@@ -34,13 +34,13 @@ import java.util.Map;
 
 public class MetadataRecordsXmlProvider extends InfrastructureXmlProvider {
 
-    private static final String MD_RECORDS_RESOURCE_NAME = "md-records";
+    public static final String MD_RECORDS_RESOURCE_NAME = "md-records";
 
-    private static final String MD_RECORD_RESOURCE_NAME = "md-record";
+    public static final String MD_RECORD_RESOURCE_NAME = "md-record";
 
-    private static final String MD_RECORDS_PATH = "/common";
+    public static final String MD_RECORDS_PATH = "/common";
 
-    private static final String MD_RECORD_PATH = "/common";
+    public static final String MD_RECORD_PATH = "/common";
 
     private static final MetadataRecordsXmlProvider PROVIDER = new MetadataRecordsXmlProvider();
 
@@ -52,13 +52,13 @@ public class MetadataRecordsXmlProvider extends InfrastructureXmlProvider {
         return PROVIDER;
     }
 
-    public final String getMdRecordsXml(final Map values)
+    public String getMdRecordsXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(MD_RECORDS_RESOURCE_NAME, MD_RECORDS_PATH, values);
     }
 
-    public final String getMdRecordXml(final Map values)
+    public String getMdRecordXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(MD_RECORD_RESOURCE_NAME, MD_RECORD_PATH, values);

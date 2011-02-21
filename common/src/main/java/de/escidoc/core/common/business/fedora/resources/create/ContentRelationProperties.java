@@ -103,7 +103,7 @@ public class ContentRelationProperties implements Serializable {
      * @param status
      *            the status to set
      */
-    public final void setStatus(final StatusType status) {
+    public void setStatus(final StatusType status) {
         this.status = status;
     }
 
@@ -112,7 +112,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return the status
      */
-    public final StatusType getStatus() {
+    public StatusType getStatus() {
         return status;
     }
 
@@ -120,14 +120,14 @@ public class ContentRelationProperties implements Serializable {
      * @param statusComment
      *            the statusComment to set
      */
-    public final void setStatusComment(final String statusComment) {
+    public void setStatusComment(final String statusComment) {
         this.statusComment = statusComment;
     }
 
     /**
      * @return the statusComment
      */
-    public final String getStatusComment() {
+    public String getStatusComment() {
         return statusComment;
     }
 
@@ -135,14 +135,14 @@ public class ContentRelationProperties implements Serializable {
      * @param pid
      *            the pid to set
      */
-    public final void setPid(final String pid) {
+    public void setPid(final String pid) {
         this.pid = pid;
     }
 
     /**
      * @return the pid
      */
-    public final String getPid() {
+    public String getPid() {
         return pid;
     }
 
@@ -150,14 +150,14 @@ public class ContentRelationProperties implements Serializable {
      * @param title
      *            the title to set
      */
-    public final void setTitle(final String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
     /**
      * @return the title
      */
-    public final String getTitle() {
+    public String getTitle() {
         return this.title;
     }
 
@@ -167,7 +167,7 @@ public class ContentRelationProperties implements Serializable {
      * @param createdById
      *            the creator id
      */
-    public final void setCreatedById(final String createdById) {
+    public void setCreatedById(final String createdById) {
         this.createdById = createdById;
     }
 
@@ -176,7 +176,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return the creator id
      */
-    public final String getCreatedById() {
+    public String getCreatedById() {
         return createdById;
     }
 
@@ -186,7 +186,7 @@ public class ContentRelationProperties implements Serializable {
      * @param modifiedById
      *            the modifiedById to set
      */
-    public final void setModifiedById(final String modifiedById) {
+    public void setModifiedById(final String modifiedById) {
         this.modifiedById = modifiedById;
     }
 
@@ -195,7 +195,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return the modifiedById
      */
-    public final String getModifiedById() {
+    public String getModifiedById() {
         return modifiedById;
     }
 
@@ -203,14 +203,14 @@ public class ContentRelationProperties implements Serializable {
      * @param createdByName
      *            the createdByName to set
      */
-    public final void setCreatedByName(final String createdByName) {
+    public void setCreatedByName(final String createdByName) {
         this.createdByName = createdByName;
     }
 
     /**
      * @return the createdByName
      */
-    public final String getCreatedByName() {
+    public String getCreatedByName() {
         return createdByName;
     }
 
@@ -218,14 +218,14 @@ public class ContentRelationProperties implements Serializable {
      * @param modifiedByName
      *            the modifiedByName to set
      */
-    public final void setModifiedByName(final String modifiedByName) {
+    public void setModifiedByName(final String modifiedByName) {
         this.modifiedByName = modifiedByName;
     }
 
     /**
      * @return the modifiedByName
      */
-    public final String getModifiedByName() {
+    public String getModifiedByName() {
         return modifiedByName;
     }
 
@@ -234,7 +234,7 @@ public class ContentRelationProperties implements Serializable {
      * @param lastModificationDate
      *            Last-modification-date of ContentRelation
      */
-    final void setLastModificationDate(final DateTime lastModificationDate) {
+    public void setLastModificationDate(final DateTime lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
     }
 
@@ -243,7 +243,7 @@ public class ContentRelationProperties implements Serializable {
      * @param lastModificationDate
      *            Last-modification-date of ContentRelation
      */
-    public final void setLastModificationDate(final String lastModificationDate) {
+    public void setLastModificationDate(final String lastModificationDate) {
         setLastModificationDate(new DateTime(lastModificationDate));
     }
 
@@ -251,7 +251,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return Last-modification-date of ContentRelation
      */
-    public final DateTime getLastModificationDate() {
+    public DateTime getLastModificationDate() {
         return lastModificationDate;
     }
 
@@ -260,7 +260,7 @@ public class ContentRelationProperties implements Serializable {
      * @param creationDate
      *            Creation date of ContentRelation
      */
-    final void setCreationDate(final DateTime creationDate) {
+    public void setCreationDate(final DateTime creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -269,7 +269,7 @@ public class ContentRelationProperties implements Serializable {
      * @param creationDate
      *            Creation date of ContentRelation
      */
-    public final void setCreationDate(final String creationDate) {
+    public void setCreationDate(final String creationDate) {
         setCreationDate(new DateTime(creationDate));
     }
 
@@ -278,7 +278,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return timestamp of create
      */
-    public final DateTime getCreationDate() {
+    public DateTime getCreationDate() {
         return creationDate;
     }
 
@@ -290,7 +290,7 @@ public class ContentRelationProperties implements Serializable {
      * @throws InvalidStatusException
      *             Thrown if status in invalid
      */
-    public final void setLockStatus(final LockStatus lockStatus)
+    public void setLockStatus(final LockStatus lockStatus)
         throws InvalidStatusException {
 
         this.lockStatus = lockStatus;
@@ -314,7 +314,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return status of lock ([locked|unlocked]
      */
-    public final LockStatus getLockStatus() {
+    public LockStatus getLockStatus() {
         return lockStatus;
     }
 
@@ -324,7 +324,7 @@ public class ContentRelationProperties implements Serializable {
      * @param lockDate
      *            timestamp of lock.
      */
-    public final void setLockDate(final DateTime lockDate) {
+    public void setLockDate(final DateTime lockDate) {
         this.lockDate = lockDate;
     }
 
@@ -334,7 +334,7 @@ public class ContentRelationProperties implements Serializable {
      * @param lockDate
      *            timestamp of lock.
      */
-    public final void setLockDate(final String lockDate) {
+    public void setLockDate(final String lockDate) {
         setLockDate(new DateTime(lockDate));
     }
 
@@ -343,7 +343,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return timestamp of lock.
      */
-    public final DateTime getLockDate() {
+    public DateTime getLockDate() {
         return lockDate;
     }
 
@@ -353,7 +353,7 @@ public class ContentRelationProperties implements Serializable {
      * @param lockOwnerId
      *            Lock owner
      */
-    public final void setLockOwnerId(final String lockOwnerId) {
+    public void setLockOwnerId(final String lockOwnerId) {
         this.lockOwnerId = lockOwnerId;
     }
 
@@ -362,7 +362,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return Owner of lock
      */
-    public final String getLockOwnerId() {
+    public String getLockOwnerId() {
         return lockOwnerId;
     }
 
@@ -372,7 +372,7 @@ public class ContentRelationProperties implements Serializable {
      * @param lockOwnerName
      *            Name (title) of lock owner
      */
-    public final void setLockOwnerName(final String lockOwnerName) {
+    public void setLockOwnerName(final String lockOwnerName) {
         this.lockOwnerName = lockOwnerName;
     }
 
@@ -381,7 +381,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return Name (title) of lock owner
      */
-    public final String getLockOwnerName() {
+    public String getLockOwnerName() {
         return lockOwnerName;
     }
 
@@ -390,7 +390,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return true if locked, false otherwise.
      */
-    public final boolean isLocked() {
+    public boolean isLocked() {
 
         return this.lockStatus == LockStatus.LOCKED;
     }
@@ -423,7 +423,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return timestamp of resource
      */
-    public final DateTime getVersionDate() {
+    public DateTime getVersionDate() {
         return versionDate;
     }
 
@@ -436,12 +436,12 @@ public class ContentRelationProperties implements Serializable {
      * @return true if this object is the same as the obj argument; false
      *         otherwise.
      */
-    public final boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return HashCodeBuilder.reflectionHashCode(this);
     }
 
@@ -451,7 +451,7 @@ public class ContentRelationProperties implements Serializable {
      * @param description
      *            Description of ContentRelation
      */
-    public final void setDescription(final String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -460,7 +460,7 @@ public class ContentRelationProperties implements Serializable {
      * 
      * @return Description of ContentRelation
      */
-    public final String getDescription() {
+    public String getDescription() {
         return description;
     }
 

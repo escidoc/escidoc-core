@@ -1,13 +1,11 @@
 package de.escidoc.core.http;
 
 import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.Credentials;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
-import org.apache.http.conn.params.ConnPerRoute;
 import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -64,7 +62,7 @@ public class HttpClientBuilderImpl extends HttpClientBuilder {
             throw new IllegalArgumentException("Invalid url '" + urlString + "'.", e);
         }
         final AuthScope authScope = new AuthScope(url.getHost(), AuthScope.ANY_PORT, AuthScope.ANY_REALM);
-        final Credentials usernamePasswordCredentials = new UsernamePasswordCredentials(username, password);
+        final UsernamePasswordCredentials usernamePasswordCredentials = new UsernamePasswordCredentials(username, password);
         this.httpClient.getCredentialsProvider().setCredentials(authScope, usernamePasswordCredentials);
         return this;
     }
@@ -72,7 +70,7 @@ public class HttpClientBuilderImpl extends HttpClientBuilder {
     private void initHttpClient() {
         final HttpParams httpParams = new BasicHttpParams();
         ConnManagerParams.setMaxTotalConnections(httpParams, this.maxTotalConnections);
-        final ConnPerRoute connPerRoute = new ConnPerRouteBean(this.maxConnectionsPerHost);
+        final ConnPerRouteBean connPerRoute = new ConnPerRouteBean(this.maxConnectionsPerHost);
         ConnManagerParams.setMaxConnectionsPerRoute(httpParams, connPerRoute);
         final Scheme httpSchema = new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
         final SchemeRegistry schemaRegistry = new SchemeRegistry();

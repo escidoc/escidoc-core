@@ -68,7 +68,7 @@ import java.util.List;
  * 
  * @author Michael Hoppe
  */
-class FileProvider implements WSDDEngineConfiguration {
+public class FileProvider implements WSDDEngineConfiguration {
     private static final AppLogger log = new AppLogger(FileProvider.class.getName());
 
     private WSDDDeployment deployment = null;
@@ -83,7 +83,7 @@ class FileProvider implements WSDDEngineConfiguration {
     // the specified location?
     private boolean searchClasspath = true;
 
-    private static String defaultJNDIUrl = null;
+    private static String DEFAULT_JNDI_URL = null;
 
     /**
      * Constructor which accesses a file in the current directory of the engine
@@ -94,9 +94,9 @@ class FileProvider implements WSDDEngineConfiguration {
      */
     public FileProvider(final String filename) {
         configFile = new File(filename);
-        if (defaultJNDIUrl == null) {
+        if (DEFAULT_JNDI_URL == null) {
             try {
-                defaultJNDIUrl =
+                DEFAULT_JNDI_URL =
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL);
             }
@@ -176,7 +176,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * @param is
      *            the input stream
      */
-    final void setInputStream(final InputStream is) {
+    public void setInputStream(final InputStream is) {
 
         myInputStream = is;
         if (is != null) {
@@ -198,7 +198,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * 
      * @return WSDDDeployment the deployment
      */
-    public final WSDDDeployment getDeployment() {
+    public WSDDDeployment getDeployment() {
         return deployment;
     }
 
@@ -232,7 +232,7 @@ class FileProvider implements WSDDEngineConfiguration {
      */
     private InputStream replaceVariables(final InputStream in) {
         String str;
-        StringBuilder xml = new StringBuilder("");
+        StringBuffer xml = new StringBuffer("");
         BufferedReader reader;
         try {
             reader = new BufferedReader(new InputStreamReader(in));
@@ -267,7 +267,7 @@ class FileProvider implements WSDDEngineConfiguration {
      */
     private String insertSystemProperties(final String propertyValue) {
         String result = propertyValue;
-        while (result.contains("${")) {
+        while (result.indexOf("${") > -1) {
             if (log.isDebugEnabled()) {
                 log.debug("propertyValue=" + result);
             }
@@ -287,7 +287,7 @@ class FileProvider implements WSDDEngineConfiguration {
      *            propertyValue
      * @return String replaced String
      */
-    private static String insertSystemProperty(final String propertyValue) {
+    private String insertSystemProperty(final String propertyValue) {
         String result = propertyValue;
         int i = result.indexOf("${");
         if (i > -1) {
@@ -303,7 +303,7 @@ class FileProvider implements WSDDEngineConfiguration {
                     log.error(e);
                 }
                 if (confPropertyValue == null) {
-                    confPropertyValue = defaultJNDIUrl;
+                    confPropertyValue = DEFAULT_JNDI_URL;
                 }
                 result =
                     result.substring(0, i) + confPropertyValue
@@ -321,7 +321,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
-    public final void configureEngine(final AxisEngine engine)
+    public void configureEngine(final AxisEngine engine)
         throws ConfigurationException {
         try {
             if (getInputStream() == null) {
@@ -365,7 +365,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
-    public final void writeEngineConfig(final AxisEngine engine)
+    public void writeEngineConfig(final AxisEngine engine)
         throws ConfigurationException {
         if (!readOnly) {
             try {
@@ -394,7 +394,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
-    public final Handler getHandler(final QName qname) throws ConfigurationException {
+    public Handler getHandler(final QName qname) throws ConfigurationException {
         return deployment.getHandler(qname);
     }
 
@@ -407,7 +407,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
-    public final SOAPService getService(final QName qname)
+    public SOAPService getService(final QName qname)
         throws ConfigurationException {
         SOAPService service = deployment.getService(qname);
         if (service == null) {
@@ -426,7 +426,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
-    public final SOAPService getServiceByNamespaceURI(final String namespace)
+    public SOAPService getServiceByNamespaceURI(final String namespace)
         throws ConfigurationException {
         return deployment.getServiceByNamespaceURI(namespace);
     }
@@ -440,7 +440,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
-    public final Handler getTransport(final QName qname)
+    public Handler getTransport(final QName qname)
         throws ConfigurationException {
         return deployment.getTransport(qname);
     }
@@ -452,7 +452,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
-    public final TypeMappingRegistry getTypeMappingRegistry()
+    public TypeMappingRegistry getTypeMappingRegistry()
         throws ConfigurationException {
         return deployment.getTypeMappingRegistry();
     }
@@ -464,7 +464,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
-    public final Handler getGlobalRequest() throws ConfigurationException {
+    public Handler getGlobalRequest() throws ConfigurationException {
         return deployment.getGlobalRequest();
     }
 
@@ -475,7 +475,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
-    public final Handler getGlobalResponse() throws ConfigurationException {
+    public Handler getGlobalResponse() throws ConfigurationException {
         return deployment.getGlobalResponse();
     }
 
@@ -488,7 +488,7 @@ class FileProvider implements WSDDEngineConfiguration {
      */
     // Needs to be a HashTable
     // Interface org.apache.axis.EngineConfiguration
-    public final Hashtable getGlobalOptions() throws ConfigurationException {
+    public Hashtable getGlobalOptions() throws ConfigurationException {
         WSDDGlobalConfiguration globalConfig =
             deployment.getGlobalConfiguration();
 
@@ -506,7 +506,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
-    public final Iterator getDeployedServices() throws ConfigurationException {
+    public Iterator getDeployedServices() throws ConfigurationException {
         return deployment.getDeployedServices();
     }
 
@@ -516,7 +516,7 @@ class FileProvider implements WSDDEngineConfiguration {
      * 
      * @return a <code>List</code> of the roles for this engine
      */
-    public final List getRoles() {
+    public List getRoles() {
         return deployment.getRoles();
     }
 }

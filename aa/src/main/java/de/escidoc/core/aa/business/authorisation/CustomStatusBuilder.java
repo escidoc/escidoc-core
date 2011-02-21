@@ -109,8 +109,8 @@ public final class CustomStatusBuilder {
         }
         if (e instanceof EscidocException) {
             try {
-                StringBuilder errorMsg = new StringBuilder(message);
-                errorMsg.append('\n');
+                StringBuffer errorMsg = new StringBuffer(message);
+                errorMsg.append("\n");
                 errorMsg.append(XmlUtility.CDATA_START);
                 errorMsg
                     .append(quoteCdata(((EscidocException) e).toXmlString()));
@@ -118,7 +118,7 @@ public final class CustomStatusBuilder {
                 return new Status(codeList, errorMsg.toString());
             }
             catch (Exception e1) {
-                StringBuilder errorMsg = new StringBuilder(message);
+                StringBuffer errorMsg = new StringBuffer(message);
                 errorMsg
                     .append(quoteCdata(((EscidocException) e).toXmlString()));
                 errorMsg.append("\n\nException deserializing failed due to ");
@@ -128,7 +128,7 @@ public final class CustomStatusBuilder {
         }
         else {
             try {
-                StringBuilder errorMsg = new StringBuilder(message);
+                StringBuffer errorMsg = new StringBuffer(message);
                 errorMsg.append("\n<exception>");
                 errorMsg
                     .append(quoteCdata(EscidocException.getStackTraceXml(e)));
@@ -136,8 +136,8 @@ public final class CustomStatusBuilder {
                 return new Status(codeList, errorMsg.toString());
             }
             catch (Exception e1) {
-                StringBuilder errorMsg = new StringBuilder(message);
-                errorMsg.append('\n');
+                StringBuffer errorMsg = new StringBuffer(message);
+                errorMsg.append("\n");
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
                 e.printStackTrace(pw);
@@ -163,7 +163,7 @@ public final class CustomStatusBuilder {
      * @return Returns the provided string with "]]>" replaced by "]]&gt;"
      * @aa
      */
-    private static String quoteCdata(final CharSequence str) {
+    private static String quoteCdata(final String str) {
 
         Pattern pattern = PATTERN_CDATA_END;
         Matcher matcher = pattern.matcher(str);

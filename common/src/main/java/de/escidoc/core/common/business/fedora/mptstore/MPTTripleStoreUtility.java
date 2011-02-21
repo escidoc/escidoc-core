@@ -105,6 +105,414 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         return result;
     }
 
+    // public List<String> getContextMemberList(
+    // final String contextId, final String filterParam)
+    // throws SystemException, MissingMethodParameterException {
+    // Map filter = null;
+    // if (filterParam != null) {
+    // try {
+    // filter = getFilterMap(filterParam);
+    // }
+    // catch (Exception e) {
+    // throw new XmlParserSystemException("While parse param filter.",
+    // e);
+    // }
+    //
+    // }
+    // String tableWithIdentifier =
+    // getTableName("http://purl.org/dc/elements/1.1/identifier");
+    // String idColumn = tableWithIdentifier + ".o";
+    //
+    // String tableWithItemContexts =
+    // getTableName(Constants.ITEM_PROPERTIES_NAMESPACE_URI + "/context");
+    // String tableWithContainerContexts =
+    // getTableName(Constants.CONTAINER_PROPERTIES_NAMESPACE_URI
+    // + "/context");
+    //
+    // String queryResult = null;
+    // String roleCriteria = null;
+    // String userCriteria = null;
+    // String filterCriteria = null;
+    //
+    // if ((filterParam == null) || filter == null) {
+    // StringBuffer queryResultBuf = new StringBuffer();
+    // queryResultBuf.append("SELECT ");
+    // queryResultBuf.append(tableWithItemContexts);
+    // queryResultBuf.append(".s FROM ");
+    // queryResultBuf.append(tableWithItemContexts);
+    // queryResultBuf.append(" WHERE ");
+    // queryResultBuf.append(tableWithItemContexts);
+    // queryResultBuf.append(".o='<info:fedora/");
+    // queryResultBuf.append(contextId + ">'");
+    // queryResultBuf.append(" UNION SELECT ");
+    // queryResultBuf.append(tableWithContainerContexts);
+    // queryResultBuf.append(".s FROM ");
+    // queryResultBuf.append(tableWithContainerContexts);
+    // queryResultBuf.append(" WHERE ");
+    // queryResultBuf.append(tableWithContainerContexts);
+    // queryResultBuf.append(".o='<info:fedora/");
+    // queryResultBuf.append(contextId + ">'");
+    // queryResult = queryResultBuf.toString();
+    //
+    // }
+    // else {
+    //
+    // // ID filter; items TODO other objects
+    //
+    // filterCriteria =
+    // getQueryPartId(idColumn, (Set) filter.remove("members"));
+    //
+    // // object type filter TODO now, we only have items
+    // // String type = (String) filter.remove("type");
+    // // if (type != null) {
+    // // // query += " and $object
+    // // <http://www.nsdl.org/ontologies/relationships/objectType> '"
+    // // // + type + "' ";
+    // // }
+    // // meeting 2007-01-25 type -> object-type
+    // String type = (String) filter.remove("object-type");
+    //
+    // // user
+    // userCriteria = (String) filter.remove("user");
+    // // role
+    // roleCriteria = (String) filter.remove("role");
+    //
+    // // public-status (is property)
+    // // content-model (is property)
+    // // generic (including public-status and content-model)
+    //
+    // // only content-model, status
+    // // status
+    //
+    // if (type == null) {
+    // StringBuffer queryPartPropertiesBuffer = new StringBuffer();
+    // StringBuffer queryPartJoinPropertiesBuffer = new StringBuffer();
+    // Iterator it = filter.keySet().iterator();
+    // String propertiesPredicateItem = null;
+    // String propertiesPredicateContainer = null;
+    // String columnObjectItem = null;
+    // String columnObjectContainer = null;
+    // String columnSubjectItem = null;
+    // String columnSubjectContainer = null;
+    // String tablenameFirstInChain = null;
+    // String tableNameFirst = null;
+    // String tableNameNext = null;
+    // String tableNameItem = null;
+    // String tableNameContainer = null;
+    // Vector<String> tableNames = new Vector<String>();
+    // // Vector<String> columnNames = new Vector<String>();
+    // while (it.hasNext()) {
+    // String key = (String) it.next();
+    // String val = (String) filter.get(key);
+    // val = MPTStringUtil.escapeLiteralValueForSql(val);
+    //
+    // if ((TripleStoreUtility.PROP_PUBLIC_STATUS.equals(key))
+    // || (Elements.ELEMENT_CONTENT_MODEL.equals(key))) {
+    //
+    // // val may be href, need id
+    // if (val.startsWith("http://") || val.startsWith("/")) {
+    // val = val.substring(val.lastIndexOf('/'));
+    // }
+    // propertiesPredicateItem =
+    // Constants.ITEM_PROPERTIES_NAMESPACE_URI + "/" + key;
+    // propertiesPredicateContainer =
+    // Constants.CONTAINER_PROPERTIES_NAMESPACE_URI + "/"
+    // + key;
+    // tableNameItem = getTableName(propertiesPredicateItem);
+    // tableNameContainer =
+    // getTableName(propertiesPredicateContainer);
+    // tableNameNext = tableNameItem + tableNameContainer;
+    // if (tableNameFirst == null) {
+    // tablenameFirstInChain = tableNameNext;
+    // }
+    // tableNames.add(tableNameItem + tableNameContainer);
+    //
+    // columnObjectItem = tableNameItem + ".o";
+    // columnObjectContainer = tableNameContainer + ".o";
+    // columnSubjectItem = tableNameItem + ".s";
+    // columnSubjectContainer = tableNameContainer + ".s";
+    // // columnNames.add(columnName);
+    // // query += "and $object
+    // // <http://www.escidoc.de/schemas/"
+    // // + objectType + "/0.1/" + key + "> '" + val + "' ";
+    //
+    // queryPartPropertiesBuffer.append("(SELECT ");
+    // queryPartPropertiesBuffer.append(columnSubjectItem);
+    // queryPartPropertiesBuffer.append(" FROM ");
+    // queryPartPropertiesBuffer.append(tableNameItem);
+    // queryPartPropertiesBuffer.append(" WHERE ");
+    // if (key.equals("context")
+    // || key.equals(Elements.ELEMENT_CONTENT_MODEL)) {
+    // queryPartPropertiesBuffer.append(columnObjectItem
+    // + "='<info:fedora/" + val + ">'");
+    // }
+    // else {
+    // queryPartPropertiesBuffer.append(columnObjectItem
+    // + "= \'\"" + val + "\"\'");
+    // }
+    // queryPartPropertiesBuffer.append(" UNION SELECT ");
+    // queryPartPropertiesBuffer
+    // .append(columnSubjectContainer);
+    // queryPartPropertiesBuffer.append(" FROM ");
+    // queryPartPropertiesBuffer.append(tableNameContainer);
+    // queryPartPropertiesBuffer.append(" WHERE ");
+    // if (key.equals("context")
+    // || key.equals(Elements.ELEMENT_CONTENT_MODEL)) {
+    // queryPartPropertiesBuffer
+    // .append(columnObjectContainer
+    // + "='<info:fedora/" + val + ">'");
+    // }
+    // else {
+    // queryPartPropertiesBuffer
+    // .append(columnObjectContainer + "=\'\"" + val
+    // + "\"\'");
+    // }
+    // queryPartPropertiesBuffer.append(") ");
+    // queryPartPropertiesBuffer.append(tableNameNext);
+    // if (tableNameFirst != null) {
+    // queryPartJoinPropertiesBuffer.append(tableNameFirst
+    // + ".s=" + tableNameNext + ".s");
+    // }
+    //
+    // if (it.hasNext()) {
+    // queryPartPropertiesBuffer.append(", ");
+    //
+    // queryPartJoinPropertiesBuffer.append(" AND ");
+    //
+    // }
+    // tableNameFirst = tableNameNext;
+    // }
+    //
+    // }
+    // String queryPartProperties = "";
+    // String queryPartJoinProperties = "";
+    // String queryPartJoinContextsAndProperties = "";
+    // String tableWithContextes =
+    // tableWithItemContexts + tableWithContainerContexts;
+    // if (tableNames.size() > 0) {
+    // queryPartProperties = queryPartPropertiesBuffer.toString();
+    // queryPartJoinProperties =
+    // queryPartJoinPropertiesBuffer.toString();
+    // queryPartJoinContextsAndProperties =
+    // tablenameFirstInChain + ".s=" + tableWithContextes
+    // + ".s";
+    // }
+    //
+    // String joinIdentifierAndContext = "";
+    //
+    // // //////////////////////
+    // StringBuffer queryResultBuf = new StringBuffer();
+    // queryResultBuf.append("SELECT ");
+    // queryResultBuf.append(tableWithContextes + ".s");
+    // queryResultBuf.append(" FROM (SELECT ");
+    // queryResultBuf.append(tableWithItemContexts);
+    // queryResultBuf.append(".s FROM ");
+    // queryResultBuf.append(tableWithItemContexts);
+    // queryResultBuf.append(" WHERE ");
+    // queryResultBuf.append(tableWithItemContexts);
+    // queryResultBuf.append(".o='<info:fedora/");
+    // queryResultBuf.append(contextId + ">'");
+    // queryResultBuf.append(" UNION SELECT ");
+    // queryResultBuf.append(tableWithContainerContexts);
+    // queryResultBuf.append(".s FROM ");
+    // queryResultBuf.append(tableWithContainerContexts);
+    // queryResultBuf.append(" WHERE ");
+    // queryResultBuf.append(tableWithContainerContexts);
+    // queryResultBuf.append(".o='<info:fedora/");
+    // queryResultBuf.append(contextId + ">') ");
+    // queryResultBuf.append(tableWithContextes);
+    // if (!filterCriteria.equals("")) {
+    // queryResultBuf.append(tableWithIdentifier);
+    // queryResultBuf.append(",");
+    // joinIdentifierAndContext =
+    // tableWithIdentifier + ".s=" + tableWithContextes
+    // + ".s AND ";
+    // }
+    // // queryResultBuf.append(tableWithObjectType);
+    // if (tableNames.size() > 0) {
+    // queryResultBuf.append(",");
+    // queryResultBuf.append(queryPartProperties);
+    //
+    // }
+    // if (!filterCriteria.equals("")
+    // || !queryPartJoinContextsAndProperties.equals("")) {
+    // queryResultBuf.append(" WHERE ");
+    // }
+    // queryResultBuf.append(joinIdentifierAndContext);
+    // queryResultBuf.append(queryPartJoinContextsAndProperties);
+    // queryResultBuf.append(queryPartJoinProperties);
+    //
+    // if (!filterCriteria.equals("")) {
+    // queryResultBuf.append(" AND (");
+    // queryResultBuf.append(filterCriteria);
+    // queryResultBuf.append(")");
+    // }
+    // queryResult = queryResultBuf.toString();
+    //
+    // }
+    // else {
+    // // FIXME a provider for ALL schema versions dependant on the
+    // // type has to be created and used here
+    // // FIXME this is only a quick fix
+    // String version = "/0.1/";
+    // if ((Constants.ITEM_OBJECT_TYPE.equals(type))
+    // || (Constants.CONTAINER_OBJECT_TYPE.equals(type))) {
+    // version = "/0.3/";
+    // }
+    // else if (Constants.CONTEXT_OBJECT_TYPE.equals(type)) {
+    // version = "/0.3/";
+    // }
+    //
+    // String typePredicate =
+    // "http://www.escidoc.de/schemas/" + type + version;
+    //
+    // String tableNameContext =
+    // getTableName(typePredicate + "context");
+    // StringBuffer queryPartPropertiesBuffer = new StringBuffer();
+    // StringBuffer queryPartJoinPropertiesBuffer = new StringBuffer();
+    // Iterator it = filter.keySet().iterator();
+    // String propertiesPredicate = null;
+    // String columnName = null;
+    // String tablenameFirstInChain = null;
+    // String tableNameFirst = null;
+    // String tableNameNext = null;
+    // Vector<String> tableNames = new Vector<String>();
+    // // Vector<String> columnNames = new Vector<String>();
+    // while (it.hasNext()) {
+    // String key = (String) it.next();
+    // String val = (String) filter.get(key);
+    // val = MPTStringUtil.escapeLiteralValueForSql(val);
+    // if ((Elements.ELEMENT_CONTENT_MODEL.equals(key))
+    // || (TripleStoreUtility.PROP_PUBLIC_STATUS.equals(key))) {
+    //
+    // // val may be href, need id
+    // if (val.startsWith("http://") || val.startsWith("/")) {
+    // val = val.substring(val.lastIndexOf('/'));
+    // }
+    // // FIXME a provider for ALL schema versions dependant on
+    // // the type has to be created and used here
+    // // FIXME this is only a quick fix
+    // version = "/0.1/";
+    // if ((Constants.ITEM_OBJECT_TYPE.equals(type))
+    // || (Constants.CONTAINER_OBJECT_TYPE.equals(type))) {
+    // version = "/0.3/";
+    // }
+    // else if (Constants.CONTEXT_OBJECT_TYPE.equals(type)) {
+    // version = "/0.3/";
+    // }
+    //
+    // propertiesPredicate =
+    // "http://www.escidoc.de/schemas/" + type + version
+    // + key;
+    // tableNameNext = getTableName(propertiesPredicate);
+    // if (tableNameFirst == null) {
+    // tablenameFirstInChain = tableNameNext;
+    // }
+    // tableNames.add(tableNameNext);
+    // columnName = tableNameNext + ".o";
+    // // columnNames.add(columnName);
+    // // query += "and $object
+    // // <http://www.escidoc.de/schemas/"
+    // // + objectType + "/0.1/" + key + "> '" + val + "' ";
+    // if (key.equals("context")
+    // || key.equals(Elements.ELEMENT_CONTENT_MODEL)) {
+    // queryPartPropertiesBuffer.append(columnName
+    // + "='<info:fedora/" + val + ">'");
+    // }
+    // else {
+    // queryPartPropertiesBuffer.append(columnName + "="
+    // + "\'\"" + val + "\"\'");
+    // }
+    // if (tableNameFirst != null) {
+    // queryPartJoinPropertiesBuffer.append(tableNameFirst
+    // + ".s=" + tableNameNext + ".s");
+    // }
+    //
+    // if (it.hasNext()) {
+    // queryPartPropertiesBuffer.append(" AND ");
+    //
+    // queryPartJoinPropertiesBuffer.append(" AND ");
+    //
+    // }
+    // tableNameFirst = tableNameNext;
+    // }
+    // }
+    // String queryPartProperties = "";
+    // String queryPartJoinProperties = "";
+    // String queryPartJoinContextAndProperties = "";
+    //
+    // if (tableNames.size() > 0) {
+    // queryPartProperties = queryPartPropertiesBuffer.toString();
+    // queryPartJoinProperties =
+    // queryPartJoinPropertiesBuffer.toString();
+    // queryPartJoinContextAndProperties =
+    // tablenameFirstInChain + ".s=" + tableNameContext + ".s";
+    // }
+    //
+    // String joinIdentifierAndContext = "";
+    // StringBuffer queryResultBuf = new StringBuffer();
+    // queryResultBuf.append("SELECT ");
+    // queryResultBuf.append(tableNameContext);
+    // queryResultBuf.append(".s FROM ");
+    //
+    // if (!filterCriteria.equals("")) {
+    // queryResultBuf.append(tableWithIdentifier);
+    // queryResultBuf.append(",");
+    // joinIdentifierAndContext =
+    // tableWithIdentifier + ".s=" + tableNameContext
+    // + ".s AND ";
+    // }
+    // queryResultBuf.append(tableNameContext);
+    // if (tableNames.size() > 0) {
+    // Iterator<String> iterator = tableNames.iterator();
+    // while (iterator.hasNext()) {
+    // queryResultBuf.append(",");
+    // queryResultBuf.append(iterator.next());
+    // }
+    //
+    // }
+    // queryResultBuf.append(" WHERE ");
+    //
+    // queryResultBuf.append(joinIdentifierAndContext);
+    //
+    // queryResultBuf.append(queryPartJoinContextAndProperties);
+    // queryResultBuf.append(queryPartJoinProperties);
+    // if (!queryPartJoinContextAndProperties.equals("")) {
+    // queryResultBuf.append(" AND ");
+    // queryResultBuf.append(queryPartProperties);
+    // queryResultBuf.append(" AND ");
+    // }
+    // queryResultBuf.append(tableNameContext);
+    // queryResultBuf.append(".o='<info:fedora/" + contextId + ">'");
+    //
+    // if (!filterCriteria.equals("")) {
+    // queryResultBuf.append(" AND (");
+    // queryResultBuf.append(filterCriteria);
+    // queryResultBuf.append(")");
+    // }
+    // queryResult = queryResultBuf.toString();
+    // }
+    // //
+    // }
+    // if (!checkQuery(queryResult)) {
+    // return new ArrayList<String>();
+    // }
+    // List<String> resultList = getListFromSimpleQuerySingleCol(queryResult);
+    //
+    // if (!(userCriteria == null && roleCriteria == null)) {
+    // resultList =
+    // filterUserRole("member", roleCriteria, userCriteria, resultList);
+    // }
+    //
+    // return resultList;
+    // }
+
+    // private List<String> getListFromSimpleQuerySingleCol(final String query)
+    // throws TripleStoreSystemException {
+    //
+    // return executeQuery(query);
+    // }
+
     /*
      * (non-Javadoc)
      * 
@@ -113,8 +521,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * (java.lang.String, boolean, java.lang.String)
      */
     @Override
-    public final List<String> executeQueryId(
-            final String id, final boolean targetIsSubject, final String predicate)
+    public List<String> executeQueryId(
+        final String id, final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
         return executeQuery(false, id, targetIsSubject, predicate);
     }
@@ -191,18 +599,18 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         List<String> result = new ArrayList<String>();
         String tableName = getTableName(predicate);
         if (tableName != null) {
-            CharSequence table = new StringBuilder(tableName);
+            StringBuffer table = new StringBuffer(tableName);
             StringBuffer select = new StringBuffer("SELECT ");
-            StringBuilder from =
-                    new StringBuilder("FROM ").append(table).append(' ');
+            StringBuffer from =
+                new StringBuffer("FROM ").append(table).append(" ");
             StringBuffer where = new StringBuffer("WHERE (");
 
             if (targetIsSubject) {
-                select = select.append(table).append(".s").append(' ');
+                select = select.append(table).append(".s").append(" ");
                 where = where.append(table).append(".o = ");
             }
             else {
-                select = select.append(table).append(".o").append(' ');
+                select = select.append(table).append(".o").append(" ");
                 where = where.append(table).append(".s = ");
             }
             if (queryByLiteral) {
@@ -217,7 +625,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 try {
                     where =
                         where
-                            .append('\'')
+                            .append("'")
                             .append(
                                 (new URIReference("info:fedora/" + idOrLiteral))
                                     .toString()).append("')");
@@ -262,10 +670,10 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         List<String> result = new ArrayList<String>();
         String tableName = getTableName(predicate);
         if (tableName != null) {
-            CharSequence table = new StringBuilder(tableName);
+            StringBuffer table = new StringBuffer(tableName);
             StringBuffer select = new StringBuffer("SELECT ");
-            StringBuilder from =
-                    new StringBuilder("FROM ").append(table).append(' ');
+            StringBuffer from =
+                new StringBuffer("FROM ").append(table).append(" ");
             StringBuffer where = new StringBuffer("WHERE (");
             if (targetIsSubject) {
                 select = select.append(table).append(".s ");
@@ -299,17 +707,17 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 try {
                     where =
                         where
-                            .append('\'')
+                            .append("'")
                             .append(
                                 (new URIReference("info:fedora/" + id))
-                                    .toString()).append('\'');
+                                    .toString()).append("'");
                 }
                 catch (URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
                 }
 
             }
-            where = where.append(')');
+            where = where.append(")");
             select = select.append(from).append(where);
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Executing sql query '" + select + "'.");
@@ -338,8 +746,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * (java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public final String getRelation(
-            final String pid, final String fullQualifiedPropertyName)
+    public String getRelation(
+        final String pid, final String fullQualifiedPropertyName)
         throws TripleStoreSystemException {
         String result = null;
         Connection connection = null;
@@ -353,7 +761,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             String querySelect = "SELECT " + table + ".o";
             String queryFrom = " FROM " + table;
             String queryWhere =
-                " WHERE " + '(' + table + ".s = '"
+                " WHERE " + "(" + table + ".s = '"
                     + new URIReference("info:fedora/" + pid).toString() + "')";
 
             query = querySelect + queryFrom + queryWhere;
@@ -401,9 +809,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /**
      * 
      */
-    private List<String> evaluate(
-            final String objectType, final Map<String, Object> filterMap,
-            final String whereClause) throws SystemException,
+    public List<String> evaluate(
+        final String objectType, final Map<String, Object> filterMap,
+        final String whereClause) throws SystemException,
         MissingMethodParameterException {
 
         return evaluate(objectType, filterMap, null, whereClause);
@@ -416,23 +824,27 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * de.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#evaluate
      * (java.lang.String, java.lang.String)
      */
-    public final List<String> evaluate(
-            final String objectType, final Map<String, Object> filterMap,
-            final String additionalConditionTriple, final String whereClause)
+    public List<String> evaluate(
+        final String objectType, final Map<String, Object> filterMap,
+        final String additionalConditionTriple, final String whereClause)
         throws SystemException, MissingMethodParameterException {
 
         Map filter = (Map) filterMap.get("filter");
 
         boolean first = true;
-
+        // String objectsToFind = objectType + "s";
+        // String query = "select $object from <#ri> "
+        // + "where $object
+        // <http://www.nsdl.org/ontologies/relationships/objectType> '"
+        // + objectType + "' ";
         String tableWithObjectType = getTableName(PROP_OBJECT_TYPE);
         if (tableWithObjectType == null) {
             return new ArrayList<String>();
         }
         String objectTypeColumn = tableWithObjectType + ".o";
-        StringBuilder queryResultBuf = new StringBuilder();
-        StringBuilder querySelectPartBuf = new StringBuilder();
-        StringBuilder queryWherePart = new StringBuilder();
+        StringBuffer queryResultBuf = new StringBuffer();
+        StringBuffer querySelectPartBuf = new StringBuffer();
+        StringBuffer queryWherePart = new StringBuffer();
         String queryResult = null;
 
         String roleCriteria = null;
@@ -450,29 +862,30 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         querySelectPartBuf.append(tableWithObjectType);
         querySelectPartBuf.append(".s FROM ");
         queryResultBuf.append(tableWithObjectType);
+        // queryResultBuf.append(" WHERE ");
 
         if ("member".equalsIgnoreCase(objectType)) {
             if ((filter != null) && filter.containsKey(PROP_OBJECT_TYPE)) {
                 String queryPartObjectTypeMember =
-                    objectTypeColumn + '=' + "\'<"
+                    objectTypeColumn + "=" + "\'<"
                         + filter.remove(PROP_OBJECT_TYPE) + ">\'";
                 queryWherePart.append(queryPartObjectTypeMember);
             }
             else {
                 String queryPartObjectTypeMember =
-                        '('
+                    "("
                         + objectTypeColumn
-                        + '='
+                        + "="
                         + "\'<http://escidoc.de/core/01/resources/Item>\' OR "
                         + objectTypeColumn
-                        + '='
+                        + "="
                         + "\'<http://escidoc.de/core/01/resources/Container>\')";
                 queryWherePart.append(queryPartObjectTypeMember);
             }
         }
         else {
             String queryPartObjectType =
-                objectTypeColumn + '=' + "\'<" + objectType + ">\'";
+                objectTypeColumn + "=" + "\'<" + objectType + ">\'";
             queryWherePart.append(queryPartObjectType);
         }
         if (additionalConditionTriple != null) {
@@ -507,11 +920,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             queryWherePart.append(additionalTableName);
             if (inverse) {
                 queryWherePart.append(".s=");
-                queryWherePart.append('\'').append(tripleParts[0]).append('\'');
+                queryWherePart.append("'").append(tripleParts[0]).append("'");
             }
             else {
                 queryWherePart.append(".o=");
-                queryWherePart.append('\'').append(tripleParts[2]).append('\'');
+                queryWherePart.append("'").append(tripleParts[2]).append("'");
             }
         }
         if (filter == null) {
@@ -532,14 +945,17 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 }
             }
             else {
-
+                // try {
+                // whereClause =
+                // getPdp().getRoleUserWhereClauseMPT(objectType,
+                // userCriteria, roleCriteria);
                 if (whereClause == null) {
                     return new ArrayList<String>(0);
                 }
 
                 if (whereClause.length() > 0) {
                     if (!first) {
-                        queryResultBuf.insert(0, '(');
+                        queryResultBuf.insert(0, "(");
                         queryResultBuf.append(") INNER JOIN (");
                     }
                     else {
@@ -550,15 +966,21 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     queryResultBuf.append(tableWithObjectType);
                     queryResultBuf.append(".s");
                 }
-
+                // }
+                // catch (SystemException e) {
+                // // FIXME: throw SystemException?
+                // throw new TripleStoreSystemException(
+                // "Failed to retrieve clause for user and role criteria",
+                // e);
+                // }
             }
 
             filterCriteria =
                 getQueryPartId(idColumn,
                     (Set<String>) filter.remove(Constants.DC_IDENTIFIER_URI));
-            if (filterCriteria.length() != 0) {
+            if (!filterCriteria.equals("")) {
                 if (!first) {
-                    queryResultBuf.insert(0, '(');
+                    queryResultBuf.insert(0, "(");
                     queryResultBuf.append(") INNER JOIN ");
                 }
                 else {
@@ -574,7 +996,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
                 queryWherePart.append(" AND (");
                 queryWherePart.append(filterCriteria);
-                queryWherePart.append(')');
+                queryWherePart.append(")");
             }
 
             topLevelOus =
@@ -634,13 +1056,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     private String[] getJoinPartProperties(
         final Map<String, String> filters, final boolean begin)
         throws TripleStoreSystemException {
-        StringBuilder queryPartBuffer = new StringBuilder();
+        StringBuffer queryPartBuffer = new StringBuffer();
 
         Iterator<String> it = filters.keySet().iterator();
         String tableWithOldPredicate = null;
         String tableWithObjectType = getTableName(PROP_OBJECT_TYPE);
         boolean first = true;
-        StringBuilder openBracesBuffer = new StringBuilder();
+        StringBuffer openBracesBuffer = new StringBuffer();
         while (it.hasNext()) {
             String predicate = it.next();
             String tableWithPredicate = getTableName(predicate);
@@ -665,9 +1087,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             queryPartBuffer.append(tableWithPredicate);
             queryPartBuffer.append(".s");
-
+            // queryPartBuffer.append(")");
             if (!begin || !first) {
-                openBracesBuffer.append('(');
+                openBracesBuffer.append("(");
             }
 
             tableWithOldPredicate = tableWithPredicate;
@@ -690,7 +1112,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             return "";
         }
 
-        StringBuilder queryPart = new StringBuilder();
+        StringBuffer queryPart = new StringBuffer();
         Set<Map.Entry<String, String>> filtersEntrySet = filters.entrySet();
         for(Map.Entry<String, String> entry : filtersEntrySet) {
             String predicate = entry.getKey();
@@ -732,18 +1154,18 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     private static String getQueryPartId(
         final String columnName, final Set<String> idSet) {
 
-        StringBuilder queryPart = new StringBuilder();
+        StringBuffer queryPart = new StringBuffer();
         String queryPartString = "";
         Set<String> objects = idSet;
 
         // TODO or rule for every id
-        if ((objects != null) && (!objects.isEmpty())) {
+        if ((objects != null) && (objects.size() > 0)) {
             Iterator<String> it = objects.iterator();
 
             while (it.hasNext()) {
                 String id = it.next();
 
-                queryPart.append(columnName).append('=' + "\'\"").append(id).append("\"\'");
+                queryPart.append(columnName).append("=" + "\'\"").append(id).append("\"\'");
                 if (it.hasNext()) {
                     queryPart.append(" OR ");
                 }
@@ -772,7 +1194,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             return new LinkedList<String>();
         }
 
-        StringBuilder queryResultBuf = new StringBuilder();
+        StringBuffer queryResultBuf = new StringBuffer();
         String queryResult = null;
 
         queryResultBuf.append("SELECT ");
@@ -832,11 +1254,15 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             // object type filter TODO now, we only have items
             // String type = (String) filter.remove("type");
             String objectType = (String) filterMap.remove("object-type");
-
+            // String tableWithObjectType =
+            // getTableName("http://www.nsdl.org/ontologies/relationships/objectType");
+            // String objectTypeColumn = tableWithObjectType + ".o";
+            // String queryPartObjectType =
+            // objectTypeColumn + "=" + "\'\"" + objectType + "\"\'";
             if (objectType == null) {
                 // generic
-                StringBuilder queryPartPropertiesBuffer = new StringBuilder();
-                StringBuilder queryPartJoinPropertiesBuffer = new StringBuilder();
+                StringBuffer queryPartPropertiesBuffer = new StringBuffer();
+                StringBuffer queryPartJoinPropertiesBuffer = new StringBuffer();
                 String propertiesPredicateItem = null;
                 String propertiesPredicateContainer = null;
                 String columnObjectItem = null;
@@ -848,8 +1274,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 String tableNameNext = null;
                 String tableNameItem = null;
                 String tableNameContainer = null;
-                Collection<String> tableNames = new ArrayList<String>();
+                List<String> tableNames = new ArrayList<String>();
                 int i = 0;
+                // Vector<String> columnNames = new Vector<String>();
                 Set<Map.Entry<String, Object>> filterEntrySet = filterMap.entrySet();
                 for(Map.Entry<String, Object> entry : filterEntrySet){
                     String key = entry.getKey();
@@ -863,7 +1290,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                         val = val.substring(val.lastIndexOf('/'));
                     }
                     propertiesPredicateItem =
-                        Constants.ITEM_PROPERTIES_NAMESPACE_URI + '/' + key;
+                        Constants.ITEM_PROPERTIES_NAMESPACE_URI + "/" + key;
                     propertiesPredicateContainer =
                         "http://www.escidoc.de/schemas/container/0.1/" + key;
                     tableNameItem = getTableName(propertiesPredicateItem);
@@ -879,6 +1306,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     columnObjectContainer = tableNameContainer + ".o";
                     columnSubjectItem = tableNameItem + ".s";
                     columnSubjectContainer = tableNameContainer + ".s";
+                    // columnNames.add(columnName);
+                    // query += "and $object <http://www.escidoc.de/schemas/"
+                    // + objectType + "/0.1/" + key + "> '" + val + "' ";
 
                     queryPartPropertiesBuffer.append("(SELECT ");
                     queryPartPropertiesBuffer.append(columnSubjectItem);
@@ -923,7 +1353,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 String queryPartJoinProperties = "";
                 String queryPartJoinMembersAndProperties = "";
 
-                if (!tableNames.isEmpty()) {
+                if (tableNames.size() > 0) {
                     queryPartProperties = queryPartPropertiesBuffer.toString();
                     queryPartJoinProperties =
                         queryPartJoinPropertiesBuffer.toString();
@@ -940,18 +1370,20 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 queryResultBuf.append(tableWithMembers);
                 queryResultBuf.append(".o FROM ");
                 queryResultBuf.append(tableWithMembers);
+                // queryResultBuf.append("SELECT ");
+                // queryResultBuf.append(tableWithObjectType);
+                // queryResultBuf.append(".s FROM ");
 
-
-                if (filterCriteria.length() != 0) {
+                if (!filterCriteria.equals("")) {
                     queryResultBuf.append(tableWithIdentifier);
-                    queryResultBuf.append(',');
+                    queryResultBuf.append(",");
                     joinIdentifierAndMembers =
                         tableWithIdentifier + ".s=" + tableWithMembers
                             + ".o AND ";
                 }
-
-                if (!tableNames.isEmpty()) {
-                    queryResultBuf.append(',');
+                // queryResultBuf.append(tableWithObjectType);
+                if (tableNames.size() > 0) {
+                    queryResultBuf.append(",");
                     queryResultBuf.append(queryPartProperties);
 
                 }
@@ -961,28 +1393,28 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
                 queryResultBuf.append(queryPartJoinMembersAndProperties);
                 queryResultBuf.append(queryPartJoinProperties);
-                if (queryPartJoinMembersAndProperties.length() != 0) {
+                if (!queryPartJoinMembersAndProperties.equals("")) {
                     queryResultBuf.append(" AND ");
                 }
                 queryResultBuf.append(tableWithMembers);
                 queryResultBuf.append(".s='<info:fedora/").append(containerId).append(">'");
-                if (filterCriteria.length() != 0) {
+                if (!filterCriteria.equals("")) {
                     queryResultBuf.append(" AND (");
                     queryResultBuf.append(filterCriteria);
-                    queryResultBuf.append(')');
+                    queryResultBuf.append(")");
                 }
                 queryResult = queryResultBuf.toString();
             }
             else {
-                StringBuilder queryPartPropertiesBuffer = new StringBuilder();
-                StringBuilder queryPartJoinPropertiesBuffer = new StringBuilder();
+                StringBuffer queryPartPropertiesBuffer = new StringBuffer();
+                StringBuffer queryPartJoinPropertiesBuffer = new StringBuffer();
                 Iterator<String> it = filterMap.keySet().iterator();
                 String propertiesPredicate = null;
                 String columnName = null;
                 String tablenameFirstInChain = null;
                 String tableNameFirst = null;
                 String tableNameNext = null;
-                Collection<String> tableNames = new ArrayList<String>();
+                List<String> tableNames = new ArrayList<String>();
                 Set<Map.Entry<String, Object>> filterEntrySet = filterMap.entrySet();
                 for(Map.Entry<String, Object> entry : filterEntrySet){
                     String key = entry.getKey();
@@ -1004,7 +1436,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     }
                     tableNames.add(tableNameNext);
                     columnName = tableNameNext + ".o";
-
+                    // columnNames.add(columnName);
+                    // query += "and $object <http://www.escidoc.de/schemas/"
+                    // + objectType + "/0.1/" + key + "> '" + val + "' ";
                     if (key.equals("context")
                         || key.equals(Elements.ELEMENT_CONTENT_MODEL)) {
                         queryPartPropertiesBuffer.append(columnName).append("='<info:fedora/").append(val).append(">'");
@@ -1028,7 +1462,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 String queryPartJoinProperties = "";
                 String queryPartJoinMembersAndProperties = "";
 
-                if (!tableNames.isEmpty()) {
+                if (tableNames.size() > 0) {
                     queryPartProperties = queryPartPropertiesBuffer.toString();
                     queryPartJoinProperties =
                         queryPartJoinPropertiesBuffer.toString();
@@ -1045,17 +1479,17 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 queryResultBuf.append(tableWithMembers);
                 queryResultBuf.append(".o FROM ");
 
-                if (filterCriteria.length() != 0) {
+                if (!filterCriteria.equals("")) {
                     queryResultBuf.append(tableWithIdentifier);
-                    queryResultBuf.append(',');
+                    queryResultBuf.append(",");
                     joinIdentifierAndMembers =
                         tableWithIdentifier + ".s=" + tableWithMembers
                             + ".o AND ";
                 }
                 queryResultBuf.append(tableWithMembers);
-                if (!tableNames.isEmpty()) {
+                if (tableNames.size() > 0) {
                     for (String tableName : tableNames) {
-                        queryResultBuf.append(',');
+                        queryResultBuf.append(",");
                         queryResultBuf.append(tableName);
                     }
 
@@ -1066,20 +1500,20 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
                 queryResultBuf.append(queryPartJoinMembersAndProperties);
                 queryResultBuf.append(queryPartJoinProperties);
-                if (queryPartJoinMembersAndProperties.length() != 0) {
+                if (!queryPartJoinMembersAndProperties.equals("")) {
                     queryResultBuf.append(" AND ");
                 }
                 queryResultBuf.append(tableWithMembers);
                 queryResultBuf.append(".s='<info:fedora/").append(containerId).append(">'");
-                if (queryPartProperties.length() != 0) {
+                if (!queryPartProperties.equals("")) {
                     queryResultBuf.append(" AND ");
                     queryResultBuf.append(queryPartProperties);
                 }
 
-                if (filterCriteria.length() != 0) {
+                if (!filterCriteria.equals("")) {
                     queryResultBuf.append(" AND (");
                     queryResultBuf.append(filterCriteria);
-                    queryResultBuf.append(')');
+                    queryResultBuf.append(")");
                 }
                 queryResult = queryResultBuf.toString();
             }
@@ -1097,9 +1531,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @param query
      * @return
      */
-    private static boolean checkQuery(final String query) {
+    private boolean checkQuery(final String query) {
         boolean result = false;
-        if ((query != null) && (!query.contains("null."))) {
+        if ((query != null) && (query.indexOf("null.") == -1)) {
             result = true;
         }
         return result;
@@ -1121,7 +1555,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         List<String> result =
             evaluate("member", filterMap, "* <"
                 + Constants.STRUCTURAL_RELATIONS_NS_URI
-                + "context> <info:fedora/" + contextId + '>');
+                + "context> <info:fedora/" + contextId + ">");
         // $parent "
         // + "and $parent <" + PROP_OBJECT_TYPE
         // + "> <http://escidoc.de/core/01/resources/Context> "
@@ -1159,15 +1593,15 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         String rootElementName = objectType + "-ref-list";
         String listElementName = objectType + "-ref";
 
-        String prefixedRootElement = namespacePrefix + ':' + rootElementName;
-        String prefixedListElement = namespacePrefix + ':' + listElementName;
+        String prefixedRootElement = namespacePrefix + ":" + rootElementName;
+        String prefixedListElement = namespacePrefix + ":" + listElementName;
 
         String namespaceDecl =
             " xmlns:" + namespacePrefix + "=\"" + namespaceUri + "\" ";
 
-        StringBuilder sb = new StringBuilder();
+        StringBuffer sb = new StringBuffer();
 
-        sb.append('<');
+        sb.append("<");
         sb.append(prefixedRootElement);
 
         sb.append(namespaceDecl);
@@ -1177,32 +1611,32 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             sb
                 .append(" references\" xlink:type=\"simple\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"");
             sb.append(" xml:base=\"");
-            sb.append(XmlUtility.getEscidocBaseUrl()).append('\"');
+            sb.append(XmlUtility.getEscidocBaseUrl()).append("\"");
         }
-        sb.append('>');
+        sb.append(">");
 
         for (String aList : list) {
             String id = aList;
-            sb.append('<');
+            sb.append("<");
             sb.append(prefixedListElement);
             if (UserContext.isRestAccess()) {
                 sb.append(" xlink:href=\"/");
                 sb.append(absoluteLocalPathFirstPart);
-                sb.append('/');
+                sb.append("/");
                 sb.append(objectType);
-                sb.append('/');
+                sb.append("/");
                 sb.append(id);
                 sb.append("\" xlink:type=\"simple\"");
             } else {
                 sb.append(" objid=\"");
                 sb.append(id);
-                sb.append('\"');
+                sb.append("\"");
             }
             sb.append(" />");
         }
         sb.append("</");
         sb.append(prefixedRootElement);
-        sb.append('>');
+        sb.append(">");
         return sb.toString();
     }
 
@@ -1215,7 +1649,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             Thrown if request of TripleStore failed.
      */
-    private String getTableName(final String predicate)
+    public String getTableName(final String predicate)
         throws TripleStoreSystemException {
         String result = null;
         if (predicate != null) {
@@ -1277,7 +1711,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#
      * reinitialize()
      */
-    public final Object reinitialize() throws TripleStoreSystemException {
+    public Object reinitialize() throws TripleStoreSystemException {
         return setUpTableManager();
     }
 
@@ -1316,7 +1750,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    private static String getValue(final String entry)
+    private String getValue(final String entry)
         throws TripleStoreSystemException {
         String result = null;
         try {
@@ -1349,7 +1783,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    private List<String> executeSqlQuery(final String query)
+    public List<String> executeSqlQuery(final String query)
         throws TripleStoreSystemException {
 
         List<String> result = new LinkedList<String>();
@@ -1360,6 +1794,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             rs = con.prepareStatement(query).executeQuery();
             while (rs.next()) {
                 String entry = getValue(rs.getString(1));
+                // entry = NTriplesUtil.unescapeLiteralValue(value);
+
                 result.add(entry);
             }
         }
@@ -1396,7 +1832,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    private TableManager getTableManager() throws TripleStoreSystemException {
+    public TableManager getTableManager() throws TripleStoreSystemException {
         if (tableManager == null) {
             setUpTableManager();
         }
@@ -1407,7 +1843,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @param tableManager
      *            the tableManager to set
      */
-    private void setTableManager(final TableManager tableManager) {
+    public void setTableManager(final TableManager tableManager) {
         this.tableManager = tableManager;
     }
 
@@ -1471,11 +1907,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         ResultSet resultSet = null;
         String query = null;
         try {
-            String table = getTableName(FEDORA_CREATION_DATE_PREDICATE);
+            String table = getTableName(Fedora_Creation_Date_Predicate);
             if (table == null) {
                 return false;
             }
-            StringBuilder queryBuffer = new StringBuilder();
+            StringBuffer queryBuffer = new StringBuffer();
             queryBuffer.append("SELECT ");
             queryBuffer.append(table);
             queryBuffer.append(".o FROM ");
@@ -1571,7 +2007,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         boolean isFirst = true;
 
         int braceToAddAtBeginn = 0;
-        String creationDateTable = getTableName(FEDORA_CREATION_DATE_PREDICATE);
+        String creationDateTable = getTableName(Fedora_Creation_Date_Predicate);
+        // String dcIdentifierTable = getTableName(Constants.DC_IDENTIFIER_URI);
         final String contentModelTitleTableName = getTableName(PROP_TITLE);
         final String contentModelOfObjectTableName =
             getTableName(contentModelTitleId);
@@ -1593,8 +2030,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         }
         final StringBuffer queryPart = new StringBuffer();
 
-        final StringBuilder queryPartJoinObjectTypeWithPredicateBuffer =
-                new StringBuilder();
+        final StringBuffer queryPartJoinObjectTypeWithPredicateBuffer =
+            new StringBuffer();
         queryPartJoinObjectTypeWithPredicateBuffer.append(tableWithPredicate);
         queryPartJoinObjectTypeWithPredicateBuffer.append(" ON ");
         queryPartJoinObjectTypeWithPredicateBuffer.append(tableWithObjectType);
@@ -1609,8 +2046,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         String queryPartJoinObjectTypeWithPredicate =
             queryPartJoinObjectTypeWithPredicateBuffer.toString();
 
-        final StringBuilder queryPartJoinContentModelWithPredicateBuffer =
-                new StringBuilder();
+        final StringBuffer queryPartJoinContentModelWithPredicateBuffer =
+            new StringBuffer();
         queryPartJoinContentModelWithPredicateBuffer.append(tableWithPredicate);
         queryPartJoinContentModelWithPredicateBuffer.append(" ON ");
         queryPartJoinContentModelWithPredicateBuffer
@@ -1632,7 +2069,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 return faultCase;
             }
             isFirst = false;
-            queryPart.append('(');
+            queryPart.append("(");
             queryPart.append(contentModelOfObjectTableName);
             queryPart.append(" INNER JOIN ");
             queryPart.append(contentModelTitleTableName);
@@ -1685,7 +2122,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         }
         if (targetResourceType != null) {
             if ("member".equals(targetResourceType)) {
-                queryPart.append('(');
+                queryPart.append("(");
                 queryPart.append(tableWithObjectType);
                 queryPart.append(".o=");
                 queryPart.append("'<" + Constants.ITEM_OBJECT_TYPE + ">' OR ");
@@ -1707,7 +2144,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             // therefore the dummy SQL-Query is using here:
             // select t.s from t where t.s='<info:fedora/escidoc:bla>';
             if (predicateId
-                .equals(TripleStoreUtility.FEDORA_CREATION_DATE_PREDICATE)) {
+                .equals(TripleStoreUtility.Fedora_Creation_Date_Predicate)) {
                 queryPart.append(".s=");
                 queryPart.append("'<info:fedora/").append(expectedValue).append(">'");
             }
@@ -1723,9 +2160,21 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             queryPart.append(".s=");
             queryPart.append("'<info:fedora/").append(expectedValue).append(">'");
         }
+        // if (!targetIsSubject
+        // ||
+        // predicateId.equals(TripleStoreUtility.Fedora_Creation_Date_Predicate))
+        // {
+        // queryPart.append(tableWithPredicate);
+        // queryPart.append(".s=");
+        // queryPart.append("'<info:fedora/" + expectedValue + ">'");
+        // } else {
+        // queryPart.append(tableWithPredicate);
+        // queryPart.append(".o=");
+        // queryPart.append("'<info:fedora/" + expectedValue + ">'");
+        // }
 
         if (braceToAddAtBeginn == 1) {
-            queryPart.insert(0, '(');
+            queryPart.insert(0, "(");
         }
 
         return queryPart;
@@ -1772,7 +2221,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             select.append(titleTableName);
             select.append(".s FROM ");
             select.append(titleTableName);
-            select.append(',');
+            select.append(",");
             select.append(typeTableName);
             select.append(" WHERE ");
             select.append(titleTableName);

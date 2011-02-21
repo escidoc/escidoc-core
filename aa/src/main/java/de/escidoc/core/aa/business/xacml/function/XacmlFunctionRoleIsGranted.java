@@ -46,7 +46,6 @@ import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -130,7 +129,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @see com.sun.xacml.cond.Function#evaluate(java.util.List,
      *      com.sun.xacml.EvaluationCtx)
      */
-    public final EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
+    public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
 
         try {
             final AttributeValue[] argValues =
@@ -332,7 +331,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                                 if (resolvedAttributeValues != null
                                         && !resolvedAttributeValues.isEmpty()) {
                                     for (String resolvedAttributeValue : resolvedAttributeValues) {
-                                        final Collection grantsOfRoleAndObject =
+                                        final List grantsOfRoleAndObject =
                                                 (List) grantsOfRole
                                                         .get(resolvedAttributeValue);
                                         if (grantsOfRoleAndObject != null
@@ -377,8 +376,8 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @return Returns the {@link EvaluationResult} found in the cache or
      *         <code>null</code>.
      */
-    private static EvaluationResult fetchFromCache(
-            final String userId, final String roleId, final String resourceId) {
+    private EvaluationResult fetchFromCache(
+        final String userId, final String roleId, final String resourceId) {
 
         // try to get a result for unlimited role or role not granted to the
         // user (resource-id = null)
@@ -413,9 +412,9 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      *            Flag indicating if the role has been granted to the user
      *            (optional: for the provided resource).
      */
-    private static EvaluationResult createCachedResult(
-            final String userId, final String roleId, final String resourceId,
-            final boolean roleIsGranted) {
+    private EvaluationResult createCachedResult(
+        final String userId, final String roleId, final String resourceId,
+        final boolean roleIsGranted) {
 
         final EvaluationResult result =
             EvaluationResult.getInstance(roleIsGranted);

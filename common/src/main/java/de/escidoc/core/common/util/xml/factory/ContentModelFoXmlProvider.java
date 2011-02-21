@@ -77,7 +77,7 @@ public class ContentModelFoXmlProvider extends InfrastructureFoXmlProvider {
      * @return
      * @throws WebserverSystemException
      */
-    public final String getContentModelFoXml(final Map values)
+    public String getContentModelFoXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(CONTENT_MODEL_RESOURCE_NAME, CONTENT_MODEL_PATH, values);
@@ -89,7 +89,7 @@ public class ContentModelFoXmlProvider extends InfrastructureFoXmlProvider {
      * @return
      * @throws WebserverSystemException
      */
-    public final String getContentModelDsComposite(final Map values)
+    public String getContentModelDsComposite(final Map values)
         throws WebserverSystemException {
 
         return getXml(DS_COMPOSITE_RESOURCE_NAME, CONTENT_MODEL_PATH, values);
@@ -101,7 +101,7 @@ public class ContentModelFoXmlProvider extends InfrastructureFoXmlProvider {
      * @return
      * @throws WebserverSystemException
      */
-    public final String getServiceDefinitionFoXml(final Map values)
+    public String getServiceDefinitionFoXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(SERVICE_DEFINITION_RESOURCE_NAME, CONTENT_MODEL_PATH,
@@ -114,7 +114,7 @@ public class ContentModelFoXmlProvider extends InfrastructureFoXmlProvider {
      * @return
      * @throws WebserverSystemException
      */
-    public final String getServiceDeploymentFoXml(final Map values)
+    public String getServiceDeploymentFoXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(SERVICE_DEPLOYMENT_RESOURCE_NAME, CONTENT_MODEL_PATH,
@@ -127,7 +127,7 @@ public class ContentModelFoXmlProvider extends InfrastructureFoXmlProvider {
      * @return
      * @throws WebserverSystemException
      */
-    public final String getContentModelRelsExt(final Map values)
+    public String getContentModelRelsExt(final Map values)
         throws WebserverSystemException {
 
         return getXml(RELS_EXT_RESOURCE_NAME, CONTENT_MODEL_RELS_EXT_PATH,

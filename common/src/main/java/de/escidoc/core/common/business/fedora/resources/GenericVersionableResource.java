@@ -378,7 +378,9 @@ public class GenericVersionableResource extends GenericResourcePid {
         catch (IntegritySystemException e) {
             throw new WebserverSystemException(e);
         }
-
+        // if (versionNumber == null || versionNumber.length() <= 0) {
+        // return null;
+        // }
         return versionDate;
     }
 
@@ -880,6 +882,7 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         setLastVersionData();
         if (getVersionNumber() == null) {
+            // setTitle(getTripleStoreUtility().getTitle(getId()));
             this.description =
                 TripleStoreUtility.getInstance().getPropertiesElements(getId(),
                     Constants.DC_NS_URI + Elements.ELEMENT_DESCRIPTION);
@@ -1058,7 +1061,8 @@ public class GenericVersionableResource extends GenericResourcePid {
             // writing RELS-EXT twice.
             timestamp = persistRelsExt();
             if (timestamp == null) {
-               timestamp = getLastFedoraModificationDate();
+                // timestamp = getLastModificationDate();
+                timestamp = getLastFedoraModificationDate();
             }
             updateWovTimestamp(getVersionNumber(), timestamp);
             persistWov();
@@ -1072,6 +1076,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             getFedoraUtility().sync();
         }
 
+        // getsomevaluesfromFedora();
         return timestamp;
     }
 
@@ -1126,6 +1131,59 @@ public class GenericVersionableResource extends GenericResourcePid {
         catch (Exception e1) {
             throw new WebserverSystemException(e1);
         }
+
+        // final StaxParser sp = new StaxParser();
+        //
+        // Map<String, StartElementWithChildElements> updateElementsWOV =
+        // new HashMap<String, StartElementWithChildElements>();
+        //
+        // // change first occurrence of timestamp in version-history
+        // updateElementsWOV.put(TripleStoreUtility.PROP_VERSION_TIMESTAMP,
+        // new StartElementWithChildElements(
+        // TripleStoreUtility.PROP_VERSION_TIMESTAMP,
+        // Constants.WOV_NAMESPACE_URI, Constants.WOV_NAMESPACE_PREFIX,
+        // null, timestamp, null));
+        //
+        // // if first entry of a new version, fix timestamp of this version
+        //
+        // ItemRelsExtUpdateHandler ireuh =
+        // new ItemRelsExtUpdateHandler(updateElementsWOV, sp);
+        // ireuh.setPath("/version-history/version/");
+        // sp.addHandler(ireuh);
+        //
+        // AddNewSubTreesToDatastream addNewSubtreesHandler =
+        // new AddNewSubTreesToDatastream("/version-history", sp);
+        // StartElement pointer =
+        // new StartElement("version", Constants.WOV_NAMESPACE_URI,
+        // "escidocVersions", null);
+        // addNewSubtreesHandler.setPointerElement(pointer);
+        // List<StartElementWithChildElements> elementsToAdd =
+        // new Vector<StartElementWithChildElements>();
+        // addNewSubtreesHandler.setSubtreeToInsert(elementsToAdd);
+        // sp.addHandler(addNewSubtreesHandler);
+        //
+        // try {
+        // sp.parse(getWov().getStream());
+        // ByteArrayOutputStream newWovStream =
+        // addNewSubtreesHandler.getOutputStreams();
+        //
+        // String newWovString =
+        // newWovStream.toString(XmlUtility.CHARACTER_ENCODING);
+        //
+        // // replace the timestamp of the newest event (horrible, I know!)
+        // newWovString =
+        // newWovString.replaceFirst(
+        // "<premis:eventDateTime>[^<]*</premis:eventDateTime>",
+        // "<premis:eventDateTime>" + timestamp
+        // + "</premis:eventDateTime>");
+        //
+        // setWov(new Datastream(Elements.ELEMENT_WOV_VERSION_HISTORY,
+        // getId(), newWovString.getBytes(XmlUtility.CHARACTER_ENCODING),
+        // "text/xml"));
+        // }
+        // catch (Exception e) {
+        // throw new WebserverSystemException(e);
+        // }
     }
 
     /**
@@ -1265,8 +1323,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private static Collection<String> expandPropertiesNames(
-            final Collection<String> propertiesNames) {
+    private Collection<String> expandPropertiesNames(
+        final Collection<String> propertiesNames) {
 
         Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
@@ -1301,8 +1359,8 @@ public class GenericVersionableResource extends GenericResourcePid {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private static Map<String, String> expandPropertiesNamesMapping(
-            final Map<String, String> propertiesNamesMap) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesNamesMap) {
 
         Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
@@ -1365,7 +1423,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     public Map<String, String> mapTripleStoreKeys(
         final Map<String, String> tripleStoreMap) {
 
-        Map<String, String> properties = new HashMap<String, String>();
+        HashMap<String, String> properties = new HashMap<String, String>();
 
         for (String s : tripleStoreMap.keySet()) {
             String sourceKey = s;
@@ -1472,6 +1530,7 @@ public class GenericVersionableResource extends GenericResourcePid {
 
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
+                // setRelsExt(ds);
                 this.relsExt = ds;
             }
             // DC

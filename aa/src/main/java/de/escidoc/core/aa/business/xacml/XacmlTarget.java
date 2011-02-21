@@ -63,7 +63,7 @@ import java.util.List;
  * 
  * @aa
  */
-class XacmlTarget extends Target {
+public class XacmlTarget extends Target {
 
     private static final String URN_ACTION_DESIGNATOR_ID =
         "urn:oasis:names:tc:xacml:1.0:action:action-id";
@@ -120,10 +120,10 @@ class XacmlTarget extends Target {
             actionsList = new ArrayList<List<TargetMatch>>();
             List<TargetMatch> action = new ArrayList<TargetMatch>();
             Iterator<Action> iter = actions.iterator();
-            StringBuilder values = new StringBuilder();
+            StringBuffer values = new StringBuffer();
             while (iter.hasNext()) {
                 values.append(iter.next().getName());
-                values.append(' ');
+                values.append(" ");
             }
             action.add(createTargetActionMatch(new StringAttribute(values
                 .toString().trim())));
@@ -170,7 +170,7 @@ class XacmlTarget extends Target {
      * @return
      * @see java.lang.Object#toString()
      */
-    public final String toString() {
+    public String toString() {
 
         ByteArrayOutputStream writer = new ByteArrayOutputStream();
         encode(writer, new Indenter());

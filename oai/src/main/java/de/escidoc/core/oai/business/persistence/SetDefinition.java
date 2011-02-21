@@ -50,7 +50,7 @@ public class SetDefinition extends SetDefinitionBase implements Serializable {
      *         {@link de.escidoc.core.oai.business.persistence.SetDefinition}
      *         object.
      */
-    public final String getHref() {
+    public String getHref() {
 
         return XmlUtility.getSetDefinitionHref(getId());
     }

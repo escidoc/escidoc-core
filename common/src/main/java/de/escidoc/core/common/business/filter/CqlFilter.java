@@ -43,7 +43,6 @@ import org.z3950.zing.cql.CQLTermNode;
 import org.z3950.zing.cql.Modifier;
 import org.z3950.zing.cql.ModifierSet;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -92,7 +91,7 @@ public abstract class CqlFilter {
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      */
-    private Criterion evaluate(final CQLBooleanNode node)
+    protected Criterion evaluate(final CQLBooleanNode node)
         throws InvalidSearchQueryException {
         Criterion result = null;
         Criterion left = evaluate(node.left);
@@ -158,8 +157,8 @@ public abstract class CqlFilter {
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      */
-    protected static Criterion evaluate(final CQLRelation relation,
-                                        final String propertyName, final Object value, final boolean useLike)
+    protected Criterion evaluate(final CQLRelation relation,
+        final String propertyName, final Object value, final boolean useLike)
         throws InvalidSearchQueryException {
         Criterion result;
         final String rel = relation.getBase();
@@ -208,7 +207,7 @@ public abstract class CqlFilter {
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      */
-    private Criterion evaluate(final CQLSortNode node)
+   protected Criterion evaluate(final CQLSortNode node)
         throws InvalidSearchQueryException {
         setOrderBy(node.getSortIndexes());
         return evaluate(node.subtree);
@@ -236,7 +235,7 @@ public abstract class CqlFilter {
      *
      * @return the given Hibernate query or "TRUE"
      */
-    private static Criterion getAndRestriction(final Criterion criterion) {
+    private Criterion getAndRestriction(final Criterion criterion) {
         Criterion result;
 
         if (criterion != null) {
@@ -257,8 +256,8 @@ public abstract class CqlFilter {
      *
      * @return Criterion
      */
-    protected static Criterion getInRestrictions(
-            final Collection<String> criteria, final String fieldName) {
+    protected Criterion getInRestrictions(
+        final Set<String> criteria, final String fieldName) {
         if (criteria.contains("")) {
             criteria.remove("");
             if (criteria.isEmpty()) {
@@ -281,7 +280,7 @@ public abstract class CqlFilter {
      *
      * @return the given Hibernate query or "FALSE"
      */
-    private static Criterion getOrRestriction(final Criterion criterion) {
+    private Criterion getOrRestriction(final Criterion criterion) {
         Criterion result;
 
         if (criterion != null) {
@@ -342,10 +341,10 @@ public abstract class CqlFilter {
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      */
-    private void setOrderBy(final Iterable<ModifierSet> orderBy)
+    protected void setOrderBy(final List<ModifierSet> orderBy)
         throws InvalidSearchQueryException {
         for (ModifierSet modifier : orderBy) {
-            if (!modifier.getModifiers().isEmpty()) {
+            if (modifier.getModifiers().size() > 0) {
                 for (Modifier mod : modifier.getModifiers()) {
                     String columnName =
                         propertyNamesMap.get(modifier.getBase());

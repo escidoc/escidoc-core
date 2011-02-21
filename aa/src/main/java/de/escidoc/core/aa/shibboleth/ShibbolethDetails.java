@@ -35,7 +35,7 @@ package de.escidoc.core.aa.shibboleth;
  * @aa
  * 
  */
-class ShibbolethDetails {
+public class ShibbolethDetails {
 
     public static final String SHIB_APPLICATION_ID = "Shib-Application-ID";
 
@@ -168,7 +168,7 @@ class ShibbolethDetails {
      * @return Returns the value of the request header "Shib-Identity-Provider".
      * @aa
      */
-    public final String getShibIdentityProvider() {
+    public String getShibIdentityProvider() {
         return shibIdentityProvider;
     }
 

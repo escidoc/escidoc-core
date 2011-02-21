@@ -97,22 +97,6 @@ public class ItemCreate extends GenericResourceCreate {
     private EscidocIdProvider idProvider = null;
 
     private String dcXml = null;
-    
-    // define pattern
-    // taken from method handleFedoraUploadError
-    // in order to make them static final
-    private static final String ERROR_MSG_NO_HTTP_PROTOCOL =
-        "The url has a wrong protocol."
-            + " The protocol must be a http protocol.";
-
-    private static final Pattern PATTERN_ERROR_GETTING =
-        Pattern.compile(
-            "fedora.server.errors.GeneralException: Error getting",
-            Pattern.CASE_INSENSITIVE);
-    private static final Pattern PATTERN_MALFORMED_URL =
-        Pattern.compile("fedora.server.errors.ObjectIntegrityException: "
-            + "FOXML IO stream was bad : Malformed URL");
-
 
     /**
      * Set ItemProperties.
@@ -120,7 +104,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @param properties
      *            The properties of Item.
      */
-    public final void setProperties(final ItemProperties properties) {
+    public void setProperties(final ItemProperties properties) {
 
         this.properties = properties;
     }
@@ -131,7 +115,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @param mdRecord
      *            The new MetadataRecord.
      */
-    public final void addMdRecord(final MdRecordCreate mdRecord) {
+    public void addMdRecord(final MdRecordCreate mdRecord) {
 
         if (this.mdRecords == null) {
             this.mdRecords = new ArrayList<MdRecordCreate>();
@@ -147,7 +131,7 @@ public class ItemCreate extends GenericResourceCreate {
      *            Vector with new set of Components. Existing Components are
      *            removed.
      */
-    public final void setComponents(final List<ComponentCreate> components) {
+    public void setComponents(final List<ComponentCreate> components) {
 
         this.components = components;
     }
@@ -179,7 +163,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return Vector with all Components of Item.
      */
-    private List<ComponentCreate> getComponents() {
+    public List<ComponentCreate> getComponents() {
 
         return this.components;
     }
@@ -193,7 +177,7 @@ public class ItemCreate extends GenericResourceCreate {
      *            FIXME This Spring construct seams not to work.
      * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
-    public final void setIdProvider(final EscidocIdProvider idProvider) {
+    public void setIdProvider(final EscidocIdProvider idProvider) {
 
         this.idProvider = idProvider;
     }
@@ -233,7 +217,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws InvalidContentException
      * @throws MissingAttributeValueException
      */
-    public final void persist(final boolean forceSync) throws SystemException,
+    public void persist(final boolean forceSync) throws SystemException,
         FileNotFoundException, InvalidContentException {
 
         if (getProperties().getObjectProperties().getOrigin() == null) {
@@ -315,7 +299,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws EncodingSystemException
      *             Thrown if the conversion to default encoding failed.
      */
-    private String getDC() throws WebserverSystemException,
+    public String getDC() throws WebserverSystemException,
         EncodingSystemException {
 
         if (this.dcXml == null) {
@@ -341,7 +325,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return All MdRecords.
      */
-    public final List<MdRecordCreate> getMetadataRecords() {
+    public List<MdRecordCreate> getMetadataRecords() {
         return this.mdRecords;
     }
 
@@ -352,7 +336,7 @@ public class ItemCreate extends GenericResourceCreate {
      *            Name of MetadataRecord.
      * @return MetadataRecord with required name or null.
      */
-    private MdRecordCreate getMetadataRecord(final String name) {
+    public MdRecordCreate getMetadataRecord(final String name) {
         if (this.mdRecords != null) {
             for (MdRecordCreate mdRecord : this.mdRecords) {
                 if (mdRecord.getName().equals(name)) {
@@ -374,7 +358,7 @@ public class ItemCreate extends GenericResourceCreate {
     /**
      * @return the relations
      */
-    public final RelationsCreate getRelations() {
+    public RelationsCreate getRelations() {
         return relations;
     }
 
@@ -398,8 +382,8 @@ public class ItemCreate extends GenericResourceCreate {
      * @param contentStreams
      *            the contentStreams to set
      */
-    public final void setContentStreams(
-            final List<ContentStreamCreate> contentStreams) {
+    public void setContentStreams(
+        final List<ContentStreamCreate> contentStreams) {
         this.contentStreams = contentStreams;
     }
 
@@ -415,7 +399,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return ItemProperties
      */
-    public final ItemProperties getProperties() {
+    public ItemProperties getProperties() {
         return this.properties;
     }
 
@@ -550,7 +534,7 @@ public class ItemCreate extends GenericResourceCreate {
     private String getMinimalFoXML() throws SystemException,
         UnsupportedEncodingException {
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
 
@@ -599,7 +583,7 @@ public class ItemCreate extends GenericResourceCreate {
      */
     private String renderRelsExt() throws SystemException {
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
 
@@ -710,7 +694,7 @@ public class ItemCreate extends GenericResourceCreate {
     private Map<String, String> preparePropertiesValueMap()
         throws SystemException {
 
-        Map<String, String> valueMap = new HashMap<String, String>();
+        HashMap<String, String> valueMap = new HashMap<String, String>();
 
         // add RELS-EXT values -------------------------------------------------
         valueMap.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER,
@@ -818,9 +802,9 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return HashMap with namespace values for XML representation.
      */
-    private static Map<String, String> getRelsExtNamespaceValues() {
+    private Map<String, String> getRelsExtNamespaceValues() {
 
-        Map<String, String> values = new HashMap<String, String>();
+        HashMap<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
@@ -864,7 +848,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @param componentIds
      *            Fedora objid of resources which are to purge.
      */
-    private static void rollbackCreate(final Iterable<String> componentIds) {
+    private void rollbackCreate(final List<String> componentIds) {
 
         String componentId;
         for (String componentId1 : componentIds) {
@@ -892,10 +876,11 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
-    private static String getLastModificationDateByWorkaround(final String objid)
+    private String getLastModificationDateByWorkaround(final String objid)
         throws FedoraSystemException {
 
         // Work around for Fedora30 bug APIM.getDatastreams()
+        // String lastModificationDate = null;
         org.fcrepo.server.types.gen.Datastream relsExtInfo =
             FedoraUtility.getInstance().getDatastreamInformation(objid,
                 Datastream.RELS_EXT_DATASTREAM, null);
@@ -961,9 +946,22 @@ public class ItemCreate extends GenericResourceCreate {
      *             Thrown if the reason for the Fedora Exception was not an
      *             unaccible content resource (file).
      */
-    private static void handleFedoraUploadError(
-            final String url, final FedoraSystemException e)
+    private void handleFedoraUploadError(
+        final String url, final FedoraSystemException e)
         throws FileNotFoundException, FedoraSystemException {
+
+        // define pattern
+        String ERROR_MSG_NO_HTTP_PROTOCOL =
+            "The url has a wrong protocol."
+                + " The protocol must be a http protocol.";
+
+        Pattern PATTERN_ERROR_GETTING =
+            Pattern.compile(
+                "fedora.server.errors.GeneralException: Error getting",
+                Pattern.CASE_INSENSITIVE);
+        Pattern PATTERN_MALFORMED_URL =
+            Pattern.compile("fedora.server.errors.ObjectIntegrityException: "
+                + "FOXML IO stream was bad : Malformed URL");
 
         Matcher matcherErrorGetting =
             PATTERN_ERROR_GETTING.matcher(e.getMessage());

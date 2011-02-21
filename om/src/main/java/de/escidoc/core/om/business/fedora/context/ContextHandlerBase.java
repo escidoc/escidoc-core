@@ -54,7 +54,7 @@ public class ContextHandlerBase extends HandlerBase {
     /**
      * @return Return the Context.
      */
-    public final Context getContext() {
+    public Context getContext() {
         return (this.context);
     }
 
@@ -71,7 +71,7 @@ public class ContextHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If anything else fails.
      */
-    final void setContext(final String id) throws ContextNotFoundException,
+    public void setContext(final String id) throws ContextNotFoundException,
         SystemException {
 
         this.context = new Context(id);
@@ -82,7 +82,7 @@ public class ContextHandlerBase extends HandlerBase {
      * 
      * @return renderer
      */
-    final ContextRendererInterface getRenderer() {
+    public ContextRendererInterface getRenderer() {
         if (this.renderer == null) {
             this.renderer = new VelocityXmlContextRenderer();
         }
@@ -92,12 +92,29 @@ public class ContextHandlerBase extends HandlerBase {
     /**
      * @return Returns the utility.
      */
-    protected final Utility getUtility() {
+    public Utility getUtility() {
         if (this.utility == null) {
             this.utility = Utility.getInstance();
         }
         return this.utility;
     }
+
+    // /**
+    // * @return return ContextCreator
+    // */
+    // public ContextCreator getContextCreator() {
+    // return this.contextCreator;
+    // }
+
+    // /**
+    // * @spring.property ref="business.ContextCreator"
+    // *
+    // * @param contextCreator
+    // * Context creator.
+    // */
+    // public void setContextCreator(final ContextCreator contextCreator) {
+    // this.contextCreator = contextCreator;
+    // }
 
     /**
      * Check Status of Context against given value.
@@ -110,7 +127,7 @@ public class ContextHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If anything else fails.
      */
-    final void checkStatus(final String status)
+    protected void checkStatus(final String status)
         throws InvalidStatusException, SystemException {
         final String objectStatus =
             getTripleStoreUtility().getPropertiesElements(this.context.getId(),

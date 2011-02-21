@@ -53,7 +53,7 @@ public enum LockStatus {
      * @param status
      *            Type of lock status as String.
      */
-    private LockStatus(final String status) {
+    LockStatus(final String status) {
 
         this.status = status;
     }
@@ -90,7 +90,7 @@ public enum LockStatus {
             }
         }
 
-        String msg = "Invalid lock status '" + status + '\'';
+        String msg = "Invalid lock status '" + status + "'";
         throw new InvalidStatusException(msg);
     }
 

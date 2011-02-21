@@ -67,7 +67,7 @@ import java.util.Vector;
  */
 public class Context extends GenericResource implements ContextInterface {
 
-    private static final AppLogger LOGGER = new AppLogger(Context.class.getName());
+    private static final AppLogger log = new AppLogger(Context.class.getName());
 
     private Datastream dc = null;
 
@@ -145,8 +145,10 @@ public class Context extends GenericResource implements ContextInterface {
         catch (final StreamNotFoundException e) {
             // A context have to have a properties datastream
             throw new StreamNotFoundException("No properties for context "
-                + getId() + '.', e);
+                + getId() + ".", e);
         }
+        // getSomeValuesFromFedora();
+
     }
 
     /*
@@ -156,7 +158,7 @@ public class Context extends GenericResource implements ContextInterface {
      * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #getProperties()
      */
-    public final Datastream getProperties() throws StreamNotFoundException,
+    public Datastream getProperties() throws StreamNotFoundException,
         FedoraSystemException {
         // if properties is unset, instantiate the Datastream
         if (this.properties == null) {
@@ -187,7 +189,7 @@ public class Context extends GenericResource implements ContextInterface {
         catch (final StreamNotFoundException e) {
             // A context have to have a properties datastream
             throw new StreamNotFoundException("No properties for context "
-                + getId() + '.', e);
+                + getId() + ".", e);
         }
         // getSomeValuesFromFedora();
     }
@@ -199,15 +201,15 @@ public class Context extends GenericResource implements ContextInterface {
         return this.organizationalUnits;
     }
 
-    public final void setOrganizationalUnits(final List<String> ous)
+    public void setOrganizationalUnits(final List<String> ous)
         throws InvalidContentException, TripleStoreSystemException,
         WebserverSystemException {
 
         // check that at least one OU is given
-        if (ous.isEmpty()) {
+        if (ous.size() == 0) {
             final String message =
                 "No 'organizational-unit' element is given. ";
-            LOGGER.error(message);
+            log.error(message);
             throw new InvalidContentException(message);
         }
 
@@ -215,7 +217,7 @@ public class Context extends GenericResource implements ContextInterface {
 
         // merge new OUS with existing ------------------------------
         // remove
-        final Map<String, List<StartElementWithChildElements>> elementsToRemove =
+        final TreeMap<String, List<StartElementWithChildElements>> elementsToRemove =
             new TreeMap<String, List<StartElementWithChildElements>>();
 
         Iterator<String> it = currentOus.iterator();
@@ -292,7 +294,7 @@ public class Context extends GenericResource implements ContextInterface {
      * 
      * @return href.
      */
-    public final String getHref() {
+    public String getHref() {
         return (Constants.CONTEXT_URL_BASE + getId());
     }
 
@@ -303,7 +305,7 @@ public class Context extends GenericResource implements ContextInterface {
      * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #getRelsExt()
      */
-    public final Datastream getDc() throws StreamNotFoundException,
+    public Datastream getDc() throws StreamNotFoundException,
         FedoraSystemException {
         if (this.dc == null) {
             this.dc = new Datastream("DC", getId(), null);
@@ -318,7 +320,7 @@ public class Context extends GenericResource implements ContextInterface {
      * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    public final void setDc(final Datastream ds) throws StreamNotFoundException,
+    public void setDc(final Datastream ds) throws StreamNotFoundException,
         FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException {
         // check if dc is set, is equal to ds and save to fedora
@@ -332,8 +334,9 @@ public class Context extends GenericResource implements ContextInterface {
         catch (final StreamNotFoundException e) {
             // An item have to have a RELS-EXT datastream
             throw new StreamNotFoundException("No DC for context " + getId()
-                + '.', e);
+                + ".", e);
         }
+        // getSomeValuesFromFedora();
     }
 
     /*
@@ -350,7 +353,7 @@ public class Context extends GenericResource implements ContextInterface {
             new HashMap<String, Datastream>();
         final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
-        final Collection<String> names = new ArrayList<String>();
+        final List<String> names = new ArrayList<String>();
 
         for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             final String[] altIDs = datastream.getAltIDs();
@@ -370,8 +373,8 @@ public class Context extends GenericResource implements ContextInterface {
             } catch (final StreamNotFoundException e) {
                 final String message =
                         "Admin-descriptor \"" + dsNname
-                                + "\" not found for Context " + getId() + '.';
-                LOGGER.error(message, e);
+                                + "\" not found for Context " + getId() + ".";
+                log.error(message, e);
                 throw new IntegritySystemException(message, e);
             }
 
@@ -386,10 +389,21 @@ public class Context extends GenericResource implements ContextInterface {
      * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #getAdminDescriptor(java.lang.String)
      */
-    public final Datastream getAdminDescriptor(final String adminDescriptorName)
+    public Datastream getAdminDescriptor(final String adminDescriptorName)
         throws FedoraSystemException {
 
-        return getAdminDescriptorsMap().get(adminDescriptorName);
+        final Map<String, Datastream> admDescs = getAdminDescriptorsMap();
+        final Iterator<String> it = admDescs.keySet().iterator();
+
+        String dsName = null;
+        while (it.hasNext()) {
+            dsName = it.next();
+            if (dsName.equals(adminDescriptorName)) {
+                break;
+            }
+        }
+
+        return (admDescs.get(dsName));
     }
 
     /*
@@ -400,7 +414,7 @@ public class Context extends GenericResource implements ContextInterface {
      * #setAdminDescriptor(de.escidoc.core.common.business.fedora.datastream.
      * Datastream)
      */
-    public final void setAdminDescriptor(final Datastream ds)
+    public void setAdminDescriptor(final Datastream ds)
         throws FedoraSystemException, WebserverSystemException {
 
         // TODO never reached by create, therefore no persist is needed. Correct
@@ -417,10 +431,10 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws FedoraSystemException
      *             Thrown if retrieve of datastreams fail.
      */
-    public final Map<String, Datastream> getAdminDescriptorsMap()
+    public Map<String, Datastream> getAdminDescriptorsMap()
         throws FedoraSystemException {
 
-        final Collection<String> dsNames =
+        final List<String> dsNames =
             getFedoraUtility()
                 .getDatastreamNamesByAltId(
                     getId(),
@@ -435,8 +449,8 @@ public class Context extends GenericResource implements ContextInterface {
                             new Datastream(dsName, getId(), null);
                     this.adminDescriptors.put(dsName, newDs);
                 } catch (final StreamNotFoundException e) {
-                    LOGGER.error("AdminDescriptor \"" + dsName
-                            + "\" not found for Context " + getId() + '.', e);
+                    log.error("AdminDescriptor \"" + dsName
+                            + "\" not found for Context " + getId() + ".", e);
                 }
             }
         }
@@ -480,7 +494,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws SystemException
      *             If anything fails.
      */
-    public final String getModifiedBy() throws SystemException {
+    public String getModifiedBy() throws SystemException {
         return getResourceProperties().get(
             PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
     }
@@ -494,7 +508,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws WebserverSystemException
      *             If anything fails.
      */
-    public final List<String> getOrganizationalUnitObjids()
+    public List<String> getOrganizationalUnitObjids()
         throws TripleStoreSystemException, WebserverSystemException {
         return (TripleStoreUtility.getInstance().getPropertiesElementsVector(
             getId(), TripleStoreUtility.PROP_ORGANIZATIONAL_UNIT));
@@ -507,10 +521,10 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws SystemException
      *             If anythings fails.
      */
-    public Collection<String> getOrganizationalUnitHrefs() throws SystemException {
+    public List<String> getOrganizationalUnitHrefs() throws SystemException {
         final String path = "/oum/organizational-unit/";
         final List<String> propVals = getOrganizationalUnitObjids();
-        final Collection<String> ouHrefs = new ArrayList<String>(propVals.size());
+        final List<String> ouHrefs = new ArrayList<String>(propVals.size());
         
         for (String s : propVals) {
             ouHrefs.add(path + s);
@@ -548,8 +562,8 @@ public class Context extends GenericResource implements ContextInterface {
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private static Collection<String> expandPropertiesNames(
-            final Collection<String> propertiesNames) {
+    private Collection<String> expandPropertiesNames(
+        final Collection<String> propertiesNames) {
 
         Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
@@ -576,8 +590,8 @@ public class Context extends GenericResource implements ContextInterface {
      *            internal key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
-    private static Map<String, String> expandPropertiesNamesMapping(
-            final Map<String, String> propertiesMapping) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesMapping) {
 
         Map<String, String> newPropertiesNames;
         if (propertiesMapping != null) {
@@ -599,7 +613,7 @@ public class Context extends GenericResource implements ContextInterface {
      * 
      * @return true if Organizational Unit was updated. False otherwise.
      */
-    public final boolean isOuUpdated() {
+    public boolean isOuUpdated() {
         return this.ouUpdated;
     }
 

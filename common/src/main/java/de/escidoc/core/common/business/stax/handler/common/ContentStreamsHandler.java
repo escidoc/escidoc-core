@@ -84,7 +84,7 @@ public class ContentStreamsHandler extends DefaultHandler {
     public ContentStreamsHandler(final StaxParser parser) {
         this.parser = parser;
         this.xpathContentStream =
-            this.xpathContentStreams + '/' + Elements.ELEMENT_CONTENT_STREAM;
+            this.xpathContentStreams + "/" + Elements.ELEMENT_CONTENT_STREAM;
     }
 
     /**
@@ -97,7 +97,7 @@ public class ContentStreamsHandler extends DefaultHandler {
         final String xpathContentStreams) {
         this.xpathContentStreams = xpathContentStreams;
         this.xpathContentStream =
-            this.xpathContentStreams + '/' + Elements.ELEMENT_CONTENT_STREAM;
+            this.xpathContentStreams + "/" + Elements.ELEMENT_CONTENT_STREAM;
         this.parser = parser;
     }
 
@@ -114,7 +114,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * @throws IOException
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws InvalidContentException, MissingAttributeValueException,
         WebserverSystemException {
 
@@ -147,7 +147,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * @throws UnsupportedEncodingException
      */
     @Override
-    public final EndElement endElement(final EndElement element)
+    public EndElement endElement(final EndElement element)
         throws WebserverSystemException, InvalidContentException {
 
         String currentPath = parser.getCurPath();
@@ -185,7 +185,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * 
      */
     @Override
-    public final String characters(final String s, final StartElement element)
+    public String characters(final String s, final StartElement element)
         throws InvalidContentException, MissingElementValueException,
         WebserverSystemException {
 
@@ -201,7 +201,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * 
      * @return Vector with all ContentStreams.
      */
-    public final List<ContentStreamCreate> getContentStreams() {
+    public List<ContentStreamCreate> getContentStreams() {
 
         return this.contentStreams;
     }

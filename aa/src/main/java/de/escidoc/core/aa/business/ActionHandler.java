@@ -203,7 +203,7 @@ public class ActionHandler implements ActionHandlerInterface {
      *             Thrown in case of any other failure.
      * @aa
      */
-    private static ByteArrayInputStream validateUnsecuredActions(final String xmlData)
+    private ByteArrayInputStream validateUnsecuredActions(final String xmlData)
         throws XmlCorruptedException, WebserverSystemException,
         XmlSchemaValidationException {
 

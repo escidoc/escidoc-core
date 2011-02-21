@@ -39,7 +39,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.joda.time.DateTime;
 
 import javax.naming.directory.NoSuchAttributeException;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -183,19 +182,19 @@ public class TaskParamHandler extends DefaultHandler {
     public String characters(final String data, final StartElement element) {
         String curPath = parser.getCurPath();
 
-        if (curPath.equals(PARAM_PATH + '/'
+        if (curPath.equals(PARAM_PATH + "/"
             + Elements.ELEMENT_PARAM_WITHDRAW_COMMENT)) {
             this.withdrawComment = data;
         }
-        else if (curPath.equals(PARAM_PATH + '/'
+        else if (curPath.equals(PARAM_PATH + "/"
             + Elements.ELEMENT_PARAM_REVOKATION_REMARK)) {
             this.revokationRemark = data;
         }
-        else if (curPath.equals(PARAM_PATH + '/'
+        else if (curPath.equals(PARAM_PATH + "/"
             + Elements.ELEMENT_PARAM_COMMENT)) {
             this.comment = data;
         }
-        else if (curPath.equals(PARAM_PATH + '/'
+        else if (curPath.equals(PARAM_PATH + "/"
             + Elements.ELEMENT_PARAM_FORMAT)) {
             this.format = data;
         }
@@ -221,7 +220,7 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return The keep in sync value used for AdminHandler.deleteObjects()
      */
-    public final boolean getKeepInSync() {
+    public boolean getKeepInSync() {
         return keepInSync;
     }
 
@@ -229,7 +228,7 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return The latest modification date.
      */
-    public final String getLastModificationDate() {
+    public String getLastModificationDate() {
         return lastModificationDate;
     }
 
@@ -238,7 +237,7 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return withdraw comment
      */
-    public final String getWithdrawComment() {
+    public String getWithdrawComment() {
         return withdrawComment;
     }
 
@@ -247,7 +246,7 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return comment.
      */
-    public final String getComment() {
+    public String getComment() {
         return comment;
     }
 
@@ -262,7 +261,7 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return the id list
      */
-    public final Collection<String> getIds() {
+    public List<String> getIds() {
         return ids;
     }
 
@@ -272,15 +271,15 @@ public class TaskParamHandler extends DefaultHandler {
      * @param checkLastModificationDate
      *            the checkLastModificationDate to set
      */
-    public final void setCheckLastModificationDate(
-            final boolean checkLastModificationDate) {
+    public void setCheckLastModificationDate(
+        final boolean checkLastModificationDate) {
         this.checkLastModificationDate = checkLastModificationDate;
     }
 
     /**
      * @return the password
      */
-    public final String getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -296,14 +295,14 @@ public class TaskParamHandler extends DefaultHandler {
      * 
      * @return Value of pid element or null if not provided.
      */
-    public final String getPid() {
+    public String getPid() {
         return this.pid;
     }
 
     /**
      * @return the revokationRemark
      */
-    public final String getRevokationRemark() {
+    public String getRevokationRemark() {
         return revokationRemark;
     }
 }

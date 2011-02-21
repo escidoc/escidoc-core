@@ -51,7 +51,7 @@ public class AdditionalWhereGroupVo {
     /**
      * @return the additionalWhereFieldVos
      */
-    public final Collection<AdditionalWhereFieldVo> getAdditionalWhereFieldVos() {
+    public Collection<AdditionalWhereFieldVo> getAdditionalWhereFieldVos() {
         return additionalWhereFieldVos;
     }
 
@@ -69,7 +69,7 @@ public class AdditionalWhereGroupVo {
      * 
      * @return the alliance
      */
-    public final String getAlliance() {
+    public String getAlliance() {
         return alliance;
     }
 
@@ -92,7 +92,7 @@ public class AdditionalWhereGroupVo {
     /**
      * @return the rootWhereFieldVo
      */
-    public final RootWhereFieldVo getRootWhereFieldVo() {
+    public RootWhereFieldVo getRootWhereFieldVo() {
         return rootWhereFieldVo;
     }
 

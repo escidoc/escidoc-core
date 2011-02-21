@@ -58,20 +58,20 @@ public class ErrorMessageHandler {
      *            name of the logfile error-message has to get written to
      * @common
      */
-    public final void putErrorMessage(final Map<String, String> parameters,
-                                      final Throwable exception, final String logfile) {
+    public void putErrorMessage(final Map<String, String> parameters,
+            final Throwable exception, final String logfile) {
 
         StringBuffer messageBuf = new StringBuffer(DELIMITER);
         
         // put all given parameters into StringBuffer
-        for (Map.Entry<String, String> e : parameters.entrySet()) {
-            messageBuf.append(e.getKey()).append(": ").append(e.getValue())
-                    .append('\n');
+        for (String key : parameters.keySet()) {
+            messageBuf.append(key).append(": ").append(parameters.get(key))
+                    .append("\n");
         }
 
         //put error-message into StringBuffer
         messageBuf.append("error: ").append(getStackTrace(exception)).append(
-                '\n');
+                "\n");
         
         //write StringBuffer into logfile
         errorLogger = new AppLogger(logfile);
@@ -88,14 +88,14 @@ public class ErrorMessageHandler {
      * @return String Stack Trace
      * @common
      */
-    private static String getStackTrace(final Throwable e) {
-        StringBuilder stack = new StringBuilder("");
+    private String getStackTrace(final Throwable e) {
+        StringBuffer stack = new StringBuffer("");
         if (e != null) {
-            stack.append(e.getMessage()).append('\n');
+            stack.append(e.getMessage()).append("\n");
             StackTraceElement[] stackElements = e.getStackTrace();
             if (stackElements != null && stackElements.length > 0
                     && stackElements[0] != null) {
-                stack.append(stackElements[0].toString()).append('\n');
+                stack.append(stackElements[0].toString()).append("\n");
             }
             if (e.getCause() != null) {
                 stack.append("Caused by:\n");

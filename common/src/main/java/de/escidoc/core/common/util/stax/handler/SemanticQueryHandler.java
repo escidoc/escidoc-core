@@ -47,7 +47,7 @@ public class SemanticQueryHandler extends DefaultHandler {
 
     private String format = null;
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(SemanticQueryHandler.class.getName());
 
     public String characters(String data, StartElement element)
@@ -58,7 +58,7 @@ public class SemanticQueryHandler extends DefaultHandler {
                 String message =
                     "The value of the element " + element.getLocalName()
                         + " is missing.";
-                LOGGER.error(message);
+                log.error(message);
                 throw new MissingElementValueException(message);
             }
             this.query =
@@ -74,7 +74,7 @@ public class SemanticQueryHandler extends DefaultHandler {
                 String message =
                     "The value of the element " + element.getLocalName()
                         + " is missing.";
-                LOGGER.error(message);
+                log.error(message);
                 throw new MissingElementValueException(message);
             }
             this.format = data;
@@ -88,7 +88,7 @@ public class SemanticQueryHandler extends DefaultHandler {
      * 
      * @return the format of triple store request
      */
-    public final String getFormat() {
+    public String getFormat() {
         return this.format;
     }
 
@@ -96,7 +96,7 @@ public class SemanticQueryHandler extends DefaultHandler {
      * 
      * @return the query
      */
-    public final String getQuery() {
+    public String getQuery() {
         return this.query;
     }
 
@@ -110,7 +110,7 @@ public class SemanticQueryHandler extends DefaultHandler {
     /**
      * @return the query predicate part
      */
-    public final String getPredicate() {
+    public String getPredicate() {
         return predicate;
     }
 

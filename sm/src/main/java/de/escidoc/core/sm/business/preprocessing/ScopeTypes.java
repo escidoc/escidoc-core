@@ -53,7 +53,7 @@ public enum ScopeTypes {
 
     private final String value;
 
-    private ScopeTypes(String v) {
+    ScopeTypes(String v) {
         value = v;
     }
 

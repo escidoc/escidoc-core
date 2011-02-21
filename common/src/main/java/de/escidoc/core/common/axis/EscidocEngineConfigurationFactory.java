@@ -99,7 +99,7 @@ public class EscidocEngineConfigurationFactory
 
         String path = "";
         if (param != null) {
-            path = param.getServletContext().getRealPath("/WEB-INF") + '/';
+            path = param.getServletContext().getRealPath("/WEB-INF") + "/";
         }
         clientConfigFile =
             path
@@ -117,7 +117,7 @@ public class EscidocEngineConfigurationFactory
      * 
      * @return a client EngineConfiguration
      */
-    public final EngineConfiguration getClientEngineConfig() {
+    public EngineConfiguration getClientEngineConfig() {
 
         return new FileProvider(clientConfigFile);
     }
@@ -127,7 +127,7 @@ public class EscidocEngineConfigurationFactory
      * 
      * @return a server EngineConfiguration
      */
-    public final EngineConfiguration getServerEngineConfig() {
+    public EngineConfiguration getServerEngineConfig() {
 
         return new FileProvider(serverConfigFile);
     }

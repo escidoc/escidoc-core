@@ -1,0 +1,18 @@
+#parse("common/macros.vm")<${roleListNamespacePrefix}:role-list
+	#virtualResourceRoot(	${roleListNamespacePrefix} ${roleListNamespace} ${roleListTitle})>
+#foreach($role in $roles)
+#set( $roleName = ${role.roleName} )
+#set( $roleHref = ${role.roleHref} )
+#set( $CREATION_DATE = ${role.CREATION_DATE} )
+#set( $roleCreatedByTitle = ${role.roleCreatedByTitle} )
+#set( $roleCreatedByHref = ${role.roleCreatedByHref} )
+#set( $LAST_MODIFICATION_DATE = ${role.LAST_MODIFICATION_DATE} )
+#set( $roleModifiedByTitle = ${role.roleModifiedByTitle} )
+#set( $roleModifiedByHref = ${role.roleModifiedByHref} )
+#set( $DESCRIPTION = ${role.DESCRIPTION} )
+#set( $roleIsLimited = ${role.roleIsLimited} )
+#set( $roleScopeDefs = ${role.roleScopeDefs} )
+#set( $policy = ${role.policy} )
+#parse("role/rest/role.vm")
+#end
+</${roleListNamespacePrefix}:role-list>

@@ -32,7 +32,6 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -103,7 +102,7 @@ public class FedoraContentRelationHandler extends HandlerBase
     private static final AppLogger log = new AppLogger(
         FedoraContentRelationHandler.class.getName());
 
-    private final Collection<ResourceListener> contentRelationListeners =
+    private final List<ResourceListener> contentRelationListeners =
         new ArrayList<ResourceListener>();
 
     private PIDSystemFactory pidGenFactory = null;
@@ -192,7 +191,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             If case of internal error.
      */
-    public final String retrieveContentRelations(final SRURequestParameters parameters)
+    public String retrieveContentRelations(final SRURequestParameters parameters)
         throws SystemException {
         StringWriter result = new StringWriter();
 
@@ -403,7 +402,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @param indexingHandler
      *            The indexing handler.
      */
-    public void setIndexingHandler(final ResourceListener indexingHandler) {
+    public void setIndexingHandler(final IndexingHandler indexingHandler) {
         addContentRelationListener(indexingHandler);
     }
 
@@ -533,7 +532,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @param listener
      *            listener which will be added to the list
      */
-    final void addContentRelationListener(final ResourceListener listener) {
+    public void addContentRelationListener(final ResourceListener listener) {
         contentRelationListeners.add(listener);
     }
 
@@ -845,7 +844,11 @@ public class FedoraContentRelationHandler extends HandlerBase
             // get PID from external PID System
             pid = getPid(id, taskParam);
         }
+        // else if (!cr.validPidStructure(pid)) {
+        // throw new InvalidXmlException("Empty pid element of taskParam.");
+        // }
         cr.getProperties().setPid(pid);
+        // updateRelsExt();
         cr.persist();
         return (prepareResponse(cr, pid));
     }
@@ -895,7 +898,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws WebserverSystemException
      *             Thrown by assignPid().
      */
-    final String getPid(final String id, final String param)
+    public String getPid(final String id, final String param)
         throws PidSystemException, MissingMethodParameterException,
         WebserverSystemException {
 
@@ -938,7 +941,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    final ContentRelationCreate setContentRelation(final String id)
+    protected ContentRelationCreate setContentRelation(final String id)
         throws ContentRelationNotFoundException, SystemException {
 
         ContentRelationCreate cr = new ContentRelationCreate();
@@ -1010,7 +1013,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws InvalidStatusException
      *             Thrown if object is not in status released.
      */
-    private static void checkReleased(final ContentRelationCreate cr)
+    private void checkReleased(final ContentRelationCreate cr)
         throws InvalidStatusException {
 
         StatusType status = cr.getProperties().getStatus();
@@ -1035,7 +1038,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      *             Thrown if resource with provided id could not be found in
      *             Fedora repository.
      */
-    private static void setRelsExtValues(final ContentRelationCreate cr)
+    private void setRelsExtValues(final ContentRelationCreate cr)
         throws SystemException, ContentRelationNotFoundException {
 
         // retrieve resource with id from Fedora
@@ -1255,7 +1258,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @return the int value of the position in the array and -1 if the values
      *         is not in the array
      */
-    private static int contains(final String[] array, final String value) {
+    private int contains(final String[] array, final String value) {
 
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(value)) {
@@ -1277,7 +1280,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws RelationPredicateNotFoundException
      *             Thrown if the predicate is not registered.
      */
-    private static void checkRelationType(final URI predicate)
+    private void checkRelationType(final URI predicate)
         throws InvalidContentException, WebserverSystemException,
         RelationPredicateNotFoundException {
         if (!ContentRelationsUtility.validPredicate(predicate)) {
@@ -1306,7 +1309,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown if internal error occur
      */
-    private static ContentRelationCreate parseContentRelation(final String xml)
+    private ContentRelationCreate parseContentRelation(final String xml)
         throws MissingAttributeValueException, InvalidXmlException,
         InvalidContentException, SystemException {
 
@@ -1353,7 +1356,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws WebserverSystemException
      *             Thrown if access to repository (Feodra) failed.
      */
-    private static void enrichWithMetadataContent(final ContentRelationCreate cr)
+    private void enrichWithMetadataContent(final ContentRelationCreate cr)
         throws WebserverSystemException {
 
         List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
@@ -1438,7 +1441,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      *             Thrown if the current status of the ContentRelation is
      *             invalid to change to submitted.
      */
-    private static void validateToSubmitStatus(final ContentRelationCreate cr)
+    private void validateToSubmitStatus(final ContentRelationCreate cr)
         throws InvalidStatusException {
 
         /*
@@ -1581,7 +1584,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             An internal error occurred.
      */
-    private static String getAlternateForm(final ContentRelationCreate cr)
+    private String getAlternateForm(final ContentRelationCreate cr)
         throws SystemException {
         String result = null;
         boolean isRestAccess = UserContext.isRestAccess();

@@ -85,8 +85,8 @@ public class XacmlFunctionContains extends FunctionBase {
      * @see com.sun.xacml.cond.Function#evaluate(java.util.List,
      *      com.sun.xacml.EvaluationCtx)
      */
-    public final EvaluationResult evaluate(
-            final List inputs, final EvaluationCtx context) {
+    public EvaluationResult evaluate(
+        final List inputs, final EvaluationCtx context) {
 
         AttributeValue[] argValues = new AttributeValue[inputs.size()];
         EvaluationResult result = evalArgs(inputs, context, argValues);

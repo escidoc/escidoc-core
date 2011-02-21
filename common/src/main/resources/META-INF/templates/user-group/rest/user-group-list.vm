@@ -1,0 +1,22 @@
+#parse("common/macros.vm")
+<${userGroupListNamespacePrefix}:user-group-list #virtualResourceRoot(	${userGroupListNamespacePrefix} ${userGroupListNamespace} ${userGroupListTitle}) #namespaceDecl(${userGroupNamespacePrefix} ${userGroupNamespace}) #namespaceDecl(${escidocPropertiesNamespacePrefix} ${escidocPropertiesNamespace}) #namespaceDecl(${structuralRelationsNamespacePrefix} ${structuralRelationsNamespace})>
+#foreach($userGroup in $userGroups)
+    #set( $userGroupName = ${userGroup.userGroupName} )
+    #set( $userGroupHref = ${userGroup.userGroupHref} )
+    #set( $userGroupLastModificationDate = ${userGroup.userGroupLastModificationDate} )
+    #set( $userGroupCreationDate = ${userGroup.userGroupCreationDate} )
+    #set( $userGroupCreatedByTitle = ${userGroup.userGroupCreatedByTitle} )
+    #set( $userGroupCreatedByHref = ${userGroup.userGroupCreatedByHref} )
+    #set( $userGroupModifiedByTitle = ${userGroup.userGroupModifiedByTitle} )
+    #set( $userGroupModifiedByHref = ${userGroup.userGroupModifiedByHref} )
+    #set( $userGroupEmail = ${userGroup.userGroupEmail} )
+    #set( $userGroupLabel = ${userGroup.userGroupLabel} )
+    #set( $userGroupDescription = ${userGroup.userGroupDescription} )
+    #set( $userGroupActive = ${userGroup.userGroupActive} )
+    #set( $userGroupSelectors = ${userGroup.userGroupSelectors} )
+    #set( $userGroupType = ${userGroup.userGroupType} )
+    #set( $resourcesHref = ${userGroup.resourcesHref} )
+    #set( $currentGrantsHref = ${userGroup.currentGrantsHref} )
+    #parse("user-group/rest/user-group.vm")
+#end
+</${userGroupListNamespacePrefix}:user-group-list>

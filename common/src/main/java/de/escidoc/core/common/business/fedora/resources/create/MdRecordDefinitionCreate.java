@@ -84,10 +84,10 @@ public class MdRecordDefinitionCreate {
      * @throws MissingAttributeValueException
      *             Thrown if name is an empty String.
      */
-    public final void setName(final String name)
+    public void setName(final String name)
         throws MissingAttributeValueException {
 
-        if ((name == null) || name.length() == 0) {
+        if ((name == null) || name.equals("")) {
             final String errorMsg = "the value of the" +
                     " \"name\" atribute of the element 'name' is missing";
             LOG.debug(errorMsg);
@@ -102,7 +102,7 @@ public class MdRecordDefinitionCreate {
      * 
      * @return name of metadata record.
      */
-    public final String getName() {
+    public String getName() {
 
         return this.mdRecordDefinitionName;
     }
@@ -118,7 +118,7 @@ public class MdRecordDefinitionCreate {
      *             If the eSciDoc configuration file can not be read. FIXME
      *             should probably not be thrown so late.
      */
-    public final void setSchemaHref(final String schemaHref)
+    public void setSchemaHref(final String schemaHref)
         throws MalformedURLException, IOException {
         URL url;
         if (schemaHref.startsWith("/")) {
@@ -143,7 +143,7 @@ public class MdRecordDefinitionCreate {
      * 
      * @return XML SchemaHref URL
      */
-    public final String getSchemaHref() {
+    public String getSchemaHref() {
 
         return this.schemaHref;
     }
@@ -165,7 +165,7 @@ public class MdRecordDefinitionCreate {
      * 
      * @return Content of MdRecord.
      */
-    final ByteArrayOutputStream getMdRecordDefinition() {
+    public ByteArrayOutputStream getMdRecordDefinition() {
 
         if (this.mdRecordDefinition == null) {
             this.mdRecordDefinition = new ByteArrayOutputStream();
@@ -194,9 +194,9 @@ public class MdRecordDefinitionCreate {
      * @throws SystemException
      *             Thrown if character encoding failed.
      */
-    final Map<String, String> getValueMap() throws SystemException {
+    public Map<String, String> getValueMap() throws SystemException {
 
-        Map<String, String> templateValues = new HashMap<String, String>();
+        HashMap<String, String> templateValues = new HashMap<String, String>();
 
         templateValues.put(XmlTemplateProvider.MD_RECORD_TYPE, this.type);
         templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA,

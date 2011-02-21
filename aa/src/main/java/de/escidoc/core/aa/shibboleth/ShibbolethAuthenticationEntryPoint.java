@@ -48,17 +48,17 @@ public class ShibbolethAuthenticationEntryPoint
 
     private String sessionInitiatorPath = null;
 
-    public final void commence(
-            final ServletRequest request, final ServletResponse response,
-            final AuthenticationException authException) throws IOException,
+    public void commence(
+        final ServletRequest request, final ServletResponse response,
+        final AuthenticationException authException) throws IOException,
         ServletException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         // FIXME:URL!!!
-        final StringBuilder target = new StringBuilder(serviceProviderBaseUrl).append("aa/login");
+        final StringBuffer target = new StringBuffer(serviceProviderBaseUrl).append("aa/login");
 
         final String queryString = httpRequest.getQueryString();
         if (queryString != null) {
-            target.append('?');
+            target.append("?");
             target.append(queryString);
         }
         final String redirectUrl;
@@ -96,7 +96,7 @@ public class ShibbolethAuthenticationEntryPoint
             this.serviceProviderBaseUrl = serviceProviderBaseUrl;
         }
         else {
-            this.serviceProviderBaseUrl = serviceProviderBaseUrl + '/';
+            this.serviceProviderBaseUrl = serviceProviderBaseUrl + "/";
         }
     }
 

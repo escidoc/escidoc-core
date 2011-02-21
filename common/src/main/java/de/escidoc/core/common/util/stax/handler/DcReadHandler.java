@@ -69,12 +69,18 @@ public class DcReadHandler extends DefaultHandler {
         String theName = element.getLocalName();
 
         // organizational-unit
-        if (curPath.equals(DC_PATH + '/' + Elements.ELEMENT_DC_TITLE)) {
+        if (curPath.equals(DC_PATH + "/" + Elements.ELEMENT_DC_TITLE)) {
             if (data.length() == 0) {
+                // logger.error("the value of" + " of the element " + theName
+                // + " is missing");
+                // throw new IntegritySystemException(
+                // "the value of the dc data stream element " + theName
+                // + " is missing");
                 properties.put(Elements.ELEMENT_DC_TITLE, "");
                 properties.put(TripleStoreUtility.PROP_DC_TITLE, "");
             }
             else {
+                // propertiesMap.put(theName, data);
                 properties.put(Elements.ELEMENT_DC_TITLE, data);
                 properties.put(TripleStoreUtility.PROP_DC_TITLE, data);
             }
@@ -88,6 +94,7 @@ public class DcReadHandler extends DefaultHandler {
                 properties.put(TripleStoreUtility.PROP_DC_DESCRIPTION, "");
             }
             else {
+                // propertiesMap.put(theName, data);
                 properties.put(Elements.ELEMENT_DESCRIPTION, data);
                 properties.put(TripleStoreUtility.PROP_DC_DESCRIPTION, data);
             }
@@ -101,7 +108,7 @@ public class DcReadHandler extends DefaultHandler {
      * 
      * @return map of properties without organizational units.
      */
-    public final Map<String, String> getPropertiesMap() {
+    public Map<String, String> getPropertiesMap() {
         return this.properties;
     }
 

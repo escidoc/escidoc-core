@@ -71,7 +71,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
      * 
      * @return The resource definitions.
      */
-    public final Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
+    public Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
         return resourceDefinitions;
     }
 
@@ -108,7 +108,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws MissingAttributeValueException, InvalidContentException,
         WebserverSystemException {
 
@@ -158,7 +158,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
      * @return The character data for further processing.
      */
     @Override
-    public final String characters(final String data, final StartElement element) {
+    public String characters(final String data, final StartElement element) {
 
         String currentPath = parser.getCurPath();
         if (currentPath.equals(this.resourceDefinitionPath + "/md-record-name")) {
@@ -174,7 +174,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
      * 
      * @return The element for further processing.
      */
-    public final EndElement endElement(final EndElement element) {
+    public EndElement endElement(final EndElement element) {
 
         String currentPath = parser.getCurPath();
         if (currentPath.equals(this.resourceDefinitionPath)) {

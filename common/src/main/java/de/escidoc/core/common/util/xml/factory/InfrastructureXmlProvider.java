@@ -49,7 +49,7 @@ public abstract class InfrastructureXmlProvider extends VelocityXmlProvider {
      * 
      * @common
      */
-    InfrastructureXmlProvider() {
+    protected InfrastructureXmlProvider() {
 
     }
 

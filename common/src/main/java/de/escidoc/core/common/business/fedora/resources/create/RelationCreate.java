@@ -78,7 +78,7 @@ public class RelationCreate {
     /**
      * @return the predicateValue
      */
-    public final String getPredicate() {
+    public String getPredicate() {
         return predicate;
     }
 
@@ -93,7 +93,7 @@ public class RelationCreate {
     /**
      * @return the target
      */
-    public final String getTarget() {
+    public String getTarget() {
         return target;
     }
 
@@ -108,7 +108,7 @@ public class RelationCreate {
     /**
      * @return the predicateNs
      */
-    public final String getPredicateNs() {
+    public String getPredicateNs() {
         return predicateNs;
     }
 

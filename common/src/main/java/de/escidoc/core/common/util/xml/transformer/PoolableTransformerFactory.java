@@ -106,7 +106,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      *            The default style sheet url.
      * @common
      */
-    final void setDefaultXsltUrl(final String defaultXsltUrl) {
+    public void setDefaultXsltUrl(final String defaultXsltUrl) {
 
         this.defaultXsltUrl = defaultXsltUrl;
     }
@@ -124,7 +124,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * @see org.apache.commons.pool.BaseKeyedPoolableObjectFactory#makeObject(java.lang.Object)
      */
     @Override
-    public final Object makeObject(final Object key)
+    public Object makeObject(final Object key)
         throws WebserverSystemException, FedoraSystemException {
         if (!(key instanceof String)) {
             throw new UnsupportedOperationException(
@@ -190,7 +190,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
             && !contentModelId.equalsIgnoreCase("null")) {
             // create link to content of DC-MAPPING in content model object
             String dcMappingXsltFedoraUrl =
-                "/get/" + contentModelId + '/'
+                "/get/" + contentModelId + "/"
                     + CONTENT_MODEL_XSLT_DC_DATASTREAM;
             try {
                 xslt =

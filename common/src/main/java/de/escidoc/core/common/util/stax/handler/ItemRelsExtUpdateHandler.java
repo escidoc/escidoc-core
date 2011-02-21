@@ -101,7 +101,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
     }
 
     public StartElement startElement(final StartElement element) {
-        if (!props.isEmpty()) {
+        if (props.size() > 0) {
             String curPath = parser.getCurPath();
             String theKey = element.getLocalName();
             String curElementNamespace = element.getNamespace();
@@ -190,7 +190,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
     public String characters(final String data, final StartElement element) {
 
         String newData = data;
-        if (!props.isEmpty()) {
+        if (props.size() > 0) {
             String curPath = parser.getCurPath();
             String theKey = element.getLocalName();
 
@@ -240,7 +240,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
      * @param path
      *            XPath
      */
-    public final void setPath(final String path) {
+    public void setPath(final String path) {
         this.path = path;
     }
 
@@ -253,7 +253,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
      *            Namespace 2.
      * @return true if both Namespaces are equal, false otherwise.
      */
-    private static boolean compareNS(final String ns1, final String ns2) {
+    private boolean compareNS(final String ns1, final String ns2) {
 
         String curElementNamespace = ns1;
         String replacementElementNamespace = ns2;

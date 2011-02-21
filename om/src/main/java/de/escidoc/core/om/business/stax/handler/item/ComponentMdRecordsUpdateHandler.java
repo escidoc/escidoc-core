@@ -84,7 +84,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
     private final Map<String, Map<String, Map<String, String>>> metadataAttributes =
         new HashMap<String, Map<String, Map<String, String>>>();
 
-    private static final AppLogger LOG =
+    private static final AppLogger log =
         new AppLogger(ComponentMetadataHandler.class.getName());
 
     /**
@@ -158,7 +158,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                 try {
                     name = element.getAttribute(null, "name").getValue();
                     if (name.length() == 0) {
-                        LOG.error("the value of"
+                        log.error("the value of"
                             + " \"name\" atribute of the element " + theName
                             + " is missing");
                         throw new MissingAttributeValueException(
@@ -169,7 +169,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                     }
                 }
                 catch (NoSuchAttributeException e) {
-                    LOG.debug(e);
+                    log.debug(e);
                 }
                 isInside = true;
 
@@ -188,7 +188,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                     schemaValue = schema.getValue();
                 }
 
-                Map<String, String> md = new HashMap<String, String>();
+                HashMap<String, String> md = new HashMap<String, String>();
                 if (typeValue != null) {
                     md.put("type", typeValue);
                 }
@@ -243,14 +243,14 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
      * 
      * @return Attributes of md-record element.
      */
-    public final Map<String, Map<String, Map<String, String>>> getMetadataAttributes() {
+    public Map<String, Map<String, Map<String, String>>> getMetadataAttributes() {
         return metadataAttributes;
     }
 
     /**
      * @return Returns a map with a namespaces.
      */
-    public final Map<String, String> getNamespacesMap() {
+    public Map<String, String> getNamespacesMap() {
         return this.escidocMdNamespacesMap;
     }
 }

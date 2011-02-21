@@ -35,7 +35,7 @@ public class InitBeansServlet extends HttpServlet {
      * @see javax.servlet.GenericServlet#init()
      */
     @Override
-    public final void init() throws ServletException {
+    public void init() throws ServletException {
 
         super.init();
 
@@ -64,7 +64,7 @@ public class InitBeansServlet extends HttpServlet {
      * @see javax.servlet.GenericServlet#destroy()
      */
     @Override
-    public final void destroy() {
+    public void destroy() {
 
         super.destroy();
     }

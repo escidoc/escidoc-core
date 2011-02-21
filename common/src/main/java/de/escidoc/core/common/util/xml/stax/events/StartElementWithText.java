@@ -34,7 +34,7 @@ public class StartElementWithText extends StartElement {
 
     private String elementText;
 
-    StartElementWithText() {
+    public StartElementWithText() {
         super();
         this.elementText = null;
     }
@@ -61,11 +61,11 @@ public class StartElementWithText extends StartElement {
         this.elementText = elementText;
     }
 
-    public final String getElementText() {
+    public String getElementText() {
         return elementText;
     }
 
-    public final void setElementText(String elementText) {
+    public void setElementText(String elementText) {
         this.elementText = elementText;
     }
 

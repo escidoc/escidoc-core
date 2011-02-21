@@ -50,7 +50,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,9 +57,9 @@ import java.util.Vector;
 
 public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
-    private static final String CONTAINER = "/container";
+    public static final String CONTAINER = "/container";
 
-    private static final AppLogger LOGGER = new AppLogger(ContentRelationsCreateHandler2Edition.class.getName());
+    private static final AppLogger LOG = new AppLogger(ContentRelationsCreateHandler2Edition.class.getName());
 
     private final StaxParser parser;
 
@@ -77,7 +76,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
     private final List<Map<String, String>> relationsData =
         new ArrayList<Map<String, String>>();
 
-    private final Collection<String> relationsDataCheck = new ArrayList<String>();
+    private final List<String> relationsDataCheck = new ArrayList<String>();
 
     /**
      * Instantiate a ContentRelationsCreateHandler.
@@ -135,7 +134,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                         "The value of attribute 'xlink:href' of "
                             + " the element '" + theName
                             + "' may not be an empty string";
-                    LOGGER.error(message);
+                    LOG.error(message);
                     throw new InvalidContentException(message);
                 }
             }
@@ -146,7 +145,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                     String message =
                         "The value of attribute 'objid' of " + " the element '"
                             + theName + "' may not be an empty string";
-                    LOGGER.error(message);
+                    LOG.error(message);
                     throw new InvalidContentException(message);
                 }
             }
@@ -156,7 +155,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             predicate = element.getAttribute(indexOfPredicate).getValue();
             if (!ContentRelationsUtility.validPredicate(predicate)) {
                 String message = "Predicate " + predicate + " is wrong. ";
-                LOGGER.error(message);
+                LOG.error(message);
                 throw new RelationPredicateNotFoundException(message);
             }
         }
@@ -178,7 +177,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             String relationDataCheck = predicate + "###" + targetId;
             if (!relationsDataCheck.contains(relationDataCheck)) {
                 relationsDataCheck.add(relationDataCheck);
-                Map<String, String> relationData =
+                HashMap<String, String> relationData =
                     new HashMap<String, String>();
                 relationsData.add(relationData);
                 int index = predicate.lastIndexOf('#');
@@ -198,7 +197,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
     /**
      * @return Returns the title.
      */
-    public final List<Map<String, String>> getContentRelationsData() {
+    public List<Map<String, String>> getContentRelationsData() {
         return relationsData;
     }
 
@@ -222,7 +221,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                 "A relation target may not be referenced by an "
                     + " identifier containing a version number. Use a floating "
                     + "identifier like 'escidoc:123' to reference a target";
-            LOGGER.error(message);
+            LOG.error(message);
             throw new InvalidContentException(message);
         }
 
@@ -233,7 +232,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             String message =
                 "Related " + targetObjectType + " with id " + targetId
                     + " does not exist.";
-            LOGGER.error(message);
+            LOG.error(message);
             throw new ReferencedResourceNotFoundException(message);
         }
 
@@ -244,7 +243,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                     + "A object with id " + targetId
                     + " is neither 'item' nor 'container' ";
 
-            LOGGER.error(message);
+            LOG.error(message);
             throw new InvalidContentException(message);
         }
         if (href != null) {
@@ -255,7 +254,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                     "The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
                         + "/ir/item/" + targetId;
-                LOGGER.error(message);
+                LOG.error(message);
                 throw new InvalidContentException(message);
 
             }
@@ -266,7 +265,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                     "The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
                         + "/ir/container/" + targetId;
-                LOGGER.error(message);
+                LOG.error(message);
                 throw new InvalidContentException(message);
 
             }

@@ -95,9 +95,9 @@ public class ConditionParser {
          *
          * @return string representation of this object
          */
-        public final String toString() {
+        public String toString() {
             return "[operation=" + operation + ", operand1=" + operand1
-                + ",operand2=" + operand2 + ']';
+                + ",operand2=" + operand2 + "]";
         }
     }
 
@@ -227,8 +227,8 @@ public class ConditionParser {
      * 
      * @return SQL fragment representing the XACML condition
      */
-    public final String parse(final Apply condition) {
-        StringBuilder result = new StringBuilder();
+    public String parse(final Apply condition) {
+        StringBuffer result = new StringBuffer();
         Function function = parseApply(condition);
 
         if (function != null) {

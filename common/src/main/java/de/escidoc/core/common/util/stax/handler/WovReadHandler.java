@@ -120,7 +120,7 @@ public class WovReadHandler extends DefaultHandler {
      * 
      * @return version data
      */
-    public final Map<String, String> getVersionData() {
+    public Map<String, String> getVersionData() {
         return this.versionData;
     }
 
@@ -134,7 +134,7 @@ public class WovReadHandler extends DefaultHandler {
                 if (versionId != null) {
 
                     String objectId = getObjId(element);
-                    if (objectId.endsWith(':' + versionId)) {
+                    if (objectId.endsWith(":" + versionId)) {
                         inCertainVersion = true;
                         try {
                             this.versionCreatedDate =
@@ -360,7 +360,7 @@ public class WovReadHandler extends DefaultHandler {
      * @throws IntegritySystemException
      *             Thrown if href attribute is missing.
      */
-    private static String getObjId(final StartElement element)
+    private String getObjId(final StartElement element)
         throws IntegritySystemException {
         Attribute objectId;
         try {

@@ -46,9 +46,9 @@ public class OrganizationalUnitHasChildrenException
      */
     private static final long serialVersionUID = -1573670027831544615L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE =
         "Organizational Unit has children.";
 
     /**

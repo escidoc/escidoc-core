@@ -162,7 +162,7 @@ public class Examples {
                 XPath xpath = XPathFactory.newInstance().newXPath();
 
                 result =
-                    xpath.evaluate('/' + type.getLabel()
+                    xpath.evaluate("/" + type.getLabel()
                         + "/@last-modification-date", xmlDom);
             }
             finally {
@@ -203,7 +203,7 @@ public class Examples {
                 XPath xpath = XPathFactory.newInstance().newXPath();
                 String href =
                     xpath.evaluate(
-                            '/' + type.getLabel() + "/@href|/" + type.getLabel()
+                        "/" + type.getLabel() + "/@href|/" + type.getLabel()
                             + "/@objid", xmlDom);
 
                 result = href.substring(href.lastIndexOf('/') + 1);
@@ -229,8 +229,8 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    public final String load(final String directory) throws Exception {
-        StringBuilder result = new StringBuilder();
+    public String load(final String directory) throws Exception {
+        StringBuffer result = new StringBuffer();
         String ouId = loadOrganizationalUnit(loadFile(directory + EXAMPLE_OU));
 
         result.append(createMessage("created " + ResourceType.OU.getLabel()
@@ -278,8 +278,8 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private static String loadContainer(
-            final String xml, final String contextId, final String contentModelId)
+    private String loadContainer(
+        final String xml, final String contextId, final String contentModelId)
         throws Exception {
         String result = null;
         ContainerHandlerInterface handler =
@@ -303,7 +303,7 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private static String loadContentModel(final String xml) throws Exception {
+    private String loadContentModel(final String xml) throws Exception {
         String result = null;
         ContentModelHandlerInterface handler =
             BeanLocator.locateContentModelHandler();
@@ -327,7 +327,7 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private static String loadContext(final String xml, final String ouId)
+    private String loadContext(final String xml, final String ouId)
         throws Exception {
         String result = null;
         ContextHandlerInterface handler = BeanLocator.locateContextHandler();
@@ -376,9 +376,9 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private static String loadItem(
-            final String xml, final String contextId, final String contentModelId,
-            final String containerId) throws Exception {
+    private String loadItem(
+        final String xml, final String contextId, final String contentModelId,
+        final String containerId) throws Exception {
         String result = null;
         ContainerHandlerInterface containerHandler =
             BeanLocator.locateContainerHandler();
@@ -420,7 +420,7 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private static String loadOrganizationalUnit(final String xml) throws Exception {
+    private String loadOrganizationalUnit(final String xml) throws Exception {
         String result = null;
         OrganizationalUnitHandlerInterface handler =
             BeanLocator.locateOrganizationalUnitHandler();

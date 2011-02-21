@@ -38,7 +38,6 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -48,11 +47,11 @@ import java.util.regex.Pattern;
 
 public class FilterHandler extends DefaultHandler {
 
-    private static final String XPATH_ORDER_BY = '/' + XmlUtility.NAME_PARAM
-        + '/' + XmlUtility.NAME_ORDER_BY;
+    private static final String XPATH_ORDER_BY = "/" + XmlUtility.NAME_PARAM
+        + "/" + XmlUtility.NAME_ORDER_BY;
 
-    private static final String XPATH_FILTER = '/' + XmlUtility.NAME_PARAM
-        + '/' + XmlUtility.NAME_FILTER;
+    private static final String XPATH_FILTER = "/" + XmlUtility.NAME_PARAM
+        + "/" + XmlUtility.NAME_FILTER;
 
     /**
      * The default offset used if no offset is defined in parsed data.
@@ -68,7 +67,7 @@ public class FilterHandler extends DefaultHandler {
     /**
      * The default sorting if no sorting is defined in the parsed data.
      */
-    private static final ListSorting DEFAULT_SORTING = ListSorting.ASCENDING;
+    public static final ListSorting DEFAULT_SORTING = ListSorting.ASCENDING;
 
     /**
      * Pattern used to parse uris.
@@ -250,7 +249,7 @@ public class FilterHandler extends DefaultHandler {
      * @return Filter Map
      * @common
      */
-    public final Map<String, Object> getRules() {
+    public Map<String, Object> getRules() {
         return rules;
     }
 
@@ -265,13 +264,13 @@ public class FilterHandler extends DefaultHandler {
      * @common
      */
     @SuppressWarnings("unchecked")
-    public void putRule(final String ruleName, final Collection<String> ruleValues) {
+    public void putRule(final String ruleName, final Set<String> ruleValues) {
         if (rules.get(ruleName) != null) {
             if (rules.get(ruleName) instanceof String) {
                 ruleValues.add((String) rules.get(ruleName));
             }
             else if (rules.get(ruleName) instanceof Set) {
-                ruleValues.addAll((Collection<String>) rules.get(ruleName));
+                ruleValues.addAll((Set) rules.get(ruleName));
             }
         }
         rules.put(ruleName, ruleValues);
@@ -296,7 +295,7 @@ public class FilterHandler extends DefaultHandler {
      *         value {@link FilterHandler.DEFAULT_OFFSET} is returned
      * @common
      */
-    public final int getOffset() {
+    public int getOffset() {
 
         return offset;
     }
@@ -308,7 +307,7 @@ public class FilterHandler extends DefaultHandler {
      *         value {@link FilterHandler.DEFAULT_LIMIT} is returned.
      * @common
      */
-    public final int getLimit() {
+    public int getLimit() {
 
         return limit;
     }
@@ -320,7 +319,7 @@ public class FilterHandler extends DefaultHandler {
      *         <code>null</code> is returned.
      * @common
      */
-    public final String getOrderBy() {
+    public String getOrderBy() {
         return orderBy;
     }
 
@@ -332,7 +331,7 @@ public class FilterHandler extends DefaultHandler {
      *         returned.
      * @common
      */
-    public final ListSorting getSorting() {
+    public ListSorting getSorting() {
         return sorting;
     }
 

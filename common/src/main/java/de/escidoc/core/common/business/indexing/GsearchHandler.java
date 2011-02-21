@@ -92,11 +92,11 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *             e
      */
-    public final String requestIndexing(
-            final String resource,
-            String index,
-            final String pidSuffix,
-            final String indexFulltextVisibilities)
+    public String requestIndexing(
+        final String resource, 
+        String index, 
+        final String pidSuffix,
+        final String indexFulltextVisibilities)
         throws ApplicationServerSystemException {
         long time = System.currentTimeMillis();
         if (index == null) {
@@ -121,7 +121,7 @@ public class GsearchHandler {
                                     getRepositoryInfo()
                                         .get("SupportedMimeTypes")
                                     , XmlUtility.CHARACTER_ENCODING));
-            if (pidSuffix == null || pidSuffix.length() == 0) {
+            if (pidSuffix == null || pidSuffix.equals("")) {
                 stylesheetParameters =
                     Constants.PID_VERSION_IDENTIFIER_TOTAL_MATCHER.reset(
                                             stylesheetParameters)
@@ -133,7 +133,7 @@ public class GsearchHandler {
                                                 .replaceFirst(pidSuffix);
             }
             if (indexFulltextVisibilities == null 
-                || indexFulltextVisibilities.length() == 0) {
+                || indexFulltextVisibilities.equals("")) {
                 stylesheetParameters =
                     Constants.INDEX_FULLTEXT_VISIBILITIES_TOTAL_MATCHER.reset(
                                             stylesheetParameters)
@@ -211,14 +211,14 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *             e
      */
-    public final String requestDeletion(
-            String resource, String index, final String pidSuffix)
+    public String requestDeletion(
+        String resource, String index, final String pidSuffix)
         throws ApplicationServerSystemException {
         if (index == null) {
             index = "";
         }
         if (pidSuffix != null) {
-            resource = resource + ':' + pidSuffix;
+            resource = resource + ":" + pidSuffix;
         }
         String deleteIndexParams = 
             Constants.INDEX_NAME_MATCHER.reset(
@@ -278,7 +278,7 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *             e
      */
-    public final String requestCreateEmpty(String index)
+    public String requestCreateEmpty(String index)
         throws ApplicationServerSystemException {
         if (index == null) {
             index = "";
@@ -349,7 +349,7 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *             e
      */
-    public final String requestOptimize(String index)
+    public String requestOptimize(String index)
         throws ApplicationServerSystemException {
         if (index == null) {
             index = "";
@@ -476,7 +476,7 @@ public class GsearchHandler {
      * @param response xml returned by request to fedoragsearch.
      * @param index name of the index to check/optimize.
      */
-    public void checkOptimize(final CharSequence response, final String index) {
+    public void checkOptimize(final String response, final String index) {
         int docCount = 1;
         String docCountStr = "";
         if (Constants.DOC_COUNT_MATCHER.reset(response).matches()) {
@@ -499,7 +499,7 @@ public class GsearchHandler {
      * @return the indexConfigurations
      * @throws ApplicationServerSystemException e
      */
-    public final Map<String, Map<String, String>> getIndexConfigurations()
+    public Map<String, Map<String, String>> getIndexConfigurations() 
                                     throws ApplicationServerSystemException {
         if (indexConfigurations == null) {
             indexConfigurations = requestIndexConfiguration();
@@ -511,7 +511,7 @@ public class GsearchHandler {
      * @return the repositoryInfo
      * @throws ApplicationServerSystemException e
      */
-    private Map<String, String> getRepositoryInfo()
+    public Map<String, String> getRepositoryInfo() 
                                     throws ApplicationServerSystemException {
         if (repositoryInfo == null) {
             repositoryInfo = requestRepositoryInfo();
@@ -648,7 +648,7 @@ public class GsearchHandler {
      * 
      * @sb
      */
-    private static void deleteLock(final String response) {
+    private void deleteLock(final String response) {
         try {
             String lockfilePath =
                 response.replaceFirst("(?s).*Lock@", "");
@@ -690,7 +690,7 @@ public class GsearchHandler {
      * 
      * @sb
      */
-    private static boolean deleteDir(final File path) {
+    public boolean deleteDir(final File path) {
         if (path.exists()) {
             File[] files = path.listFiles();
             for (File file : files) {

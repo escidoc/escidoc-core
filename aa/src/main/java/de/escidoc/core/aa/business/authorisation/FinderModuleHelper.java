@@ -76,7 +76,7 @@ public final class FinderModuleHelper {
      * Pattern used to convert the object type retrieved from the triple store.
      */
     private static final Pattern PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE =
-        Pattern.compile('('
+        Pattern.compile("("
             + de.escidoc.core.common.business.Constants.RESOURCES_NS_URI
             + "){0,1}([A-Z])([^A-Z]*)");
 
@@ -296,7 +296,7 @@ public final class FinderModuleHelper {
         final boolean forceEmptyResultException)
         throws ResourceNotFoundException, WebserverSystemException {
 
-        Set<String> returnHash = new HashSet<String>();
+        HashSet<String> returnHash = new HashSet<String>();
         final BagAttribute bag = (BagAttribute) result.getAttributeValue();
 
         if (bag == null || bag.isEmpty()) {
@@ -377,7 +377,7 @@ public final class FinderModuleHelper {
                 LOG.error(emsg);
                 throw new WebserverSystemException(emsg);
             }
-            LOG.error(exceptionClassName + ' ' + msg + ' ' + statusCode);
+            LOG.error(exceptionClassName + " " + msg + " " + statusCode);
             throw exceptionInstance;
         }
         else {
@@ -500,7 +500,7 @@ public final class FinderModuleHelper {
             final Matcher matcher =
                 PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE.matcher(objectType);
             if (matcher.find()) {
-                final StringBuilder ret = new StringBuilder();
+                final StringBuffer ret = new StringBuffer();
                 boolean hasNext;
                 do {
                     ret.append(matcher

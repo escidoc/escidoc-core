@@ -29,7 +29,7 @@ public class StatisticServiceImpl {
         } catch (final Exception e) {
             final String errorMessage = "Error on saving statistic data.";
             LOG.error(errorMessage, e);
-            throw new StatisticServiceException(statisticData + '\n' + e);
+            throw new StatisticServiceException(statisticData + "\n" + e);
         }
     }
 
@@ -46,7 +46,7 @@ public class StatisticServiceImpl {
      * {@inheritDoc}
      */
     @Override
-    public final String toString() {
+    public String toString() {
         return "StatisticServiceImpl{" +
                 "statisticDataHandler=" + statisticDataHandler +
                 '}';

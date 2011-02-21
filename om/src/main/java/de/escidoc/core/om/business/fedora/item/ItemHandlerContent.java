@@ -70,7 +70,7 @@ import java.util.regex.Pattern;
  */
 public class ItemHandlerContent extends ItemHandlerUpdate {
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(ItemHandlerContent.class.getName());
 
     private static final String TRANSFORM_SERVICE_DIGILIB = "digilib";
@@ -122,7 +122,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             if (component == null) {
                 throw new ComponentNotFoundException("The component "
                     + componentId + " does not exist in item "
-                    + getItem().getId() + '.');
+                    + getItem().getId() + ".");
             }
         }
 
@@ -144,6 +144,19 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         Datastream content = component.getContent();
 
         String storage = content.getControlGroup();
+        // if (storage.equals(FoXmlProvider.CONTROL_GROUP_E)) {
+        // String message =
+        // "Binary content of component "
+        // + componentId
+        // + " is not managed by the framework, because the attribute "
+        // + " 'storage' of the element 'component.content' set to
+        // 'external-url. "
+        // + "Please try to retrieve the content using an URL from the
+        // attribute"
+        // + " 'xkink:href' of the element 'component.content'.";
+        // log.error(message);
+        // throw new ResourceNotFoundException(message);
+        // }
         EscidocBinaryContent bin = new EscidocBinaryContent();
 
         Map<String, String> properties = component.getResourceProperties();
@@ -181,7 +194,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 String fedoraLocalUrl =
                     "/get/" + component.getId() + "/content";
                 if (getItem().getVersionDate() != null) {
-                    fedoraLocalUrl += '/' + getItem().getVersionDate();
+                    fedoraLocalUrl += "/" + getItem().getVersionDate();
                 }
                 bin.setContent(getFedoraUtility().requestFedoraURL(
                     fedoraLocalUrl));
@@ -551,7 +564,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 "The item with id " + itemId
                     + " does not contain a content stream" + " with name "
                     + name;
-            LOGGER.error(message);
+            log.error(message);
             throw new ContentStreamNotFoundException(message);
         }
         return contentStream;
@@ -600,9 +613,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             bin.setRedirectUrl(cs.getLocation());
         }
         else {
-            String fedoraLocalUrl = "/get/" + getItem().getId() + '/' + name;
+            String fedoraLocalUrl = "/get/" + getItem().getId() + "/" + name;
             if (getItem().getVersionDate() != null) {
-                fedoraLocalUrl += '/' + getItem().getVersionDate();
+                fedoraLocalUrl += "/" + getItem().getVersionDate();
             }
             bin.setContent(getFedoraUtility()
                 .requestFedoraURL(fedoraLocalUrl));
@@ -636,7 +649,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             System.getProperty(EscidocConfiguration.FEDORA_USER);
         String fedoraPw =
             System.getProperty(EscidocConfiguration.FEDORA_PASSWORD);
-        String auth = fedoraUser + ':' + fedoraPw + '@';
+        String auth = fedoraUser + ":" + fedoraPw + "@";
 
         String fedoraUrl = System.getProperty(EscidocConfiguration.FEDORA_URL);
         int pos = fedoraUrl.indexOf("://");
@@ -645,12 +658,12 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
         String contentUrl =
             protocol + auth + hostPart + "/get/" + componentId + "/content"
-                + '/' + versionDate;
+                + "/" + versionDate;
 
         URL url;
         if (transformer.equals(TRANSFORM_SERVICE_DIGILIB)) {
             url =
-                new URL(getDigilibScalerUrl() + "?fn=" + contentUrl + '&'
+                new URL(getDigilibScalerUrl() + "?fn=" + contentUrl + "&"
                     + param);
         }
         else {

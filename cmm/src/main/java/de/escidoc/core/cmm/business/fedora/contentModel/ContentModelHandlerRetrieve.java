@@ -6,7 +6,6 @@ import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.cmm.ContentModel;
 import de.escidoc.core.common.business.fedora.resources.cmm.DsTypeModel;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
@@ -24,7 +23,6 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -36,12 +34,12 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     private ContentModel contentModel;
 
     // TODO ContentModelHandlerBase ?
-    public final ContentModel getContentModel() {
+    public ContentModel getContentModel() {
         return this.contentModel;
     }
 
     // TODO ContentModelHandlerBase ?
-    protected final void setContentModel(final String id)
+    protected void setContentModel(final String id)
         throws ContentModelNotFoundException, SystemException {
 
         try {
@@ -56,7 +54,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected final String render() throws WebserverSystemException,
+    protected String render() throws WebserverSystemException,
         ContentModelNotFoundException, TripleStoreSystemException,
         IntegritySystemException, XmlParserSystemException,
         EncodingSystemException, FedoraSystemException {
@@ -78,7 +76,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected final String renderProperties() throws ContentModelNotFoundException,
+    protected String renderProperties() throws ContentModelNotFoundException,
         WebserverSystemException, TripleStoreSystemException,
         IntegritySystemException, XmlParserSystemException,
         EncodingSystemException, FedoraSystemException {
@@ -92,7 +90,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected final String renderResources() throws ContentModelNotFoundException,
+    protected String renderResources() throws ContentModelNotFoundException,
         WebserverSystemException, TripleStoreSystemException,
         IntegritySystemException, XmlParserSystemException,
         EncodingSystemException, FedoraSystemException {
@@ -106,17 +104,17 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected static final String renderResourceDefinitions() {
+    protected String renderResourceDefinitions() {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected static final String renderResourceDefinition(final String name) {
+    protected String renderResourceDefinition(final String name) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    protected final String renderContentStreams(final boolean isRoot)
+    protected String renderContentStreams(final boolean isRoot)
         throws WebserverSystemException, EncodingSystemException,
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
@@ -126,7 +124,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         Map<String, String> commonValues = getCommonValues(getContentModel());
         values.putAll(commonValues);
 
-        StringBuilder content = new StringBuilder();
+        StringBuffer content = new StringBuffer();
         for (String s : getContentModel()
                 .getContentStreams().keySet()) {
             String contentStreamName = s;
@@ -153,7 +151,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    protected final String renderContentStream(final String name, final boolean isRoot)
+    protected String renderContentStream(final String name, final boolean isRoot)
         throws WebserverSystemException, IntegritySystemException,
         TripleStoreSystemException {
 
@@ -178,7 +176,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                 Constants.STORAGE_INTERNAL_MANAGED);
             location =
                 getContentModel().getHref() + Constants.CONTENT_STREAM_URL_PART
-                    + '/' + ds.getName()
+                    + "/" + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
             if (ds.getControlGroup().equals("X")) {
                 try {
@@ -195,7 +193,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                 Constants.STORAGE_EXTERNAL_MANAGED);
             location =
                 getContentModel().getHref() + Constants.CONTENT_STREAM_URL_PART
-                    + '/' + ds.getName()
+                    + "/" + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
 
         }
@@ -321,8 +319,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
      * @throws FedoraSystemException
      * @throws ContentModelNotFoundException
      */
-    private static Map<String, String> getPropertiesValues(
-            final ContentModel contentModel) throws TripleStoreSystemException,
+    private Map<String, String> getPropertiesValues(
+        final ContentModel contentModel) throws TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException,
         XmlParserSystemException, EncodingSystemException,
         FedoraSystemException, ContentModelNotFoundException {
@@ -340,6 +338,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
         // FIXME description not in map? (FRS)
         String debug = contentModel.getDescription();
+        // properties.get(PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
         values.put(XmlTemplateProvider.VAR_DESCRIPTION, debug);
 
         try {
@@ -388,11 +387,13 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         }
 
         // version
-        final StringBuilder versionIdBase =
-                new StringBuilder(contentModel.getId()).append(':');
+        final StringBuffer versionIdBase =
+            new StringBuffer(contentModel.getId()).append(":");
 
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_HREF,
             contentModel.getVersionHref());
+        // de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
+        // + currentVersionId);
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_ID,
             contentModel.getFullId());
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_TITLE,
@@ -400,14 +401,14 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.put(
             XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_NUMBER,
             contentModel.getVersionId());
-
+        // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_NUMBER));
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_DATE,
             contentModel.getVersionDate());
-
+        // properties.get(TripleStoreUtility.PROP_VERSION_DATE));
         values.put(
             XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_STATUS,
             contentModel.getVersionStatus());
-
+        // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_STATUS));
         values.put(
             XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_VALID_STATUS,
             properties.get(PropertyMapKeys.CURRENT_VERSION_VALID_STATUS));
@@ -512,7 +513,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         // </dsCompositeModel>
 
         Map<String, Object> values = new HashMap<String, Object>();
-        Collection<Map<String, String>> mdRecordDefinitions =
+        List<Map<String, String>> mdRecordDefinitions =
             new ArrayList<Map<String, String>>();
 
         // get dsTypeModel/@ID entries from datastream DS-COMPOSITE-MODEL
@@ -560,12 +561,12 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         // the XSLT is retrieved and stored in the service definition object)
 
         Map<String, Object> values = new HashMap<String, Object>();
-        Collection<Map<String, String>> resourceDefinitions =
+        List<Map<String, String>> resourceDefinitions =
             new ArrayList<Map<String, String>>();
 
         // FIXME do not use triplestore
 
-        Collection<String> methodNames = new ArrayList<String>();
+        List<String> methodNames = new ArrayList<String>();
         // <info:fedora/fedora-system:def/model#hasService>
         List<String> sdefs =
             getTripleStoreUtility().getPropertiesElementsVector(
@@ -611,8 +612,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    private static Map<String, String> getResourcesValues(
-            final FedoraResource contentModel) throws WebserverSystemException {
+    private Map<String, String> getResourcesValues(
+        final ContentModel contentModel) throws WebserverSystemException {
 
         Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");

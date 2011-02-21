@@ -75,10 +75,10 @@ public class ResourceDefinitionCreate {
      * @throws MissingAttributeValueException
      *             Thrown if name is an empty String.
      */
-    public final void setName(final String name)
+    public void setName(final String name)
         throws MissingAttributeValueException {
 
-        if ((name == null) || name.length() == 0) {
+        if ((name == null) || name.equals("")) {
             final String errorMsg =
                 "the value of the"
                     + " \"name\" atribute of the element 'resource-definition' is missing";
@@ -94,7 +94,7 @@ public class ResourceDefinitionCreate {
      * 
      * @return name of metadata record.
      */
-    public final String getName() {
+    public String getName() {
 
         return this.name;
     }
@@ -120,9 +120,9 @@ public class ResourceDefinitionCreate {
      * @throws SystemException
      *             Thrown if character encoding failed.
      */
-    static final Map<String, String> getValueMap() throws SystemException {
+    public Map<String, String> getValueMap() throws SystemException {
 
-        Map<String, String> templateValues = new HashMap<String, String>();
+        HashMap<String, String> templateValues = new HashMap<String, String>();
 
         // templateValues.put(XmlTemplateProvider.MD_RECOD_TYPE, this.type);
         // templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
@@ -133,11 +133,11 @@ public class ResourceDefinitionCreate {
         return templateValues;
     }
 
-    public final String getXsltHref() {
+    public String getXsltHref() {
         return xsltHref;
     }
 
-    public final void setXsltHref(String xsltHref) throws MalformedURLException,
+    public void setXsltHref(String xsltHref) throws MalformedURLException,
         IOException {
         URL url;
         if (xsltHref.startsWith("/")) {
@@ -158,20 +158,20 @@ public class ResourceDefinitionCreate {
         this.xsltHref = url.toString();
     }
 
-    public final String getMdRecordName() {
+    public String getMdRecordName() {
         return mdRecordName;
     }
 
-    public final void setMdRecordName(String mdRecordName) {
+    public void setMdRecordName(String mdRecordName) {
         this.mdRecordName = mdRecordName;
     }
 
-    public final String getFedoraId(String parentId) {
+    public String getFedoraId(String parentId) {
         if (name == null) {
             throw new NullPointerException(
                 "Name must not be null to provide FedoraId.");
         }
-        return "info:fedora/sdef:" + parentId.replaceAll(":", "_") + '-'
+        return "info:fedora/sdef:" + parentId.replaceAll(":", "_") + "-"
             + this.name;
     }
 

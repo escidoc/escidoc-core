@@ -83,7 +83,7 @@ public class ComponentCreate extends GenericResourceCreate
      *            The properties of Item.
      * @throws WebserverSystemException
      */
-    public final void setProperties(final ComponentProperties properties) {
+    public void setProperties(final ComponentProperties properties) {
 
         this.properties = properties;
     }
@@ -94,7 +94,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @param mdRecord
      *            New metadata record.
      */
-    public final void addMdRecord(final MdRecordCreate mdRecord) {
+    public void addMdRecord(final MdRecordCreate mdRecord) {
 
         if (this.mdRecords == null) {
             this.mdRecords = new ArrayList<MdRecordCreate>();
@@ -110,7 +110,7 @@ public class ComponentCreate extends GenericResourceCreate
      *            Name of MetadataRecord.
      * @return MetadataRecord with required name or null.
      */
-    final MdRecordCreate getMetadataRecord(final String name) {
+    public MdRecordCreate getMetadataRecord(final String name) {
 
         if (this.mdRecords != null) {
             for (final MdRecordCreate mdRecord : this.mdRecords) {
@@ -128,7 +128,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @param content
      *            New content of Component
      */
-    public final void setContent(final BinaryContent content) {
+    public void setContent(final BinaryContent content) {
 
         this.content = content;
     }
@@ -138,7 +138,7 @@ public class ComponentCreate extends GenericResourceCreate
      * 
      * @return Content of Component
      */
-    public final BinaryContent getContent() {
+    public BinaryContent getContent() {
 
         return this.content;
     }
@@ -151,7 +151,7 @@ public class ComponentCreate extends GenericResourceCreate
      * 
      * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
-    public final void setIdProvider(final EscidocIdProvider idProvider) {
+    public void setIdProvider(final EscidocIdProvider idProvider) {
 
         this.idProvider = idProvider;
     }
@@ -165,14 +165,14 @@ public class ComponentCreate extends GenericResourceCreate
      * @throws IOException
      *             Thrown if preparing of properties, meta data record failed.
      */
-    final String getFOXML() throws SystemException, IOException {
+    public String getFOXML() throws SystemException, IOException {
 
         // objid
         if (getObjid() == null) {
             setObjid(this.idProvider.getNextPid());
         }
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.DC, getDC());
         valueMap.putAll(preparePropertiesValueMap());
@@ -201,7 +201,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @throws EncodingSystemException
      *             Thrown if the conversion to default encoding failed.
      */
-    final String getDC() throws WebserverSystemException,
+    public String getDC() throws WebserverSystemException,
         EncodingSystemException {
 
         if (this.dcXml == null) {
@@ -240,7 +240,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @throws IOException
      *             Thrown if preparing of properties, meta data record failed.
      */
-    public final String persist(final boolean forceSync) throws SystemException,
+    public String persist(final boolean forceSync) throws SystemException,
         InvalidContentException, IOException {
 
         validate();
@@ -256,7 +256,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @throws Exception
      *             Thrown if a Thread failed.
      */
-    public final String call() throws Exception {
+    public String call() throws Exception {
 
         persist(false);
         return getObjid();
@@ -280,7 +280,7 @@ public class ComponentCreate extends GenericResourceCreate
     private Map<String, String> preparePropertiesValueMap()
         throws WebserverSystemException {
 
-        Map<String, String> valueMap = new HashMap<String, String>();
+        HashMap<String, String> valueMap = new HashMap<String, String>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
 
@@ -320,7 +320,11 @@ public class ComponentCreate extends GenericResourceCreate
                     .getDataLocation().toString());
                 valueMap.put(XmlTemplateProvider.REF_TYPE, "URL");
             }
-
+            // else if (this.content.getStorageType().equals(
+            // StorageType.INTERNAL_MANAGED)) {
+            // this.properties.put(XmlTemplateProvider.INLINE_CONTENT,
+            // this.content.getContent());
+            // }
         }
         valueMap.put(XmlTemplateProvider.CONTROL_GROUP, this.content
             .getStorageType().getAbbreviation());
@@ -332,9 +336,9 @@ public class ComponentCreate extends GenericResourceCreate
     /**
      * @return HashMap where name space values are to add.
      */
-    private static Map<String, String> getRelsExtNamespaceValues() {
+    private Map<String, String> getRelsExtNamespaceValues() {
 
-        Map<String, String> values = new HashMap<String, String>();
+        HashMap<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             de.escidoc.core.common.business.Constants.PROPERTIES_NS_PREFIX);
@@ -378,7 +382,7 @@ public class ComponentCreate extends GenericResourceCreate
      */
     private Map<String, String> getContentValues() {
 
-        Map<String, String> values = new HashMap<String, String>();
+        HashMap<String, String> values = new HashMap<String, String>();
 
         try {
             values
@@ -418,9 +422,9 @@ public class ComponentCreate extends GenericResourceCreate
      *             In case of an internal error during decoding or storing the
      *             content.
      */
-    private static String uploadBase64EncodedContent(
-            final String contentAsString, final String fileName,
-            final String mimeType) throws WebserverSystemException {
+    private String uploadBase64EncodedContent(
+        final String contentAsString, final String fileName,
+        final String mimeType) throws WebserverSystemException {
         String uploadUrl;
         byte[] streamContent;
         try {
@@ -460,6 +464,17 @@ public class ComponentCreate extends GenericResourceCreate
             throw new InvalidContentException(
                 "Attribute 'storage' fits not to inline content.");
         }
+
+        // // check if data location is not Fedora
+        // if (this.content.getDataLocation().toString().startsWith(
+        // EscidocConfiguration.getInstance().get(
+        // EscidocConfiguration.FEDORA_URL))) {
+        // String msg =
+        // "Data location invalid: '" + this.content.getDataLocation()
+        // + "'.";
+        // LOG.debug(msg);
+        // throw new InvalidContentException(msg);
+        // }
     }
 
 }

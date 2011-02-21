@@ -773,7 +773,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      * 
      */
     private String handleSelectFields(
-        final Iterable<SelectFieldVo> selectFieldVos)
+        final Collection<SelectFieldVo> selectFieldVos)
         throws SqlDatabaseSystemException {
         StringBuilder selectFields = new StringBuilder(" ");
         int i = 0;
@@ -809,7 +809,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      * @return String database-dependant query for an xpath-boolean request.
      * 
      */
-    public final String getXpathBoolean(final String xpath, final String field) {
+    public String getXpathBoolean(final String xpath, final String field) {
         String xpathBol = XPATH_MATCHER
             .reset(XPATH_BOOLEAN_FUNCTION)
             .replaceAll(Matcher.quoteReplacement(xpath) 
@@ -828,7 +828,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      * @return String database-dependant query for an xpath-string request.
      * 
      */
-    public final String getXpathString(final String xpath, final String field) {
+    public String getXpathString(final String xpath, final String field) {
         StringBuilder replacedXpath = new StringBuilder(xpath.trim());
         if (!replacedXpath.toString().endsWith("text()")) {
             if (!replacedXpath.toString().endsWith("/")) {
@@ -854,7 +854,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      * @return String database-dependant query for an xpath-string request.
      * 
      */
-    static final String getXpathNumeric(final String xpath, final String field) {
+    String getXpathNumeric(final String xpath, final String field) {
         StringBuilder replacedXpath = new StringBuilder(xpath.trim());
         if (!replacedXpath.toString().endsWith("text()")) {
             if (!replacedXpath.toString().endsWith("/")) {
@@ -879,7 +879,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      *             SqlDatabaseSystemException
      * 
      */
-    static final void checkDatabaseTableVo(final DatabaseTableVo databaseTableVo)
+    public void checkDatabaseTableVo(final DatabaseTableVo databaseTableVo)
         throws SqlDatabaseSystemException {
         if (databaseTableVo.getTableName() == null
             || databaseTableVo.getTableName().length() == 0) {
@@ -943,7 +943,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      *             SqlDatabaseSystemException
      * 
      */
-    static final void checkDatabaseRecordVo(final DatabaseRecordVo databaseRecordVo)
+    public void checkDatabaseRecordVo(final DatabaseRecordVo databaseRecordVo)
         throws SqlDatabaseSystemException {
         if (databaseRecordVo.getTableName() == null
             || databaseRecordVo.getTableName().length() == 0) {
@@ -987,7 +987,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      *             SqlDatabaseSystemException
      * 
      */
-    final void checkDatabaseSelectVo(final DatabaseSelectVo databaseSelectVo)
+    public void checkDatabaseSelectVo(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException {
         if (databaseSelectVo.getTableNames() == null
             || databaseSelectVo.getTableNames().isEmpty()) {
@@ -1130,9 +1130,9 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      *             SqlDatabaseSystemException
      * 
      */
-    private static void checkWhereFieldVo(
-            final CharSequence type, final CharSequence fieldName, final String fieldType,
-            final String fieldValue, final CharSequence operator, final CharSequence xpath)
+    private void checkWhereFieldVo(
+        final String type, final String fieldName, final String fieldType,
+        final String fieldValue, final String operator, final String xpath)
         throws SqlDatabaseSystemException {
         if (type == null || type.length() == 0
             || (!type.equals("root") && !type.equals("additional"))) {
@@ -1179,7 +1179,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      * @return String replaced tablename
      * 
      */
-    static final String handleTableName(final String tablename) {
+    public String handleTableName(final String tablename) {
         if (!tablename.matches(".*\\..*")) {
             String extendedTablename =
                 Constants.SM_SCHEMA_NAME + '.' + tablename;

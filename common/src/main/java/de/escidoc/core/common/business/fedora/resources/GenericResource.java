@@ -612,6 +612,8 @@ public class GenericResource implements FedoraResource {
         sp.addHandler(me);
 
         try {
+            // final ByteArrayInputStream relsExtBA =
+            // new ByteArrayInputStream(getRelsExt().getStream());
             sp.parse(getRelsExt().getStream());
             setRelsExt((ByteArrayOutputStream) me.getOutputStreams().get("RDF"));
         }
@@ -746,7 +748,7 @@ public class GenericResource implements FedoraResource {
     public Map<String, String> mapTripleStoreKeys(
         final Map<String, String> tripleStoreMap) {
 
-        Map<String, String> properties = new HashMap<String, String>();
+        HashMap<String, String> properties = new HashMap<String, String>();
 
         for (String s : tripleStoreMap.keySet()) {
             String sourceKey = s;
@@ -962,7 +964,7 @@ public class GenericResource implements FedoraResource {
             // An item have to have a RELS-EXT datastream
             throw new StreamNotFoundException(
                 "No " + Datastream.RELS_EXT_DATASTREAM + " for item " + this.id
-                    + '.', e);
+                    + ".", e);
         }
 
         // // don't forget to update
@@ -1118,8 +1120,8 @@ public class GenericResource implements FedoraResource {
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private static Collection<String> expandPropertiesNames(
-            final Collection<String> propertiesNames) {
+    private Collection<String> expandPropertiesNames(
+        final Collection<String> propertiesNames) {
 
         Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
@@ -1164,8 +1166,8 @@ public class GenericResource implements FedoraResource {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private static Map<String, String> expandPropertiesNamesMapping(
-            final Map<String, String> propertiesNamesMap) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesNamesMap) {
 
         Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
@@ -1226,10 +1228,10 @@ public class GenericResource implements FedoraResource {
      * @param targetKey
      *            The key in the target Map where the value is to store.
      */
-    public static void map(
-            final Map<String, String> sourceMap,
-            final Map<String, String> targetMap, final String sourceKey,
-            final String targetKey) {
+    public void map(
+        final Map<String, String> sourceMap,
+        final Map<String, String> targetMap, final String sourceKey,
+        final String targetKey) {
 
         String value = sourceMap.get(sourceKey);
         if (value != null) {
@@ -1294,9 +1296,9 @@ public class GenericResource implements FedoraResource {
      * @return Tupel list.
      */
     private Map<String, String> mapTripleList2TupleList(
-        final Iterable<Triple> triples) {
+        final List<Triple> triples) {
 
-        Map<String, String> lastVersionData = new HashMap<String, String>();
+        HashMap<String, String> lastVersionData = new HashMap<String, String>();
 
         for (Triple triple : triples) {
             Triple t = triple;
@@ -1387,6 +1389,7 @@ public class GenericResource implements FedoraResource {
 
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
+                // setRelsExt(ds);
                 this.relsExt = ds;
             }
             // DC
@@ -1400,7 +1403,7 @@ public class GenericResource implements FedoraResource {
                     this.dc = ds;
                 }
             } else {
-                log.debug("Datastream " + getId() + '/' + name
+                log.debug("Datastream " + getId() + "/" + name
                         + " not instanziated in GenericResource.<init>.");
             }
         }

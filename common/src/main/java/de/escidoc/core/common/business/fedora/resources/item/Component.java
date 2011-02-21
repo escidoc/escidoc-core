@@ -193,7 +193,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     ds.setLabel(label);
                     this.content = ds;
                 } else {
-                    log.warn("Datastream " + getId() + '/' + name
+                    log.warn("Datastream " + getId() + "/" + name
                             + " not instanziated in Item.<init>.");
                 }
             }
@@ -241,6 +241,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 + Elements.ELEMENT_DESCRIPTION, description);
         }
 
+        // }
+
         String title =
             properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
                 + Elements.ELEMENT_DC_TITLE);
@@ -265,11 +267,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @throws StreamNotFoundException
      * @throws FedoraSystemException
      */
-    public final Datastream getContent() {
+    public Datastream getContent() {
         return this.content;
     }
 
-    public final String getChecksum() throws TripleStoreSystemException,
+    public String getChecksum() throws TripleStoreSystemException,
         WebserverSystemException {
         return getResourcePropertiesValue(Elements.ELEMENT_COMPONENT_CONTENT_CHECKSUM);
     }
@@ -282,7 +284,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * (de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
     @Override
-    public final void setRelsExt(final Datastream ds) throws FedoraSystemException,
+    public void setRelsExt(final Datastream ds) throws FedoraSystemException,
         WebserverSystemException {
 
         super.setRelsExt(ds);
@@ -291,18 +293,18 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         }
     }
 
-    public static void setContent(final Datastream ds) {
+    public void setContent(final Datastream ds) {
         throw new UnsupportedOperationException("Component.setContent.");
     }
 
-    public final void notifySetContent() throws FedoraSystemException,
+    public void notifySetContent() throws FedoraSystemException,
         WebserverSystemException, TripleStoreSystemException {
 
         getFedoraUtility().touchObject(this.parent, true);
         this.content = null;
     }
 
-    public static Datastream getLicenses() {
+    public Datastream getLicenses() {
         throw new UnsupportedOperationException(
             "Licenses are not yet available.");
     }
@@ -314,7 +316,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
      * #getMdRecords()
      */
-    public final Map<String, Datastream> getMdRecords() {
+    public Map<String, Datastream> getMdRecords() {
         return this.mdRecords;
     }
 
@@ -325,7 +327,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
      * #setMdRecords(java.util.HashMap)
      */
-    public final void setMdRecords(final Map<String, Datastream> ds)
+    public void setMdRecords(final Map<String, Datastream> ds)
         throws FedoraSystemException, WebserverSystemException,
         EncodingSystemException, IntegritySystemException {
         // compare
@@ -344,6 +346,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 Datastream fedoraDs = getMdRecord(nameInFedora);
                 fedoraDs.delete();
                 if (fedoraDs.getName().equals("escidoc")) {
+                    // Datastream dcDs = getDc();
                     final ItemFoXmlRendererInterface iri =
                             new VelocityXmlItemFoXmlRenderer();
                     final String dcContent = iri.renderDefaultDc(getId());
@@ -362,21 +365,21 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 modified = true;
             }
         }
-        
-        // FIXME: What is mdRecordsToAdd for?
         final Map<String, Datastream> mdRecordsToAdd =
             new HashMap<String, Datastream>();
-        
-        final Iterator<Map.Entry<String, Datastream>> nameIt = ds.entrySet().iterator();
+        final Iterator<String> nameIt = ds.keySet().iterator();
         // create/activate data streams which are in mdRecords but not in fedora
         while (nameIt.hasNext()) {
-            Map.Entry<String, Datastream> mapEntry = nameIt.next();
-            final String name = mapEntry.getKey();
-            final Datastream currentMdRecord = mapEntry.getValue();
-            setMdRecord(name, currentMdRecord);
+            final String name = nameIt.next();
             if (!namesInFedora.contains(name)) {
+                final Datastream currentMdRecord = ds.get(name);
+                setMdRecord(name, currentMdRecord);
                 nameIt.remove();
             }
+        }
+        for (String s : ds.keySet()) {
+            final String name = s;
+            setMdRecord(name, ds.get(name));
         }
 
         if (modified) {
@@ -392,7 +395,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
      * #getMdRecord(java.lang.String)
      */
-    public final Datastream getMdRecord(final String name) {
+    public Datastream getMdRecord(final String name) {
         return this.mdRecords.get(name);
     }
 
@@ -404,7 +407,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * #setMdRecord(java.lang.String,
      * de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    public final void setMdRecord(final String name, final Datastream ds)
+    public void setMdRecord(final String name, final Datastream ds)
         throws WebserverSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException {
         // check if the metadata datastream is set, is equal to ds and save to
@@ -447,7 +450,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     final Map<String, String> mdProperties =
                         ds.getProperties();
                     if (mdProperties != null) {
-
+                        // if (mdProperties.get("nsUri") != null) {
                         if (mdProperties.containsKey("nsUri")) {
                             final String nsUri = mdProperties.get("nsUri");
                             // FIXME get content model ID from Item Object (see
@@ -519,12 +522,13 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    private void setDc(final Datastream ds) throws FedoraSystemException,
+    public void setDc(final Datastream ds) throws FedoraSystemException,
         WebserverSystemException {
         final Datastream curDs = getDc();
         if (!ds.equals(curDs)) {
             this.dc = ds;
             ds.merge();
+            // FedoraUtility.getInstance().sync();
             getFedoraUtility().touchObject(this.parent, true);
         }
     }
@@ -536,7 +540,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #getRelsExt()
      */
-    private Datastream getDc() {
+    public Datastream getDc() {
 
         return this.dc;
     }
@@ -557,7 +561,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * 
      * @return the components part of the href, after the item id
      */
-    public final String getHrefPart() {
+    public String getHrefPart() {
         return super.getHref();
     }
 
@@ -578,13 +582,13 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * @throws ComponentNotFoundException
      * @throws SystemException
      */
-    public final Map<String, String> setProperties(
-            final String xml, final String itemId) throws InvalidContentException,
+    public Map<String, String> setProperties(
+        final String xml, final String itemId) throws InvalidContentException,
         ComponentNotFoundException, SystemException {
 
         StaxParser sp = new StaxParser();
         ComponentPropertiesUpdateHandler cpuh =
-            new ComponentPropertiesUpdateHandler(getResourceProperties(), '/'
+            new ComponentPropertiesUpdateHandler(getResourceProperties(), "/"
                 + Elements.ELEMENT_PROPERTIES, sp);
         sp.addHandler(cpuh);
         try {
@@ -608,7 +612,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * 
      * @return The foxml renderer.
      */
-    private ItemFoXmlRendererInterface getFoxmlRenderer() {
+    public ItemFoXmlRendererInterface getFoxmlRenderer() {
 
         if (this.foxmlRenderer == null) {
             this.foxmlRenderer = new VelocityXmlItemFoXmlRenderer();
@@ -645,7 +649,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             throw new XmlParserSystemException(msg, e);
         }
 
-        final Map<String, String> properties =
+        final HashMap<String, String> properties =
             new HashMap<String, String>();
 
         List<Triple> triples = eve.getElementValues().getTriples();

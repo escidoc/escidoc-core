@@ -81,7 +81,7 @@ import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
 public class AggregationDefinitionHandler
     implements AggregationDefinitionHandlerInterface {
 
-    private static final AppLogger log = new AppLogger(
+    private static AppLogger log = new AppLogger(
         AggregationDefinitionHandler.class.getName());
 
     private SmAggregationDefinitionsDaoInterface dao;
@@ -329,12 +329,16 @@ public class AggregationDefinitionHandler
                     filterUtility.filterRetrievePrivilege(
                         Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
-       if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
+
+            // int numberOfRecords = 0;
+
+            if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get aggregation-definitions as XML
                 aggregationDefinitions =
                     dao.retrieveAggregationDefinitions(filteredScopeIds, query,
                         offset, limit);
                 if (aggregationDefinitions != null) {
+                    // numberOfRecords = aggregationDefinitions.size();
                 }
             }
 
@@ -372,7 +376,7 @@ public class AggregationDefinitionHandler
             Collection<DatabaseTableFieldVo> databaseFieldVos =
                 new ArrayList<DatabaseTableFieldVo>();
             // sort AggregationTableFields
-            Collection<AggregationTableField> sortedAggregationTableFields =
+            TreeSet<AggregationTableField> sortedAggregationTableFields =
                 new TreeSet<AggregationTableField>(
                     new AggregationTableFieldComparator());
             sortedAggregationTableFields
@@ -431,7 +435,7 @@ public class AggregationDefinitionHandler
                     Collection<String> indexFields = new ArrayList<String>();
                     if (index.getAggregationTableIndexFields() != null) {
                         // sort AggregationTableIndexFields
-                        Collection<AggregationTableIndexField> sortedAggregationTableIndexFields =
+                        TreeSet<AggregationTableIndexField> sortedAggregationTableIndexFields =
                             new TreeSet<AggregationTableIndexField>(
                                 new AggregationTableIndexFieldComparator());
                         sortedAggregationTableIndexFields
@@ -463,8 +467,8 @@ public class AggregationDefinitionHandler
      * 
      * @sm
      */
-    private static DatabaseSelectVo generateAggregationDatabaseRecordVoForDeletion(
-            final String primKey) throws SqlDatabaseSystemException {
+    private DatabaseSelectVo generateAggregationDatabaseRecordVoForDeletion(
+        final String primKey) throws SqlDatabaseSystemException {
         DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
         databaseSelectVo.setSelectType(Constants.DATABASE_SELECT_TYPE_DELETE);
         Collection<String> tablenames = new ArrayList<String>();

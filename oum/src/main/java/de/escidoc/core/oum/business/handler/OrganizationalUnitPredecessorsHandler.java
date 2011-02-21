@@ -59,8 +59,8 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
     private final List<Predecessor> predecessors = new ArrayList<Predecessor>();
 
     private static final String XPATH_PREDECESSOR =
-            '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT + '/'
-            + XmlUtility.NAME_PREDECESSORS + '/' + XmlUtility.NAME_PREDECESSOR;
+        "/" + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "/"
+            + XmlUtility.NAME_PREDECESSORS + "/" + XmlUtility.NAME_PREDECESSOR;
 
     /**
      * 
@@ -149,7 +149,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
      * 
      * @return list of predecessors
      */
-    public final List<Predecessor> getPredecessors() {
+    public List<Predecessor> getPredecessors() {
         return predecessors;
     }
 
@@ -162,7 +162,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
      * @throws InvalidContentException
      *             Thrown if PredecessorType is not supported.
      */
-    private static PredecessorForm getPredecessorForm(final String predecessorForm)
+    private PredecessorForm getPredecessorForm(final String predecessorForm)
         throws InvalidContentException {
 
         if (predecessorForm.equals(PredecessorForm.SPLITTING.getLabel())) {

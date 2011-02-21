@@ -55,11 +55,11 @@ public class OrganizationalUnitMetadataHandler
 
     private static final String UNKNOWN = "unknown";
 
-    private static final String SCHEMA = "schema";
+    public static final String SCHEMA = "schema";
 
-    private static final String TYPE = "md-type";
+    public static final String TYPE = "md-type";
 
-    private static final String NAME = "name";
+    public static final String NAME = "name";
 
     private boolean insideMdRecord = false;
 
@@ -73,7 +73,7 @@ public class OrganizationalUnitMetadataHandler
 
     private String escidocMetadataRecordNameSpace = null;
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(OrganizationalUnitMetadataHandler.class.getName());
 
     private final Map<String, Map<String, String>> metadataAttributes =
@@ -129,11 +129,11 @@ public class OrganizationalUnitMetadataHandler
                 name = element.getAttribute(null, NAME);
                 this.currentMdRecordName = name.getValue();
 
-                if (currentMdRecordName.length() == 0) {
+                if (currentMdRecordName.equals("")) {
                     String message =
                         "The value of attribute 'name' of the element "
                             + elementName + " was not set!";
-                    LOGGER.error(message);
+                    log.error(message);
                     throw new MissingAttributeValueException(message);
 
                 }
@@ -145,10 +145,10 @@ public class OrganizationalUnitMetadataHandler
                 String message =
                     "The mandatory attribute 'name' of the element "
                         + elementName + " was not found!";
-                LOGGER.error(message);
+                log.error(message);
                 throw new MissingAttributeValueException(message);
             }
-            Map<String, String> md = new HashMap<String, String>();
+            HashMap<String, String> md = new HashMap<String, String>();
             int indexOfType = element.indexOfAttribute(null, TYPE);
             if (indexOfType != -1) {
                 md.put("type", element.getAttribute(indexOfType).getValue());
@@ -199,7 +199,7 @@ public class OrganizationalUnitMetadataHandler
             String message =
                 "Mandatory md-record with a name "
                     + MANDATORY_MD_RECORD_NAME + " is missing.";
-            LOGGER.error(message);
+            log.error(message);
             throw new MissingMdRecordException(message);
         }
         return element;
@@ -232,7 +232,7 @@ public class OrganizationalUnitMetadataHandler
     /**
      * @return Returns metadata attributes.
      */
-    public final Map<String, Map<String, String>> getMetadataAttributes() {
+    public Map<String, Map<String, String>> getMetadataAttributes() {
         return this.metadataAttributes;
     }
 
@@ -242,7 +242,7 @@ public class OrganizationalUnitMetadataHandler
      * 
      * @return Namespace of MetadataRecord
      */
-    public final String getEscidocMetadataRecordNameSpace() {
+    public String getEscidocMetadataRecordNameSpace() {
         return this.escidocMetadataRecordNameSpace;
     }
 
@@ -256,21 +256,21 @@ public class OrganizationalUnitMetadataHandler
     /**
      * @return the mdRecordsPath
      */
-    final String getMdRecordsPath() {
-        return getRootPath() + '/' + XmlUtility.NAME_MDRECORDS;
+    public String getMdRecordsPath() {
+        return getRootPath() + "/" + XmlUtility.NAME_MDRECORDS;
     }
 
     /**
      * @return the mdRecordpath
      */
-    public final String getMdRecordPath() {
-        return getMdRecordsPath() + '/' + XmlUtility.NAME_MDRECORD;
+    public String getMdRecordPath() {
+        return getMdRecordsPath() + "/" + XmlUtility.NAME_MDRECORD;
     }
 
     /**
      * @return the dcTitle
      */
-    public final String getDcTitle() {
+    public String getDcTitle() {
         return dcTitle;
     }
 

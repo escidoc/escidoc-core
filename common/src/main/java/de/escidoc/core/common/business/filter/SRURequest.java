@@ -87,8 +87,7 @@ public class SRURequest {
      * @throws WebserverSystemException
      *             Thrown if the connection to the SRW servlet failed.
      */
-    public final void explain(
-        final Writer output, final ResourceType resourceType)
+    public void explain(final Writer output, final ResourceType resourceType)
         throws WebserverSystemException {
         try {
             String url =
@@ -138,7 +137,7 @@ public class SRURequest {
      *            content type header
      * @return charset information
      */
-    private static String getCharset(final String contentType) {
+    private String getCharset(final String contentType) {
         String result = XmlUtility.CHARACTER_ENCODING;
 
         if (contentType != null) {
@@ -174,7 +173,7 @@ public class SRURequest {
      * @throws WebserverSystemException
      *             Thrown if the connection to the SRW servlet failed.
      */
-    public final void searchRetrieve(
+    public void searchRetrieve(
         final Writer output, final ResourceType[] resourceTypes,
         final SRURequestParameters parameters) throws WebserverSystemException {
         searchRetrieve(output, resourceTypes, parameters.getQuery(),
@@ -218,10 +217,10 @@ public class SRURequest {
      * @throws WebserverSystemException
      *             Thrown if the connection to the SRW servlet failed.
      */
-    public final void searchRetrieve(
+    public void searchRetrieve(
         final Writer output, final ResourceType[] resourceTypes,
         final String query, final int limit, final int offset,
-        final String user, final String role, final RecordPacking recordPacking)
+        final String user, final String role, final String recordPacking)
         throws WebserverSystemException {
         try {
             StringBuilder internalQuery = new StringBuilder();
@@ -268,7 +267,7 @@ public class SRURequest {
             }
             if (recordPacking != null) {
                 url +=
-                    '&' + Constants.SRU_PARAMETER_RECORD_PACKING + '='
+                    "&" + Constants.SRU_PARAMETER_RECORD_PACKING + "="
                         + recordPacking;
             }
             if (!UserContext.isRestAccess()) {

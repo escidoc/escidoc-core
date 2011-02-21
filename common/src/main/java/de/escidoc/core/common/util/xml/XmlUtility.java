@@ -58,7 +58,6 @@ import de.escidoc.core.common.util.xml.transformer.PoolableTransformerFactory;
 import org.apache.commons.pool.impl.StackKeyedObjectPool;
 import org.codehaus.stax2.XMLOutputFactory2;
 import org.joda.time.DateTime;
-import org.joda.time.ReadableDateTime;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -125,7 +124,7 @@ public final class XmlUtility {
     /**
      * The XML version.
      */
-    private static final String XML_VERSION = "1.0";
+    public static final String XML_VERSION = "1.0";
 
     /**
      * Head of document.
@@ -143,25 +142,25 @@ public final class XmlUtility {
      */
     public static final String CDATA_END = "]]>";
 
-    private static final String AMPERSAND = "&";
+    public static final String AMPERSAND = "&";
 
-    private static final String ESC_AMPERSAND = "&amp;";
+    public static final String ESC_AMPERSAND = "&amp;";
 
-    private static final String LESS_THAN = "<";
+    public static final String LESS_THAN = "<";
 
-    private static final String ESC_LESS_THAN = "&lt;";
+    public static final String ESC_LESS_THAN = "&lt;";
 
-    private static final String GREATER_THAN = ">";
+    public static final String GREATER_THAN = ">";
 
-    private static final String ESC_GREATER_THAN = "&gt;";
+    public static final String ESC_GREATER_THAN = "&gt;";
 
-    private static final String APOS = "'";
+    public static final String APOS = "'";
 
-    private static final String ESC_APOS = "&apos;";
+    public static final String ESC_APOS = "&apos;";
 
-    private static final String QUOT = "\"";
+    public static final String QUOT = "\"";
 
-    private static final String ESC_QUOT = "&quot;";
+    public static final String ESC_QUOT = "&quot;";
 
     private static final Pattern PATTERN_ESCAPE_NEEDED = Pattern
         .compile(AMPERSAND + '|' + LESS_THAN + '|' + GREATER_THAN + '|' + QUOT
@@ -423,7 +422,7 @@ public final class XmlUtility {
 
     public static final String NAME_ATTRIBUTE = "attribute";
 
-    private static final String NAME_OBJID = "objid";
+    public static final String NAME_OBJID = "objid";
 
     public static final String NAME_NAME = "name";
 
@@ -439,7 +438,7 @@ public final class XmlUtility {
 
     public static final String NAME_MDRECORD = "md-record";
 
-    private static final String NAME_RESOURCES = "resources";
+    public static final String NAME_RESOURCES = "resources";
 
     public static final String NAME_ORGANIZATION_DETAILS =
         "organization-details";
@@ -456,7 +455,7 @@ public final class XmlUtility {
 
     public static final String NAME_HANDLE = "handle";
 
-    private static final String NAME_HREF = "href";
+    public static final String NAME_HREF = "href";
 
     public static final String NAME_TASK_INSTANCE_ID = "task-instance-id";
 
@@ -472,21 +471,21 @@ public final class XmlUtility {
 
     public static final String NAME_METADATA_SCHEMA = "md-schema";
 
-    private static final String NAME_PARENT_OBJECTS = "parent-objects";
+    public static final String NAME_PARENT_OBJECTS = "parent-objects";
 
     public static final String NAME_PARENTS = "parents";
 
     public static final String NAME_PARENT = "parent";
 
-    private static final String NAME_CHILD_OBJECTS = "child-objects";
+    public static final String NAME_CHILD_OBJECTS = "child-objects";
 
-    private static final String NAME_PATH_LIST = "path-list";
+    public static final String NAME_PATH_LIST = "path-list";
 
     public static final String NAME_PREDECESSORS = "predecessors";
 
     public static final String NAME_PREDECESSOR = "predecessor";
 
-    private static final String NAME_SUCCESSORS = "successors";
+    public static final String NAME_SUCCESSORS = "successors";
 
     public static final String NAME_ORDER_BY = "order-by";
 
@@ -506,42 +505,42 @@ public final class XmlUtility {
     public static final String XPATH_USER_ACCOUNT_ORGANIZATIONAL_UNIT =
         "/user-account/properties/organizational-units/organizational-unit";
 
-    private static final String BASE_AA = "/aa/";
+    public static final String BASE_AA = "/aa/";
 
-    private static final String BASE_SM = "/statistic/";
+    public static final String BASE_SM = "/statistic/";
 
-    private static final String BASE_OUM = "/oum/";
+    public static final String BASE_OUM = "/oum/";
 
     public static final String BASE_OM = "/ir/";
 
     public static final String BASE_ORGANIZATIONAL_UNIT = BASE_OUM
         + NAME_ORGANIZATIONAL_UNIT + '/';
 
-    private static final String BASE_USER_ACCOUNT = BASE_AA + NAME_USER_ACCOUNT
-        + '/';
+    public static final String BASE_USER_ACCOUNT = BASE_AA + NAME_USER_ACCOUNT
+        + "/";
 
-    private static final String BASE_USER_GROUP = BASE_AA + NAME_USER_GROUP
-        + '/';
+    public static final String BASE_USER_GROUP = BASE_AA + NAME_USER_GROUP
+        + "/";
 
-    private static final String BASE_SET_DEFINITION = "/oai/"
-        + NAME_SET_DEFINITION + '/';
+    public static final String BASE_SET_DEFINITION = "/oai/"
+        + NAME_SET_DEFINITION + "/";
 
     public static final String BASE_ROLE = BASE_AA + NAME_ROLE + '/';
 
     public static final String BASE_LOGIN = BASE_AA + "login" + '/';
 
-    private static final String BASE_SCOPE = BASE_SM + NAME_SCOPE + '/';
+    public static final String BASE_SCOPE = BASE_SM + NAME_SCOPE + "/";
 
-    private static final String BASE_AGGREGATION_DEFINITION = BASE_SM
-        + NAME_AGGREGATION_DEFINITION + '/';
+    public static final String BASE_AGGREGATION_DEFINITION = BASE_SM
+        + NAME_AGGREGATION_DEFINITION + "/";
 
-    private static final String BASE_REPORT_DEFINITION = BASE_SM
-        + NAME_REPORT_DEFINITION + '/';
+    public static final String BASE_REPORT_DEFINITION = BASE_SM
+        + NAME_REPORT_DEFINITION + "/";
 
-    private static final Map<String, String> REST_SCHEMA_LOCATIONS =
+    private static final Map<String, String> restSchemaLocations =
         new HashMap<String, String>();
 
-    private static final Map<String, String> SOAP_SCHEMA_LOCATIONS =
+    private static final Map<String, String> soapSchemaLocations =
         new HashMap<String, String>();
 
     public static final String XPATH_USER_ACCOUNT_PROPERTIES = '/'
@@ -577,9 +576,9 @@ public final class XmlUtility {
     private static final Pattern PATTERN_VERSION_NUMBER = Pattern
         .compile("[a-zA-Z]+:[a-zA-Z0-9]+:([0-9]+)");
 
-    private static final String ERR_MSG_MISSING_ATTRIBUTE = "Missing attribute";
+    public static final String ERR_MSG_MISSING_ATTRIBUTE = "Missing attribute";
 
-    private static final StackKeyedObjectPool TRANSFORMER_POOL =
+    private static final StackKeyedObjectPool transformerPool =
         new StackKeyedObjectPool(new PoolableTransformerFactory());
 
     /**
@@ -598,7 +597,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             Thrown if retrieve of SchemaLocation failed.
      */
-    private static String getSchemaLocationForResource(final ResourceType type)
+    public static String getSchemaLocationForResource(final ResourceType type)
         throws WebserverSystemException {
 
         String schemaLocation;
@@ -744,7 +743,7 @@ public final class XmlUtility {
      *            The id of the component.
      * @return Returns the href for the provided component id.
      */
-    private static String getComponentHref(final String componentId) {
+    public static String getComponentHref(final String componentId) {
         String itemId;
         try {
             itemId =
@@ -1076,12 +1075,12 @@ public final class XmlUtility {
         return getUserGroupHref(userGroupId) + "/resources";
     }
 
-    private static String getUserAccountGrantsHref(final String userAccountId) {
+    public static String getUserAccountGrantsHref(final String userAccountId) {
 
         return getUserAccountHref(userAccountId) + "/resources/grants";
     }
 
-    private static String getUserGroupGrantsHref(final String userGroupId) {
+    public static String getUserGroupGrantsHref(final String userGroupId) {
 
         return getUserGroupHref(userGroupId) + "/resources/grants";
     }
@@ -1242,7 +1241,7 @@ public final class XmlUtility {
      */
     public static void addElement(
         final XMLStreamWriter writer, final String elementName,
-        final ReadableDateTime elementContent, final String namespaceUri,
+        final DateTime elementContent, final String namespaceUri,
         final boolean createEmpty) throws XMLStreamException {
 
         if (elementContent == null) {
@@ -1273,7 +1272,7 @@ public final class XmlUtility {
      *             Thrown in case of an xml stream error.
      */
     public static void addLastModificationDateAttribute(
-        final XMLStreamWriter writer, final ReadableDateTime modifiedDate)
+        final XMLStreamWriter writer, final DateTime modifiedDate)
         throws XMLStreamException {
 
         if (modifiedDate == null) {
@@ -1414,7 +1413,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             Thrown if schema can not be parsed.
      */
-    private static Schema getSchema(final String schemaUri) throws IOException,
+    public static Schema getSchema(final String schemaUri) throws IOException,
         WebserverSystemException {
 
         Schema schema = SCHEMA_CACHE.get(schemaUri);
@@ -1458,7 +1457,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             Thrown if schema can not be parsed.
      */
-    private static Validator getValidator(final String schemaUri)
+    public static Validator getValidator(final String schemaUri)
         throws IOException, WebserverSystemException {
 
         return getSchema(schemaUri).newValidator();
@@ -1511,8 +1510,8 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             Thrown in any other case.
      */
-    private static void validate(
-            final ByteArrayInputStream byteArrayInputStream, final String schemaUri)
+    public static void validate(
+        final ByteArrayInputStream byteArrayInputStream, final String schemaUri)
         throws XmlCorruptedException, XmlSchemaValidationException,
         WebserverSystemException {
 
@@ -1749,7 +1748,7 @@ public final class XmlUtility {
      *            The XML representation of the resource to get the objid from.
      * @return Returns the extracted objid or <code>null</code>.
      */
-    public static String getIdFromXml(final CharSequence resourceXml) {
+    public static String getIdFromXml(final String resourceXml) {
 
         final Matcher matcher = PATTERN_OBJID_FROM_XML.matcher(resourceXml);
         if (matcher.find()) {
@@ -1820,7 +1819,7 @@ public final class XmlUtility {
      *            The objid.
      * @return The number of version or null.
      */
-    public static String getVersionNumberFromObjid(final CharSequence objid) {
+    public static String getVersionNumberFromObjid(final String objid) {
         String version = null;
         final Matcher m = PATTERN_VERSION_NUMBER.matcher(objid);
         if (m.find()) {
@@ -1838,7 +1837,7 @@ public final class XmlUtility {
      *            The XML representation of the resource to get the name from.
      * @return Returns the extracted name (trimmed) or <code>null</code>.
      */
-    public static String extractNameFromXml(final CharSequence resourceXml) {
+    public static String extractNameFromXml(final String resourceXml) {
 
         final Matcher matcher = PATTERN_NAME_FROM_XML.matcher(resourceXml);
         if (matcher.find()) {
@@ -2843,23 +2842,23 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    public static String getSchemaLocation(final String commonPart)
+    private static String getSchemaLocation(final String commonPart)
         throws WebserverSystemException {
 
         String result;
 
         if (UserContext.isRestAccess()) {
-            result = REST_SCHEMA_LOCATIONS.get(commonPart);
+            result = restSchemaLocations.get(commonPart);
             if (result == null) {
                 result = getSchemaBaseUrl() + "rest/" + commonPart;
-                REST_SCHEMA_LOCATIONS.put(commonPart, result);
+                restSchemaLocations.put(commonPart, result);
             }
         }
         else {
-            result = SOAP_SCHEMA_LOCATIONS.get(commonPart);
+            result = soapSchemaLocations.get(commonPart);
             if (result == null) {
                 result = getSchemaBaseUrl() + "soap/" + commonPart;
-                SOAP_SCHEMA_LOCATIONS.put(commonPart, result);
+                soapSchemaLocations.put(commonPart, result);
             }
         }
         return result;
@@ -2976,7 +2975,7 @@ public final class XmlUtility {
     public static String replaceNamespacePrefix(
         final String xml, final String currentPrefix, final String newPrefix) {
         String result = xml;
-        if (result.contains(currentPrefix)) {
+        if (result.indexOf(currentPrefix) != -1) {
             result =
                 result.replaceAll("xmlns:" + currentPrefix, "xmlns:"
                     + newPrefix);
@@ -3227,7 +3226,7 @@ public final class XmlUtility {
      *             If an error occurs.
      */
     public static String createDC(
-        final String nsUri, final String mdRecordXml, final CharSequence objID,
+        final String nsUri, final String mdRecordXml, final String objID,
         final String contentModelID) throws WebserverSystemException {
 
         String result = null;
@@ -3235,7 +3234,7 @@ public final class XmlUtility {
         Transformer t = null;
         String transformerKey = nsUri + ';' + contentModelID;
         try {
-            t = (Transformer) TRANSFORMER_POOL.borrowObject(transformerKey);
+            t = (Transformer) transformerPool.borrowObject(transformerKey);
             if (objID != null && objID.length() > 0) {
                 t.setParameter("ID", objID);
             }
@@ -3255,7 +3254,7 @@ public final class XmlUtility {
         }
         finally {
             try {
-                TRANSFORMER_POOL.returnObject(transformerKey, t);
+                transformerPool.returnObject(transformerKey, t);
             }
             catch (final Exception e) {
                 throw new WebserverSystemException(
@@ -3368,6 +3367,7 @@ public final class XmlUtility {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
+        // filter = fh.getRules();
         // we need offset, limit etc. not in the map (ask TTE)
         filter.put("filter", fh.getRules());
         filter.put("limit", fh.getLimit());

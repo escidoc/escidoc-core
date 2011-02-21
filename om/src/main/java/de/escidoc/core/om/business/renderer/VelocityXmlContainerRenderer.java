@@ -33,7 +33,6 @@ import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Container;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -197,6 +196,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         String result;
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
+        // addNamespaceValues(values);
         values.put("isRootRelations", XmlTemplateProvider.TRUE);
 
         commonRenderer.addRelationsValues(container.getRelations(),
@@ -267,7 +267,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             }
 
             Iterator<String> idIter = ids.iterator();
-            Collection<Map<String, String>> entries =
+            List<Map<String, String>> entries =
                 new ArrayList<Map<String, String>>(ids.size());
             while (idIter.hasNext()) {
                 Map<String, String> entry = new HashMap<String, String>(THREE);
@@ -293,7 +293,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    private static void addNamespaceValues(final Map<String, Object> values)
+    private void addNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("containerNamespacePrefix",
@@ -326,8 +326,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static void addPropertiesValus(
-            final Map<String, Object> values, final Container container)
+    private void addPropertiesValus(
+        final Map<String, Object> values, final Container container)
         throws SystemException {
 
         Map<String, String> properties = container.getResourceProperties();
@@ -393,6 +393,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         }
 
         final String currentVersionId = container.getFullId();
+        // final StringBuffer versionIdBase =
+        // new StringBuffer(container.getId()).append(":");
+
         String latestVersionNumber =
             properties.get(PropertyMapKeys.LATEST_VERSION_NUMBER);
         String curVersionNumber = container.getVersionId();
@@ -426,6 +429,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         String versionPid = container.getVersionPid();
         // container
+        // .getVersionData().get(Elements.ELEMENT_WOV_VERSION_PID);
         if ((versionPid != null) && versionPid.length() != 0) {
             values.put("containerCurrentVersionPID", versionPid);
         }
@@ -445,12 +449,20 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 }
             }
 
+            // values.put("containerCurrentVersionValidStatus", container
+            // .getLastVersionData().get(
+            // TripleStoreUtility.PROP_LATEST_VERSION_VALID_STATUS));
+
         }
         else {
             values.put(
                 "containerCurrentVersionStatus",
                 container.getResourceProperties().get(
                     PropertyMapKeys.CURRENT_VERSION_STATUS));
+
+            // values.put("containerCurrentVersionValidStatus", container
+            // .getVersionData()
+            // .get(Elements.ELEMENT_WOV_VERSION_VALID_STATUS));
 
             values.put("containerCurrentVersionComment", XmlUtility
                 .escapeForbiddenXmlCharacters(container
@@ -543,6 +555,10 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("structMapTitle", "StructMap of Container");
         values.put("structMapHref", container.getHref() + "/struct-map");
 
+        // values.put("structmapNamespacePrefix",
+        // Constants.STRUCT_MAP_PREFIX);
+        // values.put("structmapNamespace",
+        // Constants.STRUCT_MAP_NAMESPACE_URI);
         try {
             addMemberRefs(container, values);
         }
@@ -558,16 +574,16 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException
      * @throws MissingMethodParameterException
      */
-    private static void addMemberRefs(
-            final Container container, final Map<String, Object> values)
+    private void addMemberRefs(
+        final Container container, final Map<String, Object> values)
         throws SystemException, MissingMethodParameterException {
 
         UserFilter ufilter = new UserFilter();
 
         List<String> ids = ufilter.getMemberRefList(container);
         Iterator<String> idIter = ids.iterator();
-        Collection<Map<String, String>> items = new ArrayList<Map<String, String>>();
-        Collection<Map<String, String>> containers =
+        List<Map<String, String>> items = new ArrayList<Map<String, String>>();
+        List<Map<String, String>> containers =
             new ArrayList<Map<String, String>>();
 
         while (idIter.hasNext()) {
@@ -601,6 +617,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                         + "write member entry to struct-map for "
                         + "object with unknown type: " + id + '.';
                 log.error(msg);
+                // throw new IntegritySystemException(msg);
             }
 
         }
@@ -623,8 +640,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *             If an error occurs.
      * @oum
      */
-    private static void addResourcesValues(
-            final FedoraResource container, final Map<String, Object> values)
+    private void addResourcesValues(
+        final Container container, final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
@@ -711,9 +728,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * 
      * @return Returns the XML representation of the metadata records.
      */
-    public final String renderMetadataRecord(
-            final Container container, final Datastream mdRecord,
-            final boolean isRootMdRecord) throws EncodingSystemException,
+    public String renderMetadataRecord(
+        final Container container, final Datastream mdRecord,
+        final boolean isRootMdRecord) throws EncodingSystemException,
         FedoraSystemException, WebserverSystemException {
 
         if (mdRecord.isDeleted()) {

@@ -61,7 +61,7 @@ public class PrepareHandler extends DefaultHandler {
 
     private int componentNumber = 0;
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(PrepareHandler.class.getName());
 
     public PrepareHandler(StaxParser parser) {
@@ -82,7 +82,7 @@ public class PrepareHandler extends DefaultHandler {
 
             this.storageValue = getStorageAttribute(element);
             inContent = true;
-            Map<String, String> componentBinary =
+            HashMap<String, String> componentBinary =
                 new HashMap<String, String>();
             componentBinary.put("storage", this.storageValue);
             binaryData.put(componentNumber, componentBinary);
@@ -93,6 +93,33 @@ public class PrepareHandler extends DefaultHandler {
                 Attribute href = element.getAttribute(indexOfHref);
                 this.uploadUrl = href.getValue();
             }
+            // int indexOfTitle =
+            // element.indexOfAttribute(Constants.XLINK_URI, "title");
+
+            // if (indexOfTitle != (-1)) {
+            // String message =
+            // "Read only attribute \"title\" of the " + "element "
+            // + element.getLocalName()
+            // + " may not exist while create";
+            // log.error(message);
+            // // no error (FRS)
+            // // throw new ReadonlyAttributeViolationException(message);
+            // }
+            // int indexOfType =
+            // element.indexOfAttribute(Constants.XLINK_URI, "type");
+            // if (indexOfType == (-1)) {
+            // Attribute type =
+            // new Attribute("type", Constants.XLINK_URI,
+            // Constants.XLINK_PREFIX, Constants.XLINK_TYPE_SIMPLE);
+            // element.addAttribute(type);
+            // }
+            // else {
+            // Attribute type = element.getAttribute(indexOfType);
+            // String typeValue = type.getValue();
+            // if (!typeValue.equals(Constants.XLINK_TYPE_SIMPLE)) {
+            // type.setValue(Constants.XLINK_TYPE_SIMPLE);
+            // }
+            // }
 
         }
         return null;
@@ -104,7 +131,7 @@ public class PrepareHandler extends DefaultHandler {
 
         if (inContent) {
 
-            Map<String, String> componentBinary =
+            HashMap<String, String> componentBinary =
                 (HashMap<String, String>) binaryData.get(componentNumber);
             if (this.content == null) {
                 if ((this.uploadUrl != null) && (this.uploadUrl.length() > 0)) {
@@ -113,7 +140,7 @@ public class PrepareHandler extends DefaultHandler {
                     componentBinary.put("uploadUrl", this.uploadUrl);
                 }
                 else {
-                    LOGGER.error("the content of component with id "
+                    log.error("the content of component with id "
                         + componentNumber + " is missing");
                     throw new MissingContentException(
                         "the content of component with id " + componentNumber
@@ -147,10 +174,15 @@ public class PrepareHandler extends DefaultHandler {
                     String message =
                         "The component section 'content' with the attribute 'storage' set to 'external-url' "
                             + "or 'external-managed' may not have an inline content.";
-                    LOGGER.error(message);
+                    log.error(message);
                     throw new InvalidContentException(message);
                 }
-
+                // if (uploadUrl != null) {
+                // throw new ReadonlyAttributeViolationException(
+                // "Read only attribute \"href\" of the " + "element "
+                // + element.getLocalName()
+                // + " may not exist while create");
+                // }
                 this.content = s;
                 // FIXME use constant as in ItemHandlerCreate.handleComponent()
                 componentBinary.put("content", s);
@@ -170,7 +202,7 @@ public class PrepareHandler extends DefaultHandler {
      * @throws InvalidContentException
      *             Thrown if attribute Storage not exists.
      */
-    private static String getStorageAttribute(final StartElement element)
+    private String getStorageAttribute(final StartElement element)
         throws InvalidContentException {
 
         int indexOfStorage = element.indexOfAttribute(null, "storage");
@@ -179,7 +211,7 @@ public class PrepareHandler extends DefaultHandler {
             String message =
                 "The attribute 'storage' of the element '"
                     + element.getLocalName() + "' is missing.";
-            LOGGER.error(message);
+            log.error(message);
             throw new InvalidContentException(message);
         }
 

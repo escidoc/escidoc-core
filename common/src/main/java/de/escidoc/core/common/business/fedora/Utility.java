@@ -116,7 +116,7 @@ import java.util.regex.Pattern;
  */
 public class Utility {
 
-    private static final AppLogger LOGGER = new AppLogger(Utility.class.getName());
+    private static final AppLogger log = new AppLogger(Utility.class.getName());
 
     private StagingFileHandlerInterface stagingFileHandler;
 
@@ -136,7 +136,7 @@ public class Utility {
      *            Predicate.
      * @return split predicate
      */
-    public static String[] splitPredicate(final String predicate) {
+    public String[] splitPredicate(final String predicate) {
         String[] result = new String[2];
         int index = predicate.lastIndexOf('/');
         if (index != -1) {
@@ -166,7 +166,7 @@ public class Utility {
         append = append.replace("\\", "/");
         if (!result.endsWith("/")) {
             if (!append.startsWith("/")) {
-                result += '/' + append;
+                result += "/" + append;
             }
             else {
                 result += append;
@@ -216,13 +216,13 @@ public class Utility {
      * @throws LockingException
      *             Thrown if the object is locked.
      */
-    public static final boolean checkUnlocked(
-            final boolean locked, final String method, final String label,
-            final String lockOwner) throws LockingException {
+    public boolean checkUnlocked(
+        final boolean locked, final String method, final String label,
+        final String lockOwner) throws LockingException {
 
         if (locked) {
             throw new LockingException(method + " failed!" + label
-                + " is locked by " + lockOwner + '.');
+                + " is locked by " + lockOwner + ".");
         }
         return true;
     }
@@ -243,9 +243,9 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    public static final void checkOptimisticLockingCriteria(
-            final DateTime fedoraLatestVersionDate,
-            final DateTime updateLatestVersionDate, final String label)
+    public void checkOptimisticLockingCriteria(
+        final DateTime fedoraLatestVersionDate,
+        final DateTime updateLatestVersionDate, final String label)
         throws OptimisticLockingException, WebserverSystemException {
 
         if (!fedoraLatestVersionDate.equals(updateLatestVersionDate)) {
@@ -260,7 +260,7 @@ public class Utility {
                     + " does not match most recent version (requested:"
                     + updateLatestVersionDate + " saved:"
                     + fedoraLatestVersionDate + ")! Changes are not permitted.";
-            LOGGER.info(message);
+            log.info(message);
             throw new OptimisticLockingException(message);
         }
     }
@@ -282,9 +282,9 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    public final boolean checkOptimisticLockingCriteria(
-            final String fedoraLatestVersionDate,
-            final String updateLatestVersionDate, final String label)
+    public boolean checkOptimisticLockingCriteria(
+        final String fedoraLatestVersionDate,
+        final String updateLatestVersionDate, final String label)
         throws OptimisticLockingException, WebserverSystemException {
 
         if ((fedoraLatestVersionDate != null)
@@ -306,7 +306,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             If the current user could not be retrieved.
      */
-    public static final String[] getCurrentUser() throws WebserverSystemException {
+    public String[] getCurrentUser() throws WebserverSystemException {
 
         String[] result = new String[2];
         if ((UserContext.getId() == null)
@@ -331,7 +331,7 @@ public class Utility {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    public final boolean hasSameContext(final String id0, final String id1)
+    public boolean hasSameContext(final String id0, final String id1)
         throws SystemException {
         String context0 = tripleStoreUtility.getContext(id0);
         String context1 = tripleStoreUtility.getContext(id1);
@@ -363,7 +363,7 @@ public class Utility {
      * @throws MissingMethodParameterException
      *             If the param is null.
      */
-    public static final void checkNotNull(final Object param, final String label)
+    public void checkNotNull(final Object param, final String label)
         throws MissingMethodParameterException {
         if (param == null) {
             throw new MissingMethodParameterException(label
@@ -405,7 +405,7 @@ public class Utility {
      *             If the container does not exist or if the object is no
      *             container.
      */
-    public final void checkIsContainer(final String id) throws SystemException,
+    public void checkIsContainer(final String id) throws SystemException,
         ContainerNotFoundException {
 
         try {
@@ -426,7 +426,7 @@ public class Utility {
      * @throws ContextNotFoundException
      *             If the context does not exist or if the object is no context.
      */
-    public final void checkIsContext(final String id) throws SystemException,
+    public void checkIsContext(final String id) throws SystemException,
         ContextNotFoundException {
 
         try {
@@ -472,7 +472,7 @@ public class Utility {
      * @throws WebserverSystemException
      * @throws TripleStoreSystemException
      */
-    public final void checkIsContentModel(final String id)
+    public void checkIsContentModel(final String id)
         throws ContentModelNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
 
@@ -499,7 +499,7 @@ public class Utility {
      *             Thrown if there is an integrity error with the addressed
      *             object.
      */
-    public final void checkIsItem(final String id) throws ItemNotFoundException,
+    public void checkIsItem(final String id) throws ItemNotFoundException,
         TripleStoreSystemException, WebserverSystemException,
         IntegritySystemException {
 
@@ -527,7 +527,7 @@ public class Utility {
      *             Thrown if there is an integrity error with the addressed
      *             object.
      */
-    public final void checkIsRelation(final String id)
+    public void checkIsRelation(final String id)
         throws ContentRelationNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
 
@@ -550,7 +550,7 @@ public class Utility {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    public final void checkIsOrganizationalUnit(final String id)
+    public void checkIsOrganizationalUnit(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         try {
@@ -577,7 +577,7 @@ public class Utility {
      * @throws IntegritySystemException
      *             Thrown if no object type is found for an existing object.
      */
-    private void checkIsOfObjectType(final String id, final String type)
+    public void checkIsOfObjectType(final String id, final String type)
         throws ResourceNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
 
@@ -599,7 +599,7 @@ public class Utility {
         }
         else if (!objectType.equals(type)) {
             throw new ResourceNotFoundException("Object with id "
-                + idWithoutVersionNumber + " is not a " + type + '!');
+                + idWithoutVersionNumber + " is not a " + type + "!");
         }
     }
 
@@ -617,7 +617,7 @@ public class Utility {
      * @throws SystemException
      *             Thrown in case of internal failure.
      */
-    public final void checkSameContext(final String id, final String xmlData)
+    public void checkSameContext(final String id, final String xmlData)
         throws InvalidContextException, SystemException {
 
         // TODO This is a quick fix hack. Change to StAX parser. And, may be,
@@ -678,7 +678,7 @@ public class Utility {
     public String getPath(final String id, final String newVersionNumber)
         throws WebserverSystemException, TripleStoreSystemException {
 
-        StringBuilder result = new StringBuilder("/");
+        StringBuffer result = new StringBuffer("/");
 
         String objectType = tripleStoreUtility.getObjectType(id);
         if (Constants.ITEM_OBJECT_TYPE.equals(objectType)
@@ -688,14 +688,14 @@ public class Utility {
         }
         else {
             throw new WebserverSystemException(
-                "Can not create path for object-type " + objectType + '.');
+                "Can not create path for object-type " + objectType + ".");
         }
 
         result.append(objectType);
-        result.append('/');
+        result.append("/");
         result.append(id);
         if (newVersionNumber != null) {
-            result.append(':');
+            result.append(":");
             result.append(newVersionNumber);
         }
 
@@ -717,9 +717,9 @@ public class Utility {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    public final void makeVersion(
-            final String versionComment, final String newStatus,
-            final VersionableResource resource, final FedoraUtility fedoraUtility)
+    public void makeVersion(
+        final String versionComment, final String newStatus,
+        final VersionableResource resource, final FedoraUtility fedoraUtility)
         throws SystemException {
 
         boolean release = false;
@@ -988,11 +988,11 @@ public class Utility {
      * @throws SystemException
      *             Thrown in case of internal failure.
      */
-    private static void updateElementsInRelsExt(
-            final Map<String, StartElementWithChildElements> updateElementsRelsExt,
-            final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt,
-            final FedoraResource resource, final String currentPublicStatus,
-            final boolean release) throws SystemException {
+    private void updateElementsInRelsExt(
+        final Map<String, StartElementWithChildElements> updateElementsRelsExt,
+        final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt,
+        final VersionableResource resource, final String currentPublicStatus,
+        final boolean release) throws SystemException {
 
         StaxParser sp = new StaxParser();
         ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
@@ -1016,16 +1016,16 @@ public class Utility {
                     new String(resource.getRelsExt().getStream(),
                         XmlUtility.CHARACTER_ENCODING);
                 relsExtS =
-                    relsExtS.replaceFirst("(</rdf:Description>)", '<'
-                        + Constants.RELEASE_NS_PREFIX + ':'
+                    relsExtS.replaceFirst("(</rdf:Description>)", "<"
+                        + Constants.RELEASE_NS_PREFIX + ":"
                         + Elements.ELEMENT_NUMBER + " xmlns:"
                         + Constants.RELEASE_NS_PREFIX + "=\""
                         + Constants.RELEASE_NS_URI + "\"/>\n<"
-                        + Constants.RELEASE_NS_PREFIX + ':'
+                        + Constants.RELEASE_NS_PREFIX + ":"
                         + Elements.ELEMENT_DATE + " xmlns:"
                         + Constants.RELEASE_NS_PREFIX + "=\""
                         + Constants.RELEASE_NS_URI + "\">---</"
-                        + Constants.RELEASE_NS_PREFIX + ':'
+                        + Constants.RELEASE_NS_PREFIX + ":"
                         + Elements.ELEMENT_DATE + ">\n" + "$1");
                 relsExtBA =
                     new ByteArrayInputStream(
@@ -1074,7 +1074,7 @@ public class Utility {
      * @throws TripleStoreSystemException
      */
     private String createVersionXml(
-        final FedoraResource resource,
+        final VersionableResource resource,
         final Map<String, String> resBaseData,
         final Map<String, String> currentVersionProperties,
         final int newVersionNumberInt, final String comment)
@@ -1088,12 +1088,12 @@ public class Utility {
             Constants.WOV_NAMESPACE_PREFIX);
         newVersionEntry.put(XmlTemplateProvider.VAR_NAMESPACE,
             Constants.WOV_NAMESPACE_URI);
-        newVersionEntry.put(XmlTemplateProvider.OBJID, resource.getId() + ':'
+        newVersionEntry.put(XmlTemplateProvider.OBJID, resource.getId() + ":"
             + Integer.toString(newVersionNumberInt));
         newVersionEntry.put(XmlTemplateProvider.TITLE,
             "Version " + Integer.toString(newVersionNumberInt));
 
-        newVersionEntry.put(XmlTemplateProvider.HREF, resource.getHref() + ':'
+        newVersionEntry.put(XmlTemplateProvider.HREF, resource.getHref() + ":"
             + Integer.toString(newVersionNumberInt));
         newVersionEntry.put(XmlTemplateProvider.VERSION_NUMBER,
             Integer.toString(newVersionNumberInt));
@@ -1123,11 +1123,11 @@ public class Utility {
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_TYPE, "update");
         newVersionEntry.put(
             XmlTemplateProvider.VAR_EVENT_XMLID,
-                'v' + Integer.toString(newVersionNumberInt) + 'e'
+            "v" + Integer.toString(newVersionNumberInt) + "e"
                 + System.currentTimeMillis());
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE,
             resBaseData.get("resourceBaseUrl") + resource.getId()
-                + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + '#'
+                + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY + "#"
                 + newVersionEntry.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         newVersionEntry.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_URL_RELATIVE);
@@ -1166,26 +1166,26 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    private static String createEventXml(
-            final String resourceId, final String resourceBaseUrl,
-            final String currentUserName, final String currentUserId,
-            final String latestModificationTimestamp, final String newStatus,
-            final String comment, final Map<String, String> currentVersionProperties)
+    private String createEventXml(
+        final String resourceId, final String resourceBaseUrl,
+        final String currentUserName, final String currentUserId,
+        final String latestModificationTimestamp, final String newStatus,
+        final String comment, final Map<String, String> currentVersionProperties)
         throws WebserverSystemException {
 
         HashMap<String, String> eventValues = new HashMap<String, String>();
         eventValues.put(XmlTemplateProvider.VAR_EVENT_TYPE, newStatus);
         eventValues.put(
             XmlTemplateProvider.VAR_EVENT_XMLID,
-                'v'
+            "v"
                 + currentVersionProperties
-                    .get(PropertyMapKeys.LATEST_VERSION_NUMBER) + 'e'
+                    .get(PropertyMapKeys.LATEST_VERSION_NUMBER) + "e"
                 + System.currentTimeMillis());
         eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_TYPE,
             Constants.PREMIS_ID_TYPE_URL_RELATIVE);
         eventValues.put(XmlTemplateProvider.VAR_EVENT_ID_VALUE, resourceBaseUrl
             + resourceId + "/resources/" + Elements.ELEMENT_WOV_VERSION_HISTORY
-            + '#' + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
+            + "#" + eventValues.get(XmlTemplateProvider.VAR_EVENT_XMLID));
         eventValues.put(XmlTemplateProvider.TIMESTAMP,
             latestModificationTimestamp);
         eventValues.put(XmlTemplateProvider.VAR_COMMENT,
@@ -1214,9 +1214,9 @@ public class Utility {
      *            Comment for version.
      * @return Comment
      */
-    private static String createComment(
-            final FedoraResource resource, final String newStatus,
-            final String versionComment) {
+    private String createComment(
+        final VersionableResource resource, final String newStatus,
+        final String versionComment) {
         String comment = versionComment;
         if (versionComment == null) {
             if (newStatus != null) {
@@ -1226,8 +1226,8 @@ public class Utility {
                 comment = "New version created";
             }
             comment +=
-                " for " + resource.getClass().getSimpleName() + ' '
-                    + resource.getId() + '.';
+                " for " + resource.getClass().getSimpleName() + " "
+                    + resource.getId() + ".";
         }
         return comment;
     }
@@ -1237,7 +1237,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown if current user is not set.
      */
-    public final String getCurrentUserId() throws WebserverSystemException {
+    public String getCurrentUserId() throws WebserverSystemException {
         return getCurrentUser()[0];
     }
 
@@ -1246,7 +1246,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown if current user is not set.
      */
-    public final String getCurrentUserRealName() throws WebserverSystemException {
+    public String getCurrentUserRealName() throws WebserverSystemException {
         return getCurrentUser()[1];
     }
 
@@ -1259,10 +1259,10 @@ public class Utility {
      * @throws SystemException
      *             Thrown if anything fails.
      */
-    private static Map<String, String> getResourceBaseData(
-            final VersionableResource resource) throws SystemException {
+    private Map<String, String> getResourceBaseData(
+        final VersionableResource resource) throws SystemException {
 
-        Map<String, String> baseData = new HashMap<String, String>();
+        HashMap<String, String> baseData = new HashMap<String, String>();
         if (resource instanceof Item) {
             baseData.put("resourceBaseUrl", Constants.ITEM_URL_BASE);
             baseData.put("resourcePrefix",
@@ -1300,8 +1300,8 @@ public class Utility {
         return (baseData);
     }
 
-    private static void prependVersion(
-            final VersionableResource resource, final String versionEntry)
+    private void prependVersion(
+        final VersionableResource resource, final String versionEntry)
         throws EncodingSystemException, FedoraSystemException,
         IntegritySystemException {
 
@@ -1333,10 +1333,10 @@ public class Utility {
         }
     }
 
-    private static void writeEvent(
-            final VersionableResource resource, final String newEventEntry,
-            final Map<String, StartElementWithChildElements> updateElementsWOV,
-            final List<StartElementWithChildElements> elementsToAdd)
+    private void writeEvent(
+        final VersionableResource resource, final String newEventEntry,
+        final Map<String, StartElementWithChildElements> updateElementsWOV,
+        final List<StartElementWithChildElements> elementsToAdd)
         throws WebserverSystemException {
 
         StaxParser sp = new StaxParser();
@@ -1358,6 +1358,7 @@ public class Utility {
             sp.clearHandlerChain();
             ByteArrayOutputStream newWovStream =
                 addNewSubtreesHandler.getOutputStreams();
+            // String debug = newWovStream.toString();
             String newWovString =
                 newWovStream
                     .toString(XmlUtility.CHARACTER_ENCODING).replaceFirst(
@@ -1426,8 +1427,8 @@ public class Utility {
             new ByteArrayInputStream(relsExtContent);
 
         StaxParser sp = new StaxParser();
-        if ((addToRelsExt != null) && (!addToRelsExt.isEmpty())) {
-            if ((updateProperties != null) && (!updateProperties.isEmpty())) {
+        if ((addToRelsExt != null) && (addToRelsExt.size() > 0)) {
+            if ((updateProperties != null) && (updateProperties.size() > 0)) {
                 updatedRelsExtProperties = true;
                 ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
                     new ItemRelsExtUpdateHandler(updateProperties, sp);
@@ -1452,7 +1453,7 @@ public class Utility {
                 sp.parse(relsExtIs);
             }
             catch (XMLStreamException e) {
-                LOGGER.error(e.getMessage());
+                log.error(e.getMessage());
                 throw new XmlParserSystemException(e.getMessage(), e);
             }
             catch (NullPointerException e) {
@@ -1467,12 +1468,12 @@ public class Utility {
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
 
-        if ((deleteFromRelsExt != null) && (!deleteFromRelsExt.isEmpty())) {
+        if ((deleteFromRelsExt != null) && (deleteFromRelsExt.size() > 0)) {
 
             if (relsExtNewBytes != null) {
                 relsExtIs = new ByteArrayInputStream(relsExtNewBytes);
             }
-            if ((updateProperties != null) && (!updateProperties.isEmpty())
+            if ((updateProperties != null) && (updateProperties.size() > 0)
                 && !updatedRelsExtProperties) {
                 updatedRelsExtProperties = true;
                 ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
@@ -1495,7 +1496,7 @@ public class Utility {
                 sp.parse(relsExtIs);
             }
             catch (XMLStreamException e) {
-                LOGGER.error(e.getMessage());
+                log.error(e.getMessage());
                 throw new XmlParserSystemException(e.getMessage(), e);
             }
             catch (NullPointerException e) {
@@ -1511,7 +1512,7 @@ public class Utility {
                 (ByteArrayOutputStream) streams.get("RDF");
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
-        if ((updateProperties != null) && (!updateProperties.isEmpty())
+        if ((updateProperties != null) && (updateProperties.size() > 0)
             && !updatedRelsExtProperties) {
             ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
                 new ItemRelsExtUpdateHandler(updateProperties, sp);
@@ -1571,8 +1572,8 @@ public class Utility {
      *             In case of an internal error during storing the content.
      * @om
      */
-    public final String upload(
-            final byte[] streamContent, final String fileName, final String mimeType)
+    public String upload(
+        final byte[] streamContent, final String fileName, final String mimeType)
         throws FileSystemException {
 
         EscidocBinaryContent content = new EscidocBinaryContent();
@@ -1650,13 +1651,13 @@ public class Utility {
      *             Thrown if parsing last modification or retrieving xml:base
      *             failed.
      */
-    public final String prepareReturnXmlFromLastModificationDate(final String lastModificationDate)
+    public String prepareReturnXmlFromLastModificationDate(final String lastModificationDate)
         throws SystemException {
         DateTime t = new DateTime(lastModificationDate, DateTimeZone.UTC);
         return prepareReturnXml(t, null);
     }
 
-    public final String prepareReturnXml(final String content) throws SystemException {
+    public String prepareReturnXml(final String content) throws SystemException {
        return prepareReturnXml(null, content);
     }
 
@@ -1674,7 +1675,7 @@ public class Utility {
      *             Thrown if parsing last modification or retrieving xml:base
      *             failed.
      */
-    public static final String prepareReturnXml(final DateTime lastModificationDate, final String content)
+    public String prepareReturnXml(final DateTime lastModificationDate, final String content)
         throws SystemException {
 
         DateTime t = lastModificationDate;
@@ -1691,7 +1692,7 @@ public class Utility {
                 + "\" "
                 + "last-modification-date=\""
                 + t.withZone(DateTimeZone.UTC).toString(
-                    Constants.TIMESTAMP_FORMAT) + '\"';
+                    Constants.TIMESTAMP_FORMAT) + "\"";
 
         if (content == null) {
             xml += " />";
@@ -1752,6 +1753,9 @@ public class Utility {
             }
             else {
                 local = new URI(url.replaceFirst("http[s]?://[^/]+", ""));
+                // if (url.startsWith(escidocBaseUrl)) {
+                // checkESciDocLocalURL(local);
+                // }
                 fq = new URI(url);
             }
 
@@ -1776,7 +1780,9 @@ public class Utility {
         catch (URISyntaxException e) {
             throw new InvalidContentException("No valid URL.", e);
         }
-
+        // catch (FedoraSystemException e) {
+        // throw new WebserverSystemException(e);
+        // }
     }
 
     /**
@@ -1786,7 +1792,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown if obtaining from properties failed.
      */
-    public static final String getBuildNumber() throws WebserverSystemException {
+    public String getBuildNumber() throws WebserverSystemException {
         String buildNumber;
         try {
             buildNumber =
@@ -1797,7 +1803,7 @@ public class Utility {
             String errorMsg =
                 "Failed to retrieve configuration parameter "
                     + EscidocConfiguration.FEDORA_URL;
-            LOGGER.error(errorMsg, e);
+            log.error(errorMsg, e);
             throw new WebserverSystemException(errorMsg, e);
         }
         return buildNumber;
@@ -1817,7 +1823,7 @@ public class Utility {
             String msg =
                 "The local URL '" + url
                     + "' does not point into an eSciDoc Core component.";
-            LOGGER.debug(msg);
+            log.debug(msg);
             throw new InvalidContentException(msg);
         }
 

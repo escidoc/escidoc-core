@@ -259,7 +259,7 @@ public class RoleGrantFilter extends CqlFilter {
      * 
      * @return list of the collected user group ids
      */
-    public final Set<String> getGroupIds() {
+    public Set<String> getGroupIds() {
         return groupIds;
     }
 
@@ -269,7 +269,7 @@ public class RoleGrantFilter extends CqlFilter {
      * 
      * @return all property names for that filter
      */
-    public final Set<String> getPropertyNames() {
+    public Set<String> getPropertyNames() {
         Set<String> result = new TreeSet<String>();
         result.addAll(super.getPropertyNames());
         return result;
@@ -280,7 +280,7 @@ public class RoleGrantFilter extends CqlFilter {
      * 
      * @return list of the collected user account ids
      */
-    public final Set<String> getUserIds() {
+    public Set<String> getUserIds() {
         return userIds;
     }
 
@@ -290,7 +290,7 @@ public class RoleGrantFilter extends CqlFilter {
      * @param groupIds
      *            list of user groups.
      */
-    public final void setGroupIds(final Set<String> groupIds) {
+    public void setGroupIds(final Set<String> groupIds) {
         this.groupIds = groupIds;
     }
 
@@ -312,7 +312,7 @@ public class RoleGrantFilter extends CqlFilter {
      *             thrown if the given search query could not be translated into
      *             a SQL query
      */
-    public final DetachedCriteria toSql() throws InvalidSearchQueryException {
+    public DetachedCriteria toSql() throws InvalidSearchQueryException {
         DetachedCriteria result = super.toSql();
 
         // users

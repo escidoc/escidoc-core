@@ -100,7 +100,7 @@ public class RemoteStatelessEjbProxyFactoryBean
      * @common
      */
     @Override
-    public final void afterPropertiesSet() throws NamingException {
+    public void afterPropertiesSet() throws NamingException {
 
         try {
             this.setJndiEnvironment(EjbFactoryBeanHelper
@@ -116,6 +116,10 @@ public class RemoteStatelessEjbProxyFactoryBean
                 PATTERN_INTERFACE
                     .matcher(getBusinessInterface().getName()).replaceAll(
                         "Remote")).replaceAll("ejb.interfaces");
+
+        // final String className =
+        // method.getDeclaringClass().getName().replaceAll("Interface",
+        // "Remote").replaceAll("service.interfaces", "ejb.interfaces");
         try {
             extendedInterface = Class.forName(className);
         }
@@ -139,7 +143,7 @@ public class RemoteStatelessEjbProxyFactoryBean
      * @common
      */
     @Override
-    public final Object invoke(final MethodInvocation arg0) throws Throwable {
+    public Object invoke(final MethodInvocation arg0) throws Throwable {
 
         if (logger.isDebugEnabled()) {
             logger.debug("invoke started");

@@ -43,7 +43,6 @@ import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -133,7 +132,7 @@ public class MultipleExtractor extends WriteHandler {
 
     private StartElementWithChildElements elementToDelete = null;
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(MultipleExtractor.class.getName());
 
     /**
@@ -189,7 +188,7 @@ public class MultipleExtractor extends WriteHandler {
      * 
      * @return outputStreams
      */
-    public final Map<String, Object> getOutputStreams() {
+    public Map<String, Object> getOutputStreams() {
         return this.outputStreams;
     }
 
@@ -199,7 +198,7 @@ public class MultipleExtractor extends WriteHandler {
      * @param pids
      *            List with ids of components.
      */
-    public final void setPids(final List<String> pids) {
+    public void setPids(final List<String> pids) {
         this.pids = pids;
     }
 
@@ -209,8 +208,8 @@ public class MultipleExtractor extends WriteHandler {
      * @param elements
      *            Elements which are to remove.
      */
-    public final void removeElements(
-            final Map<String, List<StartElementWithChildElements>> elements) {
+    public void removeElements(
+        final Map<String, List<StartElementWithChildElements>> elements) {
         // TODO extend this to List<StartElement>
         this.removeElements = elements;
     }
@@ -225,7 +224,7 @@ public class MultipleExtractor extends WriteHandler {
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws InvalidContentException, WebserverSystemException {
         NamespaceContext nscontext = element.getNamespaceContext();
         this.increaseDeepLevel();
@@ -326,6 +325,7 @@ public class MultipleExtractor extends WriteHandler {
                 .indexOfAttribute(Constants.RDF_NAMESPACE_URI, "resource") < 0
             && element.indexOfAttribute(null, "inherited") < 0) {
             inComponent = true;
+            // Object id = pids.get(number);
             if (pids != null) {
                 componentId = pids.get(number);
                 number++;
@@ -431,13 +431,20 @@ public class MultipleExtractor extends WriteHandler {
                                 (HashMap) components.get(componentId);
                         }
 
+                        // String subId = (String) pids.get(number);
+                        // number++;
                         if (attributeName == null) {
-
+                            // outputStreams.put(theName + "*" + subId,
+                            // out);
                             component.put(theName, out);
                         }
                         else {
                             if (theName.equals("md-record")) {
 
+                                // this.mdNameValue = attributeValue;
+                                // outputStreams.put(attributeValue + "*" +
+                                // subId,
+                                // out);
                                 if (!component.containsKey("md-records")) {
                                     mdRecords =
                                         new HashMap<String, ByteArrayOutputStream>();
@@ -454,7 +461,7 @@ public class MultipleExtractor extends WriteHandler {
                                             + attributeValue
                                             + "' occurs multiple times in the representation"
                                             + " of a component.";
-                                    LOGGER.error(message);
+                                    log.error(message);
                                     throw new InvalidContentException(
                                         message);
 
@@ -486,7 +493,7 @@ public class MultipleExtractor extends WriteHandler {
                                             + attributeValue
                                             + "' occurs multiple times in the representation"
                                             + " of the resource";
-                                    LOGGER.error(message);
+                                    log.error(message);
                                     throw new InvalidContentException(
                                         message);
 
@@ -515,7 +522,7 @@ public class MultipleExtractor extends WriteHandler {
                                                 + "' occurs multiple times in the"
                                                 + " representation of the resource";
                                     }
-                                    LOGGER.error(message);
+                                    log.error(message);
                                     throw new InvalidContentException(
                                         message);
 
@@ -552,7 +559,7 @@ public class MultipleExtractor extends WriteHandler {
      * 
      * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
-    public final EndElement endElement(final EndElement element)
+    public EndElement endElement(final EndElement element)
         throws WebserverSystemException {
         String theName = element.getLocalName();
         String currentPath = parser.getCurPath();
@@ -570,7 +577,7 @@ public class MultipleExtractor extends WriteHandler {
         this.decreaseDeepLevel();
         if (inComponent && theName.equals("component")) {
             if (componentId == null) {
-                Map components = (HashMap) outputStreams.get("components");
+                HashMap components = (HashMap) outputStreams.get("components");
                 components.remove(componentId);
             }
             inComponent = false;
@@ -605,7 +612,7 @@ public class MultipleExtractor extends WriteHandler {
                 // TODO iteration is a hack, use
                 // javax.xml.namespace.NamespaceContext
                 Iterator it = this.getNsuris().keySet().iterator();
-                Collection<String> toRemove = new ArrayList<String>();
+                List<String> toRemove = new ArrayList<String>();
                 while (it.hasNext()) {
                     try {
                         String key = (String) it.next();
@@ -648,7 +655,7 @@ public class MultipleExtractor extends WriteHandler {
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public final String characters(final String data, final StartElement element)
+    public String characters(final String data, final StartElement element)
         throws WebserverSystemException {
 
         try {

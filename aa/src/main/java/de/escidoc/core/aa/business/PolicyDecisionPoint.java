@@ -213,9 +213,9 @@ public class PolicyDecisionPoint
                     String policyRules =
                         xacmlParser.getPolicyRules(resourceType);
 
-                    LOG.info("create access right (" + role.getId() + ','
-                        + resourceType + ',' + scopeRules + ',' + policyRules
-                        + ')');
+                    LOG.info("create access right (" + role.getId() + ","
+                        + resourceType + "," + scopeRules + "," + policyRules
+                        + ")");
                     accessRights.putAccessRight(resourceType, role.getId(),
                         scopeRules, policyRules);
                 }
@@ -248,8 +248,8 @@ public class PolicyDecisionPoint
      * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
      *      #evaluate(java.lang.String)
      */
-    public final boolean[] evaluateRequestList(
-            final List<Map<String, String>> requests)
+    public boolean[] evaluateRequestList(
+        final List<Map<String, String>> requests)
         throws ResourceNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
@@ -258,14 +258,13 @@ public class PolicyDecisionPoint
 
         for (Map<String, String> request : requests) {
             final Map<String, String> attributeMap = request;
-            Iterator<Map.Entry<String, String>> attributeUriIter =
-                    attributeMap.entrySet().iterator();
+            Iterator<String> attributeUriIter =
+                    attributeMap.keySet().iterator();
             Set<Subject> subjects = null;
             Set<Attribute> actions = null;
             Set<Attribute> resourceAttributes = new HashSet<Attribute>();
             while (attributeUriIter.hasNext()) {
-                Map.Entry<String, String> mapEntry = attributeUriIter.next();
-                final String uriString = mapEntry.getKey();
+                final String uriString = attributeUriIter.next();
                 URI uri = uriCache.get(uriString);
                 if (uri == null) {
                     try {
@@ -276,7 +275,7 @@ public class PolicyDecisionPoint
                     }
                     uriCache.put(uriString, uri);
                 }
-                final String value = mapEntry.getValue();
+                final String value = attributeMap.get(uriString);
                 final StringAttribute attributeValue =
                         new StringAttribute(value);
                 final Attribute attribute =
@@ -349,7 +348,7 @@ public class PolicyDecisionPoint
 
         List<ResponseCtx> responseCtxs = doEvaluate(requestsXml);
 
-        StringBuilder buf = new StringBuilder("<results xmlns=\"");
+        StringBuffer buf = new StringBuffer("<results xmlns=\"");
         buf.append(Constants.RESULTS_NS_URI);
         buf.append("\" xmlns:xacml-context=\"");
         buf.append(Constants.XACML_CONTEXT_NS_URI);
@@ -523,7 +522,7 @@ public class PolicyDecisionPoint
      * @throws ResourceNotFoundException
      *             Thrown in case of a resource not found error.
      */
-    private static boolean handleResult(final Result result)
+    private boolean handleResult(final Result result)
         throws WebserverSystemException, ResourceNotFoundException {
 
         // any decision other than permit means denial, throw exception
@@ -579,9 +578,9 @@ public class PolicyDecisionPoint
             }
 
             if (LOG.isDebugEnabled()) {
-                StringBuilder msg =
-                        new StringBuilder(
-                                "Access not granted. Reason from XACML engine: ");
+                StringBuffer msg =
+                    new StringBuffer(
+                        "Access not granted. Reason from XACML engine: ");
                 msg.append(Result.DECISIONS[result.getDecision()]);
                 LOG.debug(msg.toString());
             }
@@ -629,8 +628,8 @@ public class PolicyDecisionPoint
      *             Thrown if there is not exactly one result in the provided
      *             xacml response object, or the result has obligations.
      */
-    private static Result extractSingleResultWithoutObligations(
-            final ResponseCtx responseCtx) throws WebserverSystemException {
+    private Result extractSingleResultWithoutObligations(
+        final ResponseCtx responseCtx) throws WebserverSystemException {
 
         if (responseCtx.getResults().size() != 1) {
             throw new WebserverSystemException(ERROR_MORE_THAN_ONE_RESULT);
@@ -657,7 +656,7 @@ public class PolicyDecisionPoint
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private List<ResponseCtx> doEvaluate(final CharSequence requestsXml)
+    private List<ResponseCtx> doEvaluate(final String requestsXml)
         throws XmlSchemaValidationException, SystemException {
 
         // trim white spaces and newlines around < and >
@@ -668,7 +667,7 @@ public class PolicyDecisionPoint
         matcher = PREFIX_PATTERN.matcher(xml);
         xml = matcher.replaceAll("$1");
 
-        StringBuilder buf = new StringBuilder("<results xmlns=\"");
+        StringBuffer buf = new StringBuffer("<results xmlns=\"");
         buf.append(Constants.RESULTS_NS_URI);
         buf.append("\" xmlns:xacml-context=\"");
         buf.append(Constants.XACML_CONTEXT_NS_URI);
@@ -941,7 +940,7 @@ public class PolicyDecisionPoint
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
      * @aa
      */
-    public final void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws Exception {
 
         LOG.debug("Properties set");
     }

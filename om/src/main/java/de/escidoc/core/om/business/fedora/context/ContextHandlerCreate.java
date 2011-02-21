@@ -66,7 +66,6 @@ import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -81,7 +80,7 @@ import java.util.Vector;
  */
 public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
-    private static final AppLogger LOGGER = new AppLogger(
+    private static final AppLogger logger = new AppLogger(
         ContextHandlerCreate.class.getName());
 
     private static final String XPATH_PROPERTIES = "/context/properties";
@@ -118,7 +117,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      * @throws InvalidStatusException
      *             Thrown if an organizational unit is in an invalid status.
      */
-    final String createContext(final String xmlData)
+    public String createContext(final String xmlData)
         throws ContextNameNotUniqueException, ContentModelNotFoundException,
         ReadonlyElementViolationException, MissingAttributeValueException,
         MissingElementValueException, ReadonlyAttributeViolationException,
@@ -194,7 +193,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         if (propertiesHandler.getOrganizationalUnits().isEmpty()) {
             final String message =
                 "No 'organizational-unit' element is given. ";
-            LOGGER.error(message);
+            logger.error(message);
             throw new InvalidContentException(message);
         }
 
@@ -221,7 +220,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         // in later version could the dc:title be used for object title
         // properties.put(TripleStoreUtility.PROP_TITLE, properties
         // .get(TripleStoreUtility.PROP_NAME));
-        final Map<String, String> dcProperties =
+        final HashMap<String, String> dcProperties =
             new HashMap<String, String>();
         final String description =
             (String) properties.remove(Elements.ELEMENT_DESCRIPTION);
@@ -230,7 +229,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         }
         dcProperties.put(Elements.ELEMENT_DC_TITLE, name);
 
-        final Map<String, String> propertiesAsReferences =
+        final HashMap<String, String> propertiesAsReferences =
             new HashMap<String, String>();
         propertiesAsReferences.put(Elements.ELEMENT_MODIFIED_BY,
             (String) properties.remove(Elements.ELEMENT_MODIFIED_BY));
@@ -270,17 +269,17 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      * @throws SystemException
      *             Thrown if the FOXML rendering failed.
      */
-    final String buildContextFoxml(
-            final String id, final Map<String, Object> properties,
-            final Map<String, String> dcProperties,
-            final Map<String, String> propertiesAsReferences,
-            final Map<String, Object> dataStreams) throws SystemException {
+    protected String buildContextFoxml(
+        final String id, final Map<String, Object> properties,
+        final Map<String, String> dcProperties,
+        final Map<String, String> propertiesAsReferences,
+        final Map<String, Object> dataStreams) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("id", id);
         values.put("contextTitle", dcProperties.get(Elements.ELEMENT_DC_TITLE));
 
-        final Collection<HashMap<String, String>> adminDescriptors =
+        final List<HashMap<String, String>> adminDescriptors =
             new ArrayList<HashMap<String, String>>();
 
         for (String s : dataStreams.keySet()) {
@@ -355,7 +354,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      * 
      * @return The foxml renderer.
      */
-    final ContextFoXmlRendererInterface getFoxmlRenderer() {
+    public ContextFoXmlRendererInterface getFoxmlRenderer() {
 
         if (foxmlRenderer == null) {
             foxmlRenderer = new VelocityXmlContextFoXmlRenderer();

@@ -72,7 +72,7 @@ public class DsCompositeModelHandler extends DefaultHandler {
         this.dsTypeModels = new ArrayList<DsTypeModel>();
     }
 
-    public final List<DsTypeModel> getDsTypeModels() {
+    public List<DsTypeModel> getDsTypeModels() {
         return dsTypeModels;
     }
 
@@ -88,7 +88,7 @@ public class DsCompositeModelHandler extends DefaultHandler {
             catch (NoSuchAttributeException e) {
                 throw new IntegritySystemException(
                     "Datastream type model must have an attribute "
-                        + ATTRIBUTE_ID + '.', e);
+                        + ATTRIBUTE_ID + ".", e);
             }
         }
         else if (parser.getCurPath().equals(DS_TYPE_MODEL_EXTENSIONS_PATH)) {

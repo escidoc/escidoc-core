@@ -41,7 +41,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -101,7 +100,7 @@ public class NewComponentExtractor extends DefaultHandler {
             // TODO iteration is a hack, use
             // javax.xml.namespace.NamespaceContext
             Iterator it = nsuris.keySet().iterator();
-            Collection toRemove = new ArrayList();
+            List toRemove = new ArrayList();
             while (it.hasNext()) {
                 try {
                     String key = (String) it.next();
@@ -241,7 +240,7 @@ public class NewComponentExtractor extends DefaultHandler {
         writer.writeAttribute(prefix, uri, attributeName, attributeValue);
     }
 
-    public final List getOutputStreams() {
+    public List getOutputStreams() {
         return outputStreams;
     }
 }

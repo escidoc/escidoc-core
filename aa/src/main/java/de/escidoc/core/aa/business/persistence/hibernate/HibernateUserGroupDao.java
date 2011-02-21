@@ -67,9 +67,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             + RoleGrant.class.getName()
             + " g where g.userGroupByGroupId.id = ? order by role_id, object_id";
 
-    private final Map<String, Object[]> criteriaMap;
+    private final Map<String, Object[]> CRITERIA_MAP;
 
-    private final Map<String, String> propertiesNamesMap;
+    private final Map<String, String> PROPERTIES_NAMES_MAP;
 
     private UserGroupFilter userGroupFilter;
 
@@ -85,8 +85,8 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         catch (InvalidSearchQueryException e) {
             // Dont do anything because null-query is given
         }
-        criteriaMap = userGroupFilter.getCriteriaMap();
-        propertiesNamesMap = userGroupFilter.getPropertyMap();
+        CRITERIA_MAP = userGroupFilter.getCriteriaMap();
+        PROPERTIES_NAMES_MAP = userGroupFilter.getPropertyMap();
     }
 
     /**
@@ -240,7 +240,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             try {
                 result =
                     getHibernateTemplate().find(
-                            QUERY_RETRIEVE_GRANTS_BY_GROUP_ID, groupId);
+                        QUERY_RETRIEVE_GRANTS_BY_GROUP_ID, groupId);
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
@@ -374,12 +374,12 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 Boolean.valueOf(active1)));
         }
 
-        for (String s : criteriaMap.keySet()) {
+        for (String s : CRITERIA_MAP.keySet()) {
             final String key = s;
             final Object criteriaValue = clonedCriterias.remove(key);
 
             if (criteriaValue != null) {
-                final Object[] parts = criteriaMap.get(key);
+                final Object[] parts = CRITERIA_MAP.get(key);
                 if (parts[0].equals(COMPARE_EQ)) {
                     detachedCriteria.add(Restrictions.eq((String) parts[1],
                             criteriaValue));
@@ -391,11 +391,11 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         }
         if (orderBy != null) {
             if (sorting == ListSorting.ASCENDING) {
-                detachedCriteria.addOrder(Order.asc(propertiesNamesMap
+                detachedCriteria.addOrder(Order.asc(PROPERTIES_NAMES_MAP
                     .get(orderBy)));
             }
             else if (sorting == ListSorting.DESCENDING) {
-                detachedCriteria.addOrder(Order.desc(propertiesNamesMap
+                detachedCriteria.addOrder(Order.desc(PROPERTIES_NAMES_MAP
                     .get(orderBy)));
             }
         }
@@ -544,9 +544,10 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #retrieveGrantsByUserId(String)
      * @aa
      */
-    public static List<RoleGrant> retrieveGrantsByUserId(final String userId)
+    public List<RoleGrant> retrieveGrantsByUserId(final String userId)
         throws SqlDatabaseSystemException {
-
+//        List<RoleGrant> result = null;
+//        return result;
         return null;
     }
 

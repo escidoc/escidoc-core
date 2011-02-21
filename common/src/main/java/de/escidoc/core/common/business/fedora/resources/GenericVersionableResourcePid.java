@@ -106,7 +106,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    protected GenericVersionableResourcePid(final String id)
+    public GenericVersionableResourcePid(final String id)
         throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
 
@@ -170,7 +170,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws IntegritySystemException
      *             Thrown if the integrity of WOV data is violated.
      */
-    String getVersionPid(final String fullId)
+    public String getVersionPid(final String fullId)
         throws IntegritySystemException {
 
         // TODO throw exact exceptions
@@ -271,6 +271,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             latestReleasedVersion = getVersionId();
         }
 
+        // if (latestReleasedVersion != null) {
+
         // compare the versions (only set latest-release pid if the
         // latest-released version is older thean the current.
         int lrvn = Integer.valueOf(latestReleasedVersion);
@@ -285,7 +287,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         }
         setResourceProperties(PropertyMapKeys.LATEST_RELEASE_PID, pid);
         setLatestReleasePid(pid);
-
+        // }
     }
 
     /**
@@ -297,20 +299,27 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws SystemException
      *             Thrown in case of internal failure.
      */
-    void setLatestReleasePid(final String pid) throws SystemException {
+    public void setLatestReleasePid(final String pid) throws SystemException {
 
         byte[] relsExtS = null;
 
         if (getLatestReleaseVersionNumber() == null) {
             relsExtS = createLatestReleasePid(pid);
         }
-        else if ((getLatestReleasePid() != null) && pid.length() != 0) {
+        else if ((getLatestReleasePid() != null) && !pid.equals("")) {
+            // relsExtS = updateVersionPid(pid);
             relsExtS = updateLatestReleasePid(pid);
         }
 
+        // we could store the new collected pid
+        // versionPids.put(getFullId(), pid);
         if (relsExtS != null) {
             setRelsExt(relsExtS);
         }
+        // }
+        // else {
+        // unsetRelsExt();
+        // }
     }
 
     /**
@@ -380,15 +389,17 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
          */
 
         // perpare parser chain
+        // String ltstRlsNo = getLatestReleaseVersionNumber();
+        // if ((ltstRlsNo != null) && (getVersionId().equals(ltstRlsNo))) {
         byte[] relsExtS = null;
 
         if (getVersionPid() == null) {
             relsExtS = createVersionPid(pid);
         }
-        else if ((getVersionPid() != null) && pid.length() != 0) {
+        else if ((getVersionPid() != null) && !pid.equals("")) {
             relsExtS = updateVersionPid(pid);
         }
-        else if ((pid == null || pid.length() == 0)) {
+        else if ((pid == null || pid.equals(""))) {
             relsExtS = deleteLatestReleasePid();
         }
 
@@ -413,7 +424,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      * @throws TripleStoreSystemException
      *             If the triple store request failed.
      */
-    void updatePidToWov(final String pid, final String timestamp)
+    public void updatePidToWov(final String pid, final String timestamp)
         throws FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException {
 
@@ -434,7 +445,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         final StaxParser sp = new StaxParser();
         final AddNewSubTreesToDatastream addNewSubtreesHandler =
-            new AddNewSubTreesToDatastream('/'
+            new AddNewSubTreesToDatastream("/"
                 + Elements.ELEMENT_WOV_VERSION_HISTORY, sp);
 
         final StartElement pointer =
@@ -763,8 +774,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private static Collection<String> expandPropertiesNames(
-            final Collection<String> propertiesNames) {
+    private Collection<String> expandPropertiesNames(
+        final Collection<String> propertiesNames) {
 
         Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
@@ -790,8 +801,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private static Map<String, String> expandPropertiesNamesMapping(
-            final Map<String, String> propertiesNamesMap) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesNamesMap) {
 
         Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
@@ -871,7 +882,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *             If the Fedora reports an error
      */
     public void setContentRelations(
-        final StaxParser sp, final Collection<String> relationsToUpdate)
+        final StaxParser sp, final List<String> relationsToUpdate)
         throws XmlParserSystemException, WebserverSystemException,
         IntegritySystemException, FedoraSystemException {
 
@@ -903,15 +914,15 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         sp.clearHandlerChain();
         List<String> existRelations = relsExtHandler.getRelationsStrings();
 
-        Collection<String> existRelationsCopy = new ArrayList<String>();
+        List<String> existRelationsCopy = new ArrayList<String>();
         existRelationsCopy.addAll(existRelations);
         existRelations.removeAll(relationsToUpdate);
         relationsToUpdate.removeAll(existRelationsCopy);
         List<StartElementWithChildElements> elementsToAdd = null;
-        Map<String, List<StartElementWithChildElements>> toRemove = null;
+        TreeMap<String, List<StartElementWithChildElements>> toRemove = null;
 
         // prepare update relations
-        if ((relationsToUpdate != null) && (!relationsToUpdate.isEmpty())) {
+        if ((relationsToUpdate != null) && (relationsToUpdate.size() > 0)) {
             elementsToAdd = new ArrayList<StartElementWithChildElements>();
             for (String aRelationsToUpdate : relationsToUpdate) {
                 String relation = aRelationsToUpdate;
@@ -928,12 +939,13 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                                 Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
                                         + predicateAndTarget[1]);
                 newContentRelationElement.addAttribute(resource);
+                // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
                 elementsToAdd.add(newContentRelationElement);
             }
         }
         // prepare add/remove
-        if ((existRelations != null) && (!existRelations.isEmpty())) {
+        if ((existRelations != null) && (existRelations.size() > 0)) {
             Iterator<String> iterator = existRelations.iterator();
             HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
                 new HashMap<String, List<StartElementWithChildElements>>();
@@ -948,7 +960,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 newContentRelationElement.setLocalName(predicate[1]);
                 newContentRelationElement
                     .setPrefix(de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
-                newContentRelationElement.setNamespace(predicate[0] + '/');
+                newContentRelationElement.setNamespace(predicate[0] + "/");
                 Attribute resource =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                         Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"

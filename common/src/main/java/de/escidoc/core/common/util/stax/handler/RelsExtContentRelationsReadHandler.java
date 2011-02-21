@@ -53,43 +53,43 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
     private boolean inRelation = false;
 
-    private static final String PATH = "/RDF/Description";
+    private final String path = "/RDF/Description";
 
     private String targetId = null;
 
     private String predicate = null;
 
-    private static final AppLogger LOGGER = new AppLogger(MultipleExtractor.class.getName());
+    private static final AppLogger log = new AppLogger(MultipleExtractor.class.getName());
 
     public RelsExtContentRelationsReadHandler(StaxParser parser) {
         this.parser = parser;
     }
 
-    public final List<Map<String, String>> getRelations() {
+    public List<Map<String, String>> getRelations() {
         return this.relations;
     }
 
-    final boolean isInRelation() {
+    public boolean isInRelation() {
         return inRelation;
     }
 
-    final void setInRelation(boolean inRelation) {
+    public void setInRelation(boolean inRelation) {
         this.inRelation = inRelation;
     }
 
-    final String getTargetId() {
+    public String getTargetId() {
         return targetId;
     }
 
-    final void setTargetId(String targetId) {
+    public void setTargetId(String targetId) {
         this.targetId = targetId;
     }
 
-    final String getPredicate() {
+    public String getPredicate() {
         return predicate;
     }
 
-    final void setPredicate(String predicate) {
+    public void setPredicate(String predicate) {
         this.predicate = predicate;
     }
 
@@ -97,7 +97,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         throws WebserverSystemException {
         String curPath = parser.getCurPath();
 
-        if (curPath.equals(PATH)) {
+        if (curPath.equals(path)) {
             inRdf = true;
         }
         if ((inRdf)
@@ -118,14 +118,14 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
                 String message =
                     "The attribute 'rdf:resource' of the element '"
                         + element.getLocalName() + "' is missing.";
-                LOGGER.error(message);
+                log.error(message);
                 throw new WebserverSystemException(message);
             }
             String predicateNs = element.getNamespace();
             predicateNs =
                 predicateNs.substring(0, predicateNs.length() - 1);
             String predicateValue = element.getLocalName();
-            predicate = predicateNs + '#' + predicateValue;
+            predicate = predicateNs + "#" + predicateValue;
         }
         return element;
     }
@@ -133,7 +133,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
     public EndElement endElement(EndElement element) {
 
         if (inRelation) {
-            Map<String, String> relationData =
+            HashMap<String, String> relationData =
                 new HashMap<String, String>();
             relations.add(relationData);
             relationData.put("predicate", predicate);

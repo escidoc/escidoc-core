@@ -51,9 +51,9 @@ import java.util.Map;
  */
 public class BeanMethod {
 
-    private static final AppLogger LOGGER = new AppLogger(BeanMethod.class.getName());
+    private static final AppLogger logger = new AppLogger(BeanMethod.class.getName());
 
-    private static final Map<String, Object> RESOURCE_POOL =
+    private static final Map<String, Object> resourcePool =
         Collections.synchronizedMap(new HashMap<String, Object>());
 
     private String beanId = null;
@@ -97,7 +97,7 @@ public class BeanMethod {
      *             If the invocation of the method causes an error.
      * @common
      */
-    public final Object invoke(final String username, final String password)
+    public Object invoke(final String username, final String password)
         throws InvocationTargetException, MethodNotFoundException,
         WebserverSystemException {
         return invokeWithProtocol(password, true);
@@ -122,8 +122,8 @@ public class BeanMethod {
      *             If the invocation of the method causes an error.
      * @common
      */
-    public final Object invokeWithProtocol(
-            final String eSciDocUserHandle, final boolean restAccess)
+    public Object invokeWithProtocol(
+        final String eSciDocUserHandle, final boolean restAccess)
         throws InvocationTargetException, MethodNotFoundException,
         WebserverSystemException {
 
@@ -153,7 +153,7 @@ public class BeanMethod {
                                 new SystemException(
                                     "Unsupported parameter type ["
                                         + parameters[i].getClass().getName()
-                                        + ']'));
+                                        + "]"));
                         }
                     }
                     else {
@@ -209,9 +209,9 @@ public class BeanMethod {
      * @return The String representation of the resource method.
      */
     @Override
-    public final String toString() {
+    public String toString() {
 
-        return '[' + getBeanId() + '.' + getMethod() + ']';
+        return "[" + getBeanId() + "." + getMethod() + "]";
     }
 
     /**
@@ -224,7 +224,7 @@ public class BeanMethod {
      */
     private Object getBean() throws WebserverSystemException {
 
-        Object result = RESOURCE_POOL.get(getBeanId());
+        Object result = resourcePool.get(getBeanId());
         if ((result == null) && (getBeanId() != null)) {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug(
@@ -239,7 +239,7 @@ public class BeanMethod {
             result =
                 BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID, getBeanId());
             }
-            RESOURCE_POOL.put(getBeanId(), result);
+            resourcePool.put(getBeanId(), result);
         }
         return result;
     }
@@ -248,7 +248,7 @@ public class BeanMethod {
      * @return Returns the method name.
      * @common
      */
-    private String getMethod() {
+    public String getMethod() {
         return method;
     }
 
@@ -265,7 +265,7 @@ public class BeanMethod {
      * @return Returns the parameters.
      * @common
      */
-    public final Object[] getParameters() {
+    public Object[] getParameters() {
         return parameters;
     }
 
@@ -282,15 +282,15 @@ public class BeanMethod {
      * @return Returns the logger.
      * @common
      */
-    private static AppLogger getLogger() {
-        return LOGGER;
+    public static AppLogger getLogger() {
+        return logger;
     }
 
     /**
      * @return Returns the bean id.
      * @common
      */
-    private String getBeanId() {
+    public String getBeanId() {
         return beanId;
     }
 

@@ -130,6 +130,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
         for (int i = 0; i < attCount; i++) {
             Attribute att = element.getAttribute(i);
+            // String namespace = att.getNamespace();
             writeAttribute(att.getNamespace(), element.getLocalName(), att
                 .getLocalName(), att.getValue(), att.getPrefix());
 
@@ -138,7 +139,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         return element;
     }
 
-    public final OutputStream getOutputStream() throws XMLStreamException {
+    public OutputStream getOutputStream() throws XMLStreamException {
         writer.flush();
         writer.close();
         return outputStream;
@@ -169,7 +170,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
      * 
      * @return number of removed objects.
      */
-    public final int getNoOfRemovedObjects() {
+    public int getNoOfRemovedObjects() {
         return this.noOfRemoved;
     }
 

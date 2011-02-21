@@ -97,6 +97,14 @@ public abstract class PIDSystemFactory {
 
         try {
             Class<?> factoryClass = Class.forName(factoryClassName);
+            // Class.newInstance can be used only if there is a no-arg
+            // constructor ;
+            // otherwise, use Class.getConstructor and Constructor.newInstance.
+            // java.lang.reflect.Constructor constructor =
+            // factoryClass.getConstructor(types);
+            // Object[] params = { aConfig };
+            // pidGeneratorFactory = (PIDGeneratorFactory)
+            // constructor.newInstance( params );
             pidSystemFactory = (PIDSystemFactory) factoryClass.newInstance();
         }
         catch (ClassNotFoundException e) {

@@ -8,10 +8,10 @@ import de.escidoc.core.tme.business.stax.handler.TmeRequestsStaxHandler;
 
 public class TmeHandlerBase {
 
-    protected TmeHandlerBase() {
+    public TmeHandlerBase() {
     }
 
-    protected static final String[] parseRequests(final String requests)
+    protected String[] parseRequests(final String requests)
         throws TmeException, XmlParserSystemException {
 
         StaxParser sp = new StaxParser();

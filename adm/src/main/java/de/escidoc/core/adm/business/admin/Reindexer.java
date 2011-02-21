@@ -160,12 +160,12 @@ public class Reindexer {
      *             thrown if the given search query could not be translated into
      *             a SQL query
      */
-    public final String reindex(final boolean clearIndex, final String indexName)
+    public String reindex(final boolean clearIndex, final String indexName)
         throws SystemException, InvalidSearchQueryException {
         if (indexName.equals("errorTest")) {
             return testReindexError();
         }
-        StringBuilder result = new StringBuilder();
+        StringBuffer result = new StringBuffer();
         ReindexStatus reindexStatus = ReindexStatus.getInstance();
 
         if (reindexStatus.startMethod()) {
@@ -177,42 +177,42 @@ public class Reindexer {
                     getIds(indexName, ResourceType.CONTAINER,
                         CONTAINER_LIST_QUERY, clearIndex);
 
-                idListEmpty &= containerHrefs.isEmpty();
+                idListEmpty &= containerHrefs.size() == 0;
 
                 // Get all Content Models
                 Collection<String> contentModelHrefs =
                     getIds(indexName, ResourceType.CONTENT_MODEL,
                         CONTENT_MODEL_LIST_QUERY, clearIndex);
 
-                idListEmpty &= contentModelHrefs.isEmpty();
+                idListEmpty &= contentModelHrefs.size() == 0;
 
                 // Get all Content Relations
                 Collection<String> contentRelationHrefs =
                     getIds(indexName, ResourceType.CONTENT_RELATION,
                         CONTENT_RELATION_LIST_QUERY, clearIndex);
 
-                idListEmpty &= contentRelationHrefs.isEmpty();
+                idListEmpty &= contentRelationHrefs.size() == 0;
 
                 // Get all Contexts
                 Collection<String> contextHrefs =
                     getIds(indexName, ResourceType.CONTEXT, CONTEXT_LIST_QUERY,
                         clearIndex);
 
-                idListEmpty &= contextHrefs.isEmpty();
+                idListEmpty &= contextHrefs.size() == 0;
 
                 // Get all Items
                 Collection<String> itemHrefs =
                     getIds(indexName, ResourceType.ITEM, ITEM_LIST_QUERY,
                         clearIndex);
 
-                idListEmpty &= itemHrefs.isEmpty();
+                idListEmpty &= itemHrefs.size() == 0;
 
                 // Get all Organizational Units
                 Collection<String> orgUnitHrefs =
                     getIds(indexName, ResourceType.OU, OU_LIST_QUERY,
                         clearIndex);
 
-                idListEmpty &= orgUnitHrefs.isEmpty();
+                idListEmpty &= orgUnitHrefs.size() == 0;
 
                 if (clearIndex) {
                     // Delete indexes
@@ -310,7 +310,7 @@ public class Reindexer {
      *             thrown if the given search query could not be translated into
      *             a SQL query
      */
-    public final String testReindexError() throws SystemException,
+    public String testReindexError() throws SystemException,
         InvalidSearchQueryException {
         sendUpdateIndexMessage("nonexistingPid", ResourceType.ITEM, null);
         return "OK";
@@ -324,7 +324,7 @@ public class Reindexer {
      * 
      * @return the subject of the given triple
      */
-    private static String getSubject(final String triple) {
+    private String getSubject(final String triple) {
         String result = null;
 
         if (triple != null) {
@@ -372,7 +372,7 @@ public class Reindexer {
      * @throws ApplicationServerSystemException
      *             e
      */
-    public final void sendDeleteObjectMessage(final String resource)
+    public void sendDeleteObjectMessage(final String resource)
         throws ApplicationServerSystemException {
         try {
             IndexRequest indexRequest =
@@ -494,7 +494,7 @@ public class Reindexer {
      * @throws SystemException
      *             thrown in case of an internal error
      */
-    public static final String getStatus() throws SystemException {
+    public String getStatus() throws SystemException {
         return ReindexStatus.getInstance().toString();
     }
 

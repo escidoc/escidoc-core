@@ -46,7 +46,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.fcrepo.server.types.gen.MIMETypedStream;
 import org.joda.time.DateTime;
-import org.joda.time.ReadableDateTime;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -54,8 +53,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Representation of a datastream managed in Fedora Digital Repository System.
@@ -81,13 +82,13 @@ public class Datastream {
 
     public static final String MIME_TYPE_TEXT_XML = "text/xml";
 
-    private static final String CONTROL_GROUP_EXTERNAL_REFERENCE = "E";
+    public static final String CONTROL_GROUP_EXTERNAL_REFERENCE = "E";
 
-    private static final String CONTROL_GROUP_REDIRECT = "R";
+    public static final String CONTROL_GROUP_REDIRECT = "R";
 
     public static final String CONTROL_GROUP_INTERNAL_XML = "X";
 
-    private static final String CONTROL_GROUP_MANAGED = "M";
+    public static final String CONTROL_GROUP_MANAGED = "M";
 
     public static final String METADATA_ALTERNATE_ID = "metadata";
 
@@ -119,7 +120,7 @@ public class Datastream {
 
     private String checksum = null;
 
-    private static final boolean VERSIONABLE = true;
+    private final boolean versionable = true;
 
     /**
      * Indicating the URL should not be sent when storing this in Fedora.
@@ -212,7 +213,7 @@ public class Datastream {
      */
     public Datastream(final String name, final String parentId,
         final String mimeType, final String location,
-        final String controlGroupValue, final ReadableDateTime timestamp) {
+        final String controlGroupValue, final DateTime timestamp) {
         if (timestamp != null) {
             String tsFormat =
                 de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT;
@@ -377,8 +378,15 @@ public class Datastream {
         }
         else if (Constants.STORAGE_EXTERNAL_URL.equalsIgnoreCase(storage)) {
             this.controlGroupValue = CONTROL_GROUP_REDIRECT;
-        } else if (Constants.STORAGE_INTERNAL_MANAGED.equalsIgnoreCase(storage)) {
+        }
+        else if (Constants.STORAGE_INTERNAL_MANAGED.equalsIgnoreCase(storage)) {
+            // internal xml data not possible in Fedora by reference
+            // if (mimeType.equals(MIME_TYPE_TEXT_XML)) {
+            // this.controlGroupValue = CONTROL_GROUP_INTERNAL_XML;
+            // }
+            // else {
             this.controlGroupValue = CONTROL_GROUP_MANAGED;
+            // }
         }
         this.mimeType = mimeType;
     }
@@ -472,7 +480,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             Thrown in case of internal failure (get configuration)
      */
-    public final String merge() throws FedoraSystemException,
+    public String merge() throws FedoraSystemException,
         WebserverSystemException {
 
         if (this.getStream() == null && this.location != null) {
@@ -581,7 +589,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             Thrown if getting Fedora instance fails.
      */
-    public final String persist(final boolean sync) throws FedoraSystemException,
+    public String persist(final boolean sync) throws FedoraSystemException,
         WebserverSystemException {
 
         if (this.getStream() == null && this.location != null) {
@@ -594,7 +602,7 @@ public class Datastream {
             timestamp =
                 getFedoraUtility().addDatastream(this.parentId, this.name,
                     this.alternateIDs.toArray(new String[alternateIDs.size()]), this.label,
-                    this.VERSIONABLE, this.getStream(), sync);
+                    this.versionable, this.getStream(), sync);
         }
 
         return timestamp;
@@ -610,7 +618,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             If an error ocurres.
      */
-    public final void delete() throws FedoraSystemException, WebserverSystemException {
+    public void delete() throws FedoraSystemException, WebserverSystemException {
         try {
             // TODO: check of the 'concurrent' flag have to be done too
             if (this.mimeType.equals("text/xml")) {
@@ -622,7 +630,17 @@ public class Datastream {
                 getFedoraUtility().setDatastreamState(this.parentId, this.name,
                     FedoraUtility.DATASTREAM_STATUS_DELETED);
 
+                // this.theStream =
+                // ("<deleted/>").getBytes(XmlUtility.CHARACTER_ENCODING);
+
+                // catch (final UnsupportedEncodingException e1) {
+                // // ignore, does not happen
+                // throw new WebserverSystemException(
+                // "Unexpected encoding exception.", e1);
+                // }
+                // merge();
                 init();
+                // if a data stream
             }
         }
         catch (final StreamNotFoundException e) {
@@ -635,7 +653,7 @@ public class Datastream {
      * 
      * @return true/false
      */
-    public final boolean isDeleted() {
+    public boolean isDeleted() {
 
         if (this.mimeType.equals(Constants.MIME_TYPE_DELETED)) {
             return true;
@@ -649,7 +667,7 @@ public class Datastream {
      * 
      * @return The name of this datastream.
      */
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
@@ -667,7 +685,7 @@ public class Datastream {
      * 
      * @return The alternate IDs of this datastream.
      */
-    public final List<String> getAlternateIDs() {
+    public List<String> getAlternateIDs() {
         return alternateIDs;
     }
 
@@ -679,7 +697,7 @@ public class Datastream {
      * @param alternateId
      *            An alternate ID to add to this Datastream.
      */
-    public final void addAlternateId(final String alternateId) {
+    public void addAlternateId(final String alternateId) {
         this.alternateIDs.add(alternateId);
     }
 
@@ -705,7 +723,7 @@ public class Datastream {
      * @param alternateIDs
      *            A {@link java.util.Set Set} of strings with alternate IDs.
      */
-    public final void setAlternateIDs(final List<String> alternateIDs) {
+    public void setAlternateIDs(final List<String> alternateIDs) {
         this.alternateIDs = alternateIDs;
     }
 
@@ -714,7 +732,7 @@ public class Datastream {
      * 
      * @return The ID of the parent of this datastream.
      */
-    public final String getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
@@ -725,7 +743,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             If an error ocurres.
      */
-    public final byte[] getStream() throws WebserverSystemException {
+    public byte[] getStream() throws WebserverSystemException {
         // Workaround for the issue INFR666, now the content of a data stream
         // with a managed content should be pulled
         if (this.theStream == null
@@ -753,6 +771,16 @@ public class Datastream {
             }
 
             this.theStream = datastream.getStream();
+            // FIXME check if deleted by mime-type
+
+            // // final String streamString = new
+            // String(datastream.getStream());
+            // // if (streamString.contains("<deleted")) {
+            // // this.theStream = new byte[0];
+            // // }
+            // // else {
+            // this.theStream = datastream.getStream();
+            // // }
 
         }
 
@@ -764,7 +792,7 @@ public class Datastream {
      * 
      * @return Map with datastream properties.
      */
-    public final Map<String, String> getProperties() {
+    public Map<String, String> getProperties() {
         return this.properties;
     }
 
@@ -777,7 +805,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             If an error ocurres.
      */
-    public final String toStringUTF8() throws EncodingSystemException,
+    public String toStringUTF8() throws EncodingSystemException,
         WebserverSystemException {
 
         return toString(XmlUtility.CHARACTER_ENCODING).trim();
@@ -792,7 +820,7 @@ public class Datastream {
      * @see java.lang.Object#toString()
      */
     @Override
-    public final String toString() {
+    public String toString() {
         try {
             return toStringUTF8();
         }
@@ -816,7 +844,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             If an error ocurres.
      */
-    public final String toString(final String charset)
+    public String toString(final String charset)
         throws EncodingSystemException, WebserverSystemException {
         try {
             return new String(getStream(), XmlUtility.CHARACTER_ENCODING);
@@ -840,7 +868,7 @@ public class Datastream {
      * @throws StreamNotFoundException
      *             If the stream can not be retrieved.
      */
-    public final void setStream(final byte[] theStream) throws FedoraSystemException,
+    public void setStream(final byte[] theStream) throws FedoraSystemException,
         WebserverSystemException, StreamNotFoundException {
 
         try {
@@ -877,7 +905,7 @@ public class Datastream {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public final boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
 
         if (!(obj instanceof Datastream)) {
             return false;
@@ -925,7 +953,7 @@ public class Datastream {
      * 
      * @return The label of this datastream.
      */
-    public final String getLabel() {
+    public String getLabel() {
         return label;
     }
 
@@ -935,7 +963,7 @@ public class Datastream {
      * @param label
      *            The label of this datastream.
      */
-    public final void setLabel(final String label) {
+    public void setLabel(final String label) {
         this.label = label;
     }
 
@@ -953,7 +981,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             If an error ocurres.
      */
-    final String getMd5Hash() throws ParserConfigurationException,
+    public String getMd5Hash() throws ParserConfigurationException,
         SAXException, WebserverSystemException {
         if (this.mimeType.equals("text/xml")) {
             if (this.md5Hash == null && getStream() != null) {
@@ -961,7 +989,7 @@ public class Datastream {
             }
             else {
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("MD5 Hash of datastream " + getParentId() + '/'
+                    LOG.debug("MD5 Hash of datastream " + getParentId() + "/"
                         + getName() + " reused.");
                 }
             }
@@ -978,7 +1006,7 @@ public class Datastream {
      * @see java.lang.Object#hashCode()
      */
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         // not needed for HashTables in eSciDoc Business Layer because
         // Datastreams are values not keys
 
@@ -1000,7 +1028,7 @@ public class Datastream {
      * 
      * @return controlGroup
      */
-    public final String getControlGroup() {
+    public String getControlGroup() {
         return this.controlGroupValue;
     }
 
@@ -1010,23 +1038,32 @@ public class Datastream {
      * @param controlGroup
      *            Fedora controlGroup type
      */
-    public final void setControlGroup(final String controlGroup) {
+    public void setControlGroup(final String controlGroup) {
         this.controlGroupValue = controlGroup;
     }
 
     /**
      * @return the mimeType
      */
-    public final String getMimeType() {
+    public String getMimeType() {
         return mimeType;
     }
 
     /**
      * @return the location
      */
-    public final String getLocation() {
+    public String getLocation() {
         return this.location;
     }
+
+    // /**
+    // * Overrides current location. Set it null in order to preserve old
+    // location
+    // * when merging or persist.
+    // */
+    // public void setLocation(final String location) {
+    // this.location = location;
+    // }
 
     /**
      * Gets the {@link FedoraUtility}.
@@ -1037,7 +1074,7 @@ public class Datastream {
      * @throws FedoraSystemException
      *             Thrown if getting the object failed.
      */
-    final FedoraUtility getFedoraUtility() throws FedoraSystemException {
+    protected FedoraUtility getFedoraUtility() throws FedoraSystemException {
 
         if (fu == null) {
             fu = FedoraUtility.getInstance();
@@ -1048,18 +1085,18 @@ public class Datastream {
     /**
      * @return The method by which the checksum was calculated.
      */
-    public final String getChecksumMethod() {
+    public String getChecksumMethod() {
         return checksumMethod;
     }
 
     /**
      * @return The checksum of the stream.
      */
-    public final String getChecksum() {
+    public String getChecksum() {
         return checksum;
     }
 
-    public final void setContentUnchanged(boolean b) {
+    public void setContentUnchanged(boolean b) {
         this.contentUnchanged = b;
     }
 }

@@ -44,9 +44,9 @@ public class MissingMdRecordException extends MissingParameterException {
      */
     private static final long serialVersionUID = -7580873547510589409L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_MISSING;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_MISSING;
 
-    private static final String HTTP_STATUS_MESSAGE = "Md-record is missing.";
+    public static final String HTTP_STATUS_MESSAGE = "Md-record is missing.";
 
     /**
      * Default constructor.

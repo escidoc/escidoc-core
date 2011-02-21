@@ -32,9 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -138,15 +136,15 @@ public class UserAccountHandler
     private static final AppLogger LOG = new AppLogger(
         UserAccountHandler.class.getName());
 
-    private static final String XPATH_GRANT_ASSIGNED_ON = '/'
-        + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/'
+    private static final String XPATH_GRANT_ASSIGNED_ON = "/"
+        + XmlUtility.NAME_GRANT + "/" + XmlUtility.NAME_PROPERTIES + "/"
         + XmlUtility.NAME_ASSIGNED_ON;
 
-    private static final String XPATH_GRANT_ROLE = '/' + XmlUtility.NAME_GRANT
-        + '/' + XmlUtility.NAME_PROPERTIES + '/' + XmlUtility.NAME_ROLE;
+    private static final String XPATH_GRANT_ROLE = "/" + XmlUtility.NAME_GRANT
+        + "/" + XmlUtility.NAME_PROPERTIES + "/" + XmlUtility.NAME_ROLE;
 
     private static final Pattern GROUP_FILTER_PATTERN = Pattern
-        .compile("(?s)\"{0,1}(" + Constants.FILTER_GROUP + '|'
+        .compile("(?s)\"{0,1}(" + Constants.FILTER_GROUP + "|"
             + Constants.FILTER_PATH_USER_ACCOUNT_GROUP_ID
             + ")(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*"
             + "|\"*\\s*(cql.any)\\s*\"*)" + "([^\\s\"\\(\\)]*)\"{0,1}");
@@ -670,16 +668,16 @@ public class UserAccountHandler
                 try {
                     List<String> tmpUsersPermitted = new ArrayList<String>();
                     List<String> tmpGroupsPermitted = new ArrayList<String>();
-                    if (!userIds.isEmpty()) {
+                    if (userIds.size() > 0) {
                         tmpUsersPermitted =
                             pdp.evaluateRetrieve("user-account", userIds);
                     }
-                    if (!groupIds.isEmpty()) {
+                    if (groupIds.size() > 0) {
                         tmpGroupsPermitted =
                             pdp.evaluateRetrieve("user-group", groupIds);
                     }
-                    if (!tmpUsersPermitted.isEmpty()
-                        || !tmpGroupsPermitted.isEmpty()) {
+                    if (tmpUsersPermitted.size() > 0
+                        || tmpGroupsPermitted.size() > 0) {
                         for (RoleGrant roleGrant : tmpRoleGrants) {
                             if (roleGrant.getUserId() != null) {
                                 if (tmpUsersPermitted.contains(roleGrant
@@ -1205,7 +1203,7 @@ public class UserAccountHandler
 
         Map<String, Object> filters = fh.getRules();
 
-        Collection<String> grantIds;
+        HashSet<String> grantIds;
         if (filters.isEmpty()) {
             // if no filters are provided, remove all current grants
             grantIds = new HashSet<String>();
@@ -1480,7 +1478,7 @@ public class UserAccountHandler
                         }
                         // get users for group
                         Set<String> userIds;
-                        StringBuilder replacement = new StringBuilder(" (");
+                        StringBuffer replacement = new StringBuffer(" (");
                         try {
                             userIds =
                                 retrieveUsersForGroup(groupFilterMatcher
@@ -1492,12 +1490,12 @@ public class UserAccountHandler
                                     if (replacement.length() > 2) {
                                         replacement.append(" or ");
                                     }
-                                    replacement.append('\"');
+                                    replacement.append("\"");
                                     replacement
                                         .append(Constants.FILTER_PATH_ID);
                                     replacement
                                         .append("\"=").append(userId)
-                                        .append(' ');
+                                        .append(" ");
                                 }
                             }
                             else {
@@ -1507,11 +1505,11 @@ public class UserAccountHandler
                         catch (UserGroupNotFoundException e) {
                             // if group has no users or group not found,
                             // write nonexisting user in query
-                            replacement.append('\"');
+                            replacement.append("\"");
                             replacement.append(Constants.FILTER_PATH_ID);
                             replacement
                                 .append("\"=").append("nonexistinguser")
-                                .append(' ');
+                                .append(" ");
                         }
 
                         replacement.append(") ");
@@ -1564,7 +1562,7 @@ public class UserAccountHandler
     private Set<String> retrieveUsersForGroup(final String groupId)
         throws UserGroupNotFoundException, SystemException {
         // may not return null but empty list!!
-        Set<String> userIds = new HashSet<String>();
+        HashSet<String> userIds = new HashSet<String>();
 
         // Try getting the userGroup
         UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
@@ -1607,7 +1605,7 @@ public class UserAccountHandler
                 attributesSet.add(attributeHash);
                 // check if attribute-name is ou-attribute
                 // if yes, resolve children-path-list
-                if (ouAttributeName != null && ouAttributeName.length() != 0
+                if (ouAttributeName != null && !ouAttributeName.equals("")
                     && member.getName().equals(ouAttributeName)) {
                     List<String> initialList = new ArrayList<String>();
                     initialList.add(member.getValue());
@@ -1796,7 +1794,7 @@ public class UserAccountHandler
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private static void sendUserAccountUpdateEvent(final String userId)
+    private void sendUserAccountUpdateEvent(final String userId)
         throws SqlDatabaseSystemException, UserAccountNotFoundException,
         WebserverSystemException {
 
@@ -1863,7 +1861,7 @@ public class UserAccountHandler
      * @throws UserAccountNotFoundException
      *             Thrown if assertion fails.
      */
-    private static void assertUserAccount(final String userId, final UserAccount user)
+    private void assertUserAccount(final String userId, final UserAccount user)
         throws UserAccountNotFoundException {
 
         if (user == null) {
@@ -2020,7 +2018,7 @@ public class UserAccountHandler
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static void setCreationValues(final UserAccount userAccount)
+    private void setCreationValues(final UserAccount userAccount)
         throws SystemException {
 
         // initialize creation-date value
@@ -2114,7 +2112,7 @@ public class UserAccountHandler
      * @throws Exception
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
      */
-    public final void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws Exception {
 
         LOG.debug("Properties set");
     }
@@ -2253,6 +2251,7 @@ public class UserAccountHandler
         Set<UserPreference> userPreferences =
             userAccount.getUserPreferencesByUserId();
         // TODO check for same preference already set by getting preference by
+        // PrimKey(userId,name)
         for (UserPreference userPreference : userPreferences) {
             if (preferenceName.equals(userPreference.getName())) {
                 throw new AlreadyExistsException("Preference " + preferenceName
@@ -2354,6 +2353,7 @@ public class UserAccountHandler
         }
 
         // TODO check for existence of preference by getting preference by
+        // PrimKey(userId,name)
         Iterator<UserPreference> prefIt = userPreferences.iterator();
         UserPreference preference = null;
         while (prefIt.hasNext()) {
@@ -2368,6 +2368,7 @@ public class UserAccountHandler
                 + " does not exist for user " + userId);
         }
         preference.setValue(preferences.get(preferenceName));
+        // unnecessary: userPreferences.add(preference);
 
         // update user in policy cache; rights may depend on preferences
         sendUserAccountUpdateEvent(userId);
@@ -2401,6 +2402,7 @@ public class UserAccountHandler
         Set<UserPreference> userPreferences =
             userAccount.getUserPreferencesByUserId();
 
+        // PrimKey(userId,name)
         for (UserPreference userPreference : userPreferences) {
             UserPreference curPref = userPreference;
             if (curPref.getName().equals(preferenceName)) {
@@ -2481,6 +2483,12 @@ public class UserAccountHandler
         // FIXME name/value may be defined as primary key
         Set<UserPreference> currentPreferences =
             userAccount.getUserPreferencesByUserId();
+        // Iterator<UserPreference> curPrefsIterator =
+        // currentPreferences.iterator();
+        // while (curPrefsIterator.hasNext()) {
+        // UserPreference preference = curPrefsIterator.next();
+        // dao.delete(preference);
+        // }
         currentPreferences.clear();
 
         // add all given preferences
@@ -2494,6 +2502,7 @@ public class UserAccountHandler
             preference.setName(preferenceName);
             preference.setValue(preferenceValue);
 
+            // dao.save(preference);
             // FIXME ? set does not prevent dublicate keys but dublicate objects
             // (FRS)
             currentPreferences.add(preference);
@@ -2812,11 +2821,11 @@ public class UserAccountHandler
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
         Utility utility = Utility.getInstance();
-        Set<ResourceType> resourceTypes = EnumSet.noneOf(ResourceType.class);
+        Set<ResourceType> resourceTypes = new HashSet<ResourceType>();
         String[] types = parameters.get("index");
 
         if (types != null) {
-            Collection<String> hashedTypes = new HashSet<String>();
+            Set<String> hashedTypes = new HashSet<String>();
 
             hashedTypes.addAll(Arrays.asList(types));
 

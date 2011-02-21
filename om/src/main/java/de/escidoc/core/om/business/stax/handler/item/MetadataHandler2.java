@@ -43,7 +43,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The MetadataHandler. The parser handles only one Metadata Record!
@@ -110,7 +109,7 @@ public class MetadataHandler2 extends DefaultHandler {
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws MissingAttributeValueException, WebserverSystemException,
         InvalidContentException {
 
@@ -168,7 +167,7 @@ public class MetadataHandler2 extends DefaultHandler {
      * @om
      */
     @Override
-    public final EndElement endElement(final EndElement element)
+    public EndElement endElement(final EndElement element)
         throws WebserverSystemException {
 
         if (this.metadataXPath.equals(parser.getCurPath())
@@ -178,7 +177,7 @@ public class MetadataHandler2 extends DefaultHandler {
             this.parsingMetadata = false;
 
             this.me.endElement(element);
-            Map<String, ?> tmp =
+            HashMap<String, ?> tmp =
                 (HashMap<String, ?>) this.me.getOutputStreams().get(
                     Elements.ELEMENT_MD_RECORDS);
             try {
@@ -211,7 +210,7 @@ public class MetadataHandler2 extends DefaultHandler {
      * @om
      */
     @Override
-    public final String characters(final String s, final StartElement element)
+    public String characters(final String s, final StartElement element)
         throws WebserverSystemException {
 
         if (this.parsingMetadata) {
@@ -226,7 +225,7 @@ public class MetadataHandler2 extends DefaultHandler {
      * 
      * @return Return the MetadataRecord.
      */
-    public final MdRecordCreate getMetadataRecord() {
+    public MdRecordCreate getMetadataRecord() {
 
         return this.metadataRecord;
     }

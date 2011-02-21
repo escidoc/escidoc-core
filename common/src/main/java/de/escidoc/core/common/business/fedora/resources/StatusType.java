@@ -95,7 +95,7 @@ public enum StatusType {
             }
         }
 
-        String msg = "Invalid status '" + type + '\'';
+        String msg = "Invalid status '" + type + "'";
         throw new InvalidStatusException(msg);
     }
 

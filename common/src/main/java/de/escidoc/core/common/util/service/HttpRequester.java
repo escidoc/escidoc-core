@@ -57,7 +57,7 @@ import java.net.URL;
  * 
  * 
  */
-class HttpRequester {
+public class HttpRequester {
     private int timeout = 180000;
 
     private static final boolean SSL = false;
@@ -101,7 +101,7 @@ class HttpRequester {
      *            boolean flag
      * 
      */
-    public static void setFollowRedirects(final boolean flag) {
+    public void setFollowRedirects(final boolean flag) {
         HttpURLConnection.setFollowRedirects(flag);
         HttpsURLConnection.setFollowRedirects(flag);
     }
@@ -135,7 +135,7 @@ class HttpRequester {
      */
     public String doPut(final String resource, final String body)
         throws Exception {
-        if (body == null || body.length() == 0) {
+        if (body == null || body.equals("")) {
             throw new Exception("body may not be null");
         }
         return request(resource, "PUT", body);
@@ -156,7 +156,7 @@ class HttpRequester {
      */
     public String doPost(final String resource, final String body)
         throws Exception {
-        if (body == null || body.length() == 0) {
+        if (body == null || body.equals("")) {
             throw new Exception("body may not be null");
         }
         return request(resource, "POST", body);
@@ -222,7 +222,7 @@ class HttpRequester {
         throws Exception {
         URL url;
         InputStream is;
-        StringBuilder response = new StringBuilder();
+        StringBuffer response = new StringBuffer();
 
         // Open Connection to given resource
         url = new URL(domain + resource);
@@ -234,12 +234,12 @@ class HttpRequester {
         con.setSSLSocketFactory(sslSF);
 
         // Set Basic-Authentication Header
-        if (securityHandle != null && securityHandle.length() != 0) {
+        if (securityHandle != null && !securityHandle.equals("")) {
             String encoding =
                 UserHandleCookieUtil.createEncodedUserHandle(securityHandle);
             con.setRequestProperty("Authorization", "Basic " + encoding);
             // Set Cookie
-            con.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN + '='
+            con.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN + "="
                 + securityHandle);
         }
         else if (getCookie() != null) {
@@ -270,7 +270,7 @@ class HttpRequester {
         try {
             br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));
             while ((currentLine = br.readLine()) != null) {
-                response.append(currentLine).append('\n');
+                response.append(currentLine).append("\n");
             }
         } finally {
             if(br != null) {
@@ -306,7 +306,7 @@ class HttpRequester {
         HttpURLConnection con = null;
         InputStream is = null;
         OutputStream out = null;
-        StringBuilder response = new StringBuilder();
+        StringBuffer response = new StringBuffer();
 
         try {
             // Open Connection to given resource
@@ -314,14 +314,14 @@ class HttpRequester {
             con = (HttpURLConnection) url.openConnection();
 
             // Set Basic-Authentication Header
-            if (securityHandle != null && securityHandle.length() != 0) {
+            if (securityHandle != null && !securityHandle.equals("")) {
                 String encoding =
                     UserHandleCookieUtil
                         .createEncodedUserHandle(securityHandle);
                 con.setRequestProperty("Authorization", "Basic " + encoding);
                 // Set Cookie
                 con.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN
-                    + '=' + securityHandle);
+                    + "=" + securityHandle);
             }
             else if (getCookie() != null) {
                 con.setRequestProperty("Cookie", getCookie());
@@ -351,7 +351,7 @@ class HttpRequester {
             try {
                 br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));
                 while ((currentLine = br.readLine()) != null) {
-                    response.append(currentLine).append('\n');
+                    response.append(currentLine).append("\n");
                 }
             } finally {
             if(br != null) {
@@ -390,14 +390,14 @@ class HttpRequester {
      * 
      * 
      */
-    private static class RelaxedX509TrustManager implements X509TrustManager {
+    class RelaxedX509TrustManager implements X509TrustManager {
         /**
          * Gets accepted Issuers.
          * 
          * @return X509Certificate[] response
          * 
          */
-        public final java.security.cert.X509Certificate[] getAcceptedIssuers() {
+        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
             return null;
         }
 
@@ -410,9 +410,9 @@ class HttpRequester {
          *            String
          * 
          */
-        public final void checkClientTrusted(
-                final java.security.cert.X509Certificate[] chain,
-                final String authType) {
+        public void checkClientTrusted(
+            final java.security.cert.X509Certificate[] chain,
+            final String authType) {
         }
 
         /**
@@ -424,16 +424,16 @@ class HttpRequester {
          *            String
          * 
          */
-        public final void checkServerTrusted(
-                final java.security.cert.X509Certificate[] chain,
-                final String authType) {
+        public void checkServerTrusted(
+            final java.security.cert.X509Certificate[] chain,
+            final String authType) {
         }
     }
 
     /**
      * @return the cookie
      */
-    private String getCookie() {
+    public String getCookie() {
         return cookie;
     }
 
@@ -441,7 +441,7 @@ class HttpRequester {
      * @param cookie
      *            the cookie to set
      */
-    private void setCookie(final String cookie) {
+    public void setCookie(final String cookie) {
         this.cookie = cookie;
     }
 

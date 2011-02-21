@@ -51,7 +51,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
     private SetDefinitionRendererInterface renderer = null;
 
-    private static final String MSG_SET_DEFINITION_NOT_FOUND_BY_ID =
+    private final String MSG_SET_DEFINITION_NOT_FOUND_BY_ID =
         "Set definition with provided id does not exist.";
 
     private PolicyDecisionPointInterface pdp = null;
@@ -147,9 +147,9 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *             Thrown in case of an internal error.
      * 
      */
-    private static boolean setModificationValues(
-            final SetDefinition setDefinition,
-            final Map<String, String> setProperties) throws SystemException {
+    private boolean setModificationValues(
+        final SetDefinition setDefinition,
+        final Map<String, String> setProperties) throws SystemException {
         boolean changed = false;
         if (setProperties != null) {
             String newDescription =
@@ -255,6 +255,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         sp.addHandler(sduh);
         try {
             sp.parse(in);
+            // sp.clearHandlerChain();
         }
         catch (OptimisticLockingException e) {
             throw e;
@@ -448,7 +449,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * @throws WebserverSystemException
      *             e
      */
-    private void setPdpHandler() throws WebserverSystemException {
+    public void setPdpHandler() throws WebserverSystemException {
         if (this.pdp == null) {
             this.pdp = BeanLocator.locatePolicyDecisionPoint();
         }
@@ -459,7 +460,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * @return the renderer
      * 
      */
-    private SetDefinitionRendererInterface getRenderer() {
+    public SetDefinitionRendererInterface getRenderer() {
         if (renderer == null) {
             renderer = new VelocityXmlSetDefinitionRenderer();
         }

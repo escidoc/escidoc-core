@@ -43,7 +43,7 @@ public final class PurgeStatus extends AdminMethodStatus {
     /**
      * Singleton instance.
      */
-    private static final PurgeStatus instance = new PurgeStatus();
+    private static PurgeStatus instance = new PurgeStatus();
 
     private int count = 0;
 
@@ -96,7 +96,7 @@ public final class PurgeStatus extends AdminMethodStatus {
      * @return a string representation of this object
      */
     public String toString() {
-        StringBuilder result = new StringBuilder();
+        StringBuffer result = new StringBuffer();
 
         if (getCompletionDate() != null) {
             result.append("<message>purging finished at ").append(getCompletionDate()).append("</message>\n");

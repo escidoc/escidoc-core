@@ -81,7 +81,7 @@ public class RelsExtRefListExtractor extends DefaultHandler {
         return element;
     }
 
-    public final Map<String, List<String>> getEntries() {
+    public Map<String, List<String>> getEntries() {
         return entries;
     }
 

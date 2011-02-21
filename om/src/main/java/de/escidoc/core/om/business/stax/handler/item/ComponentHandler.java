@@ -54,18 +54,18 @@ import java.io.IOException;
  */
 public class ComponentHandler extends DefaultHandler {
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(ComponentHandler.class.getName());
 
-    private static final String XPATH_COMPONENT = "/item/components/component";
+    private final String XPATH_COMPONENT = "/item/components/component";
 
-    private static final String XPATH_COMPONENT_PROPERTIES =
+    private final String XPATH_COMPONENT_PROPERTIES =
         XPATH_COMPONENT + "/properties";
 
-    private static final String XPATH_COMPONENT_METADATA =
+    private final String XPATH_COMPONENT_METADATA =
         XPATH_COMPONENT + "/md-records/md-record";
 
-    private static final String XPATH_COMPONENT_CONTENT = XPATH_COMPONENT + "/content";
+    private final String XPATH_COMPONENT_CONTENT = XPATH_COMPONENT + "/content";
 
     private final StaxParser parser;
 
@@ -106,7 +106,7 @@ public class ComponentHandler extends DefaultHandler {
      * @throws IOException
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws InvalidContentException, MissingAttributeValueException,
         XMLStreamException, WebserverSystemException, IOException {
 
@@ -122,7 +122,7 @@ public class ComponentHandler extends DefaultHandler {
         else {
             String currentPath = parser.getCurPath();
             if (XPATH_COMPONENT_PROPERTIES.equals(currentPath)) {
-                LOGGER.debug("Parser reached " + XPATH_COMPONENT_PROPERTIES);
+                log.debug("Parser reached " + XPATH_COMPONENT_PROPERTIES);
                 // creating a new Component shows that the parser is within a
                 // component element.
                 this.parsingProperties = true;
@@ -161,13 +161,13 @@ public class ComponentHandler extends DefaultHandler {
      *             Thrown if writting event failed.
      */
     @Override
-    public final EndElement endElement(final EndElement element)
+    public EndElement endElement(final EndElement element)
         throws WebserverSystemException {
 
         String currentPath = parser.getCurPath();
 
         if (XPATH_COMPONENT_PROPERTIES.equals(currentPath)) {
-            LOGGER.debug("Parser reached end of " + XPATH_COMPONENT_PROPERTIES);
+            log.debug("Parser reached end of " + XPATH_COMPONENT_PROPERTIES);
             // parser leaves the XML component element
             this.parsingProperties = false;
             this.propertiesHandler.endElement(element);
@@ -176,7 +176,7 @@ public class ComponentHandler extends DefaultHandler {
             this.propertiesHandler = null;
         }
         else if (XPATH_COMPONENT_METADATA.equals(currentPath)) {
-            LOGGER.debug("Parser reached end of " + XPATH_COMPONENT_METADATA);
+            log.debug("Parser reached end of " + XPATH_COMPONENT_METADATA);
             // parser leaves the XML md-records element
             this.parsingMetaData = false;
 
@@ -209,7 +209,7 @@ public class ComponentHandler extends DefaultHandler {
      * 
      */
     @Override
-    public final String characters(final String s, final StartElement element)
+    public String characters(final String s, final StartElement element)
         throws InvalidContentException, MissingElementValueException,
         WebserverSystemException, XMLStreamException {
 
@@ -233,7 +233,7 @@ public class ComponentHandler extends DefaultHandler {
      * 
      * @return Component
      */
-    public final ComponentCreate getComponent() {
+    public ComponentCreate getComponent() {
 
         return this.component;
     }

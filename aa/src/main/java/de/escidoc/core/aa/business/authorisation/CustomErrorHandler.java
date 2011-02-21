@@ -46,7 +46,7 @@ import java.util.logging.Logger;
  * 
  * @author ROW (Accenture)
  */
-class CustomErrorHandler implements ErrorHandler {
+public class CustomErrorHandler implements ErrorHandler {
 
     // the logger we'll use for all messages
     private static final Logger LOGGER =
@@ -60,7 +60,7 @@ class CustomErrorHandler implements ErrorHandler {
      * @throws SAXException
      *             exception
      */
-    public final void warning(final SAXParseException exception) throws SAXException {
+    public void warning(final SAXParseException exception) throws SAXException {
         if (LOGGER.isLoggable(Level.WARNING)) {
             LOGGER.warning("Warning on line " + exception.getLineNumber()
                 + ": " + exception.getMessage());
@@ -76,7 +76,7 @@ class CustomErrorHandler implements ErrorHandler {
      * @throws SAXException
      *             always to halt parsing on errors
      */
-    public final void error(final SAXParseException exception) throws SAXException {
+    public void error(final SAXParseException exception) throws SAXException {
         if (LOGGER.isLoggable(Level.WARNING)) {
             LOGGER.warning("Error on line " + exception.getLineNumber() + ": "
                 + exception.getMessage() + " ... "
@@ -95,7 +95,7 @@ class CustomErrorHandler implements ErrorHandler {
      * @throws SAXException
      *             always to halt parsing on errors
      */
-    public final void fatalError(final SAXParseException exception)
+    public void fatalError(final SAXParseException exception)
         throws SAXException {
         if (LOGGER.isLoggable(Level.WARNING)) {
             LOGGER.warning("Fatal error on line " + exception.getLineNumber()

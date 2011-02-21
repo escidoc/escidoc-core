@@ -82,7 +82,7 @@ public class UserGroupAttributeFinderModule
     private static final String ATTR_NAME = "name";
 
     private static final String RESOLVABLE_USER_GROUP_ATTRS =
-        ATTR_CREATED_BY + '|' + ATTR_MODIFIED_BY + '|' + ATTR_ID + '|'
+        ATTR_CREATED_BY + "|" + ATTR_MODIFIED_BY + "|" + ATTR_ID + "|"
             + ATTR_NAME;
 
     private static final Pattern PATTERN_USER_GROUP_ATTRIBUTE_PREFIX =
@@ -233,8 +233,8 @@ public class UserGroupAttributeFinderModule
      *             Thrown if assertion fails.
      * @aa
      */
-    private static void assertUserGroup(
-            final String userGroupId, final UserGroup userGroup)
+    private void assertUserGroup(
+        final String userGroupId, final UserGroup userGroup)
         throws UserGroupNotFoundException {
 
         if (userGroup == null) {

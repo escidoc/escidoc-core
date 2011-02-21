@@ -68,7 +68,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,11 +80,11 @@ public abstract class AbstractResourceHandler extends HandlerBase {
 
     private GenericResource theResource;
 
-    final void setResource(final String id) throws ResourceNotFoundException, SystemException {
+    protected void setResource(final String id) throws ResourceNotFoundException, SystemException {
         theResource = new GenericResource(id);
     }
 
-    final String retrieve(final String id) throws ResourceNotFoundException,
+    public String retrieve(final String id) throws ResourceNotFoundException,
         SystemException {
         setResource(id);
 
@@ -100,7 +99,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
         return xml;
     }
 
-    final String getDatastream() throws StreamNotFoundException,
+    protected String getDatastream() throws StreamNotFoundException,
         FedoraSystemException, EncodingSystemException, WebserverSystemException {
         Datastream datastream = theResource.getDatastream();
         String xml;
@@ -210,10 +209,10 @@ public abstract class AbstractResourceHandler extends HandlerBase {
 
             final String id = getIdProvider().getNextPid();
             // handler to set id
-            xmlData = xmlData.replaceAll("objid=\"\"", "objid=\"" + id + '\"');
+            xmlData = xmlData.replaceAll("objid=\"\"", "objid=\"" + id + "\"");
             xmlData =
                 xmlData.replaceAll("xlink:href=\"\"", "xlink:href=\""
-                    + getFirstPathPart() + getRootElement() + '/' + id + '\"');
+                    + getFirstPathPart() + getRootElement() + "/" + id + "\"");
             // handler to extract properties ?
 
             // handler to extract datastreams from xml
@@ -373,7 +372,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
     /**
      * @return A List of DefaultHandler to check/modify this resource.
      */
-    protected abstract Collection getResourceHandler(StaxParser parser);
+    protected abstract List getResourceHandler(StaxParser parser);
 
     /**
      * @return "http://localhost:8080/xsd/XXX.xsd"
@@ -389,7 +388,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
      * @throws WebserverSystemException
      *             Thrown if schema location cannot be determined.
      */
-    final String getXMLSchemaUrl(final String xmlData)
+    protected String getXMLSchemaUrl(final String xmlData)
         throws WebserverSystemException {
         return getXMLSchemaUrl();
     }

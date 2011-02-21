@@ -75,7 +75,7 @@ public class ObjectProperties {
      * @param status
      *            the status to set
      */
-    public final void setStatus(final StatusType status) {
+    public void setStatus(final StatusType status) {
         this.status = status;
     }
 
@@ -84,7 +84,7 @@ public class ObjectProperties {
      * 
      * @return the status
      */
-    public final StatusType getStatus() {
+    public StatusType getStatus() {
         return status;
     }
 
@@ -99,7 +99,7 @@ public class ObjectProperties {
     /**
      * @return the statusComment
      */
-    public final String getStatusComment() {
+    public String getStatusComment() {
         return statusComment;
     }
 
@@ -107,14 +107,14 @@ public class ObjectProperties {
      * @param pid
      *            the pid to set
      */
-    public final void setPid(final String pid) {
+    public void setPid(final String pid) {
         this.pid = pid;
     }
 
     /**
      * @return the pid
      */
-    public final String getPid() {
+    public String getPid() {
         return pid;
     }
 
@@ -122,14 +122,14 @@ public class ObjectProperties {
      * @param contextId
      *            the contextId to set
      */
-    public final void setContextId(final String contextId) {
+    public void setContextId(final String contextId) {
         this.contextId = contextId;
     }
 
     /**
      * @return the contextId
      */
-    public final String getContextId() {
+    public String getContextId() {
         return contextId;
     }
 
@@ -137,7 +137,7 @@ public class ObjectProperties {
      * @param contentModelId
      *            the contentModelId to set
      */
-    public final void setContentModelId(final String contentModelId) {
+    public void setContentModelId(final String contentModelId) {
         this.contentModelId = contentModelId;
     }
 
@@ -145,7 +145,7 @@ public class ObjectProperties {
      * @param origin
      *            the objid of origin
      */
-    public final void setOrigin(final String origin) {
+    public void setOrigin(final String origin) {
         this.origin = origin;
         this.originObjectId = XmlUtility.getObjidWithoutVersion(this.origin);
         this.originVersionId =
@@ -155,28 +155,28 @@ public class ObjectProperties {
     /**
      * @return the contentModelId
      */
-    public final String getContentModelId() {
+    public String getContentModelId() {
         return contentModelId;
     }
 
     /**
      * @return the contentModelId
      */
-    public final String getOrigin() {
+    public String getOrigin() {
         return origin;
     }
 
     /**
      * @return the contentModelId
      */
-    public final String getOriginObjectId() {
+    public String getOriginObjectId() {
         return originObjectId;
     }
 
     /**
      * @return the contentModelId
      */
-    public final String getOriginVersionId() {
+    public String getOriginVersionId() {
         return originVersionId;
     }
 
@@ -184,14 +184,14 @@ public class ObjectProperties {
      * @param title
      *            the title to set
      */
-    public final void setTitle(final String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
     /**
      * @return the title
      */
-    public final String getTitle() {
+    public String getTitle() {
         return title;
     }
 
@@ -199,14 +199,14 @@ public class ObjectProperties {
      * @param description
      *            the description to set
      */
-    public final void setDescription(final String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
     /**
      * @return the description
      */
-    public final String getDescription() {
+    public String getDescription() {
         return this.description;
     }
 
@@ -214,14 +214,14 @@ public class ObjectProperties {
      * @param conextTitle
      *            the conextTitle to set
      */
-    public final void setContextTitle(final String conextTitle) {
+    public void setContextTitle(final String conextTitle) {
         this.contextTitle = conextTitle;
     }
 
     /**
      * @return the conextTitle
      */
-    public final String getContextTitle() {
+    public String getContextTitle() {
         return contextTitle;
     }
 
@@ -229,14 +229,14 @@ public class ObjectProperties {
      * @param contentModelTitle
      *            the contentModelTitle to set
      */
-    public final void setContentModelTitle(final String contentModelTitle) {
+    public void setContentModelTitle(final String contentModelTitle) {
         this.contentModelTitle = contentModelTitle;
     }
 
     /**
      * @return the contentModelTitle
      */
-    public final String getContentModelTitle() {
+    public String getContentModelTitle() {
         return contentModelTitle;
     }
 

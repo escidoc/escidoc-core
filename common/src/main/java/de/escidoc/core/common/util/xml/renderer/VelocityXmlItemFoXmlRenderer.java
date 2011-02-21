@@ -40,7 +40,6 @@ import de.escidoc.core.common.util.xml.renderer.interfaces.ItemFoXmlRendererInte
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +55,10 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
     private final VelocityXmlCommonFoXmlRenderer commonRenderer =
         new VelocityXmlCommonFoXmlRenderer();
+
+    // not needed if no one logs
+    // private static AppLogger log =
+    // new AppLogger(VelocityXmlItemFoXmlRenderer.class.getName());
 
     private String buildNumber = null;
 
@@ -128,7 +131,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         final Map<String, Object> values, final String itemId,
         final String lastModificationDate, final String[] components,
         final Map<String, String> properties,
-        final Collection<Map<String, String>> contentRelations,
+        final List<Map<String, String>> contentRelations,
         final Map<String, String> propertiesAsReferences,
         final Map<String, String> propertiesVersion)
         throws WebserverSystemException {
@@ -138,7 +141,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         propertiesVersion.put(XmlTemplateProvider.LATEST_VERSION_DATE,
             lastModificationDate);
 
-        if ((properties != null) && (!properties.isEmpty())) {
+        if ((properties != null) && (properties.size() > 0)) {
             values.put("properties", properties);
             values.put("propertiesAsReferences", propertiesAsReferences);
             values.put("propertiesVersion", propertiesVersion);
@@ -151,10 +154,15 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
             .put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
         values.put("itemId", itemId);
 
+        // values.put("latestVersionUser",
+        // Utility.getInstance().getCurrentUser()[0]);
+        // values.put("latestVersionUserTitle",
+        // Utility.getInstance().getCurrentUser()[1]);
+        // values.put("latestVersionComment", comment);
         if ((contentRelations != null) && (!contentRelations.isEmpty())) {
             values.put("contentRelations", contentRelations);
         }
-        Collection<String> componentsVector = new ArrayList<String>();
+        List<String> componentsVector = new ArrayList<String>();
         if ((components != null) && (components.length > 0)) {
 
             componentsVector.addAll(Arrays.asList(components).subList(1, components.length));
@@ -163,7 +171,10 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
     }
 
-    private static void addRelsExtNamespaceValues(Map<String, Object> values) {
+    private void addRelsExtNamespaceValues(Map<String, Object> values) {
+
+        // values.put("itemNamespace", Constants.ITEM_NAMESPACE_URI);
+        // values.put("itemNamespacePrefix", Constants.ITEM_NAMESPACE_PREFIX);
 
         values.put("escidocPropertiesNamespacePrefix",
             Constants.PROPERTIES_NS_PREFIX);
@@ -272,7 +283,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         Map<String, Object> values = new HashMap<String, Object>();
 
         addRelsExtNamespaceValues(values);
-
+        // values.put("itemId", itemId);
         if (this.buildNumber == null) {
             this.buildNumber = Utility.getInstance().getBuildNumber();
         }
@@ -302,7 +313,15 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
             getEscpapedValue(
                     properties.get(TripleStoreUtility.PROP_VISIBILITY),
                 false));
-
+        // values.put(XmlTemplateProvider.VAR_FILESIZE, getEscpapedValue(
+        // (String) properties.get(TripleStoreUtility.PROP_FILESIZE), false));
+        // values.put(XmlTemplateProvider.VAR_FILENAME, getEscpapedValue(
+        // (String) properties.get(TripleStoreUtility.PROP_FILENAME), false));
+        // if (properties.get(TripleStoreUtility.PROP_DESCRIPTION) != null) {
+        // values.put(XmlTemplateProvider.VAR_DESCRIPTION, getEscpapedValue(
+        // (String) properties.get(TripleStoreUtility.PROP_DESCRIPTION),
+        // false));
+        // }
         if (properties.get(TripleStoreUtility.PROP_MIME_TYPE) != null) {
             values.put(
                 XmlTemplateProvider.MIME_TYPE,
@@ -316,7 +335,11 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
                 getEscpapedValue(properties
                     .get(TripleStoreUtility.PROP_VALID_STATUS), false));
         }
-
+        // if (properties.get(TripleStoreUtility.PROP_LOCATOR_URL) != null) {
+        // values.put(XmlTemplateProvider.VAR_LOCATOR_URL, getEscpapedValue(
+        // (String) properties.get(TripleStoreUtility.PROP_LOCATOR_URL),
+        // false));
+        // }
         if (inCreate) {
             values.put("inCreate", inCreate);
         }
@@ -335,8 +358,8 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
      *            If it is an attribute or element value.
      * @return The escaped string.
      */
-    private static String getEscpapedValue(
-            final String value, final boolean isAttribute) {
+    private String getEscpapedValue(
+        final String value, final boolean isAttribute) {
 
         return XmlUtility.escapeForbiddenXmlCharacters(value);
     }

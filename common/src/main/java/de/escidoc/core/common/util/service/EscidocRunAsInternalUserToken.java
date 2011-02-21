@@ -13,7 +13,7 @@ import org.springframework.security.providers.AbstractAuthenticationToken;
  * @common
  * 
  */
-class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
+public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
 
     /**
      * The wrapped {@link Authentication}.
@@ -44,7 +44,7 @@ class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * @return Returns the original {@link Authentication}.
      * @common
      */
-    public final Authentication getOrginalAuthentication() {
+    public Authentication getOrginalAuthentication() {
         return orginalAuthentication;
     }
 
@@ -56,7 +56,7 @@ class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      *      #getCredentials()
      * @common
      */
-    public final Object getCredentials() {
+    public Object getCredentials() {
 
         return orginalAuthentication.getCredentials();
     }
@@ -69,7 +69,7 @@ class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      *      #getPrincipal()
      * @common
      */
-    public final Object getPrincipal() {
+    public Object getPrincipal() {
 
         return orginalAuthentication.getPrincipal();
     }
@@ -83,7 +83,7 @@ class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * @common
      */
     @Override
-    public final Object getDetails() {
+    public Object getDetails() {
 
         return orginalAuthentication.getDetails();
     }
@@ -97,7 +97,7 @@ class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * @common
      */
     @Override
-    public final GrantedAuthority[] getAuthorities() {
+    public GrantedAuthority[] getAuthorities() {
 
         return orginalAuthentication.getAuthorities();
     }
@@ -111,7 +111,7 @@ class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * @common
      */
     @Override
-    public final String getName() {
+    public String getName() {
 
         return orginalAuthentication.getName();
     }

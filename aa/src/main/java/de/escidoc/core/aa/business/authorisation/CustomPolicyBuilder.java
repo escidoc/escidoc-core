@@ -33,7 +33,6 @@ import com.sun.xacml.Indenter;
 import com.sun.xacml.ParsingException;
 import com.sun.xacml.Policy;
 import com.sun.xacml.PolicySet;
-import com.sun.xacml.PolicyTreeElement;
 import com.sun.xacml.TargetMatch;
 import com.sun.xacml.UnknownIdentifierException;
 import com.sun.xacml.cond.FunctionTypeException;
@@ -84,7 +83,7 @@ public final class CustomPolicyBuilder {
      * The property which is used to specify the schema file to validate against
      * (if any).
      */
-    private static final String POLICY_SCHEMA_PROPERTY =
+    public static final String POLICY_SCHEMA_PROPERTY =
         "com.sun.xacml.PolicySchema";
 
     /**
@@ -95,13 +94,13 @@ public final class CustomPolicyBuilder {
         "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:"
             + "ordered-permit-overrides";
 
-    private static final String JAXP_SCHEMA_LANGUAGE =
+    public static final String JAXP_SCHEMA_LANGUAGE =
         "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
 
-    private static final String W3C_XML_SCHEMA =
+    public static final String W3C_XML_SCHEMA =
         "http://www.w3.org/2001/XMLSchema";
 
-    private static final String JAXP_SCHEMA_SOURCE =
+    public static final String JAXP_SCHEMA_SOURCE =
         "http://java.sun.com/xml/jaxp/properties/schemaSource";
 
     /**
@@ -295,14 +294,18 @@ public final class CustomPolicyBuilder {
         final EscidocRole escidocRole) throws WebserverSystemException,
         URISyntaxException, UnknownIdentifierException, FunctionTypeException {
 
+        // final String policyIdValue =
+        // StringUtility.concatenateToString(escidocRole.getRoleName(),
+        // "-policy");
         List<AbstractPolicy> xacmlPolicies = new ArrayList<AbstractPolicy>();
-
+        // List<Rule> rules = new ArrayList<Rule>();
+        // List<Action> rulesActions = new Vector<Action>();
         for (EscidocPolicy escidocPolicy1 : escidocRole.getEscidocPolicies()) {
             EscidocPolicy escidocPolicy = escidocPolicy1;
             final String xmlData = escidocPolicy.getXml();
             final Element root;
             final String name;
-            if (xmlData != null && xmlData.trim().length() != 0) {
+            if (xmlData != null && !xmlData.trim().equals("")) {
                 try {
                     Document doc = parseXml(xmlData);
 
@@ -382,8 +385,8 @@ public final class CustomPolicyBuilder {
      * @see XacmlFunctionRoleIsGranted
      * @aa
      */
-    private static List<Collection<TargetMatch>> generateTargetResources(
-            final EscidocRole role) throws URISyntaxException,
+    static List<Collection<TargetMatch>> generateTargetResources(
+        final EscidocRole role) throws URISyntaxException,
         UnknownIdentifierException, FunctionTypeException {
 
         // null is the needed default value in case of default (user) policies.
@@ -391,7 +394,7 @@ public final class CustomPolicyBuilder {
         if (!EscidocRole.DEFAULT_USER_ROLE_ID.equals(role.getId())) {
 
             policyResources = new ArrayList<Collection<TargetMatch>>();
-            Collection<TargetMatch> policyResource = new ArrayList<TargetMatch>();
+            List<TargetMatch> policyResource = new ArrayList<TargetMatch>();
             policyResource.add(CustomTargetBuilder.generateResourceMatch(
                 XacmlFunctionRoleIsGranted.NAME, role.getId(),
                 AttributeIds.URN_RESOURCE_ID, Constants.XMLSCHEMA_STRING));
@@ -425,13 +428,13 @@ public final class CustomPolicyBuilder {
      * @see XacmlFunctionRoleIsGranted
      * @aa
      */
-    private static List<Collection<TargetMatch>> generateTargetResources(
-            final String policyId) throws URISyntaxException,
+    static List<Collection<TargetMatch>> generateTargetResources(
+        final String policyId) throws URISyntaxException,
         UnknownIdentifierException, FunctionTypeException {
 
         List<Collection<TargetMatch>> policyResources;
         policyResources = new ArrayList<Collection<TargetMatch>>();
-        Collection<TargetMatch> policyResource = new ArrayList<TargetMatch>();
+        List<TargetMatch> policyResource = new ArrayList<TargetMatch>();
         policyResource.add(CustomTargetBuilder.generateResourceMatch(
             XacmlFunctionRoleIsGranted.NAME, policyId,
             AttributeIds.URN_RESOURCE_ID, Constants.XMLSCHEMA_STRING));
@@ -480,7 +483,7 @@ public final class CustomPolicyBuilder {
      *             Thrown in case of an internal error.
      * @aa
      */
-    public static String encode(final PolicyTreeElement policy)
+    public static String encode(final AbstractPolicy policy)
         throws WebserverSystemException {
 
         long start = System.nanoTime();
@@ -515,7 +518,7 @@ public final class CustomPolicyBuilder {
      *            The xml data to insert the prefix.
      * @return Returns the provided xml data with injected xacml prefix.
      */
-    public static String insertXacmlPrefix(final CharSequence ret) {
+    public static String insertXacmlPrefix(final String ret) {
 
         return INSERT_XACML_PREFIX_PATTERN.matcher(ret).replaceAll(
             INSERT_XACML_PREFIX_POLICY_VALUE);

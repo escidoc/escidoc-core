@@ -20,7 +20,6 @@ public class ObjectFactory  {
      *
      * @return a new instance of {@link de.escidoc.core.purge.PurgeRequest}
      */
-    @SuppressWarnings({"MethodMayBeStatic"})
     public PurgeRequestImpl createIndexRequest() {
         return new PurgeRequestImpl();
     }

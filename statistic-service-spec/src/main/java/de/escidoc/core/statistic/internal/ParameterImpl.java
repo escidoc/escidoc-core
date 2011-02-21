@@ -4,7 +4,6 @@ import de.escidoc.core.statistic.Parameter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.joda.time.DateTime;
-import org.joda.time.ReadableInstant;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -57,7 +56,7 @@ public class ParameterImpl implements Parameter {
      * @param name the name of the parameter
      * @value value the date value of the parameter
      */
-    public ParameterImpl(final String name, final ReadableInstant value) {
+    public ParameterImpl(final String name, final DateTime value) {
         this.name = name;
         final GregorianCalendar gregorianCalendar = new GregorianCalendar();
         gregorianCalendar.setTimeInMillis(value.getMillis());
@@ -139,7 +138,7 @@ public class ParameterImpl implements Parameter {
      * {@inheritDoc}
      */
     @Override
-    public final String toString() {
+    public String toString() {
         return "ParameterImpl{" +
                 "name='" + name + '\'' +
                 ", datevalue=" + datevalue +

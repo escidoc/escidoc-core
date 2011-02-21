@@ -47,7 +47,7 @@ import java.util.Set;
  * @author Roland Werner (Accenture)
  * 
  */
-final class CollectionsConverter {
+public final class CollectionsConverter {
 
     /**
      * Private Constructor, in order to prevent instantiation of this utility
@@ -137,7 +137,7 @@ final class CollectionsConverter {
      * @return The new create array.
      */
     public static Object[] convertListToArray(
-        final Collection list, final Class objectClass) {
+        final List list, final Class objectClass) {
         int length = list.size();
         Object[] array = (Object[]) Array.newInstance(objectClass, length);
         array = list.toArray(array);
@@ -189,8 +189,8 @@ final class CollectionsConverter {
      * @return The converted object or <code>null</code> if no array has been
      *         provided.
      */
-    private static Collection convertArrayToCollection(
-            final Object[] array, final Class objectClass) {
+    public static Collection convertArrayToCollection(
+        final Object[] array, final Class objectClass) {
 
         if (array == null) {
             return null;

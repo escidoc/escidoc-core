@@ -147,7 +147,7 @@ public class StatisticInterceptor implements Ordered {
      * @see org.springframework.core.Ordered#getOrder()
      * @common
      */
-    public final int getOrder() {
+    public int getOrder() {
         return AopUtil.PRECEDENCE_STATISTIC_INTERCEPTOR;
     }
 
@@ -221,7 +221,7 @@ public class StatisticInterceptor implements Ordered {
                     .withParameter(PARAM_EXCEPTION_NAME, exceptionName)
                     .withParameter(PARAM_EXCEPTION_SOURCE, exceptionSource)
                     .withParameter(PARAM_USER_ID, UserContext.getId())
-                    .withParameter(PARAM_ELAPSED_TIME, String.valueOf((System.currentTimeMillis() - invocationStartTime)))
+                    .withParameter(PARAM_ELAPSED_TIME, "" + (System.currentTimeMillis() - invocationStartTime))
                     .build();
             this.statisticService.createStatisticRecord(statisticRecord);
         }
@@ -265,9 +265,9 @@ public class StatisticInterceptor implements Ordered {
      *            The arguments of the method call.
      * @common
      */
-    private static void handleObjectIds(
-            final StatisticRecordBuilder statisticRecordBuilder, final String calledMethodName,
-            final Object[] arguments) {
+    private void handleObjectIds(
+        final StatisticRecordBuilder statisticRecordBuilder, final String calledMethodName,
+        final Object[] arguments) {
 
         if (arguments != null && arguments.length > 0) {
             int indexLastObjid = -1;
@@ -284,7 +284,7 @@ public class StatisticInterceptor implements Ordered {
                     indexLastObjid = -1;
                     break;
                 }
-                final CharSequence argument = (String) arguments[i];
+                final String argument = (String) arguments[i];
                 if (argument != null && !PATTERN_DETERMINE_XML_PARAMETER .matcher(argument).find()) {
                     indexLastObjid = i;
                 }

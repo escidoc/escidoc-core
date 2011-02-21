@@ -35,7 +35,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
-import org.apache.velocity.context.Context;
 
 import java.io.StringWriter;
 import java.io.Writer;
@@ -60,7 +59,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      * 
      * @common
      */
-    VelocityXmlProvider() {
+    protected VelocityXmlProvider() {
 
     }
 
@@ -85,8 +84,8 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      * @common
      */
     @Override
-    public final String getXml(
-            final String resource, final String path, final Map values)
+    public String getXml(
+        final String resource, final String path, final Map values)
         throws WebserverSystemException {
 
         long start = System.nanoTime();
@@ -147,7 +146,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
                 Velocity.getTemplate(templateFileName,
                     XmlUtility.CHARACTER_ENCODING);
             Writer out = new StringWriter();
-            Context context = new VelocityContext(values);
+            VelocityContext context = new VelocityContext(values);
             synchronized (template) {
                 template.merge(context, out);
             }
@@ -181,12 +180,12 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
         String templateFileName;
         if (path.startsWith("/")) {
             templateFileName =
-                path.substring(1) + '/' + completePath() + '/' + resource
+                path.substring(1) + "/" + completePath() + "/" + resource
                     + ".vm";
         }
         else {
             templateFileName =
-                path + '/' + completePath() + '/' + resource + ".vm";
+                path + "/" + completePath() + "/" + resource + ".vm";
         }
         return templateFileName;
     }

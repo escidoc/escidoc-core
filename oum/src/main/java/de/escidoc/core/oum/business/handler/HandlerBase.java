@@ -32,7 +32,6 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import de.escidoc.core.common.util.xml.stax.interfaces.DefaultHandlerStackInterface;
 
 /**
  * Base class for stax handlers.
@@ -51,7 +50,7 @@ public class HandlerBase extends DefaultHandler {
      * @param parser
      *            The stax parser.
      */
-    HandlerBase(final StaxParser parser) {
+    public HandlerBase(final StaxParser parser) {
 
         this.parser = parser;
     }
@@ -59,7 +58,7 @@ public class HandlerBase extends DefaultHandler {
     /**
      * @return the parser
      */
-    final DefaultHandlerStackInterface getParser() {
+    public StaxParser getParser() {
 
         return parser;
     }
@@ -78,7 +77,7 @@ public class HandlerBase extends DefaultHandler {
      * 
      * @return TripleStoreUtility Returns the {@link TripleStoreUtility} object.
      */
-    final TripleStoreUtility getTripleStoreUtility() {
+    protected TripleStoreUtility getTripleStoreUtility() {
 
         return this.tripleStoreUtility;
     }
@@ -99,7 +98,7 @@ public class HandlerBase extends DefaultHandler {
      * 
      * @return An instance of the Utility.
      */
-    public static Utility getUtility() {
+    public Utility getUtility() {
 
         return Utility.getInstance();
     }

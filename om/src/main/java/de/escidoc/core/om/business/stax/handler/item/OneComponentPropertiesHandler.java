@@ -61,7 +61,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
     private final Map<String, String> properties =
         new HashMap<String, String>();
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(OneComponentPropertiesHandler.class.getName());
 
     /**
@@ -80,7 +80,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
      * 
      * @return Map with properties of Component.
      */
-    public final Map<String, String> getProperties() {
+    public Map<String, String> getProperties() {
         return this.properties;
     }
 
@@ -143,7 +143,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
                     properties.put(TripleStoreUtility.PROP_VISIBILITY, s);
                 }
                 else {
-                    LOGGER
+                    log
                         .error("the value of element " + theName
                             + " is missing");
                     throw new MissingElementValueException(
@@ -157,7 +157,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
                         TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY, s);
                 }
                 else {
-                    LOGGER
+                    log
                         .error("the value of element " + theName
                             + " is missing");
                     throw new MissingElementValueException(

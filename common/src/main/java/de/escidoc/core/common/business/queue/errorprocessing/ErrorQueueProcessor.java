@@ -41,7 +41,6 @@ import de.escidoc.core.common.util.logger.AppLogger;
  */
 public class ErrorQueueProcessor {
 
-    // A setter exists. Consider removing from Spring.
     private ErrorMessageHandler errorMessageHandler = null;
 
     /**
@@ -51,7 +50,7 @@ public class ErrorQueueProcessor {
      *            name of the logfile
      * 
      */
-    public final void execute(final String logfile) {
+    public void execute(final String logfile) {
         //read logfile and do something
     }
 

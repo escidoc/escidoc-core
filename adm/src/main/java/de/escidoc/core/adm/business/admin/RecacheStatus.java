@@ -28,13 +28,11 @@
  */
 package de.escidoc.core.adm.business.admin;
 
-import java.util.Map;
-
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
 public final class RecacheStatus extends AdminMethodStatus {
 
-    private static final RecacheStatus instance = new RecacheStatus();
+    private static RecacheStatus instance = new RecacheStatus();
 
     private RecacheStatus() {
     }
@@ -83,11 +81,11 @@ public final class RecacheStatus extends AdminMethodStatus {
         }
         else {
             result.append("<message>recaching currently running</message>\n");
-            for (Map.Entry<ResourceType, Integer> e : entrySet()) {
+            for (ResourceType type : keySet()) {
                 result.append("<message>\n");
-                result.append(e.getValue());
+                result.append(get(type));
                 result.append(' ');
-                result.append(e.getKey().getLabel());
+                result.append(type.getLabel());
                 result.append("(s) still to be recached\n");
                 result.append("</message>\n");
             }

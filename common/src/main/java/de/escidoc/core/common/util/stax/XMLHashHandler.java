@@ -53,72 +53,72 @@ public class XMLHashHandler extends DefaultHandler {
     private String hash = null;
 
     @Override
-    public final void characters(char[] ch, int start, int length)
+    public void characters(char[] ch, int start, int length)
         throws SAXException {
-        StringBuilder cb = new StringBuilder();
+        StringBuffer cb = new StringBuffer();
 
         for (int i = 0; i < length; i++) {
             cb.append(ch[i + start]);
         }
 
         String characters = cb.toString();
-        if (characters.trim().length() != 0) {
+        if (!characters.trim().equals("")) {
             // problems with splited character data
             // string.append("#" + characters);
             string.append(characters);
         }
     }
 
-    public final String getHash() {
+    public String getHash() {
         return hash;
     }
 
     @Override
-    public final void startDocument() throws SAXException {
+    public void startDocument() throws SAXException {
         string = new StringBuffer();
         string.append("begin");
     }
 
     @Override
-    public final void startElement(
-            String uri, String localName, String qName, Attributes attributes)
+    public void startElement(
+        String uri, String localName, String qName, Attributes attributes)
         throws SAXException {
 
         String fqName = createFqName(uri, localName, qName);
 
-        string.append('#');
+        string.append("#");
         string.append(fqName);
         int length = attributes.getLength();
         SortedMap<String, String> atts = new TreeMap<String, String>();
         for (int i = 0; i < length; i++) {
             String curQName = attributes.getQName(i);
             String attName =
-                    '{' + attributes.getURI(i) + '}' + attributes.getLocalName(i);
+                "{" + attributes.getURI(i) + "}" + attributes.getLocalName(i);
             if (!curQName.equalsIgnoreCase("xmlns:xml")) {
                 atts.put(attName, attributes.getValue(i));
             }
         }
         for (String s : atts.keySet()) {
             String name = s;
-            string.append('#');
+            string.append("#");
             string.append(name);
-            string.append('=');
+            string.append("=");
             string.append(atts.get(name));
         }
         // mark for begin of element content, either complex or simple
-        string.append('#');
+        string.append("#");
     }
 
     @Override
-    public final void endElement(
-            final String uri, final String localName, final String qName)
+    public void endElement(
+        final String uri, final String localName, final String qName)
         throws SAXException {
-        string.append('#');
+        string.append("#");
         string.append(createFqName(uri, localName, qName));
     }
 
     @Override
-    public final void endDocument() throws SAXException {
+    public void endDocument() throws SAXException {
         string.append("#end");
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -131,7 +131,7 @@ public class XMLHashHandler extends DefaultHandler {
     }
 
     @Override
-    public final void error(SAXParseException e) throws SAXException {
+    public void error(SAXParseException e) throws SAXException {
         throw new SAXException(e);
     }
 
@@ -143,10 +143,10 @@ public class XMLHashHandler extends DefaultHandler {
      * @param qName
      * @return full qualified name
      */
-    private static String createFqName(
-            final String uri, final String localName, final String qName) {
+    private String createFqName(
+        final String uri, final String localName, final String qName) {
 
-        String fqName = '{' + uri + '}';
+        String fqName = "{" + uri + "}";
         if (localName != null && localName.length() > 0) {
             fqName += localName;
         }

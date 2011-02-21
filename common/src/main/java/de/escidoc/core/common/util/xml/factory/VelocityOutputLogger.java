@@ -10,7 +10,7 @@ import org.apache.velocity.runtime.log.LogChute;
  * @author SWA
  * 
  */
-class VelocityOutputLogger implements LogChute {
+public class VelocityOutputLogger implements LogChute {
 
     private static final AppLogger LOG =
         new AppLogger(VelocityOutputLogger.class.getName());
@@ -23,7 +23,7 @@ class VelocityOutputLogger implements LogChute {
      * @throws Exception
      *             Shouldn't happen.
      */
-    public final void init(final RuntimeServices arg0) throws Exception {
+    public void init(final RuntimeServices arg0) throws Exception {
     }
 
     /**
@@ -33,7 +33,7 @@ class VelocityOutputLogger implements LogChute {
      *            log level which is to check
      * @return true if log level is enabled, false otherwise
      */
-    public final boolean isLevelEnabled(final int arg0) {
+    public boolean isLevelEnabled(final int arg0) {
         return true;
     }
 
@@ -47,7 +47,7 @@ class VelocityOutputLogger implements LogChute {
      * @param arg2
      *            Exception
      */
-    public final void log(final int arg0, final String arg1, final Throwable arg2) {
+    public void log(final int arg0, final String arg1, final Throwable arg2) {
 
         LOG.debug(arg1);
     }
@@ -60,7 +60,7 @@ class VelocityOutputLogger implements LogChute {
      * @param arg1
      *            log message
      */
-    public final void log(final int arg0, final String arg1) {
+    public void log(final int arg0, final String arg1) {
         LOG.debug(arg1);
     }
 }

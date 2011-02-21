@@ -37,7 +37,7 @@ import de.escidoc.core.st.business.persistence.StagingFileDao;
  * @author MSC
  * @st
  */
-class StagingUtil {
+public class StagingUtil {
     private static final String STAGING_AREA_BASE_PATH = "catalina.home";
 
     private static final String STAGING_AREA = "staging";
@@ -55,7 +55,7 @@ class StagingUtil {
      * data is possible.<br>
      * The value is 1000 seconds.
      */
-    private static final int TOKEN_VALID_DURATION = 1000000;
+    public static final int TOKEN_VALID_DURATION = 1000000;
 
     /**
      * Constructor.
@@ -113,7 +113,7 @@ class StagingUtil {
         append = append.replace("\\", "/");
         if (!result.endsWith("/")) {
             if (!append.startsWith("/")) {
-                result += '/' + append;
+                result += "/" + append;
             }
             else {
                 result += append;

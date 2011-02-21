@@ -86,25 +86,25 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
     /**
      * This attribute matches the id of the role.
      */
-    private static final String ATTR_ROLE_ID =
+    public static final String ATTR_ROLE_ID =
         AttributeIds.ROLE_ATTR_PREFIX + "id";
 
     /**
      * This attribute matches the user who created the role.
      */
-    private static final String ATTR_ROLE_CREATED_BY =
+    public static final String ATTR_ROLE_CREATED_BY =
         AttributeIds.ROLE_ATTR_PREFIX + "created-by";
 
     /**
      * This attribute matches the user who modified the role.
      */
-    private static final String ATTR_ROLE_MODIFIED_BY =
+    public static final String ATTR_ROLE_MODIFIED_BY =
         AttributeIds.ROLE_ATTR_PREFIX + "modified-by";
 
     /**
      * This attribute matches the name of the role.
      */
-    private static final String ATTR_ROLE_NAME =
+    public static final String ATTR_ROLE_NAME =
         AttributeIds.ROLE_ATTR_PREFIX + "name";
 
     

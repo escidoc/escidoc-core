@@ -6,7 +6,7 @@ package de.escidoc.core.common.business.fedora.mptstore;
  * 
  * @author cwilper@cs.cornell.edu
  */
-abstract class MPTStringUtil {
+public abstract class MPTStringUtil {
 
     private static final int SHORT_ESCAPE_LENGTH = 5;
 
@@ -37,10 +37,10 @@ abstract class MPTStringUtil {
     }
 
 
-    public static String escapeLiteralValueForSql(final CharSequence s) {
+    public static String escapeLiteralValueForSql(final String s) {
 
         int len = s.length();
-        StringBuilder out = new StringBuilder(len * 2);
+        StringBuffer out = new StringBuffer(len * 2);
 
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
@@ -117,7 +117,7 @@ abstract class MPTStringUtil {
      * @return The uppercase hex string.
      */
     private static String hexString(final int num, final int len) {
-        StringBuilder out = new StringBuilder(len);
+        StringBuffer out = new StringBuffer(len);
         String hex = Integer.toHexString(num).toUpperCase();
         int n = len - hex.length();
         for (int i = 0; i < n; i++) {

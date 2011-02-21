@@ -45,7 +45,7 @@ import de.escidoc.core.sm.business.stax.handler.PreprocessingInformationStaxHand
  */
 public class PreprocessingHandler implements PreprocessingHandlerInterface {
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(PreprocessingHandler.class.getName());
 
     private StatisticPreprocessor preprocessor;
@@ -81,7 +81,7 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
         try {
             sp.parse(xmlData);
         } catch (Exception e) {
-            LOGGER.error(e);
+            log.error(e);
             throw new SystemException(e);
         }
         

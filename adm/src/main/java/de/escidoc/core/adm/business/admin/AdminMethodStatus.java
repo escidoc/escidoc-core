@@ -50,18 +50,18 @@ public abstract class AdminMethodStatus extends TreeMap<ResourceType, Integer> {
     private boolean fillingComplete = false;
     private final Semaphore semaphore = new Semaphore(1);
 
-    final boolean isFillingComplete() {
+    protected boolean isFillingComplete() {
         return fillingComplete;
     }
 
-    final void setFillingComplete(boolean fillingComplete) {
+    protected void setFillingComplete(boolean fillingComplete) {
         this.fillingComplete = fillingComplete;
     }
 
     /**
      * This method must be called if the admin method has been finished.
      */
-    public final void finishMethod() {
+    public void finishMethod() {
         completionDate = new Date();
         semaphore.release();
     }
@@ -72,7 +72,7 @@ public abstract class AdminMethodStatus extends TreeMap<ResourceType, Integer> {
      *
      * @return completion date
      */
-    final Date getCompletionDate() {
+    public Date getCompletionDate() {
         return completionDate;
     }
 
@@ -82,7 +82,7 @@ public abstract class AdminMethodStatus extends TreeMap<ResourceType, Integer> {
      *
      * @return true if the method is allowed to be started
      */
-    public final boolean startMethod() {
+    public boolean startMethod() {
         boolean result = false;
 
         if (semaphore.tryAcquire()) {

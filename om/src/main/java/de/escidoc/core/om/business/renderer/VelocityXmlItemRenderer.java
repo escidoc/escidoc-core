@@ -43,15 +43,48 @@ import java.util.List;
  * @author FRS
  * 
  */
-class VelocityXmlItemRenderer {
+public class VelocityXmlItemRenderer {
 
-
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#render(de.escidoc.core.common.business.fedora.resources.Item)
+     */
+    // public String render(Item item) throws SystemException {
+    // String result = null;
+    //
+    // Map<String, String> values = new HashMap<String, String>();
+    // values.put(XmlTemplateProvider.VAR_OBJID, item.getId());
+    // values.put(XmlTemplateProvider.VAR_TITLE, item.getTitle());
+    // values.put(XmlTemplateProvider.VAR_HREF, item.getHref());
+    // // values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, item
+    // // .getLastModifiedDate());
+    // // values.put(XmlTemplateProvider.VAR_NAMESPACE,
+    // // de.escidoc.core.common.business.Constants.ITEM_NAMESPACE_URI);
+    // // values.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX,
+    // // de.escidoc.core.common.business.Constants.ITEM_NAMESPACE_PREFIX);
+    // // values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
+    // // .getEscidocBaseUrl());
+    // values.putAll(getCommonValues(item));
+    // values.putAll(getPropertiesValues(item));
+    // values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT,
+    // renderMdRecords(item));
+    // values.put(XmlTemplateProvider.VAR_COMPONENTS_CONTENT,
+    // renderComponents(item));
+    // values.putAll(getRelationValues(item));
+    // values.putAll(getResourcesValues(item));
+    //
+    // result = ItemXmlProvider.getInstance().getItemXml(values);
+    //
+    // return result;
+    //
+    // }
     /*
      * (non-Javadoc)
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderComponent(de.escidoc.core.common.business.fedora.resources.Item)
      */
-    public static String renderComponent(GenericResource item) throws WebserverSystemException {
+    public String renderComponent(GenericResource item) throws WebserverSystemException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -67,7 +100,7 @@ class VelocityXmlItemRenderer {
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderItemRefs(java.util.List)
      */
-    public static String renderItemRefs(List<String> itemRefs) throws SystemException {
+    public String renderItemRefs(List<String> itemRefs) throws SystemException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -77,18 +110,49 @@ class VelocityXmlItemRenderer {
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderItems(java.util.List)
      */
-    public static String renderItems(List<String> items) throws SystemException {
+    public String renderItems(List<String> items) throws SystemException {
         // TODO Auto-generated method stub
         return null;
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderMdRecord(de.escidoc.core.common.business.fedora.resources.Item)
+     */
+    // public String renderMdRecord(Item item) throws WebserverSystemException,
+    // IntegritySystemException {
+    // Map<String, String> values = new HashMap<String, String>();
+    // values.putAll(getCommonValues(item));
+    // values.put(XmlTemplateProvider.VAR_MD_RECORD_NAME, "escidoc");
+    // values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF, item.getHref()
+    // + "/md-records/md-record/escidoc");
+    // try {
+    // values.put(XmlTemplateProvider.VAR_MD_RECORD_CONTENT, item.getMdRecord(
+    // "escidoc").toString());
+    // }
+    // catch (FedoraSystemException e) {
+    // throw new IntegritySystemException("Can not retrieve md-record
+    // escidoc.");
+    // }
+    // catch (StreamNotFoundException e) {
+    // throw new IntegritySystemException("Can not retrieve md-record
+    // escidoc.");
+    // }
+    // return null;
+    // }
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderMdRecords(de.escidoc.core.common.business.fedora.resources.Item)
+     */
 
     /*
      * (non-Javadoc)
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderProperties(de.escidoc.core.common.business.fedora.resources.Item)
      */
-    public static String renderProperties(GenericResource item) throws WebserverSystemException {
+    public String renderProperties(GenericResource item) throws WebserverSystemException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -98,7 +162,7 @@ class VelocityXmlItemRenderer {
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderRelations(de.escidoc.core.common.business.fedora.resources.Item)
      */
-    public static String renderRelations(GenericResource item) throws WebserverSystemException {
+    public String renderRelations(GenericResource item) throws WebserverSystemException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -108,7 +172,7 @@ class VelocityXmlItemRenderer {
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderResources(de.escidoc.core.common.business.fedora.resources.Item)
      */
-    public static String renderResources(GenericResource item) throws WebserverSystemException {
+    public String renderResources(GenericResource item) throws WebserverSystemException {
         // TODO Auto-generated method stub
         return null;
     }

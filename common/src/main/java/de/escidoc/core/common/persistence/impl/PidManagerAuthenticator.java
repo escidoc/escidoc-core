@@ -35,7 +35,7 @@ import java.net.PasswordAuthentication;
  * @author SWA
  * 
  */
-class PidManagerAuthenticator extends Authenticator {
+public class PidManagerAuthenticator extends Authenticator {
     private final String username;
 
     private final String password;
@@ -58,7 +58,7 @@ class PidManagerAuthenticator extends Authenticator {
      * 
      * @return PasswordAuthentication
      */
-    protected final PasswordAuthentication getPasswordAuthentication() {
+    protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(username, password.toCharArray());
     }
 }

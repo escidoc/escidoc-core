@@ -73,10 +73,10 @@ public class EscidocSpringProvider extends RPCProvider {
     private static final AppLogger LOG =
         new AppLogger(EscidocSpringProvider.class.getName());
 
-    static final String MISSING_MANDATORY_PARAMETER =
+    protected static final String MISSING_MANDATORY_PARAMETER =
         "Missing mandatory parameter in deployment descriptor";
 
-    private static final String OPTION_SPRING_BEAN = "springBean";
+    protected static final String OPTION_SPRING_BEAN = "springBean";
 
     // CHECKSTYLE:JAVADOC-OFF
 
@@ -92,8 +92,8 @@ public class EscidocSpringProvider extends RPCProvider {
      *      org.apache.axis.MessageContext, java.lang.String)
      */
     @Override
-    protected final Object makeNewServiceObject(
-            final MessageContext messageContext, final String className)
+    protected Object makeNewServiceObject(
+        final MessageContext messageContext, final String className)
         throws Exception {
 
         Object springBean = lookupSpringBean(messageContext.getService());
@@ -132,9 +132,9 @@ public class EscidocSpringProvider extends RPCProvider {
      * @common
      */
     @Override
-    protected final Class getServiceClass(
-            final String className, final SOAPService service,
-            final MessageContext messageContext) throws AxisFault {
+    protected Class getServiceClass(
+        final String className, final SOAPService service,
+        final MessageContext messageContext) throws AxisFault {
 
         try {
             final Class beanType =
@@ -157,7 +157,7 @@ public class EscidocSpringProvider extends RPCProvider {
      * @common
      */
     @Override
-    protected final String getServiceClassNameOptionName() {
+    protected String getServiceClassNameOptionName() {
 
         return OPTION_SPRING_BEAN;
     }
@@ -173,7 +173,7 @@ public class EscidocSpringProvider extends RPCProvider {
      * @return user name and password as {@link String} array {username,
      *         password}
      */
-    private static String getHandle(final MessageContext messageContext) {
+    private String getHandle(final MessageContext messageContext) {
 
         String eSciDocUserHandle = null;
         List results;

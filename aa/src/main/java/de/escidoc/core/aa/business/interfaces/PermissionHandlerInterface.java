@@ -57,11 +57,11 @@ import java.util.Map;
 public interface PermissionHandlerInterface extends ResourceHandlerInterface {
 
     String XPATH_GRANT_ASSIGNED_ON =
-            '/' + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/'
+        "/" + XmlUtility.NAME_GRANT + "/" + XmlUtility.NAME_PROPERTIES + "/"
             + XmlUtility.NAME_ASSIGNED_ON;
 
     String XPATH_GRANT_ROLE =
-            '/' + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/'
+        "/" + XmlUtility.NAME_GRANT + "/" + XmlUtility.NAME_PROPERTIES + "/"
             + XmlUtility.NAME_ROLE;
 
     String MSG_WRONG_HREF =

@@ -35,7 +35,7 @@ public class PurgeRequestBuilderImpl extends PurgeRequestBuilder {
      * {@inheritDoc}
      */
     @Override
-    public final String toString() {
+    public String toString() {
         return "PurgeRequestBuilderImpl{" +
                 "purgeRequest=" + purgeRequest +
                 '}';

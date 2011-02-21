@@ -60,19 +60,19 @@ public final class BeanLocator {
 
     public static final String AA_FACTORY_ID = "Aa.spring.ejb.context";
 
-    private static final String ADM_FACTORY_ID = "Adm.spring.ejb.context";
+    public static final String ADM_FACTORY_ID = "Adm.spring.ejb.context";
 
-    private static final String CMM_FACTORY_ID = "Cmm.spring.ejb.context";
+    public static final String CMM_FACTORY_ID = "Cmm.spring.ejb.context";
 
-    private static final String OM_FACTORY_ID = "Om.spring.ejb.context";
+    public static final String OM_FACTORY_ID = "Om.spring.ejb.context";
 
-    private static final String OUM_FACTORY_ID = "Oum.spring.ejb.context";
+    public static final String OUM_FACTORY_ID = "Oum.spring.ejb.context";
 
     public static final String SM_FACTORY_ID = "Sm.spring.ejb.context";
 
     public static final String ST_FACTORY_ID = "St.spring.ejb.context";
 
-    private static final String TME_FACTORY_ID = "Tme.spring.ejb.context";
+    public static final String TME_FACTORY_ID = "Tme.spring.ejb.context";
 
     /**
      * Private constructor, prevents creation of instances.
@@ -80,7 +80,7 @@ public final class BeanLocator {
     private BeanLocator() {
     }
 
-    private static BeanFactory getBeanFactory(final String beanContextId) {
+    public static BeanFactory getBeanFactory(final String beanContextId) {
         BeanFactoryLocator beanFactoryLocator =
             SingletonBeanFactoryLocator.getInstance();
         BeanFactory factory =

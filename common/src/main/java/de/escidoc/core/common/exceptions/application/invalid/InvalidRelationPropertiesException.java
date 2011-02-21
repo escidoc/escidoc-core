@@ -45,9 +45,9 @@ public class InvalidRelationPropertiesException extends ValidationException {
      */
     private static final long serialVersionUID = 4062818670949006781L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE =
         "Invalid relation property.";
 
     /**

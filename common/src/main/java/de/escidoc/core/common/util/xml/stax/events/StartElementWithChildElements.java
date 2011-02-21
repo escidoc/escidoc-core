@@ -51,6 +51,29 @@ public class StartElementWithChildElements extends StartElementWithText {
         this.children = null;
     }
 
+    // /**
+    // * StartElementWithChildElements.
+    // *
+    // * @param localName
+    // * The localName (node).
+    // * @param namespace
+    // * The namespace.
+    // * @param prefix
+    // * The prefix.
+    // * @param elementText
+    // * The element text
+    // * @param nscontext
+    // * TODO
+    // */
+    // public StartElementWithChildElements(final String localName,
+    // final String namespace, final String prefix, final String elementText,
+    // final NamespaceContext nscontext) {
+    //
+    // super(localName, namespace, prefix, elementText, nscontext);
+    // this.children = null;
+    //
+    // }
+
     /**
      * StartElementWithChildElements.
      * 
@@ -109,7 +132,7 @@ public class StartElementWithChildElements extends StartElementWithText {
      * @param childs
      *            Vector of child elements.
      */
-    public final void setChildrenElements(final List<StartElementWithText> childs) {
+    public void setChildrenElements(final List<StartElementWithText> childs) {
         this.children = childs;
     }
 
@@ -131,9 +154,25 @@ public class StartElementWithChildElements extends StartElementWithText {
      * 
      * @return all child elements
      */
-    public final List<StartElementWithText> getChildrenElements() {
+    public List<StartElementWithText> getChildrenElements() {
         return this.children;
     }
 
-
+    // public void deleteChildElement(StartElementWithText child) {
+    // if ((this.children != null) && (this.children.size() > 0)) {
+    // Iterator iterator = children.iterator();
+    // while (iterator.hasNext()) {
+    // StartElementWithText next
+    // = (StartElementWithText) iterator.next();
+    // if(super.localName.equals(child.getLocalName())
+    // && super.)
+    // }
+    // }
+    // }
+    /*
+     * public List getAttributes() { return attributes; }
+     * 
+     * public void setAttributes(List attributes) { this.attributes =
+     * attributes; }
+     */
 }

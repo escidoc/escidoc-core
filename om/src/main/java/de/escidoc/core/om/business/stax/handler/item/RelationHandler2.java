@@ -58,7 +58,7 @@ public class RelationHandler2 extends DefaultHandler {
 
     private RelationCreate relation = null;
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(RelationHandler2.class.getName());
 
     /**
@@ -95,7 +95,7 @@ public class RelationHandler2 extends DefaultHandler {
      *             Thrown if check of transport protocol failed.
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws InvalidContentException, WebserverSystemException {
 
         if (this.relationXPath.equals(parser.getCurPath())
@@ -114,7 +114,7 @@ public class RelationHandler2 extends DefaultHandler {
                     String[] predicateAndTarget = predicateUri.split("#");
                     if (predicateAndTarget.length != 2) {
                         String msg = "Attribute has invalid predicate";
-                        LOGGER.debug(msg + " '" + predicateUri + '\'');
+                        log.debug(msg + " '" + predicateUri + "'");
                         throw new InvalidContentException(msg);
                     }
 
@@ -124,7 +124,7 @@ public class RelationHandler2 extends DefaultHandler {
 
             }
             catch (NoSuchAttributeException e) {
-                LOGGER.debug(e);
+                log.debug(e);
             }
 
             String id = null;
@@ -145,7 +145,7 @@ public class RelationHandler2 extends DefaultHandler {
                 }
             }
             catch (NoSuchAttributeException e) {
-                LOGGER.debug(e);
+                log.debug(e);
             }
 
             // handle objid
@@ -155,7 +155,7 @@ public class RelationHandler2 extends DefaultHandler {
                         + " identifier containing a version number. "
                         + "Use a floating identifier like 'escidoc:123' "
                         + "to reference a target";
-                LOGGER.debug(message);
+                log.debug(message);
                 throw new InvalidContentException(message);
             }
 
@@ -171,7 +171,7 @@ public class RelationHandler2 extends DefaultHandler {
      * @return StAX EndElement
      */
     @Override
-    public final EndElement endElement(final EndElement element) {
+    public EndElement endElement(final EndElement element) {
 
         return element;
     }
@@ -187,7 +187,7 @@ public class RelationHandler2 extends DefaultHandler {
     /**
      * @return the relation
      */
-    public final RelationCreate getRelation() {
+    public RelationCreate getRelation() {
         return relation;
     }
 

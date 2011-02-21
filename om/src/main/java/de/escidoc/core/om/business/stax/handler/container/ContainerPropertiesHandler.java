@@ -52,7 +52,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.naming.directory.NoSuchAttributeException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +71,7 @@ import java.util.Vector;
  */
 public class ContainerPropertiesHandler extends DefaultHandler {
 
-    private static final String PROPERTIES_PATH = "/container/properties";
+    public static final String PROPERTIES_PATH = "/container/properties";
 
     public static final String PID = "pid";
 
@@ -81,7 +80,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
     private final Map<String, String> properties =
         new HashMap<String, String>();
 
-    private final Collection<String> expectedElements = new ArrayList<String>();
+    private final List<String> expectedElements = new ArrayList<String>();
 
     private static final AppLogger log =
         new AppLogger(ContainerPropertiesHandler.class.getName());
@@ -104,7 +103,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      * 
      * @return The properties.
      */
-    public final Map<String, String> getProperties() {
+    public Map<String, String> getProperties() {
         return this.properties;
     }
 
@@ -324,7 +323,25 @@ public class ContainerPropertiesHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element)
         throws MissingElementValueException {
         String curPath = staxParser.getCurPath();
+        // String theName = element.getLocalName();
         if (curPath.startsWith(PROPERTIES_PATH)) {
+            // Now properties.description is read only element.
+            // It value origins from the corresponding element of the escidoc
+            // meta data set
+            // and is stored in dc data stream as dc.description element as
+            // result of a mapping escidoc->dc.
+            // if (theName.equals("description")) {
+            // if ((s != null)) {
+            // properties.put("description", s);
+            // }
+            // else {
+            // getLog().debug(
+            // "the value of" + " of the element " + theName
+            // + " is missing");
+            // throw new MissingElementValueException(
+            // "the value of the element " + theName + " is missing");
+            // }
+            // }
 
             if (curPath.equals("/container/properties/public-status")) {
                 if ((s != null)) {

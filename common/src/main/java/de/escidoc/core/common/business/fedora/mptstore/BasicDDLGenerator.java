@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.common.business.fedora.mptstore;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -44,7 +43,7 @@ public class BasicDDLGenerator
     /**
      * Maximum prefix length when creating a database index.
      */
-    static final int INDEX_PREFIX_LENGTH = 2000;
+    protected static final int INDEX_PREFIX_LENGTH = 2000;
 
     private final String[] users;
 
@@ -53,7 +52,7 @@ public class BasicDDLGenerator
     /**
      * Constructor.
      */
-    BasicDDLGenerator() {
+    public BasicDDLGenerator() {
         users = splitProperty("mptstore.postgres.autoGrantUsers");
         groups = splitProperty("mptstore.postgres.autoGrantGroups");
     }
@@ -61,7 +60,7 @@ public class BasicDDLGenerator
     /**
      * Copied from superclass.
      */
-    final void addSelectGrants(final Collection<String> cmds, final String table) {
+    protected void addSelectGrants(final List<String> cmds, final String table) {
         for (String name : users) {
             cmds.add("GRANT SELECT ON TABLE " + table + " TO " + name);
         }
@@ -73,7 +72,7 @@ public class BasicDDLGenerator
     /**
      * Copied from superclass.
      */
-    private static String[] splitProperty(final String name) {
+    protected static String[] splitProperty(final String name) {
         String val = System.getProperty(name);
         if (val == null || val.trim().length() == 0) {
             return new String[0];

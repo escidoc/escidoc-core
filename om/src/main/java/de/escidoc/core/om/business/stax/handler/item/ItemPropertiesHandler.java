@@ -58,7 +58,6 @@ import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
@@ -80,9 +79,9 @@ public class ItemPropertiesHandler extends DefaultHandler {
     private static final String XPATH_ITEM_CONTENT_MODEL_SPECIFIC =
         XPATH_ITEM_PROPERTIES + '/' + Elements.ELEMENT_CONTENT_MODEL_SPECIFIC;
 
-    private final Collection<String> expectedElements = new ArrayList<String>();
+    private final List<String> expectedElements = new ArrayList<String>();
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(ItemPropertiesHandler.class.getName());
 
     private boolean parsingContentModelSpecific = false;
@@ -108,7 +107,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * 
      * @return ItemProperties.
      */
-    public final ItemProperties getProperties() {
+    public ItemProperties getProperties() {
 
         return this.properties;
     }
@@ -122,7 +121,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * 
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws ContentModelNotFoundException, ContextNotFoundException,
         MissingAttributeValueException, ReadonlyAttributeViolationException,
         ReadonlyElementViolationException, WebserverSystemException,
@@ -173,7 +172,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * 
      */
     @Override
-    public final EndElement endElement(final EndElement element)
+    public EndElement endElement(final EndElement element)
         throws InvalidXmlException, MissingAttributeValueException,
         SystemException, ContextNotFoundException,
         ContentModelNotFoundException, XMLStreamException,
@@ -194,7 +193,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             utility.checkIsContentModel(id);
         }
         else if (currentPath.equals(XPATH_ITEM_CONTENT_MODEL_SPECIFIC)) {
-            LOGGER.debug("Parser reached end of "
+            log.debug("Parser reached end of "
                 + XPATH_ITEM_CONTENT_MODEL_SPECIFIC);
             this.parsingContentModelSpecific = false;
             this.contentModelHandler.endElement(element);
@@ -226,7 +225,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public final String characters(final String data, final StartElement element)
+    public String characters(final String data, final StartElement element)
         throws WebserverSystemException, InvalidStatusException {
 
         String curPath = parser.getCurPath();
@@ -295,7 +294,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
                         + " element has a wrong url."
                         + "the url have to look like: "
                         + Constants.CONTEXT_URL_BASE + "[id] ";
-                LOGGER.error(message);
+                log.error(message);
                 throw new ContextNotFoundException(message, e);
             }
         }
@@ -356,7 +355,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
                         + " element has a wrong url."
                         + "the url have to look like: "
                         + Constants.CONTENT_MODEL_URL_BASE + "[id] ";
-                LOGGER.error(message);
+                log.error(message);
                 throw new ContentModelNotFoundException(message, e);
             }
         }
@@ -414,7 +413,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
                         + " element has a wrong url."
                         + "the url have to look like: "
                         + Constants.ITEM_URL_BASE + "[id] ";
-                LOGGER.error(message);
+                log.error(message);
                 throw new InvalidContentException(message, e);
             }
         }
@@ -431,7 +430,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * @throws InvalidStatusException
      *             Thrown if unknown or invalid status type was set.
      */
-    private static StatusType getStatusType(final String type)
+    private StatusType getStatusType(final String type)
         throws InvalidStatusException {
 
         if (type != null) {
@@ -453,7 +452,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
         }
 
         String msg = "Invalid status '" + type + '\'';
-        LOGGER.debug(msg);
+        log.debug(msg);
         throw new InvalidStatusException(msg);
     }
 }

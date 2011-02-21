@@ -58,7 +58,7 @@ public class XacmlPolicySet extends PolicySet {
 
     public static final String DEFAULT_ROLE = "Default";
 
-    private static final String URN_POLICY_COMBINING_ALGORITHM =
+    public static final String URN_POLICY_COMBINING_ALGORITHM =
         "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:";
 
     public static final String URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES =
@@ -188,7 +188,7 @@ public class XacmlPolicySet extends PolicySet {
      * @see java.lang.Object#toString()
      */
     @Override
-    public final String toString() {
+    public String toString() {
 
         try {
             return CustomPolicyBuilder.encode(this);

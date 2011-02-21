@@ -69,8 +69,8 @@ public abstract class GenericResourceCreate {
      *             Thrown if converting of characters to default character set
      *             failed.
      */
-    static final List<Map<String, String>> getMetadataRecordsMap(
-            final Iterable<MdRecordCreate> mdRecords) throws SystemException {
+    protected List<Map<String, String>> getMetadataRecordsMap(
+        final List<MdRecordCreate> mdRecords) throws SystemException {
 
         List<Map<String, String>> values =
             new ArrayList<Map<String, String>>();
@@ -98,8 +98,8 @@ public abstract class GenericResourceCreate {
      * @throws EncodingSystemException
      *             Thrown if the conversion to default encoding failed.
      */
-    public final String getDC(
-            final MdRecordCreate mdRecord, final String contentModelId)
+    public String getDC(
+        final MdRecordCreate mdRecord, final String contentModelId)
         throws WebserverSystemException, EncodingSystemException {
 
         String dcXml =
@@ -123,8 +123,8 @@ public abstract class GenericResourceCreate {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    protected static void checkContextStatus(
-            final String contextId, final String status)
+    protected void checkContextStatus(
+        final String contextId, final String status)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
 
@@ -138,7 +138,7 @@ public abstract class GenericResourceCreate {
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus == null || curStatus.length() == 0) {
             final String msg =
-                "Can not get status of context " + contextId + '.';
+                "Can not get status of context " + contextId + ".";
             LOG.debug(msg);
             throw new WebserverSystemException(msg);
         }
@@ -146,7 +146,7 @@ public abstract class GenericResourceCreate {
         if (!curStatus.equals(status)) {
             final String msg =
                 "The Context '" + contextId + "' is in state '" + curStatus
-                    + "' and not in status " + status + '.';
+                    + "' and not in status " + status + ".";
             LOG.debug(msg);
             throw new InvalidStatusException(msg);
         }
@@ -156,14 +156,14 @@ public abstract class GenericResourceCreate {
      * @param objid
      *            the objid to set
      */
-    public final void setObjid(final String objid) {
+    public void setObjid(final String objid) {
         this.objid = objid;
     }
 
     /**
      * @return the objid
      */
-    public final String getObjid() {
+    public String getObjid() {
         return objid;
     }
 
@@ -171,7 +171,7 @@ public abstract class GenericResourceCreate {
      * @param buildNumber
      *            the buildNumber to set
      */
-    public final void setBuildNumber(final String buildNumber) {
+    public void setBuildNumber(final String buildNumber) {
         this.buildNumber = buildNumber;
     }
 
@@ -182,7 +182,7 @@ public abstract class GenericResourceCreate {
      * @throws WebserverSystemException
      *             Thrown by Utility instance.
      */
-    public final String getBuildNumber() throws WebserverSystemException {
+    public String getBuildNumber() throws WebserverSystemException {
         if (this.buildNumber == null) {
             this.buildNumber = Utility.getInstance().getBuildNumber();
         }

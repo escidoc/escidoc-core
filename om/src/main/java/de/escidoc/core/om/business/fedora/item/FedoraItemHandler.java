@@ -34,7 +34,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -162,7 +161,7 @@ import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
 public class FedoraItemHandler extends ItemHandlerPid
     implements ItemHandlerInterface {
 
-    private static final AppLogger LOGGER = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         FedoraItemHandler.class.getName());
 
     private FedoraContentRelationHandler contentRelationHandler = null;
@@ -184,7 +183,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * 
      * @return PolicyDecisionPointInterface
      */
-    final PolicyDecisionPointInterface getPdp() {
+    PolicyDecisionPointInterface getPdp() {
 
         return pdp;
     }
@@ -212,7 +211,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieve(java.lang.String)
      */
-    public final String retrieve(final String id) throws ItemNotFoundException,
+    public String retrieve(final String id) throws ItemNotFoundException,
         MissingMethodParameterException, SystemException,
         ComponentNotFoundException, AuthorizationException {
 
@@ -333,6 +332,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             extractPathes.put("/item/relations", null);
             extractPathes.put("/item/resources", null);
             extractPathes.put("/item/md-records/md-record", "name");
+            // extractPathes.put("/item/components/component", "objid");
             if (!origin) {
                 extractPathes
                     .put("/item/components/component/properties", null);
@@ -399,7 +399,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             catch (UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
-            Map mdRecordsStreams = (HashMap) streams.get("md-records");
+            HashMap mdRecordsStreams = (HashMap) streams.get("md-records");
             if ((mdRecordsStreams != null)
                 && !mdRecordsStreams.containsKey("escidoc") && !origin) {
                 throw new MissingMdRecordException(
@@ -490,7 +490,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws InvalidStatusException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#create(java.lang.String)
      */
-    public final String create(final String xml) throws MissingContentException,
+    public String create(final String xml) throws MissingContentException,
         ContextNotFoundException, ContentModelNotFoundException,
         ReadonlyElementViolationException, MissingAttributeValueException,
         MissingElementValueException, ReadonlyAttributeViolationException,
@@ -517,7 +517,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             String msg =
                 "The Item with id '" + objid + "', which was just created, "
                     + "could not be found for retrieve.";
-            LOGGER.warn(msg);
+            log.warn(msg);
             throw new IntegritySystemException(msg, e);
         }
         fireItemCreated(objid, resultItem);
@@ -580,7 +580,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             String msg =
                 "The Item with id '" + objid + "', which was just ingested, "
                     + "could not be found for retrieve.";
-            LOGGER.warn(msg);
+            log.warn(msg);
             throw new IntegritySystemException(msg, e);
         }
         return objid;
@@ -662,7 +662,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecord(java.lang.String,java.lang.String)
      */
-    public final String retrieveMdRecord(final String id, final String mdRecordId)
+    public String retrieveMdRecord(final String id, final String mdRecordId)
         throws ItemNotFoundException, MdRecordNotFoundException,
         MissingMethodParameterException, SystemException,
         AuthorizationException {
@@ -700,7 +700,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             String message =
                 "Metadata record with name " + mdRecordId
                     + " not found in item " + id + '.';
-            LOGGER.debug(message);
+            log.debug(message);
             throw new MdRecordNotFoundException(message);
         }
         return mdRecord;
@@ -747,7 +747,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 message =
                     "Metadata record with name " + mdRecordId
                         + " not found in item " + id + '.';
-                LOGGER.debug(message);
+                log.debug(message);
                 throw new MdRecordNotFoundException(message);
             }
         }
@@ -796,7 +796,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 message =
                     "Metadata record with name DC" + " not found in item " + id
                         + '.';
-                LOGGER.debug(message);
+                log.debug(message);
                 throw new MdRecordNotFoundException(message);
             }
 
@@ -867,7 +867,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(e.getMessage(), e);
         }
 
-        Map mds = (HashMap) me.getOutputStreams().get("md-records");
+        HashMap mds = (HashMap) me.getOutputStreams().get("md-records");
         // there is only one md-record (root element is md-record)
         ByteArrayOutputStream mdXml =
             (ByteArrayOutputStream) mds.get(mdRecordId);
@@ -953,7 +953,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#createMdRecord(java.lang.String,java.lang.String)
      */
-    public final String createMdRecord(final String id, final String xmlData)
+    public String createMdRecord(final String id, final String xmlData)
         throws ItemNotFoundException, SystemException,
         XmlSchemaValidationException, LockingException,
         MissingAttributeValueException, InvalidStatusException,
@@ -984,7 +984,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     + "FedoraItemHandler.createMetadataRecord.", e);
         }
         Map map = me.getOutputStreams();
-        Map mdRecords = (Map) map.get("md-records");
+        Map mdRecords = (HashMap) map.get("md-records");
         Set keySet = mdRecords.keySet();
         Iterator it = keySet.iterator();
         if (!it.hasNext()) {
@@ -1042,7 +1042,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveComponents(java.lang.String)
      */
-    public final String retrieveComponents(final String id)
+    public String retrieveComponents(final String id)
         throws ItemNotFoundException, ComponentNotFoundException,
         MissingMethodParameterException, SystemException,
         AuthorizationException {
@@ -1302,7 +1302,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveComponent(java.lang.String,java.lang.String)
      */
-    public final String retrieveComponent(final String id, final String componentId)
+    public String retrieveComponent(final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException,
         MissingMethodParameterException, SystemException,
         AuthorizationException {
@@ -1573,9 +1573,9 @@ public class FedoraItemHandler extends ItemHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
-        Map<String, Object> compsMap =
+        HashMap<String, Object> compsMap =
             (HashMap<String, Object>) me.getOutputStreams().get("components");
-        Map compMap = (Map) compsMap.get(componentId);
+        Map compMap = (HashMap) compsMap.get(componentId);
 
         setComponent(getItem().getComponent(componentId), compMap, cmuh
             .getMetadataAttributes().get(componentId), cmuh
@@ -1609,7 +1609,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#release(java.lang.String,java.lang.String)
      */
-    public final String release(final String id, final String param)
+    public String release(final String id, final String param)
         throws ItemNotFoundException, LockingException, InvalidStatusException,
         MissingMethodParameterException, SystemException,
         OptimisticLockingException, ReadonlyViolationException,
@@ -1646,12 +1646,14 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().setLatestReleasePid();
             getItem().persist();
 
+            // notify indexer
+            // getUtility().notifyIndexerAddPublication(getItem().getHref());
             fireItemModified(getItem().getId());
             // find surrogate items which reference this item by a floating
             // reference, recache them and if necessary reindex them.
             List<String> surrogateItemIds =
                 getTripleStoreUtility().getSurrogates(getItem().getId());
-            Collection<String> referencedSurrogateItemIds = new ArrayList<String>();
+            List<String> referencedSurrogateItemIds = new ArrayList<String>();
             for (String surrogateItemId : surrogateItemIds) {
                 String surrogateId = surrogateItemId;
                 String versionId =
@@ -1794,7 +1796,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#withdraw(java.lang.String,java.lang.String)
      */
-    public final String withdraw(final String id, final String param)
+    public String withdraw(final String id, final String param)
         throws ItemNotFoundException, NotPublishedException, LockingException,
         AlreadyWithdrawnException, InvalidStatusException,
         MissingMethodParameterException, SystemException,
@@ -1842,6 +1844,8 @@ public class FedoraItemHandler extends ItemHandlerPid
 
             makeVersion(withdrawComment, Constants.STATUS_WITHDRAWN);
             getItem().persist();
+
+            // getUtility().notifyIndexerDeletePublication(getItem().getHref());
 
             fireItemModified(getItem().getId());
         }
@@ -1944,6 +1948,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                         Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + target);
                 newContentRelationElement.addAttribute(resource);
+                // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
 
                 elements.add(newContentRelationElement);
@@ -2026,7 +2031,7 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         List<Map<String, String>> relationsData = removeHandler.getRelations();
         if ((relationsData != null) && (!relationsData.isEmpty())) {
-            final Map<String, List<StartElementWithChildElements>> toRemove =
+            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
@@ -2177,7 +2182,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveVersionHistory(java.lang.String)
      */
-    public final String retrieveVersionHistory(final String id)
+    public String retrieveVersionHistory(final String id)
         throws ItemNotFoundException, SystemException {
 
         setItem(id);
@@ -2284,7 +2289,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ItemNotFoundException
      *             TODO
      */
-    public static String retrieveRevisions(final String id)
+    public String retrieveRevisions(final String id)
         throws ItemNotFoundException {
         // FIXME
         throw new UnsupportedOperationException();
@@ -2343,7 +2348,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws TripleStoreSystemException
      * @throws IntegritySystemException
      */
-    private static ItemCreate parseItem(final String xml)
+    private ItemCreate parseItem(final String xml)
         throws WebserverSystemException, XmlParserSystemException,
         ReadonlyElementViolationException, ReadonlyAttributeViolationException,
         ContentModelNotFoundException, ContextNotFoundException,
@@ -2488,9 +2493,9 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static void setMetadataRecord(
-            final String name, final String xml,
-            final Map<String, String> mdAttributes) throws SystemException {
+    private void setMetadataRecord(
+        final String name, final String xml,
+        final Map<String, String> mdAttributes) throws SystemException {
 
         // this method must be reimplemented to use set-method in item
         throw new SystemException("Not yet implemented.");
@@ -2534,7 +2539,7 @@ public class FedoraItemHandler extends ItemHandlerPid
     private void setMetadataRecords(
         final Map mdMap, final Map mdAttributesMap,
         final String escidocMdRecordnsUri) throws SystemException {
-        Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
+        HashMap<String, Datastream> dsMap = new HashMap<String, Datastream>();
         if (mdMap == null) {
             getItem().setMdRecords(dsMap);
         }
@@ -2553,7 +2558,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 Datastream ds =
                     new Datastream(name, getItem().getId(), xmlBytes,
                         "text/xml", mdProperties);
-                Map mdRecordAttributes =
+                HashMap mdRecordAttributes =
                     (HashMap) mdAttributesMap.get(name);
                 ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
                 ds.addAlternateId((String) mdRecordAttributes.get("type"));
@@ -2583,7 +2588,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         final Map<String, Map<String, Object>> contentStreamMap)
         throws FedoraSystemException, WebserverSystemException,
         IntegritySystemException {
-        Map<String, Datastream> contentStreamDatastreams =
+        HashMap<String, Datastream> contentStreamDatastreams =
             new HashMap<String, Datastream>();
 
         for (String s : contentStreamMap.keySet()) {
@@ -2680,10 +2685,12 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         if (publicStatus != StatusType.PENDING) {
 
-            LOGGER.debug("New Items has to be in public-status '"
+            log.debug("New Items has to be in public-status '"
                 + StatusType.PENDING + "'.");
             item.getProperties().getObjectProperties()
                 .setStatus(StatusType.PENDING);
+            // item.getProperties().getObjectProperties().setStatusComment(
+            // "Object created");
         }
     }
 
@@ -2745,17 +2752,28 @@ public class FedoraItemHandler extends ItemHandlerPid
             && (item.getProperties().getObjectProperties().getPid() == null)) {
                 String msg =
                     "Item with public-status released requires an PID.";
-                LOGGER.debug(msg);
+                log.debug(msg);
                 throw new InvalidStatusException(msg);
             }
 
+            // make sure that version 1 is also in status released
+            // if (!Boolean.valueOf(System
+            // .getProperty("cmm.Item.versionPid.releaseWithoutPid"))) {
+            //
+            // if (item.getProperties().getCurrentVersion().getPid() == null) {
+            // String msg =
+            // "Item with version-status released requires an PID.";
+            // log.debug(msg);
+            // throw new InvalidStatusException(msg);
+            // }
+            // }
             item.getProperties().getCurrentVersion()
                 .setStatus(StatusType.RELEASED);
             item.getProperties().setLatestReleasedVersion(
                 item.getProperties().getCurrentVersion());
         }
         else if (publicStatus != StatusType.PENDING) {
-            LOGGER.debug("New Items has to be in public-status '"
+            log.debug("New Items has to be in public-status '"
                 + StatusType.PENDING + "' or '" + StatusType.RELEASED);
             item.getProperties().getObjectProperties()
                 .setStatus(StatusType.PENDING);
@@ -2820,8 +2838,8 @@ public class FedoraItemHandler extends ItemHandlerPid
                     String message =
                         "Predicate '" + relation.getPredicate()
                             + "' is invalid. ";
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(message);
+                    if (log.isDebugEnabled()) {
+                        log.debug(message);
                     }
                     throw new RelationPredicateNotFoundException(message);
                 }
@@ -2865,7 +2883,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             if (publicStatus == null) {
                 String message =
                     "A referenced Item '" + origin + "' does not exist.";
-                LOGGER.error(message);
+                log.error(message);
                 throw new InvalidContentException();
             }
             else if (publicStatus.equals(Constants.STATUS_WITHDRAWN)) {
@@ -2873,7 +2891,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     "The referenced Item '" + origin
                         + "' is in status 'withdrawn'. The surrogate Item can "
                         + "not be created.";
-                LOGGER.error(message);
+                log.error(message);
                 throw new InvalidStatusException();
             }
 
@@ -2885,7 +2903,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 String message =
                     "The referenced Item with id '" + origin
                         + "' is not released.";
-                LOGGER.error(message);
+                log.error(message);
                 throw new InvalidStatusException(message);
             }
             if (versionNumber == null) {
@@ -2898,7 +2916,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                         + "on the Item '" + origin
                         + "' because you have no access "
                         + "rights on this Item.";
-                LOGGER.debug(message);
+                log.debug(message);
                 throw new AuthorizationException(message);
             }
             try {
@@ -2908,7 +2926,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             catch (ItemNotFoundException e) {
                 String message =
                     "The referenced Item '" + origin + "' does not exist.";
-                LOGGER.debug(message);
+                log.debug(message);
                 throw new InvalidContentException();
             }
 
@@ -2917,7 +2935,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 String message =
                     "A referenced original Item should be "
                         + "a regular Item, not a surrogate Item.";
-                LOGGER.debug(message);
+                log.debug(message);
                 throw new InvalidContentException(message);
             }
             String versionStatus =
@@ -2928,7 +2946,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     "The referenced Item version is not released. "
                         + "You can create a surrogate Item only based on a "
                         + "released Item version.";
-                LOGGER.debug(message);
+                log.debug(message);
                 throw new InvalidStatusException(message);
             }
 
@@ -2949,7 +2967,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws InvalidContentException
      *             Thrown if content is invalid.
      */
-    private static void checkMetadataRecords(final ItemCreate item)
+    private void checkMetadataRecords(final ItemCreate item)
         throws MissingMdRecordException, InvalidContentException {
 
         /*
@@ -2965,14 +2983,14 @@ public class FedoraItemHandler extends ItemHandlerPid
                     "The Item representation doesn't contain a "
                         + "mandatory md-record. A regular Item must contain a "
                         + "mandatory md-record. ";
-                LOGGER.error(message);
+                log.error(message);
                 throw new MissingMdRecordException(message);
             }
 
         }
         else {
 
-            Collection<String> mdRecordNames = new ArrayList<String>();
+            List<String> mdRecordNames = new ArrayList<String>();
             String name;
             for (MdRecordCreate mdRecord : mdRecords) {
 
@@ -2982,6 +3000,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 if (mdRecordNames.contains(name)) {
                     throw new InvalidContentException(
                         "Metadata 'md-record' with name='"
+                        // + Elements.MANDATORY_MD_RECORD_NAME
                             + name + "' exists multiple times.");
                 }
 
@@ -2993,7 +3012,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     "The item representation doesn't contain a "
                         + "mandatory md-record. A regular item must contain a "
                         + "mandatory md-record. ";
-                LOGGER.error(message);
+                log.error(message);
                 throw new MissingMdRecordException(message);
             }
 
@@ -3024,7 +3043,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         if (targetObjectType == null) {
             String message =
                 "Resource with id '" + targetId + "' does not exist.";
-            LOGGER.debug(message);
+            log.debug(message);
             throw new ReferencedResourceNotFoundException(message);
         }
 
@@ -3036,7 +3055,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 "A related resource '" + targetId
                     + "' is neither 'Item' nor 'Container' ";
 
-            LOGGER.debug(message);
+            log.debug(message);
             throw new InvalidContentException(message);
         }
     }
@@ -3101,6 +3120,41 @@ public class FedoraItemHandler extends ItemHandlerPid
 
     }
 
+    // /**
+    // * Check if Item is surrogate Item and set objid of origin Item.
+    // *
+    // * @throws ItemNotFoundException
+    // * Thrown if the resource for the obtained objid is no Item.
+    // * @throws AuthorizationException
+    // * Thrown if user has no permission to origin Item.
+    // * @throws SystemException
+    // * Thrown in case of internal error.
+    // */
+    // private void setOriginItem() throws ItemNotFoundException,
+    // AuthorizationException, SystemException {
+    //
+    // String originObjectId =
+    // getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
+    //
+    // if (originObjectId != null) {
+    // prepareAndSetOriginItem();
+    // if (!checkUserRights(getOriginItem().getFullId())) {
+    // String message =
+    // "You cannot access a full surrogate item representation"
+    // + " because you have no access rights on the item "
+    // + getOriginId()
+    // + " . You can access subressourcess owned by a "
+    // + "surrogate item using retrieve methods on "
+    // + "subresources.";
+    //
+    // log.debug(message);
+    // throw new AuthorizationException(message);
+    // }
+    // }
+    // else {
+    // setOriginItem(null);
+    // }
+    // }
 
     /**
      * Load origin Item. User permissions are checked.
@@ -3128,7 +3182,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             origin = true;
             prepareAndSetOriginItem();
             if (!checkUserRights(getOriginItem().getFullId())) {
-                LOGGER.debug(errorMessage);
+                log.debug(errorMessage);
                 throw new AuthorizationException(errorMessage);
             }
         }

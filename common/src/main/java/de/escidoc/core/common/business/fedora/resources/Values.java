@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.common.business.fedora.resources;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -43,7 +42,7 @@ public abstract class Values {
     public static final String FUNCTION_AND =
         "urn:oasis:names:tc:xacml:1.0:function:and";
 
-    static final String FUNCTION_OR =
+    public static final String FUNCTION_OR =
         "urn:oasis:names:tc:xacml:1.0:function:or";
 
     public static final String FUNCTION_STRING_CONTAINS =
@@ -60,24 +59,24 @@ public abstract class Values {
     /**
      * This map contains all functions which can be mapped.
      */
-    static final Map<String, String> FUNCTION_MAP =
+    protected static final Map<String, String> FUNCTION_MAP =
         new HashMap<String, String>();
 
     /**
      * This map contains all operands which can be mapped.
      */
-    static final Map<String, String> OPERAND_MAP =
+    protected static final Map<String, String> OPERAND_MAP =
         new HashMap<String, String>();
 
     /**
      * This set contains scopes which are ignored by this parser.
      */
-    private static final Collection<String> IGNORED_SCOPES = new HashSet<String>();
+    protected static final Set<String> IGNORED_SCOPES = new HashSet<String>();
 
     /**
      * This map contains all scopes which can be mapped.
      */
-    static final Map<String, String> SCOPE_MAP =
+    protected static final Map<String, String> SCOPE_MAP =
         new HashMap<String, String>();
 
     static {
@@ -104,7 +103,7 @@ public abstract class Values {
      * 
      * @return corresponding filter operation name
      */
-    public static final String getFunction(final String name) {
+    public String getFunction(final String name) {
         return FUNCTION_MAP.get(name);
     }
 
@@ -115,7 +114,7 @@ public abstract class Values {
      *            scope name
      * @return whether or not the given scope may be ignored for filters
      */
-    public static final boolean ignoreScope(final String name) {
+    public boolean ignoreScope(final String name) {
         return IGNORED_SCOPES.contains(name);
     }
 
@@ -127,7 +126,7 @@ public abstract class Values {
      * 
      * @return operand usable in filter query
      */
-    public static final String getOperand(final String name) {
+    public String getOperand(final String name) {
         return OPERAND_MAP.get(name);
     }
 
@@ -139,7 +138,7 @@ public abstract class Values {
      * 
      * @return sub query representing the given scope usable in filter query
      */
-    public static final String getScope(final String name) {
+    public String getScope(final String name) {
         return SCOPE_MAP.get(name);
     }
 

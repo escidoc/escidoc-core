@@ -78,7 +78,7 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
      * @throws AuthorizationException
      *             If further needed access rights are not given.
      */
-    final void remove(final String id) throws ItemNotFoundException,
+    protected void remove(final String id) throws ItemNotFoundException,
         LockingException, InvalidStatusException, SystemException,
         AuthorizationException {
 

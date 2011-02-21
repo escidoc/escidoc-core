@@ -96,7 +96,7 @@ import java.util.Vector;
  */
 public class ContextHandlerUpdate extends ContextHandlerDelete {
 
-    private static final AppLogger LOGGER = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         ContextHandlerUpdate.class.getName());
 
     private static final String XPATH_ADMIN_DESCRIPTORS =
@@ -133,8 +133,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      *             Thrown if anything else fails.
      * @throws InvalidContentException
      */
-    final boolean update(
-            final FedoraContextHandler contextHandler, final String xmlData)
+    public boolean update(
+        final FedoraContextHandler contextHandler, final String xmlData)
         throws ContextNotFoundException, InvalidStatusException,
         OptimisticLockingException, ReadonlyAttributeViolationException,
         ReadonlyElementViolationException, ContextNameNotUniqueException,
@@ -230,7 +230,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 cpuh.getPropertiesToAdd());
         Map<String, String> changedValues =
             cpuh.getChangedValuesInRelsExt();
-        if (!changedValues.isEmpty() || dcUpdated || adminDescriptorsUpdated
+        if (changedValues.size() > 0 || dcUpdated || adminDescriptorsUpdated
             || getContext().isOuUpdated()) {
             String oldModifiedBy =
                 getTripleStoreUtility().getProperty(getContext().getId(),
@@ -274,8 +274,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException
      *             Thrown if Context is locked.
      */
-    final void open(
-            final FedoraContextHandler contextHandler, final String taskParam)
+    public void open(
+        final FedoraContextHandler contextHandler, final String taskParam)
         throws ContextNotFoundException, InvalidStatusException,
         InvalidXmlException, OptimisticLockingException, SystemException,
         LockingException, StreamNotFoundException {
@@ -385,8 +385,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException
      *             Thrown if Context is locked.
      */
-    final void close(
-            final FedoraContextHandler contextHandler, final String taskParam)
+    public void close(
+        final FedoraContextHandler contextHandler, final String taskParam)
         throws ContextNotFoundException, InvalidStatusException,
         InvalidXmlException, OptimisticLockingException, SystemException,
         LockingException, StreamNotFoundException {
@@ -495,8 +495,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @param xmlData
      *            XML representation of new AdminDescriptor.
      */
-    public static void updateAdminDescriptor(
-            final FedoraContextHandler contextHandler, final String xmlData) {
+    public void updateAdminDescriptor(
+        final FedoraContextHandler contextHandler, final String xmlData) {
         // TODO implement
         throw new UnsupportedOperationException(
             "ContextHandlerUpdate.updateAdminDescriptor not yet implemented");
@@ -609,9 +609,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         final List<String> propertiesToRemove,
         final Map<String, String> propertiesToAdd)
         throws ContextNameNotUniqueException, SystemException {
-        if (((changedValues == null) || (changedValues.isEmpty()))
-            && ((propertiesToRemove == null) || (propertiesToRemove.isEmpty()))
-            && ((propertiesToAdd == null) || (propertiesToAdd.isEmpty()))) {
+        if (((changedValues == null) || (changedValues.size() == 0))
+            && ((propertiesToRemove == null) || (propertiesToRemove.size() == 0))
+            && ((propertiesToAdd == null) || (propertiesToAdd.size() == 0))) {
             return false;
         }
         boolean updatedDcProperties = false;
@@ -627,9 +627,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         byte[] dcNewBytes = null;
         final StaxParser sp = new StaxParser();
 
-        if (!propertiesToRemove.isEmpty()) {
+        if (propertiesToRemove.size() > 0) {
 
-            if (!changedValues.isEmpty()) {
+            if (changedValues.size() > 0) {
                 updatedDcProperties = true;
                 final Map<String, StartElementWithText> updateElementsDc =
                     updateDcProperties(changedValues);
@@ -646,7 +646,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             extractPathes.put("/dc", null);
             sp.addHandler(me);
 
-            final Map<String, List<StartElementWithChildElements>> toRemove =
+            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<String> iterator = propertiesToRemove.iterator();
             HashMap<String, List<StartElementWithChildElements>> propertiesVectorAssignment =
@@ -693,9 +693,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 throw new XmlParserSystemException(e);
             }
         }
-        if (!propertiesToAdd.isEmpty()) {
+        if (propertiesToAdd.size() > 0) {
 
-            if (!updatedDcProperties && !changedValues.isEmpty()) {
+            if (!updatedDcProperties && changedValues.size() > 0) {
                 updatedDcProperties = true;
 
                 final Map<String, StartElementWithText> updateElementsDc =
@@ -755,7 +755,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 throw new XmlParserSystemException(e);
             }
         }
-        if (!updatedDcProperties && !changedValues.isEmpty()) {
+        if (!updatedDcProperties && changedValues.size() > 0) {
 
             final Map<String, StartElementWithText> updateElementsDc =
                 updateDcProperties(changedValues);
@@ -791,7 +791,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             dcNew = new String(dcNewBytes, XmlUtility.CHARACTER_ENCODING);
         }
         catch (final UnsupportedEncodingException e) {
-            LOGGER.error(e);
+            log.error(e);
             throw new EncodingSystemException(e);
         }
 
@@ -816,7 +816,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         throws TripleStoreSystemException, ContextNameNotUniqueException,
         WebserverSystemException {
 
-        final Map<String, StartElementWithText> updateElementsDc =
+        final TreeMap<String, StartElementWithText> updateElementsDc =
             new TreeMap<String, StartElementWithText>();
 
         final Set<Map.Entry<String, String>> changedValuesEntrySet = changedValues.entrySet();
@@ -885,7 +885,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws SystemException
      *             TODO
      */
-    final boolean handleAdminDescriptors(final Map<String, Object> streams)
+    boolean handleAdminDescriptors(final Map<String, Object> streams)
         throws SystemException {
         boolean updated = false;
         Set<Map.Entry<String, Object>> streamsEntrySet = streams.entrySet();
@@ -895,6 +895,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
         for(Map.Entry<String, Object> entry : streamsEntrySet) {
             final String name = entry.getKey();
+            // final String id = name.replace(" ", "_");
             final String label = name;
             Boolean newDS = true;
             if (adminDescriptors.containsKey(name)) {
@@ -908,13 +909,13 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
                 if (oldDs.equals(newDs)
                     && oldDs.getMimeType().equals("text/xml")) {
-                    LOGGER.debug("Datastreams identical; updated of Context "
+                    log.debug("Datastreams identical; updated of Context "
                         + getContext().getId() + " with admin-descriptor "
                         + name + " skipped.");
                 }
                 else {
                     getContext().setAdminDescriptor(newDs);
-                    LOGGER.debug("updated Context " + getContext().getId()
+                    log.debug("updated Context " + getContext().getId()
                         + " with admin-descriptor " + name);
                     updated = true;
                 }
@@ -933,7 +934,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                         true,
                         ((ByteArrayOutputStream) streams.get(name))
                             .toByteArray(), false);
-                LOGGER.debug("add to Context " + getContext().getId()
+                // it.remove();
+                log.debug("add to Context " + getContext().getId()
                     + " new admin-descriptor " + name);
                 updated = true;
             }
@@ -944,7 +946,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         for(Map.Entry<String, Datastream> entry : adminDescriptorsEntrySet) {
             Datastream nextDatastream = entry.getValue();
             nextDatastream.delete();
-            LOGGER.debug("Admin-descriptor datastream '" + entry.getKey()
+            log.debug("Admin-descriptor datastream '" + entry.getKey()
                 + "' of Context " + getContext().getId() + " deleted.");
             updated = true;
         }

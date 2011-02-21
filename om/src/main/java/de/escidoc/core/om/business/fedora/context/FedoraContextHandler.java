@@ -32,7 +32,6 @@ import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +84,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     private static final AppLogger LOG = new AppLogger(
         FedoraContextHandler.class.getName());
 
-    private final Collection<ResourceListener> contextListeners =
+    private final List<ResourceListener> contextListeners =
         new ArrayList<ResourceListener>();
 
     private FedoraContentRelationHandler contentRelationHandler;
@@ -211,7 +210,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * de.escidoc.core.om.business.interfaces.ContextHandlerInterface#retrieve
      * (java.lang.String)
      */
-    public final String retrieve(final String id) throws ContextNotFoundException,
+    public String retrieve(final String id) throws ContextNotFoundException,
         SystemException {
         setContext(id);
         return getContextXml(this);
@@ -306,8 +305,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     /**
      * (non-Javadoc).
      */
-    public final String retrieveMembers(
-            final String id, final SRURequestParameters parameters)
+    public String retrieveMembers(
+        final String id, final SRURequestParameters parameters)
         throws ContextNotFoundException, SystemException {
         StringWriter result = new StringWriter();
 
@@ -596,6 +595,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         setContext(id);
         filterParams.put("query", new String[] { "\"/subject/id\"="
             + getContext().getId() + " or " +
+            // "\"/subject/id\"=" + getContext().getFullId() + " or " +
+            // "\"/object/id\"=" + getContext().getFullId() + " or " +
             "\"/object/id\"=" + getContext().getId() });
 
         String searchResponse =
@@ -684,7 +685,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @param indexingHandler
      *            The indexing handler.
      */
-    public void setIndexingHandler(final ResourceListener indexingHandler) {
+    public void setIndexingHandler(final IndexingHandler indexingHandler) {
         addContextListener(indexingHandler);
     }
 
@@ -694,7 +695,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @param listener
      *            listener which will be added to the list
      */
-    private void addContextListener(final ResourceListener listener) {
+    public void addContextListener(final ResourceListener listener) {
         contextListeners.add(listener);
     }
 }

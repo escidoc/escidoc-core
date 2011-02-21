@@ -107,7 +107,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If anything unexpected goes wrong.
      */
-    final void setOrganizationalUnit(final String id)
+    protected void setOrganizationalUnit(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         if (id != null) {
@@ -127,14 +127,14 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * 
      * @return Get the current organizational unit resource.
      */
-    final OrganizationalUnit getOrganizationalUnit() {
+    protected OrganizationalUnit getOrganizationalUnit() {
         return organizationalUnit;
     }
 
     /**
      * @return Returns the utility.
      */
-    protected final Utility getUtility() {
+    protected Utility getUtility() {
         if (utility == null) {
             utility = Utility.getInstance();
         }
@@ -157,8 +157,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    static final void checkName(
-            final String id, final String name, final List<String> parents)
+    protected void checkName(
+        final String id, final String name, final List<String> parents)
         throws MissingElementValueException, SystemException {
 
         if (("".equals(name)) || (name == null)) {
@@ -171,14 +171,14 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * Initialize the pathes queue.
      * 
      */
-    final void initPathes() {
+    protected void initPathes() {
         this.pathes = new Stack<List<String>>();
     }
 
     /**
      * @return The pathes queue.
      */
-    final Stack<List<String>> getPathes() {
+    protected Stack<List<String>> getPathes() {
         return this.pathes;
     }
 
@@ -191,7 +191,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If the access to the triplestore fails.
      */
-    final void expandPaths(final List<String> path) throws SystemException {
+    protected void expandPaths(final List<String> path) throws SystemException {
 
         List<String> organizationalUnitIds =
             getTripleStoreUtility().getParents(path.get(path.size() - 1));
@@ -232,8 +232,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws MissingMdRecordException
      *             If the required md-record is missing
      */
-    static final void parseIncomingXmlForCreate(
-            final String xml, final StaxParser parser)
+    protected void parseIncomingXmlForCreate(
+        final String xml, final StaxParser parser)
         throws MissingAttributeValueException, MissingElementValueException,
         OrganizationalUnitNotFoundException, XmlCorruptedException,
         SystemException, MissingMdRecordException {
@@ -309,8 +309,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If anything fails.
      */
-    static final void parseIncomingXmlForUpdate(
-            final String xml, final StaxParser parser) throws InvalidXmlException,
+    protected void parseIncomingXmlForUpdate(
+        final String xml, final StaxParser parser) throws InvalidXmlException,
         OptimisticLockingException, OrganizationalUnitNotFoundException,
         SystemException {
 
@@ -393,8 +393,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *         {@link de.escidoc.core.common.util.stax.handler.MultipleExtractor2}
      *         .
      */
-    static final MultipleExtractor2 createMultipleExtractor(
-            final StaxParser sp, final String mdRecordPath) {
+    protected MultipleExtractor2 createMultipleExtractor(
+        final StaxParser sp, final String mdRecordPath) {
 
         HashMap<String, String> extractPathes = new HashMap<String, String>();
         extractPathes.put(mdRecordPath, "name");
@@ -409,7 +409,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * 
      * @return The foxml renderer.
      */
-    final OrganizationalUnitFoXmlRendererInterface getFoxmlRenderer() {
+    public OrganizationalUnitFoXmlRendererInterface getFoxmlRenderer() {
 
         if (foxmlRenderer == null) {
             foxmlRenderer = new VelocityXmlOrganizationalUnitFoXmlRenderer();
@@ -420,7 +420,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     /**
      * @return the renderer
      */
-    final OrganizationalUnitRendererInterface getRenderer() {
+    public OrganizationalUnitRendererInterface getRenderer() {
         if (renderer == null) {
             renderer = new VelocityXmlOrganizationalUnitRenderer();
         }

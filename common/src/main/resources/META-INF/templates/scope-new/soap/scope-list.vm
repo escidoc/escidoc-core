@@ -1,0 +1,13 @@
+#parse("common/macros.vm")
+<${scopeListNamespacePrefix}:scope-list #namespaceDecl(  ${scopeListNamespacePrefix} ${scopeListNamespace})  #namespaceDecl(${scopeNamespacePrefix} ${scopeNamespace}) #namespaceDecl(${escidocPropertiesNamespacePrefix} ${escidocPropertiesNamespace}) #namespaceDecl(${structuralRelationsNamespacePrefix} ${structuralRelationsNamespace})>
+#foreach($scope in $scopes)
+    #set( $scopeName = ${scope.scopeName} )
+    #set( $scopeType = ${scope.scopeType} )
+    #set( $scopeId = ${scope.scopeId} )
+    #set( $scopeCreationDate = ${scope.scopeCreationDate} )
+    #set( $scopeCreatedById = ${scope.scopeCreatedById} )
+    #set( $scopeLastModificationDate = ${scope.scopeLastModificationDate} )
+    #set( $scopeModifiedById = ${scope.scopeModifiedById} )
+    #parse("scope-new/soap/scope.vm")
+#end
+</${scopeListNamespacePrefix}:scope-list>

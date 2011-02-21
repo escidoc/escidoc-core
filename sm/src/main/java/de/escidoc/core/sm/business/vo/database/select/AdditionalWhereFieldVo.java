@@ -62,7 +62,7 @@ public class AdditionalWhereFieldVo {
      * 
      * @return the alliance
      */
-    public final String getAlliance() {
+    public String getAlliance() {
         return alliance;
     }
 
@@ -74,7 +74,7 @@ public class AdditionalWhereFieldVo {
      * @throws SqlDatabaseSystemException
      *             e
      */
-    public final void setAlliance(final String alliance)
+    public void setAlliance(final String alliance)
         throws SqlDatabaseSystemException {
         if (alliance == null || (!alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_AND)
             && !alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_OR))) {
@@ -86,7 +86,7 @@ public class AdditionalWhereFieldVo {
     /**
      * @return the fieldName
      */
-    public final String getFieldName() {
+    public String getFieldName() {
         return fieldName;
     }
 
@@ -95,7 +95,7 @@ public class AdditionalWhereFieldVo {
      *            the fieldName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public final void setFieldName(final String fieldName)
+    public void setFieldName(final String fieldName) 
                         throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(fieldName);
         this.fieldName = fieldName;
@@ -107,7 +107,7 @@ public class AdditionalWhereFieldVo {
      * 
      * @return the fieldType
      */
-    public final String getFieldType() {
+    public String getFieldType() {
         return fieldType;
     }
 
@@ -120,7 +120,7 @@ public class AdditionalWhereFieldVo {
      * @throws SqlDatabaseSystemException
      *             e
      */
-    public final void setFieldType(final String fieldType)
+    public void setFieldType(final String fieldType)
         throws SqlDatabaseSystemException {
         if (fieldType == null || (!fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)
@@ -138,7 +138,7 @@ public class AdditionalWhereFieldVo {
     /**
      * @return the fieldValue
      */
-    public final String getFieldValue() {
+    public String getFieldValue() {
         return fieldValue;
     }
 
@@ -146,14 +146,14 @@ public class AdditionalWhereFieldVo {
      * @param fieldValue
      *            the fieldValue to set
      */
-    public final void setFieldValue(final String fieldValue) {
+    public void setFieldValue(final String fieldValue) {
         this.fieldValue = fieldValue;
     }
 
     /**
      * @return the operator
      */
-    public final String getOperator() {
+    public String getOperator() {
         return operator;
     }
 
@@ -165,7 +165,7 @@ public class AdditionalWhereFieldVo {
      * @throws SqlDatabaseSystemException
      *             e
      */
-    public final void setOperator(final String operator)
+    public void setOperator(final String operator)
         throws SqlDatabaseSystemException {
         if (operator == null || (!operator.equals(Constants.DATABASE_OPERATOR_EQUALS)
             && !operator.equals(Constants.DATABASE_OPERATOR_LESS)
@@ -178,7 +178,7 @@ public class AdditionalWhereFieldVo {
     /**
      * @return the tableName
      */
-    public final String getTableName() {
+    public String getTableName() {
         return tableName;
     }
 
@@ -187,7 +187,7 @@ public class AdditionalWhereFieldVo {
      *            the tableName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public final void setTableName(final String tableName)
+    public void setTableName(final String tableName) 
                         throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(tableName);
         this.tableName = tableName;
@@ -196,7 +196,7 @@ public class AdditionalWhereFieldVo {
     /**
      * @return the xpath
      */
-    public final String getXpath() {
+    public String getXpath() {
         return xpath;
     }
 

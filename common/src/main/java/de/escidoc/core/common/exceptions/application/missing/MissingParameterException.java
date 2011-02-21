@@ -46,9 +46,9 @@ public class MissingParameterException extends ApplicationException {
      */
     private static final long serialVersionUID = 11834342425140655L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_MISSING;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_MISSING;
 
-    private static final String HTTP_STATUS_MESSAGE = "Parameter is missing.";
+    public static final String HTTP_STATUS_MESSAGE = "Parameter is missing.";
 
     /**
      * Default constructor.

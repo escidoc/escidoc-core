@@ -37,7 +37,6 @@ import de.escidoc.core.common.util.xml.factory.AdminXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,7 +94,7 @@ public class VelocityXmlAdminRenderer
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private static void addCommonValues(final Map<String, Object> values)
+    private void addCommonValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("indexConfigurationNamespacePrefix", 
@@ -116,12 +115,12 @@ public class VelocityXmlAdminRenderer
      * @throws WebserverSystemException
      */
     @SuppressWarnings("unchecked")
-    private static void addIndexConfigurationValues(
-            final Map<String, Map<String,
-                    Map<String, Object>>> indexConfiguration,
-            final Map<String, Object> values)
+    private void addIndexConfigurationValues(
+        final Map<String, Map<String, 
+        Map<String, Object>>> indexConfiguration, 
+                        final Map<String, Object> values)
         throws WebserverSystemException {
-        Collection<HashMap<String, Object>> resourcesVm =
+        List<HashMap<String, Object>> resourcesVm = 
             new ArrayList<HashMap<String, Object>>();
         if (indexConfiguration != null && !indexConfiguration.isEmpty()) {
             Set<Map.Entry<String, Map<String, Map<String, Object>>>> indexConfigurationEntrySet =
@@ -132,7 +131,7 @@ public class VelocityXmlAdminRenderer
                 resourceVm.put("resourceName", entry.getKey());
                 Map<String, Map<String, Object>> indexMap = entry.getValue();
                 if (indexMap != null && !indexMap.isEmpty()) {
-                    Collection<HashMap<String, Object>> indexesVm =
+                    List<HashMap<String, Object>> indexesVm = 
                                 new ArrayList<HashMap<String, Object>>();
                     Set<Map.Entry<String, Map<String, Object>>> indexMapEntrySet = indexMap.entrySet();
                     for (Map.Entry<String, Map<String, Object>> indexMapEntry : indexMapEntrySet) {
@@ -140,13 +139,13 @@ public class VelocityXmlAdminRenderer
                         indexVm.put("indexName", indexMapEntry.getKey());
                         Map<String, Object> indexParamsMap = indexMapEntry.getValue();
                         if (indexParamsMap != null && !indexParamsMap.isEmpty()) {
-                            for (Map.Entry<String, Object> mapEntry : indexParamsMap.entrySet()) {
-                                String indexParamName = mapEntry.getKey();
+                            for (String indexParamName : indexParamsMap.keySet()) {
                                 if (indexParamName.equals("prerequisites")) {
                                     HashMap<String, String> prerequisitesMap = 
-                                        (HashMap<String, String>) mapEntry.getValue();
+                                        (HashMap<String, String>)
+                                            indexParamsMap.get(indexParamName);
                                     if (prerequisitesMap != null  && !prerequisitesMap.isEmpty()) {
-                                        Map<String, String> prerequisitesVm = new HashMap<String, String>();
+                                        HashMap<String, String> prerequisitesVm = new HashMap<String, String>();
                                         Set<Map.Entry<String, String>>prerequisitesMapEntrySet =
                                                 prerequisitesMap.entrySet();
                                         for (Map.Entry<String, String> prerequisitesMapEntry :
@@ -178,7 +177,7 @@ public class VelocityXmlAdminRenderer
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private static AdminXmlProvider getAdminXmlProvider()
+    private AdminXmlProvider getAdminXmlProvider()
         throws WebserverSystemException {
 
         return AdminXmlProvider.getInstance();

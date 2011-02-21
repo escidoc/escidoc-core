@@ -69,7 +69,7 @@ public class EscidocRequestDetail implements Serializable {
      *            the default value.
      * @aa
      */
-    public final void setRestAccess(final boolean restAccess) {
+    public void setRestAccess(final boolean restAccess) {
 
         this.restAccess = restAccess;
     }
@@ -81,7 +81,7 @@ public class EscidocRequestDetail implements Serializable {
      *         <code>false</code>.
      * @aa
      */
-    public final boolean isRestAccess() {
+    public boolean isRestAccess() {
 
         return restAccess;
     }
@@ -93,7 +93,7 @@ public class EscidocRequestDetail implements Serializable {
      *            The code identifying the restricted permissions.
      * @aa
      */
-    public final void setRestrictedPermissions(final int restrictedPermissions) {
+    public void setRestrictedPermissions(final int restrictedPermissions) {
 
         this.restrictedPermissionCode = restrictedPermissions;
     }
@@ -104,7 +104,7 @@ public class EscidocRequestDetail implements Serializable {
      * @return Returns the code identifying the restricted permissions.
      * @aa
      */
-    public final int getRestrictedPermissions() {
+    public int getRestrictedPermissions() {
 
         return this.restrictedPermissionCode;
     }

@@ -42,7 +42,6 @@ import org.joda.time.DateTimeZone;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -124,12 +123,12 @@ public final class VelocityXmlReportRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static void addDataValues(
-            final Collection dbResult,
-            final Map<String, Object> values)
+    private void addDataValues(
+        final List dbResult, 
+        final Map<String, Object> values)
         throws SystemException {
 
-        Collection<List<HashMap<String, Object>>> recordsList =
+        List<List<HashMap<String, Object>>> recordsList = 
             new ArrayList<List<HashMap<String, Object>>>();
         if (dbResult != null && !dbResult.isEmpty()) {
             // Iterate records from database
@@ -191,9 +190,9 @@ public final class VelocityXmlReportRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static void addReportValues(
-            final ReportDefinition reportDefinition,
-            final Map<String, Object> values)
+    private void addReportValues(
+        final ReportDefinition reportDefinition, 
+        final Map<String, Object> values)
         throws SystemException {
 
         values.put("reportDefinitionId", reportDefinition.getId());
@@ -238,7 +237,7 @@ public final class VelocityXmlReportRenderer
      *             Thrown in case of an internal error.
      * @sm
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values)
+    private void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
@@ -253,7 +252,7 @@ public final class VelocityXmlReportRenderer
      *             Thrown in case of an internal error.
      * @sm
      */
-    private static ReportXmlProvider getReportXmlProvider()
+    private ReportXmlProvider getReportXmlProvider()
         throws WebserverSystemException {
 
         return ReportXmlProvider.getInstance();

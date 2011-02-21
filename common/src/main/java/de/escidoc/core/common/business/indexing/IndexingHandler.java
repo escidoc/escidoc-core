@@ -40,7 +40,6 @@ import de.escidoc.core.index.IndexRequestBuilder;
 import de.escidoc.core.index.IndexService;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -211,8 +210,8 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             The resource could not be deleted and newly created.
      */
-    public final void resourceModified(
-            final String id, final String restXml, final String soapXml)
+    public void resourceModified(
+        final String id, final String restXml, final String soapXml)
         throws SystemException {
         if (!notifyIndexerEnabled) {
             return;
@@ -367,9 +366,9 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             e
      */
-    public final void doIndexing(
-            final String resource, final String objectType, final String action,
-            final boolean isAsynch, final String xml) throws SystemException {
+    public void doIndexing(
+        final String resource, final String objectType, final String action,
+        final boolean isAsynch, final String xml) throws SystemException {
         if (log.isDebugEnabled()) {
             log.debug("calling do Indexing with resource: " + resource
                 + ", objectType: " + objectType + ", action: " + action
@@ -430,9 +429,9 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             e
      */
-    public final void doIndexing(
-            final String resource, final String objectType, final String indexName,
-            final String action, final boolean isAsynch, final String xml)
+    public void doIndexing(
+        final String resource, final String objectType, final String indexName,
+        final String action, final boolean isAsynch, final String xml)
         throws SystemException {
 
         if (log.isDebugEnabled()) {
@@ -488,7 +487,7 @@ public class IndexingHandler implements ResourceListener {
                 }
                 if (!latestReleasedVersion.equals(thisVersion)) {
                     // adapt resource
-                    versionedResource = resource + ':' + latestReleasedVersion;
+                    versionedResource = resource + ":" + latestReleasedVersion;
                 }
             }
             else {
@@ -566,7 +565,7 @@ public class IndexingHandler implements ResourceListener {
                             .equals(Constants.LATEST_VERSION_PID_SUFFIX)
                         && latestReleasedVersion != null) {
                         // reindex latest released version
-                        gsearchHandler.requestIndexing(versionedResource + ':'
+                        gsearchHandler.requestIndexing(versionedResource + ":"
                             + latestReleasedVersion, indexName,
                             Constants.LATEST_RELEASE_PID_SUFFIX,
                             (String) parameters
@@ -708,8 +707,8 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    public final boolean exists(
-            final String id, final String objectType, final String indexName)
+    public boolean exists(
+        final String id, final String objectType, final String indexName)
         throws SystemException {
         boolean result = false;
         Map<String, Map<String, Object>> resourceParameters =
@@ -744,7 +743,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    private static boolean exists(final String id, final String indexName)
+    private boolean exists(final String id, final String indexName)
         throws SystemException {
         boolean result = false;
 
@@ -760,16 +759,16 @@ public class IndexingHandler implements ResourceListener {
 
             DefaultHttpClient client = new DefaultHttpClient(cm, params);
 
-            StringBuilder query = new StringBuilder("");
+            StringBuffer query = new StringBuffer("");
             for (int i = 0; i < Constants.INDEX_PRIM_KEY_FIELDS.length; i++) {
                 if (query.length() > 0) {
                     query.append(" or ");
                 }
                 query.append(Constants.INDEX_PRIM_KEY_FIELDS[i])
-                                            .append('=').append(id);
+                                            .append("=").append(id);
             }
 
-            HttpUriRequest httpGet =
+            HttpGet httpGet =
                 new HttpGet(EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.SRW_URL)
                     + "/search/"
@@ -807,7 +806,7 @@ public class IndexingHandler implements ResourceListener {
      *             e
      * 
      */
-    private Iterable<String> getIndexNames() throws IOException,
+    private Collection<String> getIndexNames() throws IOException,
         SystemException {
         if (indexNames == null) {
             // Get index names from gsearch-config
@@ -845,7 +844,7 @@ public class IndexingHandler implements ResourceListener {
             Properties indexProps = new Properties();
             InputStream propStream = null;
             try {
-                propStream = IndexingHandler.class.getResourceAsStream('/'
+                propStream = IndexingHandler.class.getResourceAsStream("/"
                     + searchPropertiesDirectory + "/index/" + indexName
                     + "/index.object-types.properties");
                 if (propStream == null) {
@@ -865,13 +864,13 @@ public class IndexingHandler implements ResourceListener {
             }
             Pattern objectTypePattern = Pattern.compile(".*?\\.(.*?)\\..*");
             Matcher objectTypeMatcher = objectTypePattern.matcher("");
-            Collection<String> objectTypes = new HashSet<String>();
+            HashSet<String> objectTypes = new HashSet<String>();
             for (Object o : indexProps.keySet()) {
                 String key = (String) o;
                 if (key.startsWith("Resource")) {
                     String propVal = indexProps.getProperty(key);
                     if (log.isDebugEnabled()) {
-                        log.debug("found property " + key + ':' + propVal);
+                        log.debug("found property " + key + ":" + propVal);
                     }
                     objectTypeMatcher.reset(key);
                     if (!objectTypeMatcher.matches()) {
@@ -908,12 +907,12 @@ public class IndexingHandler implements ResourceListener {
                                     .put("prerequisites",
                                             new HashMap<String, String>());
                         }
-                        ((Map<String, String>) objectTypeParameters
+                        ((HashMap<String, String>) objectTypeParameters
                                 .get(objectType).get(indexName)
                                 .get("prerequisites")).put(
                                 key.replaceFirst(".*\\.", ""), propVal);
                         if (log.isDebugEnabled()) {
-                            log.debug("adding prerequisite " + key + ':'
+                            log.debug("adding prerequisite " + key + ":"
                                     + propVal);
                         }
                     } else {
@@ -922,7 +921,7 @@ public class IndexingHandler implements ResourceListener {
                                 .put(key.replaceFirst(".*\\.", ""), propVal);
                         if (log.isDebugEnabled()) {
                             log
-                                    .debug("adding parameter " + key + ':'
+                                    .debug("adding parameter " + key + ":"
                                             + propVal);
                         }
                     }
@@ -971,7 +970,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws WebserverSystemException
      *             e
      */
-    public final Map<String, Map<String, Map<String, Object>>> getObjectTypeParameters()
+    public Map<String, Map<String, Map<String, Object>>> getObjectTypeParameters()
         throws WebserverSystemException {
         if (objectTypeParameters == null) {
             try {

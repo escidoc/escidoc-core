@@ -96,7 +96,7 @@ public class AuthenticationInterceptor implements Ordered {
      * @see org.springframework.core.Ordered#getOrder()
      * @common
      */
-    public final int getOrder() {
+    public int getOrder() {
 
         return AopUtil.PRECEDENCE_AUTHENTICATION_INTERCEPTOR;
     }
@@ -237,7 +237,7 @@ public class AuthenticationInterceptor implements Ordered {
      *             Thrown in case of an internal error
      * @common
      */
-    private static boolean authenticateInternalUser() throws WebserverSystemException {
+    private boolean authenticateInternalUser() throws WebserverSystemException {
 
         return UserContext.isInternalUser();
     }

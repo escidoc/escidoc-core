@@ -58,7 +58,7 @@ public abstract class SRURequestParameters {
      * @param parameters
      *            map map containing the CQL request parameters
      */
-    SRURequestParameters(final Map<String, String[]> parameters) {
+    public SRURequestParameters(final Map<String, String[]> parameters) {
         query =
             getStringParameter(parameters.get(Constants.SRU_PARAMETER_QUERY));
         limit =
@@ -89,31 +89,31 @@ public abstract class SRURequestParameters {
                 parameters.get(Constants.SRU_PARAMETER_RECORD_PACKING), "xml"));
     }
 
-    public final String getQuery() {
+    public String getQuery() {
         return query;
     }
 
-    public final int getLimit() {
+    public int getLimit() {
         return limit;
     }
 
-    public final int getOffset() {
+    public int getOffset() {
         return offset;
     }
 
-    public final boolean isExplain() {
+    public boolean isExplain() {
         return explain;
     }
 
-    public final String getUser() {
+    public String getUser() {
         return user;
     }
 
-    public final String getRole() {
+    public String getRole() {
         return role;
     }
 
-    public final RecordPacking getRecordPacking() {
+    public String getRecordPacking() {
         return recordPacking;
     }
 
@@ -143,8 +143,7 @@ public abstract class SRURequestParameters {
      * 
      * @return first value from the given array as integer or the default value
      */
-    private static int getIntParameter(
-        final Object[] parameter, final int defaultValue) {
+    private int getIntParameter(final Object[] parameter, final int defaultValue) {
         int result = defaultValue;
 
         if ((parameter != null) && (parameter.length > 0)) {
@@ -163,9 +162,8 @@ public abstract class SRURequestParameters {
      * 
      * @return first value from the given array or the default value
      */
-    private static String getStringParameter(
-        final Object[] parameter, final String defaultValue) {
-        String result = defaultValue;
+    private String getStringParameter(final Object[] parameter) {
+        String result = null;
 
         if ((parameter != null) && (parameter.length > 0)) {
             result = parameter[0].toString();

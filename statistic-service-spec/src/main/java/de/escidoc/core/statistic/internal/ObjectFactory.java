@@ -20,7 +20,6 @@ public class ObjectFactory {
      *
      * @return a new instance of {@link de.escidoc.core.statistic.LinkRequired}
      */
-    @SuppressWarnings({"MethodMayBeStatic"})
     public LinkRequiredImpl createLinkRequired() {
         return new LinkRequiredImpl();
     }
@@ -30,7 +29,6 @@ public class ObjectFactory {
      *
      * @return a new instance of {@link de.escidoc.core.statistic.Parameter}.
      */
-    @SuppressWarnings({"MethodMayBeStatic"})
     public ParameterImpl createParameter() {
         return new ParameterImpl();
     }
@@ -40,7 +38,6 @@ public class ObjectFactory {
      *
      * @return a new instance of {@link de.escidoc.core.statistic.StatisticRecord}
      */
-    @SuppressWarnings({"MethodMayBeStatic"})
     public StatisticRecordImpl createStatisticRecord(){
         return new StatisticRecordImpl();
     }

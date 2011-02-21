@@ -140,13 +140,13 @@ public class UserAccountAttributeFinderModule
     private static final String ROLE_GRANT_ATTRS = "(assigned-on)";
 
     private static final Pattern PATTERN_PARSE_ROLE_GRANT_ROLE = Pattern
-        .compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|'
-            + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')' + USER_ACCOUNT_ATTRS
+        .compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + "|"
+            + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ")" + USER_ACCOUNT_ATTRS
             + "):(.*?):" + ROLE_GRANT_ATTRS);
 
     private static final Pattern PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID =
-        Pattern.compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + '|'
-            + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ')' + USER_ACCOUNT_ATTRS
+        Pattern.compile("((" + AttributeIds.SUBJECT_ATTR_PREFIX + "|"
+            + AttributeIds.USER_ACCOUNT_ATTR_PREFIX + ")" + USER_ACCOUNT_ATTRS
             + ")(:.*){0,1}");
 
     private static final Pattern PATTERN_SUBJECT_ATTRIBUTE_PREFIX = Pattern
@@ -181,7 +181,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    private static final String ATTR_USER_HANDLE =
+    public static final String ATTR_USER_HANDLE =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "handle";
 
     /**
@@ -190,7 +190,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    private static final String ATTR_USER_ID =
+    public static final String ATTR_USER_ID =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "id";
 
     /**
@@ -199,7 +199,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    private static final String ATTR_USER_LOGIN_NAME =
+    public static final String ATTR_USER_LOGIN_NAME =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "login-name";
 
     /**
@@ -208,7 +208,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    private static final String ATTR_USER_NAME =
+    public static final String ATTR_USER_NAME =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "name";
 
     /**
@@ -217,7 +217,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    private static final String ATTR_CREATED_BY =
+    public static final String ATTR_CREATED_BY =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "created-by";
 
     /**
@@ -226,7 +226,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    private static final String ATTR_MODIFIED_BY =
+    public static final String ATTR_MODIFIED_BY =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "modified-by";
 
     /**
@@ -235,7 +235,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    private static final String ATTR_USER_GROUP_MEMBERSHIP =
+    public static final String ATTR_USER_GROUP_MEMBERSHIP =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "group-membership";
 
     /**
@@ -244,7 +244,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    private static final String ATTR_USER_ORGANIZATIONAL_UNIT =
+    public static final String ATTR_USER_ORGANIZATIONAL_UNIT =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX
             + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
@@ -254,7 +254,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    private static final String ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN =
+    public static final String ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX
             + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "-with-children";
 
@@ -263,7 +263,7 @@ public class UserAccountAttributeFinderModule
      * 
      * @aa
      */
-    private static final Pattern ATTR_USER_ROLE_SCOPE = Pattern
+    public static final Pattern ATTR_USER_ROLE_SCOPE = Pattern
         .compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX
             + "role-grant:(.*?):assigned-on");
 
@@ -284,7 +284,7 @@ public class UserAccountAttributeFinderModule
      * @aa
      */
     @Override
-    public final Set getSupportedDesignatorTypes() {
+    public Set getSupportedDesignatorTypes() {
         Set<Integer> set = new HashSet<Integer>();
         set.add(AttributeDesignator.SUBJECT_TARGET);
         set.add(AttributeDesignator.RESOURCE_TARGET);
@@ -370,9 +370,9 @@ public class UserAccountAttributeFinderModule
                 FinderModuleHelper.retrieveSingleSubjectAttribute(ctx,
                     Constants.URI_SUBJECT_ID, true);
             if (userAccountId == null) {
-                StringBuilder errorMsg =
-                        new StringBuilder(
-                                "The subject (user) of the request cannot be ");
+                StringBuffer errorMsg =
+                    new StringBuffer(
+                        "The subject (user) of the request cannot be ");
                 errorMsg.append("identified, the ");
                 errorMsg.append(Constants.URI_SUBJECT_ID);
                 errorMsg.append(" may not have been set.");
@@ -546,12 +546,12 @@ public class UserAccountAttributeFinderModule
         catch (IOException e) {
             throw new SystemException(e);
         }
-        if (ouAttributeName == null || ouAttributeName.length() == 0) {
+        if (ouAttributeName == null || ouAttributeName.equals("")) {
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
         List<UserAttribute> attributes =
             userAccountDao.retrieveAttributes(userAccount, ouAttributeName);
-        if (attributes == null || attributes.isEmpty()) {
+        if (attributes == null || attributes.size() == 0) {
             result =
                 CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
@@ -600,7 +600,7 @@ public class UserAccountAttributeFinderModule
         Set<String> userGroups =
             policiesCacheProxy.getUserGroups(userAccountId);
 
-        if (userGroups == null || userGroups.isEmpty()) {
+        if (userGroups == null || userGroups.size() == 0) {
             result =
                 CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
@@ -631,7 +631,7 @@ public class UserAccountAttributeFinderModule
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
      */
     private EvaluationResult fetchRoleScopes(
-        final String userAccountId, final CharSequence attributeId)
+        final String userAccountId, final String attributeId)
         throws EscidocException {
 
         final EvaluationResult result;
@@ -642,7 +642,7 @@ public class UserAccountAttributeFinderModule
         if (roleMatcher.find()) {
             roleName = roleMatcher.group(4);
         }
-        if (roleName == null || roleName.length() == 0) {
+        if (roleName == null || roleName.equals("")) {
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
 
@@ -807,8 +807,8 @@ public class UserAccountAttributeFinderModule
      *             Thrown if assertion fails.
      * @aa
      */
-    private static void assertUserAccount(
-            final String userId, final UserAccount userAccount)
+    private void assertUserAccount(
+        final String userId, final UserAccount userAccount)
         throws UserAccountNotFoundException {
 
         if (userAccount == null) {

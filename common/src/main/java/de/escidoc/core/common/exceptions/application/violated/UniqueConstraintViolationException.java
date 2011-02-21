@@ -44,9 +44,9 @@ public class UniqueConstraintViolationException extends RuleViolationException {
      */
     private static final long serialVersionUID = -8198236454778670833L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE =
         "An unique constraint was violated.";
 
     /**

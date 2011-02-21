@@ -183,7 +183,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     /** The policy decision point used to check access privileges. */
     private PolicyDecisionPointInterface pdp;
 
-    // A setter exists. Consider removing from Spring.
     private IndexingHandler indexingHandler;
 
     /** SRU request. */
@@ -419,7 +418,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         final String contentModel =
             properties.remove(Elements.ELEMENT_CONTENT_MODEL);
-        final Map<String, String> propertiesAsReferences =
+        final HashMap<String, String> propertiesAsReferences =
             new HashMap<String, String>();
         propertiesAsReferences.put(Elements.ELEMENT_CREATED_BY, creator[0]);
         propertiesAsReferences.put(Elements.ELEMENT_MODIFIED_BY, creator[0]);
@@ -488,6 +487,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             throw new EncodingSystemException(e1);
         }
         // Work around for Fedora30 bug APIM.getDatastreams()
+
+        // // String lastModificationDate =
+        // // TripleStoreUtility.getInstance().getLastModificationDate(
+        // // pids[0], getFedoraUtility());
+        //
 
         String lastModifiedDate = null;
         org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
@@ -682,7 +686,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *      #retrieve(java.lang.String)
      * @om
      */
-    public final String retrieve(final String id) throws ContainerNotFoundException,
+    public String retrieve(final String id) throws ContainerNotFoundException,
         SystemException, MissingMethodParameterException {
 
         setContainer(id);
@@ -876,10 +880,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 setCts(cts);
             }
             // md-records
-            final Map<String, Map<String, String>> mdRecordsAttributes =
+            final HashMap<String, Map<String, String>> mdRecordsAttributes =
                 (HashMap<String, Map<String, String>>) mdHandler
                     .getMetadataAttributes();
-            final Map mdRecordsStreams =
+            final HashMap mdRecordsStreams =
                 (HashMap) streams.get("md-records");
             if (!mdRecordsStreams.containsKey("escidoc")) {
                 throw new XmlCorruptedException(
@@ -966,8 +970,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
      *      de.escidoc.core.common.business.filter.SRURequestParameters)
      */
-    public final String retrieveMembers(
-            final String id, final SRURequestParameters parameters)
+    public String retrieveMembers(
+        final String id, final SRURequestParameters parameters)
         throws ContainerNotFoundException, SystemException {
         StringWriter result = new StringWriter();
 
@@ -1188,7 +1192,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @throws MdRecordNotFoundException
      *             e
      */
-    public static void deleteMetadataRecord(final String id, final String mdRecordId)
+    public void deleteMetadataRecord(final String id, final String mdRecordId)
         throws ContainerNotFoundException, LockingException,
         MdRecordNotFoundException {
         // TODO: implement
@@ -1359,7 +1363,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         EncodingSystemException {
-        final Map<String, Datastream> dsMap =
+        final HashMap<String, Datastream> dsMap =
             new HashMap<String, Datastream>();
 
         for (String s : mdMap.keySet()) {
@@ -1375,7 +1379,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final Datastream ds =
                 new Datastream(name, getContainer().getId(), xmlBytes,
                     "text/xml", mdProperties);
-            final Map mdRecordAttributes =
+            final HashMap mdRecordAttributes =
                 (HashMap) mdAttributesMap.get(name);
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId((String) mdRecordAttributes.get("type"));
@@ -1443,9 +1447,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         return retrieveResource(id, resourceName, null);
     }
 
-    public final EscidocBinaryContent retrieveResource(
-            final String id, final String resourceName,
-            final Map<String, String[]> parameters) throws SystemException,
+    public EscidocBinaryContent retrieveResource(
+        final String id, final String resourceName,
+        final Map<String, String[]> parameters) throws SystemException,
         ContainerNotFoundException, OperationNotFoundException {
 
         EscidocBinaryContent content = new EscidocBinaryContent();
@@ -1607,11 +1611,16 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
 
             releaseMembers(id);
+
+            // set status "submited"
+            // only renew the timestamp and set status with version entry
+            // getFedoraUtility().touchObject(getContainer().getId(), true);
             makeVersion("ContainerHandler.release()", Constants.STATUS_RELEASED);
             getContainer().setLatestReleasePid();
             getContainer().persist();
         }
 
+        // getUtility().notifyIndexerAddPublication(getContainer().getHref());
         fireContainerModified(getContainer().getId(), retrieve(getContainer()
             .getId()));
 
@@ -1768,6 +1777,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
 
         checkLatestVersion();
+        // checkLocked();
+        // checkStatusNot(Constants.STATUS_RELEASED);
         checkReleased();
 
         final String label = "Container " + getContainer().getId();
@@ -1791,6 +1802,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
 
             // set status "submited"
+            // only renew the timestamp and set status with version entry
+            // getFedoraUtility().touchObject(getContainer().getId(), true);
             makeVersion(taskParameter.getComment(), Constants.STATUS_SUBMITTED);
             getContainer().persist();
             fireContainerModified(getContainer().getId(),
@@ -1837,6 +1850,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
 
         checkLatestVersion();
+        // checkLocked();
         checkVersionStatus(Constants.STATUS_SUBMITTED);
 
         final String label = "Container " + getContainer().getId();
@@ -1858,6 +1872,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
 
             // set status "in-revision"
+            // only renew the timestamp and set status with version entry
+            // getFedoraUtility().touchObject(getContainer().getId(), true);
             makeVersion(taskParameter.getComment(),
                 Constants.STATUS_IN_REVISION);
             getContainer().persist();
@@ -1948,9 +1964,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
 
             // withdrawing is possible in every version status
+
+            // only renew the timestamp and set status with version entry
+            // getFedoraUtility().touchObject(getContainer().getId(), true);
             makeVersion(taskParameter.getComment(), Constants.STATUS_WITHDRAWN);
             getContainer().persist();
 
+            // notify indexer
+            // getUtility().notifyIndexerDeletePublication(
+            // getContainer().getHref());
             fireContainerModified(getContainer().getId(),
                 retrieve(getContainer().getId()));
         }
@@ -1995,6 +2017,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 try {
                     BeanLocator.locateContainerHandler().withdraw(memberId,
                         param);
+                    // withdraw(memberId, param);
                 }
                 catch (final InvalidStatusException e) {
                     // do next member
@@ -2177,7 +2200,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveVersionHistory(java.lang.String)
      */
-    public final String retrieveVersionHistory(final String id)
+    public String retrieveVersionHistory(final String id)
         throws ContainerNotFoundException, SystemException {
 
         setContainer(id);
@@ -2186,10 +2209,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         try {
             versionsXml =
                 getVersions().replaceFirst(
-                        '<' + Constants.WOV_NAMESPACE_PREFIX + ':'
+                    "<" + Constants.WOV_NAMESPACE_PREFIX + ":"
                         + Elements.ELEMENT_WOV_VERSION_HISTORY,
                     "<?xml version=\"1.0\" encoding=\"UTF-8\"?><"
-                        + Constants.WOV_NAMESPACE_PREFIX + ':'
+                        + Constants.WOV_NAMESPACE_PREFIX + ":"
                         + Elements.ELEMENT_WOV_VERSION_HISTORY + " xml:base=\""
                         + XmlUtility.getEscidocBaseUrl() + "\" "
                         + MODIFIED_DATE_ATT_NAME + "=\""
@@ -2228,7 +2251,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     /**
      * @return Returns the logger.
      */
-    private static AppLogger getLogger() {
+    public static AppLogger getLogger() {
         return log;
     }
 
@@ -2296,6 +2319,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         AuthorizationException {
 
         Utility.getInstance().checkSameContext(containerId, xmlData);
+        // checkContextStatus(contextId, Constants.STATUS_CONTEXT_OPENED);
+
         setContainer(containerId);
         checkLocked();
 
@@ -2389,6 +2414,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         MissingMdRecordException {
 
         Utility.getInstance().checkSameContext(containerId, xmlData);
+        // checkContextStatus(contextId, Constants.STATUS_CONTEXT_OPENED);
+
         setContainer(containerId);
         checkLocked();
 
@@ -2413,6 +2440,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                 Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + objid);
         newMemberElement.addAttribute(resource);
+        // newComponentIdElement.setElementText(componentId);
         newMemberElement.setChildrenElements(null);
 
         elements.add(newMemberElement);
@@ -2426,6 +2454,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         // create method)
         getContainer().setRelsExt(relsExtNewBytes);
         getContainer().persist();
+
+        // getFedoraUtility().sync();
+
         fireContainerModified(getContainer().getId(), retrieve(getContainer()
             .getId()));
         fireContainerModified(objid, containerXml);
@@ -2457,7 +2488,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#addMembers(java.lang.String,
      *      java.lang.String)
      */
-    public final String addMembers(final String id, final String taskParam)
+    public String addMembers(final String id, final String taskParam)
         throws ContainerNotFoundException, LockingException,
         InvalidContentException, OptimisticLockingException, SystemException,
         InvalidContextException, MissingAttributeValueException {
@@ -2498,7 +2529,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final List<String> memberIds = bremeftph.getMemberIds();
             for (String memberId2 : memberIds) {
                 final String memberId = memberId2;
-
+                // if (!TripleStoreUtility.getInstance().exists(memberId)) {
+                // final String message =
+                // "Member with id " + memberId + " does not exist.";
+                // log.error(message);
+                // throw new InvalidContentException(message);
+                // }
                 if (!Utility.getInstance().hasSameContext(memberId,
                     getContainer().getId())) {
                     throw new InvalidContextException(
@@ -2525,11 +2561,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                         Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
                             + memberId);
                 newComponentIdElement.addAttribute(resource);
+                // newComponentIdElement.setElementText(componentId);
                 newComponentIdElement.setChildrenElements(null);
 
                 elements.add(newComponentIdElement);
             }
-            if (!elements.isEmpty()) {
+            if (elements.size() > 0) {
                 resourceUpdated = true;
                 final byte[] relsExtNewBytes =
                     Utility.updateRelsExt(elements, null, null, getContainer(),
@@ -2537,11 +2574,14 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 getContainer().setRelsExt(
                     new Datastream(Datastream.RELS_EXT_DATASTREAM,
                         getContainer().getId(), relsExtNewBytes, "text/xml"));
-
+                // getContainer().persist();
+                // fireContainerModified(getContainer().getId(),
+                // retrieve(id));
             }
             final String endTimestamp =
                 getContainer().getLastFedoraModificationDate();
             if (resourceUpdated || !startTimestamp.equals(endTimestamp)) {
+                // updateTimeStamp();
                 makeVersion("Container.addMembers");
                 getContainer().persist();
             }
@@ -2664,7 +2704,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             if (!tocContentModel.equals(memberContentModel)) {
                 final String message =
                     "Object with id " + memberId + " must have content model "
-                        + tocContentModel + '.';
+                        + tocContentModel + ".";
                 log.error(message);
                 throw new InvalidContentException(message);
             }
@@ -2734,14 +2774,14 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             sp.parse(taskParam);
 
             final List<String> memberIds = bremeftph.getMemberIdsToRemove();
-            if (memberIds.isEmpty()) {
+            if (memberIds.size() == 0) {
                 return getUtility().prepareReturnXmlFromLastModificationDate(
                     getContainer().getLastModificationDate());
             }
             else {
                 // rebuild rels-ext
 
-                final Map<String, List<StartElementWithChildElements>> removeElements =
+                final TreeMap<String, List<StartElementWithChildElements>> removeElements =
                     new TreeMap<String, List<StartElementWithChildElements>>();
 
                 final Iterator<String> iterator = memberIds.iterator();
@@ -2944,7 +2984,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final List<Map<String, String>> relationsData =
             addHandler.getRelations();
 
-        if ((relationsData != null) && (!relationsData.isEmpty())) {
+        if ((relationsData != null) && (relationsData.size() > 0)) {
             final List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
             for (Map<String, String> aRelationsData : relationsData) {
@@ -2964,6 +3004,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                         Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + target);
                 newContentRelationElement.addAttribute(resource);
+                // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
 
                 elements.add(newContentRelationElement);
@@ -3073,8 +3114,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         final List<Map<String, String>> relationsData =
             removeHandler.getRelations();
-        if ((relationsData != null) && (!relationsData.isEmpty())) {
-            final Map<String, List<StartElementWithChildElements>> toRemove =
+        if ((relationsData != null) && (relationsData.size() > 0)) {
+            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
@@ -3131,6 +3172,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 final String endTimestamp =
                     getContainer().getLastFedoraModificationDate();
                 if (resourceUpdated || !startTimestamp.equals(endTimestamp)) {
+                    // updateTimeStamp();
                     makeVersion("Container.removeContentRelations");
                     getContainer().persist();
                 }

@@ -37,14 +37,14 @@ import java.util.List;
  *
  * @author SCHE
  */
-class PostgresDDLGenerator extends BasicDDLGenerator {
+public class PostgresDDLGenerator extends BasicDDLGenerator {
     /*
      * (non-Javadoc)
      * 
      * @see org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator#getCreateMapTableDDL(java.lang.String)
      */
     @Override
-    public final List<String> getCreateMapTableDDL(final String table) {
+    public List<String> getCreateMapTableDDL(final String table) {
 
         List<String> cmds = new ArrayList<String>();
 
@@ -68,7 +68,7 @@ class PostgresDDLGenerator extends BasicDDLGenerator {
      * @see org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator#getCreateSOTableDDL(java.lang.String)
      */
     @Override
-    public final List<String> getCreateSOTableDDL(final String table) {
+    public List<String> getCreateSOTableDDL(final String table) {
 
         List<String> cmds = new ArrayList<String>();
 

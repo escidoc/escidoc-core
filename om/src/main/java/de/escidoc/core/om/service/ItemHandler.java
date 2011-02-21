@@ -130,6 +130,11 @@ public class ItemHandler implements ItemHandlerInterface {
         RelationPredicateNotFoundException, MissingMdRecordException,
         InvalidStatusException {
 
+        // if (LOG.isDebugEnabled()) {
+        // LOG.debug(StringUtility.concatenateWithBracketsToString("create",
+        // this));
+        // }
+
         return handler.create(xmlData);
     }
 

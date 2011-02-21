@@ -53,7 +53,7 @@ public enum ResourceType {
      * @param label object label
      * @param uri object type URI
      */
-    private ResourceType(final String label, final String uri) {
+    ResourceType(final String label, final String uri) {
         this.label = label;
         this.uri = uri;
     }

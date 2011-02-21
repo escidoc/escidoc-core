@@ -80,7 +80,7 @@ import java.util.Vector;
  */
 public class ItemHandlerUpdate extends ItemHandlerDelete {
 
-    private static final AppLogger LOGGER = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         ItemHandlerUpdate.class.getName());
 
     /**
@@ -120,10 +120,10 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws SystemException
      *             Thrown in case of internal error.
      */
-    final void setComponents(
-            final Map<String, Object> components,
-            final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
-            final Map<String, String> nsUris) throws ComponentNotFoundException,
+    protected void setComponents(
+        final Map<String, Object> components,
+        final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
+        final Map<String, String> nsUris) throws ComponentNotFoundException,
         LockingException, InvalidStatusException, SystemException,
         InvalidContentException, MissingContentException,
         FileNotFoundException, XmlCorruptedException,
@@ -153,22 +153,24 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         // update
         Collection<ByteArrayOutputStream> newComponents =
             (Collection<ByteArrayOutputStream>) components.remove("new");
-
-        for (Map.Entry<String, Object> e : components.entrySet()) {
-            String componentId = e.getKey();
+        componentIter = components.keySet().iterator();
+        while (componentIter.hasNext()) {
+            String componentId = componentIter.next();
             Component c = getItem().getComponent(componentId);
 
-            setComponent(c, (Map) e.getValue(),
+            setComponent(c, (Map) components.get(componentId),
                 mdRecordsAttributes.get(componentId), nsUris.get(componentId));
         }
 
         // new
-        if (!newComponents.isEmpty()) {
+        if (newComponents.size() > 0) {
             for (ByteArrayOutputStream newComponent : newComponents) {
                 try {
                     String componentId =
                             createComponent((newComponent)
                                     .toString(XmlUtility.CHARACTER_ENCODING));
+                    // addComponent((newCompIt.next())
+                    // .toString(XmlUtility.CHARACTER_ENCODING));
                     getItem().addComponent(componentId);
                 } catch (UnsupportedEncodingException e) {
                     throw new EncodingSystemException(e.getMessage(), e);
@@ -202,10 +204,10 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      *             Thrown if Component with provided id was not found.
      * 
      */
-    final void setComponent(
-            final Component c, final Map streams,
-            final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
-            final String nsUri) throws InvalidContentException, SystemException,
+    protected void setComponent(
+        final Component c, final Map streams,
+        final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
+        final String nsUri) throws InvalidContentException, SystemException,
         MissingContentException, FileNotFoundException,
         ComponentNotFoundException {
 
@@ -245,8 +247,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
         else {
             mdRecords =
-                    (Map<String, ByteArrayOutputStream>) streams
-                            .get("md-records");
+                (HashMap<String, ByteArrayOutputStream>) streams
+                    .get("md-records");
         }
 
         setComponentMetadataRecords(c, mdRecords, mdRecordsMetadataAttribures,
@@ -270,13 +272,13 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws ComponentNotFoundException
      *             Thrown if Component with provided objid was not found.
      */
-    private static void setComponentMetadataRecords(
-            final Component c, final Map<String, ByteArrayOutputStream> mdMap,
-            final Map<String, Map<String, String>> mdAttributesMap,
-            final String escidocMdRecordnsUri) throws SystemException,
+    private void setComponentMetadataRecords(
+        final Component c, final Map<String, ByteArrayOutputStream> mdMap,
+        final Map<String, Map<String, String>> mdAttributesMap,
+        final String escidocMdRecordnsUri) throws SystemException,
         ComponentNotFoundException {
 
-        Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
+        HashMap<String, Datastream> dsMap = new HashMap<String, Datastream>();
 
         for (String s : mdMap.keySet()) {
             String name = s;
@@ -376,7 +378,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws IntegritySystemException
      *             If the integrity of the repository is violated.
      */
-    final void setContentTypeSpecificProperties(final String xml)
+    protected void setContentTypeSpecificProperties(final String xml)
         throws FedoraSystemException, LockingException,
         WebserverSystemException, TripleStoreSystemException,
         EncodingSystemException, IntegritySystemException {
@@ -419,9 +421,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws ComponentNotFoundException
      *             Thrown if Component with provided objid was not found.
      */
-    final void setComponentContent(
-            final Component component, final String xml, final String fileName,
-            final String mimeType) throws MissingContentException,
+    protected void setComponentContent(
+        final Component component, final String xml, final String fileName,
+        final String mimeType) throws MissingContentException,
         InvalidContentException, FileNotFoundException,
         ComponentNotFoundException, SystemException {
 
@@ -454,9 +456,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
             if (url == null) {
                 // it's the local url we send
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Do not update content of " + component.getId()
-                        + ". URL[" + url + ']');
+                if (log.isDebugEnabled()) {
+                    log.debug("Do not update content of " + component.getId()
+                        + ". URL[" + url + "]");
                 }
                 return;
             }
@@ -498,7 +500,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                         + "because the attribute 'storage' of the section"
                         + " 'content' was set to 'external-url' or "
                         + "'external-managed' while create.";
-                LOGGER.error(message);
+                log.error(message);
                 throw new InvalidContentException(message);
             }
             String url =

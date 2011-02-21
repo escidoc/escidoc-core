@@ -46,9 +46,9 @@ public class InvalidTripleStoreOutputFormatException
      */
     private static final long serialVersionUID = -218951629375699046L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_INVALID;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE =
         "Invalid triple store output format.";
 
     /**

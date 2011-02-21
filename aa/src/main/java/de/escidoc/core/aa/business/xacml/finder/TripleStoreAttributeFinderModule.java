@@ -47,7 +47,6 @@ import de.escidoc.core.common.util.string.StringUtility;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -466,9 +465,9 @@ public class TripleStoreAttributeFinderModule
      * 
      * @aa
      */
-    final List<String> getHierarchicalCachedAttributes(
-            final Collection<String> attributesList,
-            final List<String> totalAttributesList, final MapResult mapresult)
+    protected List<String> getHierarchicalCachedAttributes(
+        final List<String> attributesList,
+        final List<String> totalAttributesList, final MapResult mapresult)
         throws ResourceNotFoundException, SystemException {
         List<String> hierarchicalAttributesList = totalAttributesList;
         if (attributesList != null && !attributesList.isEmpty()) {
@@ -514,7 +513,7 @@ public class TripleStoreAttributeFinderModule
         // of an Escidoc resource does not always contain dc:identifier entry
         // due to using of custom XSLTs for DC-Mapping
         String cacheId =
-            de.escidoc.core.common.business.fedora.TripleStoreUtility.FEDORA_CREATION_DATE_PREDICATE;
+            de.escidoc.core.common.business.fedora.TripleStoreUtility.Fedora_Creation_Date_Predicate;
 
         mapping.put("component-id", new MapResult(cacheId, true));
         mapping.put("component:id", new MapResult(cacheId, true));
@@ -775,7 +774,7 @@ public class TripleStoreAttributeFinderModule
      *         If no match can be found, <code>null</code> is returned.
      * 
      */
-    final MapResult mapIt(final String attributeIdValue) {
+    public MapResult mapIt(final String attributeIdValue) {
 
         if (attributeIdValue == null) {
             return null;

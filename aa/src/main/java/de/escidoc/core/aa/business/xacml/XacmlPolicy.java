@@ -44,11 +44,11 @@ import java.util.List;
  * 
  * @aa
  */
-class XacmlPolicy extends Policy {
+public class XacmlPolicy extends Policy {
 
     private final String roleId;
 
-    private static final String URN_RULE_COMBINING_ALGORITHM =
+    public static final String URN_RULE_COMBINING_ALGORITHM =
         "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:";
 
     public static final String URN_RULE_COMBINING_ALGORITHM_ORDERED_DENY_OVERRIDES =
@@ -109,7 +109,7 @@ class XacmlPolicy extends Policy {
      * @return
      * @see java.lang.Object#toString()
      */
-    public final String toString() {
+    public String toString() {
 
         try {
             return CustomPolicyBuilder.encode(this);

@@ -102,7 +102,7 @@ public class SecurityInterceptor implements Ordered {
      * 
      * @aa
      */
-    private static final Pattern PATTERN_CHECK_MISSING_VERSION_NUMBER =
+    public static final Pattern PATTERN_CHECK_MISSING_VERSION_NUMBER =
         Pattern.compile("^[^:]*:[^:]*$");
 
     private static final String ITEM_HANDLER_CLASS_NAME =
@@ -127,7 +127,7 @@ public class SecurityInterceptor implements Ordered {
      * The error message that is used in the {@link ResourceNotFoundException}
      * to indicate a resource has not been released, yet.
      */
-    private static final String ERR_MSG_LATEST_RELEASE_NOT_FOUND =
+    public static final String ERR_MSG_LATEST_RELEASE_NOT_FOUND =
         "Latest release not found.";
 
     /**
@@ -276,7 +276,7 @@ public class SecurityInterceptor implements Ordered {
      * @throws Throwable
      *             Thrown in case of an error during proceeding the method call.
      */
-    private static Object proceed(final ProceedingJoinPoint joinPoint)
+    private Object proceed(final ProceedingJoinPoint joinPoint)
         throws Throwable {
 
         return joinPoint.proceed();
@@ -291,7 +291,7 @@ public class SecurityInterceptor implements Ordered {
      * @see org.springframework.core.Ordered#getOrder()
      * @common
      */
-    public final int getOrder() {
+    public int getOrder() {
 
         return AopUtil.PRECEDENCE_SECURITY_INTERCEPTOR;
     }
@@ -418,7 +418,7 @@ public class SecurityInterceptor implements Ordered {
 
             if (methodName.startsWith("retrieve")
                 && PATTERN_CHECK_MISSING_VERSION_NUMBER.matcher(
-                    (CharSequence) arguments[0]).find()
+                    (String) arguments[0]).find()
                 && (className.equals(CONTAINER_HANDLER_CLASS_NAME) || className
                     .equals(ITEM_HANDLER_CLASS_NAME))) {
 
@@ -483,8 +483,8 @@ public class SecurityInterceptor implements Ordered {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private static AuthorizationException createAuthorizationException(
-            final String className, final String methodName)
+    private AuthorizationException createAuthorizationException(
+        final String className, final String methodName)
         throws WebserverSystemException {
 
         return new AuthorizationException(StringUtility
@@ -506,8 +506,8 @@ public class SecurityInterceptor implements Ordered {
      *             Thrown in case of an identified error with a method mapping.
      * @common
      */
-    private static ResourceNotFoundException determineResourceNotFoundException(
-            final MethodMapping methodMapping, final ResourceNotFoundException e)
+    private ResourceNotFoundException determineResourceNotFoundException(
+        final MethodMapping methodMapping, final ResourceNotFoundException e)
         throws WebserverSystemException {
 
         if (methodMapping == null) {
@@ -538,8 +538,8 @@ public class SecurityInterceptor implements Ordered {
             return resourceNotFoundException;
         }
         catch (Exception e1) {
-            StringBuilder errorMsg =
-                    new StringBuilder("Error in method mapping. Specified");
+            StringBuffer errorMsg =
+                new StringBuffer("Error in method mapping. Specified");
             errorMsg.append(" ResourceNotFoundException is unknown or cannot ");
             errorMsg.append(" be instantiated using the constructor ");
             errorMsg.append(exceptionName);

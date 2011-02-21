@@ -44,9 +44,9 @@ public class TargetBasketNotFoundException extends ResourceNotFoundException {
      */
     private static final long serialVersionUID = -9130430226462103139L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE =
         "Target Basket was not found.";
 
     /**

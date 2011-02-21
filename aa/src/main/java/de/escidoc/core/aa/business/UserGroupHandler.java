@@ -31,7 +31,6 @@ package de.escidoc.core.aa.business;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -119,7 +118,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         UserGroupHandler.class.getName());
 
     private static final Pattern USER_FILTER_PATTERN = Pattern
-        .compile("(?s)\"{0,1}(" + Constants.FILTER_USER + '|'
+        .compile("(?s)\"{0,1}(" + Constants.FILTER_USER + "|"
             + Constants.FILTER_PATH_USER_GROUP_USER_ID
             + ")(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*"
             + "|\"*\\s*(cql.any)\\s*\"*)" + "([^\\s\"\\(\\)]*)\"{0,1}");
@@ -679,7 +678,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
         List<String[]> selectors = groupHandler.getGroupSelectors();
         Set<UserGroupMember> existingMembers = userGroup.getMembers();
-        Collection<UserGroupMember> newMembers = new HashSet<UserGroupMember>();
+        Set<UserGroupMember> newMembers = new HashSet<UserGroupMember>();
 
         for (String[] selector : selectors) {
             UserGroupMember member = new UserGroupMember(userGroup);
@@ -994,7 +993,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                 "non-supported relation in user-filter");
                         }
                         Set<String> groupIds;
-                        StringBuilder replacement = new StringBuilder(" (");
+                        StringBuffer replacement = new StringBuffer(" (");
                         try {
                             // get groups for user
                             groupIds =
@@ -1008,12 +1007,12 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                     if (replacement.length() > 2) {
                                         replacement.append(" or ");
                                     }
-                                    replacement.append('\"');
+                                    replacement.append("\"");
                                     replacement
                                         .append(Constants.FILTER_PATH_ID);
                                     replacement
                                         .append("\"=").append(groupId)
-                                        .append(' ');
+                                        .append(" ");
                                 }
                             }
                             else {
@@ -1023,11 +1022,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                         catch (UserAccountNotFoundException e) {
                             // if user has no groups or user not found,
                             // write nonexisting group in query
-                            replacement.append('\"');
+                            replacement.append("\"");
                             replacement.append(Constants.FILTER_PATH_ID);
                             replacement
                                 .append("\"=").append("nonexistinggroup")
-                                .append(' ');
+                                .append(" ");
                         }
 
                         replacement.append(") ");
@@ -1092,7 +1091,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             }
         });
         List<UserGroupMember> userGroupMembers;
-        Collection<String> superMembers;
+        HashSet<String> superMembers;
         boolean proceed = true;
         while (proceed) {
             superMembers = new HashSet<String>();
@@ -1130,7 +1129,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveGroupsForUser(java.lang.String)
      * @aa
      */
-    public final Set<String> retrieveGroupsForUser(final String userId)
+    public Set<String> retrieveGroupsForUser(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
         return retrieveGroupsForUser(userId, false);
@@ -1150,8 +1149,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveGroupsForUser(java.lang.String, boolean)
      * @aa
      */
-    public final Set<String> retrieveGroupsForUser(
-            final String userId, final boolean activeOnly)
+    public Set<String> retrieveGroupsForUser(
+        final String userId, final boolean activeOnly)
         throws UserAccountNotFoundException, SystemException {
         // may not return null, so return empty list!!
         Set<String> userGroups = new HashSet<String>();
@@ -1262,10 +1261,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @aa
      */
-    private Collection<String> retrieveGroupsByUserIds(
-        final Collection<String> userIds, final boolean activeOnly)
+    private Set<String> retrieveGroupsByUserIds(
+        final Set<String> userIds, final boolean activeOnly)
         throws UserAccountNotFoundException, SqlDatabaseSystemException {
-        Set<String> userGroupIds = new HashSet<String>();
+        HashSet<String> userGroupIds = new HashSet<String>();
 
         if (userIds != null && !userIds.isEmpty()) {
             // retrieve all groupMembers that are of type
@@ -1353,7 +1352,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             criteria.put(Constants.FILTER_PATH_TYPE, "internal");
             criteria.put(Constants.FILTER_PATH_NAME, "user-group");
             criteria.put(Constants.FILTER_PATH_VALUE, userGroupIds);
-            Collection<String> superMembers;
+            HashSet<String> superMembers;
             boolean proceed = true;
             while (proceed) {
                 List<UserGroupMember> userGroupMembers =
@@ -1474,7 +1473,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveCurrentGrantsAsMap(List)
      * @aa
      */
-    public Map<String, Map<String, Map<String, List<RoleGrant>>>> retrieveManyCurrentGrantsAsMap(
+    // Can't use Map instead of HashMap
+    // Interface dictates method signature
+    public HashMap<String, Map<String, Map<String, List<RoleGrant>>>> retrieveManyCurrentGrantsAsMap(
         final List<String> groupIds) throws SystemException {
 
         Map<String, List<RoleGrant>> currentGrantsForGroups =
@@ -1483,7 +1484,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             return null;
         }
 
-        Map<String, Map<String, Map<String, List<RoleGrant>>>> ret =
+        HashMap<String, Map<String, Map<String, List<RoleGrant>>>> ret =
             new HashMap<String, Map<String, Map<String, List<RoleGrant>>>>();
         for (Entry<String, List<RoleGrant>> entry : currentGrantsForGroups
             .entrySet()) {
@@ -1775,7 +1776,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
 
         Map<String, Object> filters = fh.getRules();
-        Collection<String> grantIds;
+        HashSet<String> grantIds;
 
         if (filters.isEmpty()) {
             // if no filters are provided, remove all current grants
@@ -1885,7 +1886,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             Thrown in case of an internal error.
      * @aa
      */
-    private static void sendUserGroupUpdateEvent(final String groupId)
+    private void sendUserGroupUpdateEvent(final String groupId)
         throws WebserverSystemException {
 
         PoliciesCache.clearGroupPolicies(groupId);
@@ -1901,7 +1902,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             Thrown in case of an internal error.
      * @aa
      */
-    private static void sendUserGroupMemberUpdateEvent(final String groupId)
+    private void sendUserGroupMemberUpdateEvent(final String groupId)
         throws WebserverSystemException {
 
         PoliciesCache.clearUserGroups();
@@ -1920,7 +1921,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static void setCreationValues(final UserGroup userGroup)
+    private void setCreationValues(final UserGroup userGroup)
         throws SystemException {
 
         // initialize creation-date value

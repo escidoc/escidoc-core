@@ -59,9 +59,9 @@ public abstract class ApplicationException extends EscidocException {
 
     private static final long serialVersionUID = 6185967378077511872L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_BAD_REQUEST;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_BAD_REQUEST;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE =
         "eSciDoc Application Error";
 
     /**

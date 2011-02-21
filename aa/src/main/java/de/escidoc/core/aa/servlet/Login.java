@@ -42,7 +42,6 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -82,7 +81,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 public class Login extends HttpServlet {
 
     /** The logger. */
-    private static final AppLogger LOGGER = new AppLogger(Login.class.getName());
+    private static final AppLogger logger = new AppLogger(Login.class.getName());
 
     /**
      * The serial version uid.
@@ -124,7 +123,7 @@ public class Login extends HttpServlet {
 
     // TODO values was cloned to EsidocServlet (to reduce common package
     // dependencies)
-    private static final String AUTHENTICATION = "eSciDocUserHandle";
+    public static final String AUTHENTICATION = "eSciDocUserHandle";
 
     private static final int BUFFER_SIZE = 0xFFFF;
 
@@ -170,7 +169,7 @@ public class Login extends HttpServlet {
      * @aa
      */
     @Override
-    public final void init() throws ServletException {
+    public void init() throws ServletException {
 
         super.init();
 
@@ -216,8 +215,8 @@ public class Login extends HttpServlet {
      * @aa
      */
     @Override
-    public final void doGet(
-            final HttpServletRequest request, final HttpServletResponse response)
+    public void doGet(
+        final HttpServletRequest request, final HttpServletResponse response)
         throws ServletException, IOException {
 
         if (request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
@@ -240,8 +239,8 @@ public class Login extends HttpServlet {
      * @aa
      */
     @Override
-    public final void doPost(
-            final HttpServletRequest request, final HttpServletResponse response)
+    public void doPost(
+        final HttpServletRequest request, final HttpServletResponse response)
         throws ServletException, IOException {
 
         if (request.getRequestURL().toString().endsWith(LOGOUT_POSTFIX)) {
@@ -352,16 +351,16 @@ public class Login extends HttpServlet {
                 // using white spaces in login names?
                 loginname =
                     escidocLdapUserDetails.getUsername()
-                        + ','
+                        + ","
                         + PATTERN_WHITESPACE.matcher(
                             PATTERN_DN_SPLIT.matcher(
                                 escidocLdapUserDetails.getDn()).replaceAll(
                                 ",$1")).replaceAll("_");
                 // FIXME: cn should be used for user name
-                final int index = escidocLdapUserDetails.getDn().indexOf(',');
+                final int index = escidocLdapUserDetails.getDn().indexOf(",");
                 if (index != -1) {
                     final int index2 =
-                        escidocLdapUserDetails.getDn().indexOf('=');
+                        escidocLdapUserDetails.getDn().indexOf("=");
 
                     username =
                         escidocLdapUserDetails.getDn().substring(index2 + 1,
@@ -488,7 +487,7 @@ public class Login extends HttpServlet {
      * @throws MissingParameterException
      *             Thrown if a mandatory parameter is missing.
      */
-    private static String retrieveDecodedTarget(final ServletRequest request)
+    private String retrieveDecodedTarget(final HttpServletRequest request)
         throws MissingParameterException {
 
         try {
@@ -669,8 +668,8 @@ public class Login extends HttpServlet {
      *         provided.
      * @aa
      */
-    private static String createRedirectUrl(
-            final String redirectUrl, final String userHandle)
+    private String createRedirectUrl(
+        final String redirectUrl, final String userHandle)
         throws WebserverSystemException {
 
         if (StringUtils.isEmpty(redirectUrl)) {
@@ -684,7 +683,7 @@ public class Login extends HttpServlet {
             else {
                 delimiter = '&';
             }
-            return redirectUrl + delimiter + AUTHENTICATION + '='
+            return redirectUrl + delimiter + AUTHENTICATION + "="
                 + UserHandleCookieUtil.createEncodedUserHandle(userHandle);
         }
     }
@@ -759,7 +758,7 @@ public class Login extends HttpServlet {
     private void initFileContent(final String templateFileName)
         throws IOException {
 
-        StringBuilder result = new StringBuilder();
+        StringBuffer result = new StringBuffer();
         final InputStream inputStream =
             this.getClass().getResourceAsStream(templateFileName);
         if (inputStream == null) {
@@ -779,7 +778,7 @@ public class Login extends HttpServlet {
                 inputStream.close();
             }
             catch (IOException e) {
-                LOGGER.debug("Error on closing stream: " + e);
+                logger.debug("Error on closing stream: " + e);
             }
         }
         templates.put(templateFileName, result.toString());
@@ -832,9 +831,9 @@ public class Login extends HttpServlet {
      * @throws IOException
      *             Thrown in case of a failed i/o operation.
      */
-    private static void sendResponse(
-            final HttpServletResponse response, final String page,
-            final int statusCode) throws IOException {
+    private void sendResponse(
+        final HttpServletResponse response, final String page,
+        final int statusCode) throws IOException {
 
         final PrintWriter writer = response.getWriter();
         writer.print(page);
@@ -856,9 +855,9 @@ public class Login extends HttpServlet {
      * @throws IOException
      *             Thrown in case of a failed i/o operation.
      */
-    private static void sendRedirectingResponse(
-            final HttpServletResponse response, final String page,
-            final String redirectUrl) throws IOException {
+    private void sendRedirectingResponse(
+        final HttpServletResponse response, final String page,
+        final String redirectUrl) throws IOException {
 
         final PrintWriter writer = response.getWriter();
         writer.print(page);
@@ -992,7 +991,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
-    private static long getESciDocUserHandleLifetime() throws WebserverSystemException {
+    public long getESciDocUserHandleLifetime() throws WebserverSystemException {
 
         try {
             return Long.parseLong(EscidocConfiguration.getInstance().get(
@@ -1018,7 +1017,7 @@ public class Login extends HttpServlet {
      * @throws WebserverSystemException
      *             Thrown if access to configuration properties fails.
      */
-    private static byte getEscidocCookieVersion() throws WebserverSystemException {
+    public byte getEscidocCookieVersion() throws WebserverSystemException {
 
         byte escidocCookieVersion = -1;
         try {
@@ -1068,7 +1067,7 @@ public class Login extends HttpServlet {
         private static final String CHARS =
             "abcdefghijklmonpqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-        private static final Random R = new Random(new Date().getTime());
+        private static final Random r = new Random(new Date().getTime());
 
         /**
          * Constructor.
@@ -1081,11 +1080,11 @@ public class Login extends HttpServlet {
          * 
          * @return random string
          */
-        private static String getUniqueID() {
+        public static String getUniqueID() {
             char[] buf = new char[NUM_CHARS];
 
             for (int i = 0; i < buf.length; i++) {
-                buf[i] = CHARS.charAt(R.nextInt(CHARS.length()));
+                buf[i] = CHARS.charAt(r.nextInt(CHARS.length()));
             }
             return new String(buf);
         }

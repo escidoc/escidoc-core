@@ -98,7 +98,7 @@ public class ComponentUpdateHandler extends DefaultHandler {
                         // isExist(componentId)){
                         throw new InvalidContentException(
                             "Component with id " + componentId
-                                + " does not exist in item " + itemId + '.');
+                                + " does not exist in item " + itemId + ".");
                     }
                 }
             }

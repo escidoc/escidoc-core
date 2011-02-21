@@ -59,18 +59,18 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
 
     private boolean inRdfType = false;
 
-    private static final String RDF_PROPERTY_URI =
+    private final String RDF_PROPERTY_URI =
         Constants.RDF_NAMESPACE_URI + "Property";
 
-    private static final String PROPERTY_PATH = "/RDF/Property";
+    private final String PROPERTY_PATH = "/RDF/Property";
 
-    private static final String DESCRIPTION_PATH = "/RDF/Description";
+    private final String DESCRIPTION_PATH = "/RDF/Description";
 
-    private static final String BASE_PATH = "/RDF";
+    private final String BASE_PATH = "/RDF";
 
-    private static final String RDF_TYPE_PATH = "/RDF/Description/type";
+    private final String RDF_TYPE_PATH = "/RDF/Description/type";
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(ContentRelationsOntologyHandler.class.getName());
 
     public ContentRelationsOntologyHandler(final StaxParser parser) {
@@ -112,7 +112,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                         "The ontology-xml is not valide rdf/xml. "
                             + "The element 'rdf:type' must have "
                             + "the attribute 'resource'.";
-                    LOGGER.debug(message);
+                    log.debug(message);
                     throw new XmlCorruptedException(message);
                 }
             }
@@ -125,7 +125,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                     "The ontology-xml is not valide rdf/xml."
                         + "The element 'rdf:Property' must have "
                         + "one of the attributes 'id' or 'about'";
-                LOGGER.debug(message);
+                log.debug(message);
                 throw new XmlCorruptedException(message);
             }
         }
@@ -138,7 +138,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                     "The ontology-xml is not valide rdf/xml."
                         + "The element 'rdf:Description' must have "
                         + "one of the attributes 'id' or 'about'";
-                LOGGER.debug(message);
+                log.debug(message);
                 throw new XmlCorruptedException(message);
             }
         }
@@ -177,14 +177,14 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
         if (indexOfId != -1) {
             String id = element.getAttribute(indexOfId).getValue();
             if (this.base != null) {
-                this.predicate = this.base + '#' + id;
+                this.predicate = this.base + "#" + id;
             }
             else {
                 String message =
                     "The ontology-xml does not contain a "
                         + "base-url. Therefore the element 'Description' "
                         + "may not contain the attribute 'id'.";
-                LOGGER.debug(message);
+                log.debug(message);
                 throw new InvalidContentException(message);
             }
         }
@@ -213,7 +213,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
         }
     }
 
-    public final List<String> getPredicates() {
+    public List<String> getPredicates() {
         return this.predicates;
     }
 }

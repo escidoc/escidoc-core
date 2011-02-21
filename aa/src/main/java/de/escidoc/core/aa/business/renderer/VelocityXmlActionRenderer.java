@@ -51,6 +51,10 @@ import java.util.regex.Pattern;
 public class VelocityXmlActionRenderer extends AbstractRenderer
     implements ActionRendererInterface {
 
+    /** The logger. */
+    private static final AppLogger LOG =
+        new AppLogger(VelocityXmlActionRenderer.class.getName());
+
     /**
      * Pattern used to detect white spaces.
      */
@@ -100,7 +104,7 @@ public class VelocityXmlActionRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private static ActionXmlProvider getActionXmlProvider()
+    private ActionXmlProvider getActionXmlProvider()
         throws WebserverSystemException {
 
         return ActionXmlProvider.getInstance();

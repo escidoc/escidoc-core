@@ -70,7 +70,7 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     private String object;
 
-    private static final String IDENTIFIER_PREFIX = "info:fedora/";
+    private final String IDENTIFIER_PREFIX = "info:fedora/";
 
     /**
      * RelsExtReadHandler.
@@ -173,7 +173,7 @@ public class RelsExtReadHandler extends DefaultHandler {
      *            Set true to remove info:fedora/ from object. False (default)
      *            keeps object value untouched.
      */
-    public final void cleanIdentifier(final boolean clean) {
+    public void cleanIdentifier(final boolean clean) {
         this.cleanIdentifier = clean;
     }
 
@@ -182,7 +182,7 @@ public class RelsExtReadHandler extends DefaultHandler {
      * 
      * @return Triples
      */
-    public final Triples getElementValues() {
+    public Triples getElementValues() {
         return this.triples;
     }
 
@@ -218,7 +218,7 @@ public class RelsExtReadHandler extends DefaultHandler {
      *            The String where info:fedora/ is to remove
      * @return the cleaned resource identifier.
      */
-    private static String cleanIdentifier(final String identifier) {
+    private String cleanIdentifier(final String identifier) {
 
         if (identifier.startsWith(IDENTIFIER_PREFIX)) {
             return identifier.substring(IDENTIFIER_PREFIX.length());

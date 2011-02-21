@@ -217,7 +217,8 @@ public class CustomPdp {
         factory.addFunction(new XacmlFunctionRoleInList());
         factory.addFunction(new XacmlFunctionOneAttributeInBothLists());
         factory.addFunction(xacmlFunctionRoleIsGranted);
-
+        // FunctionFactory factory = proxy.getConditionFactory();
+        // factory.addFunction(new TimeInRangeFunction());
         FunctionFactory.setDefaultFactory(proxy);
 
         pdpConfig = new PDPConfig(attributeFinder, policyFinder, null);
@@ -271,7 +272,7 @@ public class CustomPdp {
      * @aa
      * 
      */
-    public final ResponseCtx evaluate(final RequestCtx request)
+    public ResponseCtx evaluate(final RequestCtx request)
         throws WebserverSystemException {
 
         if (pdp == null) {

@@ -62,7 +62,7 @@ public class OneComponentContentHandler extends DefaultHandler {
 
     private boolean inContent = false;
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(OneComponentContentHandler.class.getName());
 
     /**
@@ -95,7 +95,7 @@ public class OneComponentContentHandler extends DefaultHandler {
      * 
      * @return Map with Component content.
      */
-    public final Map<String, String> getComponentBinary() {
+    public Map<String, String> getComponentBinary() {
         return this.componentBinary;
     }
 
@@ -138,7 +138,7 @@ public class OneComponentContentHandler extends DefaultHandler {
 
                 }
                 else {
-                    LOGGER.error("the content of one component is missing");
+                    log.error("the content of one component is missing");
                     throw new MissingContentException(
                         "the content of one component is missing");
                 }

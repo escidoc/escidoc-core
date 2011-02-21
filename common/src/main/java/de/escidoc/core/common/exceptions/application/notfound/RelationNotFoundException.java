@@ -44,9 +44,9 @@ public class RelationNotFoundException extends ResourceNotFoundException {
      */
     private static final long serialVersionUID = 5628606781005134880L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
 
-    private static final String HTTP_STATUS_MESSAGE = "Relation was not found.";
+    public static final String HTTP_STATUS_MESSAGE = "Relation was not found.";
 
     /**
      * Default constructor.

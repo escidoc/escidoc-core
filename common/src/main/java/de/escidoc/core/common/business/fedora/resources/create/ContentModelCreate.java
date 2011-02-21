@@ -44,7 +44,6 @@ import de.escidoc.core.common.util.xml.factory.ContentModelFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.joda.time.DateTime;
-import org.joda.time.ReadableInstant;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -75,7 +74,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     private Map<String, ResourceDefinitionCreate> resourceDefinitions;
 
-    private Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
+    public Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
         return resourceDefinitions;
     }
 
@@ -85,7 +84,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @param properties
      *            The properties of Content Model.
      */
-    public final void setProperties(final ContentModelProperties properties) {
+    public void setProperties(final ContentModelProperties properties) {
 
         this.properties = properties;
     }
@@ -95,15 +94,15 @@ public class ContentModelCreate extends GenericResourceCreate {
      * 
      * @return ContentModelProperties
      */
-    public final ContentModelProperties getProperties() {
+    public ContentModelProperties getProperties() {
         return this.properties;
     }
 
     /**
      * Set metadata record definitions.
      */
-    public final void setMdRecordDefinitions(
-            final List<MdRecordDefinitionCreate> mdRecordDefinitions) {
+    public void setMdRecordDefinitions(
+        final List<MdRecordDefinitionCreate> mdRecordDefinitions) {
 
         this.mdRecordDefinitions = mdRecordDefinitions;
     }
@@ -111,8 +110,8 @@ public class ContentModelCreate extends GenericResourceCreate {
     /**
      * Set resource definitions.
      */
-    public final void setResourceDefinitions(
-            final Map<String, ResourceDefinitionCreate> resourceDefinitions) {
+    public void setResourceDefinitions(
+        final Map<String, ResourceDefinitionCreate> resourceDefinitions) {
 
         this.resourceDefinitions = resourceDefinitions;
     }
@@ -122,7 +121,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * 
      * @return All MdRecords.
      */
-    private List<MdRecordDefinitionCreate> getMetadataRecordDefinitions() {
+    public List<MdRecordDefinitionCreate> getMetadataRecordDefinitions() {
         return this.mdRecordDefinitions;
     }
 
@@ -135,10 +134,30 @@ public class ContentModelCreate extends GenericResourceCreate {
      *            FIXME This Spring construct seams not to work.
      * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
-    public final void setIdProvider(final EscidocIdProvider idProvider) {
+    public void setIdProvider(final EscidocIdProvider idProvider) {
 
         this.idProvider = idProvider;
     }
+
+    // /**
+    // * Persist whole ContentModel to Repository and force TripleStore sync.
+    // *
+    // * @throws SystemException
+    // * @throws MissingMdRecordException
+    // * @throws InvalidStatusException
+    // * @throws FileNotFoundException
+    // * @throws RelationPredicateNotFoundException
+    // * @throws ReferencedResourceNotFoundException
+    // * @throws InvalidContentException
+    // * @throws MissingAttributeValueException
+    // */
+    // public void persist() throws SystemException, InvalidStatusException,
+    // MissingMdRecordException, FileNotFoundException,
+    // InvalidContentException, ReferencedResourceNotFoundException,
+    // RelationPredicateNotFoundException, MissingAttributeValueException {
+    //
+    // persist(true);
+    // }
 
     /**
      * Persist whole ContentModel to Repository.
@@ -148,7 +167,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @throws WebserverSystemException
      * @throws FedoraSystemException
      */
-    public final void persist(final boolean forceSync)
+    public void persist(final boolean forceSync)
         throws WebserverSystemException, FedoraSystemException {
 
         // FIXME persist behavior
@@ -222,7 +241,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @param contentStreams
      *            the contentStreams to set
      */
-    public final void setContentStreams(final List<ContentStreamCreate> contentStreams) {
+    public void setContentStreams(final List<ContentStreamCreate> contentStreams) {
         this.contentStreams = contentStreams;
     }
 
@@ -316,7 +335,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private String getMinimalFoXML() throws WebserverSystemException {
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
         valueMap.put(XmlTemplateProvider.OBJID_UNDERSCORE, getObjid()
@@ -367,7 +386,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.putAll(getBehaviorValues(resourceDefinition));
 
@@ -395,7 +414,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.putAll(getBehaviorValues(resourceDefinition));
 
@@ -407,7 +426,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     private Map<String, Object> getBehaviorValues(
         final ResourceDefinitionCreate resourceDefinition) {
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
         valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID, getObjid());
         valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID_UNDERSCORE,
             getObjid().replaceAll(":", Constants.COLON_REPLACEMENT_PID));
@@ -430,7 +449,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private String renderRelsExt() throws WebserverSystemException {
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
         valueMap.put(XmlTemplateProvider.OBJID_UNDERSCORE, getObjid()
@@ -457,7 +476,7 @@ public class ContentModelCreate extends GenericResourceCreate {
     private Map<String, String> preparePropertiesValueMap()
         throws WebserverSystemException {
 
-        Map<String, String> valueMap = new HashMap<String, String>();
+        HashMap<String, String> valueMap = new HashMap<String, String>();
 
         // add RELS-EXT values -------------------------------------------------
         valueMap.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER,
@@ -491,6 +510,11 @@ public class ContentModelCreate extends GenericResourceCreate {
             .getObjectProperties().getContentModelId());
         valueMap.put(XmlTemplateProvider.CONTENT_MODEL_TITLE, this.properties
             .getObjectProperties().getContentModelTitle());
+
+        // add RELS-EXT current version values
+        // version pid currently not supported for create
+        // valueMap.put(XmlTemplateProvider.VERSION_PID, this.properties
+        // .getCurrentVersion().getPid());
 
         valueMap.put(XmlTemplateProvider.VERSION_NUMBER, this.properties
             .getCurrentVersion().getNumber());
@@ -560,9 +584,9 @@ public class ContentModelCreate extends GenericResourceCreate {
      * 
      * @return HashMap with namespace values for XML representation.
      */
-    private static Map<String, String> getRelsExtNamespaceValues() {
+    private Map<String, String> getRelsExtNamespaceValues() {
 
-        Map<String, String> values = new HashMap<String, String>();
+        HashMap<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
@@ -613,7 +637,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
-    private static String getLastModificationDateByWorkaround(final String objid)
+    private String getLastModificationDateByWorkaround(final String objid)
         throws FedoraSystemException {
 
         // Work around for Fedora30 bug APIM.getDatastreams()
@@ -627,8 +651,8 @@ public class ContentModelCreate extends GenericResourceCreate {
                 lastModificationDate = createdDate;
             } else {
 
-                ReadableInstant cDate = new DateTime(createdDate);
-                ReadableInstant lDate = new DateTime(lastModificationDate);
+                DateTime cDate = new DateTime(createdDate);
+                DateTime lDate = new DateTime(lastModificationDate);
                 if (lDate.isBefore(cDate)) {
                     lastModificationDate = createdDate;
                 }
@@ -712,7 +736,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         return contStreams;
     }
 
-    public static final List<MdRecordCreate> getMetadataRecords() {
+    public List<MdRecordCreate> getMetadataRecords() {
         // TODO Auto-generated method stub
         return null;
     }

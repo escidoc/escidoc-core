@@ -47,7 +47,7 @@ import java.net.URISyntaxException;
  * @author TTE
  * @aa
  */
-final class CustomTargetBuilder {
+public final class CustomTargetBuilder {
 
     /**
      * Standard Constructor.<br>
@@ -156,9 +156,9 @@ final class CustomTargetBuilder {
      *             Thrown if there is a problem with the provided functionId.
      * @aa
      */
-    private static TargetMatch createTargetMatch(
-            final int type, final String functionId,
-            final AttributeDesignator designator, final AttributeValue value)
+    public static TargetMatch createTargetMatch(
+        final int type, final String functionId,
+        final AttributeDesignator designator, final AttributeValue value)
         throws UnknownIdentifierException, FunctionTypeException {
 
         FunctionFactory factory = FunctionFactory.getTargetInstance();

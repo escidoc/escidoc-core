@@ -85,7 +85,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
      */
     private static final String QUERY_LATEST_VERSION = "SELECT * FROM "
         + TABLE_NAME + " WHERE " + COLUMN_DATE + "=(SELECT MAX(" + COLUMN_DATE
-        + ") FROM " + TABLE_NAME + ')';
+        + ") FROM " + TABLE_NAME + ")";
 
     /**
      * XML file with the finger print of the "escidoc-core" database.
@@ -105,7 +105,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
 
         if (!DB_VERSION.equals(currentDbVersion)) {
             throw new SystemException("database version differs (needed: "
-                + DB_VERSION + ", installed: " + currentDbVersion + ')');
+                + DB_VERSION + ", installed: " + currentDbVersion + ")");
         }
     }
 
@@ -114,7 +114,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
      * 
      * @return current database version
      */
-    public final Version getVersion() {
+    public Version getVersion() {
         Version result;
 
         try {
@@ -157,7 +157,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
      *             Thrown if the structure of the database could not be
      *             determined
      */
-    public final boolean isConsistent() throws IOException, SQLException {
+    public boolean isConsistent() throws IOException, SQLException {
         boolean result = false;
         Connection conn = null;
 

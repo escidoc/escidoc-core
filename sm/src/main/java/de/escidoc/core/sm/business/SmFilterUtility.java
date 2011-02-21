@@ -62,8 +62,8 @@ public class SmFilterUtility {
      *             filtering.
      * @sm
      */
-    public static final Collection<String> filterRetrievePrivilege(
-            final String objectType, final Collection<String> objectIds)
+    public Collection<String> filterRetrievePrivilege(
+        final String objectType, final Collection<String> objectIds)
         throws WebserverSystemException {
 
         List<String> resultIds = null;

@@ -32,7 +32,6 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.application.missing.MissingParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
@@ -57,7 +56,6 @@ import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -115,9 +113,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws EncodingSystemException
      *             Thrown if character encoding failed.
      */
-    public final String renderAdminDescriptors(
-            final FedoraContextHandler contextHandler,
-            final Map<String, Object> values) throws FedoraSystemException,
+    public String renderAdminDescriptors(
+        final FedoraContextHandler contextHandler,
+        final Map<String, Object> values) throws FedoraSystemException,
         WebserverSystemException, EncodingSystemException {
 
         addCommonValues(contextHandler.getContext(), values);
@@ -129,7 +127,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         if (!admDescs.isEmpty()) {
             Iterator<String> it = keys.iterator();
-            Collection<String> admDescriptors = new ArrayList<String>();
+            List<String> admDescriptors = new ArrayList<String>();
 
             while (it.hasNext()) {
                 String name = it.next();
@@ -169,9 +167,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *             Thrown if anything else fails.
      */
 
-    public final String renderAdminDescriptor(
-            final FedoraContextHandler contextHandler, final String name,
-            final Datastream admDesc, final boolean isRoot)
+    public String renderAdminDescriptor(
+        final FedoraContextHandler contextHandler, final String name,
+        final Datastream admDesc, final boolean isRoot)
         throws EncodingSystemException, WebserverSystemException {
         if (admDesc.isDeleted()) {
             return "";
@@ -339,7 +337,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *            Map where parameter to add.
      * @throws WebserverSystemException
      */
-    private static void addXlinkValues(final Map<String, Object> values) {
+    private void addXlinkValues(final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
             System.getProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL));
@@ -371,8 +369,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            Value Map for Velocity
      */
-    private static void addStructuralRelationsNamespaceValues(
-            final Map<String, Object> values) {
+    protected void addStructuralRelationsNamespaceValues(
+        final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
@@ -386,7 +384,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            Value Map for Velocity
      */
-    private static void addPropertiesNamespaceValues(final Map<String, Object> values) {
+    protected void addPropertiesNamespaceValues(final Map<String, Object> values) {
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
@@ -458,10 +456,10 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown if retrieving OU context failed.
      */
-    private Collection<Map<String, String>> getOrganizationalUnitsContext(
-            final Iterable<String> ouids) throws SystemException {
+    public List<Map<String, String>> getOrganizationalUnitsContext(
+        final List<String> ouids) throws SystemException {
 
-        Collection<Map<String, String>> ousContext =
+        List<Map<String, String>> ousContext =
             new ArrayList<Map<String, String>>();
 
         for (String ouid : ouids) {
@@ -480,7 +478,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown if instance of TripleStore failed.
      */
-    private static Map<String, String> getOrganizationalUnitContext(final String id)
+    public Map<String, String> getOrganizationalUnitContext(final String id)
         throws SystemException {
         Map<String, String> ouContext = new HashMap<String, String>();
 
@@ -501,8 +499,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            The map to add values to.
      */
-    private static void addResourcesValues(
-            final FedoraResource context, final Map<String, Object> values) {
+    private void addResourcesValues(
+        final Context context, final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref",
@@ -518,7 +516,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            The map to add values to.
      */
-    private static void addListNamespaceValues(final Map<String, Object> values) {
+    private void addListNamespaceValues(final Map<String, Object> values) {
 
         values.put("organizationalUnitsNamespacePrefix",
             Constants.ORGANIZATIONAL_UNIT_LIST_PREFIX);
@@ -539,7 +537,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     private void addMemberListValues(
         final Context context, final Map<String, Object> values,
-        final Iterable<String> memberList) throws SystemException,
+        final List<String> memberList) throws SystemException,
         AuthorizationException {
 
         FedoraItemHandler itemHandler =
@@ -649,7 +647,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static String getProperty(final String id, final String property)
+    private String getProperty(final String id, final String property)
         throws SystemException {
 
         return TripleStoreUtility.getInstance().getPropertiesElements(id,

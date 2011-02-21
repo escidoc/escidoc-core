@@ -77,7 +77,7 @@ import java.util.Set;
  */
 public class AggregationPreprocessor {
 
-    private static final AppLogger log =
+    private static AppLogger log =
         new AppLogger(AggregationPreprocessor.class.getName());
 
     private DirectDatabaseAccessorInterface dbAccessor;
@@ -116,7 +116,7 @@ public class AggregationPreprocessor {
         for (AggregationTable aggregationTable 
                 : aggregationDefinitionIn.getAggregationTables()) {
             if (aggregationTable.getName() == null
-                || aggregationTable.getName().length() == 0) {
+                || aggregationTable.getName().equals("")) {
                 log.error("Aggregation-Table-Name is null");
                 throw new StatisticPreprocessingSystemException(
                     "Aggregation-Table-Name is null");
@@ -147,9 +147,9 @@ public class AggregationPreprocessor {
      *             e
      * 
      */
-    private static Map initFieldTypeHash(final Collection<AggregationTableField> fieldList)
+    private Map initFieldTypeHash(final Set<AggregationTableField> fieldList)
         throws StatisticPreprocessingSystemException {
-        Map fields = new HashMap();
+        HashMap fields = new HashMap();
         HashMap fieldtypes = new HashMap();
         HashMap dbtypes = new HashMap();
         if (fieldList == null || fieldList.isEmpty()) {
@@ -213,9 +213,9 @@ public class AggregationPreprocessor {
      *             e
      * 
      */
-    public final AggregationPreprocessorVo processAggregation(
-            final AggregationDefinition aggregationDefinitionIn,
-            final Iterable statisticDatas)
+    public AggregationPreprocessorVo processAggregation(
+        final AggregationDefinition aggregationDefinitionIn,
+        final List statisticDatas)
         throws StatisticPreprocessingSystemException,
         SqlDatabaseSystemException {
         xpathFactory = XPathFactory.newInstance();
@@ -436,7 +436,7 @@ public class AggregationPreprocessor {
         try {
             Calendar cal;
             if (field.getXpath() != null
-                && field.getXpath().length() != 0) {
+                && !field.getXpath().equals("")) {
                 String fieldValue =
                     (String) xpathFactory.newXPath().evaluate(
                             field.getXpath().replaceAll("\\s+", " "), 
@@ -478,8 +478,8 @@ public class AggregationPreprocessor {
      *            Object that holds all values
      * 
      */
-    private static void handleCountCumulationField(final AggregationTableField field,
-                                                   final AggregationPreprocessorVo aggregationPreprocessorVo) {
+    private void handleCountCumulationField(final AggregationTableField field, 
+                    final AggregationPreprocessorVo aggregationPreprocessorVo) {
         // process count-cumulation-field:
         // just put 1 in fieldsHash
         aggregationPreprocessorVo
@@ -547,8 +547,8 @@ public class AggregationPreprocessor {
      *             e
      * 
      */
-    private static void mergeRecord(final String tablename,
-                                    final AggregationPreprocessorVo aggregationPreprocessorVo)
+    private void mergeRecord(final String tablename, 
+            final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws StatisticPreprocessingSystemException {
         // Iterate over differenceCumulationFields,
         // build unique key with tablename,
@@ -564,11 +564,11 @@ public class AggregationPreprocessor {
                     .getDifferenceHashForOneRecord()
                     .keySet()) {
                 String fieldname = (String) o;
-                StringBuilder key = new StringBuilder(tablename);
-                key.append('|').append(fieldname).append('|').append(
+                StringBuffer key = new StringBuffer(tablename);
+                key.append("|").append(fieldname).append("|").append(
                         aggregationPreprocessorVo
                                 .getUniqueKeyForOneRecord().toString())
-                        .append('|').append(
+                        .append("|").append(
                         aggregationPreprocessorVo
                                 .getDifferenceHashForOneRecord().get(fieldname));
                 if (aggregationPreprocessorVo
@@ -588,16 +588,16 @@ public class AggregationPreprocessor {
         // of the count-cumulation-fields
         // and difference-cumulation-fields to the record in the dataHash
         // if no: add new record with uniqueKey to dataHash
-        if (((Map) aggregationPreprocessorVo
+        if (((HashMap) aggregationPreprocessorVo
                 .getDataHash().get(tablename)).get(
                         aggregationPreprocessorVo.getUniqueKeyForOneRecord()
                         .toString()) != null) {
-            Map record =
-                (HashMap) ((Map) aggregationPreprocessorVo
-                        .getDataHash().get(tablename))
+            HashMap record =
+                (HashMap) ((HashMap) aggregationPreprocessorVo
+                            .getDataHash().get(tablename))
                     .get(aggregationPreprocessorVo
                             .getUniqueKeyForOneRecord().toString());
-            Map tablefields = (HashMap) aggregationPreprocessorVo
+            HashMap tablefields = (HashMap) aggregationPreprocessorVo
                                     .getFieldTypeHash().get(tablename);
             HashMap fieldtypes = new HashMap();
             if (tablefields != null) {
@@ -622,7 +622,7 @@ public class AggregationPreprocessor {
             }
         }
         else {
-            ((Map) aggregationPreprocessorVo.getDataHash().get(tablename)).put(
+            ((HashMap) aggregationPreprocessorVo.getDataHash().get(tablename)).put(
                         aggregationPreprocessorVo.getUniqueKeyForOneRecord()
                             .toString(), 
                             aggregationPreprocessorVo.getFieldHashForOneRecord());
@@ -642,9 +642,9 @@ public class AggregationPreprocessor {
      *             e
      * @tx
      */
-    public final void persistAggregation(
-            final AggregationPreprocessorVo aggregationPreprocessorVo,
-            final String aggregationDefinitionId,
+    public void persistAggregation(
+            final AggregationPreprocessorVo aggregationPreprocessorVo, 
+            final String aggregationDefinitionId, 
             final Date date) 
                                     throws SqlDatabaseSystemException {
         // dont process statistic-data for this date and
@@ -653,7 +653,7 @@ public class AggregationPreprocessor {
         Collection<PreprocessingLog> preprocessingLogs =
                 preprocessingLogsDao.retrievePreprocessingLogs(
                 aggregationDefinitionId, date, false);
-        if (preprocessingLogs != null && !preprocessingLogs.isEmpty()) {
+        if (preprocessingLogs != null && preprocessingLogs.size() > 0) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             log.error("aggregation-definition "
                     + aggregationDefinitionId
@@ -670,7 +670,7 @@ public class AggregationPreprocessor {
                 // Iterate dataHash, for each Aggregation-table
                 String tablename = (String) o;
 
-                Map tableRecords =
+                HashMap tableRecords =
                         (HashMap) aggregationPreprocessorVo
                                 .getDataHash().get(tablename);
 
@@ -678,7 +678,7 @@ public class AggregationPreprocessor {
                     for (Object o1 : tableRecords.values()) {
                         // for each record in dataHash->table,
                         // query database, if record already exists
-                        Map fields = (HashMap) o1;
+                        HashMap fields = (HashMap) o1;
 
                         // Build databaseSelectVo
                         Collection<String> tablenames = new ArrayList<String>();
@@ -704,12 +704,12 @@ public class AggregationPreprocessor {
                         // Iterate fields in dataHash and fill WhereFieldVos
                         for (Object o2 : fields.keySet()) {
                             String fieldname = (String) o2;
-                            Map fieldHash =
-                                    (HashMap) ((Map) aggregationPreprocessorVo
+                            HashMap fieldHash =
+                                    (HashMap) ((HashMap) aggregationPreprocessorVo
                                             .getFieldTypeHash()
                                             .get(tablename)).get("fieldtype");
-                            Map dbHash =
-                                    (HashMap) ((Map) aggregationPreprocessorVo
+                            HashMap dbHash =
+                                    (HashMap) ((HashMap) aggregationPreprocessorVo
                                             .getFieldTypeHash()
                                             .get(tablename)).get("dbtype");
                             String fieldtype = null;
@@ -781,7 +781,7 @@ public class AggregationPreprocessor {
                                 .executeSql(databaseSelectVo);
 
                         // If record doesnt exist yet, insert new Record
-                        if (results == null || results.isEmpty()) {
+                        if (results == null || results.size() == 0) {
                             // insert Record
                             insertRecord(
                                     tablename, fields,
@@ -869,7 +869,7 @@ public class AggregationPreprocessor {
     private void updateRecord(
             final String tablename, 
             final Map fields, 
-            final Iterable results,
+            final List results, 
             final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws SqlDatabaseSystemException {
         for (Object result : results) {
@@ -890,12 +890,12 @@ public class AggregationPreprocessor {
             try {
                 for (Map.Entry entry : fieldsEntrySet) {
                     String fieldname = (String) entry.getKey();
-                    Map fieldHash =
-                            (HashMap) ((Map) aggregationPreprocessorVo
+                    HashMap fieldHash =
+                            (HashMap) ((HashMap) aggregationPreprocessorVo
                                     .getFieldTypeHash().get(tablename))
                                     .get("fieldtype");
-                    Map dbHash =
-                            (HashMap) ((Map) aggregationPreprocessorVo
+                    HashMap dbHash =
+                            (HashMap) ((HashMap) aggregationPreprocessorVo
                                     .getFieldTypeHash().get(tablename))
                                     .get("dbtype");
                     String fieldtype = null;
@@ -975,14 +975,14 @@ public class AggregationPreprocessor {
      *            Object that holds all values
      * @return String fieldType (text or numeric)
      */
-    private static String getDbFieldType(
-            final String tablename,
-            final String fieldname,
+    private String getDbFieldType(
+            final String tablename, 
+            final String fieldname, 
             final AggregationPreprocessorVo aggregationPreprocessorVo) {
-        Map tableFieldTypes = (HashMap) aggregationPreprocessorVo
+        HashMap tableFieldTypes = (HashMap) aggregationPreprocessorVo
                                         .getFieldTypeHash().get(tablename);
         if (tableFieldTypes != null) {
-            Map dbFieldTypes = (HashMap) tableFieldTypes.get("dbtype");
+            HashMap dbFieldTypes = (HashMap) tableFieldTypes.get("dbtype");
             if (dbFieldTypes != null) {
                 return (String) dbFieldTypes.get(fieldname);
             }
@@ -1006,7 +1006,7 @@ public class AggregationPreprocessor {
      * @return String reduced time
      * 
      */
-    private static String reduceTime(final Calendar cal, final String reduceTo) {
+    private String reduceTime(final Calendar cal, final String reduceTo) {
         if (reduceTo.equals(Constants.TIME_REDUCTION_TYPE_YEAR)) {
             return Integer.valueOf(cal.get(Calendar.YEAR)).toString();
         }

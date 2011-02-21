@@ -92,10 +92,10 @@ public class OntologyHandler extends DefaultHandler {
                     "ID");
 
             if (indexOfId != -1) {
-                String id = element.getAttribute(indexOfId).getValue();
-                if ((id.equals(this.predicateWithoutBase) && base
+                String Id = element.getAttribute(indexOfId).getValue();
+                if ((Id.equals(this.predicateWithoutBase) && base
                     .equals(predicateBase))
-                    || id.equals(this.predicate)) {
+                    || Id.equals(this.predicate)) {
                     exist = true;                    
                 }
             }
@@ -103,7 +103,7 @@ public class OntologyHandler extends DefaultHandler {
         return element;
     }
 
-    public final boolean isExist() {
+    public boolean isExist() {
         return exist;
     }
 

@@ -288,7 +288,7 @@ public class ContentRelationHandler extends DefaultHandler {
      * 
      * @return ContentRelationCreate
      */
-    public final ContentRelationCreate getContentRelation() {
+    public ContentRelationCreate getContentRelation() {
 
         return this.contentRelation;
     }
@@ -302,7 +302,7 @@ public class ContentRelationHandler extends DefaultHandler {
      * @throws MissingAttributeValueException
      *             Thrown if element has neither objid nor href attribute
      */
-    private static String handleReferences(final StartElement element)
+    private String handleReferences(final StartElement element)
         throws MissingAttributeValueException {
 
         String objid;

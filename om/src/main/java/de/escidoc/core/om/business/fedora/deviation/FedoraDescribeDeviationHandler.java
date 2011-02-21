@@ -45,6 +45,9 @@ public class FedoraDescribeDeviationHandler
 
     private ConnectionUtility connectionUtility;
 
+    // private static AppLogger log =
+    // new AppLogger(FedoraDescribeDeviationHandler.class.getName());
+
     private String baseURL;
 
     private String user;
@@ -108,17 +111,17 @@ public class FedoraDescribeDeviationHandler
      * @return String http requestparameters as String
      * 
      */
-    private static String buildUrlParameters(final Map<String, String[]> parameters) {
-        StringBuilder urlParams = new StringBuilder("");
+    private String buildUrlParameters(final Map<String, String[]> parameters) {
+        StringBuffer urlParams = new StringBuffer("");
         if (parameters != null && !parameters.isEmpty()) {
-            urlParams.append('?');
-            for (Map.Entry<String, String[]> e : parameters.entrySet()) {
+            urlParams.append("?");
+            for (String key : parameters.keySet()) {
                 if (urlParams.length() > 1) {
-                    urlParams.append('&');
+                    urlParams.append("&");
                 }
-                String[] values = e.getValue();
+                String[] values = parameters.get(key);
                 if (values != null && values.length > 0) {
-                    urlParams.append(e.getKey()).append('=').append(values[0]);
+                    urlParams.append(key).append("=").append(values[0]);
                 }
             }
         }

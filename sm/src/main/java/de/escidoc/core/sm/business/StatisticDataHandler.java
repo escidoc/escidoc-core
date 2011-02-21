@@ -50,7 +50,7 @@ import org.apache.camel.ProducerTemplate;
  */
 public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(StatisticDataHandler.class.getName());
 
     private SmStatisticDataDaoInterface dao;
@@ -77,11 +77,11 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      */
     public void create(final String xmlData)
         throws MissingMethodParameterException, SystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("StatisticDataHandler does create");
+        if (log.isDebugEnabled()) {
+            log.debug("StatisticDataHandler does create");
         }
-        if (xmlData == null || xmlData.length() == 0) {
-            LOGGER.error("xml may not be null");
+        if (xmlData == null || xmlData.equals("")) {
+            log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
         ProducerTemplate producerTemplate = this.camelContext.createProducerTemplate();
@@ -111,8 +111,8 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
     public void insertStatisticData(final String xmlData)
         throws ScopeNotFoundException, MissingMethodParameterException,
         XmlSchemaValidationException, XmlCorruptedException, SystemException {
-        if (xmlData == null || xmlData.length() == 0) {
-            LOGGER.error("xml may not be null");
+        if (xmlData == null || xmlData.equals("")) {
+            log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
         XmlUtility.validate(xmlData, XmlUtility
@@ -120,8 +120,8 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
         String scopeId = xmlUtility.getScopeId(xmlData);
 
-        if (scopeId == null || scopeId.length() == 0) {
-            LOGGER.error("scopeId is null");
+        if (scopeId == null || scopeId.equals("")) {
+            log.error("scopeId is null");
             throw new ScopeNotFoundException("scopeId is null");
         }
         try {
@@ -132,14 +132,14 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
                 && e.getCause().getClass() != null
                 && e.getCause().getClass().getSimpleName().equals(
                     "ConstraintViolationException")) {
-                LOGGER
+                log
                     .error("scope with id " + scopeId
                         + " not found in database");
                 throw new ScopeNotFoundException("scope with id " + scopeId
                     + " not found in database");
             }
             else {
-                LOGGER.error(e);
+                log.error(e);
                 throw (e);
             }
         }

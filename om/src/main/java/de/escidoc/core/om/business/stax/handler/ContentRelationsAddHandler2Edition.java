@@ -49,7 +49,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +69,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
     private final List<Map<String, String>> relationsData =
         new ArrayList<Map<String, String>>();
 
-    private final Collection<String> relationsDataCheck = new ArrayList<String>();
+    private final List<String> relationsDataCheck = new ArrayList<String>();
 
     private static final AppLogger log =
         new AppLogger(ContentRelationsAddHandler2Edition.class.getName());
@@ -190,7 +189,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
             if (!relationsDataCheck.contains(relationDataCheck)) {
                 relationsDataCheck.add(relationDataCheck);
 
-                Map<String, String> relationData =
+                HashMap<String, String> relationData =
                     new HashMap<String, String>();
                 relationsData.add(relationData);
                 relationData.put("predicateNs", predicateNs);
@@ -209,11 +208,11 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
      * 
      * @return Relations Map
      */
-    public final List<Map<String, String>> getRelations() {
+    public List<Map<String, String>> getRelations() {
         return relationsData;
     }
 
-    private static String[] splitPredicate(final String predicate) {
+    private String[] splitPredicate(final String predicate) {
         String[] result = new String[2];
         int index = predicate.lastIndexOf('#');
         if (index < 0) {

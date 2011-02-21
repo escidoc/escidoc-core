@@ -46,9 +46,9 @@ public class AuthorizationException extends SecurityException {
      */
     private static final long serialVersionUID = -1134432729970703482L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_SECURITY;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_SECURITY;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE =
         "Authorization failed. ";
 
     /**

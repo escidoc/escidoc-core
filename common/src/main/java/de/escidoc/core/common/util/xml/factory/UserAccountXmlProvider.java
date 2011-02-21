@@ -105,13 +105,13 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
         return PROVIDER;
     }
 
-    public final String getUserAccountXml(final Map values)
+    public String getUserAccountXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(USER_ACCOUNT_RESOURCE_NAME, USER_ACCOUNT_PATH, values);
     }
 
-    public final String getResourcesXml(final Map values)
+    public String getResourcesXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(RESOURCES_RESOURCE_NAME, RESOURCES_PATH, values);
@@ -123,7 +123,7 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
         return getXml(GRANT_RESOURCE_NAME, GRANT_PATH, values);
     }
 
-    public final String getCurrentGrantsXml(final Map values)
+    public String getCurrentGrantsXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(CURRENT_GRANTS_RESOURCE_NAME, CURRENT_GRANTS_PATH, values);
@@ -135,19 +135,19 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
         return getXml(GRANTS_RESOURCE_NAME, GRANTS_PATH, values);
     }
 
-    public final String getGrantsSrwXml(final Map values)
+    public String getGrantsSrwXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(GRANTS_SRW_RESOURCE_NAME, GRANTS_PATH, values);
     }
 
-    public final String getPreferenceXml(final Map values)
+    public String getPreferenceXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(PREFERENCE_RESOURCE_NAME, PREFERENCE_PATH, values);
     }
 
-    public final String getPreferencesXml(final Map values)
+    public String getPreferencesXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(PREFERENCES_RESOURCE_NAME, PREFERENCES_PATH, values);
@@ -162,7 +162,7 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
      *             error.
      * @aa
      */
-    public final String getAttributeXml(final Map values)
+    public String getAttributeXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(ATTRIBUTE_RESOURCE_NAME, ATTRIBUTE_PATH, values);
@@ -177,7 +177,7 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
      *             error.
      * @aa
      */
-    public final String getAttributesXml(final Map values)
+    public String getAttributesXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(ATTRIBUTES_RESOURCE_NAME, ATTRIBUTES_PATH, values);
@@ -185,6 +185,13 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
 
     public final String getUserAccountsXml(
         final Map values, final RecordPacking recordPacking)
+        throws WebserverSystemException {
+
+        return getXml(USER_ACCOUNTS_RESOURCE_NAME, RESOURCES_PATH, values);
+    }
+
+    public String getUserAccountsSrwXml(
+        final Map values, final String recordPacking)
         throws WebserverSystemException {
 
         return getXml(USER_ACCOUNTS_SRW_RESOURCE_NAME, RESOURCES_PATH, values);

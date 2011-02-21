@@ -35,7 +35,6 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -63,13 +62,13 @@ public class TripleStoreConnector {
 
     static final String LANG = "iTQL";
 
-    private static final String LANG_MPT = "spo";
+    static final String LANG_MPT = "spo";
 
     static final String FORMAT_CSV = "CSV";
 
     static final String FORMAT_MPT = "N-Triples";
 
-    private static final String TYPE_MPT = "triples";
+    static final String TYPE_MPT = "triples";
 
     static final String FORMAT_SIMPLE = "Simple";
 
@@ -77,7 +76,7 @@ public class TripleStoreConnector {
 
     static final String FORMAT_TSV = "TSV";
 
-    private static final String FLUSH = "true";
+    static final String FLUSH = "true";
 
     public static final String QUERY_ERROR = "<title>.*Error</title>";
 
@@ -104,7 +103,7 @@ public class TripleStoreConnector {
      * 
      *             TODO move to TriplestoreUtility implementation
      */
-    public final String requestMPT(final String spoQuery, final String outputFormat)
+    public String requestMPT(final String spoQuery, final String outputFormat)
         throws TripleStoreSystemException,
         InvalidTripleStoreOutputFormatException,
         InvalidTripleStoreQueryException {
@@ -123,7 +122,7 @@ public class TripleStoreConnector {
 
             String url = fedoraUrl + "/risearch";
             HttpPost httpPost = new HttpPost(url);
-            HttpEntity entity =
+            UrlEncodedFormEntity entity =
                 new UrlEncodedFormEntity(params, XmlUtility.CHARACTER_ENCODING);
 
             httpPost.setEntity(entity);
@@ -134,6 +133,13 @@ public class TripleStoreConnector {
                 connectionUtility.getHttpClient(url).execute(httpPost);
             String responseContent =
                 connectionUtility.readResponse(httpResponse).trim();
+
+            // result code from risearch seems to be unreliable
+            // if (resultCode != HttpServletResponse.SC_OK) {
+            // log.error("Bad request. Http response : " + resultCode);
+            // throw new TripleStoreSystemException(
+            // "Bad request. Http response : " + resultCode);
+            // }
 
             if (responseContent == null || responseContent.length() == 0) {
                 return null;

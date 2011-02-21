@@ -47,7 +47,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  */
 public class ComponentPropertiesHandler2 extends DefaultHandler {
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(ComponentPropertiesHandler2.class.getName());
 
     private static final String XPATH_COMPONENT_PROPERTIES =
@@ -78,7 +78,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
      * 
      * @return Component Properties Map
      */
-    public final ComponentProperties getProperties() {
+    public ComponentProperties getProperties() {
         return this.properties;
     }
 
@@ -86,7 +86,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
 	 * 
 	 */
     @Override
-    public final StartElement startElement(final StartElement element) {
+    public StartElement startElement(final StartElement element) {
 
         if (!inside) {
             String currentPath = parser.getCurPath();
@@ -101,7 +101,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
 	 * 
 	 */
     @Override
-    public final EndElement endElement(final EndElement element) {
+    public EndElement endElement(final EndElement element) {
 
         if (inside) {
             String currentPath = parser.getCurPath();
@@ -116,7 +116,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
 	 * 
 	 */
     @Override
-    public final String characters(final String s, final StartElement element)
+    public String characters(final String s, final StartElement element)
         throws MissingElementValueException, InvalidContentException,
         WebserverSystemException {
 
@@ -159,7 +159,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
             this.properties.setVisibility(s);
         }
         else {
-            LOGGER.error("the value of element " + currentPath + " is missing");
+            log.error("the value of element " + currentPath + " is missing");
             throw new MissingElementValueException("the value of element "
                 + currentPath + " is missing");
         }
@@ -178,7 +178,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
             this.properties.setContentCatagory(s);
         }
         else {
-            LOGGER.error("the value of element " + currentPath + " is missing");
+            log.error("the value of element " + currentPath + " is missing");
             throw new MissingElementValueException("the value of element "
                 + currentPath + " is missing");
         }

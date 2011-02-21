@@ -51,7 +51,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     private IndexingHandler indexingHandler = null;
 
-    private final Collection<ResourceListener> itemListeners =
+    private final List<ResourceListener> itemListeners =
         new ArrayList<ResourceListener>();
 
     /**
@@ -87,7 +87,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    final void fireItemCreated(final String id, final String xmlData)
+    protected void fireItemCreated(final String id, final String xmlData)
         throws SystemException {
         String restXml;
         String soapXml;
@@ -120,7 +120,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    final void fireItemModified(final String id)
+    protected void fireItemModified(final String id)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
         String restXml;
@@ -151,7 +151,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    public final void fireItemModified(final String id, final String xmlData)
+    public void fireItemModified(final String id, final String xmlData)
         throws SystemException {
         String restXml;
         String soapXml;
@@ -178,7 +178,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    final void fireItemDeleted(final String id) throws SystemException {
+    protected void fireItemDeleted(final String id) throws SystemException {
         for (ResourceListener itemListener : itemListeners) {
             itemListener.resourceDeleted(id);
         }
@@ -238,7 +238,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    final void queueItemsModified(final Iterable<String> ids)
+    protected void queueItemsModified(final Collection<String> ids)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
         if (indexingHandler != null) {

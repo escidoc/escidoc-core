@@ -96,7 +96,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static void addScopeValues(
+    private void addScopeValues(
         final Scope scope, final Map<String, Object> values)
         throws SystemException {
         DateTime createDateTime = new DateTime(scope.getCreationDate());
@@ -219,7 +219,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *             Thrown in case of an internal error.
      * @sm
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values)
+    private void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -234,7 +234,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *             Thrown in case of an internal error.
      * @sm
      */
-    private static ScopeXmlProvider getScopeXmlProvider()
+    private ScopeXmlProvider getScopeXmlProvider()
         throws WebserverSystemException {
 
         return ScopeXmlProvider.getInstance();

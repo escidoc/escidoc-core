@@ -44,9 +44,9 @@ public class AlreadyActiveException extends RuleViolationException {
      */
     private static final long serialVersionUID = 4477901463466613716L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE =
         "UserAccount resource already active.";
 
     /**

@@ -41,7 +41,7 @@ import java.io.Writer;
  * @author TTE
  * 
  */
-class StaxEscapingWriter extends Writer {
+public class StaxEscapingWriter extends Writer {
 
     private final Writer writer;
 
@@ -70,7 +70,7 @@ class StaxEscapingWriter extends Writer {
      * @see java.io.Writer#close()
      */
     @Override
-    public final void close() throws IOException {
+    public void close() throws IOException {
 
         writer.close();
     }
@@ -82,7 +82,7 @@ class StaxEscapingWriter extends Writer {
      * @see java.io.Writer#flush()
      */
     @Override
-    public final void flush() throws IOException {
+    public void flush() throws IOException {
 
         writer.flush();
     }
@@ -97,7 +97,7 @@ class StaxEscapingWriter extends Writer {
      * @see java.io.Writer#write(char[], int, int)
      */
     @Override
-    public final void write(char[] cbuf, int off, int len) throws IOException {
+    public void write(char[] cbuf, int off, int len) throws IOException {
 
         writer.write(XmlUtility.escapeForbiddenXmlCharacters(new String(cbuf,
             off, len)));

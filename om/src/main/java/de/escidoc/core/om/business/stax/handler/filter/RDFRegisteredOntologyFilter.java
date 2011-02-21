@@ -48,7 +48,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
 
     private boolean workaroundForItemList = false;
 
-    public final boolean accept(XMLEvent event) {
+    public boolean accept(XMLEvent event) {
         if (event instanceof StartElement) {
             StartElement element = event.asStartElement();
             return accept(element);
@@ -71,7 +71,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
         return true;
     }
 
-    final boolean accept(StartElement element) {
+    public boolean accept(StartElement element) {
         try {
             if (workaroundForItemList
                 && element.getName().getLocalPart().equalsIgnoreCase("RDF")) {

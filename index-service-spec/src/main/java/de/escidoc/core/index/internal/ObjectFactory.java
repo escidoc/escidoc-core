@@ -20,7 +20,6 @@ public class ObjectFactory  {
      *
      * @return a new instance of {@link de.escidoc.core.index.IndexRequest}
      */
-    @SuppressWarnings({"MethodMayBeStatic"})
     public IndexRequestImpl createIndexRequest() {
         return new IndexRequestImpl();
     }

@@ -34,7 +34,6 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -467,7 +466,7 @@ public final class EscidocConfiguration {
      */
     private synchronized InputStream getInputStream(final String filename)
         throws IOException {
-        final ResourcePatternResolver applicationContext =
+        final ApplicationContext applicationContext =
             new ClassPathXmlApplicationContext(new String[] {});
         final Resource[] resource =
             applicationContext.getResources("classpath*:**/" + filename);
@@ -489,7 +488,7 @@ public final class EscidocConfiguration {
      */
     private synchronized String replaceEnvVariables(final String property) {
         String replacedProperty = property;
-        if (property.contains("${")) {
+        if (property.indexOf("${") > -1) {
             String[] envVariables = property.split("\\}.*?\\$\\{");
             if (envVariables != null) {
                 for (int i = 0; i < envVariables.length; i++) {
@@ -497,13 +496,13 @@ public final class EscidocConfiguration {
                         envVariables[i].replaceFirst(".*?\\$\\{", "");
                     envVariables[i] = envVariables[i].replaceFirst("\\}.*", "");
                     if (System.getProperty(envVariables[i]) != null
-                        && System.getProperty(envVariables[i]).length() != 0) {
+                        && !System.getProperty(envVariables[i]).equals("")) {
                         String envVariable =
                             System.getProperty(envVariables[i]);
                         envVariable = envVariable.replaceAll("\\\\", "/");
                         replacedProperty =
                             replacedProperty.replaceAll("\\$\\{"
-                                + envVariables[i] + '}', envVariable);
+                                + envVariables[i] + "}", envVariable);
                     }
                 }
             }

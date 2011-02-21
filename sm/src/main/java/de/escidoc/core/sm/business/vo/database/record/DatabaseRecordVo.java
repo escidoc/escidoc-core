@@ -46,7 +46,7 @@ public class DatabaseRecordVo {
     /**
      * @return the databaseRecordFieldVos
      */
-    public final Collection<DatabaseRecordFieldVo> getDatabaseRecordFieldVos() {
+    public Collection<DatabaseRecordFieldVo> getDatabaseRecordFieldVos() {
         return databaseRecordFieldVos;
     }
 
@@ -54,15 +54,15 @@ public class DatabaseRecordVo {
      * @param databaseRecordFieldVos
      *            the databaseRecordFieldVos to set
      */
-    public final void setDatabaseRecordFieldVos(
-            final Collection<DatabaseRecordFieldVo> databaseRecordFieldVos) {
+    public void setDatabaseRecordFieldVos(
+        final Collection<DatabaseRecordFieldVo> databaseRecordFieldVos) {
         this.databaseRecordFieldVos = databaseRecordFieldVos;
     }
 
     /**
      * @return the tableName
      */
-    public final String getTableName() {
+    public String getTableName() {
         return tableName;
     }
 
@@ -71,7 +71,7 @@ public class DatabaseRecordVo {
      *            the tableName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public final void setTableName(final String tableName)
+    public void setTableName(final String tableName) 
                         throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(tableName);
         this.tableName = tableName;

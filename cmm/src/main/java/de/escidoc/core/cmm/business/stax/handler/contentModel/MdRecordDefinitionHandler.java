@@ -68,7 +68,7 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
 
     private MdRecordDefinitionCreate curMdRecordDefinition;
 
-    public final List<MdRecordDefinitionCreate> getMdRecordDefinitions() {
+    public List<MdRecordDefinitionCreate> getMdRecordDefinitions() {
         return mdRecordDefinitions;
     }
 
@@ -110,7 +110,7 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
      * 
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws MissingAttributeValueException, InvalidContentException,
         WebserverSystemException {
 
@@ -152,7 +152,7 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
     }
 
     @Override
-    public final EndElement endElement(EndElement element) {
+    public EndElement endElement(EndElement element) {
 
         String currentPath = parser.getCurPath();
         if (currentPath.equals(this.metadataXPath)) {

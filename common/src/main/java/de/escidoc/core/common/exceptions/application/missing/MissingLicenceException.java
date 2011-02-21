@@ -44,9 +44,9 @@ public class MissingLicenceException extends MissingParameterException {
      */
     private static final long serialVersionUID = -7642290196365829286L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_MISSING;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_MISSING;
 
-    private static final String HTTP_STATUS_MESSAGE = "License is missing";
+    public static final String HTTP_STATUS_MESSAGE = "License is missing";
 
     /**
      * Default constructor.

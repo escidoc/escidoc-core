@@ -70,7 +70,7 @@ public class GenericResourcePid extends GenericResource {
      * Constructor.
      * 
      */
-    protected GenericResourcePid() {
+    public GenericResourcePid() {
 
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
@@ -88,7 +88,7 @@ public class GenericResourcePid extends GenericResource {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    protected GenericResourcePid(final String objid)
+    public GenericResourcePid(final String objid)
         throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
 
@@ -171,7 +171,8 @@ public class GenericResourcePid extends GenericResource {
                     getResourceProperties().get(
                         TripleStoreUtility.PROP_OBJECT_PID);
             }
-
+            // getTripleStoreUtility().getPropertiesElements(getId(),
+            // TripleStoreUtility.PROP_OBJECT_PID);
             if (!validPidStructure(this.objectPid)) {
                 this.objectPid = null;
             }
@@ -212,7 +213,7 @@ public class GenericResourcePid extends GenericResource {
      *            The to validate PID.
      * @return true if the structure is valid, false otherwise.
      */
-    public static boolean validPidStructure(final CharSequence pid) {
+    public boolean validPidStructure(final String pid) {
         if ((pid != null) && (pid.length() > 0)) {
             return (true);
         }
@@ -229,8 +230,8 @@ public class GenericResourcePid extends GenericResource {
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private static Collection<String> expandPropertiesNames(
-            final Collection<String> propertiesNames) {
+    private Collection<String> expandPropertiesNames(
+        final Collection<String> propertiesNames) {
 
         Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
@@ -321,8 +322,8 @@ public class GenericResourcePid extends GenericResource {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private static Map<String, String> expandPropertiesNamesMapping(
-            final Map<String, String> propertiesNamesMap) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesNamesMap) {
 
         Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {

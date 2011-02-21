@@ -67,7 +67,7 @@ public class XmlValidationInterceptor implements Ordered {
      * @see org.springframework.core.Ordered#getOrder()
      * @common
      */
-    public final int getOrder() {
+    public int getOrder() {
 
         return AopUtil.PRECEDENCE_XML_VALIDATION_INTERCEPTOR;
     }
@@ -134,7 +134,7 @@ public class XmlValidationInterceptor implements Ordered {
      *             Thrown in case of an internal error.
      * @common
      */
-    private static String getSchemaLocation(final String resolvingMethod)
+    private String getSchemaLocation(final String resolvingMethod)
         throws WebserverSystemException {
         Class[] paramTypes = {};
         try {

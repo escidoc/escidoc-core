@@ -44,9 +44,9 @@ public class AdminDescriptorViolationException extends RuleViolationException {
      */
     private static final long serialVersionUID = -5147887391768440019L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE =
         "AdminDescriptor rule was violated.";
 
     /**

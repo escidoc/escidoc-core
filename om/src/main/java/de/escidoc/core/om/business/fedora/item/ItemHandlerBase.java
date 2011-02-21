@@ -60,7 +60,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import javax.servlet.http.HttpServletResponse;
@@ -88,7 +87,7 @@ public class ItemHandlerBase extends HandlerBase {
         .compile("fedora.server.errors.ObjectIntegrityException: "
             + "FOXML IO stream was bad : Malformed URL");
 
-    private static final AppLogger LOGGER = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         ItemHandlerBase.class.getName());
 
     private Item item = null;
@@ -114,8 +113,8 @@ public class ItemHandlerBase extends HandlerBase {
      *             In case of an internal error during decoding or storing the
      *             content.
      */
-    static final String uploadBase64EncodedContent(
-            final String content, final String fileName, final String mimeType)
+    protected String uploadBase64EncodedContent(
+        final String content, final String fileName, final String mimeType)
         throws WebserverSystemException {
         String uploadUrl;
         byte[] streamContent;
@@ -125,7 +124,7 @@ public class ItemHandlerBase extends HandlerBase {
                 Utility.getInstance().upload(streamContent, fileName, mimeType);
         }
         catch (final FileSystemException e) {
-            LOGGER.error("Error while uploading of content to the staging area. "
+            log.error("Error while uploading of content to the staging area. "
                 + e.getMessage());
             throw new WebserverSystemException(
                 "Error while uploading of content to the staging area. ", e);
@@ -139,7 +138,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return ItemXmlProvider.
      */
-    static final ItemXmlProvider getItemXmlProvider() {
+    protected ItemXmlProvider getItemXmlProvider() {
         return ItemXmlProvider.getInstance();
     }
 
@@ -148,7 +147,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return RelationsXmlProvider.
      */
-    protected static RelationsXmlProvider getRelationsXmlProvider() {
+    protected RelationsXmlProvider getRelationsXmlProvider() {
 
         return RelationsXmlProvider.getInstance();
     }
@@ -159,7 +158,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return the item
      */
-    final Item getItem() {
+    public Item getItem() {
         return item;
     }
 
@@ -169,7 +168,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return the item
      */
-    final Item getOriginItem() {
+    public Item getOriginItem() {
         return originItem;
     }
 
@@ -184,7 +183,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    final void setItem(final String id) throws ItemNotFoundException,
+    protected void setItem(final String id) throws ItemNotFoundException,
         SystemException {
 
         try {
@@ -209,7 +208,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    final void setOriginItem(final String id) throws ItemNotFoundException,
+    protected void setOriginItem(final String id) throws ItemNotFoundException,
         SystemException {
         try {
             this.originItem = new Item(id);
@@ -228,7 +227,7 @@ public class ItemHandlerBase extends HandlerBase {
      * Subsequent calls to this method have no effect.
      * 
      */
-    final void resetOriginItem() {
+    protected void resetOriginItem() {
         this.originItem = null;
         this.originId = null;
     }
@@ -240,7 +239,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @param originItem
      *            The item which should be bound to this Handler.
      */
-    final void setOriginItem(final Item originItem) {
+    protected void setOriginItem(final Item originItem) {
         this.originItem = originItem;
 
     }
@@ -257,7 +256,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of internal error.
      */
-    final Component getComponent(final String id)
+    public Component getComponent(final String id)
         throws ComponentNotFoundException, SystemException {
 
         Component c;
@@ -293,7 +292,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    final String getVersions() throws StreamNotFoundException,
+    protected String getVersions() throws StreamNotFoundException,
         FedoraSystemException, EncodingSystemException,
         WebserverSystemException {
 
@@ -309,13 +308,13 @@ public class ItemHandlerBase extends HandlerBase {
      *             If the item is locked and the current user is not the one who
      *             locked it.
      */
-    final void checkLocked() throws LockingException,
+    protected void checkLocked() throws LockingException,
         WebserverSystemException {
         if (getItem().isLocked()
             && !getItem().getLockOwner().equals(
                 getUtility().getCurrentUser()[0])) {
             throw new LockingException("Item + " + getItem().getId()
-                + " is locked by " + getItem().getLockOwner() + '.');
+                + " is locked by " + getItem().getLockOwner() + ".");
         }
     }
 
@@ -326,7 +325,7 @@ public class ItemHandlerBase extends HandlerBase {
      *             If the requested item version is not the latest one.
      * 
      */
-    final void checkLatestVersion() throws ReadonlyVersionException {
+    protected void checkLatestVersion() throws ReadonlyVersionException {
         final String thisVersion = getItem().getVersionNumber();
         if (thisVersion != null
             && !thisVersion.equals(getItem().getLatestVersionNumber())) {
@@ -345,11 +344,13 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    final void checkReleased() throws InvalidStatusException,
+    protected void checkReleased() throws InvalidStatusException,
         TripleStoreSystemException, WebserverSystemException {
 
         final String status =
             getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
+        // TripleStoreUtility.getInstance().getPropertiesElements(
+        // getItem().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
         if (status.equals(Constants.STATUS_RELEASED)) {
             // check if the version is in status released
@@ -368,7 +369,7 @@ public class ItemHandlerBase extends HandlerBase {
                 final String msg =
                     "The object is in state '" + Constants.STATUS_RELEASED
                         + "' and can not be" + " changed.";
-                LOGGER.debug(msg);
+                log.debug(msg);
                 throw new InvalidStatusException(msg);
             }
         }
@@ -389,8 +390,8 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    final void checkContextStatus(
-            final String contextId, final String status)
+    protected void checkContextStatus(
+        final String contextId, final String status)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
 
@@ -404,16 +405,16 @@ public class ItemHandlerBase extends HandlerBase {
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus == null || curStatus.length() == 0) {
             final String msg =
-                "Can not get status of context " + contextId + '.';
-            LOGGER.error(msg);
+                "Can not get status of context " + contextId + ".";
+            log.error(msg);
             throw new WebserverSystemException(msg);
         }
         // In first release, if object is once released no changes are allowed
         if (!curStatus.equals(status)) {
             final String msg =
                 "The Context '" + contextId + "' is in state '" + curStatus
-                    + "' and not in status " + status + '.';
-            LOGGER.debug(msg);
+                    + "' and not in status " + status + ".";
+            log.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -461,14 +462,14 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws WebserverSystemException
      *             In case of an internal error.
      */
-    final void checkNotStatus(final String status)
+    protected void checkNotStatus(final String status)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
 
         // In first release, if object is once released no changes are allowed
         if (!status.equals(getItem().getStatus())) {
             final String msg = "The object is in not state '" + status + "'.";
-            LOGGER.debug(msg);
+            log.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -485,13 +486,13 @@ public class ItemHandlerBase extends HandlerBase {
      *             Thrown in case of internal error.
      */
     // TODO make this consistent to Container (proposal: checkStatusNot())
-    final void checkStatus(final String status)
+    protected void checkStatus(final String status)
         throws InvalidStatusException, WebserverSystemException {
 
         // In first release, if object is once released no changes are allowed
         if (status.equals(getItem().getStatus())) {
             final String msg = "The object is in state '" + status + "'.";
-            LOGGER.debug(msg);
+            log.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -508,7 +509,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws IntegritySystemException
      *             Thrown if version status could not be obtained.
      */
-    final void checkVersionStatus(final String checkStatus)
+    protected void checkVersionStatus(final String checkStatus)
         throws InvalidStatusException, IntegritySystemException {
 
         final String status = getItem().getVersionStatus();
@@ -518,7 +519,7 @@ public class ItemHandlerBase extends HandlerBase {
             final String msg =
                 "The object is in state '" + checkStatus + "' and can not be"
                     + " changed.";
-            LOGGER.debug(msg);
+            log.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -534,7 +535,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws IntegritySystemException
      *             Thrown if version status could not be obtained.
      */
-    final void checkVersionStatusNot(final String checkStatus)
+    protected void checkVersionStatusNot(final String checkStatus)
         throws InvalidStatusException, IntegritySystemException {
 
         final String status = getItem().getVersionStatus();
@@ -543,7 +544,7 @@ public class ItemHandlerBase extends HandlerBase {
             final String msg =
                 "The object is in state '" + checkStatus + "' and can not be"
                     + " changed.";
-            LOGGER.debug(msg);
+            log.debug(msg);
             throw new InvalidStatusException(msg);
         }
     }
@@ -560,7 +561,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    final void checkWithdrawn(final String additionalMessage)
+    protected void checkWithdrawn(final String additionalMessage)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
 
@@ -570,7 +571,7 @@ public class ItemHandlerBase extends HandlerBase {
             final String msg =
                 "The object is in state '" + Constants.STATUS_WITHDRAWN + "'. "
                     + additionalMessage;
-            LOGGER.debug(msg);
+            log.debug(msg);
             throw new InvalidStatusException(msg);
 
         }
@@ -588,8 +589,8 @@ public class ItemHandlerBase extends HandlerBase {
      * @throws FedoraSystemException
      *             Thrown if Fedora reports an error.
      */
-    static final void handleFedoraUploadError(
-            final String url, final FedoraSystemException e)
+    protected void handleFedoraUploadError(
+        final String url, final FedoraSystemException e)
         throws FileNotFoundException, FedoraSystemException {
 
         final Matcher matcherErrorGetting =
@@ -607,14 +608,14 @@ public class ItemHandlerBase extends HandlerBase {
         // TODO: Reuse HttpClient
         final HttpClient client = new DefaultHttpClient();
         try {
-            final HttpUriRequest method = new HttpGet(url);
+            final HttpGet method = new HttpGet(url);
             final HttpResponse response = client.execute(method);
             final int resultCode = response.getStatusLine().getStatusCode();
             if (resultCode != HttpServletResponse.SC_OK) {
                 final String errorMsg =
                     StringUtility.format(
                             "Bad request. ", response.getStatusLine(), url);
-                LOGGER.error(errorMsg);
+                log.error(errorMsg);
                 throw new FileNotFoundException(errorMsg);
             }
 
@@ -634,7 +635,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return The foxml renderer.
      */
-    final ItemFoXmlRendererInterface getFoxmlRenderer() {
+    public ItemFoXmlRendererInterface getFoxmlRenderer() {
 
         if (foxmlRenderer == null) {
             foxmlRenderer = new VelocityXmlItemFoXmlRenderer();
@@ -647,7 +648,7 @@ public class ItemHandlerBase extends HandlerBase {
      * 
      * @return objid of origin
      */
-    final String getOriginId() {
+    public String getOriginId() {
         return originId;
     }
 
@@ -657,7 +658,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @param originId
      *            objid of origin.
      */
-    final void setOriginId(final String originId) {
+    public void setOriginId(final String originId) {
         this.originId = originId;
     }
 }

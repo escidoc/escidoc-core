@@ -76,7 +76,7 @@ public class Triple {
      * @param subject
      *            the subject to set
      */
-    final void setSubject(final String subject) {
+    public void setSubject(final String subject) {
         this.subject = subject;
     }
 
@@ -91,14 +91,14 @@ public class Triple {
      * @param predicate
      *            the predicate to set
      */
-    final void setPredicate(final String predicate) {
+    public void setPredicate(final String predicate) {
         this.predicate = predicate;
     }
 
     /**
      * @return the predicate
      */
-    public final String getPredicate() {
+    public String getPredicate() {
         return predicate;
     }
 
@@ -106,14 +106,14 @@ public class Triple {
      * @param object
      *            the object to set
      */
-    final void setObject(final String object) {
+    public void setObject(final String object) {
         this.object = object;
     }
 
     /**
      * @return the object
      */
-    public final String getObject() {
+    public String getObject() {
         return object;
     }
 
@@ -122,8 +122,8 @@ public class Triple {
      * 
      * @return string representation of this object
      */
-    public final String toString() {
+    public String toString() {
         return "[subject=" + subject + ", predicate=" + predicate + ", object="
-            + object + ']';
+            + object + "]";
     }
 }

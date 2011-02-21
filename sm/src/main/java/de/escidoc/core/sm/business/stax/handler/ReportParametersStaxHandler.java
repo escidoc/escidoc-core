@@ -124,7 +124,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
     /**
      * @return the reportParametersVo
      */
-    public final ReportParametersVo getReportParametersVo() {
+    public ReportParametersVo getReportParametersVo() {
         return reportParametersVo;
     }
 

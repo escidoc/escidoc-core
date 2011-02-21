@@ -45,7 +45,7 @@ import org.apache.axis.providers.java.EJBProvider;
  * @author TTE
  * @common
  */
-class EscidocEjbProvider extends EscidocSpringProvider {
+public class EscidocEjbProvider extends EscidocSpringProvider {
 
     // CHECKSTYLE:JAVADOC-OFF
 
@@ -76,8 +76,8 @@ class EscidocEjbProvider extends EscidocSpringProvider {
      * @common
      */
     @Override
-    public final void initServiceDesc(
-            final SOAPService service, final MessageContext messageContext)
+    public void initServiceDesc(
+        final SOAPService service, final MessageContext messageContext)
         throws AxisFault {
 
     	TypeMappingImpl.dotnet_soapenc_bugfix = true;

@@ -142,7 +142,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         addRoleListValues(values);
         values.put("recordPacking", recordPacking);
 
-        final Collection<Map<String, Object>> rolesValues =
+        final List<Map<String, Object>> rolesValues =
             new ArrayList<Map<String, Object>>(roles.size());
         for (EscidocRole role : roles) {
             EscidocRole escidocRole = role;
@@ -239,7 +239,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private static void addPolicyValues(
+    private void addPolicyValues(
         final EscidocRole role, final Map<String, Object> values)
         throws WebserverSystemException {
 
@@ -266,7 +266,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *            The map to add values to.
      * @aa
      */
-    private static void addResourcesValues(
+    private void addResourcesValues(
         final EscidocRole role, final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.VAR_RESOURCES_HREF,
@@ -296,7 +296,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *            The {@link Map} to add the values to
      * @aa.
      */
-    private static void addRolesNamespaceValues(final Map<String, Object> values) {
+    private void addRolesNamespaceValues(final Map<String, Object> values) {
         values.put("roleListNamespacePrefix", Constants.ROLE_LIST_NS_PREFIX);
         values.put("roleListNamespace", Constants.ROLE_LIST_NS_URI);
     }
@@ -309,7 +309,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *            The {@link Map} to add the values to.
      * @aa
      */
-    private static void addXacmlNamespaceValues(final Map<String, Object> values) {
+    private void addXacmlNamespaceValues(final Map<String, Object> values) {
         values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE_PREFIX,
             Constants.XACML_POLICY_NS_PREFIX);
         values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE,
@@ -324,7 +324,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private static RoleXmlProvider getRoleXmlProvider()
+    private RoleXmlProvider getRoleXmlProvider()
         throws WebserverSystemException {
 
         return RoleXmlProvider.getInstance();

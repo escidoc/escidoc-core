@@ -53,7 +53,6 @@ import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
-import org.apache.http.conn.params.ConnPerRoute;
 import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -124,7 +123,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final String getRequestURLAsString(final URL url)
+    public String getRequestURLAsString(final URL url)
         throws WebserverSystemException {
 
         HttpResponse httpResponse = getRequestURL(url);
@@ -147,8 +146,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final String getRequestURLAsString(
-            final URL url, final String username, final String password)
+    public String getRequestURLAsString(
+        final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         HttpResponse httpResponse = getRequestURL(url, username, password);
@@ -188,7 +187,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final HttpResponse getRequestURL(final URL url)
+    public HttpResponse getRequestURL(final URL url)
         throws WebserverSystemException {
 
         String username;
@@ -224,8 +223,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    private HttpResponse getRequestURL(
-            final URL url, final String username, final String password)
+    public HttpResponse getRequestURL(
+        final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         setAuthentication(url, username, password);
@@ -243,7 +242,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final HttpResponse getRequestURL(final URL url, final Cookie cookie)
+    public HttpResponse getRequestURL(final URL url, final Cookie cookie)
         throws WebserverSystemException {
 
         return get(url.toString(), cookie);
@@ -317,9 +316,9 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    private HttpResponse putRequestURL(
-            final URL url, final String body, final String username,
-            final String password) throws WebserverSystemException {
+    public HttpResponse putRequestURL(
+        final URL url, final String body, final String username,
+        final String password) throws WebserverSystemException {
 
         setAuthentication(url, username, password);
         return put(url.toString(), body);
@@ -338,8 +337,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    private HttpResponse putRequestURL(
-            final URL url, final String body, final Cookie cookie)
+    public HttpResponse putRequestURL(
+        final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
         return put(url.toString(), body, cookie);
@@ -410,9 +409,9 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final HttpResponse postRequestURL(
-            final URL url, final String body, final String username,
-            final String password) throws WebserverSystemException {
+    public HttpResponse postRequestURL(
+        final URL url, final String body, final String username,
+        final String password) throws WebserverSystemException {
 
         setAuthentication(url, username, password);
         return post(url.toString(), body);
@@ -431,8 +430,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    private HttpResponse postRequestURL(
-            final URL url, final String body, final Cookie cookie)
+    public HttpResponse postRequestURL(
+        final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
         return post(url.toString(), body, cookie);
@@ -491,8 +490,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             e
      */
-    public final void setAuthentication(
-            final URL url, final String username, final String password)
+    public void setAuthentication(
+        final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         CredentialsProvider credsProvider = new BasicCredentialsProvider();
@@ -500,7 +499,7 @@ public class ConnectionUtility {
         AuthScope authScope =
             new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                 AuthScope.ANY_REALM);
-        Credentials creds =
+        UsernamePasswordCredentials creds =
             new UsernamePasswordCredentials(username, password);
         credsProvider.setCredentials(authScope, creds);
 
@@ -550,13 +549,13 @@ public class ConnectionUtility {
      * @param url
      *            The URL to the resource.
      */
-    public final void resetAuthentication(final URL url) {
+    public void resetAuthentication(final URL url) {
 
         AuthScope authScope =
             new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                 AuthScope.ANY_REALM);
 
-        Credentials creds =
+        UsernamePasswordCredentials creds =
             new UsernamePasswordCredentials("", "");
 
         httpClient.getCredentialsProvider().setCredentials(authScope, creds);
@@ -579,8 +578,8 @@ public class ConnectionUtility {
                 String proxyPort =
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
-                if (proxyHostName != null && proxyHostName.trim().length() != 0) {
-                    if (proxyPort != null && proxyPort.trim().length() != 0) {
+                if (proxyHostName != null && !proxyHostName.trim().equals("")) {
+                    if (proxyPort != null && !proxyPort.trim().equals("")) {
                         this.proxyHost =
                             new HttpHost(proxyHostName,
                                 Integer.parseInt(proxyPort));
@@ -609,13 +608,13 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             e
      */
-    private void setProxy(final CharSequence url) throws WebserverSystemException {
+    private void setProxy(final String url) throws WebserverSystemException {
         try {
             if (this.proxyHost != null) {
                 String nonProxyHosts =
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_NON_PROXY_HOSTS);
-                if (nonProxyHosts != null && nonProxyHosts.trim().length() != 0) {
+                if (nonProxyHosts != null && !nonProxyHosts.trim().equals("")) {
                     nonProxyHosts = nonProxyHosts.replaceAll("\\.", "\\\\.");
                     nonProxyHosts = nonProxyHosts.replaceAll("\\*", "");
                     nonProxyHosts = nonProxyHosts.replaceAll("\\?", "\\\\?");
@@ -652,7 +651,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             e
      */
-    public final DefaultHttpClient getHttpClient(final String url)
+    public DefaultHttpClient getHttpClient(final String url)
         throws WebserverSystemException {
         if (this.httpClient == null) {
 
@@ -660,15 +659,22 @@ public class ConnectionUtility {
             ConnManagerParams.setMaxTotalConnections(params,
                 HTTP_MAX_TOTAL_CONNECTIONS_FACTOR);
 
-            ConnPerRoute connPerRoute =
+            ConnPerRouteBean connPerRoute =
                 new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
             ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute);
 
             Scheme http =
                 new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
 
+            // Schema für SSL Verbindungen
+            // SSLSocketFactory sf = new
+            // SSLSocketFactory(SSLContext.getInstance("TLS"));
+            // sf.setHostnameVerifier(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
+            // Scheme https = new Scheme("https", sf, 443);
+
             SchemeRegistry sr = new SchemeRegistry();
             sr.register(http);
+            // sr.register(https);
 
             cm = new ThreadSafeClientConnManager(params, sr);
 
@@ -727,7 +733,7 @@ public class ConnectionUtility {
                 HttpClientParams.setCookiePolicy(httpGet.getParams(),
                     CookiePolicy.BEST_MATCH);
                 httpGet.setHeader("Cookie",
-                    cookie.getName() + '=' + cookie.getValue());
+                    cookie.getName() + "=" + cookie.getValue());
             }
             httpResponse = getHttpClient(url).execute(httpGet);
 
@@ -784,6 +790,7 @@ public class ConnectionUtility {
         HttpDelete delete;
         try {
             delete = new HttpDelete(url);
+            // delete = new HttpDelete(new URI(url, false).getEscapedURI());
             delete = new HttpDelete(new URI(url));
             HttpResponse httpResponse = getHttpClient(url).execute(delete);
             int responseCode = httpResponse.getStatusLine().getStatusCode();
@@ -900,16 +907,26 @@ public class ConnectionUtility {
 
         HttpPost httpPost;
         HttpResponse httpResponse;
+        // RequestEntity entity;
+        // try {
+        // entity =
+        // new StringRequestEntity(body, Constants.DEFAULT_MIME_TYPE,
+        // XmlUtility.CHARACTER_ENCODING);
+        // }
+        // catch (UnsupportedEncodingException e) {
+        // throw new WebserverSystemException(e);
+        // }
 
         try {
-
+            // TODO
+            // entitys für Body Posts
             httpPost = new HttpPost(url);
 
             if (cookie != null) {
                 HttpClientParams.setCookiePolicy(httpPost.getParams(),
                     CookiePolicy.BEST_MATCH);
                 httpPost.setHeader("Cookie",
-                    cookie.getName() + '=' + cookie.getValue());
+                    cookie.getName() + "=" + cookie.getValue());
             }
 
             httpResponse = getHttpClient(url).execute(httpPost);
@@ -930,7 +947,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public static final String readResponse(final HttpResponse httpResponse)
+    public String readResponse(final HttpResponse httpResponse)
         throws WebserverSystemException {
         try {
             return EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
@@ -944,12 +961,34 @@ public class ConnectionUtility {
      * @param timeout
      *            the timeout to set
      */
-    public final void setTimeout(final int timeout) {
+    public void setTimeout(final int timeout) {
         this.timeout = timeout;
         if (this.httpClient != null) {
 
             httpClient.getParams().setIntParameter(
                 CoreConnectionPNames.SO_TIMEOUT, timeout);
+            // TODO:
+            // http.protocol.expect-continue': activates Expect: 100-Continue
+            // handshake for the
+            // entity enclosing methods. The purpose of the Expect: 100-Continue
+            // handshake is to allow
+            // the client that is sending a request message with a request body
+            // to determine if the origin server
+            // is willing to accept the request (based on the request headers)
+            // before the client sends the request
+            // body. The use of the Expect: 100-continue handshake can result in
+            // a noticeable performance improvement
+            // for entity enclosing requests (such as POST and PUT) that require
+            // the target server's authentication.
+            // Expect: 100-continue handshake should be used with caution, as it
+            // may cause problems with HTTP
+            // servers and proxies that do not support HTTP/1.1 protocol. This
+            // parameter expects a value of type
+            // java.lang.Boolean. If this parameter is not set HttpClient will
+            // attempt to use the handshake.
+            // httpClient.getParams().setBooleanParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE,
+            // Boolean.TRUE);
+
         }
     }
 }

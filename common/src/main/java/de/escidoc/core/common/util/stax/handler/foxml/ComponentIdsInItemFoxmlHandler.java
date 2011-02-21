@@ -57,6 +57,9 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
     private final List<String> componentIds = new ArrayList<String>();
 
+    // private static AppLogger log =
+    // new AppLogger(ComponentIdsInItemFoxmlHandler.class.getName());
+
     /**
      * 
      * @param parser
@@ -120,7 +123,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
      * 
      * @return Vector with ids of the Components.
      */
-    public final List<String> getComponentIds() {
+    public List<String> getComponentIds() {
         return this.componentIds;
     }
 
@@ -129,7 +132,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
      * 
      * @return PID of version.
      */
-    public final String getVersionPid() {
+    public String getVersionPid() {
         return this.versionPid;
     }
 }

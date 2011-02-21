@@ -58,11 +58,14 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
 
     private ContentModelProperties properties = null;
 
-    private static final String XPATH_CONTENT_MODEL =
+    private final String XPATH_CONTENT_MODEL =
             '/' + Elements.ELEMENT_CONTENT_MODEL;
 
-    private static final String XPATH_CONTENT_MODEL_PROPERTIES =
+    private final String XPATH_CONTENT_MODEL_PROPERTIES =
         XPATH_CONTENT_MODEL + '/' + Elements.ELEMENT_PROPERTIES;
+
+    private static AppLogger log =
+        new AppLogger(ContentModelPropertiesHandler.class.getName());
 
     /**
      * 
@@ -81,7 +84,7 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
      * 
      * @return ContentModelProperties.
      */
-    public final ContentModelProperties getProperties() {
+    public ContentModelProperties getProperties() {
         return this.properties;
     }
 
@@ -92,7 +95,7 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
      * 
      */
     @Override
-    public final StartElement startElement(final StartElement element) {
+    public StartElement startElement(final StartElement element) {
         return element;
     }
 
@@ -104,7 +107,7 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
      * 
      */
     @Override
-    public final EndElement endElement(final EndElement element)
+    public EndElement endElement(final EndElement element)
         throws InvalidXmlException {
         return element;
     }
@@ -118,7 +121,7 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
      * de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public final String characters(final String data, final StartElement element) {
+    public String characters(final String data, final StartElement element) {
         String curPath = parser.getCurPath();
         if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + '/'
             + Elements.ELEMENT_NAME)) {

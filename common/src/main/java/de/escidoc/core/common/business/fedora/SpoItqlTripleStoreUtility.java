@@ -95,7 +95,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             A configuration parameter could not be read.
      */
-    private SpoItqlTripleStoreUtility() throws TripleStoreSystemException {
+    public SpoItqlTripleStoreUtility() throws TripleStoreSystemException {
 
         final String fedoraUrl;
         try {
@@ -107,7 +107,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             final String errorMsg =
                 "Failed to retrieve configuration parameter "
                     + EscidocConfiguration.FEDORA_URL;
-            LOGGER.error(errorMsg, e);
+            log.error(errorMsg, e);
             throw new TripleStoreSystemException(e);
         }
         fedoraRdfXmlUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_RDF_XML;
@@ -153,7 +153,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             + "format=CSV&" + "limit=0&" + "distinct=on&" + "stream=off&"
             + "query=";
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(SpoItqlTripleStoreUtility.class.getName());
 
     private final String fedoraRdfXmlUrl;
@@ -250,7 +250,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         InvalidTripleStoreOutputFormatException {
         String result;
 
-        LOGGER.debug(StringUtility.format("doRequest",
+        log.debug(StringUtility.format("doRequest",
             address));
 
         try {
@@ -271,11 +271,11 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                     in.close();
                 }
                 catch (final IOException e) {
-                    LOGGER.warn("Could not close result inputstream.");
+                    log.warn("Could not close result inputstream.");
                 }
             }
 
-            result = out.toString(XmlUtility.CHARACTER_ENCODING);
+            result = out.toString(XmlUtility.CHARACTER_ENCODING); // con.getContentEncoding());
         }
         catch (final MalformedURLException e) {
             throw new TripleStoreSystemException(e);
@@ -297,7 +297,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 Pattern.compile(TripleStoreConnector.FORMAT_ERROR);
             final Matcher m2 = p2.matcher(result);
             if (m.find()) {
-                LOGGER.error(result);
+                log.error(result);
                 result =
                     XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
                 if (m1.find()) {
@@ -309,7 +309,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 }
             }
             else {
-                LOGGER.error("Request failed:\n" + result);
+                log.error("Request failed:\n" + result);
                 result =
                     XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
                 throw new TripleStoreSystemException(
@@ -335,17 +335,17 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @common
      */
     @Override
-    public final List<String> executeQueryId(
-            final String id, final boolean targetIsSubject, final String predicate)
+    public List<String> executeQueryId(
+        final String id, final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
         return executeQuery(false, id, targetIsSubject, predicate);
     }
 
     // CHECKSTYLE:JAVADOC-ON
 
-    private List<String> executeQuery(
-            final boolean queryByLiteral, final String idOrLiteral,
-            final boolean targetIsSubject, final String predicate)
+    protected List<String> executeQuery(
+        final boolean queryByLiteral, final String idOrLiteral,
+        final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();
@@ -534,11 +534,16 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final String[] triples = PATTERN_WHITESPACE_DOT.split(response);
         // final String[] triples = response.split("\\s\\.");
         for (String triple : triples) {
-
+            // final String[] tripleParts =
+            // PATTERN_BLANKS.split(triples[i].trim(), 3);
             final String[] tripleParts = triple.trim().split("\\ +", 3);
             if (tripleParts.length > 2) {
                 final String property = tripleParts[1];
                 String entry = tripleParts[2];
+
+                // propertyName =
+                // property.substring(property.lastIndexOf('/') + 1, property
+                // .length() - 1);
                 propertyName = property.substring(1, property.length() - 1);
 
                 if (entry != null) {
@@ -546,7 +551,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                         entry = XmlUtility.getIdFromURI(entry);
                     } else if (entry.startsWith("\"")) {
                         entry = entry.substring(1, entry.lastIndexOf('"'));
-                        // remove every escaping backslash;
+                        // remove every escaping backslash
+                        // entry = entry.replaceAll("\\\\([^\\\\])", "$1");
                         try {
                             entry = NTriplesUtil.unescapeLiteralValue(entry);
                         } catch (final ParseException e) {
@@ -743,15 +749,15 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @common
      */
     @Override
-    public final StringBuffer getRetrieveSelectClause(
-            final boolean targetIsSubject, final String predicateId) {
+    public StringBuffer getRetrieveSelectClause(
+        final boolean targetIsSubject, final String predicateId) {
 
         return new StringBuffer(retrieveSelectClause);
     }
 
     // CHECKSTYLE:JAVADOC-ON
 
-    private static String getQueryPartProperties(final Map<String, String> filters) {
+    private String getQueryPartProperties(final Map<String, String> filters) {
         if (filters.isEmpty()) {
             // just provide NO query part if there are no predicates properties
             return "";
@@ -899,7 +905,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     // CHECKSTYLE:JAVADOC-ON
 
-    private static String getQueryPartId(final Set<String> ids) {
+    private String getQueryPartId(final Set<String> ids) {
         if (ids == null || ids.isEmpty()) {
             return "";
         }
@@ -962,7 +968,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @return
      */
     @Deprecated
-    private static String getObjectsToFind(final CharSequence objectType) {
+    private String getObjectsToFind(final String objectType) {
         final Matcher matcher =
             PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE.matcher(objectType);
         final StringBuilder result = new StringBuilder();
@@ -994,13 +1000,15 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @throws XmlParserSystemException
      * @throws MissingMethodParameterException
      */
-    public final List<String> evaluate(
-            final String objectType, final Map filterMap,
-            final String additionalQueryPart, final String whereClause)
+    public List<String> evaluate(
+        final String objectType, final Map filterMap,
+        final String additionalQueryPart, final String whereClause)
         throws TripleStoreSystemException, XmlParserSystemException,
         MissingMethodParameterException {
 
         final List<String> result = new ArrayList<String>();
+        // String objectsToFind = getObjectsToFind(objectType);
+
         final String template = SELECT_VAR;
         final StringBuffer query = getRetrieveSelectClause(false, null);
 

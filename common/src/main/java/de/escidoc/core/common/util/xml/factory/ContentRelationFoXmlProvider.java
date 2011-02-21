@@ -149,8 +149,8 @@ public final class ContentRelationFoXmlProvider
      *            The ContentRelation object.
      * @return Map with rels-ext relevant values and velocity valid key names.
      */
-    private static Map<String, String> getRelsExtValueMap(
-            final ContentRelationCreate cr) {
+    private Map<String, String> getRelsExtValueMap(
+        final ContentRelationCreate cr) {
 
         Map<String, String> values = new HashMap<String, String>();
 
@@ -191,9 +191,9 @@ public final class ContentRelationFoXmlProvider
      * 
      * @return HashMap with namespace values for XML representation.
      */
-    private static Map<String, String> getRelsExtNamespaceValues() {
+    private Map<String, String> getRelsExtNamespaceValues() {
 
-        Map<String, String> values = new HashMap<String, String>();
+        HashMap<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
@@ -208,7 +208,7 @@ public final class ContentRelationFoXmlProvider
         values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE_PREFIX,
             Constants.CONTENT_RELATIONS_NEW_NS_PREFIX_IN_RELSEXT);
         values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE,
-            Constants.CONTENT_RELATION_NAMESPACE_URI + '/');
+            Constants.CONTENT_RELATION_NAMESPACE_URI + "/");
 
         values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS_PREFIX,
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);

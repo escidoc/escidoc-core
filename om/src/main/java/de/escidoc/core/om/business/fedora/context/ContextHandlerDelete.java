@@ -43,7 +43,7 @@ import de.escidoc.core.common.util.string.StringUtility;
  */
 public class ContextHandlerDelete extends ContextHandlerCreate {
 
-    private static final AppLogger LOGGER = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         ContextHandlerDelete.class.getName());
 
     /**
@@ -60,7 +60,7 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
      * @throws SystemException
      *             If anything else fails.
      */
-    final void remove(final FedoraContextHandler contextHandler)
+    public void remove(final FedoraContextHandler contextHandler)
         throws ContextNotEmptyException, ContextNotFoundException,
         InvalidStatusException, SystemException {
 
@@ -73,7 +73,7 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
             String msg =
                 StringUtility.format(
                     "Context not found", context.getId());
-            LOGGER.debug(msg);
+            log.debug(msg);
             throw new ContextNotFoundException(msg);
         }
 

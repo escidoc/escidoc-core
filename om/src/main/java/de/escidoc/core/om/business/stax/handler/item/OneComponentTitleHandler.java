@@ -57,6 +57,7 @@ public class OneComponentTitleHandler extends DefaultHandler {
         String currenrPath = parser.getCurPath();
         if (componentPath.equals(currenrPath)) {
 
+            // componentNumber ++;
             int indexOfobjId = element.indexOfAttribute(null, "objid");
             if (indexOfobjId != (-1)
                 && element.getAttribute(indexOfobjId).getValue().length() > 0) {
@@ -78,6 +79,28 @@ public class OneComponentTitleHandler extends DefaultHandler {
                 throw new ReadonlyAttributeViolationException(message);
             }
 
+            // not longer needed
+            // type is restricted to "simple" by schema
+            // not necessary to add non-existing type
+            // int indexOfType =
+            // element.indexOfAttribute(Constants.XLINK_URI, "type");
+            // if (indexOfType == (-1)) {
+            // Attribute type =
+            // new Attribute("type", Constants.XLINK_URI,
+            // Constants.XLINK_PREFIX, "simple");
+            // element.addAttribute(type);
+            // }
+            // else {
+            // Attribute type = element.getAttribute(indexOfType);
+            // String typeValue = type.getValue();
+            // if (!typeValue.equals(Constants.XLINK_TYPE_SIMPLE)) {
+            // String message =
+            // "the attribute xlink:type must be "
+            // + "set to \"simple\"";
+            // LOG.error(message);
+            // throw new InvalidContentException(message);
+            // }
+            // }
 
         }
 

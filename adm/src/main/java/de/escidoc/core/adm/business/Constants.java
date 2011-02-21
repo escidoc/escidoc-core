@@ -33,7 +33,7 @@ package de.escidoc.core.adm.business;
  *
  * @author sche
  */
-final class Constants {
+public final class Constants {
     /**
      * String parameter "id" used in the message queue.
      */

@@ -119,10 +119,10 @@ public class Resource extends XMLBase {
      *             If no matching method is found.
      * @common
      */
-    public final BeanMethod getMethod(
-            final String uri, final String query,
-            final Map<String, String[]> parameters, final String httpMethod,
-            final Object body) throws MethodNotFoundException {
+    public BeanMethod getMethod(
+        final String uri, final String query,
+        final Map<String, String[]> parameters, final String httpMethod,
+        final Object body) throws MethodNotFoundException {
 
         BeanMethod result = null;
         Set<String> regexps = getDescriptors().keySet();
@@ -330,14 +330,14 @@ public class Resource extends XMLBase {
      * @common
      */
     private String replaceIdentifierToRegexp(
-        final String xPath, final Iterable<Node> varDefinitions) {
+        final String xPath, final Collection<Node> varDefinitions) {
         String result = xPath.replaceAll("\\?", "\\\\?");
 
         for (Node varDefinition : varDefinitions) {
             Node var = varDefinition;
             String varName = getAttributeValue(var, DEFINITION_VAR_NAME_ATTR);
             String regexp = getAttributeValue(var, DEFINITION_VAR_REGEXP_ATTR);
-            if (result.contains('/' + VAR_PREFIX + varName + VAR_POSTFIX)) {
+            if (result.indexOf('/' + VAR_PREFIX + varName + VAR_POSTFIX) != -1) {
                 result =
                         result.replace('/' + VAR_PREFIX + varName + VAR_POSTFIX,
                                 regexp);
@@ -356,7 +356,7 @@ public class Resource extends XMLBase {
      *            The key.
      * @return The value or null.
      */
-    private static String getValueFromRequestBody(final String body, final String key) {
+    private String getValueFromRequestBody(final String body, final String key) {
 
         if (body == null) {
             return null;
@@ -391,7 +391,7 @@ public class Resource extends XMLBase {
 
             // FIXME: Hack for staging-file. Must be solved by descriptor
             if ("PUT".equals(request.getMethod())
-                && request.getRequestURI().contains("staging-file")) {
+                && request.getRequestURI().indexOf("staging-file") != -1) {
                 EscidocBinaryContent binaryContent = new EscidocBinaryContent();
                 binaryContent.setMimeType(request
                     .getHeader(EscidocServlet.HTTP_HEADER_CONTENT_TYPE));
@@ -428,7 +428,7 @@ public class Resource extends XMLBase {
      * @return Returns the descriptors.
      * @common
      */
-    private Map<String, Node> getDescriptors() {
+    public Map<String, Node> getDescriptors() {
         return descriptors;
     }
 
@@ -445,7 +445,7 @@ public class Resource extends XMLBase {
      * @return Returns the resource.
      * @common
      */
-    private Node getResource() {
+    public Node getResource() {
         return resource;
     }
 
@@ -462,7 +462,7 @@ public class Resource extends XMLBase {
      * @return Returns the baseUri.
      * @common
      */
-    private String getBaseUri() {
+    public String getBaseUri() {
         return baseUri;
     }
 
@@ -479,7 +479,7 @@ public class Resource extends XMLBase {
      * @return Returns the name.
      * @common
      */
-    private String getName() {
+    public String getName() {
         return name;
     }
 
@@ -496,7 +496,7 @@ public class Resource extends XMLBase {
      * @return Returns the definitions.
      * @common
      */
-    private Map getDefinitions() {
+    public Map getDefinitions() {
         return definitions;
     }
 
@@ -516,7 +516,7 @@ public class Resource extends XMLBase {
      * @common
      */
     @Override
-    public final String toString() {
+    public String toString() {
         return "Resource name='" + getName() + "', base-uri='" + getBaseUri()
             + "' has descriptors for uris '" + getDescriptors().keySet() + "'.";
     }
@@ -524,7 +524,7 @@ public class Resource extends XMLBase {
     /**
      * @return the beanName
      */
-    private String getBeanId() {
+    public String getBeanId() {
         return beanId;
     }
 

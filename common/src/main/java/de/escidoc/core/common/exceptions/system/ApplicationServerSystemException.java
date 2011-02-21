@@ -46,10 +46,10 @@ public class ApplicationServerSystemException extends SystemException {
      */
     private static final long serialVersionUID = -7848234882269176786L;
 
-    private static final int HTTP_STATUS_CODE =
+    public static final int HTTP_STATUS_CODE = 
         ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE = 
         "Internal Application Server Error";
     
     /**

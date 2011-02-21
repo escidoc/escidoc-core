@@ -68,14 +68,14 @@ public class ComponentProperties {
      * @param contentCatagory
      *            the contentCatagory to set
      */
-    public final void setContentCatagory(final String contentCatagory) {
+    public void setContentCatagory(final String contentCatagory) {
         this.contentCatagory = contentCatagory;
     }
 
     /**
      * @return the contentCatagory
      */
-    public final String getContentCatagory() {
+    public String getContentCatagory() {
         return contentCatagory;
     }
 
@@ -83,14 +83,14 @@ public class ComponentProperties {
      * @param createdById
      *            the createdById to set
      */
-    final void setCreatedById(final String createdById) {
+    public void setCreatedById(final String createdById) {
         this.createdById = createdById;
     }
 
     /**
      * @return the createdById
      */
-    public final String getCreatedById() {
+    public String getCreatedById() {
         return createdById;
     }
 
@@ -98,14 +98,14 @@ public class ComponentProperties {
      * @param createdByName
      *            the createdByName to set
      */
-    final void setCreatedByName(final String createdByName) {
+    public void setCreatedByName(final String createdByName) {
         this.createdByName = createdByName;
     }
 
     /**
      * @return the createdByName
      */
-    public final String getCreatedByName() {
+    public String getCreatedByName() {
         return createdByName;
     }
 
@@ -113,14 +113,14 @@ public class ComponentProperties {
      * @param visibility
      *            the visibility to set
      */
-    public final void setVisibility(final String visibility) {
+    public void setVisibility(final String visibility) {
         this.visibility = visibility;
     }
 
     /**
      * @return the visibility
      */
-    public final String getVisibility() {
+    public String getVisibility() {
         return visibility;
     }
 
@@ -128,14 +128,14 @@ public class ComponentProperties {
      * @param validStatus
      *            the validStatus to set
      */
-    public final void setValidStatus(final String validStatus) {
+    public void setValidStatus(final String validStatus) {
         this.validStatus = validStatus;
     }
 
     /**
      * @return the validStatus
      */
-    public final String getValidStatus() {
+    public String getValidStatus() {
         return validStatus;
     }
 
@@ -143,14 +143,14 @@ public class ComponentProperties {
      * @param mimeType
      *            the mimeType to set
      */
-    public final void setMimeType(final String mimeType) {
+    public void setMimeType(final String mimeType) {
         this.mimeType = mimeType;
     }
 
     /**
      * @return the mimeType
      */
-    public final String getMimeType() {
+    public String getMimeType() {
         return mimeType;
     }
 

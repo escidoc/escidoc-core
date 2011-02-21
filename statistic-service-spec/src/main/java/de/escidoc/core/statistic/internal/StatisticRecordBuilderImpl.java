@@ -88,7 +88,7 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
      * {@inheritDoc}
      */
     @Override
-    public final String toString() {
+    public String toString() {
         return "StatisticRecordBuilderImpl{" +
                 "statisticRecord=" + statisticRecord +
                 ", scopeId='" + scopeId + '\'' +

@@ -45,7 +45,6 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -232,7 +231,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * @param url
      *            URL to PID Manager Service (http://host[:port]/)
      */
-    public final void setPidGeneratorServer(final String url) {
+    public void setPidGeneratorServer(final String url) {
         this.pidGeneratorServer = url;
     }
 
@@ -244,7 +243,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * @throws MissingMethodParameterException
      *             If <code>globalPrefix</code> is null.
      */
-    public final void setGlobalPrefix(final String globalPrefix)
+    public void setGlobalPrefix(final String globalPrefix)
         throws MissingMethodParameterException {
         Utility.getInstance().checkNotNull(globalPrefix,
             "global prefix for PID");
@@ -259,7 +258,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * @param localPrefix
      *            The localPrefix for generated PIDs
      */
-    public final void setLocalPrefix(final String localPrefix) {
+    public void setLocalPrefix(final String localPrefix) {
         this.localPrefix = localPrefix;
     }
 
@@ -271,7 +270,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * @throws MissingMethodParameterException
      *             If <code>separator</code> is null.
      */
-    public final void setSeparator(final String separator)
+    public void setSeparator(final String separator)
         throws MissingMethodParameterException {
         Utility.getInstance().checkNotNull(separator, "separator");
         this.separator = separator;
@@ -285,7 +284,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * @throws MissingMethodParameterException
      *             If <code>pidNamespace</code> is null.
      */
-    public final void setPidNamespace(final String pidNamespace)
+    public void setPidNamespace(final String pidNamespace)
         throws MissingMethodParameterException {
         Utility.getInstance().checkNotNull(pidNamespace, "namespace for PID");
         this.pidNamespace = pidNamespace;
@@ -306,8 +305,8 @@ public class PIDManagerRESTService implements PIDSystem {
      * @throws TransformerFactoryConfigurationError
      * @throws TransformerException
      */
-    private static String preparePidManagerDatastructure(
-            final String systemID, final String param)
+    private String preparePidManagerDatastructure(
+        final String systemID, final String param)
         throws ParserConfigurationException, SAXException, IOException,
         TransformerFactoryConfigurationError, TransformerException {
 
@@ -331,7 +330,7 @@ public class PIDManagerRESTService implements PIDSystem {
             transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             StreamResult result = new StreamResult(new StringWriter());
-            Source source = new DOMSource(doc);
+            DOMSource source = new DOMSource(doc);
             transformer.transform(source, result);
 
             xmlParam = result.getWriter().toString();
@@ -353,7 +352,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * @throws SAXException
      * @throws IOException
      */
-    private static String obtainPidResult(final InputStream in)
+    private String obtainPidResult(final InputStream in)
         throws ParserConfigurationException, SAXException, IOException {
 
         javax.xml.parsers.DocumentBuilder db =

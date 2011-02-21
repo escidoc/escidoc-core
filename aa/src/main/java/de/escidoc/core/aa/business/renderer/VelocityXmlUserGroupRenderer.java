@@ -29,7 +29,6 @@
 package de.escidoc.core.aa.business.renderer;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -327,7 +326,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         addCommonValues(values);
         addUserGroupListValues(values);
 
-        final Collection<Map<String, Object>> userGroupsValues =
+        final List<Map<String, Object>> userGroupsValues =
             new ArrayList<Map<String, Object>>(userGroups.size());
 
         for (UserGroup userGroup1 : userGroups) {
@@ -369,8 +368,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The {@link Map} to that the values shall be added.
      * @aa
      */
-    private static void addUserGroupNamespaceValues(
-        final Map<String, Object> values) {
+    private void addUserGroupNamespaceValues(final Map<String, Object> values) {
         values.put("userGroupNamespacePrefix", Constants.USER_GROUP_NS_PREFIX);
         values.put("userGroupNamespace", Constants.USER_GROUP_NS_URI);
     }
@@ -397,8 +395,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The MAP to add the values to.
      * @aa
      */
-    private static void addUserGroupsNamespaceValues(
-        final Map<String, Object> values) {
+    private void addUserGroupsNamespaceValues(final Map<String, Object> values) {
 
         values.put("userGroupListNamespacePrefix",
             Constants.USER_GROUP_LIST_NS_PREFIX);
@@ -414,7 +411,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values)
+    private void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -430,7 +427,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The map to add values to.
      * @aa
      */
-    private static void addResourcesValues(
+    private void addResourcesValues(
         final UserGroup userGroup, final Map<String, Object> values) {
 
         values.put("resourcesHref",
@@ -447,7 +444,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private static UserGroupXmlProvider getUserGroupXmlProvider()
+    private UserGroupXmlProvider getUserGroupXmlProvider()
         throws WebserverSystemException {
 
         return UserGroupXmlProvider.getInstance();

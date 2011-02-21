@@ -211,7 +211,7 @@ public class UserGroupFilter extends CqlFilter {
      * 
      * @return all property names for that filter
      */
-    public final Set<String> getPropertyNames() {
+    public Set<String> getPropertyNames() {
         Set<String> result = new TreeSet<String>();
 
         result.addAll(super.getPropertyNames());

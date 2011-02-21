@@ -74,7 +74,7 @@ public class Predecessor {
     /**
      * @return the objid
      */
-    public final String getObjid() {
+    public String getObjid() {
         return objid;
     }
 
@@ -89,12 +89,12 @@ public class Predecessor {
     /**
      * @return the predecessor form
      */
-    public final PredecessorForm getForm() {
+    public PredecessorForm getForm() {
         return form;
     }
 
     @Override
-    public final boolean equals(Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -112,7 +112,7 @@ public class Predecessor {
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         int result = objid != null ? objid.hashCode() : 0;
         result = 31 * result + (form != null ? form.hashCode() : 0);
         return result;

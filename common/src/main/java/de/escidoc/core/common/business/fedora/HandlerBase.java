@@ -34,7 +34,7 @@ public class HandlerBase implements InitializingBean {
 
     private Utility utility = null;
 
-    protected static final String transformSearchResponse2relations(String searchResponse)
+    protected String transformSearchResponse2relations(String searchResponse)
         throws SystemException {
 
         try {
@@ -74,7 +74,7 @@ public class HandlerBase implements InitializingBean {
      * 
      * @return FedoraUtility Returns the {@link FedoraUtility} object.
      */
-    protected final FedoraUtility getFedoraUtility() {
+    protected FedoraUtility getFedoraUtility() {
 
         return this.fedoraUtility;
     }
@@ -85,7 +85,7 @@ public class HandlerBase implements InitializingBean {
      * @param fedoraUtility
      *            The {@link FedoraUtility} to set
      */
-    protected void setFedoraUtility(final FedoraUtility fedoraUtility) {
+    public void setFedoraUtility(final FedoraUtility fedoraUtility) {
 
         this.fedoraUtility = fedoraUtility;
     }
@@ -95,7 +95,7 @@ public class HandlerBase implements InitializingBean {
      * 
      * @return TripleStoreUtility Returns the {@link TripleStoreUtility} object.
      */
-    protected final TripleStoreUtility getTripleStoreUtility() {
+    protected TripleStoreUtility getTripleStoreUtility() {
 
         return this.tripleStoreUtility;
     }
@@ -106,8 +106,8 @@ public class HandlerBase implements InitializingBean {
      * @param tripleStoreUtility
      *            The {@link TripleStoreUtility} to set
      */
-    protected void setTripleStoreUtility(
-            final TripleStoreUtility tripleStoreUtility) {
+    public void setTripleStoreUtility(
+        final TripleStoreUtility tripleStoreUtility) {
 
         this.tripleStoreUtility = tripleStoreUtility;
     }
@@ -118,7 +118,7 @@ public class HandlerBase implements InitializingBean {
      * @return Returns the {@link EscidocIdProvider} object.
      * @common
      */
-    protected final EscidocIdProvider getIdProvider() {
+    protected EscidocIdProvider getIdProvider() {
 
         return this.idProvider;
     }
@@ -130,7 +130,7 @@ public class HandlerBase implements InitializingBean {
      *            The {@link EscidocIdProvider} to set.
      * @common
      */
-    protected void setIdProvider(final EscidocIdProvider idProvider) {
+    public void setIdProvider(final EscidocIdProvider idProvider) {
 
         this.idProvider = idProvider;
     }
@@ -145,7 +145,7 @@ public class HandlerBase implements InitializingBean {
      *      #afterPropertiesSet()
      * @common
      */
-    public final void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws Exception {
 
         if (this.fedoraUtility == null) {
             throw new BeanInitializationException(

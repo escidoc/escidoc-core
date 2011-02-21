@@ -43,9 +43,9 @@ public class MissingUserListException extends MissingParameterException {
      */
     private static final long serialVersionUID = 1617086079650495659L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_MISSING;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_MISSING;
 
-    private static final String HTTP_STATUS_MESSAGE = "User list is missing.";
+    public static final String HTTP_STATUS_MESSAGE = "User list is missing.";
 
     /**
      * Default constructor.

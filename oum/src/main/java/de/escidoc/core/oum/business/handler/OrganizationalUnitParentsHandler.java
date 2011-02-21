@@ -56,6 +56,8 @@ public class OrganizationalUnitParentsHandler
 
     private final List<String> parents = new ArrayList<String>();
 
+    // private boolean parentsExist = false;
+
     private String rootElement = XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
     private boolean rootElementPathChecked = false;
@@ -94,7 +96,7 @@ public class OrganizationalUnitParentsHandler
 
         String curPath = getParser().getCurPath();
         if (!rootElementPathChecked) {
-            if (!getParser().getCurPath().startsWith('/' + rootElement)) {
+            if (!getParser().getCurPath().startsWith("/" + rootElement)) {
                 throw new XmlCorruptedException("Root element is "
                     + element.getLocalName() + " not as expected" + rootElement
                     + "! ");
@@ -102,6 +104,10 @@ public class OrganizationalUnitParentsHandler
             rootElementPathChecked = true;
         }
 
+        // if (curPath.endsWith(XmlUtility.NAME_PARENT_OBJECTS)) {
+        // parentsExist = true;
+        // }
+        // else
         if (curPath.endsWith(XmlUtility.NAME_PARENT)) {
             parents.add(checkParentRef(element));
         }
@@ -121,6 +127,11 @@ public class OrganizationalUnitParentsHandler
     public EndElement endElement(final EndElement element)
         throws InvalidXmlException {
 
+        // if (getParser().getCurPath().equals("/organizational-unit/parents")
+        // && parentsExist && parents.isEmpty()) {
+        // throw new InvalidXmlException(
+        // "Element parent-ous must not be empty!");
+        // }
         return element;
     }
 
@@ -129,7 +140,7 @@ public class OrganizationalUnitParentsHandler
     /**
      * @return the parentOus
      */
-    public final List<String> getParentOus() {
+    public List<String> getParentOus() {
         return parents;
     }
 
@@ -137,7 +148,7 @@ public class OrganizationalUnitParentsHandler
      * @param rootElement
      *            the rootElement to set
      */
-    public final void setRootElement(final String rootElement) {
+    public void setRootElement(final String rootElement) {
         this.rootElement = rootElement;
     }
 

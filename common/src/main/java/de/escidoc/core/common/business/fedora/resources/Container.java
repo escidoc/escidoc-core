@@ -84,7 +84,7 @@ public class Container extends GenericVersionableResourcePid
 
     private Datastream escidocRelsExt = null;
 
-    private static final String DATASTREAM_ESCIDOC_RELS_EXT = "ESCIDOC_RELS_EXT";
+    public static final String DATASTREAM_ESCIDOC_RELS_EXT = "ESCIDOC_RELS_EXT";
 
     /**
      * Constructor of Container with specified id. The datastreams are
@@ -111,11 +111,11 @@ public class Container extends GenericVersionableResourcePid
         setHref(Constants.CONTAINER_URL_BASE + getId());
         getVersionData();
         if (getVersionNumber() != null) {
-
+            // setVersionData();
             setDcData();
         }
         this.mdRecords = new HashMap<String, Datastream>();
-
+        // getSomeValuesFromFedora();
     }
 
     /**
@@ -132,7 +132,7 @@ public class Container extends GenericVersionableResourcePid
      *             Thrown in case of internal error.
      */
     @Override
-    public final String getCreationDate() throws TripleStoreSystemException,
+    public String getCreationDate() throws TripleStoreSystemException,
         WebserverSystemException {
 
         if (this.creationDate == null) {
@@ -197,7 +197,7 @@ public class Container extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #getGenericProperties()
      */
-    public final Datastream getCts() throws StreamNotFoundException,
+    public Datastream getCts() throws StreamNotFoundException,
         FedoraSystemException {
         if (this.cts == null) {
             try {
@@ -220,7 +220,7 @@ public class Container extends GenericVersionableResourcePid
      * @throws TripleStoreSystemException
      * @throws WebserverSystemException
      */
-    public final void setCts(Datastream ds) throws StreamNotFoundException,
+    public void setCts(Datastream ds) throws StreamNotFoundException,
         FedoraSystemException, TripleStoreSystemException,
         WebserverSystemException {
         try {
@@ -253,14 +253,14 @@ public class Container extends GenericVersionableResourcePid
      * @throws FedoraSystemException
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.ContainerInterface#getMdRecords()
      */
-    public final Map<String, Datastream> getMdRecords()
+    public Map<String, Datastream> getMdRecords()
         throws IntegritySystemException, FedoraSystemException, WebserverSystemException {
 
         Map<String, Datastream> result = new HashMap<String, Datastream>();
         org.fcrepo.server.types.gen.Datastream[] datastreams =
             getDatastreamInfos();
 
-        Collection<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<String>();
         for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             List<String> altIDs = Arrays.asList(datastream.getAltIDs());
             if (altIDs != null
@@ -296,7 +296,7 @@ public class Container extends GenericVersionableResourcePid
      *             Thrown in case of an internal error.
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setMdRecords(java.util.HashMap)
      */
-    public final void setMdRecords(final Map<String, Datastream> mdRecords)
+    public void setMdRecords(final Map<String, Datastream> mdRecords)
         throws FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException, IntegritySystemException,
         EncodingSystemException {
@@ -325,39 +325,35 @@ public class Container extends GenericVersionableResourcePid
         }
 
         
-        // create or activate data streams which are in mdRecords but not in
-        // fedora
-        Iterator<Map.Entry<String, Datastream>> nameIt = mdRecords.entrySet().iterator();
-        while (nameIt.hasNext()) {
-            Map.Entry<String, Datastream> mapEntry = nameIt.next();
-            String name = mapEntry.getKey();
+        for (Map.Entry<String,Datastream> e : mdRecords.entrySet()) {
+            String name = e.getKey();
             if (!namesInFedora.contains(name)) {
-
-                Datastream currentMdRecord = mapEntry.getValue();
-                byte[] stream;
-                stream = currentMdRecord.getStream();
-                List<String> altIds = currentMdRecord.getAlternateIDs();
+                // create or activate data streams which are in mdRecords
+                // but not in fedora
+                Datastream currentDatastream = e.getValue();
+                byte[] stream = currentDatastream.getStream();
+                List<String> altIds = currentDatastream.getAlternateIDs();
                 String[] altIDs = new String[altIds.size()];
                 for (int i = 0; i < altIds.size(); i++) {
                     altIDs[i] = altIds.get(i);
                 }
                 getFedoraUtility().addDatastream(getId(), name, altIDs,
                     "md-record", true, stream, false);
-                this.mdRecords.put(name, currentMdRecord);
-                nameIt.remove();
+                this.mdRecords.put(name, currentDatastream);
             }
             else {
                 // update Datastreams which already exist
-                setMdRecord(name, mdRecords.get(name));
+                setMdRecord(name, e.getValue());
             }
         }
+
     }
 
     /**
      * 
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#getMdRecord(java.lang.String)
      */
-    public final Datastream getMdRecord(final String name)
+    public Datastream getMdRecord(final String name)
         throws StreamNotFoundException, FedoraSystemException {
         // check if the ds is set
         if (!this.mdRecords.containsKey(name)) {
@@ -382,7 +378,7 @@ public class Container extends GenericVersionableResourcePid
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setMdRecord(java.lang.String,
      *      de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    public final void setMdRecord(final String name, final Datastream ds)
+    public void setMdRecord(final String name, final Datastream ds)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, EncodingSystemException,
         IntegritySystemException {
@@ -461,6 +457,7 @@ public class Container extends GenericVersionableResourcePid
                     }
                 }
 
+                // ds.replaceAlternateId(type, 1);
                 this.mdRecords.put(name, ds);
                 ds.merge();
 
@@ -491,7 +488,7 @@ public class Container extends GenericVersionableResourcePid
      *             Thrown in case of internal error.
      */
 
-    public final Datastream getEscidocRelsExt() throws StreamNotFoundException,
+    public Datastream getEscidocRelsExt() throws StreamNotFoundException,
         FedoraSystemException {
 
         if (this.escidocRelsExt == null) {
@@ -528,7 +525,7 @@ public class Container extends GenericVersionableResourcePid
      *             Thrown in case of internal failure.
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    final void setEscidocRelsExt(final Datastream ds)
+    public void setEscidocRelsExt(final Datastream ds)
         throws StreamNotFoundException, FedoraSystemException,
         WebserverSystemException {
 
@@ -560,7 +557,7 @@ public class Container extends GenericVersionableResourcePid
      *             Thrown in case of internal error.
      */
     @Override
-    public final String persist() throws FedoraSystemException,
+    public String persist() throws FedoraSystemException,
         WebserverSystemException {
         /*
          * Persist persists the data streams of the object and updates all
@@ -603,6 +600,7 @@ public class Container extends GenericVersionableResourcePid
             // writing RELS-EXT twice.
             timestamp = persistEscidocRelsExt();
             if (timestamp == null) {
+                // timestamp = getLastModificationDate();
                 timestamp = getLastFedoraModificationDate();
             }
             updateWovTimestamp(getVersionNumber(), timestamp);
@@ -613,8 +611,11 @@ public class Container extends GenericVersionableResourcePid
                 timestamp);
         }
 
+        // if (sync) {
         getFedoraUtility().sync();
+        // }
 
+        // getsomevaluesfromFedora();
         return timestamp;
     }
 
@@ -628,7 +629,7 @@ public class Container extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      * @throws SystemException
      */
-    public final List<Map<String, String>> getRelations()
+    public List<Map<String, String>> getRelations()
         throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException {
 
@@ -677,7 +678,7 @@ public class Container extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    final String persistEscidocRelsExt() throws FedoraSystemException,
+    protected String persistEscidocRelsExt() throws FedoraSystemException,
         WebserverSystemException {
 
         String timestamp = null; // Maybe would it be better, if we use the
@@ -715,7 +716,7 @@ public class Container extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setDc(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    final void setDc(Datastream ds) throws StreamNotFoundException,
+    public void setDc(Datastream ds) throws StreamNotFoundException,
         FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException {
         // TODO should lock only be checked in handler?
@@ -748,7 +749,7 @@ public class Container extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #getDc()
      */
-    public final Datastream getDc() throws StreamNotFoundException,
+    public Datastream getDc() throws StreamNotFoundException,
         FedoraSystemException {
         if (this.dc == null) {
             try {
@@ -771,7 +772,7 @@ public class Container extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      *             Thrown if the id could not retrieved from the TripleStore.
      */
-    final String getContextId() throws WebserverSystemException {
+    public String getContextId() throws WebserverSystemException {
 
         if (this.contextId == null) {
             try {
@@ -833,8 +834,8 @@ public class Container extends GenericVersionableResourcePid
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private static Collection<String> expandPropertiesNames(
-            final Collection<String> propertiesNames) {
+    private Collection<String> expandPropertiesNames(
+        final Collection<String> propertiesNames) {
 
         Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
@@ -861,8 +862,8 @@ public class Container extends GenericVersionableResourcePid
      *            key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
-    private static Map<String, String> expandPropertiesNamesMapping(
-            final Map<String, String> propertiesMapping) {
+    private Map<String, String> expandPropertiesNamesMapping(
+        final Map<String, String> propertiesMapping) {
 
         Map<String, String> newPropertiesNames;
         if (propertiesMapping != null) {
@@ -893,7 +894,7 @@ public class Container extends GenericVersionableResourcePid
      * @throws FedoraSystemException
      *             Thrown in case of Fedora error.
      */
-    public final Datastream getWov() throws StreamNotFoundException,
+    public Datastream getWov() throws StreamNotFoundException,
         FedoraSystemException {
 
         if (this.wov == null) {

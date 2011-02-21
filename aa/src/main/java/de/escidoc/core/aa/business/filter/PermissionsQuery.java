@@ -133,7 +133,7 @@ public class PermissionsQuery {
                         hierarchicalOUs);
 
                 if ((rights != null) && (rights.length() > 0)) {
-                    LOG.info("OR access rights for (" + userId + ',' + roleId
+                    LOG.info("OR access rights for (" + userId + "," + roleId
                         + "): " + rights);
                     statements.add(rights);
                 }
@@ -170,9 +170,9 @@ public class PermissionsQuery {
      * @throws WebserverSystemException
      *             Thrown if a framework internal error occurs.
      */
-    public final String getFilterQuery(
-            final Iterable<ResourceType> resourceTypes, final String userId,
-            final FilterInterface filter) throws InvalidSearchQueryException,
+    public String getFilterQuery(
+        final Set<ResourceType> resourceTypes, final String userId,
+        final FilterInterface filter) throws InvalidSearchQueryException,
         WebserverSystemException {
         StringBuffer result = new StringBuffer();
 
@@ -238,7 +238,7 @@ public class PermissionsQuery {
      * 
      * @return list of all child containers
      */
-    private Set<String> getHierarchicalContainers(final Iterable<String> containerIds) {
+    private Set<String> getHierarchicalContainers(final Set<String> containerIds) {
         Set<String> result = new HashSet<String>();
 
         try {
@@ -268,7 +268,7 @@ public class PermissionsQuery {
      * 
      * @return list of all child OUs
      */
-    private Set<String> getHierarchicalOUs(final Iterable<String> ouIds) {
+    private Set<String> getHierarchicalOUs(final Set<String> ouIds) {
         Set<String> result = new HashSet<String>();
 
         try {
@@ -375,7 +375,7 @@ public class PermissionsQuery {
      *            user id
      * @return set of user groups or empty set
      */
-    private Set<String> retrieveGroupsForUser(final String userId) {
+    protected Set<String> retrieveGroupsForUser(final String userId) {
         Set<String> result = new HashSet<String>();
 
         if ((userId != null) && (userId.length() > 0)) {

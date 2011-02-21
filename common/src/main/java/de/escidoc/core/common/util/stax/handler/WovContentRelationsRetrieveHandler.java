@@ -55,6 +55,8 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
 
     private GregorianCalendar sourceVersionTimeStamp = null;
 
+    private final boolean isParsed = false;
+
     private GregorianCalendar latestStatusTimestamp;
 
     private String status = "inactive";
@@ -75,21 +77,24 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
         }
     }
 
-    public final String getStatus() {
+    public String getStatus() {
         return this.status;
     }
 
     @Override
     public StartElement startElement(StartElement element)
         throws IntegritySystemException {
-        String elementPath = "/version-history/version";
-        String currentPath = parser.getCurPath();
-        if (elementPath.equals(currentPath)) {
-            inside = true;
-            insideLevel++;
-        }
-        else if (inside) {
-            insideLevel++;
+        if (!isParsed) {
+            String elementPath = "/version-history/version";
+            String currentPath = parser.getCurPath();
+
+            if (elementPath.equals(currentPath)) {
+                inside = true;
+                insideLevel++;
+            }
+            else if (inside) {
+                insideLevel++;
+            }
         }
         return null;
     }

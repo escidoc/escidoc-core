@@ -49,13 +49,13 @@ import java.util.Vector;
  * @author schneider
  * 
  */
-class Resource extends XMLBase {
+public class Resource extends XMLBase {
 
-    private static final String INTERFACE_BOTH = "BOTH";
+    public static final String INTERFACE_BOTH = "BOTH";
 
-    private static final String INTERFACE_REST = "REST";
+    public static final String INTERFACE_REST = "REST";
 
-    private static final String INTERFACE_SOAP = "SOAP";
+    public static final String INTERFACE_SOAP = "SOAP";
 
     private static final AppLogger LOG =
         new AppLogger(Resource.class.getName());
@@ -210,9 +210,9 @@ class Resource extends XMLBase {
         initResult(INTERFACE_SOAP, getChapterStart(getTitle(INTERFACE_SOAP)));
 
         Iterator<Node> resourceIter = resources.iterator();
-        StringBuilder resourceOriented = new StringBuilder();
-        StringBuilder taskOriented = new StringBuilder();
-        StringBuilder soap = new StringBuilder();
+        StringBuffer resourceOriented = new StringBuffer();
+        StringBuffer taskOriented = new StringBuffer();
+        StringBuffer soap = new StringBuffer();
         while (resourceIter.hasNext()) {
             Node resource = resourceIter.next();
             Node description =
@@ -239,8 +239,8 @@ class Resource extends XMLBase {
                 for (int i = 0; i < descriptors.getLength(); ++i) {
                     taskOriented.append(
                         createDescriptorDocumentation(INTERFACE_REST,
-                            descriptors.item(i), INVOKE_ELEMENT + '['
-                                + taskOrientedMethodsSelector + ']'));
+                            descriptors.item(i), INVOKE_ELEMENT + "["
+                                + taskOrientedMethodsSelector + "]"));
                 }
                 for (int i = 0; i < descriptors.getLength(); ++i) {
                     soap.append(
@@ -429,7 +429,7 @@ class Resource extends XMLBase {
             String httpMethod = getAttributeValue(invoke, INVOKE_HTTP_ATTR);
             result +=
                 getMethodTableStart(title + " via REST",
-                    getMethodTableRow2Cols("HTTP Request", httpMethod + ' '
+                    getMethodTableRow2Cols("HTTP Request", httpMethod + " "
                         + prepareUriParameter(uri)));
             int paramNo = 1;
             result += getMethodTableRow2Cols(" ", " ");
@@ -458,10 +458,10 @@ class Resource extends XMLBase {
                     else if ("Input from Body".equals(c1)) {
                         c1 = "Input from Uri";
                     }
-                    if ((prepareParameter("${" + VAR_BODY + '}')
+                    if ((prepareParameter("${" + VAR_BODY + "}")
                         .equalsIgnoreCase(c2))
                         || (prepareParameter("${"
-                            + VAR_BODY_LAST_MODIFICATION_DATE + '}')
+                            + VAR_BODY_LAST_MODIFICATION_DATE + "}")
                             .equalsIgnoreCase(c2))) {
                         if (!"".equals(parameter)) {
                             result += getMethodTableRow2Cols(c1, parameter);
@@ -475,7 +475,7 @@ class Resource extends XMLBase {
                         result += getMethodTableRow2Cols(" ", " ");
                         c1 = "Input from Body";
                         if (prepareParameter(
-                            "${" + VAR_BODY_LAST_MODIFICATION_DATE + '}')
+                            "${" + VAR_BODY_LAST_MODIFICATION_DATE + "}")
                             .equalsIgnoreCase(c2)) {
                             c3 = "<emphasis>timestamp</emphasis>: " + c3;
                         }
@@ -485,7 +485,7 @@ class Resource extends XMLBase {
                         String paramVar =
                             prepareParameter(getAttributeValue(invoke,
                                 INVOKE_PARAM_ATTR + paramNo));
-                        if (uri.contains(paramVar)) {
+                        if (uri.indexOf(paramVar) != -1) {
                             printedParam = true;
                             if (!"".equals(parameter)) {
                                 parameter += "<para/>";
@@ -560,7 +560,7 @@ class Resource extends XMLBase {
                     paramNo - 1);
             if ((exceptionTypes != null) && (exceptionTypes.length > 0)) {
                 c1 = new StringBuffer();
-                StringBuilder c2 = new StringBuilder();
+                StringBuffer c2 = new StringBuffer();
                 String msg = "";
                 for (int i = 0; i < exceptionTypes.length; ++i) {
                     try {
@@ -571,13 +571,13 @@ class Resource extends XMLBase {
                             statusLine.invoke(exceptionTypes[i]
                                 .newInstance(), new Object[]{})
                                 + " (caused by "
-                                + exceptionTypes[i].getSimpleName() + ')';
+                                + exceptionTypes[i].getSimpleName() + ")";
                     }
                     catch (Exception e) {
                         msg =
                             HttpServletResponse.SC_INTERNAL_SERVER_ERROR
                                 + " Internal eSciDoc Error";
-                        LOG.info('[' + name + ']'
+                        LOG.info("[" + name + "]"
                             + ": Error generating documentation for "
                             + "[Rest: " + title + "] " + exceptionTypes[i]);
                     }
@@ -631,7 +631,7 @@ class Resource extends XMLBase {
         String result = "";
 
         String method =
-            name + HANDLER_POSTFIX + SERVICE_POSTFIX + '.'
+            name + HANDLER_POSTFIX + SERVICE_POSTFIX + "."
                 + getAttributeValue(invoke, INVOKE_METHOD_ATTR) + " ( ";
         String paramDocumentation = "";
 
@@ -696,7 +696,7 @@ class Resource extends XMLBase {
             if (output != null) {
                 paramDocumentation += getMethodTableRow2Cols(" ", " ");
                 method =
-                    getAttributeValue(child, RESULT_ATTR_TYPE) + ' ' + method;
+                    getAttributeValue(child, RESULT_ATTR_TYPE) + " " + method;
                 paramDocumentation += getMethodTableRow2Cols("Output", output);
 
             }
@@ -805,7 +805,7 @@ class Resource extends XMLBase {
      *            The parameter.
      * @return The docbook representation of a parameter.
      */
-    private static String prepareParameter(final String parameter) {
+    private String prepareParameter(final String parameter) {
 
         String result = parameter.toLowerCase();
         result = result.replaceAll("\\$\\{", "<emphasis>");
@@ -820,7 +820,7 @@ class Resource extends XMLBase {
      * @param text The text.
      * @return The text with the replaced text fragments.
      */
-    private static String prepareUriParameter(final String text) {
+    private String prepareUriParameter(final String text) {
 
         String result = text.toLowerCase();
         result = result.replaceAll("<emphasis>", "<emphasis>" + LESS_THAN);
@@ -964,11 +964,11 @@ class Resource extends XMLBase {
 
         String result = null;
         try {
-            result = getFileContents(TEMPLATE_PATH + '/' + filename) + CR_LF;
+            result = getFileContents(TEMPLATE_PATH + "/" + filename) + CR_LF;
         }
         catch (IOException e) {
             getLogger().error(
-                "Template '" + TEMPLATE_PATH + '/' + filename + "' not found!");
+                "Template '" + TEMPLATE_PATH + "/" + filename + "' not found!");
         }
 
         return result;
@@ -980,7 +980,7 @@ class Resource extends XMLBase {
      * 
      * @return The instance of the resource handler.
      */
-    private Class getInstance() {
+    final Class getInstance() {
 
         String beanName = "service." + name + "HandlerBean";
         return getConfiguredClass(beanName);
@@ -1017,7 +1017,7 @@ class Resource extends XMLBase {
     /**
      * @return Returns the includeErrors.
      */
-    private boolean isIncludeErrors() {
+    public boolean isIncludeErrors() {
         return includeErrors;
     }
 

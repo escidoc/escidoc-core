@@ -37,7 +37,6 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,7 +111,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     private static final AppLogger log = new AppLogger(
         FedoraContentModelHandler.class.getName());
 
-    private final Collection<ResourceListener> contentModelListeners =
+    private final List<ResourceListener> contentModelListeners =
         new ArrayList<ResourceListener>();
 
     /** SRU request. */
@@ -127,7 +126,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws SystemException
      * @see de.escidoc.core.common.business.fedora.AbstractResourceHandler#retrieve(java.lang.String)
      */
-    public final String retrieve(final String id)
+    public String retrieve(final String id)
         throws ContentModelNotFoundException, SystemException {
 
         setContentModel(id);
@@ -188,9 +187,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         }
         else {
             String fedoraLocalUrl =
-                "/get/" + getContentModel().getId() + '/' + name;
+                "/get/" + getContentModel().getId() + "/" + name;
             if (getContentModel().getVersionDate() != null) {
-                fedoraLocalUrl += '/' + getContentModel().getVersionDate();
+                fedoraLocalUrl += "/" + getContentModel().getVersionDate();
             }
             bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
         }
@@ -219,9 +218,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             bin.setRedirectUrl(ds.getLocation());
         }
         else {
-            String fedoraLocalUrl = "/get/" + ds.getParentId() + '/' + name;
+            String fedoraLocalUrl = "/get/" + ds.getParentId() + "/" + name;
             if (getContentModel().getVersionDate() != null) {
-                fedoraLocalUrl += '/' + getContentModel().getVersionDate();
+                fedoraLocalUrl += "/" + getContentModel().getVersionDate();
             }
             bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
         }
@@ -269,7 +268,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         String sDefId =
             "sdef:"
                 + getContentModel().getId().replaceAll(":",
-                    Constants.COLON_REPLACEMENT_PID) + '-' + name;
+                    Constants.COLON_REPLACEMENT_PID) + "-" + name;
 
         // get the 'xslt' datastream from sDef
         Datastream ds;
@@ -278,7 +277,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         }
         catch (StreamNotFoundException e) {
             throw new ResourceNotFoundException("No XSLT for operation '"
-                + name + "' in content model " + id + '.');
+                + name + "' in content model " + id + ".");
         }
 
         return getContent(ds);
@@ -296,12 +295,12 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                     .getWov()
                     .toStringUTF8()
                     .replaceFirst(
-                            '<'
+                        "<"
                             + de.escidoc.core.common.business.Constants.WOV_NAMESPACE_PREFIX
-                            + ':' + Elements.ELEMENT_WOV_VERSION_HISTORY,
-                            '<'
+                            + ":" + Elements.ELEMENT_WOV_VERSION_HISTORY,
+                        "<"
                             + de.escidoc.core.common.business.Constants.WOV_NAMESPACE_PREFIX
-                            + ':' + Elements.ELEMENT_WOV_VERSION_HISTORY
+                            + ":" + Elements.ELEMENT_WOV_VERSION_HISTORY
                             + " xml:base=\"" + XmlUtility.getEscidocBaseUrl()
                             + "\" " + Elements.ATTRIBUTE_LAST_MODIFICATION_DATE
                             + "=\""
@@ -559,8 +558,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         String sdexIdMidfix =
             getContentModel().getId().replaceAll(":",
                 Constants.COLON_REPLACEMENT_PID)
-                + '-';
+                + "-";
         String sdefIdPrefix = "sdef:" + sdexIdMidfix;
+        // String sdepIdPrefix = "sdep:" + sdexIdMidfix;
         Map<String, ResourceDefinitionCreate> resourceDefinitions =
             rdh.getResourceDefinitions();
 
@@ -589,7 +589,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             }
         }
         deleteFromRelsExt.put("/RDF/Description/hasService", deleteElementList);
-
+        // getContentModel().setRelsExt(
+        // Utility.updateRelsExt(null, deleteFromRelsExt, null,
+        // getContentModel(), null));
         byte[] tmpRelsExt =
             Utility.updateRelsExt(null, deleteFromRelsExt, null,
                 getContentModel(), null);
@@ -664,6 +666,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 ResourceDefinitionCreate resourceDefinition =
                     resourceDefinitionCreate;
                 String sdefId = sdefIdPrefix + resourceDefinition.getName();
+                // String sdepId = sdepIdPrefix + resourceDefinition.getName();
 
                 if (getTripleStoreUtility().exists(sdefId)) {
                     // check if href for xslt is changed
@@ -741,7 +744,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.putAll(getBehaviorValues(resourceDefinition));
 
@@ -769,7 +772,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.putAll(getBehaviorValues(resourceDefinition));
 
@@ -781,7 +784,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
     private Map<String, Object> getBehaviorValues(
         final ResourceDefinitionCreate resourceDefinition) {
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
         valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID,
             getContentModel().getId());
         valueMap.put(
@@ -808,10 +811,10 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws FedoraSystemException
      */
     private void setContentStreams(
-        final Iterable<ContentStreamCreate> contentStreams)
+        final List<ContentStreamCreate> contentStreams)
         throws WebserverSystemException, IntegritySystemException,
         FedoraSystemException {
-        Map<String, Datastream> contentStreamDatastreams =
+        HashMap<String, Datastream> contentStreamDatastreams =
             new HashMap<String, Datastream>();
 
         for (ContentStreamCreate contentStream1 : contentStreams) {
@@ -865,7 +868,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      *             If the requested item version is not the latest one.
      * 
      */
-    final void checkLatestVersion() throws ReadonlyVersionException {
+    protected void checkLatestVersion() throws ReadonlyVersionException {
         final String thisVersion = getContentModel().getVersionNumber();
         if (thisVersion != null
             && !thisVersion.equals(getContentModel().getLatestVersionNumber())) {
@@ -913,13 +916,13 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws InvalidContentException
      *             Thrown if content is invalid.
      */
-    private static void checkMetadataRecords(final ContentModelCreate item)
+    private void checkMetadataRecords(final ContentModelCreate item)
         throws InvalidContentException {
 
         List<MdRecordCreate> mdRecords = item.getMetadataRecords();
 
         if (!((mdRecords == null) || mdRecords.size() < 1)) {
-            Collection<String> mdRecordNames = new ArrayList<String>();
+            List<String> mdRecordNames = new ArrayList<String>();
             String name;
             for (MdRecordCreate mdRecord : mdRecords) {
 
@@ -951,7 +954,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws XmlCorruptedException
      *             Thrown if the schema validation of the provided data failed.
      */
-    private static ContentModelCreate parseContentModel(final String xml)
+    private ContentModelCreate parseContentModel(final String xml)
         throws WebserverSystemException, InvalidContentException,
         MissingAttributeValueException, XmlParserSystemException,
         XmlCorruptedException {
@@ -993,14 +996,14 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      *             If the item is locked and the current user is not the one who
      *             locked it.
      */
-    final void checkLocked() throws LockingException,
+    protected void checkLocked() throws LockingException,
         WebserverSystemException {
         if (getContentModel().isLocked()
             && !getContentModel().getLockOwner().equals(
                 Utility.getInstance().getCurrentUser()[0])) {
             throw new LockingException("Content Model + "
                 + getContentModel().getId() + " is locked by "
-                + getContentModel().getLockOwner() + '.');
+                + getContentModel().getLockOwner() + ".");
         }
     }
 
@@ -1011,7 +1014,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @param indexingHandler
      *            The indexing handler.
      */
-    public void setIndexingHandler(final ResourceListener indexingHandler) {
+    public void setIndexingHandler(final IndexingHandler indexingHandler) {
         contentModelListeners.add(indexingHandler);
     }
 

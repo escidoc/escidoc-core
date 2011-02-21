@@ -62,7 +62,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
     private static final AppLogger LOG =
         new AppLogger(ContentStreamHandler2.class.getName());
 
-    private String xpathContentStream =
+    private String XPATH_CONTENT_STREAM =
         "/item/content-streams/content-stream";
 
     private final StaxParser parser;
@@ -98,7 +98,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
     public ContentStreamHandler2(final StaxParser parser,
         final String contentStreamPath) {
         this.parser = parser;
-        this.xpathContentStream = contentStreamPath;
+        this.XPATH_CONTENT_STREAM = contentStreamPath;
     }
 
     /**
@@ -112,7 +112,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
      * @throws WebserverSystemException
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws InvalidContentException, MissingAttributeValueException,
         WebserverSystemException {
 
@@ -120,7 +120,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
             if (this.contentHandler == null) {
                 // reached first element after content-stream root element
                 this.contentHandler =
-                    new MultipleExtractor(xpathContentStream + '/'
+                    new MultipleExtractor(XPATH_CONTENT_STREAM + "/"
                         + element.getLocalName(), parser);
             }
             this.hasContent = true;
@@ -128,7 +128,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
         }
         else {
             String currentPath = parser.getCurPath();
-            if (currentPath.equals(xpathContentStream)) {
+            if (currentPath.equals(XPATH_CONTENT_STREAM)) {
 
                 LOG.debug("Parser reached " + currentPath);
 
@@ -168,12 +168,12 @@ public class ContentStreamHandler2 extends DefaultHandler {
      * @throws UnsupportedEncodingException
      */
     @Override
-    public final EndElement endElement(final EndElement element)
+    public EndElement endElement(final EndElement element)
         throws WebserverSystemException {
 
         String currentPath = parser.getCurPath();
 
-        if (xpathContentStream.equals(currentPath)) {
+        if (XPATH_CONTENT_STREAM.equals(currentPath)) {
 
             this.parsingContent = false;
 
@@ -229,7 +229,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
      * 
      */
     @Override
-    public final String characters(final String s, final StartElement element)
+    public String characters(final String s, final StartElement element)
         throws InvalidContentException, MissingElementValueException,
         WebserverSystemException {
 
@@ -247,7 +247,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
      * 
      * @return ContentStream
      */
-    public final ContentStreamCreate getContentStream() {
+    public ContentStreamCreate getContentStream() {
 
         return this.contentStream;
     }

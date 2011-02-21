@@ -34,7 +34,6 @@ import com.sun.xacml.cond.StandardFunctionFactory;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.aa.business.persistence.ScopeDef;
-import de.escidoc.core.aa.business.persistence.ScopeDefBase;
 import de.escidoc.core.aa.business.stax.handler.RolePropertiesStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.ScopeStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.XacmlStaxHandler;
@@ -132,7 +131,7 @@ public class XacmlParser {
      * @return SQL fragment representing the policy rules of the XACML document
      *         for that resource type
      */
-    public final String getPolicyRules(final ResourceType resourceType) {
+    public String getPolicyRules(final ResourceType resourceType) {
         String result = "";
         List<String> ruleList = pol.getMatchingRules(resourceType);
 
@@ -162,24 +161,24 @@ public class XacmlParser {
      * @return SQL fragment representing the role scope of the XACML document
      *         for that resource type
      */
-    public final String getScopeRules(final ResourceType resourceType) {
+    public String getScopeRules(final ResourceType resourceType) {
         String result = "";
         String label = resourceType.getLabel();
 
         for (Object scope : role.getScopeDefs()) {
-            if (label.equals(((ScopeDefBase) scope).getObjectType())) {
+            if (label.equals(((ScopeDef) scope).getObjectType())) {
                 String rule =
-                    values.getScope(((ScopeDefBase) scope).getAttributeId());
+                    values.getScope(((ScopeDef) scope).getAttributeId());
 
                 if (rule == null) {
-                    if (values.ignoreScope(((ScopeDefBase) scope).getAttributeId())) {
+                    if (values.ignoreScope(((ScopeDef) scope).getAttributeId())) {
                         LOG.info("ignore scope definition "
-                            + ((ScopeDefBase) scope).getAttributeId());
+                            + ((ScopeDef) scope).getAttributeId());
                     }
                     else {
                         throw new IllegalArgumentException(
                             "no translation found for "
-                                + ((ScopeDefBase) scope).getAttributeId());
+                                + ((ScopeDef) scope).getAttributeId());
                     }
                 }
                 else {
@@ -221,7 +220,7 @@ public class XacmlParser {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    public final void parse(final EscidocRole aRole) throws WebserverSystemException {
+    public void parse(final EscidocRole aRole) throws WebserverSystemException {
         this.role = aRole;
         initFactory();
         pol.parse(role.getXacmlPolicySet());

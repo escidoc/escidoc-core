@@ -111,7 +111,7 @@ public class ResourceAttributeFinderModule
      * attribute, too.
      */
     private static final Pattern PATTERN_PARSE_COMPONENT_ATTRIBUTE_ID =
-        Pattern.compile('(' +
+        Pattern.compile("(" +
             AttributeIds.ITEM_COMPONENT_ATTR_PREFIX + "[^:]+).*");
 
     /**
@@ -120,7 +120,7 @@ public class ResourceAttributeFinderModule
      */
     private static final Pattern PATTERN_PARSE_ATTRIBUTE_ID =
         Pattern
-            .compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX
+            .compile("(" + AttributeIds.RESOURCE_ATTR_PREFIX 
                 + "[^:]+:([^:]+)):{0,1}(.+){0,1}");
 
     private ItemHandlerInterface itemHandler;

@@ -43,7 +43,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -126,16 +125,16 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
     }
 
-    public final void setSubtreeToInsert(
-            List<StartElementWithChildElements> subtreesToInsert) {
+    public void setSubtreeToInsert(
+        List<StartElementWithChildElements> subtreesToInsert) {
         this.subtreesToInsert = subtreesToInsert;
     }
 
-    public final ByteArrayOutputStream getOutputStreams() {
+    public ByteArrayOutputStream getOutputStreams() {
         return this.out;
     }
 
-    public final void setPointerElement(StartElement pointerElement) {
+    public void setPointerElement(StartElement pointerElement) {
         this.pointerElement = pointerElement;
     }
 
@@ -240,7 +239,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 isContentRelation = false;
                 List<StartElementWithText> children =
                         subtreeToInsert.getChildrenElements();
-                if ((children != null) && (!children.isEmpty())) {
+                if ((children != null) && (children.size() > 0)) {
                     for (StartElementWithText aChildren : children) {
                         StartElementWithText inserted =
                                 aChildren;
@@ -313,7 +312,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
             // TODO iteration is a hack, use
             // javax.xml.namespace.NamespaceContext
             Iterator it = nsuris.keySet().iterator();
-            Collection toRemove = new ArrayList();
+            List toRemove = new ArrayList();
             while (it.hasNext()) {
                 try {
                     String key = (String) it.next();
@@ -428,7 +427,13 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 if (((deepLevelInMAp == deep) && (!elementName
                     .equals(nameTrace)))
                     || (deepLevelInMAp > deep)) {
+                    // if (isRelsExt && isNew) {
+                    //
+                    // writer.writeNamespace(prefix, uri + "/");
+                    // }
+                    // else {
                     writer.writeNamespace(prefix, uri);
+                    // }
 
                 }
             }
@@ -459,8 +464,8 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
      *         there values are equal. Other attibutes (of element) are not
      *         compared. false - otherwise
      */
-    private static boolean equalAttr(
-            final StartElement pointerElement, final StartElement element) {
+    private boolean equalAttr(
+        final StartElement pointerElement, final StartElement element) {
         try {
             int pointerAttsNo = pointerElement.getAttributeCount();
             for (int i = 0; i < pointerAttsNo; i++) {

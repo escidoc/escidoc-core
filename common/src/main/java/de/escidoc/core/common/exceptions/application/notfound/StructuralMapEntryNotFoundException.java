@@ -45,9 +45,9 @@ public class StructuralMapEntryNotFoundException
      */
     private static final long serialVersionUID = -5848370961270648807L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE =
         "Structural Map was not found.";
 
     /**

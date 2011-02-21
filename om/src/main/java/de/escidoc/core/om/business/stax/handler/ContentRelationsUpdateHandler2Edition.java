@@ -62,7 +62,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private static final String CONTAINER = "/container";
+    public static final String CONTAINER = "/container";
 
     private boolean inContentRelation = false;
 
@@ -76,7 +76,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     private final List<String> relationsData = new ArrayList<String>();
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(ContentRelationsUpdateHandler2Edition.class.getName());
 
     /**
@@ -119,12 +119,12 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
             String href = null;
             if (indexOfHref != -1) {
                 href = element.getAttribute(indexOfHref).getValue();
-                if (href.length() == 0) {
+                if (href.equals("")) {
                     String message =
                         "The value of attribute 'xlink:href' of "
                             + " the element '" + theName
                             + "' may not be an empty string";
-                    LOGGER.error(message);
+                    log.error(message);
                     throw new InvalidContentException(message);
                 }
             }
@@ -132,11 +132,11 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
             String objid = null;
             if (indexOfObjId != -1) {
                 objid = element.getAttribute(indexOfObjId).getValue();
-                if (objid.length() == 0) {
+                if (objid.equals("")) {
                     String message =
                         "The value of attribute 'objid' of " + " the element '"
                             + theName + "' may not be an empty string";
-                    LOGGER.error(message);
+                    log.error(message);
                     throw new InvalidContentException(message);
                 }
             }
@@ -145,7 +145,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
             predicate = element.getAttribute(indexOfPredicate).getValue();
             if (!ContentRelationsUtility.validPredicate(predicate)) {
                 String message = "Predicate " + predicate + " is wrong. ";
-                LOGGER.error(message);
+                log.error(message);
                 throw new RelationPredicateNotFoundException(message);
             }
 
@@ -179,7 +179,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
     /**
      * @return Returns the title.
      */
-    public final List<String> getContentRelationsData() {
+    public List<String> getContentRelationsData() {
         return relationsData;
     }
 
@@ -203,14 +203,14 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
                 "A relation target may not be referenced by an "
                     + " identifier containing a version number. Use a floating "
                     + "identifier like 'escidoc:123' to reference a target";
-            LOGGER.error(message);
+            log.error(message);
             throw new InvalidContentException(message);
         }
         if (!TripleStoreUtility.getInstance().exists(targetId)) {
             String message =
                 "Related target resource with id " + targetId
                     + " does not exist.";
-            LOGGER.error(message);
+            log.error(message);
             throw new ReferencedResourceNotFoundException(message);
         }
         String targetObjectType =
@@ -222,7 +222,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
                     + "A object with id " + targetId
                     + " is neither 'item' nor 'container' ";
 
-            LOGGER.error(message);
+            log.error(message);
             throw new InvalidContentException(message);
         }
         if (href != null) {
@@ -233,7 +233,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
                     "The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
                         + "/ir/item/" + targetId;
-                LOGGER.error(message);
+                log.error(message);
                 throw new InvalidContentException(message);
 
             } else if (targetObjectType.equals(Constants.CONTAINER_OBJECT_TYPE)
@@ -243,7 +243,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
                     "The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
                         + "/ir/container/" + targetId;
-                LOGGER.error(message);
+                log.error(message);
                 throw new InvalidContentException(message);
 
             }

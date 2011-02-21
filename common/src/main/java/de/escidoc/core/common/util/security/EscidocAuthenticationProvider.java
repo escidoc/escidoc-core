@@ -68,14 +68,14 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
      *      #authenticate(org.acegisecurity.Authentication)
      * @common
      */
-    public final Authentication authenticate(final Authentication authentication)
+    public Authentication authenticate(final Authentication authentication)
         throws AuthenticationException {
 
         LOG.debug("authenticate");
 
         final String credentials = (String) authentication.getCredentials();
         if (credentials == null || "".equals(credentials)) {
-            final GrantedAuthority grantedAuthority =
+            final GrantedAuthorityImpl grantedAuthority =
                 new GrantedAuthorityImpl("");
             final GrantedAuthority[] grantedAuthorities =
                 new GrantedAuthority[] { grantedAuthority };
@@ -103,7 +103,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
      *      #supports(java.lang.Class)
      * @common
      */
-    public final boolean supports(final Class cls) {
+    public boolean supports(final Class cls) {
 
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(cls);
     }

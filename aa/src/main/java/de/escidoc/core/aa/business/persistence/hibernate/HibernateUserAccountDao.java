@@ -30,7 +30,6 @@ package de.escidoc.core.aa.business.persistence.hibernate;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -105,11 +104,11 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
     private static final String QUERY_RETRIEVE_USER_ACCOUNT_BY_LOGINNAME =
         "from UserAccount u where u.loginname = ?";
 
-    private final Map<String, Object[]> criteriaMap;
+    private final Map<String, Object[]> CRITERIA_MAP;
 
-    private final Map<String, String> propertiesNamesMap;
+    private final Map<String, String> PROPERTIES_NAMES_MAP;
 
-    private final Map<String, String> grantPropertiesNamesMap;
+    private final Map<String, String> GRANT_PROPERTIES_NAMES_MAP;
 
     private UserAccountFilter userAccountFilter;
 
@@ -128,9 +127,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         catch (InvalidSearchQueryException e) {
             // Dont do anything because null-query is given
         }
-        criteriaMap = userAccountFilter.getCriteriaMap();
-        propertiesNamesMap = userAccountFilter.getPropertyMap();
-        grantPropertiesNamesMap = roleGrantFilter.getPropertyMap();
+        CRITERIA_MAP = userAccountFilter.getCriteriaMap();
+        PROPERTIES_NAMES_MAP = userAccountFilter.getPropertyMap();
+        GRANT_PROPERTIES_NAMES_MAP = roleGrantFilter.getPropertyMap();
     }
 
     /**
@@ -263,7 +262,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see UserAccountDaoInterface#retrieveUserAccountById(java.lang.String)
      * @aa
      */
-    public final UserAccount retrieveUserAccountById(final String id)
+    public UserAccount retrieveUserAccountById(final String id)
         throws SqlDatabaseSystemException {
 
         UserAccount result = null;
@@ -296,7 +295,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see UserAccountDaoInterface#retrieveUserAccountByLoginName(java.lang.String)
      * @aa
      */
-    public final UserAccount retrieveUserAccountByLoginName(final String loginName)
+    public UserAccount retrieveUserAccountByLoginName(final String loginName)
         throws SqlDatabaseSystemException {
 
         try {
@@ -324,7 +323,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see UserAccountDaoInterface#retrieveUserAccountByHandle(java.lang.String)
      * @aa
      */
-    public final UserAccount retrieveUserAccountByHandle(final String handle)
+    public UserAccount retrieveUserAccountByHandle(final String handle)
         throws SqlDatabaseSystemException {
 
         try {
@@ -393,7 +392,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 Boolean.valueOf(active1)));
         }
 
-        for (String s : criteriaMap.keySet()) {
+        for (String s : CRITERIA_MAP.keySet()) {
             final String key = s;
             if (key.equals(Constants.FILTER_ORGANIZATIONAL_UNIT)
                     || key.equals(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT)) {
@@ -401,7 +400,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             }
             final Object criteriaValue = clonedCriterias.remove(key);
             if (criteriaValue != null) {
-                final Object[] parts = criteriaMap.get(key);
+                final Object[] parts = CRITERIA_MAP.get(key);
                 if (parts[0].equals(COMPARE_EQ)) {
                     detachedCriteria.add(Restrictions.eq((String) parts[1],
                             criteriaValue));
@@ -452,11 +451,11 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
         if (orderBy != null) {
             if (sorting == ListSorting.ASCENDING) {
-                detachedCriteria.addOrder(Order.asc(propertiesNamesMap
+                detachedCriteria.addOrder(Order.asc(PROPERTIES_NAMES_MAP
                     .get(orderBy)));
             }
             else if (sorting == ListSorting.DESCENDING) {
-                detachedCriteria.addOrder(Order.desc(propertiesNamesMap
+                detachedCriteria.addOrder(Order.desc(PROPERTIES_NAMES_MAP
                     .get(orderBy)));
             }
         }
@@ -828,11 +827,11 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
         if (orderBy != null) {
             if (sorting == ListSorting.ASCENDING) {
-                detachedCriteria.addOrder(Order.asc(grantPropertiesNamesMap
+                detachedCriteria.addOrder(Order.asc(GRANT_PROPERTIES_NAMES_MAP
                     .get(orderBy)));
             }
             else if (sorting == ListSorting.DESCENDING) {
-                detachedCriteria.addOrder(Order.desc(grantPropertiesNamesMap
+                detachedCriteria.addOrder(Order.desc(GRANT_PROPERTIES_NAMES_MAP
                     .get(orderBy)));
             }
         }
@@ -1083,7 +1082,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
         Criterion criterion = null;
-        for (Map<String, String> attribute : attributes) {
+        for (HashMap<String, String> attribute : attributes) {
             for (Entry<String, String> entry : attribute.entrySet()) {
                 if (criterion == null) {
                     criterion =
@@ -1164,7 +1163,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveUserLoginDataByHandle(java.lang.String)
      * @aa
      */
-    public final UserLoginData retrieveUserLoginDataByHandle(final String handle)
+    public UserLoginData retrieveUserLoginDataByHandle(final String handle)
         throws SqlDatabaseSystemException {
 
         UserLoginData result;
@@ -1233,6 +1232,25 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     // Put Object in UserDetails-Cache
                     PoliciesCache.putUserDetails(handle, result);
                 }
+                // // FIXME: remove
+                // System.out.println(getSession().connection());
+                // // end
+                // final Object[] res =
+                // (Object[]) getUniqueResult(getHibernateTemplate().find(
+                // QUERY_RETRIEVE_USER_DETAILS_DATA,
+                // new Object[] { handle, System.currentTimeMillis() }));
+                // if (res != null) {
+                // result =
+                // new EscidocUserDetails();
+                // result.setId((String) res[0]);
+                // result.setRealName((String) res[1]);
+                //
+                // //Get OUs of user
+                //
+                //
+                // //Put Object in UserDetails-Cache
+                // PoliciesCache.putUserDetails(handle, result);
+                // }
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
@@ -1275,7 +1293,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserLoginData)
      * @aa
      */
-    public final void delete(final UserLoginData data)
+    public void delete(final UserLoginData data)
         throws SqlDatabaseSystemException {
         // remove UserData from Cache
         PoliciesCache.clearUserDetails(data.getHandle());
@@ -1416,7 +1434,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *            object to check.
      * @return Returns <code>true</code> if the provided object is expired.
      */
-    private static boolean isExpired(final UserLoginData data) {
+    private boolean isExpired(final UserLoginData data) {
 
         boolean result = false;
         if (data.getExpiryts() - System.currentTimeMillis() <= 0) {
@@ -1512,8 +1530,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @aa
      */
-    private static Criterion getInRestrictions(
-            final Collection<String> criteria, final String fieldName) {
+    private Criterion getInRestrictions(
+        final Set<String> criteria, final String fieldName) {
         if (criteria.contains("")) {
             criteria.remove("");
             if (criteria.isEmpty()) {

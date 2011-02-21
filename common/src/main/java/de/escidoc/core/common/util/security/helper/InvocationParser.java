@@ -103,7 +103,7 @@ public class InvocationParser {
      * @author TTE
      * @aa
      */
-    private static final class DocumentCache {
+    private final class DocumentCache {
 
         private final Map<Object, Document> map;
 
@@ -115,7 +115,7 @@ public class InvocationParser {
          * @aa
          */
         @SuppressWarnings("unchecked")
-        private DocumentCache(final int size) {
+        public DocumentCache(final int size) {
 
             map = Collections.synchronizedMap(new LRUMap(size));
         }
@@ -138,7 +138,7 @@ public class InvocationParser {
          *             Thrown in case of a parse error
          * @aa
          */
-        private Document retrieveDocument(final Object documentData)
+        public Document retrieveDocument(final Object documentData)
             throws IOException, ParserConfigurationException, SAXException {
 
             Document document = map.get(documentData);
@@ -183,8 +183,8 @@ public class InvocationParser {
      * 
      * @aa
      */
-    public final List<Map<String, String>> buildRequestsList(
-            final Object[] arguments, final MethodMapping methodMapping)
+    public List<Map<String, String>> buildRequestsList(
+        final Object[] arguments, final MethodMapping methodMapping)
         throws MissingMethodParameterException, MissingAttributeValueException,
         MissingElementValueException, InvalidXmlException, SystemException {
 
@@ -218,8 +218,8 @@ public class InvocationParser {
      * 
      * @aa
      */
-    public final List<Map<String, String>> buildRequestsList(
-            final Object argument, final MethodMapping methodMapping)
+    public List<Map<String, String>> buildRequestsList(
+        final Object argument, final MethodMapping methodMapping)
         throws MissingMethodParameterException, MissingAttributeValueException,
         MissingElementValueException, InvalidXmlException, SystemException {
 
@@ -338,7 +338,7 @@ public class InvocationParser {
      */
     private Map<String, String> setupResourceAttributes(
         final Object arguments,
-        final Iterable<InvocationMapping> invocationMappings, final boolean isArray,
+        final Set<InvocationMapping> invocationMappings, final boolean isArray,
         final int index) throws MissingMethodParameterException,
         MissingAttributeValueException, MissingElementValueException,
         WebserverSystemException, InvalidXmlException {
@@ -483,7 +483,7 @@ public class InvocationParser {
                 }
                 final String xpath =
                     PATTERN_INDEXED.matcher(path).replaceAll(
-                                    "["+ (index + 1)+ ']');
+                                    "["+ (index + 1)+ "]");
                 NodeList nodeList;
                 try {
                     nodeList = XPathAPI.selectNodeList(document, xpath);
@@ -519,7 +519,7 @@ public class InvocationParser {
                     if (invocationMapping.isMultiValue()) {
                         length = nodeList.getLength();
                     }
-                    StringBuilder valueBuf = new StringBuilder("");
+                    StringBuffer valueBuf = new StringBuffer("");
                     for (int i = 0; i < length; i++) {
                         Node node = nodeList.item(i);
                         String tmpValue = null;
@@ -531,7 +531,7 @@ public class InvocationParser {
                                 tmpValue = XmlUtility.getIdFromURI(tmpValue);
                             }
                             if (valueBuf.length() > 0) {
-                                valueBuf.append(' ');
+                                valueBuf.append(" ");
                             }
                             valueBuf.append(tmpValue);
                             value = new StringAttribute(tmpValue);

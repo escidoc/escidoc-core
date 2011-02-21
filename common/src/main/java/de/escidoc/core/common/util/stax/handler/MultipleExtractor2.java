@@ -103,7 +103,7 @@ public class MultipleExtractor2 extends DefaultHandler {
         this.paths.put(extractPath, extractAtt);
     }
 
-    public final Map<String, Object> getOutputStreams() {
+    public Map<String, Object> getOutputStreams() {
 
         return this.outputStreams;
     }
@@ -247,7 +247,7 @@ public class MultipleExtractor2 extends DefaultHandler {
 
         if (theName.equals("component")) {
             if (componentId == null) {
-                Map components = (HashMap) outputStreams.get("components");
+                HashMap components = (HashMap) outputStreams.get("components");
                 components.remove(componentId);
             }
             inComponent = false;

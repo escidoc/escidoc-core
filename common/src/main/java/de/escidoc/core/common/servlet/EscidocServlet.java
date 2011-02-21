@@ -82,7 +82,7 @@ import java.util.regex.Pattern;
  */
 public class EscidocServlet extends HttpServlet {
 
-    private static final String AUTHENTICATION = "eSciDocUserHandle";
+    public static final String AUTHENTICATION = "eSciDocUserHandle";
 
     /**
      * Pattern used to detect the eSciDoc user handle in the query string of the
@@ -98,15 +98,15 @@ public class EscidocServlet extends HttpServlet {
         "The request could not be executed "
             + "due to an unexpected response for the http method.";
 
-    private static final String HTTP_DELETE = "DELETE";
+    public static final String HTTP_DELETE = "DELETE";
 
-    private static final String HTTP_GET = "GET";
+    public static final String HTTP_GET = "GET";
 
-    private static final String HTTP_HEAD = "HEAD";
+    public static final String HTTP_HEAD = "HEAD";
 
-    private static final String HTTP_POST = "POST";
+    public static final String HTTP_POST = "POST";
 
-    private static final String HTTP_PUT = "PUT";
+    public static final String HTTP_PUT = "PUT";
 
     /**
      * The serial version UID.
@@ -148,7 +148,7 @@ public class EscidocServlet extends HttpServlet {
      * The parameter name of the init-param in web.xml holding the name of the
      * method descriptor file.
      */
-    private static final String PARAM_DESCRIPTOR = "resource-descriptor";
+    protected static final String PARAM_DESCRIPTOR = "resource-descriptor";
 
     private static final String HTTP_PARAM_DESCRIPTOR = "descriptor";
 
@@ -170,14 +170,14 @@ public class EscidocServlet extends HttpServlet {
      * 
      * @see Shibboleth parameter shire.
      */
-    private static final String PARAM_SHIRE = "shire";
+    public static final String PARAM_SHIRE = "shire";
 
     /**
      * The provider id.
      * 
      * @see Shibboleth parameter providerId.
      */
-    private static final String PARAM_PROVIDER_ID = "providerId";
+    public static final String PARAM_PROVIDER_ID = "providerId";
 
     public static final String COOKIE_LOGIN = "escidocCookie";
 
@@ -207,8 +207,8 @@ public class EscidocServlet extends HttpServlet {
      * @common
      */
     @Override
-    public final void service(
-            final ServletRequest request, final ServletResponse response)
+    public void service(
+        final ServletRequest request, final ServletResponse response)
         throws ServletException, IOException {
 
         try {
@@ -246,7 +246,7 @@ public class EscidocServlet extends HttpServlet {
                         final StringBuffer location =
                             httpRequest.getRequestURL();
                         if (queryString.length() > 0) {
-                            location.append('?');
+                            location.append("?");
                             location.append(queryString);
                         }
                         final String locationString = location.toString();
@@ -389,7 +389,7 @@ public class EscidocServlet extends HttpServlet {
         else if (e instanceof AuthorizationException) {
             final String[] authValues =
                 getAuthValues(httpRequest, httpResponse);
-            if (authValues == null || authValues[1].length() == 0) {
+            if (authValues == null || authValues[1].equals("")) {
                 doRedirect(httpRequest, httpResponse, (SecurityException) e);
             }
             else {
@@ -461,7 +461,7 @@ public class EscidocServlet extends HttpServlet {
      *             If anything fails.
      * @common
      */
-    private static MapperInterface getMethodMapper(final String filename)
+    private MapperInterface getMethodMapper(final String filename)
         throws IOException, TransformerException, ParserConfigurationException,
         SAXException {
         MapperInterface result = MAPPINGS.get(filename);
@@ -514,9 +514,9 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             If anything fails.
      */
-    private static void doRedirectResponse(
-            final HttpServletResponse httpResponse, final String httpMethod,
-            final EscidocServiceRedirectInterface result) throws IOException {
+    private void doRedirectResponse(
+        final HttpServletResponse httpResponse, final String httpMethod,
+        final EscidocServiceRedirectInterface result) throws IOException {
 
         if ((HTTP_GET.equals(httpMethod)) || (HTTP_PUT.equals(httpMethod))
             || (HTTP_POST.equals(httpMethod))) {
@@ -650,7 +650,7 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             Thrown if copy failed.
      */
-    private static void copyStreams(final InputStream ins, final OutputStream out)
+    private void copyStreams(final InputStream ins, final OutputStream out)
         throws IOException {
 
         final byte[] buffer = new byte[BUFFER_SIZE];
@@ -675,9 +675,9 @@ public class EscidocServlet extends HttpServlet {
      *             If anything fails.
      * @common
      */
-    private static void doSendStringResponse(
-            final HttpServletResponse httpResponse, final String text,
-            final int status) throws IOException {
+    private void doSendStringResponse(
+        final HttpServletResponse httpResponse, final String text,
+        final int status) throws IOException {
 
         initHttpResponse(httpResponse);
         if (text != null) {
@@ -746,27 +746,27 @@ public class EscidocServlet extends HttpServlet {
      *             If anything fails.
      * @common
      */
-    private static void doRedirect(
-            final HttpServletRequest httpRequest,
-            final HttpServletResponse httpResponse,
-            final SecurityException exception) throws IOException {
+    private void doRedirect(
+        final HttpServletRequest httpRequest,
+        final HttpServletResponse httpResponse,
+        final SecurityException exception) throws IOException {
 
         final String message = exception.toXmlString();
         final String redirectLocation =
             exception.getRedirectLocation()
-                + '?'
+                + "?"
                 + PARAM_TARGET
-                + '='
+                + "="
                 + URLEncoder.encode(httpRequest.getRequestURL().toString(),
                     ENCODING)
-                + '&'
+                + "&"
                 + PARAM_SHIRE
-                + '='
+                + "="
                 + URLEncoder.encode("https://localhost:8080/shibboleth/acs",
                     ENCODING)
-                + '&'
+                + "&"
                 + PARAM_PROVIDER_ID
-                + '='
+                + "="
                 + URLEncoder.encode("https://www.escidoc.de/shibboleth",
                     ENCODING);
 
@@ -796,10 +796,10 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             If an errors occurs handling the http response.
      */
-    private static void doRedirect(
-            final HttpServletResponse httpResponse, final String exceptionName,
-            final String message, final String redirectLocation,
-            final int httpStatusCode) throws IOException {
+    public static void doRedirect(
+        final HttpServletResponse httpResponse, final String exceptionName,
+        final String message, final String redirectLocation,
+        final int httpStatusCode) throws IOException {
 
         initHttpResponse(httpResponse);
         try {
@@ -827,15 +827,15 @@ public class EscidocServlet extends HttpServlet {
      * @return The value of the param.
      * @common
      */
-    private static String getQueryParamValue(
-            final HttpServletRequest request, final String param) {
+    protected String getQueryParamValue(
+        final HttpServletRequest request, final String param) {
         String result = null;
         if (request.getQueryString() != null) {
             final StringTokenizer queryToken =
                 new StringTokenizer(request.getQueryString(), "&");
             while (queryToken.hasMoreTokens()) {
                 final String next = queryToken.nextToken();
-                if (next.startsWith(param + '=')) {
+                if (next.startsWith(param + "=")) {
                     result = next.substring(param.length() + 1);
                     break;
                 }
@@ -914,7 +914,7 @@ public class EscidocServlet extends HttpServlet {
      * @return Returns the LOG.
      * @common
      */
-    private static AppLogger getLOG() {
+    public static AppLogger getLOG() {
         return LOG;
     }
 
@@ -945,8 +945,8 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             In case of an I/O error.
      */
-    private static String[] getAuthValues(
-            final HttpServletRequest request, final HttpServletResponse response)
+    public static String[] getAuthValues(
+        final HttpServletRequest request, final HttpServletResponse response)
         throws IOException {
 
         // Authentication via browser cookie
@@ -960,7 +960,7 @@ public class EscidocServlet extends HttpServlet {
         }
         // Authentication via Auth-Header
         else if (request.getHeader("Authorization") != null
-            && request.getHeader("Authorization").length() != 0) {
+            && !request.getHeader("Authorization").equals("")) {
             String authHeader = request.getHeader("Authorization");
             authHeader = authHeader.substring(authHeader.indexOf(' '));
             try {
@@ -995,9 +995,9 @@ public class EscidocServlet extends HttpServlet {
      * @throws ServletException
      *             thrown in case of an internal error
      */
-    private static String addCookie(
-            final HttpServletRequest httpRequest,
-            final HttpServletResponse httpResponse) throws ServletException {
+    public static String addCookie(
+        final HttpServletRequest httpRequest,
+        final HttpServletResponse httpResponse) throws ServletException {
         // Handle problem with eSciDoc user handle information in
         // Request URL. This could be a request from a browser which
         // displays this complete URL in the URL-line.

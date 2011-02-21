@@ -44,9 +44,9 @@ public class XmlSchemaNotFoundException extends ResourceNotFoundException {
      */
     private static final long serialVersionUID = 1197027745054905907L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
 
-    private static final String HTTP_STATUS_MESSAGE = "XML-Schema was not found.";
+    public static final String HTTP_STATUS_MESSAGE = "XML-Schema was not found.";
 
     /**
      * Default constructor.

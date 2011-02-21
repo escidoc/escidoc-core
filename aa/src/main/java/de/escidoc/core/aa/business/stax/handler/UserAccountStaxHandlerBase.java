@@ -65,8 +65,8 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * 
      * @aa
      */
-    UserAccountStaxHandlerBase(final UserAccount userAccount,
-                               final boolean create) {
+    public UserAccountStaxHandlerBase(final UserAccount userAccount,
+        final boolean create) {
 
         this.userAccount = userAccount;
         this.create = create;
@@ -83,8 +83,8 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * 
      * @aa
      */
-    UserAccountStaxHandlerBase(final RoleGrant grant,
-                               final boolean create) {
+    public UserAccountStaxHandlerBase(final RoleGrant grant,
+        final boolean create) {
 
         this.grant = grant;
         this.create = create;
@@ -104,7 +104,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * @return Returns the stored <code>UserAccount</code> object or
      *         <code>null</code>.
      */
-    final UserAccount getUserAccount() {
+    protected UserAccount getUserAccount() {
 
         return userAccount;
     }
@@ -115,7 +115,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * @return Returns the stored <code>UserAccount</code> object or
      *         <code>null</code>.
      */
-    final RoleGrant getGrant() {
+    protected RoleGrant getGrant() {
 
         return grant;
     }

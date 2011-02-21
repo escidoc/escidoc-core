@@ -89,14 +89,14 @@ public class ContainerHandlerBase extends HandlerBase {
     /**
      * @return the container
      */
-    final Container getContainer() {
+    public Container getContainer() {
         return container;
     }
 
     /**
      * @return the item
      */
-    final GenericResource getItem() {
+    public GenericResource getItem() {
         return item;
     }
 
@@ -117,7 +117,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws IntegritySystemException
      *             If the integrity of the repository is violated.
      */
-    final void setItem(final String id) throws ItemNotFoundException,
+    protected void setItem(final String id) throws ItemNotFoundException,
         WebserverSystemException, XmlParserSystemException,
         TripleStoreSystemException, IntegritySystemException {
 
@@ -152,7 +152,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    final void setContainer(final String id)
+    public void setContainer(final String id)
         throws ContainerNotFoundException, SystemException {
 
         try {
@@ -183,7 +183,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws WebserverSystemException
      *             Thrown if converting character encoding failed.
      */
-    final String getVersions() throws EncodingSystemException,
+    protected String getVersions() throws EncodingSystemException,
         WebserverSystemException, FedoraSystemException,
         StreamNotFoundException {
 
@@ -199,7 +199,7 @@ public class ContainerHandlerBase extends HandlerBase {
      *             If the container is locked and the current user is not the
      *             one who locked it.
      */
-    final void checkLocked() throws LockingException,
+    protected void checkLocked() throws LockingException,
         WebserverSystemException {
         if (getContainer().isLocked()
             && !getContainer().getLockOwner().equals(
@@ -209,7 +209,7 @@ public class ContainerHandlerBase extends HandlerBase {
                     + getContainer().getId()
                     + " is locked by "
                     + XmlUtility.escapeForbiddenXmlCharacters(getContainer()
-                        .getLockOwner()) + '.';
+                        .getLockOwner()) + ".";
             if (LOG.isDebugEnabled()) {
                 LOG.debug(message);
             }
@@ -260,7 +260,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws WebserverSystemException
      *             In case of an internal error.
      */
-    final void checkNotStatus(final String status)
+    protected void checkNotStatus(final String status)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
 
@@ -287,7 +287,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    final void checkReleased() throws InvalidStatusException,
+    protected void checkReleased() throws InvalidStatusException,
         TripleStoreSystemException, WebserverSystemException {
 
         final String status =
@@ -324,7 +324,7 @@ public class ContainerHandlerBase extends HandlerBase {
      *             If provided container version status is not released
      * 
      */
-    final void checkVersionStatusNot(final String checkStatus)
+    protected void checkVersionStatusNot(final String checkStatus)
         throws InvalidStatusException {
 
         String status;
@@ -385,7 +385,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws IntegritySystemException
      *             Thrown if version status could not be obtained.
      */
-    final void checkVersionStatus(final String checkStatus)
+    protected void checkVersionStatus(final String checkStatus)
         throws InvalidStatusException, IntegritySystemException {
 
         final String status = getContainer().getVersionStatus();
@@ -413,7 +413,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    final void checkNoObjectPidAssigned() throws InvalidStatusException,
+    protected void checkNoObjectPidAssigned() throws InvalidStatusException,
         TripleStoreSystemException, WebserverSystemException {
 
         final String pid =
@@ -517,7 +517,7 @@ public class ContainerHandlerBase extends HandlerBase {
     /**
      * @return Returns the utility.
      */
-    protected final Utility getUtility() {
+    protected Utility getUtility() {
         if (utility == null) {
             utility = Utility.getInstance();
         }
@@ -528,7 +528,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * 
      * @return The foxml renderer.
      */
-    final ContainerFoXmlRendererInterface getFoxmlRenderer() {
+    public ContainerFoXmlRendererInterface getFoxmlRenderer() {
 
         if (foxmlRenderer == null) {
             foxmlRenderer = new VelocityXmlContainerFoXmlRenderer();
@@ -539,7 +539,7 @@ public class ContainerHandlerBase extends HandlerBase {
     /**
      * @return the renderer
      */
-    final ContainerRendererInterface getRenderer()
+    public ContainerRendererInterface getRenderer()
         throws WebserverSystemException {
         if (renderer == null) {
             renderer = new VelocityXmlContainerRenderer();
@@ -553,7 +553,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws ReadonlyVersionException
      *             if the requested container version is not the last version
      */
-    final void checkLatestVersion() throws ReadonlyVersionException {
+    protected void checkLatestVersion() throws ReadonlyVersionException {
         final String thisVersion = container.getVersionNumber();
         if (thisVersion != null
             && !thisVersion.equals(container.getLatestVersionNumber())) {
@@ -606,8 +606,8 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws TripleStoreSystemException
      *             If the triple store reports an error.
      */
-    final void checkContextStatus(
-            final String contextId, final String status)
+    protected void checkContextStatus(
+        final String contextId, final String status)
         throws InvalidStatusException, TripleStoreSystemException,
         WebserverSystemException {
 
@@ -618,7 +618,7 @@ public class ContainerHandlerBase extends HandlerBase {
         if (!curStatus.equals(status)) {
             final String msg =
                 "The Context is in state '" + curStatus
-                    + "' and not in status " + status + '.';
+                    + "' and not in status " + status + ".";
             if (LOG.isDebugEnabled()) {
                 LOG.debug(msg);
             }
@@ -637,7 +637,7 @@ public class ContainerHandlerBase extends HandlerBase {
      * @throws SystemException
      *             Thrown in case of internal error.
      */
-    final void checkStatusNot(final String status)
+    protected void checkStatusNot(final String status)
         throws InvalidStatusException, SystemException {
         final String objectStatus =
             getTripleStoreUtility().getPropertiesElements(container.getId(),

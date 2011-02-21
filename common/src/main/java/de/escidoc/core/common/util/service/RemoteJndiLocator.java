@@ -44,7 +44,7 @@ import java.util.Properties;
  * @author Bernhard Kraus (Accenture)
  * 
  */
-class RemoteJndiLocator extends JndiObjectFactoryBean {
+public class RemoteJndiLocator extends JndiObjectFactoryBean {
 
     private String packageName;
 
@@ -68,7 +68,7 @@ class RemoteJndiLocator extends JndiObjectFactoryBean {
      *             From the lookup
      */
     @Override
-    public final void afterPropertiesSet() throws NamingException {
+    public void afterPropertiesSet() throws NamingException {
         try {
             setInitialContextJndiProperties();
         }
@@ -95,7 +95,7 @@ class RemoteJndiLocator extends JndiObjectFactoryBean {
      * @return boolean true because is a Spring singleton
      */
     @Override
-    public final boolean isSingleton() {
+    public boolean isSingleton() {
         return true;
     }
 
@@ -124,6 +124,8 @@ class RemoteJndiLocator extends JndiObjectFactoryBean {
         Properties properties = new Properties();
         properties.setProperty(Context.URL_PKG_PREFIXES,
             "org.jboss.naming:org.jnp.interfaces");
+        // properties.setProperty(Context.INITIAL_CONTEXT_FACTORY,
+        // "org.jboss.security.jndi.JndiLoginInitialContextFactory");
         properties.setProperty(Context.PROVIDER_URL, providerUrl);
         this.setJndiEnvironment(properties);
     }

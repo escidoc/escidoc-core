@@ -44,7 +44,7 @@ import java.io.InputStream;
  * @author TTE
  * @common
  */
-class VelocityClasspathResourceLoader extends ResourceLoader {
+public class VelocityClasspathResourceLoader extends ResourceLoader {
 
     private static final String TEMPLATES_BASE = "/META-INF/templates/";
 
@@ -72,7 +72,7 @@ class VelocityClasspathResourceLoader extends ResourceLoader {
      * @common
      */
     @Override
-    public final long getLastModified(final Resource resource) {
+    public long getLastModified(final Resource resource) {
 
         resource.setName(TEMPLATES_BASE + resource.getName());
         return loader.getLastModified(resource);
@@ -86,7 +86,7 @@ class VelocityClasspathResourceLoader extends ResourceLoader {
      * @common
      */
     @Override
-    public final InputStream getResourceStream(final String s)
+    public InputStream getResourceStream(final String s)
         throws ResourceNotFoundException {
 
         String source = TEMPLATES_BASE + s;
@@ -102,7 +102,7 @@ class VelocityClasspathResourceLoader extends ResourceLoader {
      * @common
      */
     @Override
-    public final void init(final ExtendedProperties extendedproperties) {
+    public void init(final ExtendedProperties extendedproperties) {
 
         setCachingOn(true);
     }
@@ -117,7 +117,7 @@ class VelocityClasspathResourceLoader extends ResourceLoader {
      * @common
      */
     @Override
-    public final boolean isSourceModified(final Resource resource) {
+    public boolean isSourceModified(final Resource resource) {
 
         resource.setName(TEMPLATES_BASE + resource.getName());
         return loader.isSourceModified(resource);

@@ -201,7 +201,6 @@
 		</descriptor>
 		<!-- #
 			 # Metadata Record Content
-			 # -->
 		<descriptor
 			uri="/ir/item/${ITEM-ID}/md-records/md-record/${MD-RECORD-ID}/content">
 			<invoke http="GET" method="retrieveMdRecordContent" param1="${ITEM-ID}"
@@ -210,6 +209,7 @@
 				</documentation>
 			</invoke>
 		</descriptor>
+			 # -->
 		<!--#
 			# Content streams
 			# -->
@@ -228,13 +228,14 @@
 		</descriptor>
 		<!-- #
 			 # DC Record Content
-			 #-->
 		<descriptor uri="/ir/item/${ITEM-ID}/resources/dc/content">
 			<invoke http="GET" method="retrieveDcRecordContent" param1="${ITEM-ID}">
 				<documentation visible="false">
 				</documentation>
 			</invoke>
 		</descriptor>
+			 #
+-->
 		<!--#
 			# version
 			# 	-->

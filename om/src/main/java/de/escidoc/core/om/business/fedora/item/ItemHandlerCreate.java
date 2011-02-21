@@ -75,7 +75,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -99,7 +98,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
     private static final Pattern PATTERN_INVALID_FOXML =
         Pattern.compile("fedora.server.errors.ObjectValidityException");
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(ItemHandlerCreate.class.getName());
 
     /**
@@ -116,9 +115,9 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    final String getComponentRelsExtWithVelocity(
-            final String id, final Map<String, String> properties,
-            final boolean inCreate) throws WebserverSystemException {
+    protected String getComponentRelsExtWithVelocity(
+        final String id, final Map<String, String> properties,
+        final boolean inCreate) throws WebserverSystemException {
 
         return getFoxmlRenderer().renderComponentRelsExt(id, properties,
             inCreate);
@@ -220,15 +219,15 @@ public class ItemHandlerCreate extends ItemResourceListener {
                 // found, if the retrieved value is not available the default
                 // value
                 // will be set
-                LOGGER.warn(e);
+                log.warn(e);
             }
         }
 
         if (dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS) != null) {
             final Map mdRecordsStreams =
                 (Map) dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS);
-            if (!mdRecordsStreams.isEmpty()) {
-                final Collection<Map<String, String>> mdRecords =
+            if (mdRecordsStreams.size() > 0) {
+                final List<Map<String, String>> mdRecords =
                     new ArrayList<Map<String, String>>(mdRecordsStreams.size());
                 values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
 
@@ -320,7 +319,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws MissingContentException
      *             If some required content is missing in xml data.
      */
-    final String addComponent(final String xmlData) throws SystemException,
+    public String addComponent(final String xmlData) throws SystemException,
         XmlCorruptedException, XmlSchemaValidationException, LockingException,
         InvalidStatusException, FileNotFoundException,
         MissingElementValueException, ReadonlyElementViolationException,
@@ -412,8 +411,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
             .getCurrentUserId());
         properties.put(TripleStoreUtility.PROP_CREATED_BY_TITLE, getUtility()
             .getCurrentUserRealName());
-        final Map components = (Map) streams.get("components");
-        final Map componentStreams = (Map) components.get(componentId);
+        final Map components = (HashMap) streams.get("components");
+        final Map componentStreams = (HashMap) components.get(componentId);
         final Map<String, Map<String, String>> componentMdAttributes =
             cmh.getMetadataAttributes().get(componentId);
         final String escidocMdNsUri = cmh.getNamespacesMap().get(componentId);
@@ -421,7 +420,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final String message =
                 "The attribute 'storage' of the element "
                     + "'content' is missing.";
-            LOGGER.error(message);
+            log.error(message);
             throw new InvalidContentException(message);
         }
         if ((componentBinary.get(DATASTREAM_CONTENT) != null)
@@ -435,7 +434,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final String message =
                 "The component section 'content' with the attribute 'storage' set to 'external-url' "
                     + "or 'external-managed' may not have an inline content.";
-            LOGGER.error(message);
+            log.error(message);
             throw new InvalidContentException(message);
         }
         handleComponent(componentId, properties, componentBinary,
@@ -461,6 +460,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                 Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + componentId);
         newComponentIdElement.addAttribute(resource);
+        // newComponentIdElement.setElementText(componentId);
         newComponentIdElement.setChildrenElements(null);
         final List<StartElementWithChildElements> elements =
             new ArrayList<StartElementWithChildElements>();
@@ -473,7 +473,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             sp.parse(getItem().getRelsExt().getStream());
         }
         catch (final XMLStreamException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
             throw new XmlParserSystemException(e.getMessage(), e);
         }
         catch (final Exception e) {
@@ -487,7 +487,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             getItem().setRelsExt(relsExtNew);
         }
         catch (final StreamNotFoundException e1) {
-            LOGGER.error(e1.getMessage());
+            log.error(e1.getMessage());
             throw new IntegritySystemException(e1);
         }
         getFedoraUtility().sync();
@@ -501,7 +501,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         }
         catch (final ResourceNotFoundException e) {
             String msg = "Just created component not found.";
-            LOGGER.error(msg, e);
+            log.error(msg, e);
             throw new IntegritySystemException(msg, e);
         }
         return component;
@@ -529,7 +529,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws InvalidContentException
      * @throws MissingContentException
      */
-    final String createComponent(final String xmlData) throws SystemException,
+    public String createComponent(final String xmlData) throws SystemException,
         XmlCorruptedException, XmlSchemaValidationException, LockingException,
         InvalidStatusException, FileNotFoundException,
         MissingElementValueException, ReadonlyElementViolationException,
@@ -603,6 +603,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         sp.clearHandlerChain();
         final Map<String, String> componentBinary =
             contentHandler.getComponentBinary();
+        // String componentTitle = (String) titleHandler.getComponentTitle();
         // get modified data streams
         final Map<String, Object> streams = me.getOutputStreams();
         final Map<String, String> properties =
@@ -621,7 +622,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final String message =
                 "The attribute 'storage' of the element "
                     + "'content' is missing.";
-            LOGGER.debug(message);
+            log.debug(message);
             throw new InvalidContentException(message);
         }
         if ((componentBinary.get(DATASTREAM_CONTENT) != null)
@@ -635,7 +636,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             final String message =
                 "The component section 'content' with the attribute 'storage' set to 'external-url' "
                     + "or 'external-managed' may not have an inline content.";
-            LOGGER.debug(message);
+            log.debug(message);
             throw new InvalidContentException(message);
         }
         handleComponent(componentId, properties, componentBinary,
@@ -678,11 +679,11 @@ public class ItemHandlerCreate extends ItemResourceListener {
      * @throws InvalidContentException
      * @throws TripleStoreSystemException
      */
-    final void handleComponent(
-            final String componentId, final Map<String, String> properties,
-            final Map<String, String> binaryContent, final Map datastreams,
-            final Map<String, Map<String, String>> mdRecordAttributes,
-            final String nsUri) throws FileNotFoundException,
+    protected void handleComponent(
+        final String componentId, final Map<String, String> properties,
+        final Map<String, String> binaryContent, final Map datastreams,
+        final Map<String, Map<String, String>> mdRecordAttributes,
+        final String nsUri) throws FileNotFoundException,
         WebserverSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException,
         InvalidContentException, TripleStoreSystemException {

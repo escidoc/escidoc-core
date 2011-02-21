@@ -54,7 +54,7 @@ public class StagingFile
      *         there does not exist an associated file.
      * @st
      */
-    public final boolean hasFile() {
+    public boolean hasFile() {
 
         if (getReference() == null) {
             return false;
@@ -101,7 +101,7 @@ public class StagingFile
      * @return Returns <code>true</code> if this staging file has been expired.
      * @st
      */
-    public final boolean isExpired() {
+    public boolean isExpired() {
 
         return getExpiryTs() <= System.currentTimeMillis();
     }
@@ -132,7 +132,7 @@ public class StagingFile
      *             If file cannot be retrieved.
      * @st
      */
-    final File createFile() throws IOException {
+    public File createFile() throws IOException {
 
         if (getReference() == null) {
             throw new IOException();
@@ -154,7 +154,7 @@ public class StagingFile
      *             If file input stream cannot be retrieved.
      * @st
      */
-    public final FileInputStream getFileInputStream() throws IOException {
+    public FileInputStream getFileInputStream() throws IOException {
 
         try {
             return new FileInputStream(getFile());
@@ -205,7 +205,7 @@ public class StagingFile
      *             If operation fails.
      * @st
      */
-    public final boolean read(final InputStream inputStream) throws IOException {
+    public boolean read(final InputStream inputStream) throws IOException {
 
         if (inputStream == null) {
             throw new IOException();
@@ -235,8 +235,8 @@ public class StagingFile
      *             If copy fails.
      * @st
      */
-    private static boolean copy(
-            final InputStream inputStream, final OutputStream outputStream)
+    private boolean copy(
+        final InputStream inputStream, final OutputStream outputStream)
         throws IOException {
 
         byte[] buffer = new byte[BUFFER_SIZE];
@@ -261,7 +261,7 @@ public class StagingFile
      *             If clear fails.
      * @st
      */
-    public final void clear() throws IOException {
+    public void clear() throws IOException {
 
         if (hasFile()) {
             getFile().delete();

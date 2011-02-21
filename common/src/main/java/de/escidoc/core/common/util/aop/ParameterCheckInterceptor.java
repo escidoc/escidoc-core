@@ -69,7 +69,7 @@ public class ParameterCheckInterceptor implements Ordered {
      * @see org.springframework.core.Ordered#getOrder()
      * @common
      */
-    public final int getOrder() {
+    public int getOrder() {
 
         return AopUtil.PRECEDENCE_PARAMETER_CHECK_INTERCEPTOR;
     }
@@ -100,7 +100,7 @@ public class ParameterCheckInterceptor implements Ordered {
                 final String target = methodSignature.getDeclaringTypeName();
                 throw new MissingMethodParameterException(StringUtility
                     .format("The parameter at position "+
-                            (i + 1) + " must be provided", target+ '.' + calledMethod
+                            (i + 1) + " must be provided", target+ "."+ calledMethod
                             .getName()));
             }
         }

@@ -32,7 +32,6 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Predecessor;
-import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
@@ -49,7 +48,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -320,7 +318,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             .getOrganizationalUnitResourcesPathListHref(organizationalUnit
                 .getId()));
         Iterator<List<String>> pathIter = pathes.iterator();
-        Collection<List<Map<String, String>>> pathList =
+        List<List<Map<String, String>>> pathList =
             new ArrayList<List<Map<String, String>>>();
         while (pathIter.hasNext()) {
             pathList.add(retrieveRefValues(pathIter.next()));
@@ -374,7 +372,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private static List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
+    private List<Map<String, String>> retrieveRefValues(final List<String> ids)
         throws SystemException {
         List<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(ids.size());
@@ -430,7 +428,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private static void addXlinkValues(final Map<String, Object> values)
+    private void addXlinkValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -450,7 +448,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private static void addNamespaceValues(final Map<String, Object> values)
+    private void addNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitNamespacePrefix",
@@ -476,7 +474,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private static void addListNamespaceValues(final Map<String, Object> values)
+    private void addListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitsNamespacePrefix",
@@ -494,7 +492,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private static void addPathListNamespaceValues(final Map<String, Object> values)
+    private void addPathListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitPathListNamespacePrefix",
@@ -518,7 +516,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private static void addSuccessorsNamespaceValues(final Map<String, Object> values)
+    private void addSuccessorsNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitNamespacePrefix",
@@ -541,9 +539,9 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @oum
      */
-    private static void addPropertiesValues(
-            final OrganizationalUnit organizationalUnit,
-            final Map<String, Object> values) {
+    private void addPropertiesValues(
+        final OrganizationalUnit organizationalUnit,
+        final Map<String, Object> values) {
 
         try {
             values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
@@ -619,7 +617,7 @@ public class VelocityXmlOrganizationalUnitRenderer
 
         values.put("mdRecordsTitle", "Metadata");
 
-        Map<String, Datastream> mdRecords;
+        HashMap<String, Datastream> mdRecords;
         try {
             mdRecords =
                 (HashMap<String, Datastream>) organizationalUnit.getMdRecords();
@@ -726,9 +724,9 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @oum
      */
-    private static void addResourcesValues(
-            final FedoraResource organizationalUnit,
-            final Map<String, Object> values) {
+    private void addResourcesValues(
+        final OrganizationalUnit organizationalUnit,
+        final Map<String, Object> values) {
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", XmlUtility
             .getOrganizationalUnitResourcesHref(organizationalUnit.getId()));
@@ -758,15 +756,15 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private static void addParentsValues(
-            final OrganizationalUnit organizationalUnit,
-            final Map<String, Object> values) throws SystemException {
+    private void addParentsValues(
+        final OrganizationalUnit organizationalUnit,
+        final Map<String, Object> values) throws SystemException {
         values.put("parentsHref", XmlUtility
             .getOrganizationalUnitParentsHref(organizationalUnit.getId()));
         values.put("parentsTitle", "Parents");
         List<String> ids = organizationalUnit.getParents();
         Iterator<String> idIter = ids.iterator();
-        Collection<Map<String, String>> entries =
+        List<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(ids.size());
         while (idIter.hasNext()) {
             Map<String, String> entry = new HashMap<String, String>(THREE);
@@ -792,9 +790,9 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static void addPredecessorsValues(
-            final OrganizationalUnit organizationalUnit,
-            final Map<String, Object> values) throws SystemException {
+    private void addPredecessorsValues(
+        final OrganizationalUnit organizationalUnit,
+        final Map<String, Object> values) throws SystemException {
 
         values.put(XmlTemplateProvider.PREDECESSORS_HREF, XmlUtility
             .getOrganizationalUnitPredecessorsHref(organizationalUnit.getId()));
@@ -803,7 +801,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         List<Predecessor> predecessors = organizationalUnit.getPredecessors();
         Iterator<Predecessor> idIter = predecessors.iterator();
 
-        Collection<Map<String, String>> entries =
+        List<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(predecessors.size());
 
         while (idIter.hasNext()) {
@@ -836,9 +834,9 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static void addSuccessorsValues(
-            final OrganizationalUnit organizationalUnit,
-            final Map<String, Object> values) throws SystemException {
+    private void addSuccessorsValues(
+        final OrganizationalUnit organizationalUnit,
+        final Map<String, Object> values) throws SystemException {
 
         values.put(XmlTemplateProvider.SUCCESSORS_HREF, XmlUtility
             .getOrganizationalUnitSuccessorsHref(organizationalUnit.getId()));
@@ -850,7 +848,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         }
         Iterator<Predecessor> idIter = successors.iterator();
 
-        Collection<Map<String, String>> entries =
+        List<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(successors.size());
 
         while (idIter.hasNext()) {

@@ -92,11 +92,11 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
         return data;
     }
 
-    public final List<String> getMemberIds() {
+    public List<String> getMemberIds() {
         return memberIds;
     }
 
-    public final List<String> getMemberIdsToRemove() {
+    public List<String> getMemberIdsToRemove() {
         return memberIdsToRemove;
     }
 

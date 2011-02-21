@@ -57,7 +57,7 @@ public class XmlTemplateProvider {
 
     public static final String IN_CREATE = "IN_CREATE";
 
-    static final String ESCAPER = "esc";
+    public static final String ESCAPER = "esc";
 
     public static final String DEFAULT_METADATA_FOR_DC_MAPPING = "escidoc";
 
@@ -83,7 +83,7 @@ public class XmlTemplateProvider {
     /*
      * Common values
      */
-    static final String LOCK_STATUS = "LOCK_STATUS";
+    public static final String LOCK_STATUS = "LOCK_STATUS";
 
     public static final String LOCK_OWNER = "LOCK_OWNER";
 
@@ -107,7 +107,7 @@ public class XmlTemplateProvider {
 
     public static final String CREATED_BY_ID = "CREATED_BY_ID";
 
-    static final String CREATED_BY_HREF = "CREATED_BY_HREF";
+    public static final String CREATED_BY_HREF = "CREATED_BY_HREF";
 
     public static final String CREATED_BY_TITLE = "CREATED_BY_TITLE";
 
@@ -130,7 +130,7 @@ public class XmlTemplateProvider {
      */
     public static final String MODIFIED_BY_ID = "MODIFIED_BY_ID";
 
-    static final String MODIFIED_BY_HREF = "MODIFIED_BY_HREF";
+    public static final String MODIFIED_BY_HREF = "MODIFIED_BY_HREF";
 
     public static final String MODIFIED_BY_TITLE = "MODIFIED_BY_TITLE";
 
@@ -322,13 +322,13 @@ public class XmlTemplateProvider {
 
     public static final String ESCIDOC_PARAMETER_NS = "parameterNamespace";
 
-    private static final String BASE_TEMPLATE_PATH =
+    protected static final String BASE_TEMPLATE_PATH =
         "/de/escidoc/core/common/util/xml/factory/templates";
 
-    static final String CONTENT_RELATION_NAMESPACE_PREFIX =
+    public static final String CONTENT_RELATION_NAMESPACE_PREFIX =
         "contentRelationNamespacePrefix";
 
-    static final String CONTENT_RELATION_NAMESPACE =
+    public static final String CONTENT_RELATION_NAMESPACE =
         "contentRelationNamespace";
 
     public static final String MD_RECRORDS_NAMESPACE_PREFIX =
@@ -658,13 +658,13 @@ public class XmlTemplateProvider {
     public static final String VAR_CONTENT_MODEL_STATUS =
         XmlTemplateProvider.VAR_CONTENT_MODEL_PUBLIC_STATUS;
 
-    private static final String VAR_CONTENT_MODEL_PUBLIC_STATUS =
+    public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS =
         "resourcePublicStatus";
 
     public static final String VAR_CONTENT_MODEL_STATUS_COMMENT =
         XmlTemplateProvider.VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT;
 
-    private static final String VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT =
+    public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT =
         "resourcePublicStatusComment";
 
     public static final String VAR_CONTENT_MODEL_OBJECT_PID =
@@ -774,39 +774,39 @@ public class XmlTemplateProvider {
     /*
      * Content Relation
      */
-    static final String CONTENT_RELATION_TYPE = "CONTENT_RELATION_TYPE";
+    public static final String CONTENT_RELATION_TYPE = "CONTENT_RELATION_TYPE";
 
-    static final String CONTENT_RELATION_DESCRIPTION =
+    public static final String CONTENT_RELATION_DESCRIPTION =
         "CONTENT_RELATION_DESCRIPTION";
 
-    static final String CONTENT_RELATION_SUBJECT_TITLE =
+    public static final String CONTENT_RELATION_SUBJECT_TITLE =
         "contentRelationSubjectTitle";
 
-    static final String CONTENT_RELATION_SUBJECT_HREF =
+    public static final String CONTENT_RELATION_SUBJECT_HREF =
         "contentRelationSubjectHref";
 
-    static final String CONTENT_RELATION_SUBJECT_ID =
+    public static final String CONTENT_RELATION_SUBJECT_ID =
         "contentRelationSubjectId";
 
-    static final String CONTENT_RELATION_OBJECT_TITLE =
+    public static final String CONTENT_RELATION_OBJECT_TITLE =
         "contentRelationObjectTitle";
 
-    static final String CONTENT_RELATION_OBJECT_HREF =
+    public static final String CONTENT_RELATION_OBJECT_HREF =
         "contentRelationObjectHref";
 
-    static final String CONTENT_RELATION_OBJECT_ID =
+    public static final String CONTENT_RELATION_OBJECT_ID =
         "contentRelationObjectId";
 
-    static final String CONTENT_RELATION_SUBJECT_VERSION_NUMBER =
+    public static final String CONTENT_RELATION_SUBJECT_VERSION_NUMBER =
         "contentRelationSubjectVersion";
 
-    static final String CONTENT_RELATION_OBJECT_VERSION_NUMBER =
+    public static final String CONTENT_RELATION_OBJECT_VERSION_NUMBER =
         "contentRelationObjectVersion";
 
     /*
      * Map with templates (cache).
      */
-    private static final Map<String, String> TEMPLATES =
+    private static final Map<String, String> templates =
         new HashMap<String, String>();
 
     private static final Map<String, Pattern> PATTERNS = new HashMap<String, Pattern>();
@@ -836,8 +836,8 @@ public class XmlTemplateProvider {
         final Map<String, String> values) throws WebserverSystemException {
 
         String result = getTemplate(resource, path);
-        for (Map.Entry<String, String> e : values.entrySet()) {
-            result = replaceAll(result, e.getKey(), e.getValue());
+        for (String s : values.keySet()) {
+            result = replaceAll(result, s, values.get(s));
         }
         return result;
     }
@@ -855,8 +855,8 @@ public class XmlTemplateProvider {
      *            The String replacing the variable.
      * @return The resulting String.
      */
-    final String replaceAll(
-            final String source, final String variable, final String replacement) {
+    protected String replaceAll(
+        final String source, final String variable, final String replacement) {
 
         Matcher matcher = getPattern(variable).matcher(source);
         String ret = source;
@@ -882,7 +882,7 @@ public class XmlTemplateProvider {
      *            The variable.
      * @return The corresponding pattern.
      */
-    static final Pattern getPattern(final String variable) {
+    protected Pattern getPattern(final String variable) {
 
         Pattern result;
         result = PATTERNS.get(variable);
@@ -914,12 +914,12 @@ public class XmlTemplateProvider {
     private String getTemplate(final String resource, final String path)
         throws WebserverSystemException {
 
-        String result = TEMPLATES.get(resource);
+        String result = templates.get(resource);
         if (result == null) {
-            String filename = getTemplatePath(path) + '/' + resource + ".xml";
+            String filename = getTemplatePath(path) + "/" + resource + ".xml";
             try {
                 result = getFileContents(filename);
-                TEMPLATES.put(resource, result);
+                templates.put(resource, result);
             }
             catch (IOException e) {
                 throw new WebserverSystemException("Template for " + resource
@@ -936,14 +936,14 @@ public class XmlTemplateProvider {
      *            The path to the parent of resource.
      * @return The path to resource.
      */
-    private static String getTemplatePath(final String path) {
+    private String getTemplatePath(final String path) {
         String result;
 
         if (path.startsWith("/")) {
             result = XmlTemplateProvider.BASE_TEMPLATE_PATH + path;
         }
         else {
-            result = XmlTemplateProvider.BASE_TEMPLATE_PATH + '/' + path;
+            result = XmlTemplateProvider.BASE_TEMPLATE_PATH + "/" + path;
         }
         return result;
     }

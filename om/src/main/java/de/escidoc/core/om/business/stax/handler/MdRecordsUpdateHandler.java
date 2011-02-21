@@ -59,7 +59,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
     private final Map<String, Map<String, String>> metadataAttributes =
         new HashMap<String, Map<String, String>>();
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(MetadataHandler.class.getName());
 
     private boolean isMandatoryName = false;
@@ -92,7 +92,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
         String curPath = parser.getCurPath();
         String theName = element.getLocalName();
         int indexInherited = element.indexOfAttribute(null, "inherited");
-        if (curPath.startsWith(mdRecordsPath) || mdRecordsPath.length() == 0) {
+        if (curPath.startsWith(mdRecordsPath) || mdRecordsPath.equals("")) {
 
             if (curPath.equals(mdRecordsPath + "/md-record")
                 && (indexInherited < 0)) {
@@ -101,10 +101,11 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                 isInside = true;
                 // get name of md-record
 
+                // String onlyName = "escidoc";
                 try {
                     name = element.getAttribute(null, "name").getValue();
-                    if (name.length() == 0) {
-                        LOGGER.error("the value of"
+                    if (name.equals("")) {
+                        log.error("the value of"
                             + " \"name\" atribute of the element " + theName
                             + " is missing");
                         throw new MissingAttributeValueException(
@@ -137,7 +138,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                     Attribute schema = element.getAttribute(indexOfSchema);
                     schemaValue = schema.getValue();
                 }
-                Map<String, String> md = new HashMap<String, String>();
+                HashMap<String, String> md = new HashMap<String, String>();
                 if (typeValue != null) {
                     md.put("type", typeValue);
                 }
@@ -185,7 +186,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
             String message =
                 "Mandatory md-record with a name "
                     + Elements.MANDATORY_MD_RECORD_NAME + " is missing.";
-            LOGGER.error(message);
+            log.error(message);
             throw new MissingMdRecordException(message);
         }
         return element;
@@ -196,7 +197,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
      * 
      * @return Map with map of md-record attributes.
      */
-    public final Map<String, Map<String, String>> getMetadataAttributes() {
+    public Map<String, Map<String, String>> getMetadataAttributes() {
         return this.metadataAttributes;
     }
 
@@ -206,7 +207,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
      * 
      * @return name space of md-record
      */
-    public final String getEscidocMdRecordNameSpace() {
+    public String getEscidocMdRecordNameSpace() {
         return this.escidocMdRecordNameSpace;
     }
 }

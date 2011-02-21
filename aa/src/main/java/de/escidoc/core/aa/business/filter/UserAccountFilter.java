@@ -226,7 +226,7 @@ public class UserAccountFilter extends CqlFilter {
                     catch (IOException e) {
                         throw new InvalidSearchQueryException(e);
                     }
-                    if (ouAttributeName == null || ouAttributeName.length() == 0) {
+                    if (ouAttributeName == null || ouAttributeName.equals("")) {
                         throw new InvalidSearchQueryException(
                             "ou-attribute-name not found in configuration");
                     }
@@ -253,7 +253,7 @@ public class UserAccountFilter extends CqlFilter {
      * 
      * @return all property names for that filter
      */
-    public final Set<String> getPropertyNames() {
+    public Set<String> getPropertyNames() {
         Set<String> result = new TreeSet<String>();
 
         result.addAll(super.getPropertyNames());

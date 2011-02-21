@@ -68,7 +68,7 @@ public abstract class DefaultHandler {
      * As this should not occur in a Stax handler (parsing is executed after
      * schema validation), this should be reported as an internal system error.
      */
-    private static final String MSG_MANDATORY_ATTRIBUTE_NOT_FOUND =
+    public static final String MSG_MANDATORY_ATTRIBUTE_NOT_FOUND =
         "Mandatory attribute not found.";
 
     private boolean ready = false;
@@ -143,9 +143,9 @@ public abstract class DefaultHandler {
      * @return Returns a {@link SystemException} as this situation can occur due
      *         to internal errors, only.
      */
-    protected static final SystemException createMandatoryAttributeNotFoundException(
-            final StartElement startElement, final String namespaceUri,
-            final String attributeName, Exception e) {
+    protected SystemException createMandatoryAttributeNotFoundException(
+        final StartElement startElement, final String namespaceUri,
+        final String attributeName, Exception e) {
 
         return new WebserverSystemException(StringUtility
             .format(MSG_MANDATORY_ATTRIBUTE_NOT_FOUND,
@@ -155,7 +155,7 @@ public abstract class DefaultHandler {
     /**
      * @return Returns <code>true</code> if the ready flag is not set.
      */
-    protected final boolean isNotReady() {
+    protected boolean isNotReady() {
         return !ready;
     }
 
@@ -163,7 +163,7 @@ public abstract class DefaultHandler {
      * Marks this handler has finished by setting the ready flag to
      * <code>true</code>.
      */
-    protected final void setReady() {
+    protected void setReady() {
         this.ready = true;
     }
 
@@ -180,9 +180,9 @@ public abstract class DefaultHandler {
      *            The name of the Attribute.
      * @return Value of Attribute or null.
      */
-    protected static final String getAttributeValue(
-            final StartElement element, final String namespace,
-            final String attributeName) {
+    protected String getAttributeValue(
+        final StartElement element, final String namespace,
+        final String attributeName) {
 
         String typeValue = null;
         int indexOfType = element.indexOfAttribute(namespace, attributeName);

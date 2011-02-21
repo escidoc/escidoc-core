@@ -102,7 +102,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         throws ParserConfigurationException, SAXException, IOException,
         TransformerException {
 
-        Collection<String> paths = new ArrayList<String>();
+        List<String> paths = new ArrayList<String>();
         paths.add(descriptor);
         setDescriptorFilenames(paths);
     }
@@ -122,7 +122,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             Thrown if an xml transformation fails.
      * @common
      */
-    public MethodMapper(final Collection<String> descriptors)
+    public MethodMapper(final List<String> descriptors)
         throws ParserConfigurationException, SAXException, IOException,
         TransformerException {
 
@@ -146,8 +146,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             Thrown if an xml transformation fails.
      * @common
      */
-    private void setDescriptorFilenames(
-            final Iterable<String> descriptorFilenames)
+    public void setDescriptorFilenames(
+        final Collection<String> descriptorFilenames)
         throws ParserConfigurationException, SAXException, IOException,
         TransformerException {
 
@@ -155,7 +155,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         for (String descriptor : descriptorFilenames) {
             descriptor = descriptor.trim();
             if (!descriptor.startsWith("/")) {
-                this.descriptorFilenames.add('/' + descriptor);
+                this.descriptorFilenames.add("/" + descriptor);
             }
             else {
                 this.descriptorFilenames.add(descriptor);
@@ -205,7 +205,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
                         + getAttributeValue(next, DEFINITION_VAR_NAME_ATTR)
                         + "', regexp='"
                         + getAttributeValue(next, DEFINITION_VAR_REGEXP_ATTR)
-                        + '\'');
+                        + "'");
         }
         Iterator<String> resIter = getResources().keySet().iterator();
         getLogger().debug("Resources:");
@@ -312,10 +312,10 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             e
      * @common
      */
-    public final BeanMethod getMethod(
-            final String uri, final String query,
-            final Map<String, String[]> parameters, final String httpMethod,
-            final Object body) throws MethodNotFoundException,
+    public BeanMethod getMethod(
+        final String uri, final String query,
+        final Map<String, String[]> parameters, final String httpMethod,
+        final Object body) throws MethodNotFoundException,
         EncodingSystemException {
         String decodedUri = null;
         try {
@@ -344,14 +344,14 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return The resource name.
      * @common
      */
-    private Resource getResource(final String requestUri) {
+    public Resource getResource(final String requestUri) {
 
         final String uri;
         if (requestUri.endsWith("/")) {
             uri = requestUri;
         }
         else {
-            uri = requestUri + '/';
+            uri = requestUri + "/";
         }
         Resource result = null;
         // FIXME: Remove this iteration. All base-URIs are like
@@ -394,7 +394,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return The definitions.
      * @common
      */
-    private Collection getDefinitions(final String type) {
+    public Collection getDefinitions(final String type) {
 
         return getDefinitions().get(type);
     }
@@ -408,8 +408,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *            The collection of definitions.
      * @common
      */
-    private void putDefinitions(
-            final String type, final Collection<Node> newDefinitions) {
+    public void putDefinitions(
+        final String type, final Collection<Node> newDefinitions) {
 
         if (this.definitions == null) {
             this.definitions = new HashMap<String, Collection>();
@@ -421,7 +421,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return Returns the definitions.
      * @common
      */
-    private Map<String, Collection> getDefinitions() {
+    public Map<String, Collection> getDefinitions() {
         return definitions;
     }
 
@@ -439,7 +439,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return Returns the resources.
      * @common
      */
-    private Map<String, Resource> getResources() {
+    public Map<String, Resource> getResources() {
         return resources;
     }
 
@@ -448,7 +448,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *            The resources to set.
      * @common
      */
-    private void setResources(final Map<String, Resource> resources) {
+    public void setResources(final Map<String, Resource> resources) {
         this.resources = resources;
     }
 }

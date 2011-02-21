@@ -53,6 +53,15 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.UserAccountXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+
 /**
  * User account renderer implementation using the velocity template engine.
  * 
@@ -381,7 +390,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         addCommonValues(values);
         addUserAccountListValues(values);
 
-        final Collection<Map<String, Object>> userAccountsValues =
+        final List<Map<String, Object>> userAccountsValues =
             new ArrayList<Map<String, Object>>(userAccounts.size());
         for (UserAccount userAccount1 : userAccounts) {
             UserAccount userAccount = userAccount1;
@@ -423,8 +432,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *            The {@link Map} to that the values shall be added.
      * @aa
      */
-    private static void addUserAccountNamespaceValues(
-        final Map<String, Object> values) {
+    private void addUserAccountNamespaceValues(final Map<String, Object> values) {
         values.put("userAccountNamespacePrefix",
             Constants.USER_ACCOUNT_NS_PREFIX);
         values.put("userAccountNamespace", Constants.USER_ACCOUNT_NS_URI);
@@ -451,8 +459,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *            The MAP to add the values to.
      * @aa
      */
-    private static void addUserAccountsNamespaceValues(
-        final Map<String, Object> values) {
+    private void addUserAccountsNamespaceValues(final Map<String, Object> values) {
 
         values.put("userAccountListNamespacePrefix",
             Constants.USER_ACCOUNT_LIST_NS_PREFIX);
@@ -470,7 +477,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values)
+    private void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -486,7 +493,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *            The map to add values to.
      * @aa
      */
-    private static void addResourcesValues(
+    private void addResourcesValues(
         final UserAccount userAccount, final Map<String, Object> values) {
 
         values.put("resourcesHref",
@@ -507,7 +514,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private static UserAccountXmlProvider getUserAccountXmlProvider()
+    private UserAccountXmlProvider getUserAccountXmlProvider()
         throws WebserverSystemException {
 
         return UserAccountXmlProvider.getInstance();
@@ -561,7 +568,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         values.put("userAccountId", userAccount.getId());
         addEscidocBaseUrl(values);
 
-        Collection<Map<String, String>> userAccountPreferencesValues =
+        List<Map<String, String>> userAccountPreferencesValues =
             new ArrayList<Map<String, String>>();
         for (UserPreference preference : preferences) {
             UserPreference p = preference;
@@ -578,8 +585,10 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         return ret;
     }
 
-    private static void addPreferencesCommonValues(
-        final Map<String, Object> values) {
+    private void addPreferencesCommonValues(final Map<String, Object> values) {
+        // would like to create and return new map: no side effects(?) (FRS)
+        // values.put("userAccountPreferencesHref", value);
+        // values.put("userAccountPreferencesTitle", value);
         values.put("preferencesNamespacePrefix",
             Constants.USER_PREFERENCES_NS_PREFIX);
         values.put("preferencesNamespace", Constants.USER_PREFERENCES_NS_URI);
@@ -671,7 +680,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         values.put("userAccountId", userAccount.getId());
         addEscidocBaseUrl(values);
 
-        Collection<Map<String, Object>> userAccountAttributesValues =
+        List<Map<String, Object>> userAccountAttributesValues =
             new ArrayList<Map<String, Object>>();
         for (UserAttribute attribute : attributes) {
             UserAttribute p = attribute;

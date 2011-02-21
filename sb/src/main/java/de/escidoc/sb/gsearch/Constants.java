@@ -33,7 +33,7 @@ package de.escidoc.sb.gsearch;
  * 
  * @author MIH
  */
-class Constants {
+public class Constants {
 
     /**
      * Spring Object-Names.

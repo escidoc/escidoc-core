@@ -50,7 +50,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.naming.directory.NoSuchAttributeException;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,7 +118,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
         MissingElementValueException {
         String curPath = parser.getCurPath();
 
-        if (curPath.startsWith(propertiesPath + '/')) {
+        if (curPath.startsWith(propertiesPath + "/")) {
             String theName = element.getLocalName();
 
             // organizational-unit
@@ -202,9 +201,17 @@ public class ContextPropertiesHandler extends DefaultHandler {
             }
             else if (theName.equals(Elements.ELEMENT_DESCRIPTION)) {
                 if (data.length() == 0) {
+                    // int index =
+                    // element.indexOfAttribute(
+                    // de.escidoc.core.common.business.Constants.XLINK_URI,
+                    // "href");
+                    // String hrefVal = element.getAttribute(index).getValue();
+                    // propertiesMap.put(element.getLocalName(), hrefVal);
+                    // propertiesMap.put(theName, "");
                     propertiesMap.put(Elements.ELEMENT_DESCRIPTION, "");
                 }
                 else {
+                    // propertiesMap.put(theName, data);
                     propertiesMap.put(Elements.ELEMENT_DESCRIPTION, data);
                 }
             }
@@ -218,7 +225,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
      * 
      * @return map of properties without organizational units.
      */
-    public final Map<String, Object> getPropertiesMap() {
+    public Map<String, Object> getPropertiesMap() {
         return this.propertiesMap;
     }
 
@@ -227,7 +234,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
      * 
      * @return organizational units
      */
-    public final Collection<String> getOrganizationalUnits() {
+    public List<String> getOrganizationalUnits() {
         return this.orgunits;
     }
 }

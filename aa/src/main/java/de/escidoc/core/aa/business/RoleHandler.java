@@ -492,7 +492,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static void setCreationValues(final EscidocRole role)
+    private void setCreationValues(final EscidocRole role)
         throws SystemException {
 
         // initialize creation-date value
@@ -652,8 +652,8 @@ public class RoleHandler implements RoleHandlerInterface {
             String scopeRules = xacmlParser.getScopeRules(resourceType);
             String policyRules = xacmlParser.getPolicyRules(resourceType);
 
-            log.info("create access right (" + role.getId() + ','
-                + resourceType + ',' + scopeRules + ',' + policyRules + ')');
+            log.info("create access right (" + role.getId() + ","
+                + resourceType + "," + scopeRules + "," + policyRules + ")");
             accessRights.putAccessRight(resourceType, role.getId(), scopeRules,
                 policyRules);
         }

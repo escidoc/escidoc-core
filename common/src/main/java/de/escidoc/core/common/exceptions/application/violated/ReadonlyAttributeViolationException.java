@@ -45,9 +45,9 @@ public class ReadonlyAttributeViolationException
      */
     private static final long serialVersionUID = -7303197141584516836L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_VIOLATED;
 
-    private static final String HTTP_STATUS_MESSAGE =
+    public static final String HTTP_STATUS_MESSAGE =
         "Readonly attribute is setr.";
 
     /**

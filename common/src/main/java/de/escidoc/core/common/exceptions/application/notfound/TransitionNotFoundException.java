@@ -44,9 +44,9 @@ public class TransitionNotFoundException extends ResourceNotFoundException {
      */
     private static final long serialVersionUID = -1961513548032968127L;
 
-    private static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
+    public static final int HTTP_STATUS_CODE = ESCIDOC_HTTP_SC_NOT_FOUND;
 
-    private static final String HTTP_STATUS_MESSAGE = "Transition was not found.";
+    public static final String HTTP_STATUS_MESSAGE = "Transition was not found.";
 
     /**
      * Default constructor.

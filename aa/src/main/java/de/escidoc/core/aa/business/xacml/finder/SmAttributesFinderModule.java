@@ -96,7 +96,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         "allowed-roles:allowed-role";
 
     private static final String RESOLVABLE_SM_ATTRS =
-        ATTR_SCOPE + '|' + ATTR_ALLOWED_ROLE;
+        ATTR_SCOPE + "|" + ATTR_ALLOWED_ROLE;
 
     private static final String VALID_SM_ATTRIBUTE_PREFIXES =
         AttributeIds.RESOURCE_AGGREGATION_DEFINITION_ATTR_PREFIX + ".*|"
@@ -105,7 +105,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
 
     private static final Pattern PATTERN_PARSE_SM_ATTRIBUTE_ID =
         Pattern.compile("((" + VALID_SM_ATTRIBUTE_PREFIXES + ")("
-            + RESOLVABLE_SM_ATTRS + "))(-new){0,1}(:(.*)){0,1}" + '|'
+            + RESOLVABLE_SM_ATTRS + "))(-new){0,1}(:(.*)){0,1}" + "|"
             + AttributeIds.URN_STATISTIC_SCOPE_ID);
 
     private static final Pattern PATTERN_VALID_ATTRIBUTE_ID =
@@ -115,6 +115,20 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         Pattern.compile(".*<[^>]*?scope[^>]*?objid=\"(.*?)\".*"
             + "|.*<[^>]*?scope[^>]*?href=\"[^\"]*/(.*?)\".*", Pattern.DOTALL
             + Pattern.MULTILINE);
+
+    // private static final Pattern CREATED_BY_PATTERN =
+    // Pattern.compile(StringUtility.concatenateToString(
+    // ".*<[^>]*?created-by[^>]*?objid=\"(.*?)\".*",
+    // "|.*<[^>]*?created-by[^>]*?href=\"[^\"]*/(.*?)\".*"),
+    // Pattern.DOTALL
+    // + Pattern.MULTILINE);
+    //
+    // private static final Pattern MODIFIED_BY_PATTERN =
+    // Pattern.compile(StringUtility.concatenateToString(
+    // ".*<[^>]*?modified-by[^>]*?objid=\"(.*?)\".*",
+    // "|.*<[^>]*?modified-by[^>]*?href=\"[^\"]*/(.*?)\".*"),
+    // Pattern.DOTALL
+    // + Pattern.MULTILINE);
 
     private static final Pattern ALLOWED_ROLE_PATTERN =
         Pattern.compile("<[^>]*?allowed-role[^>]*?objid=\"(.*?)\""
@@ -250,9 +264,9 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      *            The id of the attribute.
      * @return EvaluationResult result.
      */
-    private static EvaluationResult evaluateResult(
-            final CharSequence resourceXml, final String resolvableAttribute,
-            final String attributeId) {
+    private EvaluationResult evaluateResult(
+        final String resourceXml, final String resolvableAttribute,
+        final String attributeId) {
         EvaluationResult result = null;
 
         if (ATTR_SCOPE.equals(attributeId)) {
@@ -266,17 +280,40 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                     CustomEvaluationResultBuilder
                         .createSingleStringValueResult(objId.trim());
             }
-
+            // } else if (ATTR_CREATED_BY.equals(attributeId)) {
+            // Matcher matcher =
+            // CREATED_BY_PATTERN.matcher(resourceXml);
+            // if (matcher.find()) {
+            // String objId = matcher.group(1);
+            // if (objId == null) {
+            // objId = matcher.group(2);
+            // }
+            // result =
+            // CustomEvaluationResultBuilder
+            // .createSingleStringValueResult(objId.trim());
+            // }
+            // } else if (ATTR_MODIFIED_BY.equals(attributeId)) {
+            // Matcher matcher =
+            // MODIFIED_BY_PATTERN.matcher(resourceXml);
+            // if (matcher.find()) {
+            // String objId = matcher.group(1);
+            // if (objId == null) {
+            // objId = matcher.group(2);
+            // }
+            // result =
+            // CustomEvaluationResultBuilder
+            // .createSingleStringValueResult(objId.trim());
+            // }
         }
         else if (ATTR_ALLOWED_ROLE.equals(attributeId)) {
             Matcher matcher = ALLOWED_ROLE_PATTERN.matcher(resourceXml);
-            StringBuilder roles = new StringBuilder("");
+            StringBuffer roles = new StringBuffer("");
             while (matcher.find()) {
                 String roleId = matcher.group(1);
                 if (roleId == null) {
                     roleId = matcher.group(2);
                 }
-                roles.append(' ').append(roleId.trim());
+                roles.append(" ").append(roleId.trim());
             }
             result =
                 CustomEvaluationResultBuilder
@@ -307,10 +344,10 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         final EvaluationCtx ctx, final String aggregationDefinitionId)
         throws WebserverSystemException, AggregationDefinitionNotFoundException {
 
-        final StringBuilder key =
-                new StringBuilder(XmlUtility.NAME_AGGREGATION_DEFINITION)
-                        .append(':').append(XmlUtility.NAME_ID).append(
-                        aggregationDefinitionId);
+        final StringBuffer key =
+            new StringBuffer(XmlUtility.NAME_AGGREGATION_DEFINITION)
+                .append(":").append(XmlUtility.NAME_ID).append(
+                    aggregationDefinitionId);
         String aggregationDefinitionXml =
             (String) RequestAttributesCache.get(ctx, key.toString());
         if (aggregationDefinitionXml == null) {
@@ -368,10 +405,10 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         final EvaluationCtx ctx, final String reportDefinitionId)
         throws WebserverSystemException, ReportDefinitionNotFoundException {
 
-        final StringBuilder key =
-                new StringBuilder(XmlUtility.NAME_REPORT_DEFINITION)
-                        .append(':').append(XmlUtility.NAME_ID).append(
-                        reportDefinitionId);
+        final StringBuffer key =
+            new StringBuffer(XmlUtility.NAME_REPORT_DEFINITION)
+                .append(":").append(XmlUtility.NAME_ID).append(
+                    reportDefinitionId);
         String reportDefinitionXml =
             (String) RequestAttributesCache.get(ctx, key.toString());
         if (reportDefinitionXml == null) {
@@ -426,9 +463,9 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
     private String retrieveScope(final EvaluationCtx ctx, final String scopeId)
         throws WebserverSystemException, ScopeNotFoundException {
 
-        final StringBuilder key =
-                new StringBuilder(XmlUtility.NAME_SCOPE).append(':').append(
-                        XmlUtility.NAME_ID).append(scopeId);
+        final StringBuffer key =
+            new StringBuffer(XmlUtility.NAME_SCOPE).append(":").append(
+                XmlUtility.NAME_ID).append(scopeId);
         String scopeXml =
             (String) RequestAttributesCache.get(ctx, key.toString());
         if (scopeXml == null) {

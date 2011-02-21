@@ -58,7 +58,7 @@ public class VersionProperties {
     /**
      * @return the versionNumber
      */
-    public final String getNumber() {
+    public String getNumber() {
         return versionNumber;
     }
 
@@ -68,7 +68,7 @@ public class VersionProperties {
      * @param createdById
      *            the creator id
      */
-    final void setCreatedById(final String createdById) {
+    public void setCreatedById(final String createdById) {
         this.createdById = createdById;
     }
 
@@ -77,7 +77,7 @@ public class VersionProperties {
      * 
      * @return the creator id
      */
-    public final String getCreatedById() {
+    public String getCreatedById() {
         return createdById;
     }
 
@@ -87,7 +87,7 @@ public class VersionProperties {
      * @param modifiedById
      *            the modifiedById to set
      */
-    final void setModifiedById(final String modifiedById) {
+    public void setModifiedById(final String modifiedById) {
         this.modifiedById = modifiedById;
     }
 
@@ -96,7 +96,7 @@ public class VersionProperties {
      * 
      * @return the modifiedById
      */
-    public final String getModifiedById() {
+    public String getModifiedById() {
         return modifiedById;
     }
 
@@ -106,14 +106,14 @@ public class VersionProperties {
      * @param status
      *            the status to set
      */
-    public final void setStatus(final StatusType status) {
+    public void setStatus(final StatusType status) {
         this.status = status;
     }
 
     /**
      * @return the status
      */
-    public final StatusType getStatus() {
+    public StatusType getStatus() {
         return status;
     }
 
@@ -128,7 +128,7 @@ public class VersionProperties {
     /**
      * @return the statusComment
      */
-    public final String getComment() {
+    public String getComment() {
         return comment;
     }
 
@@ -136,14 +136,14 @@ public class VersionProperties {
      * @param createdByName
      *            the createdByName to set
      */
-    final void setCreatedByName(final String createdByName) {
+    public void setCreatedByName(final String createdByName) {
         this.createdByName = createdByName;
     }
 
     /**
      * @return the createdByName
      */
-    public final String getCreatedByName() {
+    public String getCreatedByName() {
         return createdByName;
     }
 
@@ -151,7 +151,7 @@ public class VersionProperties {
      * @param modifiedByName
      *            the modifiedByName to set
      */
-    final void setModifiedByName(final String modifiedByName) {
+    public void setModifiedByName(final String modifiedByName) {
         this.modifiedByName = modifiedByName;
     }
 
@@ -173,7 +173,7 @@ public class VersionProperties {
     /**
      * @return the pid
      */
-    public final String getPid() {
+    public String getPid() {
         return pid;
     }
 
@@ -181,14 +181,14 @@ public class VersionProperties {
      * @param date
      *            the date to set
      */
-    public final void setDate(final String date) {
+    public void setDate(final String date) {
         this.date = date;
     }
 
     /**
      * @return the date
      */
-    public final String getDate() {
+    public String getDate() {
         return date;
     }
 

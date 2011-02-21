@@ -47,23 +47,23 @@ public abstract class EscidocException extends Exception {
      */
     private static final long serialVersionUID = -4848570917974401296L;
 
-    protected static final int ESCIDOC_HTTP_SC_INVALID = 450;
+    public static final int ESCIDOC_HTTP_SC_INVALID = 450;
 
-    protected static final int ESCIDOC_HTTP_SC_MISSING = 451;
+    public static final int ESCIDOC_HTTP_SC_MISSING = 451;
 
-    protected static final int ESCIDOC_HTTP_SC_NOT_FOUND =
+    public static final int ESCIDOC_HTTP_SC_NOT_FOUND =
         HttpServletResponse.SC_NOT_FOUND;
 
-    protected static final int ESCIDOC_HTTP_SC_SECURITY =
+    public static final int ESCIDOC_HTTP_SC_SECURITY =
         HttpServletResponse.SC_MOVED_TEMPORARILY;
 
-    protected static final int ESCIDOC_HTTP_SC_VIOLATED =
+    public static final int ESCIDOC_HTTP_SC_VIOLATED =
         HttpServletResponse.SC_CONFLICT;
 
-    protected static final int ESCIDOC_HTTP_SC_BAD_REQUEST =
+    public static final int ESCIDOC_HTTP_SC_BAD_REQUEST =
         HttpServletResponse.SC_BAD_REQUEST;
 
-    protected static final int ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR =
+    public static final int ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR =
         HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 
     private int httpStatusCode = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
@@ -76,7 +76,7 @@ public abstract class EscidocException extends Exception {
      * @return The HttpStatusCode associated with this Exception.
      * @common
      */
-    public final int getHttpStatusCode() {
+    public int getHttpStatusCode() {
         return httpStatusCode;
     }
 
@@ -87,7 +87,7 @@ public abstract class EscidocException extends Exception {
      * @return The HttpStatusMessage associated with this Exception.
      * @common
      */
-    public final String getHttpStatusMsg() {
+    public String getHttpStatusMsg() {
         return httpStatusMsg;
     }
 
@@ -99,7 +99,7 @@ public abstract class EscidocException extends Exception {
      * @return
      * @see java.lang.Throwable#toString()
      */
-    public final String toString() {
+    public String toString() {
         return toXmlString();
     }
 
@@ -111,7 +111,7 @@ public abstract class EscidocException extends Exception {
      * @return A xml-representation of this Exception.
      * @common
      */
-    public final String toXmlString() {
+    public String toXmlString() {
 
         return getXml(this);
     }
@@ -121,7 +121,7 @@ public abstract class EscidocException extends Exception {
      * @return The HTTP status line.
      */
     public String getHttpStatusLine() {
-        return String.valueOf(httpStatusCode) + ' ' + httpStatusMsg;
+        return "" + httpStatusCode + " " + httpStatusMsg;
     }
 
     /**
@@ -252,17 +252,18 @@ public abstract class EscidocException extends Exception {
      * @return String xml-representation of this throwable
      * @common
      */
-    private static String getXml(final Throwable throwable) {
+    public static String getXml(final Throwable throwable) {
 
-        StringBuilder result = new StringBuilder("<exception>\n");
+        StringBuffer result = new StringBuffer("<exception>\n");
 
         // http status line, if any
         EscidocException escidocException = null;
         if (throwable instanceof EscidocException) {
             escidocException = (EscidocException) throwable;
             result.append("  <title><h1>");
-            result.append(XmlEscaper.escapeTextContent(String.valueOf(escidocException.getHttpStatusCode())));
-            result.append(' ');
+            result.append(XmlEscaper.escapeTextContent(""
+                + escidocException.getHttpStatusCode()));
+            result.append(" ");
             result.append(XmlEscaper.escapeTextContent(escidocException
                 .getHttpStatusMsg()));
             result.append("</h1></title>\n");
@@ -327,12 +328,12 @@ public abstract class EscidocException extends Exception {
      */
     public static String getStackTraceXml(final Throwable e) {
 
-        StringBuilder result = new StringBuilder("  <stack-trace><p><![CDATA[\n");
+        StringBuffer result = new StringBuffer("  <stack-trace><p><![CDATA[\n");
         StackTraceElement[] elements = e.getStackTrace();
         for (StackTraceElement element : elements) {
             result.append("    ");
             result.append(element);
-            result.append('\n');
+            result.append("\n");
         }
         result.append("]]></p></stack-trace>\n");
         return result.toString();

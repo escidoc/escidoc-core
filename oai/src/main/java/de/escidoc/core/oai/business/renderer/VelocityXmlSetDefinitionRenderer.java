@@ -29,7 +29,6 @@
 package de.escidoc.core.oai.business.renderer;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +91,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private static void addSetDefinitionValues(
+    private void addSetDefinitionValues(
         final SetDefinition setDefinition, final Map<String, Object> values)
         throws SystemException {
         DateTime lmdDateTime =
@@ -144,7 +143,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
         addCommonValues(values);
         addSetDefinitionListValues(values);
 
-        final Collection<Map<String, Object>> setDefinitionsValues =
+        final List<Map<String, Object>> setDefinitionsValues =
             new ArrayList<Map<String, Object>>(setDefinitions.size());
 
         for (SetDefinition setDefinition1 : setDefinitions) {
@@ -203,7 +202,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      *            The {@link Map} to that the values shall be added.
      * @aa
      */
-    private static void addSetDefinitionNamespaceValues(
+    private void addSetDefinitionNamespaceValues(
         final Map<String, Object> values) {
         values.put("setDefinitionNamespacePrefix",
             Constants.SET_DEFINITION_NS_PREFIX);
@@ -232,7 +231,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      *            The MAP to add the values to.
      * @aa
      */
-    private static void addSetDefinitionsNamespaceValues(
+    private void addSetDefinitionsNamespaceValues(
         final Map<String, Object> values) {
 
         values.put("setDefinitionListNamespacePrefix",
@@ -250,7 +249,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private static void addEscidocBaseUrl(final Map<String, Object> values)
+    private void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -265,7 +264,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private static SetDefinitionXmlProvider getSetDefinitionXmlProvider()
+    private SetDefinitionXmlProvider getSetDefinitionXmlProvider()
         throws WebserverSystemException {
 
         return SetDefinitionXmlProvider.getInstance();

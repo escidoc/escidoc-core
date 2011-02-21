@@ -37,7 +37,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.sql.BatchUpdateException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -66,7 +65,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown in case of an internal database access error.
      * @aa
      */
-    public final void delete(final Object object) throws SqlDatabaseSystemException {
+    public void delete(final Object object) throws SqlDatabaseSystemException {
 
         if (object != null) {
             try {
@@ -88,7 +87,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      * 
      * @throws SqlDatabaseSystemException Thrown in case of Hibernate errors
      */
-    public final void flush() throws SqlDatabaseSystemException {
+    public void flush() throws SqlDatabaseSystemException {
         getHibernateTemplate().flush();
     }
 
@@ -102,7 +101,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown in case of an internal database access error.
      * @aa
      */
-    protected final Object save(final Object object)
+    protected Object save(final Object object)
         throws SqlDatabaseSystemException {
 
         Object result = null;
@@ -129,7 +128,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown in case of an internal database access error.
      * @aa
      */
-    protected final String saveOrUpdate(final Object object)
+    protected String saveOrUpdate(final Object object)
         throws SqlDatabaseSystemException {
 
         if (object != null) {
@@ -153,7 +152,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
-    protected final void update(final Object object)
+    protected void update(final Object object)
         throws SqlDatabaseSystemException {
 
         if (object != null) {
@@ -178,11 +177,11 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown if the provided exception contains an
      *             <code>BatchUpdateException</code>.
      */
-    private static void handleBatchUpdateException(final HibernateException e)
+    private void handleBatchUpdateException(final HibernateException e)
         throws SqlDatabaseSystemException {
         if (e.getCause() instanceof BatchUpdateException) {
             Exception e1 =
-                ((SQLException) e.getCause()).getNextException();
+                ((BatchUpdateException) e.getCause()).getNextException();
             throw new SqlDatabaseSystemException(StringUtility
                 .format(e.getMessage(), e
                     .getCause().getMessage(), e1.getMessage()), e1);
@@ -200,14 +199,14 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown if the provided exception contains an
      *             <code>FedoraSystemException</code>.
      */
-    private static void handleFedoraSystemException(final Throwable e)
+    private void handleFedoraSystemException(final Throwable e)
         throws SqlDatabaseSystemException {
         if (e.getCause() != null 
                 && e.getCause().getCause() != null) {
             Throwable e1 = e.getCause().getCause();
             if (e1 instanceof FedoraSystemException) {
-                StringBuilder message =
-                        new StringBuilder(FEDORA_EXCEPTION_MESSAGE);
+                StringBuffer message = 
+                    new StringBuffer(FEDORA_EXCEPTION_MESSAGE);
                 Throwable e2 = e1.getCause();
                 if (e2 != null) {
                     message.append(e2.getMessage());
@@ -228,7 +227,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *         <code>null</code>.
      * @aa
      */
-    protected static final Object getUniqueResult(final List<Object> results) {
+    protected Object getUniqueResult(final List<Object> results) {
 
         final int resultSize = results.size();
         if (resultSize == 1) {
@@ -250,8 +249,8 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *            
      * @return Set merged set
      */
-    protected static final Set<String> mergeSets(
-            final Set<String> set1, final Set<String> set2) {
+    protected Set<String> mergeSets(
+        final Set<String> set1, final Set<String> set2) {
         
         Set<String> s1 = set1;
         Set<String> s2 = set2;

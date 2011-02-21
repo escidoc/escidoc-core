@@ -59,7 +59,7 @@ public class MetadataHandler extends DefaultHandler {
 
     private String nameValue = null;
 
-    private static final String CONTAINER = "/container";
+    public static final String CONTAINER = "/container";
 
     private String escidocMdRecordNameSpace = null;
 
@@ -67,7 +67,7 @@ public class MetadataHandler extends DefaultHandler {
 
     private String mdRecordsPath = null;
 
-    private static final AppLogger LOGGER =
+    private static final AppLogger log =
         new AppLogger(MetadataHandler.class.getName());
 
     private final Map<String, Map<String, String>> metadataAttributes =
@@ -109,9 +109,11 @@ public class MetadataHandler extends DefaultHandler {
         String currentPath = parser.getCurPath();
         mdRecordsPath = "/item/md-records";
         elementPath = "/item/md-records/md-record";
+        // String hrefBasePath = "/ir/item/";
         if (currentPath.startsWith(CONTAINER)) {
             mdRecordsPath = "/container/md-records";
             elementPath = "/container/md-records/md-record";
+            // hrefBasePath = "/ir/container/";
         }
         String theName = element.getLocalName();
 
@@ -120,8 +122,8 @@ public class MetadataHandler extends DefaultHandler {
             Attribute name = element.getAttribute(indexOfName);
             this.nameValue = name.getValue();
 
-            if (nameValue.length() == 0) {
-                LOGGER.error("the value of" + " \"name\" atribute of the element "
+            if (nameValue.equals("")) {
+                log.error("the value of" + " \"name\" atribute of the element "
                     + theName + " is missing");
                 throw new MissingAttributeValueException("the value of the"
                     + " \"name\" atribute of the element " + theName
@@ -144,7 +146,7 @@ public class MetadataHandler extends DefaultHandler {
                 Attribute schema = element.getAttribute(indexOfSchema);
                 schemaValue = schema.getValue();
             }
-            Map<String, String> md = new HashMap<String, String>();
+            HashMap<String, String> md = new HashMap<String, String>();
             if (typeValue != null) {
                 md.put("type", typeValue);
             }
@@ -197,7 +199,7 @@ public class MetadataHandler extends DefaultHandler {
             String message =
                 "Mandatory md-record with a name "
                     + MANDATORY_MD_RECORD_NAME + " is missing.";
-            LOGGER.error(message);
+            log.error(message);
             throw new MissingMdRecordException(message);
         }
         return element;
@@ -231,7 +233,7 @@ public class MetadataHandler extends DefaultHandler {
     /**
      * @return Returns metadata attributes.
      */
-    public final Map<String, Map<String, String>> getMetadataAttributes() {
+    public Map<String, Map<String, String>> getMetadataAttributes() {
         return this.metadataAttributes;
     }
 
@@ -241,7 +243,7 @@ public class MetadataHandler extends DefaultHandler {
      * 
      * @return namespace
      */
-    public final String getEscidocMdRecordNameSpace() {
+    public String getEscidocMdRecordNameSpace() {
         return this.escidocMdRecordNameSpace;
     }
 }

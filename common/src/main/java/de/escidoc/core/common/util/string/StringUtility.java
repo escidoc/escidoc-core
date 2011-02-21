@@ -41,7 +41,7 @@ public final class StringUtility {
     /**
      * Pattern used to detect '-'.
      */
-    private static final Pattern PATTERN_MINUS = Pattern.compile("-");
+    static final Pattern PATTERN_MINUS = Pattern.compile("-");
 
     /**
      * Private constructor to prevent initialization.
@@ -140,7 +140,7 @@ public final class StringUtility {
      *            representation.
      * @return Returns the converted value.
      */
-    public static StringBuffer convertToUpperCaseLetterFormat(final CharSequence objectType) {
+    public static StringBuffer convertToUpperCaseLetterFormat(final String objectType) {
         String[] splitted = PATTERN_MINUS.split(objectType);
         StringBuffer ret = new StringBuffer();
         for (String split : splitted) {

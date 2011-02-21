@@ -43,7 +43,7 @@ public class CommonFoXmlProvider extends InfrastructureFoXmlProvider {
     private static final String FOXML_VERSION_ENTRY_RESOURCE_NAME =
         "wov-version";
 
-    private static final String FOXML_EVENT_RESOURCE_NAME = "premis-event";
+    public static final String FOXML_EVENT_RESOURCE_NAME = "premis-event";
 
     private static final CommonFoXmlProvider PROVIDER = new CommonFoXmlProvider();
 
@@ -64,18 +64,18 @@ public class CommonFoXmlProvider extends InfrastructureFoXmlProvider {
         return PROVIDER;
     }
 
-    public final String getWov(final Map values) throws WebserverSystemException {
+    public String getWov(final Map values) throws WebserverSystemException {
 
         return getXml(WOV_RESOURCE_NAME, WOV_PATH, values);
     }
 
-    public final String getWovVersionEntryXml(final Map values)
+    public String getWovVersionEntryXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(FOXML_VERSION_ENTRY_RESOURCE_NAME, WOV_PATH, values);
     }
 
-    public final String getPremisEventXml(final Map values)
+    public String getPremisEventXml(final Map values)
         throws WebserverSystemException {
         return getXml(FOXML_EVENT_RESOURCE_NAME, WOV_PATH, values);
     }
