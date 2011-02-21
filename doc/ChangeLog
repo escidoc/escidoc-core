@@ -67,6 +67,13 @@ changes since version 1.2
     	 	http://escidoc.de/core/01/properties/name -->, /properties/name
     	-Deprecate URI-Like Filter-Names
     	-Surround object-xml in SRW-Search-Result of Filters with element search-result-record
+    	
+    February 2011:
+    	-Because of a bug in escidocoaipmh_all index, the escidocoaipmh_all index has to get reindexed.
+    	-Bug was : Search-Field md-record-identifier was indexed tokenized. If identifier is eg http://www.fiz-karlsruhe.de,
+    	 it is split at the ., so search for http://www.fiz-karlsruhe.de fails.
+    	 This search is executed when querying for new records. Search-string is defined in properties-file, 
+    	 property driver.escidoc.md.format.oai_nlm.uri.
 
 changes since version 1.1
 --------------------------
