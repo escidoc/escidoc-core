@@ -101,7 +101,6 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                 isInside = true;
                 // get name of md-record
 
-                // String onlyName = "escidoc";
                 try {
                     name = element.getAttribute(null, "name").getValue();
                     if (name.length() == 0) {

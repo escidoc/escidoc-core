@@ -197,51 +197,13 @@ public class WebServiceLocator extends Service {
             Stub msg = (Stub) stub;
             msg._setProperty(WSHandlerConstants.USER, username);
             msg._setProperty(WSConstants.PASSWORD_LN, password);
-            /*
-             * // WSS4J security (technical user for the webservice)
-             * msg._setProperty(WSHandlerConstants.USER, "wss4j");
-             * msg._setProperty(WSConstants.PASSWORD_LN, "Password"); // JAXRPC
-             * security (The user) msg._setProperty(Stub.USERNAME_PROPERTY,
-             * username); msg._setProperty(Stub.PASSWORD_PROPERTY, password);
-             */
+
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         return stub;
     }
-
-//    /**
-//     * Get the Service with one type mapping.
-//     * 
-//     * @param namespace
-//     *            String of the type mapping
-//     * @param mapping
-//     *            Class of the type mapping
-//     * @return Remote The webservice Remote client
-//     * @throws ServiceException
-//     *             Thrown if service is not available
-//     */
-    /*
-     * public Remote getService(final String namespace, final Class mapping)
-     * throws ServiceException {
-     * 
-     * Call call = (Call) this.createCall();
-     * call.setProperty(UsernameToken.PASSWORD_TYPE,
-     * WSConstants.PASSWORD_DIGEST);
-     * 
-     * PWCallback pwCallback = new PWCallback();
-     * call.setProperty(WSHandlerConstants.USER, "wss4j");
-     * call.setProperty(WSHandlerConstants.PW_CALLBACK_REF, pwCallback); QName
-     * poqn = new QName(namespace, mapping.getSimpleName());
-     * 
-     * call.registerTypeMapping(mapping, poqn, new
-     * BeanSerializerFactory(mapping, poqn), new
-     * BeanDeserializerFactory(mapping, poqn)); Remote stub =
-     * call.getService().getPort(serviceAddress, serviceInterface);
-     * 
-     * return stub; }
-     */
 
     /**
      * Get the Service with one type mapping.
@@ -273,13 +235,7 @@ public class WebServiceLocator extends Service {
             Stub msg = (Stub) stub;
             msg._setProperty(WSHandlerConstants.USER, "NotProvided");
             msg._setProperty(WSConstants.PASSWORD_LN, "");
-            /*
-             * // WSS4J security (technical user for the webservice)
-             * msg._setProperty(WSHandlerConstants.USER, "wss4j");
-             * msg._setProperty(WSConstants.PASSWORD_LN, "Password"); // JAXRPC
-             * security (The user) msg._setProperty(Stub.USERNAME_PROPERTY,
-             * "NotProvided"); msg._setProperty(Stub.PASSWORD_PROPERTY, "");
-             */
+
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -312,13 +268,6 @@ public class WebServiceLocator extends Service {
             msg._setProperty(WSHandlerConstants.USER, "ShibbolethUser");
             msg._setProperty(WSConstants.PASSWORD_LN, handle);
 
-            // WSS4J security (technical user for the webservice)
-            // msg._setProperty(WSHandlerConstants.USER, "wss4j");
-            // msg._setProperty(WSConstants.PASSWORD_LN, "Password");
-            // JAXRPC security (The user)
-            // msg._setProperty(Stub.USERNAME_PROPERTY, "ShibbolethUser");
-            // msg._setProperty(Stub.PASSWORD_PROPERTY, handle);
-
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -337,28 +286,6 @@ public class WebServiceLocator extends Service {
         serviceAddress = address;
     }
 
-//    /**
-//     * For the given interface, get the stub implementation. If this service has
-//     * no port for the given interface, then ServiceException is thrown.
-//     * 
-//     * @param portName
-//     *            The Axis QName object
-//     * @param serviceEndpointInterface
-//     *            The endpoint class
-//     * @return Remote the Webservice
-//     * @throws ServiceException
-//     *             Thrown if Webservice is not available
-//     */
-    /*
-     * public Remote getPort(final QName portName, final Class
-     * serviceEndpointInterface) throws ServiceException {
-     * 
-     * if (portName == null) { return getPort(serviceEndpointInterface); }
-     * String inputPortName = portName.getLocalPart(); if
-     * (serviceName.equals(inputPortName)) { return getService(); } else {
-     * Remote stub = getPort(serviceEndpointInterface); ((Stub)
-     * stub).setPortName(portName); return stub; } }
-     */
 
     /**
      * Builds the QName objetc out of the parameters.

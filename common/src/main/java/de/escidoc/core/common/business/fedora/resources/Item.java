@@ -442,10 +442,7 @@ public class Item extends GenericVersionableResourcePid
             catch (StreamNotFoundException e) {
                 throw new WebserverSystemException(e);
             }
-            // ,
-            // location, controlGroupValue);
-            // ds.setAlternateIDs(new Vector<String>(altIDs));
-            // ds.setLabel(label);
+
             this.dc = ds;
         }
 
@@ -570,11 +567,6 @@ public class Item extends GenericVersionableResourcePid
         for(Map.Entry<String, Datastream> entry : mdRecordsEntrySet) {
             setMdRecord(entry.getKey(), entry.getValue());
         }
-
-        // this.lastModifiedDate =
-        // getTripleStoreUtility().getPropertiesElements(getId(),
-        // "latest-version.date",
-        // Constants.CONTAINER_PROPERTIES_NAMESPACE_URI);
     }
 
     /*
@@ -803,11 +795,6 @@ public class Item extends GenericVersionableResourcePid
                 this.contentStreams.remove(nameInFedora);
             }
         }
-
-        // this.lastModifiedDate =
-        // getTripleStoreUtility().getPropertiesElements(getId(),
-        // "latest-version.date",
-        // Constants.CONTAINER_PROPERTIES_NAMESPACE_URI);
     }
 
     /**
@@ -934,9 +921,6 @@ public class Item extends GenericVersionableResourcePid
 
         if (!this.alteredComponent.isEmpty()) {
             resourceUpdated = true;
-            // persist is called during the alter method
-            // should move at this position
-            // this.alteredComponent = new Vector<String>();
         }
 
         return resourceUpdated;

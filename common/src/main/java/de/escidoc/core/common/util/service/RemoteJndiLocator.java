@@ -124,8 +124,6 @@ class RemoteJndiLocator extends JndiObjectFactoryBean {
         Properties properties = new Properties();
         properties.setProperty(Context.URL_PKG_PREFIXES,
             "org.jboss.naming:org.jnp.interfaces");
-        // properties.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-        // "org.jboss.security.jndi.JndiLoginInitialContextFactory");
         properties.setProperty(Context.PROVIDER_URL, providerUrl);
         this.setJndiEnvironment(properties);
     }

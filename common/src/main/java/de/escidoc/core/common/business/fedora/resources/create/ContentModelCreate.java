@@ -140,26 +140,6 @@ public class ContentModelCreate extends GenericResourceCreate {
         this.idProvider = idProvider;
     }
 
-    // /**
-    // * Persist whole ContentModel to Repository and force TripleStore sync.
-    // *
-    // * @throws SystemException
-    // * @throws MissingMdRecordException
-    // * @throws InvalidStatusException
-    // * @throws FileNotFoundException
-    // * @throws RelationPredicateNotFoundException
-    // * @throws ReferencedResourceNotFoundException
-    // * @throws InvalidContentException
-    // * @throws MissingAttributeValueException
-    // */
-    // public void persist() throws SystemException, InvalidStatusException,
-    // MissingMdRecordException, FileNotFoundException,
-    // InvalidContentException, ReferencedResourceNotFoundException,
-    // RelationPredicateNotFoundException, MissingAttributeValueException {
-    //
-    // persist(true);
-    // }
-
     /**
      * Persist whole ContentModel to Repository.
      * 
@@ -511,11 +491,6 @@ public class ContentModelCreate extends GenericResourceCreate {
             .getObjectProperties().getContentModelId());
         valueMap.put(XmlTemplateProvider.CONTENT_MODEL_TITLE, this.properties
             .getObjectProperties().getContentModelTitle());
-
-        // add RELS-EXT current version values
-        // version pid currently not supported for create
-        // valueMap.put(XmlTemplateProvider.VERSION_PID, this.properties
-        // .getCurrentVersion().getPid());
 
         valueMap.put(XmlTemplateProvider.VERSION_NUMBER, this.properties
             .getCurrentVersion().getNumber());

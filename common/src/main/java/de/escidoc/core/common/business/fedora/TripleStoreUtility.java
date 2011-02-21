@@ -679,8 +679,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         try {
             results = executeQueryLiteral(name, true, PROP_DC_TITLE);
             for (String result1 : results) {
-                // List<Node> row = results.next();
-                // row.get(0).getValue()
                 final String entry = result1;
                 result.add(XmlUtility.getIdFromURI(entry));
             }
@@ -688,9 +686,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         catch (final QueryException e) {
             throw new TripleStoreSystemException(e.getMessage(), e);
         }
-        // finally {
-        // closeAndRelease(results);
-        // }
+
         return result;
     }
 
@@ -979,21 +975,6 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      */
     public abstract boolean exists(final String pid)
         throws TripleStoreSystemException;
-
-    // public boolean exists(final String pid) throws TripleStoreSystemException
-    // {
-    //
-    // boolean exists = false;
-    // String result = null;
-    //
-    // result =
-    // getPropertiesElements(pid,
-    // "http://purl.org/dc/elements/1.1/identifier");
-    // if (result != null && result.length() > 0) {
-    // exists = true;
-    // }
-    // return exists;
-    // }
 
     /**
      * Retrieves the object type of the identified object.

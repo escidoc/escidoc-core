@@ -596,8 +596,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         setContext(id);
         filterParams.put("query", new String[] { "\"/subject/id\"="
             + getContext().getId() + " or " +
-            // "\"/subject/id\"=" + getContext().getFullId() + " or " +
-            // "\"/object/id\"=" + getContext().getFullId() + " or " +
             "\"/object/id\"=" + getContext().getId() });
 
         String searchResponse =

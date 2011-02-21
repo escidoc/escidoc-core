@@ -300,43 +300,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
 
     // CHECKSTYLE:JAVADOC-ON
 
-    // /**
-    // * See Interface for functional description.
-    // *
-    // * @param identityInfo identityInfo
-    // * @return boolean
-    // * @throws SqlDatabaseSystemException e
-    // * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
-    // * #userGroupExists(java.lang.String)
-    // * @aa
-    // */
-    // public boolean setDefinitionExists(final String identityInfo)
-    // throws SqlDatabaseSystemException {
-    //
-    // boolean result = false;
-    // if (identityInfo != null) {
-    // try {
-    // // try identification by id or label
-    // DetachedCriteria criteria =
-    // DetachedCriteria.forClass(UserGroup.class).add(
-    // Restrictions.or(Restrictions.eq("id", identityInfo),
-    // Restrictions.eq("specification", identityInfo)));
-    // result =
-    // !getHibernateTemplate().findByCriteria(criteria).isEmpty();
-    // }
-    // catch (DataAccessException e) {
-    // throw new SqlDatabaseSystemException(e);
-    // }
-    // catch (IllegalStateException e) {
-    // throw new SqlDatabaseSystemException(e);
-    // }
-    // catch (HibernateException e) {
-    // throw new SqlDatabaseSystemException(
-    // convertHibernateAccessException(e));
-    // }
-    // }
-    // return result;
-    // }
+
 
     /**
      * Wrapper of setSessionFactory to enable bean stuff generation for this

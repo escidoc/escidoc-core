@@ -109,11 +109,9 @@ public class MetadataHandler extends DefaultHandler {
         String currentPath = parser.getCurPath();
         mdRecordsPath = "/item/md-records";
         elementPath = "/item/md-records/md-record";
-        // String hrefBasePath = "/ir/item/";
         if (currentPath.startsWith(CONTAINER)) {
             mdRecordsPath = "/container/md-records";
             elementPath = "/container/md-records/md-record";
-            // hrefBasePath = "/ir/container/";
         }
         String theName = element.getLocalName();
 

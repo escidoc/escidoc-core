@@ -255,7 +255,6 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         sp.addHandler(sduh);
         try {
             sp.parse(in);
-            // sp.clearHandlerChain();
         }
         catch (OptimisticLockingException e) {
             throw e;

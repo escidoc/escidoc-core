@@ -326,7 +326,6 @@ public class MultipleExtractor extends WriteHandler {
                 .indexOfAttribute(Constants.RDF_NAMESPACE_URI, "resource") < 0
             && element.indexOfAttribute(null, "inherited") < 0) {
             inComponent = true;
-            // Object id = pids.get(number);
             if (pids != null) {
                 componentId = pids.get(number);
                 number++;
@@ -432,20 +431,13 @@ public class MultipleExtractor extends WriteHandler {
                                 (HashMap) components.get(componentId);
                         }
 
-                        // String subId = (String) pids.get(number);
-                        // number++;
                         if (attributeName == null) {
-                            // outputStreams.put(theName + "*" + subId,
-                            // out);
+
                             component.put(theName, out);
                         }
                         else {
                             if (theName.equals("md-record")) {
 
-                                // this.mdNameValue = attributeValue;
-                                // outputStreams.put(attributeValue + "*" +
-                                // subId,
-                                // out);
                                 if (!component.containsKey("md-records")) {
                                     mdRecords =
                                         new HashMap<String, ByteArrayOutputStream>();

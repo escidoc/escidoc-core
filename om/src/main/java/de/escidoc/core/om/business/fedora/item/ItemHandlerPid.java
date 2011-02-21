@@ -676,18 +676,6 @@ public class ItemHandlerPid extends ItemHandlerContent {
     protected void checkNoObjectPidAssigned() throws InvalidStatusException,
         TripleStoreSystemException, WebserverSystemException {
 
-        // final String pid =
-        // TripleStoreUtility.getInstance().getPropertiesElements(
-        // getItem().getId(), TripleStoreUtility.PROP_OBJECT_PID);
-        // // In first release, if object is once released no changes are
-        // allowed
-        // if ((pid != null) && (pid.length() > 0)) {
-        // final String msg =
-        // "The object is already assigned with PID '" + pid
-        // + "' and can not be reassigned.";
-        // log.debug(msg);
-        // throw new InvalidStatusException(msg);
-        // }
         if (getItem().hasObjectPid()) {
             final String msg =
                 "The object is already assigned with a objectPID "

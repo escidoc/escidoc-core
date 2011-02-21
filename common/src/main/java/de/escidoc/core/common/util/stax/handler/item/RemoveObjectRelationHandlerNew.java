@@ -130,7 +130,6 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
         for (int i = 0; i < attCount; i++) {
             Attribute att = element.getAttribute(i);
-            // String namespace = att.getNamespace();
             writeAttribute(att.getNamespace(), element.getLocalName(), att
                 .getLocalName(), att.getValue(), att.getPrefix());
 

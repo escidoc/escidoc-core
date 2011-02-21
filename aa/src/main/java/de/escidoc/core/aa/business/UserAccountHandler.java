@@ -2253,7 +2253,6 @@ public class UserAccountHandler
         Set<UserPreference> userPreferences =
             userAccount.getUserPreferencesByUserId();
         // TODO check for same preference already set by getting preference by
-        // PrimKey(userId,name)
         for (UserPreference userPreference : userPreferences) {
             if (preferenceName.equals(userPreference.getName())) {
                 throw new AlreadyExistsException("Preference " + preferenceName
@@ -2355,7 +2354,6 @@ public class UserAccountHandler
         }
 
         // TODO check for existence of preference by getting preference by
-        // PrimKey(userId,name)
         Iterator<UserPreference> prefIt = userPreferences.iterator();
         UserPreference preference = null;
         while (prefIt.hasNext()) {
@@ -2370,7 +2368,6 @@ public class UserAccountHandler
                 + " does not exist for user " + userId);
         }
         preference.setValue(preferences.get(preferenceName));
-        // unnecessary: userPreferences.add(preference);
 
         // update user in policy cache; rights may depend on preferences
         sendUserAccountUpdateEvent(userId);
@@ -2404,7 +2401,6 @@ public class UserAccountHandler
         Set<UserPreference> userPreferences =
             userAccount.getUserPreferencesByUserId();
 
-        // PrimKey(userId,name)
         for (UserPreference userPreference : userPreferences) {
             UserPreference curPref = userPreference;
             if (curPref.getName().equals(preferenceName)) {
@@ -2485,12 +2481,6 @@ public class UserAccountHandler
         // FIXME name/value may be defined as primary key
         Set<UserPreference> currentPreferences =
             userAccount.getUserPreferencesByUserId();
-        // Iterator<UserPreference> curPrefsIterator =
-        // currentPreferences.iterator();
-        // while (curPrefsIterator.hasNext()) {
-        // UserPreference preference = curPrefsIterator.next();
-        // dao.delete(preference);
-        // }
         currentPreferences.clear();
 
         // add all given preferences
@@ -2504,7 +2494,6 @@ public class UserAccountHandler
             preference.setName(preferenceName);
             preference.setValue(preferenceValue);
 
-            // dao.save(preference);
             // FIXME ? set does not prevent dublicate keys but dublicate objects
             // (FRS)
             currentPreferences.add(preference);

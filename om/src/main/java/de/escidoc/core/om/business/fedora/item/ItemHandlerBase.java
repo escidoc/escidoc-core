@@ -350,8 +350,6 @@ public class ItemHandlerBase extends HandlerBase {
 
         final String status =
             getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
-        // TripleStoreUtility.getInstance().getPropertiesElements(
-        // getItem().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
         if (status.equals(Constants.STATUS_RELEASED)) {
             // check if the version is in status released

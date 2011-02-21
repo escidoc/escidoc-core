@@ -546,8 +546,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      */
     public static List<RoleGrant> retrieveGrantsByUserId(final String userId)
         throws SqlDatabaseSystemException {
-//        List<RoleGrant> result = null;
-//        return result;
+
         return null;
     }
 

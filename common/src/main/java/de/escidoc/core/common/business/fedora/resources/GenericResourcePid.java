@@ -171,8 +171,7 @@ public class GenericResourcePid extends GenericResource {
                     getResourceProperties().get(
                         TripleStoreUtility.PROP_OBJECT_PID);
             }
-            // getTripleStoreUtility().getPropertiesElements(getId(),
-            // TripleStoreUtility.PROP_OBJECT_PID);
+
             if (!validPidStructure(this.objectPid)) {
                 this.objectPid = null;
             }

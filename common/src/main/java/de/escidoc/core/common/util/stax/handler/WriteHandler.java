@@ -143,11 +143,6 @@ public abstract class WriteHandler extends DefaultHandler {
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
-                // Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
-                // String nameTrace = (String) namespaceTrace.get(1);
-                // if ( (deepLevelInMAp.intValue() >= deepLevel)) {
-                // writer.writeNamespace(prefix, uri);
-                // }
             }
         }
         if (prefix != null) {
@@ -159,10 +154,7 @@ public abstract class WriteHandler extends DefaultHandler {
                 if (attributeValueArray.length == 2) {
                     int index = attributeValueArray[1].indexOf('/');
                     if (index == -1) {
-                        // int index = attributeValue.indexOf(":");
-                        // if(index != -1) {
-                        // String prefixValue =
-                        // attributeValue.substring(0, index);
+
                         String prefixValue = attributeValueArray[0];
                         if (prefixValue != null) {
                             String valueUri =
@@ -191,7 +183,6 @@ public abstract class WriteHandler extends DefaultHandler {
                             }
                         }
                     }
-                    // writer.writeNamespace(valuePrefix, valueUri);
                 }
             }
         }

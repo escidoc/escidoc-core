@@ -71,8 +71,8 @@ public enum StorageType {
         else if (this.storageType.equals("R")) {
             return Constants.STORAGE_EXTERNAL_URL;
         }
-        // else if (this.storageType.equals(StorageType.INTERNAL_MANAGED)) {
+
         return Constants.STORAGE_INTERNAL_MANAGED;
-        // }
+
     }
 }

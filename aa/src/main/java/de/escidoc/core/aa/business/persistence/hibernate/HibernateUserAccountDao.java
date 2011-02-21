@@ -1233,25 +1233,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     // Put Object in UserDetails-Cache
                     PoliciesCache.putUserDetails(handle, result);
                 }
-                // // FIXME: remove
-                // System.out.println(getSession().connection());
-                // // end
-                // final Object[] res =
-                // (Object[]) getUniqueResult(getHibernateTemplate().find(
-                // QUERY_RETRIEVE_USER_DETAILS_DATA,
-                // new Object[] { handle, System.currentTimeMillis() }));
-                // if (res != null) {
-                // result =
-                // new EscidocUserDetails();
-                // result.setId((String) res[0]);
-                // result.setRealName((String) res[1]);
-                //
-                // //Get OUs of user
-                //
-                //
-                // //Put Object in UserDetails-Cache
-                // PoliciesCache.putUserDetails(handle, result);
-                // }
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);

@@ -561,7 +561,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 Constants.COLON_REPLACEMENT_PID)
                 + '-';
         String sdefIdPrefix = "sdef:" + sdexIdMidfix;
-        // String sdepIdPrefix = "sdep:" + sdexIdMidfix;
         Map<String, ResourceDefinitionCreate> resourceDefinitions =
             rdh.getResourceDefinitions();
 
@@ -590,9 +589,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             }
         }
         deleteFromRelsExt.put("/RDF/Description/hasService", deleteElementList);
-        // getContentModel().setRelsExt(
-        // Utility.updateRelsExt(null, deleteFromRelsExt, null,
-        // getContentModel(), null));
+
         byte[] tmpRelsExt =
             Utility.updateRelsExt(null, deleteFromRelsExt, null,
                 getContentModel(), null);
@@ -667,7 +664,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 ResourceDefinitionCreate resourceDefinition =
                     resourceDefinitionCreate;
                 String sdefId = sdefIdPrefix + resourceDefinition.getName();
-                // String sdepId = sdepIdPrefix + resourceDefinition.getName();
 
                 if (getTripleStoreUtility().exists(sdefId)) {
                     // check if href for xslt is changed

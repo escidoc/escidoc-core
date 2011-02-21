@@ -169,8 +169,6 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                     String componentId =
                             createComponent((newComponent)
                                     .toString(XmlUtility.CHARACTER_ENCODING));
-                    // addComponent((newCompIt.next())
-                    // .toString(XmlUtility.CHARACTER_ENCODING));
                     getItem().addComponent(componentId);
                 } catch (UnsupportedEncodingException e) {
                     throw new EncodingSystemException(e.getMessage(), e);

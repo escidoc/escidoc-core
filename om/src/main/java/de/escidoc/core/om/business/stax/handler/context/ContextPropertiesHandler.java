@@ -202,17 +202,9 @@ public class ContextPropertiesHandler extends DefaultHandler {
             }
             else if (theName.equals(Elements.ELEMENT_DESCRIPTION)) {
                 if (data.length() == 0) {
-                    // int index =
-                    // element.indexOfAttribute(
-                    // de.escidoc.core.common.business.Constants.XLINK_URI,
-                    // "href");
-                    // String hrefVal = element.getAttribute(index).getValue();
-                    // propertiesMap.put(element.getLocalName(), hrefVal);
-                    // propertiesMap.put(theName, "");
                     propertiesMap.put(Elements.ELEMENT_DESCRIPTION, "");
                 }
                 else {
-                    // propertiesMap.put(theName, data);
                     propertiesMap.put(Elements.ELEMENT_DESCRIPTION, data);
                 }
             }

@@ -575,9 +575,6 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     }
 
     private static void addPreferencesCommonValues(final Map<String, Object> values) {
-        // would like to create and return new map: no side effects(?) (FRS)
-        // values.put("userAccountPreferencesHref", value);
-        // values.put("userAccountPreferencesTitle", value);
         values.put("preferencesNamespacePrefix",
             Constants.USER_PREFERENCES_NS_PREFIX);
         values.put("preferencesNamespace", Constants.USER_PREFERENCES_NS_URI);

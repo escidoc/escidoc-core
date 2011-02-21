@@ -3368,7 +3368,6 @@ public final class XmlUtility {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
-        // filter = fh.getRules();
         // we need offset, limit etc. not in the map (ask TTE)
         filter.put("filter", fh.getRules());
         filter.put("limit", fh.getLimit());

@@ -241,8 +241,6 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 + Elements.ELEMENT_DESCRIPTION, description);
         }
 
-        // }
-
         String title =
             properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
                 + Elements.ELEMENT_DC_TITLE);
@@ -346,7 +344,6 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 Datastream fedoraDs = getMdRecord(nameInFedora);
                 fedoraDs.delete();
                 if (fedoraDs.getName().equals("escidoc")) {
-                    // Datastream dcDs = getDc();
                     final ItemFoXmlRendererInterface iri =
                             new VelocityXmlItemFoXmlRenderer();
                     final String dcContent = iri.renderDefaultDc(getId());
@@ -450,7 +447,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     final Map<String, String> mdProperties =
                         ds.getProperties();
                     if (mdProperties != null) {
-                        // if (mdProperties.get("nsUri") != null) {
+
                         if (mdProperties.containsKey("nsUri")) {
                             final String nsUri = mdProperties.get("nsUri");
                             // FIXME get content model ID from Item Object (see
@@ -528,7 +525,6 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         if (!ds.equals(curDs)) {
             this.dc = ds;
             ds.merge();
-            // FedoraUtility.getInstance().sync();
             getFedoraUtility().touchObject(this.parent, true);
         }
     }

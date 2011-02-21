@@ -53,8 +53,6 @@ import javax.naming.directory.NoSuchAttributeException;
  */
 public class OptimisticLockingHandler extends DefaultHandler {
 
-    // private StaxParser parser = null;
-
     private String objid = null;
 
     private String objectType = null;
@@ -87,7 +85,6 @@ public class OptimisticLockingHandler extends DefaultHandler {
         this.objid = objid;
         this.objectType = objectType;
         this.lastModifiedDate = lastModificationDate;
-        // this.parser = parser;
     }
 
     /*
@@ -102,35 +99,6 @@ public class OptimisticLockingHandler extends DefaultHandler {
         throws OptimisticLockingException, MissingAttributeValueException,
         WebserverSystemException, InvalidContentException {
         if (!done) {
-            // String curPath = parser.getCurPath();
-            // to match root element is not necessary because the first one
-            // always is the root element
-            // if (Pattern.matches("^/[^/]+$", curPath)) {
-
-//            if (this.objid != null) {
-//                String objid;
-//                try {
-//                    objid = element.getAttributeValue(null, "objid");
-//                }
-//                catch (NoSuchAttributeException e) {
-//                    try {
-//                        objid =
-//                            Utility.getId(element.getAttributeValue(
-//                                Constants.XLINK_NS_URI, "href"));
-//                    }
-//                    catch (NoSuchAttributeException e1) {
-//                        throw new InvalidContentException(
-//                            "ID of the resource not provided in"
-//                                + " XML representation.");
-//                    }
-//                }
-//                if (!objid.equalsIgnoreCase(this.objid)) {
-//                    throw new InvalidContentException(
-//                        "Incorrect ID in XML representation. Expected was "
-//                            + this.objid + ", found " + objid);
-//                }
-//            }
-
             Attribute requestedDate;
             try {
                 requestedDate =
@@ -150,7 +118,7 @@ public class OptimisticLockingHandler extends DefaultHandler {
                     objectType + " with id " + objid);
             }
             done = true;
-            // }
+
         }
         return element;
     }

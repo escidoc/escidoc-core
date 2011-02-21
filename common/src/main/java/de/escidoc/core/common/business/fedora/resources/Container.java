@@ -111,11 +111,11 @@ public class Container extends GenericVersionableResourcePid
         setHref(Constants.CONTAINER_URL_BASE + getId());
         getVersionData();
         if (getVersionNumber() != null) {
-            // setVersionData();
+
             setDcData();
         }
         this.mdRecords = new HashMap<String, Datastream>();
-        // getSomeValuesFromFedora();
+
     }
 
     /**
@@ -461,7 +461,6 @@ public class Container extends GenericVersionableResourcePid
                     }
                 }
 
-                // ds.replaceAlternateId(type, 1);
                 this.mdRecords.put(name, ds);
                 ds.merge();
 
@@ -604,7 +603,6 @@ public class Container extends GenericVersionableResourcePid
             // writing RELS-EXT twice.
             timestamp = persistEscidocRelsExt();
             if (timestamp == null) {
-                // timestamp = getLastModificationDate();
                 timestamp = getLastFedoraModificationDate();
             }
             updateWovTimestamp(getVersionNumber(), timestamp);
@@ -615,11 +613,8 @@ public class Container extends GenericVersionableResourcePid
                 timestamp);
         }
 
-        // if (sync) {
         getFedoraUtility().sync();
-        // }
 
-        // getsomevaluesfromFedora();
         return timestamp;
     }
 

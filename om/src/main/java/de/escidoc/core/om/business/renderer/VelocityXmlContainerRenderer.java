@@ -197,7 +197,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         String result;
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
-        // addNamespaceValues(values);
         values.put("isRootRelations", XmlTemplateProvider.TRUE);
 
         commonRenderer.addRelationsValues(container.getRelations(),
@@ -394,9 +393,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         }
 
         final String currentVersionId = container.getFullId();
-        // final StringBuffer versionIdBase =
-        // new StringBuffer(container.getId()).append(":");
-
         String latestVersionNumber =
             properties.get(PropertyMapKeys.LATEST_VERSION_NUMBER);
         String curVersionNumber = container.getVersionId();
@@ -430,7 +426,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         String versionPid = container.getVersionPid();
         // container
-        // .getVersionData().get(Elements.ELEMENT_WOV_VERSION_PID);
         if ((versionPid != null) && versionPid.length() != 0) {
             values.put("containerCurrentVersionPID", versionPid);
         }
@@ -450,20 +445,12 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 }
             }
 
-            // values.put("containerCurrentVersionValidStatus", container
-            // .getLastVersionData().get(
-            // TripleStoreUtility.PROP_LATEST_VERSION_VALID_STATUS));
-
         }
         else {
             values.put(
                 "containerCurrentVersionStatus",
                 container.getResourceProperties().get(
                     PropertyMapKeys.CURRENT_VERSION_STATUS));
-
-            // values.put("containerCurrentVersionValidStatus", container
-            // .getVersionData()
-            // .get(Elements.ELEMENT_WOV_VERSION_VALID_STATUS));
 
             values.put("containerCurrentVersionComment", XmlUtility
                 .escapeForbiddenXmlCharacters(container
@@ -556,10 +543,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("structMapTitle", "StructMap of Container");
         values.put("structMapHref", container.getHref() + "/struct-map");
 
-        // values.put("structmapNamespacePrefix",
-        // Constants.STRUCT_MAP_PREFIX);
-        // values.put("structmapNamespace",
-        // Constants.STRUCT_MAP_NAMESPACE_URI);
         try {
             addMemberRefs(container, values);
         }
@@ -618,7 +601,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                         + "write member entry to struct-map for "
                         + "object with unknown type: " + id + '.';
                 log.error(msg);
-                // throw new IntegritySystemException(msg);
             }
 
         }

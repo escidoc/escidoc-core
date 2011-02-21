@@ -57,9 +57,6 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
     private final List<String> componentIds = new ArrayList<String>();
 
-    // private static AppLogger log =
-    // new AppLogger(ComponentIdsInItemFoxmlHandler.class.getName());
-
     /**
      * 
      * @param parser

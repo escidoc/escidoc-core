@@ -612,8 +612,6 @@ public class GenericResource implements FedoraResource {
         sp.addHandler(me);
 
         try {
-            // final ByteArrayInputStream relsExtBA =
-            // new ByteArrayInputStream(getRelsExt().getStream());
             sp.parse(getRelsExt().getStream());
             setRelsExt((ByteArrayOutputStream) me.getOutputStreams().get("RDF"));
         }
@@ -1389,7 +1387,6 @@ public class GenericResource implements FedoraResource {
 
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);
-                // setRelsExt(ds);
                 this.relsExt = ds;
             }
             // DC

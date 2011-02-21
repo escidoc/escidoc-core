@@ -333,7 +333,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             extractPathes.put("/item/relations", null);
             extractPathes.put("/item/resources", null);
             extractPathes.put("/item/md-records/md-record", "name");
-            // extractPathes.put("/item/components/component", "objid");
             if (!origin) {
                 extractPathes
                     .put("/item/components/component/properties", null);
@@ -1647,8 +1646,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().setLatestReleasePid();
             getItem().persist();
 
-            // notify indexer
-            // getUtility().notifyIndexerAddPublication(getItem().getHref());
             fireItemModified(getItem().getId());
             // find surrogate items which reference this item by a floating
             // reference, recache them and if necessary reindex them.
@@ -1846,8 +1843,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             makeVersion(withdrawComment, Constants.STATUS_WITHDRAWN);
             getItem().persist();
 
-            // getUtility().notifyIndexerDeletePublication(getItem().getHref());
-
             fireItemModified(getItem().getId());
         }
 
@@ -1949,7 +1944,6 @@ public class FedoraItemHandler extends ItemHandlerPid
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                         Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + target);
                 newContentRelationElement.addAttribute(resource);
-                // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
 
                 elements.add(newContentRelationElement);
@@ -2690,8 +2684,6 @@ public class FedoraItemHandler extends ItemHandlerPid
                 + StatusType.PENDING + "'.");
             item.getProperties().getObjectProperties()
                 .setStatus(StatusType.PENDING);
-            // item.getProperties().getObjectProperties().setStatusComment(
-            // "Object created");
         }
     }
 
@@ -2757,17 +2749,6 @@ public class FedoraItemHandler extends ItemHandlerPid
                 throw new InvalidStatusException(msg);
             }
 
-            // make sure that version 1 is also in status released
-            // if (!Boolean.valueOf(System
-            // .getProperty("cmm.Item.versionPid.releaseWithoutPid"))) {
-            //
-            // if (item.getProperties().getCurrentVersion().getPid() == null) {
-            // String msg =
-            // "Item with version-status released requires an PID.";
-            // log.debug(msg);
-            // throw new InvalidStatusException(msg);
-            // }
-            // }
             item.getProperties().getCurrentVersion()
                 .setStatus(StatusType.RELEASED);
             item.getProperties().setLatestReleasedVersion(
@@ -3001,7 +2982,6 @@ public class FedoraItemHandler extends ItemHandlerPid
                 if (mdRecordNames.contains(name)) {
                     throw new InvalidContentException(
                         "Metadata 'md-record' with name='"
-                        // + Elements.MANDATORY_MD_RECORD_NAME
                             + name + "' exists multiple times.");
                 }
 
@@ -3121,41 +3101,6 @@ public class FedoraItemHandler extends ItemHandlerPid
 
     }
 
-    // /**
-    // * Check if Item is surrogate Item and set objid of origin Item.
-    // *
-    // * @throws ItemNotFoundException
-    // * Thrown if the resource for the obtained objid is no Item.
-    // * @throws AuthorizationException
-    // * Thrown if user has no permission to origin Item.
-    // * @throws SystemException
-    // * Thrown in case of internal error.
-    // */
-    // private void setOriginItem() throws ItemNotFoundException,
-    // AuthorizationException, SystemException {
-    //
-    // String originObjectId =
-    // getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
-    //
-    // if (originObjectId != null) {
-    // prepareAndSetOriginItem();
-    // if (!checkUserRights(getOriginItem().getFullId())) {
-    // String message =
-    // "You cannot access a full surrogate item representation"
-    // + " because you have no access rights on the item "
-    // + getOriginId()
-    // + " . You can access subressourcess owned by a "
-    // + "surrogate item using retrieve methods on "
-    // + "subresources.";
-    //
-    // log.debug(message);
-    // throw new AuthorizationException(message);
-    // }
-    // }
-    // else {
-    // setOriginItem(null);
-    // }
-    // }
 
     /**
      * Load origin Item. User permissions are checked.

@@ -45,9 +45,6 @@ public class FedoraDescribeDeviationHandler
 
     private ConnectionUtility connectionUtility;
 
-    // private static AppLogger log =
-    // new AppLogger(FedoraDescribeDeviationHandler.class.getName());
-
     private String baseURL;
 
     private String user;

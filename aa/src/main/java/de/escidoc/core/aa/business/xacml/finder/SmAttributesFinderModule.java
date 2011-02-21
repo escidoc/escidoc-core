@@ -116,20 +116,6 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
             + "|.*<[^>]*?scope[^>]*?href=\"[^\"]*/(.*?)\".*", Pattern.DOTALL
             + Pattern.MULTILINE);
 
-    // private static final Pattern CREATED_BY_PATTERN =
-    // Pattern.compile(StringUtility.concatenateToString(
-    // ".*<[^>]*?created-by[^>]*?objid=\"(.*?)\".*",
-    // "|.*<[^>]*?created-by[^>]*?href=\"[^\"]*/(.*?)\".*"),
-    // Pattern.DOTALL
-    // + Pattern.MULTILINE);
-    //
-    // private static final Pattern MODIFIED_BY_PATTERN =
-    // Pattern.compile(StringUtility.concatenateToString(
-    // ".*<[^>]*?modified-by[^>]*?objid=\"(.*?)\".*",
-    // "|.*<[^>]*?modified-by[^>]*?href=\"[^\"]*/(.*?)\".*"),
-    // Pattern.DOTALL
-    // + Pattern.MULTILINE);
-
     private static final Pattern ALLOWED_ROLE_PATTERN =
         Pattern.compile("<[^>]*?allowed-role[^>]*?objid=\"(.*?)\""
             + "|<[^>]*?allowed-role[^>]*?href=\"[^\"]*/(.*?)\"", Pattern.DOTALL
@@ -280,30 +266,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                     CustomEvaluationResultBuilder
                         .createSingleStringValueResult(objId.trim());
             }
-            // } else if (ATTR_CREATED_BY.equals(attributeId)) {
-            // Matcher matcher =
-            // CREATED_BY_PATTERN.matcher(resourceXml);
-            // if (matcher.find()) {
-            // String objId = matcher.group(1);
-            // if (objId == null) {
-            // objId = matcher.group(2);
-            // }
-            // result =
-            // CustomEvaluationResultBuilder
-            // .createSingleStringValueResult(objId.trim());
-            // }
-            // } else if (ATTR_MODIFIED_BY.equals(attributeId)) {
-            // Matcher matcher =
-            // MODIFIED_BY_PATTERN.matcher(resourceXml);
-            // if (matcher.find()) {
-            // String objId = matcher.group(1);
-            // if (objId == null) {
-            // objId = matcher.group(2);
-            // }
-            // result =
-            // CustomEvaluationResultBuilder
-            // .createSingleStringValueResult(objId.trim());
-            // }
+
         }
         else if (ATTR_ALLOWED_ROLE.equals(attributeId)) {
             Matcher matcher = ALLOWED_ROLE_PATTERN.matcher(resourceXml);

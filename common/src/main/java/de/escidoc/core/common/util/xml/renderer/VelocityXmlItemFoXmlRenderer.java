@@ -57,10 +57,6 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
     private final VelocityXmlCommonFoXmlRenderer commonRenderer =
         new VelocityXmlCommonFoXmlRenderer();
 
-    // not needed if no one logs
-    // private static AppLogger log =
-    // new AppLogger(VelocityXmlItemFoXmlRenderer.class.getName());
-
     private String buildNumber = null;
 
     /**
@@ -155,11 +151,6 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
             .put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, this.buildNumber);
         values.put("itemId", itemId);
 
-        // values.put("latestVersionUser",
-        // Utility.getInstance().getCurrentUser()[0]);
-        // values.put("latestVersionUserTitle",
-        // Utility.getInstance().getCurrentUser()[1]);
-        // values.put("latestVersionComment", comment);
         if ((contentRelations != null) && (!contentRelations.isEmpty())) {
             values.put("contentRelations", contentRelations);
         }
@@ -173,9 +164,6 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
     }
 
     private static void addRelsExtNamespaceValues(Map<String, Object> values) {
-
-        // values.put("itemNamespace", Constants.ITEM_NAMESPACE_URI);
-        // values.put("itemNamespacePrefix", Constants.ITEM_NAMESPACE_PREFIX);
 
         values.put("escidocPropertiesNamespacePrefix",
             Constants.PROPERTIES_NS_PREFIX);
@@ -284,7 +272,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         Map<String, Object> values = new HashMap<String, Object>();
 
         addRelsExtNamespaceValues(values);
-        // values.put("itemId", itemId);
+
         if (this.buildNumber == null) {
             this.buildNumber = Utility.getInstance().getBuildNumber();
         }
@@ -314,15 +302,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
             getEscpapedValue(
                     properties.get(TripleStoreUtility.PROP_VISIBILITY),
                 false));
-        // values.put(XmlTemplateProvider.VAR_FILESIZE, getEscpapedValue(
-        // (String) properties.get(TripleStoreUtility.PROP_FILESIZE), false));
-        // values.put(XmlTemplateProvider.VAR_FILENAME, getEscpapedValue(
-        // (String) properties.get(TripleStoreUtility.PROP_FILENAME), false));
-        // if (properties.get(TripleStoreUtility.PROP_DESCRIPTION) != null) {
-        // values.put(XmlTemplateProvider.VAR_DESCRIPTION, getEscpapedValue(
-        // (String) properties.get(TripleStoreUtility.PROP_DESCRIPTION),
-        // false));
-        // }
+
         if (properties.get(TripleStoreUtility.PROP_MIME_TYPE) != null) {
             values.put(
                 XmlTemplateProvider.MIME_TYPE,
@@ -336,11 +316,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
                 getEscpapedValue(properties
                     .get(TripleStoreUtility.PROP_VALID_STATUS), false));
         }
-        // if (properties.get(TripleStoreUtility.PROP_LOCATOR_URL) != null) {
-        // values.put(XmlTemplateProvider.VAR_LOCATOR_URL, getEscpapedValue(
-        // (String) properties.get(TripleStoreUtility.PROP_LOCATOR_URL),
-        // false));
-        // }
+
         if (inCreate) {
             values.put("inCreate", inCreate);
         }

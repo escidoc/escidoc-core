@@ -275,7 +275,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 }
             }
 
-            result = out.toString(XmlUtility.CHARACTER_ENCODING); // con.getContentEncoding());
+            result = out.toString(XmlUtility.CHARACTER_ENCODING);
         }
         catch (final MalformedURLException e) {
             throw new TripleStoreSystemException(e);
@@ -534,16 +534,11 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final String[] triples = PATTERN_WHITESPACE_DOT.split(response);
         // final String[] triples = response.split("\\s\\.");
         for (String triple : triples) {
-            // final String[] tripleParts =
-            // PATTERN_BLANKS.split(triples[i].trim(), 3);
+
             final String[] tripleParts = triple.trim().split("\\ +", 3);
             if (tripleParts.length > 2) {
                 final String property = tripleParts[1];
                 String entry = tripleParts[2];
-
-                // propertyName =
-                // property.substring(property.lastIndexOf('/') + 1, property
-                // .length() - 1);
                 propertyName = property.substring(1, property.length() - 1);
 
                 if (entry != null) {
@@ -551,8 +546,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                         entry = XmlUtility.getIdFromURI(entry);
                     } else if (entry.startsWith("\"")) {
                         entry = entry.substring(1, entry.lastIndexOf('"'));
-                        // remove every escaping backslash
-                        // entry = entry.replaceAll("\\\\([^\\\\])", "$1");
+                        // remove every escaping backslash;
                         try {
                             entry = NTriplesUtil.unescapeLiteralValue(entry);
                         } catch (final ParseException e) {
@@ -1007,8 +1001,6 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         MissingMethodParameterException {
 
         final List<String> result = new ArrayList<String>();
-        // String objectsToFind = getObjectsToFind(objectType);
-
         final String template = SELECT_VAR;
         final StringBuffer query = getRetrieveSelectClause(false, null);
 

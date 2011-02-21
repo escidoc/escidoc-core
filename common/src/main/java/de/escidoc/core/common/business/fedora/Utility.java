@@ -1358,7 +1358,6 @@ public class Utility {
             sp.clearHandlerChain();
             ByteArrayOutputStream newWovStream =
                 addNewSubtreesHandler.getOutputStreams();
-            // String debug = newWovStream.toString();
             String newWovString =
                 newWovStream
                     .toString(XmlUtility.CHARACTER_ENCODING).replaceFirst(
@@ -1753,9 +1752,6 @@ public class Utility {
             }
             else {
                 local = new URI(url.replaceFirst("http[s]?://[^/]+", ""));
-                // if (url.startsWith(escidocBaseUrl)) {
-                // checkESciDocLocalURL(local);
-                // }
                 fq = new URI(url);
             }
 
@@ -1780,9 +1776,7 @@ public class Utility {
         catch (URISyntaxException e) {
             throw new InvalidContentException("No valid URL.", e);
         }
-        // catch (FedoraSystemException e) {
-        // throw new WebserverSystemException(e);
-        // }
+
     }
 
     /**

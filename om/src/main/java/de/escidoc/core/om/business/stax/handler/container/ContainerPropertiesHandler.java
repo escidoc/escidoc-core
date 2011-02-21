@@ -324,25 +324,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element)
         throws MissingElementValueException {
         String curPath = staxParser.getCurPath();
-        // String theName = element.getLocalName();
         if (curPath.startsWith(PROPERTIES_PATH)) {
-            // Now properties.description is read only element.
-            // It value origins from the corresponding element of the escidoc
-            // meta data set
-            // and is stored in dc data stream as dc.description element as
-            // result of a mapping escidoc->dc.
-            // if (theName.equals("description")) {
-            // if ((s != null)) {
-            // properties.put("description", s);
-            // }
-            // else {
-            // getLog().debug(
-            // "the value of" + " of the element " + theName
-            // + " is missing");
-            // throw new MissingElementValueException(
-            // "the value of the element " + theName + " is missing");
-            // }
-            // }
 
             if (curPath.equals("/container/properties/public-status")) {
                 if ((s != null)) {

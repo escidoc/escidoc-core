@@ -1782,10 +1782,6 @@ public class FedoraUtility implements InitializingBean {
 
         if (!(matcherErrorGetting.find() || matcherMalformedUrl.find())) {
             LOG.debug("Failed to modify Fedora datastream. " + e.toString());
-            // LOG.warn("Failed to modify Fedora datastream:\n"
-            // + "======== begin data stream ================\n"
-            // + new String(datastream) + "\n"
-            // + "======== end data stream ==================\n" + e);
         }
         else {
             LOG.debug("Failed to load content. " + e.toString());

@@ -333,11 +333,6 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     + "(new DefaultHandler());");
         }
 
-        // factory.setProperty("javax.xml.stream.isValidating", "true");
-        // factory.setProperty("javax.xml.stream.isNamespaceAware", "True");
-        // factory.setProperty("javax.xml.stream.isCoalescing", "True");
-
-        // parseEvents(in);
         parseStream(in);
     }
 

@@ -895,7 +895,6 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
         for(Map.Entry<String, Object> entry : streamsEntrySet) {
             final String name = entry.getKey();
-            // final String id = name.replace(" ", "_");
             final String label = name;
             Boolean newDS = true;
             if (adminDescriptors.containsKey(name)) {
@@ -934,7 +933,6 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                         true,
                         ((ByteArrayOutputStream) streams.get(name))
                             .toByteArray(), false);
-                // it.remove();
                 LOGGER.debug("add to Context " + getContext().getId()
                     + " new admin-descriptor " + name);
                 updated = true;

@@ -147,8 +147,6 @@ public class Context extends GenericResource implements ContextInterface {
             throw new StreamNotFoundException("No properties for context "
                 + getId() + '.', e);
         }
-        // getSomeValuesFromFedora();
-
     }
 
     /*
@@ -336,7 +334,6 @@ public class Context extends GenericResource implements ContextInterface {
             throw new StreamNotFoundException("No DC for context " + getId()
                 + '.', e);
         }
-        // getSomeValuesFromFedora();
     }
 
     /*

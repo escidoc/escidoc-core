@@ -320,11 +320,7 @@ public class ComponentCreate extends GenericResourceCreate
                     .getDataLocation().toString());
                 valueMap.put(XmlTemplateProvider.REF_TYPE, "URL");
             }
-            // else if (this.content.getStorageType().equals(
-            // StorageType.INTERNAL_MANAGED)) {
-            // this.properties.put(XmlTemplateProvider.INLINE_CONTENT,
-            // this.content.getContent());
-            // }
+
         }
         valueMap.put(XmlTemplateProvider.CONTROL_GROUP, this.content
             .getStorageType().getAbbreviation());
@@ -464,17 +460,6 @@ public class ComponentCreate extends GenericResourceCreate
             throw new InvalidContentException(
                 "Attribute 'storage' fits not to inline content.");
         }
-
-        // // check if data location is not Fedora
-        // if (this.content.getDataLocation().toString().startsWith(
-        // EscidocConfiguration.getInstance().get(
-        // EscidocConfiguration.FEDORA_URL))) {
-        // String msg =
-        // "Data location invalid: '" + this.content.getDataLocation()
-        // + "'.";
-        // LOG.debug(msg);
-        // throw new InvalidContentException(msg);
-        // }
     }
 
 }

@@ -190,10 +190,7 @@ public class ContentModel extends GenericVersionableResourcePid
             catch (StreamNotFoundException e) {
                 throw new WebserverSystemException(e);
             }
-            // ,
-            // location, controlGroupValue);
-            // ds.setAlternateIDs(new Vector<String>(altIDs));
-            // ds.setLabel(label);
+
             this.dc = ds;
         }
 

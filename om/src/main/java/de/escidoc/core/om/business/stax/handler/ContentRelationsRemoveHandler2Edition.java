@@ -134,13 +134,11 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
                 throw new ContentRelationNotFoundException(message);
 
             }
-            // String predicatePrefix = "ns" +
-            // String.valueOf(predicateNs.hashCode());
+
             Map<String, String> relationData =
                 new HashMap<String, String>();
             relationsData.add(relationData);
             relationData.put("predicateNs", predicateNs);
-            // relationData.put("predicatePrefix", predicatePrefix);
             relationData.put("predicateValue", predicateValue);
             relationData.put("target", targetId);
             targetId = null;

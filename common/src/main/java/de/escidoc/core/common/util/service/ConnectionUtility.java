@@ -667,15 +667,8 @@ public class ConnectionUtility {
             Scheme http =
                 new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
 
-            // Schema für SSL Verbindungen
-            // SSLSocketFactory sf = new
-            // SSLSocketFactory(SSLContext.getInstance("TLS"));
-            // sf.setHostnameVerifier(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
-            // Scheme https = new Scheme("https", sf, 443);
-
             SchemeRegistry sr = new SchemeRegistry();
             sr.register(http);
-            // sr.register(https);
 
             cm = new ThreadSafeClientConnManager(params, sr);
 
@@ -791,7 +784,6 @@ public class ConnectionUtility {
         HttpDelete delete;
         try {
             delete = new HttpDelete(url);
-            // delete = new HttpDelete(new URI(url, false).getEscapedURI());
             delete = new HttpDelete(new URI(url));
             HttpResponse httpResponse = getHttpClient(url).execute(delete);
             int responseCode = httpResponse.getStatusLine().getStatusCode();
@@ -908,19 +900,9 @@ public class ConnectionUtility {
 
         HttpPost httpPost;
         HttpResponse httpResponse;
-        // RequestEntity entity;
-        // try {
-        // entity =
-        // new StringRequestEntity(body, Constants.DEFAULT_MIME_TYPE,
-        // XmlUtility.CHARACTER_ENCODING);
-        // }
-        // catch (UnsupportedEncodingException e) {
-        // throw new WebserverSystemException(e);
-        // }
 
         try {
-            // TODO
-            // entitys für Body Posts
+
             httpPost = new HttpPost(url);
 
             if (cookie != null) {
@@ -968,28 +950,6 @@ public class ConnectionUtility {
 
             httpClient.getParams().setIntParameter(
                 CoreConnectionPNames.SO_TIMEOUT, timeout);
-            // TODO:
-            // http.protocol.expect-continue': activates Expect: 100-Continue
-            // handshake for the
-            // entity enclosing methods. The purpose of the Expect: 100-Continue
-            // handshake is to allow
-            // the client that is sending a request message with a request body
-            // to determine if the origin server
-            // is willing to accept the request (based on the request headers)
-            // before the client sends the request
-            // body. The use of the Expect: 100-continue handshake can result in
-            // a noticeable performance improvement
-            // for entity enclosing requests (such as POST and PUT) that require
-            // the target server's authentication.
-            // Expect: 100-continue handshake should be used with caution, as it
-            // may cause problems with HTTP
-            // servers and proxies that do not support HTTP/1.1 protocol. This
-            // parameter expects a value of type
-            // java.lang.Boolean. If this parameter is not set HttpClient will
-            // attempt to use the handshake.
-            // httpClient.getParams().setBooleanParameter(CoreProtocolPNames.USE_EXPECT_CONTINUE,
-            // Boolean.TRUE);
-
         }
     }
 }

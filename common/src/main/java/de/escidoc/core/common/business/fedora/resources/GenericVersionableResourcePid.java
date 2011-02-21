@@ -271,8 +271,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             latestReleasedVersion = getVersionId();
         }
 
-        // if (latestReleasedVersion != null) {
-
         // compare the versions (only set latest-release pid if the
         // latest-released version is older thean the current.
         int lrvn = Integer.valueOf(latestReleasedVersion);
@@ -287,7 +285,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         }
         setResourceProperties(PropertyMapKeys.LATEST_RELEASE_PID, pid);
         setLatestReleasePid(pid);
-        // }
+
     }
 
     /**
@@ -307,12 +305,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             relsExtS = createLatestReleasePid(pid);
         }
         else if ((getLatestReleasePid() != null) && pid.length() != 0) {
-            // relsExtS = updateVersionPid(pid);
             relsExtS = updateLatestReleasePid(pid);
         }
 
-        // we could store the new collected pid
-        // versionPids.put(getFullId(), pid);
         if (relsExtS != null) {
             setRelsExt(relsExtS);
         }
@@ -385,8 +380,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
          */
 
         // perpare parser chain
-        // String ltstRlsNo = getLatestReleaseVersionNumber();
-        // if ((ltstRlsNo != null) && (getVersionId().equals(ltstRlsNo))) {
         byte[] relsExtS = null;
 
         if (getVersionPid() == null) {
@@ -404,10 +397,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         if (relsExtS != null) {
             setRelsExt(relsExtS);
         }
-        // }
-        // else {
-        // unsetRelsExt();
-        // }
     }
 
     /**
@@ -939,7 +928,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                                 Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
                                         + predicateAndTarget[1]);
                 newContentRelationElement.addAttribute(resource);
-                // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
                 elementsToAdd.add(newContentRelationElement);
             }

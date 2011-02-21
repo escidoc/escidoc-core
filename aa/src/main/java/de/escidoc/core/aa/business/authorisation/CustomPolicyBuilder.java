@@ -295,12 +295,8 @@ public final class CustomPolicyBuilder {
         final EscidocRole escidocRole) throws WebserverSystemException,
         URISyntaxException, UnknownIdentifierException, FunctionTypeException {
 
-        // final String policyIdValue =
-        // StringUtility.concatenateToString(escidocRole.getRoleName(),
-        // "-policy");
         List<AbstractPolicy> xacmlPolicies = new ArrayList<AbstractPolicy>();
-        // List<Rule> rules = new ArrayList<Rule>();
-        // List<Action> rulesActions = new Vector<Action>();
+
         for (EscidocPolicy escidocPolicy1 : escidocRole.getEscidocPolicies()) {
             EscidocPolicy escidocPolicy = escidocPolicy1;
             final String xmlData = escidocPolicy.getXml();

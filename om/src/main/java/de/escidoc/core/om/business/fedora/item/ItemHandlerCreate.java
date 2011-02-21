@@ -461,7 +461,6 @@ public class ItemHandlerCreate extends ItemResourceListener {
             new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                 Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + componentId);
         newComponentIdElement.addAttribute(resource);
-        // newComponentIdElement.setElementText(componentId);
         newComponentIdElement.setChildrenElements(null);
         final List<StartElementWithChildElements> elements =
             new ArrayList<StartElementWithChildElements>();
@@ -604,7 +603,6 @@ public class ItemHandlerCreate extends ItemResourceListener {
         sp.clearHandlerChain();
         final Map<String, String> componentBinary =
             contentHandler.getComponentBinary();
-        // String componentTitle = (String) titleHandler.getComponentTitle();
         // get modified data streams
         final Map<String, Object> streams = me.getOutputStreams();
         final Map<String, String> properties =

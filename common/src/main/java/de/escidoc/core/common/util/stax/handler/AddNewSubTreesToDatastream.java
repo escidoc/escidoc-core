@@ -428,13 +428,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 if (((deepLevelInMAp == deep) && (!elementName
                     .equals(nameTrace)))
                     || (deepLevelInMAp > deep)) {
-                    // if (isRelsExt && isNew) {
-                    //
-                    // writer.writeNamespace(prefix, uri + "/");
-                    // }
-                    // else {
                     writer.writeNamespace(prefix, uri);
-                    // }
 
                 }
             }

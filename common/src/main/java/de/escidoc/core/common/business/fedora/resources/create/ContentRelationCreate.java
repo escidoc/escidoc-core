@@ -501,56 +501,6 @@ public class ContentRelationCreate extends GenericResourceCreate
     private int mergeRelation(final ContentRelationCreate nCr) {
 
         int changes = 0;
-        /*
-         * We not allow to update subject, predicate or object for
-         * ContentRelation
-         */
-        // // ContentRelation object changed
-        // if (getObject() == null) {
-        // if (nCr.getObject() != null) {
-        // setObject(nCr.getObject());
-        // changes++;
-        // }
-        // }
-        // else if (!getObject().equals(nCr.getObject())) {
-        // setObject(nCr.getObject());
-        // changes++;
-        // }
-        //
-        // // ContentRelation object version changed
-        // if (getObjectVersion() == null) {
-        // if (nCr.getObjectVersion() != null) {
-        // setObjectVersion(nCr.getObjectVersion());
-        // changes++;
-        // }
-        // }
-        // else if (!getObjectVersion().equals(nCr.getObjectVersion())) {
-        // setObjectVersion(nCr.getObjectVersion());
-        // changes++;
-        // }
-        //
-        // // ContentRelation subject changed
-        // if (getSubject() == null) {
-        // if (nCr.getSubject() != null) {
-        // setSubject(nCr.getSubject());
-        // changes++;
-        // }
-        // }
-        // else if (!getSubject().equals(nCr.getSubject())) {
-        // setSubject(nCr.getSubject());
-        // changes++;
-        // }
-        // // ContentRelation subject version changed
-        // if (getSubjectVersion() == null) {
-        // if (nCr.getSubjectVersion() != null) {
-        // setSubjectVersion(nCr.getSubjectVersion());
-        // changes++;
-        // }
-        // }
-        // else if (!getSubjectVersion().equals(nCr.getSubjectVersion())) {
-        // setSubjectVersion(nCr.getSubjectVersion());
-        // changes++;
-        // }
         // ContentRelation description changed
         if (getProperties().getDescription() == null) {
             if (nCr.getProperties().getDescription() != null) {
@@ -701,9 +651,6 @@ public class ContentRelationCreate extends GenericResourceCreate
      */
     private void deleteDatastream(final MdRecordCreate mdRecord)
         throws FedoraSystemException {
-
-        // FedoraUtility.getInstance().setDatastreamState(getObjid(),
-        // mdRecord.getName(), FedoraUtility.DATASTREAM_STATUS_DELETED);
 
         FedoraUtility.getInstance().purgeDatastream(getObjid(),
             mdRecord.getName(), null, null);

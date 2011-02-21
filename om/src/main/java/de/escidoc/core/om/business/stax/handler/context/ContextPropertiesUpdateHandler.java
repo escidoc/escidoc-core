@@ -67,8 +67,6 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
     private String contextId = null;
 
-    // private List expected = null;
-
     private Map<String, String> changedValuesInRelsExt = null;
 
     private Map<String, String> changedValuesInDc = null;
@@ -147,50 +145,9 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
                 throw new InvalidStatusException(message);
             }
             this.orgunits.add(id);
-            // this.propertiesMap.put(
-            // Elements.ELEMENT_ORGANIZATIONAL_UNITS, this.orgunits);
-
         }
 
-        // if (curPath.startsWith(propertiesPath)) {
-        // if (curPath.equals(propertiesPath
-        // + "/organizational-units/organizational-unit")) {
-        //
-        // if (UserContext.isRestAccess()) {
-        // try {
-        // String xlinkType =
-        // element
-        // .getAttribute(
-        // de.escidoc.core.common.business.Constants.XLINK_URI,
-        // "type").getValue();
-        // if (xlinkType == null || !xlinkType.equals("simple")) {
-        // throw new ReadonlyAttributeViolationException(
-        // "xlink:type is not simple.");
-        // }
-        //
-        // // String xlinkTitle = element.getAttribute(
-        // // de.escidoc.core.common.business.Constants.XLINK_URI,
-        // // "title").getValue();
-        //
-        // // checkAttributeValue("creator-title", xlinkTitle);
-        // // properties.put("creator-title", xlinkTitle);
-        //
-        // // FIXME update of organizational unit must be
-        // // implemented !!!
-        // String xlinkHref =
-        // element
-        // .getAttribute(
-        // de.escidoc.core.common.business.Constants.XLINK_URI,
-        // "href").getValue();
-        // checkAttributeValue("organizational-unit", XmlUtility
-        // .getIdFromURI(xlinkHref));
-        // }
-        // catch (NoSuchAttributeException e) {
-        // throw new ReadonlyAttributeViolationException(e);
-        // }
-        // }
-        // }
-        // }
+
 
         return element;
     }
@@ -198,13 +155,6 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     public EndElement endElement(EndElement element) throws Exception {
         return element;
     }
-
-    // private void checkAttributeValue(String key, String val)
-    // throws ReadonlyElementViolationException,
-    // ReadonlyAttributeViolationException, SystemException {
-    // checkValue(key, val, true);
-    //
-    // }
 
     public String characters(String data, StartElement element)
         throws Exception {
@@ -221,11 +171,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
                     this.changedValuesInDc.put(Elements.ELEMENT_NAME, data);
                 }
             }
-            // // status
-            // else if (curPath.equals(propertiesPath + "/"
-            // + TripleStoreUtility.PROP_PUBLIC_STATUS)) {
-            // checkElementValue(TripleStoreUtility.PROP_PUBLIC_STATUS, data);
-            // }
+
             // type
             else if (curPath.equals(propertiesPath + '/'
                 + Elements.ELEMENT_TYPE)) {
@@ -257,27 +203,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
                 }
 
             }
-            // creation-date
-            // else if (curPath.equals(propertiesPath + "/"
-            // + TripleStoreUtility.PROP_CONTEXT_CREATION_DATE)) {
-            // String curVal =
-            // TripleStoreUtility.getInstance().getCreationDate(contextId);
-            // if (!data.equals(curVal)) {
-            // throw new ReadonlyElementViolationException(
-            // "Context properties has invalid creation-date.");
-            // }
-            // }
-            // // last-modification-data
-            // else if (curPath.equals(propertiesPath +
-            // "/last-modification-date")) {
-            // String curVal =
-            // TripleStoreUtility.getInstance().getLastModificationDate(
-            // contextId);
-            // if (!data.equals(curVal)) {
-            // throw new ReadonlyElementViolationException(
-            // "Context properties has invalid last-modification-date.");
-            // }
-            // }
+
         }
 
         return data;
@@ -301,43 +227,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
         return (this.changedValuesInDc);
     }
 
-    // private void checkValue(String key, String val, boolean isAttribute)
-    // throws ReadonlyElementViolationException,
-    // ReadonlyAttributeViolationException, SystemException {
-    // String curVal =
-    // TripleStoreUtility
-    // .getInstance()
-    // .getPropertiesElements(
-    // contextId,
-    // key,
-    // de.escidoc.core.common.business.Constants.CONTEXT_PROPERTIES_NAMESPACE_URI);
-    // if (!curVal.equals(val)) {
-    // String msg =
-    // "Property " + key + " can not be updated to " + val + ".";
-    // if (isAttribute) {
-    // throw new ReadonlyAttributeViolationException(msg);
-    // }
-    // else {
-    // throw new ReadonlyElementViolationException(msg);
-    // }
-    // }
-    //
-    // }
 
-    // /**
-    // * Check if element value was altered.
-    // *
-    // * @param key
-    // * @param val
-    // * @throws ReadonlyElementViolationException
-    // * @throws ReadonlyAttributeViolationException
-    // * @throws SystemException
-    // */
-    // private void checkElementValue(String key, String val)
-    // throws ReadonlyElementViolationException,
-    // ReadonlyAttributeViolationException, SystemException {
-    // checkValue(key, val, false);
-    // }
 
     // FIXME ? This check requires triplestore access. Just set new datastream
     // and leave it to the resource to check if it is changed!? (FRS)

@@ -340,7 +340,6 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
         // FIXME description not in map? (FRS)
         String debug = contentModel.getDescription();
-        // properties.get(PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
         values.put(XmlTemplateProvider.VAR_DESCRIPTION, debug);
 
         try {
@@ -394,8 +393,6 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_HREF,
             contentModel.getVersionHref());
-        // de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
-        // + currentVersionId);
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_ID,
             contentModel.getFullId());
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_TITLE,
@@ -403,14 +400,14 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.put(
             XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_NUMBER,
             contentModel.getVersionId());
-        // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_NUMBER));
+
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_DATE,
             contentModel.getVersionDate());
-        // properties.get(TripleStoreUtility.PROP_VERSION_DATE));
+
         values.put(
             XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_STATUS,
             contentModel.getVersionStatus());
-        // properties.get(TripleStoreUtility.PROP_CURRENT_VERSION_STATUS));
+
         values.put(
             XmlTemplateProvider.VAR_CONTENT_MODEL_CURRENT_VERSION_VALID_STATUS,
             properties.get(PropertyMapKeys.CURRENT_VERSION_VALID_STATUS));
