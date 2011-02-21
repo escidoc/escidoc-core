@@ -64,9 +64,9 @@ public class ErrorMessageHandler {
         StringBuffer messageBuf = new StringBuffer(DELIMITER);
         
         // put all given parameters into StringBuffer
-        for (String key : parameters.keySet()) {
-            messageBuf.append(key).append(": ").append(parameters.get(key))
-                    .append("\n");
+        for (Map.Entry<String, String> e : parameters.entrySet()) {
+            messageBuf.append(e.getKey()).append(": ").append(e.getValue())
+                    .append('\n');
         }
 
         //put error-message into StringBuffer

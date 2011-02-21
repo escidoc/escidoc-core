@@ -116,10 +116,6 @@ public class RemoteStatelessEjbProxyFactoryBean
                 PATTERN_INTERFACE
                     .matcher(getBusinessInterface().getName()).replaceAll(
                         "Remote")).replaceAll("ejb.interfaces");
-
-        // final String className =
-        // method.getDeclaringClass().getName().replaceAll("Interface",
-        // "Remote").replaceAll("service.interfaces", "ejb.interfaces");
         try {
             extendedInterface = Class.forName(className);
         }

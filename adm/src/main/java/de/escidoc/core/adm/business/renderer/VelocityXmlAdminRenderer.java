@@ -139,11 +139,11 @@ public class VelocityXmlAdminRenderer
                         indexVm.put("indexName", indexMapEntry.getKey());
                         Map<String, Object> indexParamsMap = indexMapEntry.getValue();
                         if (indexParamsMap != null && !indexParamsMap.isEmpty()) {
-                            for (String indexParamName : indexParamsMap.keySet()) {
+                            for (Map.Entry<String, Object> mapEntry : indexParamsMap.entrySet()) {
+                                String indexParamName = mapEntry.getKey();
                                 if (indexParamName.equals("prerequisites")) {
                                     HashMap<String, String> prerequisitesMap = 
-                                        (HashMap<String, String>)
-                                            indexParamsMap.get(indexParamName);
+                                        (HashMap<String, String>) mapEntry.getValue();
                                     if (prerequisitesMap != null  && !prerequisitesMap.isEmpty()) {
                                         HashMap<String, String> prerequisitesVm = new HashMap<String, String>();
                                         Set<Map.Entry<String, String>>prerequisitesMapEntrySet =

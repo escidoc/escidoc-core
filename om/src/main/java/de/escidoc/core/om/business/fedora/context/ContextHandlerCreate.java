@@ -80,7 +80,7 @@ import java.util.Vector;
  */
 public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
-    private static final AppLogger logger = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ContextHandlerCreate.class.getName());
 
     private static final String XPATH_PROPERTIES = "/context/properties";
@@ -193,7 +193,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         if (propertiesHandler.getOrganizationalUnits().isEmpty()) {
             final String message =
                 "No 'organizational-unit' element is given. ";
-            logger.error(message);
+            LOGGER.error(message);
             throw new InvalidContentException(message);
         }
 

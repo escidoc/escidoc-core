@@ -70,7 +70,7 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     private String object;
 
-    private final String IDENTIFIER_PREFIX = "info:fedora/";
+    private static final String IDENTIFIER_PREFIX = "info:fedora/";
 
     /**
      * RelsExtReadHandler.

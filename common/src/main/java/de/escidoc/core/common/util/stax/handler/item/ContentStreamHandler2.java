@@ -62,7 +62,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
     private static final AppLogger LOG =
         new AppLogger(ContentStreamHandler2.class.getName());
 
-    private String XPATH_CONTENT_STREAM =
+    private String xpathContentStream =
         "/item/content-streams/content-stream";
 
     private final StaxParser parser;
@@ -98,7 +98,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
     public ContentStreamHandler2(final StaxParser parser,
         final String contentStreamPath) {
         this.parser = parser;
-        this.XPATH_CONTENT_STREAM = contentStreamPath;
+        this.xpathContentStream = contentStreamPath;
     }
 
     /**
@@ -120,7 +120,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
             if (this.contentHandler == null) {
                 // reached first element after content-stream root element
                 this.contentHandler =
-                    new MultipleExtractor(XPATH_CONTENT_STREAM + "/"
+                    new MultipleExtractor(xpathContentStream + '/'
                         + element.getLocalName(), parser);
             }
             this.hasContent = true;
@@ -128,7 +128,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
         }
         else {
             String currentPath = parser.getCurPath();
-            if (currentPath.equals(XPATH_CONTENT_STREAM)) {
+            if (currentPath.equals(xpathContentStream)) {
 
                 LOG.debug("Parser reached " + currentPath);
 
@@ -173,7 +173,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
 
         String currentPath = parser.getCurPath();
 
-        if (XPATH_CONTENT_STREAM.equals(currentPath)) {
+        if (xpathContentStream.equals(currentPath)) {
 
             this.parsingContent = false;
 

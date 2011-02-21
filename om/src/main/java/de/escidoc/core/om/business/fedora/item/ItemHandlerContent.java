@@ -70,7 +70,7 @@ import java.util.regex.Pattern;
  */
 public class ItemHandlerContent extends ItemHandlerUpdate {
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(ItemHandlerContent.class.getName());
 
     private static final String TRANSFORM_SERVICE_DIGILIB = "digilib";
@@ -144,19 +144,6 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         Datastream content = component.getContent();
 
         String storage = content.getControlGroup();
-        // if (storage.equals(FoXmlProvider.CONTROL_GROUP_E)) {
-        // String message =
-        // "Binary content of component "
-        // + componentId
-        // + " is not managed by the framework, because the attribute "
-        // + " 'storage' of the element 'component.content' set to
-        // 'external-url. "
-        // + "Please try to retrieve the content using an URL from the
-        // attribute"
-        // + " 'xkink:href' of the element 'component.content'.";
-        // log.error(message);
-        // throw new ResourceNotFoundException(message);
-        // }
         EscidocBinaryContent bin = new EscidocBinaryContent();
 
         Map<String, String> properties = component.getResourceProperties();
@@ -564,7 +551,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 "The item with id " + itemId
                     + " does not contain a content stream" + " with name "
                     + name;
-            log.error(message);
+            LOGGER.error(message);
             throw new ContentStreamNotFoundException(message);
         }
         return contentStream;

@@ -190,10 +190,7 @@ public class ContentModel extends GenericVersionableResourcePid
             catch (StreamNotFoundException e) {
                 throw new WebserverSystemException(e);
             }
-            // ,
-            // location, controlGroupValue);
-            // ds.setAlternateIDs(new Vector<String>(altIDs));
-            // ds.setLabel(label);
+
             this.dc = ds;
         }
 
@@ -560,25 +557,23 @@ public class ContentModel extends GenericVersionableResourcePid
 
         final Set<String> namesInFedora = getContentStreams().keySet();
 
-        final Iterator<String> nameIt =
-            contentStreamDatastreams.keySet().iterator();
+        final Iterator<Map.Entry<String, Datastream>> nameIt =
+            contentStreamDatastreams.entrySet().iterator();
         // create/activate data streams which are in contentStreamDatastreams
         // but not in fedora
+        // TODO: Check wether contentStreamDatastreams is used outside of this
+        // method. If not, replace the following while and for with one
+        // entry-set iterator
         while (nameIt.hasNext()) {
-            final String name = nameIt.next();
+            Map.Entry<String, Datastream> mapEntry = nameIt.next();
+            final String name = mapEntry.getKey();
+            final Datastream current = mapEntry.getValue();
+            // add DS ...
+            setContentStream(name, current);
             if (!namesInFedora.contains(name)) {
-
-                final Datastream current = contentStreamDatastreams.get(name);
-                // add DS ...
-                setContentStream(name, current);
                 // and remove it from given list
                 nameIt.remove();
             }
-        }
-        // update DSs which still remain in given list
-        for (String s : contentStreamDatastreams.keySet()) {
-            final String name = s;
-            setContentStream(name, contentStreamDatastreams.get(name));
         }
 
         // delete data streams which are in fedora but not in given list

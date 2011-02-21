@@ -80,7 +80,7 @@ import java.util.Vector;
 public class ItemHandlerRetrieve extends ItemHandlerBase
     implements ItemRendererInterface {
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ItemHandlerRetrieve.class.getName());
 
     /*
@@ -541,7 +541,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             String message =
                 "Metadata record with name " + name + " not found in item "
                     + getItem().getId() + '.';
-            log.error(message);
+            LOGGER.error(message);
             throw new MdRecordNotFoundException();
         }
 
@@ -987,7 +987,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                         "FedoraItemHandler.retrieveItems: can not retrieve object "
                                 + itemId + ". ResourceNotFoundException: "
                                 + e.getCause() + '.';
-                log.error(msg);
+                LOGGER.error(msg);
                 throw new WebserverSystemException(msg, e);
             }
         }
@@ -1225,25 +1225,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return values;
     }
 
-    // /**
-    // * Get the xml representation of the properties of an item.
-    // *
-    // * @param isRoot
-    // * Indicates if the returned xml representation is part of an
-    // * Item representation or returned as root element (the xml
-    // * representation of the properties sub resource)
-    // * @return
-    // * @throws SystemException
-    // * Thrown in case of an internal error.
-    // */
-    // protected StringBuffer getPropertiesXml(final boolean isRoot)
-    // throws SystemException {
-    //
-    // StringBuffer result = null;
-    // final String objid = getItem().getId();
-    // return result;
-    // }
-
     /**
      * Get the content type specific properties.
      * 
@@ -1464,9 +1445,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         Map<String, Object> values = new HashMap<String, Object>();
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", item.getHref() + "/resources");
-        // set in template
-        // values.put("versionHistoryHref", item.getHref()
-        // + "/resources/version-history");
 
         // add operations from Fedora service definitions
         // FIXME use item properties instead of triplestore util

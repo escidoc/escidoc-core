@@ -378,15 +378,8 @@ public class Datastream {
         }
         else if (Constants.STORAGE_EXTERNAL_URL.equalsIgnoreCase(storage)) {
             this.controlGroupValue = CONTROL_GROUP_REDIRECT;
-        }
-        else if (Constants.STORAGE_INTERNAL_MANAGED.equalsIgnoreCase(storage)) {
-            // internal xml data not possible in Fedora by reference
-            // if (mimeType.equals(MIME_TYPE_TEXT_XML)) {
-            // this.controlGroupValue = CONTROL_GROUP_INTERNAL_XML;
-            // }
-            // else {
+        } else if (Constants.STORAGE_INTERNAL_MANAGED.equalsIgnoreCase(storage)) {
             this.controlGroupValue = CONTROL_GROUP_MANAGED;
-            // }
         }
         this.mimeType = mimeType;
     }
@@ -630,17 +623,7 @@ public class Datastream {
                 getFedoraUtility().setDatastreamState(this.parentId, this.name,
                     FedoraUtility.DATASTREAM_STATUS_DELETED);
 
-                // this.theStream =
-                // ("<deleted/>").getBytes(XmlUtility.CHARACTER_ENCODING);
-
-                // catch (final UnsupportedEncodingException e1) {
-                // // ignore, does not happen
-                // throw new WebserverSystemException(
-                // "Unexpected encoding exception.", e1);
-                // }
-                // merge();
                 init();
-                // if a data stream
             }
         }
         catch (final StreamNotFoundException e) {
@@ -771,16 +754,6 @@ public class Datastream {
             }
 
             this.theStream = datastream.getStream();
-            // FIXME check if deleted by mime-type
-
-            // // final String streamString = new
-            // String(datastream.getStream());
-            // // if (streamString.contains("<deleted")) {
-            // // this.theStream = new byte[0];
-            // // }
-            // // else {
-            // this.theStream = datastream.getStream();
-            // // }
 
         }
 
@@ -1055,15 +1028,6 @@ public class Datastream {
     public String getLocation() {
         return this.location;
     }
-
-    // /**
-    // * Overrides current location. Set it null in order to preserve old
-    // location
-    // * when merging or persist.
-    // */
-    // public void setLocation(final String location) {
-    // this.location = location;
-    // }
 
     /**
      * Gets the {@link FedoraUtility}.

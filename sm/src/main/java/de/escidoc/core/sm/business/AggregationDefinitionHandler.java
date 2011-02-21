@@ -329,16 +329,12 @@ public class AggregationDefinitionHandler
                     filterUtility.filterRetrievePrivilege(
                         Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
-
-            // int numberOfRecords = 0;
-
-            if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
+       if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get aggregation-definitions as XML
                 aggregationDefinitions =
                     dao.retrieveAggregationDefinitions(filteredScopeIds, query,
                         offset, limit);
                 if (aggregationDefinitions != null) {
-                    // numberOfRecords = aggregationDefinitions.size();
                 }
             }
 

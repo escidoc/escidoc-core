@@ -513,7 +513,7 @@ public class TripleStoreAttributeFinderModule
         // of an Escidoc resource does not always contain dc:identifier entry
         // due to using of custom XSLTs for DC-Mapping
         String cacheId =
-            de.escidoc.core.common.business.fedora.TripleStoreUtility.Fedora_Creation_Date_Predicate;
+            de.escidoc.core.common.business.fedora.TripleStoreUtility.FEDORA_CREATION_DATE_PREDICATE;
 
         mapping.put("component-id", new MapResult(cacheId, true));
         mapping.put("component:id", new MapResult(cacheId, true));

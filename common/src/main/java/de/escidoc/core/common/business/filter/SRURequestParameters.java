@@ -113,7 +113,7 @@ public abstract class SRURequestParameters {
         return role;
     }
 
-    public String getRecordPacking() {
+    public final RecordPacking getRecordPacking() {
         return recordPacking;
     }
 
@@ -162,8 +162,9 @@ public abstract class SRURequestParameters {
      * 
      * @return first value from the given array or the default value
      */
-    private String getStringParameter(final Object[] parameter) {
-        String result = null;
+    private static String getStringParameter(
+        final Object[] parameter, final String defaultValue) {
+        String result = defaultValue;
 
         if ((parameter != null) && (parameter.length > 0)) {
             result = parameter[0].toString();

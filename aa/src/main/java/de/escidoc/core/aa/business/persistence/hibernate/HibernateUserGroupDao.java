@@ -67,9 +67,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             + RoleGrant.class.getName()
             + " g where g.userGroupByGroupId.id = ? order by role_id, object_id";
 
-    private final Map<String, Object[]> CRITERIA_MAP;
+    private final Map<String, Object[]> criteriaMap;
 
-    private final Map<String, String> PROPERTIES_NAMES_MAP;
+    private final Map<String, String> propertiesNamesMap;
 
     private UserGroupFilter userGroupFilter;
 
@@ -85,8 +85,8 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         catch (InvalidSearchQueryException e) {
             // Dont do anything because null-query is given
         }
-        CRITERIA_MAP = userGroupFilter.getCriteriaMap();
-        PROPERTIES_NAMES_MAP = userGroupFilter.getPropertyMap();
+        criteriaMap = userGroupFilter.getCriteriaMap();
+        propertiesNamesMap = userGroupFilter.getPropertyMap();
     }
 
     /**
@@ -374,12 +374,12 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 Boolean.valueOf(active1)));
         }
 
-        for (String s : CRITERIA_MAP.keySet()) {
+        for (String s : criteriaMap.keySet()) {
             final String key = s;
             final Object criteriaValue = clonedCriterias.remove(key);
 
             if (criteriaValue != null) {
-                final Object[] parts = CRITERIA_MAP.get(key);
+                final Object[] parts = criteriaMap.get(key);
                 if (parts[0].equals(COMPARE_EQ)) {
                     detachedCriteria.add(Restrictions.eq((String) parts[1],
                             criteriaValue));
@@ -391,11 +391,11 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         }
         if (orderBy != null) {
             if (sorting == ListSorting.ASCENDING) {
-                detachedCriteria.addOrder(Order.asc(PROPERTIES_NAMES_MAP
+                detachedCriteria.addOrder(Order.asc(propertiesNamesMap
                     .get(orderBy)));
             }
             else if (sorting == ListSorting.DESCENDING) {
-                detachedCriteria.addOrder(Order.desc(PROPERTIES_NAMES_MAP
+                detachedCriteria.addOrder(Order.desc(propertiesNamesMap
                     .get(orderBy)));
             }
         }
@@ -546,8 +546,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      */
     public List<RoleGrant> retrieveGrantsByUserId(final String userId)
         throws SqlDatabaseSystemException {
-//        List<RoleGrant> result = null;
-//        return result;
+
         return null;
     }
 

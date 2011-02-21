@@ -67,7 +67,7 @@ import java.util.Vector;
  */
 public class Context extends GenericResource implements ContextInterface {
 
-    private static final AppLogger log = new AppLogger(Context.class.getName());
+    private static final AppLogger LOGGER = new AppLogger(Context.class.getName());
 
     private Datastream dc = null;
 
@@ -209,7 +209,7 @@ public class Context extends GenericResource implements ContextInterface {
         if (ous.size() == 0) {
             final String message =
                 "No 'organizational-unit' element is given. ";
-            log.error(message);
+            LOGGER.error(message);
             throw new InvalidContentException(message);
         }
 
@@ -373,8 +373,8 @@ public class Context extends GenericResource implements ContextInterface {
             } catch (final StreamNotFoundException e) {
                 final String message =
                         "Admin-descriptor \"" + dsNname
-                                + "\" not found for Context " + getId() + ".";
-                log.error(message, e);
+                                + "\" not found for Context " + getId() + '.';
+                LOGGER.error(message, e);
                 throw new IntegritySystemException(message, e);
             }
 
@@ -392,18 +392,7 @@ public class Context extends GenericResource implements ContextInterface {
     public Datastream getAdminDescriptor(final String adminDescriptorName)
         throws FedoraSystemException {
 
-        final Map<String, Datastream> admDescs = getAdminDescriptorsMap();
-        final Iterator<String> it = admDescs.keySet().iterator();
-
-        String dsName = null;
-        while (it.hasNext()) {
-            dsName = it.next();
-            if (dsName.equals(adminDescriptorName)) {
-                break;
-            }
-        }
-
-        return (admDescs.get(dsName));
+        return getAdminDescriptorsMap().get(adminDescriptorName);
     }
 
     /*
@@ -449,8 +438,8 @@ public class Context extends GenericResource implements ContextInterface {
                             new Datastream(dsName, getId(), null);
                     this.adminDescriptors.put(dsName, newDs);
                 } catch (final StreamNotFoundException e) {
-                    log.error("AdminDescriptor \"" + dsName
-                            + "\" not found for Context " + getId() + ".", e);
+                    LOGGER.error("AdminDescriptor \"" + dsName
+                            + "\" not found for Context " + getId() + '.', e);
                 }
             }
         }

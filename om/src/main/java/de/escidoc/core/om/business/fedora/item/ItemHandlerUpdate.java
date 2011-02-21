@@ -80,7 +80,7 @@ import java.util.Vector;
  */
 public class ItemHandlerUpdate extends ItemHandlerDelete {
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ItemHandlerUpdate.class.getName());
 
     /**
@@ -153,12 +153,12 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         // update
         Collection<ByteArrayOutputStream> newComponents =
             (Collection<ByteArrayOutputStream>) components.remove("new");
-        componentIter = components.keySet().iterator();
-        while (componentIter.hasNext()) {
-            String componentId = componentIter.next();
+
+        for (Map.Entry<String, Object> e : components.entrySet()) {
+            String componentId = e.getKey();
             Component c = getItem().getComponent(componentId);
 
-            setComponent(c, (Map) components.get(componentId),
+            setComponent(c, (Map) e.getValue(),
                 mdRecordsAttributes.get(componentId), nsUris.get(componentId));
         }
 
@@ -169,8 +169,6 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                     String componentId =
                             createComponent((newComponent)
                                     .toString(XmlUtility.CHARACTER_ENCODING));
-                    // addComponent((newCompIt.next())
-                    // .toString(XmlUtility.CHARACTER_ENCODING));
                     getItem().addComponent(componentId);
                 } catch (UnsupportedEncodingException e) {
                     throw new EncodingSystemException(e.getMessage(), e);
@@ -456,9 +454,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
             if (url == null) {
                 // it's the local url we send
-                if (log.isDebugEnabled()) {
-                    log.debug("Do not update content of " + component.getId()
-                        + ". URL[" + url + "]");
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Do not update content of " + component.getId()
+                        + ". URL[" + url + ']');
                 }
                 return;
             }
@@ -500,7 +498,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                         + "because the attribute 'storage' of the section"
                         + " 'content' was set to 'external-url' or "
                         + "'external-managed' while create.";
-                log.error(message);
+                LOGGER.error(message);
                 throw new InvalidContentException(message);
             }
             String url =

@@ -844,11 +844,7 @@ public class FedoraContentRelationHandler extends HandlerBase
             // get PID from external PID System
             pid = getPid(id, taskParam);
         }
-        // else if (!cr.validPidStructure(pid)) {
-        // throw new InvalidXmlException("Empty pid element of taskParam.");
-        // }
         cr.getProperties().setPid(pid);
-        // updateRelsExt();
         cr.persist();
         return (prepareResponse(cr, pid));
     }

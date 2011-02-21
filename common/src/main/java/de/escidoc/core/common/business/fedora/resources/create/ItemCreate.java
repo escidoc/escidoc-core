@@ -97,6 +97,22 @@ public class ItemCreate extends GenericResourceCreate {
     private EscidocIdProvider idProvider = null;
 
     private String dcXml = null;
+    
+    // define pattern
+    // taken from method handleFedoraUploadError
+    // in order to make them static final
+    private static final String ERROR_MSG_NO_HTTP_PROTOCOL =
+        "The url has a wrong protocol."
+            + " The protocol must be a http protocol.";
+
+    private static final Pattern PATTERN_ERROR_GETTING =
+        Pattern.compile(
+            "fedora.server.errors.GeneralException: Error getting",
+            Pattern.CASE_INSENSITIVE);
+    private static final Pattern PATTERN_MALFORMED_URL =
+        Pattern.compile("fedora.server.errors.ObjectIntegrityException: "
+            + "FOXML IO stream was bad : Malformed URL");
+
 
     /**
      * Set ItemProperties.
@@ -880,7 +896,6 @@ public class ItemCreate extends GenericResourceCreate {
         throws FedoraSystemException {
 
         // Work around for Fedora30 bug APIM.getDatastreams()
-        // String lastModificationDate = null;
         org.fcrepo.server.types.gen.Datastream relsExtInfo =
             FedoraUtility.getInstance().getDatastreamInformation(objid,
                 Datastream.RELS_EXT_DATASTREAM, null);
@@ -949,19 +964,6 @@ public class ItemCreate extends GenericResourceCreate {
     private void handleFedoraUploadError(
         final String url, final FedoraSystemException e)
         throws FileNotFoundException, FedoraSystemException {
-
-        // define pattern
-        String ERROR_MSG_NO_HTTP_PROTOCOL =
-            "The url has a wrong protocol."
-                + " The protocol must be a http protocol.";
-
-        Pattern PATTERN_ERROR_GETTING =
-            Pattern.compile(
-                "fedora.server.errors.GeneralException: Error getting",
-                Pattern.CASE_INSENSITIVE);
-        Pattern PATTERN_MALFORMED_URL =
-            Pattern.compile("fedora.server.errors.ObjectIntegrityException: "
-                + "FOXML IO stream was bad : Malformed URL");
 
         Matcher matcherErrorGetting =
             PATTERN_ERROR_GETTING.matcher(e.getMessage());

@@ -134,13 +134,6 @@ public class TripleStoreConnector {
             String responseContent =
                 connectionUtility.readResponse(httpResponse).trim();
 
-            // result code from risearch seems to be unreliable
-            // if (resultCode != HttpServletResponse.SC_OK) {
-            // log.error("Bad request. Http response : " + resultCode);
-            // throw new TripleStoreSystemException(
-            // "Bad request. Http response : " + resultCode);
-            // }
-
             if (responseContent == null || responseContent.length() == 0) {
                 return null;
             }

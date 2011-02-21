@@ -58,7 +58,7 @@ public class RelationHandler2 extends DefaultHandler {
 
     private RelationCreate relation = null;
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(RelationHandler2.class.getName());
 
     /**
@@ -114,7 +114,7 @@ public class RelationHandler2 extends DefaultHandler {
                     String[] predicateAndTarget = predicateUri.split("#");
                     if (predicateAndTarget.length != 2) {
                         String msg = "Attribute has invalid predicate";
-                        log.debug(msg + " '" + predicateUri + "'");
+                        LOGGER.debug(msg + " '" + predicateUri + '\'');
                         throw new InvalidContentException(msg);
                     }
 
@@ -124,7 +124,7 @@ public class RelationHandler2 extends DefaultHandler {
 
             }
             catch (NoSuchAttributeException e) {
-                log.debug(e);
+                LOGGER.debug(e);
             }
 
             String id = null;
@@ -145,7 +145,7 @@ public class RelationHandler2 extends DefaultHandler {
                 }
             }
             catch (NoSuchAttributeException e) {
-                log.debug(e);
+                LOGGER.debug(e);
             }
 
             // handle objid
@@ -155,7 +155,7 @@ public class RelationHandler2 extends DefaultHandler {
                         + " identifier containing a version number. "
                         + "Use a floating identifier like 'escidoc:123' "
                         + "to reference a target";
-                log.debug(message);
+                LOGGER.debug(message);
                 throw new InvalidContentException(message);
             }
 

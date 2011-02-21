@@ -44,9 +44,6 @@ import java.util.Properties;
  */
 public final class EjbFactoryBeanHelper {
 
-    private static final AppLogger LOG =
-        new AppLogger(EjbFactoryBeanHelper.class.getName());
-
     private static final String CONFIG_PROVIDER_URL_NAME = ".provider.url";
 
     /**
@@ -84,8 +81,6 @@ public final class EjbFactoryBeanHelper {
         Properties properties = new Properties();
         properties.setProperty(Context.URL_PKG_PREFIXES,
             "org.jboss.naming:org.jnp.interfaces");
-        // properties.setProperty(Context.INITIAL_CONTEXT_FACTORY,
-        // "org.jboss.security.jndi.JndiLoginInitialContextFactory");
         properties.setProperty(Context.PROVIDER_URL, providerUrl);
 
         return properties;

@@ -48,8 +48,6 @@ import java.util.Vector;
 
 public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
-    private String test = "";
-
     private static final AppLogger LOG = new AppLogger(ContentRelationsRemoveHandler2Edition.class.getName());
 
     private StaxParser parser = null;
@@ -136,13 +134,11 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
                 throw new ContentRelationNotFoundException(message);
 
             }
-            // String predicatePrefix = "ns" +
-            // String.valueOf(predicateNs.hashCode());
-            HashMap<String, String> relationData =
+
+            Map<String, String> relationData =
                 new HashMap<String, String>();
             relationsData.add(relationData);
             relationData.put("predicateNs", predicateNs);
-            // relationData.put("predicatePrefix", predicatePrefix);
             relationData.put("predicateValue", predicateValue);
             relationData.put("target", targetId);
             targetId = null;

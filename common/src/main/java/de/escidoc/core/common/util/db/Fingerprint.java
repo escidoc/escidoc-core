@@ -55,6 +55,11 @@ import java.util.Map;
  * @author SCHE
  */
 public class Fingerprint implements Comparable<Object> {
+    
+    // Java version string may differ but is not important for equality.
+    // taken from method compareTo in order to make it static final
+    private static final String JAVA_VERSION_PATTERN = "^<java version=\\S+";
+    
     private static final Map<String, String> IGNORED_SCHEMAS =
         new HashMap<String, String>() {
             private static final long serialVersionUID = 6182156177577971112L;
@@ -118,8 +123,6 @@ public class Fingerprint implements Comparable<Object> {
      */
     public int compareTo(final Object o) {
         try {
-            // Java version string may differ but is not important for equality.
-            String JAVA_VERSION_PATTERN = "^<java version=\\S+";
             ByteArrayOutputStream b1 = new ByteArrayOutputStream();
             ByteArrayOutputStream b2 = new ByteArrayOutputStream();
 

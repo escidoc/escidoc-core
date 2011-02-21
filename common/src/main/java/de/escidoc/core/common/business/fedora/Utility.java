@@ -116,7 +116,7 @@ import java.util.regex.Pattern;
  */
 public class Utility {
 
-    private static final AppLogger log = new AppLogger(Utility.class.getName());
+    private static final AppLogger LOGGER = new AppLogger(Utility.class.getName());
 
     private StagingFileHandlerInterface stagingFileHandler;
 
@@ -260,7 +260,7 @@ public class Utility {
                     + " does not match most recent version (requested:"
                     + updateLatestVersionDate + " saved:"
                     + fedoraLatestVersionDate + ")! Changes are not permitted.";
-            log.info(message);
+            LOGGER.info(message);
             throw new OptimisticLockingException(message);
         }
     }
@@ -1358,7 +1358,6 @@ public class Utility {
             sp.clearHandlerChain();
             ByteArrayOutputStream newWovStream =
                 addNewSubtreesHandler.getOutputStreams();
-            // String debug = newWovStream.toString();
             String newWovString =
                 newWovStream
                     .toString(XmlUtility.CHARACTER_ENCODING).replaceFirst(
@@ -1453,7 +1452,7 @@ public class Utility {
                 sp.parse(relsExtIs);
             }
             catch (XMLStreamException e) {
-                log.error(e.getMessage());
+                LOGGER.error(e.getMessage());
                 throw new XmlParserSystemException(e.getMessage(), e);
             }
             catch (NullPointerException e) {
@@ -1496,7 +1495,7 @@ public class Utility {
                 sp.parse(relsExtIs);
             }
             catch (XMLStreamException e) {
-                log.error(e.getMessage());
+                LOGGER.error(e.getMessage());
                 throw new XmlParserSystemException(e.getMessage(), e);
             }
             catch (NullPointerException e) {
@@ -1753,9 +1752,6 @@ public class Utility {
             }
             else {
                 local = new URI(url.replaceFirst("http[s]?://[^/]+", ""));
-                // if (url.startsWith(escidocBaseUrl)) {
-                // checkESciDocLocalURL(local);
-                // }
                 fq = new URI(url);
             }
 
@@ -1780,9 +1776,7 @@ public class Utility {
         catch (URISyntaxException e) {
             throw new InvalidContentException("No valid URL.", e);
         }
-        // catch (FedoraSystemException e) {
-        // throw new WebserverSystemException(e);
-        // }
+
     }
 
     /**
@@ -1803,7 +1797,7 @@ public class Utility {
             String errorMsg =
                 "Failed to retrieve configuration parameter "
                     + EscidocConfiguration.FEDORA_URL;
-            log.error(errorMsg, e);
+            LOGGER.error(errorMsg, e);
             throw new WebserverSystemException(errorMsg, e);
         }
         return buildNumber;
@@ -1823,7 +1817,7 @@ public class Utility {
             String msg =
                 "The local URL '" + url
                     + "' does not point into an eSciDoc Core component.";
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new InvalidContentException(msg);
         }
 

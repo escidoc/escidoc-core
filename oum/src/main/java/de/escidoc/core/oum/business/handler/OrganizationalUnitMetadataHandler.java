@@ -73,7 +73,7 @@ public class OrganizationalUnitMetadataHandler
 
     private String escidocMetadataRecordNameSpace = null;
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(OrganizationalUnitMetadataHandler.class.getName());
 
     private final Map<String, Map<String, String>> metadataAttributes =
@@ -133,7 +133,7 @@ public class OrganizationalUnitMetadataHandler
                     String message =
                         "The value of attribute 'name' of the element "
                             + elementName + " was not set!";
-                    log.error(message);
+                    LOGGER.error(message);
                     throw new MissingAttributeValueException(message);
 
                 }
@@ -145,7 +145,7 @@ public class OrganizationalUnitMetadataHandler
                 String message =
                     "The mandatory attribute 'name' of the element "
                         + elementName + " was not found!";
-                log.error(message);
+                LOGGER.error(message);
                 throw new MissingAttributeValueException(message);
             }
             HashMap<String, String> md = new HashMap<String, String>();
@@ -199,7 +199,7 @@ public class OrganizationalUnitMetadataHandler
             String message =
                 "Mandatory md-record with a name "
                     + MANDATORY_MD_RECORD_NAME + " is missing.";
-            log.error(message);
+            LOGGER.error(message);
             throw new MissingMdRecordException(message);
         }
         return element;

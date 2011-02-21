@@ -84,7 +84,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
     private List<Map<String, String>> relationsData = null;
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(ContentRelationsCreateHandler.class.getName());
 
     /**
@@ -137,7 +137,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                     "Read only attribute \"objid\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create";
-                log.info(message);
+                LOGGER.info(message);
                 throw new ReadonlyAttributeViolationException(message);
             }
 
@@ -166,7 +166,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                     String message =
                         "Attribute 'href' of the element '" + theName
                             + "' is missing.";
-                    log.info(message);
+                    LOGGER.info(message);
                     throw new InvalidContentException(message);
                 }
                 int indexOfType =
@@ -193,7 +193,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                     "Read only attribute \"title\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create";
-                log.info(message);
+                LOGGER.info(message);
                 throw new ReadonlyAttributeViolationException(message);
             }
             int indexOfHref =
@@ -204,7 +204,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                     "Read only attribute \"href\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create";
-                log.error(message);
+                LOGGER.error(message);
                 throw new ReadonlyAttributeViolationException(message);
             }
             try {
@@ -279,7 +279,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                 String message =
                     "Value of the attribute 'href' is wrong. It must contain "
                         + objectId + " instead of " + targetId;
-                log.info(message);
+                LOGGER.info(message);
                 throw new InvalidContentException(message);
             }
             targetIdWithoutVersion =
@@ -300,7 +300,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                 String message =
                     "Value of the attribute 'href' is wrong. It must be"
                         + "/ir/" + targetObjectType + '/' + targetId;
-                log.info(message);
+                LOGGER.info(message);
                 throw new InvalidContentException(message);
             }
 
@@ -311,7 +311,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                     "Read only attribute \"title\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create";
-                log.info(message);
+                LOGGER.info(message);
                 throw new ReadonlyAttributeViolationException(message);
             }
             // targetId = "<info:fedora/" + targetId + ">";
@@ -321,7 +321,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             String msg =
                 "Expected attribute in object reference " + "in 'relation' of "
                     + id + " is not set. (create item)";
-            log.info(msg, e);
+            LOGGER.info(msg, e);
             throw new InvalidContentException(msg, e);
 
         }
@@ -339,7 +339,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             String message =
                 "Referenced target resource with id " + targetIdWithoutVersion
                     + " does not exist.";
-            log.error(message);
+            LOGGER.error(message);
             throw new ReferencedResourceNotFoundException(message);
 
         }
@@ -364,7 +364,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                     "Referenced target resource with id "
                         + targetIdWithoutVersion + ':' + targetVersion
                         + " does not exist.";
-                log.info(message);
+                LOGGER.info(message);
                 throw new ReferencedResourceNotFoundException(message);
             }
         }

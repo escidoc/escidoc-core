@@ -537,10 +537,10 @@ public final class XmlUtility {
     public static final String BASE_REPORT_DEFINITION = BASE_SM
         + NAME_REPORT_DEFINITION + "/";
 
-    private static final Map<String, String> restSchemaLocations =
+    private static final Map<String, String> REST_SCHEMA_LOCATIONS =
         new HashMap<String, String>();
 
-    private static final Map<String, String> soapSchemaLocations =
+    private static final Map<String, String> SOAP_SCHEMA_LOCATIONS =
         new HashMap<String, String>();
 
     public static final String XPATH_USER_ACCOUNT_PROPERTIES = '/'
@@ -578,7 +578,7 @@ public final class XmlUtility {
 
     public static final String ERR_MSG_MISSING_ATTRIBUTE = "Missing attribute";
 
-    private static final StackKeyedObjectPool transformerPool =
+    private static final StackKeyedObjectPool TRANSFORMER_POOL =
         new StackKeyedObjectPool(new PoolableTransformerFactory());
 
     /**
@@ -2848,17 +2848,17 @@ public final class XmlUtility {
         String result;
 
         if (UserContext.isRestAccess()) {
-            result = restSchemaLocations.get(commonPart);
+            result = REST_SCHEMA_LOCATIONS.get(commonPart);
             if (result == null) {
                 result = getSchemaBaseUrl() + "rest/" + commonPart;
-                restSchemaLocations.put(commonPart, result);
+                REST_SCHEMA_LOCATIONS.put(commonPart, result);
             }
         }
         else {
-            result = soapSchemaLocations.get(commonPart);
+            result = SOAP_SCHEMA_LOCATIONS.get(commonPart);
             if (result == null) {
                 result = getSchemaBaseUrl() + "soap/" + commonPart;
-                soapSchemaLocations.put(commonPart, result);
+                SOAP_SCHEMA_LOCATIONS.put(commonPart, result);
             }
         }
         return result;
@@ -3234,7 +3234,7 @@ public final class XmlUtility {
         Transformer t = null;
         String transformerKey = nsUri + ';' + contentModelID;
         try {
-            t = (Transformer) transformerPool.borrowObject(transformerKey);
+            t = (Transformer) TRANSFORMER_POOL.borrowObject(transformerKey);
             if (objID != null && objID.length() > 0) {
                 t.setParameter("ID", objID);
             }
@@ -3254,7 +3254,7 @@ public final class XmlUtility {
         }
         finally {
             try {
-                transformerPool.returnObject(transformerKey, t);
+                TRANSFORMER_POOL.returnObject(transformerKey, t);
             }
             catch (final Exception e) {
                 throw new WebserverSystemException(

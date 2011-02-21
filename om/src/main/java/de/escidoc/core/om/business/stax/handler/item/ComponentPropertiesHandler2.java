@@ -47,7 +47,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  */
 public class ComponentPropertiesHandler2 extends DefaultHandler {
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(ComponentPropertiesHandler2.class.getName());
 
     private static final String XPATH_COMPONENT_PROPERTIES =
@@ -159,7 +159,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
             this.properties.setVisibility(s);
         }
         else {
-            log.error("the value of element " + currentPath + " is missing");
+            LOGGER.error("the value of element " + currentPath + " is missing");
             throw new MissingElementValueException("the value of element "
                 + currentPath + " is missing");
         }
@@ -178,7 +178,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
             this.properties.setContentCatagory(s);
         }
         else {
-            log.error("the value of element " + currentPath + " is missing");
+            LOGGER.error("the value of element " + currentPath + " is missing");
             throw new MissingElementValueException("the value of element "
                 + currentPath + " is missing");
         }

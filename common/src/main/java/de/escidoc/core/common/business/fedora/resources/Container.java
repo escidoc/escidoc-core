@@ -111,11 +111,11 @@ public class Container extends GenericVersionableResourcePid
         setHref(Constants.CONTAINER_URL_BASE + getId());
         getVersionData();
         if (getVersionNumber() != null) {
-            // setVersionData();
+
             setDcData();
         }
         this.mdRecords = new HashMap<String, Datastream>();
-        // getSomeValuesFromFedora();
+
     }
 
     /**
@@ -325,28 +325,32 @@ public class Container extends GenericVersionableResourcePid
         }
 
         
-        for (Map.Entry<String,Datastream> e : mdRecords.entrySet()) {
-            String name = e.getKey();
+        // create or activate data streams which are in mdRecords but not in
+        // fedora
+        Iterator<Map.Entry<String, Datastream>> nameIt = mdRecords.entrySet().iterator();
+        while (nameIt.hasNext()) {
+            Map.Entry<String, Datastream> mapEntry = nameIt.next();
+            String name = mapEntry.getKey();
             if (!namesInFedora.contains(name)) {
-                // create or activate data streams which are in mdRecords
-                // but not in fedora
-                Datastream currentDatastream = e.getValue();
-                byte[] stream = currentDatastream.getStream();
-                List<String> altIds = currentDatastream.getAlternateIDs();
+
+                Datastream currentMdRecord = mapEntry.getValue();
+                byte[] stream;
+                stream = currentMdRecord.getStream();
+                List<String> altIds = currentMdRecord.getAlternateIDs();
                 String[] altIDs = new String[altIds.size()];
                 for (int i = 0; i < altIds.size(); i++) {
                     altIDs[i] = altIds.get(i);
                 }
                 getFedoraUtility().addDatastream(getId(), name, altIDs,
                     "md-record", true, stream, false);
-                this.mdRecords.put(name, currentDatastream);
+                this.mdRecords.put(name, currentMdRecord);
+                nameIt.remove();
             }
             else {
                 // update Datastreams which already exist
-                setMdRecord(name, e.getValue());
+                setMdRecord(name, mdRecords.get(name));
             }
         }
-
     }
 
     /**
@@ -457,7 +461,6 @@ public class Container extends GenericVersionableResourcePid
                     }
                 }
 
-                // ds.replaceAlternateId(type, 1);
                 this.mdRecords.put(name, ds);
                 ds.merge();
 
@@ -600,7 +603,6 @@ public class Container extends GenericVersionableResourcePid
             // writing RELS-EXT twice.
             timestamp = persistEscidocRelsExt();
             if (timestamp == null) {
-                // timestamp = getLastModificationDate();
                 timestamp = getLastFedoraModificationDate();
             }
             updateWovTimestamp(getVersionNumber(), timestamp);
@@ -611,11 +613,8 @@ public class Container extends GenericVersionableResourcePid
                 timestamp);
         }
 
-        // if (sync) {
         getFedoraUtility().sync();
-        // }
 
-        // getsomevaluesfromFedora();
         return timestamp;
     }
 

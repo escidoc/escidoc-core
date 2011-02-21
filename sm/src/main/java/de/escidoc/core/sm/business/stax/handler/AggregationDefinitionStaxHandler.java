@@ -63,17 +63,17 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
     private final Set<AggregationTable> aggregationTables =
             new HashSet<AggregationTable>();
     
-    private final String rootPath = "/aggregation-definition";
+    private static final String ROOT_PATH = "/aggregation-definition";
     
-    private final String tablePath = "/aggregation-definition/aggregation-table";
+    private static final String TABLE_PATH = "/aggregation-definition/aggregation-table";
     
-    private final String tableFieldPath = 
+    private static final String TABLE_FIELD_PATH = 
             "/aggregation-definition/aggregation-table/field";
     
-    private final String tableIndexPath = 
+    private static final String TABLE_INDEX_PATH = 
         "/aggregation-definition/aggregation-table/index";
     
-    private final String statisticDataSelectorPath = 
+    private static final String STATISTIC_DATA_SELECTOR_PATH = 
                 "/aggregation-definition/statistic-data";
     
     private int tableIndex = 0;
@@ -227,7 +227,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element) throws Exception {
         String currentPath = parser.getCurPath();
         boolean fieldRootElement = false;
-        if (tablePath.equals(currentPath)) {
+        if (TABLE_PATH.equals(currentPath)) {
             inTable = true;
             tableIndex++;
             tableFieldIndex = 0;
@@ -235,20 +235,20 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             aggregationTable = new AggregationTable();
             aggregationTable.setListIndex(tableIndex);
         }
-        else if (tableFieldPath.equals(currentPath)) {
+        else if (TABLE_FIELD_PATH.equals(currentPath)) {
             inTableField = true;
             tableFieldIndex++;
             aggregationTableField = new AggregationTableField();
             aggregationTableField.setListIndex(tableFieldIndex);
         }
-        else if (tableIndexPath.equals(currentPath)) {
+        else if (TABLE_INDEX_PATH.equals(currentPath)) {
             inTableIndex = true;
             tableIndexIndex++;
             tableIndexFieldIndex = 0;
             aggregationTableIndex = new AggregationTableIndexe();
             aggregationTableIndex.setListIndex(tableIndexIndex);
         }
-        else if (statisticDataSelectorPath.equals(currentPath)) {
+        else if (STATISTIC_DATA_SELECTOR_PATH.equals(currentPath)) {
             inStatisticDataSelector = true;
             statisticDataSelectorIndex++;
             aggregationStatisticDataSelector = 
@@ -305,28 +305,28 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      */
     public EndElement endElement(final EndElement element) throws Exception {
         String currentPath = parser.getCurPath();
-        if (tablePath.equals(currentPath)) {
+        if (TABLE_PATH.equals(currentPath)) {
             inTable = false;
             aggregationTables.add(aggregationTable);
         }
-        else if (tableFieldPath.equals(currentPath)) {
+        else if (TABLE_FIELD_PATH.equals(currentPath)) {
             inTableField = false;
             aggregationTableField.setAggregationTable(aggregationTable);
             aggregationTable.getAggregationTableFields()
                                 .add(aggregationTableField);
         }
-        else if (tableIndexPath.equals(currentPath)) {
+        else if (TABLE_INDEX_PATH.equals(currentPath)) {
             inTableIndex = false;
             aggregationTableIndex.setAggregationTable(aggregationTable);
             aggregationTable.getAggregationTableIndexes()
             .add(aggregationTableIndex);
         }
-        else if (statisticDataSelectorPath.equals(currentPath)) {
+        else if (STATISTIC_DATA_SELECTOR_PATH.equals(currentPath)) {
             inStatisticDataSelector = false;
             aggregationStatisticDataSelectors
                                     .add(aggregationStatisticDataSelector);
         }
-        else if ((rootPath.equals(currentPath))
+        else if ((ROOT_PATH.equals(currentPath))
             && (aggregationDefinition.getName() == null
                     || aggregationStatisticDataSelectors == null
                     || aggregationStatisticDataSelectors.isEmpty()

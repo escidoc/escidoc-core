@@ -588,25 +588,7 @@ public class FedoraOrganizationalUnitHandler
         relsExtValues.put(XmlTemplateProvider.PREDECESSORS,
             getPredessorsMap(predecessorsHandler.getPredecessors(), id));
 
-        // String escidocMdRecord = null;
-        // try {
-        // escidocMdRecord =
-        // ((Map<String, ByteArrayOutputStream>) me
-        // .getOutputStreams().get(XmlUtility.NAME_MDRECORDS)).get(
-        // "escidoc").toString(XmlUtility.CHARACTER_ENCODING);
-        // }
-        // catch (UnsupportedEncodingException e) {
-        // throw new EncodingSystemException(e.getMessage(), e);
-        // }
-        // done in Resource.setMdRecord() (FRS)
-        // String dcStream = "";
-        // if (escidocMdRecord != null) {
-        // dcStream =
-        // XmlUtility.createDC(metadataHandler
-        // .getEscidocMetadataRecordNameSpace(), escidocMdRecord, id);
-        // }
         try {
-            // setDc(dcStream);
             setMdRecords((Map<String, ByteArrayOutputStream>) me
                 .getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
                 metadataHandler.getMetadataAttributes(),
@@ -764,26 +746,8 @@ public class FedoraOrganizationalUnitHandler
         relsExtValues.put(XmlTemplateProvider.PREDECESSORS,
             getPredessorsMap(getOrganizationalUnit().getPredecessors(), null));
 
-        // String escidocMdRecord = null;
-        // try {
-        // escidocMdRecord =
-        // ((Map<String, ByteArrayOutputStream>) me
-        // .getOutputStreams().get(XmlUtility.NAME_MDRECORDS)).get(
-        // "escidoc").toString(XmlUtility.CHARACTER_ENCODING);
-        // }
-        // catch (UnsupportedEncodingException e) {
-        // throw new EncodingSystemException(e.getMessage(), e);
-        // }
-        // done in Resource.setMdRecord() (FRS)
-        // String dcStream = "";
-        // if (escidocMdRecord != null) {
-        // dcStream =
-        // XmlUtility.createDC(metadataHandler
-        // .getEscidocMetadataRecordNameSpace(), escidocMdRecord, id);
-        // }
-
         try {
-            // setDc(dcStream);
+
             setMdRecords((Map<String, ByteArrayOutputStream>) me
                 .getOutputStreams().get(XmlUtility.NAME_MDRECORDS),
                 metadataHandler.getMetadataAttributes(),
@@ -1289,11 +1253,6 @@ public class FedoraOrganizationalUnitHandler
         setOrganizationalUnit(id);
         filterParams.put("query", new String[] { "\"/subject/id\"="
             + getOrganizationalUnit().getId() + " or "
-            // + "\"/subject/id\"=" + getOrganizationalUnit().getFullId() +
-            // " or "
-            // +
-            // "\"/object/id\"=" + getOrganizationalUnit().getFullId() + " or "
-            // +
             + "\"/object/id\"=" + getOrganizationalUnit().getId() });
 
         try {

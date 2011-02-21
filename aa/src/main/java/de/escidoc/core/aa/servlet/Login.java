@@ -81,7 +81,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 public class Login extends HttpServlet {
 
     /** The logger. */
-    private static final AppLogger logger = new AppLogger(Login.class.getName());
+    private static final AppLogger LOGGER = new AppLogger(Login.class.getName());
 
     /**
      * The serial version uid.
@@ -778,7 +778,7 @@ public class Login extends HttpServlet {
                 inputStream.close();
             }
             catch (IOException e) {
-                logger.debug("Error on closing stream: " + e);
+                LOGGER.debug("Error on closing stream: " + e);
             }
         }
         templates.put(templateFileName, result.toString());
@@ -1067,7 +1067,7 @@ public class Login extends HttpServlet {
         private static final String CHARS =
             "abcdefghijklmonpqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-        private static final Random r = new Random(new Date().getTime());
+        private static final Random R = new Random(new Date().getTime());
 
         /**
          * Constructor.
@@ -1084,7 +1084,7 @@ public class Login extends HttpServlet {
             char[] buf = new char[NUM_CHARS];
 
             for (int i = 0; i < buf.length; i++) {
-                buf[i] = CHARS.charAt(r.nextInt(CHARS.length()));
+                buf[i] = CHARS.charAt(R.nextInt(CHARS.length()));
             }
             return new String(buf);
         }

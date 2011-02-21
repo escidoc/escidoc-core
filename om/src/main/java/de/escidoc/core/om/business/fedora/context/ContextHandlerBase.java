@@ -99,23 +99,6 @@ public class ContextHandlerBase extends HandlerBase {
         return this.utility;
     }
 
-    // /**
-    // * @return return ContextCreator
-    // */
-    // public ContextCreator getContextCreator() {
-    // return this.contextCreator;
-    // }
-
-    // /**
-    // * @spring.property ref="business.ContextCreator"
-    // *
-    // * @param contextCreator
-    // * Context creator.
-    // */
-    // public void setContextCreator(final ContextCreator contextCreator) {
-    // this.contextCreator = contextCreator;
-    // }
-
     /**
      * Check Status of Context against given value.
      * 

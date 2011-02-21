@@ -57,7 +57,7 @@ import java.util.regex.Matcher;
  */
 public class ReportHandler implements ReportHandlerInterface {
 
-    private static final AppLogger log = new AppLogger(ReportHandler.class.getName());
+    private static final AppLogger LOGGER = new AppLogger(ReportHandler.class.getName());
 
     private SmReportDefinitionsDaoInterface dao;
 
@@ -89,11 +89,11 @@ public class ReportHandler implements ReportHandlerInterface {
     public String retrieve(final String xml) throws 
         ReportDefinitionNotFoundException, MissingMethodParameterException,
         InvalidSqlException, SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("ReportHandler does create");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("ReportHandler does create");
         }
-        if (xml == null || xml.equals("")) {
-            log.error("xml may not be null");
+        if (xml == null || xml.length() == 0) {
+            LOGGER.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
 
@@ -105,7 +105,7 @@ public class ReportHandler implements ReportHandlerInterface {
         try {
             sp.parse(xml);
         } catch (Exception e) {
-            log.error(e);
+            LOGGER.error(e);
             throw new SystemException(e);
         }
         
@@ -148,8 +148,8 @@ public class ReportHandler implements ReportHandlerInterface {
         final ReportDefinition reportDefinition)
         throws MissingMethodParameterException {
         String sql = reportDefinition.getSql();
-        if (sql == null || sql.equals("")) {
-            log.error("sql in reportDefinition may not be null");
+        if (sql == null || sql.length() == 0) {
+            LOGGER.error("sql in reportDefinition may not be null");
             throw new MissingMethodParameterException(
                 "sql in reportDefinition may not be null");
         }

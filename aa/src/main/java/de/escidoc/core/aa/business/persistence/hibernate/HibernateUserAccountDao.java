@@ -104,11 +104,11 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
     private static final String QUERY_RETRIEVE_USER_ACCOUNT_BY_LOGINNAME =
         "from UserAccount u where u.loginname = ?";
 
-    private final Map<String, Object[]> CRITERIA_MAP;
+    private final Map<String, Object[]> criteriaMap;
 
-    private final Map<String, String> PROPERTIES_NAMES_MAP;
+    private final Map<String, String> propertiesNamesMap;
 
-    private final Map<String, String> GRANT_PROPERTIES_NAMES_MAP;
+    private final Map<String, String> grantPropertiesNamesMap;
 
     private UserAccountFilter userAccountFilter;
 
@@ -127,9 +127,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         catch (InvalidSearchQueryException e) {
             // Dont do anything because null-query is given
         }
-        CRITERIA_MAP = userAccountFilter.getCriteriaMap();
-        PROPERTIES_NAMES_MAP = userAccountFilter.getPropertyMap();
-        GRANT_PROPERTIES_NAMES_MAP = roleGrantFilter.getPropertyMap();
+        criteriaMap = userAccountFilter.getCriteriaMap();
+        propertiesNamesMap = userAccountFilter.getPropertyMap();
+        grantPropertiesNamesMap = roleGrantFilter.getPropertyMap();
     }
 
     /**
@@ -392,7 +392,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 Boolean.valueOf(active1)));
         }
 
-        for (String s : CRITERIA_MAP.keySet()) {
+        for (String s : criteriaMap.keySet()) {
             final String key = s;
             if (key.equals(Constants.FILTER_ORGANIZATIONAL_UNIT)
                     || key.equals(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT)) {
@@ -400,7 +400,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             }
             final Object criteriaValue = clonedCriterias.remove(key);
             if (criteriaValue != null) {
-                final Object[] parts = CRITERIA_MAP.get(key);
+                final Object[] parts = criteriaMap.get(key);
                 if (parts[0].equals(COMPARE_EQ)) {
                     detachedCriteria.add(Restrictions.eq((String) parts[1],
                             criteriaValue));
@@ -451,11 +451,11 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
         if (orderBy != null) {
             if (sorting == ListSorting.ASCENDING) {
-                detachedCriteria.addOrder(Order.asc(PROPERTIES_NAMES_MAP
+                detachedCriteria.addOrder(Order.asc(propertiesNamesMap
                     .get(orderBy)));
             }
             else if (sorting == ListSorting.DESCENDING) {
-                detachedCriteria.addOrder(Order.desc(PROPERTIES_NAMES_MAP
+                detachedCriteria.addOrder(Order.desc(propertiesNamesMap
                     .get(orderBy)));
             }
         }
@@ -827,11 +827,11 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
         if (orderBy != null) {
             if (sorting == ListSorting.ASCENDING) {
-                detachedCriteria.addOrder(Order.asc(GRANT_PROPERTIES_NAMES_MAP
+                detachedCriteria.addOrder(Order.asc(grantPropertiesNamesMap
                     .get(orderBy)));
             }
             else if (sorting == ListSorting.DESCENDING) {
-                detachedCriteria.addOrder(Order.desc(GRANT_PROPERTIES_NAMES_MAP
+                detachedCriteria.addOrder(Order.desc(grantPropertiesNamesMap
                     .get(orderBy)));
             }
         }
@@ -1232,25 +1232,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     // Put Object in UserDetails-Cache
                     PoliciesCache.putUserDetails(handle, result);
                 }
-                // // FIXME: remove
-                // System.out.println(getSession().connection());
-                // // end
-                // final Object[] res =
-                // (Object[]) getUniqueResult(getHibernateTemplate().find(
-                // QUERY_RETRIEVE_USER_DETAILS_DATA,
-                // new Object[] { handle, System.currentTimeMillis() }));
-                // if (res != null) {
-                // result =
-                // new EscidocUserDetails();
-                // result.setId((String) res[0]);
-                // result.setRealName((String) res[1]);
-                //
-                // //Get OUs of user
-                //
-                //
-                // //Put Object in UserDetails-Cache
-                // PoliciesCache.putUserDetails(handle, result);
-                // }
             }
             catch (DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);

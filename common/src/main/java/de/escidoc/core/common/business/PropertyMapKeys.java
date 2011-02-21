@@ -144,12 +144,6 @@ public class PropertyMapKeys {
     public static final String CURRENT_VERSION_DESCRIPTION =
         "CURRENT_VERSION_DESCRIPTION";
 
-    // public static final String CURRENT_VERSION_CREATED_BY_ID =
-    // "CURRENT_VERSION_CREATED_BY_ID";
-    //
-    // public static final String CURRENT_VERSION_CREATED_BY_TITLE =
-    // "CURRENT_VERSION_CREATED_BY_TITLE";
-
     public static final String CURRENT_VERSION_PUBLIC_STATUS =
         "CURRENT_VERSION_PUBLIC_STATUS";
 
@@ -206,12 +200,4 @@ public class PropertyMapKeys {
 
     public static final String LATEST_RELEASE_PID = "LATEST_RELEASE_PID";
 
-    /*
-     * Boilerplate
-     */
-    // public static final String LATEST_VERSION_ = "LATEST_VERSION_";
-    //
-    // public static final String CURRENT_VERSION_ = "CURRENT_VERSION_";
-    //
-    // public static final String LATEST_VERSION_ = "LATEST_VERSION_";
 }

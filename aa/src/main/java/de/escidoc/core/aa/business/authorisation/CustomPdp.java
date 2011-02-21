@@ -217,8 +217,7 @@ public class CustomPdp {
         factory.addFunction(new XacmlFunctionRoleInList());
         factory.addFunction(new XacmlFunctionOneAttributeInBothLists());
         factory.addFunction(xacmlFunctionRoleIsGranted);
-        // FunctionFactory factory = proxy.getConditionFactory();
-        // factory.addFunction(new TimeInRangeFunction());
+
         FunctionFactory.setDefaultFactory(proxy);
 
         pdpConfig = new PDPConfig(attributeFinder, policyFinder, null);

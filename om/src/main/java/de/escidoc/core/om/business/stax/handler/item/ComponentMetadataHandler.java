@@ -75,9 +75,6 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
     private String escidocMdRecordNameSpace = null;
 
-    // private static AppLogger log =
-    // new AppLogger(ComponentMetadataHandler.class.getName());
-
     private final Map<String, Map<String, Map<String, String>>> metadataAttributes =
         new HashMap<String, Map<String, Map<String, String>>>();
 
@@ -134,15 +131,7 @@ public class ComponentMetadataHandler extends DefaultHandler {
         throws MissingAttributeValueException {
 
         String currentPath = parser.getCurPath();
-        // mdRecordsPath = "/item/components/component/md-records";
-        // elementPath = "/item/components/component/md-records/md-record";
-        // // String hrefBasePath = "/ir/item/";
-        // if (currentPath.startsWith(CONTAINER)) {
-        // mdRecordsPath = "/container/components/component/md-records";
-        // elementPath =
-        // "/container/components/component/md-records/md-record";
-        // // hrefBasePath = "/ir/container/";
-        // }
+
         String theName = element.getLocalName();
 
         if (elementPath.equals(currentPath)) {
@@ -157,9 +146,7 @@ public class ComponentMetadataHandler extends DefaultHandler {
                 throw new MissingAttributeValueException(errorMsg);
 
             }
-            // if (nameValue.equals(MANDATORY_MD_RECORD_NAME)) {
-            // isMandatoryName = true;
-            // }
+
             isInside = true;
             String typeValue = null;
             int indexOfType = element.indexOfAttribute(null, "md-type");
@@ -177,72 +164,15 @@ public class ComponentMetadataHandler extends DefaultHandler {
             if (typeValue != null) {
                 md.put("type", typeValue);
             }
-            // else {
-            // md.put("type", "unknown");
-            // }
+
             if (schemaValue != null) {
                 md.put("schema", schemaValue);
             }
-            // else {
-            // md.put("schema", "unknown");
-            // }
+
             componentMdRecords.put(this.nameValue, md);
 
             metadataAttributes.put(this.componentId, this.componentMdRecords);
-            // if (nameValue.equals("")) {
-            // log.error("the value of" + " \"name\" atribute of the element "
-            // + theName + " is missing");
-            // throw new MissingAttributeValueException("the value of the"
-            // + " \"name\" atribute of the element " + theName
-            // + " is missing");
-            // }
 
-            // delete attribute "xml:base" if exists on input.
-            // By retrive of a md-record an attribute "xml:base" will be added
-            // to the md-record element
-            // int indexOfBase =
-            // element.indexOfAttribute(XMLConstants.XML_NS_URI, "base");
-            // if (indexOfBase != (-1)) {
-            // element.removeAttribute(indexOfBase);
-            // }
-            // int indexOfLmd= element.indexOfAttribute(null,
-            // "last-modification-date");
-            // if (indexOfLmd != (-1)) {
-            // element.removeAttribute(indexOfLmd);
-            // String message = "Read only attribute \"last-modification-date\"
-            // of the "
-            // + "element " + element.getLocalName() + " may not exist while
-            // create";
-            // log.warn(message);
-            // }
-            // int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI,
-            // "href");
-            //
-            // if (indexOfHref != (-1)) {
-            // String message = "Read only attribute \"href\" of the "
-            // + "element " + element.getLocalName() + " may not exist while
-            // create";
-            // log.error(message);
-            // throw new ReadonlyAttributeViolationException(message);
-            // }
-            // Attribute href = new Attribute("href", Constants.XLINK_URI,
-            // Constants.XLINK_PREFIX, hrefBasePath + id +
-            // "/md-records/md-record/"
-            // + nameValue);
-            // element.addAttribute(href);
-            // int indexOfType = element.indexOfAttribute(Constants.XLINK_URI,
-            // "type");
-            // if (indexOfType == (-1)) {
-            // Attribute type = new Attribute("type", Constants.XLINK_URI,
-            // Constants.XLINK_PREFIX, Constants.XLINK_TYPE_SIMPLE);
-            // element.addAttribute(type);
-            // } else {
-            // Attribute type = element.getAttribute(indexOfType);
-            // String typeValue = type.getValue();
-            // if(!typeValue.equals(Constants.XLINK_TYPE_SIMPLE)) {
-            // type.setValue(Constants.XLINK_TYPE_SIMPLE);
-            // }
-            // }
 
         }
         else if (isInside && !isRootMetadataElement) {
@@ -287,15 +217,6 @@ public class ComponentMetadataHandler extends DefaultHandler {
             isRootMetadataElement = false;
         }
         else if (componentPath.equals(parser.getCurPath())) {
-
-            // if (!isMandatoryName) {
-            // String message = "Mandatory md-record with a name "
-            // + MANDATORY_MD_RECORD_NAME + " is missing in the component " +
-            // "number " + number + ".";
-            // log.error(message);
-            // throw new MissingMdRecordException(message);
-            // }
-
             componentId = null;
             this.componentMdRecords = null;
             this.escidocMdRecordNameSpace = null;

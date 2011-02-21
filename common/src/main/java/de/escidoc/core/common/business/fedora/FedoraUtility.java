@@ -106,6 +106,16 @@ import java.util.regex.Pattern;
 @ManagedResource(objectName = "eSciDocCore:name=FedoraUtility", description = "The utility class to access the fedora repository.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class FedoraUtility implements InitializingBean {
 
+    // taken from method preventWrongLogging to make them static final
+    private static final Pattern PATTERN_ERROR_GETTING =
+        Pattern.compile(
+            "fedora.server.errors.GeneralException: Error getting",
+            Pattern.CASE_INSENSITIVE);
+    private static final Pattern PATTERN_MALFORMED_URL =
+        Pattern.compile("fedora.server.errors.ObjectIntegrityException: "
+            + "FOXML IO stream was bad : Malformed URL");
+
+    
     public static final String DATASTREAM_STATUS_DELETED = "D";
 
     public static final int SYNC_RETRIES = 10;
@@ -245,7 +255,7 @@ public class FedoraUtility implements InitializingBean {
      * Clears the pool of apim connections.
      */
     @ManagedOperation(description = "Clear the pool of apim connections.")
-    public void clearApimPool() {
+    void clearApimPool() {
 
         apimPool.clear();
     }
@@ -566,7 +576,7 @@ public class FedoraUtility implements InitializingBean {
         catch (Exception e) {
             LOG.warn("Failed to modify Fedora datastream:\n"
                 + "======== begin data stream ================\n"
-                + new String(datastream) + "\n"
+                + new String(datastream) + '\n'
                 + "======== end data stream ==================\n" + e);
             throw new FedoraSystemException(e.toString(), e);
         }
@@ -746,7 +756,7 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
-    public Datastream[] getDatastreamsInformation(final String pid)
+    Datastream[] getDatastreamsInformation(final String pid)
         throws FedoraSystemException {
         return getDatastreamsInformation(pid, null);
     }
@@ -847,7 +857,7 @@ public class FedoraUtility implements InitializingBean {
                 pid,
                 "sdef:"
                     + contentModelPid.replace(":",
-                        Constants.COLON_REPLACEMENT_PID) + "-" + name, name,
+                        Constants.COLON_REPLACEMENT_PID) + '-' + name, name,
                 null, null).getStream();
         }
         catch (Exception e) {
@@ -1150,7 +1160,7 @@ public class FedoraUtility implements InitializingBean {
      */
     public void deleteObject(final String pid, final boolean syncTripleStore)
         throws FedoraSystemException, WebserverSystemException {
-        final String msg = "Deleted object " + pid + ".";
+        final String msg = "Deleted object " + pid + '.';
 
         final FedoraAPIM apim = borrowApim();
         try {
@@ -1534,7 +1544,7 @@ public class FedoraUtility implements InitializingBean {
      *         URLs.
      * @throws WebserverSystemException
      */
-    public DefaultHttpClient getHttpClient() throws WebserverSystemException {
+    DefaultHttpClient getHttpClient() throws WebserverSystemException {
         try {
             if (httpClient == null) {
                 HttpParams params = new BasicHttpParams();

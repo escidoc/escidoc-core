@@ -77,6 +77,7 @@ public final class Constants {
     public static final URI URI_SUBJECT_ID;
 
     public static final URI URI_XMLSCHEMA_STRING;
+
     static {
         URI_ACTION_ID = getURI(AttributeIds.URN_ACTION_ID);
         URI_CONTEXT_ID = getURI(AttributeIds.URN_CONTEXT_ID);

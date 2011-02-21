@@ -67,7 +67,7 @@ public class MetadataHandler extends DefaultHandler {
 
     private String mdRecordsPath = null;
 
-    private static final AppLogger log =
+    private static final AppLogger LOGGER =
         new AppLogger(MetadataHandler.class.getName());
 
     private final Map<String, Map<String, String>> metadataAttributes =
@@ -109,11 +109,9 @@ public class MetadataHandler extends DefaultHandler {
         String currentPath = parser.getCurPath();
         mdRecordsPath = "/item/md-records";
         elementPath = "/item/md-records/md-record";
-        // String hrefBasePath = "/ir/item/";
         if (currentPath.startsWith(CONTAINER)) {
             mdRecordsPath = "/container/md-records";
             elementPath = "/container/md-records/md-record";
-            // hrefBasePath = "/ir/container/";
         }
         String theName = element.getLocalName();
 
@@ -122,8 +120,8 @@ public class MetadataHandler extends DefaultHandler {
             Attribute name = element.getAttribute(indexOfName);
             this.nameValue = name.getValue();
 
-            if (nameValue.equals("")) {
-                log.error("the value of" + " \"name\" atribute of the element "
+            if (nameValue.length() == 0) {
+                LOGGER.error("the value of" + " \"name\" atribute of the element "
                     + theName + " is missing");
                 throw new MissingAttributeValueException("the value of the"
                     + " \"name\" atribute of the element " + theName
@@ -199,7 +197,7 @@ public class MetadataHandler extends DefaultHandler {
             String message =
                 "Mandatory md-record with a name "
                     + MANDATORY_MD_RECORD_NAME + " is missing.";
-            log.error(message);
+            LOGGER.error(message);
             throw new MissingMdRecordException(message);
         }
         return element;

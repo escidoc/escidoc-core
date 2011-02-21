@@ -71,7 +71,7 @@ import java.util.Map;
 public class ReportDefinitionHandler
     implements ReportDefinitionHandlerInterface {
 
-    private static final AppLogger log = new AppLogger(
+    private static final AppLogger LOGGER = new AppLogger(
         ReportDefinitionHandler.class.getName());
 
     private SmReportDefinitionsDaoInterface dao;
@@ -114,11 +114,11 @@ public class ReportDefinitionHandler
     public String create(final String xmlData) throws InvalidSqlException,
         MissingMethodParameterException, ScopeNotFoundException,
         ScopeContextViolationException, SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("ReportDefinitionHandler does create");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("ReportDefinitionHandler does create");
         }
-        if (xmlData == null || xmlData.equals("")) {
-            log.error("xml may not be null");
+        if (xmlData == null || xmlData.length() == 0) {
+            LOGGER.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
         // parse
@@ -129,7 +129,7 @@ public class ReportDefinitionHandler
             sp.parse(xmlData);
         }
         catch (Exception e) {
-            log.error(e);
+            LOGGER.error(e);
             throw new SystemException(e);
         }
 
@@ -176,11 +176,11 @@ public class ReportDefinitionHandler
     public void delete(final String id)
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("ReportDefinitionHandler does delete");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("ReportDefinitionHandler does delete");
         }
         if (id == null) {
-            log.error("id may not be null");
+            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
 
@@ -210,11 +210,11 @@ public class ReportDefinitionHandler
     public String retrieve(final String id)
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("ReportDefinitionHandler does retrieve");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("ReportDefinitionHandler does retrieve");
         }
         if (id == null) {
-            log.error("id may not be null");
+            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         return renderer.render(dao.retrieve(id));
@@ -314,15 +314,15 @@ public class ReportDefinitionHandler
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException,
         InvalidSqlException, ScopeContextViolationException, SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("ReportDefinitionHandler does update");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("ReportDefinitionHandler does update");
         }
-        if (id == null || id.equals("")) {
-            log.error("id may not be null");
+        if (id == null || id.length() == 0) {
+            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         if (xmlData == null) {
-            log.error("xmlData may not be null");
+            LOGGER.error("xmlData may not be null");
             throw new MissingMethodParameterException("xmlData may not be null");
         }
 
@@ -335,7 +335,7 @@ public class ReportDefinitionHandler
             sp.parse(xmlData);
         }
         catch (Exception e) {
-            log.error(e);
+            LOGGER.error(e);
             throw new SystemException(e);
         }
 
