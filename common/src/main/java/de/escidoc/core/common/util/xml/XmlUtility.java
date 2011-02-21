@@ -1985,7 +1985,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    private static String getContainerSchemaLocation()
+    public static String getContainerSchemaLocation()
         throws WebserverSystemException {
 
         final String result;
@@ -2112,7 +2112,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    private static String getContextSchemaLocation()
+    public static String getContextSchemaLocation()
         throws WebserverSystemException {
 
         final String result;
@@ -2141,7 +2141,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    private static String getContentRelationSchemaLocation()
+    public static String getContentRelationSchemaLocation()
         throws WebserverSystemException {
 
         final String result;
@@ -2289,7 +2289,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    private static String getItemSchemaLocation()
+    public static String getItemSchemaLocation()
         throws WebserverSystemException {
 
         final String result;
@@ -2369,7 +2369,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    private static String getOrganizationalUnitSchemaLocation()
+    public static String getOrganizationalUnitSchemaLocation()
         throws WebserverSystemException {
 
         final String result;
@@ -2843,7 +2843,7 @@ public final class XmlUtility {
      * @throws WebserverSystemException
      *             In case of an error.
      */
-    private static String getSchemaLocation(final String commonPart)
+    public static String getSchemaLocation(final String commonPart)
         throws WebserverSystemException {
 
         String result;
