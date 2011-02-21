@@ -140,6 +140,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(values);
         addRoleListValues(values);
+        values.put("recordPacking", recordPacking);
 
         final Collection<Map<String, Object>> rolesValues =
             new ArrayList<Map<String, Object>>(roles.size());

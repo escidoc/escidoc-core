@@ -304,6 +304,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
         values.put("isRootAggregationDefinition", XmlTemplateProvider.FALSE);
         values.put("aggregationDefinitionListTitle",
             "Aggregation Definition List");
+        values.put("recordPacking", recordPacking);
         addAggregationDefinitionNamespaceValues(values);
         addAggregationDefinitionListNamespaceValues(values);
 

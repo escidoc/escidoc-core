@@ -323,6 +323,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootUserGroup", XmlTemplateProvider.TRUE);
+        values.put("recordPacking", recordPacking);
         addCommonValues(values);
         addUserGroupListValues(values);
 

@@ -202,6 +202,7 @@ public final class VelocityXmlReportDefinitionRenderer
 
         values.put("isRootReportDefinition", XmlTemplateProvider.FALSE);
         values.put("reportDefinitionListTitle", "Report Definition List");
+        values.put("recordPacking", recordPacking);
         addReportDefinitionNamespaceValues(values);
         addReportDefinitionListNamespaceValues(values);
 
