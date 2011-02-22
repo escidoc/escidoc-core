@@ -382,10 +382,10 @@
 &lt;sru:explainResponse xmlns:sru="http://www.loc.gov/zing/srw/"&gt;
   &lt;sru:version&gt;1.1&lt;/sru:version&gt;
   &lt;sru:record&gt;
-    &lt;sru:recordSchema&gt;http://explain.z3950.org/dtd/2.1/&lt;/sru:recordSchema&gt;
+    &lt;sru:recordSchema&gt;http://explain.z3950.org/dtd/2.0/&lt;/sru:recordSchema&gt;
     &lt;sru:recordPacking&gt;XML&lt;/sru:recordPacking&gt;
     &lt;sru:recordData&gt;
-      &lt;zr:explain xmlns:zr="http://explain.z3950.org/dtd/2.1/"&gt;
+      &lt;zr:explain xmlns:zr="http://explain.z3950.org/dtd/2.0/"&gt;
         &lt;zr:serverInfo protocol="SRU" version="1.2" method="GET"&gt;
           &lt;zr:host&gt;localhost&lt;/zr:host&gt;
           &lt;zr:port&gt;8080&lt;/zr:port&gt;
