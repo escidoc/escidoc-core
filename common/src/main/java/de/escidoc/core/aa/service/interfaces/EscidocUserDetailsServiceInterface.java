@@ -48,5 +48,6 @@ public interface EscidocUserDetailsServiceInterface extends UserDetailsService {
      *             
      * @escidoc_core.visible false
      */
+    @Override
     UserDetails loadUserByUsername(final String identifier);
 }

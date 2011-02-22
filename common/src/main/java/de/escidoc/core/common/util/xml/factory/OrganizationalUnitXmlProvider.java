@@ -88,7 +88,6 @@ public final class OrganizationalUnitXmlProvider
      * @oum
      */
     private OrganizationalUnitXmlProvider() {
-        super();
     }
 
     /**

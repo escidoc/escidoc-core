@@ -70,13 +70,6 @@ public class MdRecordDefinitionCreate {
     private String schemaHref = null;
 
     /**
-     * Metadata Record Datastructure.
-     */
-    public MdRecordDefinitionCreate() {
-
-    }
-
-    /**
      * Set Name of Metadata Record.
      * 
      * @param name
@@ -196,7 +189,7 @@ public class MdRecordDefinitionCreate {
      */
     public Map<String, String> getValueMap() throws SystemException {
 
-        HashMap<String, String> templateValues = new HashMap<String, String>();
+        Map<String, String> templateValues = new HashMap<String, String>();
 
         templateValues.put(XmlTemplateProvider.MD_RECORD_TYPE, this.type);
         templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA,

@@ -49,6 +49,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +70,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
     private final List<Map<String, String>> relationsData =
         new ArrayList<Map<String, String>>();
 
-    private final List<String> relationsDataCheck = new ArrayList<String>();
+    private final Collection<String> relationsDataCheck = new ArrayList<String>();
 
     private static final AppLogger log =
         new AppLogger(ContentRelationsAddHandler2Edition.class.getName());
@@ -189,7 +190,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
             if (!relationsDataCheck.contains(relationDataCheck)) {
                 relationsDataCheck.add(relationDataCheck);
 
-                HashMap<String, String> relationData =
+                Map<String, String> relationData =
                     new HashMap<String, String>();
                 relationsData.add(relationData);
                 relationData.put("predicateNs", predicateNs);

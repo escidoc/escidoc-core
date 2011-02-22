@@ -39,15 +39,9 @@ package de.escidoc.core.common.business.fedora.resources;
  */
 public class Predecessor {
 
-    private String objid = null;
+    private final String objid;
 
-    private PredecessorForm form = null;
-
-    /**
-     * Predecessor.
-     */
-    public Predecessor() {
-    }
+    private final PredecessorForm form;
 
     /**
      * Predecessor.
@@ -64,26 +58,10 @@ public class Predecessor {
     }
 
     /**
-     * @param objid
-     *            the objid to set
-     */
-    public void setObjid(final String objid) {
-        this.objid = objid;
-    }
-
-    /**
      * @return the objid
      */
     public String getObjid() {
         return objid;
-    }
-
-    /**
-     * @param form
-     *            the form of predecessor to set
-     */
-    public void setForm(final PredecessorForm form) {
-        this.form = form;
     }
 
     /**

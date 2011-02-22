@@ -52,12 +52,6 @@ public class ContentStreamCreate {
     private String title = null;
 
     /**
-     * ContentStream POJO for create.
-     */
-    public ContentStreamCreate() {
-    }
-
-    /**
      * Add content to ContentStream.
      * 
      * @param content

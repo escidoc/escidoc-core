@@ -172,7 +172,7 @@ public class ComponentCreate extends GenericResourceCreate
             setObjid(this.idProvider.getNextPid());
         }
 
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.DC, getDC());
         valueMap.putAll(preparePropertiesValueMap());
@@ -256,6 +256,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @throws Exception
      *             Thrown if a Thread failed.
      */
+    @Override
     public String call() throws Exception {
 
         persist(false);
@@ -280,7 +281,7 @@ public class ComponentCreate extends GenericResourceCreate
     private Map<String, String> preparePropertiesValueMap()
         throws WebserverSystemException {
 
-        HashMap<String, String> valueMap = new HashMap<String, String>();
+        Map<String, String> valueMap = new HashMap<String, String>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
 
@@ -334,7 +335,7 @@ public class ComponentCreate extends GenericResourceCreate
      */
     private Map<String, String> getRelsExtNamespaceValues() {
 
-        HashMap<String, String> values = new HashMap<String, String>();
+        Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             de.escidoc.core.common.business.Constants.PROPERTIES_NS_PREFIX);
@@ -378,7 +379,7 @@ public class ComponentCreate extends GenericResourceCreate
      */
     private Map<String, String> getContentValues() {
 
-        HashMap<String, String> values = new HashMap<String, String>();
+        Map<String, String> values = new HashMap<String, String>();
 
         try {
             values

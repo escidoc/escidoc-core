@@ -45,6 +45,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -98,6 +99,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * de.escidoc.core.common.persistence.PIDSystem#assignPID(java.lang.String,
      * java.lang.String)
      */
+    @Override
     public String assignPID(final String systemID, final String param)
         throws PidSystemException, MissingMethodParameterException,
         WebserverSystemException {
@@ -163,6 +165,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * @see de.escidoc.core.common.persistence.PIDSystem
      * #generatePID(java.lang.String)
      */
+    @Override
     public String generatePID(final String systemID) throws PidSystemException {
         String result = pidNamespace + ':' + globalPrefix + separator;
         if (localPrefix != null && localPrefix.length() > 0) {
@@ -179,6 +182,7 @@ public class PIDManagerRESTService implements PIDSystem {
      * @see de.escidoc.core.common.persistence.PIDSystem
      * #neverGeneratePID(java.lang.String)
      */
+    @Override
     public void neverGeneratePID(final String pid) {
         throw new UnsupportedOperationException(
             "Method neverGeneratePID() not supported by used PID System.");
@@ -330,7 +334,7 @@ public class PIDManagerRESTService implements PIDSystem {
             transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             StreamResult result = new StreamResult(new StringWriter());
-            DOMSource source = new DOMSource(doc);
+            Source source = new DOMSource(doc);
             transformer.transform(source, result);
 
             xmlParam = result.getWriter().toString();

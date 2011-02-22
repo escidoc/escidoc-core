@@ -32,6 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,7 +85,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     private static final AppLogger LOG = new AppLogger(
         FedoraContextHandler.class.getName());
 
-    private final List<ResourceListener> contextListeners =
+    private final Collection<ResourceListener> contextListeners =
         new ArrayList<ResourceListener>();
 
     private FedoraContentRelationHandler contentRelationHandler;
@@ -181,6 +182,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * de.escidoc.core.om.business.interfaces.ContextHandlerInterface#create
      * (java.lang.String)
      */
+    @Override
     public String create(final String xmlData)
         throws ContextNameNotUniqueException, SystemException,
         ContentModelNotFoundException, ReadonlyElementViolationException,
@@ -193,6 +195,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     /**
      * @see de.escidoc.core.common.business.interfaces.IngestableResource#ingest(String)
      */
+    @Override
     public String ingest(final String xmlData)
         throws ContextNameNotUniqueException, SystemException,
         ContentModelNotFoundException, ReadonlyElementViolationException,
@@ -210,6 +213,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * de.escidoc.core.om.business.interfaces.ContextHandlerInterface#retrieve
      * (java.lang.String)
      */
+    @Override
     public String retrieve(final String id) throws ContextNotFoundException,
         SystemException {
         setContext(id);
@@ -222,6 +226,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @see ContextHandlerInterface#retrieveResource(java.lang.String,
      * java.lang.String)
      */
+    @Override
     public EscidocBinaryContent retrieveResource(
         final String id, final String resourceName,
         final Map<String, String[]> parameters)
@@ -264,6 +269,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * 
      * @see ContextHandlerInterface#retrieveResources(java.lang.String)
      */
+    @Override
     public String retrieveResources(final String id)
         throws ContextNotFoundException, SystemException {
 
@@ -278,6 +284,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * 
      * @oum
      */
+    @Override
     public String retrieveProperties(final String id)
         throws ContextNotFoundException, SystemException {
 
@@ -288,6 +295,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     /**
      * (non-Javadoc).
      */
+    @Override
     public String retrieveContexts(final SRURequestParameters parameters)
         throws SystemException {
         StringWriter result = new StringWriter();
@@ -305,6 +313,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     /**
      * (non-Javadoc).
      */
+    @Override
     public String retrieveMembers(
         final String id, final SRURequestParameters parameters)
         throws ContextNotFoundException, SystemException {
@@ -336,6 +345,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @seede.escidoc.core.om.business.interfaces.ContextHandlerInterface#
      * retrieveAdminDescriptor(java.lang.String, java.lang.String)
      */
+    @Override
     public String retrieveAdminDescriptor(final String id, final String name)
         throws ContextNotFoundException, SystemException,
         AdminDescriptorNotFoundException {
@@ -350,6 +360,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @seede.escidoc.core.om.business.interfaces.ContextHandlerInterface#
      * retrieveAdminDescriptors(java.lang.String)
      */
+    @Override
     public String retrieveAdminDescriptors(final String id)
         throws ContextNotFoundException, SystemException {
 
@@ -364,6 +375,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * de.escidoc.core.om.business.interfaces.ContextHandlerInterface#update
      * (java.lang.String, java.lang.String)
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws ContextNotFoundException, InvalidStatusException,
         OptimisticLockingException, ReadonlyAttributeViolationException,
@@ -393,6 +405,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * de.escidoc.core.om.business.interfaces.ContextHandlerInterface#open(java
      * .lang.String, java.lang.String)
      */
+    @Override
     public String open(final String id, final String taskParam)
         throws ContextNotFoundException, InvalidStatusException,
         InvalidXmlException, OptimisticLockingException, SystemException,
@@ -413,6 +426,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * de.escidoc.core.om.business.interfaces.ContextHandlerInterface#close(
      * java.lang.String, java.lang.String)
      */
+    @Override
     public String close(final String id, final String taskParam)
         throws ContextNotFoundException, OptimisticLockingException,
         InvalidXmlException, InvalidStatusException, SystemException,
@@ -433,6 +447,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * de.escidoc.core.om.business.interfaces.ContextHandlerInterface#delete
      * (java.lang.String)
      */
+    @Override
     public void delete(final String id) throws ContextNotEmptyException,
         ContextNotFoundException, InvalidStatusException, SystemException {
 
@@ -448,6 +463,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @seede.escidoc.core.om.business.interfaces.ContextHandlerInterface#
      * updateAdminDescriptor(java.lang.String, java.lang.String)
      */
+    @Override
     public String updateAdminDescriptor(final String id, final String xmlData)
         throws ContextNotFoundException, OptimisticLockingException,
         AdminDescriptorNotFoundException {
@@ -642,6 +658,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @spring.property ref="business.TripleStoreUtility"
      * 
      */
+    @Override
     public void setTripleStoreUtility(final TripleStoreUtility tsu) {
         super.setTripleStoreUtility(tsu);
     }
@@ -685,7 +702,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * @param indexingHandler
      *            The indexing handler.
      */
-    public void setIndexingHandler(final IndexingHandler indexingHandler) {
+    public void setIndexingHandler(final ResourceListener indexingHandler) {
         addContextListener(indexingHandler);
     }
 

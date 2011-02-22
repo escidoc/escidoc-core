@@ -561,7 +561,7 @@ public class Resource extends XMLBase {
             if ((exceptionTypes != null) && (exceptionTypes.length > 0)) {
                 c1 = new StringBuffer();
                 StringBuilder c2 = new StringBuilder();
-                String msg = "";
+                String msg;
                 for (int i = 0; i < exceptionTypes.length; ++i) {
                     try {
                         Method statusLine =

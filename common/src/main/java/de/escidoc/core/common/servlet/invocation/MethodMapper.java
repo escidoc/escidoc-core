@@ -102,7 +102,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         throws ParserConfigurationException, SAXException, IOException,
         TransformerException {
 
-        List<String> paths = new ArrayList<String>();
+        Collection<String> paths = new ArrayList<String>();
         paths.add(descriptor);
         setDescriptorFilenames(paths);
     }
@@ -122,7 +122,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             Thrown if an xml transformation fails.
      * @common
      */
-    public MethodMapper(final List<String> descriptors)
+    public MethodMapper(final Collection<String> descriptors)
         throws ParserConfigurationException, SAXException, IOException,
         TransformerException {
 
@@ -147,7 +147,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @common
      */
     public void setDescriptorFilenames(
-        final Collection<String> descriptorFilenames)
+        final Iterable<String> descriptorFilenames)
         throws ParserConfigurationException, SAXException, IOException,
         TransformerException {
 
@@ -283,6 +283,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             e
      * @common
      */
+    @Override
     public BeanMethod getMethod(final HttpServletRequest request)
         throws MethodNotFoundException, EncodingSystemException {
 
@@ -312,6 +313,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             e
      * @common
      */
+    @Override
     public BeanMethod getMethod(
         final String uri, final String query,
         final Map<String, String[]> parameters, final String httpMethod,

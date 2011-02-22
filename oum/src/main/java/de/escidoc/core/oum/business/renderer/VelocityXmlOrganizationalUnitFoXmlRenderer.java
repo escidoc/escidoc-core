@@ -56,6 +56,7 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
      * @throws SystemException
      * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitFoXmlRendererInterface#render(Map)
      */
+    @Override
     public String render(final Map<String, Object> values)
         throws SystemException {
 
@@ -86,6 +87,7 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
      * @throws WebserverSystemException
      * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitFoXmlRendererInterface#renderRelsExt(Map)
      */
+    @Override
     public String renderRelsExt(final Map<String, Object> values)
         throws WebserverSystemException {
 

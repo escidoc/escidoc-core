@@ -29,6 +29,7 @@
 package de.escidoc.core.aa.business.renderer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -80,6 +81,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *      UserGroupRendererInterface#render(Map)
      * @aa
      */
+    @Override
     public String render(final UserGroup userGroup) throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
 
@@ -153,6 +155,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *      (de.escidoc.core.aa.business.UserGroup, java.util.List)
      * @aa
      */
+    @Override
     public String renderCurrentGrants(
         final UserGroup userGroup, final List<RoleGrant> currentGrants)
         throws WebserverSystemException {
@@ -196,6 +199,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *      (de.escidoc.core.aa.business.persistence.RoleGrant)
      * @aa
      */
+    @Override
     public String renderGrant(final RoleGrant grant)
         throws WebserverSystemException {
 
@@ -285,6 +289,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *      #renderResources(de.escidoc.core.aa.business.UserGroup)
      * @aa
      */
+    @Override
     public String renderResources(final UserGroup userGroup)
         throws WebserverSystemException {
         Map<String, Object> values = new HashMap<String, Object>();
@@ -316,17 +321,17 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *      UserGroupRendererInterface
      *      #renderUserGroups(de.escidoc.core.aa.business.UserGroup)
      */
+    @Override
     public String renderUserGroups(
         final List<UserGroup> userGroups, final RecordPacking recordPacking)
         throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootUserGroup", XmlTemplateProvider.TRUE);
-        values.put("recordPacking", recordPacking);
         addCommonValues(values);
         addUserGroupListValues(values);
 
-        final List<Map<String, Object>> userGroupsValues =
+        final Collection<Map<String, Object>> userGroupsValues =
             new ArrayList<Map<String, Object>>(userGroups.size());
 
         for (UserGroup userGroup1 : userGroups) {
@@ -368,7 +373,8 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The {@link Map} to that the values shall be added.
      * @aa
      */
-    private void addUserGroupNamespaceValues(final Map<String, Object> values) {
+    private static void addUserGroupNamespaceValues(
+        final Map<String, Object> values) {
         values.put("userGroupNamespacePrefix", Constants.USER_GROUP_NS_PREFIX);
         values.put("userGroupNamespace", Constants.USER_GROUP_NS_URI);
     }
@@ -395,7 +401,8 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The MAP to add the values to.
      * @aa
      */
-    private void addUserGroupsNamespaceValues(final Map<String, Object> values) {
+    private static void addUserGroupsNamespaceValues(
+        final Map<String, Object> values) {
 
         values.put("userGroupListNamespacePrefix",
             Constants.USER_GROUP_LIST_NS_PREFIX);
@@ -411,7 +418,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private void addEscidocBaseUrl(final Map<String, Object> values)
+    private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -427,7 +434,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The map to add values to.
      * @aa
      */
-    private void addResourcesValues(
+    private static void addResourcesValues(
         final UserGroup userGroup, final Map<String, Object> values) {
 
         values.put("resourcesHref",
@@ -444,7 +451,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *             Thrown in case of an internal error.
      * @aa
      */
-    private UserGroupXmlProvider getUserGroupXmlProvider()
+    private static UserGroupXmlProvider getUserGroupXmlProvider()
         throws WebserverSystemException {
 
         return UserGroupXmlProvider.getInstance();

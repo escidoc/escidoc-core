@@ -66,7 +66,7 @@ public class SmFilterUtility {
         final String objectType, final Collection<String> objectIds)
         throws WebserverSystemException {
 
-        List<String> resultIds = null;
+        List<String> resultIds;
         if (pdp == null) {
             locateAa();
         }

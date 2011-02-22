@@ -83,6 +83,7 @@ public class UserAccountPropertiesStaxHandler
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      * @aa
      */
+    @Override
     public StartElement startElement(final StartElement element) {
 
         if (isNotReady()
@@ -106,6 +107,7 @@ public class UserAccountPropertiesStaxHandler
      *      #characters(java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.Star tElement)
      */
+    @Override
     public String characters(final String s, final StartElement element)
         throws UniqueConstraintViolationException, SqlDatabaseSystemException {
 

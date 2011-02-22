@@ -118,13 +118,6 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private TripleStoreUtility tsu;
 
-    /**
-     * The constructor.
-     */
-    public GrantAttributeFinderModule() {
-        super();
-    }
-
     // CHECKSTYLE:JAVADOC-OFF
 
     /**

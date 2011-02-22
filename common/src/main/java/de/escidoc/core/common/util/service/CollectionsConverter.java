@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -77,7 +78,7 @@ public final class CollectionsConverter {
         for (Object o : map.entrySet()) {
 
             // get an element as key-value pair
-            Map.Entry entry = (Map.Entry) o;
+            Entry entry = (Entry) o;
 
             // generate a new object of type KeyValuePair, set the values
             // from the Map.Entry and put the object at the next free place
@@ -137,7 +138,7 @@ public final class CollectionsConverter {
      * @return The new create array.
      */
     public static Object[] convertListToArray(
-        final List list, final Class objectClass) {
+        final Collection list, final Class objectClass) {
         int length = list.size();
         Object[] array = (Object[]) Array.newInstance(objectClass, length);
         array = list.toArray(array);

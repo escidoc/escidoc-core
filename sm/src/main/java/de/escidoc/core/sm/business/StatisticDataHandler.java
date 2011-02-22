@@ -75,6 +75,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      * 
      * @sm
      */
+    @Override
     public void create(final String xmlData)
         throws MissingMethodParameterException, SystemException {
         if (LOGGER.isDebugEnabled()) {
@@ -108,6 +109,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      * @throws SystemException
      *             e
      */
+    @Override
     public void insertStatisticData(final String xmlData)
         throws ScopeNotFoundException, MissingMethodParameterException,
         XmlSchemaValidationException, XmlCorruptedException, SystemException {

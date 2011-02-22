@@ -34,6 +34,7 @@ import de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInte
 
 import java.net.URL;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /*******************************************************************************
  * @author MIH
@@ -65,6 +66,7 @@ public class FedoraDescribeDeviationHandler
      *             ex
      * 
      */
+    @Override
     public String getFedoraDescription(
         final Map<String, String[]> parameters) throws Exception {
 
@@ -115,7 +117,7 @@ public class FedoraDescribeDeviationHandler
         StringBuilder urlParams = new StringBuilder("");
         if (parameters != null && !parameters.isEmpty()) {
             urlParams.append('?');
-            for (Map.Entry<String, String[]> e : parameters.entrySet()) {
+            for (Entry<String, String[]> e : parameters.entrySet()) {
                 if (urlParams.length() > 1) {
                     urlParams.append('&');
                 }

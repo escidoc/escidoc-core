@@ -96,6 +96,7 @@ public class ReportHandler implements ReportHandlerInterface {
      * 
      * @sm
      */
+    @Override
     public String retrieve(final String xml) throws AuthenticationException,
         AuthorizationException, XmlCorruptedException, XmlSchemaValidationException,
         ReportDefinitionNotFoundException, MissingMethodParameterException,

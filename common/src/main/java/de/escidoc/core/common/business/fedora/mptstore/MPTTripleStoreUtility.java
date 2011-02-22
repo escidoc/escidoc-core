@@ -61,6 +61,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 
@@ -599,7 +600,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         List<String> result = new ArrayList<String>();
         String tableName = getTableName(predicate);
         if (tableName != null) {
-            StringBuilder table = new StringBuilder(tableName);
+            CharSequence table = new StringBuilder(tableName);
             StringBuffer select = new StringBuffer("SELECT ");
             StringBuilder from =
                     new StringBuilder("FROM ").append(table).append(' ');
@@ -670,7 +671,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         List<String> result = new ArrayList<String>();
         String tableName = getTableName(predicate);
         if (tableName != null) {
-            StringBuilder table = new StringBuilder(tableName);
+            CharSequence table = new StringBuilder(tableName);
             StringBuffer select = new StringBuffer("SELECT ");
             StringBuilder from =
                     new StringBuilder("FROM ").append(table).append(' ');
@@ -824,6 +825,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * de.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#evaluate
      * (java.lang.String, java.lang.String)
      */
+    @Override
     public List<String> evaluate(
         final String objectType, final Map<String, Object> filterMap,
         final String additionalConditionTriple, final String whereClause)
@@ -845,12 +847,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         StringBuilder queryResultBuf = new StringBuilder();
         StringBuilder querySelectPartBuf = new StringBuilder();
         StringBuilder queryWherePart = new StringBuilder();
-        String queryResult = null;
+        String queryResult;
 
-        String roleCriteria = null;
-        String userCriteria = null;
-        String topLevelOus = null;
-        String filterCriteria = null;
+        String roleCriteria;
+        String userCriteria;
+        String topLevelOus;
+        String filterCriteria;
 
         String tableWithIdentifier =
             getTableName("http://purl.org/dc/elements/1.1/identifier");
@@ -1113,10 +1115,10 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         }
 
         StringBuilder queryPart = new StringBuilder();
-        Set<Map.Entry<String, String>> filtersEntrySet = filters.entrySet();
-        for(Map.Entry<String, String> entry : filtersEntrySet) {
+        Set<Entry<String, String>> filtersEntrySet = filters.entrySet();
+        for(Entry<String, String> entry : filtersEntrySet) {
             String predicate = entry.getKey();
-            String object = null;
+            String object;
             String tableWithPredicate = getTableName(predicate);
             if (tableWithPredicate == null) {
                 return null;
@@ -1182,6 +1184,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#
      * getMemberList(java.lang.String)
      */
+    @Override
     public List<String> getMemberList(final String id, final String whereClause)
         throws TripleStoreSystemException {
 
@@ -1195,7 +1198,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         }
 
         StringBuilder queryResultBuf = new StringBuilder();
-        String queryResult = null;
+        String queryResult;
 
         queryResultBuf.append("SELECT ");
         queryResultBuf.append(tableWithMembers);
@@ -1217,6 +1220,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * permission! (because we have to keep out AA components from common
      * package).
      */
+    @Override
     public List<String> getContainerMemberList(
         final String containerId, final Map<String, Object> filterMap,
         final String whereClause) throws SystemException,
@@ -1224,9 +1228,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
         String tableWithMembers =
             getTableName(Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
-        StringBuffer queryResultBuf = null;
-        String queryResult = null;
-        String filterCriteria = null;
+        StringBuffer queryResultBuf;
+        String queryResult;
+        String filterCriteria;
 
         if (filterMap == null) {
             // prepare statement for empty filter
@@ -1243,7 +1247,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         }
         else {
 
-            String tableWithIdentifier = null;
+            String tableWithIdentifier;
             String idColumn = null;
             filterCriteria =
                 getQueryPartId(idColumn,
@@ -1263,22 +1267,22 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 // generic
                 StringBuilder queryPartPropertiesBuffer = new StringBuilder();
                 StringBuilder queryPartJoinPropertiesBuffer = new StringBuilder();
-                String propertiesPredicateItem = null;
-                String propertiesPredicateContainer = null;
-                String columnObjectItem = null;
-                String columnObjectContainer = null;
-                String columnSubjectItem = null;
-                String columnSubjectContainer = null;
+                String propertiesPredicateItem;
+                String propertiesPredicateContainer;
+                String columnObjectItem;
+                String columnObjectContainer;
+                String columnSubjectItem;
+                String columnSubjectContainer;
                 String tablenameFirstInChain = null;
                 String tableNameFirst = null;
-                String tableNameNext = null;
-                String tableNameItem = null;
-                String tableNameContainer = null;
-                List<String> tableNames = new ArrayList<String>();
+                String tableNameNext;
+                String tableNameItem;
+                String tableNameContainer;
+                Collection<String> tableNames = new ArrayList<String>();
                 int i = 0;
                 // Vector<String> columnNames = new Vector<String>();
-                Set<Map.Entry<String, Object>> filterEntrySet = filterMap.entrySet();
-                for(Map.Entry<String, Object> entry : filterEntrySet){
+                Set<Entry<String, Object>> filterEntrySet = filterMap.entrySet();
+                for(Entry<String, Object> entry : filterEntrySet){
                     String key = entry.getKey();
                     String val = (String) entry.getValue();
                     val = MPTStringUtil.escapeLiteralValueForSql(val);
@@ -1409,14 +1413,14 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 StringBuilder queryPartPropertiesBuffer = new StringBuilder();
                 StringBuilder queryPartJoinPropertiesBuffer = new StringBuilder();
                 Iterator<String> it = filterMap.keySet().iterator();
-                String propertiesPredicate = null;
-                String columnName = null;
+                String propertiesPredicate;
+                String columnName;
                 String tablenameFirstInChain = null;
                 String tableNameFirst = null;
-                String tableNameNext = null;
-                List<String> tableNames = new ArrayList<String>();
-                Set<Map.Entry<String, Object>> filterEntrySet = filterMap.entrySet();
-                for(Map.Entry<String, Object> entry : filterEntrySet){
+                String tableNameNext;
+                Collection<String> tableNames = new ArrayList<String>();
+                Set<Entry<String, Object>> filterEntrySet = filterMap.entrySet();
+                for(Entry<String, Object> entry : filterEntrySet){
                     String key = entry.getKey();
                     String val = (String) entry.getValue();
                     val = MPTStringUtil.escapeLiteralValueForSql(val);
@@ -1546,6 +1550,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * getContextMemberList(java.lang.String, java.lang.String)
      */
 
+    @Override
     public List<String> getContextMemberList(
         final String contextId, final Map<String, Object> filterMap,
         final String whereClause) throws SystemException,
@@ -1570,6 +1575,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#
      * getObjectRefs(java.lang.String, java.lang.String)
      */
+    @Override
     public String getObjectRefs(
         final String objectType, final Map<String, Object> filterMap,
         final String whereClause) throws SystemException,
@@ -1653,7 +1659,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         throws TripleStoreSystemException {
         String result = null;
         if (predicate != null) {
-            URIReference predicateNode = null;
+            URIReference predicateNode;
             try {
                 predicateNode = new URIReference(predicate);
 
@@ -1711,6 +1717,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @seede.escidoc.core.common.business.fedora.IFTripleStoreFilterUtility#
      * reinitialize()
      */
+    @Override
     public Object reinitialize() throws TripleStoreSystemException {
         return setUpTableManager();
     }
@@ -1725,7 +1732,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      */
     private TableManager setUpTableManager() throws TripleStoreSystemException {
 
-        TableManager result = null;
+        TableManager result;
         try {
             result =
                 new BasicTableManager(getDataSource(),
@@ -1752,7 +1759,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      */
     private String getValue(final String entry)
         throws TripleStoreSystemException {
-        String result = null;
+        String result;
         try {
             result = NTriplesUtil.unescapeLiteralValue(entry);
             if (result != null) {
@@ -1902,6 +1909,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
+    @Override
     public boolean exists(final String pid) throws TripleStoreSystemException {
         Connection connection = null;
         ResultSet resultSet = null;

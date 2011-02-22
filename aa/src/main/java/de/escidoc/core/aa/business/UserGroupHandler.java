@@ -31,6 +31,7 @@ package de.escidoc.core.aa.business;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -153,6 +154,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #create(java.lang.String)
      * @aa
      */
+    @Override
     public String create(final String xmlData)
         throws UniqueConstraintViolationException, XmlCorruptedException,
         SystemException {
@@ -192,6 +194,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #delete(java.lang.String)
      * @aa
      */
+    @Override
     public void delete(final String groupId) throws ResourceNotFoundException,
         SystemException {
         UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
@@ -219,6 +222,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieve(java.lang.String)
      * @aa
      */
+    @Override
     public String retrieve(final String groupId)
         throws ResourceNotFoundException, SystemException {
         UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
@@ -247,6 +251,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #update(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String update(final String groupId, final String xmlData)
         throws ResourceNotFoundException, UniqueConstraintViolationException,
         XmlCorruptedException, MissingAttributeValueException,
@@ -307,6 +312,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #activate(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public void activate(final String groupId, final String taskParam)
         throws AlreadyActiveException, ResourceNotFoundException,
         XmlCorruptedException, MissingAttributeValueException,
@@ -383,6 +389,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #deactivate(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public void deactivate(final String groupId, final String taskParam)
         throws AlreadyDeactiveException, ResourceNotFoundException,
         XmlCorruptedException, MissingAttributeValueException,
@@ -461,6 +468,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #createGrant(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String createGrant(final String groupId, final String grantXML)
         throws AlreadyExistsException, AuthenticationException,
         AuthorizationException, RoleNotFoundException, InvalidScopeException,
@@ -639,6 +647,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * 
      * @tx
      */
+    @Override
     public String addSelectors(final String groupId, final String taskParam)
         throws OrganizationalUnitNotFoundException,
         UserAccountNotFoundException, UserGroupNotFoundException,
@@ -678,7 +687,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
         List<String[]> selectors = groupHandler.getGroupSelectors();
         Set<UserGroupMember> existingMembers = userGroup.getMembers();
-        Set<UserGroupMember> newMembers = new HashSet<UserGroupMember>();
+        Collection<UserGroupMember> newMembers = new HashSet<UserGroupMember>();
 
         for (String[] selector : selectors) {
             UserGroupMember member = new UserGroupMember(userGroup);
@@ -770,6 +779,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws XmlCorruptedException
      * @tx
      */
+    @Override
     public String removeSelectors(final String groupId, final String taskParam)
         throws XmlCorruptedException, AuthenticationException,
         AuthorizationException, SystemException, UserGroupNotFoundException,
@@ -835,6 +845,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #retrieveUserGroups(java.util.Map)
      */
+    @Override
     public String retrieveUserGroups(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
         String result;
@@ -1091,7 +1102,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             }
         });
         List<UserGroupMember> userGroupMembers;
-        HashSet<String> superMembers;
+        Collection<String> superMembers;
         boolean proceed = true;
         while (proceed) {
             superMembers = new HashSet<String>();
@@ -1129,6 +1140,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveGroupsForUser(java.lang.String)
      * @aa
      */
+    @Override
     public Set<String> retrieveGroupsForUser(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
@@ -1149,6 +1161,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveGroupsForUser(java.lang.String, boolean)
      * @aa
      */
+    @Override
     public Set<String> retrieveGroupsForUser(
         final String userId, final boolean activeOnly)
         throws UserAccountNotFoundException, SystemException {
@@ -1234,6 +1247,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveGroupsForGroup(java.lang.String)
      * @aa
      */
+    @Override
     public Set<String> retrieveGroupsForGroup(final String groupId)
         throws SystemException {
 
@@ -1261,10 +1275,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @aa
      */
-    private Set<String> retrieveGroupsByUserIds(
-        final Set<String> userIds, final boolean activeOnly)
+    private Collection<String> retrieveGroupsByUserIds(
+        final Collection<String> userIds, final boolean activeOnly)
         throws UserAccountNotFoundException, SqlDatabaseSystemException {
-        HashSet<String> userGroupIds = new HashSet<String>();
+        Set<String> userGroupIds = new HashSet<String>();
 
         if (userIds != null && !userIds.isEmpty()) {
             // retrieve all groupMembers that are of type
@@ -1352,7 +1366,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             criteria.put(Constants.FILTER_PATH_TYPE, "internal");
             criteria.put(Constants.FILTER_PATH_NAME, "user-group");
             criteria.put(Constants.FILTER_PATH_VALUE, userGroupIds);
-            HashSet<String> superMembers;
+            Collection<String> superMembers;
             boolean proceed = true;
             while (proceed) {
                 List<UserGroupMember> userGroupMembers =
@@ -1423,6 +1437,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveCurrentGrantsAsMap(java.lang.String)
      * @aa
      */
+    @Override
     public Map<String, Map<String, List<RoleGrant>>> retrieveCurrentGrantsAsMap(
         final String groupId) throws UserGroupNotFoundException,
         SystemException {
@@ -1473,6 +1488,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveCurrentGrantsAsMap(List)
      * @aa
      */
+    @Override
     public Map<String, Map<String, Map<String, List<RoleGrant>>>> retrieveManyCurrentGrantsAsMap(
         final List<String> groupIds) throws SystemException {
 
@@ -1482,7 +1498,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             return null;
         }
 
-        HashMap<String, Map<String, Map<String, List<RoleGrant>>>> ret =
+        Map<String, Map<String, Map<String, List<RoleGrant>>>> ret =
             new HashMap<String, Map<String, Map<String, List<RoleGrant>>>>();
         for (Entry<String, List<RoleGrant>> entry : currentGrantsForGroups
             .entrySet()) {
@@ -1529,6 +1545,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveCurrentGrants(java.lang.String)
      * @aa
      */
+    @Override
     public String retrieveCurrentGrants(final String groupId)
         throws UserGroupNotFoundException, SystemException {
 
@@ -1585,6 +1602,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveCurrentGrants(java.lang.String)
      * @aa
      */
+    @Override
     public String retrieveGrant(final String groupId, final String grantId)
         throws UserGroupNotFoundException, GrantNotFoundException,
         MissingMethodParameterException, AuthenticationException,
@@ -1627,6 +1645,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             Thrown if a user group with the provided id does not exist in
      *             the framework.
      */
+    @Override
     public String retrieveResources(final String groupId)
         throws UserGroupNotFoundException, SystemException {
         return renderer
@@ -1651,6 +1670,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #revokeGrant(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public void revokeGrant(
         final String groupId, final String grantId, final String taskParam)
         throws UserGroupNotFoundException, GrantNotFoundException,
@@ -1732,6 +1752,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @tx
      * @aa
      */
+    @Override
     public void revokeGrants(final String groupId, final String filterXML)
         throws UserGroupNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException,
@@ -1774,7 +1795,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
 
         Map<String, Object> filters = fh.getRules();
-        HashSet<String> grantIds;
+        Collection<String> grantIds;
 
         if (filters.isEmpty()) {
             // if no filters are provided, remove all current grants

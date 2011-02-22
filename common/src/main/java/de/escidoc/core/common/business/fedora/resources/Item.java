@@ -35,6 +35,7 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ItemInterface;
 import de.escidoc.core.common.business.fedora.resources.item.Component;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -73,6 +74,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 
@@ -99,7 +101,7 @@ public class Item extends GenericVersionableResourcePid
     private Map<String, Component> componentsByLocalName =
         new HashMap<String, Component>();
 
-    private List<String> alteredComponent = new ArrayList<String>();
+    private Collection<String> alteredComponent = new ArrayList<String>();
 
     // properties initiation
     private boolean resourceInit = false;
@@ -223,7 +225,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws IntegritySystemException
      * @throws EncodingSystemException
      */
-    public void deleteComponent(final Component c) throws LockingException,
+    public void deleteComponent(final FedoraResource c) throws LockingException,
         ComponentNotFoundException, InvalidStatusException,
         WebserverSystemException, TripleStoreSystemException,
         FedoraSystemException, XmlParserSystemException,
@@ -517,6 +519,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws FedoraSystemException
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.ItemInterface#getMdRecords()
      */
+    @Override
     public Map<String, Datastream> getMdRecords() {
 
         return this.mdRecords;
@@ -529,6 +532,7 @@ public class Item extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setMdRecords(java.util.HashMap)
      */
+    @Override
     public void setMdRecords(final Map<String, Datastream> mdRecords)
         throws WebserverSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException,
@@ -556,9 +560,9 @@ public class Item extends GenericVersionableResourcePid
                 // TODO create remove method?
             }
         }
-        Set<Map.Entry<String,Datastream>> mdRecordsEntrySet = mdRecords.entrySet();
+        Set<Entry<String,Datastream>> mdRecordsEntrySet = mdRecords.entrySet();
         // create/activate data streams which are in mdRecords but not in fedora
-        for(Map.Entry<String, Datastream> entry : mdRecordsEntrySet) {
+        for(Entry<String, Datastream> entry : mdRecordsEntrySet) {
             final String name = entry.getKey();
             if (!namesInFedora.contains(name)) {
                 final Datastream currentMdRecord = entry.getValue();
@@ -566,7 +570,7 @@ public class Item extends GenericVersionableResourcePid
             }
         }
         mdRecordsEntrySet = mdRecords.entrySet();
-        for(Map.Entry<String, Datastream> entry : mdRecordsEntrySet) {
+        for(Entry<String, Datastream> entry : mdRecordsEntrySet) {
             setMdRecord(entry.getKey(), entry.getValue());
         }
 
@@ -583,6 +587,7 @@ public class Item extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #getMdRecord(java.lang.String)
      */
+    @Override
     public Datastream getMdRecord(final String name)
         throws MdRecordNotFoundException {
         if (!this.mdRecords.containsKey(name)) {
@@ -604,6 +609,7 @@ public class Item extends GenericVersionableResourcePid
      * de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
 
+    @Override
     public void setMdRecord(final String name, final Datastream ds)
         throws WebserverSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException,
@@ -661,7 +667,7 @@ public class Item extends GenericVersionableResourcePid
                                         getId(),
                                         getResourcePropertiesValue(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
 
-                            Datastream dcNew = null;
+                            Datastream dcNew;
                             if (dcNewContent != null
                                 && dcNewContent.trim().length() > 0) {
                                 try {
@@ -780,8 +786,8 @@ public class Item extends GenericVersionableResourcePid
 
         final Set<String> namesInFedora = getContentStreams().keySet();
 
-        Set<Map.Entry<String,Datastream>> contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
-        for(Map.Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
+        Set<Entry<String,Datastream>> contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
+        for(Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
             final String name = entry.getKey();
             if (!namesInFedora.contains(name)) {
                 setContentStream(name, entry.getValue());
@@ -789,7 +795,7 @@ public class Item extends GenericVersionableResourcePid
         }
         // update DSs which still remain in given list
         contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
-        for(Map.Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
+        for(Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
             setContentStream(entry.getKey(), entry.getValue());
         }
 
@@ -981,6 +987,7 @@ public class Item extends GenericVersionableResourcePid
      *            The Fedora datastream information.
      * @throws WebserverSystemException
      */
+    @Override
     protected void initDatastreams(
         org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,
@@ -999,7 +1006,7 @@ public class Item extends GenericVersionableResourcePid
             String mimeType = datastreamInfo.getMIMEType();
             String location = datastreamInfo.getLocation();
 
-            Datastream ds = null;
+            Datastream ds;
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
                 ds =

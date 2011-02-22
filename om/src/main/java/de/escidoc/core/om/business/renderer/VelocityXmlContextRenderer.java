@@ -32,6 +32,7 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.application.missing.MissingParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
@@ -56,6 +57,7 @@ import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -80,6 +82,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface
      * #render(de.escidoc.core.om.business.fedora.resources.Context)
      */
+    @Override
     public String render(final FedoraContextHandler contextHandler)
         throws SystemException {
 
@@ -113,6 +116,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws EncodingSystemException
      *             Thrown if character encoding failed.
      */
+    @Override
     public String renderAdminDescriptors(
         final FedoraContextHandler contextHandler,
         final Map<String, Object> values) throws FedoraSystemException,
@@ -127,7 +131,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         if (!admDescs.isEmpty()) {
             Iterator<String> it = keys.iterator();
-            List<String> admDescriptors = new ArrayList<String>();
+            Collection<String> admDescriptors = new ArrayList<String>();
 
             while (it.hasNext()) {
                 String name = it.next();
@@ -167,6 +171,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *             Thrown if anything else fails.
      */
 
+    @Override
     public String renderAdminDescriptor(
         final FedoraContextHandler contextHandler, final String name,
         final Datastream admDesc, final boolean isRoot)
@@ -202,6 +207,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface
      * #renderProperties(de.escidoc.core.om.business.fedora.resources.Context)
      */
+    @Override
     public String renderProperties(final FedoraContextHandler contextHandler)
         throws WebserverSystemException {
 
@@ -229,6 +235,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface
      * #renderResources(de.escidoc.core.om.business.fedora.resources.Context)
      */
+    @Override
     public String renderResources(final FedoraContextHandler contextHandler)
         throws WebserverSystemException {
 
@@ -257,6 +264,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws AuthorizationException
      *             Thrown if access to origin Item is restricted.
      */
+    @Override
     public String renderMemberList(
         final FedoraContextHandler contextHandler, final List<String> memberList)
         throws SystemException, AuthorizationException {
@@ -284,6 +292,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @see de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface#renderMemberRefList(de.escidoc.core.om.business.fedora.context.FedoraContextHandler,
      *      java.util.List)
      */
+    @Override
     public String renderMemberRefList(
         final FedoraContextHandler contextHandler, final List<String> memberList)
         throws SystemException, AuthorizationException {
@@ -456,10 +465,10 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown if retrieving OU context failed.
      */
-    public List<Map<String, String>> getOrganizationalUnitsContext(
-        final List<String> ouids) throws SystemException {
+    public Collection<Map<String, String>> getOrganizationalUnitsContext(
+        final Iterable<String> ouids) throws SystemException {
 
-        List<Map<String, String>> ousContext =
+        Collection<Map<String, String>> ousContext =
             new ArrayList<Map<String, String>>();
 
         for (String ouid : ouids) {
@@ -500,7 +509,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *            The map to add values to.
      */
     private void addResourcesValues(
-        final Context context, final Map<String, Object> values) {
+        final FedoraResource context, final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref",
@@ -537,7 +546,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
     private void addMemberListValues(
         final Context context, final Map<String, Object> values,
-        final List<String> memberList) throws SystemException,
+        final Iterable<String> memberList) throws SystemException,
         AuthorizationException {
 
         FedoraItemHandler itemHandler =

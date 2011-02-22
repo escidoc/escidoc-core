@@ -59,6 +59,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 
@@ -253,6 +254,7 @@ public class Container extends GenericVersionableResourcePid
      * @throws FedoraSystemException
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.ContainerInterface#getMdRecords()
      */
+    @Override
     public Map<String, Datastream> getMdRecords()
         throws IntegritySystemException, FedoraSystemException, WebserverSystemException {
 
@@ -260,7 +262,7 @@ public class Container extends GenericVersionableResourcePid
         org.fcrepo.server.types.gen.Datastream[] datastreams =
             getDatastreamInfos();
 
-        List<String> names = new ArrayList<String>();
+        Collection<String> names = new ArrayList<String>();
         for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             List<String> altIDs = Arrays.asList(datastream.getAltIDs());
             if (altIDs != null
@@ -296,6 +298,7 @@ public class Container extends GenericVersionableResourcePid
      *             Thrown in case of an internal error.
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setMdRecords(java.util.HashMap)
      */
+    @Override
     public void setMdRecords(final Map<String, Datastream> mdRecords)
         throws FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException, IntegritySystemException,
@@ -311,7 +314,7 @@ public class Container extends GenericVersionableResourcePid
         for (String aNamesInFedora : namesInFedora) {
             String nameInFedora = aNamesInFedora;
             if (!mdRecords.containsKey(nameInFedora)) {
-                Datastream fedoraDs = null;
+                Datastream fedoraDs;
                 try {
                     fedoraDs = getMdRecord(nameInFedora);
                     if (fedoraDs != null) {
@@ -327,9 +330,9 @@ public class Container extends GenericVersionableResourcePid
         
         // create or activate data streams which are in mdRecords but not in
         // fedora
-        Iterator<Map.Entry<String, Datastream>> nameIt = mdRecords.entrySet().iterator();
+        Iterator<Entry<String, Datastream>> nameIt = mdRecords.entrySet().iterator();
         while (nameIt.hasNext()) {
-            Map.Entry<String, Datastream> mapEntry = nameIt.next();
+            Entry<String, Datastream> mapEntry = nameIt.next();
             String name = mapEntry.getKey();
             if (!namesInFedora.contains(name)) {
 
@@ -357,6 +360,7 @@ public class Container extends GenericVersionableResourcePid
      * 
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#getMdRecord(java.lang.String)
      */
+    @Override
     public Datastream getMdRecord(final String name)
         throws StreamNotFoundException, FedoraSystemException {
         // check if the ds is set
@@ -382,6 +386,7 @@ public class Container extends GenericVersionableResourcePid
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setMdRecord(java.lang.String,
      *      de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
+    @Override
     public void setMdRecord(final String name, final Datastream ds)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, EncodingSystemException,
@@ -425,7 +430,7 @@ public class Container extends GenericVersionableResourcePid
                                         ds.toStringUTF8(),
                                         getId(),
                                         getResourcePropertiesValue(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
-                            Datastream dcNew = null;
+                            Datastream dcNew;
                             if (dcNewContent != null
                                 && dcNewContent.trim().length() > 0) {
                                 try {
@@ -475,6 +480,7 @@ public class Container extends GenericVersionableResourcePid
         }
     }
 
+    @Override
     public Datastream getMembers() {
         // TODO Auto-generated method stub
         return null;
@@ -542,6 +548,7 @@ public class Container extends GenericVersionableResourcePid
         }
     }
 
+    @Override
     public void setMembers(Datastream ds) {
         // TODO Auto-generated method stub
 
@@ -628,11 +635,12 @@ public class Container extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      * @throws SystemException
      */
+    @Override
     public List<Map<String, String>> getRelations()
         throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException {
 
-        Datastream datastreamWithRelations = null;
+        Datastream datastreamWithRelations;
         try {
             if (getVersionNumber() == null) {
                 datastreamWithRelations = getRelsExt();
@@ -680,7 +688,7 @@ public class Container extends GenericVersionableResourcePid
     protected String persistEscidocRelsExt() throws FedoraSystemException,
         WebserverSystemException {
 
-        String timestamp = null; // Maybe would it be better, if we use the
+        String timestamp; // Maybe would it be better, if we use the
         // old timestamp instead of null.
         try {
             if (this.escidocRelsExt != null) {
@@ -893,6 +901,7 @@ public class Container extends GenericVersionableResourcePid
      * @throws FedoraSystemException
      *             Thrown in case of Fedora error.
      */
+    @Override
     public Datastream getWov() throws StreamNotFoundException,
         FedoraSystemException {
 
@@ -919,6 +928,7 @@ public class Container extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
+    @Override
     public void setWov(final Datastream ds) throws FedoraSystemException,
         StreamNotFoundException {
         if (!getWov().equals(ds)) {

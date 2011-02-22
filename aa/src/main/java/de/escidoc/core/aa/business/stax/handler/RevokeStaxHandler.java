@@ -87,6 +87,7 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
      *      #startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
      * @aa
      */
+    @Override
     public StartElement startElement(final StartElement element) {
 
         if (isNotReady() && getGrant().getRevocationDate() == null) {
@@ -107,6 +108,7 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      * @aa
      */
+    @Override
     public String characters(final String s, final StartElement element) {
 
         if (isNotReady()) {

@@ -86,7 +86,8 @@ public class ReportHandler implements ReportHandlerInterface {
      * 
      * @sm
      */
-    public String retrieve(final String xml) throws 
+    @Override
+    public String retrieve(final String xml) throws
         ReportDefinitionNotFoundException, MissingMethodParameterException,
         InvalidSqlException, SystemException {
         if (LOGGER.isDebugEnabled()) {

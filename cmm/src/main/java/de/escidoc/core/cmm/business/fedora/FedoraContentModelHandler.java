@@ -37,6 +37,7 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +112,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     private static final AppLogger log = new AppLogger(
         FedoraContentModelHandler.class.getName());
 
-    private final List<ResourceListener> contentModelListeners =
+    private final Collection<ResourceListener> contentModelListeners =
         new ArrayList<ResourceListener>();
 
     /** SRU request. */
@@ -126,6 +127,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws SystemException
      * @see de.escidoc.core.common.business.fedora.AbstractResourceHandler#retrieve(java.lang.String)
      */
+    @Override
     public String retrieve(final String id)
         throws ContentModelNotFoundException, SystemException {
 
@@ -133,24 +135,28 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         return render();
     }
 
+    @Override
     public String retrieveProperties(final String id)
         throws ContentModelNotFoundException, SystemException {
         setContentModel(id);
         return renderProperties();
     }
 
+    @Override
     public String retrieveContentStreams(final String id)
         throws ContentModelNotFoundException, SystemException {
         setContentModel(id);
         return renderContentStreams(true);
     }
 
+    @Override
     public String retrieveContentStream(final String id, final String name)
         throws ContentModelNotFoundException, SystemException {
         setContentModel(id);
         return renderContentStream(name, true);
     }
 
+    @Override
     public EscidocBinaryContent retrieveContentStreamContent(
         final String id, final String name)
         throws ContentModelNotFoundException, SystemException,
@@ -229,6 +235,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
     }
 
+    @Override
     public String retrieveResources(final String id)
         throws ContentModelNotFoundException, SystemException {
         setContentModel(id);
@@ -247,6 +254,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         return renderResourceDefinition(name);
     }
 
+    @Override
     public EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(
         final String id, final String name)
         throws ContentModelNotFoundException, SystemException {
@@ -255,6 +263,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         return retrieveOtherContent(name + "_xsd");
     }
 
+    @Override
     public EscidocBinaryContent retrieveResourceDefinitionXsltContent(
         final String id, final String name)
         throws ContentModelNotFoundException, ResourceNotFoundException,
@@ -283,6 +292,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         return getContent(ds);
     }
 
+    @Override
     public String retrieveVersionHistory(final String id)
         throws ContentModelNotFoundException, SystemException {
 
@@ -324,6 +334,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
+    @Override
     public String retrieveContentModels(final SRURequestParameters parameters)
         throws SystemException {
         StringWriter result = new StringWriter();
@@ -351,6 +362,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws SystemException
      * @see de.escidoc.core.cmm.business.interfaces.ContentModelHandlerInterface#create(java.lang.String)
      */
+    @Override
     public String create(final String xmlData) throws InvalidContentException,
         MissingAttributeValueException, SystemException, XmlCorruptedException {
 
@@ -390,6 +402,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws ResourceInUseException
      * @see de.escidoc.core.common.business.fedora.AbstractResourceHandler#delete(java.lang.String)
      */
+    @Override
     public void delete(final String id) throws ContentModelNotFoundException,
         SystemException, LockingException, InvalidStatusException,
         ResourceInUseException {
@@ -430,6 +443,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws ReadonlyVersionException
      * @throws MissingAttributeValueException
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws ContentModelNotFoundException, OptimisticLockingException,
         SystemException, ReadonlyVersionException,
@@ -744,7 +758,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
 
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.putAll(getBehaviorValues(resourceDefinition));
 
@@ -772,7 +786,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
 
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.putAll(getBehaviorValues(resourceDefinition));
 
@@ -784,7 +798,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
     private Map<String, Object> getBehaviorValues(
         final ResourceDefinitionCreate resourceDefinition) {
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        Map<String, Object> valueMap = new HashMap<String, Object>();
         valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID,
             getContentModel().getId());
         valueMap.put(
@@ -811,10 +825,10 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws FedoraSystemException
      */
     private void setContentStreams(
-        final List<ContentStreamCreate> contentStreams)
+        final Iterable<ContentStreamCreate> contentStreams)
         throws WebserverSystemException, IntegritySystemException,
         FedoraSystemException {
-        HashMap<String, Datastream> contentStreamDatastreams =
+        Map<String, Datastream> contentStreamDatastreams =
             new HashMap<String, Datastream>();
 
         for (ContentStreamCreate contentStream1 : contentStreams) {
@@ -922,7 +936,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         List<MdRecordCreate> mdRecords = item.getMetadataRecords();
 
         if (!((mdRecords == null) || mdRecords.size() < 1)) {
-            List<String> mdRecordNames = new ArrayList<String>();
+            Collection<String> mdRecordNames = new ArrayList<String>();
             String name;
             for (MdRecordCreate mdRecord : mdRecords) {
 
@@ -1014,7 +1028,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @param indexingHandler
      *            The indexing handler.
      */
-    public void setIndexingHandler(final IndexingHandler indexingHandler) {
+    public void setIndexingHandler(final ResourceListener indexingHandler) {
         contentModelListeners.add(indexingHandler);
     }
 
@@ -1038,6 +1052,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @spring.property ref="business.TripleStoreUtility"
      * 
      */
+    @Override
     public void setTripleStoreUtility(final TripleStoreUtility tsu) {
         super.setTripleStoreUtility(tsu);
     }
@@ -1072,6 +1087,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         super.setIdProvider(idProvider);
     }
 
+    @Override
     public String ingest(final String xmlData) throws EscidocException {
         throw new UnsupportedOperationException("Not yet implemented.");
     }

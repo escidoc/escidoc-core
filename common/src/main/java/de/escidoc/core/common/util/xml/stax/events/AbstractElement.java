@@ -44,7 +44,7 @@ public abstract class AbstractElement {
 
     public int getLineNumber() {
 
-        if (parser != null) {
+        if (null != parser) {
             return parser.getLocation().getLineNumber();
         }
         else {

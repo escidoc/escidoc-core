@@ -36,6 +36,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
      * create(java.lang.String)
      */
+    @Override
     public String create(final String setDefinition)
         throws UniqueConstraintViolationException, InvalidXmlException,
         MissingMethodParameterException, SystemException,
@@ -50,6 +51,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
      * retrieve(java.lang.String)
      */
+    @Override
     public String retrieve(final String setDefinitionId)
         throws ResourceNotFoundException, MissingMethodParameterException,
         SystemException, AuthenticationException, AuthorizationException {
@@ -63,6 +65,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
      * update(java.lang.String, java.lang.String)
      */
+    @Override
     public String update(final String setDefinitionId, final String xmlData)
         throws ResourceNotFoundException, OptimisticLockingException,
         MissingMethodParameterException, SystemException,
@@ -77,6 +80,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
      * delete(java.lang.String)
      */
+    @Override
     public void delete(final String setDefinitionId)
         throws ResourceNotFoundException, MissingMethodParameterException,
         SystemException, AuthenticationException, AuthorizationException {
@@ -90,6 +94,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface#
      * retrieveSetDefinitions(java.util.Map)
      */
+    @Override
     public String retrieveSetDefinitions(final Map<String, String[]> filter)
         throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, InvalidSearchQueryException,

@@ -265,7 +265,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * @return EvaluationResult result.
      */
     private EvaluationResult evaluateResult(
-        final String resourceXml, final String resolvableAttribute,
+        final CharSequence resourceXml, final String resolvableAttribute,
         final String attributeId) {
         EvaluationResult result = null;
 

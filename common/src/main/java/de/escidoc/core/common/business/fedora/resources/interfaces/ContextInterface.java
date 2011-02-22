@@ -56,6 +56,7 @@ public interface ContextInterface extends FedoraResource {
      * @throws FedoraSystemException
      *             Thrown if Fedora reports an error.
      */
+    @Override
     Datastream getRelsExt() throws StreamNotFoundException,
         FedoraSystemException;
 
@@ -78,6 +79,7 @@ public interface ContextInterface extends FedoraResource {
      * @throws FedoraSystemException
      *             Thrown if Fedora reports an error.
      */
+    @Override
     void setRelsExt(Datastream ds) throws StreamNotFoundException,
         LockingException, FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException;

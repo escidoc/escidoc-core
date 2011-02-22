@@ -92,13 +92,6 @@ public class MdRecordCreate implements Serializable {
     private String datastreamLocation = null;
 
     /**
-     * Metadata Record Datastructure.
-     */
-    public MdRecordCreate() {
-
-    }
-
-    /**
      * Set Name of Metadata Record.
      * 
      * @param name
@@ -255,7 +248,7 @@ public class MdRecordCreate implements Serializable {
      */
     public Map<String, String> getValueMap() throws SystemException {
 
-        HashMap<String, String> templateValues = new HashMap<String, String>();
+        Map<String, String> templateValues = new HashMap<String, String>();
 
         templateValues.put(XmlTemplateProvider.MD_RECORD_TYPE, this.type);
         templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA, this.schema);

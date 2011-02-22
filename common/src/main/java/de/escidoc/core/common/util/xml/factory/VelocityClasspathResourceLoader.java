@@ -56,7 +56,6 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
      * @common
      */
     public VelocityClasspathResourceLoader() {
-        super();
         loader = new ClasspathResourceLoader();
     }
 

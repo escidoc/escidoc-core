@@ -49,7 +49,6 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      * @see de.escidoc.core.aa.business.persistence.ScopeDefBase()
      */
     public ScopeDef() {
-        super();
     }
 
     /**
@@ -76,6 +75,7 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      * @aa
      */
+    @Override
     public int compareTo(final ScopeDef o) {
 
         if (o == null) {

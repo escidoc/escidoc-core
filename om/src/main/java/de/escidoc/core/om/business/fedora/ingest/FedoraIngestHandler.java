@@ -78,6 +78,7 @@ public class FedoraIngestHandler implements IngestHandlerInterface {
      *             internal errors occur.
      * @see de.escidoc.core.om.business.interfaces.IngestHandlerInterface#ingest(java.lang.String)
      */
+    @Override
     public String ingest(final String xmlData) throws EscidocException {
         return ingestFacade.ingest(xmlData);
     }

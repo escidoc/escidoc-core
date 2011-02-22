@@ -92,6 +92,7 @@ public class FedoraSemanticStoreHandler
      *             Thrown if triple store output format is wrong defined.
      * @om
      */
+    @Override
     public String spo(final String taskParam) throws SystemException,
         InvalidTripleStoreQueryException,
         InvalidTripleStoreOutputFormatException, InvalidXmlException,

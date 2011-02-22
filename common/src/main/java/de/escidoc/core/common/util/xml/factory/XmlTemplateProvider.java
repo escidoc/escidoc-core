@@ -37,6 +37,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -836,7 +837,7 @@ public class XmlTemplateProvider {
         final Map<String, String> values) throws WebserverSystemException {
 
         String result = getTemplate(resource, path);
-        for (Map.Entry<String, String> e : values.entrySet()) {
+        for (Entry<String, String> e : values.entrySet()) {
             result = replaceAll(result, e.getKey(), e.getValue());
         }
         return result;

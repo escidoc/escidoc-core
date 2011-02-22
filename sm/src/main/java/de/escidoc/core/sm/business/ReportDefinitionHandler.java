@@ -111,6 +111,7 @@ public class ReportDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public String create(final String xmlData) throws InvalidSqlException,
         MissingMethodParameterException, ScopeNotFoundException,
         ScopeContextViolationException, SystemException {
@@ -173,6 +174,7 @@ public class ReportDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public void delete(final String id)
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -207,6 +209,7 @@ public class ReportDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public String retrieve(final String id)
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -236,6 +239,7 @@ public class ReportDefinitionHandler
      * @throws SystemException
      *             e.
      */
+    @Override
     public String retrieveReportDefinitions(
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
@@ -310,6 +314,7 @@ public class ReportDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException,
@@ -414,7 +419,7 @@ public class ReportDefinitionHandler
                     .retrieveAggregationDefinitions(scopeIds);
 
             // Collect aggregation-definition primary-keys
-            HashSet<String> allowedPrimKeys = new HashSet<String>();
+            Collection<String> allowedPrimKeys = new HashSet<String>();
             for (AggregationDefinition aggregationDefinition : aggregationDefinitions) {
                 String primKey = aggregationDefinition.getId();
                 primKey = xmlUtility.convertPrimKeyToTableName(primKey);

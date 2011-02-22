@@ -78,6 +78,7 @@ public class XmlHeaderInterceptor implements Ordered {
      * @see org.springframework.core.Ordered#getOrder()
      * @common
      */
+    @Override
     public int getOrder() {
 
         return AopUtil.PRECEDENCE_XML_HEADER_INTERCEPTOR;
@@ -125,7 +126,7 @@ public class XmlHeaderInterceptor implements Ordered {
      */
     private Object post(final Object result) throws WebserverSystemException {
 
-        final String res = (String) result;
+        final CharSequence res = (String) result;
         if (!XML_DOCUMENT_START_PATTERN.matcher(res).find()) {
 
             StringBuilder ret = new StringBuilder(XmlUtility.DOCUMENT_START);

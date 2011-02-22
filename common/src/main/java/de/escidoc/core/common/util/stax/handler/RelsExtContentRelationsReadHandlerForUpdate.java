@@ -39,7 +39,7 @@ import java.util.Vector;
 public class RelsExtContentRelationsReadHandlerForUpdate
     extends RelsExtContentRelationsReadHandler {
 
-    private final List<String> relationsStrings = new ArrayList<String>();;
+    private final List<String> relationsStrings = new ArrayList<String>();
 
     public RelsExtContentRelationsReadHandlerForUpdate(StaxParser parser) {
         super(parser);
@@ -49,6 +49,7 @@ public class RelsExtContentRelationsReadHandlerForUpdate
         return this.relationsStrings;
     }
 
+    @Override
     public EndElement endElement(EndElement element) {
         if (this.isInRelation()) {
 

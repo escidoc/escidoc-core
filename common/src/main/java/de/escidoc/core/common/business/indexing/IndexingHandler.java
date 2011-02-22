@@ -40,6 +40,7 @@ import de.escidoc.core.index.IndexRequestBuilder;
 import de.escidoc.core.index.IndexService;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -144,6 +145,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             The resource could not be stored.
      */
+    @Override
     public void resourceCreated(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
@@ -182,6 +184,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             The resource could not be deleted.
      */
+    @Override
     public void resourceDeleted(final String id) throws SystemException {
         if (!notifyIndexerEnabled) {
             return;
@@ -210,6 +213,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             The resource could not be deleted and newly created.
      */
+    @Override
     public void resourceModified(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
@@ -768,7 +772,7 @@ public class IndexingHandler implements ResourceListener {
                                             .append('=').append(id);
             }
 
-            HttpGet httpGet =
+            HttpUriRequest httpGet =
                 new HttpGet(EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.SRW_URL)
                     + "/search/"
@@ -806,7 +810,7 @@ public class IndexingHandler implements ResourceListener {
      *             e
      * 
      */
-    private Collection<String> getIndexNames() throws IOException,
+    private Iterable<String> getIndexNames() throws IOException,
         SystemException {
         if (indexNames == null) {
             // Get index names from gsearch-config
@@ -864,7 +868,7 @@ public class IndexingHandler implements ResourceListener {
             }
             Pattern objectTypePattern = Pattern.compile(".*?\\.(.*?)\\..*");
             Matcher objectTypeMatcher = objectTypePattern.matcher("");
-            HashSet<String> objectTypes = new HashSet<String>();
+            Collection<String> objectTypes = new HashSet<String>();
             for (Object o : indexProps.keySet()) {
                 String key = (String) o;
                 if (key.startsWith("Resource")) {
@@ -907,7 +911,7 @@ public class IndexingHandler implements ResourceListener {
                                     .put("prerequisites",
                                             new HashMap<String, String>());
                         }
-                        ((HashMap<String, String>) objectTypeParameters
+                        ((Map<String, String>) objectTypeParameters
                                 .get(objectType).get(indexName)
                                 .get("prerequisites")).put(
                                 key.replaceFirst(".*\\.", ""), propVal);

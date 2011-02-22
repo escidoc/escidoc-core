@@ -39,7 +39,6 @@ public class ContentStreamNotFoundException extends ResourceNotFoundException {
         "Content stream was not found";
 
     public ContentStreamNotFoundException() {
-        super();
         // TODO Auto-generated constructor stub
     }
 

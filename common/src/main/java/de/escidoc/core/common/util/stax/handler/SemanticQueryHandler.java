@@ -50,6 +50,7 @@ public class SemanticQueryHandler extends DefaultHandler {
     private static final AppLogger LOGGER =
         new AppLogger(SemanticQueryHandler.class.getName());
 
+    @Override
     public String characters(String data, StartElement element)
         throws MissingElementValueException {
 

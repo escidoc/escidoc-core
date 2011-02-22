@@ -107,6 +107,7 @@ public class UserAccountHandler
      *      #create(java.lang.String)
      * @aa
      */
+    @Override
     public String create(final String user)
         throws UniqueConstraintViolationException, XmlCorruptedException,
         XmlSchemaValidationException, OrganizationalUnitNotFoundException,
@@ -135,6 +136,7 @@ public class UserAccountHandler
      *      #delete(java.lang.String)
      * @aa
      */
+    @Override
     public void delete(final String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -178,6 +180,7 @@ public class UserAccountHandler
      *      #update(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String update(final String userId, final String user)
         throws UserAccountNotFoundException,
         UniqueConstraintViolationException, XmlCorruptedException,
@@ -217,6 +220,7 @@ public class UserAccountHandler
      *      java.lang.String)
      * @aa
      */
+    @Override
     public void updatePassword(final String userId, final String taskParam)
         throws UserAccountNotFoundException, InvalidStatusException,
         XmlCorruptedException, MissingMethodParameterException,
@@ -246,6 +250,7 @@ public class UserAccountHandler
      *      #retrieve(java.lang.String)
      * @aa
      */
+    @Override
     public String retrieve(final String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -268,6 +273,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveCurrentUser(java.lang.String)
      */
+    @Override
     public String retrieveCurrentUser() throws UserAccountNotFoundException,
         AuthenticationException, AuthorizationException, SystemException {
 
@@ -295,6 +301,7 @@ public class UserAccountHandler
      * @aa
      * @axis.exclude
      */
+    @Override
     public String retrieveResources(final String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -322,6 +329,7 @@ public class UserAccountHandler
      *      #retrieveCurrentGrants(java.lang.String)
      * @aa
      */
+    @Override
     public String retrieveCurrentGrants(final String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -353,6 +361,7 @@ public class UserAccountHandler
      *      #retrieveGrant(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String retrieveGrant(final String userId, final String grantId)
         throws UserAccountNotFoundException, GrantNotFoundException,
         MissingMethodParameterException, AuthenticationException,
@@ -380,6 +389,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveGrants(java.lang.String)
      */
+    @Override
     public String retrieveGrants(final Map<String, String[]> filter)
         throws MissingMethodParameterException, InvalidSearchQueryException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -416,6 +426,7 @@ public class UserAccountHandler
      *      #activate(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public void activate(final String userId, final String taskParam)
         throws AlreadyActiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException,
@@ -454,6 +465,7 @@ public class UserAccountHandler
      *      #deactivate(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public void deactivate(final String userId, final String taskParam)
         throws AlreadyDeactiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingMethodParameterException,
@@ -495,6 +507,7 @@ public class UserAccountHandler
      *      #createGrant(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String createGrant(final String userId, final String grantXML)
         throws AlreadyExistsException, UserAccountNotFoundException,
         InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
@@ -535,6 +548,7 @@ public class UserAccountHandler
      *      #revokeGrant(java.lang.String, java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public void revokeGrant(
         final String userId, final String grantId, final String taskParam)
         throws UserAccountNotFoundException, GrantNotFoundException,
@@ -574,6 +588,7 @@ public class UserAccountHandler
      *      #revokeGrants(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public void revokeGrants(final String userId, final String taskParam)
         throws UserAccountNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException,
@@ -602,6 +617,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveUserAccounts(java.util.Map)
      */
+    @Override
     public String retrieveUserAccounts(final Map<String, String[]> filter)
         throws MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, InvalidSearchQueryException {
@@ -631,6 +647,7 @@ public class UserAccountHandler
      * 
      * @axis.exclude
      */
+    @Override
     public UserDetails retrieveUserDetails(final String handle)
         throws MissingMethodParameterException, AuthenticationException,
         AuthorizationException, UserAccountNotFoundException, SystemException {
@@ -668,6 +685,7 @@ public class UserAccountHandler
      * @aa
      * @service.exclude
      */
+    @Override
     public void afterPropertiesSet() throws Exception {
 
         LOG.debug("Properties set");
@@ -693,6 +711,7 @@ public class UserAccountHandler
      *      #retrieveCurrentGrants(java.lang.String)
      * @aa
      */
+    @Override
     public String retrievePreferences(final String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -731,6 +750,7 @@ public class UserAccountHandler
      *      #createPreference(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String createPreference(
         final String userId, final String preferenceXML)
         throws AlreadyExistsException, UserAccountNotFoundException,
@@ -772,6 +792,7 @@ public class UserAccountHandler
      *      #updatePreferences(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String updatePreferences(
         final String userId, final String preferencesXML)
         throws UserAccountNotFoundException, XmlCorruptedException,
@@ -824,6 +845,7 @@ public class UserAccountHandler
      *      java.lang.String)
      * @aa
      */
+    @Override
     public String updatePreference(
         final String userId, final String preferenceName,
         final String preferenceXML) throws AlreadyExistsException,
@@ -863,6 +885,7 @@ public class UserAccountHandler
      *      #retrievePreference(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String retrievePreference(
         final String userId, final String preferenceName)
         throws UserAccountNotFoundException, PreferenceNotFoundException,
@@ -898,6 +921,7 @@ public class UserAccountHandler
      *      #deletePreference(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public void deletePreference(
         final String userId, final String preferenceName)
         throws UserAccountNotFoundException, PreferenceNotFoundException,
@@ -935,6 +959,7 @@ public class UserAccountHandler
      *      #createAttribute(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String createAttribute(final String userId, final String attributeXml)
         throws AlreadyExistsException, UserAccountNotFoundException,
         XmlCorruptedException, XmlSchemaValidationException,
@@ -964,6 +989,7 @@ public class UserAccountHandler
      *      #retrieveAttributes(java.lang.String)
      * @aa
      */
+    @Override
     public String retrieveAttributes(final String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -997,6 +1023,7 @@ public class UserAccountHandler
      *      #retrieveAttribute(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String retrieveNamedAttributes(final String userId, final String name)
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
         MissingMethodParameterException, AuthenticationException,
@@ -1029,6 +1056,7 @@ public class UserAccountHandler
      *      #retrieveAttribute(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String retrieveAttribute(
         final String userId, final String attributeId)
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
@@ -1070,6 +1098,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #updateAttribute(java.lang.String, java.lang.String)
      */
+    @Override
     public String updateAttribute(
         final String userId, final String attributeId, final String attributeXml)
         throws UserAccountNotFoundException, OptimisticLockingException,
@@ -1104,6 +1133,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #deleteAttribute(java.lang.String, java.lang.String)
      */
+    @Override
     public void deleteAttribute(final String userId, final String attributeId)
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
         ReadonlyElementViolationException, MissingMethodParameterException,
@@ -1128,6 +1158,7 @@ public class UserAccountHandler
      * @throws AuthorizationException
      *             e
      */
+    @Override
     public String retrievePermissionFilterQuery(
         final Map<String, String[]> parameters) throws SystemException,
         InvalidSearchQueryException, AuthenticationException,

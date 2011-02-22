@@ -96,6 +96,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * 
      * @return The path to the current element consisting of local names.
      */
+    @Override
     public String getCurPath() {
         return curPath.toString();
     }

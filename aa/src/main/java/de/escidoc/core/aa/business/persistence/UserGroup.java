@@ -39,7 +39,7 @@ import java.io.Serializable;
  * @aa
  * 
  */
-public class UserGroup extends UserGroupBase implements Serializable {
+public class UserGroup extends UserGroupBase {
 
     /**
      * The serial version uid.

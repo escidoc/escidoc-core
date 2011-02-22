@@ -64,12 +64,6 @@ public class ObjectProperties {
     private String description = null;
 
     /**
-     * Version properties of Item.
-     */
-    public ObjectProperties() {
-    }
-
-    /**
      * Set status of object.
      * 
      * @param status

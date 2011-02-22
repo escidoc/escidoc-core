@@ -66,6 +66,7 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao
      * 
      * @sm
      */
+    @Override
     public void saveStatisticData(final String xmlData, final String scopeId)
         throws SqlDatabaseSystemException {
         Scope scope = new Scope();
@@ -91,6 +92,7 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao
      * 
      * @sm
      */
+    @Override
     public Date retrieveMinTimestamp(final String scopeId)
         throws SqlDatabaseSystemException {
 

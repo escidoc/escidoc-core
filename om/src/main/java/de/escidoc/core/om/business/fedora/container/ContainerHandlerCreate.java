@@ -39,10 +39,12 @@ import de.escidoc.core.om.business.stax.handler.MetadataHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 
@@ -129,9 +131,9 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         ByteArrayOutputStream outsideValue;
         String insideKey;
         ByteArrayOutputStream insideValue;
-        for (Map.Entry<String, Object> stringObjectEntry : containerDataStreams.entrySet()) {
+        for (Entry<String, Object> stringObjectEntry : containerDataStreams.entrySet()) {
 
-            Map.Entry entry = stringObjectEntry;
+            Entry entry = stringObjectEntry;
             outsideKey = (String) entry.getKey();
             if (entry.getValue() instanceof ByteArrayOutputStream) {
                 outsideValue = (ByteArrayOutputStream) entry.getValue();
@@ -152,16 +154,16 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
 
             } else if (outsideKey.equals("md-records")) {
 
-                HashMap insideHash = (HashMap) entry.getValue();
+                Map insideHash = (HashMap) entry.getValue();
                 if (!insideHash.isEmpty()) {
-                    List<Map<String, String>> mdRecords =
+                    Collection<Map<String, String>> mdRecords =
                             new ArrayList<Map<String, String>>(insideHash.size());
                     values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
                     Set content2 = insideHash.entrySet();
                     for (Object aContent2 : content2) {
                         Map<String, String> mdRecord =
                                 new HashMap<String, String>();
-                        Map.Entry entry2 = (Map.Entry) aContent2;
+                        Entry entry2 = (Entry) aContent2;
                         insideKey = (String) entry2.getKey();
                         Map<String, String> mdAttributes =
                                 metadataAttributes.get(insideKey);

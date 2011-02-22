@@ -50,6 +50,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.naming.directory.NoSuchAttributeException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -234,7 +235,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
      * 
      * @return organizational units
      */
-    public List<String> getOrganizationalUnits() {
+    public Collection<String> getOrganizationalUnits() {
         return this.orgunits;
     }
 }

@@ -48,6 +48,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
 
     private boolean workaroundForItemList = false;
 
+    @Override
     public boolean accept(XMLEvent event) {
         if (event instanceof StartElement) {
             StartElement element = event.asStartElement();

@@ -36,7 +36,13 @@ import java.util.regex.Pattern;
  * 
  * @author MIH
  */
-public class Constants {
+public final class Constants {
+
+    /**
+     * Private constructor to avoid instantiation.
+     */
+    private Constants() {
+    }
 
     /**
      * Http-Request-Timeout.

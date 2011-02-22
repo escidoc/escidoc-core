@@ -30,6 +30,7 @@ package de.escidoc.core.aa.business.persistence.hibernate;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -141,6 +142,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #userAccountExists(java.lang.String)
      * @aa
      */
+    @Override
     public boolean userAccountExists(final String identityInfo)
         throws SqlDatabaseSystemException {
 
@@ -187,6 +189,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #grantExists(java.lang.String)
      * @aa
      */
+    @Override
     public boolean grantExists(final String grantId)
         throws SqlDatabaseSystemException {
 
@@ -224,6 +227,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveUserAccount(java.lang.String)
      * @aa
      */
+    @Override
     public UserAccount retrieveUserAccount(final String identityInfo)
         throws SqlDatabaseSystemException {
 
@@ -262,6 +266,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see UserAccountDaoInterface#retrieveUserAccountById(java.lang.String)
      * @aa
      */
+    @Override
     public UserAccount retrieveUserAccountById(final String id)
         throws SqlDatabaseSystemException {
 
@@ -295,6 +300,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see UserAccountDaoInterface#retrieveUserAccountByLoginName(java.lang.String)
      * @aa
      */
+    @Override
     public UserAccount retrieveUserAccountByLoginName(final String loginName)
         throws SqlDatabaseSystemException {
 
@@ -323,6 +329,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see UserAccountDaoInterface#retrieveUserAccountByHandle(java.lang.String)
      * @aa
      */
+    @Override
     public UserAccount retrieveUserAccountByHandle(final String handle)
         throws SqlDatabaseSystemException {
 
@@ -357,6 +364,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveUserAccounts(java.util.Map, int, int, String, ListSorting)
      * @aa
      */
+    @Override
     public List<UserAccount> retrieveUserAccounts(
         final Map<String, Object> criterias, final int offset,
         final int maxResults, final String orderBy, final ListSorting sorting)
@@ -494,6 +502,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
      *      #retrieveUserAccounts(java.lang.String, int, int)
      */
+    @Override
     public List<UserAccount> retrieveUserAccounts(
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
@@ -531,6 +540,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.UserAccount)
      * @aa
      */
+    @Override
     public void save(final UserAccount userAccount)
         throws SqlDatabaseSystemException {
 
@@ -546,6 +556,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #update(de.escidoc.core.aa.business.persistence.UserAccount)
      * @aa
      */
+    @Override
     public void update(final UserAccount userAccount)
         throws SqlDatabaseSystemException {
         // remove user from cache
@@ -562,6 +573,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserAccount)
      * @aa
      */
+    @Override
     public void delete(final UserAccount userAccount)
         throws SqlDatabaseSystemException {
         // remove User from Cache
@@ -598,6 +610,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveGrantsByRole(EscidocRole)
      * @aa
      */
+    @Override
     public List<RoleGrant> retrieveGrantsByRole(final EscidocRole role)
         throws SqlDatabaseSystemException {
 
@@ -623,6 +636,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveGrantsByUserId(java.lang.String)
      * @aa
      */
+    @Override
     public List<RoleGrant> retrieveGrantsByUserId(final String userId)
         throws SqlDatabaseSystemException {
 
@@ -653,6 +667,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      java.lang.String)
      * @aa
      */
+    @Override
     public RoleGrant retrieveCurrentGrant(
         final UserAccount userAccount, final EscidocRole role,
         final String objId) throws SqlDatabaseSystemException {
@@ -700,6 +715,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveGrant(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public RoleGrant retrieveGrant(final String userId, final String grantId)
         throws SqlDatabaseSystemException {
 
@@ -736,6 +752,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveGrants(java.util.Map, int, int, String, ListSorting)
      * @aa
      */
+    @Override
     public List<RoleGrant> retrieveGrants(
         final Map<String, HashSet<String>> criterias, final String orderBy,
         final ListSorting sorting) throws SqlDatabaseSystemException {
@@ -871,6 +888,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveGrants(java.lang.String, int, int,
      *      UserGroupHandlerInterface)
      */
+    @Override
     public List<RoleGrant> retrieveGrants(
         final String criterias, final int offset, final int maxResults,
         final UserGroupHandlerInterface userGroupHandler)
@@ -940,6 +958,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.RoleGrant)
      * @aa
      */
+    @Override
     public void save(final RoleGrant grant) throws SqlDatabaseSystemException {
 
         super.save(grant);
@@ -954,6 +973,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #update(de.escidoc.core.aa.business.persistence.RoleGrant)
      * @aa
      */
+    @Override
     public void update(final RoleGrant grant) throws SqlDatabaseSystemException {
 
         super.update(grant);
@@ -969,6 +989,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveAttribute(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public UserAttribute retrieveAttribute(
         final String userId, final String attributeId)
         throws SqlDatabaseSystemException {
@@ -1008,6 +1029,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
      *      #retrieveAttributes(de.escidoc.core.aa.business.persistence.UserAccount)
      */
+    @Override
     public List<UserAttribute> retrieveAttributes(final UserAccount userAccount)
         throws SqlDatabaseSystemException {
 
@@ -1037,6 +1059,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveAttributes(de.escidoc.core.aa.business.persistence.UserAccount,
      *      java.lang.String)
      */
+    @Override
     public List<UserAttribute> retrieveAttributes(
         final UserAccount userAccount, final String attributeName)
         throws SqlDatabaseSystemException {
@@ -1069,6 +1092,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
      *      #retrieveAttributes(java.lang.String)
      */
+    @Override
     public List<UserAttribute> retrieveAttributes(
         final Set<HashMap<String, String>> attributes)
         throws SqlDatabaseSystemException {
@@ -1082,7 +1106,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
         Criterion criterion = null;
-        for (HashMap<String, String> attribute : attributes) {
+        for (Map<String, String> attribute : attributes) {
             for (Entry<String, String> entry : attribute.entrySet()) {
                 if (criterion == null) {
                     criterion =
@@ -1117,6 +1141,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.UserAttribute)
      * @aa
      */
+    @Override
     public void save(final UserAttribute attribute)
         throws SqlDatabaseSystemException {
 
@@ -1132,6 +1157,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #update(de.escidoc.core.aa.business.persistence.UserAttribute)
      * @aa
      */
+    @Override
     public void update(final UserAttribute attribute)
         throws SqlDatabaseSystemException {
 
@@ -1147,6 +1173,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserAttribute)
      * @aa
      */
+    @Override
     public void delete(final UserAttribute attribute)
         throws SqlDatabaseSystemException {
 
@@ -1163,6 +1190,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveUserLoginDataByHandle(java.lang.String)
      * @aa
      */
+    @Override
     public UserLoginData retrieveUserLoginDataByHandle(final String handle)
         throws SqlDatabaseSystemException {
 
@@ -1190,6 +1218,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * See Interface for functional description.
      * @aa
      */
+    @Override
     public List<UserLoginData> retrieveUserLoginDataByUserId(final String id)
         throws SqlDatabaseSystemException {
 
@@ -1211,6 +1240,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
      *      #retrieveUserDetails(java.lang.String)
      */
+    @Override
     public UserDetails retrieveUserDetails(final String handle)
         throws SqlDatabaseSystemException {
 
@@ -1258,6 +1288,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #saveOrUpdate(de.escidoc.core.aa.business.persistence.UserLoginData)
      * @aa
      */
+    @Override
     public void saveOrUpdate(final UserLoginData data)
         throws SqlDatabaseSystemException {
         // remove UserDetails from Cache
@@ -1274,6 +1305,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserLoginData)
      * @aa
      */
+    @Override
     public void delete(final UserLoginData data)
         throws SqlDatabaseSystemException {
         // remove UserData from Cache
@@ -1288,6 +1320,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @throws SqlDatabaseSystemException
      * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface#deleteUserLoginData(java.lang.String)
      */
+    @Override
     public void deleteUserLoginData(final String handle)
         throws SqlDatabaseSystemException {
         // remove UserData from Cache
@@ -1305,6 +1338,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrieveExpiredUserLoginData(long)
      * @aa
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List<UserLoginData> retrieveExpiredUserLoginData(final long timestamp)
         throws SqlDatabaseSystemException {
@@ -1449,6 +1483,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #retrievePreferenceByUserId(java.lang.String)
      * @aa
      */
+    @Override
     public List<UserPreference> retrievePreferencesByUserId(final String userId)
         throws SqlDatabaseSystemException {
 
@@ -1478,6 +1513,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @aa
      */
+    @Override
     public void save(final UserPreference preference)
         throws SqlDatabaseSystemException {
         super.save(preference);
@@ -1494,6 +1530,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserPreference)
      * @aa
      */
+    @Override
     public void delete(final UserPreference data)
         throws SqlDatabaseSystemException {
         super.delete(data);
@@ -1512,7 +1549,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @aa
      */
     private Criterion getInRestrictions(
-        final Set<String> criteria, final String fieldName) {
+        final Collection<String> criteria, final String fieldName) {
         if (criteria.contains("")) {
             criteria.remove("");
             if (criteria.isEmpty()) {

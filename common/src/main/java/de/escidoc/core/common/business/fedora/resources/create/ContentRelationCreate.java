@@ -579,7 +579,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      *             Thrown if the md-record name is not unique.
      */
     private void checkUniqueName(
-        final List<MdRecordCreate> records, final String name)
+        final Iterable<MdRecordCreate> records, final String name)
         throws InvalidContentException {
 
         for (MdRecordCreate record : records) {
@@ -785,8 +785,9 @@ public class ContentRelationCreate extends GenericResourceCreate
      *             throw this exception to indicate that an instance cannot be
      *             cloned.
      */
+    @Override
     public Object clone() throws CloneNotSupportedException {
-        Object result = null;
+        Object result;
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(os);

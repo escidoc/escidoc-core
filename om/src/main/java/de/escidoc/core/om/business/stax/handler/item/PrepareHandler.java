@@ -82,7 +82,7 @@ public class PrepareHandler extends DefaultHandler {
 
             this.storageValue = getStorageAttribute(element);
             inContent = true;
-            HashMap<String, String> componentBinary =
+            Map<String, String> componentBinary =
                 new HashMap<String, String>();
             componentBinary.put("storage", this.storageValue);
             binaryData.put(componentNumber, componentBinary);
@@ -104,7 +104,7 @@ public class PrepareHandler extends DefaultHandler {
 
         if (inContent) {
 
-            HashMap<String, String> componentBinary =
+            Map<String, String> componentBinary =
                 (HashMap<String, String>) binaryData.get(componentNumber);
             if (this.content == null) {
                 if ((this.uploadUrl != null) && (this.uploadUrl.length() > 0)) {

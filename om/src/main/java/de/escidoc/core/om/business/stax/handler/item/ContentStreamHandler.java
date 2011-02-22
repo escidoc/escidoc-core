@@ -68,11 +68,9 @@ public class ContentStreamHandler extends WriteHandler {
     private boolean wrote;
 
     public ContentStreamHandler() {
-        super();
     }
 
     public ContentStreamHandler(Item item) {
-        super();
         this.item = item;
     }
 

@@ -32,6 +32,7 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Predecessor;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
@@ -48,6 +49,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -84,6 +86,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * OrganizationalUnitRendererInterface#
      * render(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
+    @Override
     public String render(final OrganizationalUnit organizationalUnit)
         throws SystemException {
 
@@ -116,6 +119,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
      *      renderProperties(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
+    @Override
     public String renderProperties(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException {
 
@@ -139,6 +143,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
      *      renderResources(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
+    @Override
     public String renderResources(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException {
         String result;
@@ -159,6 +164,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @throws WebserverSystemException
      * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#renderMdRecords(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
+    @Override
     public String renderMdRecords(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException {
         String result;
@@ -185,6 +191,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *      renderMdRecord(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.lang.String)
      */
+    @Override
     public String renderMdRecord(
         final OrganizationalUnit organizationalUnit, final String name)
         throws WebserverSystemException {
@@ -214,6 +221,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
      *      renderParents(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
+    @Override
     public String renderParents(final OrganizationalUnit organizationalUnit)
         throws SystemException {
 
@@ -238,6 +246,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *      renderChildObjects(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
+    @Override
     public String renderChildObjects(
         final OrganizationalUnit organizationalUnit, final List<String> children)
         throws SystemException {
@@ -270,6 +279,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *      renderParents(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
+    @Override
     public String renderParentObjects(
         final OrganizationalUnit organizationalUnit, final List<String> parents)
         throws SystemException {
@@ -303,6 +313,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *      renderPathList(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
+    @Override
     public String renderPathList(
         final OrganizationalUnit organizationalUnit,
         final List<List<String>> pathes) throws SystemException {
@@ -318,7 +329,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             .getOrganizationalUnitResourcesPathListHref(organizationalUnit
                 .getId()));
         Iterator<List<String>> pathIter = pathes.iterator();
-        List<List<Map<String, String>>> pathList =
+        Collection<List<Map<String, String>>> pathList =
             new ArrayList<List<Map<String, String>>>();
         while (pathIter.hasNext()) {
             pathList.add(retrieveRefValues(pathIter.next()));
@@ -337,6 +348,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * #renderSuccessorsList(de.escidoc.core.oum
      * .business.fedora.resources.OrganizationalUnit)
      */
+    @Override
     public String renderSuccessors(final OrganizationalUnit organizationalUnit)
         throws SystemException {
 
@@ -372,7 +384,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private List<Map<String, String>> retrieveRefValues(final List<String> ids)
+    private List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
         throws SystemException {
         List<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(ids.size());
@@ -617,7 +629,7 @@ public class VelocityXmlOrganizationalUnitRenderer
 
         values.put("mdRecordsTitle", "Metadata");
 
-        HashMap<String, Datastream> mdRecords;
+        Map<String, Datastream> mdRecords;
         try {
             mdRecords =
                 (HashMap<String, Datastream>) organizationalUnit.getMdRecords();
@@ -725,7 +737,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @oum
      */
     private void addResourcesValues(
-        final OrganizationalUnit organizationalUnit,
+        final FedoraResource organizationalUnit,
         final Map<String, Object> values) {
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", XmlUtility
@@ -764,7 +776,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         values.put("parentsTitle", "Parents");
         List<String> ids = organizationalUnit.getParents();
         Iterator<String> idIter = ids.iterator();
-        List<Map<String, String>> entries =
+        Collection<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(ids.size());
         while (idIter.hasNext()) {
             Map<String, String> entry = new HashMap<String, String>(THREE);
@@ -801,7 +813,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         List<Predecessor> predecessors = organizationalUnit.getPredecessors();
         Iterator<Predecessor> idIter = predecessors.iterator();
 
-        List<Map<String, String>> entries =
+        Collection<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(predecessors.size());
 
         while (idIter.hasNext()) {
@@ -848,7 +860,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         }
         Iterator<Predecessor> idIter = successors.iterator();
 
-        List<Map<String, String>> entries =
+        Collection<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(successors.size());
 
         while (idIter.hasNext()) {

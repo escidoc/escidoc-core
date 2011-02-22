@@ -35,6 +35,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -122,7 +123,7 @@ public class TripleStoreConnector {
 
             String url = fedoraUrl + "/risearch";
             HttpPost httpPost = new HttpPost(url);
-            UrlEncodedFormEntity entity =
+            HttpEntity entity =
                 new UrlEncodedFormEntity(params, XmlUtility.CHARACTER_ENCODING);
 
             httpPost.setEntity(entity);

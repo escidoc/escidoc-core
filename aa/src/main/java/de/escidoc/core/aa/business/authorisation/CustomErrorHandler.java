@@ -60,6 +60,7 @@ public class CustomErrorHandler implements ErrorHandler {
      * @throws SAXException
      *             exception
      */
+    @Override
     public void warning(final SAXParseException exception) throws SAXException {
         if (LOGGER.isLoggable(Level.WARNING)) {
             LOGGER.warning("Warning on line " + exception.getLineNumber()
@@ -76,6 +77,7 @@ public class CustomErrorHandler implements ErrorHandler {
      * @throws SAXException
      *             always to halt parsing on errors
      */
+    @Override
     public void error(final SAXParseException exception) throws SAXException {
         if (LOGGER.isLoggable(Level.WARNING)) {
             LOGGER.warning("Error on line " + exception.getLineNumber() + ": "
@@ -95,6 +97,7 @@ public class CustomErrorHandler implements ErrorHandler {
      * @throws SAXException
      *             always to halt parsing on errors
      */
+    @Override
     public void fatalError(final SAXParseException exception)
         throws SAXException {
         if (LOGGER.isLoggable(Level.WARNING)) {

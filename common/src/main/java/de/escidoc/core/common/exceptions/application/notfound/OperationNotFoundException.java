@@ -15,7 +15,6 @@ public class OperationNotFoundException extends ResourceNotFoundException {
      * 
      */
     public OperationNotFoundException() {
-        super();
         // TODO Auto-generated constructor stub
     }
 

@@ -68,6 +68,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Vector;
 
 /**
@@ -154,7 +155,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         Collection<ByteArrayOutputStream> newComponents =
             (Collection<ByteArrayOutputStream>) components.remove("new");
 
-        for (Map.Entry<String, Object> e : components.entrySet()) {
+        for (Entry<String, Object> e : components.entrySet()) {
             String componentId = e.getKey();
             Component c = getItem().getComponent(componentId);
 
@@ -245,8 +246,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
         else {
             mdRecords =
-                (HashMap<String, ByteArrayOutputStream>) streams
-                    .get("md-records");
+                    (Map<String, ByteArrayOutputStream>) streams
+                            .get("md-records");
         }
 
         setComponentMetadataRecords(c, mdRecords, mdRecordsMetadataAttribures,
@@ -276,7 +277,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         final String escidocMdRecordnsUri) throws SystemException,
         ComponentNotFoundException {
 
-        HashMap<String, Datastream> dsMap = new HashMap<String, Datastream>();
+        Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
 
         for (String s : mdMap.keySet()) {
             String name = s;

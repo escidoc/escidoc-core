@@ -78,7 +78,7 @@ public interface OrganizationalUnitInterface extends FedoraResource {
      *             Thrown if the metadata datastream was not found.
      */
     Datastream getMdRecord(String name) throws FedoraSystemException,
-        StreamNotFoundException;;
+        StreamNotFoundException;
 
     /**
      * Add or update a metadata datastream.

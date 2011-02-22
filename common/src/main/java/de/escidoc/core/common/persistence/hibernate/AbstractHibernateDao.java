@@ -37,6 +37,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.sql.BatchUpdateException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -181,7 +182,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
         throws SqlDatabaseSystemException {
         if (e.getCause() instanceof BatchUpdateException) {
             Exception e1 =
-                ((BatchUpdateException) e.getCause()).getNextException();
+                ((SQLException) e.getCause()).getNextException();
             throw new SqlDatabaseSystemException(StringUtility
                 .format(e.getMessage(), e
                     .getCause().getMessage(), e1.getMessage()), e1);

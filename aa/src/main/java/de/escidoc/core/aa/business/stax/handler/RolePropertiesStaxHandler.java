@@ -73,7 +73,6 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
     public RolePropertiesStaxHandler(final EscidocRole role,
         final EscidocRoleDaoInterface roleDao) {
 
-        super();
         this.role = role;
         this.roleDao = roleDao;
     }
@@ -95,6 +94,7 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      * @aa
      */
+    @Override
     public String characters(final String s, final StartElement element)
         throws UniqueConstraintViolationException, 
                     XmlCorruptedException, SystemException {

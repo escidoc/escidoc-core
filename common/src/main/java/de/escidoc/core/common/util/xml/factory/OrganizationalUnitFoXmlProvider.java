@@ -53,7 +53,6 @@ public class OrganizationalUnitFoXmlProvider
      * @oum
      */
     private OrganizationalUnitFoXmlProvider() {
-        super();
     }
 
     /**

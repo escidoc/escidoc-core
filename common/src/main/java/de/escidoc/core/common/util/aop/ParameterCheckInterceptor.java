@@ -69,6 +69,7 @@ public class ParameterCheckInterceptor implements Ordered {
      * @see org.springframework.core.Ordered#getOrder()
      * @common
      */
+    @Override
     public int getOrder() {
 
         return AopUtil.PRECEDENCE_PARAMETER_CHECK_INTERCEPTOR;

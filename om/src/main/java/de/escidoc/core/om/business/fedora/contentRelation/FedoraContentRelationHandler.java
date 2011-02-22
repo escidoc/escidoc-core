@@ -32,6 +32,7 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -102,7 +103,7 @@ public class FedoraContentRelationHandler extends HandlerBase
     private static final AppLogger log = new AppLogger(
         FedoraContentRelationHandler.class.getName());
 
-    private final List<ResourceListener> contentRelationListeners =
+    private final Collection<ResourceListener> contentRelationListeners =
         new ArrayList<ResourceListener>();
 
     private PIDSystemFactory pidGenFactory = null;
@@ -134,6 +135,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown if internal error occur
      */
+    @Override
     public String create(final String xmlData)
         throws MissingAttributeValueException, MissingMethodParameterException,
         InvalidXmlException, InvalidContentException,
@@ -171,6 +173,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown if internal error occurs.
      */
+    @Override
     public String retrieve(final String id)
         throws ContentRelationNotFoundException, SystemException {
 
@@ -191,6 +194,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             If case of internal error.
      */
+    @Override
     public String retrieveContentRelations(final SRURequestParameters parameters)
         throws SystemException {
         StringWriter result = new StringWriter();
@@ -217,6 +221,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown if internal error occurs.
      */
+    @Override
     public String retrieveProperties(final String id)
         throws ContentRelationNotFoundException, SystemException {
 
@@ -236,6 +241,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown if internal error occurs.
      */
+    @Override
     public String retrieveMdRecords(final String id)
         throws ContentRelationNotFoundException, SystemException {
 
@@ -260,6 +266,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown if internal error occurs.
      */
+    @Override
     public String retrieveMdRecord(final String id, final String name)
         throws ContentRelationNotFoundException, MdRecordNotFoundException,
         SystemException {
@@ -315,6 +322,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown if internal error occur
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws ContentRelationNotFoundException, OptimisticLockingException,
         InvalidContentException, InvalidStatusException, LockingException,
@@ -371,6 +379,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown if internal error occurs.
      */
+    @Override
     public void delete(final String id)
         throws ContentRelationNotFoundException, SystemException,
         LockingException {
@@ -390,6 +399,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws EscidocException
      *             e
      */
+    @Override
     public String ingest(final String xmlData) throws EscidocException {
 
         throw new WebserverSystemException("Missing implementation");
@@ -402,7 +412,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @param indexingHandler
      *            The indexing handler.
      */
-    public void setIndexingHandler(final IndexingHandler indexingHandler) {
+    public void setIndexingHandler(final ResourceListener indexingHandler) {
         addContentRelationListener(indexingHandler);
     }
 
@@ -426,6 +436,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @spring.property ref="business.TripleStoreUtility"
      * 
      */
+    @Override
     public void setTripleStoreUtility(final TripleStoreUtility tsu) {
         super.setTripleStoreUtility(tsu);
     }
@@ -487,6 +498,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws InvalidContentException
      *             e
      */
+    @Override
     public String submit(final String id, final String param)
         throws ContentRelationNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException,
@@ -560,6 +572,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws InvalidContentException
      *             e
      */
+    @Override
     public String release(final String id, final String param)
         throws ContentRelationNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException,
@@ -628,6 +641,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws InvalidContentException
      *             e
      */
+    @Override
     public String revise(final String id, final String taskParam)
         throws ContentRelationNotFoundException, LockingException,
         InvalidStatusException, MissingMethodParameterException,
@@ -695,6 +709,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws InvalidStatusException
      *             e
      */
+    @Override
     public String lock(final String id, final String param)
         throws ContentRelationNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException,
@@ -757,6 +772,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws InvalidStatusException
      *             Thrown if resource is not locked.
      */
+    @Override
     public String unlock(final String id, final String param)
         throws ContentRelationNotFoundException, LockingException,
         MissingMethodParameterException, SystemException,
@@ -818,6 +834,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @see de.escidoc.core.om.business.interfaces.ContentRelationsHandlerInterface
      *      #assignObjectPid(java.lang.String,java.lang.String)
      */
+    @Override
     public String assignObjectPid(final String id, final String taskParam)
         throws ContentRelationNotFoundException, LockingException,
         MissingMethodParameterException, OptimisticLockingException,
@@ -861,6 +878,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             e
      */
+    @Override
     public String retrieveRegisteredPredicates()
         throws InvalidContentException, InvalidXmlException, SystemException {
         List<String> predicates = ContentRelationsUtility.getPredicates();
@@ -917,6 +935,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws ContentRelationNotFoundException
      * @throws SystemException
      */
+    @Override
     public String retrieveResources(final String id)
         throws ContentRelationNotFoundException, SystemException {
 

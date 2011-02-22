@@ -45,7 +45,7 @@ import org.springframework.security.providers.UsernamePasswordAuthenticationToke
  * @author Bernhard Kraus, Roland Werner (Accenture), TTE
  * @aa
  */
-public final class UserContext extends Object {
+public final class UserContext {
 
     private static final AppLogger LOG =
         new AppLogger(UserContext.class.getName());

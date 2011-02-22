@@ -57,7 +57,6 @@ public class StaxEscapingWriter extends Writer {
      */
     public StaxEscapingWriter(final Writer writer, final boolean attributeWriter) {
 
-        super();
         this.writer = writer;
     }
 

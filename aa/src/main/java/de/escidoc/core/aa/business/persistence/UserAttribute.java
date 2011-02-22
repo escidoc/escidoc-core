@@ -48,7 +48,6 @@ public class UserAttribute extends UserAttributeBase {
      * @aa
      */
     public UserAttribute() {
-        super();
     }
 
 }

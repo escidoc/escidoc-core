@@ -85,6 +85,7 @@ public class XacmlFunctionContains extends FunctionBase {
      * @see com.sun.xacml.cond.Function#evaluate(java.util.List,
      *      com.sun.xacml.EvaluationCtx)
      */
+    @Override
     public EvaluationResult evaluate(
         final List inputs, final EvaluationCtx context) {
 

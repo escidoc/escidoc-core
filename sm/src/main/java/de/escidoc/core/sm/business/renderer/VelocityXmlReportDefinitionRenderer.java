@@ -33,7 +33,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeSet;
 
 import org.joda.time.DateTime;
@@ -80,6 +79,7 @@ public final class VelocityXmlReportDefinitionRenderer
      *      ReportDefinitionRendererInterface#render(Map)
      * @sm
      */
+    @Override
     public String render(final ReportDefinition reportDefinition)
         throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
@@ -155,13 +155,13 @@ public final class VelocityXmlReportDefinitionRenderer
      * @param values
      *            The {@link Map} to add the values to.
      */
-    private void addReportDefinitionRoleValues(
-        final Set<ReportDefinitionRole> reportDefinitionRoles,
+    private static void addReportDefinitionRoleValues(
+        final Collection<ReportDefinitionRole> reportDefinitionRoles,
         final Map<String, Object> values) {
         if (reportDefinitionRoles != null && !reportDefinitionRoles.isEmpty()) {
-            List<HashMap<String, String>> reportDefinitionRolesVm =
+            Collection<HashMap<String, String>> reportDefinitionRolesVm =
                 new ArrayList<HashMap<String, String>>();
-            TreeSet<ReportDefinitionRole> sortedReportDefinitionRoles =
+            Collection<ReportDefinitionRole> sortedReportDefinitionRoles =
                 new TreeSet<ReportDefinitionRole>(
                     new ReportDefinitionRoleComparator());
             sortedReportDefinitionRoles.addAll(reportDefinitionRoles);
@@ -195,6 +195,7 @@ public final class VelocityXmlReportDefinitionRenderer
      *      #renderReportDefinitions(de.escidoc.core.sm.business.ReportDefinition)
      * @sm
      */
+    @Override
     public String renderReportDefinitions(
         final Collection<ReportDefinition> reportDefinitions,
         final RecordPacking recordPacking) throws SystemException {
@@ -203,7 +204,6 @@ public final class VelocityXmlReportDefinitionRenderer
 
         values.put("isRootReportDefinition", XmlTemplateProvider.FALSE);
         values.put("reportDefinitionListTitle", "Report Definition List");
-        values.put("recordPacking", recordPacking);
         addReportDefinitionNamespaceValues(values);
         addReportDefinitionListNamespaceValues(values);
 
@@ -284,7 +284,7 @@ public final class VelocityXmlReportDefinitionRenderer
      *             Thrown in case of an internal error.
      * @sm
      */
-    private void addEscidocBaseUrl(final Map<String, Object> values)
+    private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -299,7 +299,7 @@ public final class VelocityXmlReportDefinitionRenderer
      *             Thrown in case of an internal error.
      * @sm
      */
-    private ReportDefinitionXmlProvider getReportDefinitionXmlProvider()
+    private static ReportDefinitionXmlProvider getReportDefinitionXmlProvider()
         throws WebserverSystemException {
 
         return ReportDefinitionXmlProvider.getInstance();

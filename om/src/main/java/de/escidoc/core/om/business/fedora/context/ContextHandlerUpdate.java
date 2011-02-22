@@ -85,6 +85,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -526,8 +527,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
         final TreeMap<String, StartElementWithText> updateElementsRelsExt =
             new TreeMap<String, StartElementWithText>();
-        Set<Map.Entry<String,String>> changedValuesEntrySet = changedValues.entrySet();
-        for(Map.Entry<String, String> entry : changedValuesEntrySet){
+        Set<Entry<String,String>> changedValuesEntrySet = changedValues.entrySet();
+        for(Entry<String, String> entry : changedValuesEntrySet){
             if (entry.getKey().equals("build")) {
                 updateElementsRelsExt.put("build",
                     new StartElementWithChildElements(entry.getKey(),
@@ -646,7 +647,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             extractPathes.put("/dc", null);
             sp.addHandler(me);
 
-            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
+            final Map<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<String> iterator = propertiesToRemove.iterator();
             HashMap<String, List<StartElementWithChildElements>> propertiesVectorAssignment =
@@ -673,9 +674,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                     propertiesVectorAssignment.put(property, vector);
                 }
             }
-            Set<Map.Entry<String, List<StartElementWithChildElements>>> propertiesVectorAssignmentEntrySet =
+            Set<Entry<String, List<StartElementWithChildElements>>> propertiesVectorAssignmentEntrySet =
                     propertiesVectorAssignment.entrySet();
-            for(Map.Entry<String, List<StartElementWithChildElements>> entry : propertiesVectorAssignmentEntrySet) {
+            for(Entry<String, List<StartElementWithChildElements>> entry : propertiesVectorAssignmentEntrySet) {
                 List<StartElementWithChildElements> elements = entry.getValue();
                 toRemove.put("/dc/" + entry.getKey(), elements);
             }
@@ -816,11 +817,11 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         throws TripleStoreSystemException, ContextNameNotUniqueException,
         WebserverSystemException {
 
-        final TreeMap<String, StartElementWithText> updateElementsDc =
+        final Map<String, StartElementWithText> updateElementsDc =
             new TreeMap<String, StartElementWithText>();
 
-        final Set<Map.Entry<String, String>> changedValuesEntrySet = changedValues.entrySet();
-        for(Map.Entry<String, String> entry : changedValuesEntrySet) {
+        final Set<Entry<String, String>> changedValuesEntrySet = changedValues.entrySet();
+        for(Entry<String, String> entry : changedValuesEntrySet) {
             // if name was altered alter the title too. (title is used
             // only internally)
             if (entry.getKey().equals(Elements.ELEMENT_NAME)) {
@@ -888,12 +889,12 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
     boolean handleAdminDescriptors(final Map<String, Object> streams)
         throws SystemException {
         boolean updated = false;
-        Set<Map.Entry<String, Object>> streamsEntrySet = streams.entrySet();
+        Set<Entry<String, Object>> streamsEntrySet = streams.entrySet();
 
         Map<String, Datastream> adminDescriptors =
             getContext().getAdminDescriptorsMap();
 
-        for(Map.Entry<String, Object> entry : streamsEntrySet) {
+        for(Entry<String, Object> entry : streamsEntrySet) {
             final String name = entry.getKey();
             final String label = name;
             Boolean newDS = true;
@@ -940,8 +941,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         }
 
         // remove datastreams
-        Set<Map.Entry<String, Datastream>> adminDescriptorsEntrySet = adminDescriptors.entrySet();
-        for(Map.Entry<String, Datastream> entry : adminDescriptorsEntrySet) {
+        Set<Entry<String, Datastream>> adminDescriptorsEntrySet = adminDescriptors.entrySet();
+        for(Entry<String, Datastream> entry : adminDescriptorsEntrySet) {
             Datastream nextDatastream = entry.getValue();
             nextDatastream.delete();
             LOGGER.debug("Admin-descriptor datastream '" + entry.getKey()

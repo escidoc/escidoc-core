@@ -39,21 +39,16 @@ import java.util.TreeSet;
  * @author SCHE
  */
 public class Table implements Comparable<Object> {
-    private String name = null;
 
-    private Set<String> columns = null;
+    private final String name;
 
-    private Set<String> foreignKeys = null;
+    private Set<String> columns;
+
+    private Set<String> foreignKeys;
 
     private final Set<String> indexes = null;
 
-    private Set<String> primaryKeys = null;
-
-    /**
-     * Constructor for bean deserialization.
-     */
-    public Table() {
-    }
+    private Set<String> primaryKeys;
 
     /**
      * Create a new Table object.
@@ -72,7 +67,7 @@ public class Table implements Comparable<Object> {
     public Table(final String name, final String[] columns,
         final String[] indexes, final String[] primaryKeys,
         final String[] foreignKeys) {
-        setName(name);
+        this.name = name;
         setColumns(columns);
         setForeignKeys(foreignKeys);
         setIndexes(indexes);
@@ -90,6 +85,7 @@ public class Table implements Comparable<Object> {
      * @return a negative integer, zero, or a positive integer as this object is
      *         less than, equal to, or greater than the specified object.
      */
+    @Override
     public int compareTo(final Object o) {
         return name.compareTo(((Table) o).getName());
     }
@@ -226,16 +222,6 @@ public class Table implements Comparable<Object> {
     public void setIndexes(final Set<String> indexes) {
         // FIXME: reactivate after 1.3 release
         // this.indexes = indexes;
-    }
-
-    /**
-     * Set the table name.
-     * 
-     * @param name
-     *            table name
-     */
-    public void setName(final String name) {
-        this.name = name;
     }
 
     /**

@@ -66,6 +66,7 @@ import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -220,7 +221,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         // in later version could the dc:title be used for object title
         // properties.put(TripleStoreUtility.PROP_TITLE, properties
         // .get(TripleStoreUtility.PROP_NAME));
-        final HashMap<String, String> dcProperties =
+        final Map<String, String> dcProperties =
             new HashMap<String, String>();
         final String description =
             (String) properties.remove(Elements.ELEMENT_DESCRIPTION);
@@ -229,7 +230,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         }
         dcProperties.put(Elements.ELEMENT_DC_TITLE, name);
 
-        final HashMap<String, String> propertiesAsReferences =
+        final Map<String, String> propertiesAsReferences =
             new HashMap<String, String>();
         propertiesAsReferences.put(Elements.ELEMENT_MODIFIED_BY,
             (String) properties.remove(Elements.ELEMENT_MODIFIED_BY));
@@ -279,7 +280,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         values.put("id", id);
         values.put("contextTitle", dcProperties.get(Elements.ELEMENT_DC_TITLE));
 
-        final List<HashMap<String, String>> adminDescriptors =
+        final Collection<HashMap<String, String>> adminDescriptors =
             new ArrayList<HashMap<String, String>>();
 
         for (String s : dataStreams.keySet()) {

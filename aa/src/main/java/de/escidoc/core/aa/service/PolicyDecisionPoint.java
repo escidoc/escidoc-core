@@ -90,6 +90,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      *      #evaluate(java.lang.String)
      * @aa
      */
+    @Override
     public String evaluate(final String requestsXml)
         throws ResourceNotFoundException, XmlCorruptedException, 
         XmlSchemaValidationException,
@@ -115,6 +116,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * 
      * @axis.exclude
      */
+    @Override
     public boolean[] evaluateRequestList(
         final List<Map<String, String>> requests)
         throws ResourceNotFoundException,
@@ -141,6 +143,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * 
      * @axis.exclude
      */
+    @Override
     public List<String> evaluateRetrieve(
         final String resourceName, final List<String> ids)
         throws AuthenticationException, AuthorizationException,
@@ -169,6 +172,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * 
      * @axis.exclude
      */
+    @Override
     public List<Object[]> evaluateMethodForList(
         final String resourceName, final String methodName,
         final List<Object[]> argumentList) throws AuthenticationException,
@@ -197,6 +201,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         this.business = business;
     }
 
+    @Override
     public void touch() throws SystemException {
         this.business.touch();
     }

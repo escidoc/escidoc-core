@@ -83,6 +83,7 @@ public interface PolicyDecisionPointInterface
      * @throws SystemException
      *             Thrown in case of an internal error
      */
+    @Override
     String evaluate(String requestsXml)
         throws MissingMethodParameterException, ResourceNotFoundException,
         SystemException, XmlCorruptedException, XmlSchemaValidationException;
@@ -111,6 +112,7 @@ public interface PolicyDecisionPointInterface
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
+    @Override
     List<String> evaluateRetrieve(
         String resourceName, List<String> ids)
         throws MissingMethodParameterException, ResourceNotFoundException,
@@ -144,6 +146,7 @@ public interface PolicyDecisionPointInterface
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
+    @Override
     List<Object[]> evaluateMethodForList(
             String resourceName, 
             String methodName, 

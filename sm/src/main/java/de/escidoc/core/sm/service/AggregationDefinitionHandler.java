@@ -99,6 +99,7 @@ public class AggregationDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public String create(final String xmlData) throws AuthenticationException,
         AuthorizationException, XmlSchemaValidationException,
         XmlCorruptedException, MissingMethodParameterException,
@@ -128,6 +129,7 @@ public class AggregationDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public void delete(final String id) throws AuthenticationException,
         AuthorizationException, AggregationDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -157,6 +159,7 @@ public class AggregationDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public String retrieve(final String id) throws AuthenticationException,
         AuthorizationException, AggregationDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -186,6 +189,7 @@ public class AggregationDefinitionHandler
      * @throws SystemException
      *             e.
      */
+    @Override
     public String retrieveAggregationDefinitions(
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, MissingMethodParameterException,

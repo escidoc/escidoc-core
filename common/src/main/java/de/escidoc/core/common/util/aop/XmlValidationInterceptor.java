@@ -67,6 +67,7 @@ public class XmlValidationInterceptor implements Ordered {
      * @see org.springframework.core.Ordered#getOrder()
      * @common
      */
+    @Override
     public int getOrder() {
 
         return AopUtil.PRECEDENCE_XML_VALIDATION_INTERCEPTOR;

@@ -88,11 +88,13 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserGroup)
      * @aa
      */
+    @Override
     public void delete(final SetDefinition setDefinition)
         throws SqlDatabaseSystemException {
         super.delete(setDefinition);
     }
 
+    @Override
     public SetDefinition findSetDefinitionBySpecification(
         final String specification) throws SqlDatabaseSystemException {
         SetDefinition result;
@@ -126,6 +128,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      *      #retrieveUserGroup(java.lang.String)
      * @aa
      */
+    @Override
     public SetDefinition retrieveSetDefinition(final String id)
         throws SqlDatabaseSystemException {
         SetDefinition result = null;
@@ -166,6 +169,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      *      #retrieveSetDefinitions(java.util.Map, int, int, String, ListSorting)
      * @aa
      */
+    @Override
     public List<SetDefinition> retrieveSetDefinitions(
         final Map<String, Object> criteria, final int offset,
         final int maxResults, final String orderBy, final ListSorting sorting)
@@ -242,6 +246,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
      *      #retrieveSetDefinitions(java.util.Map, int, int, String, ListSorting)
      */
+    @Override
     public List<SetDefinition> retrieveSetDefinitions(
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
@@ -279,6 +284,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.UserGroup)
      * @aa
      */
+    @Override
     public void save(final SetDefinition setDefinition)
         throws SqlDatabaseSystemException {
         super.save(setDefinition);
@@ -293,6 +299,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      *      #update(de.escidoc.core.aa.business.persistence.UserGroup)
      * @aa
      */
+    @Override
     public void update(final SetDefinition setDefinition)
         throws SqlDatabaseSystemException {
         super.update(setDefinition);

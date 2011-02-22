@@ -43,6 +43,7 @@ import java.util.List;
  * @author FRS
  * 
  */
+@Deprecated
 public class VelocityXmlItemRenderer {
 
 

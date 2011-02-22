@@ -161,6 +161,7 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
      * @throws EscidocException
      *             thrown if an internal error has occurred.
      */
+    @Override
     String ingest(String xmlData) throws EscidocException;
 
     /**

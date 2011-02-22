@@ -63,7 +63,6 @@ public final class ReportDefinitionXmlProvider
      * @aa
      */
     private ReportDefinitionXmlProvider() {
-        super();
     }
 
     /**

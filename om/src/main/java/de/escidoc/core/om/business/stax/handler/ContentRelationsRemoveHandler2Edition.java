@@ -72,6 +72,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
      * Attention!
      * @param data is implemented with side affects!
      */
+    @Override
     public String characters(String data, final StartElement element)
         throws MissingElementValueException {
 
@@ -101,6 +102,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
         return data;
     }
 
+    @Override
     public StartElement startElement(final StartElement element) {
         String curPath = parser.getCurPath();
 
@@ -112,6 +114,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
         return element;
     }
 
+    @Override
     public EndElement endElement(final EndElement element)
         throws ContentRelationNotFoundException, TripleStoreSystemException,
         WebserverSystemException {

@@ -87,7 +87,6 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
         final String resourceId, final String urnModifiedBy,
         final String urnStatus, final String urnVersionStatus) {
 
-        super();
         this.ctx = ctx;
         this.resourceId = resourceId;
         this.urnModifiedBy = urnModifiedBy;

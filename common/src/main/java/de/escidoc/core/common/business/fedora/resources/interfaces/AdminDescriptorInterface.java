@@ -45,6 +45,7 @@ public interface AdminDescriptorInterface extends FedoraResource {
      *             If there is no RELS-EXT datastream of a fedora object with
      *             <code>id</code>.
      */
+    @Override
     Datastream getRelsExt() throws StreamNotFoundException;
 
     /**
@@ -59,6 +60,7 @@ public interface AdminDescriptorInterface extends FedoraResource {
      *             object have to have this datastream.
      * @throws LockingException
      */
+    @Override
     void setRelsExt(Datastream ds) throws StreamNotFoundException,
         LockingException;
 
@@ -83,7 +85,7 @@ public interface AdminDescriptorInterface extends FedoraResource {
      *            The name of a matadata datastream.
      * @return A metadata datastreams of this resource.
      */
-    Datastream getMdRecord(String name) throws StreamNotFoundException;;
+    Datastream getMdRecord(String name) throws StreamNotFoundException;
 
     /**
      * 

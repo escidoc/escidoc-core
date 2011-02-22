@@ -43,7 +43,13 @@ package de.escidoc.core.common.business;
  * @author SWA
  * 
  */
-public class PropertyMapKeys {
+public final class PropertyMapKeys {
+
+    /**
+     * Private constructor to avoid instantiation.
+     */
+    private PropertyMapKeys() {
+    }
 
     /*
      * FIXME may be it would be better to call some values OBJECT_XY like
@@ -184,6 +190,7 @@ public class PropertyMapKeys {
      * @deprecated ??? not used? should href be assambled in renderer or
      *             mapping?
      */
+    @Deprecated
     public static final String CURRENT_VERSION_MODIFIED_BY_HREF =
         "CURRENT_VERSION_MODIFIED_BY_HREF";
 

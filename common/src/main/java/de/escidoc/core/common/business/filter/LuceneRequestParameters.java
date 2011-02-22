@@ -58,6 +58,7 @@ public class LuceneRequestParameters extends SRURequestParameters {
      * 
      * @return default search limit
      */
+    @Override
     protected int getDefaultLimit() {
         return DEFAULT_LIMIT;
     }
@@ -67,6 +68,7 @@ public class LuceneRequestParameters extends SRURequestParameters {
      * 
      * @return default search offset
      */
+    @Override
     protected int getDefaultOffset() {
         return DEFAULT_OFFSET;
     }

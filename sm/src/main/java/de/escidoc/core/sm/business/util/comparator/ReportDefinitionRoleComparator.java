@@ -51,6 +51,7 @@ public class ReportDefinitionRoleComparator
      * 
      * @sm
      */
+    @Override
     public int compare(
             final ReportDefinitionRole a1, 
             final ReportDefinitionRole a2) {

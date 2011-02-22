@@ -86,6 +86,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         }
     }
 
+    @Override
     public String characters(String data, StartElement element)
         throws XMLStreamException {
 
@@ -94,6 +95,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         return data;
     }
 
+    @Override
     public EndElement endElement(EndElement element) throws XMLStreamException {
         if (justRemoved) {
             justRemoved = false;
@@ -104,6 +106,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         return element;
     }
 
+    @Override
     public StartElement startElement(StartElement element)
         throws XMLStreamException {
 

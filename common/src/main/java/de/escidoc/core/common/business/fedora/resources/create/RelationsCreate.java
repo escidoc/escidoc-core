@@ -44,13 +44,6 @@ public class RelationsCreate {
     private List<RelationCreate> relations = null;
 
     /**
-     * 
-     */
-    public RelationsCreate() {
-
-    }
-
-    /**
      * Add Content Relation to Relations collection.
      * 
      * @param relation

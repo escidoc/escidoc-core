@@ -81,6 +81,7 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      * @um
      */
+    @Override
     public StartElement startElement(final StartElement element)
         throws EscidocException {
 

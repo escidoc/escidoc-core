@@ -7,7 +7,7 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
  * 
  * @author MIH
  */
-public class DatabaseConventionChecker {
+public final class DatabaseConventionChecker {
     
     private static final String INCORRECT_NAME_MSG = 
         new StringBuffer(" may not contain whitespaces or quotes, ")
@@ -16,6 +16,11 @@ public class DatabaseConventionChecker {
                 .append("and length may be 63 characters maximum").toString();
     
 
+    /**
+     * Private constructor to avoid instantiation.
+     */
+    private DatabaseConventionChecker() {
+    }
 
     /**
      * Checks (table, field, index)-name 

@@ -88,7 +88,6 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      */
     public PoolableTransformerFactory() {
 
-        super();
         try {
             setDefaultXsltUrl(EscidocConfiguration
                 .getInstance().appendToSelfURL(XSL_MAPPING_UNKNOWN_TO_DC));

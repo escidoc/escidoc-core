@@ -125,6 +125,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface#create(java.lang.String)
      * @aa
      */
+    @Override
     public String create(final String xmlData) throws XmlCorruptedException,
         UniqueConstraintViolationException, SystemException {
 
@@ -195,6 +196,7 @@ public class RoleHandler implements RoleHandlerInterface {
      *      #delete(java.lang.String)
      * @aa
      */
+    @Override
     public void delete(final String id) throws RoleNotFoundException,
         RoleInUseViolationException, SystemException {
 
@@ -229,6 +231,7 @@ public class RoleHandler implements RoleHandlerInterface {
      *      #retrieve(java.lang.String)
      * @aa
      */
+    @Override
     public String retrieve(final String id) throws RoleNotFoundException,
         SystemException {
 
@@ -246,6 +249,7 @@ public class RoleHandler implements RoleHandlerInterface {
      *      #retrieveResources(java.lang.String)
      * @aa
      */
+    @Override
     public String retrieveResources(final String id)
         throws RoleNotFoundException, SystemException {
 
@@ -267,6 +271,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface#update(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws RoleNotFoundException, XmlCorruptedException,
         MissingAttributeValueException, UniqueConstraintViolationException,
@@ -377,6 +382,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
      *      #retrieveRoles(java.util.Map)
      */
+    @Override
     public String retrieveRoles(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
         boolean explain;

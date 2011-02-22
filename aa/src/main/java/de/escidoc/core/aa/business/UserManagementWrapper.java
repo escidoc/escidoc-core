@@ -85,6 +85,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      *      #logout()
      * @aa
      */
+    @Override
     public void logout() throws AuthenticationException,
         SqlDatabaseSystemException, WebserverSystemException {
 
@@ -111,7 +112,8 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      * 
      * @aa
      */
-    public void initHandleExpiryTimestamp(final String handle) 
+    @Override
+    public void initHandleExpiryTimestamp(final String handle)
         throws SystemException {
         UserLoginData userLoginData = dao.retrieveUserLoginDataByHandle(handle);
         long expiryts = System.currentTimeMillis() 

@@ -58,6 +58,7 @@ import de.escidoc.core.common.util.xml.transformer.PoolableTransformerFactory;
 import org.apache.commons.pool.impl.StackKeyedObjectPool;
 import org.codehaus.stax2.XMLOutputFactory2;
 import org.joda.time.DateTime;
+import org.joda.time.ReadableDateTime;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -1241,7 +1242,7 @@ public final class XmlUtility {
      */
     public static void addElement(
         final XMLStreamWriter writer, final String elementName,
-        final DateTime elementContent, final String namespaceUri,
+        final ReadableDateTime elementContent, final String namespaceUri,
         final boolean createEmpty) throws XMLStreamException {
 
         if (elementContent == null) {
@@ -1272,7 +1273,7 @@ public final class XmlUtility {
      *             Thrown in case of an xml stream error.
      */
     public static void addLastModificationDateAttribute(
-        final XMLStreamWriter writer, final DateTime modifiedDate)
+        final XMLStreamWriter writer, final ReadableDateTime modifiedDate)
         throws XMLStreamException {
 
         if (modifiedDate == null) {
@@ -1748,7 +1749,7 @@ public final class XmlUtility {
      *            The XML representation of the resource to get the objid from.
      * @return Returns the extracted objid or <code>null</code>.
      */
-    public static String getIdFromXml(final String resourceXml) {
+    public static String getIdFromXml(final CharSequence resourceXml) {
 
         final Matcher matcher = PATTERN_OBJID_FROM_XML.matcher(resourceXml);
         if (matcher.find()) {
@@ -1819,7 +1820,7 @@ public final class XmlUtility {
      *            The objid.
      * @return The number of version or null.
      */
-    public static String getVersionNumberFromObjid(final String objid) {
+    public static String getVersionNumberFromObjid(final CharSequence objid) {
         String version = null;
         final Matcher m = PATTERN_VERSION_NUMBER.matcher(objid);
         if (m.find()) {
@@ -1837,7 +1838,7 @@ public final class XmlUtility {
      *            The XML representation of the resource to get the name from.
      * @return Returns the extracted name (trimmed) or <code>null</code>.
      */
-    public static String extractNameFromXml(final String resourceXml) {
+    public static String extractNameFromXml(final CharSequence resourceXml) {
 
         final Matcher matcher = PATTERN_NAME_FROM_XML.matcher(resourceXml);
         if (matcher.find()) {
@@ -3226,7 +3227,7 @@ public final class XmlUtility {
      *             If an error occurs.
      */
     public static String createDC(
-        final String nsUri, final String mdRecordXml, final String objID,
+        final String nsUri, final String mdRecordXml, final CharSequence objID,
         final String contentModelID) throws WebserverSystemException {
 
         String result = null;

@@ -81,6 +81,7 @@ public class HibernateRequestMappingDao extends HibernateDaoSupport
      * 
      * @aa
      */
+    @Override
     @SuppressWarnings("unchecked")
     public List<MethodMapping> retrieveMethodMappings(
         final String className, final String methodName) {

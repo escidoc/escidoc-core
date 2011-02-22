@@ -46,6 +46,7 @@ import de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -247,7 +248,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    protected void checkCreateParentsConditions(final List<String> parents)
+    protected void checkCreateParentsConditions(final Iterable<String> parents)
         throws InvalidStatusException, SystemException {
 
         // all parents must be in state created or opened
@@ -277,7 +278,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    protected void checkUpdateParentsConditions(final List<String> parents)
+    protected void checkUpdateParentsConditions(final Collection<String> parents)
         throws InvalidStatusException, SystemException {
 
         String status = getOrganizationalUnit().getPublicStatus();

@@ -58,6 +58,7 @@ public interface ComponentInterface extends FedoraResource {
      *             If there is no RELS-EXT datastream of a fedora object with
      *             <code>id</code>.
      */
+    @Override
     Datastream getRelsExt() throws StreamNotFoundException,
         FedoraSystemException;
 
@@ -80,6 +81,7 @@ public interface ComponentInterface extends FedoraResource {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
+    @Override
     void setRelsExt(Datastream ds) throws StreamNotFoundException,
         LockingException, FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException, XmlParserSystemException;

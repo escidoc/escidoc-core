@@ -74,6 +74,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *      ScopeRendererInterface#render(Map)
      * @sm
      */
+    @Override
     public String render(final Scope scope) throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
 
@@ -96,7 +97,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addScopeValues(
+    private static void addScopeValues(
         final Scope scope, final Map<String, Object> values)
         throws SystemException {
         DateTime createDateTime = new DateTime(scope.getCreationDate());
@@ -138,6 +139,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *      #renderScopes(de.escidoc.core.sm.business.Scope)
      * @sm
      */
+    @Override
     public String renderScopes(
         final Collection<Scope> scopes, final RecordPacking recordPacking)
         throws SystemException {
@@ -146,7 +148,6 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
 
         values.put("isRootScope", XmlTemplateProvider.FALSE);
         values.put("scopeListTitle", "Scope List");
-        values.put("recordPacking", recordPacking);
         addScopeNamespaceValues(values);
         addScopeListNamespaceValues(values);
 
@@ -219,7 +220,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *             Thrown in case of an internal error.
      * @sm
      */
-    private void addEscidocBaseUrl(final Map<String, Object> values)
+    private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -234,7 +235,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *             Thrown in case of an internal error.
      * @sm
      */
-    private ScopeXmlProvider getScopeXmlProvider()
+    private static ScopeXmlProvider getScopeXmlProvider()
         throws WebserverSystemException {
 
         return ScopeXmlProvider.getInstance();

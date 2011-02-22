@@ -112,6 +112,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
+    @Override
     public StartElement startElement(final StartElement element)
         throws ReadonlyAttributeViolationException, InvalidContentException,
         ReferencedResourceNotFoundException,
@@ -236,6 +237,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
+    @Override
     public EndElement endElement(final EndElement element) {
         if (inContentRelation && element.getLocalName().equals("relation")) {
             inContentRelation = false;

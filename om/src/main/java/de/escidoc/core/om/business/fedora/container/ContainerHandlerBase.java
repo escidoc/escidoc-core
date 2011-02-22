@@ -517,6 +517,7 @@ public class ContainerHandlerBase extends HandlerBase {
     /**
      * @return Returns the utility.
      */
+    @Override
     protected Utility getUtility() {
         if (utility == null) {
             utility = Utility.getInstance();

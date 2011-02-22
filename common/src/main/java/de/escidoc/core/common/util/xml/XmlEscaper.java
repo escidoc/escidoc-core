@@ -35,7 +35,11 @@ package de.escidoc.core.common.util.xml;
  * @author TTE
  * 
  */
-public class XmlEscaper {
+public final class XmlEscaper {
+
+    // TODO: Make this constructor private!
+    public XmlEscaper() {
+    }
 
     /**
      * Escapes the provided value for output in an attribute.

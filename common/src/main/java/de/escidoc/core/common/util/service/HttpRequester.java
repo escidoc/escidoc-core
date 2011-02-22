@@ -397,6 +397,7 @@ public class HttpRequester {
          * @return X509Certificate[] response
          * 
          */
+        @Override
         public java.security.cert.X509Certificate[] getAcceptedIssuers() {
             return null;
         }
@@ -410,6 +411,7 @@ public class HttpRequester {
          *            String
          * 
          */
+        @Override
         public void checkClientTrusted(
             final java.security.cert.X509Certificate[] chain,
             final String authType) {
@@ -424,6 +426,7 @@ public class HttpRequester {
          *            String
          * 
          */
+        @Override
         public void checkServerTrusted(
             final java.security.cert.X509Certificate[] chain,
             final String authType) {

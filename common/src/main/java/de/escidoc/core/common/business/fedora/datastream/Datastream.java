@@ -46,6 +46,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.fcrepo.server.types.gen.MIMETypedStream;
 import org.joda.time.DateTime;
+import org.joda.time.ReadableDateTime;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -92,33 +93,33 @@ public class Datastream {
 
     public static final String METADATA_ALTERNATE_ID = "metadata";
 
-    private String name = null;
+    private final String name ;
 
-    private String timestamp = null;
+    private final String parentId;
+
+    private String timestamp;
 
     private List<String> alternateIDs = new ArrayList<String>();
 
-    private String label = null;
+    private String label;
 
-    private String parentId = null;
+    private String mimeType;
 
-    private String mimeType = null;
+    private byte[] theStream;
 
-    private byte[] theStream = null;
-
-    private String md5Hash = null;
+    private String md5Hash;
 
     private String controlGroupValue = "X";
 
-    private FedoraUtility fu = null;
+    private FedoraUtility fu;
 
-    private Map<String, String> properties = null;
+    private Map<String, String> properties;
 
     private String location;
 
-    private String checksumMethod = null;
+    private String checksumMethod;
 
-    private String checksum = null;
+    private String checksum;
 
     private static final boolean versionable = true;
 
@@ -213,7 +214,7 @@ public class Datastream {
      */
     public Datastream(final String name, final String parentId,
         final String mimeType, final String location,
-        final String controlGroupValue, final DateTime timestamp) {
+        final String controlGroupValue, final ReadableDateTime timestamp) {
         if (timestamp != null) {
             String tsFormat =
                 de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT;

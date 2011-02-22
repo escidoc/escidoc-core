@@ -56,6 +56,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      *      #logout()
      * @aa
      */
+    @Override
     public void logout() throws AuthenticationException, SystemException {
 
         business.logout();
@@ -73,7 +74,8 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      * 
      * @aa
      */
-    public void initHandleExpiryTimestamp(final String handle) 
+    @Override
+    public void initHandleExpiryTimestamp(final String handle)
         throws AuthenticationException, SystemException {
         business.initHandleExpiryTimestamp(handle);
     }

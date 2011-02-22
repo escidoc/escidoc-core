@@ -579,7 +579,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     private Map<String, XacmlPolicySet> retrieveGroupRolesPolicies(
         final List<String> groupIds) throws WebserverSystemException {
 
-        HashMap<String, XacmlPolicySet> ret =
+        Map<String, XacmlPolicySet> ret =
             new HashMap<String, XacmlPolicySet>();
         try {
             Map<String, Map<String, Map<String, List<RoleGrant>>>> roleGrants;

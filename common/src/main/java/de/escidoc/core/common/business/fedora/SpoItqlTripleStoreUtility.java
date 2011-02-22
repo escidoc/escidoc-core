@@ -170,7 +170,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      */
     private enum Format {
         RDF_XML, N_TRIPLES, CSV
-    };
+    }
 
     private String requestItqlNTriples(
         final String itqlQuery, final String template)
@@ -962,7 +962,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @return
      */
     @Deprecated
-    private String getObjectsToFind(final String objectType) {
+    private String getObjectsToFind(final CharSequence objectType) {
         final Matcher matcher =
             PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE.matcher(objectType);
         final StringBuilder result = new StringBuilder();
@@ -994,6 +994,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @throws XmlParserSystemException
      * @throws MissingMethodParameterException
      */
+    @Override
     public List<String> evaluate(
         final String objectType, final Map filterMap,
         final String additionalQueryPart, final String whereClause)
@@ -1129,6 +1130,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      * @throws XmlParserSystemException
      */
+    @Override
     public List<String> getContainerMemberList(
         final String containerId, final Map filterMap, final String whereClause)
         throws MissingMethodParameterException, TripleStoreSystemException,
@@ -1149,6 +1151,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     /**
      * 
      */
+    @Override
     public List<String> getContextMemberList(
         final String contextId, final Map filterMap, final String whereClause)
         throws TripleStoreSystemException, XmlParserSystemException,
@@ -1171,6 +1174,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     /**
      * 
      */
+    @Override
     public List<String> getMemberList(final String id, final String whereClause)
         throws TripleStoreSystemException {
         // TODO check functionality
@@ -1199,6 +1203,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     /**
      * 
      */
+    @Override
     public String getObjectRefs(
         final String objectType, final Map filterMap, final String whereClause)
         throws SystemException, MissingMethodParameterException {
@@ -1274,6 +1279,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         return sb.toString();
     }
 
+    @Override
     public Object reinitialize() throws TripleStoreSystemException {
         // nothing to do
         return null;
@@ -1419,6 +1425,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             "Not implemented for SpoItqlTripleStore");
     }
 
+    @Override
     public boolean exists(final String pid) throws TripleStoreSystemException {
         throw new UnsupportedOperationException(
             "Not implemented for SpoItqlTripleStore");

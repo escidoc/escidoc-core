@@ -94,13 +94,6 @@ public class UserGroupAttributeFinderModule
 
     private UserGroupDaoInterface userGroupDao;
 
-    /**
-     * The constructor.
-     */
-    public UserGroupAttributeFinderModule() {
-        super();
-    }
-
     // CHECKSTYLE:JAVADOC-OFF
 
     /**

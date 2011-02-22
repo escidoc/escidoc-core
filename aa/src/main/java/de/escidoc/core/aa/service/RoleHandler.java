@@ -76,6 +76,7 @@ public class RoleHandler implements RoleHandlerInterface {
      *      #create(java.lang.String)
      * @aa
      */
+    @Override
     public String create(final String xmlData)
         throws UniqueConstraintViolationException, 
         XmlCorruptedException, XmlSchemaValidationException,
@@ -99,6 +100,7 @@ public class RoleHandler implements RoleHandlerInterface {
      *      #delete(java.lang.String)
      * @aa
      */
+    @Override
     public void delete(final String id) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
         RoleNotFoundException, RoleInUseViolationException, SystemException {
@@ -120,6 +122,7 @@ public class RoleHandler implements RoleHandlerInterface {
      *      #retrieve(java.lang.String)
      * @aa
      */
+    @Override
     public String retrieve(final String id) throws RoleNotFoundException,
         MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
@@ -143,6 +146,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * 
      * @axis.exclude
      */
+    @Override
     public String retrieveResources(final String id)
         throws AuthenticationException, AuthorizationException,
         MissingMethodParameterException, RoleNotFoundException, SystemException {
@@ -170,6 +174,7 @@ public class RoleHandler implements RoleHandlerInterface {
      *      #update(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws RoleNotFoundException, 
         XmlCorruptedException, XmlSchemaValidationException,
@@ -193,6 +198,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
      *      #retrieveRoles(java.util.Map)
      */
+    @Override
     public String retrieveRoles(final Map<String, String[]> filter)
         throws MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException, InvalidSearchQueryException {

@@ -94,6 +94,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      *      #roleExists(java.lang.String)
      * @aa
      */
+    @Override
     public boolean roleExists(final String identifier)
         throws SqlDatabaseSystemException {
 
@@ -131,6 +132,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      *      #deleteRole(de.escidoc.core.aa.business.persistence.EscidocRole)
      * @aa
      */
+    @Override
     public void deleteRole(final EscidocRole role)
         throws SqlDatabaseSystemException {
 
@@ -147,6 +149,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      *      #retrieveRole(java.lang.String)
      * @aa
      */
+    @Override
     public EscidocRole retrieveRole(final String identifier)
         throws SqlDatabaseSystemException {
 
@@ -196,6 +199,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      *      de.escidoc.core.common.util.list.ListSorting)
      * @aa
      */
+    @Override
     public List<EscidocRole> retrieveRoles(
         final Map<String, Object> criterias, final int offset,
         final int maxResults, final String orderBy, final ListSorting sorting)
@@ -302,6 +306,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      * @see de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface
      *      #retrieveRoles(java.lang.String, int, int)
      */
+    @Override
     public List<EscidocRole> retrieveRoles(
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
@@ -338,6 +343,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      *      #saveOrUpdate(de.escidoc.core.aa.business.persistence.EscidocRole)
      * @aa
      */
+    @Override
     public void saveOrUpdate(final EscidocRole role)
         throws SqlDatabaseSystemException {
 
@@ -353,6 +359,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      *      #deleteScopeDef(de.escidoc.core.aa.business.persistence.ScopeDef)
      * @aa
      */
+    @Override
     public void deleteScopeDef(final ScopeDef scopeDef)
         throws SqlDatabaseSystemException {
 

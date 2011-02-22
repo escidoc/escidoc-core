@@ -171,6 +171,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws EscidocException
      *             Thrown if creating Item failed.
      */
+    @Override
     String ingest(final String xmlData) throws EscidocException;
 
     /**

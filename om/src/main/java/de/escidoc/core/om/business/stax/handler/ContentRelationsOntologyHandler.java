@@ -79,6 +79,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
 
     }
 
+    @Override
     public StartElement startElement(StartElement element)
         throws InvalidXmlException, InvalidContentException {
 
@@ -145,6 +146,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
         return element;
     }
 
+    @Override
     public EndElement endElement(EndElement element)
         throws InvalidContentException {
 

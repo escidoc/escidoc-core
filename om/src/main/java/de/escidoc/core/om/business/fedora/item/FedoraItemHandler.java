@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -173,12 +174,6 @@ public class FedoraItemHandler extends ItemHandlerPid
     private SRURequest sruRequest = null;
 
     /**
-     * FedoraItemHandler.
-     */
-    public FedoraItemHandler() {
-    }
-
-    /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
      * 
      * @return PolicyDecisionPointInterface
@@ -211,6 +206,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieve(java.lang.String)
      */
+    @Override
     public String retrieve(final String id) throws ItemNotFoundException,
         MissingMethodParameterException, SystemException,
         ComponentNotFoundException, AuthorizationException {
@@ -254,6 +250,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#update(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws ItemNotFoundException, FileNotFoundException,
         InvalidContextException, InvalidStatusException, LockingException,
@@ -399,7 +396,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             catch (UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
-            HashMap mdRecordsStreams = (HashMap) streams.get("md-records");
+            Map mdRecordsStreams = (HashMap) streams.get("md-records");
             if ((mdRecordsStreams != null)
                 && !mdRecordsStreams.containsKey("escidoc") && !origin) {
                 throw new MissingMdRecordException(
@@ -490,6 +487,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws InvalidStatusException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#create(java.lang.String)
      */
+    @Override
     public String create(final String xml) throws MissingContentException,
         ContextNotFoundException, ContentModelNotFoundException,
         ReadonlyElementViolationException, MissingAttributeValueException,
@@ -550,6 +548,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @return the pid of the ingested item.
      * 
      */
+    @Override
     public String ingest(final String xml)
         throws ReadonlyElementViolationException,
         ReadonlyAttributeViolationException, MissingContentException,
@@ -598,6 +597,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws AuthorizationException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#delete(java.lang.String)
      */
+    @Override
     public void delete(final String id) throws ItemNotFoundException,
         AlreadyPublishedException, LockingException, InvalidStatusException,
         SystemException, AuthorizationException {
@@ -614,6 +614,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveProperties(java.lang.String)
      */
+    @Override
     public String retrieveProperties(final String id)
         throws ItemNotFoundException, MissingMethodParameterException,
         SystemException {
@@ -630,6 +631,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecords(java.lang.String)
      */
+    @Override
     public String retrieveMdRecords(final String id)
         throws ItemNotFoundException, MissingMethodParameterException,
         SystemException, AuthorizationException {
@@ -662,6 +664,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecord(java.lang.String,java.lang.String)
      */
+    @Override
     public String retrieveMdRecord(final String id, final String mdRecordId)
         throws ItemNotFoundException, MdRecordNotFoundException,
         MissingMethodParameterException, SystemException,
@@ -721,6 +724,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * 
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecordContent(java.lang.String,java.lang.String)
      */
+    @Override
     public String retrieveMdRecordContent(
         final String id, final String mdRecordId) throws ItemNotFoundException,
         MdRecordNotFoundException, MissingMethodParameterException,
@@ -764,6 +768,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws AuthorizationException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecordContent(java.lang.String,java.lang.String)
      */
+    @Override
     public String retrieveDcRecordContent(final String id)
         throws ItemNotFoundException, MissingMethodParameterException,
         SystemException, MdRecordNotFoundException, AuthorizationException {
@@ -825,6 +830,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#updateMdRecord(java.lang.String,java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String updateMetadataRecord(
         final String id, final String mdRecordId, final String xmlData)
         throws ItemNotFoundException, XmlSchemaNotFoundException,
@@ -867,7 +873,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(e.getMessage(), e);
         }
 
-        HashMap mds = (HashMap) me.getOutputStreams().get("md-records");
+        Map mds = (HashMap) me.getOutputStreams().get("md-records");
         // there is only one md-record (root element is md-record)
         ByteArrayOutputStream mdXml =
             (ByteArrayOutputStream) mds.get(mdRecordId);
@@ -921,6 +927,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#createMetadataRecord(java.lang.String,java.lang.String)
      */
+    @Override
     @Deprecated
     public String createMetadataRecord(final String id, final String xmlData)
         throws ItemNotFoundException, XmlSchemaNotFoundException,
@@ -953,6 +960,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#createMdRecord(java.lang.String,java.lang.String)
      */
+    @Override
     public String createMdRecord(final String id, final String xmlData)
         throws ItemNotFoundException, SystemException,
         XmlSchemaValidationException, LockingException,
@@ -984,7 +992,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     + "FedoraItemHandler.createMetadataRecord.", e);
         }
         Map map = me.getOutputStreams();
-        Map mdRecords = (HashMap) map.get("md-records");
+        Map mdRecords = (Map) map.get("md-records");
         Set keySet = mdRecords.keySet();
         Iterator it = keySet.iterator();
         if (!it.hasNext()) {
@@ -1042,6 +1050,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveComponents(java.lang.String)
      */
+    @Override
     public String retrieveComponents(final String id)
         throws ItemNotFoundException, ComponentNotFoundException,
         MissingMethodParameterException, SystemException,
@@ -1212,6 +1221,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveResources(java.lang.String)
      */
+    @Override
     public String retrieveResources(final String id)
         throws ItemNotFoundException, MissingMethodParameterException,
         SystemException {
@@ -1228,6 +1238,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ItemNotFoundException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveResources(java.lang.String)
      */
+    @Override
     public EscidocBinaryContent retrieveResource(
         final String id, final String resourceName,
         final Map<String, String[]> parameters) throws SystemException,
@@ -1285,6 +1296,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveRelations(java.lang.String)
      */
+    @Override
     public String retrieveRelations(final String id)
         throws ItemNotFoundException, MissingMethodParameterException,
         SystemException {
@@ -1302,6 +1314,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveComponent(java.lang.String,java.lang.String)
      */
+    @Override
     public String retrieveComponent(final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException,
         MissingMethodParameterException, SystemException,
@@ -1335,6 +1348,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface
      *      #retrieveComponentMdRecords(java.lang.String,java.lang.String)
      */
+    @Override
     public String retrieveComponentMdRecords(
         final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -1369,6 +1383,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveComponentMdRecord(java.lang.String,java.lang.String,java.lang.String)
      */
+    @Override
     public String retrieveComponentMdRecord(
         final String id, final String componentId, final String mdRecordId)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -1404,6 +1419,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ResourceNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#deleteComponent(java.lang.String,java.lang.String)
      */
+    @Override
     public void deleteComponent(final String itemId, final String componentId)
         throws LockingException, MissingMethodParameterException,
         SystemException, InvalidStatusException, ComponentNotFoundException,
@@ -1450,6 +1466,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#createComponent(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String createComponent(final String id, final String xmlData)
         throws ItemNotFoundException, MissingContentException,
         ReadonlyViolationException, LockingException,
@@ -1515,6 +1532,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#updateComponent(java.lang.String,java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String updateComponent(
         final String id, final String componentId, final String xmlData)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -1573,9 +1591,9 @@ public class FedoraItemHandler extends ItemHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
-        HashMap<String, Object> compsMap =
+        Map<String, Object> compsMap =
             (HashMap<String, Object>) me.getOutputStreams().get("components");
-        Map compMap = (HashMap) compsMap.get(componentId);
+        Map compMap = (Map) compsMap.get(componentId);
 
         setComponent(getItem().getComponent(componentId), compMap, cmuh
             .getMetadataAttributes().get(componentId), cmuh
@@ -1609,6 +1627,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#release(java.lang.String,java.lang.String)
      */
+    @Override
     public String release(final String id, final String param)
         throws ItemNotFoundException, LockingException, InvalidStatusException,
         MissingMethodParameterException, SystemException,
@@ -1653,7 +1672,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             // reference, recache them and if necessary reindex them.
             List<String> surrogateItemIds =
                 getTripleStoreUtility().getSurrogates(getItem().getId());
-            List<String> referencedSurrogateItemIds = new ArrayList<String>();
+            Collection<String> referencedSurrogateItemIds = new ArrayList<String>();
             for (String surrogateItemId : surrogateItemIds) {
                 String surrogateId = surrogateItemId;
                 String versionId =
@@ -1688,6 +1707,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#submit(java.lang.String,java.lang.String)
      */
+    @Override
     public String submit(final String id, final String param)
         throws ItemNotFoundException, LockingException, InvalidStatusException,
         MissingMethodParameterException, SystemException,
@@ -1746,6 +1766,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws XmlCorruptedException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#revise(java.lang.String,java.lang.String)
      */
+    @Override
     public String revise(final String id, final String param)
         throws ItemNotFoundException, LockingException, InvalidStatusException,
         MissingMethodParameterException, SystemException,
@@ -1796,6 +1817,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#withdraw(java.lang.String,java.lang.String)
      */
+    @Override
     public String withdraw(final String id, final String param)
         throws ItemNotFoundException, NotPublishedException, LockingException,
         AlreadyWithdrawnException, InvalidStatusException,
@@ -1876,6 +1898,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#addContentRelations(java.lang.String,java.lang.String)
      */
+    @Override
     public String addContentRelations(final String id, final String param)
         throws SystemException, ItemNotFoundException,
         OptimisticLockingException, ReferencedResourceNotFoundException,
@@ -1984,6 +2007,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#removeContentRelations(java.lang.String,java.lang.String)
      */
+    @Override
     public String removeContentRelations(final String id, final String param)
         throws SystemException, ItemNotFoundException,
         OptimisticLockingException, InvalidStatusException,
@@ -2031,7 +2055,7 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         List<Map<String, String>> relationsData = removeHandler.getRelations();
         if ((relationsData != null) && (!relationsData.isEmpty())) {
-            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
+            final Map<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
@@ -2110,6 +2134,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws InvalidStatusException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#lock(java.lang.String,java.lang.String)
      */
+    @Override
     public String lock(final String id, final String param)
         throws ItemNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException,
@@ -2148,6 +2173,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#unlock(java.lang.String,java.lang.String)
      */
+    @Override
     public String unlock(final String id, final String param)
         throws ItemNotFoundException, LockingException,
         MissingMethodParameterException, SystemException,
@@ -2182,6 +2208,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveVersionHistory(java.lang.String)
      */
+    @Override
     public String retrieveVersionHistory(final String id)
         throws ItemNotFoundException, SystemException {
 
@@ -2224,6 +2251,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      *             cf. Interface
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveParents(java.lang.String)
      */
+    @Override
     public String retrieveParents(final String id)
         throws ItemNotFoundException, SystemException {
         Utility.getInstance().checkIsItem(id);
@@ -2235,6 +2263,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @return
      * @throws SystemException
      */
+    @Override
     public String retrieveItems(final SRURequestParameters parameters)
         throws SystemException {
         StringWriter result = new StringWriter();
@@ -2259,6 +2288,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveComponentProperties(java.lang.String,java.lang.String)
      */
+    @Override
     public String retrieveComponentProperties(
         final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -2304,6 +2334,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ItemNotFoundException
      *             TODO
      */
+    @Override
     public String moveToContext(final String id, final String taskParam)
         throws ItemNotFoundException, ContextNotFoundException,
         InvalidContentException, LockingException, InvalidStatusException,
@@ -2460,6 +2491,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @spring.property ref="business.TripleStoreUtility"
      * 
      */
+    @Override
     public void setTripleStoreUtility(final TripleStoreUtility tsu) {
         super.setTripleStoreUtility(tsu);
     }
@@ -2539,7 +2571,7 @@ public class FedoraItemHandler extends ItemHandlerPid
     private void setMetadataRecords(
         final Map mdMap, final Map mdAttributesMap,
         final String escidocMdRecordnsUri) throws SystemException {
-        HashMap<String, Datastream> dsMap = new HashMap<String, Datastream>();
+        Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
         if (mdMap == null) {
             getItem().setMdRecords(dsMap);
         }
@@ -2558,7 +2590,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 Datastream ds =
                     new Datastream(name, getItem().getId(), xmlBytes,
                         "text/xml", mdProperties);
-                HashMap mdRecordAttributes =
+                Map mdRecordAttributes =
                     (HashMap) mdAttributesMap.get(name);
                 ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
                 ds.addAlternateId((String) mdRecordAttributes.get("type"));
@@ -2588,7 +2620,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         final Map<String, Map<String, Object>> contentStreamMap)
         throws FedoraSystemException, WebserverSystemException,
         IntegritySystemException {
-        HashMap<String, Datastream> contentStreamDatastreams =
+        Map<String, Datastream> contentStreamDatastreams =
             new HashMap<String, Datastream>();
 
         for (String s : contentStreamMap.keySet()) {
@@ -2990,7 +3022,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
         else {
 
-            List<String> mdRecordNames = new ArrayList<String>();
+            Collection<String> mdRecordNames = new ArrayList<String>();
             String name;
             for (MdRecordCreate mdRecord : mdRecords) {
 

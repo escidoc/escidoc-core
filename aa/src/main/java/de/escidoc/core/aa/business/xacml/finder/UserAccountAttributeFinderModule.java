@@ -631,7 +631,7 @@ public class UserAccountAttributeFinderModule
      * @return Returns the attribute value in an <code>EvaluationResult</code>.
      */
     private EvaluationResult fetchRoleScopes(
-        final String userAccountId, final String attributeId)
+        final String userAccountId, final CharSequence attributeId)
         throws EscidocException {
 
         final EvaluationResult result;

@@ -94,6 +94,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -248,6 +249,7 @@ public class PolicyDecisionPoint
      * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
      *      #evaluate(java.lang.String)
      */
+    @Override
     public boolean[] evaluateRequestList(
         final List<Map<String, String>> requests)
         throws ResourceNotFoundException, MissingMethodParameterException,
@@ -258,13 +260,13 @@ public class PolicyDecisionPoint
 
         for (Map<String, String> request : requests) {
             final Map<String, String> attributeMap = request;
-            Iterator<Map.Entry<String, String>> attributeUriIter =
+            Iterator<Entry<String, String>> attributeUriIter =
                     attributeMap.entrySet().iterator();
             Set<Subject> subjects = null;
             Set<Attribute> actions = null;
             Set<Attribute> resourceAttributes = new HashSet<Attribute>();
             while (attributeUriIter.hasNext()) {
-                Map.Entry<String, String> mapEntry = attributeUriIter.next();
+                Entry<String, String> mapEntry = attributeUriIter.next();
                 final String uriString = mapEntry.getKey();
                 URI uri = uriCache.get(uriString);
                 if (uri == null) {
@@ -340,6 +342,7 @@ public class PolicyDecisionPoint
      * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
      *      #evaluate(java.lang.String)
      */
+    @Override
     public String evaluate(final String requestsXml)
         throws ResourceNotFoundException, XmlSchemaValidationException,
         XmlCorruptedException, SystemException {
@@ -391,6 +394,7 @@ public class PolicyDecisionPoint
      * @see de.escidoc.core.aa.service.interfaces.AaInterface
      *      #evaluateMethodForList(java.lang.String, java.lang.String, List)
      */
+    @Override
     public List<Object[]> evaluateMethodForList(
         final String resourceName, final String methodName,
         final List<Object[]> argumentList) throws ResourceNotFoundException,
@@ -455,6 +459,7 @@ public class PolicyDecisionPoint
      * @see de.escidoc.core.aa.service.interfaces.AaInterface
      *      #evaluateRetrieve(java.lang.String, List)
      */
+    @Override
     public List<String> evaluateRetrieve(
         final String resourceName, final List<String> ids)
         throws ResourceNotFoundException, SystemException {
@@ -657,7 +662,7 @@ public class PolicyDecisionPoint
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private List<ResponseCtx> doEvaluate(final String requestsXml)
+    private List<ResponseCtx> doEvaluate(final CharSequence requestsXml)
         throws XmlSchemaValidationException, SystemException {
 
         // trim white spaces and newlines around < and >
@@ -941,11 +946,13 @@ public class PolicyDecisionPoint
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
      * @aa
      */
+    @Override
     public void afterPropertiesSet() throws Exception {
 
         LOG.debug("Properties set");
     }
 
+    @Override
     public void touch() {
         // do nothing
     }

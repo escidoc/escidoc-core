@@ -32,7 +32,13 @@ package de.escidoc.core.common.util.xml;
  * Elements of eSciDoc XML representation.
  * 
  */
-public class Elements {
+public final class Elements {
+
+    /**
+     * Private constructor to avoid instantiation.
+     */
+     private Elements() {
+     }
 
     public static final String ATTRIBUTE_WOV_VERSION_CREATED_DATE =
         "version-created-date";
@@ -219,4 +225,5 @@ public class Elements {
      * One md-record with this special attribute name is mandatory.
      */
     public static final String MANDATORY_MD_RECORD_NAME = "escidoc";
+
 }

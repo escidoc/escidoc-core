@@ -258,7 +258,7 @@ public class Resource extends XMLBase {
             result = new Object[paramNames.size()];
             for (int i = 0; i < paramNames.size(); ++i) {
                 String replace = uriRegexp;
-                Object value = null;
+                Object value;
                 String param = (String) ((List) paramNames).get(i);
                 if (param.equals(VAR_PREFIX + VAR_BODY + VAR_POSTFIX)) {
                     value = body;
@@ -330,7 +330,7 @@ public class Resource extends XMLBase {
      * @common
      */
     private String replaceIdentifierToRegexp(
-        final String xPath, final Collection<Node> varDefinitions) {
+        final String xPath, final Iterable<Node> varDefinitions) {
         String result = xPath.replaceAll("\\?", "\\\\?");
 
         for (Node varDefinition : varDefinitions) {
@@ -403,7 +403,7 @@ public class Resource extends XMLBase {
             else {
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 byte[] buffer = new byte[BUFFER_SIZE];
-                int length = 0;
+                int length;
                 try {
                     while ((length = is.read(buffer)) != -1) {
                         out.write(buffer, 0, length);

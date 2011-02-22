@@ -31,12 +31,6 @@ public class StatisticRecordImpl implements StatisticRecord {
     private final List<ParameterImpl> parameter = new ArrayList<ParameterImpl>();
 
     /**
-     * Public constructor to allow JAXB serialisation.
-     */
-    public StatisticRecordImpl() {
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

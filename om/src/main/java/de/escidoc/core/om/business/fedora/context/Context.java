@@ -158,6 +158,7 @@ public class Context extends GenericResource implements ContextInterface {
      * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #getProperties()
      */
+    @Override
     public Datastream getProperties() throws StreamNotFoundException,
         FedoraSystemException {
         // if properties is unset, instantiate the Datastream
@@ -176,6 +177,7 @@ public class Context extends GenericResource implements ContextInterface {
      * setProperties(de.escidoc.core.common.business.fedora.datastream.Datastream
      * )
      */
+    @Override
     public void setProperties(final Datastream ds)
         throws StreamNotFoundException, SystemException {
         // check if properties is set, is equal to ds and save to fedora
@@ -217,7 +219,7 @@ public class Context extends GenericResource implements ContextInterface {
 
         // merge new OUS with existing ------------------------------
         // remove
-        final TreeMap<String, List<StartElementWithChildElements>> elementsToRemove =
+        final Map<String, List<StartElementWithChildElements>> elementsToRemove =
             new TreeMap<String, List<StartElementWithChildElements>>();
 
         Iterator<String> it = currentOus.iterator();
@@ -294,6 +296,7 @@ public class Context extends GenericResource implements ContextInterface {
      * 
      * @return href.
      */
+    @Override
     public String getHref() {
         return (Constants.CONTEXT_URL_BASE + getId());
     }
@@ -346,6 +349,7 @@ public class Context extends GenericResource implements ContextInterface {
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #getAdminDescriptors()
      */
+    @Override
     public Map<String, Datastream> getAdminDescriptors()
         throws IntegritySystemException, FedoraSystemException {
 
@@ -353,7 +357,7 @@ public class Context extends GenericResource implements ContextInterface {
             new HashMap<String, Datastream>();
         final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
-        final List<String> names = new ArrayList<String>();
+        final Collection<String> names = new ArrayList<String>();
 
         for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             final String[] altIDs = datastream.getAltIDs();
@@ -389,6 +393,7 @@ public class Context extends GenericResource implements ContextInterface {
      * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #getAdminDescriptor(java.lang.String)
      */
+    @Override
     public Datastream getAdminDescriptor(final String adminDescriptorName)
         throws FedoraSystemException {
 
@@ -403,6 +408,7 @@ public class Context extends GenericResource implements ContextInterface {
      * #setAdminDescriptor(de.escidoc.core.common.business.fedora.datastream.
      * Datastream)
      */
+    @Override
     public void setAdminDescriptor(final Datastream ds)
         throws FedoraSystemException, WebserverSystemException {
 
@@ -423,7 +429,7 @@ public class Context extends GenericResource implements ContextInterface {
     public Map<String, Datastream> getAdminDescriptorsMap()
         throws FedoraSystemException {
 
-        final List<String> dsNames =
+        final Collection<String> dsNames =
             getFedoraUtility()
                 .getDatastreamNamesByAltId(
                     getId(),
@@ -510,10 +516,10 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws SystemException
      *             If anythings fails.
      */
-    public List<String> getOrganizationalUnitHrefs() throws SystemException {
+    public Collection<String> getOrganizationalUnitHrefs() throws SystemException {
         final String path = "/oum/organizational-unit/";
         final List<String> propVals = getOrganizationalUnitObjids();
-        final List<String> ouHrefs = new ArrayList<String>(propVals.size());
+        final Collection<String> ouHrefs = new ArrayList<String>(propVals.size());
         
         for (String s : propVals) {
             ouHrefs.add(path + s);

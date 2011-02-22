@@ -121,6 +121,7 @@ public class Fingerprint implements Comparable<Object> {
      * @return a negative integer, zero, or a positive integer as this object is
      *         less than, equal to, or greater than the specified object.
      */
+    @Override
     public int compareTo(final Object o) {
         try {
             ByteArrayOutputStream b1 = new ByteArrayOutputStream();

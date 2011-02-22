@@ -121,6 +121,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
             result =
                 (Version) getJdbcTemplate().query(QUERY_LATEST_VERSION,
                     new ResultSetExtractor<Object>() {
+                        @Override
                         public Object extractData(final ResultSet rs)
                             throws SQLException {
                             Version result = null;

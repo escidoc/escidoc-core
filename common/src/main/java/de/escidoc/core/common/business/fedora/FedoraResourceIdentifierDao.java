@@ -50,6 +50,7 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
      * @throws SystemException
      * @see de.escidoc.core.common.persistence.interfaces.ResourceIdentifierDao#getNextPids(int)
      */
+    @Override
     public String[] getNextPids(final int noOfPids) throws SystemException {
 
         return getFedoraUtility().getNextPID(noOfPids);

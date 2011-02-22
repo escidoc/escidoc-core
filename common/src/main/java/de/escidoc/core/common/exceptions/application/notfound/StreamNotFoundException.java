@@ -48,7 +48,6 @@ public class StreamNotFoundException extends EscidocException {
      * 
      */
     public StreamNotFoundException() {
-        super();
         // TODO Auto-generated constructor stub
     }
 

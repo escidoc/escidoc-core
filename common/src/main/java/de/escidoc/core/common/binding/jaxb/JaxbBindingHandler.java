@@ -66,6 +66,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
      * 
      * @common
      */
+    @Override
     public Object unmarshal(final String xml, final String contextPath)
         throws XmlParserSystemException {
         try {
@@ -101,6 +102,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
      * 
      * @common
      */
+    @Override
     public String marshal(final Object bindingObject)
         throws XmlParserSystemException {
         try {

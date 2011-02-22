@@ -60,6 +60,7 @@ public interface ContentRelationInterface extends FedoraResource {
      * @throws FedoraSystemException
      *             If Fedora reports an error.
      */
+    @Override
     Datastream getRelsExt() throws StreamNotFoundException,
         FedoraSystemException;
 
@@ -82,6 +83,7 @@ public interface ContentRelationInterface extends FedoraResource {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
+    @Override
     void setRelsExt(Datastream ds) throws StreamNotFoundException,
         LockingException, FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException;

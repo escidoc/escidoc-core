@@ -98,11 +98,13 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserGroup)
      * @aa
      */
+    @Override
     public void delete(final UserGroup userGroup)
         throws SqlDatabaseSystemException {
         super.delete(userGroup);
     }
 
+    @Override
     public UserGroup findUsergroupByLabel(final String label)
         throws SqlDatabaseSystemException {
         UserGroup result;
@@ -136,6 +138,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserGroupMember)
      * @aa
      */
+    @Override
     public void delete(final UserGroupMember userGroupMember)
         throws SqlDatabaseSystemException {
         super.delete(userGroupMember);
@@ -154,6 +157,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      java.lang.String)
      * @aa
      */
+    @Override
     public RoleGrant retrieveCurrentGrant(
         final UserGroup userGroup, final EscidocRole role, final String objId)
         throws SqlDatabaseSystemException {
@@ -197,6 +201,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #retrieveGrant(java.lang.String)
      * @aa
      */
+    @Override
     public RoleGrant retrieveGrant(final String grantId)
         throws SqlDatabaseSystemException {
         RoleGrant result = null;
@@ -231,6 +236,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #retrieveGrants(java.lang.String)
      * @aa
      */
+    @Override
     public List<RoleGrant> retrieveGrants(final String groupId)
         throws SqlDatabaseSystemException {
 
@@ -258,6 +264,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #retrieveGrants(List)
      * @aa
      */
+    @Override
     public Map<String, List<RoleGrant>> retrieveCurrentGrants(
         final List<String> groupIds) throws SqlDatabaseSystemException {
 
@@ -300,6 +307,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #retrieveUserGroup(java.lang.String)
      * @aa
      */
+    @Override
     public UserGroup retrieveUserGroup(final String groupId)
         throws SqlDatabaseSystemException {
         UserGroup result = null;
@@ -340,6 +348,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #retrieveUserGroups(java.util.Map, int, int, String, ListSorting)
      * @aa
      */
+    @Override
     public List<UserGroup> retrieveUserGroups(
         final Map<String, Object> criteria, final int offset,
         final int maxResults, final String orderBy, final ListSorting sorting)
@@ -430,6 +439,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
      *      #retrieveUserGroups(java.lang.String, int, int)
      */
+    @Override
     public List<UserGroup> retrieveUserGroups(
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
@@ -468,6 +478,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #retrieveUserGroupMembers(java.util.Map)
      * @aa
      */
+    @Override
     public List<UserGroupMember> retrieveUserGroupMembers(
         final Map<String, Object> criteria) throws SqlDatabaseSystemException {
         List<UserGroupMember> result;
@@ -559,6 +570,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.RoleGrant)
      * @aa
      */
+    @Override
     public void save(final RoleGrant grant) throws SqlDatabaseSystemException {
         super.save(grant);
     }
@@ -572,6 +584,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.UserGroup)
      * @aa
      */
+    @Override
     public void save(final UserGroup userGroup)
         throws SqlDatabaseSystemException {
         super.save(userGroup);
@@ -586,6 +599,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.UserGroupMember)
      * @aa
      */
+    @Override
     public void save(final UserGroupMember userGroupMember)
         throws SqlDatabaseSystemException {
         super.save(userGroupMember);
@@ -600,6 +614,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #update(de.escidoc.core.aa.business.persistence.RoleGrant)
      * @aa
      */
+    @Override
     public void update(final RoleGrant grant) throws SqlDatabaseSystemException {
         super.update(grant);
     }
@@ -613,6 +628,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #update(de.escidoc.core.aa.business.persistence.UserGroup)
      * @aa
      */
+    @Override
     public void update(final UserGroup userGroup)
         throws SqlDatabaseSystemException {
         super.update(userGroup);
@@ -632,6 +648,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #userGroupExists(java.lang.String)
      * @aa
      */
+    @Override
     public boolean userGroupExists(final String identityInfo)
         throws SqlDatabaseSystemException {
 

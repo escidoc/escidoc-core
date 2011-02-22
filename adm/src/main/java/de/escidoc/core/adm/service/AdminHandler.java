@@ -73,6 +73,7 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException
      *             Thrown if authorization fails.
      */
+    @Override
     public String deleteObjects(final String taskParam)
         throws InvalidXmlException, SystemException, AuthenticationException,
         AuthorizationException {
@@ -91,6 +92,7 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException
      *             Thrown if authorization fails.
      */
+    @Override
     public String getPurgeStatus() throws SystemException,
         AuthenticationException, AuthorizationException {
         return business.getPurgeStatus();
@@ -108,6 +110,7 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException
      *             Thrown if authorization fails.
      */
+    @Override
     public String getReindexStatus() throws SystemException,
         AuthenticationException, AuthorizationException {
         return business.getReindexStatus();
@@ -129,6 +132,7 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException
      *             Thrown if authorization fails.
      */
+    @Override
     public void decreaseReindexStatus(final String objectTypeXml)
         throws InvalidXmlException, SystemException, AuthenticationException,
         AuthorizationException {
@@ -157,6 +161,7 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException
      *             Thrown if authorization fails.
      */
+    @Override
     public String reindex(final String clearIndex, final String indexNamePrefix)
         throws SystemException, InvalidSearchQueryException,
         AuthenticationException, AuthorizationException {
@@ -189,6 +194,7 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException
      *             Thrown if authorization fails.
      */
+    @Override
     public String getIndexConfiguration() throws SystemException,
         AuthenticationException, AuthorizationException {
         return this.business.getIndexConfiguration();
@@ -208,6 +214,7 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException
      *             Thrown if authorization fails.
      */
+    @Override
     public String getRepositoryInfo() throws SystemException,
         AuthenticationException, AuthorizationException {
         return this.business.getRepositoryInfo();
@@ -231,6 +238,7 @@ public class AdminHandler implements AdminHandlerInterface {
      * @throws AuthorizationException
      *             Thrown if authorization fails.
      */
+    @Override
     @Deprecated
     public String loadExamples(final String type)
         throws InvalidSearchQueryException, SystemException,

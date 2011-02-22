@@ -65,6 +65,7 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
      * @return LSInput LSInput.
      * 
      */
+    @Override
     public LSInput resolveResource(final String type,
             final String namespaceURI, final String publicId,
             final String systemId, final String baseURI) {

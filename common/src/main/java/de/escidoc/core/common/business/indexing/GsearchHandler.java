@@ -476,7 +476,7 @@ public class GsearchHandler {
      * @param response xml returned by request to fedoragsearch.
      * @param index name of the index to check/optimize.
      */
-    public void checkOptimize(final String response, final String index) {
+    public void checkOptimize(final CharSequence response, final String index) {
         int docCount = 1;
         String docCountStr = "";
         if (Constants.DOC_COUNT_MATCHER.reset(response).matches()) {

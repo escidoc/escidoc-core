@@ -95,6 +95,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * 
      * @sm
      */
+    @Override
     public String create(final String xmlData) throws AuthenticationException,
         AuthorizationException, XmlSchemaValidationException,
         XmlCorruptedException, MissingMethodParameterException, SystemException {
@@ -123,6 +124,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * 
      * @sm
      */
+    @Override
     public void delete(final String id) throws AuthenticationException,
         AuthorizationException, ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -152,6 +154,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * 
      * @sm
      */
+    @Override
     public String retrieve(final String id) throws AuthenticationException,
         AuthorizationException, ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -180,6 +183,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @throws SystemException
      *             e.
      */
+    @Override
     public String retrieveScopes(final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -215,6 +219,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * 
      * @sm
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws AuthenticationException, AuthorizationException,
         ScopeNotFoundException, MissingMethodParameterException,

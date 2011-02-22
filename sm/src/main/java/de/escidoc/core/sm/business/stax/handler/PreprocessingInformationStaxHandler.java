@@ -84,6 +84,7 @@ public class PreprocessingInformationStaxHandler extends DefaultHandler {
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      * @om
      */
+    @Override
     public String characters(
                 final String s, 
                 final StartElement element) 

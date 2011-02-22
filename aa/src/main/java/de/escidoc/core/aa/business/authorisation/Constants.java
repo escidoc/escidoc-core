@@ -140,7 +140,6 @@ public final class Constants {
      * @aa
      */
     private Constants() {
-        super();
     }
 
 }

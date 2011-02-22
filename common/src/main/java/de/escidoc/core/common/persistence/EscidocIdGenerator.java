@@ -61,6 +61,7 @@ public class EscidocIdGenerator implements org.hibernate.id.IdentifierGenerator 
      *      org.hibernate.engine.SessionImplementor, java.lang.Object)
      * @common
      */
+    @Override
     public Serializable generate(
         final SessionImplementor sessionImplementor, final Object arg1) {
 

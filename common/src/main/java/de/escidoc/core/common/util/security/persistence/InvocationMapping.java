@@ -89,6 +89,5 @@ public class InvocationMapping extends InvocationMappingBase {
 
     /** The default constructor. */
     public InvocationMapping() {
-        super();
     }
 }

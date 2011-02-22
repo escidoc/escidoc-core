@@ -17,6 +17,7 @@ import java.io.IOException;
 
 public class PreemptiveAuthInterceptor implements HttpRequestInterceptor {
 
+    @Override
     public void process(final HttpRequest request, final HttpContext context) throws HttpException, IOException {
         AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
 

@@ -54,7 +54,6 @@ public class XmlCorruptedException extends InvalidXmlException {
      * @common
      */
     public XmlCorruptedException() {
-        super();
     }
 
     /**

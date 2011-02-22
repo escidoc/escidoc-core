@@ -56,6 +56,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      *      #getCredentials()
      * @common
      */
+    @Override
     public Object getCredentials() {
 
         return orginalAuthentication.getCredentials();
@@ -69,6 +70,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      *      #getPrincipal()
      * @common
      */
+    @Override
     public Object getPrincipal() {
 
         return orginalAuthentication.getPrincipal();

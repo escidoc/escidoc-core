@@ -163,7 +163,7 @@ public class ObjectAttributeResolver {
      */
     private Map<String, String> getObjectFromTripleStore(
         final String objectId, final boolean typeOnly) throws SystemException {
-        HashMap<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<String, String>();
         String objectType = tsu.getObjectType(objectId);
         if (objectType != null) {
             // object information is stored in the triple store, title
@@ -204,7 +204,7 @@ public class ObjectAttributeResolver {
         final String objectId, final boolean typeOnly)
         throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
-        HashMap<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<String, String>();
         try {
             scopeHandler.retrieve(objectId);
             // we got a scope for the id, therefore objectType is set to
@@ -238,7 +238,7 @@ public class ObjectAttributeResolver {
      */
     private Map<String, String> getObjectFromUserAccount(
         final String objectId, final boolean typeOnly) throws SystemException {
-        HashMap<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (userAccountDao.userAccountExists(objectId)) {
                 result.put(ATTR_OBJECT_TYPE, XmlUtility.NAME_USER_ACCOUNT);
@@ -280,7 +280,7 @@ public class ObjectAttributeResolver {
      */
     private Map<String, String> getObjectFromUserGroup(
         final String objectId, final boolean typeOnly) throws SystemException {
-        HashMap<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (userGroupDao.userGroupExists(objectId)) {
                 result.put(ATTR_OBJECT_TYPE, XmlUtility.NAME_USER_GROUP);
@@ -319,7 +319,7 @@ public class ObjectAttributeResolver {
      */
     private Map<String, String> getObjectFromRole(
         final String objectId, final boolean typeOnly) throws SystemException {
-        HashMap<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (roleDao.roleExists(objectId)) {
                 result.put(ATTR_OBJECT_TYPE, XmlUtility.NAME_ROLE);
@@ -358,7 +358,7 @@ public class ObjectAttributeResolver {
      */
     private Map<String, String> getObjectFromGrant(
         final String objectId, final boolean typeOnly) throws SystemException {
-        HashMap<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<String, String>();
         if (userAccountDao.grantExists(objectId)) {
             result.put(ATTR_OBJECT_TYPE, XmlUtility.NAME_GRANT);
             if (!typeOnly) {

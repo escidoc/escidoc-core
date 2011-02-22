@@ -991,7 +991,7 @@ public class Utility {
     private void updateElementsInRelsExt(
         final Map<String, StartElementWithChildElements> updateElementsRelsExt,
         final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt,
-        final VersionableResource resource, final String currentPublicStatus,
+        final FedoraResource resource, final String currentPublicStatus,
         final boolean release) throws SystemException {
 
         StaxParser sp = new StaxParser();
@@ -1074,7 +1074,7 @@ public class Utility {
      * @throws TripleStoreSystemException
      */
     private String createVersionXml(
-        final VersionableResource resource,
+        final FedoraResource resource,
         final Map<String, String> resBaseData,
         final Map<String, String> currentVersionProperties,
         final int newVersionNumberInt, final String comment)
@@ -1215,7 +1215,7 @@ public class Utility {
      * @return Comment
      */
     private String createComment(
-        final VersionableResource resource, final String newStatus,
+        final FedoraResource resource, final String newStatus,
         final String versionComment) {
         String comment = versionComment;
         if (versionComment == null) {
@@ -1262,7 +1262,7 @@ public class Utility {
     private Map<String, String> getResourceBaseData(
         final VersionableResource resource) throws SystemException {
 
-        HashMap<String, String> baseData = new HashMap<String, String>();
+        Map<String, String> baseData = new HashMap<String, String>();
         if (resource instanceof Item) {
             baseData.put("resourceBaseUrl", Constants.ITEM_URL_BASE);
             baseData.put("resourcePrefix",

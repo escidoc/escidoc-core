@@ -11,6 +11,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.renderer.VelocityXmlCommonFoXmlRenderer;
 import de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,7 @@ public class VelocityXmlContainerFoXmlRenderer
      * @throws SystemException
      * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitFoXmlRendererInterface#render(Map)
      */
+    @Override
     public String render(
         final Map<String, Object> values,
         final Map<String, String> properties, final List<String> members,
@@ -81,9 +83,9 @@ public class VelocityXmlContainerFoXmlRenderer
      */
     private void addRelsExtValues(
         final Map<String, Object> values,
-        final Map<String, String> properties, final List<String> members,
+        final Map<String, String> properties, final Collection<String> members,
         final String containerId, final String lastModificationDate,
-        final List<Map<String, String>> contentRelations,
+        final Collection<Map<String, String>> contentRelations,
         final String comment,
         final Map<String, String> propertiesAsReferences)
         throws WebserverSystemException {
@@ -163,6 +165,7 @@ public class VelocityXmlContainerFoXmlRenderer
      *      java.lang.String, java.lang.String, java.util.Vector,
      *      java.lang.String)
      */
+    @Override
     public String renderRelsExt(
         final Map<String, String> properties, final List<String> members,
         final String containerId, final String lastModificationDate,
@@ -196,6 +199,7 @@ public class VelocityXmlContainerFoXmlRenderer
      *      java.lang.String, java.lang.String, java.lang.String,
      *      java.lang.String, java.lang.String, java.lang.String)
      */
+    @Override
     public String renderWov(
         final String id, final String title, final String versionNo,
         final String lastModificationDate, final String versionStatus,

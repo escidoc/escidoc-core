@@ -48,7 +48,6 @@ public class UserPreference extends UserPreferenceBase {
      * @aa
      */
     public UserPreference() {
-        super();
     }
 
 }

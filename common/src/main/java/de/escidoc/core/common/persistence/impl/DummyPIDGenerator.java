@@ -56,6 +56,7 @@ public class DummyPIDGenerator implements PIDSystem {
      * @see de.escidoc.core.common.persistence.PIDSystem#assignPID(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String assignPID(final String systemID, final String param)
         throws PidSystemException, MissingMethodParameterException {
 
@@ -72,6 +73,7 @@ public class DummyPIDGenerator implements PIDSystem {
      * 
      * @see de.escidoc.core.common.persistence.PIDSystem#generatePID(java.lang.String)
      */
+    @Override
     public String generatePID(final String systemID) throws PidSystemException {
         String result = pidNamespace + ':' + globalPrefix + separator;
         if (localPrefix != null && localPrefix.length() > 0) {
@@ -87,6 +89,7 @@ public class DummyPIDGenerator implements PIDSystem {
      * 
      * @see de.escidoc.core.common.persistence.PIDSystem#neverGeneratePID(java.lang.String)
      */
+    @Override
     public void neverGeneratePID(final String pid) {
         throw new UnsupportedOperationException(
             "Method neverGeneratePID() not supported by DummyPIDGenerator.");

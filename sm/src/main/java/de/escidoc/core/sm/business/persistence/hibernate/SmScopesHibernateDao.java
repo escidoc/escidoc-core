@@ -68,6 +68,7 @@ public class SmScopesHibernateDao
      * 
      * @sm
      */
+    @Override
     public void save(final Scope scope)
         throws SqlDatabaseSystemException {
         super.save(scope);
@@ -86,6 +87,7 @@ public class SmScopesHibernateDao
      * 
      * @sm
      */
+    @Override
     public void update(final Scope scope)
         throws SqlDatabaseSystemException {
         super.update(scope);
@@ -104,6 +106,7 @@ public class SmScopesHibernateDao
      *             Thrown in case of an internal database access error.
      * @sm
      */
+    @Override
     public void delete(final Scope scope)
         throws SqlDatabaseSystemException {
         if (scope != null && ((scope.getAggregationDefinitions() != null
@@ -134,6 +137,7 @@ public class SmScopesHibernateDao
      * 
      * @sm
      */
+    @Override
     public Scope retrieve(final String id)
         throws SqlDatabaseSystemException, ScopeNotFoundException {
         Scope result = null;
@@ -174,6 +178,7 @@ public class SmScopesHibernateDao
      * 
      * @sm
      */
+    @Override
     public Collection<Scope> retrieveScopes() throws SqlDatabaseSystemException {
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Scope.class, "s");
@@ -197,6 +202,7 @@ public class SmScopesHibernateDao
      * 
      * @sm
      */
+    @Override
     public Collection<Scope> retrieveScopes(final Collection<String> scopeIds)
         throws SqlDatabaseSystemException {
         if (scopeIds == null || scopeIds.isEmpty()) {
@@ -234,6 +240,7 @@ public class SmScopesHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
+    @Override
     public Collection<Scope> retrieveScopes(
         final Collection<String> scopeIds, final String criteria,
         final int offset, final int maxResults)
@@ -273,7 +280,8 @@ public class SmScopesHibernateDao
      * 
      * @sm
      */
-    public Collection<String> retrieveScopeIds() 
+    @Override
+    public Collection<String> retrieveScopeIds()
                 throws SqlDatabaseSystemException {
         Collection<String> scopeIds = new ArrayList<String>();
 

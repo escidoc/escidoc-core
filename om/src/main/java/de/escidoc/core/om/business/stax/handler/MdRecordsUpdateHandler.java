@@ -87,6 +87,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
         this.origin = origin;
     }
 
+    @Override
     public StartElement startElement(StartElement element)
         throws MissingAttributeValueException {
         String curPath = parser.getCurPath();
@@ -137,7 +138,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                     Attribute schema = element.getAttribute(indexOfSchema);
                     schemaValue = schema.getValue();
                 }
-                HashMap<String, String> md = new HashMap<String, String>();
+                Map<String, String> md = new HashMap<String, String>();
                 if (typeValue != null) {
                     md.put("type", typeValue);
                 }
@@ -173,6 +174,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      * @om
      */
+    @Override
     public EndElement endElement(final EndElement element)
         throws MissingMdRecordException {
         if (parser.getCurPath().equals(mdRecordsPath + "/md-record")) {

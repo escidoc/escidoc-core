@@ -103,6 +103,7 @@ public class MetadataHandler extends DefaultHandler {
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      * @om
      */
+    @Override
     public StartElement startElement(final StartElement element)
         throws MissingAttributeValueException {
 
@@ -144,7 +145,7 @@ public class MetadataHandler extends DefaultHandler {
                 Attribute schema = element.getAttribute(indexOfSchema);
                 schemaValue = schema.getValue();
             }
-            HashMap<String, String> md = new HashMap<String, String>();
+            Map<String, String> md = new HashMap<String, String>();
             if (typeValue != null) {
                 md.put("type", typeValue);
             }
@@ -184,6 +185,7 @@ public class MetadataHandler extends DefaultHandler {
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      * @om
      */
+    @Override
     public EndElement endElement(final EndElement element)
         throws MissingMdRecordException {
         if (elementPath.equals(parser.getCurPath())) {
@@ -216,6 +218,7 @@ public class MetadataHandler extends DefaultHandler {
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      * @om
      */
+    @Override
     public String characters(final String s, final StartElement element) {
 
         return s;

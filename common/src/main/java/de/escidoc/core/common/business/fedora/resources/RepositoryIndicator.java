@@ -52,13 +52,6 @@ public class RepositoryIndicator implements Serializable {
     private boolean statusDeleted = false;
 
     /**
-     * RepositoryIndicator.
-     */
-    public RepositoryIndicator() {
-
-    }
-
-    /**
      * Indicate if resource has changed in comparing to repository.
      * 
      * @param resourceChanged

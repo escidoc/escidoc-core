@@ -63,7 +63,6 @@ public final class AggregationDefinitionXmlProvider
      * @aa
      */
     private AggregationDefinitionXmlProvider() {
-        super();
     }
 
     /**

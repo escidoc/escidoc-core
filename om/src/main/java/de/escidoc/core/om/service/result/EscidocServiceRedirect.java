@@ -44,6 +44,7 @@ public class EscidocServiceRedirect implements EscidocServiceRedirectInterface {
     /* (non-Javadoc)
      * @see de.escidoc.core.om.service.result.EscidocServiceRedirectInterface#getRedirectUrl()
      */
+    @Override
     public String getRedirectUrl() {
         return redirectUrl;
     }
@@ -51,6 +52,7 @@ public class EscidocServiceRedirect implements EscidocServiceRedirectInterface {
     /* (non-Javadoc)
      * @see de.escidoc.core.om.service.result.EscidocServiceRedirectInterface#setRedirectUrl(java.lang.String)
      */
+    @Override
     public void setRedirectUrl(final String redirectUrl) {
         this.redirectUrl = redirectUrl;
     }
@@ -58,6 +60,7 @@ public class EscidocServiceRedirect implements EscidocServiceRedirectInterface {
     /* (non-Javadoc)
      * @see de.escidoc.core.om.service.result.EscidocServiceRedirectInterface#getContent()
      */
+    @Override
     public String getContent() {
         return content;
     }
@@ -65,6 +68,7 @@ public class EscidocServiceRedirect implements EscidocServiceRedirectInterface {
     /* (non-Javadoc)
      * @see de.escidoc.core.om.service.result.EscidocServiceRedirectInterface#setContent(java.lang.String)
      */
+    @Override
     public void setContent(final String content) {
         this.content = content;
     }

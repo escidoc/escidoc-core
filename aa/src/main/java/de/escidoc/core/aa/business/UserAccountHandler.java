@@ -32,6 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -210,6 +211,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieve(java.lang.String)
      */
+    @Override
     public String retrieve(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
@@ -230,6 +232,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveCurrentUser(java.lang.String)
      */
+    @Override
     public String retrieveCurrentUser() throws UserAccountNotFoundException,
         SystemException {
         if (StringUtils.isEmpty(UserContext.getId())) {
@@ -260,6 +263,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #create(java.lang.String)
      */
+    @Override
     public String create(final String xmlData)
         throws UniqueConstraintViolationException, XmlCorruptedException,
         OrganizationalUnitNotFoundException, SystemException,
@@ -326,6 +330,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #delete(java.lang.String)
      */
+    @Override
     public void delete(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
@@ -361,6 +366,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #update(java.lang.String, java.lang.String)
      */
+    @Override
     public String update(final String userId, final String xmlData)
         throws UserAccountNotFoundException,
         UniqueConstraintViolationException, XmlCorruptedException,
@@ -446,6 +452,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface#updatePassword(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void updatePassword(final String userId, final String taskParam)
         throws UserAccountNotFoundException, InvalidStatusException,
         XmlCorruptedException, MissingMethodParameterException,
@@ -506,6 +513,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveResources(java.lang.String)
      */
+    @Override
     public String retrieveResources(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
@@ -525,6 +533,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface
      *      #retrieveCurrentGrantsAsMap(java.lang.String)
      */
+    @Override
     public Map<String, Map<String, List<RoleGrant>>> retrieveCurrentGrantsAsMap(
         final String userId) throws UserAccountNotFoundException,
         SystemException {
@@ -575,6 +584,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveCurrentGrants(java.lang.String)
      */
+    @Override
     public String retrieveCurrentGrants(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
@@ -622,6 +632,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveGrants(java.util.Map)
      */
+    @Override
     public String retrieveGrants(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
         String result;
@@ -741,6 +752,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveGrant(java.lang.String, java.lang.String)
      */
+    @Override
     public String retrieveGrant(final String userId, final String grantId)
         throws GrantNotFoundException, UserAccountNotFoundException,
         SystemException {
@@ -770,6 +782,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #activate(java.lang.String, java.lang.String)
      */
+    @Override
     public void activate(final String userId, final String taskParam)
         throws AlreadyActiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingAttributeValueException,
@@ -844,6 +857,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #deactivate(java.lang.String, java.lang.String)
      */
+    @Override
     public void deactivate(final String userId, final String taskParam)
         throws AlreadyDeactiveException, UserAccountNotFoundException,
         XmlCorruptedException, MissingAttributeValueException,
@@ -919,6 +933,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #createGrant(java.lang.String, java.lang.String)
      */
+    @Override
     public String createGrant(final String userId, final String grantXML)
         throws AlreadyExistsException, UserAccountNotFoundException,
         InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
@@ -1094,6 +1109,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #revokeGrant(java.lang.String, java.lang.String, java.lang.String)
      */
+    @Override
     public void revokeGrant(
         final String userId, final String grantId, final String taskParam)
         throws UserAccountNotFoundException, GrantNotFoundException,
@@ -1165,6 +1181,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #revokeGrants(java.lang.String, java.lang.String)
      */
+    @Override
     public void revokeGrants(final String userId, final String taskParam)
         throws UserAccountNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException,
@@ -1204,7 +1221,7 @@ public class UserAccountHandler
 
         Map<String, Object> filters = fh.getRules();
 
-        HashSet<String> grantIds;
+        Collection<String> grantIds;
         if (filters.isEmpty()) {
             // if no filters are provided, remove all current grants
             grantIds = new HashSet<String>();
@@ -1292,6 +1309,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface
      *      #retrieveUserHandles(java.lang.String)
      */
+    @Override
     public List<UserLoginData> retrieveUserHandles(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
@@ -1315,6 +1333,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveUserAccounts(java.util.Map)
      */
+    @Override
     public String retrieveUserAccounts(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
         String result;
@@ -1563,7 +1582,7 @@ public class UserAccountHandler
     private Set<String> retrieveUsersForGroup(final String groupId)
         throws UserGroupNotFoundException, SystemException {
         // may not return null but empty list!!
-        HashSet<String> userIds = new HashSet<String>();
+        Set<String> userIds = new HashSet<String>();
 
         // Try getting the userGroup
         UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
@@ -1689,6 +1708,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveUserDetails(java.lang.String)
      */
+    @Override
     public UserDetails retrieveUserDetails(final String handle)
         throws MissingMethodParameterException, AuthenticationException,
         AuthorizationException, UserAccountNotFoundException, SystemException {
@@ -2113,6 +2133,7 @@ public class UserAccountHandler
      * @throws Exception
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
      */
+    @Override
     public void afterPropertiesSet() throws Exception {
 
         LOG.debug("Properties set");
@@ -2133,6 +2154,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrievePreferences(java.lang.String)
      */
+    @Override
     public String retrievePreferences(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
@@ -2163,6 +2185,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrievePreference(java.lang.String)
      */
+    @Override
     public String retrievePreference(final String userId, final String name)
         throws UserAccountNotFoundException, PreferenceNotFoundException,
         SystemException {
@@ -2208,6 +2231,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #createPreference(java.lang.String, java.lang.String)
      */
+    @Override
     public String createPreference(
         final String userId, final String preferenceXML)
         throws AlreadyExistsException, UserAccountNotFoundException,
@@ -2297,6 +2321,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #updatePreference(java.lang.String, java.lang.String)
      */
+    @Override
     public String updatePreference(
         final String userId, final String preferenceName,
         final String preferenceXML) throws AlreadyExistsException,
@@ -2395,6 +2420,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #deletePreference(java.lang.String, java.lang.String)
      */
+    @Override
     public void deletePreference(
         final String userId, final String preferenceName)
         throws UserAccountNotFoundException, PreferenceNotFoundException,
@@ -2443,6 +2469,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #createPreference(java.lang.String, java.lang.String)
      */
+    @Override
     public String updatePreferences(
         final String userId, final String preferencesXML)
         throws UserAccountNotFoundException, XmlCorruptedException,
@@ -2495,7 +2522,7 @@ public class UserAccountHandler
         // add all given preferences
         UserPreference preference;
         Map<String, String> preferences = uprh.getPreferences();
-        for (Map.Entry<String, String> e : preferences.entrySet()) {
+        for (Entry<String, String> e : preferences.entrySet()) {
             preference = new UserPreference();
             String preferenceName = e.getKey();
             String preferenceValue = e.getValue();
@@ -2537,6 +2564,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #createAttribute(java.lang.String, java.lang.String)
      */
+    @Override
     public String createAttribute(final String userId, final String attributeXML)
         throws AlreadyExistsException, UserAccountNotFoundException,
         XmlCorruptedException, SystemException {
@@ -2608,6 +2636,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveAttributes(java.lang.String)
      */
+    @Override
     public String retrieveAttributes(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
@@ -2638,6 +2667,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveAttribute(java.lang.String, java.lang.String)
      */
+    @Override
     public String retrieveNamedAttributes(final String userId, final String name)
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
         SystemException {
@@ -2678,6 +2708,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveAttribute(java.lang.String, java.lang.String)
      */
+    @Override
     public String retrieveAttribute(
         final String userId, final String attributeId)
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
@@ -2720,6 +2751,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #updateAttribute(java.lang.String, java.lang.String)
      */
+    @Override
     public String updateAttribute(
         final String userId, final String attributeId, final String attributeXML)
         throws UserAccountNotFoundException, OptimisticLockingException,
@@ -2790,6 +2822,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #deleteAttribute(java.lang.String, java.lang.String)
      */
+    @Override
     public void deleteAttribute(final String userId, final String attributeId)
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
         ReadonlyElementViolationException, SystemException {
@@ -2818,6 +2851,7 @@ public class UserAccountHandler
      * @throws AuthorizationException
      *             e
      */
+    @Override
     public String retrievePermissionFilterQuery(
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
@@ -2826,7 +2860,7 @@ public class UserAccountHandler
         String[] types = parameters.get("index");
 
         if (types != null) {
-            Set<String> hashedTypes = new HashSet<String>();
+            Collection<String> hashedTypes = new HashSet<String>();
 
             hashedTypes.addAll(Arrays.asList(types));
 

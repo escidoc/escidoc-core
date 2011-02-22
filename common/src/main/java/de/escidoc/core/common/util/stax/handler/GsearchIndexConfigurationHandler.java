@@ -109,6 +109,7 @@ public class GsearchIndexConfigurationHandler extends DefaultHandler {
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
+    @Override
     public String characters(
             final String s,
             final StartElement element)

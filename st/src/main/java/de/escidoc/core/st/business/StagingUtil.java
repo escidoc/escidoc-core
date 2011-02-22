@@ -37,7 +37,8 @@ import de.escidoc.core.st.business.persistence.StagingFileDao;
  * @author MSC
  * @st
  */
-public class StagingUtil {
+public final class StagingUtil {
+
     private static final String STAGING_AREA_BASE_PATH = "catalina.home";
 
     private static final String STAGING_AREA = "staging";
@@ -58,10 +59,9 @@ public class StagingUtil {
     public static final int TOKEN_VALID_DURATION = 1000000;
 
     /**
-     * Constructor.
+     * Private constructor to avoid instantiation.
      */
-    protected StagingUtil() {
-
+    private StagingUtil() {
     }
 
     /**

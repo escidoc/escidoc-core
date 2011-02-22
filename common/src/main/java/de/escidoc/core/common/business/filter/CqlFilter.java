@@ -43,6 +43,7 @@ import org.z3950.zing.cql.CQLTermNode;
 import org.z3950.zing.cql.Modifier;
 import org.z3950.zing.cql.ModifierSet;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -257,7 +258,7 @@ public abstract class CqlFilter {
      * @return Criterion
      */
     protected Criterion getInRestrictions(
-        final Set<String> criteria, final String fieldName) {
+        final Collection<String> criteria, final String fieldName) {
         if (criteria.contains("")) {
             criteria.remove("");
             if (criteria.isEmpty()) {
@@ -341,7 +342,7 @@ public abstract class CqlFilter {
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      */
-    protected void setOrderBy(final List<ModifierSet> orderBy)
+    protected void setOrderBy(final Iterable<ModifierSet> orderBy)
         throws InvalidSearchQueryException {
         for (ModifierSet modifier : orderBy) {
             if (!modifier.getModifiers().isEmpty()) {

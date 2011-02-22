@@ -43,11 +43,6 @@ import java.util.regex.Matcher;
 
 public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
 
-    public ShibbolethAuthenticationFilter() {
-        super();
-
-    }
-
     // CHECKSTYLE:JAVADOC-OFF
 
     /**
@@ -171,6 +166,7 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
      * @see org.springframework.security.ui.SpringSecurityFilter#getOrder()
      * @aa
      */
+    @Override
     public int getOrder() {
 
         return 0;

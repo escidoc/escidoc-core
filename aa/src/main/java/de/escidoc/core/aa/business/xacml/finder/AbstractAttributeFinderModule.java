@@ -109,7 +109,6 @@ public abstract class AbstractAttributeFinderModule
      */
     public AbstractAttributeFinderModule() {
 
-        super();
         convertToObjectType = new HashMap<String, String>();
 
         convertToObjectType.put(XmlUtility.NAME_COMPONENT,
@@ -868,7 +867,7 @@ public abstract class AbstractAttributeFinderModule
      *         failed attribute fetching.
      */
     protected String getResourceNotFoundExceptionName(
-        final String attributeIdValue) {
+        final CharSequence attributeIdValue) {
 
         final StringBuilder exceptionName =
                 new StringBuilder(RESOURCE_NOT_FOUND_EXCEPTION_PACKAGE_PREFIX);

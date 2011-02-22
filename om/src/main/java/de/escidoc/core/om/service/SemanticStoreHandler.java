@@ -85,6 +85,7 @@ public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
      * @throws AuthorizationException
      *             Thrown in case of a failed authorization.
      */
+    @Override
     public String spo(final String taskParam) throws SystemException,
         InvalidTripleStoreQueryException,
         InvalidTripleStoreOutputFormatException, InvalidXmlException,

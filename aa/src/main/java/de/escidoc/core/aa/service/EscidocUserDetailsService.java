@@ -74,6 +74,7 @@ public class EscidocUserDetailsService
      *      #loadUserByUsername(java.lang.String)
      * @aa
      */
+    @Override
     public UserDetails loadUserByUsername(final String identifier) {
 
         LOG.debug("loadUserByUsername");

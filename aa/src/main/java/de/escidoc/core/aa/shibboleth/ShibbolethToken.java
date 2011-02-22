@@ -59,6 +59,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
      *         to the shibboleth service provider.
      * @aa
      */
+    @Override
     public Object getCredentials() {
 
         return null;
@@ -71,6 +72,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
      * @see org.springframework.security.providers.AbstractAuthenticationToken#getPrincipal()
      * @aa
      */
+    @Override
     public Object getPrincipal() {
 
         return user;

@@ -67,7 +67,6 @@ public class DsCompositeModelHandler extends DefaultHandler {
      * 
      */
     public DsCompositeModelHandler(StaxParser parser) {
-        super();
         this.parser = parser;
         this.dsTypeModels = new ArrayList<DsTypeModel>();
     }

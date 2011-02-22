@@ -54,7 +54,6 @@ public class RoleGrant extends RoleGrantBase {
      */
     public RoleGrant() {
 
-        super();
     }
 
     /**

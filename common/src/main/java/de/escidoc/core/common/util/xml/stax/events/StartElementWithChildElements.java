@@ -47,7 +47,6 @@ public class StartElementWithChildElements extends StartElementWithText {
      * StartElementWithChildElements.
      */
     public StartElementWithChildElements() {
-        super();
         this.children = null;
     }
 

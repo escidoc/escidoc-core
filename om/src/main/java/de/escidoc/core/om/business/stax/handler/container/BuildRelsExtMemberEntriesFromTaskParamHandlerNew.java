@@ -62,6 +62,7 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
         this.memberIdsToRemove = new ArrayList<String>();
     }
 
+    @Override
     public String characters(String data, StartElement element)
         throws InvalidContentException, TripleStoreSystemException,
         WebserverSystemException {

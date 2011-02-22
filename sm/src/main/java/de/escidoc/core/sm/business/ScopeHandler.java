@@ -84,6 +84,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      *             ex
      * 
      */
+    @Override
     public String create(final String xmlData)
         throws MissingMethodParameterException, SystemException {
         if (LOGGER.isDebugEnabled()) {
@@ -136,6 +137,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      *             e.
      * 
      */
+    @Override
     public void delete(final String id) throws ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
         if (LOGGER.isDebugEnabled()) {
@@ -145,7 +147,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
             LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
-        Scope scope = null;
+        Scope scope;
         scope = dao.retrieve(id);
         dao.delete(scope);
     }
@@ -168,6 +170,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      *             e.
      * 
      */
+    @Override
     public String retrieve(final String id) throws ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
         if (LOGGER.isDebugEnabled()) {
@@ -195,9 +198,10 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @throws SystemException
      *             e.
      */
+    @Override
     public String retrieveScopes(final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
-        String result = null;
+        String result;
         SRURequestParameters params =
             new DbRequestParameters(parameters);
         String query = params.getQuery();
@@ -256,6 +260,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      *             e.
      * 
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws ScopeNotFoundException, MissingMethodParameterException,
         SystemException {

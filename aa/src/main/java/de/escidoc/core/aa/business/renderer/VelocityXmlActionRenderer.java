@@ -68,6 +68,7 @@ public class VelocityXmlActionRenderer extends AbstractRenderer
      *      #renderUnsecuredActionList(de.escidoc.core.aa.business.persistence.UnsecuredActionList)
      * @aa
      */
+    @Override
     public String renderUnsecuredActionList(final UnsecuredActionList actions)
         throws WebserverSystemException {
 

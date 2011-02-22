@@ -38,6 +38,7 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -264,13 +265,13 @@ public class FilterHandler extends DefaultHandler {
      * @common
      */
     @SuppressWarnings("unchecked")
-    public void putRule(final String ruleName, final Set<String> ruleValues) {
+    public void putRule(final String ruleName, final Collection<String> ruleValues) {
         if (rules.get(ruleName) != null) {
             if (rules.get(ruleName) instanceof String) {
                 ruleValues.add((String) rules.get(ruleName));
             }
             else if (rules.get(ruleName) instanceof Set) {
-                ruleValues.addAll((Set) rules.get(ruleName));
+                ruleValues.addAll((Collection<String>) rules.get(ruleName));
             }
         }
         rules.put(ruleName, ruleValues);

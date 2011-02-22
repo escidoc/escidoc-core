@@ -43,6 +43,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The MetadataHandler. The parser handles only one Metadata Record!
@@ -177,7 +178,7 @@ public class MetadataHandler2 extends DefaultHandler {
             this.parsingMetadata = false;
 
             this.me.endElement(element);
-            HashMap<String, ?> tmp =
+            Map<String,?> tmp =
                 (HashMap<String, ?>) this.me.getOutputStreams().get(
                     Elements.ELEMENT_MD_RECORDS);
             try {

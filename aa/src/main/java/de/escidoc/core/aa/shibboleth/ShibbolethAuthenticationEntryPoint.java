@@ -48,6 +48,7 @@ public class ShibbolethAuthenticationEntryPoint
 
     private String sessionInitiatorPath = null;
 
+    @Override
     public void commence(
         final ServletRequest request, final ServletResponse response,
         final AuthenticationException authException) throws IOException,

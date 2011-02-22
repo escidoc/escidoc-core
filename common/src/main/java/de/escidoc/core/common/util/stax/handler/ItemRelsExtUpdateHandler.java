@@ -100,6 +100,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
         return this.props;
     }
 
+    @Override
     public StartElement startElement(final StartElement element) {
         if (!props.isEmpty()) {
             String curPath = parser.getCurPath();
@@ -240,6 +241,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
      * @param path
      *            XPath
      */
+    @Deprecated
     public void setPath(final String path) {
         this.path = path;
     }

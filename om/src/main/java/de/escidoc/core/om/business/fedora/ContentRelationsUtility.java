@@ -70,6 +70,12 @@ public final class ContentRelationsUtility {
     }
 
     /**
+     * Private constructor to avoid instantiation.
+     */
+    private ContentRelationsUtility() {
+    }
+
+    /**
      * Check if a predicate is valid. Valid mean that it is a registered
      * predicate. Predicated are registered through the predicate list.
      * 

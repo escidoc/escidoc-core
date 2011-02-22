@@ -198,6 +198,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * 
      * @return WSDDDeployment the deployment
      */
+    @Override
     public WSDDDeployment getDeployment() {
         return deployment;
     }
@@ -321,6 +322,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
+    @Override
     public void configureEngine(final AxisEngine engine)
         throws ConfigurationException {
         try {
@@ -365,6 +367,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
+    @Override
     public void writeEngineConfig(final AxisEngine engine)
         throws ConfigurationException {
         if (!readOnly) {
@@ -394,6 +397,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
+    @Override
     public Handler getHandler(final QName qname) throws ConfigurationException {
         return deployment.getHandler(qname);
     }
@@ -407,6 +411,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
+    @Override
     public SOAPService getService(final QName qname)
         throws ConfigurationException {
         SOAPService service = deployment.getService(qname);
@@ -426,6 +431,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
+    @Override
     public SOAPService getServiceByNamespaceURI(final String namespace)
         throws ConfigurationException {
         return deployment.getServiceByNamespaceURI(namespace);
@@ -440,6 +446,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
+    @Override
     public Handler getTransport(final QName qname)
         throws ConfigurationException {
         return deployment.getTransport(qname);
@@ -452,6 +459,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
+    @Override
     public TypeMappingRegistry getTypeMappingRegistry()
         throws ConfigurationException {
         return deployment.getTypeMappingRegistry();
@@ -464,6 +472,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
+    @Override
     public Handler getGlobalRequest() throws ConfigurationException {
         return deployment.getGlobalRequest();
     }
@@ -475,6 +484,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
+    @Override
     public Handler getGlobalResponse() throws ConfigurationException {
         return deployment.getGlobalResponse();
     }
@@ -488,6 +498,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      */
     // Needs to be a HashTable
     // Interface org.apache.axis.EngineConfiguration
+    @Override
     public Hashtable getGlobalOptions() throws ConfigurationException {
         WSDDGlobalConfiguration globalConfig =
             deployment.getGlobalConfiguration();
@@ -506,6 +517,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @throws ConfigurationException
      *             e
      */
+    @Override
     public Iterator getDeployedServices() throws ConfigurationException {
         return deployment.getDeployedServices();
     }
@@ -516,6 +528,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * 
      * @return a <code>List</code> of the roles for this engine
      */
+    @Override
     public List getRoles() {
         return deployment.getRoles();
     }

@@ -16,6 +16,7 @@ public class ShibbolethAuthenticationProvider implements AuthenticationProvider 
      *      #authenticate(org.springframework.security.Authentication)
      * @aa
      */
+    @Override
     public Authentication authenticate(final Authentication authentication)
         throws AuthenticationException {
 
@@ -36,6 +37,7 @@ public class ShibbolethAuthenticationProvider implements AuthenticationProvider 
      *      #supports(java.lang.Class)
      * @aa
      */
+    @Override
     public boolean supports(final Class authentication) {
 
         return ShibbolethToken.class.isAssignableFrom(authentication);

@@ -112,6 +112,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *      #create(java.lang.String)
      * @om
      */
+    @Override
     public String create(final String xmlData) throws AuthenticationException,
         AuthorizationException, MissingAttributeValueException,
         MissingMethodParameterException, InvalidXmlException,
@@ -139,6 +140,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *             Thrown if internal error occurs.
      * @om
      */
+    @Override
     public void delete(final String id) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException,
         SystemException, LockingException {
@@ -176,6 +178,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @throws InvalidStatusException
      *             e
      */
+    @Override
     public String lock(final String id, final String param)
         throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException,
@@ -215,6 +218,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @throws InvalidStatusException
      *             Thrown if resource is not locked.
      */
+    @Override
     public String unlock(final String id, final String param)
         throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException,
@@ -255,6 +259,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @throws InvalidContentException
      *             e
      */
+    @Override
     public String submit(final String id, final String param)
         throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException,
@@ -294,6 +299,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @throws InvalidContentException
      *             e
      */
+    @Override
     public String release(final String id, final String param)
         throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException,
@@ -333,6 +339,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @throws InvalidContentException
      *             e
      */
+    @Override
     public String revise(final String id, final String param)
         throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException,
@@ -360,6 +367,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *      #retrieve(java.lang.String)
      * @om
      */
+    @Override
     public String retrieve(final String id) throws AuthenticationException,
         AuthorizationException, ContentRelationNotFoundException,
         SystemException {
@@ -381,6 +389,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @throws SystemException
      *             If case of internal error.
      */
+    @Override
     public String retrieveContentRelations(
         final Map<String, String[]> parameterMap)
         throws InvalidSearchQueryException, SystemException {
@@ -406,6 +415,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface
      *      #retrieveProperties(java.lang.String)
      */
+    @Override
     public String retrieveProperties(final String id)
         throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, SystemException {
@@ -453,6 +463,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @throws SystemException
      *             Thrown if internal error occur
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, OptimisticLockingException,
@@ -498,6 +509,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface
      *      #assignObjectPid(java.lang.String,java.lang.String)
      */
+    @Override
     public String assignObjectPid(final String id, final String taskParam)
         throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, LockingException,
@@ -524,6 +536,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface
      *      #retrieveMdRecords(java.lang.String)
      */
+    @Override
     public String retrieveMdRecords(final String id)
         throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, SystemException {
@@ -543,6 +556,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @throws SystemException
      *             Thrown if internal error occurs.
      */
+    @Override
     public String retrieveRegisteredPredicates()
         throws InvalidContentException, InvalidXmlException, SystemException {
         return handler.retrieveRegisteredPredicates();
@@ -570,6 +584,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *      .ContentRelationHandlerInterface
      *      #retrieveMdRecord(java.lang.String,java.lang.String)
      */
+    @Override
     public String retrieveMdRecord(final String id, final String name)
         throws AuthenticationException, AuthorizationException,
         ContentRelationNotFoundException, MdRecordNotFoundException,
@@ -588,6 +603,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * @axis.exclude
      * 
      */
+    @Override
     public String retrieveResources(final String id)
         throws ContentRelationNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException,

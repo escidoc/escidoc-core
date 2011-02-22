@@ -81,7 +81,7 @@ import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
 public class AggregationDefinitionHandler
     implements AggregationDefinitionHandlerInterface {
 
-    private static AppLogger log = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         AggregationDefinitionHandler.class.getName());
 
     private SmAggregationDefinitionsDaoInterface dao;
@@ -113,6 +113,7 @@ public class AggregationDefinitionHandler
      * @tx
      * @sm
      */
+    @Override
     public String create(final String xmlData)
         throws MissingMethodParameterException, ScopeNotFoundException,
         SystemException {
@@ -124,8 +125,8 @@ public class AggregationDefinitionHandler
             throw new MissingMethodParameterException("xml may not be null");
         }
 
-        String scopeId = null;
-        AggregationDefinition aggregationDefinition = null;
+        String scopeId;
+        AggregationDefinition aggregationDefinition;
 
         // parse
         StaxParser sp = new StaxParser();
@@ -202,6 +203,7 @@ public class AggregationDefinitionHandler
      * @tx
      * @sm
      */
+    @Override
     public void delete(final String id)
         throws AggregationDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -212,7 +214,7 @@ public class AggregationDefinitionHandler
             log.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
-        AggregationDefinition aggregationDefinition = null;
+        AggregationDefinition aggregationDefinition;
         try {
             // get aggregation definition to get aggregation table infos
             aggregationDefinition = dao.retrieve(id);
@@ -259,6 +261,7 @@ public class AggregationDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public String retrieve(final String id)
         throws AggregationDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -297,10 +300,11 @@ public class AggregationDefinitionHandler
      * @throws SystemException
      *             e.
      */
+    @Override
     public String retrieveAggregationDefinitions(
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
-        String result = null;
+        String result;
         SRURequestParameters params =
             new DbRequestParameters(parameters);
         String query = params.getQuery();
@@ -372,7 +376,7 @@ public class AggregationDefinitionHandler
             Collection<DatabaseTableFieldVo> databaseFieldVos =
                 new ArrayList<DatabaseTableFieldVo>();
             // sort AggregationTableFields
-            TreeSet<AggregationTableField> sortedAggregationTableFields =
+            Collection<AggregationTableField> sortedAggregationTableFields =
                 new TreeSet<AggregationTableField>(
                     new AggregationTableFieldComparator());
             sortedAggregationTableFields
@@ -431,7 +435,7 @@ public class AggregationDefinitionHandler
                     Collection<String> indexFields = new ArrayList<String>();
                     if (index.getAggregationTableIndexFields() != null) {
                         // sort AggregationTableIndexFields
-                        TreeSet<AggregationTableIndexField> sortedAggregationTableIndexFields =
+                        Collection<AggregationTableIndexField> sortedAggregationTableIndexFields =
                             new TreeSet<AggregationTableIndexField>(
                                 new AggregationTableIndexFieldComparator());
                         sortedAggregationTableIndexFields

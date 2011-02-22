@@ -57,6 +57,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
      * 
      * @sm
      */
+    @Override
     public StartElement startElement(final StartElement element) throws Exception {
         if ("report-definition".equals(element.getLocalName())) {
             try {
@@ -79,6 +80,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
      * 
      * @sm
      */
+    @Override
     public EndElement endElement(final EndElement element) throws Exception {
         if ("parameter".equals(element.getLocalName())) {
             reportParametersVo.getParameterVos().add(parameterVo);
@@ -100,6 +102,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      * @om
      */
+    @Override
     public String characters(
                 final String s, 
                 final StartElement element) 

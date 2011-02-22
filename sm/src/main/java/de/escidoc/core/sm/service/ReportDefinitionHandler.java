@@ -104,6 +104,7 @@ public class ReportDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public String create(final String xmlData) throws AuthenticationException,
         AuthorizationException, XmlSchemaValidationException,
         XmlCorruptedException, InvalidSqlException,
@@ -134,6 +135,7 @@ public class ReportDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public void delete(final String id) throws AuthenticationException,
         AuthorizationException, ReportDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -163,6 +165,7 @@ public class ReportDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public String retrieve(final String id) throws AuthenticationException,
         AuthorizationException, ReportDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
@@ -189,7 +192,8 @@ public class ReportDefinitionHandler
      * @throws SystemException
      *             e.
      */
-    public String retrieveReportDefinitions(final Map<String, String[]> filter) 
+    @Override
+    public String retrieveReportDefinitions(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, 
         MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
@@ -232,6 +236,7 @@ public class ReportDefinitionHandler
      * 
      * @sm
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws AuthenticationException, AuthorizationException,
         ReportDefinitionNotFoundException, MissingMethodParameterException,

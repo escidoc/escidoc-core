@@ -33,6 +33,7 @@ import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.Container;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -111,6 +112,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterface#render(de.escidoc.core.om.business.fedora.container.FedoraContainerHandler)
      */
+    @Override
     public String render(final Container container) throws SystemException {
 
         // Container container = containerHandler.getContainer();
@@ -145,6 +147,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * renderProperties(de.escidoc.core.common.business.fedora.resources.Container
      * )
      */
+    @Override
     public String renderProperties(final Container container)
         throws WebserverSystemException, SystemException {
 
@@ -167,6 +170,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * renderResources(de.escidoc.core.common.business.fedora.resources.Container
      * )
      */
+    @Override
     public String renderResources(final Container container)
         throws WebserverSystemException {
         String result;
@@ -190,6 +194,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
+    @Override
     public String renderRelations(final Container container)
         throws WebserverSystemException, SystemException {
 
@@ -217,6 +222,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
+    @Override
     public String renderParents(final String containerId)
         throws SystemException {
 
@@ -266,7 +272,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             }
 
             Iterator<String> idIter = ids.iterator();
-            List<Map<String, String>> entries =
+            Collection<Map<String, String>> entries =
                 new ArrayList<Map<String, String>>(ids.size());
             while (idIter.hasNext()) {
                 Map<String, String> entry = new HashMap<String, String>(THREE);
@@ -565,8 +571,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         List<String> ids = ufilter.getMemberRefList(container);
         Iterator<String> idIter = ids.iterator();
-        List<Map<String, String>> items = new ArrayList<Map<String, String>>();
-        List<Map<String, String>> containers =
+        Collection<Map<String, String>> items = new ArrayList<Map<String, String>>();
+        Collection<Map<String, String>> containers =
             new ArrayList<Map<String, String>>();
 
         while (idIter.hasNext()) {
@@ -623,7 +629,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @oum
      */
     private void addResourcesValues(
-        final Container container, final Map<String, Object> values)
+        final FedoraResource container, final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
@@ -710,6 +716,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * 
      * @return Returns the XML representation of the metadata records.
      */
+    @Override
     public String renderMetadataRecord(
         final Container container, final Datastream mdRecord,
         final boolean isRootMdRecord) throws EncodingSystemException,
@@ -759,6 +766,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * 
      * @return Returns the XML representation of the metadata records.
      */
+    @Override
     public String renderMetadataRecords(final Container container)
         throws EncodingSystemException, FedoraSystemException,
         WebserverSystemException, IntegritySystemException {
@@ -784,6 +792,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *             Thrown in case of an internal error.
      * @oum
      */
+    @Override
     public String renderStructMap(final Container container)
         throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();

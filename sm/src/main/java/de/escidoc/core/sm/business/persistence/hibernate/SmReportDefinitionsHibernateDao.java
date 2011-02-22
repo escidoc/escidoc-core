@@ -68,6 +68,7 @@ public class SmReportDefinitionsHibernateDao
      * 
      * @sm
      */
+    @Override
     public void save(final ReportDefinition reportDefinition)
         throws SqlDatabaseSystemException {
         super.save(reportDefinition);
@@ -87,6 +88,7 @@ public class SmReportDefinitionsHibernateDao
      * 
      * @sm
      */
+    @Override
     public void update(final ReportDefinition reportDefinition)
         throws SqlDatabaseSystemException {
         super.update(reportDefinition);
@@ -106,6 +108,7 @@ public class SmReportDefinitionsHibernateDao
      * 
      * @sm
      */
+    @Override
     public void delete(final ReportDefinition reportDefinition)
         throws SqlDatabaseSystemException {
         super.delete(reportDefinition);
@@ -128,6 +131,7 @@ public class SmReportDefinitionsHibernateDao
      * 
      * @sm
      */
+    @Override
     public ReportDefinition retrieve(final String id)
         throws SqlDatabaseSystemException, ReportDefinitionNotFoundException {
         ReportDefinition result = null;
@@ -169,6 +173,7 @@ public class SmReportDefinitionsHibernateDao
      * 
      * @sm
      */
+    @Override
     public Collection<ReportDefinition> retrieveReportDefinitions()
         throws SqlDatabaseSystemException {
         final DetachedCriteria detachedCriteria =
@@ -201,6 +206,7 @@ public class SmReportDefinitionsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
+    @Override
     public Collection<ReportDefinition> retrieveReportDefinitions(
         final Collection<String> scopeIds, final String criteria, final int offset,
         final int maxResults)

@@ -30,6 +30,7 @@ package de.escidoc.core.aa.business.xacml.function;
 
 import com.sun.xacml.AbstractPolicy;
 import com.sun.xacml.EvaluationCtx;
+import com.sun.xacml.PolicyTreeElement;
 import com.sun.xacml.attr.AttributeValue;
 import com.sun.xacml.attr.BooleanAttribute;
 import com.sun.xacml.attr.StringAttribute;
@@ -94,6 +95,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      *      com.sun.xacml.EvaluationCtx)
      * @aa
      */
+    @Override
     public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
 
         try {
@@ -141,10 +143,10 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      * @aa
      */
     private Collection<String> getRoleNames(
-        final AbstractPolicy policy, Collection<String> roleNames) {
+        final PolicyTreeElement policy, Collection<String> roleNames) {
         if (policy != null) {
             try {
-                XacmlPolicyReference policyReference =
+                PolicyTreeElement policyReference =
                     (XacmlPolicyReference) policy;
                 roleNames.add(policyReference.getId().getPath().toLowerCase());
             }
@@ -154,7 +156,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
                     for (Object o : policy.getChildren()) {
                         try {
                             abstractPolicy = (AbstractPolicy) o;
-                            XacmlPolicyReference policyReference =
+                            PolicyTreeElement policyReference =
                                     (XacmlPolicyReference) abstractPolicy;
                             roleNames.add(policyReference
                                     .getId().getPath().toLowerCase());

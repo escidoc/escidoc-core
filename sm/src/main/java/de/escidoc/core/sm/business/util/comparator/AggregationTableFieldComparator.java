@@ -51,6 +51,7 @@ public class AggregationTableFieldComparator
      * 
      * @sm
      */
+    @Override
     public int compare(
             final AggregationTableField a1, 
             final AggregationTableField a2) {

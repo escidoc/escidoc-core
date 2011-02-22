@@ -172,6 +172,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
+    @Override
     public void createTable(final DatabaseTableVo databaseTableVo)
         throws SqlDatabaseSystemException {
         checkDatabaseTableVo(databaseTableVo);
@@ -200,6 +201,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
+    @Override
     public void dropTable(final DatabaseTableVo databaseTableVo)
         throws SqlDatabaseSystemException {
         checkDatabaseTableVo(databaseTableVo);
@@ -229,6 +231,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
+    @Override
     public void createRecord(final DatabaseRecordVo databaseRecordVo)
         throws SqlDatabaseSystemException {
         checkDatabaseRecordVo(databaseRecordVo);
@@ -294,6 +297,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
+    @Override
     public void deleteRecord(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException {
         checkDatabaseSelectVo(databaseSelectVo);
@@ -330,6 +334,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
+    @Override
     public void updateRecord(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException {
         checkDatabaseSelectVo(databaseSelectVo);
@@ -378,6 +383,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
+    @Override
     public List executeSql(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException {
         checkDatabaseSelectVo(databaseSelectVo);
@@ -445,6 +451,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
+    @Override
     public List executeReadOnlySql(final String sql) throws SqlDatabaseSystemException {
         boolean condition = false;
         String executionSql = sql;
@@ -809,7 +816,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @sm
      */
     private String handleSelectFields(
-        final Collection<SelectFieldVo> selectFieldVos)
+        final Iterable<SelectFieldVo> selectFieldVos)
         throws SqlDatabaseSystemException {
         StringBuilder selectFields = new StringBuilder(" ");
         int i = 0;
@@ -846,6 +853,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
+    @Override
     public String getXpathBoolean(final String xpath, final String field) {
         String xpathBol = XPATH_MATCHER
             .reset(XPATH_BOOLEAN_FUNCTION)
@@ -866,6 +874,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
+    @Override
     public String getXpathString(final String xpath, final String field) {
         String xpathString = XPATH_MATCHER
             .reset(XPATH_STRING_FUNCTION)
@@ -1160,8 +1169,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @sm
      */
     private void checkWhereFieldVo(
-        final String type, final String fieldName, final String fieldType,
-        final String fieldValue, final String operator, final String xpath)
+        final CharSequence type, final CharSequence fieldName, final String fieldType,
+        final String fieldValue, final CharSequence operator, final CharSequence xpath)
         throws SqlDatabaseSystemException {
         if (type == null || type.length() == 0
             || (!type.equals("root") && !type.equals("additional"))) {
@@ -1231,6 +1240,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
+    @Override
     public void checkReservedExpressions(final String fieldname)
         throws SqlDatabaseSystemException {
         if (RESERVED_EXPRESSIONS.get(fieldname) != null) {

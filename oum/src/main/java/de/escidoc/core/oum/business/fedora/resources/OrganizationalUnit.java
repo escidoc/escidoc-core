@@ -51,6 +51,7 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -255,7 +256,7 @@ public class OrganizationalUnit extends GenericResource
         throws TripleStoreSystemException {
 
         List<Predecessor> successors = new ArrayList<Predecessor>();
-        List<String> ids = new ArrayList<String>();
+        Collection<String> ids = new ArrayList<String>();
         ids.add(ouId);
 
         try {
@@ -426,6 +427,7 @@ public class OrganizationalUnit extends GenericResource
      * @seede.escidoc.core.oum.business.fedora.resources.interfaces.
      * OrganizationalUnitInterface#getMdRecord(java.lang.String)
      */
+    @Override
     public Datastream getMdRecord(final String name)
         throws FedoraSystemException, StreamNotFoundException {
 
@@ -442,6 +444,7 @@ public class OrganizationalUnit extends GenericResource
      * @seede.escidoc.core.oum.business.fedora.resources.interfaces.
      * OrganizationalUnitInterface#getMdRecords()
      */
+    @Override
     public Map<String, Datastream> getMdRecords() throws FedoraSystemException,
         IntegritySystemException {
 
@@ -449,7 +452,7 @@ public class OrganizationalUnit extends GenericResource
             new HashMap<String, Datastream>();
         final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
-        final List<String> names = new ArrayList<String>();
+        final Collection<String> names = new ArrayList<String>();
         for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             final List<String> altIDs =
                     Arrays.asList(datastream.getAltIDs());
@@ -482,6 +485,7 @@ public class OrganizationalUnit extends GenericResource
      * @see de.escidoc.core.oum.business.fedora.resources.interfaces.OrganizationalUnitInterface#setMdRecord(java.lang.String,
      *      de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
+    @Override
     public void setMdRecord(final String name, final Datastream ds)
         throws SystemException {
         String mimeType = ds.getMimeType();
@@ -563,6 +567,7 @@ public class OrganizationalUnit extends GenericResource
      * @param mdRecords
      * @throws FedoraSystemException
      */
+    @Override
     public void setMdRecords(final Map<String, Datastream> mdRecords)
         throws SystemException {
         // Container.setMdRecords throws FedoraSystemException, WebserverSystemException,

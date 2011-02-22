@@ -243,6 +243,7 @@ public class SoapExceptionGeneration
      * @throws UserGroupHierarchyViolationException
      * @see de.escidoc.core.common.service.interfaces.SoapExceptionGenerationInterface#generateExceptions()
      */
+    @Override
     public void generateExceptions() throws EscidocException,
         AggregationDefinitionNotFoundException, ApplicationException,
         ValidationException, ResourceNotFoundException,

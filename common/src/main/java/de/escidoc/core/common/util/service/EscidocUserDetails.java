@@ -53,15 +53,6 @@ public class EscidocUserDetails implements UserDetails {
     private String realName;
 
     /**
-     * Constructor.
-     * 
-     * @aa
-     */
-    public EscidocUserDetails() {
-
-    }
-
-    /**
      * Gets the id.
      * 
      * @return Returns the id of the user.
@@ -128,6 +119,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#getAuthorities()
      * @aa
      */
+    @Override
     public GrantedAuthority[] getAuthorities() {
         // TODO Auto-generated method stub
         return null;
@@ -141,6 +133,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#getPassword()
      * @aa
      */
+    @Override
     public String getPassword() {
         // TODO Auto-generated method stub
         return null;
@@ -154,6 +147,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#getUsername()
      * @aa
      */
+    @Override
     public String getUsername() {
 
         return getRealName();
@@ -167,6 +161,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#isAccountNonExpired()
      * @aa
      */
+    @Override
     public boolean isAccountNonExpired() {
         // TODO Auto-generated method stub
         return false;
@@ -180,6 +175,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#isAccountNonLocked()
      * @aa
      */
+    @Override
     public boolean isAccountNonLocked() {
         // TODO Auto-generated method stub
         return false;
@@ -193,6 +189,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#isCredentialsNonExpired()
      * @aa
      */
+    @Override
     public boolean isCredentialsNonExpired() {
         // TODO Auto-generated method stub
         return false;
@@ -206,6 +203,7 @@ public class EscidocUserDetails implements UserDetails {
      * @see org.acegisecurity.userdetails.UserDetails#isEnabled()
      * @aa
      */
+    @Override
     public boolean isEnabled() {
         // TODO Auto-generated method stub
         return false;

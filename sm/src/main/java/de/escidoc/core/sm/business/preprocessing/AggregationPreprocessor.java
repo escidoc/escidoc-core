@@ -65,6 +65,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -77,7 +78,7 @@ import java.util.Set;
  */
 public class AggregationPreprocessor {
 
-    private static AppLogger log =
+    private static final AppLogger log =
         new AppLogger(AggregationPreprocessor.class.getName());
 
     private DirectDatabaseAccessorInterface dbAccessor;
@@ -147,9 +148,9 @@ public class AggregationPreprocessor {
      *             e
      * 
      */
-    private Map initFieldTypeHash(final Set<AggregationTableField> fieldList)
+    private Map initFieldTypeHash(final Collection<AggregationTableField> fieldList)
         throws StatisticPreprocessingSystemException {
-        HashMap fields = new HashMap();
+        Map fields = new HashMap();
         HashMap fieldtypes = new HashMap();
         HashMap dbtypes = new HashMap();
         if (fieldList == null || fieldList.isEmpty()) {
@@ -215,7 +216,7 @@ public class AggregationPreprocessor {
      */
     public AggregationPreprocessorVo processAggregation(
         final AggregationDefinition aggregationDefinitionIn,
-        final List statisticDatas)
+        final Iterable statisticDatas)
         throws StatisticPreprocessingSystemException,
         SqlDatabaseSystemException {
         xpathFactory = XPathFactory.newInstance();
@@ -588,23 +589,23 @@ public class AggregationPreprocessor {
         // of the count-cumulation-fields
         // and difference-cumulation-fields to the record in the dataHash
         // if no: add new record with uniqueKey to dataHash
-        if (((HashMap) aggregationPreprocessorVo
+        if (((Map) aggregationPreprocessorVo
                 .getDataHash().get(tablename)).get(
                         aggregationPreprocessorVo.getUniqueKeyForOneRecord()
                         .toString()) != null) {
-            HashMap record =
-                (HashMap) ((HashMap) aggregationPreprocessorVo
-                            .getDataHash().get(tablename))
+            Map record =
+                (HashMap) ((Map) aggregationPreprocessorVo
+                        .getDataHash().get(tablename))
                     .get(aggregationPreprocessorVo
                             .getUniqueKeyForOneRecord().toString());
-            HashMap tablefields = (HashMap) aggregationPreprocessorVo
+            Map tablefields = (HashMap) aggregationPreprocessorVo
                                     .getFieldTypeHash().get(tablename);
             HashMap fieldtypes = new HashMap();
             if (tablefields != null) {
                 fieldtypes = (HashMap) tablefields.get("fieldtype");
             }
-            Set<Map.Entry> fieldtypesEntrySet = fieldtypes.entrySet();
-            for (Map.Entry entry : fieldtypesEntrySet) {
+            Set<Entry> fieldtypesEntrySet = fieldtypes.entrySet();
+            for (Entry entry : fieldtypesEntrySet) {
                 String fieldname = (String) entry.getKey();
                 if (entry.getValue().equals(
                         Constants.COUNT_CUMULATION_FIELD)
@@ -622,7 +623,7 @@ public class AggregationPreprocessor {
             }
         }
         else {
-            ((HashMap) aggregationPreprocessorVo.getDataHash().get(tablename)).put(
+            ((Map) aggregationPreprocessorVo.getDataHash().get(tablename)).put(
                         aggregationPreprocessorVo.getUniqueKeyForOneRecord()
                             .toString(), 
                             aggregationPreprocessorVo.getFieldHashForOneRecord());
@@ -670,7 +671,7 @@ public class AggregationPreprocessor {
                 // Iterate dataHash, for each Aggregation-table
                 String tablename = (String) o;
 
-                HashMap tableRecords =
+                Map tableRecords =
                         (HashMap) aggregationPreprocessorVo
                                 .getDataHash().get(tablename);
 
@@ -678,7 +679,7 @@ public class AggregationPreprocessor {
                     for (Object o1 : tableRecords.values()) {
                         // for each record in dataHash->table,
                         // query database, if record already exists
-                        HashMap fields = (HashMap) o1;
+                        Map fields = (HashMap) o1;
 
                         // Build databaseSelectVo
                         Collection<String> tablenames = new ArrayList<String>();
@@ -704,12 +705,12 @@ public class AggregationPreprocessor {
                         // Iterate fields in dataHash and fill WhereFieldVos
                         for (Object o2 : fields.keySet()) {
                             String fieldname = (String) o2;
-                            HashMap fieldHash =
-                                    (HashMap) ((HashMap) aggregationPreprocessorVo
+                            Map fieldHash =
+                                    (HashMap) ((Map) aggregationPreprocessorVo
                                             .getFieldTypeHash()
                                             .get(tablename)).get("fieldtype");
-                            HashMap dbHash =
-                                    (HashMap) ((HashMap) aggregationPreprocessorVo
+                            Map dbHash =
+                                    (HashMap) ((Map) aggregationPreprocessorVo
                                             .getFieldTypeHash()
                                             .get(tablename)).get("dbtype");
                             String fieldtype = null;
@@ -833,8 +834,8 @@ public class AggregationPreprocessor {
         databaseRecordVo.setTableName(tablename);
         Collection<DatabaseRecordFieldVo> databaseRecordFieldVos =
             new ArrayList<DatabaseRecordFieldVo>();
-        Set<Map.Entry> fieldsEntrySet = fields.entrySet();
-        for (Map.Entry entry : fieldsEntrySet) {
+        Set<Entry> fieldsEntrySet = fields.entrySet();
+        for (Entry entry : fieldsEntrySet) {
             String fieldname = (String)entry.getKey();
             DatabaseRecordFieldVo databaseRecordFieldVo =
                 new DatabaseRecordFieldVo();
@@ -869,7 +870,7 @@ public class AggregationPreprocessor {
     private void updateRecord(
             final String tablename, 
             final Map fields, 
-            final List results, 
+            final Iterable results,
             final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws SqlDatabaseSystemException {
         for (Object result : results) {
@@ -886,16 +887,16 @@ public class AggregationPreprocessor {
                     new ArrayList<SelectFieldVo>();
 
             int i = 0;
-            Set<Map.Entry> fieldsEntrySet = fields.entrySet();
+            Set<Entry> fieldsEntrySet = fields.entrySet();
             try {
-                for (Map.Entry entry : fieldsEntrySet) {
+                for (Entry entry : fieldsEntrySet) {
                     String fieldname = (String) entry.getKey();
-                    HashMap fieldHash =
-                            (HashMap) ((HashMap) aggregationPreprocessorVo
+                    Map fieldHash =
+                            (HashMap) ((Map) aggregationPreprocessorVo
                                     .getFieldTypeHash().get(tablename))
                                     .get("fieldtype");
-                    HashMap dbHash =
-                            (HashMap) ((HashMap) aggregationPreprocessorVo
+                    Map dbHash =
+                            (HashMap) ((Map) aggregationPreprocessorVo
                                     .getFieldTypeHash().get(tablename))
                                     .get("dbtype");
                     String fieldtype = null;
@@ -979,10 +980,10 @@ public class AggregationPreprocessor {
             final String tablename, 
             final String fieldname, 
             final AggregationPreprocessorVo aggregationPreprocessorVo) {
-        HashMap tableFieldTypes = (HashMap) aggregationPreprocessorVo
+        Map tableFieldTypes = (HashMap) aggregationPreprocessorVo
                                         .getFieldTypeHash().get(tablename);
         if (tableFieldTypes != null) {
-            HashMap dbFieldTypes = (HashMap) tableFieldTypes.get("dbtype");
+            Map dbFieldTypes = (HashMap) tableFieldTypes.get("dbtype");
             if (dbFieldTypes != null) {
                 return (String) dbFieldTypes.get(fieldname);
             }

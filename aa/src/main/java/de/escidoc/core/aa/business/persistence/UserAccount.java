@@ -39,19 +39,12 @@ import java.util.Date;
  * @author TTE
  * 
  */
-public class UserAccount extends UserAccountBase implements Serializable {
+public class UserAccount extends UserAccountBase {
 
     /**
      * The serial version uid.
      */
     private static final long serialVersionUID = 1L;
-
-    /**
-     * The default constructor.
-     */
-    public UserAccount() {
-        super();
-    }
 
     /**
      * @return Returns the href to this

@@ -67,6 +67,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Vector;
@@ -882,7 +883,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *             If the Fedora reports an error
      */
     public void setContentRelations(
-        final StaxParser sp, final List<String> relationsToUpdate)
+        final StaxParser sp, final Collection<String> relationsToUpdate)
         throws XmlParserSystemException, WebserverSystemException,
         IntegritySystemException, FedoraSystemException {
 
@@ -914,12 +915,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         sp.clearHandlerChain();
         List<String> existRelations = relsExtHandler.getRelationsStrings();
 
-        List<String> existRelationsCopy = new ArrayList<String>();
+        Collection<String> existRelationsCopy = new ArrayList<String>();
         existRelationsCopy.addAll(existRelations);
         existRelations.removeAll(relationsToUpdate);
         relationsToUpdate.removeAll(existRelationsCopy);
         List<StartElementWithChildElements> elementsToAdd = null;
-        TreeMap<String, List<StartElementWithChildElements>> toRemove = null;
+        Map<String, List<StartElementWithChildElements>> toRemove = null;
 
         // prepare update relations
         if ((relationsToUpdate != null) && (!relationsToUpdate.isEmpty())) {
@@ -984,7 +985,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             
-            for (Map.Entry<String, List<StartElementWithChildElements>> e : predicateValuesVectorAssignment.entrySet()) {
+            for (Entry<String, List<StartElementWithChildElements>> e : predicateValuesVectorAssignment.entrySet()) {
                 toRemove.put("/RDF/Description/" + e.getKey(), e.getValue());
             }
         }

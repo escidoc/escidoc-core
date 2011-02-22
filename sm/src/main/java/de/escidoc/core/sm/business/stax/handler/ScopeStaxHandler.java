@@ -63,6 +63,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * 
      * @sm
      */
+    @Override
     public StartElement startElement(final StartElement element) throws Exception {
         if ("scope".equals(element.getLocalName())) {
             try {
@@ -89,6 +90,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      * @om
      */
+    @Override
     public String characters(
                 final String s, 
                 final StartElement element) 

@@ -47,6 +47,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -271,7 +272,6 @@ public class TripleStoreAttributeFinderModule
      */
     public TripleStoreAttributeFinderModule() {
 
-        super();
         initMapping();
     }
 
@@ -466,7 +466,7 @@ public class TripleStoreAttributeFinderModule
      * @aa
      */
     protected List<String> getHierarchicalCachedAttributes(
-        final List<String> attributesList,
+        final Collection<String> attributesList,
         final List<String> totalAttributesList, final MapResult mapresult)
         throws ResourceNotFoundException, SystemException {
         List<String> hierarchicalAttributesList = totalAttributesList;

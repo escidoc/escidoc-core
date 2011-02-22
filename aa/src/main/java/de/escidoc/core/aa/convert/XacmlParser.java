@@ -34,6 +34,7 @@ import com.sun.xacml.cond.StandardFunctionFactory;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface;
 import de.escidoc.core.aa.business.persistence.ScopeDef;
+import de.escidoc.core.aa.business.persistence.ScopeDefBase;
 import de.escidoc.core.aa.business.stax.handler.RolePropertiesStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.ScopeStaxHandler;
 import de.escidoc.core.aa.business.stax.handler.XacmlStaxHandler;
@@ -82,23 +83,28 @@ public class XacmlParser {
     private Values values = null;
 
     private final EscidocRoleDaoInterface roleDao = new EscidocRoleDaoInterface() {
+        @Override
         public boolean roleExists(final String identifier)
             throws SqlDatabaseSystemException {
             return false;
         }
 
+        @Override
         public void deleteRole(final EscidocRole r)
             throws SqlDatabaseSystemException {
         }
 
+        @Override
         public void flush() throws SqlDatabaseSystemException {
         }
 
+        @Override
         public EscidocRole retrieveRole(final String identifier)
             throws SqlDatabaseSystemException {
             return null;
         }
 
+        @Override
         public List<EscidocRole> retrieveRoles(
             final Map<String, Object> criteria, final int offset,
             final int maxResults, final String orderBy,
@@ -106,16 +112,19 @@ public class XacmlParser {
             return null;
         }
 
+        @Override
         public List<EscidocRole> retrieveRoles(
             final String criteria, final int offset, final int maxResults)
             throws InvalidSearchQueryException, SqlDatabaseSystemException {
             return null;
         }
 
+        @Override
         public void saveOrUpdate(final EscidocRole r)
             throws SqlDatabaseSystemException {
         }
 
+        @Override
         public void deleteScopeDef(final ScopeDef scopeDef)
             throws SqlDatabaseSystemException {
         }
@@ -166,7 +175,7 @@ public class XacmlParser {
         String label = resourceType.getLabel();
 
         for (Object scope : role.getScopeDefs()) {
-            if (label.equals(((ScopeDef) scope).getObjectType())) {
+            if (label.equals(((ScopeDefBase) scope).getObjectType())) {
                 String rule =
                     values.getScope(((ScopeDef) scope).getAttributeId());
 

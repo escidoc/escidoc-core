@@ -80,7 +80,7 @@ public class AccessRights extends JdbcDaoSupport {
          * @param policyRules
          *            policy rules
          */
-        public Rules(final String scopeRules, final String policyRules) {
+        private Rules(final String scopeRules, final String policyRules) {
             this.scopeRules = scopeRules;
             this.policyRules = policyRules;
         }
@@ -230,7 +230,7 @@ public class AccessRights extends JdbcDaoSupport {
             }
             else {
                 // concatenate all rules with "OR"
-                for (Map.Entry<String, Rules> role : rightsMap[type
+                for (Entry<String, Rules> role : rightsMap[type
                     .ordinal()].entrySet()) {
                     if (((!groupIds.isEmpty()) && userGroupGrants.containsKey(
                         roleId))
@@ -295,7 +295,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return SQL snippet with all group ids
      */
-    private String getGroupSql(final Set<String> groupIds) {
+    private String getGroupSql(final Collection<String> groupIds) {
         StringBuilder result = new StringBuilder();
 
         result.append('(');
@@ -329,7 +329,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return list of all role ids
      */
-    public Collection<String> getRoleIds(final ResourceType type) {
+    public Iterable<String> getRoleIds(final ResourceType type) {
         return rightsMap[type.ordinal()].keySet();
     }
 
@@ -354,7 +354,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return string containing all given strings separated with space
      */
-    private String getSetAsString(final Set<String> set) {
+    private String getSetAsString(final Iterable<String> set) {
         StringBuilder result = new StringBuilder();
 
         if (set != null) {
@@ -391,7 +391,7 @@ public class AccessRights extends JdbcDaoSupport {
      *         resources
      */
     public boolean needsHierarchicalPermissions(
-        final ResourceType type, final String roleId, final String placeHolder) {
+        final ResourceType type, final CharSequence roleId, final CharSequence placeHolder) {
         boolean result = false;
 
         synchronized (rightsMap) {
@@ -604,7 +604,7 @@ public class AccessRights extends JdbcDaoSupport {
             for (ResourceType type : ResourceType.values()) {
                 result.append(type);
                 result.append(":\n");
-                for (Map.Entry<String, Rules> role : rightsMap[type.ordinal()]
+                for (Entry<String, Rules> role : rightsMap[type.ordinal()]
                     .entrySet()) {
                     result.append("  ");
                     result.append(role.getKey());

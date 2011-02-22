@@ -55,7 +55,6 @@ public class XmlSchemaValidationException extends InvalidXmlException {
      * @common
      */
     public XmlSchemaValidationException() {
-        super();
     }
 
     /**

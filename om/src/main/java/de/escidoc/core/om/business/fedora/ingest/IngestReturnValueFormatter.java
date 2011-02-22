@@ -24,6 +24,7 @@ public class IngestReturnValueFormatter implements ValueFormatter {
      * @see Interface documentation
      */
     // TODO: make velocity template out of string builder concatenation
+    @Override
     public String format(Map<String, String> values) {
         StringBuilder xml = new StringBuilder();
         xml

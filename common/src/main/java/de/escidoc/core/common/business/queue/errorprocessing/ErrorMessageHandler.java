@@ -32,6 +32,7 @@ import de.escidoc.core.common.util.logger.AppLogger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /*******************************************************************************
  * @author MIH
@@ -64,7 +65,7 @@ public class ErrorMessageHandler {
         StringBuffer messageBuf = new StringBuffer(DELIMITER);
         
         // put all given parameters into StringBuffer
-        for (Map.Entry<String, String> e : parameters.entrySet()) {
+        for (Entry<String, String> e : parameters.entrySet()) {
             messageBuf.append(e.getKey()).append(": ").append(e.getValue())
                     .append('\n');
         }

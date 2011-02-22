@@ -77,6 +77,7 @@ public class ItemUpdateHandler extends DefaultHandler {
      * @see de.escidoc.core.om.business.stax.handler.DefaultHandler#startElement
      *      (de.escidoc.core.om.business.stax.events.StartElement)
      */
+    @Override
     public StartElement startElement(final StartElement element)
         throws InvalidContentException {
 

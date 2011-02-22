@@ -55,6 +55,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.params.ConnManagerParams;
+import org.apache.http.conn.params.ConnPerRoute;
 import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -89,6 +90,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 import java.util.regex.Matcher;
@@ -671,9 +673,9 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown if instantiation of Fedora connection fail.
      */
-    public List<String> getDatastreamNamesByAltId(
+    public Collection<String> getDatastreamNamesByAltId(
         final String pid, final String altId) throws FedoraSystemException {
-        final List<String> names = new ArrayList<String>();
+        final Collection<String> names = new ArrayList<String>();
 
         final org.fcrepo.server.types.gen.Datastream[] ds =
             getDatastreamsInformation(pid);
@@ -1486,6 +1488,7 @@ public class FedoraUtility implements InitializingBean {
      *      #afterPropertiesSet()
      * @common
      */
+    @Override
     public void afterPropertiesSet() throws Exception {
 
         fedoraClientPool = new StackObjectPool(new BasePoolableObjectFactory() {
@@ -1551,7 +1554,7 @@ public class FedoraUtility implements InitializingBean {
                 ConnManagerParams.setMaxTotalConnections(params,
                     HTTP_MAX_TOTAL_CONNECTIONS);
 
-                ConnPerRouteBean connPerRoute =
+                ConnPerRoute connPerRoute =
                     new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
                 ConnManagerParams.setMaxConnectionsPerRoute(params,
                     connPerRoute);
@@ -1571,7 +1574,7 @@ public class FedoraUtility implements InitializingBean {
                 AuthScope authScope =
                     new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                         AuthScope.ANY_REALM);
-                UsernamePasswordCredentials creds =
+                Credentials creds =
                     new UsernamePasswordCredentials(fedoraUser, fedoraPassword);
                 credsProvider.setCredentials(authScope, creds);
 
@@ -1582,6 +1585,7 @@ public class FedoraUtility implements InitializingBean {
             HttpRequestInterceptor preemptiveAuth =
                 new HttpRequestInterceptor() {
 
+                    @Override
                     public void process(
                         final HttpRequest request, final HttpContext context)
                         throws HttpException, IOException {
@@ -1646,7 +1650,7 @@ public class FedoraUtility implements InitializingBean {
         InputStream fedoraResponseStream;
         try {
             DefaultHttpClient httpClient = getHttpClient();
-            BasicHttpContext localcontext = new BasicHttpContext();
+            HttpContext localcontext = new BasicHttpContext();
             BasicScheme basicAuth = new BasicScheme();
             localcontext.setAttribute("preemptive-auth", basicAuth);
             httpClient

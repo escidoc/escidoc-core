@@ -85,6 +85,7 @@ public class SmPreprocessingLogsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
+    @Override
     public String savePreprocessingLog(
             final PreprocessingLog preprocessingLog) 
                         throws SqlDatabaseSystemException {
@@ -108,7 +109,8 @@ public class SmPreprocessingLogsHibernateDao
      * 
      * @sm
      */
-    public Collection<PreprocessingLog> 
+    @Override
+    public Collection<PreprocessingLog>
         retrievePreprocessingLogs(final String aggregationDefinitionId)
         throws SqlDatabaseSystemException {
         List<PreprocessingLog> results = getHibernateTemplate().find(
@@ -131,7 +133,8 @@ public class SmPreprocessingLogsHibernateDao
      * 
      * @sm
      */
-    public Collection<PreprocessingLog> 
+    @Override
+    public Collection<PreprocessingLog>
         retrievePreprocessingLogs(final Date processingDate)
         throws SqlDatabaseSystemException {
         List<PreprocessingLog> results = getHibernateTemplate().find(
@@ -157,7 +160,8 @@ public class SmPreprocessingLogsHibernateDao
      * 
      * @sm
      */
-    public Collection<PreprocessingLog> 
+    @Override
+    public Collection<PreprocessingLog>
         retrievePreprocessingLogs(final String aggregationDefinitionId, 
                 final Date processingDate)
         throws SqlDatabaseSystemException {
@@ -183,7 +187,8 @@ public class SmPreprocessingLogsHibernateDao
      * 
      * @sm
      */
-    public Collection<PreprocessingLog> 
+    @Override
+    public Collection<PreprocessingLog>
         retrievePreprocessingLogs(final String aggregationDefinitionId, 
                 final boolean hasError)
         throws SqlDatabaseSystemException {
@@ -210,7 +215,8 @@ public class SmPreprocessingLogsHibernateDao
      * 
      * @sm
      */
-    public Collection<PreprocessingLog> 
+    @Override
+    public Collection<PreprocessingLog>
         retrievePreprocessingLogs(
                 final Date processingDate, final boolean hasError)
         throws SqlDatabaseSystemException {
@@ -239,7 +245,8 @@ public class SmPreprocessingLogsHibernateDao
      * 
      * @sm
      */
-    public Collection<PreprocessingLog> 
+    @Override
+    public Collection<PreprocessingLog>
         retrievePreprocessingLogs(final String aggregationDefinitionId,
                 final Date processingDate, final boolean hasError)
         throws SqlDatabaseSystemException {

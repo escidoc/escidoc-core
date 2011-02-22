@@ -81,6 +81,7 @@ public class Version implements Comparable<Version> {
      * @return -1, 0 or 1 as this object is less than, equal to, or greater than
      *         the specified object.
      */
+    @Override
     public int compareTo(final Version o) {
         int result;
 

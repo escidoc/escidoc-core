@@ -72,6 +72,7 @@ public class OntologyHandler extends DefaultHandler {
         this.predicate = p;
     }
 
+    @Override
     public StartElement startElement(StartElement element) {
 
         String elementPath = "/RDF/Property";

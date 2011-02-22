@@ -75,6 +75,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * @return
      * @see StagingFileDao#findStagingFile(java.lang.String)
      */
+    @Override
     public StagingFile findStagingFile(final String token)
         throws SqlDatabaseSystemException {
 
@@ -104,6 +105,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * @return
      * @see StagingFileDao#findExpiredStagingFiles()
      */
+    @Override
     public List<StagingFile> findExpiredStagingFiles()
         throws SqlDatabaseSystemException {
 
@@ -125,6 +127,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * @param stagingFile
      * @see StagingFileDao#save(de.escidoc.core.st.business.StagingFile)
      */
+    @Override
     public void save(final StagingFile stagingFile)
         throws SqlDatabaseSystemException {
 
@@ -144,6 +147,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * @param stagingFile
      * @see StagingFileDao#update(de.escidoc.core.st.business.StagingFile)
      */
+    @Override
     public void update(final StagingFile stagingFile)
         throws SqlDatabaseSystemException {
 
@@ -164,6 +168,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * @param stagingFile
      * @see StagingFileDao#saveOrUpdate(de.escidoc.core.st.business.StagingFile)
      */
+    @Override
     public void saveOrUpdate(final StagingFile stagingFile)
         throws SqlDatabaseSystemException {
 
@@ -183,6 +188,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * @param stagingFile
      * @see StagingFileDao#delete(de.escidoc.core.st.business.StagingFile)
      */
+    @Override
     public void delete(final StagingFile stagingFile)
         throws SqlDatabaseSystemException {
 
@@ -202,6 +208,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * @param stagingFiles
      * @see StagingFileDao#delete(de.escidoc.core.st.business.StagingFile[])
      */
+    @Override
     public void delete(final StagingFile[] stagingFiles)
         throws SqlDatabaseSystemException {
 

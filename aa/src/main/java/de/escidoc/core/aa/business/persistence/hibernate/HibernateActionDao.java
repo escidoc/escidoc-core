@@ -58,6 +58,7 @@ public class HibernateActionDao extends AbstractHibernateDao
      * @throws SqlDatabaseSystemException
      * @see de.escidoc.core.aa.business.persistence.ActionDaoInterface#retrieveUnsecuredActionList(java.lang.String)
      */
+    @Override
     public UnsecuredActionList retrieveUnsecuredActionList(
         final String contextId) throws SqlDatabaseSystemException {
 
@@ -81,6 +82,7 @@ public class HibernateActionDao extends AbstractHibernateDao
      * @throws SqlDatabaseSystemException
      * @see de.escidoc.core.aa.business.persistence.ActionDaoInterface#saveOrUpdate(de.escidoc.core.aa.business.persistence.UnsecuredActionList)
      */
+    @Override
     public void saveOrUpdate(final UnsecuredActionList unsecuredActionList)
         throws SqlDatabaseSystemException {
 
@@ -96,6 +98,7 @@ public class HibernateActionDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UnsecuredActionList)
      * @aa
      */
+    @Override
     public void delete(final UnsecuredActionList unsecuredActionList)
         throws SqlDatabaseSystemException {
 

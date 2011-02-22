@@ -42,6 +42,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -487,7 +488,7 @@ public class Login extends HttpServlet {
      * @throws MissingParameterException
      *             Thrown if a mandatory parameter is missing.
      */
-    private String retrieveDecodedTarget(final HttpServletRequest request)
+    private String retrieveDecodedTarget(final ServletRequest request)
         throws MissingParameterException {
 
         try {
@@ -1019,7 +1020,7 @@ public class Login extends HttpServlet {
      */
     public byte getEscidocCookieVersion() throws WebserverSystemException {
 
-        byte escidocCookieVersion = -1;
+        byte escidocCookieVersion;
         try {
             final String configProperty =
                 EscidocConfiguration
@@ -1068,12 +1069,6 @@ public class Login extends HttpServlet {
             "abcdefghijklmonpqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
         private static final Random R = new Random(new Date().getTime());
-
-        /**
-         * Constructor.
-         */
-        private XUIDGenerator() {
-        }
 
         /**
          * Get a random string.

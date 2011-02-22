@@ -145,6 +145,7 @@ public class HandlerBase implements InitializingBean {
      *      #afterPropertiesSet()
      * @common
      */
+    @Override
     public void afterPropertiesSet() throws Exception {
 
         if (this.fedoraUtility == null) {

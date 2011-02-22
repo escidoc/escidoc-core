@@ -67,6 +67,7 @@ public class GrantStaxHandler extends DefaultHandler {
      *      #characters(java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.Star tElement)
      */
+    @Override
     public String characters(final String s, final StartElement element) {
 
         if (isNotReady() && "grant-remark".equals(element.getLocalName())) {

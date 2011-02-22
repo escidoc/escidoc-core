@@ -153,10 +153,12 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
         return element;
     }
 
+    @Override
     public EndElement endElement(EndElement element) throws Exception {
         return element;
     }
 
+    @Override
     public String characters(String data, StartElement element)
         throws Exception {
         String curPath = parser.getCurPath();

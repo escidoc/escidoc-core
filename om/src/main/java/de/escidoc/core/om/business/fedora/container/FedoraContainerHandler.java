@@ -190,12 +190,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     private SRURequest sruRequest = null;
 
     /**
-     * Fedora Container Handler.
-     */
-    public FedoraContainerHandler() {
-    }
-
-    /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
      * 
      * @return PolicyDecisionPointInterface
@@ -261,6 +255,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @throws MissingMdRecordException
      *             e
      */
+    @Override
     public String create(final String xmlData) throws ContextNotFoundException,
         ContentModelNotFoundException, InvalidContentException,
         MissingMethodParameterException, XmlCorruptedException,
@@ -278,6 +273,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * de.escidoc.core.common.business.interfaces.IngestableResource#ingest(
      * java.lang.String)
      */
+    @Override
     public String ingest(final String xmlData)
         throws ContentModelNotFoundException, ContextNotFoundException,
         MissingAttributeValueException, MissingElementValueException,
@@ -419,7 +415,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         final String contentModel =
             properties.remove(Elements.ELEMENT_CONTENT_MODEL);
-        final HashMap<String, String> propertiesAsReferences =
+        final Map<String, String> propertiesAsReferences =
             new HashMap<String, String>();
         propertiesAsReferences.put(Elements.ELEMENT_CREATED_BY, creator[0]);
         propertiesAsReferences.put(Elements.ELEMENT_MODIFIED_BY, creator[0]);
@@ -585,6 +581,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *      #delete(java.lang.String)
      * @om
      */
+    @Override
     public void delete(final String id) throws ContainerNotFoundException,
         LockingException, InvalidStatusException, SystemException,
         AuthorizationException {
@@ -687,6 +684,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *      #retrieve(java.lang.String)
      * @om
      */
+    @Override
     public String retrieve(final String id) throws ContainerNotFoundException,
         SystemException, MissingMethodParameterException {
 
@@ -772,6 +770,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#update(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws ContainerNotFoundException, LockingException,
         InvalidContentException, MissingMethodParameterException,
@@ -881,10 +880,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 setCts(cts);
             }
             // md-records
-            final HashMap<String, Map<String, String>> mdRecordsAttributes =
+            final Map<String, Map<String, String>> mdRecordsAttributes =
                 (HashMap<String, Map<String, String>>) mdHandler
                     .getMetadataAttributes();
-            final HashMap mdRecordsStreams =
+            final Map mdRecordsStreams =
                 (HashMap) streams.get("md-records");
             if (!mdRecordsStreams.containsKey("escidoc")) {
                 throw new XmlCorruptedException(
@@ -971,6 +970,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
      *      de.escidoc.core.common.business.filter.SRURequestParameters)
      */
+    @Override
     public String retrieveMembers(
         final String id, final SRURequestParameters parameters)
         throws ContainerNotFoundException, SystemException {
@@ -1012,6 +1012,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveTocs(java.lang.String,
      *      de.escidoc.core.common.business.filter.SRURequestParameters)
      */
+    @Override
     public String retrieveTocs(
         final String id, final SRURequestParameters parameters)
         throws ContainerNotFoundException, SystemException {
@@ -1067,6 +1068,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#moveToContext(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String moveToContext(final String containerId, final String taskParam)
         throws ContainerNotFoundException, ContextNotFoundException,
         InvalidContentException, LockingException,
@@ -1088,6 +1090,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveContainers(de.escidoc.core.common.business.filter.SRURequestParameters)
      */
+    @Override
     public String retrieveContainers(final SRURequestParameters parameters)
         throws SystemException {
         StringWriter result = new StringWriter();
@@ -1141,6 +1144,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#createMetadataRecord(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     @Deprecated
     public String createMetadataRecord(final String id, final String xmlData)
         throws ContainerNotFoundException, LockingException,
@@ -1170,6 +1174,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#createMdRecord(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String createMdRecord(final String id, final String xmlData)
         throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidXmlException {
@@ -1219,6 +1224,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveMdRecord(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String retrieveMdRecord(final String id, final String mdRecordId)
         throws ContainerNotFoundException, SystemException,
         MdRecordNotFoundException {
@@ -1243,6 +1249,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#retrieveMdRecordContent(java.lang.String,java.lang.String)
      */
+    @Override
     public String retrieveMdRecordContent(
         final String id, final String mdRecordId)
         throws ContainerNotFoundException, MdRecordNotFoundException,
@@ -1264,6 +1271,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#
      *      retrieveDcContent(java.lang.String)
      */
+    @Override
     public String retrieveDcRecordContent(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
         SystemException {
@@ -1283,6 +1291,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveMdRecords(java.lang.String)
      */
+    @Override
     public String retrieveMdRecords(final String containerId)
         throws ContainerNotFoundException, SystemException {
 
@@ -1317,6 +1326,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#updateMetadataRecord(java.lang.String,
      *      java.lang.String, java.lang.String)
      */
+    @Override
     public String updateMetadataRecord(
         final String id, final String mdRecordId, final String xmlData)
         throws ContainerNotFoundException, LockingException,
@@ -1364,7 +1374,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         EncodingSystemException {
-        final HashMap<String, Datastream> dsMap =
+        final Map<String, Datastream> dsMap =
             new HashMap<String, Datastream>();
 
         for (String s : mdMap.keySet()) {
@@ -1380,7 +1390,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final Datastream ds =
                 new Datastream(name, getContainer().getId(), xmlBytes,
                     "text/xml", mdProperties);
-            final HashMap mdRecordAttributes =
+            final Map mdRecordAttributes =
                 (HashMap) mdAttributesMap.get(name);
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId((String) mdRecordAttributes.get("type"));
@@ -1404,6 +1414,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveRelations(java.lang.String)
      */
+    @Override
     public String retrieveRelations(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
         SystemException {
@@ -1426,6 +1437,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveResources(java.lang.String)
      */
+    @Override
     public String retrieveResources(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
         SystemException {
@@ -1448,6 +1460,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         return retrieveResource(id, resourceName, null);
     }
 
+    @Override
     public EscidocBinaryContent retrieveResource(
         final String id, final String resourceName,
         final Map<String, String[]> parameters) throws SystemException,
@@ -1523,6 +1536,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveProperties(java.lang.String)
      */
+    @Override
     public String retrieveProperties(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
         SystemException {
@@ -1546,6 +1560,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @throws SystemException
      *             e
      */
+    @Override
     public String retrieveStructMap(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
         SystemException {
@@ -1580,6 +1595,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#release(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String release(final String id, final String param)
         throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException,
@@ -1768,6 +1784,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#submit(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String submit(final String id, final String param)
         throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException,
@@ -1841,6 +1858,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#revise(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String revise(final String id, final String param)
         throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException,
@@ -1914,6 +1932,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#withdraw(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String withdraw(final String id, final String param)
         throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, InvalidStatusException,
@@ -2097,6 +2116,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *      java.lang.String)
      * @om
      */
+    @Override
     public String lock(final String id, final String param)
         throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, SystemException,
@@ -2157,6 +2177,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *      java.lang.String)
      * @om
      */
+    @Override
     public String unlock(final String id, final String param)
         throws ContainerNotFoundException, LockingException,
         MissingMethodParameterException, SystemException,
@@ -2201,6 +2222,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveVersionHistory(java.lang.String)
      */
+    @Override
     public String retrieveVersionHistory(final String id)
         throws ContainerNotFoundException, SystemException {
 
@@ -2243,6 +2265,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveParents(java.lang.String)
      */
+    @Override
     public String retrieveParents(final String id)
         throws ContainerNotFoundException, SystemException {
         Utility.getInstance().checkIsContainer(id);
@@ -2307,6 +2330,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#createItem(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String createItem(final String containerId, final String xmlData)
         throws ContainerNotFoundException, MissingContentException,
         ContextNotFoundException, ContentModelNotFoundException,
@@ -2403,6 +2427,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#createContainer(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String createContainer(final String containerId, final String xmlData)
         throws MissingMethodParameterException, ContainerNotFoundException,
         LockingException, ContextNotFoundException,
@@ -2489,6 +2514,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#addMembers(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String addMembers(final String id, final String taskParam)
         throws ContainerNotFoundException, LockingException,
         InvalidContentException, OptimisticLockingException, SystemException,
@@ -2646,6 +2672,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#addMembers(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String addTocs(final String id, final String taskParam)
         throws ContainerNotFoundException, LockingException,
         InvalidContentException, OptimisticLockingException, SystemException,
@@ -2739,6 +2766,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#removeMembers(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String removeMembers(final String id, final String taskParam)
         throws LockingException, ItemNotFoundException,
         InvalidContextStatusException, InvalidItemStatusException,
@@ -2782,7 +2810,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             else {
                 // rebuild rels-ext
 
-                final TreeMap<String, List<StartElementWithChildElements>> removeElements =
+                final Map<String, List<StartElementWithChildElements>> removeElements =
                     new TreeMap<String, List<StartElementWithChildElements>>();
 
                 final Iterator<String> iterator = memberIds.iterator();
@@ -2909,6 +2937,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#addContentRelations(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String addContentRelations(final String id, final String taskParam)
         throws SystemException, ContainerNotFoundException,
         OptimisticLockingException, ReferencedResourceNotFoundException,
@@ -3066,6 +3095,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#removeContentRelations(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String removeContentRelations(final String id, final String param)
         throws SystemException, ContainerNotFoundException,
         OptimisticLockingException, InvalidStatusException,
@@ -3116,7 +3146,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final List<Map<String, String>> relationsData =
             removeHandler.getRelations();
         if ((relationsData != null) && (!relationsData.isEmpty())) {
-            final TreeMap<String, List<StartElementWithChildElements>> toRemove =
+            final Map<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
@@ -3276,6 +3306,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @spring.property ref="business.TripleStoreUtility"
      * 
      */
+    @Override
     public void setTripleStoreUtility(final TripleStoreUtility tsu) {
         super.setTripleStoreUtility(tsu);
     }

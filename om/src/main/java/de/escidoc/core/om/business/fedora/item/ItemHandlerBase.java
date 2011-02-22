@@ -60,6 +60,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import javax.servlet.http.HttpServletResponse;
@@ -608,7 +609,7 @@ public class ItemHandlerBase extends HandlerBase {
         // TODO: Reuse HttpClient
         final HttpClient client = new DefaultHttpClient();
         try {
-            final HttpGet method = new HttpGet(url);
+            final HttpUriRequest method = new HttpGet(url);
             final HttpResponse response = client.execute(method);
             final int resultCode = response.getStatusLine().getStatusCode();
             if (resultCode != HttpServletResponse.SC_OK) {

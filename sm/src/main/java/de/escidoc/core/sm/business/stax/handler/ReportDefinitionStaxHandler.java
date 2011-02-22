@@ -67,6 +67,7 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
      * 
      * @sm
      */
+    @Override
     public StartElement startElement(final StartElement element) throws Exception {
         if ("allowed-role".equals(element.getLocalName())) {
             String objId = XmlUtility.getIdFromStartElement(element);
@@ -115,6 +116,7 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      * @om
      */
+    @Override
     public String characters(final String s, final StartElement element)
         throws Exception {
         if ("name".equals(element.getLocalName())) {

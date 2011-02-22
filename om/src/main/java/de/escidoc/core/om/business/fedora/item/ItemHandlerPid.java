@@ -379,7 +379,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
      */
     private boolean releasableContentPid() throws WebserverSystemException,
         TripleStoreSystemException {
-        boolean result = false;
+        boolean result;
 
         if (Boolean.valueOf(System
             .getProperty("cmm.Item.contentPid.releaseWithoutPid"))) {

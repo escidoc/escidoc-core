@@ -150,6 +150,7 @@ public final class LuceneValues extends Values {
      * 
      * @return the escaped string
      */
+    @Override
     public String escape(final String s) {
         return LUCENE_PATTERN.matcher(s).replaceAll(REPLACEMENT_STRING);
     }
@@ -164,6 +165,7 @@ public final class LuceneValues extends Values {
      * 
      * @return AND conjunction of the given operands
      */
+    @Override
     public String getAndCondition(final String operand1, final String operand2) {
         return MessageFormat.format("({0}) AND ({1})", new Object[] { operand1,
             operand2 });
@@ -177,6 +179,7 @@ public final class LuceneValues extends Values {
      * 
      * @return CONTAINS statement with the given operand
      */
+    @Override
     public String getContainsCondition(final String operand) {
         return operand;
     }
@@ -191,6 +194,7 @@ public final class LuceneValues extends Values {
      * 
      * @return EQUALS conjunction of the given operands
      */
+    @Override
     public String getEqualCondition(final String operand1, final String operand2) {
         return MessageFormat.format("{0}:{1}", new Object[] { operand1,
             operand2 });
@@ -206,6 +210,7 @@ public final class LuceneValues extends Values {
      * 
      * @return key/value statement of the given operands
      */
+    @Override
     public String getKeyValueCondition(
         final String operand1, final String operand2) {
         return getEqualCondition(operand1, operand2);
@@ -220,6 +225,7 @@ public final class LuceneValues extends Values {
      * 
      * @return neutral element for AND
      */
+    @Override
     public String getNeutralAndElement(final ResourceType resourceType) {
         return "permissions-filter.objecttype:" + resourceType.getLabel();
     }
@@ -234,6 +240,7 @@ public final class LuceneValues extends Values {
      * 
      * @return OR conjunction of the given operands
      */
+    @Override
     public String getOrCondition(final String operand1, final String operand2) {
         return MessageFormat.format("({0}) OR ({1})", new Object[] { operand1,
             operand2 });

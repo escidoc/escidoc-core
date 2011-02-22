@@ -71,6 +71,7 @@ public class IngestHandler implements IngestHandlerInterface {
      *             Thrown if XML representation fulfills not all requirements or
      *             internal errors occur.
      */
+    @Override
     public String ingest(final String xmlData) throws EscidocException {
 
         return handler.ingest(xmlData);

@@ -92,6 +92,7 @@ public class ContextHandlerBase extends HandlerBase {
     /**
      * @return Returns the utility.
      */
+    @Override
     public Utility getUtility() {
         if (this.utility == null) {
             this.utility = Utility.getInstance();

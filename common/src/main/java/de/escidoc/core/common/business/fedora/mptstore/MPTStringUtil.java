@@ -37,7 +37,7 @@ public abstract class MPTStringUtil {
     }
 
 
-    public static String escapeLiteralValueForSql(final String s) {
+    public static String escapeLiteralValueForSql(final CharSequence s) {
 
         int len = s.length();
         StringBuilder out = new StringBuilder(len * 2);

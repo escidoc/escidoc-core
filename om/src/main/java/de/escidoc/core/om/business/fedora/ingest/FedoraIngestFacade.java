@@ -99,6 +99,7 @@ public class FedoraIngestFacade implements IngestFacade {
      *
      * @throws EscidocException
      */
+    @Override
     public String ingest(final String xmlData) throws EscidocException {
         ResourceMapperBean bean =
             getResourceMapperDao().getIngestableForResource(xmlData);

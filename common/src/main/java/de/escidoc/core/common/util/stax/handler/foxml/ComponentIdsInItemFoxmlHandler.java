@@ -102,6 +102,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
         return element;
     }
 
+    @Override
     public String characters(final String data, final StartElement element) {
         String namespace = element.getNamespace();
         if (inDescription && element.getLocalName().equals("pid")

@@ -81,6 +81,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      * @axis.exclude
      * @st
      */
+    @Override
     public String create(final EscidocBinaryContent binaryContent)
         throws MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
@@ -99,6 +100,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      * @axis.exclude
      * @st
      */
+    @Override
     public EscidocBinaryContent retrieve(final String stagingFileId)
         throws StagingFileNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException,

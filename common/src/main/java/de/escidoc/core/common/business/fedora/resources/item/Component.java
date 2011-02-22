@@ -67,6 +67,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
 
@@ -316,6 +317,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
      * #getMdRecords()
      */
+    @Override
     public Map<String, Datastream> getMdRecords() {
         return this.mdRecords;
     }
@@ -327,6 +329,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
      * #setMdRecords(java.util.HashMap)
      */
+    @Override
     public void setMdRecords(final Map<String, Datastream> ds)
         throws FedoraSystemException, WebserverSystemException,
         EncodingSystemException, IntegritySystemException {
@@ -370,10 +373,10 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         final Map<String, Datastream> mdRecordsToAdd =
             new HashMap<String, Datastream>();
         
-        final Iterator<Map.Entry<String, Datastream>> nameIt = ds.entrySet().iterator();
+        final Iterator<Entry<String, Datastream>> nameIt = ds.entrySet().iterator();
         // create/activate data streams which are in mdRecords but not in fedora
         while (nameIt.hasNext()) {
-            Map.Entry<String, Datastream> mapEntry = nameIt.next();
+            Entry<String, Datastream> mapEntry = nameIt.next();
             final String name = mapEntry.getKey();
             final Datastream currentMdRecord = mapEntry.getValue();
             setMdRecord(name, currentMdRecord);
@@ -395,6 +398,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * de.escidoc.core.om.business.fedora.resources.interfaces.ComponentInterface
      * #getMdRecord(java.lang.String)
      */
+    @Override
     public Datastream getMdRecord(final String name) {
         return this.mdRecords.get(name);
     }
@@ -407,6 +411,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * #setMdRecord(java.lang.String,
      * de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
+    @Override
     public void setMdRecord(final String name, final Datastream ds)
         throws WebserverSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException {
@@ -462,7 +467,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                             String dcNewContent =
                                 XmlUtility.createDC(nsUri, ds.toStringUTF8(),
                                     getId(), null);
-                            Datastream dcNew = null;
+                            Datastream dcNew;
                             if (dcNewContent != null
                                 && dcNewContent.trim().length() > 0) {
                                 try {
@@ -551,6 +556,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
      * 
      * @return the href
      */
+    @Override
     @Deprecated
     public String getHref() {
         return de.escidoc.core.common.business.Constants.ITEM_URL_BASE
@@ -649,7 +655,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             throw new XmlParserSystemException(msg, e);
         }
 
-        final HashMap<String, String> properties =
+        final Map<String, String> properties =
             new HashMap<String, String>();
 
         List<Triple> triples = eve.getElementValues().getTriples();

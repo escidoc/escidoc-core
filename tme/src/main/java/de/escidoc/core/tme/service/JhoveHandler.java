@@ -46,6 +46,7 @@ public class JhoveHandler
      *             e
      * @see de.escidoc.core.tme.service.interfaces.JhoveHandlerInterface#extract(java.lang.String)
      */
+    @Override
     public String extract(final String requests)
         throws AuthenticationException, AuthorizationException,
         XmlCorruptedException, XmlSchemaValidationException,

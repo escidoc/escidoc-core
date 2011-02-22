@@ -77,6 +77,7 @@ public class PerformanceStatisticsInterceptor implements MethodInterceptor {
        * @return the return value from invocation.
        * @throws Throwable t
        */
+      @Override
       public final Object invoke(final MethodInvocation invocation)
           throws Throwable {
           String className = invocation.getMethod().getDeclaringClass().getName();

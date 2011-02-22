@@ -141,6 +141,7 @@ public class SetDefinitionFilter extends CqlFilter {
      *             thrown if the given search query could not be translated into
      *             a SQL query
      */
+    @Override
     protected Criterion evaluate(final CQLTermNode node)
         throws InvalidSearchQueryException {
         Criterion result = null;
@@ -169,6 +170,7 @@ public class SetDefinitionFilter extends CqlFilter {
      * 
      * @return all property names for that filter
      */
+    @Override
     public Set<String> getPropertyNames() {
         Set<String> result = new TreeSet<String>();
 

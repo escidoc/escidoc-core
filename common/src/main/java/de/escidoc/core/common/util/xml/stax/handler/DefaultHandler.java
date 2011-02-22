@@ -180,6 +180,7 @@ public abstract class DefaultHandler {
      *            The name of the Attribute.
      * @return Value of Attribute or null.
      */
+    @Deprecated
     protected String getAttributeValue(
         final StartElement element, final String namespace,
         final String attributeName) {

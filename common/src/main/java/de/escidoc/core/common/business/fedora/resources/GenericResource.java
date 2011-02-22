@@ -158,6 +158,7 @@ public class GenericResource implements FedoraResource {
      * 
      * @return objid (without version suffix)
      */
+    @Override
     public String getId() {
 
         return this.id;
@@ -169,6 +170,7 @@ public class GenericResource implements FedoraResource {
      * 
      * @return the href
      */
+    @Override
     public String getHref() {
 
         return this.href;
@@ -305,6 +307,7 @@ public class GenericResource implements FedoraResource {
      * @throws FedoraSystemException
      *             Thrown if access to Fedora fails.
      */
+    @Override
     public String getLastFedoraModificationDate() throws FedoraSystemException {
 
         return getFedoraUtility().getLastModificationDate(this.id);
@@ -428,6 +431,7 @@ public class GenericResource implements FedoraResource {
      * @throws StreamNotFoundException
      *             Thrown if RELS-EXT datastream could not be found.
      */
+    @Override
     public Datastream getRelsExt() throws FedoraSystemException,
         StreamNotFoundException {
 
@@ -482,6 +486,7 @@ public class GenericResource implements FedoraResource {
      *             Thrown in case of internal failure.
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
+    @Override
     public void setRelsExt(final Datastream ds) throws FedoraSystemException,
         WebserverSystemException {
 
@@ -509,6 +514,7 @@ public class GenericResource implements FedoraResource {
      *             Thrown in case of internal failure.
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setRelsExt(byte[])
      */
+    @Override
     public void setRelsExt(final byte[] relsExt) throws FedoraSystemException,
         WebserverSystemException {
 
@@ -562,6 +568,7 @@ public class GenericResource implements FedoraResource {
      *             Thrown in case of internal failure.
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setRelsExt(java.lang.String)
      */
+    @Override
     public void setRelsExt(final String relsExt)
         throws EncodingSystemException, FedoraSystemException,
         WebserverSystemException {
@@ -748,7 +755,7 @@ public class GenericResource implements FedoraResource {
     public Map<String, String> mapTripleStoreKeys(
         final Map<String, String> tripleStoreMap) {
 
-        HashMap<String, String> properties = new HashMap<String, String>();
+        Map<String, String> properties = new HashMap<String, String>();
 
         for (String s : tripleStoreMap.keySet()) {
             String sourceKey = s;
@@ -1095,6 +1102,7 @@ public class GenericResource implements FedoraResource {
      * @throws FedoraSystemException
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#getDatastreamsInformation()
      */
+    @Override
     public org.fcrepo.server.types.gen.Datastream[] getDatastreamsInformation()
         throws FedoraSystemException {
 
@@ -1296,9 +1304,9 @@ public class GenericResource implements FedoraResource {
      * @return Tupel list.
      */
     private Map<String, String> mapTripleList2TupleList(
-        final List<Triple> triples) {
+        final Iterable<Triple> triples) {
 
-        HashMap<String, String> lastVersionData = new HashMap<String, String>();
+        Map<String, String> lastVersionData = new HashMap<String, String>();
 
         for (Triple triple : triples) {
             Triple t = triple;

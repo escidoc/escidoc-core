@@ -113,6 +113,7 @@ public class MultipleExtractor2 extends DefaultHandler {
         this.pids = pids;
     }
 
+    @Override
     public StartElement startElement(final StartElement element)
         throws XMLStreamException {
         String elementName = element.getLocalName();
@@ -242,12 +243,13 @@ public class MultipleExtractor2 extends DefaultHandler {
         return element;
     }
 
+    @Override
     public EndElement endElement(EndElement element) throws XMLStreamException {
         String theName = element.getLocalName();
 
         if (theName.equals("component")) {
             if (componentId == null) {
-                HashMap components = (HashMap) outputStreams.get("components");
+                Map components = (HashMap) outputStreams.get("components");
                 components.remove(componentId);
             }
             inComponent = false;
@@ -271,6 +273,7 @@ public class MultipleExtractor2 extends DefaultHandler {
         return element;
     }
 
+    @Override
     public String characters(final String data, final StartElement element)
         throws XMLStreamException {
 

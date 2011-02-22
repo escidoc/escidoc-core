@@ -102,7 +102,6 @@ public class ShibbolethDetails {
         final String shibAuthnContextClass, final String shibAuthContextDecl,
         final String shibIdentityProvider, final String shibSessionId) {
 
-        super();
         this.shibApplicationId = shibApplicationId;
         this.shibAssertionCount = shibAssertionCount;
         this.shibAuthenticationMethod = shibAuthenticationMethod;

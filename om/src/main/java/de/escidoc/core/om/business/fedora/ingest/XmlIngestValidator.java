@@ -59,6 +59,7 @@ public class XmlIngestValidator implements IngestValidator {
      * @throws InvalidResourceException
      * 
      */
+    @Override
     public boolean isResourceValid(final String xmlData, final ResourceType type)
         throws WebserverSystemException, XmlCorruptedException,
         InvalidResourceException {

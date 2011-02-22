@@ -57,6 +57,7 @@ public interface ContainerInterface extends VersionableResource {
      * @throws FedoraSystemException
      *             Thrown if Fedora reports an error
      */
+    @Override
     Datastream getRelsExt() throws StreamNotFoundException,
         FedoraSystemException;
 
@@ -76,6 +77,7 @@ public interface ContainerInterface extends VersionableResource {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
+    @Override
     void setRelsExt(Datastream ds) throws StreamNotFoundException,
         LockingException, FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException;
@@ -116,7 +118,7 @@ public interface ContainerInterface extends VersionableResource {
      *             Thrown if access to Fedora failed.
      */
     Datastream getMdRecord(String name) throws StreamNotFoundException,
-        FedoraSystemException;;
+        FedoraSystemException;
 
     /**
      * 

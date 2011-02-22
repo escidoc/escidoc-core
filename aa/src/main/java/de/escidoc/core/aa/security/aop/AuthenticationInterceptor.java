@@ -96,6 +96,7 @@ public class AuthenticationInterceptor implements Ordered {
      * @see org.springframework.core.Ordered#getOrder()
      * @common
      */
+    @Override
     public int getOrder() {
 
         return AopUtil.PRECEDENCE_AUTHENTICATION_INTERCEPTOR;

@@ -46,11 +46,13 @@ import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.business.fedora.resources.Values;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -68,7 +70,7 @@ public class PolicyParser {
     private static final String MATCH_PREFIX =
         "info:escidoc/names:aa:1.0:action:retrieve-";
 
-    private static final Set<String> MATCHES = new HashSet<String>();
+    private static final Collection<String> MATCHES = new HashSet<String>();
 
     static {
         MATCHES.add(MATCH_PREFIX + ResourceType.CONTAINER.getLabel());
@@ -102,7 +104,7 @@ public class PolicyParser {
     public List<String> getMatchingRules(final ResourceType resourceType) {
         List<String> result = new LinkedList<String>();
 
-        for (Map.Entry<Object, AttributeValue> objectAttributeValueEntry : actions.entrySet()) {
+        for (Entry<Object, AttributeValue> objectAttributeValueEntry : actions.entrySet()) {
             if (matches(objectAttributeValueEntry.getValue(),
                 MATCH_PREFIX + resourceType.getLabel())) {
                 if (objectAttributeValueEntry.getKey() instanceof Policy) {
@@ -254,7 +256,7 @@ public class PolicyParser {
      * @param children
      *            list of objects to be parsed
      */
-    private void parseChildren(final List< ? > children) {
+    private void parseChildren(final Iterable<?> children) {
         if (children != null) {
             for (Object child : children) {
                 if (child instanceof AbstractPolicy) {
@@ -283,7 +285,7 @@ public class PolicyParser {
      * @param apply
      *            object to be parsed
      */
-    private void parseCondition(final Apply apply) {
+    private void parseCondition(final Evaluatable apply) {
         if (apply != null) {
             parseChildren(apply.getChildren());
         }

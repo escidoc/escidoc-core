@@ -86,7 +86,6 @@ public class LinkStaxHandler extends DefaultHandler {
      */
     public LinkStaxHandler(final String elementPath) {
 
-        super();
         this.elementPath = elementPath;
         this.parentPath =
             elementPath.substring(0, elementPath.lastIndexOf('/'));

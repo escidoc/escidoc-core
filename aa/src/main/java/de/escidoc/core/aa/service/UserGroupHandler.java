@@ -94,6 +94,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#create(java.lang.String)
      */
+    @Override
     public String create(final String xmlData)
         throws UniqueConstraintViolationException, XmlCorruptedException,
         XmlSchemaValidationException, MissingMethodParameterException,
@@ -124,6 +125,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#delete(java.lang.String)
      */
+    @Override
     public void delete(final String groupId) throws UserGroupNotFoundException,
         MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
@@ -154,6 +156,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#retrieve(java.lang.String)
      */
+    @Override
     public String retrieve(final String groupId)
         throws UserGroupNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -197,6 +200,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#update(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String update(final String groupId, final String xmlData)
         throws UserGroupNotFoundException, UniqueConstraintViolationException,
         XmlCorruptedException, XmlSchemaValidationException,
@@ -243,6 +247,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#activate(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void activate(final String groupId, final String taskParam)
         throws AlreadyActiveException, UserGroupNotFoundException,
         XmlCorruptedException, MissingMethodParameterException,
@@ -285,6 +290,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#deactivate(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void deactivate(final String groupId, final String taskParam)
         throws AlreadyDeactiveException, UserGroupNotFoundException,
         XmlCorruptedException, MissingMethodParameterException,
@@ -318,6 +324,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveCurrentGrants(java.lang.String)
      * @aa
      */
+    @Override
     public String retrieveCurrentGrants(final String userGroupId)
         throws UserGroupNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -363,6 +370,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#createGrant(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String createGrant(final String groupId, final String grantXML)
         throws AlreadyExistsException, UserGroupNotFoundException,
         InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
@@ -413,6 +421,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#revokeGrant(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void revokeGrant(
         final String groupId, final String grantId, final String taskParam)
         throws UserGroupNotFoundException, GrantNotFoundException,
@@ -458,6 +467,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *      #retrieveGrant(java.lang.String, java.lang.String)
      * @aa
      */
+    @Override
     public String retrieveGrant(final String groupId, final String grantId)
         throws UserGroupNotFoundException, GrantNotFoundException,
         MissingMethodParameterException, AuthenticationException,
@@ -505,6 +515,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#revokeGrants(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public void revokeGrants(final String groupId, final String taskParam)
         throws UserGroupNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException,
@@ -542,6 +553,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
+    @Override
     public Set<String> retrieveGroupsForUser(final String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -561,6 +573,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             Thrown if a user group with the provided id does not exist in
      *             the framework.
      */
+    @Override
     public String retrieveResources(final String groupId)
         throws UserGroupNotFoundException, SystemException {
         return business.retrieveResources(groupId);
@@ -585,6 +598,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#retrieveUserGroups(java.util.Map)
      */
+    @Override
     public String retrieveUserGroups(final Map<String, String[]> filter)
         throws MissingMethodParameterException, AuthenticationException,
         AuthorizationException, InvalidSearchQueryException, SystemException {
@@ -627,6 +641,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#addSelectors(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String addSelectors(final String groupId, final String taskParam)
         throws OrganizationalUnitNotFoundException,
         UserAccountNotFoundException, UserGroupNotFoundException,
@@ -669,6 +684,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#removeSelectors(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String removeSelectors(final String groupId, final String taskParam)
         throws XmlCorruptedException, XmlSchemaValidationException,
         AuthenticationException, AuthorizationException, SystemException,

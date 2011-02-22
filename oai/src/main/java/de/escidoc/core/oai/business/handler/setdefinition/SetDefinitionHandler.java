@@ -69,6 +69,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * de.escidoc.core.oai.business.interfaces.SetDefinitionHandlerInterface
      * #create(java.lang.String)
      */
+    @Override
     public String create(final String xmlData)
         throws UniqueConstraintViolationException, InvalidXmlException,
         MissingMethodParameterException, SystemException {
@@ -208,6 +209,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *      #retrieve(java.lang.String)
      * @aa
      */
+    @Override
     public String retrieve(final String setDefinitionId)
         throws ResourceNotFoundException, SystemException {
         SetDefinition setDefinition =
@@ -228,6 +230,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * de.escidoc.core.oai.business.interfaces.SetDefinitionHandlerInterface
      * #update(java.lang.String, java.lang.String)
      */
+    @Override
     public String update(final String setDefinitionId, final String xmlData)
         throws ResourceNotFoundException, OptimisticLockingException,
         MissingMethodParameterException, SystemException {
@@ -282,6 +285,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *      #delete(java.lang.String)
      * @aa
      */
+    @Override
     public void delete(final String setDefinitionId)
         throws ResourceNotFoundException, SystemException {
         SetDefinition setDefinition =
@@ -314,6 +318,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * @see de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface
      *      #retrieveSetDefinitions(java.util.Map)
      */
+    @Override
     public String retrieveSetDefinitions(final Map<String, String[]> filter)
         throws AuthenticationException, AuthorizationException,
         InvalidSearchQueryException, SystemException {

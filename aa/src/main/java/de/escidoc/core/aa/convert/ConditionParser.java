@@ -83,8 +83,8 @@ public class ConditionParser {
          * @param operand1 first operand
          * @param operand2 second operand
          */
-        public Function(final String operation, final String operand1,
-            final String operand2) {
+        private Function(final String operation, final String operand1,
+                         final String operand2) {
             this.operation = operation;
             this.operand1 = operand1;
             this.operand2 = operand2;

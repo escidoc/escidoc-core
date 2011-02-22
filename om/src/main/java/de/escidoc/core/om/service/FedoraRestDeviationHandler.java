@@ -81,6 +81,7 @@ public class FedoraRestDeviationHandler
      * @throws Exception
      *             ex
      */
+    @Override
     public EscidocBinaryContent getDatastreamDissemination(
         final String pid, final String dsID, final Map<String, String[]> parameters)
         throws Exception {
@@ -100,6 +101,7 @@ public class FedoraRestDeviationHandler
      *             ex
      * 
      */
+    @Override
     public String export(
         final String pid, final Map<String, String[]> parameters)
         throws Exception {
@@ -118,6 +120,7 @@ public class FedoraRestDeviationHandler
      *             ex
      * 
      */
+    @Override
     public void cache(final String pid, final String xml) throws Exception {
         handler.cache(pid, xml);
     }
@@ -132,6 +135,7 @@ public class FedoraRestDeviationHandler
      * 
      * @om
      */
+    @Override
     public void removeFromCache(final String pid) throws Exception {
         handler.removeFromCache(pid);
     }
@@ -149,6 +153,7 @@ public class FedoraRestDeviationHandler
      * 
      * @om
      */
+    @Override
     public void replaceInCache(
         final String pid, final String xml) throws Exception {
         handler.replaceInCache(pid, xml);

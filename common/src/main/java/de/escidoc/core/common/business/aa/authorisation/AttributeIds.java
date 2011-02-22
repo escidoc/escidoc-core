@@ -36,7 +36,13 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * @author TTE
  * 
  */
-public class AttributeIds {
+public final class AttributeIds {
+
+    /**
+     * Private constructor to avoid instantiation.
+     */
+    private AttributeIds() {
+    }
 
     /**
      * The part of the id that identifies the "new" attribute for that the value

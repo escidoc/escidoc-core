@@ -161,7 +161,6 @@ public class GenericVersionableResource extends GenericResourcePid {
         throws TripleStoreSystemException, WebserverSystemException,
         ResourceNotFoundException {
 
-        super();
         setPropertiesNames(expandPropertiesNames(getPropertiesNames()),
             expandPropertiesNamesMapping(getPropertiesNamesMapping()));
         setId(id);
@@ -1365,7 +1364,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     public Map<String, String> mapTripleStoreKeys(
         final Map<String, String> tripleStoreMap) {
 
-        HashMap<String, String> properties = new HashMap<String, String>();
+        Map<String, String> properties = new HashMap<String, String>();
 
         for (String s : tripleStoreMap.keySet()) {
             String sourceKey = s;
@@ -1424,6 +1423,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         return properties;
     }
 
+    @Override
     protected org.fcrepo.server.types.gen.Datastream[] getDatastreamInfos()
         throws WebserverSystemException, FedoraSystemException {
 
@@ -1437,6 +1437,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         return datastreamInfos;
     }
 
+    @Override
     protected void initDatastreams(
         org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,

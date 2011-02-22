@@ -104,6 +104,7 @@ public class ContentModelHandler
      * @throws MalformedURLException
      * @see de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface#create(java.lang.String)
      */
+    @Override
     public String create(final String xmlData) throws InvalidContentException,
         MissingAttributeValueException, SystemException,
         AuthenticationException, AuthorizationException,
@@ -128,6 +129,7 @@ public class ContentModelHandler
      *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
      *      #delete(java.lang.String)
      */
+    @Override
     public void delete(final String id) throws SystemException,
         ContentModelNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -149,6 +151,7 @@ public class ContentModelHandler
      *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
      *      #retrieve(java.lang.String)
      */
+    @Override
     public String retrieve(final String id)
         throws ContentModelNotFoundException, SystemException,
         MissingMethodParameterException, AuthenticationException,
@@ -170,6 +173,7 @@ public class ContentModelHandler
      *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
      *      #retrieve(java.lang.String)
      */
+    @Override
     public String retrieveProperties(final String id)
         throws ContentModelNotFoundException, SystemException,
         AuthenticationException, AuthorizationException,
@@ -191,6 +195,7 @@ public class ContentModelHandler
      *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
      *      #retrieveContentStreams(java.lang.String)
      */
+    @Override
     public String retrieveContentStreams(final String id)
         throws ContentModelNotFoundException, SystemException,
         AuthenticationException, AuthorizationException,
@@ -212,6 +217,7 @@ public class ContentModelHandler
      *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
      *      #retrieveContentStream(java.lang.String)
      */
+    @Override
     public String retrieveContentStream(final String id, final String name)
         throws ContentModelNotFoundException, SystemException,
         AuthenticationException, AuthorizationException,
@@ -236,6 +242,7 @@ public class ContentModelHandler
      *      #retrieveContentStreamContent(java.lang.String, java.lang.String)
      * @axis.exclude
      */
+    @Override
     public EscidocBinaryContent retrieveContentStreamContent(
         final String id, final String name)
         throws ContentModelNotFoundException, SystemException,
@@ -260,6 +267,7 @@ public class ContentModelHandler
      *      #retrieveResources(java.lang.String)
      * @axis.exclude
      */
+    @Override
     public String retrieveResources(final String id)
         throws ContentModelNotFoundException, SystemException,
         AuthenticationException, AuthorizationException,
@@ -267,6 +275,7 @@ public class ContentModelHandler
         return business.retrieveResources(id);
     }
 
+    @Override
     public String retrieveVersionHistory(final String id)
         throws ContentModelNotFoundException, SystemException,
         AuthenticationException, AuthorizationException,
@@ -287,6 +296,7 @@ public class ContentModelHandler
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
+    @Override
     public String retrieveContentModels(final Map<String, String[]> parameterMap)
         throws InvalidSearchQueryException, SystemException {
         return business.retrieveContentModels(new LuceneRequestParameters(
@@ -314,6 +324,7 @@ public class ContentModelHandler
      *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
      *      #update(java.lang.String, java.lang.String)
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws InvalidXmlException, ContentModelNotFoundException,
         OptimisticLockingException, SystemException, AuthenticationException,
@@ -330,6 +341,7 @@ public class ContentModelHandler
      * @axis.exclude
      * @cmm
      */
+    @Override
     public EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(
         final String id, final String name) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -342,6 +354,7 @@ public class ContentModelHandler
      * @axis.exclude
      * @cmm
      */
+    @Override
     public EscidocBinaryContent retrieveResourceDefinitionXsltContent(
         final String id, final String name) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException,

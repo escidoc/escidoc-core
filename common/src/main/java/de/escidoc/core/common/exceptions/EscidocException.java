@@ -130,7 +130,6 @@ public abstract class EscidocException extends Exception {
      * @common
      */
     public EscidocException() {
-        super();
     }
 
     /**
@@ -180,7 +179,6 @@ public abstract class EscidocException extends Exception {
      * @common
      */
     public EscidocException(final int httpStatusCode, final String httpStatusMsg) {
-        super();
         this.httpStatusCode = httpStatusCode;
         this.httpStatusMsg = httpStatusMsg;
     }

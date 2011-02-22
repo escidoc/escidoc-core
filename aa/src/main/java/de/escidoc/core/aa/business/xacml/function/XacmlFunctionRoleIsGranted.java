@@ -46,6 +46,7 @@ import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 
 import java.net.URI;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -129,6 +130,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @see com.sun.xacml.cond.Function#evaluate(java.util.List,
      *      com.sun.xacml.EvaluationCtx)
      */
+    @Override
     public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
 
         try {
@@ -331,7 +333,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                                 if (resolvedAttributeValues != null
                                         && !resolvedAttributeValues.isEmpty()) {
                                     for (String resolvedAttributeValue : resolvedAttributeValues) {
-                                        final List grantsOfRoleAndObject =
+                                        final Collection grantsOfRoleAndObject =
                                                 (List) grantsOfRole
                                                         .get(resolvedAttributeValue);
                                         if (grantsOfRoleAndObject != null

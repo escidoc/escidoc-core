@@ -43,10 +43,7 @@ public class GroupSelectorsRemoveHandler
     
     private final List<String> memberIdsToRemove = new ArrayList<String>();
 
-    public GroupSelectorsRemoveHandler() {
-       
-    }
-    
+    @Override
     public String characters(String data, StartElement element)
         throws InvalidContentException, TripleStoreSystemException,
         WebserverSystemException {

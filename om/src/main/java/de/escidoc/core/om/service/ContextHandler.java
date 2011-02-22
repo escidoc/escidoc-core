@@ -97,6 +97,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #create(java.lang.String)
      */
+    @Override
     public String create(final String xmlData)
         throws MissingMethodParameterException, ContextNameNotUniqueException,
         AuthenticationException, AuthorizationException, SystemException,
@@ -116,6 +117,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #delete(java.lang.String)
      */
+    @Override
     public void delete(final String id) throws ContextNotFoundException,
         ContextNotEmptyException, MissingMethodParameterException,
         InvalidStatusException, AuthenticationException,
@@ -132,6 +134,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #retrieve(java.lang.String)
      */
+    @Override
     public String retrieve(final String id) throws ContextNotFoundException,
         MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
@@ -148,6 +151,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveProperties(java.lang.String)
      */
+    @Override
     public String retrieveProperties(final String id)
         throws ContextNotFoundException, SystemException {
         return handler.retrieveProperties(id);
@@ -163,6 +167,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #update(java.lang.String, java.lang.String)
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws ContextNotFoundException, MissingMethodParameterException,
         InvalidContentException, InvalidStatusException,
@@ -194,6 +199,7 @@ public class ContextHandler implements ContextHandlerInterface {
      *      #retrieveResource(java.lang.String, java.lang.String, java.util.Map)
      * @axis.exclude
      */
+    @Override
     public EscidocBinaryContent retrieveResource(
         final String id, final String resourceName,
         final Map<String, String[]> parameters)
@@ -213,6 +219,7 @@ public class ContextHandler implements ContextHandlerInterface {
      *      #retrieveResources(java.lang.String)
      * @axis.exclude
      */
+    @Override
     public String retrieveResources(final String id)
         throws ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -238,6 +245,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#open(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String open(final String id, final String taskParam)
         throws ContextNotFoundException, MissingMethodParameterException,
         InvalidStatusException, AuthenticationException,
@@ -266,6 +274,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#close(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String close(final String id, final String taskParam)
         throws ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException,
@@ -285,6 +294,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface
      *      #retrieveContexts(java.util.Map)
      */
+    @Override
     public String retrieveContexts(final Map<String, String[]> filter)
         throws MissingMethodParameterException, SystemException {
         return handler.retrieveContexts(new LuceneRequestParameters(filter));
@@ -306,6 +316,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveMembers(java.lang.String,
      *      java.util.Map)
      */
+    @Override
     public String retrieveMembers(
         final String id, final Map<String, String[]> filter)
         throws ContextNotFoundException, MissingMethodParameterException,
@@ -331,6 +342,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * @throws AdminDescriptorNotFoundException
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveAdminDescriptor(java.lang.String)
      */
+    @Override
     public String retrieveAdminDescriptor(final String id, final String name)
         throws ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException,
@@ -351,6 +363,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveAdminDescriptor(java.lang.String)
      */
+    @Override
     public String retrieveAdminDescriptors(final String id)
         throws ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
@@ -377,6 +390,7 @@ public class ContextHandler implements ContextHandlerInterface {
      * 
      * @service.exclude
      */
+    @Override
     public String updateAdminDescriptor(final String id, final String xmlData)
         throws ContextNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException,

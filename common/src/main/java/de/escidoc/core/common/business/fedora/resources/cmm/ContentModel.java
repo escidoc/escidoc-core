@@ -260,6 +260,7 @@ public class ContentModel extends GenericVersionableResourcePid
      * @throws StreamNotFoundException
      *             If a specific datastream can not be found.
      */
+    @Override
     protected void initDatastreams(
         final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,
@@ -278,7 +279,7 @@ public class ContentModel extends GenericVersionableResourcePid
             String mimeType = datastreamInfo.getMIMEType();
             String location = datastreamInfo.getLocation();
 
-            Datastream ds = null;
+            Datastream ds;
             if (altIDs.contains("content-stream")) {
                 // found content-stream
                 ds =
@@ -490,9 +491,9 @@ public class ContentModel extends GenericVersionableResourcePid
                 new HashMap<String, ResourceDefinitionCreate>();
 
             // get list of service references
-            Map<String, String> services = null;
+            Map<String, String> services;
             try {
-                List<String> pl = new ArrayList<String>();
+                Collection<String> pl = new ArrayList<String>();
                 pl.add("info:fedora/fedora-system:def/model#hasService");
                 services = this.getResourceProperties(pl);
             }
@@ -557,7 +558,7 @@ public class ContentModel extends GenericVersionableResourcePid
 
         final Set<String> namesInFedora = getContentStreams().keySet();
 
-        final Iterator<Map.Entry<String, Datastream>> nameIt =
+        final Iterator<Entry<String, Datastream>> nameIt =
             contentStreamDatastreams.entrySet().iterator();
         // create/activate data streams which are in contentStreamDatastreams
         // but not in fedora
@@ -565,7 +566,7 @@ public class ContentModel extends GenericVersionableResourcePid
         // method. If not, replace the following while and for with one
         // entry-set iterator
         while (nameIt.hasNext()) {
-            Map.Entry<String, Datastream> mapEntry = nameIt.next();
+            Entry<String, Datastream> mapEntry = nameIt.next();
             final String name = mapEntry.getKey();
             final Datastream current = mapEntry.getValue();
             // add DS ...

@@ -119,6 +119,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws ComponentNotFoundException
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#create(java.lang.String)
      */
+    @Override
     public String create(final String xmlData) throws MissingContentException,
         ContextNotFoundException, ContentModelNotFoundException,
         ReadonlyElementViolationException, MissingAttributeValueException,
@@ -143,6 +144,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #delete(java.lang.String)
      */
+    @Override
     public void delete(final String id) throws ItemNotFoundException,
         AlreadyPublishedException, LockingException, AuthenticationException,
         AuthorizationException, InvalidStatusException,
@@ -160,6 +162,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #retrieve(java.lang.String)
      */
+    @Override
     public String retrieve(final String id) throws ItemNotFoundException,
         ComponentNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -184,6 +187,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #update(java.lang.String, java.lang.String)
      */
+    @Override
     public String update(final String id, final String xmlData)
         throws ItemNotFoundException, FileNotFoundException,
         InvalidContextException, InvalidStatusException, LockingException,
@@ -226,6 +230,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String createComponent(final String id, final String xmlData)
         throws MissingContentException, ItemNotFoundException,
         ComponentNotFoundException, LockingException,
@@ -250,6 +255,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String retrieveComponent(final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException,
         AuthenticationException, AuthorizationException,
@@ -269,6 +275,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String retrieveComponentMdRecords(
         final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -290,6 +297,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String retrieveComponentMdRecord(
         final String id, final String componentId, final String mdRecordId)
         throws ItemNotFoundException, AuthenticationException,
@@ -318,6 +326,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String updateComponent(
         final String id, final String componentId, final String xmlData)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -343,6 +352,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String retrieveComponents(final String id)
         throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, ComponentNotFoundException,
@@ -362,6 +372,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String retrieveComponentProperties(
         final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -384,6 +395,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
      *      #createMetadataRecord(java.lang.String, java.lang.String)
      */
+    @Override
     @Deprecated
     public String createMetadataRecord(final String id, final String xmlData)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -408,6 +420,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String createMdRecord(final String id, final String xmlData)
         throws ItemNotFoundException, SystemException, InvalidXmlException,
         LockingException, MissingAttributeValueException,
@@ -435,6 +448,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public EscidocBinaryContent retrieveContent(
         final String id, final String contentId) throws ItemNotFoundException,
         AuthenticationException, AuthorizationException,
@@ -463,6 +477,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public EscidocBinaryContent retrieveContentStreamContent(
         final String itemId, final String name) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -488,6 +503,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public EscidocBinaryContent retrieveContent(
         final String id, final String contentId, final String transformer,
         final String param) throws ItemNotFoundException,
@@ -515,6 +531,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public EscidocServiceRedirectInterface redirectContentService(
         final String id, final String contentId, final String transformer,
         final String clientService) throws ItemNotFoundException,
@@ -537,6 +554,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String retrieveMdRecord(final String id, final String mdRecordId)
         throws ItemNotFoundException, MdRecordNotFoundException,
         AuthenticationException, AuthorizationException,
@@ -557,6 +575,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String retrieveMdRecordContent(
         final String id, final String mdRecordId) throws ItemNotFoundException,
         MdRecordNotFoundException, AuthenticationException,
@@ -576,6 +595,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @axis.exclude
      * @om
      */
+    @Override
     public String retrieveDcRecordContent(final String id)
         throws ItemNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException,
@@ -602,6 +622,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String updateMdRecord(
         final String id, final String mdRecordId, final String xmlData)
         throws ItemNotFoundException, XmlSchemaNotFoundException,
@@ -624,6 +645,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String retrieveMdRecords(final String id)
         throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -638,6 +660,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @seede.escidoc.core.om.service.interfaces.ItemHandlerInterface#
      * retrieveContentStreams(java.lang.String)
      */
+    @Override
     public String retrieveContentStreams(final String id)
         throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -651,6 +674,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @seede.escidoc.core.om.service.interfaces.ItemHandlerInterface#
      * retrieveContentStream(java.lang.String, java.lang.String)
      */
+    @Override
     public String retrieveContentStream(final String id, final String name)
         throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -668,6 +692,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String retrieveProperties(final String id)
         throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -687,6 +712,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String retrieveResources(final String id)
         throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -710,6 +736,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public EscidocBinaryContent retrieveResource(
         final String id, final String resourceName,
         final Map<String, String[]> parameters) throws ItemNotFoundException,
@@ -719,6 +746,7 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.retrieveResource(id, resourceName, parameters);
     }
 
+    @Override
     public String retrieveVersionHistory(final String id)
         throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -734,12 +762,14 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
      *      #retrieveParents(java.lang.String)
      */
+    @Override
     public String retrieveParents(final String id)
         throws ItemNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
         return handler.retrieveParents(id);
     }
 
+    @Override
     public String retrieveRelations(final String id)
         throws ItemNotFoundException, AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -748,6 +778,7 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.retrieveRelations(id);
     }
 
+    @Override
     public String release(final String id, final String lastModified)
         throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidStatusException, AuthenticationException,
@@ -759,6 +790,7 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.release(id, lastModified);
     }
 
+    @Override
     public String submit(final String id, final String lastModified)
         throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidStatusException, AuthenticationException,
@@ -770,6 +802,7 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.submit(id, lastModified);
     }
 
+    @Override
     public String revise(final String id, final String lastModified)
         throws AuthenticationException, AuthorizationException,
         ItemNotFoundException, ComponentNotFoundException, LockingException,
@@ -803,6 +836,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#withdraw(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String withdraw(final String id, final String lastModified)
         throws ItemNotFoundException, ComponentNotFoundException,
         NotPublishedException, LockingException, AlreadyWithdrawnException,
@@ -834,6 +868,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#lock(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String lock(final String id, final String lastModified)
         throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, InvalidContentException, AuthenticationException,
@@ -861,6 +896,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#unlock(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String unlock(final String id, final String lastModified)
         throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, AuthenticationException, AuthorizationException,
@@ -888,6 +924,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public void deleteComponent(final String itemId, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, AuthenticationException, AuthorizationException,
@@ -917,6 +954,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * 
      */
+    @Override
     public String moveToContext(final String id, final String taskParam)
         throws ContextNotFoundException, InvalidContentException,
         ItemNotFoundException, LockingException, InvalidStatusException,
@@ -934,6 +972,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
      *      #retrieveItems(java.util.Map)
      */
+    @Override
     public String retrieveItems(final Map<String, String[]> filter)
         throws SystemException {
 
@@ -954,6 +993,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws XmlCorruptedException
      *             Thrown if a provided item version id is not a latest version.
      */
+    @Override
     public String assignVersionPid(final String id, final String taskParam)
         throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, AuthenticationException, AuthorizationException,
@@ -976,6 +1016,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws OptimisticLockingException
      * @throws XmlCorruptedException
      */
+    @Override
     public String assignObjectPid(final String id, final String taskParam)
         throws ItemNotFoundException, ComponentNotFoundException,
         LockingException, AuthenticationException, AuthorizationException,
@@ -1002,6 +1043,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws ReadonlyVersionException
      *             Thrown if a provided item version id is not a latest version.
      */
+    @Override
     public String assignContentPid(
         final String id, final String componentId, final String taskParam)
         throws ItemNotFoundException, LockingException,
@@ -1035,6 +1077,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#addContentRelations(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String addContentRelations(final String id, final String param)
         throws SystemException, ItemNotFoundException,
         ComponentNotFoundException, OptimisticLockingException,
@@ -1069,6 +1112,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#removeContentRelations(java.lang.String,
      *      java.lang.String)
      */
+    @Override
     public String removeContentRelations(final String id, final String param)
         throws SystemException, ItemNotFoundException,
         ComponentNotFoundException, OptimisticLockingException,

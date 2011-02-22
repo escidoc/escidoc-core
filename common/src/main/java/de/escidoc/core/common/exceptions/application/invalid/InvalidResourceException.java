@@ -25,7 +25,6 @@ public class InvalidResourceException extends ValidationException {
      * @common
      */
     public InvalidResourceException() {
-        super();
     }
 
     /**

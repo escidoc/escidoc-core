@@ -50,7 +50,13 @@ import java.net.URLConnection;
  * @author ROF
  * 
  */
-public class OntologyUtility {
+public final class OntologyUtility {
+
+    /**
+     * Private constructor to avoid instantiation.
+     */
+    private OntologyUtility() {
+    }
 
     /**
      * Check if content-relations ontologie contains predicate.

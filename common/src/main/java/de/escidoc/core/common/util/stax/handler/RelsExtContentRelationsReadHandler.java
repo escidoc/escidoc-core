@@ -93,6 +93,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         this.predicate = predicate;
     }
 
+    @Override
     public StartElement startElement(StartElement element)
         throws WebserverSystemException {
         String curPath = parser.getCurPath();
@@ -130,10 +131,11 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         return element;
     }
 
+    @Override
     public EndElement endElement(EndElement element) {
 
         if (inRelation) {
-            HashMap<String, String> relationData =
+            Map<String, String> relationData =
                 new HashMap<String, String>();
             relations.add(relationData);
             relationData.put("predicate", predicate);

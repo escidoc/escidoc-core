@@ -174,6 +174,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
      * 
      * @return The element for further processing.
      */
+    @Override
     public EndElement endElement(final EndElement element) {
 
         String currentPath = parser.getCurPath();

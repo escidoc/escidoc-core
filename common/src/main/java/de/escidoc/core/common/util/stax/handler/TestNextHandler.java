@@ -36,18 +36,21 @@ import javax.xml.stream.XMLStreamException;
 
 public class TestNextHandler extends DefaultHandler {
 
+    @Override
     public String characters(String data, StartElement element)
         throws XMLStreamException {
         System.out.println("characters by next handler.");
         return data;
     }
 
+    @Override
     public EndElement endElement(EndElement element) throws XMLStreamException {
         System.out.println("endElement[" + element.getLocalName()
             + "] by next handler.");
         return element;
     }
 
+    @Override
     public StartElement startElement(StartElement element)
         throws XMLStreamException {
         System.out.println("startElement[" + element.getLocalName()

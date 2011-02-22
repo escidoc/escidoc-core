@@ -72,6 +72,7 @@ public class SmAggregationDefinitionsHibernateDao
      *             e
      * @sm
      */
+    @Override
     public void save(final AggregationDefinition aggregationDefinition)
         throws SqlDatabaseSystemException {
         super.save(aggregationDefinition);
@@ -90,6 +91,7 @@ public class SmAggregationDefinitionsHibernateDao
      *             e
      * @sm
      */
+    @Override
     public void save(final AggregationTable aggregationTable)
         throws SqlDatabaseSystemException {
         super.save(aggregationTable);
@@ -108,7 +110,8 @@ public class SmAggregationDefinitionsHibernateDao
      *             e
      * @sm
      */
-    public void save(final AggregationStatisticDataSelector 
+    @Override
+    public void save(final AggregationStatisticDataSelector
                         aggregationStatisticDataSelector)
         throws SqlDatabaseSystemException {
         super.save(aggregationStatisticDataSelector);
@@ -128,6 +131,7 @@ public class SmAggregationDefinitionsHibernateDao
      * 
      * @sm
      */
+    @Override
     public void delete(final AggregationDefinition aggregationDefinition)
         throws SqlDatabaseSystemException {
         super.delete(aggregationDefinition);
@@ -150,6 +154,7 @@ public class SmAggregationDefinitionsHibernateDao
      * 
      * @sm
      */
+    @Override
     public AggregationDefinition retrieve(final String id)
         throws SqlDatabaseSystemException, AggregationDefinitionNotFoundException {
         AggregationDefinition result = null;
@@ -191,6 +196,7 @@ public class SmAggregationDefinitionsHibernateDao
      * 
      * @sm
      */
+    @Override
     public Collection<AggregationDefinition> retrieveAggregationDefinitions()
         throws SqlDatabaseSystemException {
         final DetachedCriteria detachedCriteria =
@@ -226,6 +232,7 @@ public class SmAggregationDefinitionsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
+    @Override
     public Collection<AggregationDefinition> retrieveAggregationDefinitions(
         final Collection<String> scopeIds, final String criteria,
         final int offset, final int maxResults)
@@ -272,6 +279,7 @@ public class SmAggregationDefinitionsHibernateDao
      * 
      * @sm
      */
+    @Override
     public Collection<AggregationDefinition> retrieveAggregationDefinitions(
         final Collection<String> scopeIds) throws SqlDatabaseSystemException {
 
@@ -300,6 +308,7 @@ public class SmAggregationDefinitionsHibernateDao
      * 
      * @sm
      */
+    @Override
     public String getNextPrimkey()
         throws SqlDatabaseSystemException {
         try {

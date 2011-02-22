@@ -130,6 +130,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
+    @Override
     public String characters(final String s, final StartElement element)
         throws Exception {
         if (inTable) {
@@ -224,6 +225,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @throws Exception e
      * 
      */
+    @Override
     public StartElement startElement(final StartElement element) throws Exception {
         String currentPath = parser.getCurPath();
         boolean fieldRootElement = false;
@@ -303,6 +305,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @throws Exception e
      * 
      */
+    @Override
     public EndElement endElement(final EndElement element) throws Exception {
         String currentPath = parser.getCurPath();
         if (TABLE_PATH.equals(currentPath)) {

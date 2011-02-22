@@ -145,6 +145,7 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
     /**
      * 
      */
+    @Override
     String ingest(final String xmlData) throws EscidocException;
 
     /**
