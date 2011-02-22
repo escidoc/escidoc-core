@@ -489,7 +489,7 @@ public class SecurityInterceptor implements Ordered {
 
         return new AuthorizationException(StringUtility
                 .format("Access denied", className, methodName,
-                        UserContext.getHandle()));
+                        UserContext.getHandle(), UserContext.getId()));
     }
 
     /**
