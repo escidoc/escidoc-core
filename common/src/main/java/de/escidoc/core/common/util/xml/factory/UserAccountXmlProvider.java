@@ -37,9 +37,6 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
 
     private static final String USER_ACCOUNT_RESOURCE_NAME = "user-account";
 
-    private static final String USER_ACCOUNTS_RESOURCE_NAME =
-        "user-account-list";
-
     private static final String USER_ACCOUNTS_SRW_RESOURCE_NAME =
         "user-account-srw-list";
 
@@ -56,8 +53,6 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
     private static final String CURRENT_GRANTS_RESOURCE_NAME = "current-grants";
 
     private static final String CURRENT_GRANTS_PATH = USER_ACCOUNT_PATH;
-
-    private static final String GRANTS_RESOURCE_NAME = "grant-list";
 
     private static final String GRANTS_SRW_RESOURCE_NAME = "grant-srw-list";
 
@@ -129,13 +124,7 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
         return getXml(CURRENT_GRANTS_RESOURCE_NAME, CURRENT_GRANTS_PATH, values);
     }
 
-    public String getGrantsXml(final Map values)
-        throws WebserverSystemException {
-
-        return getXml(GRANTS_RESOURCE_NAME, GRANTS_PATH, values);
-    }
-
-    public final String getGrantsSrwXml(final Map values)
+    public final String getGrantsXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(GRANTS_SRW_RESOURCE_NAME, GRANTS_PATH, values);

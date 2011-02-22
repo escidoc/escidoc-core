@@ -242,7 +242,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         }
 
         addEscidocBaseUrl(values);
-        return getUserAccountXmlProvider().getGrantsSrwXml(values);
+        return getUserAccountXmlProvider().getGrantsXml(values);
     }
 
     /**
