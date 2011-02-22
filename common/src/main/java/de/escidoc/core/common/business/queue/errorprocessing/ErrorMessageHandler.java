@@ -71,7 +71,7 @@ public class ErrorMessageHandler {
 
         //put error-message into StringBuffer
         messageBuf.append("error: ").append(getStackTrace(exception)).append(
-                "\n");
+                '\n');
         
         //write StringBuffer into logfile
         errorLogger = new AppLogger(logfile);
@@ -89,13 +89,13 @@ public class ErrorMessageHandler {
      * @common
      */
     private String getStackTrace(final Throwable e) {
-        StringBuffer stack = new StringBuffer("");
+        StringBuilder stack = new StringBuilder("");
         if (e != null) {
-            stack.append(e.getMessage()).append("\n");
+            stack.append(e.getMessage()).append('\n');
             StackTraceElement[] stackElements = e.getStackTrace();
             if (stackElements != null && stackElements.length > 0
                     && stackElements[0] != null) {
-                stack.append(stackElements[0].toString()).append("\n");
+                stack.append(stackElements[0].toString()).append('\n');
             }
             if (e.getCause() != null) {
                 stack.append("Caused by:\n");

@@ -90,7 +90,7 @@ public class LockHandler extends JdbcDaoSupport {
             getJdbcTemplate().execute(
                 "INSERT INTO om.lockstatus (objid, owner, ownertitle, locked) "
                     + "VALUES ('" + objid + "','" + lockOwner[0] + "','"
-                    + lockOwner[1] + "', " + LOCKED_VALUE + ")");
+                    + lockOwner[1] + "', " + LOCKED_VALUE + ')');
         }
         catch (DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
@@ -254,7 +254,7 @@ public class LockHandler extends JdbcDaoSupport {
         }
         catch (DataAccessException e) {
             throw new WebserverSystemException(
-                "Could not find lock status for object '" + objid + "!", e);
+                "Could not find lock status for object '" + objid + '!', e);
         }
     }
 

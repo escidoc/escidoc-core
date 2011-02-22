@@ -47,11 +47,11 @@ import java.util.regex.Pattern;
 
 public class FilterHandler extends DefaultHandler {
 
-    private static final String XPATH_ORDER_BY = "/" + XmlUtility.NAME_PARAM
-        + "/" + XmlUtility.NAME_ORDER_BY;
+    private static final String XPATH_ORDER_BY = '/' + XmlUtility.NAME_PARAM
+        + '/' + XmlUtility.NAME_ORDER_BY;
 
-    private static final String XPATH_FILTER = "/" + XmlUtility.NAME_PARAM
-        + "/" + XmlUtility.NAME_FILTER;
+    private static final String XPATH_FILTER = '/' + XmlUtility.NAME_PARAM
+        + '/' + XmlUtility.NAME_FILTER;
 
     /**
      * The default offset used if no offset is defined in parsed data.

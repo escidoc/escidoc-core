@@ -40,8 +40,8 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  */
 public class UnsecuredActionStaxHandler extends DefaultHandler {
 
-    private static final String UNSECURED_ACTION_PATH = "/"
-        + XmlUtility.NAME_UNSECURED_ACTIONS + "/"
+    private static final String UNSECURED_ACTION_PATH = '/'
+        + XmlUtility.NAME_UNSECURED_ACTIONS + '/'
         + XmlUtility.NAME_UNSECURED_ACTION;
 
     private final StringBuffer unsecuredActions = new StringBuffer();
@@ -65,7 +65,7 @@ public class UnsecuredActionStaxHandler extends DefaultHandler {
         final String currentPath = element.getPath();
         if (UNSECURED_ACTION_PATH.equals(currentPath)) {
             unsecuredActions.append(s);
-            unsecuredActions.append(" ");
+            unsecuredActions.append(' ');
         }
 
         return s;

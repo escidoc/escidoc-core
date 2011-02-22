@@ -165,7 +165,7 @@ public class Reindexer {
         if (indexName.equals("errorTest")) {
             return testReindexError();
         }
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         ReindexStatus reindexStatus = ReindexStatus.getInstance();
 
         if (reindexStatus.startMethod()) {
@@ -177,42 +177,42 @@ public class Reindexer {
                     getIds(indexName, ResourceType.CONTAINER,
                         CONTAINER_LIST_QUERY, clearIndex);
 
-                idListEmpty &= containerHrefs.size() == 0;
+                idListEmpty &= containerHrefs.isEmpty();
 
                 // Get all Content Models
                 Collection<String> contentModelHrefs =
                     getIds(indexName, ResourceType.CONTENT_MODEL,
                         CONTENT_MODEL_LIST_QUERY, clearIndex);
 
-                idListEmpty &= contentModelHrefs.size() == 0;
+                idListEmpty &= contentModelHrefs.isEmpty();
 
                 // Get all Content Relations
                 Collection<String> contentRelationHrefs =
                     getIds(indexName, ResourceType.CONTENT_RELATION,
                         CONTENT_RELATION_LIST_QUERY, clearIndex);
 
-                idListEmpty &= contentRelationHrefs.size() == 0;
+                idListEmpty &= contentRelationHrefs.isEmpty();
 
                 // Get all Contexts
                 Collection<String> contextHrefs =
                     getIds(indexName, ResourceType.CONTEXT, CONTEXT_LIST_QUERY,
                         clearIndex);
 
-                idListEmpty &= contextHrefs.size() == 0;
+                idListEmpty &= contextHrefs.isEmpty();
 
                 // Get all Items
                 Collection<String> itemHrefs =
                     getIds(indexName, ResourceType.ITEM, ITEM_LIST_QUERY,
                         clearIndex);
 
-                idListEmpty &= itemHrefs.size() == 0;
+                idListEmpty &= itemHrefs.isEmpty();
 
                 // Get all Organizational Units
                 Collection<String> orgUnitHrefs =
                     getIds(indexName, ResourceType.OU, OU_LIST_QUERY,
                         clearIndex);
 
-                idListEmpty &= orgUnitHrefs.size() == 0;
+                idListEmpty &= orgUnitHrefs.isEmpty();
 
                 if (clearIndex) {
                     // Delete indexes

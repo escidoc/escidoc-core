@@ -129,7 +129,7 @@ public class OrganizationalUnitMetadataHandler
                 name = element.getAttribute(null, NAME);
                 this.currentMdRecordName = name.getValue();
 
-                if (currentMdRecordName.equals("")) {
+                if (currentMdRecordName.length() == 0) {
                     String message =
                         "The value of attribute 'name' of the element "
                             + elementName + " was not set!";
@@ -257,14 +257,14 @@ public class OrganizationalUnitMetadataHandler
      * @return the mdRecordsPath
      */
     public String getMdRecordsPath() {
-        return getRootPath() + "/" + XmlUtility.NAME_MDRECORDS;
+        return getRootPath() + '/' + XmlUtility.NAME_MDRECORDS;
     }
 
     /**
      * @return the mdRecordpath
      */
     public String getMdRecordPath() {
-        return getMdRecordsPath() + "/" + XmlUtility.NAME_MDRECORD;
+        return getMdRecordsPath() + '/' + XmlUtility.NAME_MDRECORD;
     }
 
     /**

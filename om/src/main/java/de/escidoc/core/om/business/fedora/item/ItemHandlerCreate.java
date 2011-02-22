@@ -226,7 +226,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         if (dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS) != null) {
             final Map mdRecordsStreams =
                 (Map) dataStreams.get(FoXmlProvider.DATASTREAM_MD_RECORDS);
-            if (mdRecordsStreams.size() > 0) {
+            if (!mdRecordsStreams.isEmpty()) {
                 final List<Map<String, String>> mdRecords =
                     new ArrayList<Map<String, String>>(mdRecordsStreams.size());
                 values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);

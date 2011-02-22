@@ -232,7 +232,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      */
     private InputStream replaceVariables(final InputStream in) {
         String str;
-        StringBuffer xml = new StringBuffer("");
+        StringBuilder xml = new StringBuilder("");
         BufferedReader reader;
         try {
             reader = new BufferedReader(new InputStreamReader(in));
@@ -267,7 +267,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      */
     private String insertSystemProperties(final String propertyValue) {
         String result = propertyValue;
-        while (result.indexOf("${") > -1) {
+        while (result.contains("${")) {
             if (log.isDebugEnabled()) {
                 log.debug("propertyValue=" + result);
             }

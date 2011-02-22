@@ -80,12 +80,12 @@ public abstract class AbstractAttributeFinderModule
      * unique fedora-generated ids).
      */
     public static final Pattern PATTERN_ID_VALIDATABLE_OBJECT_TYPE = Pattern
-        .compile(XmlUtility.NAME_COMPONENT + "|" + XmlUtility.NAME_CONTAINER
-            + "|" + XmlUtility.NAME_CONTENT_MODEL + "|"
-            + XmlUtility.NAME_CONTEXT + "|" + XmlUtility.NAME_ITEM + "|"
-            + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "|" + XmlUtility.NAME_ROLE
-            + "|" + XmlUtility.NAME_USER_ACCOUNT + "|"
-            + XmlUtility.NAME_USER_GROUP + "|" + XmlUtility.NAME_GRANT);
+        .compile(XmlUtility.NAME_COMPONENT + '|' + XmlUtility.NAME_CONTAINER
+            + '|' + XmlUtility.NAME_CONTENT_MODEL + '|'
+            + XmlUtility.NAME_CONTEXT + '|' + XmlUtility.NAME_ITEM + '|'
+            + XmlUtility.NAME_ORGANIZATIONAL_UNIT + '|' + XmlUtility.NAME_ROLE
+            + '|' + XmlUtility.NAME_USER_ACCOUNT + '|'
+            + XmlUtility.NAME_USER_GROUP + '|' + XmlUtility.NAME_GRANT);
 
     /**
      * Pattern used to parse the attribute id and extract local part (that can
@@ -93,7 +93,7 @@ public abstract class AbstractAttributeFinderModule
      * part.
      */
     protected static final Pattern PATTERN_PARSE_ATTRIBUTE_ID = Pattern
-        .compile("(" + AttributeIds.RESOURCE_ATTR_PREFIX
+        .compile('(' + AttributeIds.RESOURCE_ATTR_PREFIX
             + "([^:]+):[^:]+):{0,1}(.*){0,1}" + "|("
             + AttributeIds.RESOURCE_ATTR_PREFIX
             + "(object-type|object-type-new|[^:]+?-id))$");

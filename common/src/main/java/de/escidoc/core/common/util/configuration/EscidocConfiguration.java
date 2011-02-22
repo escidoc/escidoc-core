@@ -488,7 +488,7 @@ public final class EscidocConfiguration {
      */
     private synchronized String replaceEnvVariables(final String property) {
         String replacedProperty = property;
-        if (property.indexOf("${") > -1) {
+        if (property.contains("${")) {
             String[] envVariables = property.split("\\}.*?\\$\\{");
             if (envVariables != null) {
                 for (int i = 0; i < envVariables.length; i++) {
@@ -496,13 +496,13 @@ public final class EscidocConfiguration {
                         envVariables[i].replaceFirst(".*?\\$\\{", "");
                     envVariables[i] = envVariables[i].replaceFirst("\\}.*", "");
                     if (System.getProperty(envVariables[i]) != null
-                        && !System.getProperty(envVariables[i]).equals("")) {
+                        && System.getProperty(envVariables[i]).length() != 0) {
                         String envVariable =
                             System.getProperty(envVariables[i]);
                         envVariable = envVariable.replaceAll("\\\\", "/");
                         replacedProperty =
                             replacedProperty.replaceAll("\\$\\{"
-                                + envVariables[i] + "}", envVariable);
+                                + envVariables[i] + '}', envVariable);
                     }
                 }
             }
@@ -527,7 +527,7 @@ public final class EscidocConfiguration {
             if (selfUrl.endsWith("/")) {
                 selfUrl = selfUrl.substring(0, selfUrl.length() - 1);
             }
-            selfUrl = selfUrl + path;
+            selfUrl += path;
         }
         return selfUrl;
     }

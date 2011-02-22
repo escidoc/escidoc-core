@@ -134,7 +134,7 @@ public class WovReadHandler extends DefaultHandler {
                 if (versionId != null) {
 
                     String objectId = getObjId(element);
-                    if (objectId.endsWith(":" + versionId)) {
+                    if (objectId.endsWith(':' + versionId)) {
                         inCertainVersion = true;
                         try {
                             this.versionCreatedDate =

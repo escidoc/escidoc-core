@@ -652,8 +652,8 @@ public class RoleHandler implements RoleHandlerInterface {
             String scopeRules = xacmlParser.getScopeRules(resourceType);
             String policyRules = xacmlParser.getPolicyRules(resourceType);
 
-            log.info("create access right (" + role.getId() + ","
-                + resourceType + "," + scopeRules + "," + policyRules + ")");
+            log.info("create access right (" + role.getId() + ','
+                + resourceType + ',' + scopeRules + ',' + policyRules + ')');
             accessRights.putAccessRight(resourceType, role.getId(), scopeRules,
                 policyRules);
         }

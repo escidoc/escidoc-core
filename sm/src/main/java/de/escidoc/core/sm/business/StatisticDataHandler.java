@@ -80,7 +80,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("StatisticDataHandler does create");
         }
-        if (xmlData == null || xmlData.equals("")) {
+        if (xmlData == null || xmlData.length() == 0) {
             LOGGER.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -111,7 +111,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
     public void insertStatisticData(final String xmlData)
         throws ScopeNotFoundException, MissingMethodParameterException,
         XmlSchemaValidationException, XmlCorruptedException, SystemException {
-        if (xmlData == null || xmlData.equals("")) {
+        if (xmlData == null || xmlData.length() == 0) {
             LOGGER.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }

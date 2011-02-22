@@ -57,7 +57,7 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
 
     // FIXME: This variable has no use.
     // Its value is never changed. It's used in one if-statement
-    private final boolean isParsed = false;
+    private static final boolean isParsed = false;
 
     private GregorianCalendar latestStatusTimestamp;
 

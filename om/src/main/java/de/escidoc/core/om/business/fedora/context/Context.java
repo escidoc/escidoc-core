@@ -145,7 +145,7 @@ public class Context extends GenericResource implements ContextInterface {
         catch (final StreamNotFoundException e) {
             // A context have to have a properties datastream
             throw new StreamNotFoundException("No properties for context "
-                + getId() + ".", e);
+                + getId() + '.', e);
         }
         // getSomeValuesFromFedora();
 
@@ -189,7 +189,7 @@ public class Context extends GenericResource implements ContextInterface {
         catch (final StreamNotFoundException e) {
             // A context have to have a properties datastream
             throw new StreamNotFoundException("No properties for context "
-                + getId() + ".", e);
+                + getId() + '.', e);
         }
         // getSomeValuesFromFedora();
     }
@@ -206,7 +206,7 @@ public class Context extends GenericResource implements ContextInterface {
         WebserverSystemException {
 
         // check that at least one OU is given
-        if (ous.size() == 0) {
+        if (ous.isEmpty()) {
             final String message =
                 "No 'organizational-unit' element is given. ";
             LOGGER.error(message);
@@ -334,7 +334,7 @@ public class Context extends GenericResource implements ContextInterface {
         catch (final StreamNotFoundException e) {
             // An item have to have a RELS-EXT datastream
             throw new StreamNotFoundException("No DC for context " + getId()
-                + ".", e);
+                + '.', e);
         }
         // getSomeValuesFromFedora();
     }

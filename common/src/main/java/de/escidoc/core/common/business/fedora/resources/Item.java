@@ -255,7 +255,7 @@ public class Item extends GenericVersionableResourcePid
         if (!this.components.containsKey(componentId)) {
             throw new ComponentNotFoundException("Component with objid='"
                 + componentId + "' is not part of Item with objid='" + getId()
-                + "'");
+                + '\'');
         }
 
         Component c = this.components.get(componentId);
@@ -549,7 +549,7 @@ public class Item extends GenericVersionableResourcePid
                 } catch (MdRecordNotFoundException e) {
                     throw new IntegritySystemException(
                             "Can not find md-record previously found in item "
-                                    + getId() + ".", e);
+                                    + getId() + '.', e);
                 }
                 fedoraDs.delete();
                 // TODO ? remove it from this.mdrecords?
@@ -588,7 +588,7 @@ public class Item extends GenericVersionableResourcePid
         if (!this.mdRecords.containsKey(name)) {
             String message =
                 "Metadata record with name " + name + " not found in item "
-                    + getId() + ".";
+                    + getId() + '.';
             log.debug(message);
             throw new MdRecordNotFoundException(message);
         }
@@ -931,7 +931,7 @@ public class Item extends GenericVersionableResourcePid
             getFedoraUtility().sync();
         }
 
-        if (this.alteredComponent.size() != 0) {
+        if (!this.alteredComponent.isEmpty()) {
             resourceUpdated = true;
             // persist is called during the alter method
             // should move at this position
@@ -967,7 +967,7 @@ public class Item extends GenericVersionableResourcePid
         catch (SystemException e) {
             throw new WebserverSystemException(e);
         }
-        if (this.alteredComponent.size() != 0) {
+        if (!this.alteredComponent.isEmpty()) {
             this.alteredComponent = new ArrayList<String>();
         }
         return super.persist();
@@ -1026,7 +1026,7 @@ public class Item extends GenericVersionableResourcePid
                 ds.setLabel(label);
                 this.cts = ds;
             } else {
-                log.debug("Datastream " + getId() + "/" + name
+                log.debug("Datastream " + getId() + '/' + name
                         + " not instanziated in Item.<init>.");
             }
         }

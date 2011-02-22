@@ -221,7 +221,7 @@ public class StatisticInterceptor implements Ordered {
                     .withParameter(PARAM_EXCEPTION_NAME, exceptionName)
                     .withParameter(PARAM_EXCEPTION_SOURCE, exceptionSource)
                     .withParameter(PARAM_USER_ID, UserContext.getId())
-                    .withParameter(PARAM_ELAPSED_TIME, "" + (System.currentTimeMillis() - invocationStartTime))
+                    .withParameter(PARAM_ELAPSED_TIME, String.valueOf((System.currentTimeMillis() - invocationStartTime)))
                     .build();
             this.statisticService.createStatisticRecord(statisticRecord);
         }

@@ -193,7 +193,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     ds.setLabel(label);
                     this.content = ds;
                 } else {
-                    log.warn("Datastream " + getId() + "/" + name
+                    log.warn("Datastream " + getId() + '/' + name
                             + " not instanziated in Item.<init>.");
                 }
             }
@@ -588,7 +588,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
         StaxParser sp = new StaxParser();
         ComponentPropertiesUpdateHandler cpuh =
-            new ComponentPropertiesUpdateHandler(getResourceProperties(), "/"
+            new ComponentPropertiesUpdateHandler(getResourceProperties(), '/'
                 + Elements.ELEMENT_PROPERTIES, sp);
         sp.addHandler(cpuh);
         try {

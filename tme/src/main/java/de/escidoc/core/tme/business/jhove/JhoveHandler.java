@@ -155,7 +155,7 @@ public class JhoveHandler extends TmeHandlerBase
         File outputFile = null;
         BufferedReader outputFileReader = null;
 
-        logger.debug("callJhove(" + Arrays.toString(files) + ")");
+        logger.debug("callJhove(" + Arrays.toString(files) + ')');
         try {
             JhoveBase je = new JhoveBase();
 

@@ -205,8 +205,8 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
                 && e.getCause().getCause() != null) {
             Throwable e1 = e.getCause().getCause();
             if (e1 instanceof FedoraSystemException) {
-                StringBuffer message = 
-                    new StringBuffer(FEDORA_EXCEPTION_MESSAGE);
+                StringBuilder message =
+                        new StringBuilder(FEDORA_EXCEPTION_MESSAGE);
                 Throwable e2 = e1.getCause();
                 if (e2 != null) {
                     message.append(e2.getMessage());

@@ -246,7 +246,7 @@ public class EscidocServlet extends HttpServlet {
                         final StringBuffer location =
                             httpRequest.getRequestURL();
                         if (queryString.length() > 0) {
-                            location.append("?");
+                            location.append('?');
                             location.append(queryString);
                         }
                         final String locationString = location.toString();
@@ -389,7 +389,7 @@ public class EscidocServlet extends HttpServlet {
         else if (e instanceof AuthorizationException) {
             final String[] authValues =
                 getAuthValues(httpRequest, httpResponse);
-            if (authValues == null || authValues[1].equals("")) {
+            if (authValues == null || authValues[1].length() == 0) {
                 doRedirect(httpRequest, httpResponse, (SecurityException) e);
             }
             else {
@@ -754,19 +754,19 @@ public class EscidocServlet extends HttpServlet {
         final String message = exception.toXmlString();
         final String redirectLocation =
             exception.getRedirectLocation()
-                + "?"
+                + '?'
                 + PARAM_TARGET
-                + "="
+                + '='
                 + URLEncoder.encode(httpRequest.getRequestURL().toString(),
                     ENCODING)
-                + "&"
+                + '&'
                 + PARAM_SHIRE
-                + "="
+                + '='
                 + URLEncoder.encode("https://localhost:8080/shibboleth/acs",
                     ENCODING)
-                + "&"
+                + '&'
                 + PARAM_PROVIDER_ID
-                + "="
+                + '='
                 + URLEncoder.encode("https://www.escidoc.de/shibboleth",
                     ENCODING);
 
@@ -835,7 +835,7 @@ public class EscidocServlet extends HttpServlet {
                 new StringTokenizer(request.getQueryString(), "&");
             while (queryToken.hasMoreTokens()) {
                 final String next = queryToken.nextToken();
-                if (next.startsWith(param + "=")) {
+                if (next.startsWith(param + '=')) {
                     result = next.substring(param.length() + 1);
                     break;
                 }
@@ -960,7 +960,7 @@ public class EscidocServlet extends HttpServlet {
         }
         // Authentication via Auth-Header
         else if (request.getHeader("Authorization") != null
-            && !request.getHeader("Authorization").equals("")) {
+            && request.getHeader("Authorization").length() != 0) {
             String authHeader = request.getHeader("Authorization");
             authHeader = authHeader.substring(authHeader.indexOf(' '));
             try {

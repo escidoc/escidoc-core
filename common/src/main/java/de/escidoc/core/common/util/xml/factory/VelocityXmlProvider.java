@@ -180,12 +180,12 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
         String templateFileName;
         if (path.startsWith("/")) {
             templateFileName =
-                path.substring(1) + "/" + completePath() + "/" + resource
+                path.substring(1) + '/' + completePath() + '/' + resource
                     + ".vm";
         }
         else {
             templateFileName =
-                path + "/" + completePath() + "/" + resource + ".vm";
+                path + '/' + completePath() + '/' + resource + ".vm";
         }
         return templateFileName;
     }

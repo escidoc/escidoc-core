@@ -102,17 +102,17 @@ public class PolicyParser {
     public List<String> getMatchingRules(final ResourceType resourceType) {
         List<String> result = new LinkedList<String>();
 
-        for (Object action : actions.keySet()) {
-            if (matches(actions.get(action),
+        for (Map.Entry<Object, AttributeValue> objectAttributeValueEntry : actions.entrySet()) {
+            if (matches(objectAttributeValueEntry.getValue(),
                 MATCH_PREFIX + resourceType.getLabel())) {
-                if (action instanceof Policy) {
+                if (objectAttributeValueEntry.getKey() instanceof Policy) {
                     result.add(values.getNeutralAndElement(resourceType));
                 }
-                else if (action instanceof Rule) {
-                    result.add(con.parse(((Rule) action).getCondition()));
+                else if (objectAttributeValueEntry.getKey() instanceof Rule) {
+                    result.add(con.parse(((Rule) objectAttributeValueEntry.getKey()).getCondition()));
                 }
                 else {
-                    throw new IllegalArgumentException(action
+                    throw new IllegalArgumentException(objectAttributeValueEntry.getKey()
                         + ": unknown action type");
                 }
             }
@@ -328,7 +328,7 @@ public class PolicyParser {
      */
     private void parseRule(final Rule rule) {
         if (rule != null) {
-            if ((rule.getChildren() != null) && (rule.getChildren().size() > 0)) {
+            if ((rule.getChildren() != null) && (!rule.getChildren().isEmpty())) {
                 throw new IllegalArgumentException(
                     "rule with children not supported");
             }

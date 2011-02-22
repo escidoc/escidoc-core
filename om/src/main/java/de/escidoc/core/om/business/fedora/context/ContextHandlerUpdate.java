@@ -230,7 +230,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 cpuh.getPropertiesToAdd());
         Map<String, String> changedValues =
             cpuh.getChangedValuesInRelsExt();
-        if (changedValues.size() > 0 || dcUpdated || adminDescriptorsUpdated
+        if (!changedValues.isEmpty() || dcUpdated || adminDescriptorsUpdated
             || getContext().isOuUpdated()) {
             String oldModifiedBy =
                 getTripleStoreUtility().getProperty(getContext().getId(),
@@ -609,9 +609,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         final List<String> propertiesToRemove,
         final Map<String, String> propertiesToAdd)
         throws ContextNameNotUniqueException, SystemException {
-        if (((changedValues == null) || (changedValues.size() == 0))
-            && ((propertiesToRemove == null) || (propertiesToRemove.size() == 0))
-            && ((propertiesToAdd == null) || (propertiesToAdd.size() == 0))) {
+        if (((changedValues == null) || (changedValues.isEmpty()))
+            && ((propertiesToRemove == null) || (propertiesToRemove.isEmpty()))
+            && ((propertiesToAdd == null) || (propertiesToAdd.isEmpty()))) {
             return false;
         }
         boolean updatedDcProperties = false;
@@ -627,9 +627,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         byte[] dcNewBytes = null;
         final StaxParser sp = new StaxParser();
 
-        if (propertiesToRemove.size() > 0) {
+        if (!propertiesToRemove.isEmpty()) {
 
-            if (changedValues.size() > 0) {
+            if (!changedValues.isEmpty()) {
                 updatedDcProperties = true;
                 final Map<String, StartElementWithText> updateElementsDc =
                     updateDcProperties(changedValues);
@@ -693,9 +693,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 throw new XmlParserSystemException(e);
             }
         }
-        if (propertiesToAdd.size() > 0) {
+        if (!propertiesToAdd.isEmpty()) {
 
-            if (!updatedDcProperties && changedValues.size() > 0) {
+            if (!updatedDcProperties && !changedValues.isEmpty()) {
                 updatedDcProperties = true;
 
                 final Map<String, StartElementWithText> updateElementsDc =
@@ -755,7 +755,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 throw new XmlParserSystemException(e);
             }
         }
-        if (!updatedDcProperties && changedValues.size() > 0) {
+        if (!updatedDcProperties && !changedValues.isEmpty()) {
 
             final Map<String, StartElementWithText> updateElementsDc =
                 updateDcProperties(changedValues);

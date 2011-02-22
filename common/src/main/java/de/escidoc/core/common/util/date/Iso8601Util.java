@@ -117,13 +117,13 @@ public final class Iso8601Util {
             final String ret =
                 preformatted.substring(0, preformatted.length()
                     - "+0000".length())
-                    + "Z";
+                    + 'Z';
             return ret;
         }
         else {
             final String ret =
                 preformatted.substring(0, preformatted.length() - 2)
-                    + ":"
+                    + ':'
                     + preformatted.substring(preformatted.length() - 2,
                         preformatted.length());
             return ret;

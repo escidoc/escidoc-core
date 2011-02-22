@@ -78,7 +78,7 @@ public class ResourceDefinitionCreate {
     public void setName(final String name)
         throws MissingAttributeValueException {
 
-        if ((name == null) || name.equals("")) {
+        if ((name == null) || name.length() == 0) {
             final String errorMsg =
                 "the value of the"
                     + " \"name\" atribute of the element 'resource-definition' is missing";
@@ -171,7 +171,7 @@ public class ResourceDefinitionCreate {
             throw new NullPointerException(
                 "Name must not be null to provide FedoraId.");
         }
-        return "info:fedora/sdef:" + parentId.replaceAll(":", "_") + "-"
+        return "info:fedora/sdef:" + parentId.replaceAll(":", "_") + '-'
             + this.name;
     }
 

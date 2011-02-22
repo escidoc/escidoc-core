@@ -49,13 +49,13 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 public class RolePropertiesStaxHandler extends DefaultHandler {
 
     private static final String BASE_PATH =
-        "/" + XmlUtility.NAME_ROLE + "/" + XmlUtility.NAME_PROPERTIES;
+            '/' + XmlUtility.NAME_ROLE + '/' + XmlUtility.NAME_PROPERTIES;
 
     private static final String DESCRIPTION_PATH =
-        BASE_PATH + "/" + XmlUtility.NAME_DESCRIPTION;
+        BASE_PATH + '/' + XmlUtility.NAME_DESCRIPTION;
 
     private static final String NAME_PATH =
-        BASE_PATH + "/" + XmlUtility.NAME_NAME;
+        BASE_PATH + '/' + XmlUtility.NAME_NAME;
 
     private final EscidocRole role;
 

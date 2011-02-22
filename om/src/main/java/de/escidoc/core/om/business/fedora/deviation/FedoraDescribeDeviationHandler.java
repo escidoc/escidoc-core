@@ -112,12 +112,12 @@ public class FedoraDescribeDeviationHandler
      * 
      */
     private String buildUrlParameters(final Map<String, String[]> parameters) {
-        StringBuffer urlParams = new StringBuffer("");
+        StringBuilder urlParams = new StringBuilder("");
         if (parameters != null && !parameters.isEmpty()) {
             urlParams.append('?');
             for (Map.Entry<String, String[]> e : parameters.entrySet()) {
                 if (urlParams.length() > 1) {
-                    urlParams.append("&");
+                    urlParams.append('&');
                 }
                 String[] values = e.getValue();
                 if (values != null && values.length > 0) {

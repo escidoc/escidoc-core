@@ -53,11 +53,11 @@ import java.util.regex.Pattern;
  */
 public class ExtendedFilterHandler extends DefaultHandler {
 
-    private static final String XPATH_ORDER_BY = "/" + XmlUtility.NAME_PARAM
-        + "/" + XmlUtility.NAME_ORDER_BY;
+    private static final String XPATH_ORDER_BY = '/' + XmlUtility.NAME_PARAM
+        + '/' + XmlUtility.NAME_ORDER_BY;
 
-    private static final String XPATH_FILTER = "/" + XmlUtility.NAME_PARAM
-        + "/" + XmlUtility.NAME_FILTER;
+    private static final String XPATH_FILTER = '/' + XmlUtility.NAME_PARAM
+        + '/' + XmlUtility.NAME_FILTER;
 
     /**
      * The default offset used if no offset is defined in parsed data.
@@ -83,14 +83,14 @@ public class ExtendedFilterHandler extends DefaultHandler {
     private static final Pattern NON_URI_PATTERN = Pattern
         .compile("user|role|top-level-organizational-units"
             + "|primary-affiliation|limited|granted|policyId|"
-            + XmlUtility.NAME_USER_ID + "|" + XmlUtility.NAME_GROUP_ID + "|"
-            + XmlUtility.NAME_ROLE_ID + "|" + XmlUtility.NAME_OBJECT_ID + "|"
-            + XmlUtility.NAME_STATUS + "|"
-            + XmlUtility.NAME_REVOCATION_DATE_FROM + "|"
-            + XmlUtility.NAME_REVOCATION_DATE_TO + "|"
-            + XmlUtility.NAME_GRANTED_DATE_FROM + "|"
-            + XmlUtility.NAME_GRANTED_DATE_TO + "|"
-            + XmlUtility.NAME_CREATOR_ID + "|" + XmlUtility.NAME_REVOKER_ID);
+            + XmlUtility.NAME_USER_ID + '|' + XmlUtility.NAME_GROUP_ID + '|'
+            + XmlUtility.NAME_ROLE_ID + '|' + XmlUtility.NAME_OBJECT_ID + '|'
+            + XmlUtility.NAME_STATUS + '|'
+            + XmlUtility.NAME_REVOCATION_DATE_FROM + '|'
+            + XmlUtility.NAME_REVOCATION_DATE_TO + '|'
+            + XmlUtility.NAME_GRANTED_DATE_FROM + '|'
+            + XmlUtility.NAME_GRANTED_DATE_TO + '|'
+            + XmlUtility.NAME_CREATOR_ID + '|' + XmlUtility.NAME_REVOKER_ID);
 
     private StaxParser parser = null;
 

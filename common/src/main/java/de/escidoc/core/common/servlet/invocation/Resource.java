@@ -337,7 +337,7 @@ public class Resource extends XMLBase {
             Node var = varDefinition;
             String varName = getAttributeValue(var, DEFINITION_VAR_NAME_ATTR);
             String regexp = getAttributeValue(var, DEFINITION_VAR_REGEXP_ATTR);
-            if (result.indexOf('/' + VAR_PREFIX + varName + VAR_POSTFIX) != -1) {
+            if (result.contains('/' + VAR_PREFIX + varName + VAR_POSTFIX)) {
                 result =
                         result.replace('/' + VAR_PREFIX + varName + VAR_POSTFIX,
                                 regexp);
@@ -391,7 +391,7 @@ public class Resource extends XMLBase {
 
             // FIXME: Hack for staging-file. Must be solved by descriptor
             if ("PUT".equals(request.getMethod())
-                && request.getRequestURI().indexOf("staging-file") != -1) {
+                && request.getRequestURI().contains("staging-file")) {
                 EscidocBinaryContent binaryContent = new EscidocBinaryContent();
                 binaryContent.setMimeType(request
                     .getHeader(EscidocServlet.HTTP_HEADER_CONTENT_TYPE));

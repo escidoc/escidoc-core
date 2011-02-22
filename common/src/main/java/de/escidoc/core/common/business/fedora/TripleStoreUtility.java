@@ -612,7 +612,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         if (results.size() == 1) {
             result = results.get(0);
         }
-        else if (results.size() == 0) {
+        else if (results.isEmpty()) {
             throw new TripleStoreSystemException(
                 "Creation date not found for resource '" + pid + "'.");
         }

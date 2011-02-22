@@ -123,7 +123,7 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
                 }
             }
             // content-category
-            else if (curPath.equals(propertiesPath + "/"
+            else if (curPath.equals(propertiesPath + '/'
                 + Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY)) {
                 // ensure there is a value and save
                 if (data.length() > 0) {

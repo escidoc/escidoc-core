@@ -651,7 +651,7 @@ public class OrganizationalUnit extends GenericResource
         }
         catch (final StreamNotFoundException e) {
             throw new StreamNotFoundException("No DC for organizational-unit "
-                + getId() + ".", e);
+                + getId() + '.', e);
         }
         getSomeValuesFromFedora();
     }

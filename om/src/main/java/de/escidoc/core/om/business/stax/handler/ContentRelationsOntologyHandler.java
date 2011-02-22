@@ -177,7 +177,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
         if (indexOfId != -1) {
             String id = element.getAttribute(indexOfId).getValue();
             if (this.base != null) {
-                this.predicate = this.base + "#" + id;
+                this.predicate = this.base + '#' + id;
             }
             else {
                 String message =

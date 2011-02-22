@@ -188,7 +188,7 @@ public class ReportHandler implements ReportHandlerInterface {
                             replacementString = parameterVo.getStringValue();
                         }
                         if (!type.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)) {
-                            replacementString = "'" + replacementString + "'";
+                            replacementString = '\'' + replacementString + '\'';
                         }
                         sql =
                             sql.replaceAll("(?s)'?\"?\\{" + parameterVo.getName()

@@ -59,8 +59,8 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
     private final List<Predecessor> predecessors = new ArrayList<Predecessor>();
 
     private static final String XPATH_PREDECESSOR =
-        "/" + XmlUtility.NAME_ORGANIZATIONAL_UNIT + "/"
-            + XmlUtility.NAME_PREDECESSORS + "/" + XmlUtility.NAME_PREDECESSOR;
+            '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT + '/'
+            + XmlUtility.NAME_PREDECESSORS + '/' + XmlUtility.NAME_PREDECESSOR;
 
     /**
      * 

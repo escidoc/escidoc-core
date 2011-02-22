@@ -100,7 +100,7 @@ public class ParameterCheckInterceptor implements Ordered {
                 final String target = methodSignature.getDeclaringTypeName();
                 throw new MissingMethodParameterException(StringUtility
                     .format("The parameter at position "+
-                            (i + 1) + " must be provided", target+ "."+ calledMethod
+                            (i + 1) + " must be provided", target+ '.' + calledMethod
                             .getName()));
             }
         }

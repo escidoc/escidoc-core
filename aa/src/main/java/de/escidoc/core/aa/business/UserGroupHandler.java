@@ -118,7 +118,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         UserGroupHandler.class.getName());
 
     private static final Pattern USER_FILTER_PATTERN = Pattern
-        .compile("(?s)\"{0,1}(" + Constants.FILTER_USER + "|"
+        .compile("(?s)\"{0,1}(" + Constants.FILTER_USER + '|'
             + Constants.FILTER_PATH_USER_GROUP_USER_ID
             + ")(\"*\\s*([=<>]+)\\s*\"*|\"*\\s*(any)\\s*\"*"
             + "|\"*\\s*(cql.any)\\s*\"*)" + "([^\\s\"\\(\\)]*)\"{0,1}");
@@ -993,7 +993,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                 "non-supported relation in user-filter");
                         }
                         Set<String> groupIds;
-                        StringBuffer replacement = new StringBuffer(" (");
+                        StringBuilder replacement = new StringBuilder(" (");
                         try {
                             // get groups for user
                             groupIds =
@@ -1007,12 +1007,12 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                     if (replacement.length() > 2) {
                                         replacement.append(" or ");
                                     }
-                                    replacement.append("\"");
+                                    replacement.append('\"');
                                     replacement
                                         .append(Constants.FILTER_PATH_ID);
                                     replacement
                                         .append("\"=").append(groupId)
-                                        .append(" ");
+                                        .append(' ');
                                 }
                             }
                             else {
@@ -1022,11 +1022,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                         catch (UserAccountNotFoundException e) {
                             // if user has no groups or user not found,
                             // write nonexisting group in query
-                            replacement.append("\"");
+                            replacement.append('\"');
                             replacement.append(Constants.FILTER_PATH_ID);
                             replacement
                                 .append("\"=").append("nonexistinggroup")
-                                .append(" ");
+                                .append(' ');
                         }
 
                         replacement.append(") ");

@@ -96,7 +96,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         "allowed-roles:allowed-role";
 
     private static final String RESOLVABLE_SM_ATTRS =
-        ATTR_SCOPE + "|" + ATTR_ALLOWED_ROLE;
+        ATTR_SCOPE + '|' + ATTR_ALLOWED_ROLE;
 
     private static final String VALID_SM_ATTRIBUTE_PREFIXES =
         AttributeIds.RESOURCE_AGGREGATION_DEFINITION_ATTR_PREFIX + ".*|"
@@ -105,7 +105,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
 
     private static final Pattern PATTERN_PARSE_SM_ATTRIBUTE_ID =
         Pattern.compile("((" + VALID_SM_ATTRIBUTE_PREFIXES + ")("
-            + RESOLVABLE_SM_ATTRS + "))(-new){0,1}(:(.*)){0,1}" + "|"
+            + RESOLVABLE_SM_ATTRS + "))(-new){0,1}(:(.*)){0,1}" + '|'
             + AttributeIds.URN_STATISTIC_SCOPE_ID);
 
     private static final Pattern PATTERN_VALID_ATTRIBUTE_ID =
@@ -307,13 +307,13 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         }
         else if (ATTR_ALLOWED_ROLE.equals(attributeId)) {
             Matcher matcher = ALLOWED_ROLE_PATTERN.matcher(resourceXml);
-            StringBuffer roles = new StringBuffer("");
+            StringBuilder roles = new StringBuilder("");
             while (matcher.find()) {
                 String roleId = matcher.group(1);
                 if (roleId == null) {
                     roleId = matcher.group(2);
                 }
-                roles.append(" ").append(roleId.trim());
+                roles.append(' ').append(roleId.trim());
             }
             result =
                 CustomEvaluationResultBuilder
@@ -344,10 +344,10 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         final EvaluationCtx ctx, final String aggregationDefinitionId)
         throws WebserverSystemException, AggregationDefinitionNotFoundException {
 
-        final StringBuffer key =
-            new StringBuffer(XmlUtility.NAME_AGGREGATION_DEFINITION)
-                .append(":").append(XmlUtility.NAME_ID).append(
-                    aggregationDefinitionId);
+        final StringBuilder key =
+                new StringBuilder(XmlUtility.NAME_AGGREGATION_DEFINITION)
+                        .append(':').append(XmlUtility.NAME_ID).append(
+                        aggregationDefinitionId);
         String aggregationDefinitionXml =
             (String) RequestAttributesCache.get(ctx, key.toString());
         if (aggregationDefinitionXml == null) {
@@ -405,10 +405,10 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         final EvaluationCtx ctx, final String reportDefinitionId)
         throws WebserverSystemException, ReportDefinitionNotFoundException {
 
-        final StringBuffer key =
-            new StringBuffer(XmlUtility.NAME_REPORT_DEFINITION)
-                .append(":").append(XmlUtility.NAME_ID).append(
-                    reportDefinitionId);
+        final StringBuilder key =
+                new StringBuilder(XmlUtility.NAME_REPORT_DEFINITION)
+                        .append(':').append(XmlUtility.NAME_ID).append(
+                        reportDefinitionId);
         String reportDefinitionXml =
             (String) RequestAttributesCache.get(ctx, key.toString());
         if (reportDefinitionXml == null) {
@@ -463,9 +463,9 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
     private String retrieveScope(final EvaluationCtx ctx, final String scopeId)
         throws WebserverSystemException, ScopeNotFoundException {
 
-        final StringBuffer key =
-            new StringBuffer(XmlUtility.NAME_SCOPE).append(":").append(
-                XmlUtility.NAME_ID).append(scopeId);
+        final StringBuilder key =
+                new StringBuilder(XmlUtility.NAME_SCOPE).append(':').append(
+                        XmlUtility.NAME_ID).append(scopeId);
         String scopeXml =
             (String) RequestAttributesCache.get(ctx, key.toString());
         if (scopeXml == null) {

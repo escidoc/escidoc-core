@@ -126,7 +126,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
             XmlTemplateProvider.FALSE);
         values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, "/ir"
-            + CONTENT_RELATION_PATH + "/" + cr.getObjid() + "/properties");
+            + CONTENT_RELATION_PATH + '/' + cr.getObjid() + "/properties");
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE,
             "Content Relation Properties");
 
@@ -210,7 +210,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
             XmlTemplateProvider.TRUE);
         values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, "/ir"
-            + CONTENT_RELATION_PATH + "/" + cr.getObjid() + "/properties");
+            + CONTENT_RELATION_PATH + '/' + cr.getObjid() + "/properties");
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE,
             "Content Relation Properties");
 
@@ -339,7 +339,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         values.put(XmlTemplateProvider.OBJID, cr.getObjid());
         values.put(XmlTemplateProvider.TITLE, cr.getProperties().getTitle());
         values.put(XmlTemplateProvider.HREF, "/ir" + CONTENT_RELATION_PATH
-            + "/" + cr.getObjid());
+            + '/' + cr.getObjid());
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Virtual Resources");
         values.put("resourcesHref",
@@ -441,7 +441,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         String version = cr.getSubjectVersion();
         String subjectId = objid;
         if (version != null) {
-            subjectId = subjectId + ":" + version;
+            subjectId = subjectId + ':' + version;
         }
         values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_ID, subjectId);
         String subjectType =
@@ -459,7 +459,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         version = cr.getObjectVersion();
         String objectId = objid;
         if (version != null) {
-            objectId = objectId + ":" + version;
+            objectId = objectId + ':' + version;
         }
         values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_ID, objectId);
         String objectType =
@@ -505,7 +505,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
         values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF,
             Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
-                + Constants.MD_RECORD_URL_PART + "/" + mdRecord.getName());
+                + Constants.MD_RECORD_URL_PART + '/' + mdRecord.getName());
         if (!mdRecord.getType().equals(Constants.UNKNOWN)) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, mdRecord.getType());
         }
@@ -529,7 +529,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         values.put(XmlTemplateProvider.VAR_MD_RECORD_TITLE, mdRecord.getName());
         values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF,
             Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
-                + Constants.MD_RECORD_URL_PART + "/" + mdRecord.getName());
+                + Constants.MD_RECORD_URL_PART + '/' + mdRecord.getName());
 
         return ItemXmlProvider.getInstance().getMdRecordXml(values);
     }
@@ -625,7 +625,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         EncodingSystemException, FedoraSystemException,
         IntegritySystemException, TripleStoreSystemException {
 
-        StringBuffer content = new StringBuffer();
+        StringBuilder content = new StringBuilder();
 
         List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
         if (mdRecords != null) {

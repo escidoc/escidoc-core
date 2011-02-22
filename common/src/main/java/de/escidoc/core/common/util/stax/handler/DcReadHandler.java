@@ -69,7 +69,7 @@ public class DcReadHandler extends DefaultHandler {
         String theName = element.getLocalName();
 
         // organizational-unit
-        if (curPath.equals(DC_PATH + "/" + Elements.ELEMENT_DC_TITLE)) {
+        if (curPath.equals(DC_PATH + '/' + Elements.ELEMENT_DC_TITLE)) {
             if (data.length() == 0) {
                 // logger.error("the value of" + " of the element " + theName
                 // + " is missing");

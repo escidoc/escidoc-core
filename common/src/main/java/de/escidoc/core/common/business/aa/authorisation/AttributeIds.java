@@ -135,7 +135,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String CONTENT_MODEL_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTENT_MODEL + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTENT_MODEL + ':';
 
     /**
      * Prefix identifying eSciDoc resource context attributes.
@@ -143,7 +143,7 @@ public class AttributeIds {
      * @aa
      */
     public static final String CONTEXT_ATTR_PREFIX =
-        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTEXT + ":";
+        RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTEXT + ':';
 
     /**
      * Prefix identifying eSciDoc resource item attributes.

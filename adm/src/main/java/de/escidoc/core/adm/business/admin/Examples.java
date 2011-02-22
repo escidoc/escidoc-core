@@ -162,7 +162,7 @@ public class Examples {
                 XPath xpath = XPathFactory.newInstance().newXPath();
 
                 result =
-                    xpath.evaluate("/" + type.getLabel()
+                    xpath.evaluate('/' + type.getLabel()
                         + "/@last-modification-date", xmlDom);
             }
             finally {
@@ -203,7 +203,7 @@ public class Examples {
                 XPath xpath = XPathFactory.newInstance().newXPath();
                 String href =
                     xpath.evaluate(
-                        "/" + type.getLabel() + "/@href|/" + type.getLabel()
+                            '/' + type.getLabel() + "/@href|/" + type.getLabel()
                             + "/@objid", xmlDom);
 
                 result = href.substring(href.lastIndexOf('/') + 1);
@@ -230,7 +230,7 @@ public class Examples {
      *             thrown in case of an internal error
      */
     public String load(final String directory) throws Exception {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         String ouId = loadOrganizationalUnit(loadFile(directory + EXAMPLE_OU));
 
         result.append(createMessage("created " + ResourceType.OU.getLabel()

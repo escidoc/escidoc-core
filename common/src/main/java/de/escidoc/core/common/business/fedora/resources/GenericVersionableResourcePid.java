@@ -306,7 +306,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         if (getLatestReleaseVersionNumber() == null) {
             relsExtS = createLatestReleasePid(pid);
         }
-        else if ((getLatestReleasePid() != null) && !pid.equals("")) {
+        else if ((getLatestReleasePid() != null) && pid.length() != 0) {
             // relsExtS = updateVersionPid(pid);
             relsExtS = updateLatestReleasePid(pid);
         }
@@ -396,10 +396,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         if (getVersionPid() == null) {
             relsExtS = createVersionPid(pid);
         }
-        else if ((getVersionPid() != null) && !pid.equals("")) {
+        else if ((getVersionPid() != null) && pid.length() != 0) {
             relsExtS = updateVersionPid(pid);
         }
-        else if ((pid == null || pid.equals(""))) {
+        else if ((pid == null || pid.length() == 0)) {
             relsExtS = deleteLatestReleasePid();
         }
 
@@ -445,7 +445,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         final StaxParser sp = new StaxParser();
         final AddNewSubTreesToDatastream addNewSubtreesHandler =
-            new AddNewSubTreesToDatastream("/"
+            new AddNewSubTreesToDatastream('/'
                 + Elements.ELEMENT_WOV_VERSION_HISTORY, sp);
 
         final StartElement pointer =
@@ -922,7 +922,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         TreeMap<String, List<StartElementWithChildElements>> toRemove = null;
 
         // prepare update relations
-        if ((relationsToUpdate != null) && (relationsToUpdate.size() > 0)) {
+        if ((relationsToUpdate != null) && (!relationsToUpdate.isEmpty())) {
             elementsToAdd = new ArrayList<StartElementWithChildElements>();
             for (String aRelationsToUpdate : relationsToUpdate) {
                 String relation = aRelationsToUpdate;
@@ -945,7 +945,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             }
         }
         // prepare add/remove
-        if ((existRelations != null) && (existRelations.size() > 0)) {
+        if ((existRelations != null) && (!existRelations.isEmpty())) {
             Iterator<String> iterator = existRelations.iterator();
             HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
                 new HashMap<String, List<StartElementWithChildElements>>();
@@ -960,7 +960,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 newContentRelationElement.setLocalName(predicate[1]);
                 newContentRelationElement
                     .setPrefix(de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
-                newContentRelationElement.setNamespace(predicate[0] + "/");
+                newContentRelationElement.setNamespace(predicate[0] + '/');
                 Attribute resource =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                         Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"

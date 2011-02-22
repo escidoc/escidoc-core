@@ -135,7 +135,7 @@ public class StartElement extends AbstractElement {
         }
         else {
             throw new NoSuchAttributeException("No attribute {" + namespaceUri
-                + "}" + localName + ".");
+                + '}' + localName + '.');
         }
 
         return result;

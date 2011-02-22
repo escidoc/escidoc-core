@@ -120,10 +120,10 @@ public class XacmlTarget extends Target {
             actionsList = new ArrayList<List<TargetMatch>>();
             List<TargetMatch> action = new ArrayList<TargetMatch>();
             Iterator<Action> iter = actions.iterator();
-            StringBuffer values = new StringBuffer();
+            StringBuilder values = new StringBuilder();
             while (iter.hasNext()) {
                 values.append(iter.next().getName());
-                values.append(" ");
+                values.append(' ');
             }
             action.add(createTargetActionMatch(new StringAttribute(values
                 .toString().trim())));

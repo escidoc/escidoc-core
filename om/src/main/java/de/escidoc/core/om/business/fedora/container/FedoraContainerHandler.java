@@ -2210,10 +2210,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         try {
             versionsXml =
                 getVersions().replaceFirst(
-                    "<" + Constants.WOV_NAMESPACE_PREFIX + ":"
+                        '<' + Constants.WOV_NAMESPACE_PREFIX + ':'
                         + Elements.ELEMENT_WOV_VERSION_HISTORY,
                     "<?xml version=\"1.0\" encoding=\"UTF-8\"?><"
-                        + Constants.WOV_NAMESPACE_PREFIX + ":"
+                        + Constants.WOV_NAMESPACE_PREFIX + ':'
                         + Elements.ELEMENT_WOV_VERSION_HISTORY + " xml:base=\""
                         + XmlUtility.getEscidocBaseUrl() + "\" "
                         + MODIFIED_DATE_ATT_NAME + "=\""
@@ -2567,7 +2567,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
                 elements.add(newComponentIdElement);
             }
-            if (elements.size() > 0) {
+            if (!elements.isEmpty()) {
                 resourceUpdated = true;
                 final byte[] relsExtNewBytes =
                     Utility.updateRelsExt(elements, null, null, getContainer(),
@@ -2705,7 +2705,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             if (!tocContentModel.equals(memberContentModel)) {
                 final String message =
                     "Object with id " + memberId + " must have content model "
-                        + tocContentModel + ".";
+                        + tocContentModel + '.';
                 log.error(message);
                 throw new InvalidContentException(message);
             }
@@ -2775,7 +2775,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             sp.parse(taskParam);
 
             final List<String> memberIds = bremeftph.getMemberIdsToRemove();
-            if (memberIds.size() == 0) {
+            if (memberIds.isEmpty()) {
                 return getUtility().prepareReturnXmlFromLastModificationDate(
                     getContainer().getLastModificationDate());
             }
@@ -2985,7 +2985,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final List<Map<String, String>> relationsData =
             addHandler.getRelations();
 
-        if ((relationsData != null) && (relationsData.size() > 0)) {
+        if ((relationsData != null) && (!relationsData.isEmpty())) {
             final List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
             for (Map<String, String> aRelationsData : relationsData) {
@@ -3115,7 +3115,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         final List<Map<String, String>> relationsData =
             removeHandler.getRelations();
-        if ((relationsData != null) && (relationsData.size() > 0)) {
+        if ((relationsData != null) && (!relationsData.isEmpty())) {
             final TreeMap<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =

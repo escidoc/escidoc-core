@@ -122,7 +122,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             if (component == null) {
                 throw new ComponentNotFoundException("The component "
                     + componentId + " does not exist in item "
-                    + getItem().getId() + ".");
+                    + getItem().getId() + '.');
             }
         }
 
@@ -181,7 +181,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 String fedoraLocalUrl =
                     "/get/" + component.getId() + "/content";
                 if (getItem().getVersionDate() != null) {
-                    fedoraLocalUrl += "/" + getItem().getVersionDate();
+                    fedoraLocalUrl += '/' + getItem().getVersionDate();
                 }
                 bin.setContent(getFedoraUtility().requestFedoraURL(
                     fedoraLocalUrl));
@@ -600,9 +600,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             bin.setRedirectUrl(cs.getLocation());
         }
         else {
-            String fedoraLocalUrl = "/get/" + getItem().getId() + "/" + name;
+            String fedoraLocalUrl = "/get/" + getItem().getId() + '/' + name;
             if (getItem().getVersionDate() != null) {
-                fedoraLocalUrl += "/" + getItem().getVersionDate();
+                fedoraLocalUrl += '/' + getItem().getVersionDate();
             }
             bin.setContent(getFedoraUtility()
                 .requestFedoraURL(fedoraLocalUrl));
@@ -636,7 +636,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             System.getProperty(EscidocConfiguration.FEDORA_USER);
         String fedoraPw =
             System.getProperty(EscidocConfiguration.FEDORA_PASSWORD);
-        String auth = fedoraUser + ":" + fedoraPw + "@";
+        String auth = fedoraUser + ':' + fedoraPw + '@';
 
         String fedoraUrl = System.getProperty(EscidocConfiguration.FEDORA_URL);
         int pos = fedoraUrl.indexOf("://");
@@ -645,12 +645,12 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
         String contentUrl =
             protocol + auth + hostPart + "/get/" + componentId + "/content"
-                + "/" + versionDate;
+                + '/' + versionDate;
 
         URL url;
         if (transformer.equals(TRANSFORM_SERVICE_DIGILIB)) {
             url =
-                new URL(getDigilibScalerUrl() + "?fn=" + contentUrl + "&"
+                new URL(getDigilibScalerUrl() + "?fn=" + contentUrl + '&'
                     + param);
         }
         else {

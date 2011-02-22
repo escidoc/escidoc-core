@@ -120,7 +120,7 @@ public class Datastream {
 
     private String checksum = null;
 
-    private final boolean versionable = true;
+    private static final boolean versionable = true;
 
     /**
      * Indicating the URL should not be sent when storing this in Fedora.
@@ -962,7 +962,7 @@ public class Datastream {
             }
             else {
                 if (LOG.isDebugEnabled()) {
-                    LOG.debug("MD5 Hash of datastream " + getParentId() + "/"
+                    LOG.debug("MD5 Hash of datastream " + getParentId() + '/'
                         + getName() + " reused.");
                 }
             }

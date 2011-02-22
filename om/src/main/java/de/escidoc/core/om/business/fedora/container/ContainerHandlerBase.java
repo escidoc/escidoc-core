@@ -209,7 +209,7 @@ public class ContainerHandlerBase extends HandlerBase {
                     + getContainer().getId()
                     + " is locked by "
                     + XmlUtility.escapeForbiddenXmlCharacters(getContainer()
-                        .getLockOwner()) + ".";
+                        .getLockOwner()) + '.';
             if (LOG.isDebugEnabled()) {
                 LOG.debug(message);
             }
@@ -618,7 +618,7 @@ public class ContainerHandlerBase extends HandlerBase {
         if (!curStatus.equals(status)) {
             final String msg =
                 "The Context is in state '" + curStatus
-                    + "' and not in status " + status + ".";
+                    + "' and not in status " + status + '.';
             if (LOG.isDebugEnabled()) {
                 LOG.debug(msg);
             }

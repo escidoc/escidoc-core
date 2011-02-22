@@ -121,7 +121,7 @@ public abstract class EscidocException extends Exception {
      * @return The HTTP status line.
      */
     public String getHttpStatusLine() {
-        return "" + httpStatusCode + " " + httpStatusMsg;
+        return String.valueOf(httpStatusCode) + ' ' + httpStatusMsg;
     }
 
     /**
@@ -254,16 +254,15 @@ public abstract class EscidocException extends Exception {
      */
     public static String getXml(final Throwable throwable) {
 
-        StringBuffer result = new StringBuffer("<exception>\n");
+        StringBuilder result = new StringBuilder("<exception>\n");
 
         // http status line, if any
         EscidocException escidocException = null;
         if (throwable instanceof EscidocException) {
             escidocException = (EscidocException) throwable;
             result.append("  <title><h1>");
-            result.append(XmlEscaper.escapeTextContent(""
-                + escidocException.getHttpStatusCode()));
-            result.append(" ");
+            result.append(XmlEscaper.escapeTextContent(String.valueOf(escidocException.getHttpStatusCode())));
+            result.append(' ');
             result.append(XmlEscaper.escapeTextContent(escidocException
                 .getHttpStatusMsg()));
             result.append("</h1></title>\n");
@@ -328,12 +327,12 @@ public abstract class EscidocException extends Exception {
      */
     public static String getStackTraceXml(final Throwable e) {
 
-        StringBuffer result = new StringBuffer("  <stack-trace><p><![CDATA[\n");
+        StringBuilder result = new StringBuilder("  <stack-trace><p><![CDATA[\n");
         StackTraceElement[] elements = e.getStackTrace();
         for (StackTraceElement element : elements) {
             result.append("    ");
             result.append(element);
-            result.append("\n");
+            result.append('\n');
         }
         result.append("]]></p></stack-trace>\n");
         return result.toString();

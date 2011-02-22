@@ -187,9 +187,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         }
         else {
             String fedoraLocalUrl =
-                "/get/" + getContentModel().getId() + "/" + name;
+                "/get/" + getContentModel().getId() + '/' + name;
             if (getContentModel().getVersionDate() != null) {
-                fedoraLocalUrl += "/" + getContentModel().getVersionDate();
+                fedoraLocalUrl += '/' + getContentModel().getVersionDate();
             }
             bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
         }
@@ -218,9 +218,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             bin.setRedirectUrl(ds.getLocation());
         }
         else {
-            String fedoraLocalUrl = "/get/" + ds.getParentId() + "/" + name;
+            String fedoraLocalUrl = "/get/" + ds.getParentId() + '/' + name;
             if (getContentModel().getVersionDate() != null) {
-                fedoraLocalUrl += "/" + getContentModel().getVersionDate();
+                fedoraLocalUrl += '/' + getContentModel().getVersionDate();
             }
             bin.setContent(getFedoraUtility().requestFedoraURL(fedoraLocalUrl));
         }
@@ -268,7 +268,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         String sDefId =
             "sdef:"
                 + getContentModel().getId().replaceAll(":",
-                    Constants.COLON_REPLACEMENT_PID) + "-" + name;
+                    Constants.COLON_REPLACEMENT_PID) + '-' + name;
 
         // get the 'xslt' datastream from sDef
         Datastream ds;
@@ -277,7 +277,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         }
         catch (StreamNotFoundException e) {
             throw new ResourceNotFoundException("No XSLT for operation '"
-                + name + "' in content model " + id + ".");
+                + name + "' in content model " + id + '.');
         }
 
         return getContent(ds);
@@ -295,12 +295,12 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                     .getWov()
                     .toStringUTF8()
                     .replaceFirst(
-                        "<"
+                            '<'
                             + de.escidoc.core.common.business.Constants.WOV_NAMESPACE_PREFIX
-                            + ":" + Elements.ELEMENT_WOV_VERSION_HISTORY,
-                        "<"
+                            + ':' + Elements.ELEMENT_WOV_VERSION_HISTORY,
+                            '<'
                             + de.escidoc.core.common.business.Constants.WOV_NAMESPACE_PREFIX
-                            + ":" + Elements.ELEMENT_WOV_VERSION_HISTORY
+                            + ':' + Elements.ELEMENT_WOV_VERSION_HISTORY
                             + " xml:base=\"" + XmlUtility.getEscidocBaseUrl()
                             + "\" " + Elements.ATTRIBUTE_LAST_MODIFICATION_DATE
                             + "=\""
@@ -558,7 +558,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         String sdexIdMidfix =
             getContentModel().getId().replaceAll(":",
                 Constants.COLON_REPLACEMENT_PID)
-                + "-";
+                + '-';
         String sdefIdPrefix = "sdef:" + sdexIdMidfix;
         // String sdepIdPrefix = "sdep:" + sdexIdMidfix;
         Map<String, ResourceDefinitionCreate> resourceDefinitions =
@@ -1003,7 +1003,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 Utility.getInstance().getCurrentUser()[0])) {
             throw new LockingException("Content Model + "
                 + getContentModel().getId() + " is locked by "
-                + getContentModel().getLockOwner() + ".");
+                + getContentModel().getLockOwner() + '.');
         }
     }
 

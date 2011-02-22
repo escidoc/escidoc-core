@@ -73,7 +73,7 @@ public class SetDefinitionFilter extends CqlFilter {
             COMPARE_EQ, "creator_id" });
         criteriaMap.put(TripleStoreUtility.PROP_MODIFIED_BY_ID, new Object[] {
             COMPARE_EQ, "modified_by_id" });
-        criteriaMap.put(Constants.SET_DEFINITION_NS_URI + "/"
+        criteriaMap.put(Constants.SET_DEFINITION_NS_URI + '/'
             + XmlUtility.NAME_SPECIFICATION, new Object[] { COMPARE_LIKE,
             "specification" });
 

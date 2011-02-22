@@ -101,15 +101,15 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
     private static final String ATTR_ROLE = "role";
 
     private static final String RESOLVABLE_GRANT_ATTRS =
-        ATTR_ASSIGNED_ON + "|" + ATTR_CREATED_BY + "|" + ATTR_ROLE;
+        ATTR_ASSIGNED_ON + '|' + ATTR_CREATED_BY + '|' + ATTR_ROLE;
 
     private static final Pattern PATTERN_GRANT_ATTRIBUTE_PREFIX =
-        Pattern.compile(AttributeIds.USER_ACCOUNT_GRANT_ATTR_PREFIX + "|"
+        Pattern.compile(AttributeIds.USER_ACCOUNT_GRANT_ATTR_PREFIX + '|'
             + AttributeIds.USER_GROUP_GRANT_ATTR_PREFIX);
 
     private static final Pattern PATTERN_PARSE_GRANT_ATTRIBUTE_ID =
         Pattern.compile("((" + AttributeIds.USER_ACCOUNT_GRANT_ATTR_PREFIX
-            + "|" + AttributeIds.USER_GROUP_GRANT_ATTR_PREFIX + ")("
+            + '|' + AttributeIds.USER_GROUP_GRANT_ATTR_PREFIX + ")("
             + RESOLVABLE_GRANT_ATTRS + "))(-new){0,1}(:(.*)){0,1}");
 
     private UserAccountDaoInterface userAccountDao;
@@ -255,7 +255,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_SUBRESOURCE_ID, true);
         String assignedOnObjectId;
-        if (grantId == null || grantId.equals("")) {
+        if (grantId == null || grantId.length() == 0) {
             // if no grantId is present
             // fetch grant-attribute from invocation-mapping
             try {
@@ -354,7 +354,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_SUBRESOURCE_ID, true);
         String createdBy;
-        if (grantId == null || grantId.equals("")) {
+        if (grantId == null || grantId.length() == 0) {
             throw new GrantNotFoundException("no grantId found");
         }
         else {
@@ -404,7 +404,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_SUBRESOURCE_ID, true);
         String roleId;
-        if (grantId == null || grantId.equals("")) {
+        if (grantId == null || grantId.length() == 0) {
             // if no grantId is present
             // fetch grant-attribute from invocation-mapping
             roleId =

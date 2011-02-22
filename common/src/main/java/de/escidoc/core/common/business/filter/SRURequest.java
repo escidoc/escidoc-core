@@ -87,7 +87,8 @@ public class SRURequest {
      * @throws WebserverSystemException
      *             Thrown if the connection to the SRW servlet failed.
      */
-    public void explain(final Writer output, final ResourceType resourceType)
+    public final void explain(
+        final Writer output, final ResourceType resourceType)
         throws WebserverSystemException {
         try {
             String url =
@@ -137,7 +138,7 @@ public class SRURequest {
      *            content type header
      * @return charset information
      */
-    private String getCharset(final String contentType) {
+    private static String getCharset(final String contentType) {
         String result = XmlUtility.CHARACTER_ENCODING;
 
         if (contentType != null) {
@@ -217,7 +218,7 @@ public class SRURequest {
      * @throws WebserverSystemException
      *             Thrown if the connection to the SRW servlet failed.
      */
-    public void searchRetrieve(
+    public final void searchRetrieve(
         final Writer output, final ResourceType[] resourceTypes,
         final String query, final int limit, final int offset,
         final String user, final String role, final RecordPacking recordPacking)
@@ -267,7 +268,7 @@ public class SRURequest {
             }
             if (recordPacking != null) {
                 url +=
-                    "&" + Constants.SRU_PARAMETER_RECORD_PACKING + "="
+                    '&' + Constants.SRU_PARAMETER_RECORD_PACKING + '='
                         + recordPacking;
             }
             if (!UserContext.isRestAccess()) {

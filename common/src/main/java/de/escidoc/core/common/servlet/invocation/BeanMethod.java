@@ -153,7 +153,7 @@ public class BeanMethod {
                                 new SystemException(
                                     "Unsupported parameter type ["
                                         + parameters[i].getClass().getName()
-                                        + "]"));
+                                        + ']'));
                         }
                     }
                     else {
@@ -211,7 +211,7 @@ public class BeanMethod {
     @Override
     public String toString() {
 
-        return "[" + getBeanId() + "." + getMethod() + "]";
+        return '[' + getBeanId() + '.' + getMethod() + ']';
     }
 
     /**

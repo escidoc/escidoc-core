@@ -109,8 +109,8 @@ public final class CustomStatusBuilder {
         }
         if (e instanceof EscidocException) {
             try {
-                StringBuffer errorMsg = new StringBuffer(message);
-                errorMsg.append("\n");
+                StringBuilder errorMsg = new StringBuilder(message);
+                errorMsg.append('\n');
                 errorMsg.append(XmlUtility.CDATA_START);
                 errorMsg
                     .append(quoteCdata(((EscidocException) e).toXmlString()));
@@ -118,7 +118,7 @@ public final class CustomStatusBuilder {
                 return new Status(codeList, errorMsg.toString());
             }
             catch (Exception e1) {
-                StringBuffer errorMsg = new StringBuffer(message);
+                StringBuilder errorMsg = new StringBuilder(message);
                 errorMsg
                     .append(quoteCdata(((EscidocException) e).toXmlString()));
                 errorMsg.append("\n\nException deserializing failed due to ");
@@ -128,7 +128,7 @@ public final class CustomStatusBuilder {
         }
         else {
             try {
-                StringBuffer errorMsg = new StringBuffer(message);
+                StringBuilder errorMsg = new StringBuilder(message);
                 errorMsg.append("\n<exception>");
                 errorMsg
                     .append(quoteCdata(EscidocException.getStackTraceXml(e)));
@@ -136,8 +136,8 @@ public final class CustomStatusBuilder {
                 return new Status(codeList, errorMsg.toString());
             }
             catch (Exception e1) {
-                StringBuffer errorMsg = new StringBuffer(message);
-                errorMsg.append("\n");
+                StringBuilder errorMsg = new StringBuilder(message);
+                errorMsg.append('\n');
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
                 e.printStackTrace(pw);

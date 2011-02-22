@@ -305,7 +305,7 @@ public final class CustomPolicyBuilder {
             final String xmlData = escidocPolicy.getXml();
             final Element root;
             final String name;
-            if (xmlData != null && !xmlData.trim().equals("")) {
+            if (xmlData != null && xmlData.trim().length() != 0) {
                 try {
                     Document doc = parseXml(xmlData);
 

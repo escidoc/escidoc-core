@@ -382,10 +382,10 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             throw new SystemException(
                     "aggregationDefinition PrimKey may not be null");
         }
-        StringBuffer replaced = new StringBuffer();
-        replaced.append("_")
+        StringBuilder replaced = new StringBuilder();
+        replaced.append('_')
             .append(aggregationDef.getId().replaceAll("\\:", ""))
-            .append("_");
+            .append('_');
         
         replaced.append(orgName);
         return replaced.toString();

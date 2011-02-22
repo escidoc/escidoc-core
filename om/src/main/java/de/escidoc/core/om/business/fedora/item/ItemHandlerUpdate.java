@@ -163,7 +163,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         }
 
         // new
-        if (newComponents.size() > 0) {
+        if (!newComponents.isEmpty()) {
             for (ByteArrayOutputStream newComponent : newComponents) {
                 try {
                     String componentId =

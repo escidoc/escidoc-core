@@ -226,7 +226,7 @@ public class UserAccountFilter extends CqlFilter {
                     catch (IOException e) {
                         throw new InvalidSearchQueryException(e);
                     }
-                    if (ouAttributeName == null || ouAttributeName.equals("")) {
+                    if (ouAttributeName == null || ouAttributeName.length() == 0) {
                         throw new InvalidSearchQueryException(
                             "ou-attribute-name not found in configuration");
                     }

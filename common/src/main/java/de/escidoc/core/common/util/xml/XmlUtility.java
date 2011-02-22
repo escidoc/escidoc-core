@@ -517,25 +517,25 @@ public final class XmlUtility {
         + NAME_ORGANIZATIONAL_UNIT + '/';
 
     public static final String BASE_USER_ACCOUNT = BASE_AA + NAME_USER_ACCOUNT
-        + "/";
+        + '/';
 
     public static final String BASE_USER_GROUP = BASE_AA + NAME_USER_GROUP
-        + "/";
+        + '/';
 
     public static final String BASE_SET_DEFINITION = "/oai/"
-        + NAME_SET_DEFINITION + "/";
+        + NAME_SET_DEFINITION + '/';
 
     public static final String BASE_ROLE = BASE_AA + NAME_ROLE + '/';
 
     public static final String BASE_LOGIN = BASE_AA + "login" + '/';
 
-    public static final String BASE_SCOPE = BASE_SM + NAME_SCOPE + "/";
+    public static final String BASE_SCOPE = BASE_SM + NAME_SCOPE + '/';
 
     public static final String BASE_AGGREGATION_DEFINITION = BASE_SM
-        + NAME_AGGREGATION_DEFINITION + "/";
+        + NAME_AGGREGATION_DEFINITION + '/';
 
     public static final String BASE_REPORT_DEFINITION = BASE_SM
-        + NAME_REPORT_DEFINITION + "/";
+        + NAME_REPORT_DEFINITION + '/';
 
     private static final Map<String, String> REST_SCHEMA_LOCATIONS =
         new HashMap<String, String>();
@@ -2975,7 +2975,7 @@ public final class XmlUtility {
     public static String replaceNamespacePrefix(
         final String xml, final String currentPrefix, final String newPrefix) {
         String result = xml;
-        if (result.indexOf(currentPrefix) != -1) {
+        if (result.contains(currentPrefix)) {
             result =
                 result.replaceAll("xmlns:" + currentPrefix, "xmlns:"
                     + newPrefix);

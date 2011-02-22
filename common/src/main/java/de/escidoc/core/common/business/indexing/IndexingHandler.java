@@ -487,7 +487,7 @@ public class IndexingHandler implements ResourceListener {
                 }
                 if (!latestReleasedVersion.equals(thisVersion)) {
                     // adapt resource
-                    versionedResource = resource + ":" + latestReleasedVersion;
+                    versionedResource = resource + ':' + latestReleasedVersion;
                 }
             }
             else {
@@ -565,7 +565,7 @@ public class IndexingHandler implements ResourceListener {
                             .equals(Constants.LATEST_VERSION_PID_SUFFIX)
                         && latestReleasedVersion != null) {
                         // reindex latest released version
-                        gsearchHandler.requestIndexing(versionedResource + ":"
+                        gsearchHandler.requestIndexing(versionedResource + ':'
                             + latestReleasedVersion, indexName,
                             Constants.LATEST_RELEASE_PID_SUFFIX,
                             (String) parameters
@@ -759,13 +759,13 @@ public class IndexingHandler implements ResourceListener {
 
             DefaultHttpClient client = new DefaultHttpClient(cm, params);
 
-            StringBuffer query = new StringBuffer("");
+            StringBuilder query = new StringBuilder("");
             for (int i = 0; i < Constants.INDEX_PRIM_KEY_FIELDS.length; i++) {
                 if (query.length() > 0) {
                     query.append(" or ");
                 }
                 query.append(Constants.INDEX_PRIM_KEY_FIELDS[i])
-                                            .append("=").append(id);
+                                            .append('=').append(id);
             }
 
             HttpGet httpGet =
@@ -844,7 +844,7 @@ public class IndexingHandler implements ResourceListener {
             Properties indexProps = new Properties();
             InputStream propStream = null;
             try {
-                propStream = IndexingHandler.class.getResourceAsStream("/"
+                propStream = IndexingHandler.class.getResourceAsStream('/'
                     + searchPropertiesDirectory + "/index/" + indexName
                     + "/index.object-types.properties");
                 if (propStream == null) {
@@ -870,7 +870,7 @@ public class IndexingHandler implements ResourceListener {
                 if (key.startsWith("Resource")) {
                     String propVal = indexProps.getProperty(key);
                     if (log.isDebugEnabled()) {
-                        log.debug("found property " + key + ":" + propVal);
+                        log.debug("found property " + key + ':' + propVal);
                     }
                     objectTypeMatcher.reset(key);
                     if (!objectTypeMatcher.matches()) {
@@ -912,7 +912,7 @@ public class IndexingHandler implements ResourceListener {
                                 .get("prerequisites")).put(
                                 key.replaceFirst(".*\\.", ""), propVal);
                         if (log.isDebugEnabled()) {
-                            log.debug("adding prerequisite " + key + ":"
+                            log.debug("adding prerequisite " + key + ':'
                                     + propVal);
                         }
                     } else {
@@ -921,7 +921,7 @@ public class IndexingHandler implements ResourceListener {
                                 .put(key.replaceFirst(".*\\.", ""), propVal);
                         if (log.isDebugEnabled()) {
                             log
-                                    .debug("adding parameter " + key + ":"
+                                    .debug("adding parameter " + key + ':'
                                             + propVal);
                         }
                     }

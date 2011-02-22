@@ -578,8 +578,8 @@ public class ConnectionUtility {
                 String proxyPort =
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
-                if (proxyHostName != null && !proxyHostName.trim().equals("")) {
-                    if (proxyPort != null && !proxyPort.trim().equals("")) {
+                if (proxyHostName != null && proxyHostName.trim().length() != 0) {
+                    if (proxyPort != null && proxyPort.trim().length() != 0) {
                         this.proxyHost =
                             new HttpHost(proxyHostName,
                                 Integer.parseInt(proxyPort));
@@ -614,7 +614,7 @@ public class ConnectionUtility {
                 String nonProxyHosts =
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_NON_PROXY_HOSTS);
-                if (nonProxyHosts != null && !nonProxyHosts.trim().equals("")) {
+                if (nonProxyHosts != null && nonProxyHosts.trim().length() != 0) {
                     nonProxyHosts = nonProxyHosts.replaceAll("\\.", "\\\\.");
                     nonProxyHosts = nonProxyHosts.replaceAll("\\*", "");
                     nonProxyHosts = nonProxyHosts.replaceAll("\\?", "\\\\?");
@@ -733,7 +733,7 @@ public class ConnectionUtility {
                 HttpClientParams.setCookiePolicy(httpGet.getParams(),
                     CookiePolicy.BEST_MATCH);
                 httpGet.setHeader("Cookie",
-                    cookie.getName() + "=" + cookie.getValue());
+                    cookie.getName() + '=' + cookie.getValue());
             }
             httpResponse = getHttpClient(url).execute(httpGet);
 
@@ -926,7 +926,7 @@ public class ConnectionUtility {
                 HttpClientParams.setCookiePolicy(httpPost.getParams(),
                     CookiePolicy.BEST_MATCH);
                 httpPost.setHeader("Cookie",
-                    cookie.getName() + "=" + cookie.getValue());
+                    cookie.getName() + '=' + cookie.getValue());
             }
 
             httpResponse = getHttpClient(url).execute(httpPost);

@@ -190,7 +190,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
             && !contentModelId.equalsIgnoreCase("null")) {
             // create link to content of DC-MAPPING in content model object
             String dcMappingXsltFedoraUrl =
-                "/get/" + contentModelId + "/"
+                "/get/" + contentModelId + '/'
                     + CONTENT_MODEL_XSLT_DC_DATASTREAM;
             try {
                 xslt =
