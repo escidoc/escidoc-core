@@ -50,7 +50,7 @@ public abstract class SRURequestParameters {
 
     private final String role;
 
-    private final RecordPacking recordPacking;
+    private RecordPacking recordPacking;
 
     /**
      * Create a new parameters object from the given map.
@@ -87,6 +87,9 @@ public abstract class SRURequestParameters {
         recordPacking =
             RecordPacking.fromType(getStringParameter(
                 parameters.get(Constants.SRU_PARAMETER_RECORD_PACKING), "xml"));
+        if (recordPacking == null) {
+            recordPacking = RecordPacking.XML;
+        }
     }
 
     public String getQuery() {
