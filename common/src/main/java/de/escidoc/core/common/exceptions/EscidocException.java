@@ -66,9 +66,11 @@ public abstract class EscidocException extends Exception {
     public static final int ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR =
         HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 
-    private int httpStatusCode = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+    public static final String DEFAULT_STATUS_MESSAGE = "Internal eSciDoc Error";
 
-    private String httpStatusMsg = "Internal eSciDoc Error";
+    private final int httpStatusCode;
+
+    private final String httpStatusMsg;
 
     /**
      * Returns the HttpStatusCode associated with this Exception.
@@ -130,6 +132,8 @@ public abstract class EscidocException extends Exception {
      * @common
      */
     public EscidocException() {
+        this.httpStatusCode = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+        this.httpStatusMsg = DEFAULT_STATUS_MESSAGE;
     }
 
     /**
@@ -144,6 +148,8 @@ public abstract class EscidocException extends Exception {
      */
     public EscidocException(final String message, final Throwable cause) {
         super(message, cause);
+        this.httpStatusCode = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+        this.httpStatusMsg = DEFAULT_STATUS_MESSAGE;
     }
 
     /**
@@ -155,6 +161,8 @@ public abstract class EscidocException extends Exception {
      */
     public EscidocException(final String message) {
         super(message);
+        this.httpStatusCode = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+        this.httpStatusMsg = DEFAULT_STATUS_MESSAGE;
     }
 
     /**
@@ -167,6 +175,8 @@ public abstract class EscidocException extends Exception {
     public EscidocException(final Throwable cause) {
         // FIXME: better solution insrtead of empty string needed
         super("", cause);
+        this.httpStatusCode = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
+        this.httpStatusMsg = DEFAULT_STATUS_MESSAGE;
     }
 
     /**

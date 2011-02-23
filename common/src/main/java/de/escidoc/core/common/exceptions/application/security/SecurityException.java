@@ -52,7 +52,7 @@ public class SecurityException extends EscidocException {
     public static final String HTTP_STATUS_MESSAGE =
         "Security check failed. Redirect to login";
 
-    private String redirectLocation;
+    private final String redirectLocation;
 
     /**
      * Default constructor.
@@ -65,7 +65,8 @@ public class SecurityException extends EscidocException {
     public SecurityException() throws WebserverSystemException {
 
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
-        initRedirectLocation();
+        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
     /**
@@ -83,7 +84,8 @@ public class SecurityException extends EscidocException {
     public SecurityException(final String message, final Throwable cause)
         throws WebserverSystemException {
         super(message, cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
-        initRedirectLocation();
+        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
     /**
@@ -98,7 +100,8 @@ public class SecurityException extends EscidocException {
     public SecurityException(final String message)
         throws WebserverSystemException {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
-        initRedirectLocation();
+        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
     /**
@@ -113,7 +116,8 @@ public class SecurityException extends EscidocException {
     public SecurityException(final Throwable cause)
         throws WebserverSystemException {
         super(cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
-        initRedirectLocation();
+        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
     /**
@@ -130,7 +134,8 @@ public class SecurityException extends EscidocException {
     public SecurityException(final int httpStatusCode,
         final String httpStatusMsg) throws WebserverSystemException {
         super(httpStatusCode, httpStatusMsg);
-        initRedirectLocation();
+        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
     /**
@@ -153,7 +158,8 @@ public class SecurityException extends EscidocException {
         final int httpStatusCode, final String httpStatusMsg)
         throws WebserverSystemException {
         super(message, cause, httpStatusCode, httpStatusMsg);
-        initRedirectLocation();
+        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
     /**
@@ -172,7 +178,8 @@ public class SecurityException extends EscidocException {
     public SecurityException(final String message, final int httpStatusCode,
         final String httpStatusMsg) throws WebserverSystemException {
         super(message, httpStatusCode, httpStatusMsg);
-        initRedirectLocation();
+        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
     /**
@@ -191,26 +198,8 @@ public class SecurityException extends EscidocException {
     public SecurityException(final Throwable cause, final int httpStatusCode,
         final String httpStatusMsg) throws WebserverSystemException {
         super(cause, httpStatusCode, httpStatusMsg);
-        initRedirectLocation();
-    }
-
-    /**
-     * Initializes the redirect location.<br>
-     * First it is tried, to retrieve the escidoc baseurl from the
-     * EscidocConfiguration. If this fails, "http://localhost:8080/" is taken as
-     * the fallback.<br>
-     * Then, to the baseURL the value "/aa/login" is appended.
-     * 
-     * @throws WebserverSystemException
-     *             Thrown in case of an internal error.
-     */
-    private void initRedirectLocation() throws WebserverSystemException {
-
         String baseLocation = XmlUtility.getEscidocBaseUrl();
-        redirectLocation =
-            baseLocation
-                + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN
-                    .length() - 1); // remove tailing '/'
+        redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
     /**
@@ -220,21 +209,7 @@ public class SecurityException extends EscidocException {
      * @common
      */
     public String getRedirectLocation() {
-
         return redirectLocation;
-    }
-
-    /**
-     * Sets the redirect location (UserManagementWrapper).
-     * 
-     * @param redirectLocation
-     *            Returns the URL of the UserManagementWrapper in a
-     *            <code>String</code>.
-     * @common
-     */
-    public void setRedirectLocation(final String redirectLocation) {
-
-        this.redirectLocation = redirectLocation;
     }
 
 }
