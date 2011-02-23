@@ -583,7 +583,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         checkLocked(cr);
         checkReleased(cr);
-        if (!StatusType.SUBMITTED.equals(cr.getProperties().getStatus())) {
+        if (StatusType.SUBMITTED != cr.getProperties().getStatus()) {
             String message =
                 "The object is not in state '" + Constants.STATUS_SUBMITTED
                     + "' and can not be " + Constants.STATUS_RELEASED + '.';
@@ -651,7 +651,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         ContentRelationCreate cr = setContentRelation(id);
         TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
         checkLocked(cr);
-        if (!StatusType.SUBMITTED.equals(cr.getProperties().getStatus())) {
+        if (StatusType.SUBMITTED != cr.getProperties().getStatus()) {
             String message =
                 "The object is not in state '" + Constants.STATUS_SUBMITTED
                     + "' and can not be revised.";
@@ -1032,7 +1032,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         throws InvalidStatusException {
 
         StatusType status = cr.getProperties().getStatus();
-        if (status.equals(StatusType.RELEASED)) {
+        if (status == StatusType.RELEASED) {
             final String msg =
                 "The object is in state '" + Constants.STATUS_RELEASED
                     + "' and can not be" + " changed.";
@@ -1463,8 +1463,7 @@ public class FedoraContentRelationHandler extends HandlerBase
          * Resource has to have status pending or in-revision when submit is
          * possible.
          */
-        if (!(StatusType.PENDING.equals(cr.getProperties().getStatus()) || StatusType.INREVISION
-            .equals(cr.getProperties().getStatus()))) {
+        if (!(StatusType.PENDING == cr.getProperties().getStatus() || StatusType.INREVISION == cr.getProperties().getStatus())) {
             String message =
                 "The object is not in state '" + Constants.STATUS_PENDING
                     + "' or '" + Constants.STATUS_IN_REVISION

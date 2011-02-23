@@ -1452,7 +1452,7 @@ public class FedoraOrganizationalUnitHandler
              */
             for (Predecessor predecessor1 : predecessors) {
                 Predecessor predecessor = predecessor1;
-                if (!predecessor.getForm().equals(PredecessorForm.FUSION)) {
+                if (predecessor.getForm() != PredecessorForm.FUSION) {
                     throw new InvalidStatusException(
                         "Predecessor forms are inconsistent. At least one "
                             + " predecesssor has not form '"
@@ -1464,7 +1464,7 @@ public class FedoraOrganizationalUnitHandler
             /*
              * check replacement: only one predecessor is allowed
              */
-            if (predecessors.get(0).getForm().equals(PredecessorForm.FUSION)) {
+            if (predecessors.get(0).getForm() == PredecessorForm.FUSION) {
                 throw new InvalidStatusException("Predecessor form to '"
                     + PredecessorForm.FUSION.getLabel()
                     + "' requires more than on predecessor.");
