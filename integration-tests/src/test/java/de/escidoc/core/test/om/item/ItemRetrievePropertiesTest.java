@@ -72,10 +72,8 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-        super.setUp();
         ITEM_XML =
             EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");

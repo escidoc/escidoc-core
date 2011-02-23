@@ -78,14 +78,11 @@ public class ContainerVersioningTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
 
         this.theItemId =
             createItemFromTemplate("escidoc_item_198_for_create.xml");
-
-        super.setUp();
 
         String xmlData =
             getContainerTemplate("create_container_v1.1-forItem.xml");

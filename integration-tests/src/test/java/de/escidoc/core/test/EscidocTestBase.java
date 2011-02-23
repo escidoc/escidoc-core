@@ -1162,16 +1162,6 @@ public abstract class EscidocTestBase {
     }
 
     /**
-     * Setup test environment.
-     * 
-     * @throws Exception
-     */
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    /**
      * Tear down. Resets the user handle in <code>PWCallback</code>.
      * 
      * @throws Exception
@@ -1179,7 +1169,6 @@ public abstract class EscidocTestBase {
      */
     @After
     public void tearDown() throws Exception {
-
         PWCallback.resetHandle();
     }
 

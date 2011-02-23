@@ -33,7 +33,6 @@ public class SetDefinitionRetrieveTest extends SetDefinitionTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
 

@@ -65,8 +65,6 @@ public class DeleteTest extends ContextTestBase {
      */
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
         this.path += "/" + getTransport(false);
     }
 

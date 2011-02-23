@@ -410,12 +410,8 @@ public class ContainerLockTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
-
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
 
         this.theItemId =

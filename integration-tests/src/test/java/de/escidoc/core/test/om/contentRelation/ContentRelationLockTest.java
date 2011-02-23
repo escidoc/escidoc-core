@@ -76,11 +76,8 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
         this.user =
             createUserWithContentRelationRole("escidoc_useraccount_for_create.xml");
         addContentRelationManagerGrant(this.user[0]);

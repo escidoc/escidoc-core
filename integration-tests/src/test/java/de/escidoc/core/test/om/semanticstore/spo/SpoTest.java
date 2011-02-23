@@ -75,8 +75,6 @@ public class SpoTest extends SpoTestBase {
      */
     @Before
     public void setUp() throws Exception {
-        super.setUp();
-
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
     }
 

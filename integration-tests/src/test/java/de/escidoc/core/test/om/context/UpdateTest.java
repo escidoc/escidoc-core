@@ -84,10 +84,7 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     @Before
-    @Override
     public void setUp() throws Exception {
-
-        super.setUp();
         this.path += "/" + getTransport(false);
     }
 

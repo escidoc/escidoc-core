@@ -83,11 +83,8 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
         String xmlContainer =
             EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_CONTAINER_PATH
                 + "/" + getTransport(false),

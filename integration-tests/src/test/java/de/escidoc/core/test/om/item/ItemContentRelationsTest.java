@@ -81,11 +81,8 @@ public class ItemContentRelationsTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
         Document xmlItem =
             EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_ITEM_PATH
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");

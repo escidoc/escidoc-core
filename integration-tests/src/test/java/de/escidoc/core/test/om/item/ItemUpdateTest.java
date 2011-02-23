@@ -97,11 +97,8 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
         // create an item and save the id and xml data
         String xmlData =
             EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH

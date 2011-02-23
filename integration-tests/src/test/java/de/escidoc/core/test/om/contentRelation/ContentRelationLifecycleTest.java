@@ -76,10 +76,8 @@ public class ContentRelationLifecycleTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-
         String contentRelationXml =
             getExampleTemplate("content-relation-01.xml");
         relationXml = create(contentRelationXml);

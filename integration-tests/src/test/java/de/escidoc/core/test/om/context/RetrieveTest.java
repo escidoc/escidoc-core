@@ -78,8 +78,6 @@ public class RetrieveTest extends ContextTestBase {
      */
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
         this.path += "/" + getTransport(false);
 
         if (contextId == null) {

@@ -83,11 +83,8 @@ public class ItemPerformanceTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
 
         BasicEtmConfigurator.configure();
         monitor = EtmManager.getEtmMonitor();

@@ -47,26 +47,4 @@ public abstract class UserManagementWrapperTestBase extends UserAccountTestBase 
         super(transport);
     }
 
-    /**
-     * Set up servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
 }

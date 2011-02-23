@@ -85,13 +85,10 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
      *             If anything fails.
      * 
      */
-    @Override
     @Before
     public void setUp() throws Exception {
 
         this.theItemId = createItem();
-
-        super.setUp();
 
         String xmlData =
             getContainerTemplate("create_container_v1.1-forItem.xml");

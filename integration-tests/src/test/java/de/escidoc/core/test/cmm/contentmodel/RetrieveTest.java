@@ -68,11 +68,8 @@ public class RetrieveTest extends ContentModelTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-        super.setUp();
-
         Document contentModel =
             EscidocRestSoapTestBase.getTemplateAsDocument(
                 TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),

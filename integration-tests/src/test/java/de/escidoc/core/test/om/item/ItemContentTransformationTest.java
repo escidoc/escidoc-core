@@ -75,11 +75,8 @@ public class ItemContentTransformationTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
         if (itemId == null) {
             itemXml =
                 EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH

@@ -221,7 +221,6 @@ public class ContainerWithdrawTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
         this.theItemId =
@@ -232,7 +231,6 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         theContainerXml = create(xmlData);
 
         this.theSubcontainerId = getObjidValue(theContainerXml);
-        super.setUp();
 
         String xmlData1 =
             getContainerTemplate("create_container_v1.1-forItemAndforContainer.xml");

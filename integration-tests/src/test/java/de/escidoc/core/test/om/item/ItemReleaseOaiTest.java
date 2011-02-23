@@ -65,12 +65,8 @@ public class ItemReleaseOaiTest extends ItemTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
-        
         // create an item and save the id
         String xmlData =
             EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_ITEM_PATH  + "/" + getTransport(false),

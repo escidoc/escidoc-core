@@ -66,11 +66,8 @@ public class AdminDescriptorsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
         this.path += "/" + getTransport(false);
 
         if (contextId == null) {

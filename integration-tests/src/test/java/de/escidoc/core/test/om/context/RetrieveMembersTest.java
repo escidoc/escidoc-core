@@ -381,10 +381,7 @@ public class RetrieveMembersTest extends ContextTestBase {
      *             If anything fails.
      */
     @Before
-    @Override
     public void setUp() throws Exception {
-
-        super.setUp();
         this.path = "/" + getTransport(false);
 
         if (contextId == null) {

@@ -441,8 +441,6 @@ public class ItemLockTest extends ItemTestBase {
      */
     @Before
     public void setUp() throws Exception {
-
-        super.setUp();
         // create an item and save the id
         PWCallback.setHandle(PWCallback.DEPOSITOR_HANDLE);
         String xmlData =

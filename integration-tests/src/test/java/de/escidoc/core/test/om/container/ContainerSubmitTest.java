@@ -68,7 +68,6 @@ public class ContainerSubmitTest extends ContainerTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
         String xmlData =
@@ -76,7 +75,6 @@ public class ContainerSubmitTest extends ContainerTestBase {
 
         this.theContainerXml = create(xmlData);
         this.theContainerId = getObjidValue(this.theContainerXml);
-        super.setUp();
     }
 
     /**

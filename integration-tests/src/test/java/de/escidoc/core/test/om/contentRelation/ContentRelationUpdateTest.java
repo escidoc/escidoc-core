@@ -73,7 +73,6 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Override
     @Before
     public void setUp() throws Exception {
         String contentRelationXml =

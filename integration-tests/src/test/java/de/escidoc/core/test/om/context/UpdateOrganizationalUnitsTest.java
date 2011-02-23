@@ -69,10 +69,7 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
      *             If anything fails.
      */
     @Before
-    @Override
     public void setUp() throws Exception {
-
-        super.setUp();
         this.path += "/" + getTransport(false);
     }
 

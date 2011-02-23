@@ -339,19 +339,6 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     }
 
     /**
-     * Set up test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @Before
-    @Override
-    public void setUp() throws Exception {
-
-        super.setUp();
-    }
-
-    /**
      * Clean up after test.<br>
      * This method resets the current user handle in PWCallback.
      * 
