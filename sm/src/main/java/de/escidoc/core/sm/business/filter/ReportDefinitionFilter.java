@@ -46,8 +46,6 @@ import org.z3950.zing.cql.CQLTermNode;
  */
 public class ReportDefinitionFilter extends CqlFilter {
 
-    private static final long serialVersionUID = -8147941785824100599L;
-
     /**
      * Parse the given CQL query and create a corresponding Hibernate query to
      * filter for eSciDoc report definitions from it.

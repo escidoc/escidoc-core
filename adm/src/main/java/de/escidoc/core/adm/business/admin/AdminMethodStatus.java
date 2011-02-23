@@ -45,10 +45,6 @@ import java.util.concurrent.Semaphore;
  * @author sche
  */
 public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
-    /**
-     * Unique identifier for this class.
-     */
-    private static final long serialVersionUID = -836541093128206058L;
 
     private Date completionDate = new Date();
     private boolean fillingComplete = false;

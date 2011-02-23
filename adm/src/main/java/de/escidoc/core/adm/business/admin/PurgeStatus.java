@@ -35,10 +35,6 @@ package de.escidoc.core.adm.business.admin;
  * @author sche
  */
 public final class PurgeStatus extends AdminMethodStatus {
-    /**
-     * Unique identifier for this class.
-     */
-    private static final long serialVersionUID = -8993243039657011512L;
 
     /**
      * Singleton instance.

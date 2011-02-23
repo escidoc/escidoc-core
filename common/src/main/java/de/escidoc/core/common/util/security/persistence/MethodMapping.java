@@ -37,11 +37,6 @@ package de.escidoc.core.common.util.security.persistence;
 public class MethodMapping extends MethodMappingBase {
 
     /**
-     * The serial version uid.
-     */
-    private static final long serialVersionUID = 5919589184815152909L;
-
-    /**
      * Get a string representation of this object.
      *
      * @return a string representation of this object

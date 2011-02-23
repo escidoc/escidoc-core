@@ -37,10 +37,6 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
  * @author mih
  */
 public final class ReindexStatus extends AdminMethodStatus {
-    /**
-     * Unique identifier for this class.
-     */
-    private static final long serialVersionUID = 5887377255088692388L;
 
     /**
      * Singleton instance.

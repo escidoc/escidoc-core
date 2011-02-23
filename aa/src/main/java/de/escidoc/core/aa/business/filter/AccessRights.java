@@ -90,7 +90,6 @@ public class AccessRights extends JdbcDaoSupport {
      * Mapping from role id to SQL statements.
      */
     public static class RightsMap implements Map<String, Rules> {
-        private static final long serialVersionUID = 7311398691300996752L;
         private final HashMap<String, Rules> hashMap = new HashMap<String, Rules>();
 
         public boolean equals(Object o) {

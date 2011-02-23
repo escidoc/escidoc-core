@@ -36,11 +36,6 @@ package de.escidoc.core.common.util.security.persistence;
  */
 public class InvocationMapping extends InvocationMappingBase {
 
-    /**
-     * The serial version uid.
-     */
-    private static final long serialVersionUID = 2286374923210668012L;
-
     public static final int SIMPLE_ATTRIBUTE_MAPPING = 0;
 
     public static final int COMPLEX_ATTRIBUTE_MAPPING = 1;
