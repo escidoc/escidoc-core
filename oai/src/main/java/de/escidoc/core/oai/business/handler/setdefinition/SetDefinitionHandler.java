@@ -362,51 +362,49 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                 if (tmpSetDefinitions == null || tmpSetDefinitions.isEmpty()) {
                     break;
                 }
-                else {
-                    final List<String> ids =
-                        new ArrayList<String>(tmpSetDefinitions.size());
-                    for (SetDefinition setDefinition : tmpSetDefinitions) {
-                        ids.add(setDefinition.getId());
+                final List<String> ids =
+                    new ArrayList<String>(tmpSetDefinitions.size());
+                for (SetDefinition setDefinition : tmpSetDefinitions) {
+                    ids.add(setDefinition.getId());
+                }
+                setPdpHandler();
+                try {
+                    final List<String> tmpPermitted =
+                        pdp.evaluateRetrieve(
+                            XmlUtility.NAME_SET_DEFINITION, ids);
+                    final int numberPermitted = tmpPermitted.size();
+                    if (numberPermitted == 0) {
+                        break;
                     }
-                    setPdpHandler();
-                    try {
-                        final List<String> tmpPermitted =
-                            pdp.evaluateRetrieve(
-                                XmlUtility.NAME_SET_DEFINITION, ids);
-                        final int numberPermitted = tmpPermitted.size();
-                        if (numberPermitted == 0) {
-                            break;
-                        }
-                        else {
-                            int permittedIndex = 0;
-                            String currentPermittedId =
-                                tmpPermitted.get(permittedIndex);
-                            for (SetDefinition setDefinition : tmpSetDefinitions) {
-                                if (currentPermittedId.equals(setDefinition
-                                    .getId())) {
-                                    permittedSetDefinitions.add(setDefinition);
-                                    ++permittedIndex;
-                                    if (permittedIndex < numberPermitted) {
-                                        currentPermittedId =
-                                            tmpPermitted.get(permittedIndex);
-                                    }
-                                    else {
-                                        break;
-                                    }
+                    else {
+                        int permittedIndex = 0;
+                        String currentPermittedId =
+                            tmpPermitted.get(permittedIndex);
+                        for (SetDefinition setDefinition : tmpSetDefinitions) {
+                            if (currentPermittedId.equals(setDefinition
+                                .getId())) {
+                                permittedSetDefinitions.add(setDefinition);
+                                ++permittedIndex;
+                                if (permittedIndex < numberPermitted) {
+                                    currentPermittedId =
+                                        tmpPermitted.get(permittedIndex);
+                                }
+                                else {
+                                    break;
                                 }
                             }
                         }
                     }
-                    catch (MissingMethodParameterException e) {
-                        throw new SystemException(
-                            "Unexpected exception during evaluating access "
-                                + "rights.", e);
-                    }
-                    catch (ResourceNotFoundException e) {
-                        throw new SystemException(
-                            "Unexpected exception during evaluating access "
-                                + "rights.", e);
-                    }
+                }
+                catch (MissingMethodParameterException e) {
+                    throw new SystemException(
+                        "Unexpected exception during evaluating access "
+                            + "rights.", e);
+                }
+                catch (ResourceNotFoundException e) {
+                    throw new SystemException(
+                        "Unexpected exception during evaluating access "
+                            + "rights.", e);
                 }
                 currentOffset += currentLimit;
             }

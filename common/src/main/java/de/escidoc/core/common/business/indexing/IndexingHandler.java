@@ -632,65 +632,63 @@ public class IndexingHandler implements ResourceListener {
         if (parameters.get("prerequisites") == null) {
             return Constants.DO_UPDATE;
         }
-        else {
-            try {
-                HashMap<String, String> prerequisites =
-                    (HashMap<String, String>) parameters.get("prerequisites");
-                if (prerequisites.get("indexingPrerequisiteXpath") == null
-                    && prerequisites.get("deletePrerequisiteXpath") == null) {
-                    return Constants.DO_UPDATE;
-                }
-                else {
-                    if (xml == null) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("xml is null, requesting it from cache");
-                        }
-                        xml =
-                            indexingCacheHandler
-                                .retrieveObjectFromCache(resource);
-                    }
+        try {
+            HashMap<String, String> prerequisites =
+                (HashMap<String, String>) parameters.get("prerequisites");
+            if (prerequisites.get("indexingPrerequisiteXpath") == null
+                && prerequisites.get("deletePrerequisiteXpath") == null) {
+                return Constants.DO_UPDATE;
+            }
+            else {
+                if (xml == null) {
                     if (log.isDebugEnabled()) {
-                        log.debug("xml is: " + xml);
+                        log.debug("xml is null, requesting it from cache");
                     }
-                    long time = System.currentTimeMillis();
-                    if (domObject == null) {
-                        domObject = getXmlAsDocument(xml);
+                    xml =
+                        indexingCacheHandler
+                            .retrieveObjectFromCache(resource);
+                }
+                if (log.isDebugEnabled()) {
+                    log.debug("xml is: " + xml);
+                }
+                long time = System.currentTimeMillis();
+                if (domObject == null) {
+                    domObject = getXmlAsDocument(xml);
+                }
+                if (prerequisites.get("indexingPrerequisiteXpath") != null) {
+                    Node updateNode =
+                        XPathAPI.selectSingleNode(domObject,
+                            prerequisites.get("indexingPrerequisiteXpath"));
+                    if (log.isDebugEnabled()) {
+                        log
+                            .debug("gsearchindexing xpath-exec on DOM-Object "
+                                + " needed "
+                                + (System.currentTimeMillis() - time)
+                                + " ms");
                     }
-                    if (prerequisites.get("indexingPrerequisiteXpath") != null) {
-                        Node updateNode =
-                            XPathAPI.selectSingleNode(domObject,
-                                prerequisites.get("indexingPrerequisiteXpath"));
-                        if (log.isDebugEnabled()) {
-                            log
-                                .debug("gsearchindexing xpath-exec on DOM-Object "
-                                    + " needed "
-                                    + (System.currentTimeMillis() - time)
-                                    + " ms");
-                        }
-                        if (updateNode != null) {
-                            return Constants.DO_UPDATE;
-                        }
+                    if (updateNode != null) {
+                        return Constants.DO_UPDATE;
                     }
-                    if (prerequisites.get("deletePrerequisiteXpath") != null) {
-                        Node deleteNode =
-                            XPathAPI.selectSingleNode(domObject,
-                                prerequisites.get("deletePrerequisiteXpath"));
-                        if (log.isDebugEnabled()) {
-                            log
-                                .debug("gsearchindexing xpath-exec on DOM-Object "
-                                    + " needed "
-                                    + (System.currentTimeMillis() - time)
-                                    + " ms");
-                        }
-                        if (deleteNode != null) {
-                            return Constants.DO_DELETE;
-                        }
+                }
+                if (prerequisites.get("deletePrerequisiteXpath") != null) {
+                    Node deleteNode =
+                        XPathAPI.selectSingleNode(domObject,
+                            prerequisites.get("deletePrerequisiteXpath"));
+                    if (log.isDebugEnabled()) {
+                        log
+                            .debug("gsearchindexing xpath-exec on DOM-Object "
+                                + " needed "
+                                + (System.currentTimeMillis() - time)
+                                + " ms");
+                    }
+                    if (deleteNode != null) {
+                        return Constants.DO_DELETE;
                     }
                 }
             }
-            catch (TransformerException e) {
-                throw new SystemException(e.getMessage(), e);
-            }
+        }
+        catch (TransformerException e) {
+            throw new SystemException(e.getMessage(), e);
         }
         return Constants.DO_NOTHING;
     }

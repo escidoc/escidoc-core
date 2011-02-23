@@ -1382,54 +1382,52 @@ public class UserAccountHandler
                 if (tmpUserAccounts == null || tmpUserAccounts.isEmpty()) {
                     break;
                 }
-                else {
-                    Iterator<UserAccount> userAccountIter =
-                        tmpUserAccounts.iterator();
-                    final List<String> ids =
-                        new ArrayList<String>(tmpUserAccounts.size());
-                    while (userAccountIter.hasNext()) {
-                        UserAccount userAccount = userAccountIter.next();
-                        ids.add(userAccount.getId());
-                    }
+                Iterator<UserAccount> userAccountIter =
+                    tmpUserAccounts.iterator();
+                final List<String> ids =
+                    new ArrayList<String>(tmpUserAccounts.size());
+                while (userAccountIter.hasNext()) {
+                    UserAccount userAccount = userAccountIter.next();
+                    ids.add(userAccount.getId());
+                }
 
-                    try {
-                        final List<String> tmpPermitted =
-                            pdp.evaluateRetrieve("user-account", ids);
-                        final int numberPermitted = tmpPermitted.size();
-                        if (numberPermitted == 0) {
-                            break;
-                        }
-                        else {
-                            int permittedIndex = 0;
-                            String currentPermittedId =
-                                tmpPermitted.get(permittedIndex);
-                            userAccountIter = tmpUserAccounts.iterator();
-                            while (userAccountIter.hasNext()) {
-                                final UserAccount userAccount =
-                                    userAccountIter.next();
-                                if (currentPermittedId.equals(userAccount
-                                    .getId())) {
-                                    permittedUserAccounts.add(userAccount);
-                                    ++permittedIndex;
-                                    if (permittedIndex < numberPermitted) {
-                                        currentPermittedId =
-                                            tmpPermitted.get(permittedIndex);
-                                    }
-                                    else {
-                                        break;
-                                    }
+                try {
+                    final List<String> tmpPermitted =
+                        pdp.evaluateRetrieve("user-account", ids);
+                    final int numberPermitted = tmpPermitted.size();
+                    if (numberPermitted == 0) {
+                        break;
+                    }
+                    else {
+                        int permittedIndex = 0;
+                        String currentPermittedId =
+                            tmpPermitted.get(permittedIndex);
+                        userAccountIter = tmpUserAccounts.iterator();
+                        while (userAccountIter.hasNext()) {
+                            final UserAccount userAccount =
+                                userAccountIter.next();
+                            if (currentPermittedId.equals(userAccount
+                                .getId())) {
+                                permittedUserAccounts.add(userAccount);
+                                ++permittedIndex;
+                                if (permittedIndex < numberPermitted) {
+                                    currentPermittedId =
+                                        tmpPermitted.get(permittedIndex);
+                                }
+                                else {
+                                    break;
                                 }
                             }
                         }
                     }
-                    catch (MissingMethodParameterException e) {
-                        throw new SystemException(
-                            MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
-                    }
-                    catch (ResourceNotFoundException e) {
-                        throw new SystemException(
-                            MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
-                    }
+                }
+                catch (MissingMethodParameterException e) {
+                    throw new SystemException(
+                        MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
+                }
+                catch (ResourceNotFoundException e) {
+                    throw new SystemException(
+                        MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                 }
                 currentOffset += currentLimit;
             }

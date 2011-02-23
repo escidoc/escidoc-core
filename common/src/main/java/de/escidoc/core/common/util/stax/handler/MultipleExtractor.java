@@ -234,92 +234,90 @@ public class MultipleExtractor extends WriteHandler {
         if (this.insideRemoveElement) {
             return element;
         }
-        else {
-            if (((this.removeElements != null)
-                && (!this.removeElements.isEmpty()))
-                && (this.removeElements.containsKey(currentPath))) {
-                List<StartElementWithChildElements> elementsToDelete =
-                    removeElements.get(currentPath);
-                Iterator<StartElementWithChildElements> iterator =
-                    elementsToDelete.iterator();
-                this.elementToDelete = null;
-                loop1: while (iterator.hasNext()) {
-                    this.elementToDelete = iterator.next();
-                    // September 2009, changed logic: if prefix or namespace
-                    // of elementToDelete is null it is not compared with
-                    // the current element and handled as match. (FRS)
-                    if ((elementToDelete.getPrefix() == null || elementToDelete
-                        .getPrefix().equals(element.getPrefix()))
-                        && (elementToDelete.getNamespace() == null || elementToDelete
-                            .getNamespace().equals(element.getNamespace()))) {
+        if (((this.removeElements != null)
+            && (!this.removeElements.isEmpty()))
+            && (this.removeElements.containsKey(currentPath))) {
+            List<StartElementWithChildElements> elementsToDelete =
+                removeElements.get(currentPath);
+            Iterator<StartElementWithChildElements> iterator =
+                elementsToDelete.iterator();
+            this.elementToDelete = null;
+            loop1: while (iterator.hasNext()) {
+                this.elementToDelete = iterator.next();
+                // September 2009, changed logic: if prefix or namespace
+                // of elementToDelete is null it is not compared with
+                // the current element and handled as match. (FRS)
+                if ((elementToDelete.getPrefix() == null || elementToDelete
+                    .getPrefix().equals(element.getPrefix()))
+                    && (elementToDelete.getNamespace() == null || elementToDelete
+                        .getNamespace().equals(element.getNamespace()))) {
 
-                        int attCount2 = elementToDelete.getAttributeCount();
-                        if (attCount2 == 0) {
-                            // if a provided element to remove does not
-                            // contain
-                            // attributes
-                            // all matched elements will be removed
-                            // independent from attribute number and their
-                            // values
-                            // but we check at least the prefix (namespace)!
+                    int attCount2 = elementToDelete.getAttributeCount();
+                    if (attCount2 == 0) {
+                        // if a provided element to remove does not
+                        // contain
+                        // attributes
+                        // all matched elements will be removed
+                        // independent from attribute number and their
+                        // values
+                        // but we check at least the prefix (namespace)!
 
-                            this.isMatchedAttribute = true;
-                            iterator.remove();
-                            break loop1;
+                        this.isMatchedAttribute = true;
+                        iterator.remove();
+                        break loop1;
 
-                        }
-                        else {
-                            int attCount1 = element.getAttributeCount();
+                    }
+                    else {
+                        int attCount1 = element.getAttributeCount();
 
-                            if (attCount1 == attCount2) {
-                                int matchedAttributesNumber = 0;
-                                for (int i = 0; i < attCount1; i++) {
-                                    Attribute curAtt =
-                                        element.getAttribute(i);
-                                    String curName = curAtt.getLocalName();
-                                    String curNameSpace =
-                                        curAtt.getNamespace();
-                                    String curValue = curAtt.getValue();
-                                    for (int j = 0; j < attCount2; j++) {
-                                        Attribute attToDelete =
-                                            elementToDelete.getAttribute(j);
-                                        String nameToDelete =
-                                            attToDelete.getLocalName();
-                                        String nameSpaceToDelete =
-                                            attToDelete.getNamespace();
-                                        String valueToDelete =
-                                            attToDelete.getValue();
-                                        if (curName.equals(nameToDelete)
-                                            && curNameSpace
-                                                .equals(nameSpaceToDelete)
-                                            && curValue
-                                                .equals(valueToDelete)) {
+                        if (attCount1 == attCount2) {
+                            int matchedAttributesNumber = 0;
+                            for (int i = 0; i < attCount1; i++) {
+                                Attribute curAtt =
+                                    element.getAttribute(i);
+                                String curName = curAtt.getLocalName();
+                                String curNameSpace =
+                                    curAtt.getNamespace();
+                                String curValue = curAtt.getValue();
+                                for (int j = 0; j < attCount2; j++) {
+                                    Attribute attToDelete =
+                                        elementToDelete.getAttribute(j);
+                                    String nameToDelete =
+                                        attToDelete.getLocalName();
+                                    String nameSpaceToDelete =
+                                        attToDelete.getNamespace();
+                                    String valueToDelete =
+                                        attToDelete.getValue();
+                                    if (curName.equals(nameToDelete)
+                                        && curNameSpace
+                                            .equals(nameSpaceToDelete)
+                                        && curValue
+                                            .equals(valueToDelete)) {
 
-                                            // i = attCount1;
-                                            // break;
-                                            matchedAttributesNumber++;
-                                        }
-                                    }
-                                    if (matchedAttributesNumber == attCount1) {
-                                        this.isMatchedAttribute = true;
-                                        iterator.remove();
-                                        break loop1;
-
+                                        // i = attCount1;
+                                        // break;
+                                        matchedAttributesNumber++;
                                     }
                                 }
+                                if (matchedAttributesNumber == attCount1) {
+                                    this.isMatchedAttribute = true;
+                                    iterator.remove();
+                                    break loop1;
 
+                                }
                             }
+
                         }
                     }
                 }
-                if (isMatchedAttribute) {
-                    removeElements.put(currentPath, elementsToDelete);
-                    this.insideRemoveElement = true;
-                    isMatchedAttribute = false;
-                    return element;
-                }
-
             }
+            if (isMatchedAttribute) {
+                removeElements.put(currentPath, elementsToDelete);
+                this.insideRemoveElement = true;
+                isMatchedAttribute = false;
+                return element;
+            }
+
         }
         if (theName.equals("component")
             && element

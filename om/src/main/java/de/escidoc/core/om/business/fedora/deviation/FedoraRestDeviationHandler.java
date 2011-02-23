@@ -95,10 +95,8 @@ public class FedoraRestDeviationHandler
         if (escidocBinaryContent != null) {
             return escidocBinaryContent;
         }
-        else {
-            log.error(StringUtility.format(
-                "could not get resource for cache", dsID));
-        }
+        log.error(StringUtility.format(
+            "could not get resource for cache", dsID));
         // /////////////////////////////////////////////////////////////////////
 
         return null;
@@ -137,9 +135,7 @@ public class FedoraRestDeviationHandler
         if (xml != null) {
             return xml;
         }
-        else {
-            log.error("couldnt get resource " + pid + " for cache");
-        }
+        log.error("couldnt get resource " + pid + " for cache");
         return null;
     }
 

@@ -350,18 +350,16 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         if (grantId == null || grantId.length() == 0) {
             throw new GrantNotFoundException("no grantId found");
         }
-        else {
-            RoleGrant grant;
-            if (resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
-                + ".*")) {
-                grant = userAccountDao.retrieveGrant(userOrGroupId, grantId);
-            }
-            else {
-                grant = userGroupDao.retrieveGrant(grantId);
-            }
-            assertGrant(grantId, grant);
-            createdBy = grant.getCreatorId();
+        RoleGrant grant;
+        if (resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
+            + ".*")) {
+            grant = userAccountDao.retrieveGrant(userOrGroupId, grantId);
         }
+        else {
+            grant = userGroupDao.retrieveGrant(grantId);
+        }
+        assertGrant(grantId, grant);
+        createdBy = grant.getCreatorId();
 
         result =
             CustomEvaluationResultBuilder

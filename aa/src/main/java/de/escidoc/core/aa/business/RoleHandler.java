@@ -418,51 +418,49 @@ public class RoleHandler implements RoleHandlerInterface {
                 if (tmpObjects == null || tmpObjects.isEmpty()) {
                     break;
                 }
-                else {
-                    Iterator<EscidocRole> objectIter = tmpObjects.iterator();
-                    final List<String> ids =
-                        new ArrayList<String>(tmpObjects.size());
-                    while (objectIter.hasNext()) {
-                        EscidocRole object = objectIter.next();
-                        ids.add(object.getId());
-                    }
+                Iterator<EscidocRole> objectIter = tmpObjects.iterator();
+                final List<String> ids =
+                    new ArrayList<String>(tmpObjects.size());
+                while (objectIter.hasNext()) {
+                    EscidocRole object = objectIter.next();
+                    ids.add(object.getId());
+                }
 
-                    try {
-                        final List<String> tmpPermitted =
-                            pdp.evaluateRetrieve("role", ids);
-                        final int numberPermitted = tmpPermitted.size();
-                        if (numberPermitted == 0) {
-                            break;
-                        }
-                        else {
-                            int permittedIndex = 0;
-                            String currentPermittedId =
-                                tmpPermitted.get(permittedIndex);
-                            objectIter = tmpObjects.iterator();
-                            while (objectIter.hasNext()) {
-                                final EscidocRole object = objectIter.next();
-                                if (currentPermittedId.equals(object.getId())) {
-                                    permittedObjects.add(object);
-                                    ++permittedIndex;
-                                    if (permittedIndex < numberPermitted) {
-                                        currentPermittedId =
-                                            tmpPermitted.get(permittedIndex);
-                                    }
-                                    else {
-                                        break;
-                                    }
+                try {
+                    final List<String> tmpPermitted =
+                        pdp.evaluateRetrieve("role", ids);
+                    final int numberPermitted = tmpPermitted.size();
+                    if (numberPermitted == 0) {
+                        break;
+                    }
+                    else {
+                        int permittedIndex = 0;
+                        String currentPermittedId =
+                            tmpPermitted.get(permittedIndex);
+                        objectIter = tmpObjects.iterator();
+                        while (objectIter.hasNext()) {
+                            final EscidocRole object = objectIter.next();
+                            if (currentPermittedId.equals(object.getId())) {
+                                permittedObjects.add(object);
+                                ++permittedIndex;
+                                if (permittedIndex < numberPermitted) {
+                                    currentPermittedId =
+                                        tmpPermitted.get(permittedIndex);
+                                }
+                                else {
+                                    break;
                                 }
                             }
                         }
                     }
-                    catch (MissingMethodParameterException e) {
-                        throw new SystemException("Unexpected exception "
-                            + "during evaluating access rights.", e);
-                    }
-                    catch (ResourceNotFoundException e) {
-                        throw new SystemException("Unexpected exception "
-                            + "during evaluating access rights.", e);
-                    }
+                }
+                catch (MissingMethodParameterException e) {
+                    throw new SystemException("Unexpected exception "
+                        + "during evaluating access rights.", e);
+                }
+                catch (ResourceNotFoundException e) {
+                    throw new SystemException("Unexpected exception "
+                        + "during evaluating access rights.", e);
                 }
                 currentOffset += currentLimit;
             }

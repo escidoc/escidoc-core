@@ -313,13 +313,11 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
     protected boolean releasableObjectPid() throws TripleStoreSystemException,
         WebserverSystemException {
         if (Boolean.valueOf(System
-            .getProperty("cmm.Container.objectPid.releaseWithoutPid"))) {
+                .getProperty("cmm.Container.objectPid.releaseWithoutPid"))) {
             return (true);
-        }
-        else { // objectPid is needed
-            if (getContainer().hasObjectPid()) {
-                return (true);
-            }
+        } // objectPid is needed
+        if (getContainer().hasObjectPid()) {
+            return (true);
         }
         return (false);
     }

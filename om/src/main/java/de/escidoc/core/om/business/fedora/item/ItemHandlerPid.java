@@ -443,30 +443,28 @@ public class ItemHandlerPid extends ItemHandlerContent {
     protected boolean releasableObjectPid() throws TripleStoreSystemException,
         WebserverSystemException {
         if (Boolean.valueOf(System
-            .getProperty("cmm.Item.objectPid.releaseWithoutPid"))) {
+                .getProperty("cmm.Item.objectPid.releaseWithoutPid"))) {
             return (true);
+        } // objectPid is needed
+        // FIXME an exception is content model TOC, since we have a real
+        // content model object here is a workaround
+        final String curCm =
+            getItem().getProperty(
+                PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
+        String tocCm;
+        try {
+            tocCm =
+                EscidocConfiguration.getInstance().get(
+                    "escidoc-core.toc.content-model");
         }
-        else { // objectPid is needed
-               // FIXME an exception is content model TOC, since we have a real
-               // content model object here is a workaround
-            final String curCm =
-                getItem().getProperty(
-                    PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
-            String tocCm;
-            try {
-                tocCm =
-                    EscidocConfiguration.getInstance().get(
-                        "escidoc-core.toc.content-model");
-            }
-            catch (final IOException e) {
-                throw new WebserverSystemException(e);
-            }
-            if (curCm.endsWith(tocCm)) {
-                return true;
-            }
-            if (getItem().hasObjectPid()) {
-                return (true);
-            }
+        catch (final IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        if (curCm.endsWith(tocCm)) {
+            return true;
+        }
+        if (getItem().hasObjectPid()) {
+            return (true);
         }
         return (false);
     }
@@ -486,27 +484,25 @@ public class ItemHandlerPid extends ItemHandlerContent {
     protected boolean releasableVersionPid() throws WebserverSystemException,
         IntegritySystemException, TripleStoreSystemException {
         if (Boolean.valueOf(System
-            .getProperty("cmm.Item.versionPid.releaseWithoutPid"))) {
+                .getProperty("cmm.Item.versionPid.releaseWithoutPid"))) {
             return (true);
         }
-        else {
-            // FIXME an exception is content model TOC, since we have a real
-            // content model object here is a workaround
-            final String curCm =
-                getItem().getProperty(
-                    PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
-            String tocCm;
-            try {
-                tocCm =
-                    EscidocConfiguration.getInstance().get(
-                        "escidoc-core.toc.content-model");
-            }
-            catch (final IOException e) {
-                throw new WebserverSystemException(e);
-            }
-            if (curCm.endsWith(tocCm)) {
-                return true;
-            }
+        // FIXME an exception is content model TOC, since we have a real
+        // content model object here is a workaround
+        final String curCm =
+            getItem().getProperty(
+                PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
+        String tocCm;
+        try {
+            tocCm =
+                EscidocConfiguration.getInstance().get(
+                    "escidoc-core.toc.content-model");
+        }
+        catch (final IOException e) {
+            throw new WebserverSystemException(e);
+        }
+        if (curCm.endsWith(tocCm)) {
+            return true;
         }
 
         // versionPid is needed
