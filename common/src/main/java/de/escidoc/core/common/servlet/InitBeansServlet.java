@@ -19,6 +19,7 @@ public class InitBeansServlet extends HttpServlet {
      * Pattern used to split the comma separated list of bean ids.
      */
     private static final Pattern PATTERN_SPLIT_IDS = Pattern.compile(",\\s*");
+    private static final long serialVersionUID = -1471080999315442967L;
 
     private String beanIds;
 

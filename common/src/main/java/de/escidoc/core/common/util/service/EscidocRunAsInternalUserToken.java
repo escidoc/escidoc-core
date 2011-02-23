@@ -15,6 +15,7 @@ import org.springframework.security.providers.AbstractAuthenticationToken;
  */
 public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
 
+    private static final long serialVersionUID = 2667370146760424716L;
     /**
      * The wrapped {@link Authentication}.
      */

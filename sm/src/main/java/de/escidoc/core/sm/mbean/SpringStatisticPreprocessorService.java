@@ -91,7 +91,10 @@ public class SpringStatisticPreprocessorService {
                 "preprocessing of statistic-data failed";
             errorMessageHandler.putErrorMessage(
                     new HashMap<String, String>() { {
-                        put("message", message); } }, e,
+                        put("message", message); }
+
+                        private static final long serialVersionUID = 5304590831581021890L;
+                    }, e,
                         de.escidoc.core.common.business.Constants.
                         STATISTIC_PREPROCESSING_ERROR_LOGFILE);
             throw e;
@@ -117,7 +120,10 @@ public class SpringStatisticPreprocessorService {
                 "preprocessing of statistic-data failed";
             errorMessageHandler.putErrorMessage(
                     new HashMap<String, String>() { {
-                        put("message", message); } }, e,
+                        put("message", message); }
+
+                        private static final long serialVersionUID = -2340916328981929936L;
+                    }, e,
                         de.escidoc.core.common.business.Constants.
                         STATISTIC_PREPROCESSING_ERROR_LOGFILE);
             throw e;

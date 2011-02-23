@@ -417,6 +417,8 @@ public class TripleStoreAttributeFinderModule
                         {
                             add(resourceObjid);
                         }
+
+                        private static final long serialVersionUID = 2641263789045163702L;
                     }, cachedAttribute, mapresult);
         } else {
             cachedAttribute =

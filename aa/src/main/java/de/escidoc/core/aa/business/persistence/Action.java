@@ -36,4 +36,5 @@ package de.escidoc.core.aa.business.persistence;
  */
 public class Action extends ActionBase {
 
+    private static final long serialVersionUID = -670158485011665031L;
 }

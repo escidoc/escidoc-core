@@ -73,7 +73,10 @@ public class IndexOptimizerService {
                 "optimizing search-indices failed";
             errorMessageHandler.putErrorMessage(
                     new HashMap<String, String>() { {
-                        put("message", message); } }, e,
+                        put("message", message); }
+
+                        private static final long serialVersionUID = -6112223886789881292L;
+                    }, e,
                         de.escidoc.core.common.business.Constants.
                         INDEXING_ERROR_LOGFILE);
             log.error(e);

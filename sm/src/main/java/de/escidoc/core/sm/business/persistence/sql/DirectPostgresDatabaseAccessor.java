@@ -113,7 +113,9 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             put("user", "");
             put("timestamp", "");
         }
-    };
+
+            private static final long serialVersionUID = -175392516618206276L;
+        };
 
     /**
      * Converts xmldate into database-specific format.

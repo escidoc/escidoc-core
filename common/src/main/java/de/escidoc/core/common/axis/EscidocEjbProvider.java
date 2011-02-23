@@ -46,6 +46,7 @@ import org.apache.axis.providers.java.EJBProvider;
  * @common
  */
 public class EscidocEjbProvider extends EscidocSpringProvider {
+    private static final long serialVersionUID = -4909005487534850667L;
 
     // CHECKSTYLE:JAVADOC-OFF
 
