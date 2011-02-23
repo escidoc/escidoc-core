@@ -155,12 +155,11 @@ public class MultipleExtractor2 extends DefaultHandler {
                         components = new HashMap<String, Map>();
                         outputStreams.put("components", components);
                     }
-                    if (!components.containsKey(componentId)) {
+                    if (components.containsKey(componentId)) {
+                        component = (HashMap) components.get(componentId);
+                    } else {
                         component = new HashMap<String, Object>();
                         components.put(componentId, component);
-                    }
-                    else {
-                        component = (HashMap) components.get(componentId);
                     }
 
                     if (attributeName == null) {

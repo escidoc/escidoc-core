@@ -168,17 +168,16 @@ public class GenericVersionableResource extends GenericResourcePid {
             setLastVersionData();
         }
         catch (WebserverSystemException e) {
-            if (!TripleStoreUtility.getInstance().exists(id)) {
-                String msg =
-                    "Resource with the provided objid '" + id
-                        + "' does not exist.";
-                LOG.debug(msg);
-                throw new ResourceNotFoundException(msg, e);
-            }
-            else {
+            if (TripleStoreUtility.getInstance().exists(id)) {
                 String msg = "Unexpected exception during RELS-EXT parsing.";
                 LOG.warn(msg + e);
                 throw new WebserverSystemException(e);
+            } else {
+                String msg =
+                        "Resource with the provided objid '" + id
+                                + "' does not exist.";
+                LOG.debug(msg);
+                throw new ResourceNotFoundException(msg, e);
             }
 
         }

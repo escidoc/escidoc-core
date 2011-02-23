@@ -100,21 +100,20 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                 int indexOfResource =
                     element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
                         "resource");
-                if (indexOfResource != -1) {
+                if (indexOfResource == -1) {
+                    String message =
+                            "The ontology-xml is not valide rdf/xml. "
+                                    + "The element 'rdf:type' must have "
+                                    + "the attribute 'resource'.";
+                    LOGGER.debug(message);
+                    throw new XmlCorruptedException(message);
+                } else {
                     String resourceValue =
-                        element.getAttribute(indexOfResource).getValue();
+                            element.getAttribute(indexOfResource).getValue();
                     if (!resourceValue.equals(RDF_PROPERTY_URI)) {
                         this.predicate = null;
 
                     }
-                }
-                else {
-                    String message =
-                        "The ontology-xml is not valide rdf/xml. "
-                            + "The element 'rdf:type' must have "
-                            + "the attribute 'resource'.";
-                    LOGGER.debug(message);
-                    throw new XmlCorruptedException(message);
                 }
             }
         }
@@ -176,26 +175,12 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
             element.indexOfAttribute(
                 de.escidoc.core.common.business.Constants.RDF_NAMESPACE_URI,
                 "ID");
-        if (indexOfId != -1) {
-            String id = element.getAttribute(indexOfId).getValue();
-            if (this.base != null) {
-                this.predicate = this.base + '#' + id;
-            }
-            else {
-                String message =
-                    "The ontology-xml does not contain a "
-                        + "base-url. Therefore the element 'Description' "
-                        + "may not contain the attribute 'id'.";
-                LOGGER.debug(message);
-                throw new InvalidContentException(message);
-            }
-        }
-        else {
+        if (indexOfId == -1) {
             int indexOfAbout =
-                element
-                    .indexOfAttribute(
-                        de.escidoc.core.common.business.Constants.RDF_NAMESPACE_URI,
-                        "about");
+                    element
+                            .indexOfAttribute(
+                                    Constants.RDF_NAMESPACE_URI,
+                                    "about");
             if (indexOfAbout != -1) {
                 String about = element.getAttribute(indexOfAbout).getValue();
                 if (this.base != null) {
@@ -203,14 +188,24 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                         // test if a value of about is an absolute URI
                         URI aboutUri = new URI(about);
                         this.predicate = about;
-                    }
-                    catch (URISyntaxException e) {
+                    } catch (URISyntaxException e) {
                         this.predicate = this.base + about;
                     }
-                }
-                else {
+                } else {
                     this.predicate = about;
                 }
+            }
+        } else {
+            String id = element.getAttribute(indexOfId).getValue();
+            if (this.base != null) {
+                this.predicate = this.base + '#' + id;
+            } else {
+                String message =
+                        "The ontology-xml does not contain a "
+                                + "base-url. Therefore the element 'Description' "
+                                + "may not contain the attribute 'id'.";
+                LOGGER.debug(message);
+                throw new InvalidContentException(message);
             }
         }
     }

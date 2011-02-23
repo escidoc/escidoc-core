@@ -537,7 +537,9 @@ public class PolicyDecisionPoint
         // SHALL deny access to the resource in all other cases.An XACML
         // response of "Permit" SHALL be considered valid only if the PEP
         // understands all of the obligations contained in the response.
-        if (result.getDecision() != Result.DECISION_PERMIT) {
+        if (result.getDecision() == Result.DECISION_PERMIT) {
+            return true;
+        } else {
             final Status status = result.getStatus();
             final String statusCode = (String) status.getCode().get(0);
             if (!statusCode.equals(Status.STATUS_OK)) {
@@ -547,40 +549,38 @@ public class PolicyDecisionPoint
                     ResourceNotFoundException e = null;
                     try {
                         final Class clazz =
-                            Class
-                                .forName(statusCode
-                                    .substring(AttributeIds.STATUS_PREFIX
-                                        .length()));
+                                Class
+                                        .forName(statusCode
+                                                .substring(AttributeIds.STATUS_PREFIX
+                                                        .length()));
                         if (ResourceNotFoundException.class
-                            .isAssignableFrom(clazz)) {
+                                .isAssignableFrom(clazz)) {
 
                             String statusMessage = status.getMessage();
                             e =
-                                (ResourceNotFoundException) clazz
-                                    .getConstructor(
-                                        new Class[] { String.class })
-                                    .newInstance(statusMessage);
+                                    (ResourceNotFoundException) clazz
+                                            .getConstructor(
+                                                    new Class[]{String.class})
+                                            .newInstance(statusMessage);
                         }
-                    }
-                    catch (Exception e1) {
+                    } catch (Exception e1) {
                         e = null;
                     }
                     if (e != null) {
                         throw e;
-                    }
-                    else {
+                    } else {
                         throw new WebserverSystemException(
-                            StringUtility.format(
-                                "Error reported during policy evaluation ",
-                                result.getResource(), encode(status)));
+                                StringUtility.format(
+                                        "Error reported during policy evaluation ",
+                                        result.getResource(), encode(status)));
                     }
 
                 }
 
                 throw new WebserverSystemException(
-                    StringUtility.format(
-                        "XACML error reported during policy evaluation ",
-                        result.getResource(), encode(status)));
+                        StringUtility.format(
+                                "XACML error reported during policy evaluation ",
+                                result.getResource(), encode(status)));
             }
 
             if (LOG.isDebugEnabled()) {
@@ -591,9 +591,6 @@ public class PolicyDecisionPoint
                 LOG.debug(msg.toString());
             }
             return false;
-        }
-        else {
-            return true;
         }
     }
 

@@ -122,16 +122,15 @@ public class EscidocRole extends EscidocRoleBase {
      */
     public Collection<String> getObjectTypes() {
         if (objectTypes == null) {
-            if (!isLimited()) {
-                objectTypes = new ArrayList<String>(0);
-            }
-            else {
+            if (isLimited()) {
                 Collection<ScopeDef> scopeDefs = getScopeDefs();
                 objectTypes = new ArrayList<String>(scopeDefs.size());
                 for (ScopeDef scopeDef1 : scopeDefs) {
                     ScopeDef scopeDef = scopeDef1;
                     objectTypes.add(scopeDef.getObjectType());
                 }
+            } else {
+                objectTypes = new ArrayList<String>(0);
             }
         }
 

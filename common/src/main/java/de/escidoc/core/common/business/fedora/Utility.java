@@ -164,20 +164,17 @@ public class Utility {
         String append = appendix;
         result = result.replace("\\", "/");
         append = append.replace("\\", "/");
-        if (!result.endsWith("/")) {
+        if (result.endsWith("/")) {
+            if (!append.startsWith("/")) {
+                result += append;
+            } else {
+                result += append.substring(1);
+            }
+        } else {
             if (!append.startsWith("/")) {
                 result += '/' + append;
-            }
-            else {
+            } else {
                 result += append;
-            }
-        }
-        else {
-            if (!append.startsWith("/")) {
-                result += append;
-            }
-            else {
-                result += append.substring(1);
             }
         }
         return result;
@@ -586,15 +583,14 @@ public class Utility {
             tripleStoreUtility.getObjectType(idWithoutVersionNumber);
 
         if (objectType == null) {
-            if (!tripleStoreUtility.exists(idWithoutVersionNumber)) {
-                throw new ResourceNotFoundException("Object with id "
-                    + idWithoutVersionNumber + " does not exist!");
-            }
-            else {
+            if (tripleStoreUtility.exists(idWithoutVersionNumber)) {
                 // object exists but has no object-type
                 throw new IntegritySystemException(
-                    StringUtility.format(
-                            "Object has no object-type ", idWithoutVersionNumber));
+                        StringUtility.format(
+                                "Object has no object-type ", idWithoutVersionNumber));
+            } else {
+                throw new ResourceNotFoundException("Object with id "
+                        + idWithoutVersionNumber + " does not exist!");
             }
         }
         else if (!objectType.equals(type)) {

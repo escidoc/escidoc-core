@@ -599,7 +599,10 @@ public class OrganizationalUnit extends GenericResource
         // create or update Datastreams which are send
         for (String s : mdRecords.keySet()) {
             final String name = s;
-            if (!namesInFedora.contains(name)) {
+            if (namesInFedora.contains(name)) {
+                setMdRecord(name, mdRecords.get(name));
+                namesInFedora.remove(name);
+            } else {
                 final Datastream currentMdRecord = mdRecords.get(name);
                 byte[] stream = currentMdRecord.getStream();
                 final List<String> altIds = currentMdRecord.getAlternateIDs();
@@ -610,9 +613,6 @@ public class OrganizationalUnit extends GenericResource
                 getFedoraUtility().addDatastream(getId(), name, altIDs,
                         XmlUtility.NAME_MDRECORD, false, stream, false);
                 // TODO should new Datastream be put in list of md-records of this OU?
-            } else {
-                setMdRecord(name, mdRecords.get(name));
-                namesInFedora.remove(name);
             }
         }
     }

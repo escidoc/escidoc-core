@@ -324,7 +324,9 @@ public class PIDManagerRESTService implements PIDSystem {
             db.parse(new ByteArrayInputStream(param.getBytes()));
         NodeList systemIDs = doc.getElementsByTagName("systemID");
 
-        if (systemIDs.getLength() != 1) {
+        if (systemIDs.getLength() == 1) {
+            xmlParam = param;
+        } else {
             Node first = doc.getFirstChild();
             Node sysid = doc.createElement("systemID");
             sysid.setTextContent(systemID);
@@ -338,9 +340,6 @@ public class PIDManagerRESTService implements PIDSystem {
             transformer.transform(source, result);
 
             xmlParam = result.getWriter().toString();
-        }
-        else {
-            xmlParam = param;
         }
         return xmlParam;
     }

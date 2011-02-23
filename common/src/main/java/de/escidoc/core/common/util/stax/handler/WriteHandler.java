@@ -92,16 +92,7 @@ public abstract class WriteHandler extends DefaultHandler {
         String prefix = element.getPrefix();
 
         if ((uri) != null) {
-            if (!nsuris.containsKey(uri)) {
-                List namespaceTrace = new ArrayList();
-                namespaceTrace.add(deepLevel);
-                namespaceTrace.add(name);
-                namespaceTrace.add(prefix);
-                nsuris.put(uri, namespaceTrace);
-                writer.writeStartElement(prefix, name, uri);
-                writer.writeNamespace(prefix, uri);
-            }
-            else {
+            if (nsuris.containsKey(uri)) {
                 List namespaceTrace = nsuris.get(uri);
                 Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 String prefixTrace = (String) namespaceTrace.get(2);
@@ -111,10 +102,17 @@ public abstract class WriteHandler extends DefaultHandler {
                 if (deepLevelInMAp >= deepLevel) {
                     writer.writeStartElement(prefix, name, uri);
                     writer.writeNamespace(prefix, uri);
-                }
-                else {
+                } else {
                     writer.writeStartElement(prefix, name, uri);
                 }
+            } else {
+                List namespaceTrace = new ArrayList();
+                namespaceTrace.add(deepLevel);
+                namespaceTrace.add(name);
+                namespaceTrace.add(prefix);
+                nsuris.put(uri, namespaceTrace);
+                writer.writeStartElement(prefix, name, uri);
+                writer.writeNamespace(prefix, uri);
             }
         }
         else {
@@ -128,16 +126,7 @@ public abstract class WriteHandler extends DefaultHandler {
         String attributeValue, String prefix, NamespaceContext nscontext)
         throws XMLStreamException {
         if (uri != null) {
-            if (!nsuris.containsKey(uri)) {
-                List namespaceTrace = new ArrayList();
-                namespaceTrace.add(deepLevel);
-                namespaceTrace.add(elementName);
-                namespaceTrace.add(prefix);
-                nsuris.put(uri, namespaceTrace);
-
-                writer.writeNamespace(prefix, uri);
-            }
-            else {
+            if (nsuris.containsKey(uri)) {
                 List namespaceTrace = nsuris.get(uri);
                 String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
@@ -148,6 +137,14 @@ public abstract class WriteHandler extends DefaultHandler {
                 // if ( (deepLevelInMAp.intValue() >= deepLevel)) {
                 // writer.writeNamespace(prefix, uri);
                 // }
+            } else {
+                List namespaceTrace = new ArrayList();
+                namespaceTrace.add(deepLevel);
+                namespaceTrace.add(elementName);
+                namespaceTrace.add(prefix);
+                nsuris.put(uri, namespaceTrace);
+
+                writer.writeNamespace(prefix, uri);
             }
         }
         if (prefix != null) {
@@ -168,7 +165,16 @@ public abstract class WriteHandler extends DefaultHandler {
                             String valueUri =
                                 nscontext.getNamespaceURI(prefixValue);
                             if (valueUri != null) {
-                                if (!nsuris.containsKey(valueUri)) {
+                                if (nsuris.containsKey(valueUri)) {
+                                    List namespaceTrace =
+                                            nsuris.get(valueUri);
+                                    String prefixTrace =
+                                            (String) namespaceTrace.get(2);
+                                    if (!prefixTrace.equals(prefixValue)) {
+                                        prefixValue = prefixTrace;
+                                    }
+
+                                } else {
                                     List namespaceTrace = new ArrayList();
                                     namespaceTrace.add(deepLevel);
                                     namespaceTrace.add(elementName);
@@ -176,17 +182,7 @@ public abstract class WriteHandler extends DefaultHandler {
                                     nsuris.put(valueUri, namespaceTrace);
 
                                     writer
-                                        .writeNamespace(prefixValue, valueUri);
-                                }
-                                else {
-                                    List namespaceTrace =
-                                            nsuris.get(valueUri);
-                                    String prefixTrace =
-                                        (String) namespaceTrace.get(2);
-                                    if (!prefixTrace.equals(prefixValue)) {
-                                        prefixValue = prefixTrace;
-                                    }
-
+                                            .writeNamespace(prefixValue, valueUri);
                                 }
                             }
                         }

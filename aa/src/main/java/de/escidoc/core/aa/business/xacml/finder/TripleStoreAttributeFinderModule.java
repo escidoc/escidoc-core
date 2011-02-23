@@ -409,23 +409,22 @@ public class TripleStoreAttributeFinderModule
             return new Object[] { result, mapresult.getresolvableAttributeId() };
         }
 
-        if (!mapresult.isHierarchical()) {
-            cachedAttribute =
-                FinderModuleHelper.retrieveFromTripleStore(mapresult
-                    .isInverse(), mapresult.getResolveCurrentWhereClause(
-                    resourceObjid, tsu), resourceObjid, 
-                    mapresult.getCacheId(), tsu);
-        }
-        else {
+        if (mapresult.isHierarchical()) {
             if (mapresult.isIncludeHierarchyBase()) {
                 cachedAttribute.add(resourceObjid);
             }
             cachedAttribute =
-                getHierarchicalCachedAttributes(new ArrayList<String>() {
-                    {
-                        add(resourceObjid);
-                    }
-                }, cachedAttribute, mapresult);
+                    getHierarchicalCachedAttributes(new ArrayList<String>() {
+                        {
+                            add(resourceObjid);
+                        }
+                    }, cachedAttribute, mapresult);
+        } else {
+            cachedAttribute =
+                    FinderModuleHelper.retrieveFromTripleStore(mapresult
+                            .isInverse(), mapresult.getResolveCurrentWhereClause(
+                            resourceObjid, tsu), resourceObjid,
+                            mapresult.getCacheId(), tsu);
         }
 
         List<StringAttribute> stringAttributes =

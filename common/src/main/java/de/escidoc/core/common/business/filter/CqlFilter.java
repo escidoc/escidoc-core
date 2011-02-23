@@ -345,31 +345,28 @@ public abstract class CqlFilter {
     protected void setOrderBy(final Iterable<ModifierSet> orderBy)
         throws InvalidSearchQueryException {
         for (ModifierSet modifier : orderBy) {
-            if (!modifier.getModifiers().isEmpty()) {
+            if (modifier.getModifiers().isEmpty()) {
+                detachedCriteria.addOrder(Order.asc(modifier.getBase()));
+            } else {
                 for (Modifier mod : modifier.getModifiers()) {
                     String columnName =
-                        propertyNamesMap.get(modifier.getBase());
+                            propertyNamesMap.get(modifier.getBase());
 
                     if (columnName == null) {
                         throw new InvalidSearchQueryException(
-                            "attribute \"" + modifier.getBase()
-                            + "\" not allowed for sorting");
+                                "attribute \"" + modifier.getBase()
+                                        + "\" not allowed for sorting");
                     }
                     if (mod.getType().equals("sort.ascending")) {
                         detachedCriteria.addOrder(Order.asc(columnName));
-                    }
-                    else if (mod.getType().equals("sort.descending")) {
+                    } else if (mod.getType().equals("sort.descending")) {
                         detachedCriteria.addOrder(Order.desc(columnName));
-                    }
-                    else {
+                    } else {
                         throw new InvalidSearchQueryException(
-                            mod.getType()
-                            + ": index modifier type not implemented");
-                     }
+                                mod.getType()
+                                        + ": index modifier type not implemented");
+                    }
                 }
-            }
-            else {
-                detachedCriteria.addOrder(Order.asc(modifier.getBase()));
             }
         }
     }

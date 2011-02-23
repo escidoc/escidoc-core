@@ -197,7 +197,9 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
         List<String> organizationalUnitIds =
             getTripleStoreUtility().getParents(path.get(path.size() - 1));
         if (organizationalUnitIds != null) {
-            if (!organizationalUnitIds.isEmpty()) {
+            if (organizationalUnitIds.isEmpty()) {
+                getPathes().push(new ArrayList<String>(path));
+            } else {
                 for (String organizationalUnitId : organizationalUnitIds) {
                     List<String> newPath = new ArrayList<String>(path);
                     String parent = organizationalUnitId;
@@ -205,9 +207,6 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
                     getPathes().push(newPath);
 
                 }
-            }
-            else {
-                getPathes().push(new ArrayList<String>(path));
             }
         }
     }

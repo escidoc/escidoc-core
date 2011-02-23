@@ -359,16 +359,15 @@ public class Login extends HttpServlet {
                                 ",$1")).replaceAll("_");
                 // FIXME: cn should be used for user name
                 final int index = escidocLdapUserDetails.getDn().indexOf(',');
-                if (index != -1) {
+                if (index == -1) {
+                    username = escidocLdapUserDetails.getUsername();
+                } else {
                     final int index2 =
-                        escidocLdapUserDetails.getDn().indexOf('=');
+                            escidocLdapUserDetails.getDn().indexOf('=');
 
                     username =
-                        escidocLdapUserDetails.getDn().substring(index2 + 1,
-                            index);
-                }
-                else {
-                    username = escidocLdapUserDetails.getUsername();
+                            escidocLdapUserDetails.getDn().substring(index2 + 1,
+                                    index);
                 }
                 attributes = escidocLdapUserDetails.getStringAttributes();
             }

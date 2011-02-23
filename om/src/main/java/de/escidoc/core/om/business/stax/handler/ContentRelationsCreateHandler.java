@@ -153,13 +153,12 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                         element
                             .getAttribute(Constants.XLINK_URI, "href")
                             .getValue();
-                    if (!OntologyUtility.checkPredicate(xlinkHref)) {
-                        String message =
-                            "Predicate " + xlinkHref + " is wrong. ";
-                        throw new RelationPredicateNotFoundException(message);
-                    }
-                    else {
+                    if (OntologyUtility.checkPredicate(xlinkHref)) {
                         predicate = xlinkHref;
+                    } else {
+                        String message =
+                                "Predicate " + xlinkHref + " is wrong. ";
+                        throw new RelationPredicateNotFoundException(message);
                     }
 
                 }

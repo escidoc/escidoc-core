@@ -20,11 +20,10 @@ public class ShibbolethAuthenticationProvider implements AuthenticationProvider 
     public Authentication authenticate(final Authentication authentication)
         throws AuthenticationException {
 
-        if (!supports(authentication.getClass())) {
-            return null;
-        }
-        else {
+        if (supports(authentication.getClass())) {
             return authentication;
+        } else {
+            return null;
         }
     }
 

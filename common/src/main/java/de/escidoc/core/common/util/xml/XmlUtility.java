@@ -1525,11 +1525,10 @@ public final class XmlUtility {
             final String errorMsg =
                 "Error in line " + e.getLineNumber() + ", column "
                     + e.getColumnNumber() + ". " + e.getMessage();
-            if (!e.getMessage().startsWith("cvc")) {
-                throw new XmlCorruptedException(errorMsg, e);
-            }
-            else {
+            if (e.getMessage().startsWith("cvc")) {
                 throw new XmlSchemaValidationException(errorMsg, e);
+            } else {
+                throw new XmlCorruptedException(errorMsg, e);
             }
         }
         catch (final Exception e) {
@@ -1778,14 +1777,13 @@ public final class XmlUtility {
 
         try {
             final String objid;
-            if (element.indexOfAttribute(null, NAME_OBJID) != -1) {
-                objid = element.getAttributeValue(null, NAME_OBJID);
-            }
-            else {
+            if (element.indexOfAttribute(null, NAME_OBJID) == -1) {
                 objid =
-                    getIdFromURI(element.getAttributeValue(
-                        de.escidoc.core.common.business.Constants.XLINK_NS_URI,
-                        NAME_HREF));
+                        getIdFromURI(element.getAttributeValue(
+                                Constants.XLINK_NS_URI,
+                                NAME_HREF));
+            } else {
+                objid = element.getAttributeValue(null, NAME_OBJID);
             }
             return objid;
         }

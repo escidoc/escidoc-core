@@ -499,11 +499,10 @@ public class IndexingHandler implements ResourceListener {
                     pidSuffix = Constants.LATEST_VERSION_PID_SUFFIX;
                 }
                 else {
-                    if (!latestReleasedVersion.equals(thisVersion)) {
-                        pidSuffix = Constants.LATEST_VERSION_PID_SUFFIX;
-                    }
-                    else {
+                    if (latestReleasedVersion.equals(thisVersion)) {
                         pidSuffix = Constants.LATEST_RELEASE_PID_SUFFIX;
+                    } else {
+                        pidSuffix = Constants.LATEST_VERSION_PID_SUFFIX;
                     }
                 }
             }

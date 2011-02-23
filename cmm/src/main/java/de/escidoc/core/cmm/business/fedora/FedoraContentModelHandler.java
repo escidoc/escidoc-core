@@ -686,20 +686,19 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                     // check if href for xslt is changed
                     // /cmm/content-model/escidoc:40013/resource-\
                     // definitions/resource-definition/trans/xslt
-                    if (!(resourceDefinition.getXsltHref()
-                        .equalsIgnoreCase("/cmm/content-model/"
-                            + getContentModel().getId()
-                            + "/resource-definitions/resource-definition/"
-                            + resourceDefinition.getName() + "/xslt/content"))) {
+                    if (resourceDefinition.getXsltHref()
+                            .equalsIgnoreCase("/cmm/content-model/"
+                                    + getContentModel().getId()
+                                    + "/resource-definitions/resource-definition/"
+                                    + resourceDefinition.getName() + "/xslt/content")) {
+                        log.debug("Do not update xslt.");
+                    } else {
                         // update xslt
                         fu.modifyDatastream(sdefId, "xslt",
-                            "Transformation instructions for operation '"
-                                + resourceDefinition.getName() + "'.",
-                            "text/xml", new String[0],
-                            resourceDefinition.getXsltHref(), false);
-                    }
-                    else {
-                        log.debug("Do not update xslt.");
+                                "Transformation instructions for operation '"
+                                        + resourceDefinition.getName() + "'.",
+                                "text/xml", new String[0],
+                                resourceDefinition.getXsltHref(), false);
                     }
                 }
                 else {

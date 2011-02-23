@@ -150,18 +150,16 @@ public class OrganizationalUnitMetadataHandler
             }
             Map<String, String> md = new HashMap<String, String>();
             int indexOfType = element.indexOfAttribute(null, TYPE);
-            if (indexOfType != -1) {
+            if (indexOfType == -1) {
+                md.put("type", UNKNOWN);
+            } else {
                 md.put("type", element.getAttribute(indexOfType).getValue());
             }
-            else {
-                md.put("type", UNKNOWN);
-            }
             int indexOfSchema = element.indexOfAttribute(null, SCHEMA);
-            if (indexOfSchema != -1) {
-                md.put(SCHEMA, element.getAttribute(indexOfSchema).getValue());
-            }
-            else {
+            if (indexOfSchema == -1) {
                 md.put(SCHEMA, UNKNOWN);
+            } else {
+                md.put(SCHEMA, element.getAttribute(indexOfSchema).getValue());
             }
             metadataAttributes.put(this.currentMdRecordName, md);
 

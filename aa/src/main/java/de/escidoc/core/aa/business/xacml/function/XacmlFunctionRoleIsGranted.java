@@ -271,11 +271,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                     // scope definition
                     for (ScopeDef scopeDef1 : role.getScopeDefs()) {
                         final ScopeDef scopeDef = scopeDef1;
-                        if (!scopeDef.getObjectType().equals(objectType)) {
-                            // scope definitions for other object types than the
-                            // object type of the current resource are skipped.
-                            continue;
-                        } else {
+                        if (scopeDef.getObjectType().equals(objectType)) {
                             // scope definition for the current object type has
                             // been found
                             String scopeDefAttributeId =
@@ -345,6 +341,10 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                                     }
                                 }
                             }
+                        } else {
+                            // scope definitions for other object types than the
+                            // object type of the current resource are skipped.
+                            continue;
                         }
                     }
                 }

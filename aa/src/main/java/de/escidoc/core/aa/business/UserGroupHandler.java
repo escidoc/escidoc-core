@@ -1387,11 +1387,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                         }
                     }
                 }
-                if (!superMembers.isEmpty()) {
-                    criteria.put(Constants.FILTER_PATH_VALUE, superMembers);
-                }
-                else {
+                if (superMembers.isEmpty()) {
                     proceed = false;
+                } else {
+                    criteria.put(Constants.FILTER_PATH_VALUE, superMembers);
                 }
             }
         }
@@ -1984,17 +1983,16 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
             String oldLabel = userGroup.getLabel();
             String label = groupProperties.get("label");
-            if (!checkLabelUnique(label)) {
+            if (checkLabelUnique(label)) {
+                changed = true;
+                userGroup.setLabel(label);
+            } else {
                 if (oldLabel == null || !oldLabel.equals(label)) {
                     String message =
-                        "The provided user group label is not unique.";
+                            "The provided user group label is not unique.";
                     LOG.error(message);
                     throw new UniqueConstraintViolationException(message);
                 }
-            }
-            else {
-                changed = true;
-                userGroup.setLabel(label);
             }
 
             String name = groupProperties.get(Elements.ELEMENT_NAME);

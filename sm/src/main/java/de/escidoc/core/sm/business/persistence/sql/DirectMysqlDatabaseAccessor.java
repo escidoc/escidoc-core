@@ -1219,13 +1219,12 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @sm
      */
     public String handleTableName(final String tablename) {
-        if (!tablename.matches(".*\\..*")) {
-            String extendedTablename =
-                Constants.SM_SCHEMA_NAME + '.' + tablename;
-            return extendedTablename;
-        }
-        else {
+        if (tablename.matches(".*\\..*")) {
             return tablename;
+        } else {
+            String extendedTablename =
+                    Constants.SM_SCHEMA_NAME + '.' + tablename;
+            return extendedTablename;
         }
 
     }

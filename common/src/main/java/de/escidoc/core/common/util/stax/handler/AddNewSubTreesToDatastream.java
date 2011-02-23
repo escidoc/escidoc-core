@@ -356,21 +356,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         String uri, String name, String prefix, int deep, boolean isRelsExt,
         boolean isNew, boolean isContentRelation) throws XMLStreamException {
         if ((uri) != null) {
-            if (!nsuris.containsKey(uri)) {
-                List namespaceTrace = new ArrayList();
-                namespaceTrace.add(deep);
-                namespaceTrace.add(name);
-                namespaceTrace.add(prefix);
-                nsuris.put(uri, namespaceTrace);
-                writer.writeStartElement(prefix, name, uri);
-                // if (isRelsExt && isNew && !isContentRelation) {
-                // writer.writeNamespace(prefix, uri + "/");
-                // }
-                // else {
-                writer.writeNamespace(prefix, uri);
-                // }
-            }
-            else {
+            if (nsuris.containsKey(uri)) {
                 List namespaceTrace = (List) nsuris.get(uri);
                 Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 String prefixTrace = (String) namespaceTrace.get(2);
@@ -385,10 +371,22 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                     // else {
                     writer.writeNamespace(prefix, uri);
                     // }
-                }
-                else {
+                } else {
                     writer.writeStartElement(prefix, name, uri);
                 }
+            } else {
+                List namespaceTrace = new ArrayList();
+                namespaceTrace.add(deep);
+                namespaceTrace.add(name);
+                namespaceTrace.add(prefix);
+                nsuris.put(uri, namespaceTrace);
+                writer.writeStartElement(prefix, name, uri);
+                // if (isRelsExt && isNew && !isContentRelation) {
+                // writer.writeNamespace(prefix, uri + "/");
+                // }
+                // else {
+                writer.writeNamespace(prefix, uri);
+                // }
             }
         }
         else {
@@ -403,7 +401,27 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         final boolean isRelsExt, final boolean isNew,
         final boolean isContentRelation) throws XMLStreamException {
         if (uri != null) {
-            if (!nsuris.containsKey(uri)) {
+            if (nsuris.containsKey(uri)) {
+                List namespaceTrace = (List) nsuris.get(uri);
+                String prefixTrace = (String) namespaceTrace.get(2);
+                if (!prefixTrace.equals(prefix)) {
+                    prefix = prefixTrace;
+                }
+                Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
+                String nameTrace = (String) namespaceTrace.get(1);
+                if (((deepLevelInMAp == deep) && (!elementName
+                        .equals(nameTrace)))
+                        || (deepLevelInMAp > deep)) {
+                    // if (isRelsExt && isNew) {
+                    //
+                    // writer.writeNamespace(prefix, uri + "/");
+                    // }
+                    // else {
+                    writer.writeNamespace(prefix, uri);
+                    // }
+
+                }
+            } else {
                 List namespaceTrace = new ArrayList();
                 namespaceTrace.add(deep);
                 namespaceTrace.add(elementName);
@@ -416,27 +434,6 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 writer.writeNamespace(prefix, uri);
                 // }
 
-            }
-            else {
-                List namespaceTrace = (List) nsuris.get(uri);
-                String prefixTrace = (String) namespaceTrace.get(2);
-                if (!prefixTrace.equals(prefix)) {
-                    prefix = prefixTrace;
-                }
-                Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
-                String nameTrace = (String) namespaceTrace.get(1);
-                if (((deepLevelInMAp == deep) && (!elementName
-                    .equals(nameTrace)))
-                    || (deepLevelInMAp > deep)) {
-                    // if (isRelsExt && isNew) {
-                    //
-                    // writer.writeNamespace(prefix, uri + "/");
-                    // }
-                    // else {
-                    writer.writeNamespace(prefix, uri);
-                    // }
-
-                }
             }
         }
         writer.writeAttribute(prefix, uri, attributeName, attributeValue);

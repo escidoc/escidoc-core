@@ -392,17 +392,16 @@ public final class CustomPolicyBuilder {
 
         // null is the needed default value in case of default (user) policies.
         List<Collection<TargetMatch>> policyResources;
-        if (!EscidocRole.DEFAULT_USER_ROLE_ID.equals(role.getId())) {
+        if (EscidocRole.DEFAULT_USER_ROLE_ID.equals(role.getId())) {
+            policyResources = null;
+        } else {
 
             policyResources = new ArrayList<Collection<TargetMatch>>();
             Collection<TargetMatch> policyResource = new ArrayList<TargetMatch>();
             policyResource.add(CustomTargetBuilder.generateResourceMatch(
-                XacmlFunctionRoleIsGranted.NAME, role.getId(),
-                AttributeIds.URN_RESOURCE_ID, Constants.XMLSCHEMA_STRING));
+                    XacmlFunctionRoleIsGranted.NAME, role.getId(),
+                    AttributeIds.URN_RESOURCE_ID, Constants.XMLSCHEMA_STRING));
             policyResources.add(policyResource);
-        }
-        else {
-            policyResources = null;
         }
 
         return policyResources;

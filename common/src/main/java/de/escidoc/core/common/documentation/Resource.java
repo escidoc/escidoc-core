@@ -460,13 +460,12 @@ public class Resource extends XMLBase {
                         || (prepareParameter("${"
                             + VAR_BODY_LAST_MODIFICATION_DATE + '}')
                             .equalsIgnoreCase(c2))) {
-                        if (!"".equals(parameter)) {
+                        if ("".equals(parameter)) {
+                            result +=
+                                    getMethodTableRow2Cols(c1, "No input values");
+                        } else {
                             result += getMethodTableRow2Cols(c1, parameter);
                             parameter = "";
-                        }
-                        else {
-                            result +=
-                                getMethodTableRow2Cols(c1, "No input values");
                         }
                         printedParam = true;
                         result += getMethodTableRow2Cols(" ", " ");

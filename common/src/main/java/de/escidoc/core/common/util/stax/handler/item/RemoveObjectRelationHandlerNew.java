@@ -183,16 +183,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         String uri = element.getNamespace();
         String prefix = element.getPrefix();
         if ((uri) != null) {
-            if (!nsuris.containsKey(uri)) {
-                List namespaceTrace = new ArrayList();
-                namespaceTrace.add(deepLevel);
-                namespaceTrace.add(name);
-                namespaceTrace.add(prefix);
-                nsuris.put(uri, namespaceTrace);
-                writer.writeStartElement(prefix, name, uri);
-                writer.writeNamespace(prefix, uri);
-            }
-            else {
+            if (nsuris.containsKey(uri)) {
                 List namespaceTrace = (List) nsuris.get(uri);
                 Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 String prefixTrace = (String) namespaceTrace.get(2);
@@ -202,10 +193,17 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 if (deepLevelInMAp >= deepLevel) {
                     writer.writeStartElement(prefix, name, uri);
                     writer.writeNamespace(prefix, uri);
-                }
-                else {
+                } else {
                     writer.writeStartElement(prefix, name, uri);
                 }
+            } else {
+                List namespaceTrace = new ArrayList();
+                namespaceTrace.add(deepLevel);
+                namespaceTrace.add(name);
+                namespaceTrace.add(prefix);
+                nsuris.put(uri, namespaceTrace);
+                writer.writeStartElement(prefix, name, uri);
+                writer.writeNamespace(prefix, uri);
             }
         }
 
@@ -215,16 +213,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         String uri, String elementName, String attributeName,
         String attributeValue, String prefix) throws XMLStreamException {
         if (uri != null) {
-            if (!nsuris.containsKey(uri)) {
-                List namespaceTrace = new ArrayList();
-                namespaceTrace.add(deepLevel);
-                namespaceTrace.add(elementName);
-                namespaceTrace.add(prefix);
-                nsuris.put(uri, namespaceTrace);
-
-                writer.writeNamespace(prefix, uri);
-            }
-            else {
+            if (nsuris.containsKey(uri)) {
                 List namespaceTrace = (List) nsuris.get(uri);
                 String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
@@ -233,10 +222,18 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 String nameTrace = (String) namespaceTrace.get(1);
                 if (((deepLevelInMAp == deepLevel) && (!elementName
-                    .equals(nameTrace)))
-                    || (deepLevelInMAp > deepLevel)) {
+                        .equals(nameTrace)))
+                        || (deepLevelInMAp > deepLevel)) {
                     writer.writeNamespace(prefix, uri);
                 }
+            } else {
+                List namespaceTrace = new ArrayList();
+                namespaceTrace.add(deepLevel);
+                namespaceTrace.add(elementName);
+                namespaceTrace.add(prefix);
+                nsuris.put(uri, namespaceTrace);
+
+                writer.writeNamespace(prefix, uri);
             }
         }
         writer.writeAttribute(prefix, uri, attributeName, attributeValue);

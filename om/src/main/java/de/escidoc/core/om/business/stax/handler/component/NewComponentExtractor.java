@@ -184,16 +184,7 @@ public class NewComponentExtractor extends DefaultHandler {
         String uri = element.getNamespace();
         String prefix = element.getPrefix();
         if ((uri) != null) {
-            if (!nsuris.containsKey(uri)) {
-                List namespaceTrace = new ArrayList();
-                namespaceTrace.add(deepLevel);
-                namespaceTrace.add(name);
-                namespaceTrace.add(prefix);
-                nsuris.put(uri, namespaceTrace);
-                writer.writeStartElement(prefix, name, uri);
-                writer.writeNamespace(prefix, uri);
-            }
-            else {
+            if (nsuris.containsKey(uri)) {
                 List namespaceTrace = (List) nsuris.get(uri);
                 Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 String prefixTrace = (String) namespaceTrace.get(2);
@@ -203,10 +194,17 @@ public class NewComponentExtractor extends DefaultHandler {
                 if (deepLevelInMAp >= deepLevel) {
                     writer.writeStartElement(prefix, name, uri);
                     writer.writeNamespace(prefix, uri);
-                }
-                else {
+                } else {
                     writer.writeStartElement(prefix, name, uri);
                 }
+            } else {
+                List namespaceTrace = new ArrayList();
+                namespaceTrace.add(deepLevel);
+                namespaceTrace.add(name);
+                namespaceTrace.add(prefix);
+                nsuris.put(uri, namespaceTrace);
+                writer.writeStartElement(prefix, name, uri);
+                writer.writeNamespace(prefix, uri);
             }
         }
         else {
@@ -220,7 +218,13 @@ public class NewComponentExtractor extends DefaultHandler {
         String attributeValue, String prefix) throws XMLStreamException {
 
         if (uri != null) {
-            if (!nsuris.containsKey(uri)) {
+            if (nsuris.containsKey(uri)) {
+                List namespaceTrace = (List) nsuris.get(uri);
+                String prefixTrace = (String) namespaceTrace.get(2);
+                if (!prefixTrace.equals(prefix)) {
+                    prefix = prefixTrace;
+                }
+            } else {
                 List namespaceTrace = new ArrayList();
                 namespaceTrace.add(deepLevel);
                 namespaceTrace.add(elementName);
@@ -228,13 +232,6 @@ public class NewComponentExtractor extends DefaultHandler {
                 nsuris.put(uri, namespaceTrace);
 
                 writer.writeNamespace(prefix, uri);
-            }
-            else {
-                List namespaceTrace = (List) nsuris.get(uri);
-                String prefixTrace = (String) namespaceTrace.get(2);
-                if (!prefixTrace.equals(prefix)) {
-                    prefix = prefixTrace;
-                }
             }
         }
 

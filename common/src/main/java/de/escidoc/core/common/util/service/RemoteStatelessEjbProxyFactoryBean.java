@@ -164,7 +164,15 @@ public class RemoteStatelessEjbProxyFactoryBean
                 throw new SystemException(
                     "Security context does not hold an authentication object.");
             }
-            if (!authentication.isAuthenticated()) {
+            if (authentication.isAuthenticated()) {
+                extendedArgs = new Object[argsLength + 1];
+                extendedArgsTypes = new Class[extendedArgs.length];
+
+                extendedArgs[argsLength] = securityContext;
+                extendedArgsTypes[argsLength] = SecurityContext.class;
+                org.jboss.security.SecurityAssociation.pushRunAsIdentity(
+                        new RunAsIdentity("Administrator", ""));
+            } else {
                 // user currently not authenticated. Just user name and
                 // handle/password are forwarded
                 extendedArgs = new Object[argsLength + 2];
@@ -176,15 +184,6 @@ public class RemoteStatelessEjbProxyFactoryBean
                 i++;
                 extendedArgs[i] = UserContext.isRestAccess();
                 extendedArgsTypes[i] = Boolean.class;
-            }
-            else {
-                extendedArgs = new Object[argsLength + 1];
-                extendedArgsTypes = new Class[extendedArgs.length];
-
-                extendedArgs[argsLength] = securityContext;
-                extendedArgsTypes[argsLength] = SecurityContext.class;
-                org.jboss.security.SecurityAssociation.pushRunAsIdentity(
-                    new RunAsIdentity("Administrator", ""));
             }
         }
         catch (SystemException e1) {

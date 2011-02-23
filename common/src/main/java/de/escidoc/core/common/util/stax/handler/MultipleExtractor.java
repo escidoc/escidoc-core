@@ -422,14 +422,13 @@ public class MultipleExtractor extends WriteHandler {
                             components = new HashMap();
                             outputStreams.put("components", components);
                         }
-                        if (!components.containsKey(componentId)) {
+                        if (components.containsKey(componentId)) {
+                            component =
+                                    (HashMap) components.get(componentId);
+                        } else {
                             component = new HashMap();
 
                             components.put(componentId, component);
-                        }
-                        else {
-                            component =
-                                (HashMap) components.get(componentId);
                         }
 
                         // String subId = (String) pids.get(number);
@@ -446,15 +445,14 @@ public class MultipleExtractor extends WriteHandler {
                                 // outputStreams.put(attributeValue + "*" +
                                 // subId,
                                 // out);
-                                if (!component.containsKey("md-records")) {
+                                if (component.containsKey("md-records")) {
                                     mdRecords =
-                                        new HashMap<String, ByteArrayOutputStream>();
+                                            (HashMap<String, ByteArrayOutputStream>) component
+                                                    .get("md-records");
+                                } else {
+                                    mdRecords =
+                                            new HashMap<String, ByteArrayOutputStream>();
                                     component.put("md-records", mdRecords);
-                                }
-                                else {
-                                    mdRecords =
-                                        (HashMap<String, ByteArrayOutputStream>) component
-                                            .get("md-records");
                                 }
                                 if (mdRecords.containsKey(attributeValue)) {
                                     String message =
@@ -662,20 +660,15 @@ public class MultipleExtractor extends WriteHandler {
 
         try {
             if ((inside)) {
-                if (!this.insideRemoveElement) {
-                    this.getWriter().writeCharacters(data);
-                }
-                else {
+                if (this.insideRemoveElement) {
                     String text = this.elementToDelete.getElementText();
                     if ((text != null) && (text.length() > 0)) {
                         if (data.equals(text)) {
                             this.isMatchedText = true;
-                        }
-                        else {
+                        } else {
                             this.getWriter().writeCharacters(data);
                         }
-                    }
-                    else {
+                    } else {
                         // if a provided element to remove does not contain a
                         // text
                         // all matched elements will be removed
@@ -683,6 +676,8 @@ public class MultipleExtractor extends WriteHandler {
                         this.isMatchedText = true;
 
                     }
+                } else {
+                    this.getWriter().writeCharacters(data);
                 }
             }
         }

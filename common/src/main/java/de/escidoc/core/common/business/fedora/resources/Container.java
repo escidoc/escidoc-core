@@ -334,7 +334,10 @@ public class Container extends GenericVersionableResourcePid
         while (nameIt.hasNext()) {
             Entry<String, Datastream> mapEntry = nameIt.next();
             String name = mapEntry.getKey();
-            if (!namesInFedora.contains(name)) {
+            if (namesInFedora.contains(name)) {
+                // update Datastreams which already exist
+                setMdRecord(name, mdRecords.get(name));
+            } else {
 
                 Datastream currentMdRecord = mapEntry.getValue();
                 byte[] stream;
@@ -345,13 +348,9 @@ public class Container extends GenericVersionableResourcePid
                     altIDs[i] = altIds.get(i);
                 }
                 getFedoraUtility().addDatastream(getId(), name, altIDs,
-                    "md-record", true, stream, false);
+                        "md-record", true, stream, false);
                 this.mdRecords.put(name, currentMdRecord);
                 nameIt.remove();
-            }
-            else {
-                // update Datastreams which already exist
-                setMdRecord(name, mdRecords.get(name));
             }
         }
     }

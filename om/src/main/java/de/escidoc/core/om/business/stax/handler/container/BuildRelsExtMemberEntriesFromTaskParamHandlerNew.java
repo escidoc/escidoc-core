@@ -82,11 +82,10 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
                         + parentId + '.');
                     }
             }
-            if (!TripleStoreUtility.getInstance().isMemberOf(parentId, objid)) {
-                memberIds.add(objid);
-            }
-            else {
+            if (TripleStoreUtility.getInstance().isMemberOf(parentId, objid)) {
                 memberIdsToRemove.add(objid);
+            } else {
+                memberIds.add(objid);
             }
         }
 

@@ -558,14 +558,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             results = executeSqlQuery(select);
 
             if (getLogger().isDebugEnabled()) {
-                if (!results.isEmpty()) {
+                if (results.isEmpty()) {
+                    getLogger().debug("found no records");
+                } else {
                     getLogger().debug("found " + results.size() + " records");
                     for (String item : results) {
                         getLogger().debug("item: " + item);
                     }
-                }
-                else {
-                    getLogger().debug("found no records");
                 }
             }
 
@@ -641,14 +640,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             result = executeSqlQuery(select.toString());
             if (getLogger().isDebugEnabled()) {
-                if (!result.isEmpty()) {
+                if (result.isEmpty()) {
+                    getLogger().debug("found no records");
+                } else {
                     getLogger().debug("found " + result.size() + " records");
                     for (String item : result) {
                         getLogger().debug("item: " + item);
                     }
-                }
-                else {
-                    getLogger().debug("found no records");
                 }
             }
         }
@@ -725,14 +723,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             result = executeSqlQuery(select.toString());
             if (getLogger().isDebugEnabled()) {
-                if (!result.isEmpty()) {
+                if (result.isEmpty()) {
+                    getLogger().debug("found no records");
+                } else {
                     getLogger().debug("found " + result.size() + " records");
                     for (String item : result) {
                         getLogger().debug("item: " + item);
                     }
-                }
-                else {
-                    getLogger().debug("found no records");
                 }
             }
         }
@@ -956,12 +953,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 }
 
                 if (whereClause.length() > 0) {
-                    if (!first) {
+                    if (first) {
+                        queryResultBuf.append(" INNER JOIN (");
+                    } else {
                         queryResultBuf.insert(0, '(');
                         queryResultBuf.append(") INNER JOIN (");
-                    }
-                    else {
-                        queryResultBuf.append(" INNER JOIN (");
                     }
                     queryResultBuf.append(whereClause);
                     queryResultBuf.append(") unionTable ON unionTable.temp=");
@@ -981,13 +977,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 getQueryPartId(idColumn,
                     (Set<String>) filter.remove(Constants.DC_IDENTIFIER_URI));
             if (filterCriteria.length() != 0) {
-                if (!first) {
-                    queryResultBuf.insert(0, '(');
-                    queryResultBuf.append(") INNER JOIN ");
-                }
-                else {
+                if (first) {
 
                     queryResultBuf.append(" INNER JOIN ");
+                } else {
+                    queryResultBuf.insert(0, '(');
+                    queryResultBuf.append(") INNER JOIN ");
                 }
                 queryResultBuf.append(tableWithIdentifier);
                 queryResultBuf.append(" ON ");
@@ -2089,7 +2084,12 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             if (tableWithObjectType == null) {
                 return faultCase;
             }
-            if (!isFirst) {
+            if (isFirst) {
+                isFirst = false;
+                queryPart.append(tableWithObjectType);
+                queryPart.append(" INNER JOIN ");
+                queryPart.append(queryPartJoinObjectTypeWithPredicate);
+            } else {
                 braceToAddAtBeginn++;
                 queryPart.append(" INNER JOIN ");
                 queryPart.append(tableWithObjectType);
@@ -2101,21 +2101,14 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 queryPart.append(queryPartJoinObjectTypeWithPredicate);
 
             }
-            else {
-                isFirst = false;
-                queryPart.append(tableWithObjectType);
-                queryPart.append(" INNER JOIN ");
-                queryPart.append(queryPartJoinObjectTypeWithPredicate);
-            }
 
         }
         else {
-            if (!isFirst) {
+            if (isFirst) {
+                queryPart.append(tableWithPredicate);
+            } else {
                 queryPart.append(" INNER JOIN ");
                 queryPart.append(queryPartJoinContentModelWithPredicate);
-            }
-            else {
-                queryPart.append(tableWithPredicate);
             }
         }
         queryPart.append(" WHERE ");
@@ -2247,15 +2240,14 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             List<String> res = executeSqlQuery(select.toString());
             if (getLogger().isDebugEnabled()) {
-                if (!res.isEmpty()) {
+                if (res.isEmpty()) {
+                    getLogger().debug("found no records");
+                } else {
                     getLogger().debug("found " + res.size() + " records");
                     for (String item : res) {
                         getLogger().debug("item: " + item);
                         result = item;
                     }
-                }
-                else {
-                    getLogger().debug("found no records");
                 }
             }
         }
@@ -2297,11 +2289,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             result = executeSqlQuery(select);
             if (getLogger().isDebugEnabled()) {
-                if (!result.isEmpty()) {
+                if (result.isEmpty()) {
+                    getLogger().debug("found no records");
+                } else {
                     getLogger().debug("found " + result.size() + " records");
                     getLogger().debug("records: " + result);
-                } else {
-                    getLogger().debug("found no records");
                 }
             }
         }
@@ -2338,12 +2330,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             }
             result = executeSqlQuery(select);
             if (getLogger().isDebugEnabled()) {
-                if (!result.isEmpty()) {
+                if (result.isEmpty()) {
+                    getLogger().debug("found no records");
+                } else {
                     getLogger().debug("found " + result.size() + " records");
                     getLogger().debug("records: " + result);
-                }
-                else {
-                    getLogger().debug("found no records");
                 }
             }
         }

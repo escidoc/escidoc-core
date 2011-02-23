@@ -621,15 +621,14 @@ public abstract class AbstractAttributeFinderModule
             || ((BagAttribute) resolvedAttributeValue).size() == 1) {
             // as we only support string attributes, the attribute value is a
             // StringAttribute
-            if (!attributeValueIsBag) {
-                newResourceId =
-                    ((StringAttribute) resolvedAttributeValue).getValue();
-            }
-            else {
+            if (attributeValueIsBag) {
                 // this is a bag attribute containing one StringAttribute
                 newResourceId =
-                    ((StringAttribute) ((BagAttribute) resolvedAttributeValue)
-                        .iterator().next()).getValue();
+                        ((StringAttribute) ((BagAttribute) resolvedAttributeValue)
+                                .iterator().next()).getValue();
+            } else {
+                newResourceId =
+                        ((StringAttribute) resolvedAttributeValue).getValue();
             }
 
             // determine to which object-type the new resource id points

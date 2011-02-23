@@ -154,11 +154,10 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         this.descriptorFilenames = new ArrayList<String>();
         for (String descriptor : descriptorFilenames) {
             descriptor = descriptor.trim();
-            if (!descriptor.startsWith("/")) {
-                this.descriptorFilenames.add('/' + descriptor);
-            }
-            else {
+            if (descriptor.startsWith("/")) {
                 this.descriptorFilenames.add(descriptor);
+            } else {
+                this.descriptorFilenames.add('/' + descriptor);
             }
         }
         init();
