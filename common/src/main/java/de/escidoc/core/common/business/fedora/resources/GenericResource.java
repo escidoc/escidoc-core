@@ -490,10 +490,7 @@ public class GenericResource implements FedoraResource {
     public void setRelsExt(final Datastream ds) throws FedoraSystemException,
         WebserverSystemException {
 
-        if (this.relsExt == null) {
-            this.relsExt = ds;
-            this.needSync = true;
-        } else if (!this.relsExt.equals(ds)) {
+        if (this.relsExt == null || !this.relsExt.equals(ds)) {
             this.relsExt = ds;
             this.needSync = true;
         }

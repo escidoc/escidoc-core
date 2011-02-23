@@ -751,7 +751,7 @@ public class Item extends GenericVersionableResourcePid
                         && !ds.getLocation().startsWith("/ir/item/" + getId()) || !curDs.getControlGroup().equals(ds.getControlGroup())) {
                     contentChanged = true;
                 }
-                else if (!curDs.getMimeType().equals(ds.getMimeType()) || !curDs.getLabel().equals(ds.getLabel())) {
+                else if (!curDs.getMimeType().equals(ds.getMimeType()) || !curDs.getLabel().equals(ds.getLabel()) || !curDs.getLabel().equals(ds.getLabel())) {
                     contentChanged = true;
                 }
                 else if (!curDs.getLabel().equals(ds.getLabel())) {
