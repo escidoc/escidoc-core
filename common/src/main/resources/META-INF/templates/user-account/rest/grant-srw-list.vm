@@ -7,7 +7,7 @@
 #foreach($grant in ${grants})
     <zs:record>
       <zs:recordSchema>${grantNamespace}</zs:recordSchema>
-      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
       <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $grantTitle = ${grant.title} )
@@ -30,7 +30,7 @@
 #set( $grantRevokedByHref = ${grant.userAccountByRevokerId.href})
 #set( $grantRevocationRemark = ${grant.grantRevocationRemark})
 #set( ${isRootGrant} = "true")
-#parse("user-account/rest/grant.vm")
+#searchResultRecord("user-account/rest/grant.vm")
 	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>${velocityCount}</zs:recordPosition>

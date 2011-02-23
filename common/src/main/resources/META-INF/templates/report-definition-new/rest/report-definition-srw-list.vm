@@ -7,7 +7,7 @@
 #foreach($reportDefinition in $reportDefinitions)
     <zs:record>
       <zs:recordSchema>${reportDefinitionNamespace}</zs:recordSchema>
-      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
 	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
     #set( $reportDefinitionRoles = ${reportDefinition.reportDefinitionRoles} )
@@ -23,7 +23,7 @@
     #set( $reportDefinitionScopeHref = ${reportDefinition.reportDefinitionScopeHref} )
     #set( $reportDefinitionSql = ${reportDefinition.reportDefinitionSql} )
 	#set( $isRootReportDefinition = "true")
-    #parse("report-definition-new/rest/report-definition.vm")
+    #searchResultRecord("report-definition-new/rest/report-definition.vm")
 	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>

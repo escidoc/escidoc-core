@@ -142,6 +142,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
         Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootSetDefinition", "false");
+        values.put("recordPacking", recordPacking);
         addCommonValues(values);
         addSetDefinitionListValues(values);
 

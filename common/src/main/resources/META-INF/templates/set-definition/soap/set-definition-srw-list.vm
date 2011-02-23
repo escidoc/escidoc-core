@@ -7,7 +7,7 @@
 #foreach($setDefinition in $setDefinitions)
     <zs:record>
       <zs:recordSchema>${setDefinitionNamespace}</zs:recordSchema>
-      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
 	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $setDefinitionName = ${setDefinition.setDefinitionName} )
@@ -19,7 +19,7 @@
 #set( $setDefinitionDescription = ${setDefinition.setDefinitionDescription} )
 #set( $setDefinitionSpecification = ${setDefinition.setDefinitionSpecification} )
 #set( $setDefinitionQuery = ${setDefinition.setDefinitionQuery} )
-#parse("set-definition/soap/set-definition.vm")
+#searchResultRecord("set-definition/soap/set-definition.vm")
 	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>

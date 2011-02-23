@@ -7,7 +7,7 @@
 #foreach($scope in $scopes)
     <zs:record>
       <zs:recordSchema>${scopeNamespace}</zs:recordSchema>
-      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
 	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
     #set( $scopeName = ${scope.scopeName} )
@@ -20,7 +20,7 @@
     #set( $scopeModifiedByTitle = ${scope.scopeModifiedByTitle} )
     #set( $scopeModifiedByHref = ${scope.scopeModifiedByHref} )
 	#set( $isRootScope = "true")
-    #parse("scope-new/rest/scope.vm")
+    #searchResultRecord("scope-new/rest/scope.vm")
 	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>

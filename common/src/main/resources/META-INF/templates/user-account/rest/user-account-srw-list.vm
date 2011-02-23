@@ -7,7 +7,7 @@
 #foreach(${userAccount} in ${userAccounts})
     <zs:record>
       <zs:recordSchema>${userAccountNamespace}</zs:recordSchema>
-      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
       <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $userAccountName = ${userAccount.userAccountName} )
@@ -26,7 +26,7 @@
 #set( $resourcesHref = ${userAccount.resourcesHref} )
 #set( $currentGrantsHref = ${userAccount.currentGrantsHref} )
 #set( $preferencesHref = ${userAccount.preferencesHref} )
-#parse("user-account/rest/user-account.vm")
+#searchResultRecord("user-account/rest/user-account.vm")
 	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>${velocityCount}</zs:recordPosition>

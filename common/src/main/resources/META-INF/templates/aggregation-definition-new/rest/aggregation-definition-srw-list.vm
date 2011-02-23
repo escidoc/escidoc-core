@@ -7,7 +7,7 @@
 #foreach($aggregationDefinition in $aggregationDefinitions)
     <zs:record>
       <zs:recordSchema>${aggregationDefinitionNamespace}</zs:recordSchema>
-      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
 	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
     #set( $aggregationStatisticDataSelectors = ${aggregationDefinition.aggregationStatisticDataSelectors} )
@@ -20,7 +20,7 @@
     #set( $aggregationDefinitionScopeTitle = ${aggregationDefinition.aggregationDefinitionScopeTitle} )
     #set( $aggregationDefinitionScopeHref = ${aggregationDefinition.aggregationDefinitionScopeHref} )
 	#set( $isRootAggregationDefinition = "true")
-    #parse("aggregation-definition-new/rest/aggregation-definition.vm")
+    #searchResultRecord("aggregation-definition-new/rest/aggregation-definition.vm")
 	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>

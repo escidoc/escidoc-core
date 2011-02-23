@@ -7,7 +7,7 @@
 #foreach($userAccount in $userAccounts)
     <zs:record>
       <zs:recordSchema>${userAccountNamespace}</zs:recordSchema>
-      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
       <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $userAccountName = ${userAccount.userAccountName} )
@@ -21,7 +21,7 @@
 #set( $userAccountActive = ${userAccount.userAccountActive} )
 #set( $userAccountOus = ${userAccount.userAccountOus} )
 #set( $userAccountCreationDate = ${userAccount.userAccountCreationDate} )
-#parse("user-account/soap/user-account.vm")
+#searchResultRecord("user-account/soap/user-account.vm")
 	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>

@@ -148,6 +148,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
 
         values.put("isRootScope", XmlTemplateProvider.FALSE);
         values.put("scopeListTitle", "Scope List");
+        values.put("recordPacking", recordPacking);
         addScopeNamespaceValues(values);
         addScopeListNamespaceValues(values);
 

@@ -7,7 +7,7 @@
 #foreach($scope in $scopes)
     <zs:record>
       <zs:recordSchema>${scopeNamespace}</zs:recordSchema>
-      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
 	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
     #set( $scopeName = ${scope.scopeName} )
@@ -18,7 +18,7 @@
     #set( $scopeLastModificationDate = ${scope.scopeLastModificationDate} )
     #set( $scopeModifiedById = ${scope.scopeModifiedById} )
 	#set( $isRootScope = "true")
-    #parse("scope-new/soap/scope.vm")
+    #searchResultRecord("scope-new/soap/scope.vm")
 	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>

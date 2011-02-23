@@ -7,7 +7,7 @@
 #foreach($userGroup in $userGroups)
     <zs:record>
       <zs:recordSchema>${userGroupNamespace}</zs:recordSchema>
-      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
       <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $userGroupName = ${userGroup.userGroupName} )
@@ -22,7 +22,7 @@
 #set( $userGroupActive = ${userGroup.userGroupActive} )
 #set( $userGroupSelectors = ${userGroup.userGroupSelectors} )
 #set( $userGroupType = ${userGroup.userGroupType} )
-#parse("user-group/soap/user-group.vm")
+#searchResultRecord("user-group/soap/user-group.vm")
 	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>

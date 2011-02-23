@@ -7,7 +7,7 @@
 #foreach($userGroup in ${userGroups})
     <zs:record>
       <zs:recordSchema>${userGroupNamespace}</zs:recordSchema>
-      <zs:recordPacking>xml</zs:recordPacking>
+      <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
       <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $userGroupName = ${userGroup.userGroupName} )
@@ -26,7 +26,7 @@
 #set( $userGroupType = ${userGroup.userGroupType} )
 #set( $resourcesHref = ${userGroup.resourcesHref} )
 #set( $currentGrantsHref = ${userGroup.currentGrantsHref} )
-#parse("user-group/rest/user-group.vm")
+#searchResultRecord("user-group/rest/user-group.vm")
 	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>${velocityCount}</zs:recordPosition>

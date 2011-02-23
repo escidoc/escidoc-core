@@ -234,6 +234,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS,
             Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
+        values.put("recordPacking", recordPacking);
         values.put("numberOfHits", numberOfHits);
         values.put("offset", offset);
         values.put("limit", limit);
@@ -382,6 +383,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootUserAccount", XmlTemplateProvider.TRUE);
+        values.put("recordPacking", recordPacking);
         addCommonValues(values);
         addUserAccountListValues(values);
 
@@ -395,8 +397,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
             userAccountsValues.add(userAccountValues);
         }
         values.put("userAccounts", userAccountsValues);
-        return getUserAccountXmlProvider().getUserAccountsXml(values,
-                recordPacking);
+        return getUserAccountXmlProvider().getUserAccountsXml(values);
     }
 
     // CHECKSTYLE:JAVADOC-ON

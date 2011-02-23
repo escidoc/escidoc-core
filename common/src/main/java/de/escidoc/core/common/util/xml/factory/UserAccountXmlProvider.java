@@ -172,8 +172,7 @@ public class UserAccountXmlProvider extends InfrastructureXmlProvider {
         return getXml(ATTRIBUTES_RESOURCE_NAME, ATTRIBUTES_PATH, values);
     }
 
-    public final String getUserAccountsXml(
-        final Map values, final RecordPacking recordPacking)
+    public final String getUserAccountsXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(USER_ACCOUNTS_SRW_RESOURCE_NAME, RESOURCES_PATH, values);
