@@ -42,10 +42,9 @@ import java.util.Map;
  */
 public final class AggregationIdMapper {
 
-    private static AggregationIdMapper instance = null;
+    private static AggregationIdMapper instance = new AggregationIdMapper();
 
-    private final Map<String, String> aggregationIdMap =
-        new HashMap<String, String>();
+    private final Map<String, String> aggregationIdMap = new HashMap<String, String>();
 
     /**
      * private Constructor for Singleton.
@@ -62,10 +61,7 @@ public final class AggregationIdMapper {
      * 
      * @sm
      */
-    public static synchronized AggregationIdMapper getInstance() {
-        if (instance == null) {
-            instance = new AggregationIdMapper();
-        }
+    public static AggregationIdMapper getInstance() {
         return instance;
     }
 
