@@ -151,6 +151,8 @@ INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-get-repository-info', 'info:escidoc/names:aa:1.0:action:get-repository-info');
 INSERT INTO aa.actions (id, name) VALUES
     ('escidoc:action-get-index-configuration', 'info:escidoc/names:aa:1.0:action:get-index-configuration');
+INSERT INTO aa.actions (id, name) VALUES
+    ('escidoc:action-load-examples', 'info:escidoc/names:aa:1.0:action:load-examples');
 
     /**
      * CMM actions.
