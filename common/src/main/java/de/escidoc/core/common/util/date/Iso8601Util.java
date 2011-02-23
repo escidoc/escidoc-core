@@ -59,12 +59,6 @@ public final class Iso8601Util {
     private static final String DATE_FORMAT_PATTERN =
         "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
-    /** The date format for parsing date string. */
-    private static DateFormat inputDateFormat;
-
-    /** The date format to convert date objects to string. */
-    private static DateFormat outputDateFormat;
-
     private static final Calendar CALENDAR = new GregorianCalendar(TimeZone.getTimeZone(UTC_TIMEZONE_ID));
 
     /**
@@ -105,10 +99,7 @@ public final class Iso8601Util {
      */
     @Deprecated
     public static synchronized String getIso8601(final Date date) {
-
-        if (outputDateFormat == null) {
-            outputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
-        }
+        DateFormat outputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
         String preformatted = outputDateFormat.format(date);
         if (preformatted.endsWith("Z")) {
             return preformatted;
@@ -177,18 +168,9 @@ public final class Iso8601Util {
                         "Could not parse date text", dateText), pos);
             }
         }
-
-        if (inputDateFormat == null) {
-            inputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
-            inputDateFormat.setLenient(false);
-        }
-        Date ret;
-        try {
-            ret = inputDateFormat.parse(tmpDateText);
-        }
-        catch (ParseException e) {
-            throw e;
-        }
+        DateFormat inputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
+        inputDateFormat.setLenient(false);
+        Date ret = inputDateFormat.parse(tmpDateText);
         return ret;
     }
 
