@@ -11,7 +11,7 @@ package de.escidoc.core.sm.mbean;
  */
 public final class StatisticPreprocessorServiceTimer {
 
-    private static StatisticPreprocessorServiceTimer instance = null;
+    private static StatisticPreprocessorServiceTimer instance = new StatisticPreprocessorServiceTimer();;
     
     private long lastExecutionTime = 0;
 
@@ -28,10 +28,7 @@ public final class StatisticPreprocessorServiceTimer {
      * @return StatisticPreprocessorServiceTimer StatisticPreprocessorServiceTimer
      * 
      */
-    public static synchronized StatisticPreprocessorServiceTimer getInstance() {
-        if (instance == null) {
-            instance = new StatisticPreprocessorServiceTimer();
-        }
+    public static StatisticPreprocessorServiceTimer getInstance() {
         return instance;
     }
     
