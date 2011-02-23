@@ -160,11 +160,7 @@ public class WovReadHandler extends DefaultHandler {
             else if (inside) {
                 String theName = element.getLocalName();
                 if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER)) {
-                    if (certainVersionIsLatestVersion) {
-                        setLatestVersionValues(theName, null, element);
-                        setCurrentVersionValues(theName, null, element);
-                    }
-                    else if (inLatestVersion) {
+                    if (certainVersionIsLatestVersion || inLatestVersion) {
                         setLatestVersionValues(theName, null, element);
                         setCurrentVersionValues(theName, null, element);
                     }
@@ -207,11 +203,7 @@ public class WovReadHandler extends DefaultHandler {
 
         if (!isParsed) {
             String theName = element.getLocalName();
-            if (certainVersionIsLatestVersion) {
-                setLatestVersionValues(theName, s, element);
-                setCurrentVersionValues(theName, s, element);
-            }
-            else if (inLatestVersion) {
+            if (certainVersionIsLatestVersion || inLatestVersion) {
                 setLatestVersionValues(theName, s, element);
                 setCurrentVersionValues(theName, s, element);
             }

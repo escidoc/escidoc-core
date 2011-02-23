@@ -126,19 +126,13 @@ public class Version implements Comparable<Version> {
         if (this == obj) {
             return true;
         }
-        else if (obj == null) {
-            return false;
-        }
-        else if (getClass() != obj.getClass()) {
+        else if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
 
         Version other = (Version) obj;
 
-        if (majorNumber != other.majorNumber) {
-            return false;
-        }
-        else if (minorNumber != other.minorNumber) {
+        if (majorNumber != other.majorNumber || minorNumber != other.minorNumber) {
             return false;
         }
         else if (revisionNumber != other.revisionNumber) {

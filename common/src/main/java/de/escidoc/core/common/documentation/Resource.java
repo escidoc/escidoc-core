@@ -452,10 +452,7 @@ public class Resource extends XMLBase {
                             c3 = DEFAULT_TEXT;
                         }
                     }
-                    if (paramNo == 1) {
-                        c1 = "Input from Uri";
-                    }
-                    else if ("Input from Body".equals(c1)) {
+                    if (paramNo == 1 || "Input from Body".equals(c1)) {
                         c1 = "Input from Uri";
                     }
                     if ((prepareParameter("${" + VAR_BODY + '}')

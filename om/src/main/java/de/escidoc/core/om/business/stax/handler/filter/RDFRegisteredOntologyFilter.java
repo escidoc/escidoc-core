@@ -86,14 +86,10 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
             else {
                 QName name = element.getName();
                 String predicate = name.getNamespaceURI() + name.getLocalPart();
-                if (OntologyUtility.checkPredicate(predicate)) {
+                if (OntologyUtility.checkPredicate(predicate) || workaroundForItemList && predicate.startsWith(Constants.DC_NS_URI)) {
                     return true;
                 }
                 // workaround for item list is to allow dc and some specials
-                else if (workaroundForItemList && predicate.startsWith(Constants.DC_NS_URI)) {
-                    // dc elements are allowed
-                    return true;
-                }
                 else if (workaroundForItemList
                     && (name.getLocalPart().equals("created-by-title")
                         || name.getLocalPart().equals("context-title")

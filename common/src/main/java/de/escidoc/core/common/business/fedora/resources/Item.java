@@ -747,14 +747,11 @@ public class Item extends GenericVersionableResourcePid
                 // FIXME change storage and mime-type ? (FRS)
                 // TODO ds.getLocation() may be null -> inline content
                 if (ds.getLocation() != null
-                    && !ds.getLocation().equals(curDs.getLocation())
-                    && !ds.getLocation().startsWith("/ir/item/" + getId())) {
+                        && !ds.getLocation().equals(curDs.getLocation())
+                        && !ds.getLocation().startsWith("/ir/item/" + getId()) || !curDs.getControlGroup().equals(ds.getControlGroup())) {
                     contentChanged = true;
                 }
-                else if (!curDs.getControlGroup().equals(ds.getControlGroup())) {
-                    contentChanged = true;
-                }
-                else if (!curDs.getMimeType().equals(ds.getMimeType())) {
+                else if (!curDs.getMimeType().equals(ds.getMimeType()) || !curDs.getLabel().equals(ds.getLabel())) {
                     contentChanged = true;
                 }
                 else if (!curDs.getLabel().equals(ds.getLabel())) {

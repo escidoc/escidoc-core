@@ -1702,9 +1702,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         for (String result : results) {
             value = result;
             if (!fullqualifiedPropertyName
-                    .equals("http://purl.org/dc/elements/1.1/identifier")) {
-                break;
-            } else if (pid.equals(value)) {
+                    .equals("http://purl.org/dc/elements/1.1/identifier") || pid.equals(value)) {
                 break;
             }
         }
