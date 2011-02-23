@@ -139,7 +139,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
-    private synchronized String convertDate(final String xmldate) 
+    private String convertDate(final String xmldate)
                     throws SqlDatabaseSystemException {
         try {
             XMLGregorianCalendar xmlCal =
