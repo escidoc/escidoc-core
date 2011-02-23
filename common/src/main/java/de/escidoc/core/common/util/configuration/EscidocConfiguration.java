@@ -378,7 +378,7 @@ public final class EscidocConfiguration {
      * 
      * @common
      */
-    private synchronized Properties loadProperties() throws SystemException {
+    private static Properties loadProperties() throws SystemException {
         Properties result;
         try {
             result = getProperties(PROPERTIES_DEFAULT_FILENAME);
@@ -442,7 +442,7 @@ public final class EscidocConfiguration {
      * @throws IOException
      *             If access to the specified file fails.
      */
-    private synchronized Properties getProperties(final String filename)
+    private static Properties getProperties(final String filename)
         throws IOException {
 
         Properties result = new Properties();
@@ -460,7 +460,7 @@ public final class EscidocConfiguration {
      * @throws FileNotFoundException
      *             If access to the specified file fails.
      */
-    private synchronized InputStream getInputStream(final String filename)
+    private static InputStream getInputStream(final String filename)
         throws IOException {
         final ResourcePatternResolver applicationContext =
             new ClassPathXmlApplicationContext(new String[] {});
@@ -482,7 +482,7 @@ public final class EscidocConfiguration {
      * 
      * @common
      */
-    private synchronized String replaceEnvVariables(final String property) {
+    private static String replaceEnvVariables(final String property) {
         String replacedProperty = property;
         if (property.contains("${")) {
             String[] envVariables = property.split("\\}.*?\\$\\{");

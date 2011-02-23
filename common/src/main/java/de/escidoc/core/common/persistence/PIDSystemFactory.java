@@ -42,7 +42,16 @@ import java.io.IOException;
  */
 public abstract class PIDSystemFactory {
 
-    private static PIDSystemFactory pidSystemFactory = null;
+    private static PIDSystemFactory pidSystemFactory ;
+
+    static {
+        try {
+            createNewInstanceFromConfig();
+        } catch (PidSystemException e) {
+            System.err.println("Error on creating new instance of PIDSystemFactory.");
+            e.printStackTrace(System.err);
+       }
+    }
 
     private static final String defaultFactory =
         "de.escidoc.core.common.persistence.impl.DummyPIDGeneratorFactory";
@@ -65,12 +74,8 @@ public abstract class PIDSystemFactory {
      * @throws PidSystemException
      *             If no instance could be returned
      */
-    public static synchronized PIDSystemFactory getInstance()
+    public static PIDSystemFactory getInstance()
         throws PidSystemException {
-        if (pidSystemFactory == null) {
-            getImplementationFromConfig();
-        }
-
         return pidSystemFactory;
     }
 
@@ -80,7 +85,7 @@ public abstract class PIDSystemFactory {
      * @throws PidSystemException
      *             If no instance could be returned
      */
-    private static void getImplementationFromConfig() throws PidSystemException {
+    private static void createNewInstanceFromConfig() throws PidSystemException {
         String factoryClassName;
 
         try {

@@ -125,7 +125,7 @@ public final class Iso8601Util {
      * Parses the provided date and time in ISO8601 format
      * yyyy-MM-ddThh:mm:ss.sssZ, yyyy-MM-dd-Thh:mm:ss.sss+hh:mm, or
      * yyyy-MM-dd-Thh:mm:ss.sss-hh:mm.
-     * 
+     *
      * @param dateText
      *            The date and time to parse.
      * @return Returns a <code>Date</code> object representing the provided date
@@ -135,7 +135,7 @@ public final class Iso8601Util {
      * @common
      */
     @Deprecated
-    public static synchronized Date parseIso8601(final String dateText)
+    public static Date parseIso8601(final String dateText)
         throws ParseException {
 
         if ((dateText == null) || (dateText.length() == 0)) {
@@ -174,43 +174,4 @@ public final class Iso8601Util {
         return ret;
     }
 
-    /**
-     * Checks if the dates specified by the two provided Strings are equal.
-     * 
-     * @param date1String
-     *            The first date as a String.
-     * @param date2String
-     *            The second date as a String.
-     * @return Returns <code>true</code> if both dates are equal.
-     * @throws ParseException
-     *             Thrown if parsing a provided date String fails.
-     * @common
-     */
-    @Deprecated
-    public static synchronized boolean equalDates(
-        final String date1String, final String date2String)
-        throws ParseException {
-        Date date1 = parseIso8601(date1String);
-        return equalDates(date1, date2String);
-    }
-
-    /**
-     * Checks if the dates specified by the two provided Date and String are
-     * equal.
-     * 
-     * @param date1
-     *            The first date.
-     * @param date2String
-     *            The second date as a String.
-     * @return Returns <code>true</code> if both dates are equal.
-     * @throws ParseException
-     *             Thrown if parsing the provided date String fails.
-     * @common
-     */
-    public static boolean equalDates(final Date date1, final String date2String)
-        throws ParseException {
-
-        final Date date2 = parseIso8601(date2String);
-        return date2.equals(date1);
-    }
 }
