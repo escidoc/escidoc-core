@@ -11,7 +11,7 @@ package de.escidoc.sb.gsearch.mbean;
  */
 public final class IndexOptimizerServiceTimer {
 
-    private static IndexOptimizerServiceTimer instance = null;
+    private static final IndexOptimizerServiceTimer instance = new IndexOptimizerServiceTimer();
     
     private long lastExecutionTime = 0;
 
@@ -28,10 +28,7 @@ public final class IndexOptimizerServiceTimer {
      * @return IndexOptimizerServiceTimer IndexOptimizerServiceTimer
      * 
      */
-    public static synchronized IndexOptimizerServiceTimer getInstance() {
-        if (instance == null) {
-            instance = new IndexOptimizerServiceTimer();
-        }
+    public static IndexOptimizerServiceTimer getInstance() {
         return instance;
     }
     

@@ -64,7 +64,7 @@ import java.util.Map;
  */
 public final class IndexerResourceCache {
 
-    private static IndexerResourceCache instance = null;
+    private static final IndexerResourceCache instance = new IndexerResourceCache();
 
     /**
      * Fall back value if reading property
@@ -126,10 +126,7 @@ public final class IndexerResourceCache {
      * @return IndexerResourceCache IndexerResourceCache
      * 
      */
-    public static synchronized IndexerResourceCache getInstance() {
-        if (instance == null) {
-            instance = new IndexerResourceCache();
-        }
+    public static IndexerResourceCache getInstance() {
         return instance;
     }
 

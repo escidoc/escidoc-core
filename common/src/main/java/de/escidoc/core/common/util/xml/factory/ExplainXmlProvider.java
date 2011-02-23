@@ -46,7 +46,7 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     private static final String RESOURCES_PATH = "/common";
 
-    private static ExplainXmlProvider provider = null;
+    private static final ExplainXmlProvider provider = new ExplainXmlProvider();
 
     /**
      * Render an SRU explain response to describe the aggregation definition
@@ -394,11 +394,8 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
      *             Thrown if the instance cannot be created due to an internal
      *             error.
      */
-    public static synchronized ExplainXmlProvider getInstance()
+    public static ExplainXmlProvider getInstance()
         throws WebserverSystemException {
-        if (provider == null) {
-            provider = new ExplainXmlProvider();
-        }
         return provider;
     }
 }

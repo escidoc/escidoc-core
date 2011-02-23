@@ -42,7 +42,7 @@ import java.util.Map;
  */
 public final class AggregationIdMapper {
 
-    private static AggregationIdMapper instance = new AggregationIdMapper();
+    private static final AggregationIdMapper instance = new AggregationIdMapper();
 
     private final Map<String, String> aggregationIdMap = new HashMap<String, String>();
 
