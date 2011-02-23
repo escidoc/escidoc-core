@@ -128,7 +128,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException e
      * 
      */
-    private synchronized String convertDate(final String xmldate) 
+    private String convertDate(final String xmldate)
                     throws SqlDatabaseSystemException {
         //do nothing
         return xmldate;
