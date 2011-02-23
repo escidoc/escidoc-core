@@ -246,7 +246,17 @@ public final class EscidocConfiguration {
     private static final AppLogger LOG = new AppLogger(
         EscidocConfiguration.class.getName());
 
-    private static EscidocConfiguration instance = null;
+    private static EscidocConfiguration instance;
+
+    static {
+        try {
+            instance = new EscidocConfiguration();
+        } catch (EscidocException e) {
+            StringWriter w = new StringWriter();
+            PrintWriter pw = new PrintWriter(w);
+            System.err.println("Problem while loading properties! Caused by:\n" + w.toString());
+        }
+    }
 
     private final Properties properties;
 
@@ -282,21 +292,8 @@ public final class EscidocConfiguration {
      * 
      * @common
      */
-    public static synchronized EscidocConfiguration getInstance()
+    public static EscidocConfiguration getInstance()
         throws IOException {
-        if (instance == null) {
-            try {
-                instance = new EscidocConfiguration();
-            }
-            catch (EscidocException e) {
-                StringWriter w = new StringWriter();
-                PrintWriter pw = new PrintWriter(w);
-                e.printStackTrace(pw);
-                throw new IOException(
-                    "Problem while loading properties! Caused by:\n"
-                        + w.toString(), e);
-            }
-        }
         return instance;
     }
 
