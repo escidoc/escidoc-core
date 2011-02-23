@@ -196,7 +196,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      *             Thrown in case of internal error.
      */
     @Override
-    public void setId(final String id) throws TripleStoreSystemException,
+    public final void setId(final String id) throws TripleStoreSystemException,
         WebserverSystemException, ResourceNotFoundException {
 
         super.setId(id);
@@ -606,7 +606,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
      */
-    public Map<String, String> setLastVersionData()
+    public final Map<String, String> setLastVersionData()
         throws TripleStoreSystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
