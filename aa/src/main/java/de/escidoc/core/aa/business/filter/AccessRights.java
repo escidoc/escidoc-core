@@ -89,8 +89,67 @@ public class AccessRights extends JdbcDaoSupport {
     /**
      * Mapping from role id to SQL statements.
      */
-    public class RightsMap extends HashMap<String, Rules> {
+    public class RightsMap implements Map<String, Rules> {
         private static final long serialVersionUID = 7311398691300996752L;
+        private final HashMap<String, Rules> hashMap = new HashMap<String, Rules>();
+
+        public boolean equals(Object o) {
+            return hashMap.equals(o);
+        }
+
+        public int hashCode() {
+            return hashMap.hashCode();
+        }
+
+        public int size() {
+            return hashMap.size();
+        }
+
+        public boolean isEmpty() {
+            return hashMap.isEmpty();
+        }
+
+        public Rules get(Object key) {
+            return hashMap.get(key);
+        }
+
+        @Override
+        public Rules put(String key, Rules value) {
+            return this.hashMap.put(key, value);
+        }
+
+        public boolean containsKey(Object key) {
+            return hashMap.containsKey(key);
+        }
+
+        public Rules remove(Object key) {
+            return hashMap.remove(key);
+        }
+
+        @Override
+        public void putAll(Map<? extends String, ? extends Rules> m) {
+            this.hashMap.putAll(m);
+        }
+
+        public void clear() {
+            hashMap.clear();
+        }
+
+        public boolean containsValue(Object value) {
+            return hashMap.containsValue(value);
+        }
+
+        public Set<String> keySet() {
+            return hashMap.keySet();
+        }
+
+        public Collection<Rules> values() {
+            return hashMap.values();
+        }
+
+        public Set<Map.Entry<String, Rules>> entrySet() {
+            return hashMap.entrySet();
+        }
     }
 
     /**
@@ -336,7 +395,7 @@ public class AccessRights extends JdbcDaoSupport {
     /**
      * Put the given grant lists into a space separated string.
      * 
-     * @param scoepIds
+     * @param scopeIds
      *            list of all scopeIds of all grants of the user
      * 
      * @return string containing all given grants separated with space
@@ -380,10 +439,6 @@ public class AccessRights extends JdbcDaoSupport {
      *            resource type
      * @param roleId
      *            role id
-     * @param userId
-     *            user id
-     * @param groupIds
-     *            list of all user groups the user belongs to
      * @param placeHolder
      *            place holder to be searched for in the rule set
      * 
