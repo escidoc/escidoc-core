@@ -92,9 +92,6 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     
     private static final String SYSDATE = "CURDATE()";
 
-    private static final SimpleDateFormat DATE_FORMATTER = 
-                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     private static final String DAY_OF_MONTH_FUNCTION = 
         "DATE(${FIELD_NAME})";
 
@@ -149,7 +146,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                 DatatypeFactory.newInstance().newXMLGregorianCalendar(
                     xmldate);
             Calendar cal = xmlCal.toGregorianCalendar();
-            return DATE_FORMATTER.format(cal.getTime());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return dateFormat.format(cal.getTime());
         } catch (Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
