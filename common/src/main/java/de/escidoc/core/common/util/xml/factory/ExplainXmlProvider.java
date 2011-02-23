@@ -48,6 +48,13 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     private static final ExplainXmlProvider provider = new ExplainXmlProvider();
 
+     /**
+     * private Constructor for Singleton.
+     *
+     */
+    private ExplainXmlProvider()
+    {}
+
     /**
      * Render an SRU explain response to describe the aggregation definition
      * database.
