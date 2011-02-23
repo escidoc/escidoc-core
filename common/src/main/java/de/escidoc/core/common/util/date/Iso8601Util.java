@@ -98,7 +98,7 @@ public final class Iso8601Util {
      * 
      */
     @Deprecated
-    public static synchronized String getIso8601(final Date date) {
+    public static String getIso8601(final Date date) {
         DateFormat outputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
         String preformatted = outputDateFormat.format(date);
         if (preformatted.endsWith("Z")) {
