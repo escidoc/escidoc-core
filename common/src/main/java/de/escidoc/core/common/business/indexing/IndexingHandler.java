@@ -28,16 +28,26 @@
  */
 package de.escidoc.core.common.business.indexing;
 
-import de.escidoc.core.common.business.fedora.TripleStoreUtility;
-import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.index.IndexRequest;
-import de.escidoc.core.index.IndexRequestBuilder;
-import de.escidoc.core.index.IndexService;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -56,24 +66,18 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.SrwScanResponseHandler;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.index.IndexRequest;
+import de.escidoc.core.index.IndexRequestBuilder;
+import de.escidoc.core.index.IndexService;
 
 /**
  * Handler for synchronous indexing via gsearch.
@@ -386,8 +390,6 @@ public class IndexingHandler implements ResourceListener {
             Map<String, Map<String, Object>> resourceParameters =
                 getObjectTypeParameters().get(objectType);
             if (resourceParameters == null) {
-                log.info("No indexing information found for objectType "
-                    + objectType);
                 return;
             }
             for (String indexName : resourceParameters.keySet()) {
@@ -448,8 +450,6 @@ public class IndexingHandler implements ResourceListener {
         Map<String, Map<String, Object>> resourceParameters =
             getObjectTypeParameters().get(objectType);
         if (resourceParameters == null) {
-            log.info("No indexing information found for objectType "
-                + objectType);
             return;
         }
         Map<String, Object> parameters = resourceParameters.get(indexName);
@@ -792,6 +792,113 @@ public class IndexingHandler implements ResourceListener {
             }
         }
         catch (IOException e) {
+            throw new SystemException(e.getMessage(), e);
+        }
+        return result;
+    }
+    
+    /**
+     * Return all PIDs contained in given index.
+     * 
+     * @param indexName
+     *            name of the index
+     * 
+     * @return List of PIDs
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    public Set<String> getPids(
+        final String objectType, final String indexName)
+                                    throws SystemException {
+        Map<String, Map<String, Object>> resourceParameters =
+            getObjectTypeParameters().get(objectType);
+        Set<String> result = new HashSet<String>();
+
+        if ((resourceParameters != null)) {
+            if (indexName == null || indexName.trim().length() == 0
+                || indexName.equalsIgnoreCase("all")) {
+                for (String indexName2 : resourceParameters.keySet()) {
+                    result.addAll(getPids(indexName2));
+                }
+            }
+            else {
+                result = getPids(indexName);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Return all PIDs contained in given index.
+     * 
+     * @param indexName
+     *            name of the index
+     * 
+     * @return List of PIDs
+     * @throws SystemException
+     *             Thrown if a framework internal error occurs.
+     */
+    private Set<String> getPids(final String indexName)
+        throws SystemException {
+        Set<String> result = new HashSet<String>();
+
+        try {
+
+            HttpParams params = new BasicHttpParams();
+            Scheme http =
+                new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
+            SchemeRegistry sr = new SchemeRegistry();
+            sr.register(http);
+            ClientConnectionManager cm =
+                new ThreadSafeClientConnManager(params, sr);
+
+            DefaultHttpClient client = new DefaultHttpClient(cm, params);
+
+            StaxParser sp = new StaxParser();
+            SrwScanResponseHandler handler =
+                        new SrwScanResponseHandler(sp);
+            sp.addHandler(handler);
+
+            String query = 
+                "operation=scan&scanClause=PID%3D%22${Term}%22&maximumTerms=1";
+            String lastTerm = "";
+            String lastLastTerm = "";
+            boolean running = true;
+            HttpGet httpGet;
+            HttpResponse response;
+            while (running) {
+                handler.resetNoOfDocumentTerms();
+                httpGet =
+                    new HttpGet(EscidocConfiguration.getInstance().get(
+                        EscidocConfiguration.SRW_URL)
+                        + "/search/"
+                        + indexName
+                        + "?"
+                        + query.replaceFirst("\\$\\{Term\\}", lastTerm));
+                response = client.execute(httpGet);
+                if (response.getStatusLine().getStatusCode() 
+                                    == HttpURLConnection.HTTP_OK) {
+                    lastLastTerm = handler.getLastTerm();
+                    sp.parse(new ByteArrayInputStream(EntityUtils.toByteArray(
+                        response.getEntity())));
+                    lastTerm = handler.getLastTerm();
+                } else {
+                    throw new WebserverSystemException(
+                        response.getStatusLine().getReasonPhrase());
+                }
+                if (handler.getNoOfDocumentTerms() == 0) {
+                    running = false;
+                }
+                else if (lastTerm.equals(lastLastTerm)) {
+                    throw new SystemException("duplicate PID in Scan Operation");
+                }
+            }
+            result = handler.getTerms();
+        }
+        catch (IOException e) {
+            throw new SystemException(e.getMessage(), e);
+        }
+        catch (Exception e) {
             throw new SystemException(e.getMessage(), e);
         }
         return result;
