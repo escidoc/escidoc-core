@@ -52,10 +52,6 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
 
     private GregorianCalendar sourceVersionTimeStamp = null;
 
-    // FIXME: This variable has no use.
-    // Its value is never changed. It's used in one if-statement
-    private static final boolean isParsed = false;
-
     private GregorianCalendar latestStatusTimestamp;
 
     private String status = "inactive";
@@ -83,17 +79,15 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
     @Override
     public StartElement startElement(StartElement element)
         throws IntegritySystemException {
-        if (!isParsed) {
-            String elementPath = "/version-history/version";
-            String currentPath = parser.getCurPath();
+        String elementPath = "/version-history/version";
+        String currentPath = parser.getCurPath();
 
-            if (elementPath.equals(currentPath)) {
-                inside = true;
-                insideLevel++;
-            }
-            else if (inside) {
-                insideLevel++;
-            }
+        if (elementPath.equals(currentPath)) {
+            inside = true;
+            insideLevel++;
+        }
+        else if (inside) {
+            insideLevel++;
         }
         return null;
     }

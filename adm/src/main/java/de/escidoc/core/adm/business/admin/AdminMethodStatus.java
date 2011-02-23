@@ -32,6 +32,7 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -52,7 +53,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
     private Date completionDate = new Date();
     private boolean fillingComplete = false;
     private final Semaphore semaphore = new Semaphore(1);
-    protected final TreeMap<ResourceType, Integer> treeMap = new TreeMap<ResourceType, Integer>();
+    protected final Map<ResourceType, Integer> treeMap = new EnumMap<ResourceType, Integer>(ResourceType.class);
 
     protected boolean isFillingComplete() {
         return fillingComplete;

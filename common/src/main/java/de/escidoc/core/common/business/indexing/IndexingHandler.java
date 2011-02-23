@@ -873,7 +873,7 @@ public class IndexingHandler implements ResourceListener {
                         EscidocConfiguration.SRW_URL)
                         + "/search/"
                         + indexName
-                        + "?"
+                        + '?'
                         + query.replaceFirst("\\$\\{Term\\}", lastTerm));
                 response = client.execute(httpGet);
                 if (response.getStatusLine().getStatusCode() 

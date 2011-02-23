@@ -30,7 +30,6 @@ package de.escidoc.core.common.util.security.persistence.hibernate;
 
 import de.escidoc.core.common.util.security.persistence.MethodMapping;
 import de.escidoc.core.common.util.security.persistence.RequestMappingDaoInterface;
-import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
