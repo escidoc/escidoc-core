@@ -47,7 +47,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 

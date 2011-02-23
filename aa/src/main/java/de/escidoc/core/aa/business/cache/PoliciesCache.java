@@ -40,7 +40,6 @@ import org.springframework.security.userdetails.UserDetails;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 

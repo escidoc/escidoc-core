@@ -30,7 +30,6 @@ package de.escidoc.core.common.binding.jaxb;
 
 import de.escidoc.core.common.binding.BindingHandlerInterface;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 import javax.xml.bind.JAXBContext;

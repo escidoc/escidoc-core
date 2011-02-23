@@ -41,7 +41,6 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

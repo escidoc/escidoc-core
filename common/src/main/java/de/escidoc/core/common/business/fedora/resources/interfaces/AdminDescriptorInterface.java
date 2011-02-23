@@ -32,7 +32,6 @@ import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public interface AdminDescriptorInterface extends FedoraResource {

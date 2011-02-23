@@ -57,7 +57,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Preprocesses Raw Statistic Data once a night depending on

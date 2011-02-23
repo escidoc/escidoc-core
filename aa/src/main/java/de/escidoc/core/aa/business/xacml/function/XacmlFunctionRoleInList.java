@@ -46,7 +46,6 @@ import de.escidoc.core.common.util.service.UserContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 /**

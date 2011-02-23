@@ -29,7 +29,6 @@
 package de.escidoc.core.common.business.fedora.mptstore;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * This class is the super class for the Postgres and MySQL implementations of the

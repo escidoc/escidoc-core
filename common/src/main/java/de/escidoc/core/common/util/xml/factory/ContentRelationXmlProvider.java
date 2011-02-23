@@ -44,10 +44,8 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import org.joda.time.DateTimeZone;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * XML Provider of ContentRelation.

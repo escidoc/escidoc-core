@@ -39,15 +39,11 @@ import de.escidoc.core.sm.business.renderer.interfaces.ReportRendererInterface;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * Report renderer implementation using the velocity template engine.

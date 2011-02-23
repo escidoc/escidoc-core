@@ -32,7 +32,6 @@ import javax.xml.namespace.NamespaceContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * StartElementWithChildElements.

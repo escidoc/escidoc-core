@@ -44,8 +44,6 @@ import javax.naming.directory.Attributes;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Customized Springsecurity-ContextMapper.

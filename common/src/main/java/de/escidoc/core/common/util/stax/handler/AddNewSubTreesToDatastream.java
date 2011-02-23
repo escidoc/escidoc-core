@@ -48,7 +48,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * This handler must be the last in the chain! Adds a new sub-tree to the data

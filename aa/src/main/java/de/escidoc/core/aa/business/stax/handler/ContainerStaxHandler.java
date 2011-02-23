@@ -37,7 +37,6 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Vector;
 
 /**
  * Stax handler implementation that handles the attributes that have to be

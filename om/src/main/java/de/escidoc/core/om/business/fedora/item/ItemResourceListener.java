@@ -38,8 +38,6 @@ import de.escidoc.core.common.util.service.UserContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Vector;
 
 /**
  * Handle the Item within the ResourceCache.

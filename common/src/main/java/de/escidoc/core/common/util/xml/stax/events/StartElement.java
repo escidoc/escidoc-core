@@ -36,7 +36,6 @@ import javax.xml.stream.XMLStreamReader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class StartElement extends AbstractElement {
 

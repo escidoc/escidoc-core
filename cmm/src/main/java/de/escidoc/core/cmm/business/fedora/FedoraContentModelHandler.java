@@ -65,7 +65,6 @@ import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitio
 import de.escidoc.core.common.business.fedora.resources.listener.ResourceListener;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
-import de.escidoc.core.common.business.indexing.IndexingHandler;
 import de.escidoc.core.common.business.stax.handler.common.ContentStreamsHandler;
 import de.escidoc.core.common.business.stax.handler.context.DcUpdateHandler;
 import de.escidoc.core.common.exceptions.EscidocException;

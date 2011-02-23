@@ -30,7 +30,6 @@ package de.escidoc.core.common.util.service;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
 
 import javax.naming.Context;
 import java.io.IOException;

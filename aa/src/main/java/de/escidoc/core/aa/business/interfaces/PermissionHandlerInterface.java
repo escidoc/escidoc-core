@@ -45,7 +45,6 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

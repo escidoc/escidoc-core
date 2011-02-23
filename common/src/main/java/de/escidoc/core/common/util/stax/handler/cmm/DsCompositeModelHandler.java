@@ -39,7 +39,6 @@ import javax.naming.directory.NoSuchAttributeException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class DsCompositeModelHandler extends DefaultHandler {
 

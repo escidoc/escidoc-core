@@ -63,7 +63,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.Vector;
 
 /**
  * Implementation of an eSciDoc Content Model Object which consist of

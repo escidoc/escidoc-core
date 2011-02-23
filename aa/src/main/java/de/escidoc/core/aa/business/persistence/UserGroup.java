@@ -30,8 +30,6 @@ package de.escidoc.core.aa.business.persistence;
 
 import de.escidoc.core.common.util.xml.XmlUtility;
 
-import java.io.Serializable;
-
 /**
  * Class holding the user group data.
  * 

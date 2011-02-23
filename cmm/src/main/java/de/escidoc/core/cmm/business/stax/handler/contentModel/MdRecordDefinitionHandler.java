@@ -44,7 +44,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Handler to extract md-record definitions from content-model xml by

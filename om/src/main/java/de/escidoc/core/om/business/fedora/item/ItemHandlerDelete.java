@@ -46,9 +46,7 @@ import de.escidoc.core.common.util.stax.handler.foxml.ComponentIdsInItemFoxmlHan
 
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * 

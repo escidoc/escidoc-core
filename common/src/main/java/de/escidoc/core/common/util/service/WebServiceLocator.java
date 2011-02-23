@@ -41,9 +41,7 @@ import javax.xml.namespace.QName;
 import javax.xml.rpc.ServiceException;
 import javax.xml.rpc.Stub;
 import java.rmi.Remote;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * WebServiceLocator.java is used to connect to WebSevices using

@@ -30,7 +30,6 @@ package de.escidoc.core.common.business.queue.errorprocessing;
 
 import de.escidoc.core.common.util.logger.AppLogger;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 

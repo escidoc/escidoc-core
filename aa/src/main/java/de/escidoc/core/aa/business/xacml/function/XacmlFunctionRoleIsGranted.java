@@ -47,8 +47,6 @@ import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundEx
 
 import java.net.URI;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

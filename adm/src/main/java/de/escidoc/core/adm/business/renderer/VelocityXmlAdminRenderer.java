@@ -39,11 +39,9 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.Vector;
 
 /**
  * Admin renderer implementation using the velocity template engine.

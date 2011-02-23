@@ -35,9 +35,7 @@ import de.escidoc.core.common.util.logger.AppLogger;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Stack;
-import java.util.Vector;
 
 /**
  * Methods to check if there are cycles in an ous parent list..

@@ -45,7 +45,6 @@ import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
 import org.fcrepo.server.types.gen.MIMETypedStream;
-import org.joda.time.DateTime;
 import org.joda.time.ReadableDateTime;
 import org.xml.sax.SAXException;
 
@@ -54,10 +53,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 /**
  * Representation of a datastream managed in Fedora Digital Repository System.

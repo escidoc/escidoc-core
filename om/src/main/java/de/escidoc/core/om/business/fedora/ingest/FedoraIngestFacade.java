@@ -36,7 +36,6 @@ import de.escidoc.core.om.business.interfaces.ValueFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static de.escidoc.core.common.business.Constants.INGEST_OBJ_ID;
 import static de.escidoc.core.common.business.Constants.INGEST_RESOURCE_TYPE;
 
 /**

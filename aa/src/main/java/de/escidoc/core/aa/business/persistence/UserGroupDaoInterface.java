@@ -32,7 +32,6 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.util.list.ListSorting;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

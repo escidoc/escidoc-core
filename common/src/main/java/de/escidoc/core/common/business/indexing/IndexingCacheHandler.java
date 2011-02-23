@@ -29,7 +29,6 @@
 package de.escidoc.core.common.business.indexing;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface;
 
 import java.util.HashMap;

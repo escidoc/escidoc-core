@@ -47,7 +47,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Handle content relations for framework.

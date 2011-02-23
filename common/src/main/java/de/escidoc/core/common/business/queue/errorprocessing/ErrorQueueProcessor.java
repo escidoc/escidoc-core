@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.common.business.queue.errorprocessing;
 
-import de.escidoc.core.common.util.logger.AppLogger;
-
 /**
  * Gets traces out of logfile and sends them via email to the
  * queue.error.administrator.email.

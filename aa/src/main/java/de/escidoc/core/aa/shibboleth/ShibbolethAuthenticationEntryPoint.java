@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.aa.shibboleth;
 
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.springframework.security.AuthenticationException;
 import org.springframework.security.ui.AuthenticationEntryPoint;

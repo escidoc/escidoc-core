@@ -46,11 +46,9 @@ import org.z3950.zing.cql.ModifierSet;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.Vector;
 
 /**
  * This class parses a CQL filter and translates it into a Hibernate query.

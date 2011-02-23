@@ -41,7 +41,6 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Stax handler implementation that handles the refrences to parent ous that

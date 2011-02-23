@@ -34,7 +34,6 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.sm.business.filter.AggregationDefinitionFilter;
 import de.escidoc.core.sm.business.persistence.SmAggregationDefinitionsDaoInterface;
 import org.hibernate.HibernateException;

@@ -47,7 +47,6 @@ import org.apache.ws.security.handler.WSHandlerResult;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Axis provider implementation that extends

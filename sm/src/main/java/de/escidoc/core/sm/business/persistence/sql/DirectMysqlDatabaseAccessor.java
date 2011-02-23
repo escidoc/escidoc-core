@@ -42,8 +42,6 @@ import javax.sql.DataSource;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;

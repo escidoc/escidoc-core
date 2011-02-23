@@ -38,9 +38,7 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 public class ComponentUpdateHandler extends DefaultHandler {
 

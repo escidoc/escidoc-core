@@ -49,7 +49,6 @@ import de.escidoc.core.om.business.fedora.ContentRelationsUtility;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * 

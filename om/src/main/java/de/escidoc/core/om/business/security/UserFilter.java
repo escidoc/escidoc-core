@@ -39,7 +39,6 @@ import de.escidoc.core.common.util.stax.handler.RelsExtRefListExtractor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * Helper class to filter elements out where the user permissions are

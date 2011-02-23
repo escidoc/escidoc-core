@@ -29,7 +29,6 @@
 package de.escidoc.core.oai.business.persistence;
 
 import de.escidoc.core.common.util.xml.XmlUtility;
-import de.escidoc.core.oai.business.persistence.SetDefinitionBase;
 
 import java.io.Serializable;
 

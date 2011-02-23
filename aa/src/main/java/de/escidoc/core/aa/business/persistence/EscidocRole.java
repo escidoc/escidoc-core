@@ -38,7 +38,6 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 /**

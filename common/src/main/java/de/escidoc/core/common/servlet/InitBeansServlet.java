@@ -5,8 +5,6 @@ import de.escidoc.core.common.util.service.BeanLocator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 /**

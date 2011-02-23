@@ -32,7 +32,6 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.persistence.hibernate.AbstractHibernateDao;
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.sm.business.filter.ScopeFilter;
 import de.escidoc.core.sm.business.persistence.SmScopesDaoInterface;
 import org.hibernate.HibernateException;

@@ -34,7 +34,6 @@ import de.escidoc.core.common.exceptions.system.StatisticPreprocessingSystemExce
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.sm.business.Constants;
-import de.escidoc.core.sm.business.SmXmlUtility;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
 import de.escidoc.core.sm.business.persistence.SmScopesDaoInterface;
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
@@ -51,7 +50,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Extracts data for Aggregation Definition out of raw-statistic-data-table.

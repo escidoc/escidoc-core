@@ -41,8 +41,6 @@ import org.springframework.core.Ordered;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Interceptor to validate incoming XML documents. The validation takes only

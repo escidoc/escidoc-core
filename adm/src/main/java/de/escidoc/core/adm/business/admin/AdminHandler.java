@@ -51,7 +51,6 @@ import de.escidoc.core.purge.PurgeService;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
