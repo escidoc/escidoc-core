@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.common.util.db;
 
-import java.util.Arrays;
-import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -39,16 +37,21 @@ import java.util.TreeSet;
  * @author SCHE
  */
 public class Table implements Comparable<Object> {
+    private String name = null;
 
-    private final String name;
+    private TreeSet<String> columns = null;
 
-    private Set<String> columns;
+    private TreeSet<String> foreignKeys = null;
 
-    private Set<String> foreignKeys;
+    private TreeSet<String> indexes = null;
 
-    private final Set<String> indexes = null;
+    private TreeSet<String> primaryKeys = null;
 
-    private Set<String> primaryKeys;
+    /**
+     * Constructor for bean deserialization.
+     */
+    public Table() {
+    }
 
     /**
      * Create a new Table object.
@@ -67,7 +70,7 @@ public class Table implements Comparable<Object> {
     public Table(final String name, final String[] columns,
         final String[] indexes, final String[] primaryKeys,
         final String[] foreignKeys) {
-        this.name = name;
+        setName(name);
         setColumns(columns);
         setForeignKeys(foreignKeys);
         setIndexes(indexes);
@@ -85,29 +88,21 @@ public class Table implements Comparable<Object> {
      * @return a negative integer, zero, or a positive integer as this object is
      *         less than, equal to, or greater than the specified object.
      */
-    @Override
     public int compareTo(final Object o) {
         return name.compareTo(((Table) o).getName());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Table table = (Table) o;
-
-        return !(name != null ? !name.equals(table.name) : table.name != null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * 
+     * @param obj
+     *            the reference object with which to compare.
+     * 
+     * @return true if this object is the same as the obj argument; false
+     *         otherwise.
+     */
+    public boolean equals(final Object obj) {
+        return name.equals(((Table) obj).getName());
     }
 
     /**
@@ -115,7 +110,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return column names
      */
-    public Set<String> getColumns() {
+    public TreeSet<String> getColumns() {
         return columns;
     }
 
@@ -124,7 +119,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return foreign keys
      */
-    public Set<String> getForeignKeys() {
+    public TreeSet<String> getForeignKeys() {
         return foreignKeys;
     }
 
@@ -133,7 +128,7 @@ public class Table implements Comparable<Object> {
      * 
      * @return table indexes
      */
-    public Set<String> getIndexes() {
+    public TreeSet<String> getIndexes() {
         return indexes;
     }
 
@@ -151,19 +146,18 @@ public class Table implements Comparable<Object> {
      * 
      * @return primary keys
      */
-    public Set<String> getPrimaryKeys() {
+    public TreeSet<String> getPrimaryKeys() {
         return primaryKeys;
     }
 
     /**
-     * Set the list of column names.
+     * Returns a hash code value for the object. This method is supported for
+     * the benefit of hashtables such as those provided by java.util.Hashtable.
      * 
-     * @param columns
-     *            column names
+     * @return a hash code value for this object.
      */
-    public final void setColumns(final String[] columns) {
-        this.columns = new TreeSet<String>();
-        this.columns.addAll(Arrays.asList(columns));
+    public int hashCode() {
+        return name.hashCode();
     }
 
     /**
@@ -172,7 +166,20 @@ public class Table implements Comparable<Object> {
      * @param columns
      *            column names
      */
-    public void setColumns(final Set<String> columns) {
+    public void setColumns(final String[] columns) {
+        this.columns = new TreeSet<String>();
+        for (String column : columns) {
+            this.columns.add(column);
+        }
+    }
+
+    /**
+     * Set the list of column names.
+     * 
+     * @param columns
+     *            column names
+     */
+    public void setColumns(final TreeSet<String> columns) {
         this.columns = columns;
     }
 
@@ -182,9 +189,11 @@ public class Table implements Comparable<Object> {
      * @param foreignKeys
      *            foreign keys
      */
-    public final void setForeignKeys(final String[] foreignKeys) {
+    public void setForeignKeys(final String[] foreignKeys) {
         this.foreignKeys = new TreeSet<String>();
-        this.foreignKeys.addAll(Arrays.asList(foreignKeys));
+        for (String foreignKey : foreignKeys) {
+            this.foreignKeys.add(foreignKey);
+        }
     }
 
     /**
@@ -193,7 +202,7 @@ public class Table implements Comparable<Object> {
      * @param foreignKeys
      *            foreign keys
      */
-    public void setForeignKeys(final Set<String> foreignKeys) {
+    public void setForeignKeys(final TreeSet<String> foreignKeys) {
         this.foreignKeys = foreignKeys;
     }
 
@@ -203,9 +212,9 @@ public class Table implements Comparable<Object> {
      * @param indexes
      *            table indexes
      */
-    public final void setIndexes(final String[] indexes) {
+    public void setIndexes(final String[] indexes) {
         // FIXME: reactivate after 1.3 release
-        // this.indexes = new Set<String>();
+        // this.indexes = new TreeSet<String>();
         // if (indexes != null) {
         // for (String index : indexes) {
         // this.indexes.add(index);
@@ -219,20 +228,19 @@ public class Table implements Comparable<Object> {
      * @param indexes
      *            table indexes
      */
-    public void setIndexes(final Set<String> indexes) {
+    public void setIndexes(final TreeSet<String> indexes) {
         // FIXME: reactivate after 1.3 release
         // this.indexes = indexes;
     }
 
     /**
-     * Set the list of primary keys.
+     * Set the table name.
      * 
-     * @param primaryKeys
-     *            primary keys
+     * @param name
+     *            table name
      */
-    public final void setPrimaryKeys(final String[] primaryKeys) {
-        this.primaryKeys = new TreeSet<String>();
-        this.primaryKeys.addAll(Arrays.asList(primaryKeys));
+    public void setName(final String name) {
+        this.name = name;
     }
 
     /**
@@ -241,7 +249,20 @@ public class Table implements Comparable<Object> {
      * @param primaryKeys
      *            primary keys
      */
-    public void setPrimaryKeys(final Set<String> primaryKeys) {
+    public void setPrimaryKeys(final String[] primaryKeys) {
+        this.primaryKeys = new TreeSet<String>();
+        for (String primaryKey : primaryKeys) {
+            this.primaryKeys.add(primaryKey);
+        }
+    }
+
+    /**
+     * Set the list of primary keys.
+     * 
+     * @param primaryKeys
+     *            primary keys
+     */
+    public void setPrimaryKeys(final TreeSet<String> primaryKeys) {
         this.primaryKeys = primaryKeys;
     }
 }
