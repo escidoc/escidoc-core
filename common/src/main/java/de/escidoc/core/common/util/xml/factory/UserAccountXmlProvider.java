@@ -30,7 +30,6 @@ package de.escidoc.core.common.util.xml.factory;
 
 import java.util.Map;
 
-import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 public class UserAccountXmlProvider extends InfrastructureXmlProvider {
