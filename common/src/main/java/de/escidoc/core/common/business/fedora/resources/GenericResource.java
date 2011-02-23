@@ -792,7 +792,7 @@ public class GenericResource implements FedoraResource {
      * 
      * @return list of RELS-EXT properties names.
      */
-    protected Collection<String> getPropertiesNames() {
+    protected final Collection<String> getPropertiesNames() {
 
         return this.propertiesNames;
     }
@@ -802,7 +802,7 @@ public class GenericResource implements FedoraResource {
      * 
      * @return list of RELS-EXT properties names.
      */
-    protected Map<String, String> getPropertiesNamesMapping() {
+    protected final Map<String, String> getPropertiesNamesMapping() {
 
         return this.propertiesNamesMapping;
     }
@@ -817,9 +817,9 @@ public class GenericResource implements FedoraResource {
      *            The Map of key names how they to map to the internal key
      *            names.
      */
-    protected void setPropertiesNames(
-        final Collection<String> propertiesNames,
-        final Map<String, String> propertiesNamesMapping) {
+    protected final void setPropertiesNames(
+            final Collection<String> propertiesNames,
+            final Map<String, String> propertiesNamesMapping) {
 
         this.propertiesNames = propertiesNames;
         this.propertiesNamesMapping = propertiesNamesMapping;

@@ -143,7 +143,7 @@ public class OrganizationalUnit extends GenericResource
      * @throws WebserverSystemException
      *             If access to the backend (fedora or triplestore) fails.
      */
-    protected void getSomeValuesFromFedora() throws TripleStoreSystemException,
+    protected final void getSomeValuesFromFedora() throws TripleStoreSystemException,
         WebserverSystemException {
 
         // this.creationDate = getTripleStoreUtility().getCreationDate(getId());

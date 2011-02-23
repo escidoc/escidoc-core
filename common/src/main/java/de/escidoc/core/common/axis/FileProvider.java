@@ -176,7 +176,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @param is
      *            the input stream
      */
-    public void setInputStream(final InputStream is) {
+    public final void setInputStream(final InputStream is) {
 
         myInputStream = is;
         if (is != null) {

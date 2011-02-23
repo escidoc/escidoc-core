@@ -105,7 +105,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      *            The default style sheet url.
      * @common
      */
-    public void setDefaultXsltUrl(final String defaultXsltUrl) {
+    public final void setDefaultXsltUrl(final String defaultXsltUrl) {
 
         this.defaultXsltUrl = defaultXsltUrl;
     }

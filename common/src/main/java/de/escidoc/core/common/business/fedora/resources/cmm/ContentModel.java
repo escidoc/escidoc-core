@@ -260,8 +260,8 @@ public class ContentModel extends GenericVersionableResourcePid
      *             If a specific datastream can not be found.
      */
     @Override
-    protected void initDatastreams(
-        final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
+    protected final void initDatastreams(
+            final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {

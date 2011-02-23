@@ -84,7 +84,7 @@ public class SecurityInterceptorCache {
      * 
      * @common
      */
-    public void clear() {
+    public final void clear() {
 
         mappingsCache.clear();
     }

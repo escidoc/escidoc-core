@@ -75,7 +75,7 @@ public class MethodMappingList {
      * @param methodMappings
      *            Collection of method mappings.
      */
-    public void setMethodMappings(final Iterable<MethodMapping> methodMappings) {
+    public final void setMethodMappings(final Iterable<MethodMapping> methodMappings) {
 
         if (methodMappings == null) {
             methodMappingsBefore = new ArrayList<MethodMapping>();

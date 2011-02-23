@@ -83,7 +83,7 @@ public class ComponentProperties {
      * @param createdById
      *            the createdById to set
      */
-    public void setCreatedById(final String createdById) {
+    public final void setCreatedById(final String createdById) {
         this.createdById = createdById;
     }
 
@@ -98,7 +98,7 @@ public class ComponentProperties {
      * @param createdByName
      *            the createdByName to set
      */
-    public void setCreatedByName(final String createdByName) {
+    public final void setCreatedByName(final String createdByName) {
         this.createdByName = createdByName;
     }
 

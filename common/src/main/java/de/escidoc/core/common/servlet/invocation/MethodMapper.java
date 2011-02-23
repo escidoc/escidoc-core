@@ -145,8 +145,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             Thrown if an xml transformation fails.
      * @common
      */
-    public void setDescriptorFilenames(
-        final Iterable<String> descriptorFilenames)
+    public final void setDescriptorFilenames(
+            final Iterable<String> descriptorFilenames)
         throws ParserConfigurationException, SAXException, IOException,
         TransformerException {
 

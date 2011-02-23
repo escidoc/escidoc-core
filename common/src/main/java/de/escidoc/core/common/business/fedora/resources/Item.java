@@ -984,8 +984,8 @@ public class Item extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      */
     @Override
-    protected void initDatastreams(
-        org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
+    protected final void initDatastreams(
+            org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {

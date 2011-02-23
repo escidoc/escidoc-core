@@ -167,7 +167,7 @@ public class ContentRelationProperties implements Serializable {
      * @param createdById
      *            the creator id
      */
-    public void setCreatedById(final String createdById) {
+    public final void setCreatedById(final String createdById) {
         this.createdById = createdById;
     }
 
@@ -186,7 +186,7 @@ public class ContentRelationProperties implements Serializable {
      * @param modifiedById
      *            the modifiedById to set
      */
-    public void setModifiedById(final String modifiedById) {
+    public final void setModifiedById(final String modifiedById) {
         this.modifiedById = modifiedById;
     }
 
@@ -203,7 +203,7 @@ public class ContentRelationProperties implements Serializable {
      * @param createdByName
      *            the createdByName to set
      */
-    public void setCreatedByName(final String createdByName) {
+    public final void setCreatedByName(final String createdByName) {
         this.createdByName = createdByName;
     }
 
@@ -218,7 +218,7 @@ public class ContentRelationProperties implements Serializable {
      * @param modifiedByName
      *            the modifiedByName to set
      */
-    public void setModifiedByName(final String modifiedByName) {
+    public final void setModifiedByName(final String modifiedByName) {
         this.modifiedByName = modifiedByName;
     }
 
