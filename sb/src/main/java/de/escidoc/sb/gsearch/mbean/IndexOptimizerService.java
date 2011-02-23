@@ -69,10 +69,9 @@ public class IndexOptimizerService {
             log.info("optimizing search-indices");
             gsearchHandler.requestOptimize(null);
         } catch (Exception e) {
-            final String message = 
-                "optimizing search-indices failed";
             errorMessageHandler.putErrorMessage(
                     new HashMap<String, String>() { {
+                        final String message = "optimizing search-indices failed";
                         put("message", message); }
 
                         private static final long serialVersionUID = -6112223886789881292L;

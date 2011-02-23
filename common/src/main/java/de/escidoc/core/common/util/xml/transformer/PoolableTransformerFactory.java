@@ -130,11 +130,10 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
                 ERR_MSG_UNSUPPORTED_ARG_TYPE);
         }
         Transformer result = null;
-        StreamSource streamSrc;
         InputStream xslt =null;
         try {
             xslt = mapKeyToXslt((String) key);
-            streamSrc = new StreamSource(xslt);
+            StreamSource streamSrc = new StreamSource(xslt);
             result = transformerFactory.newTransformer(streamSrc);
         } catch (IOException e) {
                 throw new WebserverSystemException("XSLT for DC-mapping not retrievable.", e);

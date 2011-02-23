@@ -422,9 +422,8 @@ public class ComponentCreate extends GenericResourceCreate
         final String contentAsString, final String fileName,
         final String mimeType) throws WebserverSystemException {
         String uploadUrl;
-        byte[] streamContent;
         try {
-            streamContent = Base64.decodeBase64(contentAsString.getBytes());
+            byte[] streamContent = Base64.decodeBase64(contentAsString.getBytes());
             uploadUrl =
                 Utility.getInstance().upload(streamContent, fileName, mimeType);
         }

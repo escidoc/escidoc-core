@@ -579,27 +579,25 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                     log.error(msg);
                 }
             } catch (ItemNotFoundException e) {
-                String msg =
-                        "FedoraContextHandler.retrieveMemberRefs:"
-                                + " can not retrieve object";
                 Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
                 extValues.put("href", "/ir/" + objectType + '/' + objectId);
                 extValues.put("objid", objectId);
+                String msg = "FedoraContextHandler.retrieveMemberRefs:"
+                        + " can not retrieve object";
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider
                         .getInstance().getWithdrawnMessageXml(extValues));
 
                 log.error(msg);
             } catch (ComponentNotFoundException e) {
-                String msg =
-                        "FedoraContextHandler.retrieveMemberRefs:can not retrieve object";
                 Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
                 extValues.put("href", "/ir/" + objectType + '/' + objectId);
                 extValues.put("objid", objectId);
+                String msg = "FedoraContextHandler.retrieveMemberRefs:can not retrieve object";
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider
                         .getInstance().getWithdrawnMessageXml(extValues));
@@ -610,13 +608,12 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                         "Should not occure in FedoraContextHandler.retrieveMembers",
                         e);
             } catch (ContainerNotFoundException e) {
-                String msg =
-                        "FedoraContextHandler.retrieveMembers:can not retrieve object";
                 Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
                 addListNamespaceValues(extValues);
                 extValues.put("href", "/ir/" + objectType + '/' + objectId);
                 extValues.put("objid", objectId);
+                String msg = "FedoraContextHandler.retrieveMembers:can not retrieve object";
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider
                         .getInstance().getWithdrawnMessageXml(extValues));

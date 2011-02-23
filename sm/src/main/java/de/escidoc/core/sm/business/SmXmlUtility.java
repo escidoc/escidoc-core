@@ -55,9 +55,9 @@ public class SmXmlUtility {
     public Collection<String> extractAggregationPrimKeysFromSql(final String sql) {
         Collection<String> primKeys = new ArrayList<String>();
         if (sql != null) {
-            boolean condition = false;
             String workSql = sql.replaceAll("\\s+", " ");
             workSql = workSql.replaceAll("\\s+", " ");
+            boolean condition = false;
             if (workSql.matches("(?i).* (where|order by|group by) .*")) {
                 condition = true;
             }

@@ -125,16 +125,12 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
             values.put(XmlTemplateProvider.DC, dcXml);
         }
 
-        String outsideKey;
-        ByteArrayOutputStream outsideValue;
-        String insideKey;
-        ByteArrayOutputStream insideValue;
         for (Entry<String, Object> stringObjectEntry : containerDataStreams.entrySet()) {
 
             Entry entry = stringObjectEntry;
-            outsideKey = (String) entry.getKey();
+            String outsideKey = (String) entry.getKey();
             if (entry.getValue() instanceof ByteArrayOutputStream) {
-                outsideValue = (ByteArrayOutputStream) entry.getValue();
+                ByteArrayOutputStream outsideValue = (ByteArrayOutputStream) entry.getValue();
                 try {
                     // now we map to Velocity Variable Names
                     if (outsideKey
@@ -162,7 +158,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                         Map<String, String> mdRecord =
                                 new HashMap<String, String>();
                         Entry entry2 = (Entry) aContent2;
-                        insideKey = (String) entry2.getKey();
+                        String insideKey = (String) entry2.getKey();
                         Map<String, String> mdAttributes =
                                 metadataAttributes.get(insideKey);
                         String schema = null;
@@ -171,7 +167,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                             schema = mdAttributes.get("schema");
                             type = mdAttributes.get("type");
                         }
-                        insideValue = (ByteArrayOutputStream) entry2.getValue();
+                        ByteArrayOutputStream insideValue = (ByteArrayOutputStream) entry2.getValue();
                         mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
                                 schema);
                         mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, type);

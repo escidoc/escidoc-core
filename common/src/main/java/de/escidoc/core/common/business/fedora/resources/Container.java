@@ -313,9 +313,8 @@ public class Container extends GenericVersionableResourcePid
         for (String aNamesInFedora : namesInFedora) {
             String nameInFedora = aNamesInFedora;
             if (!mdRecords.containsKey(nameInFedora)) {
-                Datastream fedoraDs;
                 try {
-                    fedoraDs = getMdRecord(nameInFedora);
+                    Datastream fedoraDs = getMdRecord(nameInFedora);
                     if (fedoraDs != null) {
                         // FIXME remove the entire datastream
                         fedoraDs.delete();
@@ -339,8 +338,7 @@ public class Container extends GenericVersionableResourcePid
             } else {
 
                 Datastream currentMdRecord = mapEntry.getValue();
-                byte[] stream;
-                stream = currentMdRecord.getStream();
+                byte[] stream = currentMdRecord.getStream();
                 List<String> altIds = currentMdRecord.getAlternateIDs();
                 String[] altIDs = new String[altIds.size()];
                 for (int i = 0; i < altIds.size(); i++) {
@@ -428,9 +426,9 @@ public class Container extends GenericVersionableResourcePid
                                         ds.toStringUTF8(),
                                         getId(),
                                         getResourcePropertiesValue(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
-                            Datastream dcNew;
                             if (dcNewContent != null
                                 && dcNewContent.trim().length() > 0) {
+                                Datastream dcNew;
                                 try {
                                     dcNew =
                                         new Datastream(
@@ -653,10 +651,8 @@ public class Container extends GenericVersionableResourcePid
         byte[] datastreamWithRelationsContent =
             datastreamWithRelations.getStream();
 
-        ByteArrayInputStream relsExtInputStream;
         StaxParser sp = new StaxParser();
-        relsExtInputStream =
-            new ByteArrayInputStream(datastreamWithRelationsContent);
+        ByteArrayInputStream relsExtInputStream = new ByteArrayInputStream(datastreamWithRelationsContent);
 
         RelsExtContentRelationsReadHandler reHandler =
             new RelsExtContentRelationsReadHandler(sp);
@@ -686,7 +682,6 @@ public class Container extends GenericVersionableResourcePid
     protected String persistEscidocRelsExt() throws FedoraSystemException,
         WebserverSystemException {
 
-        String timestamp; // Maybe would it be better, if we use the
         // old timestamp instead of null.
         try {
             if (this.escidocRelsExt != null) {
@@ -709,7 +704,7 @@ public class Container extends GenericVersionableResourcePid
             throw new WebserverSystemException(message, e);
         }
 
-        timestamp = this.escidocRelsExt.merge();
+        String timestamp = this.escidocRelsExt.merge(); // Maybe would it be better, if we use the
 
         return timestamp;
     }

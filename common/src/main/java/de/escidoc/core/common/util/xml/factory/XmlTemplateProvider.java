@@ -884,8 +884,7 @@ public class XmlTemplateProvider {
      */
     protected Pattern getPattern(final String variable) {
 
-        Pattern result;
-        result = PATTERNS.get(variable);
+        Pattern result = PATTERNS.get(variable);
         if (result == null) {
             result = Pattern.compile("\\$\\{" + variable + "\\}");
             PATTERNS.put(variable, result);

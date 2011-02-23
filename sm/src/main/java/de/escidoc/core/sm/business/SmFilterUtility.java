@@ -66,10 +66,10 @@ public class SmFilterUtility {
         final String objectType, final Collection<String> objectIds)
         throws WebserverSystemException {
 
-        List<String> resultIds;
         if (pdp == null) {
             locateAa();
         }
+        List<String> resultIds;
         try {
             resultIds = pdp.evaluateRetrieve(
                     objectType, (List<String>) objectIds);

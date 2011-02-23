@@ -58,12 +58,11 @@ public class VelocityXmlContainerFoXmlRenderer
         final Map<String, String> propertiesAsReferences)
         throws SystemException {
 
-        String result;
         values.put(XmlTemplateProvider.TITLE, "Container " + containerId);
         addRelsExtValues(values, properties, members, containerId,
             lastModificationDate, contentRelations, comment,
             propertiesAsReferences);
-        result = ContainerFoXmlProvider.getInstance().getContainerFoXml(values);
+        String result = ContainerFoXmlProvider.getInstance().getContainerFoXml(values);
         return result;
     }
 

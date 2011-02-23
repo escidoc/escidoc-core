@@ -176,7 +176,6 @@ public class ConditionParser {
                     }
                     else {
                         String operand1;
-                        String operand2;
 
                         if (children.get(0) instanceof Apply) {
                             operand1 =
@@ -191,6 +190,7 @@ public class ConditionParser {
                                 .get(0).getClass().getName()
                                 + ": unexpected operand type");
                         }
+                        String operand2;
                         if (children.get(1) instanceof Apply) {
                             operand2 =
                                 parseApply((Apply) children.get(1)).operand1;

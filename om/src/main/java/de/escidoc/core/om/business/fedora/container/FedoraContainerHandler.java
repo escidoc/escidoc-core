@@ -2522,8 +2522,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         setContainer(id);
 
-        boolean resourceUpdated = false;
-
         try {
             checkLocked();
             try {
@@ -2593,6 +2591,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
                 elements.add(newComponentIdElement);
             }
+            boolean resourceUpdated = false;
             if (!elements.isEmpty()) {
                 resourceUpdated = true;
                 final byte[] relsExtNewBytes =
@@ -2950,7 +2949,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         checkLatestVersion();
         final String startTimestamp =
             getContainer().getLastFedoraModificationDate();
-        boolean resourceUpdated = false;
 
         checkLocked();
         checkStatusNot(Constants.STATUS_WITHDRAWN);
@@ -3017,6 +3015,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         if ((relationsData != null) && (!relationsData.isEmpty())) {
             final List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
+            boolean resourceUpdated = false;
             for (Map<String, String> aRelationsData : relationsData) {
                 resourceUpdated = true;
                 final Map<String, String> relation = aRelationsData;
@@ -3107,7 +3106,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         checkLatestVersion();
         final String startTimestamp =
             getContainer().getLastFedoraModificationDate();
-        boolean resourceUpdated = false;
 
         checkLocked();
         checkStatusNot(Constants.STATUS_WITHDRAWN);
@@ -3152,6 +3150,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 relationsData.iterator();
             HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
                 new HashMap<String, List<StartElementWithChildElements>>();
+            boolean resourceUpdated = false;
             while (iterator.hasNext()) {
                 resourceUpdated = true;
 
@@ -3237,8 +3236,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        String result;
-
         setContainer(id);
         filterParams.put("query", new String[] { "\"/subject/id\"="
             + getContainer().getId() + " or " + "\"/subject/id\"="
@@ -3250,7 +3247,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             contentRelationHandler
                 .retrieveContentRelations(new LuceneRequestParameters(
                     filterParams));
-        result = transformSearchResponse2relations(searchResponse);
+        String result = transformSearchResponse2relations(searchResponse);
 
         return result;
 

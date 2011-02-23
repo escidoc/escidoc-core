@@ -488,7 +488,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
-        byte[] relsExt = null;
 
         // create new RELS-EXT element
         final AddNewSubTreesToDatastream addNewSubtreesHandler =
@@ -515,6 +514,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         String latestReleasedVersion =
             getResourcePropertiesValue(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER);
 
+        byte[] relsExt = null;
         if (latestReleasedVersion != null) {
 
             // compare the versions (only set latest-release pid if the
@@ -740,7 +740,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         WebserverSystemException {
 
         // FIXME use a real XML parser to delete entries !
-        byte[] relsExtS = null;
         String relsExt;
         try {
             relsExt = getRelsExt().toString(XmlUtility.CHARACTER_ENCODING);
@@ -750,6 +749,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         }
 
         final Matcher m = LATEST_RELEASE_PID_ENTRY.matcher(relsExt);
+        byte[] relsExtS = null;
         if (m.find()) {
             relsExt = relsExt.replaceAll(m.group(), "");
             try {
@@ -844,9 +844,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         }
         byte[] relsExtContent = relsExt.getStream();
 
-        ByteArrayInputStream relsExtInputStream;
         StaxParser sp = new StaxParser();
-        relsExtInputStream = new ByteArrayInputStream(relsExtContent);
+        ByteArrayInputStream relsExtInputStream = new ByteArrayInputStream(relsExtContent);
 
         RelsExtContentRelationsReadHandler reHandler =
             new RelsExtContentRelationsReadHandler(sp);
@@ -918,7 +917,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         existRelations.removeAll(relationsToUpdate);
         relationsToUpdate.removeAll(existRelationsCopy);
         List<StartElementWithChildElements> elementsToAdd = null;
-        Map<String, List<StartElementWithChildElements>> toRemove = null;
 
         // prepare update relations
         if ((relationsToUpdate != null) && (!relationsToUpdate.isEmpty())) {
@@ -944,6 +942,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             }
         }
         // prepare add/remove
+        Map<String, List<StartElementWithChildElements>> toRemove = null;
         if ((existRelations != null) && (!existRelations.isEmpty())) {
             Iterator<String> iterator = existRelations.iterator();
             HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =

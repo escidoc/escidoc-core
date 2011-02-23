@@ -304,12 +304,12 @@ public class Utility {
      */
     public String[] getCurrentUser() throws WebserverSystemException {
 
-        String[] result = new String[2];
         if ((UserContext.getId() == null)
             || (UserContext.getRealName() == null)) {
             throw new WebserverSystemException(
                 "System fault: Current user not set!");
         }
+        String[] result = new String[2];
         result[0] = UserContext.getId();
         result[1] = UserContext.getRealName();
 
@@ -622,14 +622,13 @@ public class Utility {
         String dataContextId;
 
         try {
-            Document result;
             DocumentBuilderFactory docBuilderFactory =
                 DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
             InputStream in =
                 new ByteArrayInputStream(
                     xmlData.getBytes(XmlUtility.CHARACTER_ENCODING));
-            result = docBuilder.parse(new InputSource(in));
+            Document result = docBuilder.parse(new InputSource(in));
             result.getDocumentElement().normalize();
 
             if (UserContext.isRestAccess()) {
@@ -717,7 +716,6 @@ public class Utility {
         final VersionableResource resource, final FedoraUtility fedoraUtility)
         throws SystemException {
 
-        boolean release = false;
         String comment = createComment(resource, newStatus, versionComment);
 
         Map<String, String> resBaseData = getResourceBaseData(resource);
@@ -754,6 +752,7 @@ public class Utility {
             "build", "http://escidoc.de/core/01/system/", "system", null,
             buildNumber, null));
 
+        boolean release = false;
         if (newStatus != null) {
 
             release = false;
@@ -1403,9 +1402,7 @@ public class Utility {
         throws IntegritySystemException, FedoraSystemException,
         XmlParserSystemException, WebserverSystemException {
 
-        boolean updatedRelsExtProperties = false;
         byte[] relsExtContent;
-        byte[] relsExtNewBytes = null;
         if (relsExtBytes == null) {
             try {
                 relsExtContent = resource.getRelsExt().getStream();
@@ -1421,6 +1418,8 @@ public class Utility {
             new ByteArrayInputStream(relsExtContent);
 
         StaxParser sp = new StaxParser();
+        byte[] relsExtNewBytes = null;
+        boolean updatedRelsExtProperties = false;
         if ((addToRelsExt != null) && (!addToRelsExt.isEmpty())) {
             if ((updateProperties != null) && (!updateProperties.isEmpty())) {
                 updatedRelsExtProperties = true;

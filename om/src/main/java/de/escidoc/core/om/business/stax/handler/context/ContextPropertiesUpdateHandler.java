@@ -248,7 +248,6 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      */
     private boolean checkValueChanged(final String key, final String value)
         throws SystemException {
-        boolean changed = false;
         String repositoryValue;
 
         if (key.equals(Elements.ELEMENT_DESCRIPTION)) {
@@ -271,6 +270,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
                         + key);
         }
 
+        boolean changed = false;
         if (!XmlUtility.escapeForbiddenXmlCharacters(value).equals(
             repositoryValue)) {
             changed = true;

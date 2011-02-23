@@ -1643,8 +1643,6 @@ public class FedoraUtility implements InitializingBean {
      */
     public InputStream requestFedoraURL(final String localUrl)
         throws WebserverSystemException {
-        HttpGet httpGet;
-        HttpResponse httpResponse;
         InputStream fedoraResponseStream;
         try {
             DefaultHttpClient httpClient = getHttpClient();
@@ -1653,8 +1651,8 @@ public class FedoraUtility implements InitializingBean {
             localcontext.setAttribute("preemptive-auth", basicAuth);
             httpClient
                 .addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
-            httpGet = new HttpGet(fedoraUrl + localUrl);
-            httpResponse = httpClient.execute(httpGet);
+            HttpGet httpGet = new HttpGet(fedoraUrl + localUrl);
+            HttpResponse httpResponse = httpClient.execute(httpGet);
             int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (responseCode != HttpServletResponse.SC_OK) {
 

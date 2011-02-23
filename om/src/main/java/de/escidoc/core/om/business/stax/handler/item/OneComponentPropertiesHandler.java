@@ -89,8 +89,6 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
         throws ReadonlyElementViolationException,
         ReadonlyAttributeViolationException, InvalidContentException {
 
-        String elementPath = "/component/properties";
-
         if (inside) {
 
             insideLevel++;
@@ -98,6 +96,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
         }
         else {
             String currenrPath = parser.getCurPath();
+            String elementPath = "/component/properties";
             if (elementPath.equals(currenrPath)) {
                 inside = true;
                 insideLevel++;

@@ -477,11 +477,11 @@ public class GsearchHandler {
      * @param index name of the index to check/optimize.
      */
     public void checkOptimize(final CharSequence response, final String index) {
-        int docCount = 1;
         String docCountStr = "";
         if (Constants.DOC_COUNT_MATCHER.reset(response).matches()) {
             docCountStr = Constants.DOC_COUNT_MATCHER.group(1);
         }
+        int docCount = 1;
         try {
             docCount = Integer.parseInt(docCountStr);
         } catch (Exception e){}

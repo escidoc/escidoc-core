@@ -721,9 +721,9 @@ public class ConnectionUtility {
     private HttpResponse get(final String url, final Cookie cookie)
         throws WebserverSystemException {
 
-        HttpGet httpGet;
         HttpResponse httpResponse = null;
         try {
+            HttpGet httpGet;
             try {
                 httpGet = new HttpGet(url);
             }
@@ -846,14 +846,11 @@ public class ConnectionUtility {
         final String url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        HttpPut httpPut;
         HttpResponse httpResponse;
-        HttpEntity entity;
         try {
-            entity =
-                new StringEntity(body, Constants.DEFAULT_MIME_TYPE,
+            HttpEntity entity = new StringEntity(body, Constants.DEFAULT_MIME_TYPE,
                     XmlUtility.CHARACTER_ENCODING);
-            httpPut = new HttpPut(url);
+            HttpPut httpPut = new HttpPut(url);
             httpPut.setEntity(entity);
             httpResponse = getHttpClient(url).execute(httpPut);
             int responseCode = httpResponse.getStatusLine().getStatusCode();
@@ -907,7 +904,6 @@ public class ConnectionUtility {
         final String url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        HttpPost httpPost;
         HttpResponse httpResponse;
         // RequestEntity entity;
         // try {
@@ -922,7 +918,7 @@ public class ConnectionUtility {
         try {
             // TODO
             // entitys für Body Posts
-            httpPost = new HttpPost(url);
+            HttpPost httpPost = new HttpPost(url);
 
             if (cookie != null) {
                 HttpClientParams.setCookiePolicy(httpPost.getParams(),

@@ -235,7 +235,6 @@ public class AccessRights extends JdbcDaoSupport {
         Map<String, Map<String, List<RoleGrant>>> userGroupGrants,
         final Set<String> hierarchicalContainers,
         final Set<String> hierarchicalOUs) {
-        String result = null;
         final StringBuilder accessRights = new StringBuilder();
         final String containerGrants =
             ensureNotEmpty(getSetAsString(hierarchicalContainers));
@@ -339,6 +338,7 @@ public class AccessRights extends JdbcDaoSupport {
                 }
             }
         }
+        String result = null;
         if (accessRights.length() > 0) {
             result = accessRights.toString();
         }

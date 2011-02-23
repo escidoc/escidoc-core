@@ -245,7 +245,6 @@ public class XMLBase {
     public Document getDocument(final String filename)
         throws ParserConfigurationException, SAXException, IOException {
 
-        Document result = null;
         DocumentBuilderFactory docBuilderFactory =
             DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -255,6 +254,7 @@ public class XMLBase {
             throw new FileNotFoundException("XML file not found [" + filename
                 + ']');
         }
+        Document result = null;
         try {
             result = docBuilder.parse(inputStream);
         } finally {
@@ -276,7 +276,6 @@ public class XMLBase {
      */
     public String getDocumentAsString(final Document document)
         throws IOException {
-        String result;
 
         StringWriter stringOut = new StringWriter();
 
@@ -289,7 +288,7 @@ public class XMLBase {
         XMLSerializer serial = new XMLSerializer(stringOut, format);
         serial.asDOMSerializer();
         serial.serialize(document);
-        result = stringOut.toString();
+        String result = stringOut.toString();
 
         return result;
     }
@@ -303,9 +302,8 @@ public class XMLBase {
      * @common
      */
     public InputStream getFileInputStream(final String filename) {
-        InputStream result;
         getLogger().debug("getFileInputStream: Looking for file: " + filename);
-        result = this.getClass().getResourceAsStream(filename);
+        InputStream result = this.getClass().getResourceAsStream(filename);
         return result;
     }
 
@@ -320,7 +318,6 @@ public class XMLBase {
      * @common
      */
     public String getFileContents(final String filename) throws IOException {
-        String result = "";
 
         getLogger().info("looking for file " + filename);
 
@@ -328,6 +325,7 @@ public class XMLBase {
 
         byte[] buffer = new byte[BUFFER_SIZE];
         int length = inputStream.read(buffer);
+        String result = "";
         while (length != -1) {
             result += new String(buffer, 0, length);
             length = inputStream.read(buffer);

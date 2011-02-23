@@ -60,8 +60,6 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
     public String render(final Map<String, Object> values)
         throws SystemException {
 
-        String result;
-
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
@@ -73,8 +71,7 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
         values.put(XmlTemplateProvider.VAR_RESOURCES_ONTOLOGIES_NAMESPACE,
             Constants.RESOURCES_NS_URI);
 
-        result =
-            OrganizationalUnitFoXmlProvider
+        String result = OrganizationalUnitFoXmlProvider
                 .getInstance().getOrganizationalUnitFoXml(values);
         return result;
     }
@@ -91,8 +88,6 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
     public String renderRelsExt(final Map<String, Object> values)
         throws WebserverSystemException {
 
-        String result;
-
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
@@ -103,8 +98,7 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
             Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put(XmlTemplateProvider.VAR_RESOURCES_ONTOLOGIES_NAMESPACE,
             Constants.RESOURCES_NS_URI);
-        result =
-            OrganizationalUnitFoXmlProvider.getInstance().getRelsExt(values);
+        String result = OrganizationalUnitFoXmlProvider.getInstance().getRelsExt(values);
         return result;
     }
 

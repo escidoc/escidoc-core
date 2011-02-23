@@ -385,17 +385,13 @@ public class RoleHandler implements RoleHandlerInterface {
     @Override
     public String retrieveRoles(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
-        boolean explain;
-        String query;
-        String result;
-        int offset = FilterHandler.DEFAULT_OFFSET;
-        int limit = FilterHandler.DEFAULT_LIMIT;
         SRURequestParameters parameters = new DbRequestParameters(filter);
-        query = parameters.getQuery();
-        limit = parameters.getLimit();
-        offset = parameters.getOffset();
-        explain = parameters.isExplain();
+        String query = parameters.getQuery();
+        int limit = parameters.getLimit();
+        int offset = parameters.getOffset();
+        boolean explain = parameters.isExplain();
 
+        String result;
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
@@ -411,10 +407,8 @@ public class RoleHandler implements RoleHandlerInterface {
                 new ArrayList<EscidocRole>();
             final int size = permittedObjects.size();
             while (size <= needed) {
-                List<EscidocRole> tmpObjects;
 
-                tmpObjects =
-                    roleDao.retrieveRoles(query, currentOffset, currentLimit);
+                List<EscidocRole> tmpObjects = roleDao.retrieveRoles(query, currentOffset, currentLimit);
                 if (tmpObjects == null || tmpObjects.isEmpty()) {
                     break;
                 }

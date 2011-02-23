@@ -148,7 +148,6 @@ public class NewOuParentsAttributeFinderModule
         final String resourceVersionNumber) throws EscidocException {
 
         try {
-            EvaluationResult result;
             if (attributeIdValue.equals(ATTR_HIERARCHICAL_PARENTS_NEW)) {
                 Iterable<String> parentIds =
                     new ArrayList<String>(
@@ -183,8 +182,7 @@ public class NewOuParentsAttributeFinderModule
                     stringAttributes.add(new StringAttribute(stringAttribute));
                 }
 
-                result =
-                    new EvaluationResult(new BagAttribute(
+                EvaluationResult result = new EvaluationResult(new BagAttribute(
                         Constants.URI_XMLSCHEMA_STRING, stringAttributes));
 
                 return new Object[] { result, attributeIdValue };

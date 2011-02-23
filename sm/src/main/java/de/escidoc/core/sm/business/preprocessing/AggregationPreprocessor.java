@@ -693,7 +693,6 @@ public class AggregationPreprocessor {
                         selectFieldVos.add(selectFieldVo);
                         databaseSelectVo.setSelectFieldVos(selectFieldVos);
 
-                        int i = 0;
                         RootWhereGroupVo rootWhereGroupVo =
                                 new RootWhereGroupVo();
                         if (fields == null || fields.isEmpty()) {
@@ -701,6 +700,7 @@ public class AggregationPreprocessor {
                         }
 
                         // Iterate fields in dataHash and fill WhereFieldVos
+                        int i = 0;
                         for (Object o2 : fields.keySet()) {
                             String fieldname = (String) o2;
                             Map fieldHash =
@@ -884,9 +884,9 @@ public class AggregationPreprocessor {
             Collection<SelectFieldVo> selectFieldVos =
                     new ArrayList<SelectFieldVo>();
 
-            int i = 0;
             Set<Entry> fieldsEntrySet = fields.entrySet();
             try {
+                int i = 0;
                 for (Entry entry : fieldsEntrySet) {
                     String fieldname = (String) entry.getKey();
                     Map fieldHash =

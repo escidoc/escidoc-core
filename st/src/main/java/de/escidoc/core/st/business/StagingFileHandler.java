@@ -106,9 +106,8 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         dao.update(stagingFile);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        XMLStreamWriter writer;
         try {
-            writer = XmlUtility.createXmlStreamWriter(out);
+            XMLStreamWriter writer = XmlUtility.createXmlStreamWriter(out);
 
             XmlUtility.setCommonPrefixes(writer);
             writer.setDefaultNamespace(Constants.STAGING_FILE_NS_URI);
@@ -219,13 +218,12 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         throws MissingMethodParameterException, StagingFileNotFoundException,
         SystemException {
 
-        StagingFile result;
         if (stagingFileId == null) {
             throw new MissingMethodParameterException(
                 "staging file id must be provided.");
         }
 
-        result = dao.findStagingFile(stagingFileId);
+        StagingFile result = dao.findStagingFile(stagingFileId);
         if ((result == null) || (result.isExpired())) {
             throw new StagingFileNotFoundException(StringUtility
                 .format(

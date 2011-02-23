@@ -59,7 +59,6 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         IntegritySystemException, XmlParserSystemException,
         EncodingSystemException, FedoraSystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
 
         values.putAll(getCommonValues(getContentModel()));
@@ -70,9 +69,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
             renderContentStreams(false));
         values.putAll(getResourcesValues(getContentModel()));
 
-        result =
-            ContentModelXmlProvider.getInstance().getContentModelXml(values);
-        return result;
+        return ContentModelXmlProvider.getInstance().getContentModelXml(values);
     }
 
     // TODO ContentHandlerRetrieve ?
@@ -157,15 +154,13 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
 
         Map<String, Object> values = new HashMap<String, Object>();
 
-        Datastream ds;
-
         if (isRoot) {
             values.put("isRootContentStream", XmlTemplateProvider.TRUE);
         }
         Map<String, String> commonValues = getCommonValues(getContentModel());
         values.putAll(commonValues);
 
-        ds = getContentModel().getContentStream(name);
+        Datastream ds = getContentModel().getContentStream(name);
 
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NAME, ds.getName());
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_TITLE, ds.getLabel());

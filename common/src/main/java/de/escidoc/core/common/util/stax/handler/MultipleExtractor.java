@@ -412,13 +412,12 @@ public class MultipleExtractor extends WriteHandler {
                         }
                     }
 
-                    HashMap component;
-                    HashMap<String, ByteArrayOutputStream> mdRecords;
                     if (inComponent) {
                         if (components == null) {
                             components = new HashMap();
                             outputStreams.put("components", components);
                         }
+                        HashMap component;
                         if (components.containsKey(componentId)) {
                             component =
                                     (HashMap) components.get(componentId);
@@ -442,6 +441,7 @@ public class MultipleExtractor extends WriteHandler {
                                 // outputStreams.put(attributeValue + "*" +
                                 // subId,
                                 // out);
+                                HashMap<String, ByteArrayOutputStream> mdRecords;
                                 if (component.containsKey("md-records")) {
                                     mdRecords =
                                             (HashMap<String, ByteArrayOutputStream>) component

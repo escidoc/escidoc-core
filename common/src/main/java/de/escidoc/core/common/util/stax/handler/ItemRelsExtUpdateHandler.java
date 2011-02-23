@@ -145,15 +145,13 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
                 if ((replacementElement.getPosition() == 0)
                     || (count == replacementElement.getPosition())) {
 
-                    Attribute attributeToReplace = null;
-                    String replacementAttributeValue;
                     if (replacementElement.getAttributeCount() > 0) {
-                        boolean attributeMatch = false;
-                        int indexOfAttributeToReplace = 0;
                         Attribute replacementAttribute =
                             replacementElement.getAttribute(0);
-                        replacementAttributeValue =
-                            replacementAttribute.getValue();
+                        String replacementAttributeValue = replacementAttribute.getValue();
+                        int indexOfAttributeToReplace = 0;
+                        boolean attributeMatch = false;
+                        Attribute attributeToReplace = null;
                         for (int i = 0; i <= element.getAttributeCount(); i++) {
                             Attribute attribute = element.getAttribute(i);
                             if (attribute.getLocalName().equals(

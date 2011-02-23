@@ -322,20 +322,16 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     public String retrieveSetDefinitions(final Map<String, String[]> filter)
         throws AuthenticationException, AuthorizationException,
         InvalidSearchQueryException, SystemException {
-        String result;
-        String query;
-        int offset = FilterHandler.DEFAULT_OFFSET;
-        int limit = FilterHandler.DEFAULT_LIMIT;
-        boolean explain;
 
         SRURequestParameters parameters =
             new DbRequestParameters(filter);
 
-        query = parameters.getQuery();
-        limit = parameters.getLimit();
-        offset = parameters.getOffset();
-        explain = parameters.isExplain();
+        String query = parameters.getQuery();
+        int limit = parameters.getLimit();
+        int offset = parameters.getOffset();
+        boolean explain = parameters.isExplain();
 
+        String result;
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
@@ -354,10 +350,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             final int size = permittedSetDefinitions.size();
 
             while (size <= needed) {
-                final List<SetDefinition> tmpSetDefinitions;
 
-                tmpSetDefinitions =
-                    setDefinitionDao.retrieveSetDefinitions(query,
+                final List<SetDefinition> tmpSetDefinitions = setDefinitionDao.retrieveSetDefinitions(query,
                         currentOffset, currentLimit);
                 if (tmpSetDefinitions == null || tmpSetDefinitions.isEmpty()) {
                     break;

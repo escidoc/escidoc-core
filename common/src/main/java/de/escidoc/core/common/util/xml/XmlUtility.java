@@ -2013,13 +2013,12 @@ public final class XmlUtility {
      */
     public static String getSpoTaskParamSchemaLocation()
         throws WebserverSystemException {
-        String result;
 
         if (spoTaskParamSchemaLocation == null) {
             spoTaskParamSchemaLocation =
                 getSchemaBaseUrl() + "common/0.3/query.xsd";
         }
-        result = spoTaskParamSchemaLocation;
+        String result = spoTaskParamSchemaLocation;
         return result;
     }
 
@@ -3307,8 +3306,6 @@ public final class XmlUtility {
     public static Map<String, Object> getFilterMap(final String filterXML)
         throws XmlParserSystemException {
 
-        Map<String, Object> filter;
-
         // prevent empty filter
         if (filterXML == null) {
             return null;
@@ -3325,7 +3322,7 @@ public final class XmlUtility {
             throw new XmlParserSystemException("While parse param filter.", e);
         }
 
-        filter = fh.getRules();
+        Map<String, Object> filter = fh.getRules();
 
         if (filter.isEmpty()) {
             filter = null;

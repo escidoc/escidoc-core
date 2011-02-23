@@ -147,12 +147,12 @@ public class PolicyParser {
      *         in "MATCHES"
      */
     private boolean matches(final Object valueList) {
-        boolean result = false;
 
         if (!(valueList instanceof StringAttribute)) {
             throw new IllegalArgumentException(
                 "only XMLSchema#string is supported");
         }
+        boolean result = false;
         for (String match : MATCHES) {
             if (matches(valueList, match)) {
                 result = true;
@@ -175,7 +175,6 @@ public class PolicyParser {
      *         given action
      */
     private boolean matches(final Object valueList, final String action) {
-        boolean result;
 
         if (!(valueList instanceof StringAttribute)) {
             throw new IllegalArgumentException(
@@ -185,8 +184,7 @@ public class PolicyParser {
             Pattern.compile(".*(\\A|\\s)" + action + "(\\s|\\z).*",
                 Pattern.MULTILINE | Pattern.DOTALL);
 
-        result =
-            p.matcher(((StringAttribute) valueList).getValue()).matches();
+        boolean result = p.matcher(((StringAttribute) valueList).getValue()).matches();
         return result;
     }
 

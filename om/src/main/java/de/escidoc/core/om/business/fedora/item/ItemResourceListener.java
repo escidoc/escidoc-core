@@ -121,10 +121,10 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
     protected void fireItemModified(final String id)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
-        String restXml;
-        String soapXml;
 
         setItem(id);
+        String soapXml;
+        String restXml;
         if (UserContext.isRestAccess()) {
             restXml = render();
             soapXml = getAlternateForm(id);
@@ -241,10 +241,10 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
         SystemException {
         if (indexingHandler != null) {
             for (String id : ids) {
-                String restXml;
-                String soapXml;
 
                 setItem(id);
+                String soapXml;
+                String restXml;
                 if (UserContext.isRestAccess()) {
                     restXml = render();
                     soapXml = getAlternateForm(id);

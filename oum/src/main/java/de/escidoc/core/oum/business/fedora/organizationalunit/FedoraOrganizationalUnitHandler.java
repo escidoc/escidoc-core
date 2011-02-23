@@ -1267,13 +1267,12 @@ public class FedoraOrganizationalUnitHandler
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        String result;
-
         setOrganizationalUnit(id);
         filterParams.put("query", new String[] { "\"/subject/id\"="
             + getOrganizationalUnit().getId() + " or "
             + "\"/object/id\"=" + getOrganizationalUnit().getId() });
 
+        String result;
         try {
             String searchResponse =
                 contentRelationHandler.retrieveContentRelations(filterParams);

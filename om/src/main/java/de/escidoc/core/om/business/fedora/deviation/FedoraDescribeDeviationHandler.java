@@ -85,11 +85,9 @@ public class FedoraDescribeDeviationHandler
         }
 
         String describeUrl = null;
-        String httpResponse;
         try {
             describeUrl = baseURL + "describe" + urlParams;
-            httpResponse =
-                connectionUtility.getRequestURLAsString(new URL(describeUrl), user,
+            String httpResponse = connectionUtility.getRequestURLAsString(new URL(describeUrl), user,
                     pass);
             return httpResponse;
         }

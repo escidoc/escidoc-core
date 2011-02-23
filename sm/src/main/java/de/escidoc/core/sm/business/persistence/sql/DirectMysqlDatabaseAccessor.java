@@ -449,9 +449,9 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      */
     @Override
     public List executeReadOnlySql(final String sql) throws SqlDatabaseSystemException {
-        boolean condition = false;
         String executionSql = sql;
         executionSql = executionSql.replaceAll("\\s+", " ");
+        boolean condition = false;
         if (executionSql.matches("(?i).* (where|order by|group by) .*")) {
             condition = true;
         }

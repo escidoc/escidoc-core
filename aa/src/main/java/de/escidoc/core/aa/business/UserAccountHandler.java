@@ -635,19 +635,15 @@ public class UserAccountHandler
     @Override
     public String retrieveGrants(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
-        String result;
-        String query;
-        int offset = FilterHandler.DEFAULT_OFFSET;
-        int limit = FilterHandler.DEFAULT_LIMIT;
-        boolean explain;
 
         SRURequestParameters parameters = new DbRequestParameters(filter);
 
-        query = parameters.getQuery();
-        limit = parameters.getLimit();
-        offset = parameters.getOffset();
-        explain = parameters.isExplain();
+        String query = parameters.getQuery();
+        int limit = parameters.getLimit();
+        int offset = parameters.getOffset();
+        boolean explain = parameters.isExplain();
 
+        String result;
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
@@ -660,9 +656,8 @@ public class UserAccountHandler
             int needed = offset + limit;
             final List<RoleGrant> permittedRoleGrants =
                 new ArrayList<RoleGrant>();
-            List<RoleGrant> tmpRoleGrants;
 
-            tmpRoleGrants = dao.retrieveGrants(query, 0, 0, userGroupHandler);
+            List<RoleGrant> tmpRoleGrants = dao.retrieveGrants(query, 0, 0, userGroupHandler);
             if (tmpRoleGrants != null && !tmpRoleGrants.isEmpty()) {
                 final List<String> userIds = new ArrayList<String>();
                 final List<String> groupIds = new ArrayList<String>();
@@ -999,9 +994,6 @@ public class UserAccountHandler
         // FIXME: inject Triplestoreutility
 
         if (objectId != null) {
-            String objectType;
-            String objectTitle;
-            String objectHref;
             Map<String, String> objectAttributes;
             try {
                 objectAttributes =
@@ -1015,10 +1007,8 @@ public class UserAccountHandler
                 throw new XmlCorruptedException(StringUtility.format(
                     MSG_GRANT_RESTRICTION_VIOLATED, objectId));
             }
-            objectType =
-                objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
-            objectTitle =
-                objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TITLE);
+            String objectType = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
+            String objectTitle = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TITLE);
 
             // check if objectType may be scope
             boolean checkOk = false;
@@ -1050,7 +1040,7 @@ public class UserAccountHandler
             }
 
             // get the href of the object.
-            objectHref = XmlUtility.getHref(objectType, objectId);
+            String objectHref = XmlUtility.getHref(objectType, objectId);
 
             // In case of REST it has to be checked if the provided href points
             // to the correct href.
@@ -1336,11 +1326,6 @@ public class UserAccountHandler
     @Override
     public String retrieveUserAccounts(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
-        String result;
-        String query;
-        int offset = FilterHandler.DEFAULT_OFFSET;
-        int limit = FilterHandler.DEFAULT_LIMIT;
-        boolean explain;
 
         Map<String, String[]> castedFilter = filter;
 
@@ -1351,11 +1336,12 @@ public class UserAccountHandler
 
         SRURequestParameters parameters = new DbRequestParameters(castedFilter);
 
-        query = parameters.getQuery();
-        limit = parameters.getLimit();
-        offset = parameters.getOffset();
-        explain = parameters.isExplain();
+        String query = parameters.getQuery();
+        int limit = parameters.getLimit();
+        int offset = parameters.getOffset();
+        boolean explain = parameters.isExplain();
 
+        String result;
         if (explain) {
             Map<String, Object> values = new HashMap<String, Object>();
 
@@ -1373,12 +1359,10 @@ public class UserAccountHandler
                 new ArrayList<UserAccount>();
             final int size = permittedUserAccounts.size();
             while (size <= needed) {
-                List<UserAccount> tmpUserAccounts;
 
-                tmpUserAccounts =
-                    dao
+                List<UserAccount> tmpUserAccounts = dao
                         .retrieveUserAccounts(query, currentOffset,
-                            currentLimit);
+                                currentLimit);
                 if (tmpUserAccounts == null || tmpUserAccounts.isEmpty()) {
                     break;
                 }
@@ -1495,11 +1479,9 @@ public class UserAccountHandler
                                 "non-supported relation in group-filter");
                         }
                         // get users for group
-                        Set<String> userIds;
                         StringBuilder replacement = new StringBuilder(" (");
                         try {
-                            userIds =
-                                retrieveUsersForGroup(groupFilterMatcher
+                            Set<String> userIds = retrieveUsersForGroup(groupFilterMatcher
                                     .group(6));
                             // write user-cql-query
                             // and replace group-expression with it.
@@ -2518,10 +2500,9 @@ public class UserAccountHandler
         currentPreferences.clear();
 
         // add all given preferences
-        UserPreference preference;
         Map<String, String> preferences = uprh.getPreferences();
         for (Entry<String, String> e : preferences.entrySet()) {
-            preference = new UserPreference();
+            UserPreference preference = new UserPreference();
             String preferenceName = e.getKey();
             String preferenceValue = e.getValue();
             preference.setUserAccountByUserId(userAccount);

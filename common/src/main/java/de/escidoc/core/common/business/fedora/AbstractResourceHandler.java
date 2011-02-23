@@ -182,8 +182,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
         StreamNotFoundException, SystemException {
         try {
             Datastream oldDs = theResource.getDatastream();
-            byte[] xmlBytes;
-            xmlBytes = xmlData.getBytes(XmlUtility.CHARACTER_ENCODING);
+            byte[] xmlBytes = xmlData.getBytes(XmlUtility.CHARACTER_ENCODING);
             Datastream newDs =
                 new Datastream("datastream", theResource.getId(), xmlBytes,
                     "text/xml");

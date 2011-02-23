@@ -124,9 +124,8 @@ public class OrganizationalUnitMetadataHandler
 
         if (getMdRecordPath().equals(getParser().getCurPath())) {
             insideMdRecord = true;
-            Attribute name;
             try {
-                name = element.getAttribute(null, NAME);
+                Attribute name = element.getAttribute(null, NAME);
                 this.currentMdRecordName = name.getValue();
 
                 if (currentMdRecordName.length() == 0) {

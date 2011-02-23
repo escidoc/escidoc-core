@@ -122,9 +122,8 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
         }
 
         final String templateFileName = getTemplateFilename(path, resource);
-        Template template;
         try {
-            template = Velocity.getTemplate(templateFileName, XmlUtility.CHARACTER_ENCODING);
+            Template template = Velocity.getTemplate(templateFileName, XmlUtility.CHARACTER_ENCODING);
             Writer out = new StringWriter();
             Context context = new VelocityContext(values);
             template.merge(context, out);

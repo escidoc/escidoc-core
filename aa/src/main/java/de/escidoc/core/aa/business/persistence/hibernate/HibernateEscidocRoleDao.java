@@ -204,7 +204,6 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
         final int maxResults, final String orderBy, final ListSorting sorting)
         throws SqlDatabaseSystemException {
 
-        List<EscidocRole> result;
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(EscidocRole.class, "r");
         detachedCriteria.add(Restrictions.ne("id",
@@ -275,6 +274,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
 
         if (criterias != null && criterias.isEmpty()) {
 
+            List<EscidocRole> result;
             try {
                 result =
                     getHibernateTemplate().findByCriteria(detachedCriteria,

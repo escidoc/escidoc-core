@@ -1030,12 +1030,12 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
     public List<UserAttribute> retrieveAttributes(final UserAccount userAccount)
         throws SqlDatabaseSystemException {
 
-        List<UserAttribute> result;
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
         detachedCriteria.add(Restrictions
             .eq("userAccountByUserId", userAccount));
+        List<UserAttribute> result;
         try {
             result = getHibernateTemplate().findByCriteria(detachedCriteria);
         }
@@ -1061,7 +1061,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         final UserAccount userAccount, final String attributeName)
         throws SqlDatabaseSystemException {
 
-        List<UserAttribute> result;
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
@@ -1070,6 +1069,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         if (attributeName != null) {
             detachedCriteria.add(Restrictions.eq("name", attributeName));
         }
+        List<UserAttribute> result;
         try {
             result = getHibernateTemplate().findByCriteria(detachedCriteria);
         }
@@ -1098,7 +1098,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             throw new SqlDatabaseSystemException("attributes may not be null");
         }
 
-        List<UserAttribute> result;
         DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
@@ -1120,6 +1119,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
 
         detachedCriteria.add(criterion);
+        List<UserAttribute> result;
         try {
             result = getHibernateTemplate().findByCriteria(detachedCriteria);
         }

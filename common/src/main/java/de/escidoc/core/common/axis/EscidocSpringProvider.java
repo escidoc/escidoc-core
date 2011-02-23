@@ -174,12 +174,10 @@ public class EscidocSpringProvider extends RPCProvider {
      */
     private String getHandle(final MessageContext messageContext) {
 
-        String eSciDocUserHandle = null;
-        List results;
         // get the result Vector from the property
-        results =
-            (List) messageContext
+        List results = (List) messageContext
                 .getProperty(WSHandlerConstants.RECV_RESULTS);
+        String eSciDocUserHandle = null;
         if (results == null) {
             // If username/password are sent as
             // http-basic-authentication-header

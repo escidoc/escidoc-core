@@ -264,7 +264,6 @@ public class ReportDefinitionHandler
             Collection<String> scopeIds = scopesDao.retrieveScopeIds();
 
             Collection<String> filteredScopeIds = null;
-            Collection<ReportDefinition> reportDefinitions = null;
 
             if (scopeIds != null && !scopeIds.isEmpty()) {
                 // get scope-ids filtered by user-privileges
@@ -272,6 +271,7 @@ public class ReportDefinitionHandler
                     filterUtility.filterRetrievePrivilege(
                         Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
+            Collection<ReportDefinition> reportDefinitions = null;
             if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get report-definitions as xml
                 reportDefinitions =

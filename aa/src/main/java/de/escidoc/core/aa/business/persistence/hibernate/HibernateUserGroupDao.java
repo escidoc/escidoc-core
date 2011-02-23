@@ -267,7 +267,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
     public Map<String, List<RoleGrant>> retrieveCurrentGrants(
         final List<String> groupIds) throws SqlDatabaseSystemException {
 
-        List<RoleGrant> roleGrants;
         Map<String, List<RoleGrant>> orderedResult =
             new HashMap<String, List<RoleGrant>>();
 
@@ -277,6 +276,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         detachedCriteria.add(Restrictions.isNull("revocationDate"));
         detachedCriteria.addOrder(Order.desc("objectId"));
 
+        List<RoleGrant> roleGrants;
         try {
             roleGrants =
                 getHibernateTemplate().findByCriteria(detachedCriteria);
@@ -352,7 +352,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         final Map<String, Object> criteria, final int offset,
         final int maxResults, final String orderBy, final ListSorting sorting)
         throws SqlDatabaseSystemException {
-        List<UserGroup> result;
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserGroup.class);
         final Map<String, Object> clonedCriterias =
@@ -407,6 +406,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                     .get(orderBy)));
             }
         }
+        List<UserGroup> result;
         if (clonedCriterias.isEmpty()) {
             try {
                 result =
@@ -480,7 +480,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
     @Override
     public List<UserGroupMember> retrieveUserGroupMembers(
         final Map<String, Object> criteria) throws SqlDatabaseSystemException {
-        List<UserGroupMember> result;
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserGroupMember.class);
         final Map<String, Object> clonedCriterias =
@@ -526,6 +525,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             }
         }
 
+        List<UserGroupMember> result;
         if (clonedCriterias.isEmpty()) {
             try {
                 result =

@@ -640,10 +640,9 @@ public class ItemCreate extends GenericResourceCreate {
                 componentIds = new ArrayList<String>();
                 // Vector<Future<String>> threads = new
                 // Vector<Future<String>>();
-                ComponentCreate component;
                 for (i = 0; i < this.components.size(); i++) {
                     // old unthreaded - works
-                    component = this.components.get(i);
+                    ComponentCreate component = this.components.get(i);
                     component.setIdProvider(this.idProvider);
                     String id = component.persist(false);
                     componentIds.add(id);
@@ -865,9 +864,8 @@ public class ItemCreate extends GenericResourceCreate {
      */
     private void rollbackCreate(final Iterable<String> componentIds) {
 
-        String componentId;
         for (String componentId1 : componentIds) {
-            componentId = componentId1;
+            String componentId = componentId1;
             LOG.debug("Rollback Component create (" + componentId + ").");
             try {
                 FedoraUtility.getInstance().deleteObject(componentId, false);

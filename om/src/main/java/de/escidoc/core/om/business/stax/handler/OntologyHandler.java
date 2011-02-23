@@ -74,7 +74,6 @@ public class OntologyHandler extends DefaultHandler {
     @Override
     public StartElement startElement(StartElement element) {
 
-        String elementPath = "/RDF/Property";
         String basePath = "/RDF";
         String currentPath = parser.getCurPath();
         if (basePath.equals(currentPath)) {
@@ -84,6 +83,7 @@ public class OntologyHandler extends DefaultHandler {
                 this.base = element.getAttribute(indexOfBase).getValue();
             }
         }
+        String elementPath = "/RDF/Property";
         if (elementPath.equals(currentPath)) {
 
             int indexOfId =

@@ -528,11 +528,9 @@ public class SecurityInterceptor implements Ordered {
             LOG.error(errorMsg);
             throw new WebserverSystemException(errorMsg);
         }
-        Constructor<ResourceNotFoundException> constructor;
         try {
-            constructor =
-                (Constructor<ResourceNotFoundException>) Class.forName(
-                    exceptionName).getConstructor(new Class[] { String.class });
+            Constructor<ResourceNotFoundException> constructor = (Constructor<ResourceNotFoundException>) Class.forName(
+                    exceptionName).getConstructor(new Class[]{String.class});
             String msg = e.getMessage();
             ResourceNotFoundException resourceNotFoundException =
                 (constructor.newInstance(msg));

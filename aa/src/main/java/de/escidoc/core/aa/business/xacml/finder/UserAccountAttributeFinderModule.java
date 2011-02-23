@@ -353,9 +353,6 @@ public class UserAccountAttributeFinderModule
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result;
-        String resolvedAttributeIdValue = null;
-
         // determine the id of the user account and to simplify the further
         // work, replace INTERNAL_SUBJECT_ATTRIBUTE_PREFIX by
         // INTERNAL_RESOURCE_USER_ACCOUNT_ATTRIBUTE_PREFIX in case of an
@@ -390,10 +387,10 @@ public class UserAccountAttributeFinderModule
             internalAttributeIdValue = attributeIdValue;
         }
         // ask cache for previously cached results
-        result =
-            getFromCache(resourceId, resourceObjid, resourceVersionNumber,
+        EvaluationResult result = getFromCache(resourceId, resourceObjid, resourceVersionNumber,
                 internalAttributeIdValue, ctx);
 
+        String resolvedAttributeIdValue = null;
         if (result == null) {
             // check if attributes of an anonymous user shall be retrieved
             if (UserContext.isIdOfAnonymousUser(userAccountId)) {
@@ -408,9 +405,7 @@ public class UserAccountAttributeFinderModule
             }
             else {
                 if (ATTR_USER_HANDLE.equals(internalAttributeIdValue)) {
-                    Set userHandles;
-                    userHandles =
-                        retrieveUserHandle(ctx, userAccountId,
+                    Set userHandles = retrieveUserHandle(ctx, userAccountId,
                             internalAttributeIdValue);
                     result =
                         new EvaluationResult(new BagAttribute(
@@ -449,10 +444,9 @@ public class UserAccountAttributeFinderModule
                     Matcher idMatcher = p.matcher(internalAttributeIdValue);
                     if (idMatcher.find()) {
                         resolvedAttributeIdValue = idMatcher.group(1);
-                        String nextResourceId;
                         if (userAccount != null) {
                             if (ATTR_USER_ID.equals(resolvedAttributeIdValue)) {
-                                nextResourceId = userAccount.getId();
+                                String nextResourceId = userAccount.getId();
                                 result =
                                     CustomEvaluationResultBuilder
                                         .createSingleStringValueResult(nextResourceId);
@@ -535,7 +529,6 @@ public class UserAccountAttributeFinderModule
         final UserAccount userAccount, final boolean getChildren)
         throws EscidocException {
 
-        final EvaluationResult result;
         String ouAttributeName;
         try {
             ouAttributeName =
@@ -550,6 +543,7 @@ public class UserAccountAttributeFinderModule
         }
         List<UserAttribute> attributes =
             userAccountDao.retrieveAttributes(userAccount, ouAttributeName);
+        final EvaluationResult result;
         if (attributes == null || attributes.isEmpty()) {
             result =
                 CustomEvaluationResultBuilder.createEmptyEvaluationResult();
@@ -633,7 +627,6 @@ public class UserAccountAttributeFinderModule
         final String userAccountId, final CharSequence attributeId)
         throws EscidocException {
 
-        final EvaluationResult result;
         // get role to fetch
         Matcher roleMatcher =
             PATTERN_PARSE_ROLE_GRANT_ROLE.matcher(attributeId);
@@ -667,6 +660,7 @@ public class UserAccountAttributeFinderModule
         List<RoleGrant> roleGrants =
             userAccountDao.retrieveGrants(criterias, null,
                 ListSorting.ASCENDING);
+        final EvaluationResult result;
         if (roleGrants != null) {
             final List<StringAttribute> results = new ArrayList<StringAttribute>();
             for (RoleGrant roleGrant : roleGrants) {

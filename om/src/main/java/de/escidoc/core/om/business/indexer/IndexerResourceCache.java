@@ -320,12 +320,10 @@ public final class IndexerResourceCache {
      */
     private synchronized void cacheExternalResource(final String identifier)
         throws SystemException {
-        HttpResponse httpResponse;
         ByteArrayOutputStream out = null;
         InputStream in = null;
         try {
-            httpResponse =
-                connectionUtility.getRequestURL(new URL(identifier));
+            HttpResponse httpResponse = connectionUtility.getRequestURL(new URL(identifier));
 
             if (httpResponse != null) {
                 String mimeType;

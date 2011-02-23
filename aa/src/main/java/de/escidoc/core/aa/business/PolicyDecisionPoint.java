@@ -602,9 +602,9 @@ public class PolicyDecisionPoint
      */
     private static String encode(final Status status) 
                             throws WebserverSystemException {
-        String ret;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         status.encode(out, new Indenter());
+        String ret;
         try {
             ret = out.toString(XmlUtility.CHARACTER_ENCODING);
         } catch (UnsupportedEncodingException e) {

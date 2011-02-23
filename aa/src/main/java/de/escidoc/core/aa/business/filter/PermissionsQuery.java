@@ -192,7 +192,6 @@ public class PermissionsQuery {
                 final Map<String, Map<String, List<RoleGrant>>> userGroupGrants =
                     getUserGroupGrants(filter.getUserId());
                 Set<String> hierarchicalContainers = null;
-                Set<String> hierarchicalOUs = null;
 
                 if (accessRights.needsHierarchicalPermissions(resourceType,
                     filter.getRoleId(),
@@ -201,6 +200,7 @@ public class PermissionsQuery {
                         getHierarchicalContainers(accessRights.getOptimizedScopeIds(
                             ResourceType.CONTAINER, userGrants, userGroupGrants));
                 }
+                Set<String> hierarchicalOUs = null;
                 if (accessRights.needsHierarchicalPermissions(resourceType,
                     filter.getRoleId(),
                     HIERARCHICAL_OUS_PLACEHOLDER)) {

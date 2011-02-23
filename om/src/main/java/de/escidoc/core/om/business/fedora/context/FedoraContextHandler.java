@@ -604,8 +604,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        String result;
-
         setContext(id);
         filterParams.put("query", new String[] { "\"/subject/id\"="
             + getContext().getId() + " or " +
@@ -617,7 +615,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             contentRelationHandler
                 .retrieveContentRelations(new LuceneRequestParameters(
                     filterParams));
-        result = transformSearchResponse2relations(searchResponse);
+        String result = transformSearchResponse2relations(searchResponse);
 
         return result;
 

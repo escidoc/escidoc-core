@@ -85,9 +85,6 @@ public class ItemUpdateHandler extends DefaultHandler {
 
         if (!done && curPath.equals(ITEM_PATH)) {
 
-            String href;
-            String objid;
-
             // handle xml:base attribute
             //
             // FIXME: check base if it has been provided?
@@ -138,8 +135,7 @@ public class ItemUpdateHandler extends DefaultHandler {
 
             // handle xlink:href attribute
             try {
-                href =
-                    element
+                String href = element
                         .getAttribute(Constants.XLINK_URI, "href").getValue();
                 final String expectedHref =
                     Constants.ITEM_URL_BASE + this.itemId;
@@ -159,7 +155,7 @@ public class ItemUpdateHandler extends DefaultHandler {
             // in case of non lax handling, an exception must be thrown if no
             // objid has been provided.
             try {
-                objid = element.getAttribute(null, "objid").getValue();
+                String objid = element.getAttribute(null, "objid").getValue();
                 if (!objid.equals(itemId)) {
                     throw new InvalidContentException(
                         StringUtility

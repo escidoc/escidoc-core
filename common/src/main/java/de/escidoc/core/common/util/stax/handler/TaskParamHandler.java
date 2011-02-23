@@ -121,9 +121,8 @@ public class TaskParamHandler extends DefaultHandler {
         String currentPath = parser.getCurPath();
 
         if (PARAM_PATH.equals(currentPath)) {
-            Attribute date;
             try {
-                date = element.getAttribute(null, LAST_MODIFICATION_DATE_ATT);
+                Attribute date = element.getAttribute(null, LAST_MODIFICATION_DATE_ATT);
                 lastModificationDate = date.getValue();
             }
             catch (NoSuchAttributeException e1) {

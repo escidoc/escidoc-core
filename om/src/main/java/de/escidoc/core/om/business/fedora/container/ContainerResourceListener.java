@@ -150,10 +150,10 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      */
     protected void fireContainerModified(final String id)
         throws ContainerNotFoundException, SystemException {
-        String restXml;
-        String soapXml;
 
         setContainer(id);
+        String soapXml;
+        String restXml;
         if (UserContext.isRestAccess()) {
             restXml = getContainerXml(getContainer());
             soapXml = getAlternateForm(id);

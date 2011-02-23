@@ -213,11 +213,11 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
     }
 
     private String[] splitPredicate(final String predicate) {
-        String[] result = new String[2];
         int index = predicate.lastIndexOf('#');
         if (index < 0) {
             index = predicate.lastIndexOf('/');
         }
+        String[] result = new String[2];
         result[0] = predicate.substring(0, index + 1);
         result[1] = predicate.substring(index + 1);
         return result;

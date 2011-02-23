@@ -153,10 +153,10 @@ public class JhoveHandler extends TmeHandlerBase
     private String callJhove(final String[] files) throws SystemException,
         TmeException {
         StringBuffer result = new StringBuffer();
-        File outputFile = null;
-        BufferedReader outputFileReader = null;
 
         logger.debug("callJhove(" + Arrays.toString(files) + ')');
+        BufferedReader outputFileReader = null;
+        File outputFile = null;
         try {
             JhoveBase je = new JhoveBase();
 

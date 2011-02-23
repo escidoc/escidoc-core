@@ -239,8 +239,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             throw new AuthorizationException("The Content of the component "
                 + componentId + " has visibility 'private'.");
         }
-        Datastream content;
-        content = component.getContent();
+        Datastream content = component.getContent();
 
         String storage = content.getControlGroup();
 
@@ -388,7 +387,6 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     private String getServiceUrl(final String service) throws SystemException {
 
-        String serviceUrl;
         EscidocConfiguration conf;
         try {
             conf = EscidocConfiguration.getInstance();
@@ -398,6 +396,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         }
 
         // -----------------------------------
+        String serviceUrl;
         if (service.equals(TRANSFORM_DIGILIB_CLIENT)) {
             serviceUrl = conf.get(EscidocConfiguration.DIGILIB_CLIENT);
         }

@@ -227,7 +227,6 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     private String requestSPO(final String spoQuery)
         throws InvalidTripleStoreQueryException,
         InvalidTripleStoreOutputFormatException, TripleStoreSystemException {
-        String result;
 
         String queryAddress;
         try {
@@ -239,7 +238,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         catch (final UnsupportedEncodingException e) {
             throw new TripleStoreSystemException(e);
         }
-        result = doRequest(queryAddress);
+        String result = doRequest(queryAddress);
 
         return result;
     }
@@ -247,11 +246,11 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     private static String doRequest(final String address)
         throws TripleStoreSystemException, InvalidTripleStoreQueryException,
         InvalidTripleStoreOutputFormatException {
-        String result;
 
         LOGGER.debug(StringUtility.format("doRequest",
             address));
 
+        String result;
         try {
             final URL url = new URL(address);
             final URLConnection con = url.openConnection();
@@ -800,16 +799,12 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         throws InvalidContentException, TripleStoreSystemException,
         MissingMethodParameterException {
 
-        String rdfObjectList;
-        Map filters;
+        Map filters = (Map) filterMap.get("filter");
         boolean ordered = false;
-
-        filters = (Map) filterMap.get("filter");
         if (filterMap.get("order-by") != null) {
             ordered = true;
         }
 
-        final String template = "$s $p $o";
         final StringBuilder itqlQuery = new StringBuilder("select $s ");
         if (ordered) {
             itqlQuery.append(" $order");
@@ -885,7 +880,9 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         itqlQuery.append(querySuffix);
 
+        String rdfObjectList;
         try {
+            final String template = "$s $p $o";
             rdfObjectList =
                 requestITQL(itqlQuery.toString(), template, Format.RDF_XML);
         }
@@ -1001,7 +998,6 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         MissingMethodParameterException {
 
         final List<String> result = new ArrayList<String>();
-        final String template = SELECT_VAR;
         final StringBuffer query = getRetrieveSelectClause(false, null);
 
         Map filter = (Map) filterMap.get("filter");
@@ -1027,8 +1023,6 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         }
 
         // stored later for later use
-        String roleCriteria;
-        String userCriteria;
         String topLevelOus = null;
 
         if (filter != null) {
@@ -1073,8 +1067,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             // ###############################################################
 
             // stored for later use
-            roleCriteria = (String) filter.remove("role");
-            userCriteria = (String) filter.remove("user");
+            String roleCriteria = (String) filter.remove("role");
+            String userCriteria = (String) filter.remove("user");
             if (userCriteria == null) {
                 if (roleCriteria != null) {
                     throw new MissingMethodParameterException(
@@ -1107,6 +1101,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         String response;
         try {
             final String q = query.toString();
+            final String template = SELECT_VAR;
             response = requestITQL(q, template, Format.CSV);
         }
         catch (final Exception e) {
@@ -1136,9 +1131,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         XmlParserSystemException {
 
         // TODO check functionality
-        List<String> result;
-        result =
-            evaluate("member", filterMap, "and $parent <"
+        List<String> result = evaluate("member", filterMap, "and $parent <"
                 + Constants.STRUCTURAL_RELATIONS_NS_URI + "member> $s "
                 + "and $parent <" + PROP_OBJECT_TYPE
                 + "> <http://escidoc.de/core/01/resources/Container> "
@@ -1157,9 +1150,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         MissingMethodParameterException {
 
         // TODO check functionality
-        List<String> result;
-        result =
-            evaluate("member", filterMap, "and ($s <"
+        List<String> result = evaluate("member", filterMap, "and ($s <"
                 + Constants.STRUCTURAL_RELATIONS_NS_URI
                 + "context> <info:fedora/" + contextId + ">) ", whereClause);
         // $parent "

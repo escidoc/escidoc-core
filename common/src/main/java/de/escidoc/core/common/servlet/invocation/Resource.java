@@ -217,12 +217,12 @@ public class Resource extends XMLBase {
      */
     private Node getInvocationDescription(
         final Node descriptor, final String method) throws TransformerException {
-        Node result = null;
         String xPath =
             INVOKE_ELEMENT + "[@" + INVOKE_HTTP_ATTR + "=\"" + method + '\"';
 
         xPath += "]";
         NodeList nodes = parse(xPath, descriptor);
+        Node result = null;
         if (nodes.getLength() == 1) {
             result = nodes.item(0);
         }
@@ -400,9 +400,9 @@ public class Resource extends XMLBase {
             }
             else {
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
-                byte[] buffer = new byte[BUFFER_SIZE];
-                int length;
                 try {
+                    int length;
+                    byte[] buffer = new byte[BUFFER_SIZE];
                     while ((length = is.read(buffer)) != -1) {
                         out.write(buffer, 0, length);
                     }

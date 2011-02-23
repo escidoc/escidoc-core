@@ -95,7 +95,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     public String render() throws SystemException, ComponentNotFoundException,
         ItemNotFoundException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
 
         Map<String, String> commonValues = getCommonValues(getItem());
@@ -111,7 +110,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values.putAll(getResourcesValues(getItem()));
         values.putAll(commonValues);
 
-        result = ItemXmlProvider.getInstance().getItemXml(values);
+        String result = ItemXmlProvider.getInstance().getItemXml(values);
         return result;
 
     }
@@ -145,8 +144,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     public String renderComponents(
         final Map<String, String> commonValues, final boolean isRoot)
         throws ComponentNotFoundException, SystemException {
-
-        String result;
 
         Map<String, String> values = new HashMap<String, String>();
 
@@ -191,7 +188,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.put("components", renderedComponents.toString());
         }
 
-        result = ItemXmlProvider.getInstance().getComponentsXml(values);
+        String result = ItemXmlProvider.getInstance().getComponentsXml(values);
         return result;
     }
 
@@ -229,7 +226,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         SystemException {
 
         Component component = getComponent(id);
-        String result;
 
         Map<String, String> values = new HashMap<String, String>();
         if (isRoot) {
@@ -304,7 +300,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.put("componentMdRecordsContent", mdRecordsContent);
         }
 
-        result = ItemXmlProvider.getInstance().getComponentXml(values);
+        String result = ItemXmlProvider.getInstance().getComponentXml(values);
         return result;
     }
 
@@ -328,7 +324,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             component = getComponent(id);
             values.putAll(getCommonValues(getItem()));
         }
-        String result;
 
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
             XmlTemplateProvider.TRUE);
@@ -337,8 +332,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values.put("componentId", component.getId());
         values.putAll(getComponentPropertiesValues(component));
 
-        result =
-            ItemXmlProvider.getInstance().getComponentPropertiesXml(values);
+        String result = ItemXmlProvider.getInstance().getComponentPropertiesXml(values);
 
         return result;
     }
@@ -623,13 +617,12 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         IntegritySystemException, TripleStoreSystemException {
         Map<String, String> values = new HashMap<String, String>();
 
-        Datastream ds;
-
         if (isRoot) {
             values.put("isRootContentStream", XmlTemplateProvider.TRUE);
         }
         String originObjectId =
             getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
+        Datastream ds;
         if (originObjectId != null) {
             ds = getOriginItem().getContentStream(name);
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
@@ -834,7 +827,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         TripleStoreSystemException, IntegritySystemException,
         XmlParserSystemException, EncodingSystemException,
         FedoraSystemException, ItemNotFoundException {
-        String result;
 
         Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
@@ -845,7 +837,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values.putAll(getCommonValues(getItem()));
         values.putAll(getPropertiesValues(getItem()));
 
-        result = ItemXmlProvider.getInstance().getItemPropertiesXml(values);
+        String result = ItemXmlProvider.getInstance().getItemPropertiesXml(values);
 
         return result;
     }
@@ -861,14 +853,13 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     public String renderRelations() throws WebserverSystemException,
         FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, TripleStoreSystemException {
-        String result;
 
         Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootRelations", XmlTemplateProvider.TRUE);
         values.putAll(getCommonValues(getItem()));
         values.putAll(getRelationValues(getItem()));
 
-        result = ItemXmlProvider.getInstance().getItemRelationsXml(values);
+        String result = ItemXmlProvider.getInstance().getItemRelationsXml(values);
 
         return result;
     }
@@ -882,7 +873,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      */
     @Override
     public String renderResources() throws WebserverSystemException {
-        String result;
 
         Map<String, Object> values = new HashMap<String, Object>();
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
@@ -895,7 +885,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         // compaptible with the this extension.
         values.put("showContentTransformer", XmlTemplateProvider.FALSE);
 
-        result = ItemXmlProvider.getInstance().getItemResourcesXml(values);
+        String result = ItemXmlProvider.getInstance().getItemResourcesXml(values);
 
         return result;
     }
@@ -911,7 +901,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      */
     public String renderParents(String itemId) throws SystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addStructuralRelationsValues(values);
@@ -923,7 +912,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 .print(System.currentTimeMillis()));
         addParentsValues(values, itemId);
         addParentsNamespaceValues(values);
-        result = ItemXmlProvider.getInstance().getParentsXml(values);
+        String result = ItemXmlProvider.getInstance().getParentsXml(values);
         return result;
     }
 
@@ -1251,8 +1240,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     public Set checkRelations(final String versionDate, final Map relations)
         throws TripleStoreSystemException, WebserverSystemException,
         FedoraSystemException, IntegritySystemException {
-        Set relationsData;
-        relationsData = relations.entrySet();
+        Set relationsData = relations.entrySet();
         Iterator it = relationsData.iterator();
         while (it.hasNext()) {
             Entry relData = (Entry) it.next();

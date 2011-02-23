@@ -328,15 +328,11 @@ public class ContainerHandlerBase extends HandlerBase {
         throws InvalidStatusException {
 
         String status;
-        String timestamp;
-        DocumentBuilder db;
-        Document xmlDom;
 
         final XPath xpath = XPathFactory.newInstance().newXPath();
         try {
-            db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            xmlDom =
-                db.parse(new ByteArrayInputStream(getContainer()
+            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            Document xmlDom = db.parse(new ByteArrayInputStream(getContainer()
                     .getWov().getStream()));
 
             // get status from version-history/version[@objid='id']/
@@ -344,7 +340,7 @@ public class ContainerHandlerBase extends HandlerBase {
             final String xpathTimestamp =
                 "/version-history/version[@objid='"
                     + getContainer().getLatestVersionId() + "']/timestamp";
-            timestamp = xpath.evaluate(xpathTimestamp, xmlDom);
+            String timestamp = xpath.evaluate(xpathTimestamp, xmlDom);
 
             // fetch the status with the newest timestamp
             final String xpathStatus =
@@ -448,14 +444,11 @@ public class ContainerHandlerBase extends HandlerBase {
         // expand this method to support more than one pid system
 
         String pid;
-        DocumentBuilder db;
-        Document xmlDom;
 
         final XPath xpath = XPathFactory.newInstance().newXPath();
         try {
-            db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            xmlDom =
-                db.parse(new ByteArrayInputStream(getContainer()
+            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            Document xmlDom = db.parse(new ByteArrayInputStream(getContainer()
                     .getWov().getStream()));
 
             // get status from /version-history/version[@objid='id']/pid

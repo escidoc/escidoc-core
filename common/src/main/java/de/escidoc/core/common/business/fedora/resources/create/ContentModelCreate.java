@@ -188,8 +188,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
             // create service definitions and deployments
             if (resourceDefinitions != null) {
-                Iterator<ResourceDefinitionCreate> it;
-                it = this.resourceDefinitions.values().iterator();
+                Iterator<ResourceDefinitionCreate> it = this.resourceDefinitions.values().iterator();
                 while (it.hasNext()) {
                     ResourceDefinitionCreate rdc = it.next();
                     String sdefFoxml = getSDefFoXML(rdc);

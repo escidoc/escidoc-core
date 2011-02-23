@@ -147,8 +147,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
             LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
-        Scope scope;
-        scope = dao.retrieve(id);
+        Scope scope = dao.retrieve(id);
         dao.delete(scope);
     }
 

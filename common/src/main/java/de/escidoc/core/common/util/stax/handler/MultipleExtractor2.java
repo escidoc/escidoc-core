@@ -147,13 +147,12 @@ public class MultipleExtractor2 extends DefaultHandler {
                 writer = newInitializedWriter(out);
 
                 final String attributeName = paths.get(currentPath);
-                final Map<String, Object> component;
-                Map<String, OutputStream> mdRecords;
                 if (inComponent) {
                     if (components == null) {
                         components = new HashMap<String, Map>();
                         outputStreams.put("components", components);
                     }
+                    final Map<String, Object> component;
                     if (components.containsKey(componentId)) {
                         component = (HashMap) components.get(componentId);
                     } else {
@@ -168,7 +167,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                         String attributeValue =
                             getAttributeValue(element, null, attributeName);
                         if ("md-record".equals(elementName)) {
-                            mdRecords = components.get(components);
+                            Map<String, OutputStream> mdRecords = components.get(components);
                             if (mdRecords == null) {
                                 mdRecords = new HashMap<String, OutputStream>();
                                 component.put("md-records", mdRecords);

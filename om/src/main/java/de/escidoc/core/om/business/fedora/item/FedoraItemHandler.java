@@ -303,15 +303,13 @@ public class FedoraItemHandler extends ItemHandlerPid
             sp.addHandler(mdHandler);
 
             ContentStreamHandler csh = null;
-            ComponentUpdateHandler cuh;
             NewComponentExtractor nce = null;
             ComponentMdRecordsUpdateHandler cmuh = null;
 
             if (!origin) {
                 csh = new ContentStreamHandler(getItem());
                 sp.addHandler(csh);
-                cuh =
-                    new ComponentUpdateHandler(getItem().getId(),
+                ComponentUpdateHandler cuh = new ComponentUpdateHandler(getItem().getId(),
                         "/item/components/component", sp);
                 sp.addHandler(cuh);
                 nce = new NewComponentExtractor(sp);
@@ -773,11 +771,9 @@ public class FedoraItemHandler extends ItemHandlerPid
         throws ItemNotFoundException, MissingMethodParameterException,
         SystemException, MdRecordNotFoundException, AuthorizationException {
         setItem(id);
-        Datastream mdRecord;
         String dc;
         try {
-            mdRecord =
-                getItem().getMdRecord(
+            Datastream mdRecord = getItem().getMdRecord(
                     XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
             if (mdRecord.isDeleted()) {
                 throw new MdRecordNotFoundException();
@@ -848,8 +844,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         checkReleased();
         checkWithdrawn("No update allowed.");
 
-        String newMdRecord;
-
         StaxParser sp = new StaxParser();
         OptimisticLockingHandler olh =
             new OptimisticLockingHandler(getItem().getId(),
@@ -900,6 +894,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 throw new SystemException(e);
             }
         }
+        String newMdRecord;
         try {
             newMdRecord = retrieveMdRecord(getItem().getId(), mdRecordId);
         }
@@ -973,8 +968,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         checkLocked();
         checkReleased();
 
-        String newMdRecord;
-
         HashMap<String, String> extractPathes = new HashMap<String, String>();
         extractPathes.put("/md-record", "name");
 
@@ -1021,6 +1014,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             makeVersion("Item.createMetadataRecord");
             getItem().persist();
         }
+        String newMdRecord;
         try {
             newMdRecord = retrieveMdRecord(getItem().getId(), name);
         }
@@ -1090,8 +1084,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        String result;
-
         setItem(id);
         filterParams.put("query", new String[] { "\"/subject/id\"="
             + getItem().getId() + " or " + "\"/subject/id\"="
@@ -1103,7 +1095,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             contentRelationHandler
                 .retrieveContentRelations(new LuceneRequestParameters(
                     filterParams));
-        result = transformSearchResponse2relations(searchResponse);
+        String result = transformSearchResponse2relations(searchResponse);
 
         return result;
 
@@ -1157,8 +1149,6 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         String startTimestamp = getItem().getLastFedoraModificationDate();
 
-        String updatedXmlData = null;
-
         StaxParser sp = new StaxParser();
         OptimisticLockingHandler olh =
             new OptimisticLockingHandler(getItem().getId(),
@@ -1197,6 +1187,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             cmuh.getNamespacesMap());
 
         // return the new item
+        String updatedXmlData = null;
         try {
             updatedXmlData = retrieveComponents(id);
         }
@@ -1578,8 +1569,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         MultipleExtractor me = new MultipleExtractor(extractPathes, sp);
         sp.addHandler(me);
 
-        String updatedXmlData;
-
         try {
             sp.parse(xmlData);
         }
@@ -1599,7 +1588,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             .getMetadataAttributes().get(componentId), cmuh
             .getNamespacesMap().get(componentId));
 
-        updatedXmlData = retrieveComponent(id, componentId);
+        String updatedXmlData = retrieveComponent(id, componentId);
 
         String endTimestamp = getItem().getLastFedoraModificationDate();
         if (!startTimestamp.equals(endTimestamp)) {
@@ -2026,8 +2015,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getLastModificationDate(),
             taskParameter.getLastModificationDate(), "Item " + id);
 
-        boolean resourceUpdated = false;
-
         StaxParser sp = new StaxParser();
 
         ContentRelationsRemoveHandler2Edition removeHandler =
@@ -2061,6 +2048,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 relationsData.iterator();
             HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
                 new HashMap<String, List<StartElementWithChildElements>>();
+            boolean resourceUpdated = false;
             while (iterator.hasNext()) {
                 resourceUpdated = true;
                 final Map<String, String> relation = iterator.next();
@@ -3023,10 +3011,9 @@ public class FedoraItemHandler extends ItemHandlerPid
         else {
 
             Collection<String> mdRecordNames = new ArrayList<String>();
-            String name;
             for (MdRecordCreate mdRecord : mdRecords) {
 
-                name = mdRecord.getName();
+                String name = mdRecord.getName();
 
                 // check uniqueness of names
                 if (mdRecordNames.contains(name)) {

@@ -104,17 +104,13 @@ public class PIDManagerRESTService implements PIDSystem {
         throws PidSystemException, MissingMethodParameterException,
         WebserverSystemException {
 
-        String xmlParam;
-        String pidResult;
-        URL url;
-        String username;
-        String password;
-
         if (param == null) {
             throw new MissingMethodParameterException(
                 "Invalid param structure.");
         }
 
+        String password;
+        String username;
         try {
             username =
                 EscidocConfiguration.getInstance().get(
@@ -127,12 +123,12 @@ public class PIDManagerRESTService implements PIDSystem {
             throw new WebserverSystemException(e);
         }
 
-        HttpResponse httpPostRes;
+        String pidResult;
         try {
-            xmlParam = preparePidManagerDatastructure(systemID, param);
+            String xmlParam = preparePidManagerDatastructure(systemID, param);
 
-            url = new URL(this.pidGeneratorServer + this.globalPrefix + '/');
-            httpPostRes =this.connectionUtility.postRequestURL(url, xmlParam, username,
+            URL url = new URL(this.pidGeneratorServer + this.globalPrefix + '/');
+            HttpResponse httpPostRes = this.connectionUtility.postRequestURL(url, xmlParam, username,
                     password);
 
             int status = httpPostRes.getStatusLine().getStatusCode();
@@ -200,8 +196,6 @@ public class PIDManagerRESTService implements PIDSystem {
      *             Thrown if delete from the PID System fails.
      */
     public void deletePID(final String pid) throws PidSystemException {
-        URL url;
-        HttpURLConnection conn;
 
         String pidServer = this.pidGeneratorServer + this.globalPrefix + '/';
 
@@ -212,9 +206,9 @@ public class PIDManagerRESTService implements PIDSystem {
         }
 
         try {
-            url = new URL(pidServer + suffix);
+            URL url = new URL(pidServer + suffix);
 
-            conn = (HttpURLConnection) url.openConnection();
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("DELETE");
             conn.setUseCaches(false);
             conn.setInstanceFollowRedirects(false);
@@ -331,9 +325,8 @@ public class PIDManagerRESTService implements PIDSystem {
             Node sysid = doc.createElement("systemID");
             sysid.setTextContent(systemID);
             first.appendChild(sysid);
-            Transformer transformer;
 
-            transformer = TransformerFactory.newInstance().newTransformer();
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             StreamResult result = new StreamResult(new StringWriter());
             Source source = new DOMSource(doc);

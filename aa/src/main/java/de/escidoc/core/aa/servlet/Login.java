@@ -765,8 +765,8 @@ public class Login extends HttpServlet {
             throw new IOException(StringUtility.format(
                     "Template not found", templateFileName));
         }
-        final byte[] buffer = new byte[BUFFER_SIZE];
         try {
+            final byte[] buffer = new byte[BUFFER_SIZE];
             int length = inputStream.read(buffer);
             while (length != -1) {
                 result.append(new String(buffer, 0, length));

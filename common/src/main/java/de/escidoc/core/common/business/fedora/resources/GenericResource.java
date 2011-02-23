@@ -1020,15 +1020,13 @@ public class GenericResource implements FedoraResource {
     public String persist(final boolean sync) throws FedoraSystemException,
         WebserverSystemException {
 
-        String lastModificationDate;
-
         /*
          * Well, this is not nice but the used comparing method, to detect
          * changes, is expensive. If RELS-EXT was not updated (through the
          * methods of this class), then should a persist be redundant.
          */
         if (this.needSync) {
-            lastModificationDate = persistRelsExt();
+            String lastModificationDate = persistRelsExt();
             setLastModificationDate(lastModificationDate);
         }
 

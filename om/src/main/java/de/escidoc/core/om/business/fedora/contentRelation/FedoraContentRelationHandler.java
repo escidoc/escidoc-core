@@ -141,8 +141,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         ReferencedResourceNotFoundException,
         RelationPredicateNotFoundException, SystemException {
 
-        ContentRelationCreate cr;
-        cr = parseContentRelation(xmlData);
+        ContentRelationCreate cr = parseContentRelation(xmlData);
 
         // make sure that some values are fixed/ignored
         cr.setObjid(null);
@@ -329,9 +328,6 @@ public class FedoraContentRelationHandler extends HandlerBase
         SystemException, InvalidXmlException,
         ReferencedResourceNotFoundException, RelationPredicateNotFoundException {
 
-        boolean resourceChanged = false;
-        String result;
-
         // instance of stored Content Relation
         ContentRelationCreate cr = setContentRelation(id);
         enrichWithMetadataContent(cr);
@@ -344,12 +340,12 @@ public class FedoraContentRelationHandler extends HandlerBase
         validate(updatedCR);
 
         // now compare this.contentRelation with updatedCR and transfer data
+        boolean resourceChanged = false;
         if (cr.merge(updatedCR) > 0) {
             cr.persist();
             resourceChanged = true;
         }
-        result =
-            ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
+        String result = ContentRelationXmlProvider.getInstance().getContentRelationXml(cr);
 
         if (resourceChanged) {
             fireContentRelationModified(cr, result);

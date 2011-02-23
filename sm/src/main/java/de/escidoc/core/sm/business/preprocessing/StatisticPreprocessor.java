@@ -166,8 +166,6 @@ public class StatisticPreprocessor {
                                                     + ", EndDate:"
                                                     + endDate);
         }
-        Date internalStartDate;
-        Date internalEndDate;
         if (aggregationDefinitionId == null) {
             throw new StatisticPreprocessingSystemException(
                     "aggregationDefinitionId may not be null");
@@ -175,10 +173,9 @@ public class StatisticPreprocessor {
         try {
             AggregationDefinition aggregationDefinition = 
                 dao.retrieve(aggregationDefinitionId);
-            internalStartDate = 
-                determineStartDate(
-                        startDate, aggregationDefinition.getScope().getId());
-            internalEndDate = determineEndDate(endDate);
+            Date internalStartDate = determineStartDate(
+                    startDate, aggregationDefinition.getScope().getId());
+            Date internalEndDate = determineEndDate(endDate);
             if (log.isInfoEnabled()) {
                 log.info("ComputedStartDate: " + internalStartDate);
                 log.info("ComputedEndDate: " + internalEndDate);

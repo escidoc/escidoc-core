@@ -220,12 +220,10 @@ public class HttpRequester {
     private String requestSsl( // Ignore FindBugs
         final String resource, final String method, final String body)
         throws Exception {
-        URL url;
-        InputStream is;
         StringBuilder response = new StringBuilder();
 
         // Open Connection to given resource
-        url = new URL(domain + resource);
+        URL url = new URL(domain + resource);
         TrustManager[] tm = { new RelaxedX509TrustManager() };
         SSLContext sslContext = SSLContext.getInstance("SSL");
         sslContext.init(null, tm, new java.security.SecureRandom());
@@ -261,14 +259,14 @@ public class HttpRequester {
         }
 
         // Request
-        is = con.getInputStream();
+        InputStream is = con.getInputStream();
         setCookie(con.getHeaderField("Set-cookie"));
 
         // Read response
-        String currentLine;
         BufferedReader br = null;
         try {
             br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));
+            String currentLine;
             while ((currentLine = br.readLine()) != null) {
                 response.append(currentLine).append('\n');
             }
@@ -302,7 +300,6 @@ public class HttpRequester {
     private String requestNoSsl(
         final String resource, final String method, final String body)
         throws Exception {
-        URL url;
         HttpURLConnection con = null;
         InputStream is = null;
         OutputStream out = null;
@@ -310,7 +307,7 @@ public class HttpRequester {
 
         try {
             // Open Connection to given resource
-            url = new URL(domain + resource);
+            URL url = new URL(domain + resource);
             con = (HttpURLConnection) url.openConnection();
 
             // Set Basic-Authentication Header
@@ -345,10 +342,10 @@ public class HttpRequester {
             setCookie(con.getHeaderField("Set-cookie"));
 
             // Read response
-            String currentLine;
             BufferedReader br = null;
             try {
                 br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));
+                String currentLine;
                 while ((currentLine = br.readLine()) != null) {
                     response.append(currentLine).append('\n');
                 }

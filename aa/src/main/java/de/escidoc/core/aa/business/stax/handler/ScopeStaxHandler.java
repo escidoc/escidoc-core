@@ -108,7 +108,6 @@ public class ScopeStaxHandler extends DefaultHandler {
         if (isNotReady()) {
             final String currentPath = element.getPath();
             if (ROLE_SCOPE_DEF_PATH.equals(currentPath)) {
-                String scopeDefAttributeId = null;
                 try {
                     scopeDefResourceTypes.add(element.getAttributeValue(null,
                         ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME));
@@ -117,6 +116,7 @@ public class ScopeStaxHandler extends DefaultHandler {
                     throw createMandatoryAttributeNotFoundException(element,
                         null, ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME, e);
                 }
+                String scopeDefAttributeId = null;
                 try {
                     scopeDefAttributeId = element.getAttributeValue(null,
                             ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_ID_NAME);

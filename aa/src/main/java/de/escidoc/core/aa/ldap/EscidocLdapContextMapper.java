@@ -89,9 +89,8 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
             }
         }
 
-        Attributes atts;
         try {
-            atts = ctx.getAttributes("");
+            Attributes atts = ctx.getAttributes("");
             if (atts != null) {
                 NamingEnumeration< ? extends Attribute> enumer = atts.getAll();
                 if (enumer != null) {

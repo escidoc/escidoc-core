@@ -431,8 +431,7 @@ public final class CustomPolicyBuilder {
         final String policyId) throws URISyntaxException,
         UnknownIdentifierException, FunctionTypeException {
 
-        List<Collection<TargetMatch>> policyResources;
-        policyResources = new ArrayList<Collection<TargetMatch>>();
+        List<Collection<TargetMatch>> policyResources = new ArrayList<Collection<TargetMatch>>();
         Collection<TargetMatch> policyResource = new ArrayList<TargetMatch>();
         policyResource.add(CustomTargetBuilder.generateResourceMatch(
             XacmlFunctionRoleIsGranted.NAME, policyId,

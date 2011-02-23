@@ -504,9 +504,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 cmph.getProperties().getObjectProperties().getDescription())) {
             // update DC (title, description)
             Datastream dc = getContentModel().getDc();
-            ByteArrayInputStream dcIs;
-            dcIs = new ByteArrayInputStream(dc.getStream());
-            byte[] dcNewBytes;
+            ByteArrayInputStream dcIs = new ByteArrayInputStream(dc.getStream());
             final StaxParser dcParser = new StaxParser();
 
             final TreeMap<String, StartElementWithText> updateElementsDc =
@@ -536,6 +534,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 new MultipleExtractor(extractPathes, dcParser);
             extractPathes.put("/dc", null);
             dcParser.addHandler(me);
+            byte[] dcNewBytes;
             try {
                 dcParser.parse(dcIs);
                 final ByteArrayOutputStream dcUpdated =
@@ -935,10 +934,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
         if (!((mdRecords == null) || mdRecords.size() < 1)) {
             Collection<String> mdRecordNames = new ArrayList<String>();
-            String name;
             for (MdRecordCreate mdRecord : mdRecords) {
 
-                name = mdRecord.getName();
+                String name = mdRecord.getName();
 
                 // check uniqueness of names
                 if (mdRecordNames.contains(name)) {

@@ -90,8 +90,6 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
                     .getInstance()
                     .get(
                         EscidocConfiguration.ESCIDOC_CORE_AA_PERSISTENT_ID_ATTRIBUTE_NAME);
-            String name;
-            String loginname;
             String origin;
 
             // get origin
@@ -103,6 +101,7 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
             }
 
             // get name
+            String name;
             if (StringUtils.isNotEmpty(cnAttribute)
                 && StringUtils.isNotEmpty(request.getHeader(cnAttribute))) {
                 name = request.getHeader(cnAttribute);
@@ -112,6 +111,7 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
             }
 
             // get loginname
+            String loginname;
             if (StringUtils.isNotEmpty(uidAttribute)
                 && StringUtils.isNotEmpty(request.getHeader(uidAttribute))) {
                 loginname =

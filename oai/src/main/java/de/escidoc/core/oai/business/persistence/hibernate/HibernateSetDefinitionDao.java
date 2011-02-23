@@ -173,7 +173,6 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
         final Map<String, Object> criteria, final int offset,
         final int maxResults, final String orderBy, final ListSorting sorting)
         throws SqlDatabaseSystemException {
-        List<SetDefinition> result;
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(SetDefinition.class);
         final Map<String, Object> clonedCriterias =
@@ -213,6 +212,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
                     .get(orderBy)));
             }
         }
+        List<SetDefinition> result;
         if (clonedCriterias.isEmpty()) {
             try {
                 result =

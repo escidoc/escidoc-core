@@ -238,14 +238,12 @@ public class ResourceAttributeFinderModule
         final String resourceId, final String resolvedAttributeIdValue)
         throws EscidocException {
 
-        EvaluationResult result;
         final String localCacheKey =
             StringUtility.concatenateWithColonToString(resourceId,
                 resolvedAttributeIdValue);
         // A previous parse process could have stored the found
         // attributes in the cache. Here, we try to get it from the cache.
-        result =
-            (EvaluationResult) RequestAttributesCache.get(ctx, localCacheKey);
+        EvaluationResult result = (EvaluationResult) RequestAttributesCache.get(ctx, localCacheKey);
         if (result == null) {
             if (attributeIdValue.startsWith(AttributeIds.ITEM_ATTR_PREFIX)) {
                 String itemXml = retrieveItem(ctx, resourceId);
@@ -278,8 +276,7 @@ public class ResourceAttributeFinderModule
             }
             else if (attributeIdValue
                 .startsWith(AttributeIds.CONTAINER_ATTR_PREFIX)) {
-                String containerXml;
-                containerXml = retrieveContainer(ctx, resourceId);
+                String containerXml = retrieveContainer(ctx, resourceId);
                 StaxParser sp = new StaxParser(XmlUtility.NAME_CONTAINER);
                 sp.addHandler(new ContainerStaxHandler(ctx, resourceId));
                 try {
@@ -342,7 +339,6 @@ public class ResourceAttributeFinderModule
         final String attributeIdValue, final EvaluationCtx ctx,
         final String itemId) throws EscidocException {
 
-        EvaluationResult result;
         // to resolve a component attribute, the id of the component
         // must be known
         final String componentId =
@@ -353,8 +349,7 @@ public class ResourceAttributeFinderModule
         // A previous parse process could have stored the found
         // attributes in the cache. Here, we try to get it from the
         // cache.
-        result =
-            (EvaluationResult) RequestAttributesCache.get(ctx, localCacheKey);
+        EvaluationResult result = (EvaluationResult) RequestAttributesCache.get(ctx, localCacheKey);
         if (result == null) {
             final String componentXml =
                 retrieveComponent(ctx, itemId, componentId);

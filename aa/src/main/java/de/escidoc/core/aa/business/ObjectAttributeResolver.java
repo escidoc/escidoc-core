@@ -114,10 +114,9 @@ public class ObjectAttributeResolver {
         final String objectId, final boolean typeOnly)
         throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
-        Map<String, String> objectAttributes;
 
         // try getting attributes from Triple-Store
-        objectAttributes = getObjectFromTripleStore(objectId, typeOnly);
+        Map<String, String> objectAttributes = getObjectFromTripleStore(objectId, typeOnly);
 
         // try getting attributes from user-account
         if (objectAttributes == null) {

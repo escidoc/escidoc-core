@@ -140,8 +140,6 @@ public class PartlyResolveableAttributeFinderModule
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result;
-
         // First, the part until the MARKER has to be resolved. This is an
         // attribute for that the value has to be provided in the request
         // as it is a "new" value that can not be automatically resolved.
@@ -154,6 +152,7 @@ public class PartlyResolveableAttributeFinderModule
         matcher.find();
         final String firstPartAttributeId = matcher.group(1);
 
+        EvaluationResult result;
         try {
             result =
                 ctx.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING,

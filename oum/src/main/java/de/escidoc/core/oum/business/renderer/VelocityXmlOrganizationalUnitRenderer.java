@@ -89,7 +89,6 @@ public class VelocityXmlOrganizationalUnitRenderer
     public String render(final OrganizationalUnit organizationalUnit)
         throws SystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
 
@@ -103,8 +102,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         addResourcesValues(organizationalUnit, values);
         addParentsValues(organizationalUnit, values);
         addPredecessorsValues(organizationalUnit, values);
-        result =
-            OrganizationalUnitXmlProvider
+        String result = OrganizationalUnitXmlProvider
                 .getInstance().getOrganizationalUnitXml(values);
         return result;
     }
@@ -122,13 +120,11 @@ public class VelocityXmlOrganizationalUnitRenderer
     public String renderProperties(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
         values.put("isRootProperties", XmlTemplateProvider.TRUE);
         addPropertiesValues(organizationalUnit, values);
-        result =
-            OrganizationalUnitXmlProvider
+        String result = OrganizationalUnitXmlProvider
                 .getInstance().getPropertiesXml(values);
         return result;
     }
@@ -145,13 +141,11 @@ public class VelocityXmlOrganizationalUnitRenderer
     @Override
     public String renderResources(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException {
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
         values.put("isRootResources", XmlTemplateProvider.TRUE);
         addResourcesValues(organizationalUnit, values);
-        result =
-            OrganizationalUnitXmlProvider.getInstance().getResourcesXml(values);
+        String result = OrganizationalUnitXmlProvider.getInstance().getResourcesXml(values);
         return result;
     }
 
@@ -166,14 +160,12 @@ public class VelocityXmlOrganizationalUnitRenderer
     @Override
     public String renderMdRecords(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException {
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
         values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
             XmlTemplateProvider.TRUE);
         addMdRecordsValues(organizationalUnit, values);
-        result =
-            OrganizationalUnitXmlProvider.getInstance().getMdRecordsXml(values);
+        String result = OrganizationalUnitXmlProvider.getInstance().getMdRecordsXml(values);
         return result;
     }
 
@@ -195,7 +187,6 @@ public class VelocityXmlOrganizationalUnitRenderer
         final OrganizationalUnit organizationalUnit, final String name)
         throws WebserverSystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         addMdRecordValues(organizationalUnit, name, values);
         if (values.isEmpty()) {
@@ -206,8 +197,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD,
             XmlTemplateProvider.TRUE);
 
-        result =
-            MetadataRecordsXmlProvider.getInstance().getMdRecordXml(values);
+        String result = MetadataRecordsXmlProvider.getInstance().getMdRecordXml(values);
         return result;
     }
 
@@ -224,13 +214,11 @@ public class VelocityXmlOrganizationalUnitRenderer
     public String renderParents(final OrganizationalUnit organizationalUnit)
         throws SystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
         values.put("isRootParents", XmlTemplateProvider.TRUE);
         addParentsValues(organizationalUnit, values);
-        result =
-            OrganizationalUnitXmlProvider.getInstance().getParentsXml(values);
+        String result = OrganizationalUnitXmlProvider.getInstance().getParentsXml(values);
         return result;
     }
 
@@ -250,7 +238,6 @@ public class VelocityXmlOrganizationalUnitRenderer
         final OrganizationalUnit organizationalUnit, final List<String> children)
         throws SystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addListNamespaceValues(values);
@@ -261,8 +248,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             .getOrganizationalUnitResourcesChildObjectsHref(organizationalUnit
                 .getId()));
         values.put("entries", children);
-        result =
-            OrganizationalUnitXmlProvider.getInstance().getChildObjectsXml(
+        String result = OrganizationalUnitXmlProvider.getInstance().getChildObjectsXml(
                 values);
         return result;
     }
@@ -283,7 +269,6 @@ public class VelocityXmlOrganizationalUnitRenderer
         final OrganizationalUnit organizationalUnit, final List<String> parents)
         throws SystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addListNamespaceValues(values);
@@ -295,8 +280,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             .getOrganizationalUnitResourcesParentObjectsHref(organizationalUnit
                 .getId()));
         values.put("entries", parents);
-        result =
-            OrganizationalUnitXmlProvider.getInstance().getParentObjectsXml(
+        String result = OrganizationalUnitXmlProvider.getInstance().getParentObjectsXml(
                 values);
         return result;
     }
@@ -316,7 +300,6 @@ public class VelocityXmlOrganizationalUnitRenderer
     public String renderPathList(
         final OrganizationalUnit organizationalUnit,
         final List<List<String>> pathes) throws SystemException {
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addPathListNamespaceValues(values);
@@ -334,8 +317,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             pathList.add(retrieveRefValues(pathIter.next()));
         }
         values.put("pathes", pathList);
-        result =
-            OrganizationalUnitXmlProvider.getInstance().getPathListXml(values);
+        String result = OrganizationalUnitXmlProvider.getInstance().getPathListXml(values);
         return result;
     }
 
@@ -351,7 +333,6 @@ public class VelocityXmlOrganizationalUnitRenderer
     public String renderSuccessors(final OrganizationalUnit organizationalUnit)
         throws SystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
 
         values.put(XmlTemplateProvider.IS_ROOT, XmlTemplateProvider.TRUE);
@@ -365,8 +346,7 @@ public class VelocityXmlOrganizationalUnitRenderer
 
         addPropertiesValues(organizationalUnit, values);
         addSuccessorsValues(organizationalUnit, values);
-        result =
-            OrganizationalUnitXmlProvider
+        String result = OrganizationalUnitXmlProvider
                 .getInstance().getSuccessorsXml(values);
         return result;
     }
@@ -628,10 +608,8 @@ public class VelocityXmlOrganizationalUnitRenderer
 
         values.put("mdRecordsTitle", "Metadata");
 
-        Map<String, Datastream> mdRecords;
         try {
-            mdRecords =
-                (HashMap<String, Datastream>) organizationalUnit.getMdRecords();
+            Map<String, Datastream> mdRecords = (HashMap<String, Datastream>) organizationalUnit.getMdRecords();
             Iterator<Datastream> mdRecordsIter = mdRecords.values().iterator();
             StringBuffer mdRecordsContent = new StringBuffer();
             while (mdRecordsIter.hasNext()) {

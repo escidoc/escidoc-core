@@ -71,12 +71,11 @@ public class FedoraRestDeviationHandler
         final Map<String, String[]> parameters)
         throws Exception {
 
-        EscidocBinaryContent escidocBinaryContent = null;
-        
         if (log.isDebugEnabled()) {
             log.debug("PID:" + pid + ", DSID:" + dsID);
         }
         // Try to get EscidocBinaryContent from IndexerResourceCache/////////////////
+        EscidocBinaryContent escidocBinaryContent = null;
         try {
             MIMETypedStream mimeTypedStream =
                 (MIMETypedStream) IndexerResourceCache

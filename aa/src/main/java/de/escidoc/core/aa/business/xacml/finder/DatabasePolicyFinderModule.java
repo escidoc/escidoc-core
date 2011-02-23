@@ -412,11 +412,10 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
         // get groups the user belongs to
         Set<String> userGroups = policiesCacheProxy.getUserGroups(userId);
-        XacmlPolicySet groupPolicySet;
         if (userGroups != null && !userGroups.isEmpty()) {
             List<String> nonCachedGroupPolicies = new ArrayList<String>();
             for (String groupId : userGroups) {
-                groupPolicySet = PoliciesCache.getGroupPolicies(groupId);
+                XacmlPolicySet groupPolicySet = PoliciesCache.getGroupPolicies(groupId);
                 if (groupPolicySet == null) {
                     nonCachedGroupPolicies.add(groupId);
                 }
@@ -540,8 +539,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         }
 
         try {
-            Map<String, Map<String, List<RoleGrant>>> roleGrants;
-            roleGrants = userAccountHandler.retrieveCurrentGrantsAsMap(userId);
+            Map<String, Map<String, List<RoleGrant>>> roleGrants = userAccountHandler.retrieveCurrentGrantsAsMap(userId);
             // cache grants for later retrieval during policy evaluation
             PoliciesCache.putUserGrants(userId, roleGrants);
 
@@ -580,9 +578,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         Map<String, XacmlPolicySet> ret =
             new HashMap<String, XacmlPolicySet>();
         try {
-            Map<String, Map<String, Map<String, List<RoleGrant>>>> roleGrants;
-            roleGrants =
-                userGroupHandler.retrieveManyCurrentGrantsAsMap(groupIds);
+            Map<String, Map<String, Map<String, List<RoleGrant>>>> roleGrants = userGroupHandler.retrieveManyCurrentGrantsAsMap(groupIds);
             // cache grants for later retrieval during policy evaluation
             if (roleGrants != null) {
                 for (Entry<String, Map<String, 

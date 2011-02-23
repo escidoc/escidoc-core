@@ -392,9 +392,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();
-        List<String> results;
 
-        results = executeQueryId(id, true, PROP_PARENT);
+        List<String> results = executeQueryId(id, true, PROP_PARENT);
         for (String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
@@ -418,9 +417,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();
-        List<String> results;
 
-        results = executeQueryForList(ids, true, PROP_PARENT);
+        List<String> results = executeQueryForList(ids, true, PROP_PARENT);
         for (String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
@@ -447,10 +445,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         List<String> result = totalList;
-        List<String> results;
         Collection<String> parentsList = new ArrayList<String>();
 
-        results = executeQueryForList(ids, true, PROP_PARENT);
+        List<String> results = executeQueryForList(ids, true, PROP_PARENT);
         if (results != null && !results.isEmpty()) {
             for (String result1 : results) {
                 String entry = result1;
@@ -478,9 +475,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final List<String> result = new ArrayList<String>();
         final Collection<String> queryIDs = new ArrayList<String>();
         queryIDs.add(id);
-        List<String> results;
 
-        results = executeQueryForList(queryIDs, true, PROP_MEMBER);
+        List<String> results = executeQueryForList(queryIDs, true, PROP_MEMBER);
         for (String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
@@ -643,11 +639,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public String getItemForComponent(final String id)
         throws TripleStoreSystemException {
 
-        String item = null;
-        List<String> results;
-
-        results = executeQueryId(id, true, PROP_COMPONENT);
+        List<String> results = executeQueryId(id, true, PROP_COMPONENT);
         final Iterator<String> it = results.iterator();
+        String item = null;
         if (it.hasNext()) {
             // TODO throw exception if more than one result
             // List<Node> row = results.next();
@@ -674,9 +668,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         final List<String> result = new ArrayList<String>();
-        List<String> results;
         try {
-            results = executeQueryLiteral(name, true, PROP_DC_TITLE);
+            List<String> results = executeQueryLiteral(name, true, PROP_DC_TITLE);
             for (String result1 : results) {
                 final String entry = result1;
                 result.add(XmlUtility.getIdFromURI(entry));
@@ -1143,8 +1136,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public boolean hasReferringResource(String id)
         throws TripleStoreSystemException {
 
-        List<String> results;
-        results = executeQueryId(id, true, PROP_CONTENT_MODEL_ID);
+        List<String> results = executeQueryId(id, true, PROP_CONTENT_MODEL_ID);
         final Iterator<String> it = results.iterator();
         return it.hasNext();
     }

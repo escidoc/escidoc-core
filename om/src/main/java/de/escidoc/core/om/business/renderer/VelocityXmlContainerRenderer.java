@@ -150,13 +150,12 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public String renderProperties(final Container container)
         throws WebserverSystemException, SystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);
         values.put("isRootProperties", XmlTemplateProvider.TRUE);
         addPropertiesValus(values, container);
-        result = ContainerXmlProvider.getInstance().getPropertiesXml(values);
+        String result = ContainerXmlProvider.getInstance().getPropertiesXml(values);
         return result;
     }
 
@@ -172,13 +171,12 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     @Override
     public String renderResources(final Container container)
         throws WebserverSystemException {
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);
         values.put("isRootResources", XmlTemplateProvider.TRUE);
         addResourcesValues(container, values);
-        result = ContainerXmlProvider.getInstance().getResourcesXml(values);
+        String result = ContainerXmlProvider.getInstance().getResourcesXml(values);
         return result;
     }
 
@@ -197,7 +195,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public String renderRelations(final Container container)
         throws WebserverSystemException, SystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         values.put("isRootRelations", XmlTemplateProvider.TRUE);
@@ -206,7 +203,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             container.getHref(), values);
         values.put("contentRelationsTitle", "Relations of Container");
         commonRenderer.addRelationsNamespaceValues(values);
-        result = RelationsXmlProvider.getInstance().getRelationsXml(values);
+        String result = RelationsXmlProvider.getInstance().getRelationsXml(values);
         return result;
     }
 
@@ -225,7 +222,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public String renderParents(final String containerId)
         throws SystemException {
 
-        String result;
         Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addXlinkValues(values);
         commonRenderer.addStructuralRelationsValues(values);
@@ -237,7 +233,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("isRootParents", XmlTemplateProvider.TRUE);
         addParentsValues(containerId, values);
         commonRenderer.addParentsNamespaceValues(values);
-        result = ContainerXmlProvider.getInstance().getParentsXml(values);
+        String result = ContainerXmlProvider.getInstance().getParentsXml(values);
         return result;
     }
 
@@ -737,8 +733,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             Constants.METADATARECORDS_NAMESPACE_PREFIX);
         values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE,
             Constants.METADATARECORDS_NAMESPACE_URI);
-        String mdRecordContent;
-        mdRecordContent = mdRecord.toStringUTF8();
+        String mdRecordContent = mdRecord.toStringUTF8();
         values.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecordContent);
         List<String> altIds = mdRecord.getAlternateIDs();
         if (!"unknown".equals(altIds.get(1))) {

@@ -864,18 +864,15 @@ public class IndexingHandler implements ResourceListener {
             String lastTerm = "";
             String lastLastTerm = "";
             boolean running = true;
-            HttpGet httpGet;
-            HttpResponse response;
             while (running) {
                 handler.resetNoOfDocumentTerms();
-                httpGet =
-                    new HttpGet(EscidocConfiguration.getInstance().get(
+                HttpGet httpGet = new HttpGet(EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.SRW_URL)
                         + "/search/"
                         + indexName
                         + '?'
                         + query.replaceFirst("\\$\\{Term\\}", lastTerm));
-                response = client.execute(httpGet);
+                HttpResponse response = client.execute(httpGet);
                 if (response.getStatusLine().getStatusCode() 
                                     == HttpURLConnection.HTTP_OK) {
                     lastLastTerm = handler.getLastTerm();

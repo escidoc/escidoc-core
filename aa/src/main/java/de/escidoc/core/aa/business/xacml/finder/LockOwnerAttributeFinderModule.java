@@ -126,11 +126,8 @@ public class LockOwnerAttributeFinderModule
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result;
-
         String lockOwner = lockHandler.getLockOwner(resourceId);
-        result =
-            CustomEvaluationResultBuilder
+        EvaluationResult result = CustomEvaluationResultBuilder
                 .createSingleStringValueResult(lockOwner);
         return new Object[] { result, attributeIdValue };
 

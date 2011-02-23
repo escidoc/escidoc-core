@@ -387,7 +387,6 @@ public class TripleStoreAttributeFinderModule
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result;
         List<String> cachedAttribute = new ArrayList<String>();
         MapResult mapresult = mapIt(attributeIdValue);
 
@@ -395,6 +394,7 @@ public class TripleStoreAttributeFinderModule
             return null;
         }
 
+        EvaluationResult result;
         if (!mapresult.getresolvableAttributeId().equals(attributeIdValue)) {
             try {
                 result =

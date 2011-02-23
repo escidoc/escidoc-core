@@ -622,7 +622,6 @@ public class Item extends GenericVersionableResourcePid
         final String schema = ds.getAlternateIDs().get(2);
         String mimeType = ds.getMimeType();
         try {
-            boolean contentChanged = false;
             boolean isNew = false;
 
             Datastream curDs = null;
@@ -632,6 +631,7 @@ public class Item extends GenericVersionableResourcePid
             catch (MdRecordNotFoundException e1) {
                 isNew = true; // curDs is null
             }
+            boolean contentChanged = false;
             if (!isNew) { // curDs is not null
                 String curMimeType = curDs.getMimeType();
                 String curType = "";
@@ -666,9 +666,9 @@ public class Item extends GenericVersionableResourcePid
                                         getId(),
                                         getResourcePropertiesValue(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
 
-                            Datastream dcNew;
                             if (dcNewContent != null
                                 && dcNewContent.trim().length() > 0) {
+                                Datastream dcNew;
                                 try {
                                     dcNew =
                                         new Datastream(

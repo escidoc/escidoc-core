@@ -124,9 +124,6 @@ public class AggregationDefinitionHandler
             throw new MissingMethodParameterException("xml may not be null");
         }
 
-        String scopeId;
-        AggregationDefinition aggregationDefinition;
-
         // parse
         StaxParser sp = new StaxParser();
         AggregationDefinitionStaxHandler handler =
@@ -140,13 +137,13 @@ public class AggregationDefinitionHandler
             throw new SystemException(e);
         }
 
-        scopeId = handler.getAggregationDefinition().getScope().getId();
+        String scopeId = handler.getAggregationDefinition().getScope().getId();
         Scope scope = scopesDao.retrieve(scopeId);
 
         // get AggregationDefinitionObject to insert aggregation-definition
         // into database
         Utility utility = new Utility();
-        aggregationDefinition = handler.getAggregationDefinition();
+        AggregationDefinition aggregationDefinition = handler.getAggregationDefinition();
         aggregationDefinition.setCreatorId(utility.getCurrentUserId());
         aggregationDefinition.setCreationDate(new Timestamp(System
             .currentTimeMillis()));
@@ -324,7 +321,6 @@ public class AggregationDefinitionHandler
             Collection<String> scopeIds = scopesDao.retrieveScopeIds();
 
             Collection<String> filteredScopeIds = null;
-            Collection<AggregationDefinition> aggregationDefinitions = null;
 
             if (scopeIds != null && !scopeIds.isEmpty()) {
                 // get scope-ids filtered by user-privileges
@@ -332,7 +328,8 @@ public class AggregationDefinitionHandler
                     filterUtility.filterRetrievePrivilege(
                         Constants.SCOPE_OBJECT_TYPE, scopeIds);
             }
-       if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
+            Collection<AggregationDefinition> aggregationDefinitions = null;
+            if (filteredScopeIds != null && !filteredScopeIds.isEmpty()) {
                 // get aggregation-definitions as XML
                 aggregationDefinitions =
                     dao.retrieveAggregationDefinitions(filteredScopeIds, query,

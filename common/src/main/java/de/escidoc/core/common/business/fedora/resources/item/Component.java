@@ -466,9 +466,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                             String dcNewContent =
                                 XmlUtility.createDC(nsUri, ds.toStringUTF8(),
                                     getId(), null);
-                            Datastream dcNew;
                             if (dcNewContent != null
                                 && dcNewContent.trim().length() > 0) {
+                                Datastream dcNew;
                                 try {
                                     dcNew =
                                         new Datastream(

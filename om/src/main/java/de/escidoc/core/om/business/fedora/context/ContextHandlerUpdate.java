@@ -614,7 +614,6 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             && ((propertiesToAdd == null) || (propertiesToAdd.isEmpty()))) {
             return false;
         }
-        boolean updatedDcProperties = false;
         Datastream dc;
         try {
             dc = getContext().getDc();
@@ -622,11 +621,11 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         catch (final StreamNotFoundException e1) {
             throw new IntegritySystemException("Datastream dc not found.", e1);
         }
-        ByteArrayInputStream dcIs;
-        dcIs = new ByteArrayInputStream(dc.getStream());
+        ByteArrayInputStream dcIs = new ByteArrayInputStream(dc.getStream());
         byte[] dcNewBytes = null;
         final StaxParser sp = new StaxParser();
 
+        boolean updatedDcProperties = false;
         if (!propertiesToRemove.isEmpty()) {
 
             if (!changedValues.isEmpty()) {

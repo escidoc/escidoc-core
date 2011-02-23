@@ -161,11 +161,9 @@ public class LinkStaxHandler extends DefaultHandler {
                                 StringUtility.format(
                                         MSG_WRONG_BASE_URI, hrefBaseUri, href,
                                         element.getLocationString());
-                            Constructor constructor;
                             try {
-                                constructor =
-                                    exceptionClass
-                                        .getConstructor(new Class[] { String.class });
+                                Constructor constructor = exceptionClass
+                                        .getConstructor(new Class[]{String.class});
                                 throw (EscidocException) constructor
                                     .newInstance(new Object[] { errorMsg });
                             }

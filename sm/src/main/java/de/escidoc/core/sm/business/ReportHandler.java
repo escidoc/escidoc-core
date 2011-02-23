@@ -163,7 +163,6 @@ public class ReportHandler implements ReportHandlerInterface {
                     reportParametersVo.getParameterVos();
         if (parameterVos != null) {
             for (ParameterVo parameterVo : parameterVos) {
-                String replacementString = null;
                 if (parameterVo != null) {
                     String type = null;
                     if (parameterVo.getDateValue() != null) {
@@ -176,6 +175,7 @@ public class ReportHandler implements ReportHandlerInterface {
                         type = Constants.DATABASE_FIELD_TYPE_TEXT;
                     }
                     if (type != null) {
+                        String replacementString = null;
                         if (parameterVo.getDateValue() != null) {
                             replacementString =
                                 parameterVo.getDateValue()

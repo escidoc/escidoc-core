@@ -87,10 +87,9 @@ public class SpringStatisticPreprocessorService {
             Date date = new Date(time);
             preprocessor.execute(date);
         } catch (Exception e) {
-            final String message = 
-                "preprocessing of statistic-data failed";
             errorMessageHandler.putErrorMessage(
                     new HashMap<String, String>() { {
+                        final String message = "preprocessing of statistic-data failed";
                         put("message", message); }
 
                         private static final long serialVersionUID = 5304590831581021890L;
@@ -116,10 +115,9 @@ public class SpringStatisticPreprocessorService {
             Date date = new Date(millies);
             preprocessor.execute(date);
         } catch (Exception e) {
-            final String message = 
-                "preprocessing of statistic-data failed";
             errorMessageHandler.putErrorMessage(
                     new HashMap<String, String>() { {
+                        final String message = "preprocessing of statistic-data failed";
                         put("message", message); }
 
                         private static final long serialVersionUID = -2340916328981929936L;

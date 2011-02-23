@@ -262,14 +262,11 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
 
         // String status = null;
         String pid;
-        DocumentBuilder db;
-        Document xmlDom;
 
         final XPath xpath = XPathFactory.newInstance().newXPath();
         try {
-            db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            xmlDom =
-                db.parse(new ByteArrayInputStream(getContainer()
+            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            Document xmlDom = db.parse(new ByteArrayInputStream(getContainer()
                     .getWov().getStream()));
 
             // get status from version-history/version[@objid='id']/pid

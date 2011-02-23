@@ -118,9 +118,8 @@ public class ItemHandlerBase extends HandlerBase {
             final String content, final String fileName, final String mimeType)
         throws WebserverSystemException {
         String uploadUrl;
-        byte[] streamContent;
         try {
-            streamContent = Base64.decodeBase64(content.getBytes());
+            byte[] streamContent = Base64.decodeBase64(content.getBytes());
             uploadUrl =
                 Utility.getInstance().upload(streamContent, fileName, mimeType);
         }

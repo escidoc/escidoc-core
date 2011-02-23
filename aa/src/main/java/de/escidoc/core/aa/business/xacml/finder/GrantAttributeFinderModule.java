@@ -338,14 +338,12 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         final EvaluationCtx ctx, final String attributeIdValue,
         final String resolvableAttribute, final String tail)
         throws EscidocException {
-        EvaluationResult result;
         String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_RESOURCE_ID, true);
         String grantId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_SUBRESOURCE_ID, true);
-        String createdBy;
         if (grantId == null || grantId.length() == 0) {
             throw new GrantNotFoundException("no grantId found");
         }
@@ -358,10 +356,9 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             grant = userGroupDao.retrieveGrant(grantId);
         }
         assertGrant(grantId, grant);
-        createdBy = grant.getCreatorId();
+        String createdBy = grant.getCreatorId();
 
-        result =
-            CustomEvaluationResultBuilder
+        EvaluationResult result = CustomEvaluationResultBuilder
                 .createSingleStringValueResult(createdBy);
         return new Object[] { result, resolvableAttribute };
     }
@@ -386,7 +383,6 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         final EvaluationCtx ctx, final String attributeIdValue,
         final String resolvableAttribute, final String tail)
         throws EscidocException {
-        EvaluationResult result;
         String userOrGroupId =
             FinderModuleHelper.retrieveSingleResourceAttribute(ctx,
                 Constants.URI_RESOURCE_ID, true);
@@ -413,8 +409,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             roleId = grant.getRoleId();
         }
 
-        result =
-            CustomEvaluationResultBuilder.createSingleStringValueResult(roleId);
+        EvaluationResult result = CustomEvaluationResultBuilder.createSingleStringValueResult(roleId);
         return new Object[] { result, resolvableAttribute };
     }
 
