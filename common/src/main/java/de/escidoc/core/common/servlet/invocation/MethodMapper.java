@@ -287,7 +287,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         throws MethodNotFoundException, EncodingSystemException {
 
         return getMethod(request.getRequestURI(), request.getQueryString(),
-            request.getMethod().equals("GET") ? request.getParameterMap()
+                "GET".equals(request.getMethod()) ? request.getParameterMap()
                 : null, request.getMethod(), Resource.getRequestBody(request));
     }
 

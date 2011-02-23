@@ -236,7 +236,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType("text/xml");
 
-        if (resourceName.equals("members")) {
+        if ("members".equals(resourceName)) {
             try {
                 content.setContent(new ByteArrayInputStream(retrieveMembers(id,
                     new LuceneRequestParameters(parameters)).getBytes(
@@ -247,7 +247,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                 throw new WebserverSystemException(e);
             }
         }
-        else if (resourceName.equals("relations")) {
+        else if ("relations".equals(resourceName)) {
             try {
                 content.setContent(new ByteArrayInputStream(
                     retrieveContentRelations(id).getBytes(

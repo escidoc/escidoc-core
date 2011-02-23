@@ -138,14 +138,14 @@ public class FilterHandler extends DefaultHandler {
 
         final String localName = element.getLocalName();
         if (inFilter) {
-            if (localName.equals("id")) {
+            if ("id".equals(localName)) {
                 if (!inObjectList) {
                     throw new InvalidContentException(
                         "Invalid id element in filter rule.");
                 }
                 objectsToFindIdList.add(data);
             }
-            else if (localName.equals("filter")) {
+            else if ("filter".equals(localName)) {
                 // filtername=objectsToFind has no character data
                 int indexOfName = element.indexOfAttribute(null, "name");
                 if (indexOfName >= 0) {

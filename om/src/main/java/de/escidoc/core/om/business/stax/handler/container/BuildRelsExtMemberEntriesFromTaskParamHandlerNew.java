@@ -68,15 +68,15 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
         WebserverSystemException {
         String localName = element.getLocalName();
 
-        if (localName.equals("id")) {
+        if ("id".equals(localName)) {
             String objid = data;
 
             if (!TripleStoreUtility.getInstance().exists(objid)) {
-                if (this.methodName.equals("add")) {
+                if ("add".equals(this.methodName)) {
                 throw new InvalidContentException("Object with id " + objid
                     + " does not exist and can not be added to members of "
                     + parentId + '.');
-                } else if (this.methodName.equals("remove")) {
+                } else if ("remove".equals(this.methodName)) {
                     throw new InvalidContentException("Object with id " + objid
                         + " does not exist and can not be removed from members of "
                         + parentId + '.');

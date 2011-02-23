@@ -593,7 +593,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     public boolean isLatestRelease() throws IntegritySystemException {
 
-        return isLatestVersion() && getVersionStatus().equals("released");
+        return isLatestVersion() && "released".equals(getVersionStatus());
     }
 
     /**
@@ -1475,7 +1475,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 this.relsExt = ds;
             }
             // DC
-            else if ((name.equals("DC")) && (this.dc == null)) {
+            else if (("DC".equals(name)) && (this.dc == null)) {
                 ds =
                         new Datastream("DC", getId(), getVersionDate(),
                                 mimeType, location, controlGroupValue);

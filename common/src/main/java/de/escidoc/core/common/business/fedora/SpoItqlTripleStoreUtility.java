@@ -1221,7 +1221,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         final String namespacePrefix = resourceName + "-ref-list";
         String schemaVersion = "0.2";
-        if (resourceName.equals("item")) {
+        if ("item".equals(resourceName)) {
             schemaVersion = "0.4";
         }
         final String namespaceUri =

@@ -1314,7 +1314,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     queryPartPropertiesBuffer.append(" FROM ");
                     queryPartPropertiesBuffer.append(tableNameItem);
                     queryPartPropertiesBuffer.append(" WHERE ");
-                    if (key.equals("context")
+                    if ("context".equals(key)
                         || key.equals(Elements.ELEMENT_CONTENT_MODEL)) {
                         queryPartPropertiesBuffer.append(columnObjectItem).append("='<info:fedora/").append(val).append(">'");
                     }
@@ -1327,7 +1327,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     queryPartPropertiesBuffer.append(" FROM ");
                     queryPartPropertiesBuffer.append(tableNameContainer);
                     queryPartPropertiesBuffer.append(" WHERE ");
-                    if (key.equals("context")
+                    if ("context".equals(key)
                         || key.equals(Elements.ELEMENT_CONTENT_MODEL)) {
                         queryPartPropertiesBuffer.append(columnObjectContainer).append("='<info:fedora/").append(val).append(">'");
                     }
@@ -1438,7 +1438,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     // columnNames.add(columnName);
                     // query += "and $object <http://www.escidoc.de/schemas/"
                     // + objectType + "/0.1/" + key + "> '" + val + "' ";
-                    if (key.equals("context")
+                    if ("context".equals(key)
                         || key.equals(Elements.ELEMENT_CONTENT_MODEL)) {
                         queryPartPropertiesBuffer.append(columnName).append("='<info:fedora/").append(val).append(">'");
                     }
@@ -1585,7 +1585,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
         String namespacePrefix = objectType + "-ref-list";
         String schemaVersion = "0.2";
-        if (objectType.equals("item")) {
+        if ("item".equals(objectType)) {
             schemaVersion = "0.3";
         }
         String namespaceUri =
@@ -1696,8 +1696,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         // work around for more than one dc:identifier
         for (String result : results) {
             value = result;
-            if (!fullqualifiedPropertyName
-                    .equals("http://purl.org/dc/elements/1.1/identifier") || pid.equals(value)) {
+            if (!"http://purl.org/dc/elements/1.1/identifier".equals(fullqualifiedPropertyName) || pid.equals(value)) {
                 break;
             }
         }

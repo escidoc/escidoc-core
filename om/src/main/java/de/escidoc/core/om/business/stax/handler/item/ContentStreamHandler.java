@@ -88,9 +88,8 @@ public class ContentStreamHandler extends WriteHandler {
         if ((inContentStreams)
             && (contentStreamName != null
                 && getWriter() != null
-                && contentStreams.get(contentStreamName).get(
-                    Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE).equals(
-                    "text/xml"))) {
+                && "text/xml".equals(contentStreams.get(contentStreamName).get(
+                Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE)))) {
             getWriter().writeCharacters(data);
         }
         return data;
@@ -260,15 +259,13 @@ public class ContentStreamHandler extends WriteHandler {
 
                     if (storage
                         .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
-                        if (contentStreams
-                            .get(contentStreamName).get(
-                                Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE)
-                            .equals("text/xml")) {
+                        if ("text/xml".equals(contentStreams
+                                .get(contentStreamName).get(
+                                        Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
 
                             // check if control group is changed
                             if (curControlGroup != null
-                                && !(curControlGroup.equals("M") || curControlGroup
-                                    .equals("X"))) {
+                                && !("M".equals(curControlGroup) || "X".equals(curControlGroup))) {
                                 throw new InvalidContentException(
                                     "The value of storage can not be changed in existing content stream '"
                                         + contentStreamName + "'.");
@@ -306,7 +303,7 @@ public class ContentStreamHandler extends WriteHandler {
                         }
                         // check if control group is changed
                         if (curControlGroup != null
-                            && !curControlGroup.equals("E")) {
+                            && !"E".equals(curControlGroup)) {
                             throw new InvalidContentException(
                                 "The value of storage can not be changed in existing content stream '"
                                     + contentStreamName + "'.");
@@ -324,7 +321,7 @@ public class ContentStreamHandler extends WriteHandler {
                         }
                         // check if control group is changed
                         if (curControlGroup != null
-                            && !curControlGroup.equals("R")) {
+                            && !"R".equals(curControlGroup)) {
                             throw new InvalidContentException(
                                 "The value of storage can not be changed in existing content stream '"
                                     + contentStreamName + "'.");

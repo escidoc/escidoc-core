@@ -218,7 +218,7 @@ public abstract class WriteHandler extends DefaultHandler {
         if ((attributeName != null) && attLocalName.equals(attributeName)) {
             attributeValue = attValue;
         }
-        if (!theName.equals("md-record") && !theName.equals("admin-descriptor")) {
+        if (!"md-record".equals(theName) && !"admin-descriptor".equals(theName)) {
             writeAttribute(attrNameSpace, theName, attLocalName, attValue,
                 attrPrefix, nscontext);
         }

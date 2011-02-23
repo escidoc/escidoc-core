@@ -232,7 +232,7 @@ public class BeanMethod {
                         "Create Bean", getBeanId()));
             }
             
-            if(getBeanId().equals("service.StagingFileHandlerBean")) {
+            if("service.StagingFileHandlerBean".equals(getBeanId())) {
                 result =
                     BeanLocator.getBean(BeanLocator.ST_FACTORY_ID, getBeanId());
             } else {

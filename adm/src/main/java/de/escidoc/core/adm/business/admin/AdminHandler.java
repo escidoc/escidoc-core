@@ -369,7 +369,7 @@ public class AdminHandler {
         StringBuilder result = new StringBuilder();
 
         // select example package
-        if (!type.equals("common")) {
+        if (!"common".equals(type)) {
             throw new SystemException("Example set '" + type
                 + "' not supported.");
         }

@@ -65,10 +65,10 @@ public enum StorageType {
     }
 
     public String getESciDocName() {
-        if (this.storageType.equals("E")) {
+        if ("E".equals(this.storageType)) {
             return Constants.STORAGE_EXTERNAL_MANAGED;
         }
-        else if (this.storageType.equals("R")) {
+        else if ("R".equals(this.storageType)) {
             return Constants.STORAGE_EXTERNAL_URL;
         }
         // else if (this.storageType.equals(StorageType.INTERNAL_MANAGED)) {

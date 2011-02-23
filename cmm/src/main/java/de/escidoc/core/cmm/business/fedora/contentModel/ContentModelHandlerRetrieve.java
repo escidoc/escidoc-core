@@ -172,15 +172,15 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NAME, ds.getName());
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_TITLE, ds.getLabel());
         String location = ds.getLocation();
-        if (ds.getControlGroup().equals("M")
-            || ds.getControlGroup().equals("X")) {
+        if ("M".equals(ds.getControlGroup())
+            || "X".equals(ds.getControlGroup())) {
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
                 Constants.STORAGE_INTERNAL_MANAGED);
             location =
                 getContentModel().getHref() + Constants.CONTENT_STREAM_URL_PART
                     + '/' + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
-            if (ds.getControlGroup().equals("X")) {
+            if ("X".equals(ds.getControlGroup())) {
                 try {
                     values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_CONTENT,
                         ds.toStringUTF8());
@@ -190,7 +190,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                 }
             }
         }
-        else if (ds.getControlGroup().equals("E")) {
+        else if ("E".equals(ds.getControlGroup())) {
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
                 Constants.STORAGE_EXTERNAL_MANAGED);
             location =
@@ -199,7 +199,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
 
         }
-        else if (ds.getControlGroup().equals("R")) {
+        else if ("R".equals(ds.getControlGroup())) {
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
                 Constants.STORAGE_EXTERNAL_URL);
         }

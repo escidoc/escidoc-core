@@ -57,7 +57,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
         else if (event instanceof EndElement) {
             EndElement element = event.asEndElement();
             if (workaroundForItemList
-                && element.getName().getLocalPart().equalsIgnoreCase("RDF")) {
+                && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {
                 return false;
             }
         }
@@ -75,12 +75,11 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
     public boolean accept(StartElement element) {
         try {
             if (workaroundForItemList
-                && element.getName().getLocalPart().equalsIgnoreCase("RDF")) {
+                && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {
                 return false;
             }
-            if (element.getName().getLocalPart().equalsIgnoreCase("RDF")
-                || element.getName().getLocalPart().equalsIgnoreCase(
-                    "description")) {
+            if ("RDF".equalsIgnoreCase(element.getName().getLocalPart())
+                || "description".equalsIgnoreCase(element.getName().getLocalPart())) {
                 return true;
             }
             else {
@@ -91,12 +90,12 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
                 }
                 // workaround for item list is to allow dc and some specials
                 else if (workaroundForItemList
-                    && (name.getLocalPart().equals("created-by-title")
-                        || name.getLocalPart().equals("context-title")
-                        || name.getLocalPart().equals("latest-version.date")
-                        || name.getLocalPart().equals("latest-version.status")
-                        || name.getLocalPart().equals("public-status") || name
-                        .getLocalPart().equals("hasComponent"))) {
+                    && ("created-by-title".equals(name.getLocalPart())
+                        || "context-title".equals(name.getLocalPart())
+                        || "latest-version.date".equals(name.getLocalPart())
+                        || "latest-version.status".equals(name.getLocalPart())
+                        || "public-status".equals(name.getLocalPart()) || "hasComponent".equals(name
+                        .getLocalPart()))) {
                     // allowed is: created-by-title, context-title,
                     // latest-version.date, latest-version.status,
                     // public-status, hasComponent

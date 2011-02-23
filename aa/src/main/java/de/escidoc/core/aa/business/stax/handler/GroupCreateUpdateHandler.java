@@ -117,7 +117,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
                 }
 
             }
-            else if (theName.equals("label")) {
+            else if ("label".equals(theName)) {
                 if ((s != null) && (s.length() > 0)) {
                     groupProperties.put("label", s);
                 }
@@ -130,7 +130,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
                 }
                 
             }
-            else if ((theName.equals("email"))
+            else if (("email".equals(theName))
                 && ((s != null))) {
                 groupProperties.put("email", s);
             }

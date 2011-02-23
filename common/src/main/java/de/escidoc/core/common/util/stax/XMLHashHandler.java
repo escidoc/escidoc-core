@@ -94,7 +94,7 @@ public class XMLHashHandler extends DefaultHandler {
             String curQName = attributes.getQName(i);
             String attName =
                     '{' + attributes.getURI(i) + '}' + attributes.getLocalName(i);
-            if (!curQName.equalsIgnoreCase("xmlns:xml")) {
+            if (!"xmlns:xml".equalsIgnoreCase(curQName)) {
                 atts.put(attName, attributes.getValue(i));
             }
         }

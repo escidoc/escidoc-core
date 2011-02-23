@@ -79,8 +79,8 @@ public class AggregationDataSelector {
             for (AggregationStatisticDataSelector aggregationStatisticDataSelector 
                     : aggregationDefinition
                     .getAggregationStatisticDataSelectors()) {
-                if (aggregationStatisticDataSelector
-                        .getSelectorType().equals("statistic-table")) {
+                if ("statistic-table".equals(aggregationStatisticDataSelector
+                        .getSelectorType())) {
                     selector = aggregationStatisticDataSelector;
                 }
             }
@@ -126,8 +126,7 @@ public class AggregationDataSelector {
                 ScopeNotFoundException, SqlDatabaseSystemException {
         String xpath = null;
         if (aggregationStatisticDataSelector.getSelectorType() != null
-                && aggregationStatisticDataSelector.getSelectorType()
-                .equals("statistic-table")
+                && "statistic-table".equals(aggregationStatisticDataSelector.getSelectorType())
             && aggregationStatisticDataSelector.getXpath() != null) {
             xpath = 
                 aggregationStatisticDataSelector.getXpath();

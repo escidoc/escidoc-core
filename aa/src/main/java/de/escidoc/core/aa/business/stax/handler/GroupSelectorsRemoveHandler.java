@@ -49,7 +49,7 @@ public class GroupSelectorsRemoveHandler
         WebserverSystemException {
         String localName = element.getLocalName();
 
-        if (localName.equals("id")) {
+        if ("id".equals(localName)) {
             memberIdsToRemove.add(data);
            
         }

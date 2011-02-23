@@ -261,8 +261,7 @@ public final class IndexerResourceCache {
                 method.invokeWithProtocol(null,
                     Constants.USE_REST_REQUEST_PROTOCOL);
             if (content != null
-                && content.getClass().getSimpleName().equals(
-                    "EscidocBinaryContent")) {
+                && "EscidocBinaryContent".equals(content.getClass().getSimpleName())) {
                 EscidocBinaryContent escidocBinaryContent =
                     (EscidocBinaryContent) content;
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -300,10 +299,8 @@ public final class IndexerResourceCache {
         }
         catch (InvocationTargetException e) {
             log.error(e);
-            if (!e.getTargetException().getClass().getSimpleName().equals(
-                "AuthorizationException")
-                && !e.getTargetException().getClass().getSimpleName().equals(
-                        "InvalidStatusException")) {
+            if (!"AuthorizationException".equals(e.getTargetException().getClass().getSimpleName())
+                && !"InvalidStatusException".equals(e.getTargetException().getClass().getSimpleName())) {
                 throw new SystemException(e);
             }
         }

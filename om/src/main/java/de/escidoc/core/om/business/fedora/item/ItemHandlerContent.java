@@ -136,7 +136,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             component.getResourceProperties().get(
                 TripleStoreUtility.PROP_VISIBILITY);
 
-        if (visibility.equals("private")
+        if ("private".equals(visibility)
             && UserContext.isRetrieveRestrictedToReleased()) {
             throw new AuthorizationException("The Content of the component "
                 + componentId + " has visibility 'private'.");
@@ -172,7 +172,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         bin.setMimeType(mimeType);
 
         try {
-            if (storage.equals("R")) {
+            if ("R".equals(storage)) {
                 bin.setRedirectUrl(content.getLocation());
             }
             else {
@@ -234,7 +234,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             component.getResourceProperties().get(
                 TripleStoreUtility.PROP_VISIBILITY);
 
-        if (visibility.equals("private")
+        if ("private".equals(visibility)
             && UserContext.isRetrieveRestrictedToReleased()) {
             throw new AuthorizationException("The Content of the component "
                 + componentId + " has visibility 'private'.");
@@ -245,7 +245,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         String storage = content.getControlGroup();
 
         EscidocBinaryContent bin = new EscidocBinaryContent();
-        if (storage.equals("R")) {
+        if ("R".equals(storage)) {
             bin.setRedirectUrl(content.getLocation());
         }
 
@@ -311,7 +311,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             component.getResourceProperties().get(
                 TripleStoreUtility.PROP_VISIBILITY);
 
-        if (visibility.equals("private")
+        if ("private".equals(visibility)
             && UserContext.isRetrieveRestrictedToReleased()) {
             throw new AuthorizationException("The Content of the component "
                 + componentId + " has visibility 'private'.");
@@ -320,7 +320,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
 
         String storage = content.getControlGroup();
         String contentUrl;
-        if (storage.equals("R")) {
+        if ("R".equals(storage)) {
             contentUrl = content.getLocation();
         }
         else {
@@ -596,7 +596,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         String mimeType = cs.getMimeType();
         bin.setMimeType(mimeType);
 
-        if (cs.getControlGroup().equals("R")) {
+        if ("R".equals(cs.getControlGroup())) {
             bin.setRedirectUrl(cs.getLocation());
         }
         else {

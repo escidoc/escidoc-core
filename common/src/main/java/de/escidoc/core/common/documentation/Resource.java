@@ -334,14 +334,12 @@ public class Resource extends XMLBase {
                         && ((value != null)
                             && (getAttributeValue(value,
                                 DOCUMENTATION_VISIBLE_ATTR) != null))) {
-                        if (getAttributeValue(value,
-                            DOCUMENTATION_VISIBLE_ATTR)
-                            .equalsIgnoreCase("false")) {
+                        if ("false".equalsIgnoreCase(getAttributeValue(value,
+                                DOCUMENTATION_VISIBLE_ATTR))) {
                             visible = false;
                         }
-                        else if (getAttributeValue(value,
-                            DOCUMENTATION_VISIBLE_ATTR)
-                            .equalsIgnoreCase("true")) {
+                        else if ("true".equalsIgnoreCase(getAttributeValue(value,
+                                DOCUMENTATION_VISIBLE_ATTR))) {
                             visible = true;
                         }
                     }

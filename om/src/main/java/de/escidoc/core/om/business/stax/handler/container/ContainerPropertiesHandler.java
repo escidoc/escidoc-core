@@ -138,7 +138,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
         String theName = element.getLocalName();
 
         if (curPath.startsWith(PROPERTIES_PATH)) {
-            if (theName.equals("properties")) {
+            if ("properties".equals(theName)) {
                 expectedElements.add(Elements.ELEMENT_CONTEXT);
                 expectedElements.add(Elements.ELEMENT_CONTENT_MODEL);
             }
@@ -344,7 +344,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
             // }
             // }
 
-            if (curPath.equals("/container/properties/public-status")) {
+            if ("/container/properties/public-status".equals(curPath)) {
                 if ((s != null)) {
                     properties.put(Elements.ELEMENT_PUBLIC_STATUS, s);
                 }
@@ -356,7 +356,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     throw new MissingElementValueException(msg);
                 }
             }
-            else if (curPath.equals("/container/properties/pid")) {
+            else if ("/container/properties/pid".equals(curPath)) {
                 if ((s != null)) {
                     properties.put(Elements.ELEMENT_PID, s);
                 }

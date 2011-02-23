@@ -54,7 +54,7 @@ public class SemanticQueryHandler extends DefaultHandler {
     public String characters(String data, StartElement element)
         throws MissingElementValueException {
 
-        if (element.getLocalName().equals("query")) {
+        if ("query".equals(element.getLocalName())) {
             if ((data == null) || (data.length() == 0)) {
                 String message =
                     "The value of the element " + element.getLocalName()
@@ -70,7 +70,7 @@ public class SemanticQueryHandler extends DefaultHandler {
             this.predicate = queryParts[1].trim();
             this.object = queryParts[2].trim();
         }
-        else if (element.getLocalName().equals("format")) {
+        else if ("format".equals(element.getLocalName())) {
             if ((data == null) || (data.length() == 0)) {
                 String message =
                     "The value of the element " + element.getLocalName()

@@ -144,7 +144,7 @@ public class VelocityXmlAdminRenderer
                         if (indexParamsMap != null && !indexParamsMap.isEmpty()) {
                             for (Entry<String, Object> mapEntry : indexParamsMap.entrySet()) {
                                 String indexParamName = mapEntry.getKey();
-                                if (indexParamName.equals("prerequisites")) {
+                                if ("prerequisites".equals(indexParamName)) {
                                     HashMap<String, String> prerequisitesMap = 
                                         (HashMap<String, String>) mapEntry.getValue();
                                     if (prerequisitesMap != null  && !prerequisitesMap.isEmpty()) {

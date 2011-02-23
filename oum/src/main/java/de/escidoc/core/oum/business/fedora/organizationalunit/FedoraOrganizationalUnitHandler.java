@@ -930,26 +930,26 @@ public class FedoraOrganizationalUnitHandler
         content.setMimeType(Constants.DEFAULT_MIME_TYPE);
 
         try {
-            if (resourceName.equals("relations")) {
+            if ("relations".equals(resourceName)) {
                 content.setContent(new ByteArrayInputStream(
                     retrieveContentRelations(id).getBytes(
                         XmlUtility.CHARACTER_ENCODING)));
             }
-            else if (resourceName.equals("parent-objects")) {
+            else if ("parent-objects".equals(resourceName)) {
                 content.setContent(new ByteArrayInputStream(
                     retrieveParentObjects(id).getBytes(
                         XmlUtility.CHARACTER_ENCODING)));
             }
-            else if (resourceName.equals("successors")) {
+            else if ("successors".equals(resourceName)) {
                 content.setContent(new ByteArrayInputStream(retrieveSuccessors(
                     id).getBytes(XmlUtility.CHARACTER_ENCODING)));
             }
-            else if (resourceName.equals("child-objects")) {
+            else if ("child-objects".equals(resourceName)) {
                 content.setContent(new ByteArrayInputStream(
                     retrieveChildObjects(id).getBytes(
                         XmlUtility.CHARACTER_ENCODING)));
             }
-            else if (resourceName.equals("path-list")) {
+            else if ("path-list".equals(resourceName)) {
                 content.setContent(new ByteArrayInputStream(
                     retrievePathList(id)
                         .getBytes(XmlUtility.CHARACTER_ENCODING)));

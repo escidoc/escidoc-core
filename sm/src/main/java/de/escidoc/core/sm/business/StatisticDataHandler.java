@@ -132,8 +132,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         catch (SqlDatabaseSystemException e) {
             if (e.getCause() != null
                 && e.getCause().getClass() != null
-                && e.getCause().getClass().getSimpleName().equals(
-                    "ConstraintViolationException")) {
+                && "ConstraintViolationException".equals(e.getCause().getClass().getSimpleName())) {
                 LOGGER
                     .error("scope with id " + scopeId
                         + " not found in database");

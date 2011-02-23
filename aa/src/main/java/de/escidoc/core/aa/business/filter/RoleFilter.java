@@ -179,7 +179,7 @@ public class RoleFilter extends CqlFilter {
             String columnName = node.getIndex();
 
             if (columnName != null) {
-                if (columnName.equals("limited")) {
+                if ("limited".equals(columnName)) {
                     if (Boolean.parseBoolean(value)) {
                         result = Restrictions.isNotEmpty("scopeDefs");
                     }
@@ -187,7 +187,7 @@ public class RoleFilter extends CqlFilter {
                         result = Restrictions.isEmpty("scopeDefs");
                     }
                 }
-                else if (columnName.equals("granted")) {
+                else if ("granted".equals(columnName)) {
                     DetachedCriteria subQuery =
                         DetachedCriteria.forClass(RoleGrant.class, "rg");
 

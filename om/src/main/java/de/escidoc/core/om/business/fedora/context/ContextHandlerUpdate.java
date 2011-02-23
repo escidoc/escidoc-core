@@ -529,13 +529,13 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             new TreeMap<String, StartElementWithText>();
         Set<Entry<String,String>> changedValuesEntrySet = changedValues.entrySet();
         for(Entry<String, String> entry : changedValuesEntrySet){
-            if (entry.getKey().equals("build")) {
+            if ("build".equals(entry.getKey())) {
                 updateElementsRelsExt.put("build",
                     new StartElementWithChildElements(entry.getKey(),
                         "http://escidoc.de/core/01/system/", "system", null,
                         entry.getValue(), null));
             }
-            else if (entry.getKey().equals("modifiedBy")) {
+            else if ("modifiedBy".equals(entry.getKey())) {
                 StartElementWithChildElements modifiedBy =
                     new StartElementWithChildElements(
                         Elements.ELEMENT_MODIFIED_BY,
@@ -550,7 +550,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 updateElementsRelsExt.put(Elements.ELEMENT_MODIFIED_BY,
                     modifiedBy);
             }
-            else if (entry.getKey().equals("modifiedByTitle")) {
+            else if ("modifiedByTitle".equals(entry.getKey())) {
                 updateElementsRelsExt.put(
                     Elements.ELEMENT_MODIFIED_BY_TITLE,
                     new StartElementWithChildElements(
@@ -908,7 +908,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                     .addAlternateId(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID);
 
                 if (oldDs.equals(newDs)
-                    && oldDs.getMimeType().equals("text/xml")) {
+                    && "text/xml".equals(oldDs.getMimeType())) {
                     LOGGER.debug("Datastreams identical; updated of Context "
                         + getContext().getId() + " with admin-descriptor "
                         + name + " skipped.");

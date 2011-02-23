@@ -478,10 +478,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         }
 
         List<String> altIds = ds.getAlternateIDs();
-        if (altIds.size() > 1 && !altIds.get(1).equals("unknown")) {
+        if (altIds.size() > 1 && !"unknown".equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
-        if (altIds.size() > 2 && !altIds.get(2).equals("unknown")) {
+        if (altIds.size() > 2 && !"unknown".equals(altIds.get(2))) {
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
         }
         try {
@@ -642,15 +642,15 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NAME, ds.getName());
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_TITLE, ds.getLabel());
         String location = ds.getLocation();
-        if (ds.getControlGroup().equals("M")
-            || ds.getControlGroup().equals("X")) {
+        if ("M".equals(ds.getControlGroup())
+            || "X".equals(ds.getControlGroup())) {
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
                 Constants.STORAGE_INTERNAL_MANAGED);
             location =
                 getItem().getHref() + Constants.CONTENT_STREAM_URL_PART + '/'
                     + ds.getName()
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
-            if (ds.getControlGroup().equals("X")) {
+            if ("X".equals(ds.getControlGroup())) {
                 try {
                     values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_CONTENT,
                         ds.toStringUTF8());
@@ -660,7 +660,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 }
             }
         }
-        else if (ds.getControlGroup().equals("E")) {
+        else if ("E".equals(ds.getControlGroup())) {
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
                 Constants.STORAGE_EXTERNAL_MANAGED);
             location =
@@ -669,7 +669,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                     + Constants.CONTENT_STREAM_CONTENT_URL_EXTENSION;
 
         }
-        else if (ds.getControlGroup().equals("R")) {
+        else if ("R".equals(ds.getControlGroup())) {
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_STORAGE,
                 Constants.STORAGE_EXTERNAL_URL);
         }
@@ -796,10 +796,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             return "";
         }
         List<String> altIds = ds.getAlternateIDs();
-        if (altIds.size() > 1 && !altIds.get(1).equals("unknown")) {
+        if (altIds.size() > 1 && !"unknown".equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
-        if (altIds.size() > 2 && !altIds.get(2).equals("unknown")) {
+        if (altIds.size() > 2 && !"unknown".equals(altIds.get(2))) {
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
         }
         try {
@@ -1285,7 +1285,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 throw new WebserverSystemException("unreachable", e);
             }
             String status = wovHandler.getStatus();
-            if (status.equals("inactive")) {
+            if ("inactive".equals(status)) {
                 it.remove();
             }
 

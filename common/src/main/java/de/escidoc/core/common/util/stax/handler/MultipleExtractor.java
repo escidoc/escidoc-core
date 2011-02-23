@@ -319,7 +319,7 @@ public class MultipleExtractor extends WriteHandler {
             }
 
         }
-        if (theName.equals("component")
+        if ("component".equals(theName)
             && element
                 .indexOfAttribute(Constants.RDF_NAMESPACE_URI, "resource") < 0
             && element.indexOfAttribute(null, "inherited") < 0) {
@@ -397,8 +397,8 @@ public class MultipleExtractor extends WriteHandler {
                         namespaceTrace);
                     // initialized namespace map
 
-                    if (!theName.equals("md-record")
-                        && !theName.equals("admin-descriptor")) {
+                    if (!"md-record".equals(theName)
+                        && !"admin-descriptor".equals(theName)) {
                         writeElement(element);
                     }
                     String attributeValue = null;
@@ -437,7 +437,7 @@ public class MultipleExtractor extends WriteHandler {
                             component.put(theName, out);
                         }
                         else {
-                            if (theName.equals("md-record")) {
+                            if ("md-record".equals(theName)) {
 
                                 // this.mdNameValue = attributeValue;
                                 // outputStreams.put(attributeValue + "*" +
@@ -477,7 +477,7 @@ public class MultipleExtractor extends WriteHandler {
                             outputStreams.put(theName, out);
                         }
                         else {
-                            if (theName.equals("md-record")) {
+                            if ("md-record".equals(theName)) {
                                 if (metadata == null) {
                                     metadata =
                                         new HashMap<String, ByteArrayOutputStream>();
@@ -504,8 +504,7 @@ public class MultipleExtractor extends WriteHandler {
                                 if (outputStreams
                                     .containsKey(attributeValue)) {
                                     String message;
-                                    if (currentPath
-                                        .equals("/context/admin-descriptors/admin-descriptor")) {
+                                    if ("/context/admin-descriptors/admin-descriptor".equals(currentPath)) {
                                         message =
                                             "An admin-descriptor with the name '"
                                                 + attributeValue
@@ -573,7 +572,7 @@ public class MultipleExtractor extends WriteHandler {
             }
         }
         this.decreaseDeepLevel();
-        if (inComponent && theName.equals("component")) {
+        if (inComponent && "component".equals(theName)) {
             if (componentId == null) {
                 Map components = (HashMap) outputStreams.get("components");
                 components.remove(componentId);
@@ -587,8 +586,7 @@ public class MultipleExtractor extends WriteHandler {
             if (inside) {
                 insideLevel--;
                 if ((insideLevel > 0)
-                    || ((insideLevel == 0) && !theName.equals("md-record") && !theName
-                        .equals("admin-descriptor"))) {
+                    || ((insideLevel == 0) && !"md-record".equals(theName) && !"admin-descriptor".equals(theName))) {
                     this.getWriter().writeEndElement();
                 }
 

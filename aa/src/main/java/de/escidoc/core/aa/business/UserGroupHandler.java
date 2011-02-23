@@ -694,7 +694,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             String name = selector[0];
             String type = selector[1];
             String value = selector[2];
-            if (type.equals("internal")) {
+            if ("internal".equals(type)) {
                 if (name.equals(XmlUtility.NAME_USER_ACCOUNT)) {
                     UserAccount referencedUser =
                         this.userAccountDao.retrieveUserAccountById(value);

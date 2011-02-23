@@ -115,7 +115,7 @@ public class FedoraSemanticStoreHandler
         String query = qh.getQuery();
         // check predicate
         String predicate = qh.getPredicate();
-        if (!predicate.equals("*")
+        if (!"*".equals(predicate)
             && !OntologyUtility.checkPredicate(predicate)) {
             throw new InvalidTripleStoreQueryException("Predicate '"
                 + XmlUtility.escapeForbiddenXmlCharacters(predicate)
@@ -123,9 +123,9 @@ public class FedoraSemanticStoreHandler
         }
         String format = qh.getFormat();
         String result = tripleStoreConnector.requestMPT(query, format);
-        if (!"".equals(result) && predicate.equals("*")) {
+        if (!"".equals(result) && "*".equals(predicate)) {
             // TODO check result for unallowed predicates
-            if (format.equals("N-Triples")) {
+            if ("N-Triples".equals(format)) {
                 String[] triples = result.split("\\s\\.");
                 StringBuilder stringBuffer = new StringBuilder();
                 for (String triple : triples) {
@@ -138,7 +138,7 @@ public class FedoraSemanticStoreHandler
                 }
                 result = stringBuffer.toString();
             }
-            else if (format.equals("RDF/XML")) {
+            else if ("RDF/XML".equals(format)) {
                 // TODO revise, move
                 try {
                     XMLInputFactory inf = XMLInputFactory.newInstance();

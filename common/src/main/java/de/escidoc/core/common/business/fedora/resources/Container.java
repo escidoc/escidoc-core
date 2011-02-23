@@ -416,7 +416,7 @@ public class Container extends GenericVersionableResourcePid
             }
             if (contentChanged || !type.equals(curType)
                 || !schema.equals(curSchema) || !mimeType.equals(curMimeType)) {
-                if (contentChanged && name.equals("escidoc")) {
+                if (contentChanged && "escidoc".equals(name)) {
 
                     Map<String, String> mdProperties = ds.getProperties();
                     if (mdProperties != null) {

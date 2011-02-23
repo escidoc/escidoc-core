@@ -325,7 +325,7 @@ public final class CustomPolicyBuilder {
                 name = "N/A";
             }
 
-            if (name.equals("PolicySet")) {
+            if ("PolicySet".equals(name)) {
                 try {
                     xacmlPolicies.add(PolicySet.getInstance(root));
                 } catch (ParsingException e) {
@@ -335,7 +335,7 @@ public final class CustomPolicyBuilder {
                     LOG.error(msg, e);
                     throw new WebserverSystemException(msg, e);
                 }
-            } else if (name.equals("Policy")) {
+            } else if ("Policy".equals(name)) {
                 try {
                     xacmlPolicies.add(Policy.getInstance(root));
                 } catch (ParsingException e) {

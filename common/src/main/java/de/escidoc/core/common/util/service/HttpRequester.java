@@ -251,7 +251,7 @@ public class HttpRequester {
         con.setReadTimeout(timeout);
 
         // If PUT or POST, write given body in Output-Stream
-        if ((method.equalsIgnoreCase("PUT") || method.equalsIgnoreCase("POST"))
+        if (("PUT".equalsIgnoreCase(method) || "POST".equalsIgnoreCase(method))
             && body != null) {
             con.setDoOutput(true);
             OutputStream out = con.getOutputStream();
@@ -332,8 +332,7 @@ public class HttpRequester {
             con.setReadTimeout(timeout);
 
             // If PUT or POST, write given body in Output-Stream
-            if ((method.equalsIgnoreCase("PUT") || method
-                .equalsIgnoreCase("POST")) && body != null) {
+            if (("PUT".equalsIgnoreCase(method) || "POST".equalsIgnoreCase(method)) && body != null) {
                 con.setDoOutput(true);
                 out = con.getOutputStream();
                 out.write(body.getBytes(XmlUtility.CHARACTER_ENCODING));

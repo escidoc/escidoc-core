@@ -77,7 +77,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
         throws MissingElementValueException {
 
         if (this.inRelation) {
-            if (element.getLocalName().equals("targetId")) {
+            if ("targetId".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
                     String message =
                         "The value of the element " + element.getLocalName()
@@ -88,7 +88,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
                 data = XmlUtility.getObjidWithoutVersion(data);
                 this.targetId = data;
             }
-            else if (element.getLocalName().equals("predicate")) {
+            else if ("predicate".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
                     String message =
                         "The value of the element " + element.getLocalName()
@@ -106,7 +106,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
     public StartElement startElement(final StartElement element) {
         String curPath = parser.getCurPath();
 
-        if (curPath.equals("/param/relation")) {
+        if ("/param/relation".equals(curPath)) {
             inRelation = true;
 
         }
@@ -119,7 +119,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
         throws ContentRelationNotFoundException, TripleStoreSystemException,
         WebserverSystemException {
         if ((inRelation)
-            && (element.getLocalName().equals("relation"))) {
+            && ("relation".equals(element.getLocalName()))) {
             String[] splittedPredicate = splitPredicate(predicate);
             String predicateNs = splittedPredicate[0];
             String predicateValue = splittedPredicate[1];

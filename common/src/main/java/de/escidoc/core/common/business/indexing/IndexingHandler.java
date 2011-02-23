@@ -463,8 +463,8 @@ public class IndexingHandler implements ResourceListener {
         String latestReleasedVersion = null;
         // Check if latest released version has to get indexed
         if (parameters.get("indexReleasedVersion") != null
-            && (Boolean.valueOf((String) parameters.get("indexReleasedVersion")) || parameters
-                .get("indexReleasedVersion").equals("both"))) {
+            && (Boolean.valueOf((String) parameters.get("indexReleasedVersion")) || "both".equals(parameters
+                .get("indexReleasedVersion")))) {
             // get latest released version
             if (log.isDebugEnabled()) {
                 log.debug("index released version, so do checks");
@@ -662,9 +662,9 @@ public class IndexingHandler implements ResourceListener {
                     if (log.isDebugEnabled()) {
                         log
                             .debug("gsearchindexing xpath-exec on DOM-Object "
-                                + " needed "
-                                + (System.currentTimeMillis() - time)
-                                + " ms");
+                                    + " needed "
+                                    + (System.currentTimeMillis() - time)
+                                    + " ms");
                     }
                     if (updateNode != null) {
                         return Constants.DO_UPDATE;
@@ -677,9 +677,9 @@ public class IndexingHandler implements ResourceListener {
                     if (log.isDebugEnabled()) {
                         log
                             .debug("gsearchindexing xpath-exec on DOM-Object "
-                                + " needed "
-                                + (System.currentTimeMillis() - time)
-                                + " ms");
+                                    + " needed "
+                                    + (System.currentTimeMillis() - time)
+                                    + " ms");
                     }
                     if (deleteNode != null) {
                         return Constants.DO_DELETE;
@@ -717,7 +717,7 @@ public class IndexingHandler implements ResourceListener {
 
         if ((id != null) && (resourceParameters != null)) {
             if (indexName == null || indexName.trim().length() == 0
-                || indexName.equalsIgnoreCase("all")) {
+                || "all".equalsIgnoreCase(indexName)) {
                 for (String indexName2 : resourceParameters.keySet()) {
                     result = exists(id, indexName2);
                     if (result) {

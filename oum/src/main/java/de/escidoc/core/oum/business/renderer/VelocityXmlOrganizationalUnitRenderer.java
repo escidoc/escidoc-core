@@ -718,10 +718,10 @@ public class VelocityXmlOrganizationalUnitRenderer
                 "Rendering of md-record failed. ", e);
         }
         List<String> altIds = mdRecord.getAlternateIDs();
-        if (!altIds.get(1).equals("unknown")) {
+        if (!"unknown".equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
-        if (!altIds.get(2).equals("unknown")) {
+        if (!"unknown".equals(altIds.get(2))) {
             values.put(XmlTemplateProvider.MD_RECORD_SCHEMA, altIds.get(2));
         }
 

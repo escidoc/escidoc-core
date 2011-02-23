@@ -132,7 +132,7 @@ public class Reindexer {
         boolean result;
 
         if (indexName == null || indexName.trim().length() == 0
-            || indexName.equalsIgnoreCase("all")) {
+            || "all".equalsIgnoreCase(indexName)) {
             result = true;
         }
         else {
@@ -162,7 +162,7 @@ public class Reindexer {
      */
     public String reindex(final boolean clearIndex, final String indexName)
         throws SystemException, InvalidSearchQueryException {
-        if (indexName.equals("errorTest")) {
+        if ("errorTest".equals(indexName)) {
             return testReindexError();
         }
         StringBuilder result = new StringBuilder();

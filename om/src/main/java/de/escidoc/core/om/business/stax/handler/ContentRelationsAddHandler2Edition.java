@@ -90,7 +90,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
         XmlParserSystemException, EncodingSystemException, InvalidXmlException {
 
         if (this.inRelation) {
-            if (element.getLocalName().equals("targetId")) {
+            if ("targetId".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
                     String message =
                         "The value of the element " + element.getLocalName()
@@ -135,7 +135,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
                     throw new InvalidContentException(message);
                 }
             }
-            else if (element.getLocalName().equals("predicate")) {
+            else if ("predicate".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
                     String message =
                         "The value of the element " + element.getLocalName()
@@ -158,7 +158,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
     public StartElement startElement(StartElement element) {
         String curPath = parser.getCurPath();
 
-        if (curPath.equals("/param/relation")) {
+        if ("/param/relation".equals(curPath)) {
             inRelation = true;
 
         }
@@ -170,7 +170,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
     public EndElement endElement(EndElement element)
         throws AlreadyExistsException, TripleStoreSystemException,
         WebserverSystemException {
-        if ((inRelation) && (element.getLocalName().equals("relation"))) {
+        if ((inRelation) && ("relation".equals(element.getLocalName()))) {
             String[] splittedPredicate = splitPredicate(predicate);
             String predicateNs = splittedPredicate[0];
             String predicateValue = splittedPredicate[1];

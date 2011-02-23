@@ -152,7 +152,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                     throw new EncodingSystemException(e);
                 }
 
-            } else if (outsideKey.equals("md-records")) {
+            } else if ("md-records".equals(outsideKey)) {
 
                 Map insideHash = (HashMap) entry.getValue();
                 if (!insideHash.isEmpty()) {

@@ -1247,7 +1247,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType("text/xml");
 
-        if (resourceName.equals("version-history")) {
+        if ("version-history".equals(resourceName)) {
             try {
                 content.setContent(new ByteArrayInputStream(
                     retrieveVersionHistory(id).getBytes(
@@ -1258,7 +1258,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 throw new WebserverSystemException(e);
             }
         }
-        else if (resourceName.equals("relations")) {
+        else if ("relations".equals(resourceName)) {
             try {
                 content.setContent(new ByteArrayInputStream(
                     retrieveContentRelations(id).getBytes(
@@ -2582,7 +2582,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                     (ByteArrayOutputStream) mdMap.get(name);
                 byte[] xmlBytes = stream.toByteArray();
                 HashMap<String, String> mdProperties = null;
-                if (name.equals("escidoc")) {
+                if ("escidoc".equals(name)) {
                     mdProperties = new HashMap<String, String>();
                     mdProperties.put("nsUri", escidocMdRecordnsUri);
 

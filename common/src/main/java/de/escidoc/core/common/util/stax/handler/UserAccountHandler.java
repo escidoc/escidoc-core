@@ -76,7 +76,7 @@ public class UserAccountHandler extends DefaultHandler {
 
     @Override
     public String characters(String data, StartElement element) {
-        if (element.getLocalName().equals("name")) {
+        if ("name".equals(element.getLocalName())) {
             this.accountName = data;
         }
 

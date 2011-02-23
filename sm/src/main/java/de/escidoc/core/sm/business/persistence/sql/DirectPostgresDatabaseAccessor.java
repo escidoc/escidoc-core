@@ -229,7 +229,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 // (is 'now' in postgres)
                 if (field.getFieldType().equalsIgnoreCase(
                     Constants.DATABASE_FIELD_TYPE_DATE)) {
-                    if (value.equalsIgnoreCase("sysdate")) {
+                    if ("sysdate".equalsIgnoreCase(value)) {
                         value = SYSDATE;
                     }
                     else {
@@ -728,7 +728,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 whereClause.append(longFieldName).append(operator).append(' ');
             }
             String value;
-            if (fieldValue.equalsIgnoreCase("sysdate")) {
+            if ("sysdate".equalsIgnoreCase(fieldValue)) {
                 value = SYSDATE;
             }
             else {
@@ -788,7 +788,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             if (i > 0) {
                 selectFields.append(',');
             }
-            if (selectFieldVo.getFieldName().equals("*")) {
+            if ("*".equals(selectFieldVo.getFieldName())) {
                 selectFields.append('*');
                 break;
             }
@@ -1144,11 +1144,11 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
         final String fieldValue, final CharSequence operator, final CharSequence xpath)
         throws SqlDatabaseSystemException {
         if (type == null || type.length() == 0
-            || (!type.equals("root") && !type.equals("additional"))) {
+            || (!"root".equals(type) && !"additional".equals(type))) {
             LOG.error("wrong type given");
             throw new SqlDatabaseSystemException("wrong type given");
         }
-        if (type.equals("additional")
+        if ("additional".equals(type)
             && (operator == null || operator.length() == 0)) {
             LOG.error("operator may not be null");
             throw new SqlDatabaseSystemException("operator may not be null");

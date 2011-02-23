@@ -296,7 +296,7 @@ public class ContentModel extends GenericVersionableResourcePid
                 ds.setLabel(label);
                 this.dsCompositeModel = ds;
             } else if (!(name.equals(Datastream.RELS_EXT_DATASTREAM)
-                    || name.equals("DC") || name.equals(DATASTREAM_WOV))) {
+                    || "DC".equals(name) || name.equals(DATASTREAM_WOV))) {
                 ds =
                         new Datastream(name, getId(), getVersionDate(), mimeType,
                                 location, controlGroupValue);

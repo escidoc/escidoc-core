@@ -652,7 +652,7 @@ public class Item extends GenericVersionableResourcePid
             }
 
             if (contentChanged || isNew) {
-                if (contentChanged && name.equals("escidoc")) {
+                if (contentChanged && "escidoc".equals(name)) {
 
                     final Map<String, String> mdProperties =
                         ds.getProperties();
@@ -1022,7 +1022,7 @@ public class Item extends GenericVersionableResourcePid
                 this.contentStreams.put(name, ds);
             }
             // content-model-specific
-            else if (name.equals("content-model-specific")) {
+            else if ("content-model-specific".equals(name)) {
                 ds =
                         new Datastream(name, getId(), getVersionDate(), mimeType,
                                 location, controlGroupValue);

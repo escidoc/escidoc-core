@@ -186,7 +186,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         }
         // xslt is the mpdl-xslt- or default-xslt-stream
         if (contentModelId.length() > 0
-            && !contentModelId.equalsIgnoreCase("null")) {
+            && !"null".equalsIgnoreCase(contentModelId)) {
             // create link to content of DC-MAPPING in content model object
             String dcMappingXsltFedoraUrl =
                 "/get/" + contentModelId + '/'

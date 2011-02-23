@@ -155,7 +155,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                 metadataAttributes.put(name, md);
             } else if (isInside && !isRootMetadataElement) {
                 isRootMetadataElement = true;
-                if (this.name.equals("escidoc")) {
+                if ("escidoc".equals(this.name)) {
                     this.escidocMdRecordNameSpace = element.getNamespace();
                 }
 

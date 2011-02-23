@@ -1382,7 +1382,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final ByteArrayOutputStream stream = mdMap.get(name);
             final byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
-            if (name.equals("escidoc")) {
+            if ("escidoc".equals(name)) {
                 mdProperties = new HashMap<String, String>();
                 mdProperties.put("nsUri", escidocMdRecordnsUri);
 
@@ -1469,7 +1469,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType("text/xml");
 
-        if (resourceName.equals("members")) {
+        if ("members".equals(resourceName)) {
             try {
                 content.setContent(new ByteArrayInputStream(retrieveMembers(id,
                     new LuceneRequestParameters(parameters)).getBytes(
@@ -1481,7 +1481,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             }
         }
 
-        if (resourceName.equals("version-history")) {
+        if ("version-history".equals(resourceName)) {
             try {
                 content.setContent(new ByteArrayInputStream(
                     retrieveVersionHistory(id).getBytes(
@@ -1492,7 +1492,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 throw new WebserverSystemException(e);
             }
         }
-        else if (resourceName.equals("relations")) {
+        else if ("relations".equals(resourceName)) {
             try {
                 content.setContent(new ByteArrayInputStream(
                     retrieveContentRelations(id).getBytes(

@@ -72,7 +72,7 @@ public class VelocityXmlCommonFoXmlRenderer {
         values.put(XmlTemplateProvider.VAR_NAMESPACE,
             Constants.WOV_NAMESPACE_URI);
         // expand the objid to escidoc:123:1 for version no 1
-        if (versionNo.equals("1")) {
+        if ("1".equals(versionNo)) {
             values.put(XmlTemplateProvider.OBJID, id + ":1");
         }
         else {

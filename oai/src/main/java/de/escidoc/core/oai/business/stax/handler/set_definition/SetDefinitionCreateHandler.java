@@ -112,7 +112,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
             }
         }
         else if (inRoot) {
-            if (theName.equals("query")) {
+            if ("query".equals(theName)) {
                 if ((s != null)) {
                     setDefinitionProperties.put("query", s);
                 }
@@ -124,7 +124,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
                         + theName + " is missing");
                 }
             }
-            else if (theName.equals("specification")) {
+            else if ("specification".equals(theName)) {
                 if ((s != null) && (s.length() > 0)) {
                     setDefinitionProperties.put("specification", s);
                 }

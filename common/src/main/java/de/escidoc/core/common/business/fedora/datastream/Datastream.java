@@ -311,7 +311,7 @@ public class Datastream {
         this.mimeType = mimeType;
         this.location = location;
         if (checksumMethod != null
-            && !checksumMethod.equalsIgnoreCase("disabled")) {
+            && !"disabled".equalsIgnoreCase(checksumMethod)) {
             this.checksumMethod = checksumMethod;
             this.checksum = checksum;
         }
@@ -453,7 +453,7 @@ public class Datastream {
         this.location = fedoraDatastream.getLocation();
 
         String checksumMethodTmp = fedoraDatastream.getChecksumType();
-        if (!checksumMethodTmp.equalsIgnoreCase("disabled")) {
+        if (!"disabled".equalsIgnoreCase(checksumMethodTmp)) {
             this.checksumMethod = checksumMethodTmp;
 
             this.checksum = fedoraDatastream.getChecksum();
@@ -516,7 +516,7 @@ public class Datastream {
             }
         }
         else if (this.getStream() != null) {
-            if (this.getControlGroup().equals("X")) {
+            if ("X".equals(this.getControlGroup())) {
                 try {
                     timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId,
@@ -615,7 +615,7 @@ public class Datastream {
     public void delete() throws FedoraSystemException, WebserverSystemException {
         try {
             // TODO: check of the 'concurrent' flag have to be done too
-            if (this.mimeType.equals("text/xml")) {
+            if ("text/xml".equals(this.mimeType)) {
 
                 getFedoraUtility().modifyDatastream(this.parentId, this.name,
                     this.label, Constants.MIME_TYPE_DELETED,
@@ -731,8 +731,7 @@ public class Datastream {
         // Workaround for the issue INFR666, now the content of a data stream
         // with a managed content should be pulled
         if (this.theStream == null
-            && (this.controlGroupValue.equals("X") || this.controlGroupValue
-                .equals("M"))) {
+            && ("X".equals(this.controlGroupValue) || "M".equals(this.controlGroupValue))) {
             MIMETypedStream datastream;
             try {
                 datastream =
@@ -886,7 +885,7 @@ public class Datastream {
         }
 
         final Datastream ds = (Datastream) obj;
-        if (this.mimeType.equals("text/xml")) {
+        if ("text/xml".equals(this.mimeType)) {
             if (!this.name.equals(ds.name)) {
                 return false;
             }
@@ -957,7 +956,7 @@ public class Datastream {
      */
     public String getMd5Hash() throws ParserConfigurationException,
         SAXException, WebserverSystemException {
-        if (this.mimeType.equals("text/xml")) {
+        if ("text/xml".equals(this.mimeType)) {
             if (this.md5Hash == null && getStream() != null) {
                 this.md5Hash = XmlUtility.getMd5Hash(this.getStream());
             }

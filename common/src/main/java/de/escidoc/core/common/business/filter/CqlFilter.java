@@ -168,13 +168,13 @@ public abstract class CqlFilter {
             result = Restrictions.isNull(propertyName);
         }
         else {
-            if (rel.equals("<")) {
+            if ("<".equals(rel)) {
                 result = Restrictions.lt(propertyName, value);
             }
-            else if (rel.equals("<=")) {
+            else if ("<=".equals(rel)) {
                 result = Restrictions.le(propertyName, value);
             }
-            else if (rel.equals("=")) {
+            else if ("=".equals(rel)) {
                 if (useLike) {
                     result = Restrictions.like(propertyName, value);
                 }
@@ -182,13 +182,13 @@ public abstract class CqlFilter {
                     result = Restrictions.eq(propertyName, value);
                 }
             }
-            else if (rel.equals(">=")) {
+            else if (">=".equals(rel)) {
                 result = Restrictions.ge(propertyName, value);
             }
-            else if (rel.equals(">")) {
+            else if (">".equals(rel)) {
                 result = Restrictions.gt(propertyName, value);
             }
-            else if (rel.equals("<>")) {
+            else if ("<>".equals(rel)) {
                 result = Restrictions.ne(propertyName, value);
             }
             else {

@@ -117,7 +117,7 @@ public class MultipleExtractor2 extends DefaultHandler {
     public StartElement startElement(final StartElement element)
         throws XMLStreamException {
         String elementName = element.getLocalName();
-        if (elementName.equals("component")) {
+        if ("component".equals(elementName)) {
             inComponent = true;
             if (pids != null) {
                 componentId = pids.get(number);
@@ -168,7 +168,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                     else {
                         String attributeValue =
                             getAttributeValue(element, null, attributeName);
-                        if (elementName.equals("md-record")) {
+                        if ("md-record".equals(elementName)) {
                             mdRecords = components.get(components);
                             if (mdRecords == null) {
                                 mdRecords = new HashMap<String, OutputStream>();
@@ -188,7 +188,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                     else {
                         String attributeValue =
                             getAttributeValue(element, null, attributeName);
-                        if (elementName.equals("md-record")) {
+                        if ("md-record".equals(elementName)) {
                             if (metadata == null) {
                                 metadata = new HashMap<String, OutputStream>();
                                 outputStreams.put("md-records", metadata);
@@ -217,7 +217,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                 }
             }
 
-            if (!(elementName.equals("md-record") && paths.containsKey(parser
+            if (!("md-record".equals(elementName) && paths.containsKey(parser
                 .getCurPath()))) {
                 writer.writeStartElement(element.getNamespace(), elementName);
             }
@@ -229,7 +229,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                     // Prefix is not null. (FRS)
                     writer.setPrefix(curAtt.getPrefix(), namespace);
                 }
-                if (!(elementName.equals("md-record") && paths
+                if (!("md-record".equals(elementName) && paths
                     .containsKey(parser.getCurPath()))) {
                     writer.writeAttribute(namespace, curAtt.getLocalName(),
                         curAtt.getValue());
@@ -246,7 +246,7 @@ public class MultipleExtractor2 extends DefaultHandler {
     public EndElement endElement(EndElement element) throws XMLStreamException {
         String theName = element.getLocalName();
 
-        if (theName.equals("component")) {
+        if ("component".equals(theName)) {
             if (componentId == null) {
                 Map components = (HashMap) outputStreams.get("components");
                 components.remove(componentId);
@@ -258,7 +258,7 @@ public class MultipleExtractor2 extends DefaultHandler {
         if (inside) {
             insideLevel--;
             if ((insideLevel > 0)
-                || ((insideLevel == 0) && !theName.equals("md-record"))) {
+                || ((insideLevel == 0) && !"md-record".equals(theName))) {
                 writer.writeEndElement();
             }
 

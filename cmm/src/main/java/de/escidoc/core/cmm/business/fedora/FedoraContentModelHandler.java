@@ -188,7 +188,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         String mimeType = cs.getMimeType();
         bin.setMimeType(mimeType);
 
-        if (cs.getControlGroup().equals("R")) {
+        if ("R".equals(cs.getControlGroup())) {
             bin.setRedirectUrl(cs.getLocation());
         }
         else {
@@ -220,7 +220,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         String mimeType = ds.getMimeType();
         bin.setMimeType(mimeType);
 
-        if (ds.getControlGroup().equals("R")) {
+        if ("R".equals(ds.getControlGroup())) {
             bin.setRedirectUrl(ds.getLocation());
         }
         else {

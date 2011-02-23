@@ -175,7 +175,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     this.relsExt = ds;
                 }
                 // DC
-                else if (name.equals("DC")) {
+                else if ("DC".equals(name)) {
                     ds =
                             new Datastream(name, getId(), this.parentVersionDate,
                                     mimeType, location, controlGroupValue);
@@ -184,7 +184,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                     this.dc = ds;
                 }
                 // content
-                else if (name.equals("content")) {
+                else if ("content".equals(name)) {
                     ds =
                             new Datastream(name, getId(), this.parentVersionDate,
                                     mimeType, location, controlGroupValue,
@@ -348,7 +348,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             if (!ds.containsKey(nameInFedora)) {
                 Datastream fedoraDs = getMdRecord(nameInFedora);
                 fedoraDs.delete();
-                if (fedoraDs.getName().equals("escidoc")) {
+                if ("escidoc".equals(fedoraDs.getName())) {
                     // Datastream dcDs = getDc();
                     final ItemFoXmlRendererInterface iri =
                             new VelocityXmlItemFoXmlRenderer();
@@ -450,7 +450,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             }
 
             if (contentChanged || isNew) {
-                if (name.equals("escidoc")) {
+                if ("escidoc".equals(name)) {
 
                     final Map<String, String> mdProperties =
                         ds.getProperties();

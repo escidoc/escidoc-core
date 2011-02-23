@@ -152,10 +152,10 @@ public final class VelocityXmlReportRenderer
                         recordFieldMap.put("fieldname", fieldname);
                         String classname =
                                 map.get(fieldname).getClass().getSimpleName();
-                        if (classname.equals("BigDecimal")) {
+                        if ("BigDecimal".equals(classname)) {
                             recordFieldMap.put("decimalvalue", map
                                     .get(fieldname).toString());
-                        } else if (classname.equals("Timestamp")) {
+                        } else if ("Timestamp".equals(classname)) {
                             DateTime dateTime =
                                     new DateTime(map
                                             .get(fieldname));

@@ -149,7 +149,7 @@ public class UserAccountPropertiesStaxHandler
     private void assertUniqueLoginName(final String toBeAsserted)
         throws SqlDatabaseSystemException, UniqueConstraintViolationException {
 
-        if (toBeAsserted.equalsIgnoreCase("current")) {
+        if ("current".equalsIgnoreCase(toBeAsserted)) {
             throw new UniqueConstraintViolationException(
                   "Login name may not be 'current' as this is a reserved String");
         }

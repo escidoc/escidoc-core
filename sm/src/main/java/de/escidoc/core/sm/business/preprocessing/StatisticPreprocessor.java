@@ -260,8 +260,8 @@ public class StatisticPreprocessor {
                         aggregationStatisticDataSelector 
                         : aggregationDefinition
                 .getAggregationStatisticDataSelectors()) {
-                    if (aggregationStatisticDataSelector
-                            .getSelectorType().equals("statistic-table")) {
+                    if ("statistic-table".equals(aggregationStatisticDataSelector
+                            .getSelectorType())) {
                         // Extract Data from raw-statistics-table
                         List resultList =
                             dbAccessor
@@ -348,8 +348,7 @@ public class StatisticPreprocessor {
                 ScopeNotFoundException, SqlDatabaseSystemException {
         String xpath = null;
         if (aggregationStatisticDataSelector.getSelectorType() != null
-                && aggregationStatisticDataSelector.getSelectorType()
-                .equals("statistic-table")
+                && "statistic-table".equals(aggregationStatisticDataSelector.getSelectorType())
             && aggregationStatisticDataSelector.getXpath() != null) {
             xpath = 
                 aggregationStatisticDataSelector.getXpath();

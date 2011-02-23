@@ -144,10 +144,10 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
         }
         if (inContentRelation) {
-            if (theName.equals("target")) {
+            if ("target".equals(theName)) {
                 checkRefElement(element);
             }
-            else if (theName.equals("predicate")) {
+            else if ("predicate".equals(theName)) {
                 try {
                     String xlinkHref =
                         element
@@ -210,7 +210,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             try {
                 Attribute type =
                     element.getAttribute(Constants.XLINK_URI, "type");
-                if (!type.getValue().equals("simple")) {
+                if (!"simple".equals(type.getValue())) {
                     String message =
                         "Attribute " + Constants.XLINK_URI + ':'
                             + "type must be set to 'simple'";
@@ -238,7 +238,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      */
     @Override
     public EndElement endElement(final EndElement element) {
-        if (inContentRelation && element.getLocalName().equals("relation")) {
+        if (inContentRelation && "relation".equals(element.getLocalName())) {
             inContentRelation = false;
             Map<String, String> relationData = new HashMap<String, String>();
             relationsData.add(relationData);

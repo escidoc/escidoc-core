@@ -1398,7 +1398,7 @@ public class GenericResource implements FedoraResource {
                 this.relsExt = ds;
             }
             // DC
-            else if (name.equals("DC")) {
+            else if ("DC".equals(name)) {
                 if (this.dc == null) {
                     ds =
                             new Datastream("DC", getId(), null, mimeType, location,

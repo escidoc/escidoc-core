@@ -284,7 +284,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             ByteArrayOutputStream stream = mdMap.get(name);
             byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
-            if (name.equals("escidoc")) {
+            if ("escidoc".equals(name)) {
                 mdProperties = new HashMap<String, String>();
                 mdProperties.put("nsUri", escidocMdRecordnsUri);
 

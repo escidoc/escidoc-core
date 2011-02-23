@@ -81,7 +81,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
             inDescription = true;
 
         }
-        if (inDescription && theName.equals("component")) {
+        if (inDescription && "component".equals(theName)) {
 
             int indexOfComponentId =
                 element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
@@ -105,7 +105,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element) {
         String namespace = element.getNamespace();
-        if (inDescription && element.getLocalName().equals("pid")
+        if (inDescription && "pid".equals(element.getLocalName())
             && namespace.equals(Constants.VERSION_NS_URI)) {
             versionPid = data;
         }
