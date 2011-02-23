@@ -31,6 +31,7 @@ package de.escidoc.core.sm.business.util.comparator;
 
 import de.escidoc.core.sm.business.persistence.hibernate.AggregationTableIndexe;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -40,7 +41,7 @@ import java.util.Comparator;
  * @sm
  */
 public class AggregationTableIndexComparator 
-        implements Comparator<AggregationTableIndexe> {
+        implements Comparator<AggregationTableIndexe>,Serializable {
 
     /**
      * compares listIndex.
