@@ -115,14 +115,9 @@ public class MdRecordDefinitionCreate {
         throws MalformedURLException, IOException {
         URL url;
         if (schemaHref.startsWith("/")) {
-            try {
-                url = new URL(EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_BASEURL)
-                    + schemaHref);
-            }
-            catch (MalformedURLException e) {
-                throw e;
-            }
+            url = new URL(EscidocConfiguration.getInstance().get(
+                EscidocConfiguration.ESCIDOC_CORE_BASEURL)
+                + schemaHref);
             // FIXME how to handle IOException from configuration
         }
         else {

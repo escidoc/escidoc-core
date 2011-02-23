@@ -134,15 +134,10 @@ public class ResourceDefinitionCreate {
         IOException {
         URL url;
         if (xsltHref.startsWith("/")) {
-            try {
-                url =
-                    new URL(EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_BASEURL)
-                        + xsltHref);
-            }
-            catch (MalformedURLException e) {
-                throw e;
-            }
+            url =
+                new URL(EscidocConfiguration.getInstance().get(
+                    EscidocConfiguration.ESCIDOC_CORE_BASEURL)
+                    + xsltHref);
             // FIXME how to handle IOException from configuration
         }
         else {

@@ -102,15 +102,10 @@ public class NewComponentExtractor extends DefaultHandler {
             Iterator it = nsuris.keySet().iterator();
             Collection toRemove = new ArrayList();
             while (it.hasNext()) {
-                try {
-                    String key = (String) it.next();
-                    nsTrace = (List) nsuris.get(key);
-                    if ((Integer) nsTrace.get(0) == (deepLevel + 1)) {
-                        toRemove.add(key);
-                    }
-                }
-                catch (Exception e) {
-                    throw e;
+                String key = (String) it.next();
+                nsTrace = (List) nsuris.get(key);
+                if ((Integer) nsTrace.get(0) == (deepLevel + 1)) {
+                    toRemove.add(key);
                 }
             }
             it = toRemove.iterator();

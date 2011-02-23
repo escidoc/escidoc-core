@@ -185,46 +185,41 @@ public class AuthenticationInterceptor implements Ordered {
         // exists
 
         try {
-            try {
-                UserContext
-                    .setPrincipal((EscidocUserDetails) userDetailsService
-                        .loadUserByUsername(handle));
-            }
-            catch (UsernameNotFoundException e) {
-                throw new AuthenticationException(StringUtility
-                        .format(
-                                FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, handle));
-            }
-            catch (DataAccessException e) {
-                throw new WebserverSystemException(e.getMessage(), e);
-            }
-            boolean wasExternalBefore = false;
-            try {
-                // Calls from the authorization component to other components
-                // run
-                // with privileges of the internal user (superuser).
-                // They will not be further intercepted.
-                wasExternalBefore = UserContext.runAsInternalUser();
+            UserContext
+                .setPrincipal((EscidocUserDetails) userDetailsService
+                    .loadUserByUsername(handle));
+        }
+        catch (UsernameNotFoundException e) {
+            throw new AuthenticationException(StringUtility
+                    .format(
+                            FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, handle));
+        }
+        catch (DataAccessException e) {
+            throw new WebserverSystemException(e.getMessage(), e);
+        }
+        boolean wasExternalBefore = false;
+        try {
+            // Calls from the authorization component to other components
+            // run
+            // with privileges of the internal user (superuser).
+            // They will not be further intercepted.
+            wasExternalBefore = UserContext.runAsInternalUser();
 
-                userManagementWrapper.initHandleExpiryTimestamp(handle);
-            }
-            catch (SystemException e) {
-                throw new WebserverSystemException(e);
-            }
-            finally {
-                if (wasExternalBefore) {
-                    try {
-                        UserContext.runAsExternalUser();
-                    }
-                    catch (WebserverSystemException e) {
-                        throw new ObjectRetrievalFailureException(e
-                            .getMessage(), e);
-                    }
+            userManagementWrapper.initHandleExpiryTimestamp(handle);
+        }
+        catch (SystemException e) {
+            throw new WebserverSystemException(e);
+        }
+        finally {
+            if (wasExternalBefore) {
+                try {
+                    UserContext.runAsExternalUser();
+                }
+                catch (WebserverSystemException e) {
+                    throw new ObjectRetrievalFailureException(e
+                        .getMessage(), e);
                 }
             }
-        }
-        catch (WebserverSystemException e) {
-            throw e;
         }
     }
 

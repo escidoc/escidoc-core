@@ -91,17 +91,12 @@ public class HibernateRequestMappingDao extends HibernateDaoSupport
         }
 
         List<MethodMapping> methodMappings;
-        try {
-            DetachedCriteria criteria =
-                DetachedCriteria.forClass(MethodMapping.class).add(
-                    Restrictions.eq("className", className)).add(
-                    Restrictions.eq("methodName", methodName)).addOrder(
-                    Order.desc("execBefore"));
-            methodMappings = getHibernateTemplate().findByCriteria(criteria);
-        }
-        catch (HibernateException e) {
-            throw e;
-        }
+        DetachedCriteria criteria =
+            DetachedCriteria.forClass(MethodMapping.class).add(
+                Restrictions.eq("className", className)).add(
+                Restrictions.eq("methodName", methodName)).addOrder(
+                Order.desc("execBefore"));
+        methodMappings = getHibernateTemplate().findByCriteria(criteria);
 
         // initialize the invocation mappings (as they are always needed but
         // middlegen does not allow to specify it as lazy="false" because it
