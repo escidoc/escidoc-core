@@ -29,14 +29,13 @@
 
 package de.escidoc.core.om.business.fedora.ingest;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.om.business.interfaces.IngestFacade;
 import de.escidoc.core.om.business.interfaces.ValueFormatter;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static de.escidoc.core.common.business.Constants.INGEST_RESOURCE_TYPE;
 
 /**
  * Thin facade on top of the FedoraIngestHandler. This class separates the
@@ -105,8 +104,8 @@ public class FedoraIngestFacade implements IngestFacade {
         String objectId = bean.getResource().ingest(xmlData);
 
         Map<String, String> values = new HashMap<String, String>();
-        values.put(INGEST_OBJ_ID, objectId);
-        values.put(INGEST_RESOURCE_TYPE, bean.getResourceType().toString());
+        values.put(Constants.INGEST_OBJ_ID, objectId);
+        values.put(Constants.INGEST_RESOURCE_TYPE, bean.getResourceType().toString());
 
         return getFormatter().format(values);
     }
