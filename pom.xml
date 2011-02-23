@@ -150,6 +150,7 @@
 						<descriptor>src/main/assembly/bin-descriptor.xml</descriptor>
 						<descriptor>src/main/assembly/src-descriptor.xml</descriptor>
 						<descriptor>src/main/assembly/doc-descriptor.xml</descriptor>
+                                                <descriptor>src/main/assembly/examples-descriptor.xml</descriptor>
                                                 <descriptor>src/main/assembly/jboss-patch-descriptor.xml</descriptor>
 					</descriptors>
 					<finalName>escidoc-core-${project.version}</finalName>
