@@ -233,6 +233,25 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
+     * Test filtering for items with record packing = "string". The result
+     * should be a valid SRW response.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testFilterRecordPacking() throws Exception {
+        final Map<String, String[]> filterParams =
+            new HashMap<String, String[]>();
+
+        filterParams
+            .put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "10" });
+        filterParams.put(FILTER_PARAMETER_RECORDPACKING,
+            new String[] { "string" });
+        assertXmlValidSrwResponse(retrieveItems(filterParams));
+    }
+
+    /**
      * Test filtering with a large XML filter.
      * 
      * @throws Exception
