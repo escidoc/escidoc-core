@@ -269,7 +269,7 @@ public class SRURequest {
             if (recordPacking != null) {
                 url +=
                     '&' + Constants.SRU_PARAMETER_RECORD_PACKING + '='
-                        + recordPacking;
+                        + recordPacking.getType();
             }
             if (!UserContext.isRestAccess()) {
                 url +=
