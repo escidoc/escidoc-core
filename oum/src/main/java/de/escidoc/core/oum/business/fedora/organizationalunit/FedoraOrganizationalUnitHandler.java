@@ -1399,8 +1399,7 @@ public class FedoraOrganizationalUnitHandler
 
         if (!predecessors.isEmpty()) {
             predecessorsMap = new ArrayList<Map<String, String>>();
-            for (Predecessor predecessor1 : predecessors) {
-                Predecessor predecessor = predecessor1;
+            for (Predecessor predecessor : predecessors) {
                 Map<String, String> predecessorMap =
                     new HashMap<String, String>();
 
@@ -1448,8 +1447,7 @@ public class FedoraOrganizationalUnitHandler
              * This must be a fusion: check if every predecessor is set as
              * fusion.
              */
-            for (Predecessor predecessor1 : predecessors) {
-                Predecessor predecessor = predecessor1;
+            for (Predecessor predecessor : predecessors) {
                 if (predecessor.getForm() != PredecessorForm.FUSION) {
                     throw new InvalidStatusException(
                         "Predecessor forms are inconsistent. At least one "

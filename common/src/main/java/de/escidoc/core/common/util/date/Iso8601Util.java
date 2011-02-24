@@ -105,19 +105,11 @@ public final class Iso8601Util {
             return preformatted;
         }
         else if (preformatted.endsWith("+0000")) {
-            final String ret =
-                preformatted.substring(0, preformatted.length()
-                    - "+0000".length())
-                    + 'Z';
-            return ret;
+            return preformatted.substring(0, preformatted.length() - "+0000".length()) + 'Z';
         }
         else {
-            final String ret =
-                preformatted.substring(0, preformatted.length() - 2)
-                    + ':'
-                    + preformatted.substring(preformatted.length() - 2,
-                        preformatted.length());
-            return ret;
+            return preformatted.substring(0, preformatted.length() - 2) + ':'
+                    + preformatted.substring(preformatted.length() - 2, preformatted.length());
         }
     }
 
@@ -170,8 +162,7 @@ public final class Iso8601Util {
         }
         DateFormat inputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
         inputDateFormat.setLenient(false);
-        Date ret = inputDateFormat.parse(tmpDateText);
-        return ret;
+        return inputDateFormat.parse(tmpDateText);
     }
 
 }

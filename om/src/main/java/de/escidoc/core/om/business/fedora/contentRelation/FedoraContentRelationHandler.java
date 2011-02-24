@@ -1081,36 +1081,35 @@ public class FedoraContentRelationHandler extends HandlerBase
         // write triple values into ContentRelation object
 
         for (Triple triple : triples) {
-            Triple t = triple;
-            if (t
+            if (triple
                 .getPredicate().equals(TripleStoreUtility.PROP_FRAMEWORK_BUILD)) {
-                cr.setBuildNumber(t.getObject());
+                cr.setBuildNumber(triple.getObject());
             }
             // creator --------------
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_CREATED_BY_ID)) {
-                cr.getProperties().setCreatedById(t.getObject());
+                cr.getProperties().setCreatedById(triple.getObject());
             }
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_CREATED_BY_TITLE)) {
-                cr.getProperties().setCreatedByName(t.getObject());
+                cr.getProperties().setCreatedByName(triple.getObject());
             }
             // modifier --------------
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_MODIFIED_BY_ID)) {
-                cr.getProperties().setModifiedById(t.getObject());
+                cr.getProperties().setModifiedById(triple.getObject());
             }
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_MODIFIED_BY_TITLE)) {
-                cr.getProperties().setModifiedByName(t.getObject());
+                cr.getProperties().setModifiedByName(triple.getObject());
             }
             // public-status --------------
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_PUBLIC_STATUS)) {
 
                 StatusType st;
                 try {
-                    st = StatusType.getStatusType(t.getObject());
+                    st = StatusType.getStatusType(triple.getObject());
                 }
                 catch (InvalidStatusException e) {
                     // shouldn't happen
@@ -1119,37 +1118,36 @@ public class FedoraContentRelationHandler extends HandlerBase
                 }
                 cr.getProperties().setStatus(st);
             }
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_PUBLIC_STATUS_COMMENT)) {
-                cr.getProperties().setStatusComment(t.getObject());
+                cr.getProperties().setStatusComment(triple.getObject());
             }
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_OBJECT_TYPE)) {
                 // this is not the ContentRelation type, this is the type of
                 // resource
-                if (!(Constants.CONTENT_RELATION2_OBJECT_TYPE.equals(t
+                if (!(Constants.CONTENT_RELATION2_OBJECT_TYPE.equals(triple
                     .getObject()) || (Constants.RDF_NAMESPACE_URI + "Statement")
-                    .equals(t.getObject()))) {
-                    throw new WebserverSystemException(
-                        "Resource is not from type ContentRelation.");
+                    .equals(triple.getObject()))) {
+                    throw new WebserverSystemException("Resource is not from type ContentRelation.");
                 }
             }
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_CONTENT_RELATION_SUBJECT)) {
-                cr.setSubject(t.getObject());
+                cr.setSubject(triple.getObject());
             }
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_CONTENT_RELATION_OBJECT)) {
-                cr.setObject(t.getObject());
+                cr.setObject(triple.getObject());
             }
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_CONTENT_RELATION_DESCRIPTION)) {
-                cr.getProperties().setDescription(t.getObject());
+                cr.getProperties().setDescription(triple.getObject());
             }
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_CONTENT_RELATION_TYPE)) {
                 try {
-                    cr.setType(new URI(t.getObject()));
+                    cr.setType(new URI(triple.getObject()));
                 }
                 catch (URISyntaxException e) {
                     // shouldn't happen
@@ -1157,18 +1155,18 @@ public class FedoraContentRelationHandler extends HandlerBase
                     throw new SystemException(e);
                 }
             }
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_CONTENT_RELATION_OBJECT_VERSION)) {
-                cr.setObjectVersion(t.getObject());
+                cr.setObjectVersion(triple.getObject());
             }
-            else if (t.getPredicate().equals(
+            else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_CONTENT_RELATION_SUBJECT)) {
-                cr.setSubjectVersion(t.getObject());
+                cr.setSubjectVersion(triple.getObject());
             }
             else {
                 // add values for mapping
-                log.warn("Predicate not mapped " + t.getPredicate() + " = "
-                    + t.getObject());
+                log.warn("Predicate not mapped " + triple.getPredicate() + " = "
+                    + triple.getObject());
             }
         }
     }
@@ -1368,14 +1366,10 @@ public class FedoraContentRelationHandler extends HandlerBase
      */
     private void enrichWithMetadataContent(final ContentRelationCreate cr)
         throws WebserverSystemException {
-
         List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
         if (mdRecords != null) {
-            for (MdRecordCreate mdRecord1 : mdRecords) {
-                MdRecordCreate mdRecord = mdRecord1;
-
+            for (MdRecordCreate mdRecord : mdRecords) {
                 if (mdRecord.getContent() == null) {
-
                     Datastream ds =
                         new Datastream(mdRecord.getName(), cr.getObjid(),
                             mdRecord.getMimeType(),
@@ -1385,7 +1379,6 @@ public class FedoraContentRelationHandler extends HandlerBase
                     mdRecord.setContent(new String(ds.getStream()));
                 }
             }
-
         }
     }
 

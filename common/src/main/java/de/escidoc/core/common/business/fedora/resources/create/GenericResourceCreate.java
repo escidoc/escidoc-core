@@ -99,11 +99,7 @@ public abstract class GenericResourceCreate {
     public String getDC(
         final MdRecordCreate mdRecord, final String contentModelId)
         throws WebserverSystemException, EncodingSystemException {
-
-        String dcXml =
-            XmlUtility.createDC(mdRecord.getNameSpace(), mdRecord.getContent(),
-                this.objid, contentModelId);
-        return dcXml;
+        return XmlUtility.createDC(mdRecord.getNameSpace(), mdRecord.getContent(), this.objid, contentModelId);
     }
 
     /**

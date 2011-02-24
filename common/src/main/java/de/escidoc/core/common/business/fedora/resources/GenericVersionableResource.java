@@ -617,14 +617,10 @@ public class GenericVersionableResource extends GenericResourcePid {
         }
 
         this.lastVersionData = new HashMap<String, String>();
-
         List<Triple> triples = eve.getElementValues().getTriples();
-
         for (Triple triple : triples) {
-            Triple t = triple;
-            this.lastVersionData.put(t.getPredicate(), t.getObject());
+            this.lastVersionData.put(triple.getPredicate(), triple.getObject());
         }
-
         return this.lastVersionData;
     }
 
@@ -932,11 +928,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     public Datastream getRelsExt(final String timestamp)
         throws StreamNotFoundException, FedoraSystemException {
-
-        Datastream relsExt =
-            new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), timestamp);
-
-        return relsExt;
+        return new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), timestamp);
     }
 
     // --------------------------------------------------------------------------
@@ -1360,8 +1352,7 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         Map<String, String> properties = new HashMap<String, String>();
 
-        for (String s : tripleStoreMap.keySet()) {
-            String sourceKey = s;
+        for (String sourceKey : tripleStoreMap.keySet()) {
             String value = tripleStoreMap.get(sourceKey);
 
             if (value != null) {
@@ -1426,9 +1417,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             versionDate = getVersionDate();
         }
         // initialize datastreams with Fedora datastream information
-        org.fcrepo.server.types.gen.Datastream[] datastreamInfos =
-            getFedoraUtility().getDatastreamsInformation(getId(), versionDate);
-        return datastreamInfos;
+        return getFedoraUtility().getDatastreamsInformation(getId(), versionDate);
     }
 
     @Override

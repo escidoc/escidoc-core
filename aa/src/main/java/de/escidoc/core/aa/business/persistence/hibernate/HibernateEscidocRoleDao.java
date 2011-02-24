@@ -245,8 +245,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
                 }
             }
 
-            for (String s : criteriaMap.keySet()) {
-                final String key = s;
+            for (String key : criteriaMap.keySet()) {
                 final Object criteriaValue = criterias.remove(key);
                 if (criteriaValue != null) {
                     final Object[] parts = criteriaMap.get(key);

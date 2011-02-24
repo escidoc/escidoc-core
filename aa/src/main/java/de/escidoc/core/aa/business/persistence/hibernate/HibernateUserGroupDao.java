@@ -381,15 +381,12 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 Boolean.valueOf(active1)));
         }
 
-        for (String s : criteriaMap.keySet()) {
-            final String key = s;
+        for (String key : criteriaMap.keySet()) {
             final Object criteriaValue = clonedCriterias.remove(key);
-
             if (criteriaValue != null) {
                 final Object[] parts = criteriaMap.get(key);
                 if (parts[0].equals(COMPARE_EQ)) {
-                    detachedCriteria.add(Restrictions.eq((String) parts[1],
-                            criteriaValue));
+                    detachedCriteria.add(Restrictions.eq((String) parts[1], criteriaValue));
                 } else {
                     detachedCriteria.add(Restrictions.like((String) parts[1],
                             criteriaValue));

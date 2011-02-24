@@ -397,8 +397,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 Boolean.valueOf(active1)));
         }
 
-        for (String s : criteriaMap.keySet()) {
-            final String key = s;
+        for (String key : criteriaMap.keySet()) {
             if (key.equals(Constants.FILTER_ORGANIZATIONAL_UNIT)
                     || key.equals(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT)) {
                 continue;

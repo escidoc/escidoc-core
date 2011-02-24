@@ -109,9 +109,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values.putAll(getRelationValues(getItem()));
         values.putAll(getResourcesValues(getItem()));
         values.putAll(commonValues);
-
-        String result = ItemXmlProvider.getInstance().getItemXml(values);
-        return result;
+        return ItemXmlProvider.getInstance().getItemXml(values);
 
     }
 
@@ -177,8 +175,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         }
         if (!componentIds.isEmpty()) {
             StringBuilder renderedComponents = new StringBuilder();
-            for (String componentId1 : componentIds) {
-                String componentId = componentId1;
+            for (String componentId : componentIds) {
                 try {
                     renderedComponents.append(renderComponent(componentId, commonValues, false));
                 } catch (ComponentNotFoundException e) {
@@ -187,9 +184,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             }
             values.put("components", renderedComponents.toString());
         }
-
-        String result = ItemXmlProvider.getInstance().getComponentsXml(values);
-        return result;
+        return ItemXmlProvider.getInstance().getComponentsXml(values);
     }
 
     /**
@@ -299,9 +294,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         if (mdRecordsContent.length() > 0) {
             values.put("componentMdRecordsContent", mdRecordsContent);
         }
-
-        String result = ItemXmlProvider.getInstance().getComponentXml(values);
-        return result;
+        return ItemXmlProvider.getInstance().getComponentXml(values);
     }
 
     public String renderComponentProperties(final String id)
@@ -331,10 +324,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             getItem().getHref() + component.getHrefPart());
         values.put("componentId", component.getId());
         values.putAll(getComponentPropertiesValues(component));
-
-        String result = ItemXmlProvider.getInstance().getComponentPropertiesXml(values);
-
-        return result;
+        return ItemXmlProvider.getInstance().getComponentPropertiesXml(values);
     }
 
     @Override
@@ -342,7 +332,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         throws WebserverSystemException, EncodingSystemException,
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
-
         return renderMdRecords(getCommonValues(getItem()), isRoot);
     }
 
@@ -381,8 +370,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
             Map<String, Datastream> originMdRecords =
                 (HashMap<String, Datastream>) getOriginItem().getMdRecords();
-            for (String s : originMdRecords.keySet()) {
-                String mdRecordName = s;
+            for (String mdRecordName : originMdRecords.keySet()) {
                 if (!mdRecords.keySet().contains(mdRecordName)) {
                     try {
                         content.append(renderMdRecord(mdRecordName,
@@ -566,9 +554,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         StringBuilder content = new StringBuilder();
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            for (String s : getOriginItem()
-                    .getContentStreams().keySet()) {
-                String contentStreamName = s;
+            for (String contentStreamName : getOriginItem().getContentStreams().keySet()) {
                 content.append(renderContentStream(contentStreamName, false));
             }
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF,
@@ -578,11 +564,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 "Content streams of Item " + getOriginId());
         }
         else {
-            for (String s : getItem().getContentStreams()
-                    .keySet()) {
-                String contentStreamName = s;
-                content.append(renderContentStream(contentStreamName,
-                        commonValues, false));
+            for (String contentStreamName : getItem().getContentStreams().keySet()) {
+                content.append(renderContentStream(contentStreamName, commonValues, false));
             }
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF, getItem()
                 .getHref() + Constants.CONTENT_STREAMS_URL_PART);
@@ -714,11 +697,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         Map<String, Datastream> mdRecords =
             (HashMap<String, Datastream>) component.getMdRecords();
         StringBuilder content = new StringBuilder();
-        for (String s : mdRecords.keySet()) {
-            String mdRecordName = s;
+        for (String mdRecordName : mdRecords.keySet()) {
             try {
-                content.append(renderComponentMdRecord(componentId,
-                        mdRecordName, commonValues, false));
+                content.append(renderComponentMdRecord(componentId, mdRecordName, commonValues, false));
             } catch (MdRecordNotFoundException e) {
                 throw new IntegritySystemException(e.getMessage(), e);
             }
@@ -836,10 +817,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         }
         values.putAll(getCommonValues(getItem()));
         values.putAll(getPropertiesValues(getItem()));
-
-        String result = ItemXmlProvider.getInstance().getItemPropertiesXml(values);
-
-        return result;
+        return ItemXmlProvider.getInstance().getItemPropertiesXml(values);
     }
 
     /*
@@ -858,10 +836,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values.put("isRootRelations", XmlTemplateProvider.TRUE);
         values.putAll(getCommonValues(getItem()));
         values.putAll(getRelationValues(getItem()));
-
-        String result = ItemXmlProvider.getInstance().getItemRelationsXml(values);
-
-        return result;
+        return ItemXmlProvider.getInstance().getItemRelationsXml(values);
     }
 
     /*
@@ -884,10 +859,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         // digilib client (digicat). The item XML Schema is currently not
         // compaptible with the this extension.
         values.put("showContentTransformer", XmlTemplateProvider.FALSE);
-
-        String result = ItemXmlProvider.getInstance().getItemResourcesXml(values);
-
-        return result;
+        return ItemXmlProvider.getInstance().getItemResourcesXml(values);
     }
 
     /**
@@ -912,8 +884,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 .print(System.currentTimeMillis()));
         addParentsValues(values, itemId);
         addParentsNamespaceValues(values);
-        String result = ItemXmlProvider.getInstance().getParentsXml(values);
-        return result;
+        return ItemXmlProvider.getInstance().getParentsXml(values);
     }
 
     /**
@@ -975,12 +946,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         Collection<String> renderedEntries = new ArrayList<String>();
         Map<String, Object> values = new HashMap<String, Object>();
 
-        for (String item : items) {
-            String itemId = item;
+        for (String itemId : items) {
             try {
                 setItem(itemId);
                 renderedEntries.add(render());
-
             } catch (ResourceNotFoundException e) {
                 String msg =
                         "FedoraItemHandler.retrieveItems: can not retrieve object "

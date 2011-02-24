@@ -187,10 +187,8 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
             detachedCriteria.add(Restrictions.in("id", setIds.toArray()));
         }
 
-        for (String s : criteriaMap.keySet()) {
-            final String key = s;
+        for (String key : criteriaMap.keySet()) {
             final Object criteriaValue = clonedCriterias.remove(key);
-
             if (criteriaValue != null) {
                 final Object[] parts = criteriaMap.get(key);
                 if (parts[0].equals(COMPARE_EQ)) {

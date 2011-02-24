@@ -351,9 +351,7 @@ public class InvocationParser {
         boolean subresourceIdProvided = false;
 
         // for each invocation mapping...
-        for (InvocationMapping invocationMapping1 : invocationMappings) {
-            InvocationMapping invocationMapping = invocationMapping1;
-
+        for (InvocationMapping invocationMapping : invocationMappings) {
             // FIXME: resolve this
             StringAttribute value =
                     getValueForInvocationMapping(arguments, isArray, index,

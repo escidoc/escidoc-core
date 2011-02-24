@@ -611,13 +611,9 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             // "\"/object/id\"=" + getContext().getFullId() + " or " +
             "\"/object/id\"=" + getContext().getId() });
 
-        String searchResponse =
-            contentRelationHandler
-                .retrieveContentRelations(new LuceneRequestParameters(
-                    filterParams));
-        String result = transformSearchResponse2relations(searchResponse);
-
-        return result;
+        String searchResponse = contentRelationHandler.retrieveContentRelations(
+                new LuceneRequestParameters(filterParams));
+        return transformSearchResponse2relations(searchResponse);
 
     }
 

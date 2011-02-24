@@ -1091,13 +1091,9 @@ public class FedoraItemHandler extends ItemHandlerPid
             + getItem().getId() + " or " + "\"/object/id\"="
             + getItem().getFullId() });
 
-        String searchResponse =
-            contentRelationHandler
-                .retrieveContentRelations(new LuceneRequestParameters(
-                    filterParams));
-        String result = transformSearchResponse2relations(searchResponse);
-
-        return result;
+        String searchResponse = contentRelationHandler.retrieveContentRelations(
+                new LuceneRequestParameters(filterParams));
+        return transformSearchResponse2relations(searchResponse);
 
     }
 
@@ -1662,8 +1658,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             List<String> surrogateItemIds =
                 getTripleStoreUtility().getSurrogates(getItem().getId());
             Collection<String> referencedSurrogateItemIds = new ArrayList<String>();
-            for (String surrogateItemId : surrogateItemIds) {
-                String surrogateId = surrogateItemId;
+            for (String surrogateId : surrogateItemIds) {
                 String versionId =
                     getTripleStoreUtility().getRelation(surrogateId,
                         TripleStoreUtility.PROP_ORIGIN_VERSION);
@@ -1944,12 +1939,10 @@ public class FedoraItemHandler extends ItemHandlerPid
         if ((relationsData != null) && (!relationsData.isEmpty())) {
             List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
-            for (Map<String, String> aRelationsData : relationsData) {
-                Map<String, String> relation = aRelationsData;
+            for (Map<String, String> relation : relationsData) {
                 String predicateValue = relation.get("predicateValue");
                 String predicateNs = relation.get("predicateNs");
                 String target = relation.get("target");
-
                 StartElementWithChildElements newContentRelationElement =
                     new StartElementWithChildElements();
                 newContentRelationElement.setLocalName(predicateValue);
@@ -2082,8 +2075,7 @@ public class FedoraItemHandler extends ItemHandlerPid
 
             }
             Set<String> keySet = predicateValuesVectorAssignment.keySet();
-            for (String aKeySet : keySet) {
-                String predicateValue = aKeySet;
+            for (String predicateValue : keySet) {
                 List<StartElementWithChildElements> elements =
                     predicateValuesVectorAssignment.get(predicateValue);
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
@@ -2611,20 +2603,14 @@ public class FedoraItemHandler extends ItemHandlerPid
         Map<String, Datastream> contentStreamDatastreams =
             new HashMap<String, Datastream>();
 
-        for (String s : contentStreamMap.keySet()) {
-            String name = s;
+        for (String name : contentStreamMap.keySet()) {
             Map<String, Object> csValues = contentStreamMap.get(name);
-
             Datastream ds;
             if (csValues.containsKey(Elements.ELEMENT_CONTENT)) {
-                ByteArrayOutputStream stream =
-                    (ByteArrayOutputStream) csValues
-                        .get(Elements.ELEMENT_CONTENT);
+                ByteArrayOutputStream stream = (ByteArrayOutputStream) csValues.get(Elements.ELEMENT_CONTENT);
                 byte[] xmlBytes = stream.toByteArray();
-                ds =
-                    new Datastream(name, getItem().getId(), xmlBytes,
-                        (String) csValues
-                            .get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
+                ds = new Datastream(name, getItem().getId(), xmlBytes,
+                        (String) csValues.get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
             }
             else if (csValues.containsKey(Elements.ATTRIBUTE_XLINK_HREF)) {
                 ds =

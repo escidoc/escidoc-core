@@ -752,13 +752,10 @@ public class GenericResource implements FedoraResource {
 
         Map<String, String> properties = new HashMap<String, String>();
 
-        for (String s : tripleStoreMap.keySet()) {
-            String sourceKey = s;
+        for (String sourceKey : tripleStoreMap.keySet()) {
             String value = tripleStoreMap.get(sourceKey);
-
             if (value != null) {
                 String targetKey = this.propertiesNamesMapping.get(sourceKey);
-
                 if (targetKey != null) {
                     properties.put(targetKey, value);
                 } else {
@@ -1298,17 +1295,13 @@ public class GenericResource implements FedoraResource {
      */
     private Map<String, String> mapTripleList2TupleList(
         final Iterable<Triple> triples) {
-
-        Map<String, String> lastVersionData = new HashMap<String, String>();
-
+        final Map<String, String> lastVersionData = new HashMap<String, String>();
         for (Triple triple : triples) {
-            Triple t = triple;
-            lastVersionData.put(t.getPredicate(), t.getObject());
-            if (t.getPredicate().equals(TripleStoreUtility.PROP_DC_TITLE)) {
-                this.title = t.getObject();
+            lastVersionData.put(triple.getPredicate(), triple.getObject());
+            if (triple.getPredicate().equals(TripleStoreUtility.PROP_DC_TITLE)) {
+                this.title = triple.getObject();
             }
         }
-
         return lastVersionData;
 
     }
@@ -1354,12 +1347,7 @@ public class GenericResource implements FedoraResource {
 
     protected org.fcrepo.server.types.gen.Datastream[] getDatastreamInfos()
         throws WebserverSystemException, FedoraSystemException {
-        // initialize datastreams with Fedora datastream information
-        org.fcrepo.server.types.gen.Datastream[] datastreamInfos =
-            FedoraUtility
-                .getInstance().getDatastreamsInformation(getId(), null);
-
-        return datastreamInfos;
+        return FedoraUtility.getInstance().getDatastreamsInformation(getId(), null);
     }
 
     protected void initDatastreams(

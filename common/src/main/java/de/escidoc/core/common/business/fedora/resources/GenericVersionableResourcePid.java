@@ -921,8 +921,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         // prepare update relations
         if ((relationsToUpdate != null) && (!relationsToUpdate.isEmpty())) {
             elementsToAdd = new ArrayList<StartElementWithChildElements>();
-            for (String aRelationsToUpdate : relationsToUpdate) {
-                String relation = aRelationsToUpdate;
+            for (String relation : relationsToUpdate) {
                 String[] predicateAndTarget = relation.split("###");
                 String[] predicate = predicateAndTarget[0].split("#");
                 StartElementWithChildElements newContentRelationElement =

@@ -864,8 +864,7 @@ public class ItemCreate extends GenericResourceCreate {
      */
     private void rollbackCreate(final Iterable<String> componentIds) {
 
-        for (String componentId1 : componentIds) {
-            String componentId = componentId1;
+        for (String componentId : componentIds) {
             LOG.debug("Rollback Component create (" + componentId + ").");
             try {
                 FedoraUtility.getInstance().deleteObject(componentId, false);
@@ -1057,25 +1056,22 @@ public class ItemCreate extends GenericResourceCreate {
 
         for (ContentStreamCreate contentStream : this.contentStreams) {
             HashMap<String, String> valueMap = new HashMap<String, String>();
-
-            ContentStreamCreate cont = contentStream;
-
-            valueMap.put(XmlTemplateProvider.CONTROL_GROUP, cont
+            valueMap.put(XmlTemplateProvider.CONTROL_GROUP, contentStream
                     .getContent().getStorageType().getAbbreviation());
-            valueMap.put(XmlTemplateProvider.VAR_ID, cont.getName());
+            valueMap.put(XmlTemplateProvider.VAR_ID, contentStream.getName());
             valueMap.put(XmlTemplateProvider.VAR_VERSIONABLE,
                     XmlTemplateProvider.TRUE);
             valueMap.put(XmlTemplateProvider.VAR_ALT_IDS, "content-stream");
-            valueMap.put(XmlTemplateProvider.MIME_TYPE, cont.getMimeType());
+            valueMap.put(XmlTemplateProvider.MIME_TYPE, contentStream.getMimeType());
 
             // FIXME using title as label seams inconsistent
-            valueMap.put(XmlTemplateProvider.VAR_LABEL, cont.getTitle());
+            valueMap.put(XmlTemplateProvider.VAR_LABEL, contentStream.getTitle());
 
-            if (cont.getContent().getDataLocation() != null) {
-                valueMap.put(XmlTemplateProvider.VAR_URL, cont
+            if (contentStream.getContent().getDataLocation() != null) {
+                valueMap.put(XmlTemplateProvider.VAR_URL, contentStream
                         .getContent().getDataLocation().toString());
             }
-            valueMap.put(XmlTemplateProvider.VAR_CONTENT, cont
+            valueMap.put(XmlTemplateProvider.VAR_CONTENT, contentStream
                     .getContent().getContent());
 
             contStreams.add(valueMap);

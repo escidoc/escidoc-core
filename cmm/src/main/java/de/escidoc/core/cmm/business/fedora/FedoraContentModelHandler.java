@@ -203,8 +203,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
     private EscidocBinaryContent retrieveOtherContent(final String dsName)
         throws WebserverSystemException {
-        final String name = dsName;
-        Datastream ds = getContentModel().getOtherStream(name);
+        Datastream ds = getContentModel().getOtherStream(dsName);
         return getContent(ds);
     }
 
@@ -586,10 +585,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         List<StartElementWithChildElements> deleteElementList =
             new ArrayList<StartElementWithChildElements>();
 
-        for (ResourceDefinitionCreate resourceDefinitionCreate1 : getContentModel()
+        for (ResourceDefinitionCreate resourceDefinition : getContentModel()
             .getResourceDefinitions().values()) {
-            ResourceDefinitionCreate resourceDefinition =
-                resourceDefinitionCreate1;
             if (!resourceDefinitions.containsKey(resourceDefinition.getName())) {
                 StartElementWithChildElements element =
                     new StartElementWithChildElements("hasService",
@@ -611,10 +608,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         // add services to RELS-EXT
         List<StartElementWithChildElements> addToRelsExt =
             new ArrayList<StartElementWithChildElements>();
-        for (ResourceDefinitionCreate resourceDefinitionCreate : resourceDefinitions
+        for (ResourceDefinitionCreate resourceDefinition : resourceDefinitions
             .values()) {
-            ResourceDefinitionCreate resourceDefinition =
-                resourceDefinitionCreate;
             // FIXME do update existing resource definitions
             if (!getContentModel().getResourceDefinitions().containsKey(
                 resourceDefinition.getName())) {
@@ -651,10 +646,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 valueMap);
         getContentModel().setDsCompositeModel(dsCompositeModelContent);
         // TODO create, delete, update *_XSD datastreams
-        for (MdRecordDefinitionCreate mdRecordDefinition1 : mdRecordDefinitions) {
-            MdRecordDefinitionCreate mdRecordDefinition = mdRecordDefinition1;
-            String name = mdRecordDefinition.getName();
-            String xsdUrl = mdRecordDefinition.getSchemaHref();
+        for (MdRecordDefinitionCreate mdRecordDefinition : mdRecordDefinitions) {
+            final String name = mdRecordDefinition.getName();
+            final String xsdUrl = mdRecordDefinition.getSchemaHref();
             getContentModel()
                 .setOtherStream(
                     name + "_xsd",
@@ -673,10 +667,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         FedoraUtility fu = FedoraUtility.getInstance();
 
         if (resourceDefinitions != null) {
-            for (ResourceDefinitionCreate resourceDefinitionCreate : resourceDefinitions
+            for (ResourceDefinitionCreate resourceDefinition : resourceDefinitions
                 .values()) {
-                ResourceDefinitionCreate resourceDefinition =
-                    resourceDefinitionCreate;
                 String sdefId = sdefIdPrefix + resourceDefinition.getName();
                 // String sdepId = sdepIdPrefix + resourceDefinition.getName();
 
@@ -754,15 +746,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     private String getSDefFoXML(
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
-
         Map<String, Object> valueMap = new HashMap<String, Object>();
-
         valueMap.putAll(getBehaviorValues(resourceDefinition));
-
-        String foxml =
-            ContentModelFoXmlProvider.getInstance().getServiceDefinitionFoXml(
-                valueMap);
-        return foxml;
+        return ContentModelFoXmlProvider.getInstance().getServiceDefinitionFoXml(valueMap);
     }
 
     /**
@@ -782,15 +768,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     private String getSDepFoXML(
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
-
         Map<String, Object> valueMap = new HashMap<String, Object>();
-
         valueMap.putAll(getBehaviorValues(resourceDefinition));
-
-        String foxml =
-            ContentModelFoXmlProvider.getInstance().getServiceDeploymentFoXml(
-                valueMap);
-        return foxml;
+        return ContentModelFoXmlProvider.getInstance().getServiceDeploymentFoXml(valueMap);
     }
 
     private Map<String, Object> getBehaviorValues(
@@ -827,11 +807,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         FedoraSystemException {
         Map<String, Datastream> contentStreamDatastreams =
             new HashMap<String, Datastream>();
-
-        for (ContentStreamCreate contentStream1 : contentStreams) {
-            ContentStreamCreate contentStream = contentStream1;
+        for (ContentStreamCreate contentStream : contentStreams) {
             String name = contentStream.getName();
-
             Datastream ds;
             if (contentStream.getContent() != null
                 && contentStream.getContent().getContent() != null) {

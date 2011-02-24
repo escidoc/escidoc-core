@@ -543,8 +543,7 @@ public class Item extends GenericVersionableResourcePid
         // get list of names of data streams with alternateId = "metadata"
         final Set<String> namesInFedora = getMdRecords().keySet();
         // delete data streams which are in fedora but not in mdRecords
-        for (String aNamesInFedora : namesInFedora) {
-            final String nameInFedora = aNamesInFedora;
+        for (String nameInFedora : namesInFedora) {
             if (!mdRecords.containsKey(nameInFedora)) {
                 Datastream fedoraDs;
                 try {
@@ -787,19 +786,13 @@ public class Item extends GenericVersionableResourcePid
         }
 
         // delete data streams which are in fedora but not in given list
-        for (String aNamesInFedora : namesInFedora) {
-            final String nameInFedora = aNamesInFedora;
+        for (String nameInFedora : namesInFedora) {
             if (!contentStreamDatastreams.containsKey(nameInFedora)) {
                 Datastream fedoraDs = getContentStream(nameInFedora);
                 fedoraDs.delete();
                 this.contentStreams.remove(nameInFedora);
             }
         }
-
-        // this.lastModifiedDate =
-        // getTripleStoreUtility().getPropertiesElements(getId(),
-        // "latest-version.date",
-        // Constants.CONTAINER_PROPERTIES_NAMESPACE_URI);
     }
 
     /**

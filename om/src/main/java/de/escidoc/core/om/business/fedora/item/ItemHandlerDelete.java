@@ -95,11 +95,9 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
         // remove member entries referring this
         List<String> containers =
             getTripleStoreUtility().getContainers(getItem().getId());
-        for (String container1 : containers) {
+        for (String parent : containers) {
             try {
-                String parent = container1;
                 final Container container = new Container(parent);
-
                 // call removeMember with current user context (access rights)
                 String param =
                         "<param last-modification-date=\""
