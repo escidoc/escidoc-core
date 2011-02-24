@@ -127,7 +127,7 @@ public class BeanMethod {
         throws InvocationTargetException, MethodNotFoundException,
         WebserverSystemException {
 
-        Object result;
+        final Object result;
         try {
             if (eSciDocUserHandle != null) {
                 UserContext.setUserContext(eSciDocUserHandle);
@@ -135,7 +135,7 @@ public class BeanMethod {
             }
             Class[] parameterTypes = null;
             if (parameters != null) {
-                int noOfArguments = parameters.length;
+                final int noOfArguments = parameters.length;
                 parameterTypes = new Class[noOfArguments];
                 for (int i = 0; i < noOfArguments; ++i) {
                     if (parameters[i] != null) {
@@ -161,7 +161,7 @@ public class BeanMethod {
                     }
                 }
             }
-            java.lang.reflect.Method execute =
+            final java.lang.reflect.Method execute =
                 getBean().getClass().getMethod(getMethod(), parameterTypes);
             result = execute.invoke(getBean(), getParameters());
         }

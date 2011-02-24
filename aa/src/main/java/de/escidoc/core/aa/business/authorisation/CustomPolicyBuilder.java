@@ -134,7 +134,7 @@ public final class CustomPolicyBuilder {
     private static final File SCHEMA_FILE;
 
     static {
-        String schemaName = System.getProperty(POLICY_SCHEMA_PROPERTY);
+        final String schemaName = System.getProperty(POLICY_SCHEMA_PROPERTY);
         if (schemaName == null) {
             SCHEMA_FILE = null;
         } else {
@@ -177,12 +177,12 @@ public final class CustomPolicyBuilder {
         throws ParserConfigurationException, SAXException, IOException {
 
         // create the factory
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setIgnoringComments(true);
         // as of 1.2, we always are name space aware
         factory.setNamespaceAware(true);
 
-        DocumentBuilder db;
+        final DocumentBuilder db;
         if (SCHEMA_FILE != null) {
             // we're using a validating parser
             factory.setValidating(true);
@@ -297,16 +297,16 @@ public final class CustomPolicyBuilder {
         // final String policyIdValue =
         // StringUtility.concatenateToString(escidocRole.getRoleName(),
         // "-policy");
-        List<AbstractPolicy> xacmlPolicies = new ArrayList<AbstractPolicy>();
+        final List<AbstractPolicy> xacmlPolicies = new ArrayList<AbstractPolicy>();
         // List<Rule> rules = new ArrayList<Rule>();
         // List<Action> rulesActions = new Vector<Action>();
-        for (EscidocPolicy escidocPolicy : escidocRole.getEscidocPolicies()) {
+        for (final EscidocPolicy escidocPolicy : escidocRole.getEscidocPolicies()) {
             final String xmlData = escidocPolicy.getXml();
             final Element root;
             final String name;
             if (xmlData != null && xmlData.trim().length() != 0) {
                 try {
-                    Document doc = parseXml(xmlData);
+                    final Document doc = parseXml(xmlData);
 
                     // handle the policy, if it's a known type
                     root = doc.getDocumentElement();
@@ -349,7 +349,7 @@ public final class CustomPolicyBuilder {
                                 UNSUPPORTED_ROOT_ELEMENT, name));
             }
         }
-        XacmlPolicySet xacmlRolePolicySet =
+        final XacmlPolicySet xacmlRolePolicySet =
             new XacmlPolicySet(escidocRole.getId(),
                 CustomPolicyBuilder.COMB_ALG_ID,
                 CustomPolicyBuilder.DESCRIPTION + escidocRole.getRoleName(),
@@ -389,13 +389,13 @@ public final class CustomPolicyBuilder {
         UnknownIdentifierException, FunctionTypeException {
 
         // null is the needed default value in case of default (user) policies.
-        List<Collection<TargetMatch>> policyResources;
+        final List<Collection<TargetMatch>> policyResources;
         if (EscidocRole.DEFAULT_USER_ROLE_ID.equals(role.getId())) {
             policyResources = null;
         } else {
 
             policyResources = new ArrayList<Collection<TargetMatch>>();
-            Collection<TargetMatch> policyResource = new ArrayList<TargetMatch>();
+            final Collection<TargetMatch> policyResource = new ArrayList<TargetMatch>();
             policyResource.add(CustomTargetBuilder.generateResourceMatch(
                     XacmlFunctionRoleIsGranted.NAME, role.getId(),
                     AttributeIds.URN_RESOURCE_ID, Constants.XMLSCHEMA_STRING));
@@ -430,8 +430,8 @@ public final class CustomPolicyBuilder {
         final String policyId) throws URISyntaxException,
         UnknownIdentifierException, FunctionTypeException {
 
-        List<Collection<TargetMatch>> policyResources = new ArrayList<Collection<TargetMatch>>();
-        Collection<TargetMatch> policyResource = new ArrayList<TargetMatch>();
+        final List<Collection<TargetMatch>> policyResources = new ArrayList<Collection<TargetMatch>>();
+        final Collection<TargetMatch> policyResource = new ArrayList<TargetMatch>();
         policyResource.add(CustomTargetBuilder.generateResourceMatch(
             XacmlFunctionRoleIsGranted.NAME, policyId,
             AttributeIds.URN_RESOURCE_ID, Constants.XMLSCHEMA_STRING));
@@ -483,9 +483,9 @@ public final class CustomPolicyBuilder {
     public static String encode(final PolicyTreeElement policy)
         throws WebserverSystemException {
 
-        long start = System.nanoTime();
+        final long start = System.nanoTime();
 
-        ByteArrayOutputStream writer = new ByteArrayOutputStream();
+        final ByteArrayOutputStream writer = new ByteArrayOutputStream();
         policy.encode(writer, new Indenter());
         String ret = null;
         try {
@@ -535,7 +535,7 @@ public final class CustomPolicyBuilder {
     public static String encode(final ResponseCtx ctx)
         throws WebserverSystemException {
 
-        ByteArrayOutputStream writer = new ByteArrayOutputStream();
+        final ByteArrayOutputStream writer = new ByteArrayOutputStream();
         ctx.encode(writer, new Indenter());
         String ret = null;
         try {

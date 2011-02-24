@@ -69,15 +69,15 @@ public final class CollectionsConverter {
     public static KeyValuePair[] convertMapToKeyValuePairs(final Map map) {
         // generate a new array of type KeyValuePair
         // with the same size as the Map
-        KeyValuePair[] keyValuePair = new KeyValuePair[map.size()];
+        final KeyValuePair[] keyValuePair = new KeyValuePair[map.size()];
 
         // iterate over the Map, get a key-value-pair each time
         int count = 0;
 
-        for (Object o : map.entrySet()) {
+        for (final Object o : map.entrySet()) {
 
             // get an element as key-value pair
-            Entry entry = (Entry) o;
+            final Entry entry = (Entry) o;
 
             // generate a new object of type KeyValuePair, set the values
             // from the Map.Entry and put the object at the next free place
@@ -105,7 +105,7 @@ public final class CollectionsConverter {
     public static Map convertKeyValuePairsToMap(
         final KeyValuePair[] keyValuePairs, final Class objectClass) {
         // Generate new object of provided type
-        Map map;
+        final Map map;
         try {
             map = (Map) objectClass.newInstance();
         }
@@ -119,7 +119,7 @@ public final class CollectionsConverter {
         }
 
         // iterate over the KeyValuePair array
-        for (KeyValuePair keyValuePair : keyValuePairs) {
+        for (final KeyValuePair keyValuePair : keyValuePairs) {
             // put each KeyValuePair into the Map object
             map.put(keyValuePair.getKey(), keyValuePair.getValue());
         }
@@ -138,7 +138,7 @@ public final class CollectionsConverter {
      */
     public static Object[] convertListToArray(
         final Collection list, final Class objectClass) {
-        int length = list.size();
+        final int length = list.size();
         Object[] array = (Object[]) Array.newInstance(objectClass, length);
         array = list.toArray(array);
         return array;
@@ -196,15 +196,15 @@ public final class CollectionsConverter {
             return null;
         }
 
-        List tempList = Arrays.asList(array);
-        Object[] params = { tempList };
+        final List tempList = Arrays.asList(array);
+        final Object[] params = { tempList };
         // Generate new object of provided type
-        Collection collection;
+        final Collection collection;
         try {
             // get the constructor of objectClass that takes a Collection
             // as input parameter
-            Class[] paramsTypes = { Collection.class };
-            Constructor constructor = objectClass.getConstructor(paramsTypes);
+            final Class[] paramsTypes = { Collection.class };
+            final Constructor constructor = objectClass.getConstructor(paramsTypes);
             // generates a new List object using the found constructor
             collection = (Collection) constructor.newInstance(params);
         }

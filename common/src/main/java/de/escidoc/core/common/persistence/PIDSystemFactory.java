@@ -101,7 +101,7 @@ public abstract class PIDSystemFactory {
         }
 
         try {
-            Class<?> factoryClass = Class.forName(factoryClassName);
+            final Class<?> factoryClass = Class.forName(factoryClassName);
             pidSystemFactory = (PIDSystemFactory) factoryClass.newInstance();
         }
         catch (ClassNotFoundException e) {

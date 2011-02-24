@@ -159,7 +159,7 @@ public class ItemHandler extends DefaultHandler {
             this.relationHandler.startElement(element);
         }
         else {
-            String currentPath = parser.getCurPath();
+            final String currentPath = parser.getCurPath();
 
             if (XPATH_ITEM_PROPERTIES.equals(currentPath)) {
                 LOG.debug("Parser reached " + XPATH_ITEM_PROPERTIES);
@@ -220,7 +220,7 @@ public class ItemHandler extends DefaultHandler {
         ContextNotFoundException, ContentModelNotFoundException,
         UnsupportedEncodingException, SystemException, InvalidContentException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (XPATH_ITEM_PROPERTIES.equals(currentPath)) {
             LOG.debug("Parser reached end of " + XPATH_ITEM_PROPERTIES);

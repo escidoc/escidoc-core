@@ -101,7 +101,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
      *             Thrown if the eSciDocCore database has the wrong version
      */
     public void checkDbVersion() throws SystemException {
-        Version currentDbVersion = getVersion();
+        final Version currentDbVersion = getVersion();
 
         if (!DB_VERSION.equals(currentDbVersion)) {
             throw new SystemException("database version differs (needed: "
@@ -165,8 +165,8 @@ public class FrameworkInfo extends JdbcDaoSupport {
         try {
             conn = getConnection();
 
-            Fingerprint currentFingerprint = new Fingerprint(conn);
-            Fingerprint storedFingerprint =
+            final Fingerprint currentFingerprint = new Fingerprint(conn);
+            final Fingerprint storedFingerprint =
                 Fingerprint.readObject(getClass().getResourceAsStream(
                     FINGERPRINT_FILE));
 

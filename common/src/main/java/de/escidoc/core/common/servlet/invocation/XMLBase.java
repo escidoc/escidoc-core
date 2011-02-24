@@ -167,7 +167,7 @@ public class XMLBase {
         if (node != null) {
             final NamedNodeMap attributes = node.getAttributes();
             if (attributes != null) {
-                Node attributeNode = attributes.getNamedItem(attribute);
+                final Node attributeNode = attributes.getNamedItem(attribute);
                 if (attributeNode != null) {
                     result = attributeNode.getTextContent();
                 }
@@ -245,9 +245,9 @@ public class XMLBase {
     public Document getDocument(final String filename)
         throws ParserConfigurationException, SAXException, IOException {
 
-        DocumentBuilderFactory docBuilderFactory =
+        final DocumentBuilderFactory docBuilderFactory =
             DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+        final DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
 
         final InputStream inputStream = getFileInputStream(filename);
         if (inputStream == null) {
@@ -277,15 +277,15 @@ public class XMLBase {
     public String getDocumentAsString(final Document document)
         throws IOException {
 
-        StringWriter stringOut = new StringWriter();
+        final StringWriter stringOut = new StringWriter();
 
         // format
-        OutputFormat format = new OutputFormat(document);
+        final OutputFormat format = new OutputFormat(document);
         format.setIndenting(true);
         format.setPreserveSpace(false);
 
         // serialize
-        XMLSerializer serial = new XMLSerializer(stringOut, format);
+        final XMLSerializer serial = new XMLSerializer(stringOut, format);
         serial.asDOMSerializer();
         serial.serialize(document);
         return stringOut.toString();
@@ -318,9 +318,9 @@ public class XMLBase {
 
         getLogger().info("looking for file " + filename);
 
-        InputStream inputStream = getFileInputStream(filename);
+        final InputStream inputStream = getFileInputStream(filename);
 
-        byte[] buffer = new byte[BUFFER_SIZE];
+        final byte[] buffer = new byte[BUFFER_SIZE];
         int length = inputStream.read(buffer);
         String result = "";
         while (length != -1) {
@@ -343,7 +343,7 @@ public class XMLBase {
     public void saveToFile(final String filename, final String contents)
         throws IOException {
 
-        File outFile = new File(filename);
+        final File outFile = new File(filename);
         outFile.createNewFile();
         FileOutputStream fos = null;
         try {

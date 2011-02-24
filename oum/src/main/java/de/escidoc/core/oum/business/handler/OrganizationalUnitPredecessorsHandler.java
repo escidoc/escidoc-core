@@ -95,7 +95,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
         throws SystemException, MissingAttributeValueException,
         OrganizationalUnitNotFoundException, InvalidContentException {
 
-        String curPath = getParser().getCurPath();
+        final String curPath = getParser().getCurPath();
 
         if (curPath.equals(XPATH_PREDECESSOR)) {
 
@@ -121,7 +121,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
                 }
             }
 
-            String type;
+            final String type;
             try {
                 type =
                     XmlUtility.getIdFromURI(element.getAttribute(null,
@@ -136,7 +136,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
 
             Utility.getInstance().checkIsOrganizationalUnit(objid);
 
-            PredecessorForm predecessorType = getPredecessorForm(type);
+            final PredecessorForm predecessorType = getPredecessorForm(type);
 
             this.predecessors.add(new Predecessor(objid, predecessorType));
         }

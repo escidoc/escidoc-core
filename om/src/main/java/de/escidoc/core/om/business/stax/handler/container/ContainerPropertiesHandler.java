@@ -132,8 +132,8 @@ public class ContainerPropertiesHandler extends DefaultHandler {
         MissingAttributeValueException, TripleStoreSystemException,
         WebserverSystemException {
 
-        String curPath = staxParser.getCurPath();
-        String theName = element.getLocalName();
+        final String curPath = staxParser.getCurPath();
+        final String theName = element.getLocalName();
 
         if (curPath.startsWith(PROPERTIES_PATH)) {
             if ("properties".equals(theName)) {
@@ -153,7 +153,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     }
                 }
                 catch (NoSuchAttributeException e) {
-                    String href;
+                    final String href;
                     try {
                         href =
                             element.getAttributeValue(Constants.XLINK_NS_URI,
@@ -164,14 +164,14 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                         if (UserContext.isRestAccess()) {
                             att = Elements.ATTRIBUTE_XLINK_HREF;
                         }
-                        String refType = Elements.ELEMENT_CONTEXT;
-                        String objType = "container";
+                        final String refType = Elements.ELEMENT_CONTEXT;
+                        final String objType = "container";
                         throw new MissingAttributeValueException(
                             "The attribute " + att + " of " + refType
                                 + " is missing in " + objType + " for create.",
                             e);
                     }
-                    int indexOfLastSlash = href.lastIndexOf('/');
+                    final int indexOfLastSlash = href.lastIndexOf('/');
                     contextId = href.substring(indexOfLastSlash + 1);
                     if (contextId == null || contextId.length() < 1) {
                         throw new MissingAttributeValueException(
@@ -180,7 +180,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     if (!href
                         .substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                             Constants.CONTEXT_URL_BASE)) {
-                        String message =
+                        final String message =
                             "The " + Elements.ELEMENT_CONTEXT
                                 + " element has a wrong url."
                                 + "the url have to look like: "
@@ -204,7 +204,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     }
                 }
                 catch (NoSuchAttributeException e) {
-                    String href;
+                    final String href;
                     try {
                         href =
                             element.getAttributeValue(Constants.XLINK_NS_URI,
@@ -215,14 +215,14 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                         if (UserContext.isRestAccess()) {
                             att = Elements.ATTRIBUTE_XLINK_HREF;
                         }
-                        String refType = Elements.ELEMENT_CONTENT_MODEL;
-                        String objType = "container";
+                        final String refType = Elements.ELEMENT_CONTENT_MODEL;
+                        final String objType = "container";
                         throw new MissingAttributeValueException(
                             "The attribute " + att + " of " + refType
                                 + " is missing in " + objType + " for create.",
                             e);
                     }
-                    int indexOfLastSlash = href.lastIndexOf('/');
+                    final int indexOfLastSlash = href.lastIndexOf('/');
                     contextId = href.substring(indexOfLastSlash + 1);
                     if ((contextId == null) || contextId.length() < 1) {
                         throw new MissingAttributeValueException(
@@ -231,7 +231,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     if (!href
                         .substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                             Constants.CONTENT_MODEL_URL_BASE)) {
-                        String message =
+                        final String message =
                             "The " + Elements.ELEMENT_CONTENT_MODEL
                                 + " element has a wrong url."
                                 + "the url have to look like: "
@@ -321,7 +321,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
     @Override
     public String characters(final String s, final StartElement element)
         throws MissingElementValueException {
-        String curPath = staxParser.getCurPath();
+        final String curPath = staxParser.getCurPath();
         // String theName = element.getLocalName();
         if (curPath.startsWith(PROPERTIES_PATH)) {
             // Now properties.description is read only element.
@@ -347,7 +347,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     properties.put(Elements.ELEMENT_PUBLIC_STATUS, s);
                 }
                 else {
-                    String msg =
+                    final String msg =
                         "Value of the element "
                             + Elements.ELEMENT_PUBLIC_STATUS + " is missing";
                     log.debug(msg);
@@ -359,7 +359,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     properties.put(Elements.ELEMENT_PID, s);
                 }
                 else {
-                    String msg =
+                    final String msg =
                         "Value of the element " + Elements.ELEMENT_PID
                             + " is missing";
                     log.debug(msg);

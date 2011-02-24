@@ -46,7 +46,7 @@ public class PostgresDDLGenerator extends BasicDDLGenerator {
     @Override
     public List<String> getCreateMapTableDDL(final String table) {
 
-        List<String> cmds = new ArrayList<String>();
+        final List<String> cmds = new ArrayList<String>();
 
         cmds.add("CREATE TABLE " + table + " (\n"
                + "  pKey SERIAL,\n"
@@ -70,7 +70,7 @@ public class PostgresDDLGenerator extends BasicDDLGenerator {
     @Override
     public List<String> getCreateSOTableDDL(final String table) {
 
-        List<String> cmds = new ArrayList<String>();
+        final List<String> cmds = new ArrayList<String>();
 
         cmds.add("CREATE TABLE " + table + " (\n"
                + "  s TEXT NOT NULL,\n"

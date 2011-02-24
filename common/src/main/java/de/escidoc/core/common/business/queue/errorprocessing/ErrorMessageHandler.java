@@ -61,10 +61,10 @@ public class ErrorMessageHandler {
     public void putErrorMessage(final Map<String, String> parameters,
             final Throwable exception, final String logfile) {
 
-        StringBuffer messageBuf = new StringBuffer(DELIMITER);
+        final StringBuffer messageBuf = new StringBuffer(DELIMITER);
         
         // put all given parameters into StringBuffer
-        for (Entry<String, String> e : parameters.entrySet()) {
+        for (final Entry<String, String> e : parameters.entrySet()) {
             messageBuf.append(e.getKey()).append(": ").append(e.getValue())
                     .append('\n');
         }
@@ -89,10 +89,10 @@ public class ErrorMessageHandler {
      * @common
      */
     private String getStackTrace(final Throwable e) {
-        StringBuilder stack = new StringBuilder("");
+        final StringBuilder stack = new StringBuilder("");
         if (e != null) {
             stack.append(e.getMessage()).append('\n');
-            StackTraceElement[] stackElements = e.getStackTrace();
+            final StackTraceElement[] stackElements = e.getStackTrace();
             if (stackElements != null && stackElements.length > 0
                     && stackElements[0] != null) {
                 stack.append(stackElements[0].toString()).append('\n');

@@ -89,8 +89,8 @@ public class XacmlFunctionOneAttributeInBothLists extends FunctionBase {
     public EvaluationResult evaluate(
         final List inputs, final EvaluationCtx context) {
 
-        AttributeValue[] argValues = new AttributeValue[inputs.size()];
-        EvaluationResult result = evalArgs(inputs, context, argValues);
+        final AttributeValue[] argValues = new AttributeValue[inputs.size()];
+        final EvaluationResult result = evalArgs(inputs, context, argValues);
         if (result != null) {
             return result;
         }

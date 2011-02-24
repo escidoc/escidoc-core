@@ -434,7 +434,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         else {
             // set public-status to release is allowed for ingest (but not
             // create)
-            String publicStatus =
+            final String publicStatus =
                 properties.get(Elements.ELEMENT_PUBLIC_STATUS);
 
             if ((publicStatus != null)
@@ -443,7 +443,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 if ((!Boolean.valueOf(System
                     .getProperty("cmm.Container.objectPid.releaseWithoutPid")))
                     && (properties.get(Elements.ELEMENT_PID) == null)) {
-                    String msg =
+                    final String msg =
                         "Missing object PID for public-status 'released'.";
                     log.debug(msg);
                     throw new InvalidStatusException(msg);
@@ -466,7 +466,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         getFedoraUtility().storeObjectInFedora(foxml, true);
         try {
-            String escidocRelsExtWithWrongLmd =
+            final String escidocRelsExtWithWrongLmd =
                 getFoxmlRenderer().renderRelsExt(properties, structMapEntries,
                     containerId, "bla", relationsData, createComment,
                     propertiesAsReferences);
@@ -491,11 +491,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         //
 
         String lastModifiedDate = null;
-        org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
+        final org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
             FedoraUtility.getInstance().getDatastreamsInformation(containerId,
                 null);
-        for (org.fcrepo.server.types.gen.Datastream aRelsExtInfo : relsExtInfo) {
-            String createdDate = aRelsExtInfo.getCreateDate();
+        for (final org.fcrepo.server.types.gen.Datastream aRelsExtInfo : relsExtInfo) {
+            final String createdDate = aRelsExtInfo.getCreateDate();
             if (lastModifiedDate == null) {
                 lastModifiedDate = createdDate;
             }
@@ -548,7 +548,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 result = retrieve(containerId);
                 fireContainerCreated(getContainer().getId(), result);
                 // Also reindex members
-                for (String memberId : structMapEntries) {
+                for (final String memberId : structMapEntries) {
                     fireContainerMembersModified(memberId);
                 }
             }
@@ -604,7 +604,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         // to Fedora or some incorrect behavior
         final List<String> memberIds =
             getTripleStoreUtility().getMemberList(getContainer().getId(), null);
-        for (String memberId : memberIds) {
+        for (final String memberId : memberIds) {
             if (getTripleStoreUtility().exists(memberId)) {
                 throw new InvalidStatusException("Container "
                     + getContainer().getId() + " has members.");
@@ -612,22 +612,22 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
 
         // remove member entries referring this
-        List<String> containers =
+        final List<String> containers =
             getTripleStoreUtility().getContainers(getContainer().getId());
-        for (String parent : containers) {
+        for (final String parent : containers) {
             try {
                 final Container container = new Container(parent);
                 // call removeMember with current user context (access rights)
-                String param =
+                final String param =
                     "<param last-modification-date=\""
                         + container.getLastModificationDate() + "\"><id>"
                         + getContainer().getId() + "</id></param>";
 
-                MethodMapper methodMapper =
+                final MethodMapper methodMapper =
                     (MethodMapper) BeanLocator.getBean(
                         "Common.spring.ejb.context",
                         "common.CommonMethodMapper");
-                BeanMethod method =
+                final BeanMethod method =
                     methodMapper.getMethod("/ir/container/" + parent
                         + "/members/remove", null, null, "POST", param);
                 method
@@ -641,7 +641,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     throw e.getCause();
                 }
                 catch (AuthorizationException ee) {
-                    String msg =
+                    final String msg =
                         "Can not delete all member entries for container "
                             + getContainer().getId()
                             + ". Container can not be deleted.";
@@ -652,7 +652,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     if (ee instanceof Error) {
                         throw (Error) ee;
                     }
-                    String msg =
+                    final String msg =
                         "An error occured removing member entries for container "
                             + getItem().getId()
                             + ". Container can not be deleted.";
@@ -660,7 +660,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 }
             }
             catch (Exception e) {
-                String msg =
+                final String msg =
                     "An error occured removing member entries for container "
                         + getItem().getId() + ". Container can not be deleted.";
                 throw new SystemException(msg, e);
@@ -869,7 +869,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final Map<String, Object> streams = me.getOutputStreams();
 
             // content-type-specific
-            Object ctsStream =
+            final Object ctsStream =
                 streams.get(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC);
             if (ctsStream != null) {
                 final ByteArrayOutputStream os =
@@ -923,7 +923,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             // }
 
-            String updatedXmlData;
+            final String updatedXmlData;
             final String endTimestamp =
                 getContainer().getLastFedoraModificationDate();
             if (!startTimestamp.equals(endTimestamp)
@@ -972,7 +972,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     public String retrieveMembers(
         final String id, final SRURequestParameters parameters)
         throws ContainerNotFoundException, SystemException {
-        StringWriter result = new StringWriter();
+        final StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsContainer(id);
         if (parameters.isExplain()) {
@@ -1014,7 +1014,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     public String retrieveTocs(
         final String id, final SRURequestParameters parameters)
         throws ContainerNotFoundException, SystemException {
-        StringWriter result = new StringWriter();
+        final StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsContainer(id);
         if (parameters.isExplain()) {
@@ -1091,7 +1091,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     @Override
     public String retrieveContainers(final SRURequestParameters parameters)
         throws SystemException {
-        StringWriter result = new StringWriter();
+        final StringWriter result = new StringWriter();
 
         if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.CONTAINER);
@@ -1375,7 +1375,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final Map<String, Datastream> dsMap =
             new HashMap<String, Datastream>();
 
-        for (String name : mdMap.keySet()) {
+        for (final String name : mdMap.keySet()) {
             final ByteArrayOutputStream stream = mdMap.get(name);
             final byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
@@ -1463,7 +1463,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final Map<String, String[]> parameters) throws SystemException,
         ContainerNotFoundException, OperationNotFoundException {
 
-        EscidocBinaryContent content = new EscidocBinaryContent();
+        final EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType("text/xml");
 
         if ("members".equals(resourceName)) {
@@ -1502,10 +1502,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
 
         setContainer(id);
-        String contentModelId =
+        final String contentModelId =
             getContainer().getProperty(
                 PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID);
-        byte[] bytes;
+        final byte[] bytes;
         try {
             bytes =
                 FedoraUtility.getInstance().getDissemination(id,
@@ -1662,13 +1662,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         // for each refered item or container
 
-        for (String memberId : memberIds) {
+        for (final String memberId : memberIds) {
             final String objectType =
                 getTripleStoreUtility().getObjectType(memberId);
 
             if (Constants.CONTAINER_OBJECT_TYPE.equals(objectType)) {
 
-                Container container;
+                final Container container;
                 try {
                     container = new Container(memberId);
                 }
@@ -2016,7 +2016,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         // for each refered item or container
 
-        for (String memberId : memberIds) {
+        for (final String memberId : memberIds) {
             final String objectType =
                 getTripleStoreUtility().getObjectType(memberId);
 
@@ -2222,7 +2222,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         throws ContainerNotFoundException, SystemException {
 
         setContainer(id);
-        String versionsXml;
+        final String versionsXml;
 
         try {
             versionsXml =
@@ -2344,8 +2344,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         setContainer(containerId);
         checkLocked();
 
-        String itemXml = itemHandler.create(xmlData);
-        String itemId = XmlUtility.getIdFromXml(itemXml);
+        final String itemXml = itemHandler.create(xmlData);
+        final String itemId = XmlUtility.getIdFromXml(itemXml);
 
         makeVersion("Item added");
 
@@ -2440,10 +2440,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         setContainer(containerId);
         checkLocked();
 
-        String containerXml =
+        final String containerXml =
             BeanLocator.locateContainerHandler().create(xmlData);
 
-        String objid = XmlUtility.getIdFromXml(containerXml);
+        final String objid = XmlUtility.getIdFromXml(containerXml);
 
         makeVersion("Add Container");
 
@@ -2547,7 +2547,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             sp.clearHandlerChain();
             // check for same context
             final List<String> memberIds = bremeftph.getMemberIds();
-            for (String memberId : memberIds) {
+            for (final String memberId : memberIds) {
                 if (!Utility.getInstance().hasSameContext(memberId,
                     getContainer().getId())) {
                     throw new InvalidContextException(
@@ -2559,7 +2559,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
 
-            for (String memberId : memberIds) {
+            for (final String memberId : memberIds) {
                 final StartElementWithChildElements newComponentIdElement =
                     new StartElementWithChildElements();
                 newComponentIdElement.setLocalName("member");
@@ -2602,7 +2602,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 retrieve(getContainer().getId()));
 
             // Also reindex members
-            for (String memberId : memberIds) {
+            for (final String memberId : memberIds) {
                 fireContainerMembersModified(memberId);
             }
 
@@ -2700,7 +2700,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         final List<String> memberIds = bremeftph.getMemberIds();
         final Iterator<String> it = memberIds.iterator();
-        String tocContentModel;
+        final String tocContentModel;
         try {
             tocContentModel =
                 EscidocConfiguration.getInstance().get(
@@ -2711,7 +2711,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
         while (it.hasNext()) {
             final String memberId = it.next();
-            String memberContentModel =
+            final String memberContentModel =
                 getTripleStoreUtility().getProperty(memberId,
                     TripleStoreUtility.PROP_CONTENT_MODEL_ID);
             if (!tocContentModel.equals(memberContentModel)) {
@@ -2799,7 +2799,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     new TreeMap<String, List<StartElementWithChildElements>>();
 
                 final Iterator<String> iterator = memberIds.iterator();
-                List<StartElementWithChildElements> elementsToRemove =
+                final List<StartElementWithChildElements> elementsToRemove =
                     new ArrayList<StartElementWithChildElements>();
                 while (iterator.hasNext()) {
                     final String memberId = iterator.next();
@@ -2835,7 +2835,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     retrieve(getContainer().getId()));
 
                 // Also reindex removed members
-                for (String memberId : memberIds) {
+                for (final String memberId : memberIds) {
                     fireContainerMembersModified(memberId);
                 }
 
@@ -3002,7 +3002,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
             boolean resourceUpdated = false;
-            for (Map<String, String> relation : relationsData) {
+            for (final Map<String, String> relation : relationsData) {
                 resourceUpdated = true;
                 final String predicateValue = relation.get("predicateValue");
                 final String predicateNs = relation.get("predicateNs");
@@ -3130,7 +3130,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =
                 relationsData.iterator();
-            HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
+            final HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
                 new HashMap<String, List<StartElementWithChildElements>>();
             boolean resourceUpdated = false;
             while (iterator.hasNext()) {
@@ -3153,21 +3153,21 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 newContentRelationElement.addAttribute(resource);
                 newContentRelationElement.setChildrenElements(null);
                 if (predicateValuesVectorAssignment.containsKey(predicateValue)) {
-                    List<StartElementWithChildElements> vector =
+                    final List<StartElementWithChildElements> vector =
                         predicateValuesVectorAssignment.get(predicateValue);
                     vector.add(newContentRelationElement);
                 }
                 else {
-                    List<StartElementWithChildElements> vector =
+                    final List<StartElementWithChildElements> vector =
                         new ArrayList<StartElementWithChildElements>();
                     vector.add(newContentRelationElement);
                     predicateValuesVectorAssignment.put(predicateValue, vector);
                 }
 
             }
-            Set<String> keySet = predicateValuesVectorAssignment.keySet();
-            for (String predicateValue : keySet) {
-                List<StartElementWithChildElements> elements =
+            final Set<String> keySet = predicateValuesVectorAssignment.keySet();
+            for (final String predicateValue : keySet) {
+                final List<StartElementWithChildElements> elements =
                     predicateValuesVectorAssignment.get(predicateValue);
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
             }
@@ -3220,7 +3220,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             + getContainer().getId() + " or " + "\"/object/id\"="
             + getContainer().getFullId() });
 
-        String searchResponse =
+        final String searchResponse =
             contentRelationHandler
                 .retrieveContentRelations(new LuceneRequestParameters(
                     filterParams));

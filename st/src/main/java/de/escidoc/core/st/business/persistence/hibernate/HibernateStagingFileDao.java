@@ -80,8 +80,8 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
         throws SqlDatabaseSystemException {
 
         try {
-            Session session = getSession(false);
-            Criteria criteria = session.createCriteria(StagingFile.class);
+            final Session session = getSession(false);
+            final Criteria criteria = session.createCriteria(StagingFile.class);
             criteria.add(Restrictions.eq("token", token));
             return (StagingFile) criteria.uniqueResult();
         }
@@ -110,7 +110,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
         throws SqlDatabaseSystemException {
 
         try {
-            DetachedCriteria criteria =
+            final DetachedCriteria criteria =
                 DetachedCriteria.forClass(StagingFile.class);
             criteria.add(Restrictions.lt("expiryTs", System
                     .currentTimeMillis()));
@@ -214,7 +214,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
 
         if (stagingFiles != null) {
             try {
-                for (StagingFile stagingFile : stagingFiles) {
+                for (final StagingFile stagingFile : stagingFiles) {
                     getHibernateTemplate().delete(stagingFile);
                 }
             }

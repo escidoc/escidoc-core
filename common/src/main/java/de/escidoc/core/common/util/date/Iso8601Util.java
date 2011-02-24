@@ -79,7 +79,7 @@ public final class Iso8601Util {
      * @common
      */
     private static DateFormat createDateFormat(final String pattern) {
-        DateFormat df = new SimpleDateFormat(pattern);
+        final DateFormat df = new SimpleDateFormat(pattern);
         df.setCalendar(CALENDAR);
         df.setTimeZone(TimeZone.getTimeZone(UTC_TIMEZONE_ID));
         return df;
@@ -99,8 +99,8 @@ public final class Iso8601Util {
      */
     @Deprecated
     public static String getIso8601(final Date date) {
-        DateFormat outputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
-        String preformatted = outputDateFormat.format(date);
+        final DateFormat outputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
+        final String preformatted = outputDateFormat.format(date);
         if (preformatted.endsWith("Z")) {
             return preformatted;
         }
@@ -134,7 +134,7 @@ public final class Iso8601Util {
             throw new ParseException("Could not parse text: [null]", 0);
         }
 
-        String tmpDateText;
+        final String tmpDateText;
         if (dateText.endsWith("Z")) {
             // FIXME quick workaround (FRS)
             if (dateText.length() == 20) {
@@ -148,7 +148,7 @@ public final class Iso8601Util {
         }
         else {
             final int pos = dateText.length() - SIX;
-            char c = dateText.charAt(pos);
+            final char c = dateText.charAt(pos);
             if (c == '+' || c == '-') {
                 tmpDateText =
                     dateText.substring(0, dateText.length() - FOUR)
@@ -160,7 +160,7 @@ public final class Iso8601Util {
                         "Could not parse date text", dateText), pos);
             }
         }
-        DateFormat inputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
+        final DateFormat inputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
         inputDateFormat.setLenient(false);
         return inputDateFormat.parse(tmpDateText);
     }

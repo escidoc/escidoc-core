@@ -171,7 +171,7 @@ public class VelocityXmlContainerFoXmlRenderer
         final Map<String, String> propertiesAsReferences)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         addRelsExtValues(values, properties, members, containerId,
             lastModificationDate, contentRelations, comment,

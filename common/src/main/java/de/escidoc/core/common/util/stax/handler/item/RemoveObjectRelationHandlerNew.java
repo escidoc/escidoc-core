@@ -84,7 +84,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
     }
 
     @Override
-    public String characters(String data, StartElement element)
+    public String characters(final String data, final StartElement element)
         throws XMLStreamException {
 
         writer.writeCharacters(data);
@@ -93,7 +93,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(EndElement element) throws XMLStreamException {
+    public EndElement endElement(final EndElement element) throws XMLStreamException {
         if (justRemoved) {
             justRemoved = false;
             return element;
@@ -104,17 +104,17 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws XMLStreamException {
 
-        int k =
+        final int k =
             element.indexOfAttribute(
                 de.escidoc.core.common.business.Constants.RDF_NAMESPACE_URI,
                 "resource");
         if (k != -1) {
-            Iterator<String> it = objects.iterator();
+            final Iterator<String> it = objects.iterator();
             while (it.hasNext()) {
-                String obj = it.next();
+                final String obj = it.next();
                 String value = element.getAttribute(k).getValue();
                 value = XmlUtility.getIdFromURI(value);
                 if (value.equals(obj)) {
@@ -126,10 +126,10 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
             }
         }
         writeElement(element);
-        int attCount = element.getAttributeCount();
+        final int attCount = element.getAttributeCount();
 
         for (int i = 0; i < attCount; i++) {
-            Attribute att = element.getAttribute(i);
+            final Attribute att = element.getAttribute(i);
             // String namespace = att.getNamespace();
             writeAttribute(att.getNamespace(), element.getLocalName(), att
                 .getLocalName(), att.getValue(), att.getPrefix());
@@ -174,16 +174,16 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         return this.noOfRemoved;
     }
 
-    private void writeElement(StartElement element) throws XMLStreamException {
+    private void writeElement(final StartElement element) throws XMLStreamException {
         deepLevel++;
-        String name = element.getLocalName();
-        String uri = element.getNamespace();
+        final String name = element.getLocalName();
+        final String uri = element.getNamespace();
         String prefix = element.getPrefix();
         if ((uri) != null) {
             if (nsuris.containsKey(uri)) {
-                List namespaceTrace = (List) nsuris.get(uri);
-                Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
-                String prefixTrace = (String) namespaceTrace.get(2);
+                final List namespaceTrace = (List) nsuris.get(uri);
+                final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
+                final String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
@@ -194,7 +194,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                     writer.writeStartElement(prefix, name, uri);
                 }
             } else {
-                List namespaceTrace = new ArrayList();
+                final List namespaceTrace = new ArrayList();
                 namespaceTrace.add(deepLevel);
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
@@ -207,24 +207,24 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
     }
 
     private void writeAttribute(
-        String uri, String elementName, String attributeName,
-        String attributeValue, String prefix) throws XMLStreamException {
+        final String uri, final String elementName, final String attributeName,
+        final String attributeValue, String prefix) throws XMLStreamException {
         if (uri != null) {
             if (nsuris.containsKey(uri)) {
-                List namespaceTrace = (List) nsuris.get(uri);
-                String prefixTrace = (String) namespaceTrace.get(2);
+                final List namespaceTrace = (List) nsuris.get(uri);
+                final String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
-                Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
-                String nameTrace = (String) namespaceTrace.get(1);
+                final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
+                final String nameTrace = (String) namespaceTrace.get(1);
                 if (((deepLevelInMAp == deepLevel) && (!elementName
                         .equals(nameTrace)))
                         || (deepLevelInMAp > deepLevel)) {
                     writer.writeNamespace(prefix, uri);
                 }
             } else {
-                List namespaceTrace = new ArrayList();
+                final List namespaceTrace = new ArrayList();
                 namespaceTrace.add(deepLevel);
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);

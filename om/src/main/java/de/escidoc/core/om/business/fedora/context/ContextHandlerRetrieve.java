@@ -105,7 +105,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
         final FedoraContextHandler contextHandler)
         throws ContextNotFoundException, SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put(IS_ROOT_RESOURCES, true);
 
         return (getRenderer().renderAdminDescriptors(contextHandler, values));
@@ -130,7 +130,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
         final FedoraContextHandler contextHandler, final String name,
         final boolean isRoot) throws ContextNotFoundException, SystemException,
         AdminDescriptorNotFoundException {
-        String adminDescriptor =
+        final String adminDescriptor =
             getRenderer().renderAdminDescriptor(contextHandler, name,
                 getContext().getAdminDescriptor(name), isRoot);
         if (adminDescriptor.length() == 0) {

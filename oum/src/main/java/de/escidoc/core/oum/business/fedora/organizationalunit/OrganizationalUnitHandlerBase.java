@@ -192,14 +192,14 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      */
     protected void expandPaths(final List<String> path) throws SystemException {
 
-        List<String> organizationalUnitIds =
+        final List<String> organizationalUnitIds =
             getTripleStoreUtility().getParents(path.get(path.size() - 1));
         if (organizationalUnitIds != null) {
             if (organizationalUnitIds.isEmpty()) {
                 getPathes().push(new ArrayList<String>(path));
             } else {
-                for (String parent : organizationalUnitIds) {
-                    List<String> newPath = new ArrayList<String>(path);
+                for (final String parent : organizationalUnitIds) {
+                    final List<String> newPath = new ArrayList<String>(path);
                     newPath.add(parent);
                     getPathes().push(newPath);
 
@@ -393,9 +393,9 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
     protected MultipleExtractor2 createMultipleExtractor(
         final StaxParser sp, final String mdRecordPath) {
 
-        HashMap<String, String> extractPathes = new HashMap<String, String>();
+        final HashMap<String, String> extractPathes = new HashMap<String, String>();
         extractPathes.put(mdRecordPath, "name");
-        Map<String, String> namespaceMap = new HashMap<String, String>(2);
+        final Map<String, String> namespaceMap = new HashMap<String, String>(2);
         namespaceMap.put(Constants.ORGANIZATIONAL_UNIT_NAMESPACE_URI,
             Constants.ORGANIZATIONAL_UNIT_PREFIX);
         namespaceMap.put(Constants.XLINK_NS_URI, Constants.XLINK_NS_PREFIX);

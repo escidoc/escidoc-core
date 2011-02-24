@@ -70,7 +70,7 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
             final String namespaceURI, final String publicId,
             final String systemId, final String baseURI) {
         if (systemId != null) {
-            Matcher schemaLocationMatcher =
+            final Matcher schemaLocationMatcher =
                     PATTERN_SCHEMA_LOCATION_BASE.matcher(systemId);
             try {
                 // FIXME Use XmlUtility.getSchemaBaseUrl() ?
@@ -81,7 +81,7 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
                         && EscidocConfiguration.getInstance().get(
                                 EscidocConfiguration
                                 .ESCIDOC_CORE_XSD_PATH) != null) {
-                    String systemIdLocal = schemaLocationMatcher
+                    final String systemIdLocal = schemaLocationMatcher
                             .replaceAll(
                             EscidocConfiguration.getInstance()
                             .get(EscidocConfiguration

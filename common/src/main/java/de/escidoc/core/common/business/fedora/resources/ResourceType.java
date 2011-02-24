@@ -68,7 +68,7 @@ public enum ResourceType {
     public static ResourceType getResourceTypeFromUri(final String uri) {
         ResourceType result = null;
 
-        for (ResourceType resourceType : ResourceType.values()) {
+        for (final ResourceType resourceType : ResourceType.values()) {
             if (resourceType.uri.equals(uri)) {
                 result = resourceType;
                 break;

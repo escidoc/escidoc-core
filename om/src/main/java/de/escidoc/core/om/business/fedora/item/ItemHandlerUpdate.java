@@ -137,26 +137,26 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
         // delete all components which are not in xmlData
         Iterator<String> componentIter = getItem().getComponentIds().iterator();
-        List<String> delete = new ArrayList<String>();
+        final List<String> delete = new ArrayList<String>();
         while (componentIter.hasNext()) {
-            String componentId = componentIter.next();
+            final String componentId = componentIter.next();
             if (!components.containsKey(componentId)) {
                 delete.add(componentId);
             }
         }
         componentIter = delete.iterator();
         while (componentIter.hasNext()) {
-            String componentId = componentIter.next();
+            final String componentId = componentIter.next();
             getItem().deleteComponent(componentId);
         }
 
         // update
-        Collection<ByteArrayOutputStream> newComponents =
+        final Collection<ByteArrayOutputStream> newComponents =
             (Collection<ByteArrayOutputStream>) components.remove("new");
 
-        for (Entry<String, Object> e : components.entrySet()) {
-            String componentId = e.getKey();
-            Component c = getItem().getComponent(componentId);
+        for (final Entry<String, Object> e : components.entrySet()) {
+            final String componentId = e.getKey();
+            final Component c = getItem().getComponent(componentId);
 
             setComponent(c, (Map) e.getValue(),
                 mdRecordsAttributes.get(componentId), nsUris.get(componentId));
@@ -164,9 +164,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
         // new
         if (!newComponents.isEmpty()) {
-            for (ByteArrayOutputStream newComponent : newComponents) {
+            for (final ByteArrayOutputStream newComponent : newComponents) {
                 try {
-                    String componentId =
+                    final String componentId =
                             createComponent((newComponent)
                                     .toString(XmlUtility.CHARACTER_ENCODING));
                     getItem().addComponent(componentId);
@@ -209,7 +209,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         MissingContentException, FileNotFoundException,
         ComponentNotFoundException {
 
-        Map<String, String> properties;
+        final Map<String, String> properties;
         try {
             properties =
                 c.setProperties(
@@ -239,7 +239,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         catch (UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
-        Map<String, ByteArrayOutputStream> mdRecords;
+        final Map<String, ByteArrayOutputStream> mdRecords;
         if (streams.get("md-records") == null) {
             mdRecords = new HashMap<String, ByteArrayOutputStream>();
         }
@@ -276,17 +276,17 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         final String escidocMdRecordnsUri) throws SystemException,
         ComponentNotFoundException {
 
-        Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
-        for (String name : mdMap.keySet()) {
-            ByteArrayOutputStream stream = mdMap.get(name);
-            byte[] xmlBytes = stream.toByteArray();
+        final Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
+        for (final String name : mdMap.keySet()) {
+            final ByteArrayOutputStream stream = mdMap.get(name);
+            final byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
             if ("escidoc".equals(name)) {
                 mdProperties = new HashMap<String, String>();
                 mdProperties.put("nsUri", escidocMdRecordnsUri);
             }
-            Datastream ds = new Datastream(name, c.getId(), xmlBytes, "text/xml", mdProperties);
-            Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
+            final Datastream ds = new Datastream(name, c.getId(), xmlBytes, "text/xml", mdProperties);
+            final Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId(mdRecordAttributes.get("type"));
             ds.addAlternateId(mdRecordAttributes.get("schema"));
@@ -316,9 +316,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         final String id, final String xml) throws InvalidContentException,
         ComponentNotFoundException, SystemException {
 
-        Component component = getComponent(id);
-        StaxParser sp = new StaxParser();
-        ComponentPropertiesUpdateHandler cpuh =
+        final Component component = getComponent(id);
+        final StaxParser sp = new StaxParser();
+        final ComponentPropertiesUpdateHandler cpuh =
             new ComponentPropertiesUpdateHandler(component, "/properties", sp);
         sp.addHandler(cpuh);
         try {
@@ -331,12 +331,12 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
-        Map<String, String> properties = cpuh.getProperties();
+        final Map<String, String> properties = cpuh.getProperties();
         properties.put(XmlTemplateProvider.CREATED_BY_ID, UserContext.getId());
         properties.put(XmlTemplateProvider.CREATED_BY_TITLE,
             UserContext.getRealName());
         try {
-            Datastream newRelsExt =
+            final Datastream newRelsExt =
                 new Datastream(Datastream.RELS_EXT_DATASTREAM, id,
                     getComponentRelsExtWithVelocity(id, properties, false)
                         .getBytes(XmlUtility.CHARACTER_ENCODING),
@@ -376,8 +376,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         WebserverSystemException, TripleStoreSystemException,
         EncodingSystemException, IntegritySystemException {
         try {
-            Datastream oldDs = getItem().getCts();
-            Datastream newDs =
+            final Datastream oldDs = getItem().getCts();
+            final Datastream newDs =
                 new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC,
                     getItem().getId(),
                     xml.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
@@ -420,9 +420,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         InvalidContentException, FileNotFoundException,
         ComponentNotFoundException, SystemException {
 
-        StaxParser sp = new StaxParser();
+        final StaxParser sp = new StaxParser();
 
-        OneComponentContentHandler occh =
+        final OneComponentContentHandler occh =
             new OneComponentContentHandler(sp, "/content");
         sp.addHandler(occh);
         try {
@@ -435,7 +435,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             throw new WebserverSystemException(e);
         }
 
-        Map<String, String> componentBinary = occh.getComponentBinary();
+        final Map<String, String> componentBinary = occh.getComponentBinary();
         // load url or binary to fedora
         if (componentBinary.get("content") == null) {
             // ingest by URL
@@ -458,7 +458,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             else {
                 // update content and check by checksum if it is really changed
                 // and in case remove content PID if exists
-                String contentChecksum = component.getChecksum();
+                final String contentChecksum = component.getChecksum();
 
                 try {
                     getFedoraUtility().modifyDatastream(component.getId(),
@@ -470,7 +470,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
 
                 // component object is not in sync with Fedora after modifying
                 // datastream. So get new checksum from Fedora directly.
-                String newContentChecksum =
+                final String newContentChecksum =
                     getFedoraUtility().getDatastreamInformation(
                         component.getId(), "content", null).getChecksum();
 
@@ -483,11 +483,11 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             }
         }
         else {
-            Datastream content = component.getContent();
+            final Datastream content = component.getContent();
             if (content.getControlGroup().equals(FoXmlProvider.CONTROL_GROUP_E)
                 || content.getControlGroup().equals(
                     FoXmlProvider.CONTROL_GROUP_R)) {
-                String message =
+                final String message =
                     "A binary content of the component " + component.getId()
                         + " has to be referenced by a URL, "
                         + "because the attribute 'storage' of the section"
@@ -496,7 +496,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 LOGGER.error(message);
                 throw new InvalidContentException(message);
             }
-            String url =
+            final String url =
                 uploadBase64EncodedContent(
                         componentBinary.get("content"), fileName, mimeType);
             try {

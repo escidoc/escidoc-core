@@ -65,7 +65,7 @@ public class DsCompositeModelHandler extends DefaultHandler {
     /**
      * 
      */
-    public DsCompositeModelHandler(StaxParser parser) {
+    public DsCompositeModelHandler(final StaxParser parser) {
         this.parser = parser;
         this.dsTypeModels = new ArrayList<DsTypeModel>();
     }
@@ -75,7 +75,7 @@ public class DsCompositeModelHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws IntegritySystemException {
 
         if (parser.getCurPath().equals(DS_TYPE_MODEL_PATH)) {
@@ -106,7 +106,7 @@ public class DsCompositeModelHandler extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(EndElement element) {
+    public EndElement endElement(final EndElement element) {
 
         if (parser.getCurPath().equals(DS_TYPE_MODEL_PATH)) {
             this.dsTypeModels.add(dtm);

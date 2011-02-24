@@ -110,7 +110,7 @@ public class GsearchHandler {
             Constants.VALUE_MATCHER.reset(updateIndexParams)
                                                 .replaceFirst(resource);
         try {
-            String gsearchUrl =
+            final String gsearchUrl =
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.GSEARCH_URL);
 
@@ -156,7 +156,7 @@ public class GsearchHandler {
                 time = System.currentTimeMillis();
             }
             
-            String response = connectionUtility.getRequestURLAsString(
+            final String response = connectionUtility.getRequestURLAsString(
                                     new URL(gsearchUrl + updateIndexParams));
             if (log.isDebugEnabled()) {
                 log.debug("request needed " 
@@ -180,8 +180,8 @@ public class GsearchHandler {
         catch (WebserverSystemException e) {
             log
                 .error("error while indexing resource " + resource
-                    + ", waited " + (System.currentTimeMillis() - time)
-                    + " ms " + e.getMessage(), e);
+                        + ", waited " + (System.currentTimeMillis() - time)
+                        + " ms " + e.getMessage(), e);
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -226,7 +226,7 @@ public class GsearchHandler {
                                  XmlUtility.getIdFromURI(resource)));
         
         try {
-            String gsearchUrl =
+            final String gsearchUrl =
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
@@ -234,8 +234,8 @@ public class GsearchHandler {
                 log.debug("requesting " + deleteIndexParams 
                                 + " from " + gsearchUrl);
             }
-            long time = System.currentTimeMillis();
-            String response = connectionUtility.getRequestURLAsString(
+            final long time = System.currentTimeMillis();
+            final String response = connectionUtility.getRequestURLAsString(
                                     new URL(gsearchUrl + deleteIndexParams));
             if (log.isDebugEnabled()) {
                 log.debug("request needed " 
@@ -276,12 +276,12 @@ public class GsearchHandler {
         if (index == null) {
             index = "";
         }
-        String createEmptyParams = 
+        final String createEmptyParams =
             Constants.INDEX_NAME_MATCHER.reset(
                     Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS)
                                                 .replaceFirst(index);
         try {
-            String gsearchUrl =
+            final String gsearchUrl =
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
@@ -301,7 +301,7 @@ public class GsearchHandler {
                         log.debug("requesting " + createEmptyParams 
                                         + " from " + gsearchUrl);
                     }
-                    long time = System.currentTimeMillis();
+                    final long time = System.currentTimeMillis();
                     response = connectionUtility.getRequestURLAsString(
                             new URL(gsearchUrl + createEmptyParams));
                     if (log.isDebugEnabled()) {
@@ -347,12 +347,12 @@ public class GsearchHandler {
         if (index == null) {
             index = "";
         }
-        String optimizeIndexParams = 
+        final String optimizeIndexParams =
             Constants.INDEX_NAME_MATCHER.reset(
                     Constants.GSEARCH_OPTIMIZE_INDEX_PARAMS)
                                                 .replaceFirst(index);
         try {
-            String gsearchUrl =
+            final String gsearchUrl =
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
@@ -360,8 +360,8 @@ public class GsearchHandler {
                 log.debug("requesting " + optimizeIndexParams 
                                 + " from " + gsearchUrl);
             }
-            long time = System.currentTimeMillis();
-            String response = connectionUtility.getRequestURLAsString(
+            final long time = System.currentTimeMillis();
+            final String response = connectionUtility.getRequestURLAsString(
                             new URL(gsearchUrl + optimizeIndexParams));
             if (log.isDebugEnabled()) {
                 log.debug("request needed " 
@@ -394,19 +394,19 @@ public class GsearchHandler {
     private Map<String, Map<String, String>> requestIndexConfiguration()
         throws ApplicationServerSystemException {
         try {
-            String gsearchUrl =
+            final String gsearchUrl =
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
-            String response = connectionUtility.getRequestURLAsString(
+            final String response = connectionUtility.getRequestURLAsString(
                     new URL(gsearchUrl 
                             + Constants.GSEARCH_GET_INDEX_CONFIGURATION_PARAMS));
             // Catch Exceptions
             if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                 throw new Exception(response);
             }
-            StaxParser sp = new StaxParser();
-            GsearchIndexConfigurationHandler handler =
+            final StaxParser sp = new StaxParser();
+            final GsearchIndexConfigurationHandler handler =
                         new GsearchIndexConfigurationHandler();
             sp.addHandler(handler);
 
@@ -434,19 +434,19 @@ public class GsearchHandler {
     private Map<String, String> requestRepositoryInfo()
         throws ApplicationServerSystemException {
         try {
-            String gsearchUrl =
+            final String gsearchUrl =
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
-            String response = connectionUtility.getRequestURLAsString(
+            final String response = connectionUtility.getRequestURLAsString(
                     new URL(gsearchUrl
                     + Constants.GSEARCH_GET_REPOSITORY_INFO_PARAMS));
             // Catch Exceptions
             if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                 throw new Exception(response);
             }
-            StaxParser sp = new StaxParser();
-            GsearchRepositoryInfoHandler handler =
+            final StaxParser sp = new StaxParser();
+            final GsearchRepositoryInfoHandler handler =
                         new GsearchRepositoryInfoHandler();
             sp.addHandler(handler);
 
@@ -494,7 +494,7 @@ public class GsearchHandler {
             supportedMimeTypes = new HashSet<String>();
             getRepositoryInfo();
             if (repositoryInfo.get("SupportedMimeTypes") != null) {
-                String[] supportedMimeTypesArr = 
+                final String[] supportedMimeTypesArr =
                     repositoryInfo.get("SupportedMimeTypes").split("\\s");
                 supportedMimeTypes.addAll(Arrays.asList(supportedMimeTypesArr));
             }
@@ -532,7 +532,7 @@ public class GsearchHandler {
                 // create empty index directory and then recall
                 // gsearch
                 if (Constants.NO_INDEX_DIR_MATCHER.reset(response).matches()) {
-                    String gsearchUrl =
+                    final String gsearchUrl =
                         EscidocConfiguration.getInstance().get(
                             EscidocConfiguration.GSEARCH_URL);
                     if (StringUtils.isEmpty(myIndex)) {
@@ -554,7 +554,7 @@ public class GsearchHandler {
                             throw new ApplicationServerSystemException(response);
                         }
                     }
-                    String createEmptyParams = 
+                    final String createEmptyParams =
                         Constants.INDEX_NAME_MATCHER.reset(
                                 Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS)
                                                         .replaceFirst(myIndex);
@@ -617,7 +617,7 @@ public class GsearchHandler {
             String lockfilePath =
                 response.replaceFirst("(?s).*Lock@", "");
             lockfilePath = lockfilePath.replaceFirst("(?s)<.*", "");
-            File file = new File(lockfilePath);
+            final File file = new File(lockfilePath);
             file.delete();
         }
         catch (Exception e) {
@@ -632,13 +632,13 @@ public class GsearchHandler {
      */
     private void deleteIndexDirs() {
         try {
-            String jbossDataDirPath = 
+            final String jbossDataDirPath =
                 System.getProperty("jboss.server.data.dir");
-            String indexRootDirPath = jbossDataDirPath + "/index/lucene";
-            File indexRootDir = new File(indexRootDirPath);
-            String[] indexes = indexRootDir.list();
-            for (String indexe : indexes) {
-                File indexDir = new File(indexRootDir, indexe);
+            final String indexRootDirPath = jbossDataDirPath + "/index/lucene";
+            final File indexRootDir = new File(indexRootDirPath);
+            final String[] indexes = indexRootDir.list();
+            for (final String indexe : indexes) {
+                final File indexDir = new File(indexRootDir, indexe);
                 deleteDir(indexDir);
             }
         } catch (Exception e) {
@@ -656,8 +656,8 @@ public class GsearchHandler {
      */
     public boolean deleteDir(final File path) {
         if (path.exists()) {
-            File[] files = path.listFiles();
-            for (File file : files) {
+            final File[] files = path.listFiles();
+            for (final File file : files) {
                 if (file.isDirectory()) {
                     deleteDir(file);
                 } else {

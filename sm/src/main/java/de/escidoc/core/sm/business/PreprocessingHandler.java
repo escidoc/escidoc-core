@@ -75,8 +75,8 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
         throws MissingMethodParameterException, SystemException {
 
         //parse
-        StaxParser sp = new StaxParser();
-        PreprocessingInformationStaxHandler handler = 
+        final StaxParser sp = new StaxParser();
+        final PreprocessingInformationStaxHandler handler =
                 new PreprocessingInformationStaxHandler(sp);
         sp.addHandler(handler);
         try {

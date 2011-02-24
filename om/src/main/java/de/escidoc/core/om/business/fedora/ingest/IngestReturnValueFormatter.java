@@ -20,8 +20,8 @@ public class IngestReturnValueFormatter implements ValueFormatter {
      */
     // TODO: make velocity template out of string builder concatenation
     @Override
-    public String format(Map<String, String> values) {
-        StringBuilder xml = new StringBuilder();
+    public String format(final Map<String, String> values) {
+        final StringBuilder xml = new StringBuilder();
         xml
             .append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n").append(
                 "<result xmlns=\"").append(Constants.RESULT_NAMESPACE_URI).append("\" ")

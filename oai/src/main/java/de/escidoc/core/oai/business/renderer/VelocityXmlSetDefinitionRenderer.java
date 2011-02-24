@@ -73,7 +73,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
     @Override
     public String render(final SetDefinition setDefinition)
         throws SystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootSetDefinition", XmlTemplateProvider.TRUE);
         addCommonValues(values);
         addSetDefinitionValues(setDefinition, values);
@@ -97,13 +97,13 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
         DateTime lmdDateTime =
             new DateTime(setDefinition.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("setDefinitionLastModificationDate", lmd);
         values.put("setDefinitionHref", setDefinition.getHref());
         DateTime creationDateTime =
             new DateTime(setDefinition.getCreationDate());
         creationDateTime = creationDateTime.withZone(DateTimeZone.UTC);
-        String creationDate =
+        final String creationDate =
             creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("setDefinitionCreationDate", creationDate);
         values.put("setDefinitionName", setDefinition.getName());
@@ -114,8 +114,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
         values.put("setDefinitionId", setDefinition.getId());
         values.put("setDefinitionCreatedByTitle",
             setDefinition.getCreatorTitle());
-        String createdById = setDefinition.getCreatorId();
-        String cratedByHref = XmlUtility.getUserAccountHref(createdById);
+        final String createdById = setDefinition.getCreatorId();
+        final String cratedByHref = XmlUtility.getUserAccountHref(createdById);
         values.put("setDefinitionCreatedByHref", cratedByHref);
         values.put("setDefinitionCreatedById", createdById);
         values.put("setDefinitionModifiedByTitle",
@@ -137,7 +137,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
     public String renderSetDefinitions(
         final List<SetDefinition> setDefinitions,
         final RecordPacking recordPacking) throws SystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootSetDefinition", "false");
         values.put("recordPacking", recordPacking);
@@ -146,8 +146,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
 
         final Collection<Map<String, Object>> setDefinitionsValues =
             new ArrayList<Map<String, Object>>(setDefinitions.size());
-        for (SetDefinition setDefinition : setDefinitions) {
-            Map<String, Object> setDefinitionValues = new HashMap<String, Object>();
+        for (final SetDefinition setDefinition : setDefinitions) {
+            final Map<String, Object> setDefinitionValues = new HashMap<String, Object>();
             addSetDefinitionValues(setDefinition, setDefinitionValues);
             setDefinitionsValues.add(setDefinitionValues);
         }

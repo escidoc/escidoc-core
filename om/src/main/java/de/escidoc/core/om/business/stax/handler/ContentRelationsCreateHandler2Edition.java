@@ -119,18 +119,18 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             contentRelationPath = "/container/relations/relation";
 
         }
-        String theName = element.getLocalName();
+        final String theName = element.getLocalName();
 
         if (contentRelationPath.equals(currentPath)) {
             inContentRelation = true;
-            int indexOfObjId = element.indexOfAttribute(null, "objid");
-            int indexOfHref =
+            final int indexOfObjId = element.indexOfAttribute(null, "objid");
+            final int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");
             String href = null;
             if (indexOfHref != -1) {
                 href = element.getAttribute(indexOfHref).getValue();
                 if (href.length() == 0) {
-                    String message =
+                    final String message =
                         "The value of attribute 'xlink:href' of "
                             + " the element '" + theName
                             + "' may not be an empty string";
@@ -142,7 +142,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             if (indexOfObjId != -1) {
                 objid = element.getAttribute(indexOfObjId).getValue();
                 if (objid.length() == 0) {
-                    String message =
+                    final String message =
                         "The value of attribute 'objid' of " + " the element '"
                             + theName + "' may not be an empty string";
                     LOGGER.error(message);
@@ -151,10 +151,10 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             }
 
             checkRefElement(objid, href);
-            int indexOfPredicate = element.indexOfAttribute(null, "predicate");
+            final int indexOfPredicate = element.indexOfAttribute(null, "predicate");
             predicate = element.getAttribute(indexOfPredicate).getValue();
             if (!ContentRelationsUtility.validPredicate(predicate)) {
-                String message = "Predicate " + predicate + " is wrong. ";
+                final String message = "Predicate " + predicate + " is wrong. ";
                 LOGGER.error(message);
                 throw new RelationPredicateNotFoundException(message);
             }
@@ -174,15 +174,15 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
     public EndElement endElement(final EndElement element) {
         if (inContentRelation) {
             inContentRelation = false;
-            String relationDataCheck = predicate + "###" + targetId;
+            final String relationDataCheck = predicate + "###" + targetId;
             if (!relationsDataCheck.contains(relationDataCheck)) {
                 relationsDataCheck.add(relationDataCheck);
-                Map<String, String> relationData =
+                final Map<String, String> relationData =
                     new HashMap<String, String>();
                 relationsData.add(relationData);
-                int index = predicate.lastIndexOf('#');
-                String predicateNs = predicate.substring(0, index);
-                String predicateValue = predicate.substring(index + 1);
+                final int index = predicate.lastIndexOf('#');
+                final String predicateNs = predicate.substring(0, index);
+                final String predicateValue = predicate.substring(index + 1);
                 relationData.put("predicateNs", predicateNs);
                 relationData.put("predicateValue", predicateValue);
                 relationData.put("target", targetId);
@@ -201,7 +201,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
         return relationsData;
     }
 
-    private void checkRefElement(String objectId, String href)
+    private void checkRefElement(final String objectId, final String href)
         throws InvalidContentException, TripleStoreSystemException,
         ReferencedResourceNotFoundException, WebserverSystemException {
         targetId = null;
@@ -211,13 +211,13 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
         else {
             targetId = objectId;
         }
-        String targetIdWithoutVersion =
+        final String targetIdWithoutVersion =
             XmlUtility.getObjidWithoutVersion(targetId);
         String targetVersion =
             targetId.replaceFirst(targetIdWithoutVersion, "");
         if (targetVersion.length() > 0) {
             targetVersion = targetVersion.substring(1);
-            String message =
+            final String message =
                 "A relation target may not be referenced by an "
                     + " identifier containing a version number. Use a floating "
                     + "identifier like 'escidoc:123' to reference a target";
@@ -225,11 +225,11 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             throw new InvalidContentException(message);
         }
 
-        String targetObjectType =
+        final String targetObjectType =
             TripleStoreUtility.getInstance().getObjectType(targetId);
 
         if (!TripleStoreUtility.getInstance().exists(targetId)) {
-            String message =
+            final String message =
                 "Related " + targetObjectType + " with id " + targetId
                     + " does not exist.";
             LOGGER.error(message);
@@ -238,7 +238,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
         if (!Constants.ITEM_OBJECT_TYPE.equals(targetObjectType)
             && !Constants.CONTAINER_OBJECT_TYPE.equals(targetObjectType)) {
-            String message =
+            final String message =
                 "A related resource has to be either 'item' or 'container'. "
                     + "A object with id " + targetId
                     + " is neither 'item' nor 'container' ";
@@ -250,7 +250,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             if (targetObjectType.equals(Constants.ITEM_OBJECT_TYPE)
                 && !href.equals("/ir/item/" + targetId)) {
 
-                String message =
+                final String message =
                     "The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
                         + "/ir/item/" + targetId;
@@ -261,7 +261,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             else if (targetObjectType.equals(Constants.CONTAINER_OBJECT_TYPE)
                 && !href.equals("/ir/container/" + targetId)) {
 
-                String message =
+                final String message =
                     "The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
                         + "/ir/container/" + targetId;

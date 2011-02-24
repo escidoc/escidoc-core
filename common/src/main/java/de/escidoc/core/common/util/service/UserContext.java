@@ -281,7 +281,7 @@ public final class UserContext {
     public static SecurityContext getSecurityContext()
         throws WebserverSystemException {
 
-        SecurityContext securityContext = SecurityContextHolder.getContext();
+        final SecurityContext securityContext = SecurityContextHolder.getContext();
         if (securityContext == null) {
             throw new WebserverSystemException(USER_CONTEXT_IS_NOT_INITIALIZED);
         }
@@ -301,7 +301,7 @@ public final class UserContext {
     private static Authentication getAuthentication()
         throws WebserverSystemException {
 
-        Authentication authenticationToken =
+        final Authentication authenticationToken =
             getSecurityContext().getAuthentication();
         if (authenticationToken == null) {
             throw new WebserverSystemException(USER_CONTEXT_IS_NOT_INITIALIZED);
@@ -344,7 +344,7 @@ public final class UserContext {
 
         final Authentication oldAuthentication = getAuthentication();
         final boolean isInternaluser = isInternalUser();
-        UsernamePasswordAuthenticationToken newAuthentication =
+        final UsernamePasswordAuthenticationToken newAuthentication =
             new UsernamePasswordAuthenticationToken(principal,
                 oldAuthentication.getCredentials());
         newAuthentication.setDetails(oldAuthentication.getDetails());

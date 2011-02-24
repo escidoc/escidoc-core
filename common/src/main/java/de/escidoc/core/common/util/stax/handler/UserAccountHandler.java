@@ -53,28 +53,28 @@ public class UserAccountHandler extends DefaultHandler {
 
     /*
      * 
-     */public UserAccountHandler(StaxParser parser) {
+     */public UserAccountHandler(final StaxParser parser) {
         this.parser = parser;
 
     }
 
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws MissingAttributeValueException {
 
-        String elementPath = "/user-account";
-        String currenrPath = parser.getCurPath();
+        final String elementPath = "/user-account";
+        final String currenrPath = parser.getCurPath();
 
         if (currenrPath.equals(elementPath)) {
-            int indexOfObjid = element.indexOfAttribute(null, "objid");
-            Attribute objid = element.getAttribute(indexOfObjid);
+            final int indexOfObjid = element.indexOfAttribute(null, "objid");
+            final Attribute objid = element.getAttribute(indexOfObjid);
             this.accountId = objid.getValue();
         }
         return element;
     }
 
     @Override
-    public String characters(String data, StartElement element) {
+    public String characters(final String data, final StartElement element) {
         if ("name".equals(element.getLocalName())) {
             this.accountName = data;
         }
@@ -83,7 +83,7 @@ public class UserAccountHandler extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(EndElement element) {
+    public EndElement endElement(final EndElement element) {
 
         return element;
     }

@@ -50,23 +50,23 @@ public class ComponentUpdateHandler extends DefaultHandler {
 
     private String componentId = null;
 
-    public ComponentUpdateHandler(String itemId, String componentPath,
-        StaxParser parser) {
+    public ComponentUpdateHandler(final String itemId, final String componentPath,
+        final StaxParser parser) {
         this.itemId = itemId;
         this.parser = parser;
         this.componentPath = componentPath;
     }
 
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws TripleStoreSystemException, WebserverSystemException,
         InvalidContentException {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
         if ((curPath.startsWith(componentPath)) && (curPath.equals(componentPath))) {
             // do my job
             // save componentId
-            int indexObjid = element.indexOfAttribute(null, "objid");
-            int indexHref =
+            final int indexObjid = element.indexOfAttribute(null, "objid");
+            final int indexHref =
                 element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
             if (indexObjid >= 0 || indexHref >= 0) {
                 if (indexObjid >= 0) {
@@ -82,10 +82,10 @@ public class ComponentUpdateHandler extends DefaultHandler {
                 if (componentId.length() > 0) {
                     // check if component exists
                     boolean componentExists = false;
-                    List<String> existingComponents =
+                    final List<String> existingComponents =
                         TripleStoreUtility.getInstance().getComponents(
                             itemId);
-                    for (String existingComponent : existingComponents) {
+                    for (final String existingComponent : existingComponents) {
                         if (existingComponent.equals(componentId)) {
                             componentExists = true;
                             break;
@@ -104,8 +104,8 @@ public class ComponentUpdateHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(String data, StartElement element) {
-        String curPath = parser.getCurPath();
+    public String characters(final String data, final StartElement element) {
+        final String curPath = parser.getCurPath();
 
         // check content
         if (curPath.equals(componentPath + "/content")) {

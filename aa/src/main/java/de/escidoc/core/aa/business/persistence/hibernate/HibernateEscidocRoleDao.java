@@ -100,7 +100,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
         boolean result = false;
         if (identifier != null) {
             try {
-                DetachedCriteria criteria =
+                final DetachedCriteria criteria =
                     DetachedCriteria.forClass(EscidocRole.class).add(
                         Restrictions.or(Restrictions.eq("id", identifier),
                             Restrictions.eq("roleName", identifier)));
@@ -232,7 +232,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
             // granted
             final String granted = (String) criterias.remove("granted");
             if (granted != null) {
-                DetachedCriteria subQuery =
+                final DetachedCriteria subQuery =
                     DetachedCriteria.forClass(RoleGrant.class, "rg");
                 subQuery.setProjection(Projections.rowCount());
                 subQuery.add(Restrictions.eqProperty("escidocRole.id", "r.id"));
@@ -245,7 +245,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
                 }
             }
 
-            for (String key : criteriaMap.keySet()) {
+            for (final String key : criteriaMap.keySet()) {
                 final Object criteriaValue = criterias.remove(key);
                 if (criteriaValue != null) {
                     final Object[] parts = criteriaMap.get(key);
@@ -273,7 +273,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
 
         if (criterias != null && criterias.isEmpty()) {
 
-            List<EscidocRole> result;
+            final List<EscidocRole> result;
             try {
                 result =
                     getHibernateTemplate().findByCriteria(detachedCriteria,
@@ -309,7 +309,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
-        List<EscidocRole> result;
+        final List<EscidocRole> result;
 
         if ((criterias != null) && (criterias.length() > 0)) {
             result = getHibernateTemplate().findByCriteria(

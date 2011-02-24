@@ -70,7 +70,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
         throws XmlParserSystemException {
         try {
             // Store Context in HashMap for faster later use
-            JAXBContext jc;
+            final JAXBContext jc;
             if (storedContexts.get(contextPath) != null) {
                 jc = storedContexts.get(contextPath);
             }
@@ -78,7 +78,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
                 jc = JAXBContext.newInstance(contextPath);
                 storedContexts.put(contextPath, jc);
             }
-            Unmarshaller u = jc.createUnmarshaller();
+            final Unmarshaller u = jc.createUnmarshaller();
             return u.unmarshal(new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING)));
         }
         catch (Exception e) {
@@ -104,9 +104,9 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
         try {
             // Initialize JAXB-Context with package-Name of binding-Object
             // Store Context in HashMap for faster later use
-            String packageName =
+            final String packageName =
                 bindingObject.getClass().getPackage().getName();
-            JAXBContext jc;
+            final JAXBContext jc;
             if (storedContexts.get(packageName) != null) {
                 jc = storedContexts.get(packageName);
             }
@@ -115,12 +115,12 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
                 storedContexts.put(packageName, jc);
             }
 
-            Marshaller m = jc.createMarshaller();
+            final Marshaller m = jc.createMarshaller();
 
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
             // Marshall
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            final ByteArrayOutputStream out = new ByteArrayOutputStream();
             m.marshal(bindingObject, out);
 
             // MIH: workaround: reduce empty elements

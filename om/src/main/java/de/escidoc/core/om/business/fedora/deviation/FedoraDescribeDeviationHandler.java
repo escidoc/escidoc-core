@@ -70,7 +70,7 @@ public class FedoraDescribeDeviationHandler
     public String getFedoraDescription(
         final Map<String, String[]> parameters) throws Exception {
 
-        String urlParams = buildUrlParameters(parameters);
+        final String urlParams = buildUrlParameters(parameters);
         baseURL =
             EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.FEDORA_URL);
@@ -110,14 +110,14 @@ public class FedoraDescribeDeviationHandler
      * 
      */
     private String buildUrlParameters(final Map<String, String[]> parameters) {
-        StringBuilder urlParams = new StringBuilder("");
+        final StringBuilder urlParams = new StringBuilder("");
         if (parameters != null && !parameters.isEmpty()) {
             urlParams.append('?');
-            for (Entry<String, String[]> e : parameters.entrySet()) {
+            for (final Entry<String, String[]> e : parameters.entrySet()) {
                 if (urlParams.length() > 1) {
                     urlParams.append('&');
                 }
-                String[] values = e.getValue();
+                final String[] values = e.getValue();
                 if (values != null && values.length > 0) {
                     urlParams.append(e.getKey()).append('=').append(values[0]);
                 }

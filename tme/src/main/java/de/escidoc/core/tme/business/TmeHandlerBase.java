@@ -11,8 +11,8 @@ public class TmeHandlerBase {
     protected String[] parseRequests(final String requests)
         throws TmeException, XmlParserSystemException {
 
-        StaxParser sp = new StaxParser();
-        TmeRequestsStaxHandler requestsStaxHandler =
+        final StaxParser sp = new StaxParser();
+        final TmeRequestsStaxHandler requestsStaxHandler =
             new TmeRequestsStaxHandler();
         sp.addHandler(requestsStaxHandler);
         try {

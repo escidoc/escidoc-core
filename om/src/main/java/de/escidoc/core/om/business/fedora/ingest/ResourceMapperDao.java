@@ -63,7 +63,7 @@ public class ResourceMapperDao {
      *
      * @param resourceMappers
      */
-    public void setResourceMappers(List<ResourceMapperBean> resourceMappers) {
+    public void setResourceMappers(final List<ResourceMapperBean> resourceMappers) {
         this.resourceMappers = resourceMappers;
     }
 
@@ -74,10 +74,10 @@ public class ResourceMapperDao {
      * @return the IngestableResource responsible for the given resource.
      * @throws EscidocException
      */
-    public ResourceMapperBean getIngestableForResource(String xmlData)
+    public ResourceMapperBean getIngestableForResource(final String xmlData)
         throws EscidocException {
-        StringBuilder exceptions = new StringBuilder();
-        for (ResourceMapperBean bean : getResourceMappers()) {
+        final StringBuilder exceptions = new StringBuilder();
+        for (final ResourceMapperBean bean : getResourceMappers()) {
             try {
                 if (bean.getValidator().isResourceValid(xmlData,
                     bean.getResourceType())) {

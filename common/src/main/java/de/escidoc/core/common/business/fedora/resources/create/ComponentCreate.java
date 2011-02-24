@@ -171,7 +171,7 @@ public class ComponentCreate extends GenericResourceCreate
             setObjid(this.idProvider.getNextPid());
         }
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        final Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.DC, getDC());
         valueMap.putAll(preparePropertiesValueMap());
@@ -204,7 +204,7 @@ public class ComponentCreate extends GenericResourceCreate
         EncodingSystemException {
 
         if (this.dcXml == null) {
-            MdRecordCreate mdRecord =
+            final MdRecordCreate mdRecord =
                 getMetadataRecord(
                     XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
 
@@ -243,7 +243,7 @@ public class ComponentCreate extends GenericResourceCreate
         InvalidContentException, IOException {
 
         validate();
-        String foxml = getFOXML();
+        final String foxml = getFOXML();
         return FedoraUtility
             .getInstance().storeObjectInFedora(foxml, forceSync);
     }
@@ -280,7 +280,7 @@ public class ComponentCreate extends GenericResourceCreate
     private Map<String, String> preparePropertiesValueMap()
         throws WebserverSystemException {
 
-        Map<String, String> valueMap = new HashMap<String, String>();
+        final Map<String, String> valueMap = new HashMap<String, String>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
 
@@ -334,7 +334,7 @@ public class ComponentCreate extends GenericResourceCreate
      */
     private Map<String, String> getRelsExtNamespaceValues() {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             de.escidoc.core.common.business.Constants.PROPERTIES_NS_PREFIX);
@@ -378,7 +378,7 @@ public class ComponentCreate extends GenericResourceCreate
      */
     private Map<String, String> getContentValues() {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         try {
             values
@@ -421,9 +421,9 @@ public class ComponentCreate extends GenericResourceCreate
     private String uploadBase64EncodedContent(
         final String contentAsString, final String fileName,
         final String mimeType) throws WebserverSystemException {
-        String uploadUrl;
+        final String uploadUrl;
         try {
-            byte[] streamContent = Base64.decodeBase64(contentAsString.getBytes());
+            final byte[] streamContent = Base64.decodeBase64(contentAsString.getBytes());
             uploadUrl =
                 Utility.getInstance().upload(streamContent, fileName, mimeType);
         }

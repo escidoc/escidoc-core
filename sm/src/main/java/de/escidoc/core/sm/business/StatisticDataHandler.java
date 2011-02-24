@@ -85,7 +85,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
             LOGGER.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
-        ProducerTemplate producerTemplate = this.camelContext.createProducerTemplate();
+        final ProducerTemplate producerTemplate = this.camelContext.createProducerTemplate();
         producerTemplate.asyncSendBody("jms:queue:de.escidoc.core.statistic.StatisticService.input?disableReplyTo=true", xmlData);
     }
 
@@ -120,7 +120,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         XmlUtility.validate(xmlData, XmlUtility
             .getStatisticDataSchemaLocation());
 
-        String scopeId = xmlUtility.getScopeId(xmlData);
+        final String scopeId = xmlUtility.getScopeId(xmlData);
 
         if (scopeId == null || scopeId.length() == 0) {
             LOGGER.error("scopeId is null");

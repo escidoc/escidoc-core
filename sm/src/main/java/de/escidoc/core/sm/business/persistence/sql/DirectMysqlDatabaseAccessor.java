@@ -142,11 +142,11 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     private String convertDate(final String xmldate)
                     throws SqlDatabaseSystemException {
         try {
-            XMLGregorianCalendar xmlCal =
+            final XMLGregorianCalendar xmlCal =
                 DatatypeFactory.newInstance().newXMLGregorianCalendar(
                     xmldate);
-            Calendar cal = xmlCal.toGregorianCalendar();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            final Calendar cal = xmlCal.toGregorianCalendar();
+            final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             return dateFormat.format(cal.getTime());
         } catch (Exception e) {
             throw new SqlDatabaseSystemException(e);
@@ -172,9 +172,9 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     public void createTable(final DatabaseTableVo databaseTableVo)
         throws SqlDatabaseSystemException {
         checkDatabaseTableVo(databaseTableVo);
-        Collection<String> sqls = getCreateStatements(databaseTableVo);
+        final Collection<String> sqls = getCreateStatements(databaseTableVo);
         try {
-            for (String sql : sqls) {
+            for (final String sql : sqls) {
                 getJdbcTemplate().execute(sql);
             }
         }
@@ -201,9 +201,9 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     public void dropTable(final DatabaseTableVo databaseTableVo)
         throws SqlDatabaseSystemException {
         checkDatabaseTableVo(databaseTableVo);
-        Collection<String> sqls = getDropStatements(databaseTableVo);
+        final Collection<String> sqls = getDropStatements(databaseTableVo);
         try {
-            for (String sql : sqls) {
+            for (final String sql : sqls) {
                 getJdbcTemplate().execute(sql);
             }
         }
@@ -232,15 +232,15 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         throws SqlDatabaseSystemException {
         checkDatabaseRecordVo(databaseRecordVo);
         try {
-            String tablename = handleTableName(databaseRecordVo.getTableName());
-            StringBuilder sql = new StringBuilder("");
-            StringBuilder fieldsSql = new StringBuilder("");
-            StringBuilder valuesSql = new StringBuilder(" VALUES (");
+            final String tablename = handleTableName(databaseRecordVo.getTableName());
+            final StringBuilder sql = new StringBuilder("");
+            final StringBuilder fieldsSql = new StringBuilder("");
+            final StringBuilder valuesSql = new StringBuilder(" VALUES (");
             fieldsSql.append("INSERT INTO ").append(tablename).append(" (");
-            Collection<DatabaseRecordFieldVo> fields = 
+            final Collection<DatabaseRecordFieldVo> fields =
                 databaseRecordVo.getDatabaseRecordFieldVos();
             int i = 0;
-            for (DatabaseRecordFieldVo field : fields) {
+            for (final DatabaseRecordFieldVo field : fields) {
                 if (i > 0) {
                     fieldsSql.append(',');
                     valuesSql.append(',');
@@ -298,10 +298,10 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         throws SqlDatabaseSystemException {
         checkDatabaseSelectVo(databaseSelectVo);
         try {
-            String tablename =
+            final String tablename =
                 handleTableName(databaseSelectVo
                     .getTableNames().iterator().next());
-            StringBuilder sql = new StringBuilder("");
+            final StringBuilder sql = new StringBuilder("");
             sql.append("DELETE FROM ").append(tablename);
             if (databaseSelectVo.getRootWhereGroupVo() != null) {
                 sql.append(" WHERE ");
@@ -335,13 +335,13 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         throws SqlDatabaseSystemException {
         checkDatabaseSelectVo(databaseSelectVo);
         try {
-            String tablename =
+            final String tablename =
                 handleTableName(databaseSelectVo
                     .getTableNames().iterator().next());
-            StringBuilder sql = new StringBuilder("");
+            final StringBuilder sql = new StringBuilder("");
             sql.append("UPDATE ").append(tablename).append(" SET ");
             int i = 0;
-            for (SelectFieldVo selectFieldVo
+            for (final SelectFieldVo selectFieldVo
                 : databaseSelectVo.getSelectFieldVos()) {
                 if (i > 0) {
                     sql.append(',');
@@ -384,18 +384,18 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         throws SqlDatabaseSystemException {
         checkDatabaseSelectVo(databaseSelectVo);
         try {
-            StringBuilder sql = new StringBuilder("");
+            final StringBuilder sql = new StringBuilder("");
             sql.append(databaseSelectVo.getSelectType()).append(' ');
             if (databaseSelectVo.getSelectType().equalsIgnoreCase(
                 Constants.DATABASE_SELECT_TYPE_UPDATE)) {
-                String tablename =
+                final String tablename =
                     handleTableName(databaseSelectVo
                         .getTableNames().iterator().next());
                 sql.append(tablename).append(" SET ");
             }
             else if (databaseSelectVo.getSelectType().equalsIgnoreCase(
                 Constants.DATABASE_SELECT_TYPE_DELETE)) {
-                String tablename =
+                final String tablename =
                     handleTableName(databaseSelectVo
                         .getTableNames().iterator().next());
                 sql.append(" FROM ").append(tablename).append(' ');
@@ -406,8 +406,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                     .getSelectFieldVos()));
                 sql.append(" FROM ");
                 int i = 0;
-                for (String tabname : databaseSelectVo.getTableNames()) {
-                    String tablename = handleTableName(tabname);
+                for (final String tabname : databaseSelectVo.getTableNames()) {
+                    final String tablename = handleTableName(tabname);
                     if (i > 0) {
                         sql.append(',');
                     }
@@ -455,7 +455,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         if (executionSql.matches("(?i).* (where|order by|group by) .*")) {
             condition = true;
         }
-        String fromClause;
+        final String fromClause;
         if (condition) {
             fromClause =
                 executionSql.replaceFirst(
@@ -464,8 +464,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         else {
             fromClause = executionSql.replaceFirst("(?i).*?from(.*)", "$1");
         }
-        String[] tables = fromClause.split(",");
-        StringBuilder replacedFromClause = new StringBuilder(" ");
+        final String[] tables = fromClause.split(",");
+        final StringBuilder replacedFromClause = new StringBuilder(" ");
         for (int i = 0; i < tables.length; i++) {
             if (i > 0) {
                 replacedFromClause.append(',');
@@ -509,13 +509,13 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     private Collection<String> getCreateStatements(
             final DatabaseTableVo databaseTableVo) {
 
-        Collection<String> sqlStatements = new ArrayList<String>();
+        final Collection<String> sqlStatements = new ArrayList<String>();
         // Get Create-Statement for Table
-        String tablename = handleTableName(databaseTableVo.getTableName());
-        StringBuilder createSql = new StringBuilder("CREATE TABLE ");
+        final String tablename = handleTableName(databaseTableVo.getTableName());
+        final StringBuilder createSql = new StringBuilder("CREATE TABLE ");
         createSql.append(tablename).append(" (");
         int i = 0;
-        for (DatabaseTableFieldVo databaseTableFieldVo 
+        for (final DatabaseTableFieldVo databaseTableFieldVo
                 : databaseTableVo.getDatabaseFieldVos()) {
             if (i > 0) {
                 createSql.append(',');
@@ -540,18 +540,18 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         sqlStatements.add(createSql.toString());
 
         // Get Create-Statements for Indexes
-        Collection<DatabaseIndexVo> databaseIndexVos =
+        final Collection<DatabaseIndexVo> databaseIndexVos =
             databaseTableVo.getDatabaseIndexVos();
         if (databaseIndexVos != null) {
-            for (DatabaseIndexVo databaseIndexVo : databaseIndexVos) {
-                StringBuilder indexSql = new StringBuilder("CREATE INDEX ");
-                String indexName = databaseIndexVo.getIndexName();
+            for (final DatabaseIndexVo databaseIndexVo : databaseIndexVos) {
+                final StringBuilder indexSql = new StringBuilder("CREATE INDEX ");
+                final String indexName = databaseIndexVo.getIndexName();
                 indexSql
                     .append(indexName).append(" ON ").append(tablename).append(
                         " (");
-                Collection<String> indexFields = databaseIndexVo.getFields();
+                final Collection<String> indexFields = databaseIndexVo.getFields();
                 int j = 0;
-                for (String indexField : indexFields) {
+                for (final String indexField : indexFields) {
                     if (j > 0) {
                         indexSql.append(',');
                     }
@@ -578,14 +578,14 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      */
     private Collection<String> getDropStatements(
             final DatabaseTableVo databaseTableVo) {
-        Collection<String> sqlStatements = new ArrayList<String>();
-        String tablename = handleTableName(databaseTableVo.getTableName());
+        final Collection<String> sqlStatements = new ArrayList<String>();
+        final String tablename = handleTableName(databaseTableVo.getTableName());
         // Get Drop-Statements for Indexes
-        Collection<DatabaseIndexVo> databaseIndexVos =
+        final Collection<DatabaseIndexVo> databaseIndexVos =
             databaseTableVo.getDatabaseIndexVos();
         if (databaseIndexVos != null) {
-            for (DatabaseIndexVo databaseIndexVo : databaseIndexVos) {
-                StringBuilder indexSql = new StringBuilder("DROP INDEX ");
+            for (final DatabaseIndexVo databaseIndexVo : databaseIndexVos) {
+                final StringBuilder indexSql = new StringBuilder("DROP INDEX ");
                 indexSql.append(databaseIndexVo.getIndexName())
                         .append(" ON ")
                         .append(tablename)
@@ -595,7 +595,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         }
 
         // Get Drop-Statement for Table
-        StringBuilder dropSql = new StringBuilder("DROP TABLE ");
+        final StringBuilder dropSql = new StringBuilder("DROP TABLE ");
         dropSql.append(tablename);
         sqlStatements.add(dropSql.toString());
 
@@ -616,7 +616,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      */
     private String handleWhereClause(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException {
-        StringBuilder whereClause = new StringBuilder(" ");
+        final StringBuilder whereClause = new StringBuilder(" ");
         boolean additionalWhereGroups = false;
         if (databaseSelectVo.getAdditionalWhereGroupVos() != null
             && !databaseSelectVo.getAdditionalWhereGroupVos().isEmpty()) {
@@ -625,7 +625,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         if (additionalWhereGroups) {
             whereClause.append('(');
         }
-        RootWhereGroupVo rootWhereGroupVo =
+        final RootWhereGroupVo rootWhereGroupVo =
             databaseSelectVo.getRootWhereGroupVo();
         RootWhereFieldVo rootWhereFieldVo =
             rootWhereGroupVo.getRootWhereFieldVo();
@@ -641,7 +641,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
             rootWhereFieldVo.getOperator(), rootWhereFieldVo.getXpath()));
         if (rootWhereGroupVo.getAdditionalWhereFieldVos() != null
             && !rootWhereGroupVo.getAdditionalWhereFieldVos().isEmpty()) {
-            for (AdditionalWhereFieldVo additionalWhereFieldVo
+            for (final AdditionalWhereFieldVo additionalWhereFieldVo
                 : rootWhereGroupVo.getAdditionalWhereFieldVos()) {
                 whereClause.append(additionalWhereFieldVo.getAlliance());
                 if (databaseSelectVo.getSelectType().equals(
@@ -660,7 +660,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         }
         if (additionalWhereGroups) {
             whereClause.append(") ");
-            for (AdditionalWhereGroupVo additionalWhereGroupVo
+            for (final AdditionalWhereGroupVo additionalWhereGroupVo
                 : databaseSelectVo.getAdditionalWhereGroupVos()) {
                 whereClause.append(additionalWhereGroupVo.getAlliance());
                 whereClause.append(" (");
@@ -679,7 +679,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                 if (additionalWhereGroupVo.getAdditionalWhereFieldVos() != null
                     && !additionalWhereGroupVo
                         .getAdditionalWhereFieldVos().isEmpty()) {
-                    for (AdditionalWhereFieldVo additionalWhereFieldVo
+                    for (final AdditionalWhereFieldVo additionalWhereFieldVo
                         : additionalWhereGroupVo.getAdditionalWhereFieldVos()) {
                         whereClause
                             .append(additionalWhereFieldVo.getAlliance());
@@ -730,8 +730,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         final String tableName, final String fieldName, final String fieldType,
         final String fieldValue, final String operator, final String xpath)
         throws SqlDatabaseSystemException {
-        StringBuilder whereClause = new StringBuilder(" ");
-        StringBuilder longFieldName = new StringBuilder("");
+        final StringBuilder whereClause = new StringBuilder(" ");
+        final StringBuilder longFieldName = new StringBuilder("");
         if (tableName != null && tableName.length() != 0) {
             longFieldName.append(
                 handleTableName(tableName).replaceFirst(".*?\\.", "")).append(
@@ -739,7 +739,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         }
         longFieldName.append(fieldName);
         if (fieldType.equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_TEXT)) {
-            String value = fieldValue.replaceAll("'", "''");
+            final String value = fieldValue.replaceAll("'", "''");
             whereClause
                 .append(longFieldName).append(' ').append(operator)
                 .append(" '").append(value).append("' ");
@@ -747,7 +747,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         else if (fieldType.endsWith(Constants.DATABASE_FIELD_TYPE_DATE)) {
             if (fieldType
                 .equalsIgnoreCase(Constants.DATABASE_FIELD_TYPE_DAYDATE)) {
-                String dayOfMonthFunction = FIELD_NAME_MATCHER
+                final String dayOfMonthFunction = FIELD_NAME_MATCHER
                     .reset(DAY_OF_MONTH_FUNCTION)
                     .replaceAll(Matcher.quoteReplacement(
                             longFieldName.toString()));
@@ -758,7 +758,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
             else {
                 whereClause.append(longFieldName).append(operator).append(' ');
             }
-            String value;
+            final String value;
             if ("sysdate".equalsIgnoreCase(fieldValue)) {
                 value = SYSDATE;
             }
@@ -814,9 +814,9 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     private String handleSelectFields(
         final Iterable<SelectFieldVo> selectFieldVos)
         throws SqlDatabaseSystemException {
-        StringBuilder selectFields = new StringBuilder(" ");
+        final StringBuilder selectFields = new StringBuilder(" ");
         int i = 0;
-        for (SelectFieldVo selectFieldVo : selectFieldVos) {
+        for (final SelectFieldVo selectFieldVo : selectFieldVos) {
             if (i > 0) {
                 selectFields.append(',');
             }
@@ -826,7 +826,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
             }
             if (selectFieldVo.getTableName() != null
                 && selectFieldVo.getTableName().length() != 0) {
-                String tablename =
+                final String tablename =
                     handleTableName(selectFieldVo.getTableName()).replaceFirst(
                         ".*?\\.", "");
                 selectFields.append(tablename).append('.');
@@ -852,7 +852,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     @Override
     public String getXpathBoolean(final String xpath, final String field) {
         return XPATH_MATCHER.reset(XPATH_BOOLEAN_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
-                    + Matcher.quoteReplacement(xpath));
+                + Matcher.quoteReplacement(xpath));
     }
 
     /**
@@ -869,7 +869,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     @Override
     public String getXpathString(final String xpath, final String field) {
         return XPATH_MATCHER.reset(XPATH_STRING_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
-                    + Matcher.quoteReplacement(xpath));
+                + Matcher.quoteReplacement(xpath));
     }
 
     /**
@@ -885,7 +885,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      */
     public String getXpathNumeric(final String xpath, final String field) {
         return XPATH_MATCHER.reset(XPATH_NUMBER_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
-                    + Matcher.quoteReplacement(xpath));
+                + Matcher.quoteReplacement(xpath));
     }
 
     /**
@@ -911,7 +911,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
             throw new SqlDatabaseSystemException(
                 "database-fields may not be empty");
         }
-        for (DatabaseTableFieldVo databaseTableFieldVo 
+        for (final DatabaseTableFieldVo databaseTableFieldVo
                 : databaseTableVo.getDatabaseFieldVos()) {
             if (databaseTableFieldVo.getFieldName() == null
                 || databaseTableFieldVo.getFieldName().length() == 0) {
@@ -928,7 +928,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
 
         }
         if (databaseTableVo.getDatabaseIndexVos() != null) {
-            for (DatabaseIndexVo databaseIndexVo
+            for (final DatabaseIndexVo databaseIndexVo
                 : databaseTableVo.getDatabaseIndexVos()) {
                 if (databaseIndexVo.getIndexName() == null
                     || databaseIndexVo.getIndexName().length() == 0) {
@@ -941,7 +941,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                     throw new SqlDatabaseSystemException(
                         "indexfields may not be empty");
                 }
-                for (String field : databaseIndexVo.getFields()) {
+                for (final String field : databaseIndexVo.getFields()) {
                     if (field == null || field.length() == 0) {
                         log.error("indexfield may not be null");
                         throw new SqlDatabaseSystemException(
@@ -976,7 +976,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
             throw new SqlDatabaseSystemException(
                 "database-fields may not be empty");
         }
-        for (DatabaseRecordFieldVo databaseRecordFieldVo
+        for (final DatabaseRecordFieldVo databaseRecordFieldVo
             : databaseRecordVo.getDatabaseRecordFieldVos()) {
             if (databaseRecordFieldVo.getFieldName() == null
                 || databaseRecordFieldVo.getFieldName().length() == 0) {
@@ -1015,7 +1015,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
             log.error("tablenames may not be empty");
             throw new SqlDatabaseSystemException("tablenames may not be empty");
         }
-        for (String tablename : databaseSelectVo.getTableNames()) {
+        for (final String tablename : databaseSelectVo.getTableNames()) {
             if (tablename == null || tablename.length() == 0) {
                 log.error("tablename may not be null");
                 throw new SqlDatabaseSystemException(
@@ -1038,7 +1038,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                 throw new SqlDatabaseSystemException(
                     "select-fields may not be empty");
             }
-            for (SelectFieldVo selectFieldVo
+            for (final SelectFieldVo selectFieldVo
                 : databaseSelectVo.getSelectFieldVos()) {
                 if (selectFieldVo.getFieldName() == null
                     || selectFieldVo.getFieldName().length() == 0) {
@@ -1077,21 +1077,21 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                 "root where group may not be empty");
         }
         if (databaseSelectVo.getRootWhereGroupVo() != null) {
-            RootWhereGroupVo rootWhereGroupVo =
+            final RootWhereGroupVo rootWhereGroupVo =
                 databaseSelectVo.getRootWhereGroupVo();
             if (rootWhereGroupVo.getRootWhereFieldVo() == null) {
                 log.error("root where field may not be empty");
                 throw new SqlDatabaseSystemException(
                     "root where field may not be empty");
             }
-            RootWhereFieldVo rootWhereFieldVo =
+            final RootWhereFieldVo rootWhereFieldVo =
                 rootWhereGroupVo.getRootWhereFieldVo();
             checkWhereFieldVo("root", rootWhereFieldVo.getFieldName(),
                 rootWhereFieldVo.getFieldType(), rootWhereFieldVo
                     .getFieldValue(), rootWhereFieldVo.getOperator(),
                 rootWhereFieldVo.getXpath());
             if (rootWhereGroupVo.getAdditionalWhereFieldVos() != null) {
-                for (AdditionalWhereFieldVo additionalWhereFieldVo
+                for (final AdditionalWhereFieldVo additionalWhereFieldVo
                     : rootWhereGroupVo.getAdditionalWhereFieldVos()) {
                     checkWhereFieldVo("additional", additionalWhereFieldVo
                         .getFieldName(), additionalWhereFieldVo.getFieldType(),
@@ -1103,14 +1103,14 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
 
         }
         if (databaseSelectVo.getAdditionalWhereGroupVos() != null) {
-            for (AdditionalWhereGroupVo additionalWhereGroupVo
+            for (final AdditionalWhereGroupVo additionalWhereGroupVo
                 : databaseSelectVo.getAdditionalWhereGroupVos()) {
                 if (additionalWhereGroupVo.getRootWhereFieldVo() == null) {
                     log.error("root where field may not be empty");
                     throw new SqlDatabaseSystemException(
                         "root where field may not be empty");
                 }
-                RootWhereFieldVo rootWhereFieldVo =
+                final RootWhereFieldVo rootWhereFieldVo =
                     additionalWhereGroupVo.getRootWhereFieldVo();
                 checkWhereFieldVo("root", rootWhereFieldVo.getFieldName(),
                     rootWhereFieldVo.getFieldType(), rootWhereFieldVo
@@ -1118,7 +1118,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                     rootWhereFieldVo.getXpath());
                 if (additionalWhereGroupVo
                         .getAdditionalWhereFieldVos() != null) {
-                    for (AdditionalWhereFieldVo additionalWhereFieldVo
+                    for (final AdditionalWhereFieldVo additionalWhereFieldVo
                         : additionalWhereGroupVo.getAdditionalWhereFieldVos()) {
                         checkWhereFieldVo("additional", additionalWhereFieldVo
                             .getFieldName(), additionalWhereFieldVo

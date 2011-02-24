@@ -382,7 +382,7 @@ public class ExplainXmlProvider extends InfrastructureXmlProvider {
     private String getExplainXml(final Map<String, Object> values)
         throws WebserverSystemException {
         try {
-            URL baseUrl = new URL(XmlUtility.getEscidocBaseUrl());
+            final URL baseUrl = new URL(XmlUtility.getEscidocBaseUrl());
 
             values.put("HOST", baseUrl.getHost());
             values.put("PORT", baseUrl.getPort());

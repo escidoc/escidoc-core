@@ -112,7 +112,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
         throws MissingAttributeValueException, InvalidContentException,
         WebserverSystemException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         if (currentPath.equals(this.resourceDefinitionPath)) {
 
             LOG.debug("Parser reached " + this.resourceDefinitionPath);
@@ -160,7 +160,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element) {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         if (currentPath.equals(this.resourceDefinitionPath + "/md-record-name")) {
             this.resourceDefinition.setMdRecordName(data);
         }
@@ -177,7 +177,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         if (currentPath.equals(this.resourceDefinitionPath)) {
             if (this.resourceDefinitions == null) {
                 this.resourceDefinitions =

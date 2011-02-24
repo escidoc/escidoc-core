@@ -97,9 +97,9 @@ public class StartElement extends AbstractElement {
         this.hasChild = false;
         this.attributes = new ArrayList<Attribute>();
         // init attributes
-        int attCount = parser.getAttributeCount();
+        final int attCount = parser.getAttributeCount();
         for (int i = 0; i < attCount; i++) {
-            Attribute attribute = new Attribute(parser, i);
+            final Attribute attribute = new Attribute(parser, i);
             this.attributes.add(attribute);
         }
     }
@@ -126,9 +126,9 @@ public class StartElement extends AbstractElement {
     public Attribute getAttribute(
         final String namespaceUri, final String localName)
         throws NoSuchAttributeException {
-        Attribute result;
+        final Attribute result;
 
-        int index = indexOfAttribute(namespaceUri, localName);
+        final int index = indexOfAttribute(namespaceUri, localName);
         if (index >= 0) {
             result = getAttribute(index);
         }
@@ -160,12 +160,12 @@ public class StartElement extends AbstractElement {
     }
 
     public int indexOfAttribute(final CharSequence namespace, final String localName) {
-        int size = attributes.size();
+        final int size = attributes.size();
         for (int i = 0; i < size; i++) {
-            Attribute att = attributes.get(i);
+            final Attribute att = attributes.get(i);
             if (att.getLocalName().equals(localName)) {
                 if (namespace == null || namespace.length() == 0) {
-                    String ns = att.getNamespace();
+                    final String ns = att.getNamespace();
                     if (ns == null || ns.length() == 0) {
                         return i;
                     }

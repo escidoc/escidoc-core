@@ -70,12 +70,12 @@ public class DcUpdateHandler extends DefaultHandler {
     public String characters(final String data, final StartElement element) {
         String newData = data;
         if (!props.isEmpty()) {
-            String curPath = parser.getCurPath();
-            String theKey = element.getLocalName();
+            final String curPath = parser.getCurPath();
+            final String theKey = element.getLocalName();
             if (curPath.endsWith(PATH + theKey)
                 && props.containsKey(theKey)) {
                 // update propertie and remove the used value
-                StartElementWithText replacementElement =
+                final StartElementWithText replacementElement =
                     (StartElementWithText) props.get(theKey);
                 String curElementNamespace = element.getNamespace();
                 String replacementElementNamespace =

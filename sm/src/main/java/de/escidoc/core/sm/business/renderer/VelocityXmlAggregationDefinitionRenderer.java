@@ -91,7 +91,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
     @Override
     public String render(final AggregationDefinition aggregationDefinition)
         throws SystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootAggregationDefinition", XmlTemplateProvider.TRUE);
         addAggregationDefinitionNamespaceValues(values);
         addAggregationDefinitionValues(aggregationDefinition, values);
@@ -115,7 +115,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
         DateTime createDateTime =
             new DateTime(aggregationDefinition.getCreationDate());
         createDateTime = createDateTime.withZone(DateTimeZone.UTC);
-        String create = createDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String create = createDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("aggregationDefinitionCreationDate", create);
         values.put("aggregationDefinitionCreatedById",
             aggregationDefinition.getCreatorId());
@@ -154,28 +154,28 @@ public final class VelocityXmlAggregationDefinitionRenderer
     private static void addAggregationTableValues(
         final Collection<AggregationTable> aggregationTables,
         final Map<String, Object> values) {
-        Collection<HashMap<String, Object>> aggregationTablesVm =
+        final Collection<HashMap<String, Object>> aggregationTablesVm =
             new ArrayList<HashMap<String, Object>>();
         if (aggregationTables != null) {
-            Collection<AggregationTable> sortedAggregationTables =
+            final Collection<AggregationTable> sortedAggregationTables =
                 new TreeSet<AggregationTable>(new AggregationTableComparator());
             sortedAggregationTables.addAll(aggregationTables);
-            for (AggregationTable aggregationTable : sortedAggregationTables) {
-                HashMap<String, Object> tableMap =
+            for (final AggregationTable aggregationTable : sortedAggregationTables) {
+                final HashMap<String, Object> tableMap =
                     new HashMap<String, Object>();
                 tableMap.put("name", aggregationTable.getName());
 
                 // fields
-                Collection<HashMap<String, String>> aggregationTableFieldsVm =
+                final Collection<HashMap<String, String>> aggregationTableFieldsVm =
                     new ArrayList<HashMap<String, String>>();
                 if (aggregationTable.getAggregationTableFields() != null) {
-                    Collection<AggregationTableField> sortedAggregationTableFields =
+                    final Collection<AggregationTableField> sortedAggregationTableFields =
                         new TreeSet<AggregationTableField>(
                             new AggregationTableFieldComparator());
                     sortedAggregationTableFields.addAll(aggregationTable
                         .getAggregationTableFields());
-                    for (AggregationTableField aggregationTableField : sortedAggregationTableFields) {
-                        HashMap<String, String> aggregationTableFieldVm =
+                    for (final AggregationTableField aggregationTableField : sortedAggregationTableFields) {
+                        final HashMap<String, String> aggregationTableFieldVm =
                             new HashMap<String, String>();
                         aggregationTableFieldVm.put("name",
                             aggregationTableField.getName());
@@ -196,31 +196,31 @@ public final class VelocityXmlAggregationDefinitionRenderer
                     .put("aggregationTableFields", aggregationTableFieldsVm);
 
                 // indexes
-                Collection<HashMap<String, Object>> aggregationTableIndexesVm =
+                final Collection<HashMap<String, Object>> aggregationTableIndexesVm =
                     new ArrayList<HashMap<String, Object>>();
                 if (aggregationTable.getAggregationTableIndexes() != null) {
-                    Collection<AggregationTableIndexe> sortedAggregationTableIndexes =
+                    final Collection<AggregationTableIndexe> sortedAggregationTableIndexes =
                         new TreeSet<AggregationTableIndexe>(
                             new AggregationTableIndexComparator());
                     sortedAggregationTableIndexes.addAll(aggregationTable
                         .getAggregationTableIndexes());
-                    for (AggregationTableIndexe aggregationTableIndex : sortedAggregationTableIndexes) {
-                        HashMap<String, Object> aggregationTableIndexVm =
+                    for (final AggregationTableIndexe aggregationTableIndex : sortedAggregationTableIndexes) {
+                        final HashMap<String, Object> aggregationTableIndexVm =
                             new HashMap<String, Object>();
                         aggregationTableIndexVm.put("name",
                             aggregationTableIndex.getName());
-                        Collection<HashMap<String, String>> indexFields =
+                        final Collection<HashMap<String, String>> indexFields =
                             new ArrayList<HashMap<String, String>>();
                         if (aggregationTableIndex
                             .getAggregationTableIndexFields() != null) {
-                            Collection<AggregationTableIndexField> sortedAggregationTableIndexFields =
+                            final Collection<AggregationTableIndexField> sortedAggregationTableIndexFields =
                                 new TreeSet<AggregationTableIndexField>(
                                     new AggregationTableIndexFieldComparator());
                             sortedAggregationTableIndexFields
                                 .addAll(aggregationTableIndex
                                     .getAggregationTableIndexFields());
-                            for (AggregationTableIndexField aggregationTableIndexField : sortedAggregationTableIndexFields) {
-                                HashMap<String, String> field =
+                            for (final AggregationTableIndexField aggregationTableIndexField : sortedAggregationTableIndexFields) {
+                                final HashMap<String, String> field =
                                     new HashMap<String, String>();
                                 field.put("field",
                                     aggregationTableIndexField.getField());
@@ -252,16 +252,16 @@ public final class VelocityXmlAggregationDefinitionRenderer
     private static void addStatisticDataSelectorValues(
         final Collection<AggregationStatisticDataSelector> aggregationStatisticDataSelectors,
         final Map<String, Object> values) {
-        Collection<HashMap<String, String>> aggregationDataSelectorsVm =
+        final Collection<HashMap<String, String>> aggregationDataSelectorsVm =
             new ArrayList<HashMap<String, String>>();
         if (aggregationStatisticDataSelectors != null) {
-            Collection<AggregationStatisticDataSelector> sortedAggregationStatisticDataSelectors =
+            final Collection<AggregationStatisticDataSelector> sortedAggregationStatisticDataSelectors =
                 new TreeSet<AggregationStatisticDataSelector>(
                     new AggregationStatisticDataSelectorComparator());
             sortedAggregationStatisticDataSelectors
                 .addAll(aggregationStatisticDataSelectors);
-            for (AggregationStatisticDataSelector aggregationStatisticDataSelector : sortedAggregationStatisticDataSelectors) {
-                HashMap<String, String> selectorMap =
+            for (final AggregationStatisticDataSelector aggregationStatisticDataSelector : sortedAggregationStatisticDataSelectors) {
+                final HashMap<String, String> selectorMap =
                     new HashMap<String, String>();
                 selectorMap.put("selectorType",
                     aggregationStatisticDataSelector.getSelectorType());
@@ -295,7 +295,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
         final Collection<AggregationDefinition> aggregationDefinitions,
         final RecordPacking recordPacking) throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootAggregationDefinition", XmlTemplateProvider.FALSE);
         values.put("aggregationDefinitionListTitle",
@@ -314,8 +314,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
             aggregationDefinitionsValues = new ArrayList();
         }
         if (aggregationDefinitions != null) {
-            for (AggregationDefinition aggregationDefinition : aggregationDefinitions) {
-                Map<String, Object> aggregationDefinitionValues =
+            for (final AggregationDefinition aggregationDefinition : aggregationDefinitions) {
+                final Map<String, Object> aggregationDefinitionValues =
                     new HashMap<String, Object>();
                 addAggregationDefinitionNamespaceValues(aggregationDefinitionValues);
                 addAggregationDefinitionValues(aggregationDefinition,

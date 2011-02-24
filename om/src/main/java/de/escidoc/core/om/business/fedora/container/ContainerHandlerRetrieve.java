@@ -80,9 +80,9 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
         StreamNotFoundException, EncodingSystemException,
         WebserverSystemException {
 
-        Container container = getContainer();
-        Datastream cts = container.getCts();
-        String xml;
+        final Container container = getContainer();
+        final Datastream cts = container.getCts();
+        final String xml;
         try {
             xml = new String(cts.getStream(), XmlUtility.CHARACTER_ENCODING);
         }
@@ -123,8 +123,8 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
         WebserverSystemException, MdRecordNotFoundException {
 
         try {
-            Datastream mdRecord = getContainer().getMdRecord(mdRecordId);
-            String metadataRecord =
+            final Datastream mdRecord = getContainer().getMdRecord(mdRecordId);
+            final String metadataRecord =
                 getRenderer().renderMetadataRecord(getContainer(), mdRecord,
                     true);
             if (metadataRecord.length() == 0) {
@@ -154,7 +154,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
     protected String getMetadataRecordsXml() throws EncodingSystemException,
         FedoraSystemException, WebserverSystemException,
         IntegritySystemException {
-        Container container = getContainer();
+        final Container container = getContainer();
         return getRenderer().renderMetadataRecords(container);
 
     }

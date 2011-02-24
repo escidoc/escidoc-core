@@ -64,7 +64,7 @@ public class HibernateActionDao extends AbstractHibernateDao
 
         UnsecuredActionList ret = null;
         if (contextId != null) {
-            List<UnsecuredActionList> list =
+            final List<UnsecuredActionList> list =
                 getHibernateTemplate().findByCriteria(
                     DetachedCriteria.forClass(UnsecuredActionList.class).add(
                         Restrictions.eq("contextId", contextId)));

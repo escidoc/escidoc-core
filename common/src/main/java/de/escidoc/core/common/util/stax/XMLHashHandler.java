@@ -52,15 +52,15 @@ public class XMLHashHandler extends DefaultHandler {
     private String hash = null;
 
     @Override
-    public void characters(char[] ch, int start, int length)
+    public void characters(final char[] ch, final int start, final int length)
         throws SAXException {
-        StringBuilder cb = new StringBuilder();
+        final StringBuilder cb = new StringBuilder();
 
         for (int i = 0; i < length; i++) {
             cb.append(ch[i + start]);
         }
 
-        String characters = cb.toString();
+        final String characters = cb.toString();
         if (characters.trim().length() != 0) {
             // problems with splited character data
             // string.append("#" + characters);
@@ -80,24 +80,24 @@ public class XMLHashHandler extends DefaultHandler {
 
     @Override
     public void startElement(
-        String uri, String localName, String qName, Attributes attributes)
+        final String uri, final String localName, final String qName, final Attributes attributes)
         throws SAXException {
 
-        String fqName = createFqName(uri, localName, qName);
+        final String fqName = createFqName(uri, localName, qName);
 
         string.append('#');
         string.append(fqName);
-        int length = attributes.getLength();
-        SortedMap<String, String> atts = new TreeMap<String, String>();
+        final int length = attributes.getLength();
+        final SortedMap<String, String> atts = new TreeMap<String, String>();
         for (int i = 0; i < length; i++) {
-            String curQName = attributes.getQName(i);
-            String attName =
+            final String curQName = attributes.getQName(i);
+            final String attName =
                     '{' + attributes.getURI(i) + '}' + attributes.getLocalName(i);
             if (!"xmlns:xml".equalsIgnoreCase(curQName)) {
                 atts.put(attName, attributes.getValue(i));
             }
         }
-        for (String name : atts.keySet()) {
+        for (final String name : atts.keySet()) {
             string.append('#');
             string.append(name);
             string.append('=');
@@ -119,7 +119,7 @@ public class XMLHashHandler extends DefaultHandler {
     public void endDocument() throws SAXException {
         string.append("#end");
         try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
+            final MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(string.toString().getBytes());
             hash = new String(md.digest());
         }
@@ -129,7 +129,7 @@ public class XMLHashHandler extends DefaultHandler {
     }
 
     @Override
-    public void error(SAXParseException e) throws SAXException {
+    public void error(final SAXParseException e) throws SAXException {
         throw new SAXException(e);
     }
 

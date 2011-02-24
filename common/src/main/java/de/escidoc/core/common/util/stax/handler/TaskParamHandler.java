@@ -118,11 +118,11 @@ public class TaskParamHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element)
         throws InvalidXmlException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (PARAM_PATH.equals(currentPath)) {
             try {
-                Attribute date = element.getAttribute(null, LAST_MODIFICATION_DATE_ATT);
+                final Attribute date = element.getAttribute(null, LAST_MODIFICATION_DATE_ATT);
                 lastModificationDate = date.getValue();
             }
             catch (NoSuchAttributeException e1) {
@@ -180,7 +180,7 @@ public class TaskParamHandler extends DefaultHandler {
      */
     @Override
     public String characters(final String data, final StartElement element) {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
 
         if (curPath.equals(PARAM_PATH + '/'
             + Elements.ELEMENT_PARAM_WITHDRAW_COMMENT)) {

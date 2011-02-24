@@ -113,7 +113,7 @@ public class MdRecordDefinitionCreate {
      */
     public void setSchemaHref(final String schemaHref)
         throws MalformedURLException, IOException {
-        URL url;
+        final URL url;
         if (schemaHref.startsWith("/")) {
             url = new URL(EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.ESCIDOC_CORE_BASEURL)
@@ -171,7 +171,7 @@ public class MdRecordDefinitionCreate {
      */
     public String getFOXML() throws SystemException {
 
-        Map<String, String> templateValues = getValueMap();
+        final Map<String, String> templateValues = getValueMap();
         return ItemFoXmlProvider.getInstance().getMetadataFoXml(templateValues);
     }
 
@@ -184,7 +184,7 @@ public class MdRecordDefinitionCreate {
      */
     public Map<String, String> getValueMap() throws SystemException {
 
-        Map<String, String> templateValues = new HashMap<String, String>();
+        final Map<String, String> templateValues = new HashMap<String, String>();
 
         templateValues.put(XmlTemplateProvider.MD_RECORD_TYPE, this.type);
         templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA,

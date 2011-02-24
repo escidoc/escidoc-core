@@ -41,10 +41,10 @@ public class UserPreferenceReadHandler extends DefaultHandler {
     private final Map<String, String> preferences = new HashMap<String, String>();
 
     @Override
-    public String characters(String data, StartElement element)
+    public String characters(final String data, final StartElement element)
         throws Exception {
         if (element.getLocalName().equals(Elements.ELEMENT_USER_PREFERENCE)) {
-            String name = element.getAttributeValue(null, "name");
+            final String name = element.getAttributeValue(null, "name");
             this.preferences.put(name, data);
         }
         return super.characters(data, element);

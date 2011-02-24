@@ -136,8 +136,8 @@ public class Utility {
      * @return split predicate
      */
     public String[] splitPredicate(final String predicate) {
-        String[] result = new String[2];
-        int index = predicate.lastIndexOf('/');
+        final String[] result = new String[2];
+        final int index = predicate.lastIndexOf('/');
         if (index != -1) {
             result[0] = predicate.substring(predicate.lastIndexOf('/') + 1);
             result[1] = predicate.substring(0, index);
@@ -189,7 +189,7 @@ public class Utility {
      */
     public static String getId(final String link) {
         String result = link;
-        int index = link.lastIndexOf('/');
+        final int index = link.lastIndexOf('/');
         if (index != -1) {
             result = link.substring(link.lastIndexOf('/') + 1);
         }
@@ -251,7 +251,7 @@ public class Utility {
                 text = "object to change";
             }
 
-            String message =
+            final String message =
                 "Optimistic locking error! Version of " + text
                     + " does not match most recent version (requested:"
                     + updateLatestVersionDate + " saved:"
@@ -286,8 +286,8 @@ public class Utility {
         if ((fedoraLatestVersionDate != null)
             && (updateLatestVersionDate != null)) {
 
-            DateTime tFedora = new DateTime(fedoraLatestVersionDate);
-            DateTime tUpdate = new DateTime(updateLatestVersionDate);
+            final DateTime tFedora = new DateTime(fedoraLatestVersionDate);
+            final DateTime tUpdate = new DateTime(updateLatestVersionDate);
 
             checkOptimisticLockingCriteria(tFedora, tUpdate, label);
         }
@@ -309,7 +309,7 @@ public class Utility {
             throw new WebserverSystemException(
                 "System fault: Current user not set!");
         }
-        String[] result = new String[2];
+        final String[] result = new String[2];
         result[0] = UserContext.getId();
         result[1] = UserContext.getRealName();
 
@@ -329,8 +329,8 @@ public class Utility {
      */
     public boolean hasSameContext(final String id0, final String id1)
         throws SystemException {
-        String context0 = tripleStoreUtility.getContext(id0);
-        String context1 = tripleStoreUtility.getContext(id1);
+        final String context0 = tripleStoreUtility.getContext(id0);
+        final String context1 = tripleStoreUtility.getContext(id1);
 
         return !(context0 == null || !context0.equals(context1));
     }
@@ -341,9 +341,9 @@ public class Utility {
      * @return An Utility instance.
      */
     public static Utility getInstance() {
-        BeanFactoryLocator beanFactoryLocator =
+        final BeanFactoryLocator beanFactoryLocator =
             SingletonBeanFactoryLocator.getInstance();
-        BeanFactory factory =
+        final BeanFactory factory =
             beanFactoryLocator
                 .useBeanFactory(BeanLocator.COMMON_FACTORY_ID).getFactory();
         return (Utility) factory.getBean("business.Utility");
@@ -577,7 +577,7 @@ public class Utility {
         throws ResourceNotFoundException, TripleStoreSystemException,
         WebserverSystemException, IntegritySystemException {
 
-        String idWithoutVersionNumber = XmlUtility.getObjidWithoutVersion(id);
+        final String idWithoutVersionNumber = XmlUtility.getObjidWithoutVersion(id);
         final String objectType =
             tripleStoreUtility.getObjectType(idWithoutVersionNumber);
 
@@ -619,29 +619,29 @@ public class Utility {
         // move the check to another level in create to avoid a double XML
         // parsing and validating.
 
-        String dataContextId;
+        final String dataContextId;
 
         try {
-            DocumentBuilderFactory docBuilderFactory =
+            final DocumentBuilderFactory docBuilderFactory =
                 DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-            InputStream in =
+            final DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+            final InputStream in =
                 new ByteArrayInputStream(
                     xmlData.getBytes(XmlUtility.CHARACTER_ENCODING));
-            Document result = docBuilder.parse(new InputSource(in));
+            final Document result = docBuilder.parse(new InputSource(in));
             result.getDocumentElement().normalize();
 
             if (UserContext.isRestAccess()) {
-                Node n =
+                final Node n =
                     XPathAPI.selectSingleNode(result,
                         "//properties/context/@href");
 
-                String contextHref = n.getNodeValue();
+                final String contextHref = n.getNodeValue();
                 dataContextId =
                     contextHref.substring(contextHref.lastIndexOf('/') + 1);
             }
             else {
-                Node n =
+                final Node n =
                     XPathAPI.selectSingleNode(result,
                         "//properties/context/@objid");
 
@@ -672,9 +672,9 @@ public class Utility {
     public String getPath(final String id, final String newVersionNumber)
         throws WebserverSystemException, TripleStoreSystemException {
 
-        StringBuilder result = new StringBuilder("/");
+        final StringBuilder result = new StringBuilder("/");
 
-        String objectType = tripleStoreUtility.getObjectType(id);
+        final String objectType = tripleStoreUtility.getObjectType(id);
         if (Constants.ITEM_OBJECT_TYPE.equals(objectType)
             || Constants.CONTAINER_OBJECT_TYPE.equals(objectType)
             || Constants.CONTEXT_OBJECT_TYPE.equals(objectType)) {
@@ -716,25 +716,25 @@ public class Utility {
         final VersionableResource resource, final FedoraUtility fedoraUtility)
         throws SystemException {
 
-        String comment = createComment(resource, newStatus, versionComment);
+        final String comment = createComment(resource, newStatus, versionComment);
 
-        Map<String, String> resBaseData = getResourceBaseData(resource);
-        Map<String, StartElementWithChildElements> updateElementsRelsExt =
+        final Map<String, String> resBaseData = getResourceBaseData(resource);
+        final Map<String, StartElementWithChildElements> updateElementsRelsExt =
             new TreeMap<String, StartElementWithChildElements>();
-        Map<String, List<StartElementWithChildElements>> removeElementsRelsExt =
+        final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt =
             new TreeMap<String, List<StartElementWithChildElements>>();
-        Map<String, String> currentVersionProperties =
+        final Map<String, String> currentVersionProperties =
             resource.getResourceProperties();
 
         // elements to update in RELS-EXT in any case
         // - latest-version.date
         // - latest-version.user
-        StartElementWithChildElements modifiedBy =
+        final StartElementWithChildElements modifiedBy =
             new StartElementWithChildElements(Elements.ELEMENT_MODIFIED_BY,
                 Constants.STRUCTURAL_RELATIONS_NS_URI,
                 Constants.STRUCTURAL_RELATIONS_NS_PREFIX, null,
                 getCurrentUserId(), null);
-        Attribute resourceAttribute =
+        final Attribute resourceAttribute =
             new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                 Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
                     + getCurrentUserId());
@@ -747,7 +747,7 @@ public class Utility {
                 Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX,
                 null, getCurrentUserRealName(), null));
 
-        String buildNumber = Utility.getInstance().getBuildNumber();
+        final String buildNumber = Utility.getInstance().getBuildNumber();
         updateElementsRelsExt.put("build", new StartElementWithChildElements(
             "build", "http://escidoc.de/core/01/system/", "system", null,
             buildNumber, null));
@@ -839,7 +839,7 @@ public class Utility {
             // with the exact timestamp.
 
             // update version-history
-            Map<String, StartElementWithChildElements> updateElementsWOV =
+            final Map<String, StartElementWithChildElements> updateElementsWOV =
                 new HashMap<String, StartElementWithChildElements>();
 
             if (!Constants.STATUS_WITHDRAWN.equals(newStatus)) {
@@ -857,13 +857,13 @@ public class Utility {
                         Constants.WOV_NAMESPACE_URI,
                         Constants.WOV_NAMESPACE_PREFIX, null, newStatus, null));
             }
-            List<StartElementWithChildElements> elementsToAdd =
+            final List<StartElementWithChildElements> elementsToAdd =
                 new ArrayList<StartElementWithChildElements>();
             // elementsToAdd.add(versionStatus);
 
             // add premis:event to version-history/version[1]/events as
             // first child
-            String newEventEntry =
+            final String newEventEntry =
                 createEventXml(resource.getId(),
                     resBaseData.get("resourceBaseUrl"),
                     getCurrentUserRealName(), getCurrentUserId(),
@@ -908,7 +908,7 @@ public class Utility {
             // - latest-version.user ( done )
             // - latest-version.comment ( done )
 
-            int newVersionNumberInt =
+            final int newVersionNumberInt =
                 Integer.parseInt(currentVersionProperties
                     .get(PropertyMapKeys.LATEST_VERSION_NUMBER)) + 1;
 
@@ -933,11 +933,11 @@ public class Utility {
             }
 
             // remove version.pid
-            StartElementWithChildElements propertyToDelete =
+            final StartElementWithChildElements propertyToDelete =
                 new StartElementWithChildElements(Constants.RELEASE_NS_URI
                     + Elements.ELEMENT_PID, Constants.VERSION_NS_URI,
                     Constants.VERSION_NS_PREFIX, null, null, null);
-            List<StartElementWithChildElements> toRemove =
+            final List<StartElementWithChildElements> toRemove =
                 new ArrayList<StartElementWithChildElements>();
             toRemove.add(propertyToDelete);
             removeElementsRelsExt.put("/RDF/Description/pid", toRemove);
@@ -945,7 +945,7 @@ public class Utility {
             // write version-history (Keep in mind, that at this point a
             // placeholder for the timestamp is written. This placeholder is
             // replaced during persist().)
-            String newVersionXml =
+            final String newVersionXml =
                 createVersionXml(resource, resBaseData,
                     currentVersionProperties, newVersionNumberInt, comment);
 
@@ -988,19 +988,19 @@ public class Utility {
         final FedoraResource resource, final String currentPublicStatus,
         final boolean release) throws SystemException {
 
-        StaxParser sp = new StaxParser();
-        ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
+        final StaxParser sp = new StaxParser();
+        final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
             new ItemRelsExtUpdateHandler(updateElementsRelsExt, sp);
         sp.addHandler(itemRelsExtUpdateHandler);
 
-        HashMap<String, String> pathes = new HashMap<String, String>();
+        final HashMap<String, String> pathes = new HashMap<String, String>();
         pathes.put("/RDF", null);
-        MultipleExtractor me = new MultipleExtractor(pathes, sp);
+        final MultipleExtractor me = new MultipleExtractor(pathes, sp);
         me.removeElements(removeElementsRelsExt);
         sp.addHandler(me);
 
         try {
-            ByteArrayInputStream relsExtBA;
+            final ByteArrayInputStream relsExtBA;
             if (release
                 && !Constants.STATUS_RELEASED.equals(currentPublicStatus)) {
 
@@ -1030,7 +1030,7 @@ public class Utility {
                     new ByteArrayInputStream(resource.getRelsExt().getStream());
             }
             sp.parse(relsExtBA);
-            ByteArrayOutputStream relsExt =
+            final ByteArrayOutputStream relsExt =
                 (ByteArrayOutputStream) me.getOutputStreams().get("RDF");
             resource
                 .setRelsExt(relsExt.toString(XmlUtility.CHARACTER_ENCODING));
@@ -1075,7 +1075,7 @@ public class Utility {
         throws WebserverSystemException, TripleStoreSystemException {
 
         // Map for version entry values
-        Map<String, String> newVersionEntry = new HashMap<String, String>();
+        final Map<String, String> newVersionEntry = new HashMap<String, String>();
 
         // compute new latest version data
         newVersionEntry.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX,
@@ -1162,7 +1162,7 @@ public class Utility {
         final String comment, final Map<String, String> currentVersionProperties)
         throws WebserverSystemException {
 
-        HashMap<String, String> eventValues = new HashMap<String, String>();
+        final HashMap<String, String> eventValues = new HashMap<String, String>();
         eventValues.put(XmlTemplateProvider.VAR_EVENT_TYPE, newStatus);
         eventValues.put(
             XmlTemplateProvider.VAR_EVENT_XMLID,
@@ -1251,7 +1251,7 @@ public class Utility {
     private Map<String, String> getResourceBaseData(
         final VersionableResource resource) throws SystemException {
 
-        Map<String, String> baseData = new HashMap<String, String>();
+        final Map<String, String> baseData = new HashMap<String, String>();
         if (resource instanceof Item) {
             baseData.put("resourceBaseUrl", Constants.ITEM_URL_BASE);
             baseData.put("resourcePrefix",
@@ -1296,12 +1296,12 @@ public class Utility {
 
         // TODO insert new version in version-history
         try {
-            String wov =
+            final String wov =
                 resource.getWov().toString(XmlUtility.CHARACTER_ENCODING);
-            String newWov =
+            final String newWov =
                 wov.replaceFirst("(<" + Constants.WOV_NAMESPACE_PREFIX
                     + ":version-history[^>]+>)", "$1" + versionEntry);
-            Datastream ds =
+            final Datastream ds =
                 new Datastream("version-history", resource.getId(),
                     newWov.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
             resource.setWov(ds);
@@ -1328,14 +1328,14 @@ public class Utility {
         final List<StartElementWithChildElements> elementsToAdd)
         throws WebserverSystemException {
 
-        StaxParser sp = new StaxParser();
-        ItemRelsExtUpdateHandler ireuh =
+        final StaxParser sp = new StaxParser();
+        final ItemRelsExtUpdateHandler ireuh =
             new ItemRelsExtUpdateHandler(updateElementsWOV, sp);
         ireuh.setPath("/version-history/version/");
         sp.addHandler(ireuh);
-        AddNewSubTreesToDatastream addNewSubtreesHandler =
+        final AddNewSubTreesToDatastream addNewSubtreesHandler =
             new AddNewSubTreesToDatastream("/version-history", sp);
-        StartElement pointer =
+        final StartElement pointer =
             new StartElement("version", Constants.WOV_NAMESPACE_URI,
                 "escidocVersions", null);
         addNewSubtreesHandler.setPointerElement(pointer);
@@ -1345,9 +1345,9 @@ public class Utility {
         try {
             sp.parse(resource.getWov().getStream());
             sp.clearHandlerChain();
-            ByteArrayOutputStream newWovStream =
+            final ByteArrayOutputStream newWovStream =
                 addNewSubtreesHandler.getOutputStreams();
-            String newWovString =
+            final String newWovString =
                 newWovStream
                     .toString(XmlUtility.CHARACTER_ENCODING).replaceFirst(
                         "(<" + Constants.WOV_NAMESPACE_PREFIX
@@ -1397,7 +1397,7 @@ public class Utility {
         throws IntegritySystemException, FedoraSystemException,
         XmlParserSystemException, WebserverSystemException {
 
-        byte[] relsExtContent;
+        final byte[] relsExtContent;
         if (relsExtBytes == null) {
             try {
                 relsExtContent = resource.getRelsExt().getStream();
@@ -1412,21 +1412,21 @@ public class Utility {
         ByteArrayInputStream relsExtIs =
             new ByteArrayInputStream(relsExtContent);
 
-        StaxParser sp = new StaxParser();
+        final StaxParser sp = new StaxParser();
         byte[] relsExtNewBytes = null;
         boolean updatedRelsExtProperties = false;
         if ((addToRelsExt != null) && (!addToRelsExt.isEmpty())) {
             if ((updateProperties != null) && (!updateProperties.isEmpty())) {
                 updatedRelsExtProperties = true;
-                ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
+                final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
                     new ItemRelsExtUpdateHandler(updateProperties, sp);
                 sp.addHandler(itemRelsExtUpdateHandler);
 
             }
-            AddNewSubTreesToDatastream addNewEntriesHandler =
+            final AddNewSubTreesToDatastream addNewEntriesHandler =
                 new AddNewSubTreesToDatastream("/RDF", sp);
 
-            StartElement pointer = new StartElement();
+            final StartElement pointer = new StartElement();
             pointer.setLocalName("Description");
             pointer.setPrefix(Constants.RDF_NAMESPACE_PREFIX);
             pointer.setNamespace(Constants.RDF_NAMESPACE_URI);
@@ -1451,7 +1451,7 @@ public class Utility {
                 throw new WebserverSystemException(e);
             }
             sp.clearHandlerChain();
-            ByteArrayOutputStream relsExtNewStream =
+            final ByteArrayOutputStream relsExtNewStream =
                 addNewEntriesHandler.getOutputStreams();
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
@@ -1464,17 +1464,17 @@ public class Utility {
             if ((updateProperties != null) && (!updateProperties.isEmpty())
                 && !updatedRelsExtProperties) {
                 updatedRelsExtProperties = true;
-                ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
+                final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
                     new ItemRelsExtUpdateHandler(updateProperties, sp);
                 sp.addHandler(itemRelsExtUpdateHandler);
 
             }
-            HashMap<String, String> extractPathes =
+            final HashMap<String, String> extractPathes =
                 new HashMap<String, String>();
 
             extractPathes.put("/RDF", null);
 
-            MultipleExtractor multipleExtractor =
+            final MultipleExtractor multipleExtractor =
                 new MultipleExtractor(extractPathes, sp);
 
             multipleExtractor.removeElements(deleteFromRelsExt);
@@ -1494,20 +1494,20 @@ public class Utility {
                 throw new WebserverSystemException(e);
             }
             sp.clearHandlerChain();
-            Map<String, Object> streams =
+            final Map<String, Object> streams =
                 multipleExtractor.getOutputStreams();
-            ByteArrayOutputStream relsExtNewStream =
+            final ByteArrayOutputStream relsExtNewStream =
                 (ByteArrayOutputStream) streams.get("RDF");
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
         if ((updateProperties != null) && (!updateProperties.isEmpty())
             && !updatedRelsExtProperties) {
-            ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
+            final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
                 new ItemRelsExtUpdateHandler(updateProperties, sp);
             sp.addHandler(itemRelsExtUpdateHandler);
-            HashMap<String, String> pathes = new HashMap<String, String>();
+            final HashMap<String, String> pathes = new HashMap<String, String>();
             pathes.put("/RDF", null);
-            MultipleExtractor multipleExtractor =
+            final MultipleExtractor multipleExtractor =
                 new MultipleExtractor(pathes, sp);
             sp.addHandler(multipleExtractor);
             try {
@@ -1527,9 +1527,9 @@ public class Utility {
                 throw new WebserverSystemException("Unexpected Exception.", e);
             }
             sp.clearHandlerChain();
-            Map<String, Object> streams =
+            final Map<String, Object> streams =
                 multipleExtractor.getOutputStreams();
-            ByteArrayOutputStream relsExtNewStream =
+            final ByteArrayOutputStream relsExtNewStream =
                 (ByteArrayOutputStream) streams.get("RDF");
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
@@ -1564,11 +1564,11 @@ public class Utility {
         final byte[] streamContent, final String fileName, final String mimeType)
         throws FileSystemException {
 
-        EscidocBinaryContent content = new EscidocBinaryContent();
+        final EscidocBinaryContent content = new EscidocBinaryContent();
         content.setFileName(fileName);
         content.setMimeType(mimeType);
         content.setContent(new ByteArrayInputStream(streamContent));
-        String stagingFileXml;
+        final String stagingFileXml;
 
         try {
             stagingFileXml = stagingFileHandler.create(content);
@@ -1580,10 +1580,10 @@ public class Utility {
             throw new FileSystemException(
                 "Unexpected exception from StagingFileHandler.create", e);
         }
-        Matcher matcher = REDIRECT_URL_PATTERN.matcher(stagingFileXml);
+        final Matcher matcher = REDIRECT_URL_PATTERN.matcher(stagingFileXml);
         if (matcher.find()) {
-            String base = matcher.group(1);
-            String path = matcher.group(2);
+            final String base = matcher.group(1);
+            final String path = matcher.group(2);
             if (base != null && path != null) {
                 return base + path;
             }
@@ -1641,7 +1641,7 @@ public class Utility {
      */
     public String prepareReturnXmlFromLastModificationDate(final String lastModificationDate)
         throws SystemException {
-        DateTime t = new DateTime(lastModificationDate, DateTimeZone.UTC);
+        final DateTime t = new DateTime(lastModificationDate, DateTimeZone.UTC);
         return prepareReturnXml(t, null);
     }
 
@@ -1719,7 +1719,7 @@ public class Utility {
     public static String processUrl(
         final String url, final String itemId, final String componentId)
         throws InvalidContentException, WebserverSystemException {
-        String escidocBaseUrl = XmlUtility.getEscidocBaseUrl();
+        final String escidocBaseUrl = XmlUtility.getEscidocBaseUrl();
 
         try {
             // // FIXME workaround issue 631
@@ -1732,8 +1732,8 @@ public class Utility {
             // "Direct access to Fedora denied: '" + url + "'.");
             // }
             // given
-            URI local;
-            URI fq;
+            final URI local;
+            final URI fq;
             if (url.charAt(0) == '/') {
                 checkESciDocLocalURL(url);
                 local = new URI(url);
@@ -1746,14 +1746,14 @@ public class Utility {
 
             if (itemId != null && componentId != null) {
                 // expected
-                String thisUrl =
+                final String thisUrl =
                     Constants.ITEM_URL_BASE
                         + itemId
                         + de.escidoc.core.common.business.fedora.Constants.COMPONENT_URL_PART
                         + componentId
                         + de.escidoc.core.common.business.fedora.Constants.COMPONENT_CONTENT_URL_PART;
-                URI thisLocal = new URI(thisUrl);
-                URI thisFq = new URI(escidocBaseUrl + thisUrl);
+                final URI thisLocal = new URI(thisUrl);
+                final URI thisFq = new URI(escidocBaseUrl + thisUrl);
 
                 // recognize the URL we send
                 if (local.equals(thisLocal) || fq.equals(thisFq)) {
@@ -1776,14 +1776,14 @@ public class Utility {
      *             Thrown if obtaining from properties failed.
      */
     public String getBuildNumber() throws WebserverSystemException {
-        String buildNumber;
+        final String buildNumber;
         try {
             buildNumber =
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.BUILD_NUMBER);
         }
         catch (Exception e) {
-            String errorMsg =
+            final String errorMsg =
                 "Failed to retrieve configuration parameter "
                     + EscidocConfiguration.FEDORA_URL;
             LOGGER.error(errorMsg, e);
@@ -1803,7 +1803,7 @@ public class Utility {
     private static void checkESciDocLocalURL(final String url)
         throws InvalidContentException {
         if (!(url.startsWith("/ir/") || url.startsWith("/st/"))) {
-            String msg =
+            final String msg =
                 "The local URL '" + url
                     + "' does not point into an eSciDoc Core component.";
             LOGGER.debug(msg);

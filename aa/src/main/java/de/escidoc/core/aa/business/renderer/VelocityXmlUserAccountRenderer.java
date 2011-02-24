@@ -88,7 +88,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         // long start = System.nanoTime();
 
         // start = System.nanoTime();
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootUserAccount", "true");
         addCommonValues(values);
@@ -113,12 +113,12 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         DateTime lmdDateTime =
             new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userAccountLastModificationDate", lmd);
         values.put("userAccountHref", userAccount.getHref());
         DateTime creationDateTime = new DateTime(userAccount.getCreationDate());
         creationDateTime = creationDateTime.withZone(DateTimeZone.UTC);
-        String creationDate =
+        final String creationDate =
             creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userAccountCreationDate", creationDate);
         values.put("userAccountName", userAccount.getName());
@@ -126,12 +126,12 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         values.put("userAccountId", userAccount.getId());
         values.put("userAccountActive", userAccount.getActive());
 
-        UserAccount createdBy = userAccount.getUserAccountByCreatorId();
+        final UserAccount createdBy = userAccount.getUserAccountByCreatorId();
         values.put("userAccountCreatedByTitle", createdBy.getName());
         values.put("userAccountCreatedByHref", createdBy.getHref());
         values.put("userAccountCreatedById", createdBy.getId());
 
-        UserAccount modifiedBy = userAccount.getUserAccountByModifiedById();
+        final UserAccount modifiedBy = userAccount.getUserAccountByModifiedById();
         values.put("userAccountModifiedByTitle", modifiedBy.getName());
         values.put("userAccountModifiedByHref", modifiedBy.getHref());
         values.put("userAccountModifiedById", modifiedBy.getId());
@@ -155,7 +155,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         final UserAccount userAccount, final List<RoleGrant> currentGrants)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootCurrentGrants", "true");
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
@@ -177,7 +177,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         DateTime lmdDateTime =
             new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
         addEscidocBaseUrl(values);
         return getUserAccountXmlProvider().getCurrentGrantsXml(values);
@@ -206,7 +206,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         final String offset, final String limit,
         final RecordPacking recordPacking) throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootGrants", "true");
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
         values.put("grantNamespace", Constants.GRANTS_NS_URI);
@@ -245,7 +245,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     public String renderGrant(final RoleGrant grant)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootGrant", "true");
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
@@ -285,7 +285,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         values.put("grantObjectRefId", grant.getObjectId());
         DateTime creationDateTime = new DateTime(grant.getCreationDate());
         creationDateTime = creationDateTime.withZone(DateTimeZone.UTC);
-        String creationDate =
+        final String creationDate =
             creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("grantCreationDate", creationDate);
         values.put("grantCreatedByTitle", grant
@@ -300,7 +300,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         if (revocationDate != null) {
             DateTime revokationDateTime = new DateTime(revocationDate);
             revokationDateTime = revokationDateTime.withZone(DateTimeZone.UTC);
-            String revokationDate =
+            final String revokationDate =
                 revokationDateTime.toString(Constants.TIMESTAMP_FORMAT);
             values.put("grantRevocationDate", revokationDate);
             final UserAccount revokedBy = grant.getUserAccountByRevokerId();
@@ -313,7 +313,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         addEscidocBaseUrl(values);
         DateTime lmdDateTime = new DateTime(grant.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("grantLastModificationDate", lmd);
         return getUserAccountXmlProvider().getGrantXml(values);
     }
@@ -332,14 +332,14 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     public String renderResources(final UserAccount userAccount)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootResources", "true");
         addResourcesValues(userAccount, values);
         addCommonValues(values);
         DateTime lmdDateTime =
             new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userAccountLastModificationDate", lmd);
         return getUserAccountXmlProvider().getResourcesXml(values);
     }
@@ -363,7 +363,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         final List<UserAccount> userAccounts, final RecordPacking recordPacking)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootUserAccount", XmlTemplateProvider.TRUE);
         values.put("recordPacking", recordPacking);
         addCommonValues(values);
@@ -371,8 +371,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
         final Collection<Map<String, Object>> userAccountsValues =
             new ArrayList<Map<String, Object>>(userAccounts.size());
-        for (UserAccount userAccount : userAccounts) {
-            Map<String, Object> userAccountValues =
+        for (final UserAccount userAccount : userAccounts) {
+            final Map<String, Object> userAccountValues =
                 new HashMap<String, Object>();
             addUserAccountValues(userAccount, userAccountValues);
             userAccountsValues.add(userAccountValues);
@@ -510,7 +510,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         final UserAccount userAccount, final UserPreference preference,
         final boolean isRootPreference) throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         addPreferencesCommonValues(values);
         if (isRootPreference) {
@@ -518,7 +518,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
             DateTime lmdDateTime =
                 new DateTime(userAccount.getLastModificationDate());
             lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-            String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+            final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
             values.put("userAccountLastModificationDate", lmd);
             values.put("userAccountId", userAccount.getId());
             addEscidocBaseUrl(values);
@@ -534,22 +534,22 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         final UserAccount userAccount, final Set<UserPreference> preferences)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootPreference", false);
         addPreferencesCommonValues(values);
         DateTime lmdDateTime =
             new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userAccountLastModificationDate", lmd);
         values.put("userAccountId", userAccount.getId());
         addEscidocBaseUrl(values);
 
-        Collection<Map<String, String>> userAccountPreferencesValues =
+        final Collection<Map<String, String>> userAccountPreferencesValues =
             new ArrayList<Map<String, String>>();
-        for (UserPreference preference : preferences) {
-            Map<String, String> m = new HashMap<String, String>();
+        for (final UserPreference preference : preferences) {
+            final Map<String, String> m = new HashMap<String, String>();
             m.put("userAccountPreferenceName", preference.getName());
             m.put("userAccountPreferenceValue", preference.getValue());
             userAccountPreferencesValues.add(m);
@@ -599,7 +599,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         final UserAttribute attribute, final String isRootAttribute)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootAttribute", isRootAttribute);
         addAttributesCommonValues(values);
@@ -608,7 +608,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
                 new DateTime(attribute
                     .getUserAccountByUserId().getLastModificationDate());
             lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-            String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+            final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
             values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
             values.put("userAccountId", attribute
                 .getUserAccountByUserId().getId());
@@ -639,21 +639,21 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         final UserAccount userAccount, final Set<UserAttribute> attributes)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         addAttributesCommonValues(values);
         DateTime lmdDateTime =
             new DateTime(userAccount.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
         values.put("userAccountId", userAccount.getId());
         addEscidocBaseUrl(values);
 
-        Collection<Map<String, Object>> userAccountAttributesValues =
+        final Collection<Map<String, Object>> userAccountAttributesValues =
             new ArrayList<Map<String, Object>>();
-        for (UserAttribute attribute : attributes) {
-            Map<String, Object> m = new HashMap<String, Object>();
+        for (final UserAttribute attribute : attributes) {
+            final Map<String, Object> m = new HashMap<String, Object>();
             m.put("userAccountId", userAccount.getId());
             m.put("userAccountAttributeId", attribute.getId());
             m.put("userAccountAttributeName", attribute.getName());

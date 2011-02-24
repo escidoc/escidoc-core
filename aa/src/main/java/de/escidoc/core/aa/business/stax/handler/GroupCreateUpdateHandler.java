@@ -64,7 +64,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) {
 
-        String currenrPath = parser.getCurPath();
+        final String currenrPath = parser.getCurPath();
 
         
         if (PROPERTIES_PATH.equals(currenrPath)) {
@@ -77,7 +77,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) {
-        String currenrPath = parser.getCurPath();
+        final String currenrPath = parser.getCurPath();
 
         if (PROPERTIES_PATH.equals(currenrPath)) {
 
@@ -92,7 +92,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element)
         throws XmlCorruptedException {
 
-        String theName = element.getLocalName();
+        final String theName = element.getLocalName();
         if (inProperties) {
             if (theName.equals(Elements.ELEMENT_NAME)) {
                 if ((s != null) && (s.length() > 0)) {

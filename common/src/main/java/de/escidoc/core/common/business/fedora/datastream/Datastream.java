@@ -213,7 +213,7 @@ public class Datastream {
         final String mimeType, final String location,
         final String controlGroupValue, final ReadableDateTime timestamp) {
         if (timestamp != null) {
-            String tsFormat =
+            final String tsFormat =
                 de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT;
             timestamp.toString(tsFormat);
         }
@@ -421,7 +421,7 @@ public class Datastream {
      */
     private void init() throws StreamNotFoundException, FedoraSystemException {
 
-        org.fcrepo.server.types.gen.Datastream fedoraDatastream;
+        final org.fcrepo.server.types.gen.Datastream fedoraDatastream;
         try {
             fedoraDatastream =
                 getFedoraUtility().getDatastreamInformation(this.parentId,
@@ -449,7 +449,7 @@ public class Datastream {
 
         this.location = fedoraDatastream.getLocation();
 
-        String checksumMethodTmp = fedoraDatastream.getChecksumType();
+        final String checksumMethodTmp = fedoraDatastream.getChecksumType();
         if (!"disabled".equalsIgnoreCase(checksumMethodTmp)) {
             this.checksumMethod = checksumMethodTmp;
 
@@ -726,7 +726,7 @@ public class Datastream {
         // with a managed content should be pulled
         if (this.theStream == null
             && ("X".equals(this.controlGroupValue) || "M".equals(this.controlGroupValue))) {
-            MIMETypedStream datastream;
+            final MIMETypedStream datastream;
             try {
                 datastream =
                     getFedoraUtility().getDatastreamWithMimeType(this.name,
@@ -1054,7 +1054,7 @@ public class Datastream {
         return checksum;
     }
 
-    public void setContentUnchanged(boolean b) {
+    public void setContentUnchanged(final boolean b) {
         this.contentUnchanged = b;
     }
 }

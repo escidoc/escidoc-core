@@ -64,14 +64,14 @@ public class PWCallback implements CallbackHandler {
     @Override
     public void handle(final Callback[] callbacks) throws IOException,
         UnsupportedCallbackException {
-        for (Callback callback : callbacks) {
+        for (final Callback callback : callbacks) {
 
             try {
-                Method method =
+                final Method method =
                         callback.getClass().getMethod("getIdentifer",
                                 (Class[]) null);
 
-                String name =
+                final String name =
                         (String) method.invoke(callback);
 
                 LOG.debug("The CallbackHandler server-side: " + name);

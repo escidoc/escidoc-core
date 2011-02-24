@@ -99,8 +99,8 @@ public class ReportHandler implements ReportHandlerInterface {
         }
 
         //parse
-        StaxParser sp = new StaxParser();
-        ReportParametersStaxHandler handler = 
+        final StaxParser sp = new StaxParser();
+        final ReportParametersStaxHandler handler =
                 new ReportParametersStaxHandler();
         sp.addHandler(handler);
         try {
@@ -111,14 +111,14 @@ public class ReportHandler implements ReportHandlerInterface {
         }
         
         // Check if report-definition exists
-        ReportDefinition reportDefinition =
+        final ReportDefinition reportDefinition =
             dao.retrieve(handler.getReportParametersVo().getReportDefinitionId());
 
-        String sql = generateSql(
+        final String sql = generateSql(
             handler.getReportParametersVo(), reportDefinition);
 
         // get Data as defined in sql
-        List results;
+        final List results;
         try {
             results = dbAccessor.executeReadOnlySql(sql);
         }
@@ -159,10 +159,10 @@ public class ReportHandler implements ReportHandlerInterface {
         sql = sql.replaceAll("\\s+", " ");
 
         // replace Parameters in sql
-        Collection<ParameterVo> parameterVos = 
+        final Collection<ParameterVo> parameterVos =
                     reportParametersVo.getParameterVos();
         if (parameterVos != null) {
-            for (ParameterVo parameterVo : parameterVos) {
+            for (final ParameterVo parameterVo : parameterVos) {
                 if (parameterVo != null) {
                     String type = null;
                     if (parameterVo.getDateValue() != null) {

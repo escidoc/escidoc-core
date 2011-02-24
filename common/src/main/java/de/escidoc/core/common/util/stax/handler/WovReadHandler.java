@@ -124,7 +124,7 @@ public class WovReadHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws IntegritySystemException {
         if (!isParsed) {
             if (ELEMENT_PATH.equals(parser.getCurPath())) {
@@ -132,7 +132,7 @@ public class WovReadHandler extends DefaultHandler {
                 insideLevel++;
                 if (versionId != null) {
 
-                    String objectId = getObjId(element);
+                    final String objectId = getObjId(element);
                     if (objectId.endsWith(':' + versionId)) {
                         inCertainVersion = true;
                         try {
@@ -157,7 +157,7 @@ public class WovReadHandler extends DefaultHandler {
                 }
             }
             else if (inside) {
-                String theName = element.getLocalName();
+                final String theName = element.getLocalName();
                 if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER)) {
                     if (certainVersionIsLatestVersion || inLatestVersion) {
                         setLatestVersionValues(theName, null, element);
@@ -174,7 +174,7 @@ public class WovReadHandler extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(EndElement element) {
+    public EndElement endElement(final EndElement element) {
         if ((!isParsed) && (inside)) {
             insideLevel--;
 
@@ -197,11 +197,11 @@ public class WovReadHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(final String s, StartElement element)
+    public String characters(final String s, final StartElement element)
         throws IntegritySystemException, XmlParserSystemException {
 
         if (!isParsed) {
-            String theName = element.getLocalName();
+            final String theName = element.getLocalName();
             if (certainVersionIsLatestVersion || inLatestVersion) {
                 setLatestVersionValues(theName, s, element);
                 setCurrentVersionValues(theName, s, element);
@@ -353,7 +353,7 @@ public class WovReadHandler extends DefaultHandler {
      */
     private String getObjId(final StartElement element)
         throws IntegritySystemException {
-        Attribute objectId;
+        final Attribute objectId;
         try {
             objectId = element.getAttribute(Constants.XLINK_URI, "href");
         }

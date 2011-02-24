@@ -96,8 +96,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
         }
 
         // parse
-        StaxParser sp = new StaxParser();
-        ScopeStaxHandler handler = new ScopeStaxHandler();
+        final StaxParser sp = new StaxParser();
+        final ScopeStaxHandler handler = new ScopeStaxHandler();
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
@@ -107,8 +107,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
             throw new SystemException(e);
         }
 
-        Scope scope = handler.getScope();
-        Utility utility = new Utility();
+        final Scope scope = handler.getScope();
+        final Utility utility = new Utility();
         scope.setCreatorId(utility.getCurrentUserId());
         scope.setModifiedById(scope.getCreatorId());
         scope
@@ -147,7 +147,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
             LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
-        Scope scope = dao.retrieve(id);
+        final Scope scope = dao.retrieve(id);
         dao.delete(scope);
     }
 
@@ -200,15 +200,15 @@ public class ScopeHandler implements ScopeHandlerInterface {
     @Override
     public String retrieveScopes(final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
-        String result;
-        SRURequestParameters params =
+        final String result;
+        final SRURequestParameters params =
             new DbRequestParameters(parameters);
-        String query = params.getQuery();
-        int limit = params.getLimit();
-        int offset = params.getOffset();
+        final String query = params.getQuery();
+        final int limit = params.getLimit();
+        final int offset = params.getOffset();
 
         if (params.isExplain()) {
-            Map<String, Object> values = new HashMap<String, Object>();
+            final Map<String, Object> values = new HashMap<String, Object>();
 
             values.put("PROPERTY_NAMES",
                 new ScopeFilter(null).getPropertyNames());
@@ -222,7 +222,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
         }
         else {
             // get all scope-ids from database
-            Collection<String> scopeIds = dao.retrieveScopeIds();
+            final Collection<String> scopeIds = dao.retrieveScopeIds();
 
             Collection<String> filteredScopeIds = null;
             Collection<Scope> scopes = new ArrayList<Scope>();
@@ -281,8 +281,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
         }
 
         // parse
-        StaxParser sp = new StaxParser();
-        ScopeStaxHandler handler = new ScopeStaxHandler();
+        final StaxParser sp = new StaxParser();
+        final ScopeStaxHandler handler = new ScopeStaxHandler();
         handler.setScope(dao.retrieve(id));
         sp.addHandler(handler);
         try {
@@ -293,8 +293,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
             throw new SystemException(e);
         }
 
-        Scope scope = handler.getScope();
-        Utility utility = new Utility();
+        final Scope scope = handler.getScope();
+        final Utility utility = new Utility();
         scope.setModifiedById(utility.getCurrentUserId());
         scope
             .setLastModificationDate(new Timestamp(System.currentTimeMillis()));

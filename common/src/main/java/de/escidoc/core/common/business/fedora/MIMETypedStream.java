@@ -44,7 +44,7 @@ public class MIMETypedStream implements Serializable {
         hashCodeCalc = false;
     }
 
-    public MIMETypedStream(String mimeType, byte[] stream, Property[] header) {
+    public MIMETypedStream(final String mimeType, final byte[] stream, final Property[] header) {
         equalsCalc = null;
         hashCodeCalc = false;
         this.mimeType = mimeType;
@@ -80,7 +80,7 @@ public class MIMETypedStream implements Serializable {
         if (!(obj instanceof MIMETypedStream)) {
             return false;
         }
-        MIMETypedStream other = (MIMETypedStream) obj;
+        final MIMETypedStream other = (MIMETypedStream) obj;
         if (this == obj) {
             return true;
         }
@@ -89,7 +89,7 @@ public class MIMETypedStream implements Serializable {
         }
         else {
             equalsCalc = obj;
-            boolean equals = (mimeType == null && other.getMIMEType() == null || mimeType != null
+            final boolean equals = (mimeType == null && other.getMIMEType() == null || mimeType != null
                 && mimeType.equals(other.getMIMEType()))
                 && (stream == null && other.getStream() == null || stream != null
                     && Arrays.equals(stream, other.getStream()))
@@ -111,7 +111,7 @@ public class MIMETypedStream implements Serializable {
         }
         if (getStream() != null) {
             for (int i = 0; i < Array.getLength(getStream()); i++) {
-                Object obj = Array.get(getStream(), i);
+                final Object obj = Array.get(getStream(), i);
                 if (obj != null && !obj.getClass().isArray()) {
                     hashCode += obj.hashCode();
                 }
@@ -119,7 +119,7 @@ public class MIMETypedStream implements Serializable {
         }
         if (getHeader() != null) {
             for (int i = 0; i < Array.getLength(getHeader()); i++) {
-                Object obj = Array.get(getHeader(), i);
+                final Object obj = Array.get(getHeader(), i);
                 if (obj != null && !obj.getClass().isArray()) {
                     hashCode += obj.hashCode();
                 }
@@ -129,7 +129,7 @@ public class MIMETypedStream implements Serializable {
         return hashCode;
     }
 
-    static Class _mthclass$(String x0) {
+    static Class _mthclass$(final String x0) {
         try {
             return Class.forName(x0);
         }

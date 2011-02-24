@@ -91,7 +91,7 @@ public class OrganizationalUnitParentsHandler
         throws OrganizationalUnitNotFoundException, SystemException,
         InvalidXmlException, MissingAttributeValueException {
 
-        String curPath = getParser().getCurPath();
+        final String curPath = getParser().getCurPath();
         if (!rootElementPathChecked) {
             if (!getParser().getCurPath().startsWith('/' + rootElement)) {
                 throw new XmlCorruptedException("Root element is "

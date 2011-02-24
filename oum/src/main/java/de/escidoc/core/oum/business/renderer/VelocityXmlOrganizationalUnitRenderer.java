@@ -89,7 +89,7 @@ public class VelocityXmlOrganizationalUnitRenderer
     public String render(final OrganizationalUnit organizationalUnit)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
 
         values.put("organizationalUnitName", organizationalUnit.getName());
@@ -118,7 +118,7 @@ public class VelocityXmlOrganizationalUnitRenderer
     public String renderProperties(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
         values.put("isRootProperties", XmlTemplateProvider.TRUE);
         addPropertiesValues(organizationalUnit, values);
@@ -137,7 +137,7 @@ public class VelocityXmlOrganizationalUnitRenderer
     @Override
     public String renderResources(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
         values.put("isRootResources", XmlTemplateProvider.TRUE);
         addResourcesValues(organizationalUnit, values);
@@ -155,7 +155,7 @@ public class VelocityXmlOrganizationalUnitRenderer
     @Override
     public String renderMdRecords(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
         values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
             XmlTemplateProvider.TRUE);
@@ -181,7 +181,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         final OrganizationalUnit organizationalUnit, final String name)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addMdRecordValues(organizationalUnit, name, values);
         if (values.isEmpty()) {
             return "";
@@ -206,7 +206,7 @@ public class VelocityXmlOrganizationalUnitRenderer
     public String renderParents(final OrganizationalUnit organizationalUnit)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(organizationalUnit, values);
         values.put("isRootParents", XmlTemplateProvider.TRUE);
         addParentsValues(organizationalUnit, values);
@@ -229,7 +229,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         final OrganizationalUnit organizationalUnit, final List<String> children)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addListNamespaceValues(values);
         values.put(XmlTemplateProvider.IS_ROOT_LIST, XmlTemplateProvider.TRUE);
@@ -258,7 +258,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         final OrganizationalUnit organizationalUnit, final List<String> parents)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addListNamespaceValues(values);
 
@@ -287,7 +287,7 @@ public class VelocityXmlOrganizationalUnitRenderer
     public String renderPathList(
         final OrganizationalUnit organizationalUnit,
         final List<List<String>> pathes) throws SystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addPathListNamespaceValues(values);
 
@@ -297,8 +297,8 @@ public class VelocityXmlOrganizationalUnitRenderer
         values.put("listHref", XmlUtility
             .getOrganizationalUnitResourcesPathListHref(organizationalUnit
                 .getId()));
-        Iterator<List<String>> pathIter = pathes.iterator();
-        Collection<List<Map<String, String>>> pathList =
+        final Iterator<List<String>> pathIter = pathes.iterator();
+        final Collection<List<Map<String, String>>> pathList =
             new ArrayList<List<Map<String, String>>>();
         while (pathIter.hasNext()) {
             pathList.add(retrieveRefValues(pathIter.next()));
@@ -319,7 +319,7 @@ public class VelocityXmlOrganizationalUnitRenderer
     public String renderSuccessors(final OrganizationalUnit organizationalUnit)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put(XmlTemplateProvider.IS_ROOT, XmlTemplateProvider.TRUE);
         addSuccessorsNamespaceValues(values);
@@ -349,10 +349,10 @@ public class VelocityXmlOrganizationalUnitRenderer
      */
     private List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
         throws SystemException {
-        List<Map<String, String>> entries =
+        final List<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(ids.size());
-        for (String id : ids) {
-            Map<String, String> entry = new HashMap<String, String>(THREE);
+        for (final String id : ids) {
+            final Map<String, String> entry = new HashMap<String, String>(THREE);
             entry.put("id", id);
             entry.put("href", XmlUtility.getOrganizationalUnitHref(id));
             entry.put("title", TripleStoreUtility.getInstance().getTitle(id));
@@ -379,7 +379,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         String lmd = null;
         try {
             lmd = organizationalUnit.getLastModificationDate();
-            DateTime t = new DateTime(lmd, DateTimeZone.UTC);
+            final DateTime t = new DateTime(lmd, DateTimeZone.UTC);
             values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
                 t.toString());
         }
@@ -592,12 +592,12 @@ public class VelocityXmlOrganizationalUnitRenderer
         values.put("mdRecordsTitle", "Metadata");
 
         try {
-            Map<String, Datastream> mdRecords = (HashMap<String, Datastream>) organizationalUnit.getMdRecords();
-            Iterator<Datastream> mdRecordsIter = mdRecords.values().iterator();
+            final Map<String, Datastream> mdRecords = (HashMap<String, Datastream>) organizationalUnit.getMdRecords();
+            final Iterator<Datastream> mdRecordsIter = mdRecords.values().iterator();
             StringBuffer mdRecordsContent = new StringBuffer();
             while (mdRecordsIter.hasNext()) {
-                String mdRecordName = mdRecordsIter.next().getName();
-                Datastream mdRecord;
+                final String mdRecordName = mdRecordsIter.next().getName();
+                final Datastream mdRecord;
                 try {
                     mdRecord = organizationalUnit.getMdRecord(mdRecordName);
                 }
@@ -606,7 +606,7 @@ public class VelocityXmlOrganizationalUnitRenderer
                         "Rendering of md-record failed. ", e);
                 }
                 if (!mdRecord.isDeleted()) {
-                    Map<String, Object> mdRecordValues =
+                    final Map<String, Object> mdRecordValues =
                         new HashMap<String, Object>();
                     addCommonValues(organizationalUnit, mdRecordValues);
                     addMdRecordValues(organizationalUnit, mdRecordName,
@@ -646,7 +646,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         final OrganizationalUnit organizationalUnit, final String name,
         final Map<String, Object> values) throws WebserverSystemException {
 
-        Datastream mdRecord;
+        final Datastream mdRecord;
         try {
             mdRecord = organizationalUnit.getMdRecord(name);
         }
@@ -677,7 +677,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             throw new WebserverSystemException(
                 "Rendering of md-record failed. ", e);
         }
-        List<String> altIds = mdRecord.getAlternateIDs();
+        final List<String> altIds = mdRecord.getAlternateIDs();
         if (!"unknown".equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
@@ -734,13 +734,13 @@ public class VelocityXmlOrganizationalUnitRenderer
         values.put("parentsHref", XmlUtility
             .getOrganizationalUnitParentsHref(organizationalUnit.getId()));
         values.put("parentsTitle", "Parents");
-        List<String> ids = organizationalUnit.getParents();
-        Iterator<String> idIter = ids.iterator();
-        Collection<Map<String, String>> entries =
+        final List<String> ids = organizationalUnit.getParents();
+        final Iterator<String> idIter = ids.iterator();
+        final Collection<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(ids.size());
         while (idIter.hasNext()) {
-            Map<String, String> entry = new HashMap<String, String>(THREE);
-            String id = idIter.next();
+            final Map<String, String> entry = new HashMap<String, String>(THREE);
+            final String id = idIter.next();
             entry.put("id", id);
             entry.put("href", XmlUtility.getOrganizationalUnitHref(id));
             entry.put("title", TripleStoreUtility.getInstance().getTitle(id));
@@ -770,17 +770,17 @@ public class VelocityXmlOrganizationalUnitRenderer
             .getOrganizationalUnitPredecessorsHref(organizationalUnit.getId()));
         values.put(XmlTemplateProvider.PREDECESSORS_TITLE, "Predecessors");
 
-        List<Predecessor> predecessors = organizationalUnit.getPredecessors();
-        Iterator<Predecessor> idIter = predecessors.iterator();
+        final List<Predecessor> predecessors = organizationalUnit.getPredecessors();
+        final Iterator<Predecessor> idIter = predecessors.iterator();
 
-        Collection<Map<String, String>> entries =
+        final Collection<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(predecessors.size());
 
         while (idIter.hasNext()) {
-            Map<String, String> entry =
+            final Map<String, String> entry =
                 new HashMap<String, String>(PREDECESSOR_SET_SIZE);
 
-            Predecessor pred = idIter.next();
+            final Predecessor pred = idIter.next();
             entry.put(XmlTemplateProvider.OBJID, pred.getObjid());
             entry.put(XmlTemplateProvider.HREF,
                 XmlUtility.getOrganizationalUnitHref(pred.getObjid()));
@@ -814,20 +814,20 @@ public class VelocityXmlOrganizationalUnitRenderer
             .getOrganizationalUnitSuccessorsHref(organizationalUnit.getId()));
         values.put(XmlTemplateProvider.SUCCESSORS_TITLE, "Successors");
 
-        List<Predecessor> successors = organizationalUnit.getSuccessors();
+        final List<Predecessor> successors = organizationalUnit.getSuccessors();
         if (successors.isEmpty()) {
             return;
         }
-        Iterator<Predecessor> idIter = successors.iterator();
+        final Iterator<Predecessor> idIter = successors.iterator();
 
-        Collection<Map<String, String>> entries =
+        final Collection<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(successors.size());
 
         while (idIter.hasNext()) {
-            Map<String, String> entry =
+            final Map<String, String> entry =
                 new HashMap<String, String>(PREDECESSOR_SET_SIZE);
 
-            Predecessor pred = idIter.next();
+            final Predecessor pred = idIter.next();
             entry.put(XmlTemplateProvider.OBJID, pred.getObjid());
             entry.put(XmlTemplateProvider.HREF,
                 XmlUtility.getOrganizationalUnitHref(pred.getObjid()));

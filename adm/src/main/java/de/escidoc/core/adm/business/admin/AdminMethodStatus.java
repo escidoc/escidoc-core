@@ -55,7 +55,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         return fillingComplete;
     }
 
-    protected void setFillingComplete(boolean fillingComplete) {
+    protected void setFillingComplete(final boolean fillingComplete) {
         this.fillingComplete = fillingComplete;
     }
 
@@ -98,7 +98,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         return treeMap.isEmpty();
     }
 
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         return treeMap.equals(o);
     }
 
@@ -110,11 +110,11 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         treeMap.clear();
     }
 
-    public boolean containsKey(Object key) {
+    public boolean containsKey(final Object key) {
         return treeMap.containsKey(key);
     }
 
-    public boolean containsValue(Object value) {
+    public boolean containsValue(final Object value) {
         return treeMap.containsValue(value);
     }
 
@@ -122,12 +122,12 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         return treeMap.entrySet();
     }
 
-    public Integer get(Object key) {
+    public Integer get(final Object key) {
         return treeMap.get(key);
     }
 
     @Override
-    public Integer put(ResourceType key, Integer value) {
+    public Integer put(final ResourceType key, final Integer value) {
         return this.treeMap.put(key, value);
     }
 
@@ -135,12 +135,12 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         return treeMap.keySet();
     }
 
-    public Integer remove(Object key) {
+    public Integer remove(final Object key) {
         return treeMap.remove(key);
     }
 
     @Override
-    public void putAll(Map<? extends ResourceType, ? extends Integer> m) {
+    public void putAll(final Map<? extends ResourceType, ? extends Integer> m) {
         this.treeMap.putAll(m);
     }
 

@@ -134,7 +134,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
         try {
             final AttributeValue[] argValues =
                 new AttributeValue[inputs.size()];
-            EvaluationResult result = evalArgs(inputs, ctx, argValues);
+            final EvaluationResult result = evalArgs(inputs, ctx, argValues);
             if (result != null) {
                 return result;
             }
@@ -142,9 +142,9 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
             // role for default policies
             // The policyId is concatenated String
             // containing <roleName>/<user or group>/<userorGroupId>
-            String policyId = ((StringAttribute) (argValues[0])).getValue();
-            String[] parts = policyId.split("/");
-            StringBuilder roleIdentifier = new StringBuilder("");
+            final String policyId = ((StringAttribute) (argValues[0])).getValue();
+            final String[] parts = policyId.split("/");
+            final StringBuilder roleIdentifier = new StringBuilder("");
             if (parts.length > 2) {
                 for (int i = 0; i < parts.length - 2; i++) {
                     roleIdentifier.append(parts[i]);
@@ -217,7 +217,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
         final EscidocRole role, final EvaluationCtx ctx) {
         try {
             // try to find result in cache
-            EvaluationResult result =
+            final EvaluationResult result =
                 fetchFromCache(userOrGroupId, role.getId(), resourceId);
             if (result != null) {
                 // TODO: one problem exists. The cached result can be invalid,
@@ -267,7 +267,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                 if (role.getObjectTypes().contains(objectType)) {
                     // role is defined for the object type. Find the related
                     // scope definition
-                    for (ScopeDef scopeDef : role.getScopeDefs()) {
+                    for (final ScopeDef scopeDef : role.getScopeDefs()) {
                         if (scopeDef.getObjectType().equals(objectType)) {
                             // scope definition for the current object type has
                             // been found
@@ -325,7 +325,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                                 // for the addressed object.
                                 if (resolvedAttributeValues != null
                                         && !resolvedAttributeValues.isEmpty()) {
-                                    for (String resolvedAttributeValue : resolvedAttributeValues) {
+                                    for (final String resolvedAttributeValue : resolvedAttributeValues) {
                                         final Collection grantsOfRoleAndObject =
                                                 (List) grantsOfRole
                                                         .get(resolvedAttributeValue);

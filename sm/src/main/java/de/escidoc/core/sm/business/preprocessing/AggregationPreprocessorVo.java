@@ -91,7 +91,7 @@ public class AggregationPreprocessorVo {
      * @param aggregationDefinition the aggregationDefinition to set
      */
     public void setAggregationDefinition(
-            AggregationDefinition aggregationDefinition) {
+            final AggregationDefinition aggregationDefinition) {
         this.aggregationDefinition = aggregationDefinition;
     }
 

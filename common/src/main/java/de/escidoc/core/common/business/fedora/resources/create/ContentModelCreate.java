@@ -188,24 +188,24 @@ public class ContentModelCreate extends GenericResourceCreate {
 
             // create service definitions and deployments
             if (resourceDefinitions != null) {
-                Iterator<ResourceDefinitionCreate> it = this.resourceDefinitions.values().iterator();
+                final Iterator<ResourceDefinitionCreate> it = this.resourceDefinitions.values().iterator();
                 while (it.hasNext()) {
-                    ResourceDefinitionCreate rdc = it.next();
-                    String sdefFoxml = getSDefFoXML(rdc);
+                    final ResourceDefinitionCreate rdc = it.next();
+                    final String sdefFoxml = getSDefFoXML(rdc);
                     FedoraUtility.getInstance().storeObjectInFedora(sdefFoxml,
                         false);
-                    String sdepFoxml = getSDepFoXML(rdc);
+                    final String sdepFoxml = getSDepFoXML(rdc);
                     FedoraUtility.getInstance().storeObjectInFedora(sdepFoxml,
                         false);
                 }
             }
 
             // serialize object without RELS-EXT and WOV to FOXML
-            String foxml = getMinimalFoXML();
+            final String foxml = getMinimalFoXML();
             FedoraUtility.getInstance().storeObjectInFedora(foxml, false);
 
             // take timestamp and prepare RELS-EXT
-            String lmd = getLastModificationDateByWorkaround(getObjid());
+            final String lmd = getLastModificationDateByWorkaround(getObjid());
 
             this.properties.getCurrentVersion().setDate(lmd);
             this.properties.getLatestVersion().setDate(lmd);
@@ -219,7 +219,7 @@ public class ContentModelCreate extends GenericResourceCreate {
                 getWov().getBytes(XmlUtility.CHARACTER_ENCODING), false);
 
             // update RELS-EXT with timestamp
-            String relsExt = renderRelsExt();
+            final String relsExt = renderRelsExt();
             FedoraUtility.getInstance().modifyDatastream(getObjid(),
                 Datastream.RELS_EXT_DATASTREAM, "RELS_EXT DATASTREAM",
                 relsExt.getBytes(XmlUtility.CHARACTER_ENCODING), false);
@@ -260,7 +260,7 @@ public class ContentModelCreate extends GenericResourceCreate {
     private String getWov() throws WebserverSystemException {
 
         // control template
-        HashMap<String, String> templateValues = new HashMap<String, String>();
+        final HashMap<String, String> templateValues = new HashMap<String, String>();
 
         templateValues.put(XmlTemplateProvider.OBJID,
             getObjidWithVersionSuffix());
@@ -333,7 +333,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private String getMinimalFoXML() throws WebserverSystemException {
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        final Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
         valueMap.put(XmlTemplateProvider.OBJID_UNDERSCORE, getObjid()
@@ -383,7 +383,7 @@ public class ContentModelCreate extends GenericResourceCreate {
     private String getSDefFoXML(
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        final Map<String, Object> valueMap = new HashMap<String, Object>();
         valueMap.putAll(getBehaviorValues(resourceDefinition));
         return ContentModelFoXmlProvider.getInstance().getServiceDefinitionFoXml(valueMap);
     }
@@ -412,7 +412,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     private Map<String, Object> getBehaviorValues(
         final ResourceDefinitionCreate resourceDefinition) {
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        final Map<String, Object> valueMap = new HashMap<String, Object>();
         valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID, getObjid());
         valueMap.put(XmlTemplateProvider.BEHAVIOR_CONTENT_MODEL_ID_UNDERSCORE,
             getObjid().replaceAll(":", Constants.COLON_REPLACEMENT_PID));
@@ -435,7 +435,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private String renderRelsExt() throws WebserverSystemException {
 
-        Map<String, Object> valueMap = new HashMap<String, Object>();
+        final Map<String, Object> valueMap = new HashMap<String, Object>();
 
         valueMap.put(XmlTemplateProvider.OBJID, getObjid());
         valueMap.put(XmlTemplateProvider.OBJID_UNDERSCORE, getObjid()
@@ -462,7 +462,7 @@ public class ContentModelCreate extends GenericResourceCreate {
     private Map<String, String> preparePropertiesValueMap()
         throws WebserverSystemException {
 
-        Map<String, String> valueMap = new HashMap<String, String>();
+        final Map<String, String> valueMap = new HashMap<String, String>();
 
         // add RELS-EXT values -------------------------------------------------
         valueMap.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER,
@@ -528,10 +528,10 @@ public class ContentModelCreate extends GenericResourceCreate {
             this.properties.getLatestVersion().getComment());
 
         // in the case of a surrogate
-        String origin = getProperties().getObjectProperties().getOrigin();
-        String originObjectId =
+        final String origin = getProperties().getObjectProperties().getOrigin();
+        final String originObjectId =
             getProperties().getObjectProperties().getOriginObjectId();
-        String originVersionId =
+        final String originVersionId =
             getProperties().getObjectProperties().getOriginVersionId();
         if (origin != null) {
             valueMap.put("originObjectId", originObjectId);
@@ -572,7 +572,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private Map<String, String> getRelsExtNamespaceValues() {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
@@ -628,17 +628,17 @@ public class ContentModelCreate extends GenericResourceCreate {
 
         // Work around for Fedora30 bug APIM.getDatastreams()
         String lastModificationDate = null;
-        org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
+        final org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
             FedoraUtility.getInstance().getDatastreamsInformation(objid, null);
-        for (org.fcrepo.server.types.gen.Datastream aRelsExtInfo : relsExtInfo) {
-            String createdDate = aRelsExtInfo.getCreateDate();
+        for (final org.fcrepo.server.types.gen.Datastream aRelsExtInfo : relsExtInfo) {
+            final String createdDate = aRelsExtInfo.getCreateDate();
 
             if (lastModificationDate == null) {
                 lastModificationDate = createdDate;
             } else {
 
-                ReadableInstant cDate = new DateTime(createdDate);
-                ReadableInstant lDate = new DateTime(lastModificationDate);
+                final ReadableInstant cDate = new DateTime(createdDate);
+                final ReadableInstant lDate = new DateTime(lastModificationDate);
                 if (lDate.isBefore(cDate)) {
                     lastModificationDate = createdDate;
                 }
@@ -691,11 +691,11 @@ public class ContentModelCreate extends GenericResourceCreate {
             return null;
         }
 
-        List<HashMap<String, String>> contStreams =
+        final List<HashMap<String, String>> contStreams =
             new ArrayList<HashMap<String, String>>();
 
-        for (ContentStreamCreate contentStream : this.contentStreams) {
-            HashMap<String, String> valueMap = new HashMap<String, String>();
+        for (final ContentStreamCreate contentStream : this.contentStreams) {
+            final HashMap<String, String> valueMap = new HashMap<String, String>();
             valueMap.put(XmlTemplateProvider.CONTROL_GROUP, contentStream
                     .getContent().getStorageType().getAbbreviation());
             valueMap.put(XmlTemplateProvider.VAR_ID, contentStream.getName());

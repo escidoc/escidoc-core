@@ -107,18 +107,18 @@ public class MetadataHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element)
         throws MissingAttributeValueException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         mdRecordsPath = "/item/md-records";
         elementPath = "/item/md-records/md-record";
         if (currentPath.startsWith(CONTAINER)) {
             mdRecordsPath = "/container/md-records";
             elementPath = "/container/md-records/md-record";
         }
-        String theName = element.getLocalName();
+        final String theName = element.getLocalName();
 
         if (elementPath.equals(currentPath)) {
-            int indexOfName = element.indexOfAttribute(null, "name");
-            Attribute name = element.getAttribute(indexOfName);
+            final int indexOfName = element.indexOfAttribute(null, "name");
+            final Attribute name = element.getAttribute(indexOfName);
             this.nameValue = name.getValue();
 
             if (nameValue.length() == 0) {
@@ -134,18 +134,18 @@ public class MetadataHandler extends DefaultHandler {
             }
             isInside = true;
             String typeValue = null;
-            int indexOfType = element.indexOfAttribute(null, "md-type");
+            final int indexOfType = element.indexOfAttribute(null, "md-type");
             if (indexOfType != -1) {
-                Attribute type = element.getAttribute(indexOfType);
+                final Attribute type = element.getAttribute(indexOfType);
                 typeValue = type.getValue();
             }
             String schemaValue = null;
-            int indexOfSchema = element.indexOfAttribute(null, "schema");
+            final int indexOfSchema = element.indexOfAttribute(null, "schema");
             if (indexOfSchema != -1) {
-                Attribute schema = element.getAttribute(indexOfSchema);
+                final Attribute schema = element.getAttribute(indexOfSchema);
                 schemaValue = schema.getValue();
             }
-            Map<String, String> md = new HashMap<String, String>();
+            final Map<String, String> md = new HashMap<String, String>();
             if (typeValue != null) {
                 md.put("type", typeValue);
             }
@@ -196,7 +196,7 @@ public class MetadataHandler extends DefaultHandler {
         }
         else if ((mdRecordsPath.equals(parser.getCurPath()))
             && (!isMandatoryName)) {
-            String message =
+            final String message =
                 "Mandatory md-record with a name "
                     + MANDATORY_MD_RECORD_NAME + " is missing.";
             LOGGER.error(message);

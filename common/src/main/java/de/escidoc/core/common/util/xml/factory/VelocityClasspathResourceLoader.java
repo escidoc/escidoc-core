@@ -88,7 +88,7 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
     public InputStream getResourceStream(final String s)
         throws ResourceNotFoundException {
 
-        String source = TEMPLATES_BASE + s;
+        final String source = TEMPLATES_BASE + s;
         return loader.getResourceStream(source);
     }
 

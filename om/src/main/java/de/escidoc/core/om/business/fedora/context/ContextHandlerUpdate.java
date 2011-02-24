@@ -219,20 +219,20 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         final Map<String, Object> streams = me.getOutputStreams();
         streams.remove("resources");
 
-        boolean adminDescriptorsUpdated = handleAdminDescriptors(streams);
+        final boolean adminDescriptorsUpdated = handleAdminDescriptors(streams);
 
         getContext().setOrganizationalUnits(cpuh.getOrganizationalUnits());
 
         // RELS-EXT ----------------------------------------
 
-        boolean dcUpdated =
+        final boolean dcUpdated =
             updateDc(cpuh.getChangedValuesInDc(), cpuh.getPropertiesToRemove(),
                 cpuh.getPropertiesToAdd());
-        Map<String, String> changedValues =
+        final Map<String, String> changedValues =
             cpuh.getChangedValuesInRelsExt();
         if (!changedValues.isEmpty() || dcUpdated || adminDescriptorsUpdated
             || getContext().isOuUpdated()) {
-            String oldModifiedBy =
+            final String oldModifiedBy =
                 getTripleStoreUtility().getProperty(getContext().getId(),
                     Constants.STRUCTURAL_RELATIONS_NS_URI + "modified-by");
             final String[] currentUser = getUtility().getCurrentUser();
@@ -240,7 +240,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 changedValues.put("modifiedBy", currentUser[0]);
                 changedValues.put("modifiedByTitle", currentUser[1]);
             }
-            String buildNumber = Utility.getInstance().getBuildNumber();
+            final String buildNumber = Utility.getInstance().getBuildNumber();
             changedValues.put("build", buildNumber);
             updateRelsExt(changedValues);
             getContext().persist();
@@ -281,7 +281,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         LockingException, StreamNotFoundException {
 
         checkStatus(Constants.STATUS_CONTEXT_CREATED);
-        TaskParamHandler taskParamHandler;
+        final TaskParamHandler taskParamHandler;
         try {
             taskParamHandler = XmlUtility.parseTaskParam(taskParam);
         }
@@ -315,7 +315,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX,
                 null, getUtility().getCurrentUserRealName(), null));
 
-        String buildNumber = Utility.getInstance().getBuildNumber();
+        final String buildNumber = Utility.getInstance().getBuildNumber();
         updateElementsRelsExt.put("build", new StartElementWithChildElements(
             "build", "http://escidoc.de/core/01/system/", "system", null,
             buildNumber, null));
@@ -392,7 +392,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         LockingException, StreamNotFoundException {
 
         checkStatus(Constants.STATUS_CONTEXT_OPENED);
-        TaskParamHandler taskParamHandler;
+        final TaskParamHandler taskParamHandler;
         try {
             taskParamHandler = XmlUtility.parseTaskParam(taskParam);
         }
@@ -427,7 +427,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX,
                 null, getUtility().getCurrentUserRealName(), null));
 
-        String buildNumber = Utility.getInstance().getBuildNumber();
+        final String buildNumber = Utility.getInstance().getBuildNumber();
         updateElementsRelsExt.put("build", new StartElementWithChildElements(
             "build", "http://escidoc.de/core/01/system/", "system", null,
             buildNumber, null));
@@ -526,8 +526,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
         final TreeMap<String, StartElementWithText> updateElementsRelsExt =
             new TreeMap<String, StartElementWithText>();
-        Set<Entry<String,String>> changedValuesEntrySet = changedValues.entrySet();
-        for(Entry<String, String> entry : changedValuesEntrySet){
+        final Set<Entry<String,String>> changedValuesEntrySet = changedValues.entrySet();
+        for(final Entry<String, String> entry : changedValuesEntrySet){
             if ("build".equals(entry.getKey())) {
                 updateElementsRelsExt.put("build",
                     new StartElementWithChildElements(entry.getKey(),
@@ -535,13 +535,13 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                         entry.getValue(), null));
             }
             else if ("modifiedBy".equals(entry.getKey())) {
-                StartElementWithChildElements modifiedBy =
+                final StartElementWithChildElements modifiedBy =
                     new StartElementWithChildElements(
                         Elements.ELEMENT_MODIFIED_BY,
                         Constants.STRUCTURAL_RELATIONS_NS_URI,
                         Constants.STRUCTURAL_RELATIONS_NS_PREFIX, null, "",
                         null);
-                Attribute resourceAttribute =
+                final Attribute resourceAttribute =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                         Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
                             + entry.getValue());
@@ -614,14 +614,14 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             && ((propertiesToAdd == null) || (propertiesToAdd.isEmpty()))) {
             return false;
         }
-        Datastream dc;
+        final Datastream dc;
         try {
             dc = getContext().getDc();
         }
         catch (final StreamNotFoundException e1) {
             throw new IntegritySystemException("Datastream dc not found.", e1);
         }
-        ByteArrayInputStream dcIs = new ByteArrayInputStream(dc.getStream());
+        final ByteArrayInputStream dcIs = new ByteArrayInputStream(dc.getStream());
         byte[] dcNewBytes = null;
         final StaxParser sp = new StaxParser();
 
@@ -648,7 +648,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             final Map<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<String> iterator = propertiesToRemove.iterator();
-            HashMap<String, List<StartElementWithChildElements>> propertiesVectorAssignment =
+            final HashMap<String, List<StartElementWithChildElements>> propertiesVectorAssignment =
                 new HashMap<String, List<StartElementWithChildElements>>();
             while (iterator.hasNext()) {
                 final String property = iterator.next();
@@ -661,21 +661,21 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 propertyToDelete.setChildrenElements(null);
 
                 if (propertiesVectorAssignment.containsKey(property)) {
-                    List<StartElementWithChildElements> vector =
+                    final List<StartElementWithChildElements> vector =
                         propertiesVectorAssignment.get(property);
                     vector.add(propertyToDelete);
                 }
                 else {
-                    List<StartElementWithChildElements> vector =
+                    final List<StartElementWithChildElements> vector =
                         new ArrayList<StartElementWithChildElements>();
                     vector.add(propertyToDelete);
                     propertiesVectorAssignment.put(property, vector);
                 }
             }
-            Set<Entry<String, List<StartElementWithChildElements>>> propertiesVectorAssignmentEntrySet =
+            final Set<Entry<String, List<StartElementWithChildElements>>> propertiesVectorAssignmentEntrySet =
                     propertiesVectorAssignment.entrySet();
-            for(Entry<String, List<StartElementWithChildElements>> entry : propertiesVectorAssignmentEntrySet) {
-                List<StartElementWithChildElements> elements = entry.getValue();
+            for(final Entry<String, List<StartElementWithChildElements>> entry : propertiesVectorAssignmentEntrySet) {
+                final List<StartElementWithChildElements> elements = entry.getValue();
                 toRemove.put("/dc/" + entry.getKey(), elements);
             }
             me.removeElements(toRemove);
@@ -711,7 +711,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 new AddNewSubTreesToDatastream("/dc", sp);
             final List<StartElementWithChildElements> elementsToAdd = new ArrayList<StartElementWithChildElements>();
             final Set<String> keysToAdd = propertiesToAdd.keySet();
-            for (String propertyKey : keysToAdd) {
+            for (final String propertyKey : keysToAdd) {
                 final StartElementWithChildElements newPropertyElement =
                         new StartElementWithChildElements();
                 newPropertyElement.setLocalName(propertyKey);
@@ -779,7 +779,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 throw new XmlParserSystemException(e);
             }
         }
-        String dcNew;
+        final String dcNew;
         try {
             dcNew = new String(dcNewBytes, XmlUtility.CHARACTER_ENCODING);
         }
@@ -813,7 +813,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             new TreeMap<String, StartElementWithText>();
 
         final Set<Entry<String, String>> changedValuesEntrySet = changedValues.entrySet();
-        for(Entry<String, String> entry : changedValuesEntrySet) {
+        for(final Entry<String, String> entry : changedValuesEntrySet) {
             // if name was altered alter the title too. (title is used
             // only internally)
             if (entry.getKey().equals(Elements.ELEMENT_NAME)) {
@@ -881,17 +881,17 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
     boolean handleAdminDescriptors(final Map<String, Object> streams)
         throws SystemException {
         boolean updated = false;
-        Set<Entry<String, Object>> streamsEntrySet = streams.entrySet();
+        final Set<Entry<String, Object>> streamsEntrySet = streams.entrySet();
 
-        Map<String, Datastream> adminDescriptors =
+        final Map<String, Datastream> adminDescriptors =
             getContext().getAdminDescriptorsMap();
 
-        for(Entry<String, Object> entry : streamsEntrySet) {
+        for(final Entry<String, Object> entry : streamsEntrySet) {
             final String name = entry.getKey();
             Boolean newDS = true;
             if (adminDescriptors.containsKey(name)) {
-                Datastream oldDs = adminDescriptors.get(name);
-                Datastream newDs =
+                final Datastream oldDs = adminDescriptors.get(name);
+                final Datastream newDs =
                     new Datastream(name, getContext().getId(),
                         ((ByteArrayOutputStream) entry.getValue())
                             .toByteArray(), "text/xml");
@@ -932,9 +932,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         }
 
         // remove datastreams
-        Set<Entry<String, Datastream>> adminDescriptorsEntrySet = adminDescriptors.entrySet();
-        for(Entry<String, Datastream> entry : adminDescriptorsEntrySet) {
-            Datastream nextDatastream = entry.getValue();
+        final Set<Entry<String, Datastream>> adminDescriptorsEntrySet = adminDescriptors.entrySet();
+        for(final Entry<String, Datastream> entry : adminDescriptorsEntrySet) {
+            final Datastream nextDatastream = entry.getValue();
             nextDatastream.delete();
             LOGGER.debug("Admin-descriptor datastream '" + entry.getKey()
                 + "' of Context " + getContext().getId() + " deleted.");

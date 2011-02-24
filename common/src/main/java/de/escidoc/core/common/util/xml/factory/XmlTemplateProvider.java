@@ -836,7 +836,7 @@ public class XmlTemplateProvider {
         final Map<String, String> values) throws WebserverSystemException {
 
         String result = getTemplate(resource, path);
-        for (Entry<String, String> e : values.entrySet()) {
+        for (final Entry<String, String> e : values.entrySet()) {
             result = replaceAll(result, e.getKey(), e.getValue());
         }
         return result;
@@ -858,7 +858,7 @@ public class XmlTemplateProvider {
     protected String replaceAll(
         final String source, final String variable, final String replacement) {
 
-        Matcher matcher = getPattern(variable).matcher(source);
+        final Matcher matcher = getPattern(variable).matcher(source);
         String ret = source;
         // replaceAll does not like null if there is a match FRS 20070823
         if (matcher.find()) {
@@ -915,7 +915,7 @@ public class XmlTemplateProvider {
 
         String result = TEMPLATES.get(resource);
         if (result == null) {
-            String filename = getTemplatePath(path) + '/' + resource + ".xml";
+            final String filename = getTemplatePath(path) + '/' + resource + ".xml";
             try {
                 result = getFileContents(filename);
                 TEMPLATES.put(resource, result);
@@ -936,7 +936,7 @@ public class XmlTemplateProvider {
      * @return The path to resource.
      */
     private String getTemplatePath(final String path) {
-        String result;
+        final String result;
 
         if (path.startsWith("/")) {
             result = XmlTemplateProvider.BASE_TEMPLATE_PATH + path;
@@ -957,11 +957,11 @@ public class XmlTemplateProvider {
      *             If the file was not found.
      */
     private String getFileContents(final String filename) throws IOException {
-        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        final ByteArrayOutputStream result = new ByteArrayOutputStream();
         InputStream inputStream = null;
         try {
             inputStream = this.getClass().getResourceAsStream(filename);
-            byte[] buffer = new byte[BUFFER_SIZE];
+            final byte[] buffer = new byte[BUFFER_SIZE];
             int length = inputStream.read(buffer);
             while (length != -1) {
                 result.write(buffer, 0, length);

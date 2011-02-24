@@ -93,7 +93,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
             return;
         }
 
-        String handle = UserContext.getHandle();
+        final String handle = UserContext.getHandle();
         if (handle == null) {
             throw new WebserverSystemException(ERROR_MSG_LOGOUT_HANDLE_NULL);
         }
@@ -115,8 +115,8 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
     @Override
     public void initHandleExpiryTimestamp(final String handle)
         throws SystemException {
-        UserLoginData userLoginData = dao.retrieveUserLoginDataByHandle(handle);
-        long expiryts = System.currentTimeMillis() 
+        final UserLoginData userLoginData = dao.retrieveUserLoginDataByHandle(handle);
+        final long expiryts = System.currentTimeMillis()
                         + getESciDocUserHandleLifetime();
         if (userLoginData.getExpiryts() < expiryts) {
             if (userLoginData.getExpiryts() < System.currentTimeMillis()) {

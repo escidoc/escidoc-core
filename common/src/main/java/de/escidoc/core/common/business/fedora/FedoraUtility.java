@@ -678,7 +678,7 @@ public class FedoraUtility implements InitializingBean {
         final org.fcrepo.server.types.gen.Datastream[] ds =
             getDatastreamsInformation(pid);
 
-        for (Datastream d : ds) {
+        for (final Datastream d : ds) {
             final String[] altIDs = d.getAltIDs();
             if (altIDs.length > 0 && altIDs[0].equals(altId)) {
                 names.add(d.getID());
@@ -889,7 +889,7 @@ public class FedoraUtility implements InitializingBean {
         }
 
         Datastream[] datastreams = null;
-        FedoraAPIM apim = borrowApim();
+        final FedoraAPIM apim = borrowApim();
         try {
             datastreams = apim.getDatastreamHistory(pid, dsID);
         }
@@ -907,7 +907,7 @@ public class FedoraUtility implements InitializingBean {
         final String label, final boolean versionable, final byte[] stream,
         final String controlGroup, final boolean syncTripleStore)
         throws FedoraSystemException, WebserverSystemException {
-        String tempURI;
+        final String tempURI;
         try {
             tempURI =
                 Utility.getInstance().upload(stream, pid + name, "text/xml");
@@ -960,7 +960,7 @@ public class FedoraUtility implements InitializingBean {
         final boolean syncTripleStore) throws FedoraSystemException,
         WebserverSystemException {
 
-        String tempURI;
+        final String tempURI;
         try {
             tempURI =
                 Utility.getInstance().upload(stream, pid + name, "text/xml");
@@ -1208,7 +1208,7 @@ public class FedoraUtility implements InitializingBean {
         }
     }
 
-    private void logExcetionAndWait(Exception e, int i) throws FedoraSystemException {
+    private void logExcetionAndWait(final Exception e, final int i) throws FedoraSystemException {
         LOG.error(e);
         try {
             Thread.sleep(i + 1000);
@@ -1235,7 +1235,7 @@ public class FedoraUtility implements InitializingBean {
         FedoraClient fc = null;
         try {
             fc = borrowFedoraClient();
-            org.fcrepo.client.HttpInputStream httpInStr =
+            final org.fcrepo.client.HttpInputStream httpInStr =
                 fc.get(syncRestQuery, true);
             if (httpInStr.getStatusCode() != HTTP_OK) {
                 throw new FedoraSystemException("Triplestore sync failed.");
@@ -1548,31 +1548,31 @@ public class FedoraUtility implements InitializingBean {
     DefaultHttpClient getHttpClient() throws WebserverSystemException {
         try {
             if (httpClient == null) {
-                HttpParams params = new BasicHttpParams();
+                final HttpParams params = new BasicHttpParams();
                 ConnManagerParams.setMaxTotalConnections(params,
                     HTTP_MAX_TOTAL_CONNECTIONS);
 
-                ConnPerRoute connPerRoute =
+                final ConnPerRoute connPerRoute =
                     new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
                 ConnManagerParams.setMaxConnectionsPerRoute(params,
                     connPerRoute);
 
-                Scheme http =
+                final Scheme http =
                     new Scheme("http", PlainSocketFactory.getSocketFactory(),
                         80);
-                SchemeRegistry sr = new SchemeRegistry();
+                final SchemeRegistry sr = new SchemeRegistry();
                 sr.register(http);
                 cm = new ThreadSafeClientConnManager(params, sr);
 
                 this.httpClient = new DefaultHttpClient(this.cm, params);
-                URL url = new URL(fedoraUrl);
-                CredentialsProvider credsProvider =
+                final URL url = new URL(fedoraUrl);
+                final CredentialsProvider credsProvider =
                     new BasicCredentialsProvider();
 
-                AuthScope authScope =
+                final AuthScope authScope =
                     new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                         AuthScope.ANY_REALM);
-                Credentials creds =
+                final Credentials creds =
                     new UsernamePasswordCredentials(fedoraUser, fedoraPassword);
                 credsProvider.setCredentials(authScope, creds);
 
@@ -1580,7 +1580,7 @@ public class FedoraUtility implements InitializingBean {
             }
 
             // don't wait for auth request
-            HttpRequestInterceptor preemptiveAuth =
+            final HttpRequestInterceptor preemptiveAuth =
                 new HttpRequestInterceptor() {
 
                     @Override
@@ -1588,23 +1588,23 @@ public class FedoraUtility implements InitializingBean {
                         final HttpRequest request, final HttpContext context)
                         throws HttpException, IOException {
 
-                        AuthState authState =
+                        final AuthState authState =
                             (AuthState) context
                                 .getAttribute(ClientContext.TARGET_AUTH_STATE);
-                        CredentialsProvider credsProvider =
+                        final CredentialsProvider credsProvider =
                             (CredentialsProvider) context
                                 .getAttribute(ClientContext.CREDS_PROVIDER);
-                        HttpHost targetHost =
+                        final HttpHost targetHost =
                             (HttpHost) context
                                 .getAttribute(ExecutionContext.HTTP_TARGET_HOST);
 
                         // If not auth scheme has been initialized yet
                         if (authState.getAuthScheme() == null) {
-                            AuthScope authScope =
+                            final AuthScope authScope =
                                 new AuthScope(targetHost.getHostName(),
                                     targetHost.getPort());
                             // Obtain credentials matching the target host
-                            Credentials creds =
+                            final Credentials creds =
                                 credsProvider.getCredentials(authScope);
                             // If found, generate BasicScheme preemptively
                             if (creds != null) {
@@ -1643,17 +1643,17 @@ public class FedoraUtility implements InitializingBean {
      */
     public InputStream requestFedoraURL(final String localUrl)
         throws WebserverSystemException {
-        InputStream fedoraResponseStream;
+        final InputStream fedoraResponseStream;
         try {
-            DefaultHttpClient httpClient = getHttpClient();
-            HttpContext localcontext = new BasicHttpContext();
-            BasicScheme basicAuth = new BasicScheme();
+            final DefaultHttpClient httpClient = getHttpClient();
+            final HttpContext localcontext = new BasicHttpContext();
+            final BasicScheme basicAuth = new BasicScheme();
             localcontext.setAttribute("preemptive-auth", basicAuth);
             httpClient
                 .addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
-            HttpGet httpGet = new HttpGet(fedoraUrl + localUrl);
-            HttpResponse httpResponse = httpClient.execute(httpGet);
-            int responseCode = httpResponse.getStatusLine().getStatusCode();
+            final HttpGet httpGet = new HttpGet(fedoraUrl + localUrl);
+            final HttpResponse httpResponse = httpClient.execute(httpGet);
+            final int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (responseCode != HttpServletResponse.SC_OK) {
 
                 throw new WebserverSystemException("Bad response code '"
@@ -1781,9 +1781,9 @@ public class FedoraUtility implements InitializingBean {
             Pattern.compile("fedora.server.errors.ObjectIntegrityException: "
                 + "FOXML IO stream was bad : Malformed URL");
 
-        Matcher matcherErrorGetting =
+        final Matcher matcherErrorGetting =
             PATTERN_ERROR_GETTING.matcher(e.getMessage());
-        Matcher matcherMalformedUrl =
+        final Matcher matcherMalformedUrl =
             PATTERN_MALFORMED_URL.matcher(e.getMessage());
 
         if (matcherErrorGetting.find() || matcherMalformedUrl.find()) {

@@ -65,7 +65,7 @@ public class SecurityException extends EscidocException {
     public SecurityException() throws WebserverSystemException {
 
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
-        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        final String baseLocation = XmlUtility.getEscidocBaseUrl();
         redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
@@ -84,7 +84,7 @@ public class SecurityException extends EscidocException {
     public SecurityException(final String message, final Throwable cause)
         throws WebserverSystemException {
         super(message, cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
-        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        final String baseLocation = XmlUtility.getEscidocBaseUrl();
         redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
@@ -100,7 +100,7 @@ public class SecurityException extends EscidocException {
     public SecurityException(final String message)
         throws WebserverSystemException {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
-        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        final String baseLocation = XmlUtility.getEscidocBaseUrl();
         redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
@@ -116,7 +116,7 @@ public class SecurityException extends EscidocException {
     public SecurityException(final Throwable cause)
         throws WebserverSystemException {
         super(cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
-        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        final String baseLocation = XmlUtility.getEscidocBaseUrl();
         redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
@@ -134,7 +134,7 @@ public class SecurityException extends EscidocException {
     public SecurityException(final int httpStatusCode,
         final String httpStatusMsg) throws WebserverSystemException {
         super(httpStatusCode, httpStatusMsg);
-        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        final String baseLocation = XmlUtility.getEscidocBaseUrl();
         redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
@@ -158,7 +158,7 @@ public class SecurityException extends EscidocException {
         final int httpStatusCode, final String httpStatusMsg)
         throws WebserverSystemException {
         super(message, cause, httpStatusCode, httpStatusMsg);
-        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        final String baseLocation = XmlUtility.getEscidocBaseUrl();
         redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
@@ -178,7 +178,7 @@ public class SecurityException extends EscidocException {
     public SecurityException(final String message, final int httpStatusCode,
         final String httpStatusMsg) throws WebserverSystemException {
         super(message, httpStatusCode, httpStatusMsg);
-        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        final String baseLocation = XmlUtility.getEscidocBaseUrl();
         redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 
@@ -198,7 +198,7 @@ public class SecurityException extends EscidocException {
     public SecurityException(final Throwable cause, final int httpStatusCode,
         final String httpStatusMsg) throws WebserverSystemException {
         super(cause, httpStatusCode, httpStatusMsg);
-        String baseLocation = XmlUtility.getEscidocBaseUrl();
+        final String baseLocation = XmlUtility.getEscidocBaseUrl();
         redirectLocation = baseLocation + XmlUtility.BASE_LOGIN.substring(0, XmlUtility.BASE_LOGIN.length() - 1);
     }
 

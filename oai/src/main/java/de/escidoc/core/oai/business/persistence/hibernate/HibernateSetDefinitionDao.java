@@ -96,7 +96,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
     @Override
     public SetDefinition findSetDefinitionBySpecification(
         final String specification) throws SqlDatabaseSystemException {
-        SetDefinition result;
+        final SetDefinition result;
         try {
             result =
                 (SetDefinition) getUniqueResult(getHibernateTemplate()
@@ -187,7 +187,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
             detachedCriteria.add(Restrictions.in("id", setIds.toArray()));
         }
 
-        for (String key : criteriaMap.keySet()) {
+        for (final String key : criteriaMap.keySet()) {
             final Object criteriaValue = clonedCriterias.remove(key);
             if (criteriaValue != null) {
                 final Object[] parts = criteriaMap.get(key);
@@ -210,7 +210,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
                     .get(orderBy)));
             }
         }
-        List<SetDefinition> result;
+        final List<SetDefinition> result;
         if (clonedCriterias.isEmpty()) {
             try {
                 result =
@@ -248,7 +248,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
-        List<SetDefinition> result;
+        final List<SetDefinition> result;
 
         if ((criterias != null) && (criterias.length() > 0)) {
             result =

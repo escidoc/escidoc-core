@@ -140,9 +140,9 @@ public class ContentRelationCreate extends GenericResourceCreate
      */
     public void deleteMdRecord(final String name) {
 
-        Iterator<MdRecordCreate> it = this.mdRecords.iterator();
+        final Iterator<MdRecordCreate> it = this.mdRecords.iterator();
         while (it.hasNext()) {
-            String recordName = it.next().getName();
+            final String recordName = it.next().getName();
             if (recordName.equals(name)) {
                 it.remove();
                 break;
@@ -228,7 +228,7 @@ public class ContentRelationCreate extends GenericResourceCreate
 
         if (this.dcXml == null) {
 
-            MdRecordCreate mdRecord =
+            final MdRecordCreate mdRecord =
                 getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
             if (mdRecord != null) {
                 try {
@@ -270,7 +270,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      */
     public MdRecordCreate getMetadataRecord(final String name) {
         if (this.mdRecords != null) {
-            for (MdRecordCreate mdRecord : this.mdRecords) {
+            for (final MdRecordCreate mdRecord : this.mdRecords) {
                 if (mdRecord.getName().equals(name)) {
                     return mdRecord;
                 }
@@ -436,7 +436,7 @@ public class ContentRelationCreate extends GenericResourceCreate
         if (getMetadataRecords() == null && nCr.getMetadataRecords() != null) {
 
             // add all md-records
-            for (MdRecordCreate mdRecord : nCr.getMetadataRecords()) {
+            for (final MdRecordCreate mdRecord : nCr.getMetadataRecords()) {
                 mdRecord.getRepositoryIndicator().setResourceIsNew(true);
                 addMdRecord(mdRecord);
                 changes++;
@@ -446,7 +446,7 @@ public class ContentRelationCreate extends GenericResourceCreate
             && nCr.getMetadataRecords() == null) {
 
             // mark all md-records as deleted
-            for (MdRecordCreate mdRecord : getMetadataRecords()) {
+            for (final MdRecordCreate mdRecord : getMetadataRecords()) {
                 mdRecord.getRepositoryIndicator().setResourceToDelete(true);
                 changes++;
             }
@@ -457,10 +457,10 @@ public class ContentRelationCreate extends GenericResourceCreate
             // drop removed MdRecords
             Iterator<MdRecordCreate> it = getMetadataRecords().iterator();
             while (it.hasNext()) {
-                MdRecordCreate mdRecord = it.next();
-                String name = mdRecord.getName();
+                final MdRecordCreate mdRecord = it.next();
+                final String name = mdRecord.getName();
 
-                MdRecordCreate newMdRecord = nCr.getMetadataRecord(name);
+                final MdRecordCreate newMdRecord = nCr.getMetadataRecord(name);
                 if (newMdRecord == null) {
                     mdRecord.getRepositoryIndicator().setResourceToDelete(true);
                 }
@@ -470,10 +470,10 @@ public class ContentRelationCreate extends GenericResourceCreate
             // compare existing, add new
             it = nCr.getMetadataRecords().iterator();
             while (it.hasNext()) {
-                MdRecordCreate mdRecord = it.next();
-                String name = mdRecord.getName();
+                final MdRecordCreate mdRecord = it.next();
+                final String name = mdRecord.getName();
 
-                MdRecordCreate oldMdRecord = getMetadataRecord(name);
+                final MdRecordCreate oldMdRecord = getMetadataRecord(name);
                 if (oldMdRecord == null) {
                     mdRecord.getRepositoryIndicator().setResourceIsNew(true);
                     addMdRecord(mdRecord);
@@ -579,11 +579,11 @@ public class ContentRelationCreate extends GenericResourceCreate
         final Iterable<MdRecordCreate> records, final String name)
         throws InvalidContentException {
 
-        for (MdRecordCreate record : records) {
-            String recordName = record.getName();
+        for (final MdRecordCreate record : records) {
+            final String recordName = record.getName();
             if (recordName.equals(name)) {
 
-                String message =
+                final String message =
                         "A md-record with the name '" + name
                                 + "' occurs multiple times "
                                 + "in the representation of a content relation.";
@@ -612,12 +612,12 @@ public class ContentRelationCreate extends GenericResourceCreate
         }
 
         // serialize object without RELS-EXT and WOV to FOXML
-        String foxml =
+        final String foxml =
             ContentRelationFoXmlProvider.getInstance().getFoXml(this);
         FedoraUtility.getInstance().storeObjectInFedora(foxml, false);
 
         // creation /last-modification date
-        String lastModificationDate =
+        final String lastModificationDate =
             FedoraUtility.getInstance().getLastModificationDate(getObjid());
         getProperties().setCreationDate(lastModificationDate);
         getProperties().setLastModificationDate(lastModificationDate);
@@ -635,9 +635,9 @@ public class ContentRelationCreate extends GenericResourceCreate
         if (getMetadataRecords() != null) {
 
             // drop removed MdRecords
-            Iterator<MdRecordCreate> it = getMetadataRecords().iterator();
+            final Iterator<MdRecordCreate> it = getMetadataRecords().iterator();
             while (it.hasNext()) {
-                MdRecordCreate mdRecord = it.next();
+                final MdRecordCreate mdRecord = it.next();
 
                 if (mdRecord.getRepositoryIndicator().isResourceToDelete()) {
                     // if MdRecord is marked as deleted
@@ -669,10 +669,10 @@ public class ContentRelationCreate extends GenericResourceCreate
      */
     public void persistProperties(final boolean sync) throws SystemException {
 
-        String relsExt =
+        final String relsExt =
             ContentRelationFoXmlProvider.getInstance().getRelsExt(this);
         try {
-            String lmd =
+            final String lmd =
                 FedoraUtility.getInstance().modifyDatastream(getObjid(),
                     Datastream.RELS_EXT_DATASTREAM,
                     Datastream.RELS_EXT_DATASTREAM_LABEL,
@@ -720,11 +720,11 @@ public class ContentRelationCreate extends GenericResourceCreate
     private void updateDataStream(final MdRecordCreate mdRecord)
         throws FedoraSystemException, WebserverSystemException {
 
-        String[] altIds =
+        final String[] altIds =
             { Datastream.METADATA_ALTERNATE_ID, mdRecord.getType(),
                 mdRecord.getSchema() };
 
-        byte[] content;
+        final byte[] content;
         try {
             content =
                 mdRecord.getContent().getBytes(XmlUtility.CHARACTER_ENCODING);
@@ -752,11 +752,11 @@ public class ContentRelationCreate extends GenericResourceCreate
     private void createDatastream(final MdRecordCreate mdRecord)
         throws FedoraSystemException, WebserverSystemException {
 
-        String[] altIds =
+        final String[] altIds =
             { Datastream.METADATA_ALTERNATE_ID, mdRecord.getType(),
                 mdRecord.getSchema() };
 
-        byte[] content;
+        final byte[] content;
         try {
             content =
                 mdRecord.getContent().getBytes(XmlUtility.CHARACTER_ENCODING);
@@ -784,19 +784,19 @@ public class ContentRelationCreate extends GenericResourceCreate
      */
     @Override
     public Object clone() throws CloneNotSupportedException {
-        Object result;
+        final Object result;
         try {
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(os);
+            final ByteArrayOutputStream os = new ByteArrayOutputStream();
+            final ObjectOutputStream oos = new ObjectOutputStream(os);
             oos.writeObject(this);
             oos.close();
-            InputStream fis = new ByteArrayInputStream(os.toByteArray());
-            ObjectInputStream ois = new ObjectInputStream(fis);
+            final InputStream fis = new ByteArrayInputStream(os.toByteArray());
+            final ObjectInputStream ois = new ObjectInputStream(fis);
             result = ois.readObject();
             ois.close();
         }
         catch (Exception e) {
-            CloneNotSupportedException cnse = new CloneNotSupportedException(e.toString()); // Ignore FindBugs
+            final CloneNotSupportedException cnse = new CloneNotSupportedException(e.toString()); // Ignore FindBugs
             cnse.initCause(e);
             throw cnse;
         }

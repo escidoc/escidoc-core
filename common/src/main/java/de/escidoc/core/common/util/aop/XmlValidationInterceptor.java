@@ -88,11 +88,11 @@ public class XmlValidationInterceptor implements Ordered {
     @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
     public void validate(final JoinPoint joinPoint) throws Throwable {
 
-        Method calledMethod =
+        final Method calledMethod =
             ((MethodSignature) joinPoint.getSignature()).getMethod();
-        Annotation annotation = calledMethod.getAnnotation(Validate.class);
+        final Annotation annotation = calledMethod.getAnnotation(Validate.class);
         if (annotation != null) {
-            Object[] arguments = joinPoint.getArgs();
+            final Object[] arguments = joinPoint.getArgs();
             validate((String) arguments[((Validate) annotation).param()],
                 ((Validate) annotation).resolver(), ((Validate) annotation)
                     .root());
@@ -135,9 +135,9 @@ public class XmlValidationInterceptor implements Ordered {
      */
     private String getSchemaLocation(final String resolvingMethod)
         throws WebserverSystemException {
-        Class[] paramTypes = {};
+        final Class[] paramTypes = {};
         try {
-            Method getSchemaLocationM = XmlUtility.class.getMethod(resolvingMethod, paramTypes);
+            final Method getSchemaLocationM = XmlUtility.class.getMethod(resolvingMethod, paramTypes);
             return (String) getSchemaLocationM.invoke(null, new Object[0]);
         } catch (Exception e) {
             throw new WebserverSystemException("Could not find schema location for schema " + resolvingMethod + '!', e);

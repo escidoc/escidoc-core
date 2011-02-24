@@ -130,7 +130,7 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
         super.endElement(element);
         if ((isNotReady() && !isInMetadata())
             && (XmlUtility.NAME_MEMBER.equals(element.getLocalName()))) {
-            Collection<StringAttribute> memberIds =
+            final Collection<StringAttribute> memberIds =
                 new ArrayList<StringAttribute>(containerIds.size()
                     + itemIds.size());
             memberIds.addAll(containerIds);

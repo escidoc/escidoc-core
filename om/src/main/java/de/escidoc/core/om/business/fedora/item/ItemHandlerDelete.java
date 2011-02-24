@@ -93,22 +93,22 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
         }
 
         // remove member entries referring this
-        List<String> containers =
+        final List<String> containers =
             getTripleStoreUtility().getContainers(getItem().getId());
-        for (String parent : containers) {
+        for (final String parent : containers) {
             try {
                 final Container container = new Container(parent);
                 // call removeMember with current user context (access rights)
-                String param =
+                final String param =
                         "<param last-modification-date=\""
                                 + container.getLastModificationDate() + "\"><id>"
                                 + getItem().getId() + "</id></param>";
 
-                MethodMapper methodMapper =
+                final MethodMapper methodMapper =
                         (MethodMapper) BeanLocator.getBean(
                                 "Common.spring.ejb.context",
                                 "common.CommonMethodMapper");
-                BeanMethod method =
+                final BeanMethod method =
                         methodMapper.getMethod("/ir/container/" + parent
                                 + "/members/remove", null, null, "POST", param);
                 method
@@ -120,7 +120,7 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                 try {
                     throw e.getCause();
                 } catch (AuthorizationException ee) { // Ignore FindBugs
-                    String msg =
+                    final String msg =
                             "Can not delete all member entries for item "
                                     + getItem().getId() + ". item can not be deleted.";
                     throw new AuthorizationException(msg, ee);
@@ -128,13 +128,13 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                     if (ee instanceof Error) {
                         throw (Error) ee;
                     }
-                    String msg =
+                    final String msg =
                             "An error occured removing member entries for item "
                                     + getItem().getId() + ". item can not be deleted.";
                     throw new SystemException(msg, ee); // Ignore FindBugs
                 }
             } catch (Exception e) {
-                String msg =
+                final String msg =
                         "An error occured removing member entries for item "
                                 + getItem().getId() + ". Container can not be deleted.";
                 throw new SystemException(msg, e);
@@ -158,7 +158,7 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
             throw new WebserverSystemException(e);
         }
         final List<String> componentIds = cih.getComponentIds();
-        for (String componentId : componentIds) {
+        for (final String componentId : componentIds) {
             getFedoraUtility().deleteObject(componentId, false);
         }
 

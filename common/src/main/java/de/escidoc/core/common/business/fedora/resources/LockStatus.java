@@ -90,7 +90,7 @@ public enum LockStatus {
             }
         }
 
-        String msg = "Invalid lock status '" + status + '\'';
+        final String msg = "Invalid lock status '" + status + '\'';
         throw new InvalidStatusException(msg);
     }
 

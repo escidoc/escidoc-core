@@ -108,7 +108,7 @@ public class StatisticPreprocessor {
         if (log.isInfoEnabled()) {
             log.info("Preprocessing Statistics for Date " + inputDate);
         }
-        Date date;
+        final Date date;
         if (inputDate != null) {
             date = inputDate;
         }
@@ -120,10 +120,10 @@ public class StatisticPreprocessor {
         }
         try {
             // Get all Aggregation Definitions from Database
-            Collection<AggregationDefinition> aggregationDefinitions =
+            final Collection<AggregationDefinition> aggregationDefinitions =
                 dao.retrieveAggregationDefinitions();
             if (aggregationDefinitions != null) {
-                for (AggregationDefinition aggregationDefinition 
+                for (final AggregationDefinition aggregationDefinition
                                         : aggregationDefinitions) {
                     try {
                         execute(date, aggregationDefinition);
@@ -171,11 +171,11 @@ public class StatisticPreprocessor {
                     "aggregationDefinitionId may not be null");
         }
         try {
-            AggregationDefinition aggregationDefinition = 
+            final AggregationDefinition aggregationDefinition =
                 dao.retrieve(aggregationDefinitionId);
-            Date executionDate = determineStartDate(
+            final Date executionDate = determineStartDate(
                     startDate, aggregationDefinition.getScope().getId());
-            Date internalEndDate = determineEndDate(endDate);
+            final Date internalEndDate = determineEndDate(endDate);
             if (log.isInfoEnabled()) {
                 log.info("ComputedStartDate: " + executionDate);
                 log.info("ComputedEndDate: " + internalEndDate);
@@ -183,7 +183,7 @@ public class StatisticPreprocessor {
             if (internalEndDate.before(executionDate)) {
                 return;
             }
-            Calendar cal = Calendar.getInstance();
+            final Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(executionDate.getTime());
             while (internalEndDate.after(executionDate)) {
                 execute(executionDate, aggregationDefinition);
@@ -220,7 +220,7 @@ public class StatisticPreprocessor {
             throw new StatisticPreprocessingSystemException(
                         "aggregationDefinition may not be null");
         }
-        Date date;
+        final Date date;
         if (inputDate != null) {
             date = inputDate;
         }
@@ -231,11 +231,11 @@ public class StatisticPreprocessor {
             // dont process statistic-data for this date and
             // aggregation-definition
             // if statistic-data was processed successfully before.
-            Collection<PreprocessingLog> preprocessingLogs =
+            final Collection<PreprocessingLog> preprocessingLogs =
                     preprocessingLogsDao.retrievePreprocessingLogs(
                     aggregationDefinition.getId(), date, false);
             if (preprocessingLogs != null && !preprocessingLogs.isEmpty()) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 log.error("aggregation-definition "
                         + aggregationDefinition.getId()
                         + " already preprocessed successfully for date "
@@ -251,14 +251,14 @@ public class StatisticPreprocessor {
             // Do we have to access the statistic-data-table?
             if (aggregationDefinition
                 .getAggregationStatisticDataSelectors() != null) {
-                for (AggregationStatisticDataSelector 
+                for (final AggregationStatisticDataSelector
                         aggregationStatisticDataSelector 
                         : aggregationDefinition
                 .getAggregationStatisticDataSelectors()) {
                     if ("statistic-table".equals(aggregationStatisticDataSelector
                             .getSelectorType())) {
                         // Extract Data from raw-statistics-table
-                        List resultList =
+                        final List resultList =
                             dbAccessor
                                 .executeSql(generateStatisticTableSelectVo(
                                         aggregationStatisticDataSelector,
@@ -269,7 +269,7 @@ public class StatisticPreprocessor {
                                     + resultList.size() + " records");
                         }
                         // preprocess Data
-                        AggregationPreprocessorVo 
+                        final AggregationPreprocessorVo
                             aggregationPreprocessorVo = 
                                     aggregationPreprocessor
                                             .processAggregation(
@@ -296,8 +296,8 @@ public class StatisticPreprocessor {
 
     private void handleException(final Date date,
                                  final AggregationDefinition aggregationDefinition,
-                                 Throwable e) throws StatisticPreprocessingSystemException {
-        PreprocessingLog preprocessingLog = new PreprocessingLog();
+                                 final Throwable e) throws StatisticPreprocessingSystemException {
+        final PreprocessingLog preprocessingLog = new PreprocessingLog();
             preprocessingLog.setAggregationDefinition(aggregationDefinition);
             preprocessingLog.setHasError(true);
             preprocessingLog.setLogEntry(e.toString());
@@ -305,7 +305,7 @@ public class StatisticPreprocessor {
             try {
                 preprocessingLogsDao.savePreprocessingLog(preprocessingLog);
             } catch (SqlDatabaseSystemException e1) {}
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             throw new StatisticPreprocessingSystemException(
                     "error while preprocessing aggregationDefinition "
                     +  aggregationDefinition.getId()
@@ -348,25 +348,25 @@ public class StatisticPreprocessor {
             xpath = 
                 aggregationStatisticDataSelector.getXpath();
         }
-        DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
+        final DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
         databaseSelectVo.setSelectType(Constants.DATABASE_SELECT_TYPE_SELECT);
-        Collection<String> tablenames = new ArrayList<String>();
+        final Collection<String> tablenames = new ArrayList<String>();
         tablenames.add(Constants.STATISTIC_DATA_TABLE_NAME);
         databaseSelectVo.setTableNames(tablenames);
 
-        Collection<SelectFieldVo> selectFieldVos = new ArrayList<SelectFieldVo>();
-        SelectFieldVo selectFieldVo = new SelectFieldVo();
+        final Collection<SelectFieldVo> selectFieldVos = new ArrayList<SelectFieldVo>();
+        final SelectFieldVo selectFieldVo = new SelectFieldVo();
         selectFieldVo.setFieldName(Constants.STATISTIC_DATA_XML_FIELD_NAME);
         selectFieldVos.add(selectFieldVo);
-        SelectFieldVo selectFieldVo1 = new SelectFieldVo();
+        final SelectFieldVo selectFieldVo1 = new SelectFieldVo();
         selectFieldVo1.setFieldName(
                 Constants.STATISTIC_DATA_TIMESTAMP_FIELD_NAME);
         selectFieldVos.add(selectFieldVo1);
         databaseSelectVo.setSelectFieldVos(selectFieldVos);
 
-        RootWhereGroupVo rootWhereGroupVo = new RootWhereGroupVo();
-        RootWhereFieldVo rootWhereFieldVo = new RootWhereFieldVo();
-        Collection<AdditionalWhereFieldVo> additionalWhereFieldVos =
+        final RootWhereGroupVo rootWhereGroupVo = new RootWhereGroupVo();
+        final RootWhereFieldVo rootWhereFieldVo = new RootWhereFieldVo();
+        final Collection<AdditionalWhereFieldVo> additionalWhereFieldVos =
             new ArrayList<AdditionalWhereFieldVo>();
 
         rootWhereFieldVo.setFieldName(
@@ -374,17 +374,17 @@ public class StatisticPreprocessor {
         rootWhereFieldVo
             .setFieldType(Constants.DATABASE_FIELD_TYPE_DAYDATE);
         rootWhereFieldVo.setOperator(Constants.DATABASE_OPERATOR_EQUALS);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         rootWhereFieldVo.setFieldValue(dateFormat.format(date));
         rootWhereGroupVo.setRootWhereFieldVo(rootWhereFieldVo);
 
 
         //get Scope to decide if scope-type is admin
-        Scope scope = scopesDao.retrieve(scopeId);
+        final Scope scope = scopesDao.retrieve(scopeId);
 
         //only restrict to scope_id if Scope is no admin-scope
         if (!scope.getScopeType().equals(ScopeTypes.ADMIN.name())) {
-            AdditionalWhereFieldVo additionalWhereFieldVo =
+            final AdditionalWhereFieldVo additionalWhereFieldVo =
                 new AdditionalWhereFieldVo();
             additionalWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
             additionalWhereFieldVo.setFieldName("scope_id");
@@ -396,7 +396,7 @@ public class StatisticPreprocessor {
         }
 
         if (xpath != null && xpath.length() != 0) {
-            AdditionalWhereFieldVo xpathWhereFieldVo =
+            final AdditionalWhereFieldVo xpathWhereFieldVo =
                 new AdditionalWhereFieldVo();
             xpathWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
             xpathWhereFieldVo
@@ -431,15 +431,15 @@ public class StatisticPreprocessor {
         final String inputXpathQuery, final String field)
         throws StatisticPreprocessingSystemException {
         try {
-            StringBuilder dbXpathQuery = new StringBuilder(" (");
-            String xpathQuery = inputXpathQuery.replaceAll("\\s+", " ");
+            final StringBuilder dbXpathQuery = new StringBuilder(" (");
+            final String xpathQuery = inputXpathQuery.replaceAll("\\s+", " ");
             // Split at and/ors and save and/ors in array
-            String operatorHelper =
+            final String operatorHelper =
                 xpathQuery.replaceAll(
                     ".*?(( and )|( AND )|( And )|( or )|( OR )|( Or )).*?",
                     "$1\\|");
-            String[] operators = operatorHelper.split("\\|");
-            String[] xpathQueryParts =
+            final String[] operators = operatorHelper.split("\\|");
+            final String[] xpathQueryParts =
                 xpathQuery
                     .split("( and )|( AND )|( And )|( or )|( OR )|( Or )");
 
@@ -453,8 +453,8 @@ public class StatisticPreprocessor {
 
                 // save opening and closing brackets
                 String xpathQueryPart = xpathQueryParts[i].trim();
-                StringBuilder openingBracketSaver = new StringBuilder("");
-                StringBuilder closingBracketSaver = new StringBuilder("");
+                final StringBuilder openingBracketSaver = new StringBuilder("");
+                final StringBuilder closingBracketSaver = new StringBuilder("");
                 while (xpathQueryPart.indexOf('(') == 0) {
                     xpathQueryPart = xpathQueryPart.substring(1);
                     openingBracketSaver.append('(');
@@ -468,26 +468,26 @@ public class StatisticPreprocessor {
                 }
 
                 // split xpath-query part at operator (<,> or =)
-                String xpathExpression =
+                final String xpathExpression =
                     xpathQueryPart.replaceAll("(\\[.*?\\].*?)(=|>|<)",
                         "$1\\|$2\\|");
-                String[] xpathExpressionParts =
+                final String[] xpathExpressionParts =
                     xpathExpression.split("\\|.*?\\|");
                 dbXpathQuery.append(openingBracketSaver);
                 if (xpathExpressionParts.length > 1) {
-                    String operator =
+                    final String operator =
                         xpathExpression.replaceAll(".*?\\|(.*?)\\|.*", "$1");
-                    String left =
+                    final String left =
                         dbAccessor.getXpathString(xpathExpressionParts[0],
                             field);
-                    String right =
+                    final String right =
                         xpathExpressionParts[1].replaceAll("['\"]", "").trim();
                     dbXpathQuery
                         .append(left).append(' ').append(operator).append(" '")
                         .append(right).append('\'');
                 }
                 else {
-                    String left =
+                    final String left =
                         dbAccessor.getXpathBoolean(xpathExpressionParts[0],
                             field);
                     dbXpathQuery.append(left);
@@ -522,7 +522,7 @@ public class StatisticPreprocessor {
         if (internalStartDate == null) {
             internalStartDate = new Date();
         }
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(internalStartDate.getTime());
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
@@ -546,12 +546,12 @@ public class StatisticPreprocessor {
      */
     private Date determineEndDate(
             final Date endDate) {
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         cal.set(Calendar.HOUR_OF_DAY, 23);
         cal.set(Calendar.MINUTE, 59);
         cal.set(Calendar.SECOND, 59);
-        Date internalEndDate = new Date(cal.getTimeInMillis());
+        final Date internalEndDate = new Date(cal.getTimeInMillis());
         if (endDate != null 
                 && endDate.before(internalEndDate)) {
             cal.setTimeInMillis(endDate.getTime());

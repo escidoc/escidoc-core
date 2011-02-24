@@ -72,21 +72,21 @@ public final class OntologyUtility {
         throws WebserverSystemException, EncodingSystemException,
         XmlParserSystemException {
 
-        InputStream in;
+        final InputStream in;
         try {
-            String ontologyLocation =
+            final String ontologyLocation =
                 EscidocConfiguration.getInstance().appendToSelfURL(
                     "/ontologies/mpdl-ontologies/content-relations.xml");
-            URLConnection conn = new URL(ontologyLocation).openConnection();
+            final URLConnection conn = new URL(ontologyLocation).openConnection();
             in = conn.getInputStream();
         }
         catch (IOException e) {
             throw new WebserverSystemException(e);
         }
 
-        StaxParser sp = new StaxParser();
+        final StaxParser sp = new StaxParser();
 
-        OntologyHandler ontologyHandler =
+        final OntologyHandler ontologyHandler =
             new OntologyHandler(sp, predicateUriReference);
         sp.addHandler(ontologyHandler);
         try {

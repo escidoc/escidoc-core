@@ -101,7 +101,7 @@ public final class CustomStatusBuilder {
     public static Status createErrorStatus(
         final String status, final Exception e) {
 
-        List<String> codeList = new ArrayList<String>();
+        final List<String> codeList = new ArrayList<String>();
         codeList.add(status);
         String message = e.getMessage();
         if (message == null) {
@@ -109,7 +109,7 @@ public final class CustomStatusBuilder {
         }
         if (e instanceof EscidocException) {
             try {
-                StringBuilder errorMsg = new StringBuilder(message);
+                final StringBuilder errorMsg = new StringBuilder(message);
                 errorMsg.append('\n');
                 errorMsg.append(XmlUtility.CDATA_START);
                 errorMsg
@@ -118,7 +118,7 @@ public final class CustomStatusBuilder {
                 return new Status(codeList, errorMsg.toString());
             }
             catch (Exception e1) {
-                StringBuilder errorMsg = new StringBuilder(message);
+                final StringBuilder errorMsg = new StringBuilder(message);
                 errorMsg
                     .append(quoteCdata(((EscidocException) e).toXmlString()));
                 errorMsg.append("\n\nException deserializing failed due to ");
@@ -128,7 +128,7 @@ public final class CustomStatusBuilder {
         }
         else {
             try {
-                StringBuilder errorMsg = new StringBuilder(message);
+                final StringBuilder errorMsg = new StringBuilder(message);
                 errorMsg.append("\n<exception>");
                 errorMsg
                     .append(quoteCdata(EscidocException.getStackTraceXml(e)));
@@ -136,10 +136,10 @@ public final class CustomStatusBuilder {
                 return new Status(codeList, errorMsg.toString());
             }
             catch (Exception e1) {
-                StringBuilder errorMsg = new StringBuilder(message);
+                final StringBuilder errorMsg = new StringBuilder(message);
                 errorMsg.append('\n');
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
+                final StringWriter sw = new StringWriter();
+                final PrintWriter pw = new PrintWriter(sw);
                 e.printStackTrace(pw);
                 errorMsg.append(sw.toString());
                 errorMsg.append("\n\nException deserializing failed due to ");
@@ -165,8 +165,8 @@ public final class CustomStatusBuilder {
      */
     private static String quoteCdata(final CharSequence str) {
 
-        Pattern pattern = PATTERN_CDATA_END;
-        Matcher matcher = pattern.matcher(str);
+        final Pattern pattern = PATTERN_CDATA_END;
+        final Matcher matcher = pattern.matcher(str);
         return matcher.replaceAll(XmlUtility.CDATA_END_QUOTED);
     }
 

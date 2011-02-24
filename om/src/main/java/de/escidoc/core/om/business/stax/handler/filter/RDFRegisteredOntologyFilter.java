@@ -49,13 +49,13 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
     private boolean workaroundForItemList = false;
 
     @Override
-    public boolean accept(XMLEvent event) {
+    public boolean accept(final XMLEvent event) {
         if (event instanceof StartElement) {
-            StartElement element = event.asStartElement();
+            final StartElement element = event.asStartElement();
             return accept(element);
         }
         else if (event instanceof EndElement) {
-            EndElement element = event.asEndElement();
+            final EndElement element = event.asEndElement();
             if (workaroundForItemList
                 && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {
                 return false;
@@ -72,7 +72,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
         return true;
     }
 
-    public boolean accept(StartElement element) {
+    public boolean accept(final StartElement element) {
         try {
             if (workaroundForItemList
                 && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {
@@ -83,8 +83,8 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
                 return true;
             }
             else {
-                QName name = element.getName();
-                String predicate = name.getNamespaceURI() + name.getLocalPart();
+                final QName name = element.getName();
+                final String predicate = name.getNamespaceURI() + name.getLocalPart();
                 if (OntologyUtility.checkPredicate(predicate) || workaroundForItemList && predicate.startsWith(Constants.DC_NS_URI) || workaroundForItemList
                         && ("created-by-title".equals(name.getLocalPart())
                         || "context-title".equals(name.getLocalPart())
@@ -111,7 +111,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
      * @param workaroundForItemList
      *            the workaroundForItemList to set
      */
-    public void setWorkaroundForItemList(boolean workaroundForItemList) {
+    public void setWorkaroundForItemList(final boolean workaroundForItemList) {
         this.workaroundForItemList = workaroundForItemList;
     }
 }

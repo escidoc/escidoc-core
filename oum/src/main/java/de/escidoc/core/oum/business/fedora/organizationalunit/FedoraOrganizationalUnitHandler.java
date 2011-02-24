@@ -154,7 +154,7 @@ public class FedoraOrganizationalUnitHandler
      */
     private String getAlternateForm(final String id) throws SystemException {
         String result = null;
-        boolean isRestAccess = UserContext.isRestAccess();
+        final boolean isRestAccess = UserContext.isRestAccess();
 
         try {
             if (isRestAccess) {
@@ -192,8 +192,8 @@ public class FedoraOrganizationalUnitHandler
      */
     private void fireOuCreated(final String id, final String xmlData)
         throws SystemException {
-        String restXml;
-        String soapXml;
+        final String restXml;
+        final String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -203,7 +203,7 @@ public class FedoraOrganizationalUnitHandler
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (ResourceListener ouListener : ouListeners) {
+        for (final ResourceListener ouListener : ouListeners) {
             ouListener.resourceCreated(id, restXml, soapXml);
         }
     }
@@ -218,7 +218,7 @@ public class FedoraOrganizationalUnitHandler
      *             One of the listeners threw an exception.
      */
     private void fireOuDeleted(final String id) throws SystemException {
-        for (ResourceListener ouListener : ouListeners) {
+        for (final ResourceListener ouListener : ouListeners) {
             ouListener.resourceDeleted(id);
         }
     }
@@ -236,8 +236,8 @@ public class FedoraOrganizationalUnitHandler
      */
     private void fireOuModified(final String id, final String xmlData)
         throws SystemException {
-        String restXml;
-        String soapXml;
+        final String restXml;
+        final String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -247,7 +247,7 @@ public class FedoraOrganizationalUnitHandler
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (ResourceListener ouListener : ouListeners) {
+        for (final ResourceListener ouListener : ouListeners) {
             ouListener.resourceModified(id, restXml, soapXml);
         }
     }
@@ -390,7 +390,7 @@ public class FedoraOrganizationalUnitHandler
         checkName(null, metadataHandler.getDcTitle(), parents);
 
         final String id = getIdProvider().getNextPid();
-        String escidocMdRecord;
+        final String escidocMdRecord;
         try {
             escidocMdRecord =
                 ((Map<String, ByteArrayOutputStream>) streams
@@ -429,12 +429,12 @@ public class FedoraOrganizationalUnitHandler
 
         // reload all parent OUs in the DB cache to update the property
         // "has-children"
-        for (String parentId : parents) {
+        for (final String parentId : parents) {
             fireOuModified(parentId, retrieve(parentId));
         }
         // reload all predecessor OUs in the DB cache to update the property
         // "successor"
-        for (Predecessor predecessor : predecessorsHandler.getPredecessors()) {
+        for (final Predecessor predecessor : predecessorsHandler.getPredecessors()) {
             fireOuModified(predecessor.getObjid(),
                 retrieve(predecessor.getObjid()));
         }
@@ -474,10 +474,10 @@ public class FedoraOrganizationalUnitHandler
         fireOuDeleted(id);
 
         // update property hasChildren of all parents in Lucene
-        List<String> parentIds = getOrganizationalUnit().getParents();
+        final List<String> parentIds = getOrganizationalUnit().getParents();
 
         if (parentIds != null) {
-            for (String parentId : parentIds) {
+            for (final String parentId : parentIds) {
                 fireOuModified(parentId, retrieve(parentId));
             }
         }
@@ -537,8 +537,8 @@ public class FedoraOrganizationalUnitHandler
         OrganizationalUnitHierarchyViolationException, InvalidStatusException {
 
         setOrganizationalUnit(id);
-        List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
-        List<Predecessor> predecessorsBeforeUpdate =
+        final List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
+        final List<Predecessor> predecessorsBeforeUpdate =
             getOrganizationalUnit().getPredecessors();
 
         final String startTimeStamp =
@@ -609,7 +609,7 @@ public class FedoraOrganizationalUnitHandler
             throw new IntegritySystemException(e.getMessage(), e);
         }
 
-        String result;
+        final String result;
         try {
             result = retrieve(getOrganizationalUnit().getId());
         }
@@ -644,12 +644,12 @@ public class FedoraOrganizationalUnitHandler
         final Collection<String> updatedParents)
         throws OrganizationalUnitNotFoundException, SystemException {
 
-        for (String id : parentsBeforeUpdate) {
+        for (final String id : parentsBeforeUpdate) {
             if (!updatedParents.contains(id)) {
                 fireOuModified(id, retrieve(id));
             }
         }
-        for (String id : updatedParents) {
+        for (final String id : updatedParents) {
             if (!parentsBeforeUpdate.contains(id)) {
                 fireOuModified(id, retrieve(id));
             }
@@ -673,13 +673,13 @@ public class FedoraOrganizationalUnitHandler
         final Collection<Predecessor> updatedPredecessors)
         throws OrganizationalUnitNotFoundException, SystemException {
 
-        for (Predecessor predecessor : predecessorBeforeUpdate) {
+        for (final Predecessor predecessor : predecessorBeforeUpdate) {
             if (!updatedPredecessors.contains(predecessor)) {
                 fireOuModified(predecessor.getObjid(),
                     retrieve(predecessor.getObjid()));
             }
         }
-        for (Predecessor predecessor : updatedPredecessors) {
+        for (final Predecessor predecessor : updatedPredecessors) {
             if (!predecessorBeforeUpdate.contains(predecessor)) {
                 fireOuModified(predecessor.getObjid(),
                     retrieve(predecessor.getObjid()));
@@ -767,7 +767,7 @@ public class FedoraOrganizationalUnitHandler
         }
         getOrganizationalUnit().persist();
 
-        String result;
+        final String result;
         try {
             result = retrieveMdRecords(getOrganizationalUnit().getId());
         }
@@ -817,7 +817,7 @@ public class FedoraOrganizationalUnitHandler
         InvalidStatusException {
 
         setOrganizationalUnit(id);
-        List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
+        final List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
         final String startTimeStamp =
             getOrganizationalUnit().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
@@ -838,7 +838,7 @@ public class FedoraOrganizationalUnitHandler
         checkName(id, getOrganizationalUnit().getName(), parents);
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
-        String buildNumber = Utility.getInstance().getBuildNumber();
+        final String buildNumber = Utility.getInstance().getBuildNumber();
         relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER,
             buildNumber);
         relsExtValues.put(TripleStoreUtility.PROP_NAME, getOrganizationalUnit()
@@ -864,7 +864,7 @@ public class FedoraOrganizationalUnitHandler
 
         getOrganizationalUnit().persist();
 
-        String result;
+        final String result;
         try {
             result = retrieveParents(getOrganizationalUnit().getId());
         }
@@ -925,7 +925,7 @@ public class FedoraOrganizationalUnitHandler
         throws OperationNotFoundException, OrganizationalUnitNotFoundException,
         SystemException {
 
-        EscidocBinaryContent content = new EscidocBinaryContent();
+        final EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType(Constants.DEFAULT_MIME_TYPE);
 
         try {
@@ -1028,9 +1028,9 @@ public class FedoraOrganizationalUnitHandler
         throws MdRecordNotFoundException, OrganizationalUnitNotFoundException,
         SystemException {
         setOrganizationalUnit(id);
-        String mdRecord = getMdRecordXml(name);
+        final String mdRecord = getMdRecordXml(name);
         if (mdRecord.length() == 0) {
-            String message =
+            final String message =
                 "Md-record with a name " + name + " does not "
                     + " exist in the organization unit with id " + id;
             LOG.error(message);
@@ -1075,7 +1075,7 @@ public class FedoraOrganizationalUnitHandler
     @Override
     public String retrieveChildObjects(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
-        StringWriter result = new StringWriter();
+        final StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsOrganizationalUnit(id);
         sruRequest.searchRetrieve(result,
@@ -1100,14 +1100,14 @@ public class FedoraOrganizationalUnitHandler
     @Override
     public String retrieveParentObjects(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
-        StringWriter result = new StringWriter();
+        final StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsOrganizationalUnit(id);
         setOrganizationalUnit(id);
 
-        StringBuilder filter = new StringBuilder();
+        final StringBuilder filter = new StringBuilder();
 
-        for (String parent : getOrganizationalUnit().getParents()) {
+        for (final String parent : getOrganizationalUnit().getParents()) {
             if (filter.length() > 0) {
                 filter.append(" OR ");
             }
@@ -1156,7 +1156,7 @@ public class FedoraOrganizationalUnitHandler
     @Override
     public String retrieveOrganizationalUnits(
         final SRURequestParameters parameters) throws SystemException {
-        StringWriter result = new StringWriter();
+        final StringWriter result = new StringWriter();
 
         if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.OU);
@@ -1272,9 +1272,9 @@ public class FedoraOrganizationalUnitHandler
             + getOrganizationalUnit().getId() + " or "
             + "\"/object/id\"=" + getOrganizationalUnit().getId() });
 
-        String result;
+        final String result;
         try {
-            String searchResponse =
+            final String searchResponse =
                 contentRelationHandler.retrieveContentRelations(filterParams);
             result = transformSearchResponse2relations(searchResponse);
         }
@@ -1399,8 +1399,8 @@ public class FedoraOrganizationalUnitHandler
 
         if (!predecessors.isEmpty()) {
             predecessorsMap = new ArrayList<Map<String, String>>();
-            for (Predecessor predecessor : predecessors) {
-                Map<String, String> predecessorMap =
+            for (final Predecessor predecessor : predecessors) {
+                final Map<String, String> predecessorMap =
                     new HashMap<String, String>();
 
                 // check if predecessor exists and is OU (its not required to
@@ -1447,7 +1447,7 @@ public class FedoraOrganizationalUnitHandler
              * This must be a fusion: check if every predecessor is set as
              * fusion.
              */
-            for (Predecessor predecessor : predecessors) {
+            for (final Predecessor predecessor : predecessors) {
                 if (predecessor.getForm() != PredecessorForm.FUSION) {
                     throw new InvalidStatusException(
                         "Predecessor forms are inconsistent. At least one "

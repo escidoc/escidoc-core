@@ -106,7 +106,7 @@ public class ComponentsHandler extends DefaultHandler {
             this.componentHandler.startElement(element);
         }
         else {
-            String currentPath = parser.getCurPath();
+            final String currentPath = parser.getCurPath();
 
             if (XPATH_COMPONENT.equals(currentPath)) {
 
@@ -135,7 +135,7 @@ public class ComponentsHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws MissingContentException, WebserverSystemException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (XPATH_COMPONENT.equals(currentPath)) {
             LOG.debug("Reached end of " + XPATH_COMPONENT);

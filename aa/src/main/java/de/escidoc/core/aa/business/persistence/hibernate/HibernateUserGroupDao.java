@@ -106,7 +106,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
     @Override
     public UserGroup findUsergroupByLabel(final String label)
         throws SqlDatabaseSystemException {
-        UserGroup result;
+        final UserGroup result;
         try {
             result =
                 (UserGroup) getUniqueResult(getHibernateTemplate()
@@ -267,7 +267,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
     public Map<String, List<RoleGrant>> retrieveCurrentGrants(
         final List<String> groupIds) throws SqlDatabaseSystemException {
 
-        Map<String, List<RoleGrant>> orderedResult =
+        final Map<String, List<RoleGrant>> orderedResult =
             new HashMap<String, List<RoleGrant>>();
 
         final DetachedCriteria detachedCriteria =
@@ -276,7 +276,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         detachedCriteria.add(Restrictions.isNull("revocationDate"));
         detachedCriteria.addOrder(Order.desc("objectId"));
 
-        List<RoleGrant> roleGrants;
+        final List<RoleGrant> roleGrants;
         try {
             roleGrants =
                 getHibernateTemplate().findByCriteria(detachedCriteria);
@@ -285,7 +285,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             throw new SqlDatabaseSystemException(e);
         }
         if (roleGrants !=  null) {
-            for (RoleGrant roleGrant : roleGrants) {
+            for (final RoleGrant roleGrant : roleGrants) {
                 if (orderedResult.get(roleGrant.getGroupId()) == null) {
                     orderedResult.put(roleGrant.getGroupId(),
                         new ArrayList<RoleGrant>());
@@ -381,7 +381,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 Boolean.valueOf(active1)));
         }
 
-        for (String key : criteriaMap.keySet()) {
+        for (final String key : criteriaMap.keySet()) {
             final Object criteriaValue = clonedCriterias.remove(key);
             if (criteriaValue != null) {
                 final Object[] parts = criteriaMap.get(key);
@@ -403,7 +403,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                     .get(orderBy)));
             }
         }
-        List<UserGroup> result;
+        final List<UserGroup> result;
         if (clonedCriterias.isEmpty()) {
             try {
                 result =
@@ -440,7 +440,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
-        List<UserGroup> result;
+        final List<UserGroup> result;
 
         if ((criterias != null) && (criterias.length() > 0)) {
             result =
@@ -522,7 +522,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             }
         }
 
-        List<UserGroupMember> result;
+        final List<UserGroupMember> result;
         if (clonedCriterias.isEmpty()) {
             try {
                 result =
@@ -652,7 +652,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         if (identityInfo != null) {
             try {
                 // try identification by id or label
-                DetachedCriteria criteria =
+                final DetachedCriteria criteria =
                     DetachedCriteria.forClass(UserGroup.class).add(
                         Restrictions.or(Restrictions.eq("id", identityInfo),
                             Restrictions.eq("label", identityInfo)));

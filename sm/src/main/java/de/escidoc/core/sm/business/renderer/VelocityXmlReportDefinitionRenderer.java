@@ -82,7 +82,7 @@ public final class VelocityXmlReportDefinitionRenderer
     @Override
     public String render(final ReportDefinition reportDefinition)
         throws SystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootReportDefinition", XmlTemplateProvider.TRUE);
         addReportDefinitionNamespaceValues(values);
         addReportDefinitionValues(reportDefinition, values);
@@ -106,11 +106,11 @@ public final class VelocityXmlReportDefinitionRenderer
         DateTime createDateTime =
             new DateTime(reportDefinition.getCreationDate());
         createDateTime = createDateTime.withZone(DateTimeZone.UTC);
-        String create = createDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String create = createDateTime.toString(Constants.TIMESTAMP_FORMAT);
         DateTime lmdDateTime =
             new DateTime(reportDefinition.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
 
         values.put("reportDefinitionCreationDate", create);
         values.put("reportDefinitionCreatedById",
@@ -154,14 +154,14 @@ public final class VelocityXmlReportDefinitionRenderer
         final Collection<ReportDefinitionRole> reportDefinitionRoles,
         final Map<String, Object> values) {
         if (reportDefinitionRoles != null && !reportDefinitionRoles.isEmpty()) {
-            Collection<HashMap<String, String>> reportDefinitionRolesVm =
+            final Collection<HashMap<String, String>> reportDefinitionRolesVm =
                 new ArrayList<HashMap<String, String>>();
-            Collection<ReportDefinitionRole> sortedReportDefinitionRoles =
+            final Collection<ReportDefinitionRole> sortedReportDefinitionRoles =
                 new TreeSet<ReportDefinitionRole>(
                     new ReportDefinitionRoleComparator());
             sortedReportDefinitionRoles.addAll(reportDefinitionRoles);
-            for (ReportDefinitionRole reportDefinitionRole : sortedReportDefinitionRoles) {
-                HashMap<String, String> roleMap = new HashMap<String, String>();
+            for (final ReportDefinitionRole reportDefinitionRole : sortedReportDefinitionRoles) {
+                final HashMap<String, String> roleMap = new HashMap<String, String>();
                 roleMap.put("id", reportDefinitionRole.getRoleId());
                 roleMap
                     .put("title", "role " + reportDefinitionRole.getRoleId());
@@ -195,7 +195,7 @@ public final class VelocityXmlReportDefinitionRenderer
         final Collection<ReportDefinition> reportDefinitions,
         final RecordPacking recordPacking) throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootReportDefinition", XmlTemplateProvider.FALSE);
         values.put("reportDefinitionListTitle", "Report Definition List");
@@ -207,8 +207,8 @@ public final class VelocityXmlReportDefinitionRenderer
         if (reportDefinitions != null) {
             reportDefinitionsValues =
                 new ArrayList<Map<String, Object>>(reportDefinitions.size());
-            for (ReportDefinition reportDefinition : reportDefinitions) {
-                Map<String, Object> reportDefinitionValues =
+            for (final ReportDefinition reportDefinition : reportDefinitions) {
+                final Map<String, Object> reportDefinitionValues =
                     new HashMap<String, Object>();
                 addReportDefinitionNamespaceValues(reportDefinitionValues);
                 addReportDefinitionValues(reportDefinition,

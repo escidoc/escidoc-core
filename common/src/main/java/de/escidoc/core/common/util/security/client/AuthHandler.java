@@ -61,7 +61,7 @@ public class AuthHandler extends BasicHandler {
      */
     @Override
     public void invoke(final MessageContext ctx) throws AxisFault {
-        Iterator it = ctx.getAllPropertyNames();
+        final Iterator it = ctx.getAllPropertyNames();
         while (it.hasNext()) {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("The properties:" + it.next());

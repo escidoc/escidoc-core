@@ -146,7 +146,7 @@ public class LinkStaxHandler extends DefaultHandler {
             objid = null;
 
             if (UserContext.isRestAccess()) {
-                int index =
+                final int index =
                     element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
                 if (index != -1) {
                     href = element.getAttribute(index).getValue();
@@ -162,7 +162,7 @@ public class LinkStaxHandler extends DefaultHandler {
                                         MSG_WRONG_BASE_URI, hrefBaseUri, href,
                                         element.getLocationString());
                             try {
-                                Constructor constructor = exceptionClass
+                                final Constructor constructor = exceptionClass
                                         .getConstructor(new Class[]{String.class});
                                 throw (EscidocException) constructor
                                     .newInstance(new Object[] { errorMsg });
@@ -182,7 +182,7 @@ public class LinkStaxHandler extends DefaultHandler {
                 // discarded, too.
             }
             else {
-                int index = element.indexOfAttribute(null, "objid");
+                final int index = element.indexOfAttribute(null, "objid");
                 if (index != -1) {
                     objid = element.getAttribute(index).getValue();
                 }

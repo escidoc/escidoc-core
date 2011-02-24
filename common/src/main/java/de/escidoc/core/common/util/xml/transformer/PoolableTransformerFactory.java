@@ -133,7 +133,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         InputStream xslt =null;
         try {
             xslt = mapKeyToXslt((String) key);
-            StreamSource streamSrc = new StreamSource(xslt);
+            final StreamSource streamSrc = new StreamSource(xslt);
             result = transformerFactory.newTransformer(streamSrc);
         } catch (IOException e) {
                 throw new WebserverSystemException("XSLT for DC-mapping not retrievable.", e);
@@ -169,9 +169,9 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
     private InputStream mapKeyToXslt(final String key)
         throws WebserverSystemException, FedoraSystemException, IOException {
 
-        String[] keyParts = key.split(";");
-        String nsUri = keyParts[0];
-        String contentModelId = keyParts[1];
+        final String[] keyParts = key.split(";");
+        final String nsUri = keyParts[0];
+        final String contentModelId = keyParts[1];
 
         InputStream xslt;
         if (nsUri != null
@@ -187,7 +187,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         if (contentModelId.length() > 0
             && !"null".equalsIgnoreCase(contentModelId)) {
             // create link to content of DC-MAPPING in content model object
-            String dcMappingXsltFedoraUrl =
+            final String dcMappingXsltFedoraUrl =
                 "/get/" + contentModelId + '/'
                     + CONTENT_MODEL_XSLT_DC_DATASTREAM;
             try {

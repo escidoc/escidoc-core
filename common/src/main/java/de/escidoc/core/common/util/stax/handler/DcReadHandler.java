@@ -65,8 +65,8 @@ public class DcReadHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element)
         throws IntegritySystemException {
-        String curPath = parser.getCurPath();
-        String theName = element.getLocalName();
+        final String curPath = parser.getCurPath();
+        final String theName = element.getLocalName();
 
         // organizational-unit
         if (curPath.equals(DC_PATH + '/' + Elements.ELEMENT_DC_TITLE)) {

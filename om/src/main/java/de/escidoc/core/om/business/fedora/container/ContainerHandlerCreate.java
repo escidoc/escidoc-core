@@ -83,9 +83,9 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         final Map<String, String> propertiesAsReferences)
         throws SystemException {
 
-        Map<String, Map<String, String>> metadataAttributes =
+        final Map<String, Map<String, String>> metadataAttributes =
             metadataHandler.getMetadataAttributes();
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put(XmlTemplateProvider.OBJID, containerId);
         values.put("title", "Container " + containerId);
@@ -105,7 +105,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         }
 
         // dc-mapping prototyping
-        String dcXml;
+        final String dcXml;
         try {
             dcXml =
                 XmlUtility
@@ -125,10 +125,10 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
             values.put(XmlTemplateProvider.DC, dcXml);
         }
 
-        for (Entry<String, Object> entry : containerDataStreams.entrySet()) {
-            String outsideKey = (String) entry.getKey();
+        for (final Entry<String, Object> entry : containerDataStreams.entrySet()) {
+            final String outsideKey = (String) entry.getKey();
             if (entry.getValue() instanceof ByteArrayOutputStream) {
-                ByteArrayOutputStream outsideValue = (ByteArrayOutputStream) entry.getValue();
+                final ByteArrayOutputStream outsideValue = (ByteArrayOutputStream) entry.getValue();
                 try {
                     // now we map to Velocity Variable Names
                     if (outsideKey
@@ -146,18 +146,18 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
 
             } else if ("md-records".equals(outsideKey)) {
 
-                Map insideHash = (HashMap) entry.getValue();
+                final Map insideHash = (HashMap) entry.getValue();
                 if (!insideHash.isEmpty()) {
-                    Collection<Map<String, String>> mdRecords =
+                    final Collection<Map<String, String>> mdRecords =
                             new ArrayList<Map<String, String>>(insideHash.size());
                     values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
-                    Set content2 = insideHash.entrySet();
-                    for (Object aContent2 : content2) {
-                        Map<String, String> mdRecord =
+                    final Set content2 = insideHash.entrySet();
+                    for (final Object aContent2 : content2) {
+                        final Map<String, String> mdRecord =
                                 new HashMap<String, String>();
-                        Entry entry2 = (Entry) aContent2;
-                        String insideKey = (String) entry2.getKey();
-                        Map<String, String> mdAttributes =
+                        final Entry entry2 = (Entry) aContent2;
+                        final String insideKey = (String) entry2.getKey();
+                        final Map<String, String> mdAttributes =
                                 metadataAttributes.get(insideKey);
                         String schema = null;
                         String type = null;
@@ -165,7 +165,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                             schema = mdAttributes.get("schema");
                             type = mdAttributes.get("type");
                         }
-                        ByteArrayOutputStream insideValue = (ByteArrayOutputStream) entry2.getValue();
+                        final ByteArrayOutputStream insideValue = (ByteArrayOutputStream) entry2.getValue();
                         mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
                                 schema);
                         mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, type);

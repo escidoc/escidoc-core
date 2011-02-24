@@ -83,7 +83,7 @@ public class ObjectAttributeResolver {
     public String resolveObjectType(final String objectId)
         throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
-        Map<String, String> objectAttributes =
+        final Map<String, String> objectAttributes =
             resolveObjectAttributes(objectId, true);
         if (objectAttributes != null) {
             return objectAttributes.get(ATTR_OBJECT_TYPE);
@@ -162,8 +162,8 @@ public class ObjectAttributeResolver {
      */
     private Map<String, String> getObjectFromTripleStore(
         final String objectId, final boolean typeOnly) throws SystemException {
-        Map<String, String> result = new HashMap<String, String>();
-        String objectType = tsu.getObjectType(objectId);
+        final Map<String, String> result = new HashMap<String, String>();
+        final String objectType = tsu.getObjectType(objectId);
         if (objectType != null) {
             // object information is stored in the triple store, title
             // can be get from information stored in triple store
@@ -203,7 +203,7 @@ public class ObjectAttributeResolver {
         final String objectId, final boolean typeOnly)
         throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
-        Map<String, String> result = new HashMap<String, String>();
+        final Map<String, String> result = new HashMap<String, String>();
         try {
             scopeHandler.retrieve(objectId);
             // we got a scope for the id, therefore objectType is set to
@@ -237,7 +237,7 @@ public class ObjectAttributeResolver {
      */
     private Map<String, String> getObjectFromUserAccount(
         final String objectId, final boolean typeOnly) throws SystemException {
-        Map<String, String> result = new HashMap<String, String>();
+        final Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (userAccountDao.userAccountExists(objectId)) {
                 result.put(ATTR_OBJECT_TYPE, XmlUtility.NAME_USER_ACCOUNT);
@@ -247,7 +247,7 @@ public class ObjectAttributeResolver {
             }
         }
         else {
-            UserAccount userAccount =
+            final UserAccount userAccount =
                 userAccountDao.retrieveUserAccount(objectId);
             if (userAccount != null) {
                 // we got a user account for the id,
@@ -279,7 +279,7 @@ public class ObjectAttributeResolver {
      */
     private Map<String, String> getObjectFromUserGroup(
         final String objectId, final boolean typeOnly) throws SystemException {
-        Map<String, String> result = new HashMap<String, String>();
+        final Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (userGroupDao.userGroupExists(objectId)) {
                 result.put(ATTR_OBJECT_TYPE, XmlUtility.NAME_USER_GROUP);
@@ -289,7 +289,7 @@ public class ObjectAttributeResolver {
             }
         }
         else {
-            UserGroup userGroup = userGroupDao.retrieveUserGroup(objectId);
+            final UserGroup userGroup = userGroupDao.retrieveUserGroup(objectId);
             if (userGroup != null) {
                 // we got a user-group for the id,
                 // therefore objectType is set to
@@ -318,7 +318,7 @@ public class ObjectAttributeResolver {
      */
     private Map<String, String> getObjectFromRole(
         final String objectId, final boolean typeOnly) throws SystemException {
-        Map<String, String> result = new HashMap<String, String>();
+        final Map<String, String> result = new HashMap<String, String>();
         if (typeOnly) {
             if (roleDao.roleExists(objectId)) {
                 result.put(ATTR_OBJECT_TYPE, XmlUtility.NAME_ROLE);
@@ -328,7 +328,7 @@ public class ObjectAttributeResolver {
             }
         }
         else {
-            EscidocRole role = roleDao.retrieveRole(objectId);
+            final EscidocRole role = roleDao.retrieveRole(objectId);
             if (role != null) {
                 // we got a role for the id,
                 // therefore objectType is set to
@@ -357,7 +357,7 @@ public class ObjectAttributeResolver {
      */
     private Map<String, String> getObjectFromGrant(
         final String objectId, final boolean typeOnly) throws SystemException {
-        Map<String, String> result = new HashMap<String, String>();
+        final Map<String, String> result = new HashMap<String, String>();
         if (userAccountDao.grantExists(objectId)) {
             result.put(ATTR_OBJECT_TYPE, XmlUtility.NAME_GRANT);
             if (!typeOnly) {

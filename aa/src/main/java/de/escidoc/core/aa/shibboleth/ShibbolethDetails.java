@@ -96,7 +96,7 @@ public class ShibbolethDetails {
      * 
      * @aa
      */
-    public ShibbolethDetails(String shibApplicationId,
+    public ShibbolethDetails(final String shibApplicationId,
         final String shibAssertionCount, final String shibAuthenticationMethod,
         final String shibAuthenticationInstant,
         final String shibAuthnContextClass, final String shibAuthContextDecl,

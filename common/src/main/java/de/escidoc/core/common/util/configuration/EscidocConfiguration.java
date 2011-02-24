@@ -252,8 +252,8 @@ public final class EscidocConfiguration {
         try {
             instance = new EscidocConfiguration();
         } catch (EscidocException e) {
-            StringWriter w = new StringWriter();
-            PrintWriter pw = new PrintWriter(w);
+            final StringWriter w = new StringWriter();
+            final PrintWriter pw = new PrintWriter(w);
             System.err.println("Problem while loading properties! Caused by:\n" + w.toString());
         }
     }
@@ -342,7 +342,7 @@ public final class EscidocConfiguration {
      */
     public boolean getAsBoolean(final String name) {
         boolean result = false;
-        String prop = ((String) properties.get(name)).toLowerCase();
+        final String prop = ((String) properties.get(name)).toLowerCase();
 
         if ((prop != null) && (TRUE.equals(prop) || ONE.equals(prop))) {
             result = true;
@@ -379,7 +379,7 @@ public final class EscidocConfiguration {
      * @common
      */
     private static Properties loadProperties() throws SystemException {
-        Properties result;
+        final Properties result;
         try {
             result = getProperties(PROPERTIES_DEFAULT_FILENAME);
         }
@@ -424,8 +424,8 @@ public final class EscidocConfiguration {
             LOG.debug("Merged properties: " + result);
         }
         // set Properties as System-Variables
-        for (Object o : result.keySet()) {
-            String key = (String) o;
+        for (final Object o : result.keySet()) {
+            final String key = (String) o;
             String value = result.getProperty(key);
             value = replaceEnvVariables(value);
             System.setProperty(key, value);
@@ -445,8 +445,8 @@ public final class EscidocConfiguration {
     private static Properties getProperties(final String filename)
         throws IOException {
 
-        Properties result = new Properties();
-        InputStream propertiesStream = getInputStream(filename);
+        final Properties result = new Properties();
+        final InputStream propertiesStream = getInputStream(filename);
         result.load(propertiesStream);
         return result;
     }
@@ -485,7 +485,7 @@ public final class EscidocConfiguration {
     private static String replaceEnvVariables(final String property) {
         String replacedProperty = property;
         if (property.contains("${")) {
-            String[] envVariables = property.split("\\}.*?\\$\\{");
+            final String[] envVariables = property.split("\\}.*?\\$\\{");
             if (envVariables != null) {
                 for (int i = 0; i < envVariables.length; i++) {
                     envVariables[i] =

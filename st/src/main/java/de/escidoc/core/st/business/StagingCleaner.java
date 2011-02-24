@@ -82,7 +82,7 @@ public class StagingCleaner {
 
         LOG.debug("Cleaning up the staging file area");
 
-        List<StagingFile> expiredStagingFiles;
+        final List<StagingFile> expiredStagingFiles;
         try {
             expiredStagingFiles = stagingFileDao.findExpiredStagingFiles();
         }
@@ -91,7 +91,7 @@ public class StagingCleaner {
             return;
         }
 
-        for (StagingFile stagingFile : expiredStagingFiles) {
+        for (final StagingFile stagingFile : expiredStagingFiles) {
             // To avoid removing of a file that is currently transmitted to
             // a client, a offset is added to the expire time stamp.
             // TODO: this should be removed by locking mechanism.

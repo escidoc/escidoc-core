@@ -198,19 +198,19 @@ public class PolicyDecisionPoint
         WebserverSystemException {
         accessRights.deleteAccessRights();
 
-        Map<String, Object> filter = new HashMap<String, Object>();
+        final Map<String, Object> filter = new HashMap<String, Object>();
 
         filter.put(Constants.FILTER_PATH_NAME, "%");
-        List<EscidocRole> roles =
+        final List<EscidocRole> roles =
             roleDao.retrieveRoles(filter, 0, 0, null, null);
 
         roles.add(roleDao.retrieveRole(EscidocRole.DEFAULT_USER_ROLE_ID));
-        for (EscidocRole role : roles) {
+        for (final EscidocRole role : roles) {
             xacmlParser.parse(role);
-            for (ResourceType resourceType : ResourceType.values()) {
+            for (final ResourceType resourceType : ResourceType.values()) {
                 try {
-                    String scopeRules = xacmlParser.getScopeRules(resourceType);
-                    String policyRules =
+                    final String scopeRules = xacmlParser.getScopeRules(resourceType);
+                    final String policyRules =
                         xacmlParser.getPolicyRules(resourceType);
 
                     LOG.info("create access right (" + role.getId() + ','
@@ -220,7 +220,7 @@ public class PolicyDecisionPoint
                         scopeRules, policyRules);
                 }
                 catch (Exception e) {
-                    String message =
+                    final String message =
                         "The translation from XACML to SQL failed. Please try to "
                             + "paraphrase your policy or contact the developer team "
                             + "to extend the conversion rules accordingly.";
@@ -254,17 +254,17 @@ public class PolicyDecisionPoint
         throws ResourceNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
-        boolean[] allowedObjects = new boolean[requests.size()];
+        final boolean[] allowedObjects = new boolean[requests.size()];
         int i = 0;
 
-        for (Map<String, String> attributeMap : requests) {
-            Iterator<Entry<String, String>> attributeUriIter =
+        for (final Map<String, String> attributeMap : requests) {
+            final Iterator<Entry<String, String>> attributeUriIter =
                     attributeMap.entrySet().iterator();
             Set<Subject> subjects = null;
             Set<Attribute> actions = null;
-            Set<Attribute> resourceAttributes = new HashSet<Attribute>();
+            final Set<Attribute> resourceAttributes = new HashSet<Attribute>();
             while (attributeUriIter.hasNext()) {
-                Entry<String, String> mapEntry = attributeUriIter.next();
+                final Entry<String, String> mapEntry = attributeUriIter.next();
                 final String uriString = mapEntry.getKey();
                 URI uri = uriCache.get(uriString);
                 if (uri == null) {
@@ -288,7 +288,7 @@ public class PolicyDecisionPoint
                         throw new SystemException(
                                 "Duplicate definition of subject id");
                     }
-                    Set<Attribute> subjectAttributes =
+                    final Set<Attribute> subjectAttributes =
                             new HashSet<Attribute>(1);
                     subjectAttributes.add(attribute);
                     subjects = new HashSet<Subject>(1);
@@ -308,20 +308,20 @@ public class PolicyDecisionPoint
 
             // Provide attributes provided in the evaluation request for
             // checking during attribute resolving.
-            Iterator<Attribute> iter = resourceAttributes.iterator();
-            Set<Attribute> uris =
+            final Iterator<Attribute> iter = resourceAttributes.iterator();
+            final Set<Attribute> uris =
                     new HashSet<Attribute>(resourceAttributes.size());
             while (iter.hasNext()) {
-                Attribute attr = iter.next();
+                final Attribute attr = iter.next();
                 uris.add(new Attribute(CheckProvidedAttributeFinderModule
                         .getAttributeId(), null, null, new StringAttribute(attr
                         .getId().toString())));
             }
-            RequestCtx requestCtx =
+            final RequestCtx requestCtx =
                     new RequestCtx(subjects, resourceAttributes, actions, uris);
 
-            ResponseCtx responseCtx = doEvaluate(requestCtx);
-            Result result = extractSingleResultWithoutObligations(responseCtx);
+            final ResponseCtx responseCtx = doEvaluate(requestCtx);
+            final Result result = extractSingleResultWithoutObligations(responseCtx);
             allowedObjects[i] = handleResult(result);
             i++;
         }
@@ -348,17 +348,17 @@ public class PolicyDecisionPoint
         XmlUtility.validate(requestsXml,
             XmlUtility.getPdpRequestsSchemaLocation());
 
-        List<ResponseCtx> responseCtxs = doEvaluate(requestsXml);
+        final List<ResponseCtx> responseCtxs = doEvaluate(requestsXml);
 
-        StringBuilder buf = new StringBuilder("<results xmlns=\"");
+        final StringBuilder buf = new StringBuilder("<results xmlns=\"");
         buf.append(Constants.RESULTS_NS_URI);
         buf.append("\" xmlns:xacml-context=\"");
         buf.append(Constants.XACML_CONTEXT_NS_URI);
         buf.append("\">");
 
-        for (ResponseCtx responseCtx : responseCtxs) {
-            Result result = extractSingleResultWithoutObligations(responseCtx);
-            String decision;
+        for (final ResponseCtx responseCtx : responseCtxs) {
+            final Result result = extractSingleResultWithoutObligations(responseCtx);
+            final String decision;
             if (result.getDecision() == Result.DECISION_PERMIT) {
                 decision = "permit";
             } else {
@@ -408,7 +408,7 @@ public class PolicyDecisionPoint
         try {
             final MethodMappingList methodMappings =
                 cache.getMethodMappings(className, methodName);
-            for (Object[] arguments : argumentList) {
+            for (final Object[] arguments : argumentList) {
                 boolean allowed = true;
                 final Iterator<MethodMapping> iter =
                     methodMappings.iteratorBefore();
@@ -417,9 +417,9 @@ public class PolicyDecisionPoint
                         final List<Map<String, String>> requests =
                             invocationParser.buildRequestsList(arguments,
                                 iter.next());
-                        boolean[] accessAllowedArray =
+                        final boolean[] accessAllowedArray =
                             evaluateRequestList(requests);
-                        for (boolean anAccessAllowedArray : accessAllowedArray) {
+                        for (final boolean anAccessAllowedArray : accessAllowedArray) {
                             if (!anAccessAllowedArray) {
                                 allowed = false;
                                 break;
@@ -472,7 +472,7 @@ public class PolicyDecisionPoint
         try {
             final MethodMappingList methodMappings =
                 cache.getMethodMappings(className, "retrieve");
-            for (String id : ids) {
+            for (final String id : ids) {
                 boolean allowed = true;
                 final Iterator<MethodMapping> iter =
                         methodMappings.iteratorBefore();
@@ -551,7 +551,7 @@ public class PolicyDecisionPoint
                         if (ResourceNotFoundException.class
                                 .isAssignableFrom(clazz)) {
 
-                            String statusMessage = status.getMessage();
+                            final String statusMessage = status.getMessage();
                             e =
                                     (ResourceNotFoundException) clazz
                                             .getConstructor(
@@ -579,7 +579,7 @@ public class PolicyDecisionPoint
             }
 
             if (LOG.isDebugEnabled()) {
-                StringBuilder msg =
+                final StringBuilder msg =
                         new StringBuilder(
                                 "Access not granted. Reason from XACML engine: ");
                 msg.append(Result.DECISIONS[result.getDecision()]);
@@ -598,9 +598,9 @@ public class PolicyDecisionPoint
      */
     private static String encode(final Status status) 
                             throws WebserverSystemException {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
         status.encode(out, new Indenter());
-        String ret;
+        final String ret;
         try {
             ret = out.toString(XmlUtility.CHARACTER_ENCODING);
         } catch (UnsupportedEncodingException e) {
@@ -632,7 +632,7 @@ public class PolicyDecisionPoint
         if (responseCtx.getResults().size() != 1) {
             throw new WebserverSystemException(ERROR_MORE_THAN_ONE_RESULT);
         }
-        Result result = (Result) responseCtx.getResults().iterator().next();
+        final Result result = (Result) responseCtx.getResults().iterator().next();
         if (!result.getObligations().isEmpty()) {
             throw new WebserverSystemException(
                 ERROR_OBLIGATIONS_ARE_NOT_SUPPORTED);
@@ -665,7 +665,7 @@ public class PolicyDecisionPoint
         matcher = PREFIX_PATTERN.matcher(xml);
         xml = matcher.replaceAll("$1");
 
-        StringBuilder buf = new StringBuilder("<results xmlns=\"");
+        final StringBuilder buf = new StringBuilder("<results xmlns=\"");
         buf.append(Constants.RESULTS_NS_URI);
         buf.append("\" xmlns:xacml-context=\"");
         buf.append(Constants.XACML_CONTEXT_NS_URI);
@@ -673,20 +673,20 @@ public class PolicyDecisionPoint
 
         matcher = SPLIT_PATTERN.matcher(xml);
         int i = 0;
-        List<RequestCtx> requestCtxs = new ArrayList<RequestCtx>();
+        final List<RequestCtx> requestCtxs = new ArrayList<RequestCtx>();
         while (matcher.find(i)) {
             try {
                 RequestCtx requestCtx =
                     RequestCtx.getInstance(new ByteArrayInputStream(matcher
                         .group(1).getBytes(XmlUtility.CHARACTER_ENCODING)));
-                Set<Attribute> resources = requestCtx.getResource();
-                Set<Attribute> uris = new HashSet<Attribute>(resources.size());
-                for (Attribute attribute : resources) {
+                final Set<Attribute> resources = requestCtx.getResource();
+                final Set<Attribute> uris = new HashSet<Attribute>(resources.size());
+                for (final Attribute attribute : resources) {
                     uris.add(new Attribute(CheckProvidedAttributeFinderModule
                         .getAttributeId(), null, null, new StringAttribute(
                         attribute.getId().toString())));
                 }
-                for (Attribute attribute : (Set<Attribute>) requestCtx
+                for (final Attribute attribute : (Set<Attribute>) requestCtx
                     .getEnvironmentAttributes()) {
                     uris.add(attribute);
                 }
@@ -720,8 +720,8 @@ public class PolicyDecisionPoint
     private List<ResponseCtx> doEvaluate(final List<RequestCtx> requestCtxs)
         throws WebserverSystemException {
 
-        Iterator<RequestCtx> iter = requestCtxs.iterator();
-        List<ResponseCtx> responsCtxs =
+        final Iterator<RequestCtx> iter = requestCtxs.iterator();
+        final List<ResponseCtx> responsCtxs =
             new ArrayList<ResponseCtx>(requestCtxs.size());
         while (iter.hasNext()) {
             responsCtxs.add(doEvaluate(iter.next()));
@@ -744,7 +744,7 @@ public class PolicyDecisionPoint
 
         if (LOG.isDebugEnabled()) {
             LOG.debug("Request: ");
-            ByteArrayOutputStream writer = new ByteArrayOutputStream();
+            final ByteArrayOutputStream writer = new ByteArrayOutputStream();
             requestCtx.encode(writer, new Indenter());
             LOG.debug(writer.toString());
             try {
@@ -774,7 +774,7 @@ public class PolicyDecisionPoint
 
         if (LOG.isDebugEnabled()) {
             LOG.debug("Response: ");
-            ByteArrayOutputStream writer = new ByteArrayOutputStream();
+            final ByteArrayOutputStream writer = new ByteArrayOutputStream();
             response.encode(writer, new Indenter());
             LOG.debug(writer.toString());
             try {

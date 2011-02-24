@@ -174,12 +174,12 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
         final String resourceVersionNumber) throws EscidocException {
 
         EvaluationResult result = null;
-        String resolvedAttributeIdValue;
-        Matcher roleAttributeMatcher = 
+        final String resolvedAttributeIdValue;
+        final Matcher roleAttributeMatcher =
             PATTERN_PARSE_ROLE_ATTRIBUTE_ID.matcher(attributeIdValue);
         if (roleAttributeMatcher.find()) {
             resolvedAttributeIdValue = roleAttributeMatcher.group(1);
-            EscidocRole role = retrieveRole(ctx, resourceId);
+            final EscidocRole role = retrieveRole(ctx, resourceId);
             if (resolvedAttributeIdValue.equals(ATTR_ROLE_ID)) {
                 result =
                     CustomEvaluationResultBuilder

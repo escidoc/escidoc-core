@@ -157,7 +157,7 @@ public final class CustomEvaluationResultBuilder {
     public static EvaluationResult createSingleStringValueResult(
         final String value) {
 
-        List<StringAttribute> stringAttributes =
+        final List<StringAttribute> stringAttributes =
             new ArrayList<StringAttribute>();
         stringAttributes.add(new StringAttribute(value));
         return new EvaluationResult(new BagAttribute(

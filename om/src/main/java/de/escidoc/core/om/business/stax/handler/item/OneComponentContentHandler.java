@@ -102,22 +102,22 @@ public class OneComponentContentHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         if (elementPath.equals(currentPath)) {
-            int indexOfStorage =
+            final int indexOfStorage =
                 element.indexOfAttribute(null, Elements.ATTRIBUTE_STORAGE);
             String storageValue = null;
             if (indexOfStorage != -1) {
-                Attribute storage = element.getAttribute(indexOfStorage);
+                final Attribute storage = element.getAttribute(indexOfStorage);
                 storageValue = storage.getValue();
             }
             componentBinary.put(Elements.ATTRIBUTE_STORAGE, storageValue);
             inContent = true;
-            int indexOfHref =
+            final int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI,
                     Elements.ATTRIBUTE_XLINK_HREF);
             if (indexOfHref >= 0) {
-                Attribute href = element.getAttribute(indexOfHref);
+                final Attribute href = element.getAttribute(indexOfHref);
 
                 this.uploadUrl = href.getValue();
             }

@@ -106,14 +106,14 @@ public class RelationHandler2 extends DefaultHandler {
             String predicate = null;
 
             try {
-                String predicateUri =
+                final String predicateUri =
                     element.getAttributeValue(null,
                         Elements.ATTRIBUTE_PREDICATE);
 
                 if (predicateUri != null) {
-                    String[] predicateAndTarget = predicateUri.split("#");
+                    final String[] predicateAndTarget = predicateUri.split("#");
                     if (predicateAndTarget.length != 2) {
-                        String msg = "Attribute has invalid predicate";
+                        final String msg = "Attribute has invalid predicate";
                         LOGGER.debug(msg + " '" + predicateUri + '\'');
                         throw new InvalidContentException(msg);
                     }
@@ -131,7 +131,7 @@ public class RelationHandler2 extends DefaultHandler {
             try {
                 // REST
                 if (UserContext.isRestAccess()) {
-                    String href =
+                    final String href =
                         element.getAttributeValue(Constants.XLINK_NS_URI,
                             Elements.ATTRIBUTE_XLINK_HREF);
                     id = Utility.getId(href);
@@ -150,7 +150,7 @@ public class RelationHandler2 extends DefaultHandler {
 
             // handle objid
             if (XmlUtility.getVersionNumberFromObjid(id) != null) {
-                String message =
+                final String message =
                     "A relation target may not be referenced by an "
                         + " identifier containing a version number. "
                         + "Use a floating identifier like 'escidoc:123' "

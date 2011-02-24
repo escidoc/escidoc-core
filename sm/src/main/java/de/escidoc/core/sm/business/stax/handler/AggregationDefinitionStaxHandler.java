@@ -173,7 +173,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
                 }
                 else if ("field".equals(element.getLocalName())) {
                     tableIndexFieldIndex++;
-                    AggregationTableIndexField indexField =
+                    final AggregationTableIndexField indexField =
                         new AggregationTableIndexField();
                     indexField.setField(s);
                     indexField.setListIndex(tableIndexFieldIndex);
@@ -227,7 +227,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      */
     @Override
     public StartElement startElement(final StartElement element) throws Exception {
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         boolean fieldRootElement = false;
         if (TABLE_PATH.equals(currentPath)) {
             inTable = true;
@@ -259,9 +259,9 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
                                     statisticDataSelectorIndex);
         }
         else if ("scope".equals(element.getLocalName())) {
-            String objId = XmlUtility.getIdFromStartElement(element);
+            final String objId = XmlUtility.getIdFromStartElement(element);
             if (objId != null) {
-                Scope scope = new Scope();
+                final Scope scope = new Scope();
                 scope.setId(objId);
                 aggregationDefinition.setScope(scope);
             }
@@ -288,9 +288,9 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
                     .setSelectorType("statistic-table");
         } 
         if (fieldRootElement) {
-            int indexOfAttribute = element.indexOfAttribute("", "feed");
+            final int indexOfAttribute = element.indexOfAttribute("", "feed");
             if (indexOfAttribute != (-1)) {
-                Attribute att = element.getAttribute(indexOfAttribute);
+                final Attribute att = element.getAttribute(indexOfAttribute);
                 aggregationTableField.setFeed(att.getValue());
             }
         }
@@ -307,7 +307,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         if (TABLE_PATH.equals(currentPath)) {
             inTable = false;
             aggregationTables.add(aggregationTable);
@@ -349,16 +349,16 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             final AggregationDefinition aggregationDefinition) 
                                         throws SystemException {
         this.aggregationDefinition = aggregationDefinition;
-        for (AggregationStatisticDataSelector aggregationStatisticDataSel 
+        for (final AggregationStatisticDataSelector aggregationStatisticDataSel
                                         : aggregationStatisticDataSelectors) {
             aggregationStatisticDataSel
                     .setAggregationDefinition(aggregationDefinition);
         }
-        for (AggregationTable aggregationTab : aggregationTables) {
+        for (final AggregationTable aggregationTab : aggregationTables) {
             aggregationTab.setName(getReplacedTableOrIndexName(
                     aggregationDefinition, aggregationTab.getName()));
             if (aggregationTab.getAggregationTableIndexes() != null) {
-                for (AggregationTableIndexe index 
+                for (final AggregationTableIndexe index
                         : aggregationTab.getAggregationTableIndexes()) {
                     index.setName(getReplacedTableOrIndexName(
                             aggregationDefinition, index.getName()));
@@ -385,7 +385,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             throw new SystemException(
                     "aggregationDefinition PrimKey may not be null");
         }
-        StringBuilder replaced = new StringBuilder();
+        final StringBuilder replaced = new StringBuilder();
         replaced.append('_')
             .append(aggregationDef.getId().replaceAll("\\:", ""))
             .append('_');

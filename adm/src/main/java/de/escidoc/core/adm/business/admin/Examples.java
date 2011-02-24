@@ -116,10 +116,10 @@ public class Examples {
                     new ByteArrayInputStream(
                         xml.getBytes(XmlUtility.CHARACTER_ENCODING));
 
-                DocumentBuilder db =
+                final DocumentBuilder db =
                     DocumentBuilderFactory.newInstance().newDocumentBuilder();
-                Document xmlDom = db.parse(input);
-                XPath xpath = XPathFactory.newInstance().newXPath();
+                final Document xmlDom = db.parse(input);
+                final XPath xpath = XPathFactory.newInstance().newXPath();
 
                 result =
                     xpath.evaluate("/result/@last-modification-date", xmlDom);
@@ -156,10 +156,10 @@ public class Examples {
                     new ByteArrayInputStream(
                         xml.getBytes(XmlUtility.CHARACTER_ENCODING));
 
-                DocumentBuilder db =
+                final DocumentBuilder db =
                     DocumentBuilderFactory.newInstance().newDocumentBuilder();
-                Document xmlDom = db.parse(input);
-                XPath xpath = XPathFactory.newInstance().newXPath();
+                final Document xmlDom = db.parse(input);
+                final XPath xpath = XPathFactory.newInstance().newXPath();
 
                 result =
                     xpath.evaluate('/' + type.getLabel()
@@ -197,11 +197,11 @@ public class Examples {
                     new ByteArrayInputStream(
                         xml.getBytes(XmlUtility.CHARACTER_ENCODING));
 
-                DocumentBuilder db =
+                final DocumentBuilder db =
                     DocumentBuilderFactory.newInstance().newDocumentBuilder();
-                Document xmlDom = db.parse(input);
-                XPath xpath = XPathFactory.newInstance().newXPath();
-                String href =
+                final Document xmlDom = db.parse(input);
+                final XPath xpath = XPathFactory.newInstance().newXPath();
+                final String href =
                     xpath.evaluate(
                             '/' + type.getLabel() + "/@href|/" + type.getLabel()
                             + "/@objid", xmlDom);
@@ -230,32 +230,32 @@ public class Examples {
      *             thrown in case of an internal error
      */
     public String load(final String directory) throws Exception {
-        StringBuilder result = new StringBuilder();
-        String ouId = loadOrganizationalUnit(loadFile(directory + EXAMPLE_OU));
+        final StringBuilder result = new StringBuilder();
+        final String ouId = loadOrganizationalUnit(loadFile(directory + EXAMPLE_OU));
 
         result.append(createMessage("created " + ResourceType.OU.getLabel()
             + ": " + ouId));
 
-        String contextId =
+        final String contextId =
             loadContext(loadFile(directory + EXAMPLE_CONTEXT), ouId);
 
         result.append(createMessage("created "
             + ResourceType.CONTEXT.getLabel() + ": " + contextId));
 
-        String contentModelId =
+        final String contentModelId =
             loadContentModel(loadFile(directory + EXAMPLE_CONTENT_MODEL));
 
         result.append(createMessage("created "
             + ResourceType.CONTENT_MODEL.getLabel() + ": " + contentModelId));
 
-        String containerId =
+        final String containerId =
             loadContainer(loadFile(directory + EXAMPLE_CONTAINER), contextId,
                 contentModelId);
 
         result.append(createMessage("created "
             + ResourceType.CONTAINER.getLabel() + ": " + containerId));
 
-        String itemId =
+        final String itemId =
             loadItem(loadFile(directory + EXAMPLE_ITEM), contextId,
                 contentModelId, containerId);
 
@@ -282,11 +282,11 @@ public class Examples {
         final String xml, final String contextId, final String contentModelId)
         throws Exception {
         String result = null;
-        ContainerHandlerInterface handler =
+        final ContainerHandlerInterface handler =
             BeanLocator.locateContainerHandler();
 
         if (handler != null) {
-            String createXml =
+            final String createXml =
                 handler.create(MessageFormat.format(xml, contextId, contentModelId));
 
             result = getObjectId(createXml, ResourceType.CONTAINER);
@@ -305,11 +305,11 @@ public class Examples {
      */
     private String loadContentModel(final String xml) throws Exception {
         String result = null;
-        ContentModelHandlerInterface handler =
+        final ContentModelHandlerInterface handler =
             BeanLocator.locateContentModelHandler();
 
         if (handler != null) {
-            String createXml = handler.create(xml);
+            final String createXml = handler.create(xml);
 
             result = getObjectId(createXml, ResourceType.CONTENT_MODEL);
         }
@@ -330,10 +330,10 @@ public class Examples {
     private String loadContext(final String xml, final String ouId)
         throws Exception {
         String result = null;
-        ContextHandlerInterface handler = BeanLocator.locateContextHandler();
+        final ContextHandlerInterface handler = BeanLocator.locateContextHandler();
 
         if (handler != null) {
-            String createXml =
+            final String createXml =
                 handler.create(MessageFormat.format(xml, new Date().getTime(), ouId));
 
             result = getObjectId(createXml, ResourceType.CONTEXT);
@@ -380,12 +380,12 @@ public class Examples {
         final String xml, final String contextId, final String contentModelId,
         final String containerId) throws Exception {
         String result = null;
-        ContainerHandlerInterface containerHandler =
+        final ContainerHandlerInterface containerHandler =
             BeanLocator.locateContainerHandler();
-        ItemHandlerInterface itemHandler = BeanLocator.locateItemHandler();
+        final ItemHandlerInterface itemHandler = BeanLocator.locateItemHandler();
 
         if ((containerHandler != null) && (itemHandler != null)) {
-            String createXml =
+            final String createXml =
                 containerHandler.createItem(
                     containerId,
                     MessageFormat.format(xml, contextId,
@@ -393,15 +393,15 @@ public class Examples {
 
             result = getObjectId(createXml, ResourceType.ITEM);
 
-            String submitXml =
+            final String submitXml =
                 itemHandler.submit(
                     result,
                     createTaskParam(getLastModificationDate(createXml,
                         ResourceType.ITEM)));
-            String objectPidXml =
+            final String objectPidXml =
                 itemHandler.assignObjectPid(result,
                     createTaskParam(getLastModificationDate(submitXml)));
-            String versionPidXml =
+            final String versionPidXml =
                 itemHandler.assignVersionPid(result,
                     createTaskParam(getLastModificationDate(objectPidXml)));
 
@@ -422,11 +422,11 @@ public class Examples {
      */
     private String loadOrganizationalUnit(final String xml) throws Exception {
         String result = null;
-        OrganizationalUnitHandlerInterface handler =
+        final OrganizationalUnitHandlerInterface handler =
             BeanLocator.locateOrganizationalUnitHandler();
 
         if (handler != null) {
-            String createXml = handler.create(xml);
+            final String createXml = handler.create(xml);
 
             result = getObjectId(createXml, ResourceType.OU);
             handler.open(

@@ -105,9 +105,9 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         stagingFile.setMimeType(binaryContent.getMimeType());
         dao.update(stagingFile);
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {
-            XMLStreamWriter writer = XmlUtility.createXmlStreamWriter(out);
+            final XMLStreamWriter writer = XmlUtility.createXmlStreamWriter(out);
 
             XmlUtility.setCommonPrefixes(writer);
             writer.setDefaultNamespace(Constants.STAGING_FILE_NS_URI);
@@ -165,8 +165,8 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         AuthorizationException, MissingMethodParameterException,
         SystemException {
 
-        StagingFile stagingFile = getStagingFile(stagingFileId);
-        EscidocBinaryContent binaryContent = new EscidocBinaryContent();
+        final StagingFile stagingFile = getStagingFile(stagingFileId);
+        final EscidocBinaryContent binaryContent = new EscidocBinaryContent();
         binaryContent.setMimeType(stagingFile.getMimeType());
         binaryContent.setFileName(stagingFile.getReference());
         try {
@@ -223,7 +223,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
                 "staging file id must be provided.");
         }
 
-        StagingFile result = dao.findStagingFile(stagingFileId);
+        final StagingFile result = dao.findStagingFile(stagingFileId);
         if ((result == null) || (result.isExpired())) {
             throw new StagingFileNotFoundException(StringUtility
                 .format(

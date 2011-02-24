@@ -170,7 +170,7 @@ public class MapResult {
     @Override
     public String toString() {
 
-        ToStringBuilder toStringBuilder = new ToStringBuilder(this);
+        final ToStringBuilder toStringBuilder = new ToStringBuilder(this);
         toStringBuilder.append(super.toString());
         toStringBuilder.append("cacheId", getCacheId());
         toStringBuilder.append("resolvableId", getresolvableAttributeId());

@@ -61,7 +61,7 @@ public class FedoraIngestFacade implements IngestFacade {
      * @param formatter
      *            the formatter to set
      */
-    public void setFormatter(ValueFormatter formatter) {
+    public void setFormatter(final ValueFormatter formatter) {
         this.formatter = formatter;
     }
 
@@ -86,7 +86,7 @@ public class FedoraIngestFacade implements IngestFacade {
      *
      * @param resourceMapperDao
      */
-    public void setResourceMapperDao(ResourceMapperDao resourceMapperDao) {
+    public void setResourceMapperDao(final ResourceMapperDao resourceMapperDao) {
         this.resourceMapperDao = resourceMapperDao;
     }
 
@@ -99,11 +99,11 @@ public class FedoraIngestFacade implements IngestFacade {
      */
     @Override
     public String ingest(final String xmlData) throws EscidocException {
-        ResourceMapperBean bean =
+        final ResourceMapperBean bean =
             getResourceMapperDao().getIngestableForResource(xmlData);
-        String objectId = bean.getResource().ingest(xmlData);
+        final String objectId = bean.getResource().ingest(xmlData);
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
         values.put(Constants.INGEST_OBJ_ID, objectId);
         values.put(Constants.INGEST_RESOURCE_TYPE, bean.getResourceType().toString());
 

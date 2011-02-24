@@ -89,7 +89,7 @@ public class PreprocessingInformationStaxHandler extends DefaultHandler {
                 final String s, 
                 final StartElement element) 
                     throws Exception {
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (START_DATE_PATH.equals(currentPath)) {
             startDate = DATE_FORMAT.parse(s);

@@ -72,7 +72,7 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
 
         if ("file".equals(element.getLocalName())) {
             try {
-                String uriString =
+                final String uriString =
                     element
                         .getAttribute(Constants.XLINK_URI, "href").getValue();
                 if ("".equals(uriString)) {
@@ -109,7 +109,7 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
     public String getFilesAsCsv() {
 
         StringBuffer result = new StringBuffer();
-        Iterator<String> iter = files.iterator();
+        final Iterator<String> iter = files.iterator();
         if (iter.hasNext()) {
             result = result.append(iter.next());
             while (iter.hasNext()) {

@@ -74,7 +74,7 @@ public class SpringStatisticPreprocessorService {
      */
     @ManagedOperation(description = "Preprocess statistic data.")
     public void execute() throws Exception {
-        long lastExecutionTime = 
+        final long lastExecutionTime =
             StatisticPreprocessorServiceTimer.getInstance().getLastExecutionTime();
         if (lastExecutionTime > 0 
             && (System.currentTimeMillis() - lastExecutionTime) < 1000) {
@@ -83,8 +83,8 @@ public class SpringStatisticPreprocessorService {
         try {
             log.info("preprocessing statistic-data");
             // call with date of yesterday
-            long time = System.currentTimeMillis() - MILLISECONDS_PER_DAY;
-            Date date = new Date(time);
+            final long time = System.currentTimeMillis() - MILLISECONDS_PER_DAY;
+            final Date date = new Date(time);
             preprocessor.execute(date);
         } catch (Exception e) {
             errorMessageHandler.putErrorMessage(
@@ -112,7 +112,7 @@ public class SpringStatisticPreprocessorService {
     @ManagedOperationParameter(name = "millies", description = "Day to preprocess in millies.")
     public void execute(final long millies) throws Exception {
         try {
-            Date date = new Date(millies);
+            final Date date = new Date(millies);
             preprocessor.execute(date);
         } catch (Exception e) {
             errorMessageHandler.putErrorMessage(

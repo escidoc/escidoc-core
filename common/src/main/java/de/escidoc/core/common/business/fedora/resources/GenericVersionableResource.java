@@ -167,11 +167,11 @@ public class GenericVersionableResource extends GenericResourcePid {
         }
         catch (WebserverSystemException e) {
             if (TripleStoreUtility.getInstance().exists(id)) {
-                String msg = "Unexpected exception during RELS-EXT parsing.";
+                final String msg = "Unexpected exception during RELS-EXT parsing.";
                 LOG.warn(msg + e);
                 throw new WebserverSystemException(e);
             } else {
-                String msg =
+                final String msg =
                         "Resource with the provided objid '" + id
                                 + "' does not exist.";
                 LOG.debug(msg);
@@ -207,13 +207,13 @@ public class GenericVersionableResource extends GenericResourcePid {
         if ((this.versionNumber != null) && (this.versionNumber.length() > 0)) {
 
             this.versionNumber = this.versionNumber.substring(1);
-            String latestVersionNumber =
+            final String latestVersionNumber =
                 TripleStoreUtility.getInstance().getPropertiesElements(getId(),
                     TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
             if ((latestVersionNumber == null)
                 || (Integer.valueOf(this.versionId) > Integer
                     .valueOf(latestVersionNumber))) {
-                String message =
+                final String message =
                     "The version " + versionNumber
                         + " of the requested resource " + "does not exist.";
                 throw new ResourceNotFoundException(message);
@@ -299,7 +299,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     public String getVersionId() {
         if (this.versionId == null) {
-            String curVersionId = getVersionNumber();
+            final String curVersionId = getVersionNumber();
             if (curVersionId != null) {
                 return curVersionId;
             }
@@ -342,7 +342,7 @@ public class GenericVersionableResource extends GenericResourcePid {
              */
 
             try {
-                org.fcrepo.server.types.gen.Datastream[] datastreams =
+                final org.fcrepo.server.types.gen.Datastream[] datastreams =
                     getFedoraUtility().getDatastreamHistory(getId(),
                         Datastream.RELS_EXT_DATASTREAM);
                 this.creationDate =
@@ -366,7 +366,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     public String getVersionDate() throws WebserverSystemException {
 
-        String versionDate;
+        final String versionDate;
         try {
             versionDate =
                 getVersionElementData(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE);
@@ -617,8 +617,8 @@ public class GenericVersionableResource extends GenericResourcePid {
         }
 
         this.lastVersionData = new HashMap<String, String>();
-        List<Triple> triples = eve.getElementValues().getTriples();
-        for (Triple triple : triples) {
+        final List<Triple> triples = eve.getElementValues().getTriples();
+        for (final Triple triple : triples) {
             this.lastVersionData.put(triple.getPredicate(), triple.getObject());
         }
         return this.lastVersionData;
@@ -663,7 +663,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     public Map<String, String> getVersionData(final String versionNo)
         throws IntegritySystemException, WebserverSystemException {
 
-        Map<String, String> versionData;
+        final Map<String, String> versionData;
 
         try {
             versionData = super.getResourceProperties();
@@ -673,11 +673,11 @@ public class GenericVersionableResource extends GenericResourcePid {
         }
         if (versionNo != null) {
             try {
-                StaxParser sp = new StaxParser();
-                WovReadHandler wrh = new WovReadHandler(sp, versionNo);
+                final StaxParser sp = new StaxParser();
+                final WovReadHandler wrh = new WovReadHandler(sp, versionNo);
                 sp.addHandler(wrh);
                 sp.parse(getWov().getStream());
-                Map<String, String> prop = wrh.getVersionData();
+                final Map<String, String> prop = wrh.getVersionData();
                 versionData.putAll(prop);
             }
             catch (Exception e) {
@@ -804,7 +804,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         // (and override the inherited method)
 
         // last operation is to update the timestamp in RELS-EXT
-        Map<String, StartElementWithChildElements> updateElementsRelsExt =
+        final Map<String, StartElementWithChildElements> updateElementsRelsExt =
             new TreeMap<String, StartElementWithChildElements>();
 
         updateElementsRelsExt.put(Constants.VERSION_NS_URI
@@ -948,8 +948,8 @@ public class GenericVersionableResource extends GenericResourcePid {
         XmlParserSystemException, WebserverSystemException {
 
         // parse version-history
-        StaxParser sp = new StaxParser();
-        WovReadHandler wrh = new WovReadHandler(sp, this.versionNumber);
+        final StaxParser sp = new StaxParser();
+        final WovReadHandler wrh = new WovReadHandler(sp, this.versionNumber);
         sp.addHandler(wrh);
         try {
             sp.parse(this.getWov().getStream());
@@ -1099,7 +1099,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         throws FedoraSystemException, WebserverSystemException {
 
         try {
-            byte[] b = getWov().getStream();
+            final byte[] b = getWov().getStream();
             String tmpWov = new String(b, XmlUtility.CHARACTER_ENCODING);
             tmpWov =
                 tmpWov.replaceAll(XmlTemplateProvider.TIMESTAMP_PLACEHOLDER,
@@ -1133,7 +1133,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         final String comment) throws WebserverSystemException,
         IntegritySystemException {
 
-        HashMap<String, String> eventValues = new HashMap<String, String>();
+        final HashMap<String, String> eventValues = new HashMap<String, String>();
 
         eventValues.put(XmlTemplateProvider.VAR_EVENT_TYPE, newStatus);
         eventValues.put(XmlTemplateProvider.VAR_EVENT_XMLID, 'v'
@@ -1195,7 +1195,7 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         final StaxParser sp = new StaxParser();
 
-        Map<String, StartElementWithChildElements> updateElementsWOV =
+        final Map<String, StartElementWithChildElements> updateElementsWOV =
             new HashMap<String, StartElementWithChildElements>();
         // FIXME change first occurence of timestamp in version-history
         updateElementsWOV.put(TripleStoreUtility.PROP_VERSION_TIMESTAMP,
@@ -1204,28 +1204,28 @@ public class GenericVersionableResource extends GenericResourcePid {
                 Constants.WOV_NAMESPACE_URI, Constants.WOV_NAMESPACE_PREFIX,
                 null, timestamp, null));
 
-        ItemRelsExtUpdateHandler ireuh =
+        final ItemRelsExtUpdateHandler ireuh =
             new ItemRelsExtUpdateHandler(updateElementsWOV, sp);
         ireuh.setPath("/version-history/version/");
         sp.addHandler(ireuh);
 
-        AddNewSubTreesToDatastream addNewSubtreesHandler =
+        final AddNewSubTreesToDatastream addNewSubtreesHandler =
             new AddNewSubTreesToDatastream("/version-history", sp);
-        StartElement pointer =
+        final StartElement pointer =
             new StartElement("version", Constants.WOV_NAMESPACE_URI,
                 "escidocVersions", null);
         addNewSubtreesHandler.setPointerElement(pointer);
-        List<StartElementWithChildElements> elementsToAdd =
+        final List<StartElementWithChildElements> elementsToAdd =
             new ArrayList<StartElementWithChildElements>();
         addNewSubtreesHandler.setSubtreeToInsert(elementsToAdd);
         sp.addHandler(addNewSubtreesHandler);
 
         try {
             sp.parse(getWov().getStream());
-            ByteArrayOutputStream newWovStream =
+            final ByteArrayOutputStream newWovStream =
                 addNewSubtreesHandler.getOutputStreams();
 
-            String newWovString =
+            final String newWovString =
                 newWovStream
                     .toString(XmlUtility.CHARACTER_ENCODING).replaceFirst(
                         "(<" + Constants.WOV_NAMESPACE_PREFIX
@@ -1253,7 +1253,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     private Collection<String> expandPropertiesNames(
         final Collection<String> propertiesNames) {
 
-        Collection<String> newPropertiesNames;
+        final Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
             newPropertiesNames = propertiesNames;
         }
@@ -1289,7 +1289,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     private Map<String, String> expandPropertiesNamesMapping(
         final Map<String, String> propertiesNamesMap) {
 
-        Map<String, String> newPropertiesNamesMap;
+        final Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
             newPropertiesNamesMap = propertiesNamesMap;
         }
@@ -1350,13 +1350,13 @@ public class GenericVersionableResource extends GenericResourcePid {
     public Map<String, String> mapTripleStoreKeys(
         final Map<String, String> tripleStoreMap) {
 
-        Map<String, String> properties = new HashMap<String, String>();
+        final Map<String, String> properties = new HashMap<String, String>();
 
-        for (String sourceKey : tripleStoreMap.keySet()) {
-            String value = tripleStoreMap.get(sourceKey);
+        for (final String sourceKey : tripleStoreMap.keySet()) {
+            final String value = tripleStoreMap.get(sourceKey);
 
             if (value != null) {
-                String targetKey = getPropertiesNamesMapping().get(sourceKey);
+                final String targetKey = getPropertiesNamesMapping().get(sourceKey);
 
                 if (targetKey != null) {
                     properties.put(targetKey, value);
@@ -1369,7 +1369,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                             // FIXME:schauen, ob alle andere properties fuer
                             // current und latest haben
                             // consistente namen
-                            String currentVersionKey;
+                            final String currentVersionKey;
                             if (targetKey
                                     .equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS)) {
                                 currentVersionKey =
@@ -1393,7 +1393,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                                 .equals(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_ID)
                                 || targetKey
                                 .equals(PropertyMapKeys.LATEST_VERSION_CONTENT_MODEL_TITLE)) {
-                            String currentVersionKey =
+                            final String currentVersionKey =
                                     targetKey.replace("LATEST_", "CURRENT_");
                             properties.put(currentVersionKey, value);
                         }
@@ -1422,20 +1422,20 @@ public class GenericVersionableResource extends GenericResourcePid {
 
     @Override
     protected void initDatastreams(
-        org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
+        final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {
 
-        for (org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
-            List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
-            String name = datastreamInfo.getID();
-            String label = datastreamInfo.getLabel();
-            DatastreamControlGroup controlGroup =
+        for (final org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
+            final List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
+            final String name = datastreamInfo.getID();
+            final String label = datastreamInfo.getLabel();
+            final DatastreamControlGroup controlGroup =
                     datastreamInfo.getControlGroup();
-            String controlGroupValue = controlGroup.getValue();
-            String mimeType = datastreamInfo.getMIMEType();
-            String location = datastreamInfo.getLocation();
+            final String controlGroupValue = controlGroup.getValue();
+            final String mimeType = datastreamInfo.getMIMEType();
+            final String location = datastreamInfo.getLocation();
 
             Datastream ds;
 

@@ -117,9 +117,9 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     public String getContentRelationXml(final ContentRelationCreate cr)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         // put all relevant values from object into value Map
-        Map<String, String> commonValues = getCommonValues();
+        final Map<String, String> commonValues = getCommonValues();
 
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
             XmlTemplateProvider.FALSE);
@@ -152,7 +152,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         throws SystemException, EncodingSystemException, FedoraSystemException,
         IntegritySystemException {
 
-        Map<String, String> commonValues = getCommonValues();
+        final Map<String, String> commonValues = getCommonValues();
         return renderMdRecords(cr, commonValues, true);
     }
 
@@ -172,10 +172,10 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         throws MdRecordNotFoundException, FedoraSystemException,
         SystemException {
 
-        Map<String, String> commonValues = getCommonValues();
-        String mdRecord = renderMdRecord(cr, mr, commonValues, true);
+        final Map<String, String> commonValues = getCommonValues();
+        final String mdRecord = renderMdRecord(cr, mr, commonValues, true);
         if (mdRecord.length() == 0) {
-            String message =
+            final String message =
                 "A content relation with id " + cr.getObjid()
                     + "does not contain a md-record with a name "
                     + mr.getName() + " .";
@@ -198,9 +198,9 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     public String getContentRelationPropertiesXml(final ContentRelationCreate cr)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         // put all relevant values from object into value Map
-        Map<String, String> commonValues = getCommonValues();
+        final Map<String, String> commonValues = getCommonValues();
 
         values.putAll(getResourceValues(cr));
         values.putAll(getLockValues(cr));
@@ -240,7 +240,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     public String getContentRelationResourcesXml(final ContentRelationCreate cr)
         throws WebserverSystemException {
 
-        Map<String, String> values = getResourceValues(cr);
+        final Map<String, String> values = getResourceValues(cr);
         values.putAll(getCommonValues());
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
             XmlTemplateProvider.TRUE);
@@ -287,7 +287,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     private Map<String, String> getCommonValues()
         throws WebserverSystemException {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.CONTENT_RELATION_NAMESPACE_PREFIX,
             Constants.RELATION_NAMESPACE_PREFIX);
@@ -332,7 +332,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     private Map<String, String> getResourceValues(final ContentRelationCreate cr)
         throws WebserverSystemException {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.OBJID, cr.getObjid());
         values.put(XmlTemplateProvider.TITLE, cr.getProperties().getTitle());
@@ -392,7 +392,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
      */
     private Map<String, String> getLockValues(final ContentRelationCreate cr) {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.LOCK_STATUS, cr
             .getProperties().getLockStatus().toString());
 
@@ -428,7 +428,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     private Map<String, String> getRelationValues(final ContentRelationCreate cr)
         throws WebserverSystemException, TripleStoreSystemException {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         // type -----------------
         values.put(XmlTemplateProvider.CONTENT_RELATION_TYPE, cr
@@ -442,7 +442,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
             subjectId = subjectId + ':' + version;
         }
         values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_ID, subjectId);
-        String subjectType =
+        final String subjectType =
             TripleStoreUtility.getInstance().getObjectType(objid);
         String subHref = XmlUtility.getHref(subjectType, subjectId);
         values.put(XmlTemplateProvider.CONTENT_RELATION_SUBJECT_HREF, subHref);
@@ -460,7 +460,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
             objectId = objectId + ':' + version;
         }
         values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_ID, objectId);
-        String objectType =
+        final String objectType =
             TripleStoreUtility.getInstance().getObjectType(objid);
         subHref = XmlUtility.getHref(objectType, objectId);
         values.put(XmlTemplateProvider.CONTENT_RELATION_OBJECT_HREF, subHref);
@@ -499,7 +499,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         EncodingSystemException, MdRecordNotFoundException,
         TripleStoreSystemException {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.VAR_MD_RECORD_HREF,
             Constants.CONTENT_RELATION_URL_BASE + cr.getObjid()
@@ -513,7 +513,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         }
 
         // get md-record content
-        String content = mdRecord.getContent();
+        final String content = mdRecord.getContent();
         if (content != null) {
             values.put(XmlTemplateProvider.MD_RECORD_CONTENT, content);
         }
@@ -623,13 +623,13 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         EncodingSystemException, FedoraSystemException,
         IntegritySystemException, TripleStoreSystemException {
 
-        StringBuilder content = new StringBuilder();
+        final StringBuilder content = new StringBuilder();
 
-        List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
+        final List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
         if (mdRecords != null) {
-            for (MdRecordCreate mdRecord : mdRecords) {
+            for (final MdRecordCreate mdRecord : mdRecords) {
                 try {
-                    String mdRecordContent =
+                    final String mdRecordContent =
                             renderMdRecord(cr, mdRecord, commonValues, false);
                     content.append(mdRecordContent);
                 } catch (MdRecordNotFoundException e) {
@@ -644,7 +644,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
         }
 
         // prepare value map for Velocity
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         if (isRoot) {
             values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,

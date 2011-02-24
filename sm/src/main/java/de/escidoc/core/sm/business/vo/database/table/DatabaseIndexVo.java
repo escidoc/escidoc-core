@@ -58,7 +58,7 @@ public class DatabaseIndexVo {
      */
     public void setFields(final Collection<String> fields) 
                             throws SqlDatabaseSystemException {
-        for (String field : fields) {
+        for (final String field : fields) {
             DatabaseConventionChecker.checkName(field);
         }
         this.fields = fields;

@@ -241,7 +241,7 @@ public class EscidocServlet extends HttpServlet {
                     // In case of GET and HEAD requests, a redirect to the same
                     // URL
                     // without the URL parameters is sent.
-                    String queryString = addCookie(httpRequest, httpResponse);
+                    final String queryString = addCookie(httpRequest, httpResponse);
                     if (queryString != null) {
                         final StringBuffer location =
                             httpRequest.getRequestURL();
@@ -900,7 +900,7 @@ public class EscidocServlet extends HttpServlet {
         Cookie result = null;
         final Cookie[] cookies = request.getCookies();
         if ((cookies != null) && (cookies.length > 0)) {
-            for (Cookie cooky : cookies) {
+            for (final Cookie cooky : cookies) {
                 if (name.equals(cooky.getName())) {
                     result = cooky;
                     break;
@@ -964,9 +964,9 @@ public class EscidocServlet extends HttpServlet {
             String authHeader = request.getHeader("Authorization");
             authHeader = authHeader.substring(authHeader.indexOf(' '));
             try {
-                String decoded =
+                final String decoded =
                     UserHandleCookieUtil.createDecodedUserHandle(authHeader);
-                int i = decoded.indexOf(':');
+                final int i = decoded.indexOf(':');
                 return new String[] { "ShibbolethUser",
                     decoded.substring(i + 1) };
             }
@@ -1011,7 +1011,7 @@ public class EscidocServlet extends HttpServlet {
             final Matcher m = PATTERN_USER_HANDLE_IN_QUERY.matcher(queryString);
 
             if (m.find()) {
-                String handle = m.group(1);
+                final String handle = m.group(1);
 
                 queryString = m.replaceAll("");
                 try {
@@ -1026,7 +1026,7 @@ public class EscidocServlet extends HttpServlet {
                     queryString = queryString.substring(1);
                 }
 
-                String httpMethod = httpRequest.getMethod();
+                final String httpMethod = httpRequest.getMethod();
 
                 if (HTTP_GET.equals(httpMethod) || HTTP_HEAD.equals(httpMethod)) {
                     result = queryString;

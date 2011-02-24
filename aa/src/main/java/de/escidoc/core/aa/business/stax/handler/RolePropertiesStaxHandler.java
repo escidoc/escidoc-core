@@ -145,7 +145,7 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
                 .format("Role name not allowed", name));
         }
 
-        EscidocRole existingRoleWithSameName = roleDao.retrieveRole(name);
+        final EscidocRole existingRoleWithSameName = roleDao.retrieveRole(name);
         if (existingRoleWithSameName != null) {
             if (existingRoleWithSameName.getId().equals(id)) {
                 return;

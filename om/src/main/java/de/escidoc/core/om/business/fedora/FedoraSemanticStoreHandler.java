@@ -98,8 +98,8 @@ public class FedoraSemanticStoreHandler
         InvalidTripleStoreOutputFormatException, InvalidXmlException,
         MissingElementValueException {
 
-        StaxParser sp = new StaxParser();
-        SemanticQueryHandler qh = new SemanticQueryHandler();
+        final StaxParser sp = new StaxParser();
+        final SemanticQueryHandler qh = new SemanticQueryHandler();
         sp.addHandler(qh);
         try {
             sp.parse(taskParam);
@@ -112,24 +112,24 @@ public class FedoraSemanticStoreHandler
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         sp.clearHandlerChain();
-        String query = qh.getQuery();
+        final String query = qh.getQuery();
         // check predicate
-        String predicate = qh.getPredicate();
+        final String predicate = qh.getPredicate();
         if (!"*".equals(predicate)
             && !OntologyUtility.checkPredicate(predicate)) {
             throw new InvalidTripleStoreQueryException("Predicate '"
                 + XmlUtility.escapeForbiddenXmlCharacters(predicate)
                 + "' not allowed.");
         }
-        String format = qh.getFormat();
+        final String format = qh.getFormat();
         String result = tripleStoreConnector.requestMPT(query, format);
         if (!"".equals(result) && "*".equals(predicate)) {
             // TODO check result for unallowed predicates
             if ("N-Triples".equals(format)) {
-                String[] triples = result.split("\\s\\.");
-                StringBuilder stringBuffer = new StringBuilder();
-                for (String triple : triples) {
-                    String[] tripleParts = triple.trim().split("\\ +", 3);
+                final String[] triples = result.split("\\s\\.");
+                final StringBuilder stringBuffer = new StringBuilder();
+                for (final String triple : triples) {
+                    final String[] tripleParts = triple.trim().split("\\ +", 3);
                     if ((tripleParts.length >= 2)
                             && (OntologyUtility.checkPredicate(tripleParts[1]))) {
                         stringBuffer.append(triple);
@@ -141,18 +141,18 @@ public class FedoraSemanticStoreHandler
             else if ("RDF/XML".equals(format)) {
                 // TODO revise, move
                 try {
-                    XMLInputFactory inf = XMLInputFactory.newInstance();
-                    XMLEventReader reader =
+                    final XMLInputFactory inf = XMLInputFactory.newInstance();
+                    final XMLEventReader reader =
                         inf.createFilteredReader(
                             inf.createXMLEventReader(new StringReader(result)),
                             new RDFRegisteredOntologyFilter());
 
-                    StringWriter sw = new StringWriter();
-                    XMLEventWriter writer = XmlUtility.createXmlEventWriter(sw);
+                    final StringWriter sw = new StringWriter();
+                    final XMLEventWriter writer = XmlUtility.createXmlEventWriter(sw);
 
                     // writer.add(reader);
                     while (reader.hasNext()) {
-                        XMLEvent event = reader.nextEvent();
+                        final XMLEvent event = reader.nextEvent();
                         writer.add(event);
                     }
 

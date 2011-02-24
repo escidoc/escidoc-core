@@ -123,7 +123,7 @@ public class FileProvider implements WSDDEngineConfiguration {
     public FileProvider(final String basepath, final String filename)
         throws ConfigurationException {
 
-        File dir = new File(basepath);
+        final File dir = new File(basepath);
 
         /*
          * If the basepath is not a readable directory, throw an internal
@@ -232,9 +232,9 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @return InputStream replaced InputStream
      */
     private InputStream replaceVariables(final InputStream in) {
-        StringBuilder xml = new StringBuilder("");
+        final StringBuilder xml = new StringBuilder("");
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String str;
             while ((str = reader.readLine()) != null) {
                 xml.append(str);
@@ -289,11 +289,11 @@ public class FileProvider implements WSDDEngineConfiguration {
      */
     private String insertSystemProperty(final String propertyValue) {
         String result = propertyValue;
-        int i = result.indexOf("${");
+        final int i = result.indexOf("${");
         if (i > -1) {
-            int j = result.indexOf('}');
+            final int j = result.indexOf('}');
             if (j > -1) {
-                String confProperty = result.substring(i + 2, j);
+                final String confProperty = result.substring(i + 2, j);
                 String confPropertyValue = null;
                 try {
                     confPropertyValue =
@@ -342,7 +342,7 @@ public class FileProvider implements WSDDEngineConfiguration {
                     .getMessage("noConfigFile"));
             }
 
-            WSDDDocument doc =
+            final WSDDDocument doc =
                 new WSDDDocument(XMLUtils.newDocument(getInputStream()));
             deployment = doc.getDeployment();
 
@@ -371,11 +371,11 @@ public class FileProvider implements WSDDEngineConfiguration {
         throws ConfigurationException {
         if (!readOnly) {
             try {
-                Document doc = Admin.listConfig(engine);
-                Writer osWriter =
+                final Document doc = Admin.listConfig(engine);
+                final Writer osWriter =
                     new OutputStreamWriter(new FileOutputStream(configFile),
                         XMLUtils.getEncoding());
-                PrintWriter writer =
+                final PrintWriter writer =
                     new PrintWriter(new BufferedWriter(osWriter));
                 XMLUtils.DocumentToWriter(doc, writer);
                 writer.println();
@@ -413,7 +413,7 @@ public class FileProvider implements WSDDEngineConfiguration {
     @Override
     public SOAPService getService(final QName qname)
         throws ConfigurationException {
-        SOAPService service = deployment.getService(qname);
+        final SOAPService service = deployment.getService(qname);
         if (service == null) {
             throw new ConfigurationException(Messages.getMessage("noService10",
                 qname.toString()));
@@ -499,7 +499,7 @@ public class FileProvider implements WSDDEngineConfiguration {
     // Interface org.apache.axis.EngineConfiguration
     @Override
     public Hashtable getGlobalOptions() throws ConfigurationException {
-        WSDDGlobalConfiguration globalConfig =
+        final WSDDGlobalConfiguration globalConfig =
             deployment.getGlobalConfiguration();
 
         if (globalConfig != null) {

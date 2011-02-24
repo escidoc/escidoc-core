@@ -70,9 +70,9 @@ public class XacmlPolicyReference extends PolicyReference {
      */
     public String toString() {
 
-        ByteArrayOutputStream writer = new ByteArrayOutputStream();
+        final ByteArrayOutputStream writer = new ByteArrayOutputStream();
         encode(writer, new Indenter());
-        String ret = writer.toString();
+        final String ret = writer.toString();
         try {
             writer.close();
         }

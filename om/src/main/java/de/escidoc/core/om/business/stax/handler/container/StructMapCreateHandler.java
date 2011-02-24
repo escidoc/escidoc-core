@@ -107,16 +107,16 @@ public class StructMapCreateHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element)
         throws InvalidContentException, TripleStoreSystemException,
         WebserverSystemException, MissingAttributeValueException {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
 
         if (curPath.startsWith(structMapPath)) {
             if (curPath.equals(structMapPath + "/item")) {
-                String itemId =
+                final String itemId =
                     checkRefElement(element, Constants.ITEM_OBJECT_TYPE, "item");
                 entries.add(itemId);
             }
             else if (curPath.equals(structMapPath + "/container")) {
-                String containerId =
+                final String containerId =
                     checkRefElement(element, Constants.CONTAINER_OBJECT_TYPE,
                         "container");
                 entries.add(containerId);
@@ -153,12 +153,12 @@ public class StructMapCreateHandler extends DefaultHandler {
         TripleStoreSystemException, WebserverSystemException,
         MissingAttributeValueException {
         String entryId = null;
-        int indexOfObjId = element.indexOfAttribute(null, "objid");
-        int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI, "href");
+        final int indexOfObjId = element.indexOfAttribute(null, "objid");
+        final int indexOfHref = element.indexOfAttribute(Constants.XLINK_URI, "href");
         if (indexOfObjId != -1) {
             entryId = element.getAttribute(indexOfObjId).getValue();
             if (entryId.length() == 0) {
-                String message =
+                final String message =
                     "Value of attribute 'objid' of the element '"
                         + parser.getCurPath() + "' is missing.";
                 logger.error(message);
@@ -166,19 +166,19 @@ public class StructMapCreateHandler extends DefaultHandler {
             }
         }
         else if (indexOfHref != -1) {
-            Attribute xlinkHref = element.getAttribute(indexOfHref);
-            String xlinkHrefValue = xlinkHref.getValue();
+            final Attribute xlinkHref = element.getAttribute(indexOfHref);
+            final String xlinkHrefValue = xlinkHref.getValue();
             if (xlinkHrefValue.length() == 0) {
-                String message =
+                final String message =
                     "Value of attribute 'objid' of the element '"
                         + parser.getCurPath() + "' is missing.";
                 logger.error(message);
                 throw new MissingAttributeValueException(message);
             }
-            String xlinkPrefix = xlinkHref.getPrefix();
+            final String xlinkPrefix = xlinkHref.getPrefix();
             entryId = Utility.getId(xlinkHrefValue);
             if (!xlinkHrefValue.equals("/ir/" + elementName + '/' + entryId)) {
-                String message =
+                final String message =
                     "The value of attribute " + element.getLocalName() + '.'
                         + xlinkPrefix + ":href has to look like: ir/"
                         + elementName + '/' + entryId;
@@ -187,7 +187,7 @@ public class StructMapCreateHandler extends DefaultHandler {
             }
         }
         if (!TripleStoreUtility.getInstance().exists(entryId)) {
-            String message = "Referenced object in struct-map does not exist.";
+            final String message = "Referenced object in struct-map does not exist.";
             logger.error(message);
             throw new InvalidContentException(message);
         }

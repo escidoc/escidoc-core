@@ -208,13 +208,13 @@ public class Resource extends XMLBase {
         initResult(INTERFACE_REST, getChapterStart(getTitle(INTERFACE_REST)));
         initResult(INTERFACE_SOAP, getChapterStart(getTitle(INTERFACE_SOAP)));
 
-        Iterator<Node> resourceIter = resources.iterator();
-        StringBuilder resourceOriented = new StringBuilder();
-        StringBuilder taskOriented = new StringBuilder();
-        StringBuilder soap = new StringBuilder();
+        final Iterator<Node> resourceIter = resources.iterator();
+        final StringBuilder resourceOriented = new StringBuilder();
+        final StringBuilder taskOriented = new StringBuilder();
+        final StringBuilder soap = new StringBuilder();
         while (resourceIter.hasNext()) {
-            Node resource = resourceIter.next();
-            Node description =
+            final Node resource = resourceIter.next();
+            final Node description =
                 getChild(resource, DOCUMENTATION_ELEMENT + XPATH_DELIMITER
                     + DESCRIPTION_ELEMENT);
 
@@ -224,7 +224,7 @@ public class Resource extends XMLBase {
             }
             try {
                 NodeList descriptors = parse(DESCRIPTOR_ELEMENT, resource);
-                String taskOrientedMethodsSelector = "@http=\"POST\"";
+                final String taskOrientedMethodsSelector = "@http=\"POST\"";
                 // first document the resource oriented methods
                 for (int i = 0; i < descriptors.getLength(); ++i) {
                     resourceOriented.append(
@@ -320,14 +320,14 @@ public class Resource extends XMLBase {
         final String access, final Node descriptor, final String xPath) {
 
         String result = "";
-        String uri =
+        final String uri =
             prepareParameter(getAttributeValue(descriptor, DESCRIPTOR_URI_ATTR));
         try {
-            NodeList invokes = parse(xPath, descriptor);
+            final NodeList invokes = parse(xPath, descriptor);
             if ((invokes != null) && (invokes.getLength() > 0)) {
                 for (int i = 0; i < invokes.getLength(); ++i) {
                     boolean visible = VISIBILTY_DEFAULT;
-                    Node value =
+                    final Node value =
                         getChild(invokes.item(i), DOCUMENTATION_ELEMENT);
                     if ((checkVisibility)
                         && ((value != null)
@@ -423,7 +423,7 @@ public class Resource extends XMLBase {
                     + "</para><para/><para/>";
         }
         else {
-            String httpMethod = getAttributeValue(invoke, INVOKE_HTTP_ATTR);
+            final String httpMethod = getAttributeValue(invoke, INVOKE_HTTP_ATTR);
             result +=
                 getMethodTableStart(title + " via REST",
                     getMethodTableRow2Cols("HTTP Request", httpMethod + ' '
@@ -437,9 +437,9 @@ public class Resource extends XMLBase {
             if (attributeValue != null) {
                 String parameter = "";
                 while (attributeValue != null) {
-                    String c2 = prepareParameter(attributeValue);
+                    final String c2 = prepareParameter(attributeValue);
                     String c3 = DEFAULT_TEXT;
-                    Node child =
+                    final Node child =
                         getChild(invoke, DOCUMENTATION_ELEMENT
                             + XPATH_DELIMITER + PARAM_ELEMENT + XPATH_DELIMITER
                             + INVOKE_PARAM_ATTR + paramNo);
@@ -475,7 +475,7 @@ public class Resource extends XMLBase {
                         result += getMethodTableRow2Cols(c1, c3);
                     }
                     else {
-                        String paramVar =
+                        final String paramVar =
                             prepareParameter(getAttributeValue(invoke,
                                 INVOKE_PARAM_ATTR + paramNo));
                         if (uri.contains(paramVar)) {
@@ -502,7 +502,7 @@ public class Resource extends XMLBase {
                 result +=
                     getMethodTableRow2Cols("Parameter", "No input values");
             }
-            Node child =
+            final Node child =
                 getChild(invoke, DOCUMENTATION_ELEMENT + XPATH_DELIMITER
                     + RESULT_ELEMENT);
             if (child != null) {
@@ -544,20 +544,20 @@ public class Resource extends XMLBase {
         final Node invoke, final String title, final String result,
         final int paramNo) {
 
-        StringBuilder res = new StringBuilder(result);
+        final StringBuilder res = new StringBuilder(result);
 
-        StringBuffer c1;
+        final StringBuffer c1;
         try {
-            Class[] exceptionTypes =
+            final Class[] exceptionTypes =
                 getExceptions(getAttributeValue(invoke, INVOKE_METHOD_ATTR),
                     paramNo - 1);
             if ((exceptionTypes != null) && (exceptionTypes.length > 0)) {
                 c1 = new StringBuffer();
-                StringBuilder c2 = new StringBuilder();
+                final StringBuilder c2 = new StringBuilder();
                 String msg;
                 for (int i = 0; i < exceptionTypes.length; ++i) {
                     try {
-                        Method statusLine =
+                        final Method statusLine =
                             exceptionTypes[i].getMethod("getHttpStatusLine",
                                 new Class[0]);
                         msg =
@@ -636,7 +636,7 @@ public class Resource extends XMLBase {
             String parameter = "";
             String c1 = "";
             while (attributeValue != null) {
-                Node child =
+                final Node child =
                     getChild(invoke, DOCUMENTATION_ELEMENT + XPATH_DELIMITER
                         + PARAM_ELEMENT + XPATH_DELIMITER + INVOKE_PARAM_ATTR
                         + paramNo);
@@ -675,7 +675,7 @@ public class Resource extends XMLBase {
             paramDocumentation +=
                 getMethodTableRow2Cols("Parameter", "No input values");
         }
-        Node child =
+        final Node child =
             getChild(invoke, DOCUMENTATION_ELEMENT + XPATH_DELIMITER
                 + RESULT_ELEMENT);
         if (child != null) {
@@ -701,7 +701,7 @@ public class Resource extends XMLBase {
         result += paramDocumentation;
         if (isIncludeErrors()) {
             try {
-                Class[] exceptionTypes =
+                final Class[] exceptionTypes =
                     getExceptions(
                         getAttributeValue(invoke, INVOKE_METHOD_ATTR),
                         paramNo - 1);
@@ -784,7 +784,7 @@ public class Resource extends XMLBase {
                 parameterTypes[i] = String.class;
             }
         }
-        java.lang.reflect.Method invoked =
+        final java.lang.reflect.Method invoked =
             getInstance().getMethod(method, parameterTypes);
         return invoked.getExceptionTypes();
     }
@@ -975,7 +975,7 @@ public class Resource extends XMLBase {
      */
     final Class getInstance() {
 
-        String beanName = "service." + name + "HandlerBean";
+        final String beanName = "service." + name + "HandlerBean";
         return getConfiguredClass(beanName);
     }
 
@@ -990,13 +990,13 @@ public class Resource extends XMLBase {
 
         Class result = null;
         try {
-            String definitionsFile =
+            final String definitionsFile =
                 "/de/escidoc/core/common/documentation/definitions.xml";
-            Document beans = getDocument(definitionsFile);
+            final Document beans = getDocument(definitionsFile);
 
-            Node resultNode =
+            final Node resultNode =
                 getChild(beans, "/beans/bean[@id=\"" + springBeanName + "\"]");
-            String className = getAttributeValue(resultNode, "class");
+            final String className = getAttributeValue(resultNode, "class");
             result = Class.forName(className);
 
         }

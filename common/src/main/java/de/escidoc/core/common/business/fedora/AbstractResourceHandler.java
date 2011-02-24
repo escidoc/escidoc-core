@@ -100,8 +100,8 @@ public abstract class AbstractResourceHandler extends HandlerBase {
 
     protected String getDatastream() throws StreamNotFoundException,
         FedoraSystemException, EncodingSystemException, WebserverSystemException {
-        Datastream datastream = theResource.getDatastream();
-        String xml;
+        final Datastream datastream = theResource.getDatastream();
+        final String xml;
         try {
             xml =
                 new String(datastream.getStream(),
@@ -127,7 +127,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
 
         try {
 
-            StaxParser sp = new StaxParser();
+            final StaxParser sp = new StaxParser();
 
             // handler to check last modified date
             // DO NOT CHECK LAST MODIFIED DATE UNLESS ADMIN-DESCRIPTOR IS A
@@ -140,15 +140,15 @@ public abstract class AbstractResourceHandler extends HandlerBase {
             sp.addHandler(getResourceHandler(sp));
 
             // handler to extract datastreams from xml
-            HashMap<String, String> extractPathes =
+            final HashMap<String, String> extractPathes =
                 new HashMap<String, String>();
             extractPathes.put(getRootElementPath(), null);
-            MultipleExtractor me = new MultipleExtractor(extractPathes, sp);
+            final MultipleExtractor me = new MultipleExtractor(extractPathes, sp);
             sp.addHandler(me);
 
             sp.parse(xmlData);
 
-            Map<String, Object> streams = me.getOutputStreams();
+            final Map<String, Object> streams = me.getOutputStreams();
 
             setDatastream(streams
                 .get(getRootElement()).toString());
@@ -181,9 +181,9 @@ public abstract class AbstractResourceHandler extends HandlerBase {
     private void setDatastream(final String xmlData) throws LockingException,
         StreamNotFoundException, SystemException {
         try {
-            Datastream oldDs = theResource.getDatastream();
-            byte[] xmlBytes = xmlData.getBytes(XmlUtility.CHARACTER_ENCODING);
-            Datastream newDs =
+            final Datastream oldDs = theResource.getDatastream();
+            final byte[] xmlBytes = xmlData.getBytes(XmlUtility.CHARACTER_ENCODING);
+            final Datastream newDs =
                 new Datastream("datastream", theResource.getId(), xmlBytes,
                     "text/xml");
 
@@ -200,10 +200,10 @@ public abstract class AbstractResourceHandler extends HandlerBase {
     public String create(String xmlData) throws XmlSchemaValidationException,
         InvalidXmlException, SystemException {
 
-        String createdXml;
+        final String createdXml;
 
         try {
-            StaxParser sp = new StaxParser();
+            final StaxParser sp = new StaxParser();
 
             final String id = getIdProvider().getNextPid();
             // handler to set id
@@ -214,10 +214,10 @@ public abstract class AbstractResourceHandler extends HandlerBase {
             // handler to extract properties ?
 
             // handler to extract datastreams from xml
-            HashMap<String, String> extractPathes =
+            final HashMap<String, String> extractPathes =
                 new HashMap<String, String>();
             extractPathes.put(getRootElementPath(), null);
-            MultipleExtractor me = new MultipleExtractor(extractPathes, sp);
+            final MultipleExtractor me = new MultipleExtractor(extractPathes, sp);
             sp.addHandler(me);
 
             try {
@@ -285,9 +285,9 @@ public abstract class AbstractResourceHandler extends HandlerBase {
             catch (TmeException e) {
                 XmlUtility.handleUnexpectedStaxParserException("", e);
             }
-            Map streams = me.getOutputStreams();
+            final Map streams = me.getOutputStreams();
 
-            String label = getRootElement();
+            final String label = getRootElement();
 
             // create FOXML for ingest
             String foXml =
@@ -307,7 +307,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
                     + "<foxml:datastreamVersion ALT_IDS=\"\" ID=\"datastream.0\" LABEL=\"datastream\" MIMETYPE=\"text/xml\">"
                     + "<foxml:xmlContent>";
 
-            ByteArrayOutputStream datastreamXml =
+            final ByteArrayOutputStream datastreamXml =
                 (ByteArrayOutputStream) streams.get(getRootElement());
             foXml += datastreamXml.toString();
 

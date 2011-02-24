@@ -46,23 +46,23 @@ public class RelsExtRefListExtractor extends DefaultHandler {
 
     private List<String> predicates = null;
 
-    public RelsExtRefListExtractor(List<String> predicates, StaxParser parser) {
+    public RelsExtRefListExtractor(final List<String> predicates, final StaxParser parser) {
         this.predicates = predicates;
         this.entries = new HashMap<String, List<String>>();
-        for (String predicate : this.predicates) {
+        for (final String predicate : this.predicates) {
             entries.put(predicate, new ArrayList<String>());
         }
     }
 
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws InvalidContentException {
         // {"http://www.w3.org/1999/02/22-rdf-syntax-ns#"}resource="info:fedora/escidoc:12108"
-        String ns = element.getNamespace();
-        String ln = element.getLocalName();
-        String curPredicate = ns + ln;
+        final String ns = element.getNamespace();
+        final String ln = element.getLocalName();
+        final String curPredicate = ns + ln;
         if (predicates.contains(curPredicate)) {
-            String resource;
+            final String resource;
             try {
                 resource =
                     element.getAttribute(

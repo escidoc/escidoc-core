@@ -97,7 +97,7 @@ public class ActionHandler implements ActionHandlerInterface {
 
         utility.checkIsContext(contextId);
 
-        ByteArrayInputStream in = validateUnsecuredActions(actions);
+        final ByteArrayInputStream in = validateUnsecuredActions(actions);
 
         final StaxParser sp = new StaxParser(XmlUtility.NAME_UNSECURED_ACTIONS);
         final UnsecuredActionStaxHandler unsecuredActionStaxHandler =
@@ -149,7 +149,7 @@ public class ActionHandler implements ActionHandlerInterface {
         throws ContextNotFoundException, SystemException {
 
         Utility.getInstance().checkIsContext(contextId);
-        UnsecuredActionList unsecuredActionList =
+        final UnsecuredActionList unsecuredActionList =
             actionDao.retrieveUnsecuredActionList(contextId);
 
         if (unsecuredActionList == null) {

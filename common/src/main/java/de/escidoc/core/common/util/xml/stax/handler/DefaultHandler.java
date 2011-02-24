@@ -145,7 +145,7 @@ public abstract class DefaultHandler {
      */
     protected SystemException createMandatoryAttributeNotFoundException(
         final StartElement startElement, final String namespaceUri,
-        final String attributeName, Exception e) {
+        final String attributeName, final Exception e) {
 
         return new WebserverSystemException(StringUtility
             .format(MSG_MANDATORY_ATTRIBUTE_NOT_FOUND,
@@ -186,9 +186,9 @@ public abstract class DefaultHandler {
         final String attributeName) {
 
         String typeValue = null;
-        int indexOfType = element.indexOfAttribute(namespace, attributeName);
+        final int indexOfType = element.indexOfAttribute(namespace, attributeName);
         if (indexOfType != -1) {
-            Attribute type = element.getAttribute(indexOfType);
+            final Attribute type = element.getAttribute(indexOfType);
             typeValue = type.getValue();
         }
 

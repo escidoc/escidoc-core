@@ -77,7 +77,7 @@ public final class EjbFactoryBeanHelper {
         catch (IOException e) {
             throw new WebserverSystemException(e);
         }
-        Properties properties = new Properties();
+        final Properties properties = new Properties();
         properties.setProperty(Context.URL_PKG_PREFIXES,
             "org.jboss.naming:org.jnp.interfaces");
         properties.setProperty(Context.PROVIDER_URL, providerUrl);

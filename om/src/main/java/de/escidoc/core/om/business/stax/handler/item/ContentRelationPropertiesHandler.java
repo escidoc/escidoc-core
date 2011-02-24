@@ -98,7 +98,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         if (XPATH_DESCRIPTION.equals(currentPath)) {
             this.parsingDescription = true;
             this.tmpDescription = "";
@@ -115,7 +115,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         if (XPATH_DESCRIPTION.equals(currentPath)) {
             LOG.debug("Parser reached end of " + XPATH_DESCRIPTION);
             // parser leaves the XML description element
@@ -143,7 +143,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element)
         throws InvalidStatusException {
 
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
         if (curPath.equals(XPATH_CONTENT_RELATION_PROPERTIES + '/'
             + Elements.ELEMENT_PID)) {
             this.properties.setPid(s);

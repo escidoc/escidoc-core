@@ -158,10 +158,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     public String create(final String xmlData)
         throws UniqueConstraintViolationException, XmlCorruptedException,
         SystemException {
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(xmlData);
-        StaxParser sp = new StaxParser();
-        GroupCreateUpdateHandler groupHandler =
+        final StaxParser sp = new StaxParser();
+        final GroupCreateUpdateHandler groupHandler =
             new GroupCreateUpdateHandler(sp);
 
         sp.addHandler(groupHandler);
@@ -173,7 +173,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
-        UserGroup userGroup = new UserGroup();
+        final UserGroup userGroup = new UserGroup();
 
         setModificationValues(userGroup, groupHandler.getGroupProperties());
         setCreationValues(userGroup);
@@ -197,10 +197,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     @Override
     public void delete(final String groupId) throws ResourceNotFoundException,
         SystemException {
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
-            String message =
+            final String message =
                 "User group with id " + groupId + " does not exist.";
             LOG.error(message);
             throw new UserGroupNotFoundException(message);
@@ -225,7 +225,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     @Override
     public String retrieve(final String groupId)
         throws ResourceNotFoundException, SystemException {
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility.format(
@@ -257,25 +257,25 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         XmlCorruptedException, MissingAttributeValueException,
         OptimisticLockingException, SystemException {
 
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
-            String message =
+            final String message =
                 "User group with id " + groupId + " does not exist.";
             LOG.error(message);
             throw new UserGroupNotFoundException(message);
         }
 
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(xmlData);
-        StaxParser sp = new StaxParser();
+        final StaxParser sp = new StaxParser();
 
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userGroup.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
-        GroupCreateUpdateHandler groupHandler =
+        final GroupCreateUpdateHandler groupHandler =
             new GroupCreateUpdateHandler(sp);
 
         sp.addHandler(groupHandler);
@@ -317,7 +317,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         throws AlreadyActiveException, ResourceNotFoundException,
         XmlCorruptedException, MissingAttributeValueException,
         OptimisticLockingException, SystemException {
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility.format(
@@ -325,10 +325,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
 
         // TODO: validation missing, check if needed or if it shall be skipped
-        de.escidoc.core.common.util.xml.stax.StaxParser sp =
+        final de.escidoc.core.common.util.xml.stax.StaxParser sp =
             new de.escidoc.core.common.util.xml.stax.StaxParser(
                 XmlUtility.NAME_PARAM);
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userGroup.getLastModificationDate());
 
@@ -394,7 +394,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         throws AlreadyDeactiveException, ResourceNotFoundException,
         XmlCorruptedException, MissingAttributeValueException,
         OptimisticLockingException, SystemException {
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility.format(
@@ -402,10 +402,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
 
         // TODO: validation missing, check if needed or if it shall be skipped
-        de.escidoc.core.common.util.xml.stax.StaxParser sp =
+        final de.escidoc.core.common.util.xml.stax.StaxParser sp =
             new de.escidoc.core.common.util.xml.stax.StaxParser(
                 XmlUtility.NAME_PARAM);
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userGroup.getLastModificationDate());
 
@@ -473,7 +473,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         throws AlreadyExistsException, AuthenticationException,
         AuthorizationException, RoleNotFoundException, InvalidScopeException,
         UserGroupNotFoundException, XmlCorruptedException, SystemException {
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility.format(
@@ -481,23 +481,23 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
 
         final RoleGrant grant = new RoleGrant();
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(grantXML);
-        de.escidoc.core.common.util.xml.stax.StaxParser sp =
+        final de.escidoc.core.common.util.xml.stax.StaxParser sp =
             new de.escidoc.core.common.util.xml.stax.StaxParser(
                 XmlUtility.NAME_GRANT);
-        LinkStaxHandler roleLinkHandler =
+        final LinkStaxHandler roleLinkHandler =
             new LinkStaxHandler(XPATH_GRANT_ROLE, XmlUtility.BASE_ROLE,
                 RoleNotFoundException.class);
 
         sp.addHandler(roleLinkHandler);
 
-        LinkStaxHandler objectLinkHandler =
+        final LinkStaxHandler objectLinkHandler =
             new LinkStaxHandler(XPATH_GRANT_ASSIGNED_ON);
 
         sp.addHandler(objectLinkHandler);
 
-        GrantStaxHandler grantHandler = new GrantStaxHandler(grant);
+        final GrantStaxHandler grantHandler = new GrantStaxHandler(grant);
 
         sp.addHandler(grantHandler);
 
@@ -544,7 +544,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         // it is assumed, that each resource stored in fedora has an object
         // type stored in the triple store.
         if (objectId != null) {
-            Map<String, String> objectAttributes;
+            final Map<String, String> objectAttributes;
             try {
                 objectAttributes =
                     objectAttributeResolver.resolveObjectAttributes(objectId);
@@ -557,13 +557,13 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 throw new XmlCorruptedException(StringUtility.format(
                     MSG_GRANT_RESTRICTION_VIOLATED, objectId));
             }
-            String objectType = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
+            final String objectType = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
             String objectTitle = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TITLE);
 
             // check if objectType may be scope
             boolean checkOk = false;
             if (role.getScopeDefs() != null && objectType != null) {
-                for (ScopeDef scopeDef : role.getScopeDefs()) {
+                for (final ScopeDef scopeDef : role.getScopeDefs()) {
                     if (scopeDef.getAttributeObjectType() != null
                         && scopeDef.getAttributeObjectType().equals(objectType)) {
                         checkOk = true;
@@ -590,7 +590,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             }
 
             // get the href of the object.
-            String objectHref = XmlUtility.getHref(objectType, objectId);
+            final String objectHref = XmlUtility.getHref(objectType, objectId);
 
             // In case of REST it has to be checked if the provided href points
             // to the correct href.
@@ -651,23 +651,23 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         OptimisticLockingException, XmlCorruptedException,
         UserGroupHierarchyViolationException {
 
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
-            String message =
+            final String message =
                 "User group with id " + groupId + " does not exist.";
             LOG.error(message);
             throw new UserGroupNotFoundException(message);
         }
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(taskParam);
-        StaxParser sp = new StaxParser();
+        final StaxParser sp = new StaxParser();
 
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userGroup.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
-        GroupSelectorsAddHandler groupHandler =
+        final GroupSelectorsAddHandler groupHandler =
             new GroupSelectorsAddHandler(sp);
         sp.addHandler(groupHandler);
         try {
@@ -680,21 +680,21 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         catch (Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        List<String[]> selectors = groupHandler.getGroupSelectors();
-        Set<UserGroupMember> existingMembers = userGroup.getMembers();
-        Collection<UserGroupMember> newMembers = new HashSet<UserGroupMember>();
+        final List<String[]> selectors = groupHandler.getGroupSelectors();
+        final Set<UserGroupMember> existingMembers = userGroup.getMembers();
+        final Collection<UserGroupMember> newMembers = new HashSet<UserGroupMember>();
 
-        for (String[] selector : selectors) {
-            UserGroupMember member = new UserGroupMember(userGroup);
-            String name = selector[0];
-            String type = selector[1];
-            String value = selector[2];
+        for (final String[] selector : selectors) {
+            final UserGroupMember member = new UserGroupMember(userGroup);
+            final String name = selector[0];
+            final String type = selector[1];
+            final String value = selector[2];
             if ("internal".equals(type)) {
                 if (name.equals(XmlUtility.NAME_USER_ACCOUNT)) {
-                    UserAccount referencedUser =
+                    final UserAccount referencedUser =
                         this.userAccountDao.retrieveUserAccountById(value);
                     if (referencedUser == null) {
-                        String message =
+                        final String message =
                             StringUtility.format(MSG_USER_NOT_FOUND_BY_ID,
                                 value);
                         LOG.error(message);
@@ -702,17 +702,17 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                     }
                 }
                 else if (name.equals(XmlUtility.NAME_USER_GROUP)) {
-                    UserGroup referencedUserGroup =
+                    final UserGroup referencedUserGroup =
                         userGroupDao.retrieveUserGroup(value);
                     if (referencedUserGroup == null) {
-                        String message =
+                        final String message =
                             "Referenced user group with id " + value
                                 + " does not exist.";
                         LOG.error(message);
                         throw new UserGroupNotFoundException(message);
                     }
                     if (!isCycleFree(groupId, value)) {
-                        String message =
+                        final String message =
                             "User group with id "
                                 + value
                                 + " can not become a member of the user group with id "
@@ -725,13 +725,13 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                     }
                 }
                 else {
-                    String message = MSG_GROUP_INVALID_SELECTOR_NAME;
+                    final String message = MSG_GROUP_INVALID_SELECTOR_NAME;
                     LOG.error(message);
                     throw new XmlCorruptedException(message);
                 }
             }
             boolean alreadyExist = false;
-            for (UserGroupMember existingMember : existingMembers) {
+            for (final UserGroupMember existingMember : existingMembers) {
                 if (name.equals(existingMember.getName())
                     && type.equals(existingMember.getType())
                     && value.equals(existingMember.getValue())) {
@@ -749,7 +749,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
 
         // save new Members
-        for (UserGroupMember newMember : newMembers) {
+        for (final UserGroupMember newMember : newMembers) {
             userGroupDao.save(newMember);
             existingMembers.add(newMember);
         }
@@ -780,23 +780,23 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         AuthorizationException, SystemException, UserGroupNotFoundException,
         OptimisticLockingException, MissingMethodParameterException,
         UserAccountNotFoundException, OrganizationalUnitNotFoundException {
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
-            String message =
+            final String message =
                 "User group with id " + groupId + " does not exist.";
             LOG.error(message);
             throw new UserGroupNotFoundException(message);
         }
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(taskParam);
-        StaxParser sp = new StaxParser();
+        final StaxParser sp = new StaxParser();
 
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userGroup.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
-        GroupSelectorsRemoveHandler groupHandler =
+        final GroupSelectorsRemoveHandler groupHandler =
             new GroupSelectorsRemoveHandler();
         sp.addHandler(groupHandler);
         try {
@@ -809,15 +809,15 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         catch (Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        List<String> membersToRemove = groupHandler.getMemberIdsToRemove();
-        Set<UserGroupMember> existingMembers = userGroup.getMembers();
+        final List<String> membersToRemove = groupHandler.getMemberIdsToRemove();
+        final Set<UserGroupMember> existingMembers = userGroup.getMembers();
 
-        for (String memberId : membersToRemove) {
-            Iterator<UserGroupMember> membersIterator =
+        for (final String memberId : membersToRemove) {
+            final Iterator<UserGroupMember> membersIterator =
                 existingMembers.iterator();
 
             while (membersIterator.hasNext()) {
-                UserGroupMember existingMember = membersIterator.next();
+                final UserGroupMember existingMember = membersIterator.next();
                 if (memberId.equals(existingMember.getId())) {
                     membersIterator.remove();
                     break;
@@ -851,16 +851,16 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         // then remove userId from filter
         castedFilter = fixCqlUserFilter(castedFilter);
 
-        SRURequestParameters parameters = new DbRequestParameters(castedFilter);
+        final SRURequestParameters parameters = new DbRequestParameters(castedFilter);
 
-        String query = parameters.getQuery();
-        int limit = parameters.getLimit();
-        int offset = parameters.getOffset();
-        boolean explain = parameters.isExplain();
+        final String query = parameters.getQuery();
+        final int limit = parameters.getLimit();
+        final int offset = parameters.getOffset();
+        final boolean explain = parameters.isExplain();
 
-        String result;
+        final String result;
         if (explain) {
-            Map<String, Object> values = new HashMap<String, Object>();
+            final Map<String, Object> values = new HashMap<String, Object>();
 
             values.put("PROPERTY_NAMES",
                 new UserGroupFilter(null).getPropertyNames());
@@ -881,14 +881,14 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
             while (size <= currentLimit) {
 
-                List<UserGroup> tmpUserGroups = userGroupDao.retrieveUserGroups(query, currentOffset,
+                final List<UserGroup> tmpUserGroups = userGroupDao.retrieveUserGroups(query, currentOffset,
                         currentLimit);
                 if (tmpUserGroups == null || tmpUserGroups.isEmpty()) {
                     break;
                 }
                 final List<String> ids =
                     new ArrayList<String>(tmpUserGroups.size());
-                for (UserGroup userGroup : tmpUserGroups) {
+                for (final UserGroup userGroup : tmpUserGroups) {
                     ids.add(userGroup.getId());
                 }
 
@@ -904,7 +904,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                         int permittedIndex = 0;
                         String currentPermittedId =
                             tmpPermitted.get(permittedIndex);
-                        for (UserGroup userGroup : tmpUserGroups) {
+                        for (final UserGroup userGroup : tmpUserGroups) {
                             if (currentPermittedId
                                 .equals(userGroup.getId())) {
                                 permittedUserGroups.add(userGroup);
@@ -966,9 +966,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         final Map<String, String[]> filter) throws InvalidSearchQueryException,
         SystemException {
         Map<String, String[]> returnFilter = filter;
-        Object[] queryPartsObject = filter.get(Constants.SRU_PARAMETER_QUERY);
+        final Object[] queryPartsObject = filter.get(Constants.SRU_PARAMETER_QUERY);
         if (queryPartsObject != null) {
-            String[] queryParts = new String[queryPartsObject.length];
+            final String[] queryParts = new String[queryPartsObject.length];
             for (int i = 0; i < queryPartsObject.length; i++) {
                 if (queryPartsObject[i] != null) {
                     queryParts[i] = queryPartsObject[i].toString();
@@ -976,12 +976,12 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             }
             boolean userFilterFound = false;
             for (int i = 0; i < queryParts.length; i++) {
-                Matcher matcher = USER_FILTER_PATTERN.matcher(queryParts[i]);
+                final Matcher matcher = USER_FILTER_PATTERN.matcher(queryParts[i]);
                 if (matcher.find()) {
                     userFilterFound = true;
-                    Matcher userFilterMatcher =
+                    final Matcher userFilterMatcher =
                         USER_FILTER_PATTERN.matcher(queryParts[i]);
-                    StringBuffer result = new StringBuffer("");
+                    final StringBuffer result = new StringBuffer("");
                     while (userFilterMatcher.find()) {
                         if (userFilterMatcher.group(6).matches(".*?%.*")) {
                             throw new InvalidSearchQueryException(
@@ -994,16 +994,16 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                             throw new InvalidSearchQueryException(
                                 "non-supported relation in user-filter");
                         }
-                        StringBuilder replacement = new StringBuilder(" (");
+                        final StringBuilder replacement = new StringBuilder(" (");
                         try {
                             // get groups for user
-                            Set<String> groupIds = retrieveGroupsForUser(userFilterMatcher
+                            final Set<String> groupIds = retrieveGroupsForUser(userFilterMatcher
                                     .group(6));
 
                             // write group-cql-query
                             // and replace user-expression with it.
                             if (groupIds != null && !groupIds.isEmpty()) {
-                                for (String groupId : groupIds) {
+                                for (final String groupId : groupIds) {
                                     if (replacement.length() > 2) {
                                         replacement.append(" or ");
                                     }
@@ -1038,8 +1038,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 }
             }
             if (userFilterFound) {
-                Map<String, String[]> filter1 = new HashMap<String, String[]>();
-                for (Entry<String, String[]> entry : filter.entrySet()) {
+                final Map<String, String[]> filter1 = new HashMap<String, String[]>();
+                for (final Entry<String, String[]> entry : filter.entrySet()) {
                     if (entry.getValue() != null) {
                         // noinspection RedundantCast
                         filter1.put(entry.getKey(),
@@ -1080,7 +1080,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         if (userGroupId != null && userGroupId.equals(memberCandidateId)) {
             return false;
         }
-        Map<String, Object> criteria = new HashMap<String, Object>();
+        final Map<String, Object> criteria = new HashMap<String, Object>();
         criteria.put(Constants.FILTER_PATH_TYPE, "internal");
         criteria.put(Constants.FILTER_PATH_NAME, XmlUtility.NAME_USER_GROUP);
         criteria.put(Constants.FILTER_PATH_VALUE, new HashSet<String>() {
@@ -1092,11 +1092,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         });
         boolean proceed = true;
         while (proceed) {
-            Collection<String> superMembers = new HashSet<String>();
-            List<UserGroupMember> userGroupMembers = userGroupDao.retrieveUserGroupMembers(criteria);
+            final Collection<String> superMembers = new HashSet<String>();
+            final List<UserGroupMember> userGroupMembers = userGroupDao.retrieveUserGroupMembers(criteria);
             if (userGroupMembers != null && !userGroupMembers.isEmpty()) {
-                for (UserGroupMember userGroupMember : userGroupMembers) {
-                    String id = userGroupMember.getUserGroup().getId();
+                for (final UserGroupMember userGroupMember : userGroupMembers) {
+                    final String id = userGroupMember.getUserGroup().getId();
                     if (memberCandidateId.equals(id)) {
                         return false;
                     }
@@ -1155,7 +1155,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         // may not return null, so return empty list!!
         Set<String> userGroups = new HashSet<String>();
         // Try getting the userAccount
-        UserAccount userAccount = userAccountDao.retrieveUserAccount(userId);
+        final UserAccount userAccount = userAccountDao.retrieveUserAccount(userId);
         if (userAccount == null) {
             throw new UserAccountNotFoundException(StringUtility.format(
                 MSG_USER_NOT_FOUND_BY_ID, userId));
@@ -1172,7 +1172,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         // Get groups the user is integrated via one of his user attributes
         // check if attribute is ou-attribute. Then resolve path-list
-        String ouAttributeName;
+        final String ouAttributeName;
         try {
             ouAttributeName =
                 EscidocConfiguration.getInstance().get(
@@ -1181,16 +1181,16 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         catch (IOException e) {
             throw new SystemException(e);
         }
-        Set<UserAttribute> attributes = userAccount.getUserAttributesByUserId();
+        final Set<UserAttribute> attributes = userAccount.getUserAttributesByUserId();
 
-        Map<String, Set<UserGroupMember>> groupMemberMap =
+        final Map<String, Set<UserGroupMember>> groupMemberMap =
             retrieveGroupMembersWithAttributeSelector();
 
         if ((attributes != null) && (groupMemberMap != null)) {
             // iterate attributes of user
-            for (UserAttribute attribute : attributes) {
+            for (final UserAttribute attribute : attributes) {
                 // check for groupMembers with name=user-attribute-name
-                Set<UserGroupMember> groupMembers =
+                final Set<UserGroupMember> groupMembers =
                     groupMemberMap.get(attribute.getName());
 
                 if (groupMembers != null) {
@@ -1198,13 +1198,13 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                     if (ouAttributeName != null
                         && ouAttributeName.length() != 0
                         && attribute.getName().equals(ouAttributeName)) {
-                        List<String> initialList = new ArrayList<String>();
+                        final List<String> initialList = new ArrayList<String>();
                         initialList.add(attribute.getValue());
                         pathList =
                             getOrgUnitPathList(attribute.getValue(),
                                 initialList);
                     }
-                    for (UserGroupMember groupMember : groupMembers) {
+                    for (final UserGroupMember groupMember : groupMembers) {
                         if ((attribute
                             .getValue().equals(groupMember.getValue()) || (pathList != null && pathList
                             .contains(groupMember.getValue())))
@@ -1265,20 +1265,20 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     private Collection<String> retrieveGroupsByUserIds(
         final Collection<String> userIds, final boolean activeOnly)
         throws UserAccountNotFoundException, SqlDatabaseSystemException {
-        Set<String> userGroupIds = new HashSet<String>();
+        final Set<String> userGroupIds = new HashSet<String>();
 
         if (userIds != null && !userIds.isEmpty()) {
             // retrieve all groupMembers that are of type
             // user-account
             // and have one of the userIds as value
-            Map<String, Object> criteria = new HashMap<String, Object>();
+            final Map<String, Object> criteria = new HashMap<String, Object>();
             criteria.put(Constants.FILTER_PATH_TYPE, "internal");
             criteria.put(Constants.FILTER_PATH_NAME, "user-account");
             criteria.put(Constants.FILTER_PATH_VALUE, userIds);
-            List<UserGroupMember> userGroupMembers =
+            final List<UserGroupMember> userGroupMembers =
                 userGroupDao.retrieveUserGroupMembers(criteria);
             if (userGroupMembers != null) {
-                for (UserGroupMember userGroupMember : userGroupMembers) {
+                for (final UserGroupMember userGroupMember : userGroupMembers) {
                     if ((!activeOnly || Boolean.TRUE.equals(userGroupMember
                         .getUserGroup().getActive()))
                         && (!userGroupIds.contains(userGroupMember
@@ -1303,17 +1303,17 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     private Map<String, Set<UserGroupMember>> retrieveGroupMembersWithAttributeSelector()
         throws SqlDatabaseSystemException {
-        Map<String, Set<UserGroupMember>> result =
+        final Map<String, Set<UserGroupMember>> result =
             new HashMap<String, Set<UserGroupMember>>();
-        Map<String, Object> criteria = new HashMap<String, Object>();
+        final Map<String, Object> criteria = new HashMap<String, Object>();
 
         criteria.put(Constants.FILTER_PATH_TYPE, "user-attribute");
 
-        List<UserGroupMember> userGroupMembers =
+        final List<UserGroupMember> userGroupMembers =
             userGroupDao.retrieveUserGroupMembers(criteria);
 
         if (userGroupMembers != null) {
-            for (UserGroupMember userGroupMember : userGroupMembers) {
+            for (final UserGroupMember userGroupMember : userGroupMembers) {
                 final String attributeName = userGroupMember.getName();
                 Set<UserGroupMember> userGroupMemberSet =
                     result.get(attributeName);
@@ -1347,17 +1347,17 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             // retrieve all groupMembers that are of type
             // user-group and have one of the groupIds as value
             // plus: resolve complete group-hierarchy
-            Map<String, Object> criteria = new HashMap<String, Object>();
+            final Map<String, Object> criteria = new HashMap<String, Object>();
             criteria.put(Constants.FILTER_PATH_TYPE, "internal");
             criteria.put(Constants.FILTER_PATH_NAME, "user-group");
             criteria.put(Constants.FILTER_PATH_VALUE, userGroupIds);
             boolean proceed = true;
             while (proceed) {
-                List<UserGroupMember> userGroupMembers =
+                final List<UserGroupMember> userGroupMembers =
                     userGroupDao.retrieveUserGroupMembers(criteria);
-                Collection<String> superMembers = new HashSet<String>();
+                final Collection<String> superMembers = new HashSet<String>();
                 if (userGroupMembers != null && !userGroupMembers.isEmpty()) {
-                    for (UserGroupMember userGroupMember : userGroupMembers) {
+                    for (final UserGroupMember userGroupMember : userGroupMembers) {
                         if (!activeOnly
                             || Boolean.TRUE.equals(userGroupMember
                                 .getUserGroup().getActive())) {
@@ -1398,10 +1398,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         throws SystemException {
 
         List<String> addableList = totalList;
-        List<String> orgUnitIds = tsu.getParents(orgUnitId);
+        final List<String> orgUnitIds = tsu.getParents(orgUnitId);
         if (orgUnitIds != null && !orgUnitIds.isEmpty()) {
             addableList.addAll(orgUnitIds);
-            for (String parentOrgUnitId : orgUnitIds) {
+            for (final String parentOrgUnitId : orgUnitIds) {
                 addableList = getOrgUnitPathList(parentOrgUnitId, addableList);
             }
         }
@@ -1425,19 +1425,19 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         final String groupId) throws UserGroupNotFoundException,
         SystemException {
 
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility.format(
                 MSG_GROUP_NOT_FOUND_BY_ID, groupId));
         }
-        List<RoleGrant> currentGrants = fetchCurrentGrants(groupId);
+        final List<RoleGrant> currentGrants = fetchCurrentGrants(groupId);
         if (currentGrants == null || currentGrants.isEmpty()) {
             return null;
         }
 
-        Map<String, Map<String, List<RoleGrant>>> ret =
+        final Map<String, Map<String, List<RoleGrant>>> ret =
             new HashMap<String, Map<String, List<RoleGrant>>>();
-        for (RoleGrant grant : currentGrants) {
+        for (final RoleGrant grant : currentGrants) {
             final String roleId = grant.getEscidocRole().getId();
             Map<String, List<RoleGrant>> grantsOfRole = ret.get(roleId);
             if (grantsOfRole == null) {
@@ -1475,22 +1475,22 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     public Map<String, Map<String, Map<String, List<RoleGrant>>>> retrieveManyCurrentGrantsAsMap(
         final List<String> groupIds) throws SystemException {
 
-        Map<String, List<RoleGrant>> currentGrantsForGroups =
+        final Map<String, List<RoleGrant>> currentGrantsForGroups =
             userGroupDao.retrieveCurrentGrants(groupIds);
         if (currentGrantsForGroups == null || currentGrantsForGroups.isEmpty()) {
             return null;
         }
 
-        Map<String, Map<String, Map<String, List<RoleGrant>>>> ret =
+        final Map<String, Map<String, Map<String, List<RoleGrant>>>> ret =
             new HashMap<String, Map<String, Map<String, List<RoleGrant>>>>();
-        for (Entry<String, List<RoleGrant>> entry : currentGrantsForGroups
+        for (final Entry<String, List<RoleGrant>> entry : currentGrantsForGroups
             .entrySet()) {
             if (entry.getValue() == null) {
                 continue;
             }
-            Map<String, Map<String, List<RoleGrant>>> currentGrantsForOneGroup =
+            final Map<String, Map<String, List<RoleGrant>>> currentGrantsForOneGroup =
                 new HashMap<String, Map<String, List<RoleGrant>>>();
-            for (RoleGrant grant : entry.getValue()) {
+            for (final RoleGrant grant : entry.getValue()) {
                 final String roleId = grant.getRoleId();
                 Map<String, List<RoleGrant>> grantsOfRole =
                     currentGrantsForOneGroup.get(roleId);
@@ -1532,27 +1532,27 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     public String retrieveCurrentGrants(final String groupId)
         throws UserGroupNotFoundException, SystemException {
 
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility.format(
                 MSG_GROUP_NOT_FOUND_BY_ID, groupId));
         }
-        List<RoleGrant> currentGrants = fetchCurrentGrants(groupId);
-        HashMap<String, RoleGrant> grantsMap = new HashMap<String, RoleGrant>();
-        List<Object[]> argumentList = new ArrayList<Object[]>();
-        List<RoleGrant> filteredCurrentGrants = new ArrayList<RoleGrant>();
+        final List<RoleGrant> currentGrants = fetchCurrentGrants(groupId);
+        final HashMap<String, RoleGrant> grantsMap = new HashMap<String, RoleGrant>();
+        final List<Object[]> argumentList = new ArrayList<Object[]>();
+        final List<RoleGrant> filteredCurrentGrants = new ArrayList<RoleGrant>();
 
         // AA-filter
-        for (RoleGrant roleGrant : currentGrants) {
+        for (final RoleGrant roleGrant : currentGrants) {
             grantsMap.put(roleGrant.getId(), roleGrant);
-            Object[] args = new Object[] { groupId, roleGrant.getId() };
+            final Object[] args = new Object[] { groupId, roleGrant.getId() };
             argumentList.add(args);
         }
         try {
-            List<Object[]> returnList =
+            final List<Object[]> returnList =
                 pdp.evaluateMethodForList("user-group", "retrieveGrant",
                     argumentList);
-            for (Object[] obj : returnList) {
+            for (final Object[] obj : returnList) {
                 filteredCurrentGrants.add(grantsMap.get(obj[1]));
             }
         }
@@ -1590,16 +1590,16 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         throws UserGroupNotFoundException, GrantNotFoundException,
         MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility.format(
                 MSG_GROUP_NOT_FOUND_BY_ID, groupId));
         }
         boolean isOwned = false;
-        List<RoleGrant> grants = userGroupDao.retrieveGrants(groupId);
+        final List<RoleGrant> grants = userGroupDao.retrieveGrants(groupId);
         RoleGrant grantToRetrieve = null;
-        for (RoleGrant grant : grants) {
+        for (final RoleGrant grant : grants) {
             if (grant.getId().equals(grantId)) {
                 grantToRetrieve = grant;
                 isOwned = true;
@@ -1661,16 +1661,16 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         MissingAttributeValueException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
 
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility.format(
                 MSG_GROUP_NOT_FOUND_BY_ID, groupId));
         }
         boolean isOwned = false;
-        List<RoleGrant> grants = userGroupDao.retrieveGrants(groupId);
+        final List<RoleGrant> grants = userGroupDao.retrieveGrants(groupId);
         RoleGrant grantToRevoke = null;
-        for (RoleGrant grant : grants) {
+        for (final RoleGrant grant : grants) {
             if (grant.getId().equals(grantId)) {
                 grantToRevoke = grant;
                 isOwned = true;
@@ -1683,14 +1683,14 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 + " is no current grant of user group " + groupId);
         }
 
-        de.escidoc.core.common.util.xml.stax.StaxParser sp =
+        final de.escidoc.core.common.util.xml.stax.StaxParser sp =
             new de.escidoc.core.common.util.xml.stax.StaxParser(
                 XmlUtility.NAME_PARAM);
-        GrantStaxHandler grantHandler = new GrantStaxHandler(grantToRevoke);
+        final GrantStaxHandler grantHandler = new GrantStaxHandler(grantToRevoke);
 
         sp.addHandler(grantHandler);
 
-        RevokeStaxHandler revokeStaxHandler =
+        final RevokeStaxHandler revokeStaxHandler =
             new RevokeStaxHandler(grantToRevoke, userAccountDao);
 
         sp.addHandler(revokeStaxHandler);
@@ -1741,29 +1741,29 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         AlreadyRevokedException, XmlCorruptedException,
         MissingAttributeValueException, SystemException, AuthorizationException {
         // check if user group exists
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility.format(
                 MSG_GROUP_NOT_FOUND_BY_ID, groupId));
         }
         // get all current grants of user group
-        List<RoleGrant> grants = fetchCurrentGrants(groupId);
+        final List<RoleGrant> grants = fetchCurrentGrants(groupId);
         // build HashMap with grantId
-        HashMap<String, RoleGrant> grantsHash =
+        final HashMap<String, RoleGrant> grantsHash =
             new HashMap<String, RoleGrant>();
 
-        for (RoleGrant grant : grants) {
+        for (final RoleGrant grant : grants) {
             grantsHash.put(grant.getId(), grant);
         }
 
         // Parse taskParam
-        StaxParser fp = new StaxParser();
-        TaskParamHandler tph = new TaskParamHandler(fp);
+        final StaxParser fp = new StaxParser();
+        final TaskParamHandler tph = new TaskParamHandler(fp);
 
         tph.setCheckLastModificationDate(false);
         fp.addHandler(tph);
 
-        FilterHandler fh = new FilterHandler(fp);
+        final FilterHandler fh = new FilterHandler(fp);
 
         fp.addHandler(fh);
         try {
@@ -1777,13 +1777,13 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
-        Map<String, Object> filters = fh.getRules();
-        Collection<String> grantIds;
+        final Map<String, Object> filters = fh.getRules();
+        final Collection<String> grantIds;
 
         if (filters.isEmpty()) {
             // if no filters are provided, remove all current grants
             grantIds = new HashSet<String>();
-            for (String grantId : grantsHash.keySet()) {
+            for (final String grantId : grantsHash.keySet()) {
                 grantIds.add(grantId);
             }
         }
@@ -1798,7 +1798,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
 
         // check if all grants that shall get revoked are currentGrants
-        for (String grantId : grantIds) {
+        for (final String grantId : grantIds) {
             if (!grantsHash.containsKey(grantId)) {
                 throw new GrantNotFoundException("Grant with id " + grantId
                     + " is no current grant of user group " + groupId);
@@ -1806,13 +1806,13 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
 
         // AA-filter grants to revoke
-        List<Object[]> argumentList = new ArrayList<Object[]>();
-        for (String grantId : grantIds) {
-            Object[] args = new Object[] { groupId, grantId };
+        final List<Object[]> argumentList = new ArrayList<Object[]>();
+        for (final String grantId : grantIds) {
+            final Object[] args = new Object[] { groupId, grantId };
             argumentList.add(args);
         }
         try {
-            List<Object[]> returnList =
+            final List<Object[]> returnList =
                 pdp.evaluateMethodForList("user-group", "revokeGrant",
                     argumentList);
             if (returnList.size() < grantIds.size()) {
@@ -1832,10 +1832,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 + "during evaluating access rights.", e);
         }
 
-        UserAccount authenticateUser =
+        final UserAccount authenticateUser =
             UserAccountHandler.getAuthenticatedUser(userAccountDao);
 
-        for (String grantId : grantIds) {
+        for (final String grantId : grantIds) {
             // set revoke-date, -user and -remark
             grantsHash.get(grantId).setUserAccountByRevokerId(authenticateUser);
             grantsHash.get(grantId).setRevocationDate(
@@ -1867,10 +1867,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     private List<RoleGrant> fetchCurrentGrants(final String groupId)
         throws SqlDatabaseSystemException {
-        List<RoleGrant> grants = userGroupDao.retrieveGrants(groupId);
-        List<RoleGrant> result = new ArrayList<RoleGrant>(grants.size());
+        final List<RoleGrant> grants = userGroupDao.retrieveGrants(groupId);
+        final List<RoleGrant> result = new ArrayList<RoleGrant>(grants.size());
 
-        for (RoleGrant grant : grants) {
+        for (final RoleGrant grant : grants) {
             if (grant.getRevocationDate() == null) {
                 result.add(grant);
             }
@@ -1955,7 +1955,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         throws SystemException, UniqueConstraintViolationException {
         boolean changed = false;
         if (groupProperties != null) {
-            String description =
+            final String description =
                 groupProperties.get(Elements.ELEMENT_DESCRIPTION);
             if (description != null
                 && ((userGroup.getDescription() != null
@@ -1965,21 +1965,21 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 changed = true;
             }
 
-            String oldLabel = userGroup.getLabel();
-            String label = groupProperties.get("label");
+            final String oldLabel = userGroup.getLabel();
+            final String label = groupProperties.get("label");
             if (checkLabelUnique(label)) {
                 changed = true;
                 userGroup.setLabel(label);
             } else {
                 if (oldLabel == null || !oldLabel.equals(label)) {
-                    String message =
+                    final String message =
                             "The provided user group label is not unique.";
                     LOG.error(message);
                     throw new UniqueConstraintViolationException(message);
                 }
             }
 
-            String name = groupProperties.get(Elements.ELEMENT_NAME);
+            final String name = groupProperties.get(Elements.ELEMENT_NAME);
             if (userGroup.getName() == null
                 || ((userGroup.getName() != null) && !name.equals(userGroup
                     .getName()))) {
@@ -1987,7 +1987,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 changed = true;
             }
 
-            String email = groupProperties.get("email");
+            final String email = groupProperties.get("email");
             if (email != null
                 && ((userGroup.getEmail() != null
                     && email.equals(userGroup.getEmail()) || userGroup
@@ -1996,7 +1996,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 changed = true;
             }
 
-            String type = groupProperties.get(Elements.ELEMENT_TYPE);
+            final String type = groupProperties.get(Elements.ELEMENT_TYPE);
             if (type != null
                 && ((userGroup.getType() != null
                     && type.equals(userGroup.getType()) || userGroup.getType() == null))) {

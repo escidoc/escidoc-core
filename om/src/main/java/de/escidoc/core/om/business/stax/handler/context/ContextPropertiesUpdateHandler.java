@@ -114,17 +114,17 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @om
      */
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws InvalidContentException, ReadonlyElementViolationException,
         ReadonlyAttributeViolationException, MissingAttributeValueException,
         OrganizationalUnitNotFoundException, InvalidStatusException,
         SystemException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         // String theName = element.getLocalName();
 
         if (organizationalUnitPath.equals(currentPath)) {
-            String id = XmlUtility.getIdFromStartElement(element);
+            final String id = XmlUtility.getIdFromStartElement(element);
 
             Utility.getInstance().checkIsOrganizationalUnit(id);
 
@@ -153,14 +153,14 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(EndElement element) throws Exception {
+    public EndElement endElement(final EndElement element) throws Exception {
         return element;
     }
 
     @Override
-    public String characters(String data, StartElement element)
+    public String characters(final String data, final StartElement element)
         throws Exception {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
 
         if (curPath.startsWith(propertiesPath)) {
             // name
@@ -248,7 +248,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      */
     private boolean checkValueChanged(final String key, final String value)
         throws SystemException {
-        String repositoryValue;
+        final String repositoryValue;
 
         if (key.equals(Elements.ELEMENT_DESCRIPTION)) {
             repositoryValue =

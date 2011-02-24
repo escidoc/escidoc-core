@@ -89,18 +89,18 @@ public class XacmlFunctionContains extends FunctionBase {
     public EvaluationResult evaluate(
         final List inputs, final EvaluationCtx context) {
 
-        AttributeValue[] argValues = new AttributeValue[inputs.size()];
-        EvaluationResult result = evalArgs(inputs, context, argValues);
+        final AttributeValue[] argValues = new AttributeValue[inputs.size()];
+        final EvaluationResult result = evalArgs(inputs, context, argValues);
         if (result != null) {
             return result;
         }
 
-        StringAttribute encodedList = (StringAttribute) (argValues[0]);
-        StringAttribute value = (StringAttribute) (argValues[1]);
-        Pattern p =
+        final StringAttribute encodedList = (StringAttribute) (argValues[0]);
+        final StringAttribute value = (StringAttribute) (argValues[1]);
+        final Pattern p =
             Pattern.compile(".*(\\A|\\s)" + value.getValue() + "(\\s|\\z).*",
                 Pattern.MULTILINE | Pattern.DOTALL);
-        Matcher m = p.matcher(encodedList.getValue());
+        final Matcher m = p.matcher(encodedList.getValue());
 
         return EvaluationResult.getInstance(m.matches());
     }

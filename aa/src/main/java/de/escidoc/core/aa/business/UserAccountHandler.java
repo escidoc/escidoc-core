@@ -215,7 +215,7 @@ public class UserAccountHandler
     public String retrieve(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
-        UserAccount userAccount = dao.retrieveUserAccount(userId);
+        final UserAccount userAccount = dao.retrieveUserAccount(userId);
         assertUserAccount(userId, userAccount);
 
         return renderer.render(userAccount);
@@ -238,7 +238,7 @@ public class UserAccountHandler
         if (StringUtils.isEmpty(UserContext.getId())) {
             throw new UserAccountNotFoundException("No user logged in");
         }
-        UserAccount userAccount = dao.retrieveUserAccount(UserContext.getId());
+        final UserAccount userAccount = dao.retrieveUserAccount(UserContext.getId());
         assertUserAccount(UserContext.getId(), userAccount);
 
         return renderer.render(userAccount);
@@ -269,14 +269,14 @@ public class UserAccountHandler
         OrganizationalUnitNotFoundException, SystemException,
         InvalidStatusException {
 
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(xmlData);
 
         final UserAccount userAccount = new UserAccount();
 
-        StaxParser sp = new StaxParser(XmlUtility.NAME_USER_ACCOUNT);
+        final StaxParser sp = new StaxParser(XmlUtility.NAME_USER_ACCOUNT);
 
-        UserAccountPropertiesStaxHandler propertiesHandler =
+        final UserAccountPropertiesStaxHandler propertiesHandler =
             new UserAccountPropertiesStaxHandler(userAccount, dao, true);
         sp.addHandler(propertiesHandler);
 
@@ -374,19 +374,19 @@ public class UserAccountHandler
         OrganizationalUnitNotFoundException, SystemException,
         InvalidStatusException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
+        final UserAccount userAccount = retrieveUserAccountById(userId);
 
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(xmlData);
 
-        StaxParser sp = new StaxParser(XmlUtility.NAME_USER_ACCOUNT);
+        final StaxParser sp = new StaxParser(XmlUtility.NAME_USER_ACCOUNT);
 
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
-        UserAccountPropertiesStaxHandler propertiesHandler =
+        final UserAccountPropertiesStaxHandler propertiesHandler =
             new UserAccountPropertiesStaxHandler(userAccount, dao, false);
         sp.addHandler(propertiesHandler);
 
@@ -459,24 +459,24 @@ public class UserAccountHandler
         OptimisticLockingException, AuthenticationException,
         AuthorizationException, SystemException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
+        final UserAccount userAccount = retrieveUserAccountById(userId);
         if (!userAccount.getActive()) {
             throw new InvalidStatusException(
                 "Password must not be updated on inactive user-account!");
         }
 
-        TaskParamHandler handler = XmlUtility.parseTaskParam(taskParam, true);
+        final TaskParamHandler handler = XmlUtility.parseTaskParam(taskParam, true);
 
-        String password = handler.getPassword();
+        final String password = handler.getPassword();
         if (password == null || "".equals(password)) {
             throw new MissingMethodParameterException(
                 "Password must not be null or empty!");
         }
         userAccount.setPassword(password);
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(taskParam);
-        StaxParser sp = new StaxParser("param");
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final StaxParser sp = new StaxParser("param");
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
@@ -539,16 +539,16 @@ public class UserAccountHandler
         SystemException {
 
         retrieveUserAccountById(userId);
-        List<RoleGrant> currentGrants = fetchCurrentGrants(userId);
+        final List<RoleGrant> currentGrants = fetchCurrentGrants(userId);
         if (currentGrants == null || currentGrants.isEmpty()) {
             return null;
         }
 
-        Iterator<RoleGrant> iter = currentGrants.iterator();
-        Map<String, Map<String, List<RoleGrant>>> ret =
+        final Iterator<RoleGrant> iter = currentGrants.iterator();
+        final Map<String, Map<String, List<RoleGrant>>> ret =
             new HashMap<String, Map<String, List<RoleGrant>>>();
         while (iter.hasNext()) {
-            RoleGrant grant = iter.next();
+            final RoleGrant grant = iter.next();
             final String roleId = grant.getEscidocRole().getId();
             Map<String, List<RoleGrant>> grantsOfRole = ret.get(roleId);
             if (grantsOfRole == null) {
@@ -588,23 +588,23 @@ public class UserAccountHandler
     public String retrieveCurrentGrants(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
-        List<RoleGrant> currentGrants = fetchCurrentGrants(userId);
-        HashMap<String, RoleGrant> grantsMap = new HashMap<String, RoleGrant>();
-        List<Object[]> argumentList = new ArrayList<Object[]>();
-        List<RoleGrant> filteredCurrentGrants = new ArrayList<RoleGrant>();
+        final UserAccount userAccount = retrieveUserAccountById(userId);
+        final List<RoleGrant> currentGrants = fetchCurrentGrants(userId);
+        final HashMap<String, RoleGrant> grantsMap = new HashMap<String, RoleGrant>();
+        final List<Object[]> argumentList = new ArrayList<Object[]>();
+        final List<RoleGrant> filteredCurrentGrants = new ArrayList<RoleGrant>();
 
         // AA-filter
-        for (RoleGrant roleGrant : currentGrants) {
+        for (final RoleGrant roleGrant : currentGrants) {
             grantsMap.put(roleGrant.getId(), roleGrant);
-            Object[] args = new Object[] { userId, roleGrant.getId() };
+            final Object[] args = new Object[] { userId, roleGrant.getId() };
             argumentList.add(args);
         }
         try {
-            List<Object[]> returnList =
+            final List<Object[]> returnList =
                 pdp.evaluateMethodForList("user-account", "retrieveGrant",
                     argumentList);
-            for (Object[] obj : returnList) {
+            for (final Object[] obj : returnList) {
                 filteredCurrentGrants.add(grantsMap.get(obj[1]));
             }
         }
@@ -636,16 +636,16 @@ public class UserAccountHandler
     public String retrieveGrants(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
 
-        SRURequestParameters parameters = new DbRequestParameters(filter);
+        final SRURequestParameters parameters = new DbRequestParameters(filter);
 
-        String query = parameters.getQuery();
-        int limit = parameters.getLimit();
-        int offset = parameters.getOffset();
-        boolean explain = parameters.isExplain();
+        final String query = parameters.getQuery();
+        final int limit = parameters.getLimit();
+        final int offset = parameters.getOffset();
+        final boolean explain = parameters.isExplain();
 
-        String result;
+        final String result;
         if (explain) {
-            Map<String, Object> values = new HashMap<String, Object>();
+            final Map<String, Object> values = new HashMap<String, Object>();
 
             values.put("PROPERTY_NAMES",
                 new RoleGrantFilter(null).getPropertyNames());
@@ -660,15 +660,15 @@ public class UserAccountHandler
                     parameters.getRecordPacking());
         }
         else {
-            int needed = offset + limit;
+            final int needed = offset + limit;
             final List<RoleGrant> permittedRoleGrants =
                 new ArrayList<RoleGrant>();
 
-            List<RoleGrant> tmpRoleGrants = dao.retrieveGrants(query, 0, 0, userGroupHandler);
+            final List<RoleGrant> tmpRoleGrants = dao.retrieveGrants(query, 0, 0, userGroupHandler);
             if (tmpRoleGrants != null && !tmpRoleGrants.isEmpty()) {
                 final List<String> userIds = new ArrayList<String>();
                 final List<String> groupIds = new ArrayList<String>();
-                for (RoleGrant roleGrant : tmpRoleGrants) {
+                for (final RoleGrant roleGrant : tmpRoleGrants) {
                     if (roleGrant.getUserId() != null
                         && !userIds.contains(roleGrant.getUserId())) {
                         userIds.add(roleGrant.getUserId());
@@ -692,7 +692,7 @@ public class UserAccountHandler
                     }
                     if (!tmpUsersPermitted.isEmpty()
                         || !tmpGroupsPermitted.isEmpty()) {
-                        for (RoleGrant roleGrant : tmpRoleGrants) {
+                        for (final RoleGrant roleGrant : tmpRoleGrants) {
                             if (roleGrant.getUserId() != null) {
                                 if (tmpUsersPermitted.contains(roleGrant
                                     .getUserId())) {
@@ -790,13 +790,13 @@ public class UserAccountHandler
         XmlCorruptedException, MissingAttributeValueException,
         OptimisticLockingException, SystemException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
+        final UserAccount userAccount = retrieveUserAccountById(userId);
 
         // TODO: validation missing, check if needed or if it shall be skipped
 
-        StaxParser sp = new StaxParser(XmlUtility.NAME_PARAM);
+        final StaxParser sp = new StaxParser(XmlUtility.NAME_PARAM);
 
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
@@ -865,13 +865,13 @@ public class UserAccountHandler
         XmlCorruptedException, MissingAttributeValueException,
         OptimisticLockingException, SystemException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
+        final UserAccount userAccount = retrieveUserAccountById(userId);
 
         // TODO: validation missing, check if needed or if it shall be skipped
 
-        StaxParser sp = new StaxParser(XmlUtility.NAME_PARAM);
+        final StaxParser sp = new StaxParser(XmlUtility.NAME_PARAM);
 
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
@@ -941,22 +941,22 @@ public class UserAccountHandler
         InvalidScopeException, RoleNotFoundException, XmlCorruptedException,
         SystemException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
+        final UserAccount userAccount = retrieveUserAccountById(userId);
         final RoleGrant grant = new RoleGrant();
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(grantXML);
 
-        StaxParser sp = new StaxParser(XmlUtility.NAME_GRANT);
+        final StaxParser sp = new StaxParser(XmlUtility.NAME_GRANT);
 
-        LinkStaxHandler roleLinkHandler =
+        final LinkStaxHandler roleLinkHandler =
             new LinkStaxHandler(XPATH_GRANT_ROLE, XmlUtility.BASE_ROLE,
                 RoleNotFoundException.class);
         sp.addHandler(roleLinkHandler);
-        LinkStaxHandler objectLinkHandler =
+        final LinkStaxHandler objectLinkHandler =
             new LinkStaxHandler(XPATH_GRANT_ASSIGNED_ON);
         sp.addHandler(objectLinkHandler);
 
-        GrantStaxHandler grantHandler = new GrantStaxHandler(grant);
+        final GrantStaxHandler grantHandler = new GrantStaxHandler(grant);
         sp.addHandler(grantHandler);
 
         try {
@@ -1001,7 +1001,7 @@ public class UserAccountHandler
         // FIXME: inject Triplestoreutility
 
         if (objectId != null) {
-            Map<String, String> objectAttributes;
+            final Map<String, String> objectAttributes;
             try {
                 objectAttributes =
                     objectAttributeResolver.resolveObjectAttributes(objectId);
@@ -1014,13 +1014,13 @@ public class UserAccountHandler
                 throw new XmlCorruptedException(StringUtility.format(
                     MSG_GRANT_RESTRICTION_VIOLATED, objectId));
             }
-            String objectType = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
+            final String objectType = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
             String objectTitle = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TITLE);
 
             // check if objectType may be scope
             boolean checkOk = false;
             if (role.getScopeDefs() != null && objectType != null) {
-                for (ScopeDef scopeDef : role.getScopeDefs()) {
+                for (final ScopeDef scopeDef : role.getScopeDefs()) {
                     if (scopeDef.getAttributeObjectType() != null
                         && scopeDef.getAttributeObjectType().equals(objectType)) {
                         checkOk = true;
@@ -1047,7 +1047,7 @@ public class UserAccountHandler
             }
 
             // get the href of the object.
-            String objectHref = XmlUtility.getHref(objectType, objectId);
+            final String objectHref = XmlUtility.getHref(objectType, objectId);
 
             // In case of REST it has to be checked if the provided href points
             // to the correct href.
@@ -1113,16 +1113,16 @@ public class UserAccountHandler
         AlreadyRevokedException, XmlCorruptedException,
         MissingAttributeValueException, SystemException {
 
-        RoleGrant grant = retrieveGrantByIds(userId, grantId);
+        final RoleGrant grant = retrieveGrantByIds(userId, grantId);
 
         // TODO: validation missing, check if needed or if it shall be skipped
 
-        StaxParser sp = new StaxParser(XmlUtility.NAME_PARAM);
+        final StaxParser sp = new StaxParser(XmlUtility.NAME_PARAM);
 
-        GrantStaxHandler grantHandler = new GrantStaxHandler(grant);
+        final GrantStaxHandler grantHandler = new GrantStaxHandler(grant);
         sp.addHandler(grantHandler);
 
-        RevokeStaxHandler revokeStaxHandler = new RevokeStaxHandler(grant, dao);
+        final RevokeStaxHandler revokeStaxHandler = new RevokeStaxHandler(grant, dao);
         sp.addHandler(revokeStaxHandler);
 
         try {
@@ -1188,22 +1188,22 @@ public class UserAccountHandler
         retrieveUserAccountById(userId);
 
         // get all current grants of user
-        List<RoleGrant> grants = fetchCurrentGrants(userId);
+        final List<RoleGrant> grants = fetchCurrentGrants(userId);
         // build HashMap with grantId
-        HashMap<String, RoleGrant> grantsHash =
+        final HashMap<String, RoleGrant> grantsHash =
             new HashMap<String, RoleGrant>();
-        for (RoleGrant grant : grants) {
+        for (final RoleGrant grant : grants) {
             grantsHash.put(grant.getId(), grant);
         }
 
         // Parse taskParam
-        de.escidoc.core.common.util.stax.StaxParser fp =
+        final de.escidoc.core.common.util.stax.StaxParser fp =
             new de.escidoc.core.common.util.stax.StaxParser();
 
-        TaskParamHandler tph = new TaskParamHandler(fp);
+        final TaskParamHandler tph = new TaskParamHandler(fp);
         tph.setCheckLastModificationDate(false);
         fp.addHandler(tph);
-        FilterHandler fh = new FilterHandler(fp);
+        final FilterHandler fh = new FilterHandler(fp);
         fp.addHandler(fh);
         try {
             fp.parse(new ByteArrayInputStream(taskParam
@@ -1216,13 +1216,13 @@ public class UserAccountHandler
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
-        Map<String, Object> filters = fh.getRules();
+        final Map<String, Object> filters = fh.getRules();
 
-        Collection<String> grantIds;
+        final Collection<String> grantIds;
         if (filters.isEmpty()) {
             // if no filters are provided, remove all current grants
             grantIds = new HashSet<String>();
-            for (String grantId : grantsHash.keySet()) {
+            for (final String grantId : grantsHash.keySet()) {
                 grantIds.add(grantId);
             }
         }
@@ -1237,7 +1237,7 @@ public class UserAccountHandler
         }
 
         // check if all grants that shall get revoked are currentGrants
-        for (String grantId : grantIds) {
+        for (final String grantId : grantIds) {
             if (!grantsHash.containsKey(grantId)) {
                 throw new GrantNotFoundException("Grant with id " + grantId
                     + " is no current grant of user " + userId);
@@ -1245,13 +1245,13 @@ public class UserAccountHandler
         }
 
         // AA-filter grants to revoke
-        List<Object[]> argumentList = new ArrayList<Object[]>();
-        for (String grantId : grantIds) {
-            Object[] args = new Object[] { userId, grantId };
+        final List<Object[]> argumentList = new ArrayList<Object[]>();
+        for (final String grantId : grantIds) {
+            final Object[] args = new Object[] { userId, grantId };
             argumentList.add(args);
         }
         try {
-            List<Object[]> returnList =
+            final List<Object[]> returnList =
                 pdp.evaluateMethodForList("user-account", "revokeGrant",
                     argumentList);
             if (returnList.size() < grantIds.size()) {
@@ -1269,10 +1269,10 @@ public class UserAccountHandler
             throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
 
-        UserAccount authenticateUser =
+        final UserAccount authenticateUser =
             UserAccountHandler.getAuthenticatedUser(dao);
         try {
-            for (String grantId : grantIds) {
+            for (final String grantId : grantIds) {
                 // set revoke-date, -user and -remark
                 grantsHash.get(grantId).setUserAccountByRevokerId(
                     authenticateUser);
@@ -1310,7 +1310,7 @@ public class UserAccountHandler
     public List<UserLoginData> retrieveUserHandles(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
-        List<UserLoginData> ret = dao.retrieveUserLoginDataByUserId(userId);
+        final List<UserLoginData> ret = dao.retrieveUserLoginDataByUserId(userId);
         if (ret == null || ret.isEmpty()) {
             assertUserAccount(userId, dao.retrieveUserAccountById(userId));
         }
@@ -1341,16 +1341,16 @@ public class UserAccountHandler
         // then remove groupId from filter
         castedFilter = fixCqlGroupFilter(castedFilter);
 
-        SRURequestParameters parameters = new DbRequestParameters(castedFilter);
+        final SRURequestParameters parameters = new DbRequestParameters(castedFilter);
 
-        String query = parameters.getQuery();
-        int limit = parameters.getLimit();
-        int offset = parameters.getOffset();
-        boolean explain = parameters.isExplain();
+        final String query = parameters.getQuery();
+        final int limit = parameters.getLimit();
+        final int offset = parameters.getOffset();
+        final boolean explain = parameters.isExplain();
 
-        String result;
+        final String result;
         if (explain) {
-            Map<String, Object> values = new HashMap<String, Object>();
+            final Map<String, Object> values = new HashMap<String, Object>();
 
             values.put("PROPERTY_NAMES",
                 new UserAccountFilter(null).getPropertyNames());
@@ -1364,14 +1364,14 @@ public class UserAccountHandler
                     parameters.getRecordPacking());
         }
         else {
-            int currentLimit = offset + limit;
+            final int currentLimit = offset + limit;
             int currentOffset = 0;
             final List<UserAccount> permittedUserAccounts =
                 new ArrayList<UserAccount>();
             final int size = permittedUserAccounts.size();
             while (size <= currentLimit) {
 
-                List<UserAccount> tmpUserAccounts = dao
+                final List<UserAccount> tmpUserAccounts = dao
                         .retrieveUserAccounts(query, currentOffset,
                                 currentLimit);
                 if (tmpUserAccounts == null || tmpUserAccounts.isEmpty()) {
@@ -1382,7 +1382,7 @@ public class UserAccountHandler
                 final List<String> ids =
                     new ArrayList<String>(tmpUserAccounts.size());
                 while (userAccountIter.hasNext()) {
-                    UserAccount userAccount = userAccountIter.next();
+                    final UserAccount userAccount = userAccountIter.next();
                     ids.add(userAccount.getId());
                 }
 
@@ -1461,9 +1461,9 @@ public class UserAccountHandler
         SystemException {
 
         Map<String, String[]> returnFilter = filter;
-        Object[] queryPartsObject = filter.get(Constants.SRU_PARAMETER_QUERY);
+        final Object[] queryPartsObject = filter.get(Constants.SRU_PARAMETER_QUERY);
         if (queryPartsObject != null) {
-            String[] queryParts = new String[queryPartsObject.length];
+            final String[] queryParts = new String[queryPartsObject.length];
             for (int i = 0; i < queryPartsObject.length; i++) {
                 if (queryPartsObject[i] != null) {
                     queryParts[i] = queryPartsObject[i].toString();
@@ -1471,12 +1471,12 @@ public class UserAccountHandler
             }
             boolean groupFilterFound = false;
             for (int i = 0; i < queryParts.length; i++) {
-                Matcher matcher = GROUP_FILTER_PATTERN.matcher(queryParts[i]);
+                final Matcher matcher = GROUP_FILTER_PATTERN.matcher(queryParts[i]);
                 if (matcher.find()) {
                     groupFilterFound = true;
-                    Matcher groupFilterMatcher =
+                    final Matcher groupFilterMatcher =
                         GROUP_FILTER_PATTERN.matcher(queryParts[i]);
-                    StringBuffer result = new StringBuffer("");
+                    final StringBuffer result = new StringBuffer("");
                     while (groupFilterMatcher.find()) {
                         if (groupFilterMatcher.group(6).matches(".*?%.*")) {
                             throw new InvalidSearchQueryException(
@@ -1490,14 +1490,14 @@ public class UserAccountHandler
                                 "non-supported relation in group-filter");
                         }
                         // get users for group
-                        StringBuilder replacement = new StringBuilder(" (");
+                        final StringBuilder replacement = new StringBuilder(" (");
                         try {
-                            Set<String> userIds = retrieveUsersForGroup(groupFilterMatcher
+                            final Set<String> userIds = retrieveUsersForGroup(groupFilterMatcher
                                     .group(6));
                             // write user-cql-query
                             // and replace group-expression with it.
                             if (userIds != null && !userIds.isEmpty()) {
-                                for (String userId : userIds) {
+                                for (final String userId : userIds) {
                                     if (replacement.length() > 2) {
                                         replacement.append(" or ");
                                     }
@@ -1532,8 +1532,8 @@ public class UserAccountHandler
                 }
             }
             if (groupFilterFound) {
-                Map<String, String[]> filter1 = new HashMap<String, String[]>();
-                for (Entry<String, String[]> entry : filter.entrySet()) {
+                final Map<String, String[]> filter1 = new HashMap<String, String[]>();
+                for (final Entry<String, String[]> entry : filter.entrySet()) {
                     if (entry.getValue() != null) {
                         // noinspection RedundantCast
                         filter1.put(entry.getKey(),
@@ -1573,19 +1573,19 @@ public class UserAccountHandler
     private Set<String> retrieveUsersForGroup(final String groupId)
         throws UserGroupNotFoundException, SystemException {
         // may not return null but empty list!!
-        Set<String> userIds = new HashSet<String>();
+        final Set<String> userIds = new HashSet<String>();
 
         // Try getting the userGroup
-        UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
+        final UserGroup userGroup = userGroupDao.retrieveUserGroup(groupId);
         if (userGroup == null) {
             throw new UserGroupNotFoundException(StringUtility.format(
                 MSG_GROUP_NOT_FOUND_BY_ID, groupId));
         }
 
-        Set<UserGroupMember> members = userGroup.getMembers();
+        final Set<UserGroupMember> members = userGroup.getMembers();
 
         // Get users that are integrated via their userId
-        for (UserGroupMember member : members) {
+        for (final UserGroupMember member : members) {
             if (member.getType().equals(
                 Constants.TYPE_USER_GROUP_MEMBER_INTERNAL)
                 && member.getName().equals(
@@ -1595,7 +1595,7 @@ public class UserAccountHandler
         }
 
         // Get users that are integrated via their user-attributes
-        String ouAttributeName;
+        final String ouAttributeName;
         try {
             ouAttributeName =
                 EscidocConfiguration.getInstance().get(
@@ -1605,12 +1605,12 @@ public class UserAccountHandler
             throw new SystemException(e);
         }
 
-        Set<HashMap<String, String>> attributesSet =
+        final Set<HashMap<String, String>> attributesSet =
             new HashSet<HashMap<String, String>>();
-        for (UserGroupMember member : members) {
+        for (final UserGroupMember member : members) {
             if (member.getType().equals(
                 Constants.TYPE_USER_GROUP_MEMBER_USER_ATTRIBUTE)) {
-                HashMap<String, String> attributeHash =
+                final HashMap<String, String> attributeHash =
                     new HashMap<String, String>();
                 attributeHash.put(member.getName(), member.getValue());
                 attributesSet.add(attributeHash);
@@ -1618,13 +1618,13 @@ public class UserAccountHandler
                 // if yes, resolve children-path-list
                 if (ouAttributeName != null && ouAttributeName.length() != 0
                     && member.getName().equals(ouAttributeName)) {
-                    List<String> initialList = new ArrayList<String>();
+                    final List<String> initialList = new ArrayList<String>();
                     initialList.add(member.getValue());
-                    List<String> pathList =
+                    final List<String> pathList =
                         getOrgUnitChildrenPathList(member.getValue(),
                             initialList);
-                    for (String ouId : pathList) {
-                        HashMap<String, String> ouAttributeHash =
+                    for (final String ouId : pathList) {
+                        final HashMap<String, String> ouAttributeHash =
                             new HashMap<String, String>();
                         ouAttributeHash.put(ouAttributeName, ouId);
                         attributesSet.add(ouAttributeHash);
@@ -1633,15 +1633,15 @@ public class UserAccountHandler
             }
         }
         if (!attributesSet.isEmpty()) {
-            List<UserAttribute> userAttributes =
+            final List<UserAttribute> userAttributes =
                 dao.retrieveAttributes(attributesSet);
-            for (UserAttribute userAttribute : userAttributes) {
+            for (final UserAttribute userAttribute : userAttributes) {
                 userIds.add(userAttribute.getUserAccountByUserId().getId());
             }
         }
 
         // Get users that are integrated via other groups
-        for (UserGroupMember member : members) {
+        for (final UserGroupMember member : members) {
             if (member.getType().equals(
                 Constants.TYPE_USER_GROUP_MEMBER_INTERNAL)
                 && member.getName().equals(
@@ -1669,10 +1669,10 @@ public class UserAccountHandler
         throws SystemException {
 
         List<String> addableList = totalList;
-        List<String> orgUnitIds = tripleStoreUtility.getChildren(orgUnitId);
+        final List<String> orgUnitIds = tripleStoreUtility.getChildren(orgUnitId);
         if (orgUnitIds != null && !orgUnitIds.isEmpty()) {
             addableList.addAll(orgUnitIds);
-            for (String childOrgUnitId : orgUnitIds) {
+            for (final String childOrgUnitId : orgUnitIds) {
                 addableList =
                     getOrgUnitChildrenPathList(childOrgUnitId, addableList);
             }
@@ -1741,7 +1741,7 @@ public class UserAccountHandler
         throws SqlDatabaseSystemException, UserAccountNotFoundException,
         GrantNotFoundException {
 
-        RoleGrant grant = dao.retrieveGrant(userId, grantId);
+        final RoleGrant grant = dao.retrieveGrant(userId, grantId);
         if (grant == null) {
             if (dao.retrieveUserAccountById(userId) == null) {
                 throw new UserAccountNotFoundException();
@@ -1776,7 +1776,7 @@ public class UserAccountHandler
         throws SqlDatabaseSystemException, UserAccountNotFoundException,
         UserAttributeNotFoundException, ReadonlyElementViolationException {
 
-        UserAttribute attribute = dao.retrieveAttribute(userId, attributeId);
+        final UserAttribute attribute = dao.retrieveAttribute(userId, attributeId);
         if (attribute == null) {
             if (dao.retrieveUserAccountById(userId) == null) {
                 throw new UserAccountNotFoundException();
@@ -1853,7 +1853,7 @@ public class UserAccountHandler
     private UserAccount retrieveUserAccountById(final String userId)
         throws UserAccountNotFoundException, SqlDatabaseSystemException {
 
-        UserAccount user = dao.retrieveUserAccountById(userId);
+        final UserAccount user = dao.retrieveUserAccountById(userId);
         if (user == null) {
             throw new UserAccountNotFoundException(StringUtility.format(
                 MSG_USER_NOT_FOUND_BY_ID, userId));
@@ -1897,10 +1897,10 @@ public class UserAccountHandler
     private List<RoleGrant> fetchCurrentGrants(final String userId)
         throws SqlDatabaseSystemException {
 
-        List<RoleGrant> grants = dao.retrieveGrantsByUserId(userId);
-        List<RoleGrant> currentGrants = new ArrayList<RoleGrant>(grants.size());
+        final List<RoleGrant> grants = dao.retrieveGrantsByUserId(userId);
+        final List<RoleGrant> currentGrants = new ArrayList<RoleGrant>(grants.size());
         if (!grants.isEmpty()) {
-            for (RoleGrant grant : grants) {
+            for (final RoleGrant grant : grants) {
                 if (grant.getRevocationDate() == null) {
                     currentGrants.add(grant);
                 }
@@ -2147,8 +2147,8 @@ public class UserAccountHandler
     @Override
     public String retrievePreferences(final String userId)
         throws UserAccountNotFoundException, SystemException {
-        UserAccount userAccount = retrieveUserAccountById(userId);
-        Set<UserPreference> currentPreferences =
+        final UserAccount userAccount = retrieveUserAccountById(userId);
+        final Set<UserPreference> currentPreferences =
             userAccount.getUserPreferencesByUserId();
         return renderer.renderPreferences(userAccount, currentPreferences);
     }
@@ -2175,13 +2175,13 @@ public class UserAccountHandler
         throws UserAccountNotFoundException, PreferenceNotFoundException,
         SystemException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
-        Set<UserPreference> currentPreferences =
+        final UserAccount userAccount = retrieveUserAccountById(userId);
+        final Set<UserPreference> currentPreferences =
             userAccount.getUserPreferencesByUserId();
 
         String result = null;
-        for (UserPreference preference : currentPreferences) {
-            String preferenceName = preference.getName();
+        for (final UserPreference preference : currentPreferences) {
+            final String preferenceName = preference.getName();
             if (preferenceName.equals(name)) {
                 result = renderer.renderPreference(userAccount, preference);
             }
@@ -2221,13 +2221,13 @@ public class UserAccountHandler
         throws AlreadyExistsException, UserAccountNotFoundException,
         PreferenceNotFoundException, XmlCorruptedException, SystemException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
+        final UserAccount userAccount = retrieveUserAccountById(userId);
 
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(preferenceXML);
-        StaxParser sp = new StaxParser(Elements.ELEMENT_USER_PREFERENCE);
+        final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_PREFERENCE);
 
-        UserPreferenceReadHandler uprh = new UserPreferenceReadHandler();
+        final UserPreferenceReadHandler uprh = new UserPreferenceReadHandler();
         sp.addHandler(uprh);
 
         try {
@@ -2242,26 +2242,26 @@ public class UserAccountHandler
         }
 
         final UserPreference preference = new UserPreference();
-        Map<String, String> preferences = uprh.getPreferences();
-        Set<String> preferenceNames = preferences.keySet();
+        final Map<String, String> preferences = uprh.getPreferences();
+        final Set<String> preferenceNames = preferences.keySet();
         // there is only one entry
         // TODO ensure by xml schema that is true
         if (preferenceNames.size() > 1) {
             throw new XmlCorruptedException("Only one preference allowed. "
                 + MSG_XML_SCHEMA_ENSURE);
         }
-        Iterator<String> it = preferenceNames.iterator();
-        String preferenceName = it.next();
-        String preferenceValue = preferences.get(preferenceName);
+        final Iterator<String> it = preferenceNames.iterator();
+        final String preferenceName = it.next();
+        final String preferenceValue = preferences.get(preferenceName);
         preference.setUserAccountByUserId(userAccount);
         preference.setName(preferenceName);
         preference.setValue(preferenceValue);
 
-        Set<UserPreference> userPreferences =
+        final Set<UserPreference> userPreferences =
             userAccount.getUserPreferencesByUserId();
         // TODO check for same preference already set by getting preference by
         // PrimKey(userId,name)
-        for (UserPreference userPreference : userPreferences) {
+        for (final UserPreference userPreference : userPreferences) {
             if (preferenceName.equals(userPreference.getName())) {
                 throw new AlreadyExistsException("Preference " + preferenceName
                     + " already exists for user " + userId);
@@ -2313,20 +2313,20 @@ public class UserAccountHandler
         XmlCorruptedException, SystemException, OptimisticLockingException,
         MissingAttributeValueException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
-        Set<UserPreference> userPreferences =
+        final UserAccount userAccount = retrieveUserAccountById(userId);
+        final Set<UserPreference> userPreferences =
             userAccount.getUserPreferencesByUserId();
 
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(preferenceXML);
-        StaxParser sp = new StaxParser(Elements.ELEMENT_USER_PREFERENCE);
+        final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_PREFERENCE);
 
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
-        UserPreferenceReadHandler uprh = new UserPreferenceReadHandler();
+        final UserPreferenceReadHandler uprh = new UserPreferenceReadHandler();
         sp.addHandler(uprh);
 
         try {
@@ -2346,16 +2346,16 @@ public class UserAccountHandler
             throw new SystemException(msg.toString(), e);
         }
 
-        Map<String, String> preferences = uprh.getPreferences();
-        Set<String> preferenceNames = preferences.keySet();
+        final Map<String, String> preferences = uprh.getPreferences();
+        final Set<String> preferenceNames = preferences.keySet();
         // there is only one entry
         // TODO ensure by xml schema that is true
         if (preferenceNames.size() > 1) {
             throw new XmlCorruptedException("Only one preference allowed. "
                 + MSG_XML_SCHEMA_ENSURE);
         }
-        Iterator<String> it = preferenceNames.iterator();
-        String xmlPreferenceName = it.next();
+        final Iterator<String> it = preferenceNames.iterator();
+        final String xmlPreferenceName = it.next();
         if (!xmlPreferenceName.equals(preferenceName)) {
             throw new XmlCorruptedException(
                 "Given preference name does not match "
@@ -2364,10 +2364,10 @@ public class UserAccountHandler
 
         // TODO check for existence of preference by getting preference by
         // PrimKey(userId,name)
-        Iterator<UserPreference> prefIt = userPreferences.iterator();
+        final Iterator<UserPreference> prefIt = userPreferences.iterator();
         UserPreference preference = null;
         while (prefIt.hasNext()) {
-            UserPreference curPref = prefIt.next();
+            final UserPreference curPref = prefIt.next();
             if (preferenceName.equals(curPref.getName())) {
                 preference = curPref;
             }
@@ -2409,12 +2409,12 @@ public class UserAccountHandler
         final String userId, final String preferenceName)
         throws UserAccountNotFoundException, PreferenceNotFoundException,
         SystemException {
-        UserAccount userAccount = retrieveUserAccountById(userId);
-        Set<UserPreference> userPreferences =
+        final UserAccount userAccount = retrieveUserAccountById(userId);
+        final Set<UserPreference> userPreferences =
             userAccount.getUserPreferencesByUserId();
 
         // PrimKey(userId,name)
-        for (UserPreference userPreference : userPreferences) {
+        for (final UserPreference userPreference : userPreferences) {
             if (userPreference.getName().equals(preferenceName)) {
                 userPreferences.remove(userPreference);
                 // update user in policy cache; rights may depend on preferences
@@ -2456,16 +2456,16 @@ public class UserAccountHandler
         SystemException, OptimisticLockingException,
         MissingAttributeValueException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
+        final UserAccount userAccount = retrieveUserAccountById(userId);
 
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(preferencesXML);
-        StaxParser sp = new StaxParser(Elements.ELEMENT_USER_PREFERENCES);
+        final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_PREFERENCES);
 
-        UserPreferenceReadHandler uprh = new UserPreferenceReadHandler();
+        final UserPreferenceReadHandler uprh = new UserPreferenceReadHandler();
         sp.addHandler(uprh);
 
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
@@ -2489,7 +2489,7 @@ public class UserAccountHandler
 
         // delete all existing preferences
         // FIXME name/value may be defined as primary key
-        Set<UserPreference> currentPreferences =
+        final Set<UserPreference> currentPreferences =
             userAccount.getUserPreferencesByUserId();
         // Iterator<UserPreference> curPrefsIterator =
         // currentPreferences.iterator();
@@ -2500,11 +2500,11 @@ public class UserAccountHandler
         currentPreferences.clear();
 
         // add all given preferences
-        Map<String, String> preferences = uprh.getPreferences();
-        for (Entry<String, String> e : preferences.entrySet()) {
-            UserPreference preference = new UserPreference();
-            String preferenceName = e.getKey();
-            String preferenceValue = e.getValue();
+        final Map<String, String> preferences = uprh.getPreferences();
+        for (final Entry<String, String> e : preferences.entrySet()) {
+            final UserPreference preference = new UserPreference();
+            final String preferenceName = e.getKey();
+            final String preferenceValue = e.getValue();
             preference.setUserAccountByUserId(userAccount);
             preference.setName(preferenceName);
             preference.setValue(preferenceValue);
@@ -2548,11 +2548,11 @@ public class UserAccountHandler
         throws AlreadyExistsException, UserAccountNotFoundException,
         XmlCorruptedException, SystemException {
 
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(attributeXML);
-        StaxParser sp = new StaxParser(Elements.ELEMENT_USER_ATTRIBUTE);
+        final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_ATTRIBUTE);
 
-        UserAttributeReadHandler uarh = new UserAttributeReadHandler();
+        final UserAttributeReadHandler uarh = new UserAttributeReadHandler();
         sp.addHandler(uarh);
 
         try {
@@ -2567,8 +2567,8 @@ public class UserAccountHandler
         }
 
         final UserAttribute attribute = new UserAttribute();
-        Map<String, String> attributes = uarh.getAttributes();
-        Set<String> attributeNames = attributes.keySet();
+        final Map<String, String> attributes = uarh.getAttributes();
+        final Set<String> attributeNames = attributes.keySet();
         // there is only one entry
         // TODO ensure by xml schema that is true
         if (attributeNames.size() > 1) {
@@ -2576,20 +2576,20 @@ public class UserAccountHandler
                 + MSG_XML_SCHEMA_ENSURE);
         }
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
+        final UserAccount userAccount = retrieveUserAccountById(userId);
 
-        Iterator<String> it = attributeNames.iterator();
-        String attributeName = it.next();
-        String attributeValue = attributes.get(attributeName);
+        final Iterator<String> it = attributeNames.iterator();
+        final String attributeName = it.next();
+        final String attributeValue = attributes.get(attributeName);
         attribute.setUserAccountByUserId(userAccount);
         attribute.setName(attributeName);
         attribute.setValue(attributeValue);
         attribute.setInternal(true);
 
-        Set<UserAttribute> userAttributes =
+        final Set<UserAttribute> userAttributes =
             userAccount.getUserAttributesByUserId();
 
-        for (UserAttribute userAttribute : userAttributes) {
+        for (final UserAttribute userAttribute : userAttributes) {
             if (attributeName.equals(userAttribute.getName())
                 && attributeValue.equals(userAttribute.getValue())) {
                 throw new AlreadyExistsException("Attribute " + attributeName
@@ -2618,8 +2618,8 @@ public class UserAccountHandler
     @Override
     public String retrieveAttributes(final String userId)
         throws UserAccountNotFoundException, SystemException {
-        UserAccount userAccount = retrieveUserAccountById(userId);
-        Set<UserAttribute> currentAttributes = userAccount.getUserAttributesByUserId();
+        final UserAccount userAccount = retrieveUserAccountById(userId);
+        final Set<UserAttribute> currentAttributes = userAccount.getUserAttributesByUserId();
         return renderer.renderAttributes(userAccount, currentAttributes);
     }
 
@@ -2645,14 +2645,14 @@ public class UserAccountHandler
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
         SystemException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
-        Set<UserAttribute> currentAttributes =
+        final UserAccount userAccount = retrieveUserAccountById(userId);
+        final Set<UserAttribute> currentAttributes =
             userAccount.getUserAttributesByUserId();
 
-        Set<UserAttribute> selectedAttributes = new HashSet<UserAttribute>();
+        final Set<UserAttribute> selectedAttributes = new HashSet<UserAttribute>();
         if (currentAttributes != null) {
-            for (UserAttribute attribute : currentAttributes) {
-                String attributeName = attribute.getName();
+            for (final UserAttribute attribute : currentAttributes) {
+                final String attributeName = attribute.getName();
                 if (attributeName.equals(name)) {
                     selectedAttributes.add(attribute);
                 }
@@ -2683,7 +2683,7 @@ public class UserAccountHandler
         final String userId, final String attributeId)
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
         SystemException {
-        UserAttribute attribute;
+        final UserAttribute attribute;
         try {
             attribute = retrieveAttributeById(userId, attributeId, true);
         }
@@ -2726,14 +2726,14 @@ public class UserAccountHandler
         ReadonlyElementViolationException, UserAttributeNotFoundException,
         XmlCorruptedException, SystemException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
-        UserAttribute userAttribute =
+        final UserAccount userAccount = retrieveUserAccountById(userId);
+        final UserAttribute userAttribute =
             retrieveAttributeById(userId, attributeId, false);
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(attributeXML);
-        StaxParser sp = new StaxParser(Elements.ELEMENT_USER_ATTRIBUTE);
-        UserAttributeReadHandler uarh = new UserAttributeReadHandler();
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final StaxParser sp = new StaxParser(Elements.ELEMENT_USER_ATTRIBUTE);
+        final UserAttributeReadHandler uarh = new UserAttributeReadHandler();
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 userAccount.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
@@ -2752,16 +2752,16 @@ public class UserAccountHandler
             throw new SystemException(msg, e);
         }
 
-        Map<String, String> attributes = uarh.getAttributes();
-        Set<String> attributeNames = attributes.keySet();
+        final Map<String, String> attributes = uarh.getAttributes();
+        final Set<String> attributeNames = attributes.keySet();
         // there is only one entry
         // TODO ensure by xml schema that is true
         if (attributeNames.size() > 1) {
             throw new XmlCorruptedException("Only one attribute allowed. "
                 + MSG_XML_SCHEMA_ENSURE);
         }
-        Iterator<String> it = attributeNames.iterator();
-        String xmlAttributeName = it.next();
+        final Iterator<String> it = attributeNames.iterator();
+        final String xmlAttributeName = it.next();
         if (!xmlAttributeName.equals(userAttribute.getName())) {
             throw new XmlCorruptedException(
                 "Given attribute name does not match "
@@ -2795,7 +2795,7 @@ public class UserAccountHandler
         throws UserAccountNotFoundException, UserAttributeNotFoundException,
         ReadonlyElementViolationException, SystemException {
 
-        UserAttribute userAttribute =
+        final UserAttribute userAttribute =
             retrieveAttributeById(userId, attributeId, false);
 
         dao.delete(userAttribute);
@@ -2823,23 +2823,23 @@ public class UserAccountHandler
     public String retrievePermissionFilterQuery(
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
-        Utility utility = Utility.getInstance();
-        Set<ResourceType> resourceTypes = EnumSet.noneOf(ResourceType.class);
-        String[] types = parameters.get("index");
+        final Utility utility = Utility.getInstance();
+        final Set<ResourceType> resourceTypes = EnumSet.noneOf(ResourceType.class);
+        final String[] types = parameters.get("index");
 
         if (types != null) {
-            Collection<String> hashedTypes = new HashSet<String>();
+            final Collection<String> hashedTypes = new HashSet<String>();
 
             hashedTypes.addAll(Arrays.asList(types));
 
-            Map<String, Map<String, Map<String, Object>>> objectTypeParameters =
+            final Map<String, Map<String, Map<String, Object>>> objectTypeParameters =
                 BeanLocator.locateIndexingHandler().getObjectTypeParameters();
 
-            for (Entry<String, Map<String, Map<String, Object>>> entry : objectTypeParameters
+            for (final Entry<String, Map<String, Map<String, Object>>> entry : objectTypeParameters
                 .entrySet()) {
-                Map<String, Map<String, Object>> index = entry.getValue();
+                final Map<String, Map<String, Object>> index = entry.getValue();
 
-                for (String indexName : index.keySet()) {
+                for (final String indexName : index.keySet()) {
                     if (hashedTypes.contains(indexName)) {
                         resourceTypes.add(ResourceType
                             .getResourceTypeFromUri(entry.getKey()));
@@ -2855,7 +2855,7 @@ public class UserAccountHandler
                     utility.getCurrentUserId(), new FilterInterface() {
                         @Override
                         public String getRoleId() {
-                            String[] parameter = parameters.get("role");
+                            final String[] parameter = parameters.get("role");
 
                             if ((parameter != null) && (parameter.length > 0)) {
                                 return parameter[0];
@@ -2867,7 +2867,7 @@ public class UserAccountHandler
 
                         @Override
                         public String getUserId() {
-                            String[] parameter = parameters.get("user");
+                            final String[] parameter = parameters.get("user");
 
                             if ((parameter != null) && (parameter.length > 0)) {
                                 return parameter[0];

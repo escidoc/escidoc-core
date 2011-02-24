@@ -72,7 +72,7 @@ public class Predecessor {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -80,7 +80,7 @@ public class Predecessor {
             return false;
         }
 
-        Predecessor that = (Predecessor) o;
+        final Predecessor that = (Predecessor) o;
 
         if (form != that.form) {
             return false;

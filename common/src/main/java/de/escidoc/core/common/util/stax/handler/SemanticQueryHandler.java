@@ -50,12 +50,12 @@ public class SemanticQueryHandler extends DefaultHandler {
         new AppLogger(SemanticQueryHandler.class.getName());
 
     @Override
-    public String characters(String data, StartElement element)
+    public String characters(final String data, final StartElement element)
         throws MissingElementValueException {
 
         if ("query".equals(element.getLocalName())) {
             if ((data == null) || (data.length() == 0)) {
-                String message =
+                final String message =
                     "The value of the element " + element.getLocalName()
                         + " is missing.";
                 LOGGER.error(message);
@@ -64,14 +64,14 @@ public class SemanticQueryHandler extends DefaultHandler {
             this.query =
                 XmlUtility.unescapeForbiddenXmlCharacters(data.trim(), false);
             // extract predicate
-            String[] queryParts = query.split("\\ +");
+            final String[] queryParts = query.split("\\ +");
             this.subject = queryParts[0].trim();
             this.predicate = queryParts[1].trim();
             this.object = queryParts[2].trim();
         }
         else if ("format".equals(element.getLocalName())) {
             if ((data == null) || (data.length() == 0)) {
-                String message =
+                final String message =
                     "The value of the element " + element.getLocalName()
                         + " is missing.";
                 LOGGER.error(message);

@@ -28,7 +28,7 @@ public class PurgeServiceImpl implements InitializingBean {
         // TODO: Refector this old code.
         try {
             try {
-                boolean isInternalUser = UserContext.isInternalUser();
+                final boolean isInternalUser = UserContext.isInternalUser();
 
                 if (!isInternalUser) {
                     UserContext.setUserContext("");

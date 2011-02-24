@@ -155,7 +155,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         ReadonlyAttributeViolationException, InvalidContentException,
         OrganizationalUnitNotFoundException, InvalidStatusException {
 
-        String id = createContext(xmlData);
+        final String id = createContext(xmlData);
         try {
             setContext(id);
         }
@@ -163,7 +163,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             LOG.error("Created resource not found.", e);
             throw new SystemException("Created resource not found.", e);
         }
-        String contextXml = getContextXml(this);
+        final String contextXml = getContextXml(this);
         fireContextCreated(id, contextXml);
         if (isCreate) {
             return contextXml;
@@ -231,7 +231,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         throws OperationNotFoundException, ContextNotFoundException,
         SystemException {
 
-        EscidocBinaryContent content = new EscidocBinaryContent();
+        final EscidocBinaryContent content = new EscidocBinaryContent();
         content.setMimeType("text/xml");
 
         if ("members".equals(resourceName)) {
@@ -296,7 +296,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     @Override
     public String retrieveContexts(final SRURequestParameters parameters)
         throws SystemException {
-        StringWriter result = new StringWriter();
+        final StringWriter result = new StringWriter();
 
         if (parameters.isExplain()) {
             sruRequest.explain(result, ResourceType.CONTEXT);
@@ -315,7 +315,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     public String retrieveMembers(
         final String id, final SRURequestParameters parameters)
         throws ContextNotFoundException, SystemException {
-        StringWriter result = new StringWriter();
+        final StringWriter result = new StringWriter();
 
         Utility.getInstance().checkIsContext(id);
         if (parameters.isExplain()) {
@@ -382,7 +382,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         InvalidContentException {
 
         setContext(id);
-        String context;
+        final String context;
         if (update(this, xmlData)) {
             // otherwise we get the pre-update version
             setContext(id);
@@ -487,8 +487,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      */
     private void fireContextModified(final String id, final String xmlData)
         throws SystemException {
-        String restXml;
-        String soapXml;
+        final String restXml;
+        final String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -498,7 +498,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (ResourceListener contextListener : contextListeners) {
+        for (final ResourceListener contextListener : contextListeners) {
             contextListener.resourceModified(id, restXml, soapXml);
         }
     }
@@ -516,8 +516,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      */
     private void fireContextCreated(final String id, final String xmlData)
         throws SystemException {
-        String restXml;
-        String soapXml;
+        final String restXml;
+        final String soapXml;
 
         if (UserContext.isRestAccess()) {
             restXml = xmlData;
@@ -527,7 +527,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (ResourceListener contextListener : contextListeners) {
+        for (final ResourceListener contextListener : contextListeners) {
             contextListener.resourceCreated(id, restXml, soapXml);
         }
     }
@@ -542,7 +542,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      *             One of the listeners threw an exception.
      */
     private void fireContextDeleted(final String id) throws SystemException {
-        for (ResourceListener contextListener : contextListeners) {
+        for (final ResourceListener contextListener : contextListeners) {
             contextListener.resourceDeleted(id);
         }
     }
@@ -561,7 +561,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      */
     private String getAlternateForm(final String id) throws SystemException {
         String result = null;
-        boolean isRestAccess = UserContext.isRestAccess();
+        final boolean isRestAccess = UserContext.isRestAccess();
 
         try {
             if (isRestAccess) {
@@ -611,7 +611,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             // "\"/object/id\"=" + getContext().getFullId() + " or " +
             "\"/object/id\"=" + getContext().getId() });
 
-        String searchResponse = contentRelationHandler.retrieveContentRelations(
+        final String searchResponse = contentRelationHandler.retrieveContentRelations(
                 new LuceneRequestParameters(filterParams));
         return transformSearchResponse2relations(searchResponse);
 

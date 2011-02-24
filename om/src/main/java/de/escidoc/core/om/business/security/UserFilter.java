@@ -59,7 +59,7 @@ public class UserFilter {
     public List<String> getMemberRefList(final Container container)
         throws MissingMethodParameterException, SystemException {
 
-        List<String> memberRefs;
+        final List<String> memberRefs;
 
         if (container.getVersionNumber() == null) {
             memberRefs =

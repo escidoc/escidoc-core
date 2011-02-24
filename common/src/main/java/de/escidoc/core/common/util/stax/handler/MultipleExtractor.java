@@ -226,19 +226,19 @@ public class MultipleExtractor extends WriteHandler {
     @Override
     public StartElement startElement(final StartElement element)
         throws InvalidContentException, WebserverSystemException {
-        NamespaceContext nscontext = element.getNamespaceContext();
+        final NamespaceContext nscontext = element.getNamespaceContext();
         this.increaseDeepLevel();
-        String currentPath = parser.getCurPath();
-        String theName = element.getLocalName();
+        final String currentPath = parser.getCurPath();
+        final String theName = element.getLocalName();
         if (this.insideRemoveElement) {
             return element;
         }
         if (((this.removeElements != null)
             && (!this.removeElements.isEmpty()))
             && (this.removeElements.containsKey(currentPath))) {
-            List<StartElementWithChildElements> elementsToDelete =
+            final List<StartElementWithChildElements> elementsToDelete =
                 removeElements.get(currentPath);
-            Iterator<StartElementWithChildElements> iterator =
+            final Iterator<StartElementWithChildElements> iterator =
                 elementsToDelete.iterator();
             this.elementToDelete = null;
             loop1: while (iterator.hasNext()) {
@@ -251,7 +251,7 @@ public class MultipleExtractor extends WriteHandler {
                     && (elementToDelete.getNamespace() == null || elementToDelete
                         .getNamespace().equals(element.getNamespace()))) {
 
-                    int attCount2 = elementToDelete.getAttributeCount();
+                    final int attCount2 = elementToDelete.getAttributeCount();
                     if (attCount2 == 0) {
                         // if a provided element to remove does not
                         // contain
@@ -267,25 +267,25 @@ public class MultipleExtractor extends WriteHandler {
 
                     }
                     else {
-                        int attCount1 = element.getAttributeCount();
+                        final int attCount1 = element.getAttributeCount();
 
                         if (attCount1 == attCount2) {
                             int matchedAttributesNumber = 0;
                             for (int i = 0; i < attCount1; i++) {
-                                Attribute curAtt =
+                                final Attribute curAtt =
                                     element.getAttribute(i);
-                                String curName = curAtt.getLocalName();
-                                String curNameSpace =
+                                final String curName = curAtt.getLocalName();
+                                final String curNameSpace =
                                     curAtt.getNamespace();
-                                String curValue = curAtt.getValue();
+                                final String curValue = curAtt.getValue();
                                 for (int j = 0; j < attCount2; j++) {
-                                    Attribute attToDelete =
+                                    final Attribute attToDelete =
                                         elementToDelete.getAttribute(j);
-                                    String nameToDelete =
+                                    final String nameToDelete =
                                         attToDelete.getLocalName();
-                                    String nameSpaceToDelete =
+                                    final String nameSpaceToDelete =
                                         attToDelete.getNamespace();
-                                    String valueToDelete =
+                                    final String valueToDelete =
                                         attToDelete.getValue();
                                     if (curName.equals(nameToDelete)
                                         && curNameSpace
@@ -329,21 +329,21 @@ public class MultipleExtractor extends WriteHandler {
                 number++;
             }
             else {
-                int indexOfObjid = element.indexOfAttribute(null, "objid");
+                final int indexOfObjid = element.indexOfAttribute(null, "objid");
                 if (indexOfObjid != -1) {
-                    String value =
+                    final String value =
                         element.getAttribute(indexOfObjid).getValue();
                     if ((value != null) && (value.length() > 0)) {
                         componentId = value;
                     }
                 }
-                int indexOfHref =
+                final int indexOfHref =
                     element.indexOfAttribute(Constants.XLINK_URI, "href");
                 if (indexOfHref != -1) {
-                    String value = element.getAttribute(indexOfHref).getValue();
+                    final String value = element.getAttribute(indexOfHref).getValue();
                     if ((value != null) && (value.length() > 0)) {
 
-                        Matcher m1 = PATTERN_OBJID_IN_HREF.matcher(value);
+                        final Matcher m1 = PATTERN_OBJID_IN_HREF.matcher(value);
                         if (m1.find()) {
                             componentId = m1.group(1);
                         }
@@ -364,9 +364,9 @@ public class MultipleExtractor extends WriteHandler {
 
                 writeElement(element);
 
-                int attCount = element.getAttributeCount();
+                final int attCount = element.getAttributeCount();
                 for (int i = 0; i < attCount; i++) {
-                    Attribute curAtt = element.getAttribute(i);
+                    final Attribute curAtt = element.getAttribute(i);
                     handleAttributeInInsideElement(curAtt, nscontext, theName);
                 }
                 insideLevel++;
@@ -374,10 +374,10 @@ public class MultipleExtractor extends WriteHandler {
             else {
                 if ((pathes.containsKey(currentPath))
                     && (element.indexOfAttribute(null, "inherited") < 0)) {
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
                     this.setWriter(XmlUtility.createXmlStreamWriter(out));
-                    String attributeName = pathes.get(currentPath);
+                    final String attributeName = pathes.get(currentPath);
 
                     inside = true;
                     // create and initialize namespace map
@@ -401,10 +401,10 @@ public class MultipleExtractor extends WriteHandler {
                         writeElement(element);
                     }
                     String attributeValue = null;
-                    int attCount = element.getAttributeCount();
+                    final int attCount = element.getAttributeCount();
                     for (int i = 0; i < attCount; i++) {
-                        Attribute curAtt = element.getAttribute(i);
-                        String currentAttributeValue =
+                        final Attribute curAtt = element.getAttribute(i);
+                        final String currentAttributeValue =
                             handleAttributeInOutsideElement(curAtt,
                                 nscontext, theName, attributeName);
                         if (currentAttributeValue != null) {
@@ -417,7 +417,7 @@ public class MultipleExtractor extends WriteHandler {
                             components = new HashMap();
                             outputStreams.put("components", components);
                         }
-                        HashMap component;
+                        final HashMap component;
                         if (components.containsKey(componentId)) {
                             component =
                                     (HashMap) components.get(componentId);
@@ -441,7 +441,7 @@ public class MultipleExtractor extends WriteHandler {
                                 // outputStreams.put(attributeValue + "*" +
                                 // subId,
                                 // out);
-                                HashMap<String, ByteArrayOutputStream> mdRecords;
+                                final HashMap<String, ByteArrayOutputStream> mdRecords;
                                 if (component.containsKey("md-records")) {
                                     mdRecords =
                                             (HashMap<String, ByteArrayOutputStream>) component
@@ -452,7 +452,7 @@ public class MultipleExtractor extends WriteHandler {
                                     component.put("md-records", mdRecords);
                                 }
                                 if (mdRecords.containsKey(attributeValue)) {
-                                    String message =
+                                    final String message =
                                         "A component md-record with the name '"
                                             + attributeValue
                                             + "' occurs multiple times in the representation"
@@ -484,7 +484,7 @@ public class MultipleExtractor extends WriteHandler {
                                         metadata);
                                 }
                                 if (metadata.containsKey(attributeValue)) {
-                                    String message =
+                                    final String message =
                                         "A md-record with the name '"
                                             + attributeValue
                                             + "' occurs multiple times in the representation"
@@ -502,7 +502,7 @@ public class MultipleExtractor extends WriteHandler {
                             else {
                                 if (outputStreams
                                     .containsKey(attributeValue)) {
-                                    String message;
+                                    final String message;
                                     if ("/context/admin-descriptors/admin-descriptor".equals(currentPath)) {
                                         message =
                                             "An admin-descriptor with the name '"
@@ -557,8 +557,8 @@ public class MultipleExtractor extends WriteHandler {
     @Override
     public EndElement endElement(final EndElement element)
         throws WebserverSystemException {
-        String theName = element.getLocalName();
-        String currentPath = parser.getCurPath();
+        final String theName = element.getLocalName();
+        final String currentPath = parser.getCurPath();
         if (this.insideRemoveElement && isMatchedText) {
             if (this.removeElements.containsKey(currentPath)) {
                 this.insideRemoveElement = false;
@@ -573,7 +573,7 @@ public class MultipleExtractor extends WriteHandler {
         this.decreaseDeepLevel();
         if (inComponent && "component".equals(theName)) {
             if (componentId == null) {
-                Map components = (HashMap) outputStreams.get("components");
+                final Map components = (HashMap) outputStreams.get("components");
                 components.remove(componentId);
             }
             inComponent = false;
@@ -590,7 +590,7 @@ public class MultipleExtractor extends WriteHandler {
                 }
 
                 // remove namespace if is defined in this element
-                String ns = element.getNamespace();
+                final String ns = element.getNamespace();
                 List nsTrace = this.getNsuris().get(ns);
 
                 if (nsTrace != null
@@ -607,10 +607,10 @@ public class MultipleExtractor extends WriteHandler {
                 // TODO iteration is a hack, use
                 // javax.xml.namespace.NamespaceContext
                 Iterator it = this.getNsuris().keySet().iterator();
-                Collection<String> toRemove = new ArrayList<String>();
+                final Collection<String> toRemove = new ArrayList<String>();
                 while (it.hasNext()) {
                     try {
-                        String key = (String) it.next();
+                        final String key = (String) it.next();
                         nsTrace = this.getNsuris().get(key);
                         if ((Integer) nsTrace.get(0) == (this.getDeepLevel() + 1)) {
                             toRemove.add(key);
@@ -622,7 +622,7 @@ public class MultipleExtractor extends WriteHandler {
                 }
                 it = toRemove.iterator();
                 while (it.hasNext()) {
-                    String key = (String) it.next();
+                    final String key = (String) it.next();
                     this.getNsuris().remove(key);
                 }
 
@@ -656,7 +656,7 @@ public class MultipleExtractor extends WriteHandler {
         try {
             if ((inside)) {
                 if (this.insideRemoveElement) {
-                    String text = this.elementToDelete.getElementText();
+                    final String text = this.elementToDelete.getElementText();
                     if ((text != null) && (text.length() > 0)) {
                         if (data.equals(text)) {
                             this.isMatchedText = true;

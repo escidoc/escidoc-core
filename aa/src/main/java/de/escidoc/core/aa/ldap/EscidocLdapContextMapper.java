@@ -72,15 +72,15 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
     @Override
     public UserDetails mapUserFromContext(final DirContextOperations ctx,
             final String username, final GrantedAuthority[] authority) {
-        EscidocLdapUserDetails user = new EscidocLdapUserDetails();
+        final EscidocLdapUserDetails user = new EscidocLdapUserDetails();
 
-        String dn = ctx.getNameInNamespace();
+        final String dn = ctx.getNameInNamespace();
         user.setDn(dn);
         
         user.setUsername(username);
 
-        Collection<GrantedAuthority> compare = new ArrayList<GrantedAuthority>();
-        for (GrantedAuthority anAuthority : authority) {
+        final Collection<GrantedAuthority> compare = new ArrayList<GrantedAuthority>();
+        for (final GrantedAuthority anAuthority : authority) {
             if (!compare.contains(anAuthority)) {
                 user.addStringAttribute(
                         Constants.GROUP_ATTRIBUTE_NAME,
@@ -90,18 +90,18 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
         }
 
         try {
-            Attributes atts = ctx.getAttributes("");
+            final Attributes atts = ctx.getAttributes("");
             if (atts != null) {
-                NamingEnumeration< ? extends Attribute> enumer = atts.getAll();
+                final NamingEnumeration< ? extends Attribute> enumer = atts.getAll();
                 if (enumer != null) {
                     while (enumer.hasMoreElements()) {
-                        Attribute attribute =  enumer.nextElement();
-                        String key = attribute.getID();
+                        final Attribute attribute =  enumer.nextElement();
+                        final String key = attribute.getID();
                         if (!IGNORED_VALUES.contains(key)) {
-                            NamingEnumeration< ? > values = attribute.getAll();
+                            final NamingEnumeration< ? > values = attribute.getAll();
                             while (values.hasMoreElements()) {
                                 try {
-                                    String val = (String) values.nextElement();
+                                    final String val = (String) values.nextElement();
                                     if (val != null && val.length() != 0) {
                                         user.addStringAttribute(key, val);
                                     }

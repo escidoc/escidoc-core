@@ -112,7 +112,7 @@ public class PartlyResolveableAttributeFinderModule
         // make sure it is a partly resolveable attribute id, i.e. it contains
         // the substring MARKER but does not end with it, and it contains the
         // MARKER one time, only.
-        Matcher matcher =
+        final Matcher matcher =
             PATTERN_PARSE_PARTLY_RESOLVEABLE_ATTRIBUTE_ID
                 .matcher(attributeIdValue);
         return !(!matcher.find() || matcher.group(2) != null);

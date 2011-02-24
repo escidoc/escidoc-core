@@ -156,7 +156,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         if (dataStreams.containsKey("md-records")
             && ((Map) dataStreams.get("md-records"))
                 .containsKey(Elements.MANDATORY_MD_RECORD_NAME)) {
-            String dcXml;
+            final String dcXml;
             try {
                 // no content model id for component dc-mapping, default mapping
                 // should be applied
@@ -184,7 +184,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
 
         if (dataStreams.get("uploadUrl") != null) {
             values.put(XmlTemplateProvider.MIME_TYPE, contentMimeType);
-            String theUrl =
+            final String theUrl =
                 Utility.processUrl((String) dataStreams.get("uploadUrl"), null,
                     null);
             values.put(XmlTemplateProvider.REF, theUrl);
@@ -230,7 +230,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
                     new ArrayList<Map<String, String>>(mdRecordsStreams.size());
                 values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
 
-                for (Object o : mdRecordsStreams.keySet()) {
+                for (final Object o : mdRecordsStreams.keySet()) {
                     final String key = (String) o;
                     final ByteArrayOutputStream mdRecordStream =
                             (ByteArrayOutputStream) mdRecordsStreams.get(key);
@@ -439,7 +439,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         handleComponent(componentId, properties, componentBinary,
             componentStreams, componentMdAttributes, escidocMdNsUri);
 
-        AddNewSubTreesToDatastream addNewEntriesHandler =
+        final AddNewSubTreesToDatastream addNewEntriesHandler =
             new AddNewSubTreesToDatastream("/RDF", sp);
 
         final StartElement pointer = new StartElement();
@@ -489,7 +489,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             throw new IntegritySystemException(e1);
         }
         getFedoraUtility().sync();
-        String component;
+        final String component;
         try {
             final Component c =
                 new Component(componentId, getItem().getId(), null);
@@ -498,7 +498,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             component = renderComponent(componentId, false);
         }
         catch (final ResourceNotFoundException e) {
-            String msg = "Just created component not found.";
+            final String msg = "Just created component not found.";
             LOGGER.error(msg, e);
             throw new IntegritySystemException(msg, e);
         }
@@ -701,7 +701,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         String uploadUrl =
                 binaryContent.get(FoXmlProvider.DATASTREAM_UPLOAD_URL);
         if (binaryContent.get(DATASTREAM_CONTENT) != null) {
-            String fileName = "component " + componentId;
+            final String fileName = "component " + componentId;
             uploadUrl =
                 uploadBase64EncodedContent(binaryContent
                     .get(DATASTREAM_CONTENT), fileName, mimeType);

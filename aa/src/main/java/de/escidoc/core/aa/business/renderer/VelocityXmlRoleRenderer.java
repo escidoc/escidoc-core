@@ -81,8 +81,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
     public String render(final EscidocRole role)
         throws WebserverSystemException {
 
-        long start = System.nanoTime();
-        Map<String, Object> values = new HashMap<String, Object>();
+        final long start = System.nanoTime();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         addCommonValues(values);
         addRoleValues(role, values);
@@ -90,7 +90,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
 
         final String ret = getRoleXmlProvider().getRoleXml(values);
         if (LOG.isDebugEnabled()) {
-            long runtime = System.nanoTime() - start;
+            final long runtime = System.nanoTime() - start;
             LOG.debug("Built XML in " + runtime + "ns");
         }
         return ret;
@@ -109,7 +109,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
     public String renderResources(final EscidocRole role)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootResources", "true");
 
         addCommonValues(values);
@@ -140,15 +140,15 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         final List<EscidocRole> roles, final RecordPacking recordPacking)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addCommonValues(values);
         addRoleListValues(values);
         values.put("recordPacking", recordPacking);
 
         final Collection<Map<String, Object>> rolesValues =
             new ArrayList<Map<String, Object>>(roles.size());
-        for (EscidocRole escidocRole : roles) {
-            Map<String, Object> roleValues = new HashMap<String, Object>();
+        for (final EscidocRole escidocRole : roles) {
+            final Map<String, Object> roleValues = new HashMap<String, Object>();
             addRoleValues(escidocRole, roleValues);
             rolesValues.add(roleValues);
         }
@@ -216,7 +216,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
             // sort output
             Collection<ScopeDef> collection = role.getScopeDefs();
             if (collection != null && !collection.isEmpty()) {
-                List<ScopeDef> list = new ArrayList<ScopeDef>(collection);
+                final List<ScopeDef> list = new ArrayList<ScopeDef>(collection);
                 Collections.sort(list);
                 collection = list;
             }
@@ -250,10 +250,10 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
         // the xacml policy/policy set from the role. if the role's xml does not
         // contain a policy/policy set (in case of predefined roles), we have to
         // build and encode it.
-        Collection<EscidocPolicy> policies = role.getEscidocPolicies();
-        Iterator<EscidocPolicy> iter = policies.iterator();
+        final Collection<EscidocPolicy> policies = role.getEscidocPolicies();
+        final Iterator<EscidocPolicy> iter = policies.iterator();
         if (iter.hasNext()) {
-            EscidocPolicy policy = iter.next();
+            final EscidocPolicy policy = iter.next();
             values.put("policy",
                 CustomPolicyBuilder.insertXacmlPrefix(policy.getXml()));
         }

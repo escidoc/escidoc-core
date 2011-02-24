@@ -77,7 +77,7 @@ public abstract class CqlFilter {
 
     protected DetachedCriteria detachedCriteria = null;
 
-    public void addCriteria(String key, Object[] value) {
+    public void addCriteria(final String key, final Object[] value) {
         this.criteriaMap.put(key, value);
     }
 
@@ -93,8 +93,8 @@ public abstract class CqlFilter {
     protected Criterion evaluate(final CQLBooleanNode node)
         throws InvalidSearchQueryException {
         Criterion result = null;
-        Criterion left = evaluate(node.left);
-        Criterion right = evaluate(node.right);
+        final Criterion left = evaluate(node.left);
+        final Criterion right = evaluate(node.right);
 
         if (node instanceof CQLAndNode) {
             if ((left != null) || (right != null)) {
@@ -126,7 +126,7 @@ public abstract class CqlFilter {
      */
     protected Criterion evaluate(final CQLNode node)
         throws InvalidSearchQueryException {
-        Criterion result;
+        final Criterion result;
 
         if (node instanceof CQLBooleanNode) {
             result = evaluate((CQLBooleanNode) node);
@@ -159,7 +159,7 @@ public abstract class CqlFilter {
     protected Criterion evaluate(final CQLRelation relation,
         final String propertyName, final Object value, final boolean useLike)
         throws InvalidSearchQueryException {
-        Criterion result;
+        final Criterion result;
         final String rel = relation.getBase();
 
         if ((value == null) || (value.toString().length() == 0)) {
@@ -235,7 +235,7 @@ public abstract class CqlFilter {
      * @return the given Hibernate query or "TRUE"
      */
     private Criterion getAndRestriction(final Criterion criterion) {
-        Criterion result;
+        final Criterion result;
 
         if (criterion != null) {
             result = criterion;
@@ -280,7 +280,7 @@ public abstract class CqlFilter {
      * @return the given Hibernate query or "FALSE"
      */
     private Criterion getOrRestriction(final Criterion criterion) {
-        Criterion result;
+        final Criterion result;
 
         if (criterion != null) {
             result = criterion;
@@ -297,9 +297,9 @@ public abstract class CqlFilter {
      * @return all property names for that filter
      */
     public Set<String> getPropertyNames() {
-        Set<String> result = new TreeSet<String>();
+        final Set<String> result = new TreeSet<String>();
 
-        for (String criteria : criteriaMap.keySet()) {
+        for (final String criteria : criteriaMap.keySet()) {
             result.add(criteria);
         }
         return result;
@@ -342,12 +342,12 @@ public abstract class CqlFilter {
      */
     protected void setOrderBy(final Iterable<ModifierSet> orderBy)
         throws InvalidSearchQueryException {
-        for (ModifierSet modifier : orderBy) {
+        for (final ModifierSet modifier : orderBy) {
             if (modifier.getModifiers().isEmpty()) {
                 detachedCriteria.addOrder(Order.asc(modifier.getBase()));
             } else {
-                for (Modifier mod : modifier.getModifiers()) {
-                    String columnName =
+                for (final Modifier mod : modifier.getModifiers()) {
+                    final String columnName =
                             propertyNamesMap.get(modifier.getBase());
 
                     if (columnName == null) {

@@ -79,10 +79,10 @@ public class OrganizationalUnitHandlerUpdate
         final Map<String, Map<String, String>> mdAttributesMap,
         final String escidocMdRecordnsUri) throws StreamNotFoundException,
         SystemException {
-        Map<String, Datastream> updated = new HashMap<String, Datastream>();
+        final Map<String, Datastream> updated = new HashMap<String, Datastream>();
 
         // iterate over md-record names (keys) with
-        for (String name : xml.keySet()) {
+        for (final String name : xml.keySet()) {
             // for every retrieved md-record XML create a Datastream
             Map<String, String> mdProperties = null;
             if (name.equals(OrganizationalUnit.ESCIDOC)) {
@@ -90,11 +90,11 @@ public class OrganizationalUnitHandlerUpdate
                 mdProperties.put(OrganizationalUnit.NS_URI,
                         escidocMdRecordnsUri);
             }
-            Datastream ds =
+            final Datastream ds =
                     new Datastream(name, getOrganizationalUnit().getId(), xml.get(
                             name).toByteArray(), Datastream.MIME_TYPE_TEXT_XML,
                             mdProperties);
-            Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
+            final Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId(mdRecordAttributes.get("type"));
             ds.addAlternateId(mdRecordAttributes.get("schema"));
@@ -135,8 +135,8 @@ public class OrganizationalUnitHandlerUpdate
      */
     protected void updateState(final String state) throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
-        String buildNumber = Utility.getInstance().getBuildNumber();
+        final Map<String, Object> values = new HashMap<String, Object>();
+        final String buildNumber = Utility.getInstance().getBuildNumber();
         values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, buildNumber);
         values.put(XmlTemplateProvider.PUBLIC_STATUS, state);
         values.put(XmlTemplateProvider.CREATED_BY_ID, getOrganizationalUnit()
@@ -193,7 +193,7 @@ public class OrganizationalUnitHandlerUpdate
         throws InvalidStatusException {
 
         if (!getOrganizationalUnit().getPublicStatus().equals(state)) {
-            String message =
+            final String message =
                 "Organizational unit with id='"
                     + getOrganizationalUnit().getId() + "' cannot be "
                     + methodText + " because it is in status '"
@@ -219,13 +219,13 @@ public class OrganizationalUnitHandlerUpdate
         final String methodText, final String state)
         throws InvalidStatusException, SystemException {
 
-        List<String> parents = getOrganizationalUnit().getParents();
-        for (String parent : parents) {
-            String parentState =
+        final List<String> parents = getOrganizationalUnit().getParents();
+        for (final String parent : parents) {
+            final String parentState =
                     getTripleStoreUtility().getPropertiesElements(parent,
                             TripleStoreUtility.PROP_PUBLIC_STATUS);
             if (!state.equals(parentState)) {
-                String message =
+                final String message =
                         "Organizational unit with id='"
                                 + getOrganizationalUnit().getId() + "' cannot be "
                                 + methodText + " because parent with id='" + parent
@@ -249,13 +249,13 @@ public class OrganizationalUnitHandlerUpdate
         throws InvalidStatusException, SystemException {
 
         // all parents must be in state created or opened
-        for (String parent : parents) {
-            String parentState =
+        for (final String parent : parents) {
+            final String parentState =
                     getTripleStoreUtility().getPropertiesElements(parent,
                             TripleStoreUtility.PROP_PUBLIC_STATUS);
             if (!(Constants.STATUS_OU_CREATED.equals(parentState) || Constants.STATUS_OU_OPENED
                     .equals(parentState))) {
-                String message =
+                final String message =
                         "Organizational unit cannot be created  because parent with id='"
                                 + parent + "' is in status '" + parentState + "'!";
                 throw new InvalidStatusException(message);
@@ -277,16 +277,16 @@ public class OrganizationalUnitHandlerUpdate
     protected void checkUpdateParentsConditions(final Collection<String> parents)
         throws InvalidStatusException, SystemException {
 
-        String status = getOrganizationalUnit().getPublicStatus();
+        final String status = getOrganizationalUnit().getPublicStatus();
         if (Constants.STATUS_OU_CREATED.equals(status)) {
             // all parents must be in state created or opened
-            for (String parent : parents) {
-                String parentState =
+            for (final String parent : parents) {
+                final String parentState =
                         getTripleStoreUtility().getPropertiesElements(parent,
                                 TripleStoreUtility.PROP_PUBLIC_STATUS);
                 if (!(Constants.STATUS_OU_CREATED.equals(parentState) || Constants.STATUS_OU_OPENED
                         .equals(parentState))) {
-                    String message =
+                    final String message =
                             "Organizational unit with objid='"
                                     + getOrganizationalUnit().getId()
                                     + "' cannot be updated because parent with objid='"
@@ -298,17 +298,17 @@ public class OrganizationalUnitHandlerUpdate
         else {
             // check if parent list is changed, if so throw
             // InvalidStatusException
-            List<String> currentParents = getOrganizationalUnit().getParents();
+            final List<String> currentParents = getOrganizationalUnit().getParents();
             if (currentParents.size() != parents.size()) {
-                String message =
+                final String message =
                     "Parent list of organizational unit with id='"
                         + getOrganizationalUnit().getId() + "' in status '"
                         + status + "' must not be updated!";
                 throw new InvalidStatusException(message);
             }
-            for (String parent : parents) {
+            for (final String parent : parents) {
                 if (!currentParents.contains(parent)) {
-                    String message =
+                    final String message =
                             "Parent list of organizational unit with id='"
                                     + getOrganizationalUnit().getId() + "' in status '"
                                     + status + "' must not be updated!";
@@ -332,7 +332,7 @@ public class OrganizationalUnitHandlerUpdate
         throws OrganizationalUnitHasChildrenException, SystemException {
 
         if (!getOrganizationalUnit().getChildrenIds().isEmpty()) {
-            String message =
+            final String message =
                 "Organizational unit with id='"
                     + getOrganizationalUnit().getId() + "' cannot be "
                     + methodText + " because it has children:  '"
@@ -354,15 +354,15 @@ public class OrganizationalUnitHandlerUpdate
     protected void checkWithoutChildrenOrChildrenClosed(final String methodText)
         throws InvalidStatusException, SystemException {
 
-        List<String> children = getOrganizationalUnit().getChildrenIds();
+        final List<String> children = getOrganizationalUnit().getChildrenIds();
         if (!children.isEmpty()) {
-            for (String child : children) {
-                String childState =
+            for (final String child : children) {
+                final String childState =
                         getTripleStoreUtility().getPropertiesElements(child,
                                 TripleStoreUtility.PROP_PUBLIC_STATUS);
 
                 if (!Constants.STATUS_OU_CLOSED.equals(childState)) {
-                    String message =
+                    final String message =
                             "Organizational unit with id='"
                                     + getOrganizationalUnit().getId() + "' cannot be "
                                     + methodText + " because it has a child '" + child

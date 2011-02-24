@@ -86,7 +86,7 @@ public class MethodMappingList {
         methodMappingsBefore = new ArrayList<MethodMapping>();
         methodMappingsAfter = new ArrayList<MethodMapping>();
 
-        for (MethodMapping methodMapping : methodMappings) {
+        for (final MethodMapping methodMapping : methodMappings) {
             if (methodMapping.isExecBefore()) {
                 methodMappingsBefore.add(methodMapping);
             } else {

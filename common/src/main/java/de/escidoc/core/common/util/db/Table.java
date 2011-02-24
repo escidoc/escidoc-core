@@ -168,7 +168,7 @@ public class Table implements Comparable<Object> {
      */
     public void setColumns(final String[] columns) {
         this.columns = new TreeSet<String>();
-        for (String column : columns) {
+        for (final String column : columns) {
             this.columns.add(column);
         }
     }
@@ -191,7 +191,7 @@ public class Table implements Comparable<Object> {
      */
     public void setForeignKeys(final String[] foreignKeys) {
         this.foreignKeys = new TreeSet<String>();
-        for (String foreignKey : foreignKeys) {
+        for (final String foreignKey : foreignKeys) {
             this.foreignKeys.add(foreignKey);
         }
     }
@@ -251,7 +251,7 @@ public class Table implements Comparable<Object> {
      */
     public void setPrimaryKeys(final String[] primaryKeys) {
         this.primaryKeys = new TreeSet<String>();
-        for (String primaryKey : primaryKeys) {
+        for (final String primaryKey : primaryKeys) {
             this.primaryKeys.add(primaryKey);
         }
     }

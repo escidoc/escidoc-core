@@ -98,7 +98,7 @@ public final class VelocityXmlReportRenderer
     @Override
     public String render(final List dbResult,
             final ReportDefinition reportDefinition) throws SystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         addReportNamespaceValues(values);
         addReportValues(reportDefinition, values);
@@ -121,27 +121,27 @@ public final class VelocityXmlReportRenderer
         final Map<String, Object> values)
         throws SystemException {
 
-        Collection<List<HashMap<String, Object>>> recordsList =
+        final Collection<List<HashMap<String, Object>>> recordsList =
             new ArrayList<List<HashMap<String, Object>>>();
         if (dbResult != null && !dbResult.isEmpty()) {
             // Iterate records from database
-            for (Object aDbResult : dbResult) {
-                List<HashMap<String, Object>> recordFieldList =
+            for (final Object aDbResult : dbResult) {
+                final List<HashMap<String, Object>> recordFieldList =
                         new ArrayList<HashMap<String, Object>>();
-                Map map = (Map) aDbResult;
+                final Map map = (Map) aDbResult;
 
                 // iterate all fields of one record
-                for (Object o : map.keySet()) {
+                for (final Object o : map.keySet()) {
 
-                    String fieldname = (String) o;
+                    final String fieldname = (String) o;
 
                     // depending on the fieldtype,
                     // write stringvalue, datevalue or decimalvalue-element
                     if (map.get(fieldname) != null) {
-                        HashMap<String, Object> recordFieldMap =
+                        final HashMap<String, Object> recordFieldMap =
                                 new HashMap<String, Object>();
                         recordFieldMap.put("fieldname", fieldname);
-                        String classname =
+                        final String classname =
                                 map.get(fieldname).getClass().getSimpleName();
                         if ("BigDecimal".equals(classname)) {
                             recordFieldMap.put("decimalvalue", map
@@ -151,7 +151,7 @@ public final class VelocityXmlReportRenderer
                                     new DateTime(map
                                             .get(fieldname));
                             dateTime = dateTime.withZone(DateTimeZone.UTC);
-                            String dateString =
+                            final String dateString =
                                     dateTime.toString(Constants.TIMESTAMP_FORMAT);
                             recordFieldMap.put("datevalue", dateString);
                         } else {

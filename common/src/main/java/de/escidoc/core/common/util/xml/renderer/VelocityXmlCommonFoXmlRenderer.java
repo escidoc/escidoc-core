@@ -62,10 +62,10 @@ public class VelocityXmlCommonFoXmlRenderer {
         final String comment, final String baseUrl)
         throws WebserverSystemException {
 
-        String currentUserId = Utility.getInstance().getCurrentUser()[0];
-        String currentUserName = Utility.getInstance().getCurrentUser()[1];
+        final String currentUserId = Utility.getInstance().getCurrentUser()[0];
+        final String currentUserName = Utility.getInstance().getCurrentUser()[1];
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.VAR_NAMESPACE_PREFIX,
             Constants.WOV_NAMESPACE_PREFIX);

@@ -262,7 +262,7 @@ public abstract class EscidocException extends Exception {
      */
     public static String getXml(final Throwable throwable) {
 
-        StringBuilder result = new StringBuilder("<exception>\n");
+        final StringBuilder result = new StringBuilder("<exception>\n");
 
         // http status line, if any
         EscidocException escidocException = null;
@@ -335,9 +335,9 @@ public abstract class EscidocException extends Exception {
      */
     public static String getStackTraceXml(final Throwable e) {
 
-        StringBuilder result = new StringBuilder("  <stack-trace><p><![CDATA[\n");
-        StackTraceElement[] elements = e.getStackTrace();
-        for (StackTraceElement element : elements) {
+        final StringBuilder result = new StringBuilder("  <stack-trace><p><![CDATA[\n");
+        final StackTraceElement[] elements = e.getStackTrace();
+        for (final StackTraceElement element : elements) {
             result.append("    ");
             result.append(element);
             result.append('\n');

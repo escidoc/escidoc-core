@@ -66,10 +66,10 @@ public class PIDManagerRESTServiceFactory extends PIDSystemFactory {
      *             If the PIDGenerator could not be initialized.
      */
     private void getNewInstance() throws PidSystemException {
-        PIDManagerRESTService pidRestGenerator =
+        final PIDManagerRESTService pidRestGenerator =
             new PIDManagerRESTService();
         try {
-            EscidocConfiguration conf = EscidocConfiguration.getInstance();
+            final EscidocConfiguration conf = EscidocConfiguration.getInstance();
 
             String param =
                 conf

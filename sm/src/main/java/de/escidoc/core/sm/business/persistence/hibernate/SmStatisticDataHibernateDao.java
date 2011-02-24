@@ -69,9 +69,9 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao
     @Override
     public void saveStatisticData(final String xmlData, final String scopeId)
         throws SqlDatabaseSystemException {
-        Scope scope = new Scope();
+        final Scope scope = new Scope();
         scope.setId(scopeId);
-        StatisticData data =
+        final StatisticData data =
             new StatisticData(xmlData,
                 new Timestamp(System.currentTimeMillis()), scope);
         super.save(data);
@@ -96,7 +96,7 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao
     public Date retrieveMinTimestamp(final String scopeId)
         throws SqlDatabaseSystemException {
 
-        List results =
+        final List results =
             getHibernateTemplate().find(QUERY_MIN_TIMESTAMP_FOR_SCOPE,
                 new Object[] { scopeId });
         if (results != null) {

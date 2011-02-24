@@ -151,9 +151,9 @@ public class UserGroupAttributeFinderModule
         final String resourceVersionNumber) throws EscidocException {
 
         EvaluationResult result;
-        String resolvedAttributeIdValue;
+        final String resolvedAttributeIdValue;
 
-        Matcher userGroupAttributeMatcher =
+        final Matcher userGroupAttributeMatcher =
             PATTERN_PARSE_USER_GROUP_ATTRIBUTE_ID.matcher(attributeIdValue);
         if (userGroupAttributeMatcher.find()) {
             // -new attribute is not resolvable
@@ -161,9 +161,9 @@ public class UserGroupAttributeFinderModule
                 return null;
             }
             resolvedAttributeIdValue = userGroupAttributeMatcher.group(1);
-            String attributeId = userGroupAttributeMatcher.group(3);
+            final String attributeId = userGroupAttributeMatcher.group(3);
 
-            String userGroupId = FinderModuleHelper.getResourceId(ctx);
+            final String userGroupId = FinderModuleHelper.getResourceId(ctx);
             if (FinderModuleHelper.isNewResourceId(userGroupId)) {
                 return null;
             }
@@ -174,7 +174,7 @@ public class UserGroupAttributeFinderModule
                     attributeIdValue, ctx);
 
             if (result == null) {
-                UserGroup userGroup = retrieveUserGroup(ctx, userGroupId);
+                final UserGroup userGroup = retrieveUserGroup(ctx, userGroupId);
                 if (ATTR_CREATED_BY.equals(attributeId)) {
                     result =
                         CustomEvaluationResultBuilder

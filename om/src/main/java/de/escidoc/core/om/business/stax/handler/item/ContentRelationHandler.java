@@ -138,7 +138,7 @@ public class ContentRelationHandler extends DefaultHandler {
             this.metadataHandler.startElement(element);
         }
         else {
-            String currentPath = parser.getCurPath();
+            final String currentPath = parser.getCurPath();
 
             if (XPATH_CONTENT_RELATION_PROPERTIES.equals(currentPath)) {
                 LOG
@@ -158,23 +158,23 @@ public class ContentRelationHandler extends DefaultHandler {
                 this.metadataHandler.startElement(element);
             }
             else if (XPATH_SUBJECT.equals(currentPath)) {
-                String objid = handleReferences(element);
+                final String objid = handleReferences(element);
                 if (objid != null) {
-                    String subjectIdWithoutVersion =
+                    final String subjectIdWithoutVersion =
                         XmlUtility.getObjidWithoutVersion(objid);
                     this.contentRelation.setSubject(subjectIdWithoutVersion);
-                    String subjectVersion =
+                    final String subjectVersion =
                         XmlUtility.getVersionNumberFromObjid(objid);
                     this.contentRelation.setSubjectVersion(subjectVersion);
                 }
             }
             else if (XPATH_OBJECT.equals(currentPath)) {
-                String objid = handleReferences(element);
+                final String objid = handleReferences(element);
                 if (objid != null) {
-                    String objectIdWithoutVersion =
+                    final String objectIdWithoutVersion =
                         XmlUtility.getObjidWithoutVersion(objid);
                     this.contentRelation.setObject(objectIdWithoutVersion);
-                    String objectVersion =
+                    final String objectVersion =
                         XmlUtility.getVersionNumberFromObjid(objid);
                     this.contentRelation.setObjectVersion(objectVersion);
                 }
@@ -204,7 +204,7 @@ public class ContentRelationHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws InvalidContentException, WebserverSystemException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (XPATH_CONTENT_RELATION_PROPERTIES.equals(currentPath)) {
             LOG.debug("Parser reached end of "
@@ -307,13 +307,13 @@ public class ContentRelationHandler extends DefaultHandler {
 
         String objid;
         try {
-            Attribute curAttr =
+            final Attribute curAttr =
                 element.getAttribute(null, Elements.ATTRIBUTE_XLINK_OBJID);
             objid = curAttr.getValue();
         }
         catch (NoSuchAttributeException e) {
             try {
-                Attribute curAttr =
+                final Attribute curAttr =
                     element.getAttribute(Constants.XLINK_NS_URI,
                         Elements.ATTRIBUTE_XLINK_HREF);
                 objid = Utility.getId(curAttr.getValue());

@@ -43,7 +43,7 @@ public class Property implements Serializable {
         __hashCodeCalc = false;
     }
 
-    public Property(String name, String value) {
+    public Property(final String name, final String value) {
         __equalsCalc = null;
         __hashCodeCalc = false;
         this.name = name;
@@ -54,7 +54,7 @@ public class Property implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -62,15 +62,15 @@ public class Property implements Serializable {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(final String value) {
         this.value = value;
     }
 
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (!(obj instanceof Property)) {
             return false;
         }
-        Property other = (Property) obj;
+        final Property other = (Property) obj;
         if (this == obj) {
             return true;
         }
@@ -79,7 +79,7 @@ public class Property implements Serializable {
         }
         else {
             __equalsCalc = obj;
-            boolean _equals =
+            final boolean _equals =
                 (name == null && other.getName() == null || name != null
                     && name.equals(other.getName()))
                     && (value == null && other.getValue() == null || value != null
@@ -105,7 +105,7 @@ public class Property implements Serializable {
         return _hashCode;
     }
 
-    static Class _mthclass$(String x0) {
+    static Class _mthclass$(final String x0) {
         try {
             return Class.forName(x0);
         }

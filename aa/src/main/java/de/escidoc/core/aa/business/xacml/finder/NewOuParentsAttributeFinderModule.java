@@ -149,13 +149,13 @@ public class NewOuParentsAttributeFinderModule
 
         try {
             if (attributeIdValue.equals(ATTR_HIERARCHICAL_PARENTS_NEW)) {
-                Iterable<String> parentIds =
+                final Iterable<String> parentIds =
                     new ArrayList<String>(
                         FinderModuleHelper.retrieveMultiResourceAttribute(ctx,
                             new URI(ATTR_PARENT_NEW), false));
-                List<String> expandedParentIds = new ArrayList<String>();
-                for (String parentId : parentIds) {
-                    String[] expandedParentArr = parentId.split("\\s+");
+                final List<String> expandedParentIds = new ArrayList<String>();
+                for (final String parentId : parentIds) {
+                    final String[] expandedParentArr = parentId.split("\\s+");
                     if (expandedParentArr != null) {
                         expandedParentIds.addAll(Arrays.asList(expandedParentArr));
                     }
@@ -175,14 +175,14 @@ public class NewOuParentsAttributeFinderModule
                 if (StringUtils.isNotEmpty(resourceId)) {
                     cachedAttribute.add(resourceId);
                 }
-                List<StringAttribute> stringAttributes =
+                final List<StringAttribute> stringAttributes =
                     new ArrayList<StringAttribute>();
 
-                for (String stringAttribute : cachedAttribute) {
+                for (final String stringAttribute : cachedAttribute) {
                     stringAttributes.add(new StringAttribute(stringAttribute));
                 }
 
-                EvaluationResult result = new EvaluationResult(new BagAttribute(
+                final EvaluationResult result = new EvaluationResult(new BagAttribute(
                         Constants.URI_XMLSCHEMA_STRING, stringAttributes));
 
                 return new Object[] { result, attributeIdValue };

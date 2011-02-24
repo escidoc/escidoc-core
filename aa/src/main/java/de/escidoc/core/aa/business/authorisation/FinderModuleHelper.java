@@ -295,7 +295,7 @@ public final class FinderModuleHelper {
         final boolean forceEmptyResultException)
         throws ResourceNotFoundException, WebserverSystemException {
 
-        Set<String> returnHash = new HashSet<String>();
+        final Set<String> returnHash = new HashSet<String>();
         final BagAttribute bag = (BagAttribute) result.getAttributeValue();
 
         if (bag == null || bag.isEmpty()) {
@@ -361,7 +361,7 @@ public final class FinderModuleHelper {
             // are sent with processing error status and should be
             // handled as WebserverSystemException
             final String exceptionClassName = matcher.group(1);
-            ResourceNotFoundException exceptionInstance;
+            final ResourceNotFoundException exceptionInstance;
             try {
                 exceptionInstance =
                     (ResourceNotFoundException) Class.forName(
@@ -370,7 +370,7 @@ public final class FinderModuleHelper {
                             msg);
             }
             catch (final Exception e) {
-                String emsg =
+                final String emsg =
                     StringUtility.format(
                             ERROR_EXCEPTION_INSTANTIATION, exceptionClassName);
                 LOG.error(emsg);
@@ -381,7 +381,7 @@ public final class FinderModuleHelper {
         }
         else {
             // found unexpected "error" status
-            String emsg =
+            final String emsg =
                 StringUtility.format(
                         "Error during attribute fetching", msg);
             LOG.error(emsg);

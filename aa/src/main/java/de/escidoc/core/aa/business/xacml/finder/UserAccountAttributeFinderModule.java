@@ -284,7 +284,7 @@ public class UserAccountAttributeFinderModule
      */
     @Override
     public Set getSupportedDesignatorTypes() {
-        Set<Integer> set = new HashSet<Integer>();
+        final Set<Integer> set = new HashSet<Integer>();
         set.add(AttributeDesignator.SUBJECT_TARGET);
         set.add(AttributeDesignator.RESOURCE_TARGET);
         return set;
@@ -357,8 +357,8 @@ public class UserAccountAttributeFinderModule
         // work, replace INTERNAL_SUBJECT_ATTRIBUTE_PREFIX by
         // INTERNAL_RESOURCE_USER_ACCOUNT_ATTRIBUTE_PREFIX in case of an
         // subject attribute
-        String internalAttributeIdValue;
-        String userAccountId;
+        final String internalAttributeIdValue;
+        final String userAccountId;
         boolean isSubjectAttribute = false;
         if (PATTERN_IS_SUBJECT_ATTRIBUTE_ID.matcher(attributeIdValue).find()) {
             isSubjectAttribute = true;
@@ -366,7 +366,7 @@ public class UserAccountAttributeFinderModule
                 FinderModuleHelper.retrieveSingleSubjectAttribute(ctx,
                     Constants.URI_SUBJECT_ID, true);
             if (userAccountId == null) {
-                StringBuilder errorMsg =
+                final StringBuilder errorMsg =
                         new StringBuilder(
                                 "The subject (user) of the request cannot be ");
                 errorMsg.append("identified, the ");
@@ -374,7 +374,7 @@ public class UserAccountAttributeFinderModule
                 errorMsg.append(" may not have been set.");
                 throw new WebserverSystemException(errorMsg.toString());
             }
-            Matcher matcher =
+            final Matcher matcher =
                 PATTERN_SUBJECT_ATTRIBUTE_PREFIX.matcher(attributeIdValue);
             internalAttributeIdValue =
                 matcher.replaceFirst(AttributeIds.USER_ACCOUNT_ATTR_PREFIX);
@@ -405,7 +405,7 @@ public class UserAccountAttributeFinderModule
             }
             else {
                 if (ATTR_USER_HANDLE.equals(internalAttributeIdValue)) {
-                    Set userHandles = retrieveUserHandle(ctx, userAccountId,
+                    final Set userHandles = retrieveUserHandle(ctx, userAccountId,
                             internalAttributeIdValue);
                     result =
                         new EvaluationResult(new BagAttribute(
@@ -425,7 +425,7 @@ public class UserAccountAttributeFinderModule
                 }
                 else {
                     // Fetch the user account and return the appropriate value
-                    UserAccount userAccount;
+                    final UserAccount userAccount;
                     try {
                         userAccount = retrieveUserAccount(ctx, userAccountId);
                     }
@@ -440,13 +440,13 @@ public class UserAccountAttributeFinderModule
                             throw e;
                         }
                     }
-                    Pattern p = PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID;
-                    Matcher idMatcher = p.matcher(internalAttributeIdValue);
+                    final Pattern p = PATTERN_PARSE_USER_ACCOUNT_ATTRIBUTE_ID;
+                    final Matcher idMatcher = p.matcher(internalAttributeIdValue);
                     if (idMatcher.find()) {
                         resolvedAttributeIdValue = idMatcher.group(1);
                         if (userAccount != null) {
                             if (ATTR_USER_ID.equals(resolvedAttributeIdValue)) {
-                                String nextResourceId = userAccount.getId();
+                                final String nextResourceId = userAccount.getId();
                                 result =
                                     CustomEvaluationResultBuilder
                                         .createSingleStringValueResult(nextResourceId);
@@ -500,7 +500,7 @@ public class UserAccountAttributeFinderModule
         }
         if (isSubjectAttribute) {
             // revert previously Subject -> Resource change
-            Matcher matcher =
+            final Matcher matcher =
                 PATTERN_USER_ACCOUNT_ATTRIBUTE_PREFIX
                     .matcher(resolvedAttributeIdValue);
             resolvedAttributeIdValue =
@@ -529,7 +529,7 @@ public class UserAccountAttributeFinderModule
         final UserAccount userAccount, final boolean getChildren)
         throws EscidocException {
 
-        String ouAttributeName;
+        final String ouAttributeName;
         try {
             ouAttributeName =
                 EscidocConfiguration.getInstance().get(
@@ -541,7 +541,7 @@ public class UserAccountAttributeFinderModule
         if (ouAttributeName == null || ouAttributeName.length() == 0) {
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
-        List<UserAttribute> attributes =
+        final List<UserAttribute> attributes =
             userAccountDao.retrieveAttributes(userAccount, ouAttributeName);
         final EvaluationResult result;
         if (attributes == null || attributes.isEmpty()) {
@@ -551,19 +551,19 @@ public class UserAccountAttributeFinderModule
         else {
             final List<StringAttribute> results =
                 new ArrayList<StringAttribute>(attributes.size());
-            Collection<String> ouIds = new ArrayList<String>();
-            for (UserAttribute attribute : attributes) {
+            final Collection<String> ouIds = new ArrayList<String>();
+            for (final UserAttribute attribute : attributes) {
                 results.add(new StringAttribute(attribute.getValue()));
                 if (getChildren) {
                     ouIds.add(attribute.getValue());
                 }
             }
             if (getChildren) {
-                List<String> childOus =
+                final List<String> childOus =
                     tripleStoreUtility.getChildrenPath(ouIds,
                         new ArrayList<String>());
                 if (childOus != null) {
-                    for (String childOu : childOus) {
+                    for (final String childOu : childOus) {
                         results.add(new StringAttribute(childOu));
                     }
                 }
@@ -590,7 +590,7 @@ public class UserAccountAttributeFinderModule
 
         final EvaluationResult result;
 
-        Set<String> userGroups =
+        final Set<String> userGroups =
             policiesCacheProxy.getUserGroups(userAccountId);
 
         if (userGroups == null || userGroups.isEmpty()) {
@@ -628,7 +628,7 @@ public class UserAccountAttributeFinderModule
         throws EscidocException {
 
         // get role to fetch
-        Matcher roleMatcher =
+        final Matcher roleMatcher =
             PATTERN_PARSE_ROLE_GRANT_ROLE.matcher(attributeId);
         String roleName = null;
         if (roleMatcher.find()) {
@@ -638,13 +638,13 @@ public class UserAccountAttributeFinderModule
             return CustomEvaluationResultBuilder.createEmptyEvaluationResult();
         }
 
-        Set<String> userGroups =
+        final Set<String> userGroups =
             policiesCacheProxy.getUserGroups(userAccountId);
-        Map<String, HashSet<String>> criterias =
+        final Map<String, HashSet<String>> criterias =
             new HashMap<String, HashSet<String>>();
-        HashSet<String> roles = new HashSet<String>();
+        final HashSet<String> roles = new HashSet<String>();
         roles.add(roleName);
-        HashSet<String> users = new HashSet<String>();
+        final HashSet<String> users = new HashSet<String>();
         users.add(userAccountId);
         criterias.put(
             de.escidoc.core.common.business.Constants.FILTER_PATH_USER_ID,
@@ -657,13 +657,13 @@ public class UserAccountAttributeFinderModule
                 de.escidoc.core.common.business.Constants.FILTER_PATH_GROUP_ID,
                 (HashSet<String>) userGroups);
         }
-        List<RoleGrant> roleGrants =
+        final List<RoleGrant> roleGrants =
             userAccountDao.retrieveGrants(criterias, null,
                 ListSorting.ASCENDING);
         final EvaluationResult result;
         if (roleGrants != null) {
             final List<StringAttribute> results = new ArrayList<StringAttribute>();
-            for (RoleGrant roleGrant : roleGrants) {
+            for (final RoleGrant roleGrant : roleGrants) {
                 if (roleGrant.getRevocationDate() == null) {
                     results.add(new StringAttribute(roleGrant.getObjectId()));
                 }
@@ -708,7 +708,7 @@ public class UserAccountAttributeFinderModule
             (Set<AttributeValue>) RequestAttributesCache.get(ctx,
                 key.toString());
         if (result == null) {
-            List userHandles;
+            final List userHandles;
             try {
                 userHandles =
                     getUserAccountDao().retrieveUserLoginDataByUserId(
@@ -733,8 +733,8 @@ public class UserAccountAttributeFinderModule
             }
             result = new HashSet<AttributeValue>();
             if (userHandles != null && !userHandles.isEmpty()) {
-                for (Object userHandle : userHandles) {
-                    UserLoginData userLoginData = (UserLoginData) userHandle;
+                for (final Object userHandle : userHandles) {
+                    final UserLoginData userLoginData = (UserLoginData) userHandle;
                     result.add(new StringAttribute(userLoginData.getHandle()));
                 }
             }

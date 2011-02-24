@@ -91,17 +91,17 @@ public class SRURequest {
         final Writer output, final ResourceType resourceType)
         throws WebserverSystemException {
         try {
-            String url =
+            final String url =
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.SRW_URL)
                     + "/search/"
                     + ADMIN_INDEXES.get(resourceType)
                     + "?operation=explain&version=1.1";
-            HttpResponse response =
+            final HttpResponse response =
                 connectionUtility.getRequestURL(new URL(url), null);
 
             if (response != null) {
-                HttpEntity entity = response.getEntity();
+                final HttpEntity entity = response.getEntity();
                 BufferedReader input = null;
                 try {
                     input =
@@ -143,11 +143,11 @@ public class SRURequest {
 
         if (contentType != null) {
             // FIXME better use javax.mail.internet.ContentType
-            String[] parameters = contentType.split(";");
+            final String[] parameters = contentType.split(";");
 
-            for (String parameter : parameters) {
+            for (final String parameter : parameters) {
                 if (parameter.startsWith("charset")) {
-                    String[] charset = parameter.split("=");
+                    final String[] charset = parameter.split("=");
 
                     if (charset.length > 1) {
                         result = charset[1];
@@ -224,10 +224,10 @@ public class SRURequest {
         final String user, final String role, final RecordPacking recordPacking)
         throws WebserverSystemException {
         try {
-            StringBuilder internalQuery = new StringBuilder();
+            final StringBuilder internalQuery = new StringBuilder();
 
             if (query == null) {
-                for (ResourceType resourceType : resourceTypes) {
+                for (final ResourceType resourceType : resourceTypes) {
                     if (internalQuery.length() > 0) {
                         internalQuery.append(" OR ");
                     }
@@ -277,14 +277,14 @@ public class SRURequest {
                         + "=eSciDocSoap";
             }
 
-            Cookie cookie =
+            final Cookie cookie =
                 new BasicClientCookie(EscidocServlet.COOKIE_LOGIN,
                     UserContext.getHandle());
-            HttpResponse response =
+            final HttpResponse response =
                 connectionUtility.getRequestURL(new URL(url), cookie);
 
             if (response != null) {
-                HttpEntity entity = response.getEntity();
+                final HttpEntity entity = response.getEntity();
                 BufferedReader input = null;
                 try {
                     input =

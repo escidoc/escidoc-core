@@ -148,7 +148,7 @@ public class ContentModelCreateHandler extends DefaultHandler {
             this.contentStreamsHandler.startElement(element);
         }
         else {
-            String currentPath = parser.getCurPath();
+            final String currentPath = parser.getCurPath();
 
             if (XPATH_CONTENT_MODEL_PROPERTIES.equals(currentPath)) {
                 LOG.debug("Parser reached " + XPATH_CONTENT_MODEL_PROPERTIES);
@@ -208,7 +208,7 @@ public class ContentModelCreateHandler extends DefaultHandler {
         ContentModelNotFoundException, UnsupportedEncodingException,
         SystemException, InvalidContentException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (XPATH_CONTENT_MODEL_PROPERTIES.equals(currentPath)) {
             LOG

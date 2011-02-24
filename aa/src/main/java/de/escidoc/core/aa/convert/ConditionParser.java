@@ -57,7 +57,7 @@ public class ConditionParser {
         String result = function;
 
         if (function != null) {
-            int index = function.lastIndexOf(':');
+            final int index = function.lastIndexOf(':');
 
             if ((index >= 0) && (index < function.length() - 1)) {
                 result = function.substring(index + 1);
@@ -112,10 +112,10 @@ public class ConditionParser {
         Function result = null;
 
         if (condition != null) {
-            String operation =
+            final String operation =
                 condition.getFunction().getIdentifier().toString();
 
-            List< ? > children = condition.getChildren();
+            final List< ? > children = condition.getChildren();
 
             if (children != null) {
                 if (children.size() == 1) {
@@ -141,12 +141,12 @@ public class ConditionParser {
                     if (operation.equals(Values.FUNCTION_STRING_CONTAINS)) {
                         if ((children.get(0) instanceof StringAttribute)
                             && (children.get(1) instanceof Apply)) {
-                            Function nestedFunction =
+                            final Function nestedFunction =
                                 parseApply((Apply) children.get(1));
 
                             if (nestedFunction.operation
                                 .equals(Values.FUNCTION_STRING_ONE_AND_ONLY)) {
-                                String operand1 = values.getOperand(getAttribute(
+                                final String operand1 = values.getOperand(getAttribute(
                                     nestedFunction.operand1));
 
                                 if (operand1 == null) {
@@ -175,7 +175,7 @@ public class ConditionParser {
                         }
                     }
                     else {
-                        String operand1;
+                        final String operand1;
 
                         if (children.get(0) instanceof Apply) {
                             operand1 =
@@ -190,7 +190,7 @@ public class ConditionParser {
                                 .get(0).getClass().getName()
                                 + ": unexpected operand type");
                         }
-                        String operand2;
+                        final String operand2;
                         if (children.get(1) instanceof Apply) {
                             operand2 =
                                 parseApply((Apply) children.get(1)).operand1;
@@ -228,11 +228,11 @@ public class ConditionParser {
      * @return SQL fragment representing the XACML condition
      */
     public String parse(final Apply condition) {
-        StringBuilder result = new StringBuilder();
-        Function function = parseApply(condition);
+        final StringBuilder result = new StringBuilder();
+        final Function function = parseApply(condition);
 
         if (function != null) {
-            String sqlFunction = values.getFunction(function.operation);
+            final String sqlFunction = values.getFunction(function.operation);
 
             if (sqlFunction != null) {
                 result.append('(');
@@ -249,7 +249,7 @@ public class ConditionParser {
                 }
                 else if (function.operation
                     .equals(Values.FUNCTION_STRING_EQUAL)) {
-                    String operand1 =
+                    final String operand1 =
                         values.getOperand(getAttribute(function.operand1));
 
                     if (operand1 == null) {
@@ -257,7 +257,7 @@ public class ConditionParser {
                             + ": unknown operand");
                     }
 
-                    String operand2 =
+                    final String operand2 =
                         values.getOperand(getAttribute(function.operand2));
 
                     if (operand2 == null) {
@@ -313,9 +313,9 @@ public class ConditionParser {
      */
     private String parseContains(final String list, final String value) {
         String result = "";
-        String[] listValues = list.split(" ");
+        final String[] listValues = list.split(" ");
 
-        for (String listvalue : listValues) {
+        for (final String listvalue : listValues) {
             if (result.length() > 0) {
                 result =
                     values.getOrCondition(result,

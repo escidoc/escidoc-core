@@ -61,7 +61,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
     private final List<Map<String, String>> relationsData = new ArrayList<Map<String, String>>();
 
-    public ContentRelationsRemoveHandler2Edition(StaxParser parser, String id) {
+    public ContentRelationsRemoveHandler2Edition(final StaxParser parser, final String id) {
         this.parser = parser;
         this.sourceId = id;
 
@@ -78,7 +78,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
         if (this.inRelation) {
             if ("targetId".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
-                    String message =
+                    final String message =
                         "The value of the element " + element.getLocalName()
                             + " is missing.";
                     LOG.debug(message);
@@ -89,7 +89,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
             }
             else if ("predicate".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
-                    String message =
+                    final String message =
                         "The value of the element " + element.getLocalName()
                             + " is missing.";
                     LOG.debug(message);
@@ -103,7 +103,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
     @Override
     public StartElement startElement(final StartElement element) {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
 
         if ("/param/relation".equals(curPath)) {
             inRelation = true;
@@ -119,16 +119,16 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
         WebserverSystemException {
         if ((inRelation)
             && ("relation".equals(element.getLocalName()))) {
-            String[] splittedPredicate = splitPredicate(predicate);
-            String predicateNs = splittedPredicate[0];
-            String predicateValue = splittedPredicate[1];
-            String existRelationTarget =
+            final String[] splittedPredicate = splitPredicate(predicate);
+            final String predicateNs = splittedPredicate[0];
+            final String predicateValue = splittedPredicate[1];
+            final String existRelationTarget =
                 TripleStoreUtility.getInstance().getRelation(sourceId,
                     predicate);
 
             if (existRelationTarget == null) {
 
-                String message =
+                final String message =
                     "A relation with predicate " + predicate
                         + " between resources with ids " + sourceId
                         + " and " + targetId + " does not exist.";
@@ -137,7 +137,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
             }
 
-            Map<String, String> relationData =
+            final Map<String, String> relationData =
                 new HashMap<String, String>();
             relationsData.add(relationData);
             relationData.put("predicateNs", predicateNs);
@@ -164,7 +164,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
         if (index < 0) {
             index = predicate.lastIndexOf('/');
         }
-        String[] result = new String[2];
+        final String[] result = new String[2];
         result[0] = predicate.substring(0, index + 1);
         result[1] = predicate.substring(index + 1);
         return result;

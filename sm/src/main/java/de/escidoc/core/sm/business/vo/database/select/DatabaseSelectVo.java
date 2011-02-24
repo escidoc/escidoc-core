@@ -140,7 +140,7 @@ public class DatabaseSelectVo {
      */
     public void setTableNames(final Collection<String> tableNames) 
                                     throws SqlDatabaseSystemException {
-        for (String tableName : tableNames) {
+        for (final String tableName : tableNames) {
             DatabaseConventionChecker.checkName(tableName);
         }
         this.tableNames = tableNames;

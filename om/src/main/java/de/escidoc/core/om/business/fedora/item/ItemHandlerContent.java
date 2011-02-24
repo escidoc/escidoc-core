@@ -132,7 +132,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         catch (InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
-        String visibility =
+        final String visibility =
             component.getResourceProperties().get(
                 TripleStoreUtility.PROP_VISIBILITY);
 
@@ -141,12 +141,12 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             throw new AuthorizationException("The Content of the component "
                 + componentId + " has visibility 'private'.");
         }
-        Datastream content = component.getContent();
+        final Datastream content = component.getContent();
 
-        String storage = content.getControlGroup();
-        EscidocBinaryContent bin = new EscidocBinaryContent();
+        final String storage = content.getControlGroup();
+        final EscidocBinaryContent bin = new EscidocBinaryContent();
 
-        Map<String, String> properties = component.getResourceProperties();
+        final Map<String, String> properties = component.getResourceProperties();
         String fileName;
 
         if (component.getMdRecords().containsKey(
@@ -168,7 +168,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         }
         bin.setFileName(fileName);
 
-        String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
+        final String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
         bin.setMimeType(mimeType);
 
         try {
@@ -222,7 +222,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         SystemException, InvalidStatusException, AuthorizationException {
 
         setItem(id);
-        Component component = getComponent(componentId);
+        final Component component = getComponent(componentId);
 
         try {
             checkWithdrawn("Content not retrievable.");
@@ -230,7 +230,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         catch (InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
-        String visibility =
+        final String visibility =
             component.getResourceProperties().get(
                 TripleStoreUtility.PROP_VISIBILITY);
 
@@ -239,16 +239,16 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             throw new AuthorizationException("The Content of the component "
                 + componentId + " has visibility 'private'.");
         }
-        Datastream content = component.getContent();
+        final Datastream content = component.getContent();
 
-        String storage = content.getControlGroup();
+        final String storage = content.getControlGroup();
 
-        EscidocBinaryContent bin = new EscidocBinaryContent();
+        final EscidocBinaryContent bin = new EscidocBinaryContent();
         if ("R".equals(storage)) {
             bin.setRedirectUrl(content.getLocation());
         }
 
-        URL url;
+        final URL url;
         try {
             url =
                 getContentUrl(component.getId(), getItem().getVersionDate(),
@@ -259,7 +259,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 e1);
         }
 
-        String fileName =
+        final String fileName =
             component.getResourceProperties().get(
                 TripleStoreUtility.PROP_FILENAME);
 
@@ -298,7 +298,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         SystemException, InvalidStatusException, AuthorizationException {
 
         setItem(id);
-        Component component = getComponent(componentId);
+        final Component component = getComponent(componentId);
 
         try {
             checkWithdrawn("Content not retrievable.");
@@ -306,7 +306,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         catch (InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
-        String visibility =
+        final String visibility =
             component.getResourceProperties().get(
                 TripleStoreUtility.PROP_VISIBILITY);
 
@@ -315,10 +315,10 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             throw new AuthorizationException("The Content of the component "
                 + componentId + " has visibility 'private'.");
         }
-        Datastream content = component.getContent();
+        final Datastream content = component.getContent();
 
-        String storage = content.getControlGroup();
-        String contentUrl;
+        final String storage = content.getControlGroup();
+        final String contentUrl;
         if ("R".equals(storage)) {
             contentUrl = content.getLocation();
         }
@@ -336,7 +336,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             }
         }
 
-        String url;
+        final String url;
         if ((transformer.equals(TRANSFORM_SERVICE_DIGILIB))
             && (clientService.equals(TRANSFORM_DIGILIB_CLIENT))) {
 
@@ -348,7 +348,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                     + " is not supported.");
         }
 
-        EscidocServiceRedirectInterface response = new EscidocServiceRedirect();
+        final EscidocServiceRedirectInterface response = new EscidocServiceRedirect();
         response.setContent(getServiceRedirect(url));
 
         return response;
@@ -363,7 +363,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     private String getDigilibScalerUrl() throws SystemException {
 
-        String diglibUrl;
+        final String diglibUrl;
         try {
             diglibUrl =
                 EscidocConfiguration.getInstance().get(
@@ -387,7 +387,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      */
     private String getServiceUrl(final String service) throws SystemException {
 
-        EscidocConfiguration conf;
+        final EscidocConfiguration conf;
         try {
             conf = EscidocConfiguration.getInstance();
         }
@@ -396,7 +396,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         }
 
         // -----------------------------------
-        String serviceUrl;
+        final String serviceUrl;
         if (service.equals(TRANSFORM_DIGILIB_CLIENT)) {
             serviceUrl = conf.get(EscidocConfiguration.DIGILIB_CLIENT);
         }
@@ -469,7 +469,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
     private String initFileContent(final String templateFileName)
         throws IOException {
 
-        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        final ByteArrayOutputStream result = new ByteArrayOutputStream();
         InputStream inputStream = null;
         try {
             inputStream = this.getClass().getResourceAsStream(templateFileName);
@@ -544,9 +544,9 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         ContentStreamNotFoundException, AuthorizationException {
 
         setItem(itemId);
-        String contentStream = renderContentStream(name, true);
+        final String contentStream = renderContentStream(name, true);
         if (contentStream.length() == 0) {
-            String message =
+            final String message =
                 "The item with id " + itemId
                     + " does not contain a content stream" + " with name "
                     + name;
@@ -586,13 +586,13 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         throws ContentStreamNotFoundException, FedoraSystemException,
         WebserverSystemException {
 
-        Datastream cs = getItem().getContentStream(name);
+        final Datastream cs = getItem().getContentStream(name);
 
-        EscidocBinaryContent bin = new EscidocBinaryContent();
-        String fileName = cs.getLabel();
+        final EscidocBinaryContent bin = new EscidocBinaryContent();
+        final String fileName = cs.getLabel();
         bin.setFileName(fileName);
 
-        String mimeType = cs.getMimeType();
+        final String mimeType = cs.getMimeType();
         bin.setMimeType(mimeType);
 
         if ("R".equals(cs.getControlGroup())) {
@@ -631,22 +631,22 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         final String componentId, final String versionDate,
         final String transformer, final String param)
         throws MalformedURLException, SystemException {
-        String fedoraUser =
+        final String fedoraUser =
             System.getProperty(EscidocConfiguration.FEDORA_USER);
-        String fedoraPw =
+        final String fedoraPw =
             System.getProperty(EscidocConfiguration.FEDORA_PASSWORD);
-        String auth = fedoraUser + ':' + fedoraPw + '@';
+        final String auth = fedoraUser + ':' + fedoraPw + '@';
 
-        String fedoraUrl = System.getProperty(EscidocConfiguration.FEDORA_URL);
-        int pos = fedoraUrl.indexOf("://");
-        String protocol = fedoraUrl.substring(0, pos + 3);
-        String hostPart = fedoraUrl.substring(pos + 3);
+        final String fedoraUrl = System.getProperty(EscidocConfiguration.FEDORA_URL);
+        final int pos = fedoraUrl.indexOf("://");
+        final String protocol = fedoraUrl.substring(0, pos + 3);
+        final String hostPart = fedoraUrl.substring(pos + 3);
 
-        String contentUrl =
+        final String contentUrl =
             protocol + auth + hostPart + "/get/" + componentId + "/content"
                 + '/' + versionDate;
 
-        URL url;
+        final URL url;
         if (transformer.equals(TRANSFORM_SERVICE_DIGILIB)) {
             url =
                 new URL(getDigilibScalerUrl() + "?fn=" + contentUrl + '&'

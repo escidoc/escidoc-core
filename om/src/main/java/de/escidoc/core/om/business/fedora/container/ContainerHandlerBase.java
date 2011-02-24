@@ -327,12 +327,12 @@ public class ContainerHandlerBase extends HandlerBase {
     protected void checkVersionStatusNot(final String checkStatus)
         throws InvalidStatusException {
 
-        String status;
+        final String status;
 
         final XPath xpath = XPathFactory.newInstance().newXPath();
         try {
-            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document xmlDom = db.parse(new ByteArrayInputStream(getContainer()
+            final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            final Document xmlDom = db.parse(new ByteArrayInputStream(getContainer()
                     .getWov().getStream()));
 
             // get status from version-history/version[@objid='id']/
@@ -340,7 +340,7 @@ public class ContainerHandlerBase extends HandlerBase {
             final String xpathTimestamp =
                 "/version-history/version[@objid='"
                     + getContainer().getLatestVersionId() + "']/timestamp";
-            String timestamp = xpath.evaluate(xpathTimestamp, xmlDom);
+            final String timestamp = xpath.evaluate(xpathTimestamp, xmlDom);
 
             // fetch the status with the newest timestamp
             final String xpathStatus =
@@ -443,12 +443,12 @@ public class ContainerHandlerBase extends HandlerBase {
 
         // expand this method to support more than one pid system
 
-        String pid;
+        final String pid;
 
         final XPath xpath = XPathFactory.newInstance().newXPath();
         try {
-            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document xmlDom = db.parse(new ByteArrayInputStream(getContainer()
+            final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            final Document xmlDom = db.parse(new ByteArrayInputStream(getContainer()
                     .getWov().getStream()));
 
             // get status from /version-history/version[@objid='id']/pid

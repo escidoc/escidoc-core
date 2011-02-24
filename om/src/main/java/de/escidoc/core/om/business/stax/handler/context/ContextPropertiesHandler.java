@@ -105,7 +105,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(EndElement element) {
+    public EndElement endElement(final EndElement element) {
         // String theName = element.getLocalName();
         // TODO
         return element;
@@ -116,19 +116,19 @@ public class ContextPropertiesHandler extends DefaultHandler {
         throws InvalidStatusException, OrganizationalUnitNotFoundException,
         SystemException, ReadonlyAttributeViolationException,
         MissingElementValueException {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
 
         if (curPath.startsWith(propertiesPath + '/')) {
-            String theName = element.getLocalName();
+            final String theName = element.getLocalName();
 
             // organizational-unit
             if (curPath.equals(propertiesPath
                 + "/organizational-units/organizational-unit")) {
 
                 try {
-                    String id;
+                    final String id;
                     if (UserContext.isRestAccess()) {
-                        String xlinkHref =
+                        final String xlinkHref =
                             element
                                 .getAttribute(
                                     de.escidoc.core.common.business.Constants.XLINK_URI,
@@ -136,7 +136,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
                         id = XmlUtility.getIdFromURI(xlinkHref);
 
                         if (!xlinkHref.equals("/oum/organizational-unit/" + id)) {
-                            String message =
+                            final String message =
                                 "The 'organizational-unit' element has a wrong "
                                     + "url. the url have to look like: "
                                     + "/oum/organizational-unit/id";

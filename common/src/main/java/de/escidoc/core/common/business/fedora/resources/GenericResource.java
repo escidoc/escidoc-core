@@ -239,7 +239,7 @@ public class GenericResource implements FedoraResource {
         return needSync;
     }
 
-    public void setNeedSync(boolean needSync) {
+    public void setNeedSync(final boolean needSync) {
         this.needSync = needSync;
     }
 
@@ -351,7 +351,7 @@ public class GenericResource implements FedoraResource {
      */
     public String getStatus() throws WebserverSystemException {
 
-        String status;
+        final String status;
         try {
             status = getResourceProperties().get(PropertyMapKeys.PUBLIC_STATUS);
         }
@@ -458,7 +458,7 @@ public class GenericResource implements FedoraResource {
         WebserverSystemException, FedoraSystemException,
         StreamNotFoundException {
 
-        String xml;
+        final String xml;
         try {
             xml =
                 new String(getRelsExt().getStream(),
@@ -645,7 +645,7 @@ public class GenericResource implements FedoraResource {
         throws TripleStoreSystemException, WebserverSystemException {
 
         if (this.propertiesMap == null) {
-            Map<String, String> lastVersionData =
+            final Map<String, String> lastVersionData =
                 mapTripleList2TupleList(parseTriplesFromRelsExt());
             this.propertiesMap = mapTripleStoreKeys(lastVersionData);
         }
@@ -687,7 +687,7 @@ public class GenericResource implements FedoraResource {
         // return getTripleStoreUtility().getProperties(getId(),
         // propertiesNamesCol);
 
-        Map<String, String> tripleStoreValues =
+        final Map<String, String> tripleStoreValues =
             TripleStoreUtility.getInstance().getProperties(getId(),
                 propertiesNamesCol);
 
@@ -750,12 +750,12 @@ public class GenericResource implements FedoraResource {
     public Map<String, String> mapTripleStoreKeys(
         final Map<String, String> tripleStoreMap) {
 
-        Map<String, String> properties = new HashMap<String, String>();
+        final Map<String, String> properties = new HashMap<String, String>();
 
-        for (String sourceKey : tripleStoreMap.keySet()) {
-            String value = tripleStoreMap.get(sourceKey);
+        for (final String sourceKey : tripleStoreMap.keySet()) {
+            final String value = tripleStoreMap.get(sourceKey);
             if (value != null) {
-                String targetKey = this.propertiesNamesMapping.get(sourceKey);
+                final String targetKey = this.propertiesNamesMapping.get(sourceKey);
                 if (targetKey != null) {
                     properties.put(targetKey, value);
                 } else {
@@ -891,7 +891,7 @@ public class GenericResource implements FedoraResource {
         // Should lock only be checked in handler? No, it is part of the
         // resource representation.
         if ((lock) && (lockOwner == null)) {
-            String msg = "Need lockOwner.";
+            final String msg = "Need lockOwner.";
             log.debug(msg);
             throw new NullPointerException(msg);
         }
@@ -940,7 +940,7 @@ public class GenericResource implements FedoraResource {
         throws StreamNotFoundException, LockingException, SystemException {
 
         if (isLocked()) {
-            String msg = "Resource " + this.id + " is locked.";
+            final String msg = "Resource " + this.id + " is locked.";
             log.debug(msg);
             throw new LockingException(msg);
         }
@@ -954,7 +954,7 @@ public class GenericResource implements FedoraResource {
             if (!ds.equals(curDs)) {
 
                 this.datastream = ds;
-                String lmd = ds.merge();
+                final String lmd = ds.merge();
                 setLastModificationDate(lmd);
                 this.needSync = true;
             }
@@ -1023,7 +1023,7 @@ public class GenericResource implements FedoraResource {
          * methods of this class), then should a persist be redundant.
          */
         if (this.needSync) {
-            String lastModificationDate = persistRelsExt();
+            final String lastModificationDate = persistRelsExt();
             setLastModificationDate(lastModificationDate);
         }
 
@@ -1121,7 +1121,7 @@ public class GenericResource implements FedoraResource {
     private Collection<String> expandPropertiesNames(
         final Collection<String> propertiesNames) {
 
-        Collection<String> newPropertiesNames;
+        final Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
             newPropertiesNames = propertiesNames;
         }
@@ -1167,7 +1167,7 @@ public class GenericResource implements FedoraResource {
     private Map<String, String> expandPropertiesNamesMapping(
         final Map<String, String> propertiesNamesMap) {
 
-        Map<String, String> newPropertiesNamesMap;
+        final Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
             newPropertiesNamesMap = propertiesNamesMap;
         }
@@ -1231,7 +1231,7 @@ public class GenericResource implements FedoraResource {
         final Map<String, String> targetMap, final String sourceKey,
         final String targetKey) {
 
-        String value = sourceMap.get(sourceKey);
+        final String value = sourceMap.get(sourceKey);
         if (value != null) {
             targetMap.put(targetKey, value);
         }
@@ -1254,7 +1254,7 @@ public class GenericResource implements FedoraResource {
         throws IntegritySystemException, TripleStoreSystemException,
         WebserverSystemException {
 
-        String type =
+        final String type =
             getResourceProperties().get(TripleStoreUtility.PROP_OBJECT_TYPE);
 
         if (resourceType == ResourceType.ITEM) {
@@ -1296,7 +1296,7 @@ public class GenericResource implements FedoraResource {
     private Map<String, String> mapTripleList2TupleList(
         final Iterable<Triple> triples) {
         final Map<String, String> lastVersionData = new HashMap<String, String>();
-        for (Triple triple : triples) {
+        for (final Triple triple : triples) {
             lastVersionData.put(triple.getPredicate(), triple.getObject());
             if (triple.getPredicate().equals(TripleStoreUtility.PROP_DC_TITLE)) {
                 this.title = triple.getObject();
@@ -1316,7 +1316,7 @@ public class GenericResource implements FedoraResource {
      */
     private List<Triple> parseTriplesFromRelsExt()
         throws WebserverSystemException {
-        Datastream tmpRelsExt;
+        final Datastream tmpRelsExt;
         try {
             tmpRelsExt =
                 new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), null);
@@ -1337,7 +1337,7 @@ public class GenericResource implements FedoraResource {
             sp.parse(new ByteArrayInputStream(tmpRelsExt.getStream()));
         }
         catch (final Exception e) {
-            String msg = "Unexpected exception during RELS-EXT parsing.";
+            final String msg = "Unexpected exception during RELS-EXT parsing.";
             log.warn(msg + e);
             throw new WebserverSystemException(msg, e);
         }
@@ -1351,22 +1351,22 @@ public class GenericResource implements FedoraResource {
     }
 
     protected void initDatastreams(
-        org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
+        final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {
 
-        for (org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
-            List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
-            String name = datastreamInfo.getID();
-            String label = datastreamInfo.getLabel();
-            DatastreamControlGroup controlGroup =
+        for (final org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
+            final List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
+            final String name = datastreamInfo.getID();
+            final String label = datastreamInfo.getLabel();
+            final DatastreamControlGroup controlGroup =
                     datastreamInfo.getControlGroup();
-            String controlGroupValue = controlGroup.getValue();
-            String mimeType = datastreamInfo.getMIMEType();
-            String location = datastreamInfo.getLocation();
+            final String controlGroupValue = controlGroup.getValue();
+            final String mimeType = datastreamInfo.getMIMEType();
+            final String location = datastreamInfo.getLocation();
 
-            Datastream ds;
+            final Datastream ds;
             // RELS-EXT
             if (name.equals(Datastream.RELS_EXT_DATASTREAM)) {
                 // The RELS-EXT in the Fedora repository is newer than the

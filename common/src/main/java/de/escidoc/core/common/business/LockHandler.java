@@ -193,18 +193,18 @@ public class LockHandler extends JdbcDaoSupport {
      */
     public String getLockDate(final String objid)
         throws WebserverSystemException {
-        String result;
+        final String result;
 
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
-            Timestamp ts =
+            final Timestamp ts =
                     getJdbcTemplate().queryForObject(
                         "SELECT lock_timestamp FROM om.lockstatus WHERE objid = ?",
                         new Object[] { objid }, Timestamp.class);
-            Calendar cal =
+            final Calendar cal =
                 GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
             cal.setTimeInMillis(ts.getTime());
-            XMLGregorianCalendar xmlcal =
+            final XMLGregorianCalendar xmlcal =
                 DatatypeFactory.newInstance().newXMLGregorianCalendar(
                     (GregorianCalendar) cal);
             result = xmlcal.toString();
@@ -255,9 +255,9 @@ public class LockHandler extends JdbcDaoSupport {
      */
     public static LockHandler getInstance() {
 
-        BeanFactoryLocator beanFactoryLocator =
+        final BeanFactoryLocator beanFactoryLocator =
             SingletonBeanFactoryLocator.getInstance();
-        BeanFactory factory =
+        final BeanFactory factory =
             beanFactoryLocator
                 .useBeanFactory("Om.spring.ejb.context").getFactory();
         return (LockHandler) factory.getBean("business.LockHandler");

@@ -147,14 +147,14 @@ public class FilterHandler extends DefaultHandler {
             }
             else if ("filter".equals(localName)) {
                 // filtername=objectsToFind has no character data
-                int indexOfName = element.indexOfAttribute(null, "name");
+                final int indexOfName = element.indexOfAttribute(null, "name");
                 if (indexOfName >= 0) {
-                    String filterName =
+                    final String filterName =
                         element.getAttribute(indexOfName).getValue();
                     // filter name MUST be a URI or "user", "role" or
                     // "top-level-organizational-units"
-                    Matcher uriMatcher = URI_PATTERN.matcher(filterName);
-                    Matcher nonUriMatcher = NON_URI_PATTERN.matcher(filterName);
+                    final Matcher uriMatcher = URI_PATTERN.matcher(filterName);
+                    final Matcher nonUriMatcher = NON_URI_PATTERN.matcher(filterName);
                     if (!uriMatcher.matches() && !nonUriMatcher.matches()) {
                         throw new InvalidContentException(
                             StringUtility.format(
@@ -196,12 +196,12 @@ public class FilterHandler extends DefaultHandler {
      */
     @Override
     public StartElement startElement(final StartElement element) {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
         if (curPath.equals(XPATH_FILTER)) {
             inFilter = true;
-            int indexOfName = element.indexOfAttribute(null, "name");
+            final int indexOfName = element.indexOfAttribute(null, "name");
             if (indexOfName >= 0) {
-                String filterName =
+                final String filterName =
                     element.getAttribute(indexOfName).getValue();
                 if (filterName.equals(Constants.DC_IDENTIFIER_URI)) {
                     inObjectList = true;
@@ -209,7 +209,7 @@ public class FilterHandler extends DefaultHandler {
             }
         }
         else if (curPath.equals(XPATH_ORDER_BY)) {
-            int indexOfSorting =
+            final int indexOfSorting =
                 element.indexOfAttribute(null, XmlUtility.NAME_SORTING);
             if (indexOfSorting >= 0) {
                 sorting =
@@ -229,7 +229,7 @@ public class FilterHandler extends DefaultHandler {
      */
     @Override
     public EndElement endElement(final EndElement element) {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
         if (curPath.equals(XPATH_FILTER)) {
             if (inObjectList) {
                 inObjectList = false;

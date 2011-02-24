@@ -68,13 +68,13 @@ public class AggregationDataSelector {
     private SmScopesDaoInterface scopesDao;
     
     public List getDataForAggregation(
-            AggregationDefinition aggregationDefinition, Date date)
+            final AggregationDefinition aggregationDefinition, final Date date)
             throws ScopeNotFoundException, SqlDatabaseSystemException,
             StatisticPreprocessingSystemException, XmlParserSystemException {
         if (aggregationDefinition
                 .getAggregationStatisticDataSelectors() != null) {
             AggregationStatisticDataSelector selector = null;
-            for (AggregationStatisticDataSelector aggregationStatisticDataSelector 
+            for (final AggregationStatisticDataSelector aggregationStatisticDataSelector
                     : aggregationDefinition
                     .getAggregationStatisticDataSelectors()) {
                 if ("statistic-table".equals(aggregationStatisticDataSelector
@@ -129,25 +129,25 @@ public class AggregationDataSelector {
             xpath = 
                 aggregationStatisticDataSelector.getXpath();
         }
-        DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
+        final DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
         databaseSelectVo.setSelectType(Constants.DATABASE_SELECT_TYPE_SELECT);
-        Collection<String> tablenames = new ArrayList<String>();
+        final Collection<String> tablenames = new ArrayList<String>();
         tablenames.add(Constants.STATISTIC_DATA_TABLE_NAME);
         databaseSelectVo.setTableNames(tablenames);
 
-        Collection<SelectFieldVo> selectFieldVos = new ArrayList<SelectFieldVo>();
-        SelectFieldVo selectFieldVo = new SelectFieldVo();
+        final Collection<SelectFieldVo> selectFieldVos = new ArrayList<SelectFieldVo>();
+        final SelectFieldVo selectFieldVo = new SelectFieldVo();
         selectFieldVo.setFieldName(Constants.STATISTIC_DATA_XML_FIELD_NAME);
         selectFieldVos.add(selectFieldVo);
-        SelectFieldVo selectFieldVo1 = new SelectFieldVo();
+        final SelectFieldVo selectFieldVo1 = new SelectFieldVo();
         selectFieldVo1.setFieldName(
         		Constants.STATISTIC_DATA_TIMESTAMP_FIELD_NAME);
         selectFieldVos.add(selectFieldVo1);
         databaseSelectVo.setSelectFieldVos(selectFieldVos);
 
-        RootWhereGroupVo rootWhereGroupVo = new RootWhereGroupVo();
-        RootWhereFieldVo rootWhereFieldVo = new RootWhereFieldVo();
-        Collection<AdditionalWhereFieldVo> additionalWhereFieldVos =
+        final RootWhereGroupVo rootWhereGroupVo = new RootWhereGroupVo();
+        final RootWhereFieldVo rootWhereFieldVo = new RootWhereFieldVo();
+        final Collection<AdditionalWhereFieldVo> additionalWhereFieldVos =
             new ArrayList<AdditionalWhereFieldVo>();
 
         rootWhereFieldVo.setFieldName(
@@ -160,11 +160,11 @@ public class AggregationDataSelector {
 
 
         //get Scope to decide if scope-type is admin
-        Scope scope = scopesDao.retrieve(scopeId);
+        final Scope scope = scopesDao.retrieve(scopeId);
 
         //only restrict to scope_id if Scope is no admin-scope
         if (!scope.getScopeType().equals(Constants.SCOPE_TYPE_ADMIN)) {
-            AdditionalWhereFieldVo additionalWhereFieldVo =
+            final AdditionalWhereFieldVo additionalWhereFieldVo =
                 new AdditionalWhereFieldVo();
             additionalWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
             additionalWhereFieldVo.setFieldName("scope_id");
@@ -175,7 +175,7 @@ public class AggregationDataSelector {
         }
 
         if (xpath != null && xpath.length() != 0) {
-            AdditionalWhereFieldVo xpathWhereFieldVo =
+            final AdditionalWhereFieldVo xpathWhereFieldVo =
                 new AdditionalWhereFieldVo();
             xpathWhereFieldVo.setAlliance(Constants.DATABASE_ALLIANCE_AND);
             xpathWhereFieldVo
@@ -209,15 +209,15 @@ public class AggregationDataSelector {
         final String inputXpathQuery, final String field)
         throws StatisticPreprocessingSystemException {
         try {
-            StringBuilder dbXpathQuery = new StringBuilder(" (");
-            String xpathQuery = inputXpathQuery.replaceAll("\\s+", " ");
+            final StringBuilder dbXpathQuery = new StringBuilder(" (");
+            final String xpathQuery = inputXpathQuery.replaceAll("\\s+", " ");
             // Split at and/ors and save and/ors in array
-            String operatorHelper =
+            final String operatorHelper =
                 xpathQuery.replaceAll(
                     ".*?(( and )|( AND )|( And )|( or )|( OR )|( Or )).*?",
                     "$1\\|");
-            String[] operators = operatorHelper.split("\\|");
-            String[] xpathQueryParts =
+            final String[] operators = operatorHelper.split("\\|");
+            final String[] xpathQueryParts =
                 xpathQuery
                     .split("( and )|( AND )|( And )|( or )|( OR )|( Or )");
 
@@ -231,8 +231,8 @@ public class AggregationDataSelector {
 
                 // save opening and closing brackets
                 String xpathQueryPart = xpathQueryParts[i].trim();
-                StringBuilder openingBracketSaver = new StringBuilder("");
-                StringBuilder closingBracketSaver = new StringBuilder("");
+                final StringBuilder openingBracketSaver = new StringBuilder("");
+                final StringBuilder closingBracketSaver = new StringBuilder("");
                 while (xpathQueryPart.indexOf('(') == 0) {
                     xpathQueryPart = xpathQueryPart.substring(1);
                     openingBracketSaver.append('(');
@@ -246,26 +246,26 @@ public class AggregationDataSelector {
                 }
 
                 // split xpath-query part at operator (<,> or =)
-                String xpathExpression =
+                final String xpathExpression =
                     xpathQueryPart.replaceAll("(\\[.*?\\].*?)(=|>|<)",
                         "$1\\|$2\\|");
-                String[] xpathExpressionParts =
+                final String[] xpathExpressionParts =
                     xpathExpression.split("\\|.*?\\|");
                 dbXpathQuery.append(openingBracketSaver);
                 if (xpathExpressionParts.length > 1) {
-                    String operator =
+                    final String operator =
                         xpathExpression.replaceAll(".*?\\|(.*?)\\|.*", "$1");
-                    String left =
+                    final String left =
                         dbAccessor.getXpathString(xpathExpressionParts[0],
                             field);
-                    String right =
+                    final String right =
                         xpathExpressionParts[1].replaceAll("['\"]", "").trim();
                     dbXpathQuery
                         .append(left).append(' ').append(operator).append(" '")
                         .append(right).append('\'');
                 }
                 else {
-                    String left =
+                    final String left =
                         dbAccessor.getXpathBoolean(xpathExpressionParts[0],
                             field);
                     dbXpathQuery.append(left);

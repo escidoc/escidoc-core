@@ -126,14 +126,14 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             contentRelationPath = "/container/relations/relation";
         }
         
-        String theName = element.getLocalName();
+        final String theName = element.getLocalName();
 
         if (contentRelationPath.equals(currentPath)) {
             inContentRelation = true;
-            int indexOfObjId = element.indexOfAttribute(null, "objid");
+            final int indexOfObjId = element.indexOfAttribute(null, "objid");
             if (indexOfObjId != (-1)) {
 
-                String message =
+                final String message =
                     "Read only attribute \"objid\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create";
@@ -148,33 +148,33 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             }
             else if ("predicate".equals(theName)) {
                 try {
-                    String xlinkHref =
+                    final String xlinkHref =
                         element
                             .getAttribute(Constants.XLINK_URI, "href")
                             .getValue();
                     if (OntologyUtility.checkPredicate(xlinkHref)) {
                         predicate = xlinkHref;
                     } else {
-                        String message =
+                        final String message =
                                 "Predicate " + xlinkHref + " is wrong. ";
                         throw new RelationPredicateNotFoundException(message);
                     }
 
                 }
                 catch (NoSuchAttributeException e) {
-                    String message =
+                    final String message =
                         "Attribute 'href' of the element '" + theName
                             + "' is missing.";
                     LOGGER.info(message);
                     throw new InvalidContentException(message);
                 }
-                int indexOfType =
+                final int indexOfType =
                     element.indexOfAttribute(Constants.XLINK_URI, "type");
 
-                Attribute type = element.getAttribute(indexOfType);
-                String typeValue = type.getValue();
+                final Attribute type = element.getAttribute(indexOfType);
+                final String typeValue = type.getValue();
                 if (!typeValue.equals(Constants.XLINK_TYPE_SIMPLE)) {
-                    String message =
+                    final String message =
                         "Attribute " + Constants.XLINK_URI + ':'
                             + "type must be set to 'simple'";
                     throw new InvalidContentException(message);
@@ -184,22 +184,22 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
         }
         else if (contentRelationsPath.equals(currentPath)) {
             relationsData = new ArrayList<Map<String, String>>();
-            int indexOfTitle =
+            final int indexOfTitle =
                 element.indexOfAttribute(Constants.XLINK_URI, "title");
 
             if (indexOfTitle != (-1)) {
-                String message =
+                final String message =
                     "Read only attribute \"title\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create";
                 LOGGER.info(message);
                 throw new ReadonlyAttributeViolationException(message);
             }
-            int indexOfHref =
+            final int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");
 
             if (indexOfHref != (-1)) {
-                String message =
+                final String message =
                     "Read only attribute \"href\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create";
@@ -207,10 +207,10 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                 throw new ReadonlyAttributeViolationException(message);
             }
             try {
-                Attribute type =
+                final Attribute type =
                     element.getAttribute(Constants.XLINK_URI, "type");
                 if (!"simple".equals(type.getValue())) {
-                    String message =
+                    final String message =
                         "Attribute " + Constants.XLINK_URI + ':'
                             + "type must be set to 'simple'";
                     throw new InvalidContentException(message);
@@ -239,7 +239,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element) {
         if (inContentRelation && "relation".equals(element.getLocalName())) {
             inContentRelation = false;
-            Map<String, String> relationData = new HashMap<String, String>();
+            final Map<String, String> relationData = new HashMap<String, String>();
             relationsData.add(relationData);
             relationData.put("predicate", predicate);
             relationData.put("target", targetIdWithoutVersion);
@@ -267,16 +267,16 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @throws ReferencedResourceNotFoundException
      * @throws SystemException
      */
-    private void checkRefElement(StartElement element)
+    private void checkRefElement(final StartElement element)
         throws InvalidContentException, ReadonlyAttributeViolationException,
         ReferencedResourceNotFoundException, SystemException {
         try {
-            String objectId = element.getAttribute(null, "objid").getValue();
-            String xlinkHref =
+            final String objectId = element.getAttribute(null, "objid").getValue();
+            final String xlinkHref =
                 element.getAttribute(Constants.XLINK_URI, "href").getValue();
             targetId = XmlUtility.getIdFromURI(xlinkHref);
             if (!objectId.equals(targetId)) {
-                String message =
+                final String message =
                     "Value of the attribute 'href' is wrong. It must contain "
                         + objectId + " instead of " + targetId;
                 LOGGER.info(message);
@@ -292,22 +292,22 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                 targetVersion = null;
             }
 
-            String targetObjectType =
+            final String targetObjectType =
                 TripleStoreUtility.getInstance().getObjectType(
                     targetIdWithoutVersion);
             targetExist(targetObjectType);
             if (!xlinkHref.equals("/ir/" + targetObjectType + '/' + targetId)) {
-                String message =
+                final String message =
                     "Value of the attribute 'href' is wrong. It must be"
                         + "/ir/" + targetObjectType + '/' + targetId;
                 LOGGER.info(message);
                 throw new InvalidContentException(message);
             }
 
-            int indexOfTitle =
+            final int indexOfTitle =
                 element.indexOfAttribute(Constants.XLINK_URI, "title");
             if (indexOfTitle != (-1)) {
-                String message =
+                final String message =
                     "Read only attribute \"title\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create";
@@ -318,7 +318,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
         }
         catch (NoSuchAttributeException e) {
-            String msg =
+            final String msg =
                 "Expected attribute in object reference " + "in 'relation' of "
                     + id + " is not set. (create item)";
             LOGGER.info(msg, e);
@@ -336,7 +336,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
     private void targetExist(final String targetObjectType)
         throws ReferencedResourceNotFoundException, SystemException {
         if (!TripleStoreUtility.getInstance().exists(targetIdWithoutVersion)) {
-            String message =
+            final String message =
                 "Referenced target resource with id " + targetIdWithoutVersion
                     + " does not exist.";
             LOGGER.error(message);
@@ -353,7 +353,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             }
             if (targetLatestVersion == null || Integer.parseInt(targetVersion) > Integer
                 .parseInt(targetLatestVersion)) {
-                String message =
+                final String message =
                     "Referenced target resource with id "
                         + targetIdWithoutVersion + ':' + targetVersion
                         + " does not exist.";

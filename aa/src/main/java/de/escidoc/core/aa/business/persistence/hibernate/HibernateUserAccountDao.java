@@ -147,7 +147,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         if (identityInfo != null) {
             try {
                 // try identification by id or login name
-                DetachedCriteria criteria =
+                final DetachedCriteria criteria =
                     DetachedCriteria.forClass(UserAccount.class).add(
                         Restrictions.or(Restrictions.eq("id", identityInfo),
                             Restrictions.eq("loginname", identityInfo)));
@@ -193,7 +193,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         boolean result = false;
         if (grantId != null) {
             try {
-                RoleGrant roleGrant =
+                final RoleGrant roleGrant =
                         getHibernateTemplate().get(RoleGrant.class,
                             grantId);
                 if (roleGrant != null) {
@@ -397,7 +397,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 Boolean.valueOf(active1)));
         }
 
-        for (String key : criteriaMap.keySet()) {
+        for (final String key : criteriaMap.keySet()) {
             if (key.equals(Constants.FILTER_ORGANIZATIONAL_UNIT)
                     || key.equals(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT)) {
                 continue;
@@ -420,7 +420,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             (String) clonedCriterias.remove(Constants.FILTER_ORGANIZATIONAL_UNIT);
         final String organizationalUnit2 =
             (String) clonedCriterias.remove(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT);
-        String organizationalUnit;
+        final String organizationalUnit;
         if (organizationalUnit1 != null) {
             organizationalUnit = organizationalUnit1;
         }
@@ -429,7 +429,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
         if (organizationalUnit != null) {
 
-            String ouAttributeName;
+            final String ouAttributeName;
             try {
                 ouAttributeName =
                     EscidocConfiguration.getInstance().get(
@@ -465,7 +465,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
 
         if (clonedCriterias.isEmpty()) {
-            List<UserAccount> result;
+            final List<UserAccount> result;
 
             try {
                 result =
@@ -503,7 +503,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         final String criterias, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
-        List<UserAccount> result;
+        final List<UserAccount> result;
 
         if ((criterias != null) && (criterias.length() > 0)) {
             result =
@@ -850,7 +850,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
 
         if (clonedCriterias.isEmpty()) {
-            List<RoleGrant> result;
+            final List<RoleGrant> result;
 
             try {
                 result =
@@ -889,12 +889,12 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         final String criterias, final int offset, final int maxResults,
         final UserGroupHandlerInterface userGroupHandler)
         throws InvalidSearchQueryException, SystemException {
-        List<RoleGrant> result;
+        final List<RoleGrant> result;
 
         if ((criterias != null) && (criterias.length() > 0)) {
-            RoleGrantFilter filter = new RoleGrantFilter(criterias);
-            Set<String> userIds = filter.getUserIds();
-            Set<String> groupIds = filter.getGroupIds();
+            final RoleGrantFilter filter = new RoleGrantFilter(criterias);
+            final Set<String> userIds = filter.getUserIds();
+            final Set<String> groupIds = filter.getGroupIds();
 
             // check if userId and groupId was provided
             if ((userIds != null) && (!userIds.isEmpty()) && (groupIds != null)
@@ -907,7 +907,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             // if userIds or groupIds are provided,
             // get all groups the given users/groups belong to
             if ((userIds != null) && (!userIds.isEmpty())) {
-                for (String userId : userIds) {
+                for (final String userId : userIds) {
                     try {
                         groupIds.addAll(userGroupHandler
                             .retrieveGroupsForUser(userId));
@@ -919,7 +919,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
             }
             else if ((groupIds != null) && (!groupIds.isEmpty())) {
-                for (String groupId : groupIds) {
+                for (final String groupId : groupIds) {
                     groupIds.addAll(userGroupHandler
                         .retrieveGroupsForGroup(groupId));
                 }
@@ -1029,12 +1029,12 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
     public List<UserAttribute> retrieveAttributes(final UserAccount userAccount)
         throws SqlDatabaseSystemException {
 
-        DetachedCriteria detachedCriteria =
+        final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
         detachedCriteria.add(Restrictions
             .eq("userAccountByUserId", userAccount));
-        List<UserAttribute> result;
+        final List<UserAttribute> result;
         try {
             result = getHibernateTemplate().findByCriteria(detachedCriteria);
         }
@@ -1060,7 +1060,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         final UserAccount userAccount, final String attributeName)
         throws SqlDatabaseSystemException {
 
-        DetachedCriteria detachedCriteria =
+        final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
         detachedCriteria.add(Restrictions
@@ -1068,7 +1068,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         if (attributeName != null) {
             detachedCriteria.add(Restrictions.eq("name", attributeName));
         }
-        List<UserAttribute> result;
+        final List<UserAttribute> result;
         try {
             result = getHibernateTemplate().findByCriteria(detachedCriteria);
         }
@@ -1097,19 +1097,19 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             throw new SqlDatabaseSystemException("attributes may not be null");
         }
 
-        DetachedCriteria detachedCriteria =
+        final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(UserAttribute.class, "userAttribute");
 
         Criterion criterion = null;
-        for (Map<String, String> attribute : attributes) {
-            for (Entry<String, String> entry : attribute.entrySet()) {
+        for (final Map<String, String> attribute : attributes) {
+            for (final Entry<String, String> entry : attribute.entrySet()) {
                 if (criterion == null) {
                     criterion =
                         Restrictions.and(Restrictions.eq("name", entry.getKey()),
                             Restrictions.eq("value", entry.getValue()));
                 }
                 else {
-                    Criterion criterion1 =
+                    final Criterion criterion1 =
                         Restrictions.and(Restrictions.eq("name", entry.getKey()),
                             Restrictions.eq("value", entry.getValue()));
                     criterion = Restrictions.or(criterion, criterion1);
@@ -1118,7 +1118,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
 
         detachedCriteria.add(criterion);
-        List<UserAttribute> result;
+        final List<UserAttribute> result;
         try {
             result = getHibernateTemplate().findByCriteria(detachedCriteria);
         }
@@ -1190,7 +1190,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
     public UserLoginData retrieveUserLoginDataByHandle(final String handle)
         throws SqlDatabaseSystemException {
 
-        UserLoginData result;
+        final UserLoginData result;
         try {
             result =
                 checkUserLoginData((UserLoginData) getUniqueResult(getHibernateTemplate()
@@ -1249,7 +1249,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 return result;
             }
             try {
-                UserAccount userAccount = retrieveUserAccountByHandle(handle);
+                final UserAccount userAccount = retrieveUserAccountByHandle(handle);
                 if (userAccount != null) {
                     result = new EscidocUserDetails();
                     result.setId(userAccount.getId());
@@ -1375,8 +1375,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             return userLoginDatas;
         }
 
-        List<UserLoginData> ret = new ArrayList<UserLoginData>();
-        for (UserLoginData userLoginData1 : userLoginDatas) {
+        final List<UserLoginData> ret = new ArrayList<UserLoginData>();
+        for (final UserLoginData userLoginData1 : userLoginDatas) {
             UserLoginData userLoginData = userLoginData1;
             userLoginData = checkUserLoginData(userLoginData);
             if (userLoginData != null) {
@@ -1425,10 +1425,10 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
     private void clearUserDetailsCache(final String userId)
         throws SqlDatabaseSystemException {
 
-        UserAccount userAccount = retrieveUserAccountById(userId);
+        final UserAccount userAccount = retrieveUserAccountById(userId);
         if (userAccount != null && userAccount.getUserLoginDatas() != null
             && !userAccount.getUserLoginDatas().isEmpty()) {
-            for (UserLoginData userLoginData : userAccount.getUserLoginDatas()) {
+            for (final UserLoginData userLoginData : userAccount.getUserLoginDatas()) {
                 PoliciesCache.clearUserDetails(userLoginData.getHandle());
             }
         }

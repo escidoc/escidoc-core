@@ -191,7 +191,7 @@ public class SecurityInterceptor implements Ordered {
             ((MethodSignature) joinPoint.getSignature());
         final Method calledMethod = methodSignature.getMethod();
         final String target = methodSignature.getDeclaringTypeName();
-        String methodName = calledMethod.getName();
+        final String methodName = calledMethod.getName();
         final String handle = UserContext.getHandle();
 
         // -------------------
@@ -381,13 +381,13 @@ public class SecurityInterceptor implements Ordered {
 
                 // try to authorize the user
                 // throws an AuthorizationException if not authorized
-                boolean[] accessAllowedArray =
+                final boolean[] accessAllowedArray =
                     getPdp().evaluateRequestList(requests);
                 if (accessAllowedArray == null || accessAllowedArray.length == 0) {
                     throw createAuthorizationException(className,
                             methodName);
                 }
-                for (boolean anAccessAllowedArray : accessAllowedArray) {
+                for (final boolean anAccessAllowedArray : accessAllowedArray) {
                     if (!anAccessAllowedArray) {
                         throw createAuthorizationException(className,
                                 methodName);
@@ -424,7 +424,7 @@ public class SecurityInterceptor implements Ordered {
                     .equals(ITEM_HANDLER_CLASS_NAME))) {
 
                 try {
-                    String latestReleaseVersionNumber =
+                    final String latestReleaseVersionNumber =
                         getTsu().getPropertiesElements((String) arguments[0],
                             TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
                     if (latestReleaseVersionNumber == null) {
@@ -518,9 +518,9 @@ public class SecurityInterceptor implements Ordered {
             return e;
         }
 
-        String exceptionName = methodMapping.getResourceNotFoundException();
+        final String exceptionName = methodMapping.getResourceNotFoundException();
         if (exceptionName == null) {
-            String errorMsg =
+            final String errorMsg =
                 StringUtility.format(
                     "Error in method mapping, missing specified"
                         + " ResourceNotFoundException", methodMapping.getId());
@@ -528,13 +528,13 @@ public class SecurityInterceptor implements Ordered {
             throw new WebserverSystemException(errorMsg);
         }
         try {
-            Constructor<ResourceNotFoundException> constructor = (Constructor<ResourceNotFoundException>) Class.forName(
+            final Constructor<ResourceNotFoundException> constructor = (Constructor<ResourceNotFoundException>) Class.forName(
                     exceptionName).getConstructor(new Class[]{String.class});
-            String msg = e.getMessage();
+            final String msg = e.getMessage();
             return constructor.newInstance(msg);
         }
         catch (Exception e1) {
-            StringBuilder errorMsg =
+            final StringBuilder errorMsg =
                     new StringBuilder("Error in method mapping. Specified");
             errorMsg.append(" ResourceNotFoundException is unknown or cannot ");
             errorMsg.append(" be instantiated using the constructor ");

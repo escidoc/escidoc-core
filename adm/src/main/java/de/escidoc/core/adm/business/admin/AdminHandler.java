@@ -102,15 +102,15 @@ public class AdminHandler {
      */
     public String deleteObjects(final String taskParam)
         throws InvalidXmlException, SystemException {
-        StringBuilder result = new StringBuilder();
-        PurgeStatus purgeStatus = PurgeStatus.getInstance();
+        final StringBuilder result = new StringBuilder();
+        final PurgeStatus purgeStatus = PurgeStatus.getInstance();
 
         if (purgeStatus.startMethod()) {
-            TaskParamHandler taskParameter =
+            final TaskParamHandler taskParameter =
                 XmlUtility.parseTaskParam(taskParam, false);
 
             try {
-                for (String id : taskParameter.getIds()) {
+                for (final String id : taskParameter.getIds()) {
                     final PurgeRequest purgeRequest =
                         PurgeRequestBuilder
                             .createPurgeRequest().withResourceId(id).build();
@@ -227,7 +227,7 @@ public class AdminHandler {
     public String getIndexConfiguration() throws WebserverSystemException,
         TripleStoreSystemException, EncodingSystemException {
 
-        Map<String, Map<String, Map<String, Object>>> indexConfiguration =
+        final Map<String, Map<String, Map<String, Object>>> indexConfiguration =
             indexingHandler.getObjectTypeParameters();
         return renderer.renderIndexConfiguration(indexConfiguration);
     }
@@ -248,9 +248,9 @@ public class AdminHandler {
     public String getRepositoryInfo() throws WebserverSystemException,
         TripleStoreSystemException, EncodingSystemException {
 
-        String earliestCreationDate =
+        final String earliestCreationDate =
             tripleStoreUtility.getEarliestCreationDate();
-        EscidocConfiguration config;
+        final EscidocConfiguration config;
         try {
             config = EscidocConfiguration.getInstance();
         }
@@ -259,10 +259,10 @@ public class AdminHandler {
             throw new WebserverSystemException(e);
         }
 
-        Properties properties = new Properties();
-        String gsearchUrl = config.get(EscidocConfiguration.GSEARCH_URL);
+        final Properties properties = new Properties();
+        final String gsearchUrl = config.get(EscidocConfiguration.GSEARCH_URL);
 
-        String buildNr = config.get(EscidocConfiguration.BUILD_NUMBER);
+        final String buildNr = config.get(EscidocConfiguration.BUILD_NUMBER);
 
         if (buildNr != null) {
             properties.setProperty(EscidocConfiguration.BUILD_NUMBER, buildNr);
@@ -271,17 +271,17 @@ public class AdminHandler {
             properties
                 .setProperty(EscidocConfiguration.GSEARCH_URL, gsearchUrl);
         }
-        String baseUrl = config.get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
+        final String baseUrl = config.get(EscidocConfiguration.ESCIDOC_CORE_BASEURL);
         if (baseUrl != null) {
             properties.setProperty(EscidocConfiguration.ESCIDOC_CORE_BASEURL,
                 baseUrl);
         }
-        String name = config.get(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME);
+        final String name = config.get(EscidocConfiguration.ESCIDOC_REPOSITORY_NAME);
         if (name != null) {
             properties.setProperty(
                 EscidocConfiguration.ESCIDOC_REPOSITORY_NAME, name);
         }
-        String email = config.get(EscidocConfiguration.ADMIN_EMAIL);
+        final String email = config.get(EscidocConfiguration.ADMIN_EMAIL);
         if (email != null) {
             properties.setProperty(EscidocConfiguration.ADMIN_EMAIL, email);
         }
@@ -301,7 +301,7 @@ public class AdminHandler {
         // add namespace of important schemas
         properties.putAll(schemaNamespaces());
 
-        String checksumAlgorithm =
+        final String checksumAlgorithm =
             config
                 .get(EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM);
         if (checksumAlgorithm != null) {
@@ -311,7 +311,7 @@ public class AdminHandler {
                     checksumAlgorithm);
         }
 
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             properties.storeToXML(os, null);
         }
@@ -319,7 +319,7 @@ public class AdminHandler {
             LOG.error(e);
             throw new WebserverSystemException(e);
         }
-        String propertiesXml;
+        final String propertiesXml;
         try {
             propertiesXml = os.toString(XmlUtility.CHARACTER_ENCODING);
         }
@@ -365,7 +365,7 @@ public class AdminHandler {
      */
     public String loadExamples(final String type)
         throws InvalidSearchQueryException, SystemException {
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
 
         // select example package
         if (!"common".equals(type)) {

@@ -67,7 +67,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
 
     @Override
     public StartElement startElement(final StartElement element) {
-        String currenrPath = parser.getCurPath();        
+        final String currenrPath = parser.getCurPath();
         if (PROPERTIES_PATH.equals(currenrPath)) {
             inProperties = true;
         } else if (ROOT_PATH.equals(currenrPath)) {
@@ -78,7 +78,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) {
-        String currenrPath = parser.getCurPath();
+        final String currenrPath = parser.getCurPath();
         if (PROPERTIES_PATH.equals(currenrPath)) {
             inProperties = false;
         } else if (ROOT_PATH.equals(currenrPath)) {
@@ -91,7 +91,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element)
         throws InvalidXmlException {
 
-        String theName = element.getLocalName();
+        final String theName = element.getLocalName();
         if (inProperties) {
             if (theName.equals(Elements.ELEMENT_NAME)) {
                 if ((s != null) && (s.length() > 0)) {

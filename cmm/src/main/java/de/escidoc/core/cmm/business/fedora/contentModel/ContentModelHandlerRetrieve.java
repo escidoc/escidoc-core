@@ -59,7 +59,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         IntegritySystemException, XmlParserSystemException,
         EncodingSystemException, FedoraSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.putAll(getCommonValues(getContentModel()));
         values.putAll(getPropertiesValues(getContentModel()));
@@ -78,7 +78,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         IntegritySystemException, XmlParserSystemException,
         EncodingSystemException, FedoraSystemException {
 
-        Map<String, String> values = getCommonValues(getContentModel());
+        final Map<String, String> values = getCommonValues(getContentModel());
         values.putAll(getPropertiesValues(getContentModel()));
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
             XmlTemplateProvider.TRUE);
@@ -92,7 +92,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         IntegritySystemException, XmlParserSystemException,
         EncodingSystemException, FedoraSystemException {
 
-        Map<String, String> values = getCommonValues(getContentModel());
+        final Map<String, String> values = getCommonValues(getContentModel());
         values.putAll(getResourcesValues(getContentModel()));
         values.put(XmlTemplateProvider.IS_ROOT_RESOURCES,
             XmlTemplateProvider.TRUE);
@@ -116,13 +116,13 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
-        Map<String, String> commonValues = getCommonValues(getContentModel());
+        final Map<String, String> commonValues = getCommonValues(getContentModel());
         values.putAll(commonValues);
 
-        StringBuilder content = new StringBuilder();
-        for (String contentStreamName : getContentModel()
+        final StringBuilder content = new StringBuilder();
+        for (final String contentStreamName : getContentModel()
                 .getContentStreams().keySet()) {
             content.append(renderContentStream(contentStreamName, false));
         }
@@ -151,15 +151,15 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         throws WebserverSystemException, IntegritySystemException,
         TripleStoreSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         if (isRoot) {
             values.put("isRootContentStream", XmlTemplateProvider.TRUE);
         }
-        Map<String, String> commonValues = getCommonValues(getContentModel());
+        final Map<String, String> commonValues = getCommonValues(getContentModel());
         values.putAll(commonValues);
 
-        Datastream ds = getContentModel().getContentStream(name);
+        final Datastream ds = getContentModel().getContentStream(name);
 
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_NAME, ds.getName());
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_TITLE, ds.getLabel());
@@ -221,7 +221,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     private Map<String, String> getCommonValues(final ContentModel contentModel)
         throws WebserverSystemException {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.OBJID, getContentModel().getId());
         values.put(XmlTemplateProvider.TITLE, getContentModel().getTitle());
@@ -322,16 +322,16 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         // retrieve properties from resource (the resource decided where are the
         // data to load, TripleStore or Wov)
 
-        Map<String, String> properties = contentModel.getResourceProperties();
+        final Map<String, String> properties = contentModel.getResourceProperties();
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
         values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF,
             contentModel.getHref() + Constants.PROPERTIES_URL_PART);
 
         // FIXME description not in map? (FRS)
-        String debug = contentModel.getDescription();
+        final String debug = contentModel.getDescription();
         // properties.get(PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
         values.put(XmlTemplateProvider.VAR_DESCRIPTION, debug);
 
@@ -366,7 +366,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                 de.escidoc.core.common.business.Constants.STATUS_LOCKED);
             values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_DATE,
                 contentModel.getLockDate());
-            String lockOwnerId = contentModel.getLockOwner();
+            final String lockOwnerId = contentModel.getLockOwner();
             values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_ID,
                 lockOwnerId);
             values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LOCK_OWNER_HREF,
@@ -434,7 +434,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                 contentModel.getVersionPid());
         }
 
-        String latestVersionId = contentModel.getLatestVersionId();
+        final String latestVersionId = contentModel.getLatestVersionId();
         values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_VERSION_HREF,
             de.escidoc.core.common.business.Constants.CONTENT_MODEL_URL_BASE
                 + latestVersionId);
@@ -476,7 +476,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                 XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_DATE,
                 properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
 
-            String latestReleasePid = contentModel.getLatestReleasePid();
+            final String latestReleasePid = contentModel.getLatestReleasePid();
             if (latestReleasePid != null) {
                 values.put(
                     XmlTemplateProvider.VAR_CONTENT_MODEL_LATEST_RELEASE_PID,
@@ -506,16 +506,16 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         // </dsTypeModel>
         // </dsCompositeModel>
 
-        Map<String, Object> values = new HashMap<String, Object>();
-        Collection<Map<String, String>> mdRecordDefinitions =
+        final Map<String, Object> values = new HashMap<String, Object>();
+        final Collection<Map<String, String>> mdRecordDefinitions =
             new ArrayList<Map<String, String>>();
 
         // get dsTypeModel/@ID entries from datastream DS-COMPOSITE-MODEL
-        List<DsTypeModel> datastreamEntries =
+        final List<DsTypeModel> datastreamEntries =
             getContentModel().getMdRecordDefinitionIDs();
 
         if (datastreamEntries != null) {
-            for (DsTypeModel datastreamEntry : datastreamEntries) {
+            for (final DsTypeModel datastreamEntry : datastreamEntries) {
                 final Map<String, String> mdRecordDefinition = new HashMap<String, String>();
                 mdRecordDefinition.put("name", datastreamEntry.getName());
                 if (datastreamEntry.hasSchema()) {
@@ -550,30 +550,30 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         // (while create or update the URL of the XSLT may point to extern, then
         // the XSLT is retrieved and stored in the service definition object)
 
-        Map<String, Object> values = new HashMap<String, Object>();
-        Collection<Map<String, String>> resourceDefinitions =
+        final Map<String, Object> values = new HashMap<String, Object>();
+        final Collection<Map<String, String>> resourceDefinitions =
             new ArrayList<Map<String, String>>();
 
         // FIXME do not use triplestore
 
-        Collection<String> methodNames = new ArrayList<String>();
+        final Collection<String> methodNames = new ArrayList<String>();
         // <info:fedora/fedora-system:def/model#hasService>
-        List<String> sdefs =
+        final List<String> sdefs =
             getTripleStoreUtility().getPropertiesElementsVector(
                 getContentModel().getId(),
                 "info:fedora/fedora-system:def/model#hasService");
         // <info:fedora/fedora-system:def/model#definesMethod>
         // and
         // TODO <http://escidoc.de/core/01/tmp/transforms>
-        for (String sdef : sdefs) {
+        for (final String sdef : sdefs) {
             methodNames.add(getTripleStoreUtility().getProperty(
                     sdef,
                     "info:fedora/fedora-system:def/model#definesMethod"));
         }
 
         if (!methodNames.isEmpty()) {
-            for (String methodName : methodNames) {
-                Map<String, String> resourceDefinition =
+            for (final String methodName : methodNames) {
+                final Map<String, String> resourceDefinition =
                         new HashMap<String, String>();
                 resourceDefinition.put("name", methodName);
                 resourceDefinition.put("xsltHref", getContentModel().getHref()
@@ -603,7 +603,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     private Map<String, String> getResourcesValues(
         final FedoraResource contentModel) throws WebserverSystemException {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", contentModel.getHref() + "/resources");
 

@@ -81,16 +81,16 @@ public class VelocityXmlCommonRenderer {
 
         List<Map<String, String>> entries = null;
         if ((relations != null) && (!relations.isEmpty())) {
-            Iterator<Map<String, String>> relIter = relations.iterator();
+            final Iterator<Map<String, String>> relIter = relations.iterator();
             entries = new ArrayList<Map<String, String>>(relations.size());
             while (relIter.hasNext()) {
-                Map<String, String> entry = new HashMap<String, String>(3);
-                Map<String, String> relation = relIter.next();
-                String targetId = relation.get("target");
-                String predicate = relation.get("predicate");
+                final Map<String, String> entry = new HashMap<String, String>(3);
+                final Map<String, String> relation = relIter.next();
+                final String targetId = relation.get("target");
+                final String predicate = relation.get("predicate");
                 entry.put("targetId", targetId);
                 entry.put("predicate", predicate);
-                String objectType =
+                final String objectType =
                     TripleStoreUtility.getInstance().getObjectType(targetId);
                 if (objectType.endsWith("Item")) {
                     entry.put("targetHref", XmlUtility.BASE_OM + "item/"
@@ -100,7 +100,7 @@ public class VelocityXmlCommonRenderer {
                     entry.put("targetHref", XmlUtility.BASE_OM + "container/"
                         + targetId);
                 }
-                String targetTitle =
+                final String targetTitle =
                     TripleStoreUtility.getInstance().getTitle(targetId);
                 entry.put("targetTitle", targetTitle);
                 entries.add(entry);
@@ -165,7 +165,7 @@ public class VelocityXmlCommonRenderer {
         final GenericVersionableResourcePid resource, final Map values)
         throws WebserverSystemException {
 
-        String lmd;
+        final String lmd;
         try {
             lmd = resource.getLastModificationDate();
         }
@@ -176,7 +176,7 @@ public class VelocityXmlCommonRenderer {
 
         try {
 
-            String n = Iso8601Util.getIso8601(Iso8601Util.parseIso8601(lmd));
+            final String n = Iso8601Util.getIso8601(Iso8601Util.parseIso8601(lmd));
             values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, n);
         }
         catch (ParseException e) {

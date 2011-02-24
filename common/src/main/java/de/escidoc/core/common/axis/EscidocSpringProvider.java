@@ -95,7 +95,7 @@ public class EscidocSpringProvider extends RPCProvider {
         final MessageContext messageContext, final String className)
         throws Exception {
 
-        Object springBean = lookupSpringBean(messageContext.getService());
+        final Object springBean = lookupSpringBean(messageContext.getService());
 
         LOG.debug("makeNewServiceObject: Bean created");
 
@@ -169,7 +169,7 @@ public class EscidocSpringProvider extends RPCProvider {
     private String getHandle(final MessageContext messageContext) {
 
         // get the result Vector from the property
-        List results = (List) messageContext
+        final List results = (List) messageContext
                 .getProperty(WSHandlerConstants.RECV_RESULTS);
         String eSciDocUserHandle = null;
         if (results == null) {
@@ -190,19 +190,19 @@ public class EscidocSpringProvider extends RPCProvider {
             }
         }
         else {
-            for (Object result : results) {
-                WSHandlerResult hResult = (WSHandlerResult) result;
+            for (final Object result : results) {
+                final WSHandlerResult hResult = (WSHandlerResult) result;
                 // Needs to be a Vector. Handed over from WSHandlerResult.getResults()
-                List hResults = hResult.getResults();
-                for (Object hResult1 : hResults) {
-                    WSSecurityEngineResult eResult =
+                final List hResults = hResult.getResults();
+                for (final Object hResult1 : hResults) {
+                    final WSSecurityEngineResult eResult =
                             (WSSecurityEngineResult) hResult1;
                     // Note: an encryption action does not have an associated
                     // principal
                     // only Signature and UsernameToken actions return a
                     // principal
                     if (eResult.getAction() != WSConstants.ENCR) {
-                        WSUsernameTokenPrincipal principal =
+                        final WSUsernameTokenPrincipal principal =
                                 (WSUsernameTokenPrincipal) eResult.getPrincipal();
                         eSciDocUserHandle = principal.getPassword();
                     }
@@ -226,8 +226,8 @@ public class EscidocSpringProvider extends RPCProvider {
      */
     private Object lookupSpringBean(final Handler service) throws AxisFault {
 
-        String springBeanId = getSpringBeanId(service);
-        Object springBean;
+        final String springBeanId = getSpringBeanId(service);
+        final Object springBean;
         try {
             springBean =
                 BeanLocator

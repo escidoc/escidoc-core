@@ -137,7 +137,7 @@ public class StagingFile
         if (getReference() == null) {
             throw new IOException();
         }
-        File file = new File(getReference());
+        final File file = new File(getReference());
         if (!file.exists()) {
             file.getParentFile().mkdirs();
             file.createNewFile();
@@ -239,7 +239,7 @@ public class StagingFile
         final InputStream inputStream, final OutputStream outputStream)
         throws IOException {
 
-        byte[] buffer = new byte[BUFFER_SIZE];
+        final byte[] buffer = new byte[BUFFER_SIZE];
         boolean bytesCopied = false;
         int length = inputStream.read(buffer);
         while (length != -1) {

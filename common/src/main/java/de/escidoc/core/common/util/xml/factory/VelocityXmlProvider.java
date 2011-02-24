@@ -114,7 +114,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
             final String resource, final String path, final Map values)
             throws WebserverSystemException {
 
-        long start = System.nanoTime();
+        final long start = System.nanoTime();
 
         // add escaper if none is set
         if (values.get(ESCAPER) == null) {
@@ -123,9 +123,9 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
 
         final String templateFileName = getTemplateFilename(path, resource);
         try {
-            Template template = Velocity.getTemplate(templateFileName, XmlUtility.CHARACTER_ENCODING);
-            Writer out = new StringWriter();
-            Context context = new VelocityContext(values);
+            final Template template = Velocity.getTemplate(templateFileName, XmlUtility.CHARACTER_ENCODING);
+            final Writer out = new StringWriter();
+            final Context context = new VelocityContext(values);
             template.merge(context, out);
             final String ret = out.toString();
             if (LOG.isDebugEnabled()) {
@@ -151,7 +151,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      */
     private String getTemplateFilename(final String path, final String resource)
             throws WebserverSystemException {
-        String templateFileName;
+        final String templateFileName;
         if (path.startsWith("/")) {
             templateFileName =
                     path.substring(1) + '/' + completePath() + '/' + resource

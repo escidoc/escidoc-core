@@ -64,7 +64,7 @@ public class StartElementWithText extends StartElement {
         return elementText;
     }
 
-    public void setElementText(String elementText) {
+    public void setElementText(final String elementText) {
         this.elementText = elementText;
     }
 

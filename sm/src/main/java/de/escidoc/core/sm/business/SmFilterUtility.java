@@ -69,7 +69,7 @@ public class SmFilterUtility {
         if (pdp == null) {
             locateAa();
         }
-        List<String> resultIds;
+        final List<String> resultIds;
         try {
             resultIds = pdp.evaluateRetrieve(
                     objectType, (List<String>) objectIds);

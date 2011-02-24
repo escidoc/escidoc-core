@@ -40,7 +40,7 @@ public class UserHandleCleaner {
 
         LOG.debug("Cleaning up the staging file area");
 
-        Iterator<UserLoginData> expiredLoginDatas;
+        final Iterator<UserLoginData> expiredLoginDatas;
         try {
             expiredLoginDatas =
                 userAccountDao.retrieveExpiredUserLoginData(

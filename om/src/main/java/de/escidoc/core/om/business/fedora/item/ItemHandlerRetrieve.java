@@ -95,9 +95,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     public String render() throws SystemException, ComponentNotFoundException,
         ItemNotFoundException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
-        Map<String, String> commonValues = getCommonValues(getItem());
+        final Map<String, String> commonValues = getCommonValues(getItem());
 
         values.putAll(getPropertiesValues(getItem()));
         values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT,
@@ -143,15 +143,15 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         final Map<String, String> commonValues, final boolean isRoot)
         throws ComponentNotFoundException, SystemException {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         if (isRoot) {
             values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
                 XmlTemplateProvider.TRUE);
         }
 
-        Collection<String> componentIds;
-        String originObjectId =
+        final Collection<String> componentIds;
+        final String originObjectId =
             getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
@@ -174,8 +174,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             componentIds = getItem().getComponentIds();
         }
         if (!componentIds.isEmpty()) {
-            StringBuilder renderedComponents = new StringBuilder();
-            for (String componentId : componentIds) {
+            final StringBuilder renderedComponents = new StringBuilder();
+            for (final String componentId : componentIds) {
                 try {
                     renderedComponents.append(renderComponent(componentId, commonValues, false));
                 } catch (ComponentNotFoundException e) {
@@ -222,11 +222,11 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
         Component component = getComponent(id);
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
         if (isRoot) {
             values.put(XmlTemplateProvider.IS_ROOT, XmlTemplateProvider.TRUE);
         }
-        String originObjectId =
+        final String originObjectId =
             getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
             component = getComponent(id);
@@ -258,8 +258,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         values.putAll(getComponentPropertiesValues(component));
         values.put("componentContentTitle", component.getTitle());
 
-        Datastream content = component.getContent();
-        String storage = content.getControlGroup();
+        final Datastream content = component.getContent();
+        final String storage = content.getControlGroup();
         if (storage.equals(FoXmlProvider.CONTROL_GROUP_M)) {
             values.put("storage", Constants.STORAGE_INTERNAL_MANAGED);
             if (getOriginItem() != null) {
@@ -289,7 +289,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.put("componentContentHref", content.getLocation());
         }
 
-        String mdRecordsContent =
+        final String mdRecordsContent =
             renderComponentMdRecords(component.getId(), commonValues, false);
         if (mdRecordsContent.length() > 0) {
             values.put("componentMdRecordsContent", mdRecordsContent);
@@ -301,8 +301,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         throws ComponentNotFoundException, FedoraSystemException,
         SystemException {
 
-        Component component;
-        Map<String, String> values = new HashMap<String, String>();
+        final Component component;
+        final Map<String, String> values = new HashMap<String, String>();
 
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
             component = getComponent(id);
@@ -341,17 +341,17 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
 
-        Map<String, Datastream> mdRecords =
+        final Map<String, Datastream> mdRecords =
             (HashMap<String, Datastream>) getItem().getMdRecords();
 
-        StringBuilder content = new StringBuilder();
-        Map<String, String> values = new HashMap<String, String>();
+        final StringBuilder content = new StringBuilder();
+        final Map<String, String> values = new HashMap<String, String>();
 
-        Iterator<String> namesIter = mdRecords.keySet().iterator();
+        final Iterator<String> namesIter = mdRecords.keySet().iterator();
         while (namesIter.hasNext()) {
-            String mdRecordName = namesIter.next();
+            final String mdRecordName = namesIter.next();
             try {
-                String mdRecordContent =
+                final String mdRecordContent =
                     renderMdRecord(mdRecordName, commonValues, false, false);
                 if (mdRecordContent.length() == 0) {
                     namesIter.remove();
@@ -368,9 +368,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            Map<String, Datastream> originMdRecords =
+            final Map<String, Datastream> originMdRecords =
                 (HashMap<String, Datastream>) getOriginItem().getMdRecords();
-            for (String mdRecordName : originMdRecords.keySet()) {
+            for (final String mdRecordName : originMdRecords.keySet()) {
                 if (!mdRecords.keySet().contains(mdRecordName)) {
                     try {
                         content.append(renderMdRecord(mdRecordName,
@@ -428,8 +428,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         EncodingSystemException, MdRecordNotFoundException,
         TripleStoreSystemException {
 
-        Map<String, String> values = new HashMap<String, String>();
-        Datastream ds;
+        final Map<String, String> values = new HashMap<String, String>();
+        final Datastream ds;
         if (isOrigin) {
             ds = getOriginItem().getMdRecord(name);
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
@@ -458,7 +458,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             return "";
         }
 
-        List<String> altIds = ds.getAlternateIDs();
+        final List<String> altIds = ds.getAlternateIDs();
         if (altIds.size() > 1 && !"unknown".equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
@@ -518,7 +518,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     @Deprecated
     public String retrieveMdRecord(final String name, final boolean isOrigin)
         throws MdRecordNotFoundException {
-        Datastream mdRecord;
+        final Datastream mdRecord;
         if (isOrigin) {
             mdRecord = getOriginItem().getMdRecord(name);
         }
@@ -526,7 +526,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             mdRecord = getItem().getMdRecord(name);
         }
         if (mdRecord.isDeleted()) {
-            String message =
+            final String message =
                 "Metadata record with name " + name + " not found in item "
                     + getItem().getId() + '.';
             LOGGER.error(message);
@@ -550,11 +550,11 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
 
-        Map<String, String> values = new HashMap<String, String>();
-        StringBuilder content = new StringBuilder();
+        final Map<String, String> values = new HashMap<String, String>();
+        final StringBuilder content = new StringBuilder();
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            for (String contentStreamName : getOriginItem().getContentStreams().keySet()) {
+            for (final String contentStreamName : getOriginItem().getContentStreams().keySet()) {
                 content.append(renderContentStream(contentStreamName, false));
             }
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF,
@@ -564,7 +564,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 "Content streams of Item " + getOriginId());
         }
         else {
-            for (String contentStreamName : getItem().getContentStreams().keySet()) {
+            for (final String contentStreamName : getItem().getContentStreams().keySet()) {
                 content.append(renderContentStream(contentStreamName, commonValues, false));
             }
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF, getItem()
@@ -598,14 +598,14 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         final String name, final Map<String, String> commonValues,
         final boolean isRoot) throws WebserverSystemException,
         IntegritySystemException, TripleStoreSystemException {
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         if (isRoot) {
             values.put("isRootContentStream", XmlTemplateProvider.TRUE);
         }
-        String originObjectId =
+        final String originObjectId =
             getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
-        Datastream ds;
+        final Datastream ds;
         if (originObjectId != null) {
             ds = getOriginItem().getContentStream(name);
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
@@ -668,9 +668,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         final boolean isRoot) throws ComponentNotFoundException,
         SystemException {
 
-        Component component;
-        Map<String, String> values = new HashMap<String, String>();
-        String originObjectId =
+        final Component component;
+        final Map<String, String> values = new HashMap<String, String>();
+        final String originObjectId =
             getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
             component = getComponent(componentId);
@@ -694,10 +694,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                         + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
             values.putAll(getCommonValues(getItem()));
         }
-        Map<String, Datastream> mdRecords =
+        final Map<String, Datastream> mdRecords =
             (HashMap<String, Datastream>) component.getMdRecords();
-        StringBuilder content = new StringBuilder();
-        for (String mdRecordName : mdRecords.keySet()) {
+        final StringBuilder content = new StringBuilder();
+        for (final String mdRecordName : mdRecords.keySet()) {
             try {
                 content.append(renderComponentMdRecord(componentId, mdRecordName, commonValues, false));
             } catch (MdRecordNotFoundException e) {
@@ -737,9 +737,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         throws MdRecordNotFoundException, ComponentNotFoundException,
         FedoraSystemException, SystemException {
 
-        Component component;
-        Map<String, String> values = new HashMap<String, String>();
-        String originObjectId =
+        final Component component;
+        final Map<String, String> values = new HashMap<String, String>();
+        final String originObjectId =
             getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
         if (originObjectId != null) {
             component = getComponent(componentId);
@@ -764,11 +764,11 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.putAll(commonValues);
         }
 
-        Datastream ds = component.getMdRecord(name);
+        final Datastream ds = component.getMdRecord(name);
         if (ds.isDeleted()) {
             return "";
         }
-        List<String> altIds = ds.getAlternateIDs();
+        final List<String> altIds = ds.getAlternateIDs();
         if (altIds.size() > 1 && !"unknown".equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
@@ -809,7 +809,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         XmlParserSystemException, EncodingSystemException,
         FedoraSystemException, ItemNotFoundException {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
             XmlTemplateProvider.TRUE);
         if (getOriginItem() != null) {
@@ -832,7 +832,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, TripleStoreSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootRelations", XmlTemplateProvider.TRUE);
         values.putAll(getCommonValues(getItem()));
         values.putAll(getRelationValues(getItem()));
@@ -849,7 +849,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     @Override
     public String renderResources() throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
             XmlTemplateProvider.TRUE);
         values.putAll(getCommonValues(getItem()));
@@ -871,9 +871,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    public String renderParents(String itemId) throws SystemException {
+    public String renderParents(final String itemId) throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
         addStructuralRelationsValues(values);
         values.put("isRootParents", XmlTemplateProvider.TRUE);
@@ -915,12 +915,12 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             }
             catch (TripleStoreSystemException e) {
             }
-            Iterator<String> idIter = ids.iterator();
-            Collection<Map<String, String>> entries =
+            final Iterator<String> idIter = ids.iterator();
+            final Collection<Map<String, String>> entries =
                 new ArrayList<Map<String, String>>(ids.size());
             while (idIter.hasNext()) {
-                Map<String, String> entry = new HashMap<String, String>(3);
-                String id = idIter.next();
+                final Map<String, String> entry = new HashMap<String, String>(3);
+                final String id = idIter.next();
                 entry.put("id", id);
                 entry.put("href", XmlUtility.getContainerHref(id));
                 entry.put("title", getTripleStoreUtility().getTitle(id));
@@ -943,15 +943,15 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     @Override
     public String renderItems(final List<String> items) throws SystemException {
 
-        Collection<String> renderedEntries = new ArrayList<String>();
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Collection<String> renderedEntries = new ArrayList<String>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
-        for (String itemId : items) {
+        for (final String itemId : items) {
             try {
                 setItem(itemId);
                 renderedEntries.add(render());
             } catch (ResourceNotFoundException e) {
-                String msg =
+                final String msg =
                         "FedoraItemHandler.retrieveItems: can not retrieve object "
                                 + itemId + ". ResourceNotFoundException: "
                                 + e.getCause() + '.';
@@ -997,9 +997,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         // retrieve properties from resource (the resource decided where are the
         // data to load, TripleStore or Wov)
 
-        Map<String, String> properties = item.getResourceProperties();
+        final Map<String, String> properties = item.getResourceProperties();
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
         values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF, item.getHref()
@@ -1009,7 +1009,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         String origin = properties.get(PropertyMapKeys.ORIGIN);
         if (origin != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            String originVersion =
+            final String originVersion =
                 properties.get(PropertyMapKeys.ORIGIN_VERSION);
             if (originVersion != null) {
                 origin = origin + ':' + originVersion;
@@ -1023,7 +1023,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         }
 
         try {
-            String creationDate = item.getCreationDate();
+            final String creationDate = item.getCreationDate();
             values
                 .put(XmlTemplateProvider.VAR_ITEM_CREATION_DATE, creationDate);
         }
@@ -1073,7 +1073,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 de.escidoc.core.common.business.Constants.STATUS_LOCKED);
             values.put(XmlTemplateProvider.VAR_ITEM_LOCK_DATE,
                 item.getLockDate());
-            String lockOwnerId = item.getLockOwner();
+            final String lockOwnerId = item.getLockOwner();
             values.put(XmlTemplateProvider.VAR_ITEM_LOCK_OWNER_ID, lockOwnerId);
             values.put(XmlTemplateProvider.VAR_ITEM_LOCK_OWNER_HREF,
                 de.escidoc.core.common.business.Constants.USER_ACCOUNT_URL_BASE
@@ -1133,7 +1133,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 item.getVersionPid());
         }
 
-        String latestVersionId = item.getLatestVersionId();
+        final String latestVersionId = item.getLatestVersionId();
         values.put(XmlTemplateProvider.VAR_ITEM_LATEST_VERSION_HREF,
             de.escidoc.core.common.business.Constants.ITEM_URL_BASE
                 + latestVersionId);
@@ -1169,14 +1169,14 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_DATE,
                 properties.get(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
 
-            String latestReleasePid = item.getLatestReleasePid();
+            final String latestReleasePid = item.getLatestReleasePid();
             if (latestReleasePid != null) {
                 values.put(XmlTemplateProvider.VAR_ITEM_LATEST_RELEASE_PID,
                     latestReleasePid);
             }
         }
 
-        Datastream contentModelSpecific = item.getCts();
+        final Datastream contentModelSpecific = item.getCts();
         if (contentModelSpecific != null) {
             values.put(XmlTemplateProvider.VAR_ITEM_CONTENT_MODEL_SPECIFIC,
                 contentModelSpecific.toStringUTF8());
@@ -1209,28 +1209,28 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     public Set checkRelations(final String versionDate, final Map relations)
         throws TripleStoreSystemException, WebserverSystemException,
         FedoraSystemException, IntegritySystemException {
-        Set relationsData = relations.entrySet();
-        Iterator it = relationsData.iterator();
+        final Set relationsData = relations.entrySet();
+        final Iterator it = relationsData.iterator();
         while (it.hasNext()) {
-            Entry relData = (Entry) it.next();
-            String id = (String) relData.getKey();
-            Relation relation;
+            final Entry relData = (Entry) it.next();
+            final String id = (String) relData.getKey();
+            final Relation relation;
             try {
                 relation = new Relation(id);
             }
             catch (ResourceNotFoundException e) {
                 throw new WebserverSystemException("unreachable", e);
             }
-            byte[] wov;
+            final byte[] wov;
             try {
                 wov = relation.getWov().getStream();
             }
             catch (StreamNotFoundException e) {
                 throw new IntegritySystemException("unreachable", e);
             }
-            StaxParser sp = new StaxParser();
+            final StaxParser sp = new StaxParser();
 
-            WovContentRelationsRetrieveHandler wovHandler =
+            final WovContentRelationsRetrieveHandler wovHandler =
                 new WovContentRelationsRetrieveHandler(sp, versionDate);
             sp.addHandler(wovHandler);
             try {
@@ -1240,7 +1240,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             catch (Exception e) {
                 throw new WebserverSystemException("unreachable", e);
             }
-            String status = wovHandler.getStatus();
+            final String status = wovHandler.getStatus();
             if ("inactive".equals(status)) {
                 it.remove();
             }
@@ -1262,7 +1262,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     private Map<String, String> getCommonValues(final Item item)
         throws WebserverSystemException {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.OBJID, getItem().getId());
 
@@ -1357,7 +1357,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         XmlParserSystemException, WebserverSystemException,
         TripleStoreSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values
             .put(
                 "contentRelationsNamespacePrefix",
@@ -1366,7 +1366,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             .put(
                 "contentRelationsNamespace",
                 de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NAMESPACE_URI);
-        VelocityXmlCommonRenderer renderer = new VelocityXmlCommonRenderer();
+        final VelocityXmlCommonRenderer renderer = new VelocityXmlCommonRenderer();
         renderer
             .addRelationsValues(item.getRelations(), item.getHref(), values);
         values.put("contentRelationsTitle", "Relations of Item");
@@ -1409,7 +1409,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     private Map<String, Object> getResourcesValues(final FedoraResource item)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", item.getHref() + "/resources");
 
@@ -1442,10 +1442,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         final Component component) throws TripleStoreSystemException,
         WebserverSystemException {
 
-        Map<String, String> properties = component.getResourceProperties();
-        String baseHRef = getItem().getHref() + component.getHrefPart();
+        final Map<String, String> properties = component.getResourceProperties();
+        final String baseHRef = getItem().getHref() + component.getHrefPart();
         // TODO version
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.VAR_COMPONENT_PROPERTIES_TITLE,
             "Properties");
         values.put(XmlTemplateProvider.VAR_COMPONENT_PROPERTIES_HREF, baseHRef

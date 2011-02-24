@@ -82,9 +82,9 @@ public class OumUtility {
         final String organizationalUnitId, final Collection<String> parentIds)
         throws OrganizationalUnitHierarchyViolationException, SystemException {
         if (!parentIds.isEmpty()) {
-            for (String id : parentIds) {
+            for (final String id : parentIds) {
                 if (id.equals(organizationalUnitId)) {
-                    String message =
+                    final String message =
                             "Ou with id "
                                     + id
                                     + " cannot be referenced as a parent of ou with id "
@@ -98,10 +98,10 @@ public class OumUtility {
             this.closed.add(organizationalUnitId);
             expand(organizationalUnitId);
             while (!this.open.empty()) {
-                String toClosedId = this.open.pop();
-                for (String id : parentIds) {
+                final String toClosedId = this.open.pop();
+                for (final String id : parentIds) {
                     if (id.equals(toClosedId)) {
-                        String message =
+                        final String message =
                                 "Ou with id " + id
                                         + " cannot be referenced as a parent of "
                                         + "ou with id " + organizationalUnitId
@@ -128,10 +128,10 @@ public class OumUtility {
      */
     private void expand(final String currentOuId) throws SystemException {
 
-        Collection<String> children =
+        final Collection<String> children =
             TripleStoreUtility.getInstance().getChildren(currentOuId);
         if (children != null) {
-            for (String childId : children) {
+            for (final String childId : children) {
                 if (!this.closed.contains(childId)) {
                     this.open.push(childId);
                 }

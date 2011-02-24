@@ -148,7 +148,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
 
         setContainer(id);
         if (!getContainer().isLatestVersion()) {
-            String message =
+            final String message =
                 "The version " + getContainer().getVersionNumber()
                     + " is not a latest version of the container. "
                     + " Assignment of version PID is restricted to "
@@ -261,12 +261,12 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         throws InvalidStatusException {
 
         // String status = null;
-        String pid;
+        final String pid;
 
         final XPath xpath = XPathFactory.newInstance().newXPath();
         try {
-            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            Document xmlDom = db.parse(new ByteArrayInputStream(getContainer()
+            final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            final Document xmlDom = db.parse(new ByteArrayInputStream(getContainer()
                     .getWov().getStream()));
 
             // get status from version-history/version[@objid='id']/pid
@@ -382,7 +382,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
     private String prepareResponse(final String pid)
         throws TripleStoreSystemException, WebserverSystemException {
 
-        String lmd;
+        final String lmd;
         try {
             lmd = getContainer().getLastModificationDate();
         }
@@ -390,9 +390,9 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
             throw new WebserverSystemException(e);
         }
 
-        String result;
+        final String result;
         try {
-            DateTime t = new DateTime(lmd, DateTimeZone.UTC);
+            final DateTime t = new DateTime(lmd, DateTimeZone.UTC);
             result = getUtility().prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
         }
         catch (SystemException e) {

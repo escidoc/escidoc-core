@@ -614,8 +614,8 @@ public abstract class AbstractAttributeFinderModule
         // provided result, an error result has to be returned.
         final AttributeValue resolvedAttributeValue =
             result.getAttributeValue();
-        String newResourceId;
-        boolean attributeValueIsBag = resolvedAttributeValue.isBag();
+        final String newResourceId;
+        final boolean attributeValueIsBag = resolvedAttributeValue.isBag();
         String resolvedObjectType;
         if (!attributeValueIsBag
             || ((BagAttribute) resolvedAttributeValue).size() == 1) {
@@ -680,7 +680,7 @@ public abstract class AbstractAttributeFinderModule
             // component-id
             final String resourceIdentifierAttributeIdValue =
                 AttributeIds.RESOURCE_ATTR_PREFIX + resolvedObjectType + "-id";
-            String providedResourceIdentifier;
+            final String providedResourceIdentifier;
             try {
                 providedResourceIdentifier =
                     FinderModuleHelper.retrieveSingleResourceAttribute(ctx,

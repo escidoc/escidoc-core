@@ -115,7 +115,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public String render(final Container container) throws SystemException {
 
         // Container container = containerHandler.getContainer();
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);
         values.put("containerTitle", container.getTitle());
@@ -128,7 +128,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         addStructMapValus(container, values);
         addMdRecordsValues(container, values);
-        List<Map<String, String>> relations = container.getRelations();
+        final List<Map<String, String>> relations = container.getRelations();
         commonRenderer.addRelationsValues(relations, container.getHref(),
             values);
         commonRenderer.addRelationsNamespaceValues(values);
@@ -150,7 +150,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public String renderProperties(final Container container)
         throws WebserverSystemException, SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);
         values.put("isRootProperties", XmlTemplateProvider.TRUE);
@@ -170,7 +170,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     @Override
     public String renderResources(final Container container)
         throws WebserverSystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);
         values.put("isRootResources", XmlTemplateProvider.TRUE);
@@ -193,7 +193,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public String renderRelations(final Container container)
         throws WebserverSystemException, SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         values.put("isRootRelations", XmlTemplateProvider.TRUE);
 
@@ -219,7 +219,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     public String renderParents(final String containerId)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addXlinkValues(values);
         commonRenderer.addStructuralRelationsValues(values);
         values.put(
@@ -262,12 +262,12 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             catch (TripleStoreSystemException e) {
             }
 
-            Iterator<String> idIter = ids.iterator();
-            Collection<Map<String, String>> entries =
+            final Iterator<String> idIter = ids.iterator();
+            final Collection<Map<String, String>> entries =
                 new ArrayList<Map<String, String>>(ids.size());
             while (idIter.hasNext()) {
-                Map<String, String> entry = new HashMap<String, String>(THREE);
-                String id = idIter.next();
+                final Map<String, String> entry = new HashMap<String, String>(THREE);
+                final String id = idIter.next();
                 entry.put("id", id);
                 entry.put("href", XmlUtility.getContainerHref(id));
                 entry.put("title", tsu.getTitle(id));
@@ -326,8 +326,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final Map<String, Object> values, final Container container)
         throws SystemException {
 
-        Map<String, String> properties = container.getResourceProperties();
-        String id = container.getId();
+        final Map<String, String> properties = container.getResourceProperties();
+        final String id = container.getId();
         values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
         values.put(XmlTemplateProvider.VAR_PROPERTIES_HREF,
             XmlUtility.getContainerPropertiesHref(container.getHref()));
@@ -340,7 +340,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         // name
         values.put("containerName", container.getTitle());
         // description
-        String description = container.getDescription();
+        final String description = container.getDescription();
         if (description != null) {
             values.put("containerDescription",
                 PropertyMapKeys.CURRENT_VERSION_DESCRIPTION);
@@ -354,7 +354,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("containerContextTitle",
             properties.get(PropertyMapKeys.CURRENT_VERSION_CONTEXT_TITLE));
         // content model
-        String contentModelId =
+        final String contentModelId =
             properties.get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
         values.put("containerContentModelId", contentModelId);
         values.put("containerContentModelHref",
@@ -364,7 +364,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 .get(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_TITLE));
 
         // created-by -----------
-        String createdById = properties.get(PropertyMapKeys.CREATED_BY_ID);
+        final String createdById = properties.get(PropertyMapKeys.CREATED_BY_ID);
         values.put("containerCreatedById", createdById);
         values.put("containerCreatedByHref",
             XmlUtility.getUserAccountHref(createdById));
@@ -374,7 +374,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         // lock -status, -owner, -date
         if (container.isLocked()) {
             values.put("containerLocked", XmlTemplateProvider.TRUE);
-            String lockOwnerId = container.getLockOwner();
+            final String lockOwnerId = container.getLockOwner();
             values.put("containerLockStatus", "locked");
             values.put("containerLockDate", container.getLockDate());
             values.put("containerLockOwnerHref",
@@ -389,7 +389,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         }
 
         final String currentVersionId = container.getFullId();
-        String latestVersionNumber =
+        final String latestVersionNumber =
             properties.get(PropertyMapKeys.LATEST_VERSION_NUMBER);
         String curVersionNumber = container.getVersionId();
         if (curVersionNumber == null) {
@@ -397,7 +397,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         }
 
         // pid ---------------
-        String pid = container.getObjectPid();
+        final String pid = container.getObjectPid();
         if ((pid != null) && (pid.length() > 0)) {
             values.put("containerPid", pid);
         }
@@ -412,7 +412,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         // modified by
 
-        String modifiedById =
+        final String modifiedById =
             properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_ID);
         values.put("containerCurrentVersionModifiedByTitle",
             properties.get(PropertyMapKeys.CURRENT_VERSION_MODIFIED_BY_TITLE));
@@ -420,7 +420,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             XmlUtility.getUserAccountHref(modifiedById));
         values.put("containerCurrentVersionModifiedById", modifiedById);
 
-        String versionPid = container.getVersionPid();
+        final String versionPid = container.getVersionPid();
         // container
         if ((versionPid != null) && versionPid.length() != 0) {
             values.put("containerCurrentVersionPID", versionPid);
@@ -428,12 +428,12 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("containerCurrentVersionDate", container.getVersionDate());
 
         if (curVersionNumber.equals(latestVersionNumber)) {
-            String latestVersionStatus =
+            final String latestVersionStatus =
                 properties.get(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS);
             values.put("containerCurrentVersionStatus", latestVersionStatus);
 
             if (latestVersionStatus.equals(Constants.STATUS_RELEASED)) {
-                String latestReleasePid =
+                final String latestReleasePid =
                     container.getResourceProperties().get(
                         PropertyMapKeys.LATEST_RELEASE_PID);
                 if ((latestReleasePid != null) && latestReleasePid.length() != 0) {
@@ -475,7 +475,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             properties.get(PropertyMapKeys.LATEST_VERSION_DATE));
         values.put("containerLatestVersionNumber", latestVersionNumber);
         // latest release
-        String containerStatus = container.getStatus();
+        final String containerStatus = container.getStatus();
         if (containerStatus.equals(Constants.STATUS_RELEASED)
             || containerStatus.equals(Constants.STATUS_WITHDRAWN)) {
             values.put(
@@ -500,7 +500,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 "containerLatestReleaseDate",
                 container.getResourceProperties().get(
                     PropertyMapKeys.LATEST_RELEASE_VERSION_DATE));
-            String latestReleasePid =
+            final String latestReleasePid =
                 container.getResourceProperties().get(
                     PropertyMapKeys.LATEST_RELEASE_PID);
             if ((latestReleasePid != null) && latestReleasePid.length() != 0) {
@@ -509,8 +509,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         }
         // content model specific
         try {
-            Datastream cmsDs = container.getCts();
-            String xml = cmsDs.toStringUTF8();
+            final Datastream cmsDs = container.getCts();
+            final String xml = cmsDs.toStringUTF8();
             values.put(XmlTemplateProvider.CONTAINER_CONTENT_MODEL_SPECIFIC,
                 xml);
         }
@@ -558,18 +558,18 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         final Container container, final Map<String, Object> values)
         throws SystemException, MissingMethodParameterException {
 
-        UserFilter ufilter = new UserFilter();
+        final UserFilter ufilter = new UserFilter();
 
-        List<String> ids = ufilter.getMemberRefList(container);
-        Iterator<String> idIter = ids.iterator();
-        Collection<Map<String, String>> items = new ArrayList<Map<String, String>>();
-        Collection<Map<String, String>> containers =
+        final List<String> ids = ufilter.getMemberRefList(container);
+        final Iterator<String> idIter = ids.iterator();
+        final Collection<Map<String, String>> items = new ArrayList<Map<String, String>>();
+        final Collection<Map<String, String>> containers =
             new ArrayList<Map<String, String>>();
 
         while (idIter.hasNext()) {
-            Map<String, String> entry = new HashMap<String, String>(3);
-            String id = idIter.next();
-            String objectType =
+            final Map<String, String> entry = new HashMap<String, String>(3);
+            final String id = idIter.next();
+            final String objectType =
                 TripleStoreUtility.getInstance().getObjectType(id);
             if ((Constants.ITEM_OBJECT_TYPE.equals(objectType) || Constants.CONTAINER_OBJECT_TYPE
                 .equals(objectType))) {
@@ -592,7 +592,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
             }
             else {
-                String msg =
+                final String msg =
                     "FedoraContainerHandler.getMemberRefs: can not "
                         + "write member entry to struct-map for "
                         + "object with unknown type: " + id + '.';
@@ -675,14 +675,14 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("mdRecordsTitle", "Metadata Records of Container "
             + container.getId());
 
-        HashMap<String, Datastream> mdRecords =
+        final HashMap<String, Datastream> mdRecords =
             (HashMap<String, Datastream>) container.getMdRecords();
-        Collection<Datastream> mdRecordsDatastreams = mdRecords.values();
-        Iterator<Datastream> it = mdRecordsDatastreams.iterator();
-        StringBuilder content = new StringBuilder();
+        final Collection<Datastream> mdRecordsDatastreams = mdRecords.values();
+        final Iterator<Datastream> it = mdRecordsDatastreams.iterator();
+        final StringBuilder content = new StringBuilder();
         while (it.hasNext()) {
-            Datastream mdRecord = it.next();
-            String md = renderMetadataRecord(container, mdRecord, false);
+            final Datastream mdRecord = it.next();
+            final String md = renderMetadataRecord(container, mdRecord, false);
             content.append(md);
         }
         values.put("mdRecordsContent", content.toString());
@@ -717,7 +717,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             return "";
         }
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         values.put("mdRecordHref",
             XmlUtility.getContainerMdRecordsHref(container.getHref())
@@ -729,9 +729,9 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             Constants.METADATARECORDS_NAMESPACE_PREFIX);
         values.put(XmlTemplateProvider.MD_RECORDS_NAMESPACE,
             Constants.METADATARECORDS_NAMESPACE_URI);
-        String mdRecordContent = mdRecord.toStringUTF8();
+        final String mdRecordContent = mdRecord.toStringUTF8();
         values.put(XmlTemplateProvider.MD_RECORD_CONTENT, mdRecordContent);
-        List<String> altIds = mdRecord.getAlternateIDs();
+        final List<String> altIds = mdRecord.getAlternateIDs();
         if (!"unknown".equals(altIds.get(1))) {
             values.put(XmlTemplateProvider.MD_RECORD_TYPE, altIds.get(1));
         }
@@ -761,7 +761,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         throws EncodingSystemException, FedoraSystemException,
         WebserverSystemException, IntegritySystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
             XmlTemplateProvider.TRUE);
@@ -785,7 +785,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
     @Override
     public String renderStructMap(final Container container)
         throws SystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         commonRenderer.addCommonValues(container, values);
         addNamespaceValues(values);
         values.put("isRootStructMap", XmlTemplateProvider.TRUE);

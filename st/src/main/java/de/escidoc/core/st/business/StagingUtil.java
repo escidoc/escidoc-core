@@ -70,7 +70,7 @@ public final class StagingUtil {
      */
     public static String getDownloadStagingArea() {
         if (downloadStagingArea == null) {
-            String systemProperty = System.getProperty(STAGING_AREA_BASE_PATH);
+            final String systemProperty = System.getProperty(STAGING_AREA_BASE_PATH);
             downloadStagingArea = concatenatePath(systemProperty, STAGING_AREA);
             downloadStagingArea =
                 concatenatePath(downloadStagingArea, STAGING_AREA_DOWNLOAD);
@@ -151,7 +151,7 @@ public final class StagingUtil {
         final boolean isUpload, final StagingFileDao stagingFileDao)
         throws SqlDatabaseSystemException {
 
-        StagingFile stagingFile = generateStagingFile(isUpload, stagingFileDao);
+        final StagingFile stagingFile = generateStagingFile(isUpload, stagingFileDao);
         return stagingFile.getToken();
     }
 
@@ -174,9 +174,9 @@ public final class StagingUtil {
         final boolean isUpload, final StagingFileDao stagingFileDao)
         throws SqlDatabaseSystemException {
 
-        long timestamp = System.currentTimeMillis();
+        final long timestamp = System.currentTimeMillis();
 
-        StagingFile stagingFile = new StagingFile();
+        final StagingFile stagingFile = new StagingFile();
         stagingFile.setReference(null);
         stagingFile.setExpiryTs(timestamp + TOKEN_VALID_DURATION);
         stagingFile.setUpload(isUpload);

@@ -95,8 +95,8 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
 
         }
         else {
-            String currenrPath = parser.getCurPath();
-            String elementPath = "/component/properties";
+            final String currenrPath = parser.getCurPath();
+            final String elementPath = "/component/properties";
             if (elementPath.equals(currenrPath)) {
                 inside = true;
                 insideLevel++;
@@ -124,7 +124,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
         throws MissingElementValueException, InvalidContentException,
         WebserverSystemException {
 
-        String theName = element.getLocalName();
+        final String theName = element.getLocalName();
 
         if (inside) {
             if (theName.equals(Elements.ELEMENT_MIME_TYPE)) {

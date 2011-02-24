@@ -106,17 +106,17 @@ public class XacmlFunctionRoleInList extends FunctionBase {
             }
 
             // Get the roles of the user
-            PolicyFinderResult policyFinderResult =
+            final PolicyFinderResult policyFinderResult =
                 new PolicyFinderResult(PoliciesCache
                     .getUserPolicies(getUserId()));
-            Collection<String> roleNames =
+            final Collection<String> roleNames =
                 getRoleNames(policyFinderResult.getPolicy(),
                     new ArrayList<String>());
 
             // Compare roles of user with roles in List
             if (argValues != null && argValues[0] != null) {
-                String compareString = argValues[0].encode().toLowerCase();
-                for (String roleName : roleNames) {
+                final String compareString = argValues[0].encode().toLowerCase();
+                for (final String roleName : roleNames) {
                     if (compareString.contains(roleName)) {
                         result = EvaluationResult.getInstance(true);
                         return result;
@@ -142,20 +142,20 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      * @aa
      */
     private Collection<String> getRoleNames(
-        final PolicyTreeElement policy, Collection<String> roleNames) {
+        final PolicyTreeElement policy, final Collection<String> roleNames) {
         if (policy != null) {
             try {
-                PolicyTreeElement policyReference =
+                final PolicyTreeElement policyReference =
                     (XacmlPolicyReference) policy;
                 roleNames.add(policyReference.getId().getPath().toLowerCase());
             }
             catch (Exception e) {
                 if (policy.getChildren() != null) {
                     AbstractPolicy abstractPolicy = null;
-                    for (Object o : policy.getChildren()) {
+                    for (final Object o : policy.getChildren()) {
                         try {
                             abstractPolicy = (AbstractPolicy) o;
-                            PolicyTreeElement policyReference =
+                            final PolicyTreeElement policyReference =
                                     (XacmlPolicyReference) abstractPolicy;
                             roleNames.add(policyReference
                                     .getId().getPath().toLowerCase());

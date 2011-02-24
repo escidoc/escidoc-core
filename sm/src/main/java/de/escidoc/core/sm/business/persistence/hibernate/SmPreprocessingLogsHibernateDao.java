@@ -88,7 +88,7 @@ public class SmPreprocessingLogsHibernateDao
     public String savePreprocessingLog(
             final PreprocessingLog preprocessingLog) 
                         throws SqlDatabaseSystemException {
-        String savedPreprocessingLog = (String) super.save(preprocessingLog);
+        final String savedPreprocessingLog = (String) super.save(preprocessingLog);
         super.flush();
         return savedPreprocessingLog;
         

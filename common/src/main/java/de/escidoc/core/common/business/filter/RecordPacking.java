@@ -69,7 +69,7 @@ public enum RecordPacking {
     public static RecordPacking fromType(final String type) {
         RecordPacking result = null;
 
-        for (RecordPacking e : RecordPacking.values()) {
+        for (final RecordPacking e : RecordPacking.values()) {
             if (e.type.equalsIgnoreCase(type)) {
                 result = e;
                 break;

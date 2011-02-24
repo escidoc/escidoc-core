@@ -109,8 +109,8 @@ public class PIDManagerRESTService implements PIDSystem {
                 "Invalid param structure.");
         }
 
-        String password;
-        String username;
+        final String password;
+        final String username;
         try {
             username =
                 EscidocConfiguration.getInstance().get(
@@ -123,15 +123,15 @@ public class PIDManagerRESTService implements PIDSystem {
             throw new WebserverSystemException(e);
         }
 
-        String pidResult;
+        final String pidResult;
         try {
-            String xmlParam = preparePidManagerDatastructure(systemID, param);
+            final String xmlParam = preparePidManagerDatastructure(systemID, param);
 
-            URL url = new URL(this.pidGeneratorServer + this.globalPrefix + '/');
-            HttpResponse httpPostRes = this.connectionUtility.postRequestURL(url, xmlParam, username,
+            final URL url = new URL(this.pidGeneratorServer + this.globalPrefix + '/');
+            final HttpResponse httpPostRes = this.connectionUtility.postRequestURL(url, xmlParam, username,
                     password);
 
-            int status = httpPostRes.getStatusLine().getStatusCode();
+            final int status = httpPostRes.getStatusLine().getStatusCode();
             
             if (status == HttpURLConnection.HTTP_OK) {
 
@@ -142,7 +142,7 @@ public class PIDManagerRESTService implements PIDSystem {
                 throw new Exception("Authorization at PIDManager fails.");
             }
             else {
-                String msg = EntityUtils.toString(httpPostRes.getEntity(), XmlUtility.CHARACTER_ENCODING);
+                final String msg = EntityUtils.toString(httpPostRes.getEntity(), XmlUtility.CHARACTER_ENCODING);
                 log.warn(msg);
                 throw new PidSystemException(msg);
             }
@@ -197,18 +197,18 @@ public class PIDManagerRESTService implements PIDSystem {
      */
     public void deletePID(final String pid) throws PidSystemException {
 
-        String pidServer = this.pidGeneratorServer + this.globalPrefix + '/';
+        final String pidServer = this.pidGeneratorServer + this.globalPrefix + '/';
 
         // fetch suffix from pid and prepare URL
-        String suffix = pid.replace("hdl:" + this.globalPrefix + '/', "");
+        final String suffix = pid.replace("hdl:" + this.globalPrefix + '/', "");
         if (suffix.length() < 1) {
             throw new PidSystemException("Wrong handle identifier.");
         }
 
         try {
-            URL url = new URL(pidServer + suffix);
+            final URL url = new URL(pidServer + suffix);
 
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("DELETE");
             conn.setUseCaches(false);
             conn.setInstanceFollowRedirects(false);
@@ -308,28 +308,28 @@ public class PIDManagerRESTService implements PIDSystem {
         throws ParserConfigurationException, SAXException, IOException,
         TransformerFactoryConfigurationError, TransformerException {
 
-        String xmlParam;
+        final String xmlParam;
 
         // add the systemID of object for semantic identifier
-        javax.xml.parsers.DocumentBuilder db =
+        final javax.xml.parsers.DocumentBuilder db =
             javax.xml.parsers.DocumentBuilderFactory
                 .newInstance().newDocumentBuilder();
-        org.w3c.dom.Document doc =
+        final org.w3c.dom.Document doc =
             db.parse(new ByteArrayInputStream(param.getBytes()));
-        NodeList systemIDs = doc.getElementsByTagName("systemID");
+        final NodeList systemIDs = doc.getElementsByTagName("systemID");
 
         if (systemIDs.getLength() == 1) {
             xmlParam = param;
         } else {
-            Node first = doc.getFirstChild();
-            Node sysid = doc.createElement("systemID");
+            final Node first = doc.getFirstChild();
+            final Node sysid = doc.createElement("systemID");
             sysid.setTextContent(systemID);
             first.appendChild(sysid);
 
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            final Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            StreamResult result = new StreamResult(new StringWriter());
-            Source source = new DOMSource(doc);
+            final StreamResult result = new StreamResult(new StringWriter());
+            final Source source = new DOMSource(doc);
             transformer.transform(source, result);
 
             xmlParam = result.getWriter().toString();
@@ -351,15 +351,15 @@ public class PIDManagerRESTService implements PIDSystem {
     private String obtainPidResult(final InputStream in)
         throws ParserConfigurationException, SAXException, IOException {
 
-        javax.xml.parsers.DocumentBuilder db =
+        final javax.xml.parsers.DocumentBuilder db =
             javax.xml.parsers.DocumentBuilderFactory
                 .newInstance().newDocumentBuilder();
-        org.w3c.dom.Document doc = db.parse(in);
+        final org.w3c.dom.Document doc = db.parse(in);
         in.close();
 
         // retrieve PID result
-        org.w3c.dom.NodeList nl = doc.getElementsByTagName("pid");
-        org.w3c.dom.Node n = nl.item(0);
+        final org.w3c.dom.NodeList nl = doc.getElementsByTagName("pid");
+        final org.w3c.dom.Node n = nl.item(0);
 
         return n.getTextContent();
     }

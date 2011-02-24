@@ -57,7 +57,7 @@ public final class ReindexStatus extends AdminMethodStatus {
      *            resource type
      */
     public synchronized void dec(final ResourceType type) {
-        Integer oldValue = get(type);
+        final Integer oldValue = get(type);
 
         if (oldValue != null) {
             if (oldValue == 1) {
@@ -89,7 +89,7 @@ public final class ReindexStatus extends AdminMethodStatus {
      *            resource type
      */
     public synchronized void inc(final ResourceType type) {
-        Integer oldValue = get(type);
+        final Integer oldValue = get(type);
 
         if (oldValue != null) {
             treeMap.put(type, oldValue + 1);
@@ -117,14 +117,14 @@ public final class ReindexStatus extends AdminMethodStatus {
      */
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
 
         if (getCompletionDate() != null) {
             result.append("<message>reindexing finished at ").append(getCompletionDate()).append("</message>\n");
         }
         else {
             result.append("<message>reindexing currently running</message>\n");
-            for (Entry e : entrySet()) {
+            for (final Entry e : entrySet()) {
                 result.append("<message>\n");
                 result.append(e.getValue());
                 result.append(' ');

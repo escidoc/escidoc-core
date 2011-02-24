@@ -154,7 +154,7 @@ public class ObjectTypeAttributeFinderModule
         AuthorizationException, ResourceNotFoundException {
 
         EvaluationResult result = null;
-        String objectType = 
+        final String objectType =
             objectAttributeResolver.resolveObjectType(resourceObjid);
         if (objectType != null) {
             result = CustomEvaluationResultBuilder
@@ -164,7 +164,7 @@ public class ObjectTypeAttributeFinderModule
         // if no object-type could be determined, throw a resource not found
         // exception.
         if (result == null) {
-            String msg = StringUtility
+            final String msg = StringUtility
                     .format("Resource not found", resourceId);
             log.debug(msg);
             throw new ResourceNotFoundException(msg);
@@ -197,7 +197,7 @@ public class ObjectTypeAttributeFinderModule
             return new Object[] { result, attributeIdValue };
         }
 
-        String objectType;
+        final String objectType;
         try {
             objectType =
                 fetchSingleResourceAttribute(ctx,

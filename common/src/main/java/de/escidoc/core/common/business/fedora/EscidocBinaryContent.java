@@ -123,7 +123,7 @@ public class EscidocBinaryContent {
     public String getMimeType() {
 
         if ((this.mimeType == null) && (this.getMethod != null)) {
-            Header ctype = this.getMethod.getFirstHeader("Content-Type");
+            final Header ctype = this.getMethod.getFirstHeader("Content-Type");
             if (ctype != null) {
                 this.mimeType = ctype.getValue();
             }

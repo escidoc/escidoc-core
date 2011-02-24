@@ -83,7 +83,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      */
     @Override
     public String render(final UserGroup userGroup) throws SystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootUserGroup", "true");
         addCommonValues(values);
         addUserGroupValues(userGroup, values);
@@ -107,12 +107,12 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         DateTime lmdDateTime =
             new DateTime(userGroup.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userGroupLastModificationDate", lmd);
         values.put("userGroupHref", userGroup.getHref());
         DateTime creationDateTime = new DateTime(userGroup.getCreationDate());
         creationDateTime = creationDateTime.withZone(DateTimeZone.UTC);
-        String creationDate =
+        final String creationDate =
             creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userGroupCreationDate", creationDate);
         values.put("userGroupName", userGroup.getName());
@@ -124,13 +124,13 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         values.put("userGroupActive", userGroup.getActive());
         values.put("userGroupSelectors", userGroup.getMembers());
 
-        UserAccount createdBy = userGroup.getCreatorId();
+        final UserAccount createdBy = userGroup.getCreatorId();
 
         values.put("userGroupCreatedByTitle", createdBy.getName());
         values.put("userGroupCreatedByHref", createdBy.getHref());
         values.put("userGroupCreatedById", createdBy.getId());
 
-        UserAccount modifiedBy = userGroup.getModifiedById();
+        final UserAccount modifiedBy = userGroup.getModifiedById();
 
         values.put("userGroupModifiedByTitle", modifiedBy.getName());
         values.put("userGroupModifiedByHref", modifiedBy.getHref());
@@ -155,7 +155,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     public String renderCurrentGrants(
         final UserGroup userGroup, final List<RoleGrant> currentGrants)
         throws WebserverSystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootCurrentGrants", "true");
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
@@ -177,7 +177,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         DateTime lmdDateTime =
             new DateTime(userGroup.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
 
         addEscidocBaseUrl(values);
@@ -199,7 +199,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     public String renderGrant(final RoleGrant grant)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootGrant", XmlTemplateProvider.TRUE);
         values.put("grantNamespacePrefix", Constants.GRANTS_NS_PREFIX);
@@ -239,7 +239,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         values.put("grantObjectRefId", grant.getObjectId());
         DateTime creationDateTime = new DateTime(grant.getCreationDate());
         creationDateTime = creationDateTime.withZone(DateTimeZone.UTC);
-        String creationDate =
+        final String creationDate =
             creationDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("grantCreationDate", creationDate);
         values.put("grantCreatedByTitle", grant
@@ -255,7 +255,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
             DateTime revokationDateTime =
                 new DateTime(grant.getRevocationDate());
             revokationDateTime = revokationDateTime.withZone(DateTimeZone.UTC);
-            String revokationDate =
+            final String revokationDate =
                 revokationDateTime.toString(Constants.TIMESTAMP_FORMAT);
             values.put("grantRevocationDate", revokationDate);
             final UserAccount revokedBy = grant.getUserAccountByRevokerId();
@@ -268,7 +268,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         addEscidocBaseUrl(values);
         DateTime lmdDateTime = new DateTime(grant.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("grantLastModificationDate", lmd);
 
         return getUserGroupXmlProvider().getGrantXml(values);
@@ -288,7 +288,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     @Override
     public String renderResources(final UserGroup userGroup)
         throws WebserverSystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootResources", XmlTemplateProvider.TRUE);
         addResourcesValues(userGroup, values);
@@ -296,7 +296,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         DateTime lmdDateTime =
             new DateTime(userGroup.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("userGroupLastModificationDate", lmd);
 
         return getUserGroupXmlProvider().getResourcesXml(values);
@@ -321,15 +321,15 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     public String renderUserGroups(
         final List<UserGroup> userGroups, final RecordPacking recordPacking)
         throws SystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootUserGroup", XmlTemplateProvider.TRUE);
         values.put("recordPacking", recordPacking);
         addCommonValues(values);
         addUserGroupListValues(values);
         final Collection<Map<String, Object>> userGroupsValues = new ArrayList<Map<String, Object>>(userGroups.size());
-        for (UserGroup userGroup : userGroups) {
-            Map<String, Object> userGroupValues = new HashMap<String, Object>();
+        for (final UserGroup userGroup : userGroups) {
+            final Map<String, Object> userGroupValues = new HashMap<String, Object>();
             addUserGroupValues(userGroup, userGroupValues);
             userGroupsValues.add(userGroupValues);
         }

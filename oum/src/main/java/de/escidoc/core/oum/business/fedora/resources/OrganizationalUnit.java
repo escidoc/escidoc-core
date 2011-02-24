@@ -182,7 +182,7 @@ public class OrganizationalUnit extends GenericResource
     public List<Predecessor> getPredecessors(final String ouId)
         throws TripleStoreSystemException {
 
-        List<Predecessor> predecessors = new ArrayList<Predecessor>();
+        final List<Predecessor> predecessors = new ArrayList<Predecessor>();
 
         try {
             // collect affiliations
@@ -254,8 +254,8 @@ public class OrganizationalUnit extends GenericResource
     public List<Predecessor> getSuccessors(final String ouId)
         throws TripleStoreSystemException {
 
-        List<Predecessor> successors = new ArrayList<Predecessor>();
-        Collection<String> ids = new ArrayList<String>();
+        final List<Predecessor> successors = new ArrayList<Predecessor>();
+        final Collection<String> ids = new ArrayList<String>();
         ids.add(ouId);
 
         try {
@@ -452,7 +452,7 @@ public class OrganizationalUnit extends GenericResource
         final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getFedoraUtility().getDatastreamsInformation(getId(), null);
         final Collection<String> names = new ArrayList<String>();
-        for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
+        for (final org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             final List<String> altIDs =
                     Arrays.asList(datastream.getAltIDs());
             if (altIDs != null
@@ -460,7 +460,7 @@ public class OrganizationalUnit extends GenericResource
                 names.add(datastream.getID());
             }
         }
-        for (String name : names) {
+        for (final String name : names) {
             try {
                 result.put(name, new Datastream(name, getId(), null));
             } catch (final StreamNotFoundException e) {
@@ -486,7 +486,7 @@ public class OrganizationalUnit extends GenericResource
     @Override
     public void setMdRecord(final String name, final Datastream ds)
         throws SystemException {
-        String mimeType = ds.getMimeType();
+        final String mimeType = ds.getMimeType();
         String type = Constants.DEFAULT_ALTID_TYPE;
         String schema = Constants.DEFAULT_ALTID_SCHEMA;
         if (ds.getAlternateIDs().size() >= 3) {
@@ -496,7 +496,7 @@ public class OrganizationalUnit extends GenericResource
 
         try {
             final Datastream curDs = getMdRecord(name);
-            String curMimeType = curDs.getMimeType();
+            final String curMimeType = curDs.getMimeType();
             String curType = "";
             String curSchema = "";
             final List<String> altIds = curDs.getAlternateIDs();
@@ -576,10 +576,10 @@ public class OrganizationalUnit extends GenericResource
         final Set<String> namesInFedora = getMdRecords().keySet();
 
         // delete Datastreams which are in Fedora but not in mdRecords
-        for (String nameInFedora : namesInFedora) {
+        for (final String nameInFedora : namesInFedora) {
             if (!mdRecords.containsKey(nameInFedora)) {
                 try {
-                    Datastream fedoraDs = getMdRecord(nameInFedora);
+                    final Datastream fedoraDs = getMdRecord(nameInFedora);
                     if (fedoraDs != null) {
                         fedoraDs.delete();
                     }
@@ -594,13 +594,13 @@ public class OrganizationalUnit extends GenericResource
         }
         
         // create or update Datastreams which are send
-        for (String name : mdRecords.keySet()) {
+        for (final String name : mdRecords.keySet()) {
             if (namesInFedora.contains(name)) {
                 setMdRecord(name, mdRecords.get(name));
                 namesInFedora.remove(name);
             } else {
                 final Datastream currentMdRecord = mdRecords.get(name);
-                byte[] stream = currentMdRecord.getStream();
+                final byte[] stream = currentMdRecord.getStream();
                 final List<String> altIds = currentMdRecord.getAlternateIDs();
                 final String[] altIDs = new String[altIds.size()];
                 for (int i = 0; i < altIds.size(); i++) {

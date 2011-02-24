@@ -61,10 +61,10 @@ public class BasicDDLGenerator
      * Copied from superclass.
      */
     protected void addSelectGrants(final Collection<String> cmds, final String table) {
-        for (String name : users) {
+        for (final String name : users) {
             cmds.add("GRANT SELECT ON TABLE " + table + " TO " + name);
         }
-        for (String name : groups) {
+        for (final String name : groups) {
             cmds.add("GRANT SELECT ON TABLE " + table + " TO GROUP " + name);
         }
     }
@@ -73,7 +73,7 @@ public class BasicDDLGenerator
      * Copied from superclass.
      */
     protected static String[] splitProperty(final String name) {
-        String val = System.getProperty(name);
+        final String val = System.getProperty(name);
         if (val == null || val.trim().length() == 0) {
             return new String[0];
         }

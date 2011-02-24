@@ -113,12 +113,12 @@ public class SetDefinitionFilter extends CqlFilter {
 
         if (query != null) {
             try {
-                CQLParser parser = new CQLParser();
+                final CQLParser parser = new CQLParser();
 
                 detachedCriteria =
                     DetachedCriteria.forClass(SetDefinition.class, "sd");
 
-                Criterion criterion = evaluate(parser.parse(query));
+                final Criterion criterion = evaluate(parser.parse(query));
 
                 if (criterion != null) {
                     detachedCriteria.add(criterion);
@@ -145,8 +145,8 @@ public class SetDefinitionFilter extends CqlFilter {
     protected Criterion evaluate(final CQLTermNode node)
         throws InvalidSearchQueryException {
         Criterion result = null;
-        Object[] parts = criteriaMap.get(node.getIndex());
-        String value = node.getTerm();
+        final Object[] parts = criteriaMap.get(node.getIndex());
+        final String value = node.getTerm();
 
         if (parts != null) {
             result =
@@ -154,7 +154,7 @@ public class SetDefinitionFilter extends CqlFilter {
                     (Integer) (parts[0]) == COMPARE_LIKE);
         }
         else {
-            String columnName = node.getIndex();
+            final String columnName = node.getIndex();
 
             if (columnName != null) {
                 throw new InvalidSearchQueryException(
@@ -172,7 +172,7 @@ public class SetDefinitionFilter extends CqlFilter {
      */
     @Override
     public Set<String> getPropertyNames() {
-        Set<String> result = new TreeSet<String>();
+        final Set<String> result = new TreeSet<String>();
 
         result.addAll(super.getPropertyNames());
         return result;

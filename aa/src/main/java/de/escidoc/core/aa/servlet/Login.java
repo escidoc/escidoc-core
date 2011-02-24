@@ -456,7 +456,7 @@ public class Login extends HttpServlet {
         if (Boolean.TRUE.equals(userAccount.getActive())) {
 
             final long timestamp = System.currentTimeMillis();
-            UserLoginData loginData = new UserLoginData();
+            final UserLoginData loginData = new UserLoginData();
             loginData.setUserAccount(userAccount);
             loginData.setHandle("ESCIDOC-" + XUIDGenerator.getUniqueID() + timestamp);
             loginData.setExpiryts(timestamp + getESciDocUserHandleLifetime());
@@ -676,7 +676,7 @@ public class Login extends HttpServlet {
             return null;
         }
         else {
-            char delimiter;
+            final char delimiter;
             if (redirectUrl.indexOf('?') == -1) {
                 delimiter = '?';
             }
@@ -739,7 +739,7 @@ public class Login extends HttpServlet {
      */
     private String getDeactivatedUserAccountErrorPage() {
 
-        String pageContent =
+        final String pageContent =
             getFileContent(DEACTIVATED_USER_ACCOUNT_PAGE_FILENAME);
         return PATTERN_LOGIN_SERVLET_URL.matcher(pageContent).replaceAll("");
     }
@@ -758,7 +758,7 @@ public class Login extends HttpServlet {
     private void initFileContent(final String templateFileName)
         throws IOException {
 
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
         final InputStream inputStream =
             this.getClass().getResourceAsStream(templateFileName);
         if (inputStream == null) {
@@ -899,7 +899,7 @@ public class Login extends HttpServlet {
      */
     private void deleteExternalAttributes(final UserAccount userAccount)
         throws SqlDatabaseSystemException, WebserverSystemException {
-        List<UserAttribute> attributes = dao.retrieveAttributes(userAccount);
+        final List<UserAttribute> attributes = dao.retrieveAttributes(userAccount);
 
         for (final UserAttribute attribute : attributes) {
             if (!attribute.getInternal()) {
@@ -967,10 +967,10 @@ public class Login extends HttpServlet {
         final UserAccount userAccount,
         final Map<String, List<String>> attributes)
         throws SqlDatabaseSystemException, WebserverSystemException {
-        for (Entry<String, List<String>> entry : attributes.entrySet()) {
+        for (final Entry<String, List<String>> entry : attributes.entrySet()) {
             final List<String> attributeValues = entry.getValue();
             if (attributeValues != null) {
-                for (String attributeValue : attributeValues) {
+                for (final String attributeValue : attributeValues) {
                     final UserAttribute attribute = new UserAttribute();
                     attribute.setInternal(false);
                     attribute.setName(entry.getKey());
@@ -1019,7 +1019,7 @@ public class Login extends HttpServlet {
      */
     public byte getEscidocCookieVersion() throws WebserverSystemException {
 
-        byte escidocCookieVersion;
+        final byte escidocCookieVersion;
         try {
             final String configProperty =
                 EscidocConfiguration
@@ -1075,7 +1075,7 @@ public class Login extends HttpServlet {
          * @return random string
          */
         public static String getUniqueID() {
-            char[] buf = new char[NUM_CHARS];
+            final char[] buf = new char[NUM_CHARS];
 
             for (int i = 0; i < buf.length; i++) {
                 buf[i] = CHARS.charAt(R.nextInt(CHARS.length()));

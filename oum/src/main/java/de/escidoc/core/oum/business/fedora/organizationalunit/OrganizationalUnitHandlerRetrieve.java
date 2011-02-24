@@ -170,10 +170,10 @@ public class OrganizationalUnitHandlerRetrieve
      *             If anything fails while rendering the xml representation.
      */
     protected String getChildObjectsXml() throws SystemException {
-        List<String> children = new ArrayList<String>();
-        List<String> chidrenIds = getOrganizationalUnit().getChildrenIds();
-        String parentId = getOrganizationalUnit().getId();
-        for (String chidrenId : chidrenIds) {
+        final List<String> children = new ArrayList<String>();
+        final List<String> chidrenIds = getOrganizationalUnit().getChildrenIds();
+        final String parentId = getOrganizationalUnit().getId();
+        for (final String chidrenId : chidrenIds) {
             String childId = null;
             try {
                 childId = chidrenId;
@@ -207,10 +207,10 @@ public class OrganizationalUnitHandlerRetrieve
      */
     protected String getParentObjectsXml() throws SystemException {
 
-        List<String> parents = new ArrayList<String>();
-        List<String> parentsIds = getOrganizationalUnit().getParents();
-        String childId = getOrganizationalUnit().getId();
-        for (String parentsId : parentsIds) {
+        final List<String> parents = new ArrayList<String>();
+        final List<String> parentsIds = getOrganizationalUnit().getParents();
+        final String childId = getOrganizationalUnit().getId();
+        for (final String parentsId : parentsIds) {
             String parentId = null;
             try {
                 parentId = parentsId;
@@ -260,14 +260,14 @@ public class OrganizationalUnitHandlerRetrieve
     private List<List<String>> computePathes() throws SystemException {
 
         super.initPathes();
-        List<List<String>> result = new ArrayList<List<String>>();
-        List<String> initialPath = new ArrayList<String>();
+        final List<List<String>> result = new ArrayList<List<String>>();
+        final List<String> initialPath = new ArrayList<String>();
         initialPath.add(getOrganizationalUnit().getId());
         expandPaths(initialPath);
 
         while (!getPathes().empty()) {
-            List<String> path = getPathes().pop();
-            String topParentOu = path.get(path.size() - 1);
+            final List<String> path = getPathes().pop();
+            final String topParentOu = path.get(path.size() - 1);
 
             if (getTripleStoreUtility().getParents(topParentOu).isEmpty()) {
                 result.add(path);

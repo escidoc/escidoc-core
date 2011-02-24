@@ -70,7 +70,7 @@ public class Statistics {
      *            the execution time of the method
      */
     public void addValueToStatistics(final String key, final long value) {
-        SummaryStatistics statistics = getStatistics(key);
+        final SummaryStatistics statistics = getStatistics(key);
         statistics.addValue(value);
     }
 
@@ -96,7 +96,7 @@ public class Statistics {
      *            max values to be stored
      */
     @ManagedAttribute(description = "Sets the maximum of values allowed per class (default: 5000)")
-    public void setMaxValues(int values) {
+    public void setMaxValues(final int values) {
         if (values > 0) {
             this.maxValues = values;
         }
@@ -112,9 +112,9 @@ public class Statistics {
      */
     @ManagedAttribute(description = "Get all currently available statistics")
     public String getKeys() {
-        StringBuilder b = new StringBuilder();
-        for (String key : this.statisticsMap.keySet()) {
-            SummaryStatistics s = getStatistics(key);
+        final StringBuilder b = new StringBuilder();
+        for (final String key : this.statisticsMap.keySet()) {
+            final SummaryStatistics s = getStatistics(key);
             if (s != null) {
                 b
                         .append(key).append(", #:").append(s.getN()).append(

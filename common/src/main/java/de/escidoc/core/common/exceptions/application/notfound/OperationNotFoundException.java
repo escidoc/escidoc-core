@@ -22,7 +22,7 @@ public class OperationNotFoundException extends ResourceNotFoundException {
      * @param httpStatusCode
      * @param httpStatusMsg
      */
-    public OperationNotFoundException(int httpStatusCode, String httpStatusMsg) {
+    public OperationNotFoundException(final int httpStatusCode, final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
@@ -32,8 +32,8 @@ public class OperationNotFoundException extends ResourceNotFoundException {
      * @param httpStatusCode
      * @param httpStatusMsg
      */
-    public OperationNotFoundException(String message, int httpStatusCode,
-        String httpStatusMsg) {
+    public OperationNotFoundException(final String message, final int httpStatusCode,
+        final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
@@ -44,8 +44,8 @@ public class OperationNotFoundException extends ResourceNotFoundException {
      * @param httpStatusCode
      * @param httpStatusMsg
      */
-    public OperationNotFoundException(String message, Throwable cause,
-        int httpStatusCode, String httpStatusMsg) {
+    public OperationNotFoundException(final String message, final Throwable cause,
+        final int httpStatusCode, final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
@@ -54,7 +54,7 @@ public class OperationNotFoundException extends ResourceNotFoundException {
      * @param message
      * @param cause
      */
-    public OperationNotFoundException(String message, Throwable cause) {
+    public OperationNotFoundException(final String message, final Throwable cause) {
         super(message, cause);
         // TODO Auto-generated constructor stub
     }
@@ -62,7 +62,7 @@ public class OperationNotFoundException extends ResourceNotFoundException {
     /**
      * @param message
      */
-    public OperationNotFoundException(String message) {
+    public OperationNotFoundException(final String message) {
         super(message);
         // TODO Auto-generated constructor stub
     }
@@ -72,8 +72,8 @@ public class OperationNotFoundException extends ResourceNotFoundException {
      * @param httpStatusCode
      * @param httpStatusMsg
      */
-    public OperationNotFoundException(Throwable cause, int httpStatusCode,
-        String httpStatusMsg) {
+    public OperationNotFoundException(final Throwable cause, final int httpStatusCode,
+        final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
@@ -81,7 +81,7 @@ public class OperationNotFoundException extends ResourceNotFoundException {
     /**
      * @param cause
      */
-    public OperationNotFoundException(Throwable cause) {
+    public OperationNotFoundException(final Throwable cause) {
         super(cause);
         // TODO Auto-generated constructor stub
     }

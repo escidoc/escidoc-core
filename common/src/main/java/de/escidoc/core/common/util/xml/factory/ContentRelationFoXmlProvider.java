@@ -87,7 +87,7 @@ public final class ContentRelationFoXmlProvider
     public String getFoXml(final ContentRelationCreate cr)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, cr
             .getBuildNumber());
@@ -104,11 +104,11 @@ public final class ContentRelationFoXmlProvider
             .getMetadataRecords()));
 
         // DC (inclusive mapping)-------------------------
-        MdRecordCreate defaultMd =
+        final MdRecordCreate defaultMd =
             cr
                 .getMetadataRecord(XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING);
         if (defaultMd != null) {
-            String dcXml = cr.getDC(defaultMd, null);
+            final String dcXml = cr.getDC(defaultMd, null);
             values.put(XmlTemplateProvider.DC, dcXml);
         }
         values.put(XmlTemplateProvider.IN_CREATE, XmlTemplateProvider.TRUE);
@@ -129,7 +129,7 @@ public final class ContentRelationFoXmlProvider
     public String getRelsExt(final ContentRelationCreate cr)
         throws WebserverSystemException {
 
-        Map<String, String> values = getRelsExtValueMap(cr);
+        final Map<String, String> values = getRelsExtValueMap(cr);
         values.putAll(getRelsExtNamespaceValues());
         values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, cr
             .getBuildNumber());
@@ -151,7 +151,7 @@ public final class ContentRelationFoXmlProvider
     private Map<String, String> getRelsExtValueMap(
         final ContentRelationCreate cr) {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.CREATED_BY_ID, cr
             .getProperties().getCreatedById());
@@ -192,7 +192,7 @@ public final class ContentRelationFoXmlProvider
      */
     private Map<String, String> getRelsExtNamespaceValues() {
 
-        Map<String, String> values = new HashMap<String, String>();
+        final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);

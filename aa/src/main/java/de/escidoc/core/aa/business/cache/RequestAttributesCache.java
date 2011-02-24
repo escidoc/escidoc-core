@@ -218,7 +218,7 @@ public final class RequestAttributesCache {
             if (key == null || context == null) {
                 return null;
             }
-            Map<Object, Object> internalMap = attributesCache.get(context);
+            final Map<Object, Object> internalMap = attributesCache.get(context);
             if (internalMap == null) {
                 return null;
             }

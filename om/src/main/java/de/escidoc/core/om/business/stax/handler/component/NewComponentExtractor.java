@@ -61,13 +61,13 @@ public class NewComponentExtractor extends DefaultHandler {
 
     private int deepLevel = 0;
 
-    public NewComponentExtractor(StaxParser parser) {
+    public NewComponentExtractor(final StaxParser parser) {
         // TODO Auto-generated constructor stub
         this.parser = parser;
     }
 
     @Override
-    public String characters(String data, StartElement element)
+    public String characters(final String data, final StartElement element)
         throws XMLStreamException {
         if (inside) {
             writer.writeCharacters(data);
@@ -76,14 +76,14 @@ public class NewComponentExtractor extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(EndElement element) throws Exception {
-        String curPath = parser.getCurPath();
+    public EndElement endElement(final EndElement element) throws Exception {
+        final String curPath = parser.getCurPath();
 
         if (inside) {
             writer.writeEndElement();
             deepLevel--;
 
-            String ns = element.getNamespace();
+            final String ns = element.getNamespace();
             List nsTrace = (List) nsuris.get(ns);
 
             if (nsTrace != null
@@ -100,9 +100,9 @@ public class NewComponentExtractor extends DefaultHandler {
             // TODO iteration is a hack, use
             // javax.xml.namespace.NamespaceContext
             Iterator it = nsuris.keySet().iterator();
-            Collection toRemove = new ArrayList();
+            final Collection toRemove = new ArrayList();
             while (it.hasNext()) {
-                String key = (String) it.next();
+                final String key = (String) it.next();
                 nsTrace = (List) nsuris.get(key);
                 if ((Integer) nsTrace.get(0) == (deepLevel + 1)) {
                     toRemove.add(key);
@@ -110,7 +110,7 @@ public class NewComponentExtractor extends DefaultHandler {
             }
             it = toRemove.iterator();
             while (it.hasNext()) {
-                String key = (String) it.next();
+                final String key = (String) it.next();
                 nsuris.remove(key);
             }
             if (curPath.endsWith("components/component")) {
@@ -123,16 +123,16 @@ public class NewComponentExtractor extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws XMLStreamException {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
         if (inside) {
             deepLevel++;
             writeElement(element);
 
-            int attCount = element.getAttributeCount();
+            final int attCount = element.getAttributeCount();
             for (int i = 0; i < attCount; i++) {
-                Attribute curAtt = element.getAttribute(i);
+                final Attribute curAtt = element.getAttribute(i);
                 writeAttribute(curAtt.getNamespace(), element.getLocalName(),
                     curAtt.getLocalName(), curAtt.getValue(), curAtt
                         .getPrefix());
@@ -140,8 +140,8 @@ public class NewComponentExtractor extends DefaultHandler {
         }
         else {
             if (curPath.endsWith("components/component")) {
-                int indexObjid = element.indexOfAttribute(null, "objid");
-                int indexHref =
+                final int indexObjid = element.indexOfAttribute(null, "objid");
+                final int indexHref =
                     element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
                 if ((indexObjid > -1 && element
                     .getAttribute(indexObjid).getValue().length() > 0)
@@ -151,7 +151,7 @@ public class NewComponentExtractor extends DefaultHandler {
                 }
                 else {
                     // start new component
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
                     writer = XmlUtility.createXmlStreamWriter(out);
                     outputStreams.add(out);
@@ -160,9 +160,9 @@ public class NewComponentExtractor extends DefaultHandler {
                     deepLevel++;
                     writeElement(element);
 
-                    int attCount = element.getAttributeCount();
+                    final int attCount = element.getAttributeCount();
                     for (int i = 0; i < attCount; i++) {
-                        Attribute curAtt = element.getAttribute(i);
+                        final Attribute curAtt = element.getAttribute(i);
                         writeAttribute(curAtt.getNamespace(), element
                             .getLocalName(), curAtt.getLocalName(), curAtt
                             .getValue(), curAtt.getPrefix());
@@ -173,15 +173,15 @@ public class NewComponentExtractor extends DefaultHandler {
         return element;
     }
 
-    private void writeElement(StartElement element) throws XMLStreamException {
-        String name = element.getLocalName();
-        String uri = element.getNamespace();
+    private void writeElement(final StartElement element) throws XMLStreamException {
+        final String name = element.getLocalName();
+        final String uri = element.getNamespace();
         String prefix = element.getPrefix();
         if ((uri) != null) {
             if (nsuris.containsKey(uri)) {
-                List namespaceTrace = (List) nsuris.get(uri);
-                Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
-                String prefixTrace = (String) namespaceTrace.get(2);
+                final List namespaceTrace = (List) nsuris.get(uri);
+                final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
+                final String prefixTrace = (String) namespaceTrace.get(2);
                 if (prefixTrace == null || !prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
@@ -192,7 +192,7 @@ public class NewComponentExtractor extends DefaultHandler {
                     writer.writeStartElement(prefix, name, uri);
                 }
             } else {
-                List namespaceTrace = new ArrayList();
+                final List namespaceTrace = new ArrayList();
                 namespaceTrace.add(deepLevel);
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
@@ -208,18 +208,18 @@ public class NewComponentExtractor extends DefaultHandler {
     }
 
     private void writeAttribute(
-        String uri, String elementName, String attributeName,
-        String attributeValue, String prefix) throws XMLStreamException {
+        final String uri, final String elementName, final String attributeName,
+        final String attributeValue, String prefix) throws XMLStreamException {
 
         if (uri != null) {
             if (nsuris.containsKey(uri)) {
-                List namespaceTrace = (List) nsuris.get(uri);
-                String prefixTrace = (String) namespaceTrace.get(2);
+                final List namespaceTrace = (List) nsuris.get(uri);
+                final String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
             } else {
-                List namespaceTrace = new ArrayList();
+                final List namespaceTrace = new ArrayList();
                 namespaceTrace.add(deepLevel);
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);

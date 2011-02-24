@@ -96,7 +96,7 @@ public class StaxEscapingWriter extends Writer {
      * @see java.io.Writer#write(char[], int, int)
      */
     @Override
-    public void write(char[] cbuf, int off, int len) throws IOException {
+    public void write(final char[] cbuf, final int off, final int len) throws IOException {
 
         writer.write(XmlUtility.escapeForbiddenXmlCharacters(new String(cbuf,
             off, len)));

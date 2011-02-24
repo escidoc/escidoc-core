@@ -52,7 +52,7 @@ public class VelocityXmlItemRenderer {
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderComponent(de.escidoc.core.common.business.fedora.resources.Item)
      */
-    public String renderComponent(GenericResource item) throws WebserverSystemException {
+    public String renderComponent(final GenericResource item) throws WebserverSystemException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -68,7 +68,7 @@ public class VelocityXmlItemRenderer {
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderItemRefs(java.util.List)
      */
-    public String renderItemRefs(List<String> itemRefs) throws SystemException {
+    public String renderItemRefs(final List<String> itemRefs) throws SystemException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -78,7 +78,7 @@ public class VelocityXmlItemRenderer {
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderItems(java.util.List)
      */
-    public String renderItems(List<String> items) throws SystemException {
+    public String renderItems(final List<String> items) throws SystemException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -89,7 +89,7 @@ public class VelocityXmlItemRenderer {
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderProperties(de.escidoc.core.common.business.fedora.resources.Item)
      */
-    public String renderProperties(GenericResource item) throws WebserverSystemException {
+    public String renderProperties(final GenericResource item) throws WebserverSystemException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -99,7 +99,7 @@ public class VelocityXmlItemRenderer {
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderRelations(de.escidoc.core.common.business.fedora.resources.Item)
      */
-    public String renderRelations(GenericResource item) throws WebserverSystemException {
+    public String renderRelations(final GenericResource item) throws WebserverSystemException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -109,7 +109,7 @@ public class VelocityXmlItemRenderer {
      * 
      * @see de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface#renderResources(de.escidoc.core.common.business.fedora.resources.Item)
      */
-    public String renderResources(GenericResource item) throws WebserverSystemException {
+    public String renderResources(final GenericResource item) throws WebserverSystemException {
         // TODO Auto-generated method stub
         return null;
     }

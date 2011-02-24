@@ -72,9 +72,9 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) {
 
-        String theName = element.getLocalName();
+        final String theName = element.getLocalName();
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (!inDescription && DESCRIPTION_PATH.equals(currentPath)) {
             inDescription = true;
@@ -82,11 +82,11 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
         }
         if (inDescription && "component".equals(theName)) {
 
-            int indexOfComponentId =
+            final int indexOfComponentId =
                 element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
                     "resource");
             if (indexOfComponentId != (-1)) {
-                Attribute resource = element.getAttribute(indexOfComponentId);
+                final Attribute resource = element.getAttribute(indexOfComponentId);
                 String resourceValue = resource.getValue();
                 if (resourceValue.length() > 0) {
                     resourceValue = Utility.getId(resourceValue);
@@ -103,7 +103,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
     @Override
     public String characters(final String data, final StartElement element) {
-        String namespace = element.getNamespace();
+        final String namespace = element.getNamespace();
         if (inDescription && "pid".equals(element.getLocalName())
             && namespace.equals(Constants.VERSION_NS_URI)) {
             versionPid = data;
@@ -112,7 +112,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
     }
 
     public StartElement endElement(final StartElement element) {
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         if (DESCRIPTION_PATH.equals(currentPath)) {
             inDescription = false;
         }

@@ -62,12 +62,12 @@ public final class StringUtility {
      */
     public static String format(final String template, final Object... args) { // visible for testing
         // start substituting the arguments into the '%s' placeholders
-        StringBuilder builder = new StringBuilder(
+        final StringBuilder builder = new StringBuilder(
                 template.length() + 16 * args.length);
         int templateStart = 0;
         int i = 0;
         while (i < args.length) {
-            int placeholderStart = template.indexOf("%s", templateStart);
+            final int placeholderStart = template.indexOf("%s", templateStart);
             if (placeholderStart == -1) {
                 break;
             }
@@ -99,8 +99,8 @@ public final class StringUtility {
      */
     @Deprecated
     public static StringBuffer concatenate(final Object... parts) {
-        StringBuffer ret = new StringBuffer();
-        for (Object part : parts) {
+        final StringBuffer ret = new StringBuffer();
+        for (final Object part : parts) {
             ret.append(part);
         }
         return ret;
@@ -118,7 +118,7 @@ public final class StringUtility {
      * @common
      */
     public static StringBuffer concatenateWithColon(final String firstPart, final Object secondPart) {
-        StringBuffer ret = new StringBuffer(firstPart);
+        final StringBuffer ret = new StringBuffer(firstPart);
         ret.append(':');
         ret.append(secondPart);
         return ret;
@@ -141,9 +141,9 @@ public final class StringUtility {
      * @return Returns the converted value.
      */
     public static StringBuffer convertToUpperCaseLetterFormat(final CharSequence objectType) {
-        String[] splitted = PATTERN_MINUS.split(objectType);
-        StringBuffer ret = new StringBuffer();
-        for (String split : splitted) {
+        final String[] splitted = PATTERN_MINUS.split(objectType);
+        final StringBuffer ret = new StringBuffer();
+        for (final String split : splitted) {
             ret.append(split.substring(0, 1).toUpperCase());
             ret.append(split.substring(1));
         }

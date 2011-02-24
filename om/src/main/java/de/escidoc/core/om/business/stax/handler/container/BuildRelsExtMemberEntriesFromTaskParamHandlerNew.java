@@ -48,24 +48,24 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
 
     private final String parentId;
 
-    public BuildRelsExtMemberEntriesFromTaskParamHandlerNew(String parentId, String methodName) {
+    public BuildRelsExtMemberEntriesFromTaskParamHandlerNew(final String parentId, final String methodName) {
         this.parentId = parentId;
         this.memberIds = new ArrayList<String>();
         this.memberIdsToRemove = new ArrayList<String>();
         this.methodName = methodName;
     }
 
-    public BuildRelsExtMemberEntriesFromTaskParamHandlerNew(String parentId) {
+    public BuildRelsExtMemberEntriesFromTaskParamHandlerNew(final String parentId) {
         this.parentId = parentId;
         this.memberIds = new ArrayList<String>();
         this.memberIdsToRemove = new ArrayList<String>();
     }
 
     @Override
-    public String characters(String objid, StartElement element)
+    public String characters(final String objid, final StartElement element)
         throws InvalidContentException, TripleStoreSystemException,
         WebserverSystemException {
-        String localName = element.getLocalName();
+        final String localName = element.getLocalName();
 
         if ("id".equals(localName)) {
             if (!TripleStoreUtility.getInstance().exists(objid)) {

@@ -99,7 +99,7 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element)
         throws InvalidContentException, WebserverSystemException {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
 
         if (curPath.startsWith(propertiesPath)) {
             // do my job
@@ -175,10 +175,10 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
         if (curPath.equals(propertiesPath)) {
             // delete properties not send
-            for (String anExpected : expected) {
+            for (final String anExpected : expected) {
                 properties.remove(anExpected);
             }
         }

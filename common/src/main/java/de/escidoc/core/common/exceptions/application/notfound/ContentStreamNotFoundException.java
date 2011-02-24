@@ -42,41 +42,41 @@ public class ContentStreamNotFoundException extends ResourceNotFoundException {
         // TODO Auto-generated constructor stub
     }
 
-    public ContentStreamNotFoundException(int httpStatusCode,
-        String httpStatusMsg) {
+    public ContentStreamNotFoundException(final int httpStatusCode,
+        final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
 
-    public ContentStreamNotFoundException(String message, int httpStatusCode,
-        String httpStatusMsg) {
+    public ContentStreamNotFoundException(final String message, final int httpStatusCode,
+        final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
 
-    public ContentStreamNotFoundException(String message, Throwable cause,
-        int httpStatusCode, String httpStatusMsg) {
+    public ContentStreamNotFoundException(final String message, final Throwable cause,
+        final int httpStatusCode, final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
 
-    public ContentStreamNotFoundException(String message, Throwable cause) {
+    public ContentStreamNotFoundException(final String message, final Throwable cause) {
         super(message, cause);
         // TODO Auto-generated constructor stub
     }
 
-    public ContentStreamNotFoundException(String message) {
+    public ContentStreamNotFoundException(final String message) {
         super(message);
         // TODO Auto-generated constructor stub
     }
 
-    public ContentStreamNotFoundException(Throwable cause, int httpStatusCode,
-        String httpStatusMsg) {
+    public ContentStreamNotFoundException(final Throwable cause, final int httpStatusCode,
+        final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
         // TODO Auto-generated constructor stub
     }
 
-    public ContentStreamNotFoundException(Throwable cause) {
+    public ContentStreamNotFoundException(final Throwable cause) {
         super(cause);
         // TODO Auto-generated constructor stub
     }

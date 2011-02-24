@@ -67,10 +67,10 @@ public class RelationsCreate {
     public void remove(final RelationCreate relation) {
 
         if (this.relations != null) {
-            Iterator<RelationCreate> it = this.relations.iterator();
+            final Iterator<RelationCreate> it = this.relations.iterator();
 
             while (it.hasNext()) {
-                RelationCreate rel = it.next();
+                final RelationCreate rel = it.next();
 
                 if ((rel.equals(relation))
                     || ((rel.getPredicate().equals(relation.getPredicate()))

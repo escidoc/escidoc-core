@@ -280,7 +280,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         final Collection<HashMap<String, String>> adminDescriptors =
             new ArrayList<HashMap<String, String>>();
 
-        for (String name : dataStreams.keySet()) {
+        for (final String name : dataStreams.keySet()) {
             final HashMap<String, String> adminDescriptor =
                     new HashMap<String, String>();
             adminDescriptor.put("name", name);
@@ -342,7 +342,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        String buildNumber = Utility.getInstance().getBuildNumber();
+        final String buildNumber = Utility.getInstance().getBuildNumber();
         values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, buildNumber);
         return getFoxmlRenderer().renderRelsExt(values);
     }

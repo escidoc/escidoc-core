@@ -69,7 +69,7 @@ public class ContentStreamHandler extends WriteHandler {
     public ContentStreamHandler() {
     }
 
-    public ContentStreamHandler(Item item) {
+    public ContentStreamHandler(final Item item) {
         this.item = item;
     }
 
@@ -82,7 +82,7 @@ public class ContentStreamHandler extends WriteHandler {
      * de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public String characters(String data, StartElement element)
+    public String characters(final String data, final StartElement element)
         throws XMLStreamException {
         if ((inContentStreams)
             && (contentStreamName != null
@@ -102,18 +102,18 @@ public class ContentStreamHandler extends WriteHandler {
      * (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endElement(EndElement element)
+    public EndElement endElement(final EndElement element)
         throws InvalidXmlException, XMLStreamException {
 
         // in respect to WriteHandler
         this.decreaseDeepLevel();
         // but WriteHandler does not handle namespaces correctly
         if (this.getNsuris() != null) {
-            Iterator<String> it = this.getNsuris().keySet().iterator();
+            final Iterator<String> it = this.getNsuris().keySet().iterator();
             while (it.hasNext()) {
-                String uri = it.next();
-                List v = this.getNsuris().get(uri);
-                Integer i = (Integer) v.get(0);
+                final String uri = it.next();
+                final List v = this.getNsuris().get(uri);
+                final Integer i = (Integer) v.get(0);
                 if (i > this.getDeepLevel()) {
                     it.remove();
                 }
@@ -147,7 +147,7 @@ public class ContentStreamHandler extends WriteHandler {
                             de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED))) {
                     // internal-managed content-stream must have either href
                     // or content
-                    ByteArrayOutputStream baos =
+                    final ByteArrayOutputStream baos =
                         (ByteArrayOutputStream) contentStreams
                             .get(contentStreamName).get(
                                 Elements.ELEMENT_CONTENT);
@@ -177,7 +177,7 @@ public class ContentStreamHandler extends WriteHandler {
      * @throws FedoraSystemException If FedoraUtility can not connect to Fedora.
      */
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws InvalidXmlException, InvalidContentException,
         XMLStreamException, FedoraSystemException {
 
@@ -235,7 +235,7 @@ public class ContentStreamHandler extends WriteHandler {
                     }
 
                     // storage
-                    String storage;
+                    final String storage;
                     if (element.hasAttribute(null, Elements.ATTRIBUTE_STORAGE)) {
                         storage =
                             element.getAttributeValue(null,
@@ -271,7 +271,7 @@ public class ContentStreamHandler extends WriteHandler {
                             }
 
                             // prepare XML writing
-                            ByteArrayOutputStream out =
+                            final ByteArrayOutputStream out =
                                 new ByteArrayOutputStream();
                             contentStreams.get(contentStreamName).put(
                                 Elements.ELEMENT_CONTENT, out);
@@ -336,9 +336,9 @@ public class ContentStreamHandler extends WriteHandler {
                 // in a particular stream
                 wrote = true;
                 writeElement(element);
-                int c = element.getAttributeCount();
+                final int c = element.getAttributeCount();
                 for (int i = 0; i < c; i++) {
-                    Attribute att = element.getAttribute(i);
+                    final Attribute att = element.getAttribute(i);
                     writeAttribute(att.getNamespace(), element.getLocalName(),
                         att.getLocalName(), att.getValue(), att.getPrefix(),
                         element.getNamespaceContext());

@@ -81,7 +81,7 @@ public class ItemUpdateHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element)
         throws InvalidContentException {
 
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
 
         if (!done && curPath.equals(ITEM_PATH)) {
 
@@ -135,7 +135,7 @@ public class ItemUpdateHandler extends DefaultHandler {
 
             // handle xlink:href attribute
             try {
-                String href = element
+                final String href = element
                         .getAttribute(Constants.XLINK_URI, "href").getValue();
                 final String expectedHref =
                     Constants.ITEM_URL_BASE + this.itemId;
@@ -155,7 +155,7 @@ public class ItemUpdateHandler extends DefaultHandler {
             // in case of non lax handling, an exception must be thrown if no
             // objid has been provided.
             try {
-                String objid = element.getAttribute(null, "objid").getValue();
+                final String objid = element.getAttribute(null, "objid").getValue();
                 if (!objid.equals(itemId)) {
                     throw new InvalidContentException(
                         StringUtility

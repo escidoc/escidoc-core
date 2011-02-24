@@ -230,7 +230,7 @@ public class Item extends GenericVersionableResourcePid
         FedoraSystemException, XmlParserSystemException,
         IntegritySystemException, EncodingSystemException {
 
-        String componentId = c.getId();
+        final String componentId = c.getId();
         removeComponent(componentId);
         this.components.remove(componentId);
         this.alteredComponent.add(componentId);
@@ -309,7 +309,7 @@ public class Item extends GenericVersionableResourcePid
         FedoraSystemException, SystemException {
 
         initComponents();
-        Component c = this.componentsByLocalName.get(componentName);
+        final Component c = this.componentsByLocalName.get(componentName);
         if (c == null) {
             throw new ComponentNotFoundException("Component with name '"
                 + componentName + "' could not be found.");
@@ -345,7 +345,7 @@ public class Item extends GenericVersionableResourcePid
         throws XmlParserSystemException, TripleStoreSystemException,
         WebserverSystemException {
 
-        Collection<String> componentIds;
+        final Collection<String> componentIds;
 
         if (this.components == null) {
             if (isLatestVersion()) {
@@ -435,7 +435,7 @@ public class Item extends GenericVersionableResourcePid
         WebserverSystemException {
 
         if (this.dc == null) {
-            Datastream ds;
+            final Datastream ds;
             try {
                 ds = new Datastream("DC", getId(), getVersionDate());
             }
@@ -543,9 +543,9 @@ public class Item extends GenericVersionableResourcePid
         // get list of names of data streams with alternateId = "metadata"
         final Set<String> namesInFedora = getMdRecords().keySet();
         // delete data streams which are in fedora but not in mdRecords
-        for (String nameInFedora : namesInFedora) {
+        for (final String nameInFedora : namesInFedora) {
             if (!mdRecords.containsKey(nameInFedora)) {
-                Datastream fedoraDs;
+                final Datastream fedoraDs;
                 try {
                     fedoraDs = getMdRecord(nameInFedora);
                 } catch (MdRecordNotFoundException e) {
@@ -560,7 +560,7 @@ public class Item extends GenericVersionableResourcePid
         }
         Set<Entry<String,Datastream>> mdRecordsEntrySet = mdRecords.entrySet();
         // create/activate data streams which are in mdRecords but not in fedora
-        for(Entry<String, Datastream> entry : mdRecordsEntrySet) {
+        for(final Entry<String, Datastream> entry : mdRecordsEntrySet) {
             final String name = entry.getKey();
             if (!namesInFedora.contains(name)) {
                 final Datastream currentMdRecord = entry.getValue();
@@ -568,7 +568,7 @@ public class Item extends GenericVersionableResourcePid
             }
         }
         mdRecordsEntrySet = mdRecords.entrySet();
-        for(Entry<String, Datastream> entry : mdRecordsEntrySet) {
+        for(final Entry<String, Datastream> entry : mdRecordsEntrySet) {
             setMdRecord(entry.getKey(), entry.getValue());
         }
 
@@ -589,7 +589,7 @@ public class Item extends GenericVersionableResourcePid
     public Datastream getMdRecord(final String name)
         throws MdRecordNotFoundException {
         if (!this.mdRecords.containsKey(name)) {
-            String message =
+            final String message =
                 "Metadata record with name " + name + " not found in item "
                     + getId() + '.';
             log.debug(message);
@@ -619,7 +619,7 @@ public class Item extends GenericVersionableResourcePid
         // ds.addAlternateId("metadata");
         final String type = ds.getAlternateIDs().get(1);
         final String schema = ds.getAlternateIDs().get(2);
-        String mimeType = ds.getMimeType();
+        final String mimeType = ds.getMimeType();
         try {
             boolean isNew = false;
 
@@ -632,7 +632,7 @@ public class Item extends GenericVersionableResourcePid
             }
             boolean contentChanged = false;
             if (!isNew) { // curDs is not null
-                String curMimeType = curDs.getMimeType();
+                final String curMimeType = curDs.getMimeType();
                 String curType = "";
                 String curSchema = "";
                 final List<String> altIds = curDs.getAlternateIDs();
@@ -657,7 +657,7 @@ public class Item extends GenericVersionableResourcePid
                     if (mdProperties != null) {
                         if (mdProperties.containsKey("nsUri")) {
                             final String nsUri = mdProperties.get("nsUri");
-                            String dcNewContent =
+                            final String dcNewContent =
                                 XmlUtility
                                     .createDC(
                                         nsUri,
@@ -667,7 +667,7 @@ public class Item extends GenericVersionableResourcePid
 
                             if (dcNewContent != null
                                 && dcNewContent.trim().length() > 0) {
-                                Datastream dcNew;
+                                final Datastream dcNew;
                                 try {
                                     dcNew =
                                         new Datastream(
@@ -773,7 +773,7 @@ public class Item extends GenericVersionableResourcePid
         final Set<String> namesInFedora = getContentStreams().keySet();
 
         Set<Entry<String,Datastream>> contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
-        for(Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
+        for(final Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
             final String name = entry.getKey();
             if (!namesInFedora.contains(name)) {
                 setContentStream(name, entry.getValue());
@@ -781,14 +781,14 @@ public class Item extends GenericVersionableResourcePid
         }
         // update DSs which still remain in given list
         contentStreamDatastreamsEntrySet = contentStreamDatastreams.entrySet();
-        for(Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
+        for(final Entry<String, Datastream> entry : contentStreamDatastreamsEntrySet) {
             setContentStream(entry.getKey(), entry.getValue());
         }
 
         // delete data streams which are in fedora but not in given list
-        for (String nameInFedora : namesInFedora) {
+        for (final String nameInFedora : namesInFedora) {
             if (!contentStreamDatastreams.containsKey(nameInFedora)) {
-                Datastream fedoraDs = getContentStream(nameInFedora);
+                final Datastream fedoraDs = getContentStream(nameInFedora);
                 fedoraDs.delete();
                 this.contentStreams.remove(nameInFedora);
             }
@@ -808,7 +808,7 @@ public class Item extends GenericVersionableResourcePid
     private Collection<String> expandPropertiesNames(
         final Collection<String> propertiesNames) {
 
-        Collection<String> newPropertiesNames;
+        final Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
             newPropertiesNames = propertiesNames;
         }
@@ -836,7 +836,7 @@ public class Item extends GenericVersionableResourcePid
     private Map<String, String> expandPropertiesNamesMapping(
         final Map<String, String> propertiesMapping) {
 
-        Map<String, String> newPropertiesNames;
+        final Map<String, String> newPropertiesNames;
         if (propertiesMapping != null) {
             newPropertiesNames = propertiesMapping;
         }
@@ -903,11 +903,11 @@ public class Item extends GenericVersionableResourcePid
 
         boolean resourceUpdated = false;
 
-        for (String s : getComponentIds()) {
-            Component component = getComponent(s);
+        for (final String s : getComponentIds()) {
+            final Component component = getComponent(s);
             if (component != null) {
-                String lmd = component.getLastFedoraModificationDate();
-                String newLmd = component.persist(false);
+                final String lmd = component.getLastFedoraModificationDate();
+                final String newLmd = component.persist(false);
                 if (!lmd.equals(newLmd)) {
                     resourceUpdated = true;
                 }
@@ -969,24 +969,24 @@ public class Item extends GenericVersionableResourcePid
      */
     @Override
     protected final void initDatastreams(
-            org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
+            final org.fcrepo.server.types.gen.Datastream[] datastreamInfos)
         throws WebserverSystemException, FedoraSystemException,
         TripleStoreSystemException, IntegritySystemException,
         StreamNotFoundException {
 
         super.initDatastreams(datastreamInfos);
 
-        for (org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
-            List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
-            String name = datastreamInfo.getID();
-            String label = datastreamInfo.getLabel();
-            DatastreamControlGroup controlGroup =
+        for (final org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
+            final List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
+            final String name = datastreamInfo.getID();
+            final String label = datastreamInfo.getLabel();
+            final DatastreamControlGroup controlGroup =
                     datastreamInfo.getControlGroup();
-            String controlGroupValue = controlGroup.getValue();
-            String mimeType = datastreamInfo.getMIMEType();
-            String location = datastreamInfo.getLocation();
+            final String controlGroupValue = controlGroup.getValue();
+            final String mimeType = datastreamInfo.getMIMEType();
+            final String location = datastreamInfo.getLocation();
 
-            Datastream ds;
+            final Datastream ds;
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
                 ds =
@@ -1102,7 +1102,7 @@ public class Item extends GenericVersionableResourcePid
 
         final StaxParser sp = new StaxParser();
 
-        AddNewSubTreesToDatastream addNewEntriesHandler =
+        final AddNewSubTreesToDatastream addNewEntriesHandler =
             new AddNewSubTreesToDatastream("/RDF", sp);
 
         final StartElement pointer = new StartElement();

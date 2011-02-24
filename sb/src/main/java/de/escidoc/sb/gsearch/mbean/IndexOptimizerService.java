@@ -59,7 +59,7 @@ public class IndexOptimizerService {
      */
     @ManagedOperation(description = "call optimize.")
     public void execute() {
-        long lastExecutionTime = 
+        final long lastExecutionTime =
             IndexOptimizerServiceTimer.getInstance().getLastExecutionTime();
         if (lastExecutionTime > 0 
             && (System.currentTimeMillis() - lastExecutionTime) < 1000) {

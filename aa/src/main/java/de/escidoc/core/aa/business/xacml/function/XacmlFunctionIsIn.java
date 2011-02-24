@@ -86,14 +86,14 @@ public class XacmlFunctionIsIn extends FunctionBase {
     public EvaluationResult evaluate(
         final List inputs, final EvaluationCtx context) {
 
-        AttributeValue[] argValues = new AttributeValue[inputs.size()];
-        EvaluationResult result = evalArgs(inputs, context, argValues);
+        final AttributeValue[] argValues = new AttributeValue[inputs.size()];
+        final EvaluationResult result = evalArgs(inputs, context, argValues);
         if (result != null) {
             return result;
         }
 
-        StringAttribute value1 = (StringAttribute) (argValues[0]);
-        StringAttribute value2 = (StringAttribute) (argValues[1]);
+        final StringAttribute value1 = (StringAttribute) (argValues[0]);
+        final StringAttribute value2 = (StringAttribute) (argValues[1]);
         return EvaluationResult.getInstance(value1.equals(value2));
     }
 

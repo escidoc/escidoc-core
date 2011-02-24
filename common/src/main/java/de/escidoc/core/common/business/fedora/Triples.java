@@ -115,8 +115,8 @@ public class Triples {
      * Clean the list from redundant entries.
      */
     public void distinct() {
-        List<Triple> newTripleList = new LinkedList<Triple>();
-        for (Triple triple : this.triples) {
+        final List<Triple> newTripleList = new LinkedList<Triple>();
+        for (final Triple triple : this.triples) {
             newTripleList.add(triple);
             delTriples(triple);
         }
@@ -135,10 +135,10 @@ public class Triples {
      */
     private void delTriple(final Triple triple, final boolean firstHit) {
 
-        Iterator<Triple> it = this.triples.iterator();
+        final Iterator<Triple> it = this.triples.iterator();
 
         while (it.hasNext()) {
-            Triple t = it.next();
+            final Triple t = it.next();
             if (t.equals(triple)) {
                 it.remove();
                 break;

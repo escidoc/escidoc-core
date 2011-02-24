@@ -599,7 +599,7 @@ public final class XmlUtility {
     public static String getSchemaLocationForResource(final ResourceType type)
         throws WebserverSystemException {
 
-        String schemaLocation;
+        final String schemaLocation;
         switch (type) {
             case ITEM:
                 schemaLocation = getItemSchemaLocation();
@@ -743,7 +743,7 @@ public final class XmlUtility {
      * @return Returns the href for the provided component id.
      */
     public static String getComponentHref(final String componentId) {
-        String itemId;
+        final String itemId;
         try {
             itemId =
                 TripleStoreUtility.getInstance().getItemForComponent(
@@ -1870,7 +1870,7 @@ public final class XmlUtility {
         final TaskParamHandler result = new TaskParamHandler(staxParser);
         if (param != null) {
             result.setCheckLastModificationDate(checkLastModificationDate);
-            ByteArrayInputStream xmlDataIs;
+            final ByteArrayInputStream xmlDataIs;
             try {
                 xmlDataIs =
                     new ByteArrayInputStream(param.getBytes(CHARACTER_ENCODING));
@@ -1957,7 +1957,7 @@ public final class XmlUtility {
     public static String getAdminDescriptorSchemaLocation()
         throws WebserverSystemException {
 
-        String result;
+        final String result;
         final String subPath = "context/0.4/context.xsd";
         if (UserContext.isRestAccess()) {
             if (contextRestSchemaLocation == null) {
@@ -2926,7 +2926,7 @@ public final class XmlUtility {
     public static void handleUnexpectedStaxParserException(
         final String message, final Exception e)
         throws XmlParserSystemException {
-        String text;
+        final String text;
         if (message != null) {
             text = message + e.getMessage();
         }
@@ -3226,7 +3226,7 @@ public final class XmlUtility {
         String result = null;
 
         Transformer t = null;
-        String transformerKey = nsUri + ';' + contentModelID;
+        final String transformerKey = nsUri + ';' + contentModelID;
         try {
             t = (Transformer) TRANSFORMER_POOL.borrowObject(transformerKey);
             if (objID != null && objID.length() > 0) {
@@ -3309,8 +3309,8 @@ public final class XmlUtility {
             return null;
         }
 
-        StaxParser sp = new StaxParser();
-        FilterHandler fh = new FilterHandler(sp);
+        final StaxParser sp = new StaxParser();
+        final FilterHandler fh = new FilterHandler(sp);
         sp.addHandler(fh);
         try {
             sp.parse(new ByteArrayInputStream(filterXML

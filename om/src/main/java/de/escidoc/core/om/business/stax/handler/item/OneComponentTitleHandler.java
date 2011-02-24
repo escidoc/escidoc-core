@@ -42,37 +42,37 @@ public class OneComponentTitleHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    public OneComponentTitleHandler(StaxParser parser) {
+    public OneComponentTitleHandler(final StaxParser parser) {
         this.parser = parser;
     }
 
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws ReadonlyAttributeViolationException, InvalidContentException {
 
-        String componentPath = "/component";
+        final String componentPath = "/component";
 
-        String theName = element.getLocalName();
+        final String theName = element.getLocalName();
 
-        String currenrPath = parser.getCurPath();
+        final String currenrPath = parser.getCurPath();
         if (componentPath.equals(currenrPath)) {
 
             // componentNumber ++;
-            int indexOfobjId = element.indexOfAttribute(null, "objid");
+            final int indexOfobjId = element.indexOfAttribute(null, "objid");
             if (indexOfobjId != (-1)
                 && element.getAttribute(indexOfobjId).getValue().length() > 0) {
-                String message =
+                final String message =
                     "Read only attribute \"objid\" of the " + "element "
                         + theName + " may not exist while create";
                 LOG.error(message);
                 throw new ReadonlyAttributeViolationException(message);
             }
 
-            int indexOfhref =
+            final int indexOfhref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");
             if (indexOfhref != (-1)
                 && element.getAttribute(indexOfhref).getValue().length() > 0) {
-                String message =
+                final String message =
                     "Read only attribute \"href\" of the " + "element "
                         + theName + " may not exist while create";
                 LOG.error(message);

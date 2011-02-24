@@ -123,11 +123,11 @@ public class Resource extends XMLBase {
         final Object body) throws MethodNotFoundException {
 
         BeanMethod result = null;
-        Set<String> regexps = getDescriptors().keySet();
-        for (String regexp : regexps) {
+        final Set<String> regexps = getDescriptors().keySet();
+        for (final String regexp : regexps) {
             if (uri.matches(regexp)) {
-                Node descriptor = getDescriptors().get(regexp);
-                Node invokeNode;
+                final Node descriptor = getDescriptors().get(regexp);
+                final Node invokeNode;
                 try {
                     invokeNode =
                             getInvocationDescription(descriptor, httpMethod);
@@ -136,9 +136,9 @@ public class Resource extends XMLBase {
                     break;
                 }
                 if (invokeNode != null) {
-                    String method =
+                    final String method =
                             getAttributeValue(invokeNode, INVOKE_METHOD_ATTR);
-                    Object[] params =
+                    final Object[] params =
                             getMethodParameters(uri, query, parameters, body,
                                     regexp, invokeNode);
                     if ((result != null
@@ -152,7 +152,7 @@ public class Resource extends XMLBase {
             }
         }
         if (result == null) {
-            String message =
+            final String message =
                 "Error: No method configured in resource '" + getName()
                     + "' for " + httpMethod + "-request with uri '" + uri
                     + "'!";
@@ -186,12 +186,12 @@ public class Resource extends XMLBase {
             appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT, RESOURCE_ELEMENT
                 + "[@" + RESOURCE_URI_ATTR + "=\"" + getBaseUri() + "\"]");
         xPath = appendToXpath(xPath, DESCRIPTOR_ELEMENT);
-        NodeList descriptorNodes = parse(xPath, getResource());
-        int noOfDescriptors = descriptorNodes.getLength();
+        final NodeList descriptorNodes = parse(xPath, getResource());
+        final int noOfDescriptors = descriptorNodes.getLength();
         for (int i = 0; i < noOfDescriptors; ++i) {
-            Node descriptor = descriptorNodes.item(i);
+            final Node descriptor = descriptorNodes.item(i);
             if (!"".equals(getAttributeValue(descriptor, DESCRIPTOR_URI_ATTR))) {
-                String path =
+                final String path =
                     replaceIdentifierToRegexp(getAttributeValue(descriptor,
                         DESCRIPTOR_URI_ATTR), (Collection) getDefinitions()
                         .get(DEFINITION_VAR_ELEMENT));
@@ -220,7 +220,7 @@ public class Resource extends XMLBase {
             INVOKE_ELEMENT + "[@" + INVOKE_HTTP_ATTR + "=\"" + method + '\"';
 
         xPath += "]";
-        NodeList nodes = parse(xPath, descriptor);
+        final NodeList nodes = parse(xPath, descriptor);
         Node result = null;
         if (nodes.getLength() == 1) {
             result = nodes.item(0);
@@ -250,12 +250,12 @@ public class Resource extends XMLBase {
         final Map<String, String[]> parameters, final Object body,
         final String uriRegexp, final Node invoke) {
         Object[] result = null;
-        Collection<String> paramNames = getMethodParameterNames(invoke);
+        final Collection<String> paramNames = getMethodParameterNames(invoke);
         if (!paramNames.isEmpty()) {
             result = new Object[paramNames.size()];
             for (int i = 0; i < paramNames.size(); ++i) {
                 Object value;
-                String param = (String) ((List) paramNames).get(i);
+                final String param = (String) ((List) paramNames).get(i);
                 if (param.equals(VAR_PREFIX + VAR_BODY + VAR_POSTFIX)) {
                     value = body;
                 }
@@ -302,7 +302,7 @@ public class Resource extends XMLBase {
      */
     private Collection getMethodParameterNames(final Node invoke) {
 
-        Collection<String> result = new ArrayList<String>();
+        final Collection<String> result = new ArrayList<String>();
         int i = 1;
         String parameter = getAttributeValue(invoke, INVOKE_PARAM_ATTR + i);
         while (parameter != null) {
@@ -329,9 +329,9 @@ public class Resource extends XMLBase {
         final String xPath, final Iterable<Node> varDefinitions) {
         String result = xPath.replaceAll("\\?", "\\\\?");
 
-        for (Node varDefinition : varDefinitions) {
-            String varName = getAttributeValue(varDefinition, DEFINITION_VAR_NAME_ATTR);
-            String regexp = getAttributeValue(varDefinition, DEFINITION_VAR_REGEXP_ATTR);
+        for (final Node varDefinition : varDefinitions) {
+            final String varName = getAttributeValue(varDefinition, DEFINITION_VAR_NAME_ATTR);
+            final String regexp = getAttributeValue(varDefinition, DEFINITION_VAR_REGEXP_ATTR);
             if (result.contains('/' + VAR_PREFIX + varName + VAR_POSTFIX)) {
                 result =
                         result.replace('/' + VAR_PREFIX + varName + VAR_POSTFIX,
@@ -359,10 +359,10 @@ public class Resource extends XMLBase {
         }
 
         String result = null;
-        StringTokenizer bodyTokenizer =
+        final StringTokenizer bodyTokenizer =
             new StringTokenizer(body, LIST_DELIMITER);
         while (bodyTokenizer.hasMoreTokens()) {
-            String token = bodyTokenizer.nextToken().trim();
+            final String token = bodyTokenizer.nextToken().trim();
             if (token.startsWith(key)) {
                 result = token.substring(token.indexOf('=') + 1);
             }
@@ -382,12 +382,12 @@ public class Resource extends XMLBase {
 
         Object result = null;
         try {
-            InputStream is = request.getInputStream();
+            final InputStream is = request.getInputStream();
 
             // FIXME: Hack for staging-file. Must be solved by descriptor
             if ("PUT".equals(request.getMethod())
                 && request.getRequestURI().contains("staging-file")) {
-                EscidocBinaryContent binaryContent = new EscidocBinaryContent();
+                final EscidocBinaryContent binaryContent = new EscidocBinaryContent();
                 binaryContent.setMimeType(request
                     .getHeader(EscidocServlet.HTTP_HEADER_CONTENT_TYPE));
                 // TODO: extract FileName
@@ -396,10 +396,10 @@ public class Resource extends XMLBase {
                 result = binaryContent;
             }
             else {
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                final ByteArrayOutputStream out = new ByteArrayOutputStream();
                 try {
                     int length;
-                    byte[] buffer = new byte[BUFFER_SIZE];
+                    final byte[] buffer = new byte[BUFFER_SIZE];
                     while ((length = is.read(buffer)) != -1) {
                         out.write(buffer, 0, length);
                     }

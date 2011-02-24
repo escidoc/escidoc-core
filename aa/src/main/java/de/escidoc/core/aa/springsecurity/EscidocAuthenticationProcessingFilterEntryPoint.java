@@ -61,21 +61,21 @@ public class EscidocAuthenticationProcessingFilterEntryPoint extends
     protected String buildRedirectUrlToLoginPage(final HttpServletRequest request,
             final HttpServletResponse response,
             final AuthenticationException authException) {
-        String loginForm = 
+        final String loginForm =
             determineUrlToUseForThisRequest(request, response, authException);
         if (loginForm.startsWith("http://") || loginForm.startsWith("https://")) {
             return loginForm;
         }
-        int serverPort = super.getPortResolver().getServerPort(request);
-        String scheme = request.getScheme();
-        RedirectUrlBuilder urlBuilder = new RedirectUrlBuilder();
+        final int serverPort = super.getPortResolver().getServerPort(request);
+        final String scheme = request.getScheme();
+        final RedirectUrlBuilder urlBuilder = new RedirectUrlBuilder();
         urlBuilder.setScheme(scheme);
         urlBuilder.setServerName(request.getServerName());
         urlBuilder.setPort(serverPort);
         urlBuilder.setContextPath(request.getContextPath());
         urlBuilder.setPathInfo(loginForm);
         if (super.isForceHttps() && "http".equals(scheme)) {
-            Integer httpsPort = super.getPortMapper()
+            final Integer httpsPort = super.getPortMapper()
                     .lookupHttpsPort(serverPort);
             if (httpsPort != null) {
                 urlBuilder.setScheme("https");

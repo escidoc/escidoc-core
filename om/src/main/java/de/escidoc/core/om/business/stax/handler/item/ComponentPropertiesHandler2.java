@@ -89,7 +89,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     public StartElement startElement(final StartElement element) {
 
         if (!inside) {
-            String currentPath = parser.getCurPath();
+            final String currentPath = parser.getCurPath();
             if (currentPath.startsWith(XPATH_COMPONENT_PROPERTIES)) {
                 inside = true;
             }
@@ -104,7 +104,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     public EndElement endElement(final EndElement element) {
 
         if (inside) {
-            String currentPath = parser.getCurPath();
+            final String currentPath = parser.getCurPath();
             if (currentPath.startsWith(XPATH_COMPONENT_PROPERTIES)) {
                 inside = false;
             }
@@ -121,7 +121,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
         WebserverSystemException {
 
         if (inside) {
-            String currentPath = element.getLocalName();
+            final String currentPath = element.getLocalName();
 
             if (currentPath.equals(Elements.ELEMENT_MIME_TYPE)) {
               if (s != null && s.trim().length() > 0) {

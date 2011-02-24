@@ -120,7 +120,7 @@ public class ComponentHandler extends DefaultHandler {
             return element;
         }
         else {
-            String currentPath = parser.getCurPath();
+            final String currentPath = parser.getCurPath();
             if (XPATH_COMPONENT_PROPERTIES.equals(currentPath)) {
                 LOGGER.debug("Parser reached " + XPATH_COMPONENT_PROPERTIES);
                 // creating a new Component shows that the parser is within a
@@ -164,7 +164,7 @@ public class ComponentHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws WebserverSystemException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (XPATH_COMPONENT_PROPERTIES.equals(currentPath)) {
             LOGGER.debug("Parser reached end of " + XPATH_COMPONENT_PROPERTIES);

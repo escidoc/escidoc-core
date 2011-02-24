@@ -81,7 +81,7 @@ public final class BeanLocator {
     }
 
     public static BeanFactory getBeanFactory(final String beanContextId) {
-        BeanFactoryLocator beanFactoryLocator =
+        final BeanFactoryLocator beanFactoryLocator =
             SingletonBeanFactoryLocator.getInstance();
         return beanFactoryLocator.useBeanFactory(beanContextId).getFactory();
     }

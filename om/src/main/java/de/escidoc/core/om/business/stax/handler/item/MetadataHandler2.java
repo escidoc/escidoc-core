@@ -124,7 +124,7 @@ public class MetadataHandler2 extends DefaultHandler {
             }
         }
         else {
-            String currentPath = parser.getCurPath();
+            final String currentPath = parser.getCurPath();
             if (currentPath.equals(this.metadataXPath)
                 && element.indexOfAttribute(null, "inherited") < 0) {
 
@@ -178,7 +178,7 @@ public class MetadataHandler2 extends DefaultHandler {
             this.parsingMetadata = false;
 
             this.me.endElement(element);
-            Map<String,?> tmp =
+            final Map<String,?> tmp =
                 (HashMap<String, ?>) this.me.getOutputStreams().get(
                     Elements.ELEMENT_MD_RECORDS);
             try {

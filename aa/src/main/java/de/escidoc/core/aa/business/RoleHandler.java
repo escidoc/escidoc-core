@@ -129,18 +129,18 @@ public class RoleHandler implements RoleHandlerInterface {
     public String create(final String xmlData) throws XmlCorruptedException,
         UniqueConstraintViolationException, SystemException {
 
-        EscidocRole role = new EscidocRole();
-        ByteArrayInputStream in =
+        final EscidocRole role = new EscidocRole();
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(xmlData);
 
-        StaxParser sp = new StaxParser(XmlUtility.NAME_ROLE);
+        final StaxParser sp = new StaxParser(XmlUtility.NAME_ROLE);
 
-        RolePropertiesStaxHandler propertiesHandler =
+        final RolePropertiesStaxHandler propertiesHandler =
             new RolePropertiesStaxHandler(role, roleDao);
         sp.addHandler(propertiesHandler);
-        ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
+        final ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
         sp.addHandler(scopeHandler);
-        XacmlStaxHandler xacmlHandler = new XacmlStaxHandler(role);
+        final XacmlStaxHandler xacmlHandler = new XacmlStaxHandler(role);
         sp.addHandler(xacmlHandler);
 
         try {
@@ -206,7 +206,7 @@ public class RoleHandler implements RoleHandlerInterface {
                 ERROR_ROLE_NOT_FOUND, id));
         }
 
-        List<RoleGrant> grants = userAccountDao.retrieveGrantsByRole(role);
+        final List<RoleGrant> grants = userAccountDao.retrieveGrantsByRole(role);
         if (grants != null && !grants.isEmpty()) {
             throw new RoleInUseViolationException(ERROR_ROLE_IN_USE);
         }
@@ -321,13 +321,13 @@ public class RoleHandler implements RoleHandlerInterface {
 
         sp = new StaxParser(XmlUtility.NAME_ROLE);
 
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(role.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
-        RolePropertiesStaxHandler propertiesHandler =
+        final RolePropertiesStaxHandler propertiesHandler =
             new RolePropertiesStaxHandler(role, roleDao);
         sp.addHandler(propertiesHandler);
-        ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
+        final ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
         sp.addHandler(scopeHandler);
         xacmlHandler = new XacmlStaxHandler(role);
         sp.addHandler(xacmlHandler);
@@ -385,15 +385,15 @@ public class RoleHandler implements RoleHandlerInterface {
     @Override
     public String retrieveRoles(final Map<String, String[]> filter)
         throws InvalidSearchQueryException, SystemException {
-        SRURequestParameters parameters = new DbRequestParameters(filter);
-        String query = parameters.getQuery();
-        int limit = parameters.getLimit();
-        int offset = parameters.getOffset();
-        boolean explain = parameters.isExplain();
+        final SRURequestParameters parameters = new DbRequestParameters(filter);
+        final String query = parameters.getQuery();
+        final int limit = parameters.getLimit();
+        final int offset = parameters.getOffset();
+        final boolean explain = parameters.isExplain();
 
-        String result;
+        final String result;
         if (explain) {
-            Map<String, Object> values = new HashMap<String, Object>();
+            final Map<String, Object> values = new HashMap<String, Object>();
 
             values.put("PROPERTY_NAMES",
                 new RoleFilter(null).getPropertyNames());
@@ -405,14 +405,14 @@ public class RoleHandler implements RoleHandlerInterface {
                     parameters.getRecordPacking());
         }
         else {
-            int needed = offset + limit;
+            final int needed = offset + limit;
             int currentOffset = 0;
             final List<EscidocRole> permittedObjects =
                 new ArrayList<EscidocRole>();
             final int size = permittedObjects.size();
             while (size <= needed) {
 
-                List<EscidocRole> tmpObjects = roleDao.retrieveRoles(query, currentOffset, needed);
+                final List<EscidocRole> tmpObjects = roleDao.retrieveRoles(query, currentOffset, needed);
                 if (tmpObjects == null || tmpObjects.isEmpty()) {
                     break;
                 }
@@ -420,7 +420,7 @@ public class RoleHandler implements RoleHandlerInterface {
                 final List<String> ids =
                     new ArrayList<String>(tmpObjects.size());
                 while (objectIter.hasNext()) {
-                    EscidocRole object = objectIter.next();
+                    final EscidocRole object = objectIter.next();
                     ids.add(object.getId());
                 }
 
@@ -647,12 +647,12 @@ public class RoleHandler implements RoleHandlerInterface {
     private void updateRole(final EscidocRole role)
         throws SqlDatabaseSystemException, WebserverSystemException {
         getXacmlParser().parse(role);
-        for (ResourceType resourceType : ResourceType.values()) {
+        for (final ResourceType resourceType : ResourceType.values()) {
             // ensure the role is written to database
             roleDao.flush();
 
-            String scopeRules = xacmlParser.getScopeRules(resourceType);
-            String policyRules = xacmlParser.getPolicyRules(resourceType);
+            final String scopeRules = xacmlParser.getScopeRules(resourceType);
+            final String policyRules = xacmlParser.getPolicyRules(resourceType);
 
             log.info("create access right (" + role.getId() + ','
                 + resourceType + ',' + scopeRules + ',' + policyRules + ')');

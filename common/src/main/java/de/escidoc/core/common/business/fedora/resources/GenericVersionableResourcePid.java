@@ -139,8 +139,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         super.setObjectPid(pid);
 
-        String timestamp = getLastFedoraModificationDate();
-        String newEventEntry =
+        final String timestamp = getLastFedoraModificationDate();
+        final String newEventEntry =
             createEventXml(timestamp, "assignObjectPid", "objectPid assigned");
 
         writeEventToWov(null, timestamp, newEventEntry);
@@ -182,12 +182,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             }
             else {
                 // FIXME
-                String latestReleaseDate =
+                final String latestReleaseDate =
                     getVersionElementData(PropertyMapKeys.LATEST_RELEASE_VERSION_DATE);
                 // get the timestamp of this version
                 // get the RELSE-EXT of the version and parse it for the
                 // versionPid
-                Datastream relsExt;
+                final Datastream relsExt;
                 try {
                     relsExt = getRelsExt(latestReleaseDate);
                 }
@@ -234,11 +234,11 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      */
     public void setVersionPid(final String pid) throws SystemException {
 
-        String timestamp = getLastFedoraModificationDate();
+        final String timestamp = getLastFedoraModificationDate();
 
         setLastModificationDate(timestamp);
 
-        String newEventEntry =
+        final String newEventEntry =
             createEventXml(timestamp, "assignVersionPid", "versionPid assigned");
 
         writeEventToWov(null, timestamp, newEventEntry);
@@ -274,8 +274,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
         // compare the versions (only set latest-release pid if the
         // latest-released version is older thean the current.
-        int lrvn = Integer.valueOf(latestReleasedVersion);
-        int cvn = Integer.valueOf(getVersionId());
+        final int lrvn = Integer.valueOf(latestReleasedVersion);
+        final int cvn = Integer.valueOf(getVersionId());
         String pid = null;
 
         if (lrvn == cvn) {
@@ -334,7 +334,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      */
     public boolean hasVersionPid() throws WebserverSystemException {
 
-        String pid;
+        final String pid;
         try {
             pid = getVersionPid();
         }
@@ -361,7 +361,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     public String getLatestReleasePid() throws TripleStoreSystemException,
         WebserverSystemException {
 
-        String pid =
+        final String pid =
             getResourceProperties().get(PropertyMapKeys.LATEST_RELEASE_PID);
         if (validPidStructure(pid)) {
             return pid;
@@ -511,7 +511,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         // TODO update of the latest-release-pid even if this is wrong within
         // the inheritage structure (because release is no feature of the
         // GenericVersionableResource. But all other need more code refactoring)
-        String latestReleasedVersion =
+        final String latestReleasedVersion =
             getResourcePropertiesValue(PropertyMapKeys.LATEST_RELEASE_VERSION_NUMBER);
 
         byte[] relsExt = null;
@@ -519,12 +519,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
             // compare the versions (only set latest-release pid if the
             // latest-released version is older thean the current.
-            int lrvn = Integer.valueOf(latestReleasedVersion);
-            int cvn = Integer.valueOf(getVersionId());
+            final int lrvn = Integer.valueOf(latestReleasedVersion);
+            final int cvn = Integer.valueOf(getVersionId());
 
             if (lrvn <= cvn) {
                 // get the pid of the latest-release
-                String latestReleasePid = getLatestReleasePid();
+                final String latestReleasePid = getLatestReleasePid();
                 if (latestReleasePid != null) {
                     // update release pid
                     relsExt = updateLatestReleasePid(latestReleasePid);
@@ -776,7 +776,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     private Collection<String> expandPropertiesNames(
         final Collection<String> propertiesNames) {
 
-        Collection<String> newPropertiesNames;
+        final Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
             newPropertiesNames = propertiesNames;
         }
@@ -803,7 +803,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
     private Map<String, String> expandPropertiesNamesMapping(
         final Map<String, String> propertiesNamesMap) {
 
-        Map<String, String> newPropertiesNamesMap;
+        final Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
             newPropertiesNamesMap = propertiesNamesMap;
         }
@@ -835,19 +835,19 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException {
 
-        Datastream relsExt;
+        final Datastream relsExt;
         try {
             relsExt = getRelsExt();
         }
         catch (StreamNotFoundException e1) {
             throw new IntegritySystemException("Datastream not found.", e1);
         }
-        byte[] relsExtContent = relsExt.getStream();
+        final byte[] relsExtContent = relsExt.getStream();
 
-        StaxParser sp = new StaxParser();
-        ByteArrayInputStream relsExtInputStream = new ByteArrayInputStream(relsExtContent);
+        final StaxParser sp = new StaxParser();
+        final ByteArrayInputStream relsExtInputStream = new ByteArrayInputStream(relsExtContent);
 
-        RelsExtContentRelationsReadHandler reHandler =
+        final RelsExtContentRelationsReadHandler reHandler =
             new RelsExtContentRelationsReadHandler(sp);
         sp.addHandler(reHandler);
         try {
@@ -884,17 +884,17 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         throws XmlParserSystemException, WebserverSystemException,
         IntegritySystemException, FedoraSystemException {
 
-        Datastream relsExt;
+        final Datastream relsExt;
         try {
             relsExt = getRelsExt();
         }
         catch (final StreamNotFoundException e1) {
             throw new IntegritySystemException("Datastream not found.", e1);
         }
-        ByteArrayInputStream relsExtInputStream =
+        final ByteArrayInputStream relsExtInputStream =
             new ByteArrayInputStream(relsExt.getStream());
 
-        RelsExtContentRelationsReadHandlerForUpdate relsExtHandler =
+        final RelsExtContentRelationsReadHandlerForUpdate relsExtHandler =
             new RelsExtContentRelationsReadHandlerForUpdate(sp);
 
         sp.addHandler(relsExtHandler);
@@ -910,9 +910,9 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             throw new WebserverSystemException(e);
         }
         sp.clearHandlerChain();
-        List<String> existRelations = relsExtHandler.getRelationsStrings();
+        final List<String> existRelations = relsExtHandler.getRelationsStrings();
 
-        Collection<String> existRelationsCopy = new ArrayList<String>();
+        final Collection<String> existRelationsCopy = new ArrayList<String>();
         existRelationsCopy.addAll(existRelations);
         existRelations.removeAll(relationsToUpdate);
         relationsToUpdate.removeAll(existRelationsCopy);
@@ -921,16 +921,16 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         // prepare update relations
         if ((relationsToUpdate != null) && (!relationsToUpdate.isEmpty())) {
             elementsToAdd = new ArrayList<StartElementWithChildElements>();
-            for (String relation : relationsToUpdate) {
-                String[] predicateAndTarget = relation.split("###");
-                String[] predicate = predicateAndTarget[0].split("#");
-                StartElementWithChildElements newContentRelationElement =
+            for (final String relation : relationsToUpdate) {
+                final String[] predicateAndTarget = relation.split("###");
+                final String[] predicate = predicateAndTarget[0].split("#");
+                final StartElementWithChildElements newContentRelationElement =
                         new StartElementWithChildElements();
                 newContentRelationElement.setLocalName(predicate[1]);
                 newContentRelationElement
                         .setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
                 newContentRelationElement.setNamespace(predicate[0]);
-                Attribute resource =
+                final Attribute resource =
                         new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                                 Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
                                         + predicateAndTarget[1]);
@@ -943,34 +943,34 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         // prepare add/remove
         Map<String, List<StartElementWithChildElements>> toRemove = null;
         if ((existRelations != null) && (!existRelations.isEmpty())) {
-            Iterator<String> iterator = existRelations.iterator();
-            HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
+            final Iterator<String> iterator = existRelations.iterator();
+            final HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
                 new HashMap<String, List<StartElementWithChildElements>>();
 
             while (iterator.hasNext()) {
-                String relation = iterator.next();
-                String[] predicateAndTarget = relation.split("###");
-                String[] predicate = predicateAndTarget[0].split("#");
+                final String relation = iterator.next();
+                final String[] predicateAndTarget = relation.split("###");
+                final String[] predicate = predicateAndTarget[0].split("#");
 
-                StartElementWithChildElements newContentRelationElement =
+                final StartElementWithChildElements newContentRelationElement =
                     new StartElementWithChildElements();
                 newContentRelationElement.setLocalName(predicate[1]);
                 newContentRelationElement
                     .setPrefix(de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
                 newContentRelationElement.setNamespace(predicate[0] + '/');
-                Attribute resource =
+                final Attribute resource =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                         Constants.RDF_NAMESPACE_PREFIX, "info:fedora/"
                             + predicateAndTarget[1]);
                 newContentRelationElement.addAttribute(resource);
                 newContentRelationElement.setChildrenElements(null);
                 if (predicateValuesVectorAssignment.containsKey(predicate[1])) {
-                    List<StartElementWithChildElements> vector =
+                    final List<StartElementWithChildElements> vector =
                         predicateValuesVectorAssignment.get(predicate[1]);
                     vector.add(newContentRelationElement);
                 }
                 else {
-                    List<StartElementWithChildElements> vector =
+                    final List<StartElementWithChildElements> vector =
                         new ArrayList<StartElementWithChildElements>();
                     vector.add(newContentRelationElement);
                     predicateValuesVectorAssignment.put(predicate[1], vector);
@@ -981,14 +981,14 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             
-            for (Entry<String, List<StartElementWithChildElements>> e : predicateValuesVectorAssignment.entrySet()) {
+            for (final Entry<String, List<StartElementWithChildElements>> e : predicateValuesVectorAssignment.entrySet()) {
                 toRemove.put("/RDF/Description/" + e.getKey(), e.getValue());
             }
         }
 
         // Update RELS-EXT
         if ((toRemove != null) || (elementsToAdd != null)) {
-            byte[] newRelsExtBytes =
+            final byte[] newRelsExtBytes =
                 Utility.updateRelsExt(elementsToAdd, toRemove, relsExt
                     .getStream(), this, null);
             try {

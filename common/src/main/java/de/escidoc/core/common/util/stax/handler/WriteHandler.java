@@ -60,7 +60,7 @@ public abstract class WriteHandler extends DefaultHandler {
         return writer;
     }
 
-    protected void setWriter(XMLStreamWriter writer) {
+    protected void setWriter(final XMLStreamWriter writer) {
         this.writer = writer;
     }
 
@@ -68,7 +68,7 @@ public abstract class WriteHandler extends DefaultHandler {
         return nsuris;
     }
 
-    protected void setNsuris(Map<String, List> nsuris) {
+    protected void setNsuris(final Map<String, List> nsuris) {
         this.nsuris = nsuris;
     }
 
@@ -84,17 +84,17 @@ public abstract class WriteHandler extends DefaultHandler {
         deepLevel--;
     }
 
-    protected void writeElement(StartElement element) throws XMLStreamException {
+    protected void writeElement(final StartElement element) throws XMLStreamException {
 
-        String name = element.getLocalName();
-        String uri = element.getNamespace();
+        final String name = element.getLocalName();
+        final String uri = element.getNamespace();
         String prefix = element.getPrefix();
 
         if ((uri) != null) {
             if (nsuris.containsKey(uri)) {
-                List namespaceTrace = nsuris.get(uri);
-                Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
-                String prefixTrace = (String) namespaceTrace.get(2);
+                final List namespaceTrace = nsuris.get(uri);
+                final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
+                final String prefixTrace = (String) namespaceTrace.get(2);
                 if (prefixTrace == null || !prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
@@ -105,7 +105,7 @@ public abstract class WriteHandler extends DefaultHandler {
                     writer.writeStartElement(prefix, name, uri);
                 }
             } else {
-                List namespaceTrace = new ArrayList();
+                final List namespaceTrace = new ArrayList();
                 namespaceTrace.add(deepLevel);
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
@@ -121,13 +121,13 @@ public abstract class WriteHandler extends DefaultHandler {
     }
 
     protected void writeAttribute(
-        String uri, String elementName, String attributeName,
-        String attributeValue, String prefix, NamespaceContext nscontext)
+        final String uri, final String elementName, final String attributeName,
+        final String attributeValue, String prefix, final NamespaceContext nscontext)
         throws XMLStreamException {
         if (uri != null) {
             if (nsuris.containsKey(uri)) {
-                List namespaceTrace = nsuris.get(uri);
-                String prefixTrace = (String) namespaceTrace.get(2);
+                final List namespaceTrace = nsuris.get(uri);
+                final String prefixTrace = (String) namespaceTrace.get(2);
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
@@ -137,7 +137,7 @@ public abstract class WriteHandler extends DefaultHandler {
                 // writer.writeNamespace(prefix, uri);
                 // }
             } else {
-                List namespaceTrace = new ArrayList();
+                final List namespaceTrace = new ArrayList();
                 namespaceTrace.add(deepLevel);
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
@@ -147,13 +147,13 @@ public abstract class WriteHandler extends DefaultHandler {
             }
         }
         if (prefix != null) {
-            String nameUri = nscontext.getNamespaceURI(prefix);
+            final String nameUri = nscontext.getNamespaceURI(prefix);
             if (nameUri != null
                 && nameUri.equals(XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI)) {
 
-                String[] attributeValueArray = attributeValue.split(":");
+                final String[] attributeValueArray = attributeValue.split(":");
                 if (attributeValueArray.length == 2) {
-                    int index = attributeValueArray[1].indexOf('/');
+                    final int index = attributeValueArray[1].indexOf('/');
                     if (index == -1) {
                         // int index = attributeValue.indexOf(":");
                         // if(index != -1) {
@@ -161,20 +161,20 @@ public abstract class WriteHandler extends DefaultHandler {
                         // attributeValue.substring(0, index);
                         String prefixValue = attributeValueArray[0];
                         if (prefixValue != null) {
-                            String valueUri =
+                            final String valueUri =
                                 nscontext.getNamespaceURI(prefixValue);
                             if (valueUri != null) {
                                 if (nsuris.containsKey(valueUri)) {
-                                    List namespaceTrace =
+                                    final List namespaceTrace =
                                             nsuris.get(valueUri);
-                                    String prefixTrace =
+                                    final String prefixTrace =
                                             (String) namespaceTrace.get(2);
                                     if (!prefixTrace.equals(prefixValue)) {
                                         prefixValue = prefixTrace;
                                     }
 
                                 } else {
-                                    List namespaceTrace = new ArrayList();
+                                    final List namespaceTrace = new ArrayList();
                                     namespaceTrace.add(deepLevel);
                                     namespaceTrace.add(elementName);
                                     namespaceTrace.add(prefixValue);
@@ -195,25 +195,25 @@ public abstract class WriteHandler extends DefaultHandler {
     }
 
     protected void handleAttributeInInsideElement(
-        Attribute attribute, NamespaceContext nscontext, String theName)
+        final Attribute attribute, final NamespaceContext nscontext, final String theName)
         throws XMLStreamException {
-        String attLocalName = attribute.getLocalName();
-        String attrNameSpace = attribute.getNamespace();
-        String attrPrefix = attribute.getPrefix();
-        String attValue = attribute.getValue();
+        final String attLocalName = attribute.getLocalName();
+        final String attrNameSpace = attribute.getNamespace();
+        final String attrPrefix = attribute.getPrefix();
+        final String attValue = attribute.getValue();
         writeAttribute(attrNameSpace, theName, attLocalName, attValue,
             attrPrefix, nscontext);
 
     }
 
     protected String handleAttributeInOutsideElement(
-        Attribute attribute, NamespaceContext nscontext, String theName,
-        String attributeName) throws XMLStreamException {
+        final Attribute attribute, final NamespaceContext nscontext, final String theName,
+        final String attributeName) throws XMLStreamException {
         String attributeValue = null;
-        String attLocalName = attribute.getLocalName();
-        String attrNameSpace = attribute.getNamespace();
-        String attrPrefix = attribute.getPrefix();
-        String attValue = attribute.getValue();
+        final String attLocalName = attribute.getLocalName();
+        final String attrNameSpace = attribute.getNamespace();
+        final String attrPrefix = attribute.getPrefix();
+        final String attValue = attribute.getValue();
         if ((attributeName != null) && attLocalName.equals(attributeName)) {
             attributeValue = attValue;
         }

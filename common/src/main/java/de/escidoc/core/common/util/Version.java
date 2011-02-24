@@ -65,7 +65,7 @@ public class Version implements Comparable<Version> {
      *            version number as string of the form "major.minor.revision"
      */
     public Version(final String version) {
-        String[] parts = version.split("\\.");
+        final String[] parts = version.split("\\.");
 
         majorNumber = Integer.parseInt(parts[0]);
         minorNumber = Integer.parseInt(parts[1]);
@@ -83,7 +83,7 @@ public class Version implements Comparable<Version> {
      */
     @Override
     public int compareTo(final Version o) {
-        int result;
+        final int result;
 
         if (o.majorNumber > majorNumber) {
             result = -1;
@@ -130,7 +130,7 @@ public class Version implements Comparable<Version> {
             return false;
         }
 
-        Version other = (Version) obj;
+        final Version other = (Version) obj;
 
         if (majorNumber != other.majorNumber || minorNumber != other.minorNumber || revisionNumber != other.revisionNumber) {
             return false;

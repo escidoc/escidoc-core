@@ -239,7 +239,7 @@ public class Context extends GenericResource implements ContextInterface {
                 ouToRemove.addAttribute(resource);
                 ouToRemove.setChildrenElements(null);
 
-                List<StartElementWithChildElements> toRemove =
+                final List<StartElementWithChildElements> toRemove =
                     new ArrayList<StartElementWithChildElements>();
                 toRemove.add(ouToRemove);
                 elementsToRemove.put("/RDF/Description/"
@@ -358,7 +358,7 @@ public class Context extends GenericResource implements ContextInterface {
             getFedoraUtility().getDatastreamsInformation(getId(), null);
         final Collection<String> names = new ArrayList<String>();
 
-        for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
+        for (final org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             final String[] altIDs = datastream.getAltIDs();
             if ((altIDs.length > 0)
                     && (altIDs[0]
@@ -367,7 +367,7 @@ public class Context extends GenericResource implements ContextInterface {
             }
         }
 
-        for (String dsNname : names) {
+        for (final String dsNname : names) {
             try {
                 final Datastream newDs = new Datastream(dsNname, getId(), null);
                 result.put(dsNname, newDs);
@@ -433,7 +433,7 @@ public class Context extends GenericResource implements ContextInterface {
                     de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID);
 
         // add only new Datastreams to HashMap
-        for (String dsName : dsNames) {
+        for (final String dsName : dsNames) {
             if (!this.adminDescriptors.containsKey(dsName)) {
                 try {
                     final Datastream newDs =
@@ -517,7 +517,7 @@ public class Context extends GenericResource implements ContextInterface {
         final List<String> propVals = getOrganizationalUnitObjids();
         final Collection<String> ouHrefs = new ArrayList<String>(propVals.size());
         
-        for (String s : propVals) {
+        for (final String s : propVals) {
             ouHrefs.add(path + s);
         }
 
@@ -556,7 +556,7 @@ public class Context extends GenericResource implements ContextInterface {
     private Collection<String> expandPropertiesNames(
         final Collection<String> propertiesNames) {
 
-        Collection<String> newPropertiesNames;
+        final Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
             newPropertiesNames = propertiesNames;
         }
@@ -584,7 +584,7 @@ public class Context extends GenericResource implements ContextInterface {
     private Map<String, String> expandPropertiesNamesMapping(
         final Map<String, String> propertiesMapping) {
 
-        Map<String, String> newPropertiesNames;
+        final Map<String, String> newPropertiesNames;
         if (propertiesMapping != null) {
             newPropertiesNames = propertiesMapping;
         }

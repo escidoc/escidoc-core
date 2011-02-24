@@ -130,10 +130,10 @@ public class ItemPropertiesHandler extends DefaultHandler {
             this.contentModelHandler.startElement(element);
         }
         else {
-            String curPath = parser.getCurPath();
+            final String curPath = parser.getCurPath();
 
             if (curPath.startsWith(XPATH_ITEM_PROPERTIES)) {
-                String theName = element.getLocalName();
+                final String theName = element.getLocalName();
                 if (theName.equals(Elements.ELEMENT_PROPERTIES)) {
                     expectedElements.add(Elements.ELEMENT_CONTEXT);
                     expectedElements.add(Elements.ELEMENT_CONTENT_MODEL);
@@ -177,7 +177,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
         ContentModelNotFoundException, XMLStreamException,
         UnsupportedEncodingException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         if (currentPath.equals(XPATH_ITEM_PROPERTIES)) {
             if (!expectedElements.isEmpty()) {
                 throw new XmlCorruptedException("One of "
@@ -197,7 +197,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             this.parsingContentModelSpecific = false;
             this.contentModelHandler.endElement(element);
 
-            ByteArrayOutputStream cms =
+            final ByteArrayOutputStream cms =
                 (ByteArrayOutputStream) this.contentModelHandler
                     .getOutputStreams().get(
                         Elements.ELEMENT_CONTENT_MODEL_SPECIFIC);
@@ -227,7 +227,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
     public String characters(final String data, final StartElement element)
         throws WebserverSystemException, InvalidStatusException {
 
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
         if (curPath.equals(XPATH_ITEM_PROPERTIES + '/' + Elements.ELEMENT_PID)) {
             // properties.put(TripleStoreUtility.PROP_OBJECT_PID, data);
             this.properties.getObjectProperties().setPid(data);
@@ -266,7 +266,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
         }
         catch (NoSuchAttributeException e) {
-            String href;
+            final String href;
             try {
                 href =
                     element.getAttributeValue(Constants.XLINK_NS_URI,
@@ -281,14 +281,14 @@ public class ItemPropertiesHandler extends DefaultHandler {
                     + " of " + Elements.ELEMENT_CONTEXT
                     + " is missing in item for create.", e);
             }
-            int indexOfLastSlash = href.lastIndexOf('/');
+            final int indexOfLastSlash = href.lastIndexOf('/');
             contextId = href.substring(indexOfLastSlash + 1);
             if (contextId == null || contextId.length() < 1) {
                 throw new MissingAttributeValueException("No context id found.", e);
             }
             if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                 Constants.CONTEXT_URL_BASE)) {
-                String message =
+                final String message =
                     "The " + Elements.ELEMENT_CONTEXT
                         + " element has a wrong url."
                         + "the url have to look like: "
@@ -324,7 +324,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
         }
         catch (NoSuchAttributeException e) {
-            String href;
+            final String href;
             try {
                 href =
                     element.getAttributeValue(Constants.XLINK_NS_URI,
@@ -335,13 +335,13 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 if (UserContext.isRestAccess()) {
                     att = Elements.ATTRIBUTE_XLINK_HREF;
                 }
-                String refType = Elements.ELEMENT_CONTENT_MODEL;
-                String objType = "item";
+                final String refType = Elements.ELEMENT_CONTENT_MODEL;
+                final String objType = "item";
                 throw new MissingAttributeValueException("The attribute " + att
                     + " of " + refType + " is missing in " + objType
                     + " for create.", e);
             }
-            int indexOfLastSlash = href.lastIndexOf('/');
+            final int indexOfLastSlash = href.lastIndexOf('/');
             contentModelId = href.substring(indexOfLastSlash + 1);
             if (contentModelId == null || contentModelId.length() < 1) {
                 throw new MissingAttributeValueException(
@@ -349,7 +349,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
             if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                 Constants.CONTENT_MODEL_URL_BASE)) {
-                String message =
+                final String message =
                     "The " + Elements.ELEMENT_CONTENT_MODEL
                         + " element has a wrong url."
                         + "the url have to look like: "
@@ -383,7 +383,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
         }
         catch (NoSuchAttributeException e) {
-            String href;
+            final String href;
             try {
                 href =
                     element.getAttributeValue(Constants.XLINK_NS_URI,
@@ -394,20 +394,20 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 if (UserContext.isRestAccess()) {
                     att = Elements.ATTRIBUTE_XLINK_HREF;
                 }
-                String refType = Elements.ELEMENT_ORIGIN;
-                String objType = "item";
+                final String refType = Elements.ELEMENT_ORIGIN;
+                final String objType = "item";
                 throw new MissingAttributeValueException("The attribute " + att
                     + " of " + refType + " is missing in " + objType
                     + " for create.", e);
             }
-            int indexOfLastSlash = href.lastIndexOf('/');
+            final int indexOfLastSlash = href.lastIndexOf('/');
             originId = href.substring(indexOfLastSlash + 1);
             if (originId == null || originId.length() < 1) {
                 throw new MissingAttributeValueException("No origin id found.", e);
             }
             if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                 Constants.ITEM_URL_BASE)) {
-                String message =
+                final String message =
                     "The " + Elements.ELEMENT_ORIGIN
                         + " element has a wrong url."
                         + "the url have to look like: "
@@ -450,7 +450,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
         }
 
-        String msg = "Invalid status '" + type + '\'';
+        final String msg = "Invalid status '" + type + '\'';
         LOGGER.debug(msg);
         throw new InvalidStatusException(msg);
     }

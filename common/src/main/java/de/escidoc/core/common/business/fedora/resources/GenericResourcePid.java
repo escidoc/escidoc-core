@@ -108,9 +108,9 @@ public class GenericResourcePid extends GenericResource {
      *             Thrown in case of internal error.
      */
     public void removeObjectPid() throws SystemException {
-        Map<String, List<StartElementWithChildElements>> deleteFromRelsExt =
+        final Map<String, List<StartElementWithChildElements>> deleteFromRelsExt =
             new TreeMap<String, List<StartElementWithChildElements>>();
-        List<StartElementWithChildElements> elementsToRemove =
+        final List<StartElementWithChildElements> elementsToRemove =
             new ArrayList<StartElementWithChildElements>();
 
         elementsToRemove.add(new StartElementWithChildElements(
@@ -232,7 +232,7 @@ public class GenericResourcePid extends GenericResource {
     private Collection<String> expandPropertiesNames(
         final Collection<String> propertiesNames) {
 
-        Collection<String> newPropertiesNames;
+        final Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
             newPropertiesNames = propertiesNames;
         }
@@ -324,7 +324,7 @@ public class GenericResourcePid extends GenericResource {
     private Map<String, String> expandPropertiesNamesMapping(
         final Map<String, String> propertiesNamesMap) {
 
-        Map<String, String> newPropertiesNamesMap;
+        final Map<String, String> newPropertiesNamesMap;
         if (propertiesNamesMap != null) {
             newPropertiesNamesMap = propertiesNamesMap;
         }

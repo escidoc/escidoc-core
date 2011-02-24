@@ -88,11 +88,11 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws MissingAttributeValueException {
-        String curPath = parser.getCurPath();
-        String theName = element.getLocalName();
-        int indexInherited = element.indexOfAttribute(null, "inherited");
+        final String curPath = parser.getCurPath();
+        final String theName = element.getLocalName();
+        final int indexInherited = element.indexOfAttribute(null, "inherited");
         if (curPath.startsWith(mdRecordsPath) || mdRecordsPath.length() == 0) {
 
             if (curPath.equals(mdRecordsPath + "/md-record")
@@ -127,18 +127,18 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                 }
 
                 String typeValue = null;
-                int indexOfType = element.indexOfAttribute(null, "md-type");
+                final int indexOfType = element.indexOfAttribute(null, "md-type");
                 if (indexOfType != -1) {
-                    Attribute type = element.getAttribute(indexOfType);
+                    final Attribute type = element.getAttribute(indexOfType);
                     typeValue = type.getValue();
                 }
                 String schemaValue = null;
-                int indexOfSchema = element.indexOfAttribute(null, "schema");
+                final int indexOfSchema = element.indexOfAttribute(null, "schema");
                 if (indexOfSchema != -1) {
-                    Attribute schema = element.getAttribute(indexOfSchema);
+                    final Attribute schema = element.getAttribute(indexOfSchema);
                     schemaValue = schema.getValue();
                 }
-                Map<String, String> md = new HashMap<String, String>();
+                final Map<String, String> md = new HashMap<String, String>();
                 if (typeValue != null) {
                     md.put("type", typeValue);
                 }
@@ -184,7 +184,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
         }
         else if ((mdRecordsPath.equals(parser.getCurPath()))
             && (!isMandatoryName && !origin)) {
-            String message =
+            final String message =
                 "Mandatory md-record with a name "
                     + Elements.MANDATORY_MD_RECORD_NAME + " is missing.";
             LOGGER.error(message);

@@ -79,7 +79,7 @@ public class OrganizationalUnitHandlerCreate
         final Map<String, ByteArrayOutputStream> metadataStreams,
         final String dcStream) throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);
         values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility
             .getInstance().getBuildNumber());
@@ -88,12 +88,12 @@ public class OrganizationalUnitHandlerCreate
         values.put(XmlTemplateProvider.VAR_PARENTS, parents);
 
         if (metadataStreams != null) {
-            Collection<Map<String, String>> mdRecords =
+            final Collection<Map<String, String>> mdRecords =
                 new ArrayList<Map<String, String>>(metadataStreams.size());
-            for (String name : metadataStreams.keySet()) {
-                Map<String, String> mdRecord = new HashMap<String, String>();
+            for (final String name : metadataStreams.keySet()) {
+                final Map<String, String> mdRecord = new HashMap<String, String>();
                 if (metadataProperties != null) {
-                    Map<String, String> properties =
+                    final Map<String, String> properties =
                             metadataProperties.get(name);
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, properties
                             .get(Elements.MD_RECORD_ATTRIBUTE_TYPE));
@@ -102,7 +102,7 @@ public class OrganizationalUnitHandlerCreate
                 }
                 mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, name);
                 try {
-                    String metadata =
+                    final String metadata =
                             metadataStreams.get(name).toString(
                                     XmlUtility.CHARACTER_ENCODING);
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT,
@@ -140,7 +140,7 @@ public class OrganizationalUnitHandlerCreate
         final String id, final Map<String, Object> relsExtValues,
         final List<String> parents) throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);
         values.put(XmlTemplateProvider.VAR_ID, id);
         values.put(XmlTemplateProvider.VAR_PARENTS, parents);

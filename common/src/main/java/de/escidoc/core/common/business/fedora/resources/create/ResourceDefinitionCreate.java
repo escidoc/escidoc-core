@@ -102,7 +102,7 @@ public class ResourceDefinitionCreate {
      */
     public String getFOXML() throws SystemException {
 
-        Map<String, String> templateValues = getValueMap();
+        final Map<String, String> templateValues = getValueMap();
         return ItemFoXmlProvider.getInstance().getMetadataFoXml(templateValues);
     }
 
@@ -121,9 +121,9 @@ public class ResourceDefinitionCreate {
         return xsltHref;
     }
 
-    public void setXsltHref(String xsltHref) throws MalformedURLException,
+    public void setXsltHref(final String xsltHref) throws MalformedURLException,
         IOException {
-        URL url;
+        final URL url;
         if (xsltHref.startsWith("/")) {
             url =
                 new URL(EscidocConfiguration.getInstance().get(
@@ -141,11 +141,11 @@ public class ResourceDefinitionCreate {
         return mdRecordName;
     }
 
-    public void setMdRecordName(String mdRecordName) {
+    public void setMdRecordName(final String mdRecordName) {
         this.mdRecordName = mdRecordName;
     }
 
-    public String getFedoraId(String parentId) {
+    public String getFedoraId(final String parentId) {
         if (name == null) {
             throw new NullPointerException(
                 "Name must not be null to provide FedoraId.");

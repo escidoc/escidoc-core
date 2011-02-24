@@ -151,9 +151,9 @@ public class ResourceIdentifierAttributeFinderModule
         // all we have to do is to check if the object type of the object
         // identified by the resource-id matches the expected that is extracted
         // from the attribute id
-        String objectType = fetchObjectType(ctx);
+        final String objectType = fetchObjectType(ctx);
 
-        Matcher matcher =
+        final Matcher matcher =
             PATTERN_PARSE_RESOURCE_IDENTIFIED_ATTRIBUTE_ID
                 .matcher(attributeIdValue);
         if (matcher.find()) {

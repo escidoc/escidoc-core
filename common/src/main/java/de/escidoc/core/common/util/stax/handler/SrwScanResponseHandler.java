@@ -57,7 +57,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
     /**
      * Constructor
      */
-    public SrwScanResponseHandler(StaxParser parser) {
+    public SrwScanResponseHandler(final StaxParser parser) {
         this.parser = parser;
 
     }
@@ -80,7 +80,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
             final String s,
             final StartElement element)
             throws Exception {
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         System.out.println(currentPath);
         if (TERM_VALUE_PATH.equals(parser.getCurPath())) {
             terms.add(s.replaceAll("(.*?:.*?):.*", "$1"));

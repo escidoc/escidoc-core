@@ -233,7 +233,7 @@ public class SmAggregationDefinitionsHibernateDao
         final Collection<String> scopeIds, final String criteria,
         final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
-        Collection<AggregationDefinition> result = 
+        final Collection<AggregationDefinition> result =
                 new ArrayList<AggregationDefinition>();
 
         if ((scopeIds != null) && (!scopeIds.isEmpty())) {
@@ -249,7 +249,7 @@ public class SmAggregationDefinitionsHibernateDao
             }
             detachedCriteria.add(Restrictions.in("scope.id", scopeIds));
 
-            Collection<AggregationDefinition> aggregationDefinitions =
+            final Collection<AggregationDefinition> aggregationDefinitions =
                 getHibernateTemplate().findByCriteria(detachedCriteria, offset,
                     maxResults);
 
@@ -287,7 +287,7 @@ public class SmAggregationDefinitionsHibernateDao
             DetachedCriteria.forClass(AggregationDefinition.class, "a");
         detachedCriteria.add(Restrictions.in("scope.id", scopeIds));
 
-        Collection<AggregationDefinition> aggregationDefinitions =
+        final Collection<AggregationDefinition> aggregationDefinitions =
             getHibernateTemplate().findByCriteria(detachedCriteria);
         if (aggregationDefinitions != null) {
             return aggregationDefinitions;

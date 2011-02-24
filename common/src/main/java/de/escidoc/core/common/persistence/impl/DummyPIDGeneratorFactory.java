@@ -70,29 +70,29 @@ public class DummyPIDGeneratorFactory extends PIDSystemFactory {
      *             If the PID System connection could not be initialized.
      */
     private void getNewInstance() throws PidSystemException {
-        DummyPIDGenerator dummyGenerator = new DummyPIDGenerator();
+        final DummyPIDGenerator dummyGenerator = new DummyPIDGenerator();
         try {
-            EscidocConfiguration conf = EscidocConfiguration.getInstance();
+            final EscidocConfiguration conf = EscidocConfiguration.getInstance();
 
-            String pidNamespace =
+            final String pidNamespace =
                 conf.get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_NAMESPACE);
             if (pidNamespace != null) {
                 dummyGenerator.setPidNamespace(pidNamespace);
             }
 
-            String globalPrefix =
+            final String globalPrefix =
                 conf
                     .get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_GLOBALPREFIX);
             dummyGenerator.setGlobalPrefix(globalPrefix);
 
-            String localPrefix =
+            final String localPrefix =
                 conf
                     .get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_LOCALPREFIX);
             if (localPrefix != null) {
                 dummyGenerator.setLocalPrefix(localPrefix);
             }
 
-            String separator =
+            final String separator =
                 conf.get(EscidocConfiguration.ESCIDOC_CORE_DUMMYPID_SEPARATOR);
             if (separator != null) {
                 dummyGenerator.setSeparator(separator);

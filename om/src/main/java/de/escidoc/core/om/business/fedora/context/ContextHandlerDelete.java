@@ -64,13 +64,13 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
         throws ContextNotEmptyException, ContextNotFoundException,
         InvalidStatusException, SystemException {
 
-        Context context = contextHandler.getContext();
-        String objectType =
+        final Context context = contextHandler.getContext();
+        final String objectType =
             getTripleStoreUtility().getObjectType(context.getId());
 
         if (!getTripleStoreUtility().exists(context.getId())
             || !Constants.CONTEXT_OBJECT_TYPE.equals(objectType)) {
-            String msg =
+            final String msg =
                 StringUtility.format(
                     "Context not found", context.getId());
             LOGGER.debug(msg);

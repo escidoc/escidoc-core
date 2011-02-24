@@ -142,9 +142,9 @@ public class XacmlParser {
      */
     public String getPolicyRules(final ResourceType resourceType) {
         String result = "";
-        List<String> ruleList = pol.getMatchingRules(resourceType);
+        final List<String> ruleList = pol.getMatchingRules(resourceType);
 
-        for (String rule : ruleList) {
+        for (final String rule : ruleList) {
             if ((rule != null) && (rule.length() > 0)) {
                 if (result.length() > 0) {
                     result = values.getAndCondition(result, rule);
@@ -172,11 +172,11 @@ public class XacmlParser {
      */
     public String getScopeRules(final ResourceType resourceType) {
         String result = "";
-        String label = resourceType.getLabel();
+        final String label = resourceType.getLabel();
 
-        for (Object scope : role.getScopeDefs()) {
+        for (final Object scope : role.getScopeDefs()) {
             if (label.equals(((ScopeDefBase) scope).getObjectType())) {
-                String rule =
+                final String rule =
                     values.getScope(((ScopeDef) scope).getAttributeId());
 
                 if (rule == null) {
@@ -207,9 +207,9 @@ public class XacmlParser {
      * Initialize the XACML function factory.
      */
     private void initFactory() {
-        FunctionFactoryProxy proxy =
+        final FunctionFactoryProxy proxy =
             StandardFunctionFactory.getNewFactoryProxy();
-        FunctionFactory factory = proxy.getTargetFactory();
+        final FunctionFactory factory = proxy.getTargetFactory();
 
         factory.addFunction(new XacmlFunctionContains());
         factory.addFunction(new XacmlFunctionIsIn());
@@ -254,17 +254,17 @@ public class XacmlParser {
         try {
             in = new BufferedInputStream(new FileInputStream(file));
 
-            StaxParser sp = new StaxParser(XmlUtility.NAME_ROLE);
-            RolePropertiesStaxHandler propertiesHandler =
+            final StaxParser sp = new StaxParser(XmlUtility.NAME_ROLE);
+            final RolePropertiesStaxHandler propertiesHandler =
                 new RolePropertiesStaxHandler(role, roleDao);
 
             sp.addHandler(propertiesHandler);
 
-            ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
+            final ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
 
             sp.addHandler(scopeHandler);
 
-            XacmlStaxHandler xacmlHandler = new XacmlStaxHandler(role);
+            final XacmlStaxHandler xacmlHandler = new XacmlStaxHandler(role);
 
             sp.addHandler(xacmlHandler);
             sp.parse(in);

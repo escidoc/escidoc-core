@@ -77,9 +77,9 @@ public class OuListOuIdHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws Exception {
 
-        String ouRefPath = "/organizational-unit-path-list/"
+        final String ouRefPath = "/organizational-unit-path-list/"
                 + "organizational-unit-path/organizational-unit-ref";
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (ouRefPath.equals(currentPath)) {
             ids.add(XmlUtility.getIdFromStartElement(element));

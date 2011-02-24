@@ -182,7 +182,7 @@ public class ContentModel extends GenericVersionableResourcePid
         WebserverSystemException {
 
         if (this.dc == null) {
-            Datastream ds;
+            final Datastream ds;
             try {
                 ds = new Datastream("DC", getId(), getVersionDate());
             }
@@ -268,17 +268,17 @@ public class ContentModel extends GenericVersionableResourcePid
 
         super.initDatastreams(datastreamInfos);
 
-        for (org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
-            List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
-            String name = datastreamInfo.getID();
-            String label = datastreamInfo.getLabel();
-            DatastreamControlGroup controlGroup =
+        for (final org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
+            final List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
+            final String name = datastreamInfo.getID();
+            final String label = datastreamInfo.getLabel();
+            final DatastreamControlGroup controlGroup =
                     datastreamInfo.getControlGroup();
-            String controlGroupValue = controlGroup.getValue();
-            String mimeType = datastreamInfo.getMIMEType();
-            String location = datastreamInfo.getLocation();
+            final String controlGroupValue = controlGroup.getValue();
+            final String mimeType = datastreamInfo.getMIMEType();
+            final String location = datastreamInfo.getLocation();
 
-            Datastream ds;
+            final Datastream ds;
             if (altIDs.contains("content-stream")) {
                 // found content-stream
                 ds =
@@ -322,7 +322,7 @@ public class ContentModel extends GenericVersionableResourcePid
     private Collection<String> expandPropertiesNames(
         final Collection<String> propertiesNames) {
 
-        Collection<String> newPropertiesNames;
+        final Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
             newPropertiesNames = propertiesNames;
         }
@@ -350,7 +350,7 @@ public class ContentModel extends GenericVersionableResourcePid
     private Map<String, String> expandPropertiesNamesMapping(
         final Map<String, String> propertiesMapping) {
 
-        Map<String, String> newPropertiesNames;
+        final Map<String, String> newPropertiesNames;
         if (propertiesMapping != null) {
             newPropertiesNames = propertiesMapping;
         }
@@ -437,12 +437,12 @@ public class ContentModel extends GenericVersionableResourcePid
     public List<DsTypeModel> getMdRecordDefinitionIDs()
         throws IntegritySystemException, WebserverSystemException {
 
-        StaxParser sp = new StaxParser();
-        DsCompositeModelHandler dcmh = new DsCompositeModelHandler(sp);
+        final StaxParser sp = new StaxParser();
+        final DsCompositeModelHandler dcmh = new DsCompositeModelHandler(sp);
         sp.addHandler(dcmh);
 
         try {
-            Datastream dcm = getDsCompositeModel();
+            final Datastream dcm = getDsCompositeModel();
             if (dcm == null) {
                 // in case of no DS_COMPOSITE_MODEL datastream, behave as if the
                 // parser does not found any md-record-definition.
@@ -451,7 +451,7 @@ public class ContentModel extends GenericVersionableResourcePid
                 // not.
                 return new ArrayList<DsTypeModel>();
             }
-            String x = dcm.toStringUTF8();
+            final String x = dcm.toStringUTF8();
             sp.parse(x);
         }
         catch (IntegritySystemException e) {
@@ -478,9 +478,9 @@ public class ContentModel extends GenericVersionableResourcePid
                 new HashMap<String, ResourceDefinitionCreate>();
 
             // get list of service references
-            Map<String, String> services;
+            final Map<String, String> services;
             try {
-                Collection<String> pl = new ArrayList<String>();
+                final Collection<String> pl = new ArrayList<String>();
                 pl.add("info:fedora/fedora-system:def/model#hasService");
                 services = this.getResourceProperties(pl);
             }
@@ -489,11 +489,11 @@ public class ContentModel extends GenericVersionableResourcePid
                     "Can not access triplestore.", e);
             }
 
-            for (Entry<String, String> entry : services.entrySet()) {
-                String serviceName =
+            for (final Entry<String, String> entry : services.entrySet()) {
+                final String serviceName =
                         entry.getValue().substring(
                                 entry.getValue().lastIndexOf('-') + 1);
-                ResourceDefinitionCreate resourceDef =
+                final ResourceDefinitionCreate resourceDef =
                         new ResourceDefinitionCreate();
                 try {
                     resourceDef.setName(serviceName);
@@ -520,7 +520,7 @@ public class ContentModel extends GenericVersionableResourcePid
         throws WebserverSystemException {
 
         try {
-            Datastream ds =
+            final Datastream ds =
                 new Datastream("DS-COMPOSITE-MODEL", getId(),
                     xml.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
             setDsCompositeModel(ds);
@@ -552,7 +552,7 @@ public class ContentModel extends GenericVersionableResourcePid
         // method. If not, replace the following while and for with one
         // entry-set iterator
         while (nameIt.hasNext()) {
-            Entry<String, Datastream> mapEntry = nameIt.next();
+            final Entry<String, Datastream> mapEntry = nameIt.next();
             final String name = mapEntry.getKey();
             final Datastream current = mapEntry.getValue();
             // add DS ...
@@ -564,9 +564,9 @@ public class ContentModel extends GenericVersionableResourcePid
         }
 
         // delete data streams which are in fedora but not in given list
-        for (String nameInFedora : namesInFedora) {
+        for (final String nameInFedora : namesInFedora) {
             if (!contentStreamDatastreams.containsKey(nameInFedora)) {
-                Datastream fedoraDs = getContentStream(nameInFedora);
+                final Datastream fedoraDs = getContentStream(nameInFedora);
                 fedoraDs.delete();
                 this.contentStreams.remove(nameInFedora);
             }

@@ -248,7 +248,7 @@ public class SmScopesHibernateDao
             }
             detachedCriteria.add(Restrictions.in("id", scopeIds));
 
-            Collection<Scope> scopes =
+            final Collection<Scope> scopes =
                 getHibernateTemplate().findByCriteria(detachedCriteria, offset,
                     maxResults);
 
@@ -274,15 +274,15 @@ public class SmScopesHibernateDao
     @Override
     public Collection<String> retrieveScopeIds()
                 throws SqlDatabaseSystemException {
-        Collection<String> scopeIds = new ArrayList<String>();
+        final Collection<String> scopeIds = new ArrayList<String>();
 
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Scope.class, "s");
-        Collection<Scope> scopes =
+        final Collection<Scope> scopes =
             getHibernateTemplate().findByCriteria(detachedCriteria);
 
         if (scopes != null) {
-            for (Scope scope : scopes) {
+            for (final Scope scope : scopes) {
                 if (scope.getId() != null) {
                     scopeIds.add(scope.getId());
                 }

@@ -60,7 +60,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
     private static final AppLogger LOGGER = new AppLogger(MultipleExtractor.class.getName());
 
-    public RelsExtContentRelationsReadHandler(StaxParser parser) {
+    public RelsExtContentRelationsReadHandler(final StaxParser parser) {
         this.parser = parser;
     }
 
@@ -72,7 +72,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         return inRelation;
     }
 
-    public void setInRelation(boolean inRelation) {
+    public void setInRelation(final boolean inRelation) {
         this.inRelation = inRelation;
     }
 
@@ -80,7 +80,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         return targetId;
     }
 
-    public void setTargetId(String targetId) {
+    public void setTargetId(final String targetId) {
         this.targetId = targetId;
     }
 
@@ -88,14 +88,14 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         return predicate;
     }
 
-    public void setPredicate(String predicate) {
+    public void setPredicate(final String predicate) {
         this.predicate = predicate;
     }
 
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws WebserverSystemException {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
 
         if (curPath.equals(PATH)) {
             inRdf = true;
@@ -105,34 +105,34 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
                 Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT))) {
             inRelation = true;
 
-            int indexOfResource =
+            final int indexOfResource =
                 element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
                     "resource");
             if (indexOfResource == -1) {
-                String message =
+                final String message =
                         "The attribute 'rdf:resource' of the element '"
                                 + element.getLocalName() + "' is missing.";
                 LOGGER.error(message);
                 throw new WebserverSystemException(message);
             }
-            String resourceValue =
+            final String resourceValue =
                     element.getAttribute(indexOfResource).getValue();
-            String[] target = resourceValue.split("/");
+            final String[] target = resourceValue.split("/");
             targetId = target[1];
             String predicateNs = element.getNamespace();
             predicateNs =
                 predicateNs.substring(0, predicateNs.length() - 1);
-            String predicateValue = element.getLocalName();
+            final String predicateValue = element.getLocalName();
             predicate = predicateNs + '#' + predicateValue;
         }
         return element;
     }
 
     @Override
-    public EndElement endElement(EndElement element) {
+    public EndElement endElement(final EndElement element) {
 
         if (inRelation) {
-            Map<String, String> relationData =
+            final Map<String, String> relationData =
                 new HashMap<String, String>();
             relations.add(relationData);
             relationData.put("predicate", predicate);

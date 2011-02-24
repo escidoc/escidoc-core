@@ -53,7 +53,7 @@ public enum ScopeTypes {
 
     private final String value;
 
-    ScopeTypes(String v) {
+    ScopeTypes(final String v) {
         value = v;
     }
 
@@ -61,8 +61,8 @@ public enum ScopeTypes {
         return value;
     }
 
-    public static ScopeTypes fromValue(String v) {
-        for (ScopeTypes c : ScopeTypes.values()) {
+    public static ScopeTypes fromValue(final String v) {
+        for (final ScopeTypes c : ScopeTypes.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

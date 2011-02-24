@@ -39,7 +39,7 @@ public class RelsExtContentRelationsReadHandlerForUpdate
 
     private final List<String> relationsStrings = new ArrayList<String>();
 
-    public RelsExtContentRelationsReadHandlerForUpdate(StaxParser parser) {
+    public RelsExtContentRelationsReadHandlerForUpdate(final StaxParser parser) {
         super(parser);
     }
 
@@ -48,10 +48,10 @@ public class RelsExtContentRelationsReadHandlerForUpdate
     }
 
     @Override
-    public EndElement endElement(EndElement element) {
+    public EndElement endElement(final EndElement element) {
         if (this.isInRelation()) {
 
-            String relationData = this.getPredicate() + "###" + this.getTargetId();
+            final String relationData = this.getPredicate() + "###" + this.getTargetId();
             relationsStrings.add(relationData);
             this.setTargetId(null);
             this.setPredicate(null);

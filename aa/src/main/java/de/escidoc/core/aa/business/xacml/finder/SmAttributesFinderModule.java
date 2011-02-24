@@ -199,10 +199,10 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result;
+        final EvaluationResult result;
         String resolvedAttributeIdValue;
 
-        Matcher smAttributeMatcher =
+        final Matcher smAttributeMatcher =
             PATTERN_PARSE_SM_ATTRIBUTE_ID.matcher(attributeIdValue);
         if (smAttributeMatcher.find()) {
             resolvedAttributeIdValue = smAttributeMatcher.group(1);
@@ -211,9 +211,9 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                 resolvedAttributeIdValue = smAttributeMatcher.group(0);
                 attributePrefix = smAttributeMatcher.group(0);
             }
-            String attributeId = smAttributeMatcher.group(3);
+            final String attributeId = smAttributeMatcher.group(3);
 
-            String resourceXml;
+            final String resourceXml;
             if (attributePrefix
                 .equals(AttributeIds.RESOURCE_AGGREGATION_DEFINITION_ATTR_PREFIX)) {
                 resourceXml = retrieveAggregationDefinition(ctx, resourceId);
@@ -270,7 +270,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         EvaluationResult result = null;
 
         if (ATTR_SCOPE.equals(attributeId)) {
-            Matcher matcher = SCOPE_PATTERN.matcher(resourceXml);
+            final Matcher matcher = SCOPE_PATTERN.matcher(resourceXml);
             if (matcher.find()) {
                 String objId = matcher.group(1);
                 if (objId == null) {
@@ -306,8 +306,8 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
             // }
         }
         else if (ATTR_ALLOWED_ROLE.equals(attributeId)) {
-            Matcher matcher = ALLOWED_ROLE_PATTERN.matcher(resourceXml);
-            StringBuilder roles = new StringBuilder("");
+            final Matcher matcher = ALLOWED_ROLE_PATTERN.matcher(resourceXml);
+            final StringBuilder roles = new StringBuilder("");
             while (matcher.find()) {
                 String roleId = matcher.group(1);
                 if (roleId == null) {

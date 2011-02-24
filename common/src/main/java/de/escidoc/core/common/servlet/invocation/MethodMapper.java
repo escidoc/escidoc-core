@@ -101,7 +101,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         throws ParserConfigurationException, SAXException, IOException,
         TransformerException {
 
-        Collection<String> paths = new ArrayList<String>();
+        final Collection<String> paths = new ArrayList<String>();
         paths.add(descriptor);
         setDescriptorFilenames(paths);
     }
@@ -178,11 +178,11 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     private void init() throws ParserConfigurationException, SAXException,
         IOException, TransformerException {
 
-        Iterator<String> iter = this.descriptorFilenames.iterator();
+        final Iterator<String> iter = this.descriptorFilenames.iterator();
         this.methodMappings = new ArrayList<Document>();
         while (iter.hasNext()) {
-            String filename = iter.next();
-            Document document = getDocument(filename);
+            final String filename = iter.next();
+            final Document document = getDocument(filename);
             if (document != null) {
                 this.methodMappings.add(document);
             }
@@ -192,11 +192,11 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         setResources(initResources());
 
         // Debug output
-        Iterator<Node> defIter =
+        final Iterator<Node> defIter =
             getDefinitions(DEFINITION_VAR_ELEMENT).iterator();
         getLogger().debug("Definitions (Variables):");
         while (defIter.hasNext()) {
-            Node next = defIter.next();
+            final Node next = defIter.next();
             getLogger()
                 .debug(
                     "Node: " + next.getNodeName() + " name='"
@@ -205,7 +205,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
                         + getAttributeValue(next, DEFINITION_VAR_REGEXP_ATTR)
                         + '\'');
         }
-        Iterator<String> resIter = getResources().keySet().iterator();
+        final Iterator<String> resIter = getResources().keySet().iterator();
         getLogger().debug("Resources:");
         while (resIter.hasNext()) {
             getLogger().debug(
@@ -226,13 +226,13 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      */
     private Collection<Node> initDefinitions(final String type)
         throws TransformerException {
-        Collection<Node> result = new ArrayList<Node>();
-        String xPath =
+        final Collection<Node> result = new ArrayList<Node>();
+        final String xPath =
             appendToXpath(appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT,
                 DEFINITION_ELEMENT), type);
-        for (Document methodMapping : methodMappings) {
-            NodeList methodDefinitions = parse(xPath, methodMapping);
-            int noOfDefinitions = methodDefinitions.getLength();
+        for (final Document methodMapping : methodMappings) {
+            final NodeList methodDefinitions = parse(xPath, methodMapping);
+            final int noOfDefinitions = methodDefinitions.getLength();
             for (int i = 0; i < noOfDefinitions; ++i) {
                 result.add(methodDefinitions.item(i));
             }
@@ -250,15 +250,15 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @common
      */
     private Map<String, Resource> initResources() throws TransformerException {
-        Map<String, Resource> result = new HashMap<String, Resource>();
+        final Map<String, Resource> result = new HashMap<String, Resource>();
 
-        String xPath =
+        final String xPath =
             appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT, RESOURCE_ELEMENT);
-        for (Document methodMapping : methodMappings) {
-            NodeList resourcesNodes = parse(xPath, methodMapping);
-            int noOfResources = resourcesNodes.getLength();
+        for (final Document methodMapping : methodMappings) {
+            final NodeList resourcesNodes = parse(xPath, methodMapping);
+            final int noOfResources = resourcesNodes.getLength();
             for (int i = 0; i < noOfResources; ++i) {
-                Node resource = resourcesNodes.item(i);
+                final Node resource = resourcesNodes.item(i);
                 result.put(getAttributeValue(resource, RESOURCE_URI_ATTR),
                     new Resource(resource, getDefinitions()));
             }
@@ -323,7 +323,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         catch (UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
-        Resource resource = getResource(decodedUri);
+        final Resource resource = getResource(decodedUri);
         if (resource != null) {
             return resource.getMethod(decodedUri, query, parameters,
                 httpMethod, body);
@@ -355,8 +355,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         Resource result = null;
         // FIXME: Remove this iteration. All base-URIs are like
         // /<ir, um, oum, ...>/<resourcename>
-        Map<String, Resource> resourcesMap = getResources();
-        for (String baseUri : resourcesMap.keySet()) {
+        final Map<String, Resource> resourcesMap = getResources();
+        for (final String baseUri : resourcesMap.keySet()) {
             if (uri.startsWith(baseUri)) {
                 result = resourcesMap.get(baseUri);
                 break;

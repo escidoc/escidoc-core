@@ -500,12 +500,12 @@ public final class PoliciesCache {
     public static synchronized EvaluationResult getRoleIsGrantedEvaluationResult(
         final String userOrGroupId, final String roleId, final String resourceId) {
 
-        Map<String, Map<String, EvaluationResult>> roleMap =
+        final Map<String, Map<String, EvaluationResult>> roleMap =
             roleIsGrantedCache.get(userOrGroupId);
         if (roleMap == null) {
             return null;
         }
-        Map<String, EvaluationResult> resourceMap = roleMap.get(roleId);
+        final Map<String, EvaluationResult> resourceMap = roleMap.get(roleId);
         if (resourceMap == null) {
             return null;
         }
@@ -723,7 +723,7 @@ public final class PoliciesCache {
 
         // iterate over all maps stored in roleIsGrantedCache to remove the ones
         // relevant for the provided role id.
-        for (Map<String, Map<String, EvaluationResult>> userCache : getRoleIsGrantedCache().values()) {
+        for (final Map<String, Map<String, EvaluationResult>> userCache : getRoleIsGrantedCache().values()) {
             userCache.remove(roleId);
         }
     }

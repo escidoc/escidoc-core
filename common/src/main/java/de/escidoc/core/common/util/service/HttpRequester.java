@@ -220,20 +220,20 @@ public class HttpRequester {
     private String requestSsl( // Ignore FindBugs
         final String resource, final String method, final String body)
         throws Exception {
-        StringBuilder response = new StringBuilder();
+        final StringBuilder response = new StringBuilder();
 
         // Open Connection to given resource
-        URL url = new URL(domain + resource);
-        TrustManager[] tm = { new RelaxedX509TrustManager() };
-        SSLContext sslContext = SSLContext.getInstance("SSL");
+        final URL url = new URL(domain + resource);
+        final TrustManager[] tm = { new RelaxedX509TrustManager() };
+        final SSLContext sslContext = SSLContext.getInstance("SSL");
         sslContext.init(null, tm, new java.security.SecureRandom());
-        SSLSocketFactory sslSF = sslContext.getSocketFactory();
-        HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+        final SSLSocketFactory sslSF = sslContext.getSocketFactory();
+        final HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
         con.setSSLSocketFactory(sslSF);
 
         // Set Basic-Authentication Header
         if (securityHandle != null && securityHandle.length() != 0) {
-            String encoding =
+            final String encoding =
                 UserHandleCookieUtil.createEncodedUserHandle(securityHandle);
             con.setRequestProperty("Authorization", "Basic " + encoding);
             // Set Cookie
@@ -252,14 +252,14 @@ public class HttpRequester {
         if (("PUT".equalsIgnoreCase(method) || "POST".equalsIgnoreCase(method))
             && body != null) {
             con.setDoOutput(true);
-            OutputStream out = con.getOutputStream();
+            final OutputStream out = con.getOutputStream();
             out.write(body.getBytes(XmlUtility.CHARACTER_ENCODING));
             out.flush();
             out.close();
         }
 
         // Request
-        InputStream is = con.getInputStream();
+        final InputStream is = con.getInputStream();
         setCookie(con.getHeaderField("Set-cookie"));
 
         // Read response
@@ -303,16 +303,16 @@ public class HttpRequester {
         HttpURLConnection con = null;
         InputStream is = null;
         OutputStream out = null;
-        StringBuilder response = new StringBuilder();
+        final StringBuilder response = new StringBuilder();
 
         try {
             // Open Connection to given resource
-            URL url = new URL(domain + resource);
+            final URL url = new URL(domain + resource);
             con = (HttpURLConnection) url.openConnection();
 
             // Set Basic-Authentication Header
             if (securityHandle != null && securityHandle.length() != 0) {
-                String encoding =
+                final String encoding =
                     UserHandleCookieUtil
                         .createEncodedUserHandle(securityHandle);
                 con.setRequestProperty("Authorization", "Basic " + encoding);

@@ -235,7 +235,7 @@ public class MdRecordCreate implements Serializable {
      */
     public String getFOXML() throws SystemException {
 
-        Map<String, String> templateValues = getValueMap();
+        final Map<String, String> templateValues = getValueMap();
         return ItemFoXmlProvider.getInstance().getMetadataFoXml(templateValues);
     }
 
@@ -248,7 +248,7 @@ public class MdRecordCreate implements Serializable {
      */
     public Map<String, String> getValueMap() throws SystemException {
 
-        Map<String, String> templateValues = new HashMap<String, String>();
+        final Map<String, String> templateValues = new HashMap<String, String>();
 
         templateValues.put(XmlTemplateProvider.MD_RECORD_TYPE, this.type);
         templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA, this.schema);
@@ -545,8 +545,8 @@ public class MdRecordCreate implements Serializable {
         }
         else {
 
-            String md5HashThis;
-            String md5HashNew;
+            final String md5HashThis;
+            final String md5HashNew;
             try {
                 md5HashThis = XmlUtility.getMd5Hash(this.content.getBytes());
                 md5HashNew =

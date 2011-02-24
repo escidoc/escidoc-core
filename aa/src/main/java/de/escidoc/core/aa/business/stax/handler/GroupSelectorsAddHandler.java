@@ -56,26 +56,26 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) throws XmlCorruptedException {
 
-        String currenrPath = parser.getCurPath();
+        final String currenrPath = parser.getCurPath();
         if (SELECTOR_PATH.equals(currenrPath)) {
             inSelector = true;
             this.selector = new String[3];
-            int indexName = element.indexOfAttribute(null, "name");
+            final int indexName = element.indexOfAttribute(null, "name");
             if (indexName >= 0) {
-                String selectorName =
+                final String selectorName =
                     element.getAttribute(indexName).getValue();
                 if (selectorName.length() == 0) {
-                    String message = "The value of the attribute 'selector/@name is missing."; 
+                    final String message = "The value of the attribute 'selector/@name is missing.";
                     throw new XmlCorruptedException(message);
                 }
                 this.selector[0] = selectorName;
             } 
-            int indexType = element.indexOfAttribute(null, "type");
+            final int indexType = element.indexOfAttribute(null, "type");
             if (indexType >= 0) {
-                String selectorType =
+                final String selectorType =
                     element.getAttribute(indexType).getValue();
                 if (selectorType.length() == 0) {
-                    String message = "The value of the attribute 'selector/@type is missing."; 
+                    final String message = "The value of the attribute 'selector/@type is missing.";
                     throw new XmlCorruptedException(message);
                 }
                 this.selector[1] = selectorType;
@@ -86,7 +86,7 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) {
-        String currenrPath = parser.getCurPath();
+        final String currenrPath = parser.getCurPath();
 
        if (SELECTOR_PATH.equals(currenrPath)) {
             inSelector = false;
@@ -99,10 +99,10 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
     @Override
     public String characters(final String s, final StartElement element) throws XmlCorruptedException {
 
-        String theName = element.getLocalName();
+        final String theName = element.getLocalName();
         if ((inSelector) && ("selector".equals(theName)) && ((s != null))) {
             if (s.length() == 0) {
-                String message = "the value of element 'selector' is missing";
+                final String message = "the value of element 'selector' is missing";
                 throw new XmlCorruptedException(message);   
             }
             this.selector[2] = s; 

@@ -179,8 +179,8 @@ public class ResourceAttributeFinderModule
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        EvaluationResult result;
-        String resolvedAttributeIdValue;
+        final EvaluationResult result;
+        final String resolvedAttributeIdValue;
 
         final Matcher matcherComponent =
             PATTERN_PARSE_COMPONENT_ATTRIBUTE_ID.matcher(attributeIdValue);
@@ -191,7 +191,7 @@ public class ResourceAttributeFinderModule
                     resourceId);
         }
         else {
-            Matcher matcher =
+            final Matcher matcher =
                 PATTERN_PARSE_ATTRIBUTE_ID.matcher(attributeIdValue);
             if (matcher.find()) {
                 resolvedAttributeIdValue = matcher.group(1);
@@ -246,8 +246,8 @@ public class ResourceAttributeFinderModule
         EvaluationResult result = (EvaluationResult) RequestAttributesCache.get(ctx, localCacheKey);
         if (result == null) {
             if (attributeIdValue.startsWith(AttributeIds.ITEM_ATTR_PREFIX)) {
-                String itemXml = retrieveItem(ctx, resourceId);
-                StaxParser sp = new StaxParser(XmlUtility.NAME_ITEM);
+                final String itemXml = retrieveItem(ctx, resourceId);
+                final StaxParser sp = new StaxParser(XmlUtility.NAME_ITEM);
                 sp.addHandler(new ItemStaxHandler(ctx, resourceId));
                 try {
                     sp.parse(new ByteArrayInputStream(itemXml
@@ -276,8 +276,8 @@ public class ResourceAttributeFinderModule
             }
             else if (attributeIdValue
                 .startsWith(AttributeIds.CONTAINER_ATTR_PREFIX)) {
-                String containerXml = retrieveContainer(ctx, resourceId);
-                StaxParser sp = new StaxParser(XmlUtility.NAME_CONTAINER);
+                final String containerXml = retrieveContainer(ctx, resourceId);
+                final StaxParser sp = new StaxParser(XmlUtility.NAME_CONTAINER);
                 sp.addHandler(new ContainerStaxHandler(ctx, resourceId));
                 try {
                     sp.parse(new ByteArrayInputStream(containerXml
@@ -353,7 +353,7 @@ public class ResourceAttributeFinderModule
         if (result == null) {
             final String componentXml =
                 retrieveComponent(ctx, itemId, componentId);
-            StaxParser sp = new StaxParser(XmlUtility.NAME_COMPONENT);
+            final StaxParser sp = new StaxParser(XmlUtility.NAME_COMPONENT);
             sp.addHandler(new ComponentStaxHandler(ctx, componentId));
             try {
                 sp.parse(new ByteArrayInputStream(componentXml

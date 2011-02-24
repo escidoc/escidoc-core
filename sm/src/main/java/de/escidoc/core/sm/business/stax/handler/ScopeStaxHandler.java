@@ -66,7 +66,7 @@ public class ScopeStaxHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element) throws Exception {
         if ("scope".equals(element.getLocalName())) {
             try {
-                String scopeId = XmlUtility.getIdFromStartElement(element);
+                final String scopeId = XmlUtility.getIdFromStartElement(element);
                 if (scope.getId() != null && !scope.getId().equals(scopeId)) {
                     throw new IntegritySystemException(MSG_INCONSISTENT_IDS);
                 }

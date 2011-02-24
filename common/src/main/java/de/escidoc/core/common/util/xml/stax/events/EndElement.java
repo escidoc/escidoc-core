@@ -46,7 +46,7 @@ public class EndElement extends AbstractElement {
         this.prefix = null;
     }
 
-    public EndElement(String localName, String namespace, String prefix) {
+    public EndElement(final String localName, final String namespace, final String prefix) {
 
         super(null, null);
         this.localName = localName;
@@ -66,7 +66,7 @@ public class EndElement extends AbstractElement {
         return localName;
     }
 
-    public void setLocalName(String localName) {
+    public void setLocalName(final String localName) {
         this.localName = localName;
     }
 
@@ -74,7 +74,7 @@ public class EndElement extends AbstractElement {
         return namespace;
     }
 
-    public void setNamespace(String namespace) {
+    public void setNamespace(final String namespace) {
         this.namespace = namespace;
     }
 
@@ -82,7 +82,7 @@ public class EndElement extends AbstractElement {
         return prefix;
     }
 
-    public void setPrefix(String prefix) {
+    public void setPrefix(final String prefix) {
         this.prefix = prefix;
     }
 

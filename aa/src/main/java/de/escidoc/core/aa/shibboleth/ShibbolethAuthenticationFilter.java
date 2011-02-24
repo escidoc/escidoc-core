@@ -79,18 +79,18 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
                     request.getHeader(ShibbolethDetails.SHIB_IDENTITY_PROVIDER),
                     shibSessionId);
 
-            ShibbolethUser user = new ShibbolethUser();
-            String cnAttribute =
+            final ShibbolethUser user = new ShibbolethUser();
+            final String cnAttribute =
                 EscidocConfiguration
                     .getInstance()
                     .get(
                         EscidocConfiguration.ESCIDOC_CORE_AA_COMMON_NAME_ATTRIBUTE_NAME);
-            String uidAttribute =
+            final String uidAttribute =
                 EscidocConfiguration
                     .getInstance()
                     .get(
                         EscidocConfiguration.ESCIDOC_CORE_AA_PERSISTENT_ID_ATTRIBUTE_NAME);
-            String origin;
+            final String origin;
 
             // get origin
             if (StringUtils.isNotEmpty(details.getShibIdentityProvider())) {
@@ -101,7 +101,7 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
             }
 
             // get name
-            String name;
+            final String name;
             if (StringUtils.isNotEmpty(cnAttribute)
                 && StringUtils.isNotEmpty(request.getHeader(cnAttribute))) {
                 name = request.getHeader(cnAttribute);
@@ -111,7 +111,7 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
             }
 
             // get loginname
-            String loginname;
+            final String loginname;
             if (StringUtils.isNotEmpty(uidAttribute)
                 && StringUtils.isNotEmpty(request.getHeader(uidAttribute))) {
                 loginname =
@@ -124,20 +124,20 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
             user.setLoginName(loginname);
             user.setName(name);
 
-            Matcher disposableHeaderMatcher =
+            final Matcher disposableHeaderMatcher =
                 ShibbolethUser.DISPOSABLE_HEADER_PATTERN.matcher("");
-            Enumeration<String> enu = request.getHeaderNames();
+            final Enumeration<String> enu = request.getHeaderNames();
             while (enu.hasMoreElements()) {
-                String headerName = enu.nextElement();
+                final String headerName = enu.nextElement();
                 disposableHeaderMatcher.reset(headerName);
                 if (!disposableHeaderMatcher.matches()
                     && StringUtils.isNotEmpty(request.getHeader(headerName))) {
-                    Enumeration<String> en = request.getHeaders(headerName);
+                    final Enumeration<String> en = request.getHeaders(headerName);
                     while (en.hasMoreElements()) {
-                        String header = en.nextElement();
-                        String[] parts = header.split(";");
+                        final String header = en.nextElement();
+                        final String[] parts = header.split(";");
                         if (parts != null) {
-                            for (String part : parts) {
+                            for (final String part : parts) {
                                 user.addStringAttribute(headerName, part);
                             }
                         }

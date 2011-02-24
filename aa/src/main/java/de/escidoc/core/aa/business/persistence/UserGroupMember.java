@@ -47,7 +47,7 @@ public class UserGroupMember extends UserGroupMemberBase {
     public UserGroupMember() {
     }
 
-    public UserGroupMember(UserGroup userGroup) {
+    public UserGroupMember(final UserGroup userGroup) {
         setUserGroup(userGroup);
     }
 

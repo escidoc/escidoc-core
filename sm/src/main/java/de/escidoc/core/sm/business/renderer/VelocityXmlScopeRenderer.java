@@ -76,7 +76,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      */
     @Override
     public String render(final Scope scope) throws SystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("isRootScope", XmlTemplateProvider.TRUE);
         addScopeNamespaceValues(values);
         addScopeValues(scope, values);
@@ -98,10 +98,10 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
         throws SystemException {
         DateTime createDateTime = new DateTime(scope.getCreationDate());
         createDateTime = createDateTime.withZone(DateTimeZone.UTC);
-        String create = createDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String create = createDateTime.toString(Constants.TIMESTAMP_FORMAT);
         DateTime lmdDateTime = new DateTime(scope.getLastModificationDate());
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
-        String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
+        final String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
 
         values.put("scopeCreationDate", create);
         values.put("scopeCreatedById", scope.getCreatorId());
@@ -140,7 +140,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
         final Collection<Scope> scopes, final RecordPacking recordPacking)
         throws SystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootScope", XmlTemplateProvider.FALSE);
         values.put("scopeListTitle", "Scope List");
@@ -151,8 +151,8 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
         final List<Map<String, Object>> scopesValues;
         if (scopes != null) {
             scopesValues = new ArrayList<Map<String, Object>>(scopes.size());
-            for (Scope scope : scopes) {
-                Map<String, Object> scopeValues = new HashMap<String, Object>();
+            for (final Scope scope : scopes) {
+                final Map<String, Object> scopeValues = new HashMap<String, Object>();
                 addScopeNamespaceValues(scopeValues);
                 addScopeValues(scope, scopeValues);
                 scopesValues.add(scopeValues);

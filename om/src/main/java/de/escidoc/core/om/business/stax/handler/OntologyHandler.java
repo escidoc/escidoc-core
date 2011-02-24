@@ -61,7 +61,7 @@ public class OntologyHandler extends DefaultHandler {
         
         //TODO: If a predicate contains character #, this character wil be 
         //thrown away
-        String[] predicateArray = p.split("#");
+        final String[] predicateArray = p.split("#");
         if (predicateArray.length != 2) {
             exist = false;
             return;
@@ -72,27 +72,27 @@ public class OntologyHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(StartElement element) {
+    public StartElement startElement(final StartElement element) {
 
-        String basePath = "/RDF";
-        String currentPath = parser.getCurPath();
+        final String basePath = "/RDF";
+        final String currentPath = parser.getCurPath();
         if (basePath.equals(currentPath)) {
-            int indexOfBase =
+            final int indexOfBase =
                 element.indexOfAttribute(XMLConstants.XML_NS_URI, "base");
             if (indexOfBase != -1) {
                 this.base = element.getAttribute(indexOfBase).getValue();
             }
         }
-        String elementPath = "/RDF/Property";
+        final String elementPath = "/RDF/Property";
         if (elementPath.equals(currentPath)) {
 
-            int indexOfId =
+            final int indexOfId =
                 element.indexOfAttribute(
                     de.escidoc.core.common.business.Constants.RDF_NAMESPACE_URI,
                     "ID");
 
             if (indexOfId != -1) {
-                String id = element.getAttribute(indexOfId).getValue();
+                final String id = element.getAttribute(indexOfId).getValue();
                 if ((id.equals(this.predicateWithoutBase) && base
                     .equals(predicateBase))
                     || id.equals(this.predicate)) {

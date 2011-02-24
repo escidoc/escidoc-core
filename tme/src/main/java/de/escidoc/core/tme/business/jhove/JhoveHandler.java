@@ -141,7 +141,7 @@ public class JhoveHandler extends TmeHandlerBase
     public String extract(final String requests) throws SystemException,
         TmeException {
 
-        String[] files = parseRequests(requests);
+        final String[] files = parseRequests(requests);
         return callJhove(files);
     }
 
@@ -160,18 +160,18 @@ public class JhoveHandler extends TmeHandlerBase
      */
     private String callJhove(final String[] files) throws SystemException,
         TmeException {
-        StringBuffer result = new StringBuffer();
+        final StringBuffer result = new StringBuffer();
 
         logger.debug("callJhove(" + Arrays.toString(files) + ')');
         BufferedReader outputFileReader = null;
         File outputFile = null;
         try {
-            JhoveBase je = new JhoveBase();
+            final JhoveBase je = new JhoveBase();
 
             je.init(jhoveConfigFile.getPath(), SAX_PARSER);
 
-            String handlerName = "xml";
-            OutputHandler handler = je.getHandler(handlerName);
+            final String handlerName = "xml";
+            final OutputHandler handler = je.getHandler(handlerName);
 
             if (handler == null) {
                 throw new JhoveException("Jhove configuration error! Handler '"

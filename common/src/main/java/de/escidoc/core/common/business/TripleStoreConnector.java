@@ -109,7 +109,7 @@ public class TripleStoreConnector {
         InvalidTripleStoreOutputFormatException,
         InvalidTripleStoreQueryException {
         try {
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            final List<NameValuePair> params = new ArrayList<NameValuePair>();
 
             params.add(new BasicNameValuePair("format", outputFormat));
             params.add(new BasicNameValuePair("query", spoQuery));
@@ -121,16 +121,16 @@ public class TripleStoreConnector {
             // flushed to the triplestore before executing the query.
             params.add(new BasicNameValuePair("flush", FLUSH));
 
-            String url = fedoraUrl + "/risearch";
-            HttpPost httpPost = new HttpPost(url);
-            HttpEntity entity =
+            final String url = fedoraUrl + "/risearch";
+            final HttpPost httpPost = new HttpPost(url);
+            final HttpEntity entity =
                 new UrlEncodedFormEntity(params, XmlUtility.CHARACTER_ENCODING);
 
             httpPost.setEntity(entity);
             connectionUtility.setAuthentication(new URL(url), fedoraUser,
                 fedoraPassword);
 
-            HttpResponse httpResponse =
+            final HttpResponse httpResponse =
                 connectionUtility.getHttpClient(url).execute(httpPost);
             String responseContent =
                 connectionUtility.readResponse(httpResponse).trim();
@@ -139,14 +139,14 @@ public class TripleStoreConnector {
                 return null;
             }
             if (responseContent.startsWith("<html")) {
-                Pattern p = Pattern.compile(QUERY_ERROR);
-                Matcher m = p.matcher(responseContent);
+                final Pattern p = Pattern.compile(QUERY_ERROR);
+                final Matcher m = p.matcher(responseContent);
 
-                Pattern p1 = Pattern.compile(PARSE_ERROR);
-                Matcher m1 = p1.matcher(responseContent);
+                final Pattern p1 = Pattern.compile(PARSE_ERROR);
+                final Matcher m1 = p1.matcher(responseContent);
 
-                Pattern p2 = Pattern.compile(FORMAT_ERROR);
-                Matcher m2 = p2.matcher(responseContent);
+                final Pattern p2 = Pattern.compile(FORMAT_ERROR);
+                final Matcher m2 = p2.matcher(responseContent);
                 if (m.find()) {
                     log.error(responseContent);
                     responseContent =

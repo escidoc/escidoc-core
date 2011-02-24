@@ -120,16 +120,16 @@ public class OrganizationalUnitMetadataHandler
     public StartElement startElement(final StartElement element)
         throws InvalidXmlException, MissingAttributeValueException {
 
-        String elementName = element.getLocalName();
+        final String elementName = element.getLocalName();
 
         if (getMdRecordPath().equals(getParser().getCurPath())) {
             insideMdRecord = true;
             try {
-                Attribute name = element.getAttribute(null, NAME);
+                final Attribute name = element.getAttribute(null, NAME);
                 this.currentMdRecordName = name.getValue();
 
                 if (currentMdRecordName.length() == 0) {
-                    String message =
+                    final String message =
                         "The value of attribute 'name' of the element "
                             + elementName + " was not set!";
                     LOGGER.error(message);
@@ -141,20 +141,20 @@ public class OrganizationalUnitMetadataHandler
                 }
             }
             catch (NoSuchAttributeException e) {
-                String message =
+                final String message =
                     "The mandatory attribute 'name' of the element "
                         + elementName + " was not found!";
                 LOGGER.error(message);
                 throw new MissingAttributeValueException(message);
             }
-            Map<String, String> md = new HashMap<String, String>();
-            int indexOfType = element.indexOfAttribute(null, TYPE);
+            final Map<String, String> md = new HashMap<String, String>();
+            final int indexOfType = element.indexOfAttribute(null, TYPE);
             if (indexOfType == -1) {
                 md.put("type", UNKNOWN);
             } else {
                 md.put("type", element.getAttribute(indexOfType).getValue());
             }
-            int indexOfSchema = element.indexOfAttribute(null, SCHEMA);
+            final int indexOfSchema = element.indexOfAttribute(null, SCHEMA);
             if (indexOfSchema == -1) {
                 md.put(SCHEMA, UNKNOWN);
             } else {
@@ -193,7 +193,7 @@ public class OrganizationalUnitMetadataHandler
         }
         else if ((getMdRecordsPath().equals(getParser().getCurPath()))
             && (!mandatoryMdRecordFound)) {
-            String message =
+            final String message =
                 "Mandatory md-record with a name "
                     + MANDATORY_MD_RECORD_NAME + " is missing.";
             LOGGER.error(message);

@@ -181,7 +181,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
     private void handleBatchUpdateException(final HibernateException e)
         throws SqlDatabaseSystemException {
         if (e.getCause() instanceof BatchUpdateException) {
-            Exception e1 =
+            final Exception e1 =
                 ((SQLException) e.getCause()).getNextException();
             throw new SqlDatabaseSystemException(StringUtility
                 .format(e.getMessage(), e
@@ -204,11 +204,11 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
         throws SqlDatabaseSystemException {
         if (e.getCause() != null 
                 && e.getCause().getCause() != null) {
-            Throwable e1 = e.getCause().getCause();
+            final Throwable e1 = e.getCause().getCause();
             if (e1 instanceof FedoraSystemException) {
-                StringBuilder message =
+                final StringBuilder message =
                         new StringBuilder(FEDORA_EXCEPTION_MESSAGE);
-                Throwable e2 = e1.getCause();
+                final Throwable e2 = e1.getCause();
                 if (e2 != null) {
                     message.append(e2.getMessage());
                 }

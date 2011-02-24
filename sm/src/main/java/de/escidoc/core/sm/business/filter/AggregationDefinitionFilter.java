@@ -77,12 +77,12 @@ public class AggregationDefinitionFilter extends CqlFilter {
 
         if (query != null) {
             try {
-                CQLParser parser = new CQLParser();
+                final CQLParser parser = new CQLParser();
 
                 detachedCriteria =
                     DetachedCriteria.forClass(AggregationDefinition.class, "a");
 
-                Criterion criterion = evaluate(parser.parse(query));
+                final Criterion criterion = evaluate(parser.parse(query));
 
                 if (criterion != null) {
                     detachedCriteria.add(criterion);
@@ -107,15 +107,15 @@ public class AggregationDefinitionFilter extends CqlFilter {
     protected Criterion evaluate(final CQLTermNode node)
         throws InvalidSearchQueryException {
         Criterion result = null;
-        Object[] parts = criteriaMap.get(node.getIndex());
-        String value = node.getTerm();
+        final Object[] parts = criteriaMap.get(node.getIndex());
+        final String value = node.getTerm();
 
         if (parts != null) {
             result = evaluate(node.getRelation(), (String) parts[1], value,
                 (Integer) (parts[0]) == COMPARE_LIKE);
         }
         else {
-            String columnName = node.getIndex();
+            final String columnName = node.getIndex();
 
             if (columnName != null) {
                 throw new InvalidSearchQueryException(

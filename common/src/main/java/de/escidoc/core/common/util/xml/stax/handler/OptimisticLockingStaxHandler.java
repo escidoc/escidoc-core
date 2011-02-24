@@ -93,11 +93,11 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
             
             rootElementFound = true;
             try {
-                String lastModificationDateValue = element.getAttributeValue(null,
+                final String lastModificationDateValue = element.getAttributeValue(null,
                         XmlUtility.NAME_LAST_MODIFICATION_DATE);
 
                 try {
-                    Date lastModificationDate = Iso8601Util
+                    final Date lastModificationDate = Iso8601Util
                             .parseIso8601(lastModificationDateValue);
                     if (expectedLastModificationDate != null
                         && !lastModificationDate.equals(

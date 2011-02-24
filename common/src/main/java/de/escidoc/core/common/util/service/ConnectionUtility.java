@@ -127,7 +127,7 @@ public class ConnectionUtility {
     public String getRequestURLAsString(final URL url)
         throws WebserverSystemException {
 
-        HttpResponse httpResponse = getRequestURL(url);
+        final HttpResponse httpResponse = getRequestURL(url);
         return readResponse(httpResponse);
     }
 
@@ -151,7 +151,7 @@ public class ConnectionUtility {
         final URL url, final String username, final String password)
         throws WebserverSystemException {
 
-        HttpResponse httpResponse = getRequestURL(url, username, password);
+        final HttpResponse httpResponse = getRequestURL(url, username, password);
         return readResponse(httpResponse);
     }
 
@@ -172,7 +172,7 @@ public class ConnectionUtility {
     public String getRequestURLAsString(final URL url, final Cookie cookie)
         throws WebserverSystemException {
 
-        HttpResponse httpResponse = getRequestURL(url, cookie);
+        final HttpResponse httpResponse = getRequestURL(url, cookie);
         return readResponse(httpResponse);
     }
 
@@ -191,12 +191,12 @@ public class ConnectionUtility {
     public HttpResponse getRequestURL(final URL url)
         throws WebserverSystemException {
 
-        String username;
-        String password;
+        final String username;
+        final String password;
 
-        String userinfo = url.getUserInfo();
+        final String userinfo = url.getUserInfo();
         if (userinfo != null) {
-            String[] loginValues = userinfo.split(":");
+            final String[] loginValues = userinfo.split(":");
             username = loginValues[0];
             password = loginValues[1];
         }
@@ -271,7 +271,7 @@ public class ConnectionUtility {
         final URL url, final String body, final String username,
         final String password) throws WebserverSystemException {
 
-        HttpResponse method = putRequestURL(url, body, username, password);
+        final HttpResponse method = putRequestURL(url, body, username, password);
         return readResponse(method);
     }
 
@@ -295,7 +295,7 @@ public class ConnectionUtility {
         final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        HttpResponse method = putRequestURL(url, body, cookie);
+        final HttpResponse method = putRequestURL(url, body, cookie);
         return readResponse(method);
     }
 
@@ -367,7 +367,7 @@ public class ConnectionUtility {
         final URL url, final String body, final String username,
         final String password) throws WebserverSystemException {
 
-        HttpResponse method = postRequestURL(url, body, username, password);
+        final HttpResponse method = postRequestURL(url, body, username, password);
         return readResponse(method);
     }
 
@@ -388,7 +388,7 @@ public class ConnectionUtility {
         final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        HttpResponse method = postRequestURL(url, body, cookie);
+        final HttpResponse method = postRequestURL(url, body, cookie);
         return readResponse(method);
     }
 
@@ -495,42 +495,42 @@ public class ConnectionUtility {
         final URL url, final String username, final String password)
         throws WebserverSystemException {
 
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
+        final CredentialsProvider credsProvider = new BasicCredentialsProvider();
 
-        AuthScope authScope =
+        final AuthScope authScope =
             new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                 AuthScope.ANY_REALM);
-        Credentials creds =
+        final Credentials creds =
             new UsernamePasswordCredentials(username, password);
         credsProvider.setCredentials(authScope, creds);
 
         this.getHttpClient(null).setCredentialsProvider(credsProvider);
 
         // don't wait for auth request
-        HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
+        final HttpRequestInterceptor preemptiveAuth = new HttpRequestInterceptor() {
 
             @Override
             public void process(
                 final HttpRequest request, final HttpContext context)
                 throws HttpException, IOException {
 
-                AuthState authState =
+                final AuthState authState =
                     (AuthState) context
                         .getAttribute(ClientContext.TARGET_AUTH_STATE);
-                CredentialsProvider credsProvider =
+                final CredentialsProvider credsProvider =
                     (CredentialsProvider) context
                         .getAttribute(ClientContext.CREDS_PROVIDER);
-                HttpHost targetHost =
+                final HttpHost targetHost =
                     (HttpHost) context
                         .getAttribute(ExecutionContext.HTTP_TARGET_HOST);
 
                 // If not auth scheme has been initialized yet
                 if (authState.getAuthScheme() == null) {
-                    AuthScope authScope =
+                    final AuthScope authScope =
                         new AuthScope(targetHost.getHostName(),
                             targetHost.getPort());
                     // Obtain credentials matching the target host
-                    Credentials creds = credsProvider.getCredentials(authScope);
+                    final Credentials creds = credsProvider.getCredentials(authScope);
                     // If found, generate BasicScheme preemptively
                     if (creds != null) {
                         authState.setAuthScheme(new BasicScheme());
@@ -553,11 +553,11 @@ public class ConnectionUtility {
      */
     public void resetAuthentication(final URL url) {
 
-        AuthScope authScope =
+        final AuthScope authScope =
             new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                 AuthScope.ANY_REALM);
 
-        Credentials creds =
+        final Credentials creds =
             new UsernamePasswordCredentials("", "");
 
         httpClient.getCredentialsProvider().setCredentials(authScope, creds);
@@ -574,10 +574,10 @@ public class ConnectionUtility {
     private HttpHost getProxyHost() throws WebserverSystemException {
         try {
             if (!proxyConfigured) {
-                String proxyHostName =
+                final String proxyHostName =
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
-                String proxyPort =
+                final String proxyPort =
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
                 if (proxyHostName != null && proxyHostName.trim().length() != 0) {
@@ -620,8 +620,8 @@ public class ConnectionUtility {
                     nonProxyHosts = nonProxyHosts.replaceAll("\\.", "\\\\.");
                     nonProxyHosts = nonProxyHosts.replaceAll("\\*", "");
                     nonProxyHosts = nonProxyHosts.replaceAll("\\?", "\\\\?");
-                    Pattern nonProxyPattern = Pattern.compile(nonProxyHosts);
-                    Matcher nonProxyMatcher = nonProxyPattern.matcher(url);
+                    final Pattern nonProxyPattern = Pattern.compile(nonProxyHosts);
+                    final Matcher nonProxyMatcher = nonProxyPattern.matcher(url);
                     if (nonProxyMatcher.find()) {
                         this.httpClient.getParams().setParameter(
                             ConnRoutePNames.DEFAULT_PROXY, null);
@@ -657,15 +657,15 @@ public class ConnectionUtility {
         throws WebserverSystemException {
         if (this.httpClient == null) {
 
-            HttpParams params = new BasicHttpParams();
+            final HttpParams params = new BasicHttpParams();
             ConnManagerParams.setMaxTotalConnections(params,
                 HTTP_MAX_TOTAL_CONNECTIONS_FACTOR);
 
-            ConnPerRoute connPerRoute =
+            final ConnPerRoute connPerRoute =
                 new ConnPerRouteBean(HTTP_MAX_CONNECTIONS_PER_HOST);
             ConnManagerParams.setMaxConnectionsPerRoute(params, connPerRoute);
 
-            Scheme http =
+            final Scheme http =
                 new Scheme("http", PlainSocketFactory.getSocketFactory(), 80);
 
             // Schema für SSL Verbindungen
@@ -674,7 +674,7 @@ public class ConnectionUtility {
             // sf.setHostnameVerifier(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
             // Scheme https = new Scheme("https", sf, 443);
 
-            SchemeRegistry sr = new SchemeRegistry();
+            final SchemeRegistry sr = new SchemeRegistry();
             sr.register(http);
             // sr.register(https);
 
@@ -739,10 +739,10 @@ public class ConnectionUtility {
             }
             httpResponse = getHttpClient(url).execute(httpGet);
 
-            int responseCode = httpResponse.getStatusLine().getStatusCode();
+            final int responseCode = httpResponse.getStatusLine().getStatusCode();
 
             if ((responseCode / HTTP_RESPONSE_CLASS) != (HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS)) {
-                String errorPage = readResponse(httpResponse);
+                final String errorPage = readResponse(httpResponse);
 
                 // TODO logging, Url abgelöst?
                 // URLEncodedUtils.LOG.debug("Connection to '" + url
@@ -794,10 +794,10 @@ public class ConnectionUtility {
             delete = new HttpDelete(url);
             // delete = new HttpDelete(new URI(url, false).getEscapedURI());
             delete = new HttpDelete(new URI(url));
-            HttpResponse httpResponse = getHttpClient(url).execute(delete);
-            int responseCode = httpResponse.getStatusLine().getStatusCode();
+            final HttpResponse httpResponse = getHttpClient(url).execute(delete);
+            final int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (httpResponse.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
-                String errorPage = readResponse(httpResponse);
+                final String errorPage = readResponse(httpResponse);
                 LOG.debug("Connection to '" + url
                     + "' failed with response code " + responseCode);
                 throw new WebserverSystemException("HTTP connection to \""
@@ -846,16 +846,16 @@ public class ConnectionUtility {
         final String url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        HttpResponse httpResponse;
+        final HttpResponse httpResponse;
         try {
-            HttpEntity entity = new StringEntity(body, Constants.DEFAULT_MIME_TYPE,
+            final HttpEntity entity = new StringEntity(body, Constants.DEFAULT_MIME_TYPE,
                     XmlUtility.CHARACTER_ENCODING);
-            HttpPut httpPut = new HttpPut(url);
+            final HttpPut httpPut = new HttpPut(url);
             httpPut.setEntity(entity);
             httpResponse = getHttpClient(url).execute(httpPut);
-            int responseCode = httpResponse.getStatusLine().getStatusCode();
+            final int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (responseCode != HttpServletResponse.SC_OK) {
-                String errorPage = readResponse(httpResponse);
+                final String errorPage = readResponse(httpResponse);
 
                 LOG.debug("Connection to '" + url
                     + "' failed with response code " + responseCode);
@@ -904,7 +904,7 @@ public class ConnectionUtility {
         final String url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
-        HttpResponse httpResponse;
+        final HttpResponse httpResponse;
         // RequestEntity entity;
         // try {
         // entity =
@@ -918,7 +918,7 @@ public class ConnectionUtility {
         try {
             // TODO
             // entitys für Body Posts
-            HttpPost httpPost = new HttpPost(url);
+            final HttpPost httpPost = new HttpPost(url);
 
             if (cookie != null) {
                 HttpClientParams.setCookiePolicy(httpPost.getParams(),

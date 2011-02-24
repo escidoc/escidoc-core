@@ -126,7 +126,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
             this.contentHandler.startElement(element);
         }
         else {
-            String currentPath = parser.getCurPath();
+            final String currentPath = parser.getCurPath();
             if (currentPath.equals(xpathContentStream)) {
 
                 LOG.debug("Parser reached " + currentPath);
@@ -170,14 +170,14 @@ public class ContentStreamHandler2 extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws WebserverSystemException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (xpathContentStream.equals(currentPath)) {
 
             this.parsingContent = false;
 
             if (this.hasContent) {
-                Map<String, Object> outputStreams =
+                final Map<String, Object> outputStreams =
                     this.contentHandler.getOutputStreams();
 
                 // MultipleExtractor could deliver a list of stream. But it
@@ -186,8 +186,8 @@ public class ContentStreamHandler2 extends DefaultHandler {
                 if (outputStreams.size() > 1) {
                     LOG.warn("Multiple content-streams.");
                 }
-                Iterator<String> it = outputStreams.keySet().iterator();
-                ByteArrayOutputStream outStream =
+                final Iterator<String> it = outputStreams.keySet().iterator();
+                final ByteArrayOutputStream outStream =
                     (ByteArrayOutputStream) outputStreams.get(it.next());
 
                 try {

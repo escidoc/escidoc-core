@@ -65,7 +65,7 @@ public abstract class SRURequestParameters {
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_MAXIMUM_RECORDS),
                 getDefaultLimit());
-        int givenOffset =
+        final int givenOffset =
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_START_RECORD), -1);
         if (givenOffset > -1) {

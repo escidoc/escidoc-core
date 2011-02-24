@@ -142,7 +142,7 @@ public class InvocationParser {
 
             Document document = map.get(documentData);
             if (document == null) {
-                DocumentBuilder builder =
+                final DocumentBuilder builder =
                     DocumentBuilderFactory.newInstance().newDocumentBuilder();
                 document =
                     builder.parse(new ByteArrayInputStream(
@@ -269,7 +269,7 @@ public class InvocationParser {
         // exception
         int index = 0;
         do {
-            Map<String, String> request = new HashMap<String, String>();
+            final Map<String, String> request = new HashMap<String, String>();
             try {
                 // setup subject
                 String id = UserContext.getId();
@@ -346,20 +346,20 @@ public class InvocationParser {
             return new HashMap<String, String>();
         }
 
-        Map<String, String> resourceAttributes = new HashMap<String, String>();
+        final Map<String, String> resourceAttributes = new HashMap<String, String>();
         boolean resourceIdProvided = false;
         boolean subresourceIdProvided = false;
 
         // for each invocation mapping...
-        for (InvocationMapping invocationMapping : invocationMappings) {
+        for (final InvocationMapping invocationMapping : invocationMappings) {
             // FIXME: resolve this
-            StringAttribute value =
+            final StringAttribute value =
                     getValueForInvocationMapping(arguments, isArray, index,
                             invocationMapping);
 
             // and put the resource attribute in the Vector
             if (value != null) {
-                String attributeId = invocationMapping.getAttributeId();
+                final String attributeId = invocationMapping.getAttributeId();
                 if (attributeId.equals(EvaluationCtx.RESOURCE_ID)) {
                     // found the resource ID
                     resourceIdProvided = true;
@@ -425,7 +425,7 @@ public class InvocationParser {
         }
         else {
             // Get the current object addressed by the invocation mapping
-            Object currentObject;
+            final Object currentObject;
             if (isArray) {
                 currentObject =
                     ((Object[]) arguments)[invocationMapping.getPosition()];
@@ -481,7 +481,7 @@ public class InvocationParser {
                 final String xpath =
                     PATTERN_INDEXED.matcher(path).replaceAll(
                                     "["+ (index + 1)+ ']');
-                NodeList nodeList;
+                final NodeList nodeList;
                 try {
                     nodeList = XPathAPI.selectNodeList(document, xpath);
                 }
@@ -516,9 +516,9 @@ public class InvocationParser {
                     if (invocationMapping.isMultiValue()) {
                         length = nodeList.getLength();
                     }
-                    StringBuilder valueBuf = new StringBuilder("");
+                    final StringBuilder valueBuf = new StringBuilder("");
                     for (int i = 0; i < length; i++) {
-                        Node node = nodeList.item(i);
+                        final Node node = nodeList.item(i);
                         String tmpValue = null;
                         if (node.getFirstChild() != null) {
                             tmpValue = node.getFirstChild().getNodeValue();

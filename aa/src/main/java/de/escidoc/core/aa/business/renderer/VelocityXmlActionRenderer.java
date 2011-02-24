@@ -77,7 +77,7 @@ public class VelocityXmlActionRenderer extends AbstractRenderer
 
         final List<String> actionIdList;
         if (actions.getActionIds() != null) {
-            String[] actionIds =
+            final String[] actionIds =
                 PATTERN_WHITESPACE.split(actions.getActionIds());
             actionIdList = new ArrayList<String>(actionIds.length);
             actionIdList.addAll(Arrays.asList(actionIds));

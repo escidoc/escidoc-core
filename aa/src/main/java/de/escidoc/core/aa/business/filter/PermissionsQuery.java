@@ -99,7 +99,7 @@ public class PermissionsQuery {
         final ResourceType resourceType, final StringBuffer statement,
         final String userId)
         throws WebserverSystemException {
-        List<String> statements = new LinkedList<String>();
+        final List<String> statements = new LinkedList<String>();
         final Map<String, Map<String, List<RoleGrant>>> userGrants =
             getUserGrants(userId);
         final Map<String, Map<String, List<RoleGrant>>> userGroupGrants =
@@ -107,7 +107,7 @@ public class PermissionsQuery {
         Set<String> hierarchicalContainers = null;
         Set<String> hierarchicalOUs = null;
 
-        for (String roleId : accessRights.getRoleIds(resourceType)) {
+        for (final String roleId : accessRights.getRoleIds(resourceType)) {
             if (userGrants.keySet().contains(roleId) 
                 || userGroupGrants.keySet().contains(roleId)
                 || roleId.equals(AccessRights.getDefaultRole())) {
@@ -174,9 +174,9 @@ public class PermissionsQuery {
         final Iterable<ResourceType> resourceTypes, final String userId,
         final FilterInterface filter) throws InvalidSearchQueryException,
         WebserverSystemException {
-        StringBuffer result = new StringBuffer();
+        final StringBuffer result = new StringBuffer();
 
-        for (ResourceType resourceType : resourceTypes) {
+        for (final ResourceType resourceType : resourceTypes) {
             if (result.length() > 0) {
                 result.append(" OR ");
             }
@@ -209,7 +209,7 @@ public class PermissionsQuery {
                             ResourceType.OU, userGrants, userGroupGrants));
                 }
 
-                String rights =
+                final String rights =
                     accessRights.getAccessRights(resourceType,
                         filter.getRoleId(), filter.getUserId(), retrieveGroupsForUser(filter.getUserId()),
                         userGrants, userGroupGrants, hierarchicalContainers,
@@ -239,11 +239,11 @@ public class PermissionsQuery {
      * @return list of all child containers
      */
     private Set<String> getHierarchicalContainers(final Iterable<String> containerIds) {
-        Set<String> result = new HashSet<String>();
+        final Set<String> result = new HashSet<String>();
 
         try {
-            for (String containerId : containerIds) {
-                List<String> childContainers =
+            for (final String containerId : containerIds) {
+                final List<String> childContainers =
                     tripleStoreUtility.getAllChildContainers(containerId);
 
                 result.add(containerId);
@@ -269,11 +269,11 @@ public class PermissionsQuery {
      * @return list of all child OUs
      */
     private Set<String> getHierarchicalOUs(final Iterable<String> ouIds) {
-        Set<String> result = new HashSet<String>();
+        final Set<String> result = new HashSet<String>();
 
         try {
-            for (String ouId : ouIds) {
-                List<String> childOUs =
+            for (final String ouId : ouIds) {
+                final List<String> childOUs =
                     tripleStoreUtility.getAllChildOUs(ouId);
 
                 result.add(ouId);
@@ -311,7 +311,7 @@ public class PermissionsQuery {
         }
         
         //Add Default-Role
-        Map<String, List<RoleGrant>> defaultScope = new HashMap<String, List<RoleGrant>>();
+        final Map<String, List<RoleGrant>> defaultScope = new HashMap<String, List<RoleGrant>>();
         defaultScope.put("", null);
         result.put(AccessRights.getDefaultRole(), defaultScope);
         return result;
@@ -331,19 +331,19 @@ public class PermissionsQuery {
      * @return all group grants for the user
      */
     private Map<String, Map<String, List<RoleGrant>>> getUserGroupGrants(final String userId) {
-        Map<String, Map<String, List<RoleGrant>>> result 
+        final Map<String, Map<String, List<RoleGrant>>> result
             = new HashMap<String, Map<String, List<RoleGrant>>>();
         if ((userId != null) && (userId.length() > 0)) {
             try {
-                Set<String> groupIds = policiesCacheProxy.getUserGroups(userId);
+                final Set<String> groupIds = policiesCacheProxy.getUserGroups(userId);
 
                 if (groupIds != null) {
-                    for (String groupId : groupIds) {
+                    for (final String groupId : groupIds) {
                         final Map<String, Map<String, List<RoleGrant>>> currentRoleGrantMap =
                             policiesCacheProxy.getGroupGrants(groupId);
 
                         if (currentRoleGrantMap != null) {
-                            for (Entry<String, Map<String, List<RoleGrant>>> entry 
+                            for (final Entry<String, Map<String, List<RoleGrant>>> entry
                             		                : currentRoleGrantMap.entrySet()) {
                                 if (!result.containsKey(entry.getKey())) {
                                     result.put(entry.getKey(), new HashMap<String, List<RoleGrant>>());
@@ -351,7 +351,7 @@ public class PermissionsQuery {
                                 final Map<String, List<RoleGrant>> currentGrantMap =
                                 	entry.getValue();
 
-                                for (Entry<String, List<RoleGrant>> currEntry 
+                                for (final Entry<String, List<RoleGrant>> currEntry
                                 		            : currentGrantMap.entrySet()) {
                                     result.get(entry.getKey()).put(currEntry.getKey(), currEntry.getValue());
                                 }

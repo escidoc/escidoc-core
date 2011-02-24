@@ -123,8 +123,8 @@ public class ReportDefinitionHandler
             throw new MissingMethodParameterException("xml may not be null");
         }
         // parse
-        StaxParser sp = new StaxParser();
-        ReportDefinitionStaxHandler handler = new ReportDefinitionStaxHandler();
+        final StaxParser sp = new StaxParser();
+        final ReportDefinitionStaxHandler handler = new ReportDefinitionStaxHandler();
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
@@ -134,11 +134,11 @@ public class ReportDefinitionHandler
             throw new SystemException(e);
         }
 
-        String scopeId = handler.getReportDefinition().getScope().getId();
-        Scope scope = scopesDao.retrieve(scopeId);
+        final String scopeId = handler.getReportDefinition().getScope().getId();
+        final Scope scope = scopesDao.retrieve(scopeId);
 
-        ReportDefinition reportDefinition = handler.getReportDefinition();
-        Utility utility = new Utility();
+        final ReportDefinition reportDefinition = handler.getReportDefinition();
+        final Utility utility = new Utility();
         reportDefinition.setCreatorId(utility.getCurrentUserId());
         reportDefinition.setModifiedById(reportDefinition.getCreatorId());
         reportDefinition.setLastModificationDate(new Timestamp(System
@@ -186,7 +186,7 @@ public class ReportDefinitionHandler
             throw new MissingMethodParameterException("id may not be null");
         }
 
-        ReportDefinition reportDefinition = dao.retrieve(id);
+        final ReportDefinition reportDefinition = dao.retrieve(id);
         dao.delete(reportDefinition);
     }
 
@@ -243,15 +243,15 @@ public class ReportDefinitionHandler
     public String retrieveReportDefinitions(
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
-        String result;
-        SRURequestParameters params =
+        final String result;
+        final SRURequestParameters params =
             new DbRequestParameters(parameters);
-        String query = params.getQuery();
-        int limit = params.getLimit();
-        int offset = params.getOffset();
+        final String query = params.getQuery();
+        final int limit = params.getLimit();
+        final int offset = params.getOffset();
 
         if (params.isExplain()) {
-            Map<String, Object> values = new HashMap<String, Object>();
+            final Map<String, Object> values = new HashMap<String, Object>();
 
             values.put("PROPERTY_NAMES",
                 new ReportDefinitionFilter(null).getPropertyNames());
@@ -267,7 +267,7 @@ public class ReportDefinitionHandler
         }
         else {
             // get all scope-ids from database
-            Collection<String> scopeIds = scopesDao.retrieveScopeIds();
+            final Collection<String> scopeIds = scopesDao.retrieveScopeIds();
 
             Collection<String> filteredScopeIds = null;
 
@@ -338,8 +338,8 @@ public class ReportDefinitionHandler
         }
 
         // parse
-        StaxParser sp = new StaxParser();
-        ReportDefinitionStaxHandler handler = new ReportDefinitionStaxHandler();
+        final StaxParser sp = new StaxParser();
+        final ReportDefinitionStaxHandler handler = new ReportDefinitionStaxHandler();
         handler.setReportDefinition(dao.retrieve(id));
         sp.addHandler(handler);
         try {
@@ -350,12 +350,12 @@ public class ReportDefinitionHandler
             throw new SystemException(e);
         }
 
-        ReportDefinition reportDefinition = handler.getReportDefinition();
+        final ReportDefinition reportDefinition = handler.getReportDefinition();
 
-        String scopeId = reportDefinition.getScope().getId();
-        Scope scope = scopesDao.retrieve(scopeId);
+        final String scopeId = reportDefinition.getScope().getId();
+        final Scope scope = scopesDao.retrieve(scopeId);
 
-        Utility utility = new Utility();
+        final Utility utility = new Utility();
         reportDefinition.setModifiedById(utility.getCurrentUserId());
         reportDefinition.setLastModificationDate(new Timestamp(System
             .currentTimeMillis()));
@@ -395,7 +395,7 @@ public class ReportDefinitionHandler
         throws ScopeContextViolationException, InvalidSqlException,
         ScopeNotFoundException, SystemException {
         // getScope
-        Scope scope = scopesDao.retrieve(scopeId);
+        final Scope scope = scopesDao.retrieve(scopeId);
 
         if (scope == null) {
             throw new ScopeNotFoundException("Scope not found");
@@ -418,26 +418,26 @@ public class ReportDefinitionHandler
         // if scopeType != admin: check requested tables
         if (!scope.getScopeType().equals(Constants.SCOPE_TYPE_ADMIN)) {
             // get Aggregation-definitions
-            Collection<String> scopeIds = new ArrayList<String>();
+            final Collection<String> scopeIds = new ArrayList<String>();
             scopeIds.add(scopeId);
-            Collection<AggregationDefinition> aggregationDefinitions =
+            final Collection<AggregationDefinition> aggregationDefinitions =
                 aggregationDefinitionsDao
                     .retrieveAggregationDefinitions(scopeIds);
 
             // Collect aggregation-definition primary-keys
-            Collection<String> allowedPrimKeys = new HashSet<String>();
-            for (AggregationDefinition aggregationDefinition : aggregationDefinitions) {
+            final Collection<String> allowedPrimKeys = new HashSet<String>();
+            for (final AggregationDefinition aggregationDefinition : aggregationDefinitions) {
                 String primKey = aggregationDefinition.getId();
                 primKey = xmlUtility.convertPrimKeyToTableName(primKey);
                 allowedPrimKeys.add(primKey);
             }
 
             // extract tablenames from sql
-            Collection<String> primKeys =
+            final Collection<String> primKeys =
                 xmlUtility.extractAggregationPrimKeysFromSql(sql);
 
             // check primKeys against allowed primKeys
-            for (String primKey : primKeys) {
+            for (final String primKey : primKeys) {
                 if (!allowedPrimKeys.contains(primKey)) {
                     throw new ScopeContextViolationException(
                         "AggregationTable with prefix=_" + primKey

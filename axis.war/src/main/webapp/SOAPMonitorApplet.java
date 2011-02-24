@@ -66,7 +66,7 @@ public class SOAPMonitorApplet extends JApplet {
      */
     public void init() {
         // Get the port to be used
-        String port_str = getParameter("port");
+        final String port_str = getParameter("port");
         if (port_str != null) {
             port = Integer.parseInt(port_str);
         }
@@ -91,7 +91,7 @@ public class SOAPMonitorApplet extends JApplet {
     /**
      * Add a page to the notebook
      */
-    private void addPage(SOAPMonitorPage pg) {
+    private void addPage(final SOAPMonitorPage pg) {
         tabbed_pane.addTab("  "+pg.getHost()+"  ", pg);
         pages.addElement(pg);
     }
@@ -101,9 +101,9 @@ public class SOAPMonitorApplet extends JApplet {
      */
     public void start() {
         // Tell all pages to start talking to the server
-        Enumeration e = pages.elements();
+        final Enumeration e = pages.elements();
         while (e.hasMoreElements()) {
-            SOAPMonitorPage pg = (SOAPMonitorPage) e.nextElement();
+            final SOAPMonitorPage pg = (SOAPMonitorPage) e.nextElement();
             if (pg != null) {
                 pg.start();
             }
@@ -115,9 +115,9 @@ public class SOAPMonitorApplet extends JApplet {
      */
     public void stop() {
         // Tell all pages to stop talking to the server
-        Enumeration e = pages.elements();
+        final Enumeration e = pages.elements();
         while (e.hasMoreElements()) {
-            SOAPMonitorPage pg = (SOAPMonitorPage) e.nextElement();
+            final SOAPMonitorPage pg = (SOAPMonitorPage) e.nextElement();
             if (pg != null) {
                 pg.stop();
             }
@@ -200,7 +200,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Constructor (create and layout page)
          */
-        public SOAPMonitorPage(String host_name) {
+        public SOAPMonitorPage(final String host_name) {
             host = host_name;
             // Set up default filter (show all messages)
             filter = new SOAPMonitorFilter();
@@ -238,7 +238,7 @@ public class SOAPMonitorApplet extends JApplet {
             details_time_value = new JLabel();
             details_target_value = new JLabel();
             details_status_value = new JLabel();
-            Dimension preferred_size = details_time.getPreferredSize();
+            final Dimension preferred_size = details_time.getPreferredSize();
             preferred_size.width = 1;
             details_time.setPreferredSize(preferred_size); 
             details_target.setPreferredSize(preferred_size); 
@@ -341,7 +341,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Set the status text
          */
-        public void setStatus(String txt) {
+        public void setStatus(final String txt) {
             status_text.setForeground(Color.black);
             status_text.setText("  "+txt);
         }
@@ -349,7 +349,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Set the status text to an error
          */
-        public void setErrorStatus(String txt) {
+        public void setErrorStatus(final String txt) {
             status_text.setForeground(Color.red);
             status_text.setText("  "+txt);
         }
@@ -358,7 +358,7 @@ public class SOAPMonitorApplet extends JApplet {
          * Start talking to the server
          */
         public void start() {
-            String codehost = getCodeBase().getHost();
+            final String codehost = getCodeBase().getHost();
             if (socket == null) {
                 try {
                     // Open the socket to the server
@@ -505,7 +505,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Listener to handle table selection changes
          */
-        public void valueChanged(ListSelectionEvent e) {
+        public void valueChanged(final ListSelectionEvent e) {
             int row = table.getSelectedRow();
             // Check if they selected a specific row
             if (row > 0) {
@@ -529,7 +529,7 @@ public class SOAPMonitorApplet extends JApplet {
                 response_text.setText("");
             } else {
                 // Show the details for the row
-                SOAPMonitorData soap = model.getData(row);
+                final SOAPMonitorData soap = model.getData(row);
                 details_time_value.setText(soap.getTime());
                 details_target_value.setText(soap.getTargetService());
                 details_status_value.setText(soap.getStatus());
@@ -551,10 +551,10 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Listener to handle button actions
          */
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
             // Check if the user pressed the remove button
             if (e.getSource() == remove_button) {
-                int row = table.getSelectedRow();
+                final int row = table.getSelectedRow();
                 model.removeRow(row);
                 table.clearSelection();
                 table.repaint();
@@ -625,7 +625,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Constructor
          */
-        public SOAPMonitorData(Long id, String target, String soap_request) {
+        public SOAPMonitorData(final Long id, final String target, final String soap_request) {
             this.id = id;
             // A null id is used to signal that the "most recent" entry
             // is being created.
@@ -687,7 +687,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Set the resposne SOAP contents
          */
-        public void setSOAPResponse(String response) {
+        public void setSOAPResponse(final String response) {
             soap_response = response;
         }
 
@@ -729,7 +729,7 @@ public class SOAPMonitorApplet extends JApplet {
         public SOAPMonitorTableModel() {
             data = new Vector();
             // Add "most recent" entry to top of table
-            SOAPMonitorData soap = new SOAPMonitorData(null,null,null);
+            final SOAPMonitorData soap = new SOAPMonitorData(null,null,null);
             data.addElement(soap);
             filter_include = null;
             filter_exclude = null;
@@ -766,14 +766,14 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Get column name (part of table model interface)
          */
-        public String getColumnName(int col) {
+        public String getColumnName(final int col) {
             return column_names[col];
         }
 
         /**
          * Get value at (part of table model interface)
          */
-        public Object getValueAt(int row, int col) {
+        public Object getValueAt(final int row, final int col) {
             SOAPMonitorData soap;
             String          value = null;
             soap = (SOAPMonitorData) data.elementAt(row);
@@ -797,14 +797,14 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Check if soap data matches filter 
          */
-        public boolean filterMatch(SOAPMonitorData soap) {
+        public boolean filterMatch(final SOAPMonitorData soap) {
             boolean match = true;
             if (filter_include != null) {
                 // Check for service match
-                Enumeration e = filter_include.elements();
+                final Enumeration e = filter_include.elements();
                 match = false;
                 while (e.hasMoreElements() && !match) {
-                    String service = (String) e.nextElement();
+                    final String service = (String) e.nextElement();
                     if (service.equals(soap.getTargetService())) {
                         match = true;
                     }
@@ -812,9 +812,9 @@ public class SOAPMonitorApplet extends JApplet {
             }
             if (filter_exclude != null) {
                 // Check for service match
-                Enumeration e = filter_exclude.elements();
+                final Enumeration e = filter_exclude.elements();
                 while (e.hasMoreElements() && match) {
-                    String service = (String) e.nextElement();
+                    final String service = (String) e.nextElement();
                     if (service.equals(soap.getTargetService())) {
                         match = false;
                     }
@@ -842,7 +842,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Add data to the table as a new row
          */
-        public void addData(SOAPMonitorData soap) {
+        public void addData(final SOAPMonitorData soap) {
             int row = data.size();
             data.addElement(soap);
             if (filter_data != null) {
@@ -859,7 +859,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Find the data for a given id
          */
-        public SOAPMonitorData findData(Long id) {
+        public SOAPMonitorData findData(final Long id) {
             SOAPMonitorData soap = null;
             for (int row=data.size(); (row > 0) && (soap == null); row--) {
                 soap = (SOAPMonitorData) data.elementAt(row-1);
@@ -873,7 +873,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Find the row in the table for a given message id
          */
-        public int findRow(SOAPMonitorData soap) {
+        public int findRow(final SOAPMonitorData soap) {
             int row = -1;
             if (filter_data != null) {
                 row = filter_data.indexOf(soap);
@@ -887,10 +887,10 @@ public class SOAPMonitorApplet extends JApplet {
          * Remove all messages from the table (but leave "most recent")
          */
         public void clearAll() {
-            int last_row = data.size() - 1;
+            final int last_row = data.size() - 1;
             if (last_row > 0) {
                 data.removeAllElements();
-                SOAPMonitorData soap = new SOAPMonitorData(null,null,null);
+                final SOAPMonitorData soap = new SOAPMonitorData(null,null,null);
                 data.addElement(soap);
                 if (filter_data != null) {
                     filter_data.removeAllElements();
@@ -903,7 +903,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Remove a message from the table
          */
-        public void removeRow(int row) {
+        public void removeRow(final int row) {
             SOAPMonitorData soap = null;
             if (filter_data == null) {
                 soap = (SOAPMonitorData) data.elementAt(row);
@@ -919,7 +919,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Set a new filter
          */
-        public void setFilter(SOAPMonitorFilter filter) {
+        public void setFilter(final SOAPMonitorFilter filter) {
             // Save new filter criteria
             filter_include = filter.getFilterIncludeList();
             filter_exclude = filter.getFilterExcludeList();
@@ -938,7 +938,7 @@ public class SOAPMonitorApplet extends JApplet {
                 (filter_exclude != null) ||
                  filter_active || filter_complete ) {
                 filter_data = new Vector();
-                Enumeration e = data.elements();
+                final Enumeration e = data.elements();
                 SOAPMonitorData soap;
                 while (e.hasMoreElements()) {
                     soap = (SOAPMonitorData) e.nextElement();
@@ -953,7 +953,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Get the data for a row
          */
-        public SOAPMonitorData getData(int row) {
+        public SOAPMonitorData getData(final int row) {
             SOAPMonitorData soap = null;
             if (filter_data == null) {
                 soap = (SOAPMonitorData) data.elementAt(row);
@@ -966,7 +966,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Update a message
          */
-        public void updateData (SOAPMonitorData soap) {
+        public void updateData (final SOAPMonitorData soap) {
            int row;
            if (filter_data == null) {
                // No filter, so just fire table updated
@@ -1039,7 +1039,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Constructor
          */
-        public ServiceFilterPanel(String text, Vector list) {
+        public ServiceFilterPanel(final String text, final Vector list) {
             empty_border = new EmptyBorder(5,5,0,5);
             indent_border = new EmptyBorder(5,25,5,5);
             service_box = new JCheckBox(text);
@@ -1076,7 +1076,7 @@ public class SOAPMonitorApplet extends JApplet {
             add_service_button.setEnabled(false);
             add_service_panel = new JPanel();
             add_service_panel.setLayout(new BorderLayout());
-            JPanel dummy = new JPanel();
+            final JPanel dummy = new JPanel();
             dummy.setBorder(empty_border);
             add_service_panel.add(dummy, BorderLayout.WEST);
             add_service_panel.add(add_service_button, BorderLayout.EAST);
@@ -1106,7 +1106,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Listener to handle button actions
          */
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
             // Check if the user changed the service filter option
             if (e.getSource() == service_box) {
                 service_list.setEnabled(service_box.isSelected());
@@ -1119,7 +1119,7 @@ public class SOAPMonitorApplet extends JApplet {
             // Check if the user pressed the add service button
             if ((e.getSource() == add_service_button) ||
                 (e.getSource() == add_service_field)) {
-                String text = add_service_field.getText();
+                final String text = add_service_field.getText();
                 if ((text != null) && (text.length() > 0)) {
                     service_data.addElement(text);
                     service_list.setListData(service_data);
@@ -1129,7 +1129,7 @@ public class SOAPMonitorApplet extends JApplet {
             }
             // Check if the user pressed the remove service button
             if (e.getSource() == remove_service_button) {
-                Object[] sels = service_list.getSelectedValues();
+                final Object[] sels = service_list.getSelectedValues();
                 for (int i=0; i<sels.length; i++) {
                     service_data.removeElement(sels[i]);
                 }
@@ -1141,8 +1141,8 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Handle changes to the text field
          */
-        public void changedUpdate(DocumentEvent e) {
-            String text = add_service_field.getText();
+        public void changedUpdate(final DocumentEvent e) {
+            final String text = add_service_field.getText();
             if ((text != null) && (text.length() > 0)) {
                 add_service_button.setEnabled(true);
             } else {
@@ -1153,21 +1153,21 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Handle changes to the text field
          */
-        public void insertUpdate(DocumentEvent e) {
+        public void insertUpdate(final DocumentEvent e) {
             changedUpdate(e);
         }
 
         /**
          * Handle changes to the text field
          */
-        public void removeUpdate(DocumentEvent e) {
+        public void removeUpdate(final DocumentEvent e) {
             changedUpdate(e);
         }
 
         /**
          * Listener to handle service list selection changes
          */
-        public void valueChanged(ListSelectionEvent e) {
+        public void valueChanged(final ListSelectionEvent e) {
             if (service_list.getSelectedIndex() == -1) {
                 remove_service_button.setEnabled(false);
             } else {
@@ -1302,7 +1302,7 @@ public class SOAPMonitorApplet extends JApplet {
             dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             dialog.setModal(true);
             dialog.pack();
-            Dimension d = dialog.getToolkit().getScreenSize();
+            final Dimension d = dialog.getToolkit().getScreenSize();
             dialog.setLocation((d.width-dialog.getWidth())/2,
                                (d.height-dialog.getHeight())/2);
             ok_pressed = false;
@@ -1312,7 +1312,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Listener to handle button actions
          */
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
             // Check if the user pressed the ok button
             if (e.getSource() == ok_button) {
                 filter_include_list = include_panel.getServiceList();
@@ -1367,7 +1367,7 @@ public class SOAPMonitorApplet extends JApplet {
         /** 
          * Override setText to do formatting
          */
-        public void setText(String text) {
+        public void setText(final String text) {
             original = text;
             formatted = null;
             if (format) {
@@ -1381,7 +1381,7 @@ public class SOAPMonitorApplet extends JApplet {
         /**
          * Turn reflow on or off
          */
-        public void setReflowXML(boolean reflow) {
+        public void setReflowXML(final boolean reflow) {
             format = reflow;
             if (format) {
                 if (formatted == null) {
@@ -1397,8 +1397,8 @@ public class SOAPMonitorApplet extends JApplet {
          * Reflow XML
          */
         public void doFormat() {
-            Vector       parts = new Vector();
-            char[]       chars = original.toCharArray();
+            final Vector       parts = new Vector();
+            final char[]       chars = original.toCharArray();
             int          index = 0;
             int          first = 0;
             String       part = null;
@@ -1440,8 +1440,8 @@ public class SOAPMonitorApplet extends JApplet {
                 index++;
             }
             // Reflow as XML
-            StringBuffer buf = new StringBuffer();
-            Object[] list = parts.toArray();
+            final StringBuffer buf = new StringBuffer();
+            final Object[] list = parts.toArray();
             int indent = 0;
             int pad = 0;
             index = 0;

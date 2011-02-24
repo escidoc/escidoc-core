@@ -116,7 +116,7 @@ public class IndexingCacheHandler {
     public String retrieveObjectFromCache(final String id)
                                 throws SystemException {
         try {
-            String xml =
+            final String xml =
                 fedoraRestDeviationHandler.export(id, new HashMap(0));
             if (xml != null) {
                 return xml;

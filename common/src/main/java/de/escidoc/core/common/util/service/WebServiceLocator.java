@@ -152,12 +152,12 @@ public class WebServiceLocator extends Service {
      */
     public Remote getService() throws ServiceException {
 
-        Call call = (Call) this.createCall();
-        Remote stub =
+        final Call call = (Call) this.createCall();
+        final Remote stub =
             call.getService().getPort(serviceAddress, serviceInterface);
 
         try {
-            Stub msg = (Stub) stub;
+            final Stub msg = (Stub) stub;
             // WSS4J security (technical user for the webservice)
             msg._setProperty(WSHandlerConstants.USER, "NotProvided");
             msg._setProperty(WSConstants.PASSWORD_LN, "");
@@ -187,12 +187,12 @@ public class WebServiceLocator extends Service {
     public Remote getService(final String username, final String password)
         throws ServiceException {
 
-        Call call = (Call) this.createCall();
-        Remote stub =
+        final Call call = (Call) this.createCall();
+        final Remote stub =
             call.getService().getPort(serviceAddress, serviceInterface);
 
         try {
-            Stub msg = (Stub) stub;
+            final Stub msg = (Stub) stub;
             msg._setProperty(WSHandlerConstants.USER, username);
             msg._setProperty(WSConstants.PASSWORD_LN, password);
             /*
@@ -252,20 +252,20 @@ public class WebServiceLocator extends Service {
      */
     // TODO: remove this method later. only use getService(mappings, handle)
     public Remote getService(final Iterable<BeanMapping> mappings) throws ServiceException {
-        Call call = (Call) this.createCall();
-        for (BeanMapping mapping : mappings) {
+        final Call call = (Call) this.createCall();
+        for (final BeanMapping mapping : mappings) {
             // Class mapping = (Class) mappings.get(namespace);
-            QName poqn =
+            final QName poqn =
                     new QName(mapping.getNamespaceUri(), mapping.getNamespace());
             call.registerTypeMapping(mapping.getBean(), poqn,
                     new BeanSerializerFactory(mapping.getBean(), poqn),
                     new BeanDeserializerFactory(mapping.getBean(), poqn));
         }
-        Remote stub =
+        final Remote stub =
             call.getService().getPort(serviceAddress, serviceInterface);
 
         try {
-            Stub msg = (Stub) stub;
+            final Stub msg = (Stub) stub;
             msg._setProperty(WSHandlerConstants.USER, "NotProvided");
             msg._setProperty(WSConstants.PASSWORD_LN, "");
             /*
@@ -299,11 +299,11 @@ public class WebServiceLocator extends Service {
         throws ServiceException {
 
         // get the stub
-        Remote stub = getService(mappings);
+        final Remote stub = getService(mappings);
 
         // reset the password
         try {
-            Stub msg = (Stub) stub;
+            final Stub msg = (Stub) stub;
             msg._setProperty(WSHandlerConstants.USER, "ShibbolethUser");
             msg._setProperty(WSConstants.PASSWORD_LN, handle);
 

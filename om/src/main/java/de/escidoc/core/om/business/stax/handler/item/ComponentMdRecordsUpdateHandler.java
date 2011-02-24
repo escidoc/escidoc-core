@@ -105,30 +105,30 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element)
         throws MissingAttributeValueException {
-        String curPath = parser.getCurPath();
-        String theName = element.getLocalName();
+        final String curPath = parser.getCurPath();
+        final String theName = element.getLocalName();
         if (curPath.startsWith(componentPath) || componentPath.length() == 0) {
 
             if (curPath.equals(componentPath)) {
 
-                int indexOfObjid =
+                final int indexOfObjid =
                     element.indexOfAttribute(null,
                         Elements.ATTRIBUTE_XLINK_OBJID);
                 if (indexOfObjid != -1) {
-                    String value =
+                    final String value =
                         element.getAttribute(indexOfObjid).getValue();
                     if ((value != null) && (value.length() > 0)) {
                         componentId = value;
                     }
                 }
-                int indexOfHref =
+                final int indexOfHref =
                     element.indexOfAttribute(Constants.XLINK_URI,
                         Elements.ATTRIBUTE_XLINK_HREF);
                 if (indexOfHref != -1) {
-                    String value = element.getAttribute(indexOfHref).getValue();
+                    final String value = element.getAttribute(indexOfHref).getValue();
                     if ((value != null) && (value.length() > 0)) {
 
-                        Matcher m1 = PATTERN_OBJID_IN_HREF.matcher(value);
+                        final Matcher m1 = PATTERN_OBJID_IN_HREF.matcher(value);
                         if (m1.find()) {
                             componentId = m1.group(1);
                         }
@@ -175,20 +175,20 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
                 String typeValue = null;
 
-                int indexOfType = element.indexOfAttribute(null, "md-type");
+                final int indexOfType = element.indexOfAttribute(null, "md-type");
                 if (indexOfType != -1) {
-                    Attribute type = element.getAttribute(indexOfType);
+                    final Attribute type = element.getAttribute(indexOfType);
                     typeValue = type.getValue();
                 }
 
                 String schemaValue = null;
-                int indexOfSchema = element.indexOfAttribute(null, "schema");
+                final int indexOfSchema = element.indexOfAttribute(null, "schema");
                 if (indexOfSchema != -1) {
-                    Attribute schema = element.getAttribute(indexOfSchema);
+                    final Attribute schema = element.getAttribute(indexOfSchema);
                     schemaValue = schema.getValue();
                 }
 
-                Map<String, String> md = new HashMap<String, String>();
+                final Map<String, String> md = new HashMap<String, String>();
                 if (typeValue != null) {
                     md.put("type", typeValue);
                 }

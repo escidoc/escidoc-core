@@ -73,10 +73,10 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     public String create(final String xmlData)
         throws UniqueConstraintViolationException, InvalidXmlException,
         MissingMethodParameterException, SystemException {
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(xmlData);
-        StaxParser sp = new StaxParser();
-        SetDefinitionCreateHandler sdch = new SetDefinitionCreateHandler(sp);
+        final StaxParser sp = new StaxParser();
+        final SetDefinitionCreateHandler sdch = new SetDefinitionCreateHandler(sp);
 
         sp.addHandler(sdch);
         try {
@@ -86,7 +86,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         catch (Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        SetDefinition setDefinition = new SetDefinition();
+        final SetDefinition setDefinition = new SetDefinition();
         setModificationValues(setDefinition, sdch.getSetProperties());
         setCreationValues(setDefinition, sdch.getSetProperties());
         this.setDefinitionDao.save(setDefinition);
@@ -121,15 +121,15 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         setDefinition.setCreatorId(UserContext.getId());
         setDefinition.setCreatorTitle(UserContext.getRealName());
 
-        String specification = setProperties.get("specification");
+        final String specification = setProperties.get("specification");
         if (!checkSpecificationUnique(specification)) {
 
-            String message = "The provided set specification is not unique.";
+            final String message = "The provided set specification is not unique.";
             LOG.error(message);
             throw new UniqueConstraintViolationException(message);
         }
         setDefinition.setSpecification(specification);
-        String query = setProperties.get("query");
+        final String query = setProperties.get("query");
         setDefinition.setQuery(query);
     }
 
@@ -153,7 +153,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         final Map<String, String> setProperties) throws SystemException {
         boolean changed = false;
         if (setProperties != null) {
-            String newDescription =
+            final String newDescription =
                 setProperties.get(Elements.ELEMENT_DESCRIPTION);
             if (newDescription != null
                 && ((setDefinition.getDescription() != null
@@ -162,7 +162,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                 setDefinition.setDescription(newDescription);
                 changed = true;
             }
-            String newName = setProperties.get(Elements.ELEMENT_NAME);
+            final String newName = setProperties.get(Elements.ELEMENT_NAME);
             if (setDefinition.getName() == null
                 || ((setDefinition.getName() != null) && !newName
                     .equals(setDefinition.getName()))) {
@@ -212,7 +212,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     @Override
     public String retrieve(final String setDefinitionId)
         throws ResourceNotFoundException, SystemException {
-        SetDefinition setDefinition =
+        final SetDefinition setDefinition =
             setDefinitionDao.retrieveSetDefinition(setDefinitionId);
 
         if (setDefinition == null) {
@@ -234,26 +234,26 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     public String update(final String setDefinitionId, final String xmlData)
         throws ResourceNotFoundException, OptimisticLockingException,
         MissingMethodParameterException, SystemException {
-        SetDefinition setDefinition =
+        final SetDefinition setDefinition =
             setDefinitionDao.retrieveSetDefinition(setDefinitionId);
         if (setDefinition == null) {
-            String message =
+            final String message =
                 StringUtility.format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
                     setDefinitionId);
             LOG.error(message);
             throw new ResourceNotFoundException(message);
         }
 
-        ByteArrayInputStream in =
+        final ByteArrayInputStream in =
             XmlUtility.convertToByteArrayInputStream(xmlData);
-        StaxParser sp = new StaxParser();
+        final StaxParser sp = new StaxParser();
 
-        OptimisticLockingStaxHandler optimisticLockingHandler =
+        final OptimisticLockingStaxHandler optimisticLockingHandler =
             new OptimisticLockingStaxHandler(
                 setDefinition.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
 
-        SetDefinitionUpdateHandler sduh = new SetDefinitionUpdateHandler(sp);
+        final SetDefinitionUpdateHandler sduh = new SetDefinitionUpdateHandler(sp);
 
         sp.addHandler(sduh);
         try {
@@ -288,11 +288,11 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     @Override
     public void delete(final String setDefinitionId)
         throws ResourceNotFoundException, SystemException {
-        SetDefinition setDefinition =
+        final SetDefinition setDefinition =
             setDefinitionDao.retrieveSetDefinition(setDefinitionId);
 
         if (setDefinition == null) {
-            String message =
+            final String message =
                 StringUtility.format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
                     setDefinitionId);
             LOG.error(message);
@@ -323,17 +323,17 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         throws AuthenticationException, AuthorizationException,
         InvalidSearchQueryException, SystemException {
 
-        SRURequestParameters parameters =
+        final SRURequestParameters parameters =
             new DbRequestParameters(filter);
 
-        String query = parameters.getQuery();
-        int limit = parameters.getLimit();
-        int offset = parameters.getOffset();
-        boolean explain = parameters.isExplain();
+        final String query = parameters.getQuery();
+        final int limit = parameters.getLimit();
+        final int offset = parameters.getOffset();
+        final boolean explain = parameters.isExplain();
 
-        String result;
+        final String result;
         if (explain) {
-            Map<String, Object> values = new HashMap<String, Object>();
+            final Map<String, Object> values = new HashMap<String, Object>();
 
             values.put("PROPERTY_NAMES",
                 new SetDefinitionFilter(null).getPropertyNames());
@@ -342,7 +342,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                     values);
         }
         else {
-            int needed = offset + limit;
+            final int needed = offset + limit;
             int currentOffset = 0;
             final List<SetDefinition> permittedSetDefinitions =
                 new ArrayList<SetDefinition>();
@@ -357,7 +357,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                 }
                 final List<String> ids =
                     new ArrayList<String>(tmpSetDefinitions.size());
-                for (SetDefinition setDefinition : tmpSetDefinitions) {
+                for (final SetDefinition setDefinition : tmpSetDefinitions) {
                     ids.add(setDefinition.getId());
                 }
                 setPdpHandler();
@@ -373,7 +373,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                         int permittedIndex = 0;
                         String currentPermittedId =
                             tmpPermitted.get(permittedIndex);
-                        for (SetDefinition setDefinition : tmpSetDefinitions) {
+                        for (final SetDefinition setDefinition : tmpSetDefinitions) {
                             if (currentPermittedId.equals(setDefinition
                                 .getId())) {
                                 permittedSetDefinitions.add(setDefinition);

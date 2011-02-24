@@ -133,11 +133,11 @@ public class ResourceNotFoundAttributeFinderModule
         // object type addressed in the attribute id
         final String resourceObjectType = fetchObjectType(ctx);
 
-        Matcher matcher = PATTERN_PARSE_ATTRIBUTE_ID.matcher(attributeIdValue);
+        final Matcher matcher = PATTERN_PARSE_ATTRIBUTE_ID.matcher(attributeIdValue);
         if (matcher.find()) {
             final String expectedObjectType = matcher.group(2);
             if (!resourceObjectType.equals(expectedObjectType)) {
-                String emsg =
+                final String emsg =
                     StringUtility.format(
                         ERROR_MSG_RESOURCE_NOT_FOUND_DUE_TO_WRONG_TYPE,
                         resourceId, "expectedObjectType:" + expectedObjectType

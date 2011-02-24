@@ -53,7 +53,7 @@ public class SmXmlUtility {
      * 
      */
     public Collection<String> extractAggregationPrimKeysFromSql(final String sql) {
-        Collection<String> primKeys = new ArrayList<String>();
+        final Collection<String> primKeys = new ArrayList<String>();
         if (sql != null) {
             String workSql = sql.replaceAll("\\s+", " ");
             workSql = workSql.replaceAll("\\s+", " ");
@@ -61,7 +61,7 @@ public class SmXmlUtility {
             if (workSql.matches("(?i).* (where|order by|group by) .*")) {
                 condition = true;
             }
-            String fromClause;
+            final String fromClause;
             if (condition) {
                 fromClause =
                     workSql.replaceFirst(
@@ -70,8 +70,8 @@ public class SmXmlUtility {
             else {
                 fromClause = workSql.replaceFirst("(?i).*?from(.*)", "$1");
             }
-            String[] tables = fromClause.split(",");
-            for (String table : tables) {
+            final String[] tables = fromClause.split(",");
+            for (final String table : tables) {
                 if (table.matches(".*?_.*?_.*")) {
                     primKeys.add(table.replaceFirst(".*?_(.*?)_.*", "$1"));
                 }

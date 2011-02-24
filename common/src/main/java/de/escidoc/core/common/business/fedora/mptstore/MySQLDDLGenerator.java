@@ -45,7 +45,7 @@ public class MySQLDDLGenerator extends BasicDDLGenerator {
     @Override
     public List<String> getCreateMapTableDDL(final String table) {
 
-        List<String> cmds = new ArrayList<String>();
+        final List<String> cmds = new ArrayList<String>();
 
         cmds.add("CREATE TABLE `" + table + "` (\n"
             + " `pKey` bigint(20) unsigned NOT NULL auto_increment,\n"
@@ -66,7 +66,7 @@ public class MySQLDDLGenerator extends BasicDDLGenerator {
     @Override
     public List<String> getCreateSOTableDDL(final String table) {
 
-        List<String> cmds = new ArrayList<String>();
+        final List<String> cmds = new ArrayList<String>();
 
         cmds.add("CREATE TABLE " + table + " (\n" + "  s text NOT NULL,\n"
             + "  o text NOT NULL\n" + ") ENGINE=MyISAM DEFAULT CHARSET=ascii ");

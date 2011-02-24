@@ -95,11 +95,11 @@ public class OptimisticLockingHandler extends DefaultHandler {
      * (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws OptimisticLockingException, MissingAttributeValueException,
         WebserverSystemException, InvalidContentException {
         if (!done) {
-            Attribute requestedDate;
+            final Attribute requestedDate;
             try {
                 requestedDate =
                     element.getAttribute(null, MODIFIED_DATE_ATT_NAME);

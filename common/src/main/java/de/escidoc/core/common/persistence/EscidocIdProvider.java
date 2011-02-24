@@ -85,13 +85,13 @@ public class EscidocIdProvider {
      */
     private void fetchIds(final int numberNeededIds) throws SystemException {
 
-        int number = Math.max(numberNeededIds, numberPrefetchedIds);
-        List<String> idArryList =
+        final int number = Math.max(numberNeededIds, numberPrefetchedIds);
+        final List<String> idArryList =
             Arrays.asList(resourceIdentifierDao.getNextPids(number));
 
         // check if prefixes have lower characters
         // I assume that its enough to check the first retrieved pid
-        String id = idArryList.get(0);
+        final String id = idArryList.get(0);
 
         if (!id.equals(id.toLowerCase())) {
             throw new SystemException(

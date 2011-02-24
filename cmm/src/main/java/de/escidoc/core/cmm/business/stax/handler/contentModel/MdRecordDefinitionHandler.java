@@ -113,7 +113,7 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
         throws MissingAttributeValueException, InvalidContentException,
         WebserverSystemException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         if (currentPath.equals(this.metadataXPath)) {
 
             LOG.debug("Parser reached " + this.metadataXPath);
@@ -151,9 +151,9 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(EndElement element) {
+    public EndElement endElement(final EndElement element) {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
         if (currentPath.equals(this.metadataXPath)) {
 
             this.mdRecordDefinitions.add(curMdRecordDefinition);

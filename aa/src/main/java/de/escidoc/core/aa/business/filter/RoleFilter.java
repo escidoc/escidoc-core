@@ -133,14 +133,14 @@ public class RoleFilter extends CqlFilter {
 
         if (query != null) {
             try {
-                CQLParser parser = new CQLParser();
+                final CQLParser parser = new CQLParser();
 
                 detachedCriteria =
                     DetachedCriteria.forClass(EscidocRole.class, "r");
                 detachedCriteria.add(Restrictions.ne("id",
                     EscidocRole.DEFAULT_USER_ROLE_ID));
 
-                Criterion criterion = evaluate(parser.parse(query));
+                final Criterion criterion = evaluate(parser.parse(query));
 
                 if (criterion != null) {
                     detachedCriteria.add(criterion);
@@ -167,8 +167,8 @@ public class RoleFilter extends CqlFilter {
     protected Criterion evaluate(final CQLTermNode node)
         throws InvalidSearchQueryException {
         Criterion result = null;
-        Object[] parts = criteriaMap.get(node.getIndex());
-        String value = node.getTerm();
+        final Object[] parts = criteriaMap.get(node.getIndex());
+        final String value = node.getTerm();
 
         if (parts != null && !specialCriteriaNames.contains(node.getIndex())) {
             result =
@@ -176,7 +176,7 @@ public class RoleFilter extends CqlFilter {
                     (Integer) (parts[0]) == COMPARE_LIKE);
         }
         else {
-            String columnName = node.getIndex();
+            final String columnName = node.getIndex();
 
             if (columnName != null) {
                 if ("limited".equals(columnName)) {
@@ -188,7 +188,7 @@ public class RoleFilter extends CqlFilter {
                     }
                 }
                 else if ("granted".equals(columnName)) {
-                    DetachedCriteria subQuery =
+                    final DetachedCriteria subQuery =
                         DetachedCriteria.forClass(RoleGrant.class, "rg");
 
                     subQuery.setProjection(Projections.rowCount());
@@ -229,7 +229,7 @@ public class RoleFilter extends CqlFilter {
      */
     @Override
     public Set<String> getPropertyNames() {
-        Set<String> result = new TreeSet<String>();
+        final Set<String> result = new TreeSet<String>();
         result.addAll(super.getPropertyNames());
         return result;
     }

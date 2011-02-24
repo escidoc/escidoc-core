@@ -189,7 +189,7 @@ public class StatisticInterceptor implements Ordered {
             exceptionName = e.getClass().getName();
             final StackTraceElement[] elements = e.getStackTrace();
             if (elements != null && elements.length > 0) {
-                StackTraceElement element = elements[0];
+                final StackTraceElement element = elements[0];
                 exceptionSource = StringUtility.format(element.getClassName(),
                             element.getMethodName(), element.getLineNumber());
             } else {

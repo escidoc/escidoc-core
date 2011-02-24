@@ -77,7 +77,7 @@ public class FedoraRestDeviationHandler
         // Try to get EscidocBinaryContent from IndexerResourceCache/////////////////
         EscidocBinaryContent escidocBinaryContent = null;
         try {
-            MIMETypedStream mimeTypedStream =
+            final MIMETypedStream mimeTypedStream =
                 (MIMETypedStream) IndexerResourceCache
                     .getInstance().getResource(dsID);
             if (mimeTypedStream != null && mimeTypedStream.getStream() != null) {
@@ -121,7 +121,7 @@ public class FedoraRestDeviationHandler
         if (log.isDebugEnabled()) {
             log.debug("PID:" + pid);
         }
-        String xml;
+        final String xml;
 
         // Try to get xml from IndexerResourceCache/////////////////
         try {

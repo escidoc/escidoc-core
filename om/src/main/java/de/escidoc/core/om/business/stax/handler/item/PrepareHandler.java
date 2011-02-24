@@ -64,7 +64,7 @@ public class PrepareHandler extends DefaultHandler {
     private static final AppLogger LOGGER =
         new AppLogger(PrepareHandler.class.getName());
 
-    public PrepareHandler(StaxParser parser) {
+    public PrepareHandler(final StaxParser parser) {
         this.parser = parser;
     }
 
@@ -73,24 +73,24 @@ public class PrepareHandler extends DefaultHandler {
     }
 
     @Override
-    public StartElement startElement(StartElement element)
+    public StartElement startElement(final StartElement element)
         throws InvalidContentException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (ELEMENT_PATH.equals(currentPath)) {
 
             this.storageValue = getStorageAttribute(element);
             inContent = true;
-            Map<String, String> componentBinary =
+            final Map<String, String> componentBinary =
                 new HashMap<String, String>();
             componentBinary.put("storage", this.storageValue);
             binaryData.put(componentNumber, componentBinary);
 
-            int indexOfHref =
+            final int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");
             if (indexOfHref != -1) {
-                Attribute href = element.getAttribute(indexOfHref);
+                final Attribute href = element.getAttribute(indexOfHref);
                 this.uploadUrl = href.getValue();
             }
 
@@ -99,12 +99,12 @@ public class PrepareHandler extends DefaultHandler {
     }
 
     @Override
-    public EndElement endElement(EndElement element)
+    public EndElement endElement(final EndElement element)
         throws MissingContentException {
 
         if (inContent) {
 
-            Map<String, String> componentBinary =
+            final Map<String, String> componentBinary =
                 (HashMap<String, String>) binaryData.get(componentNumber);
             if (this.content == null) {
                 if ((this.uploadUrl != null) && (this.uploadUrl.length() > 0)) {
@@ -132,19 +132,19 @@ public class PrepareHandler extends DefaultHandler {
     }
 
     @Override
-    public String characters(String s, StartElement element)
+    public String characters(final String s, final StartElement element)
         throws InvalidContentException {
 
         if (inContent) {
 
-            Map<String, String> componentBinary =
+            final Map<String, String> componentBinary =
                 binaryData.get(componentNumber);
             if ((s != null) && (s.length() > 0)) {
                 if (this.storageValue
                     .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)
                     || this.storageValue
                         .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED)) {
-                    String message =
+                    final String message =
                         "The component section 'content' with the attribute 'storage' set to 'external-url' "
                             + "or 'external-managed' may not have an inline content.";
                     LOGGER.error(message);
@@ -173,17 +173,17 @@ public class PrepareHandler extends DefaultHandler {
     private String getStorageAttribute(final StartElement element)
         throws InvalidContentException {
 
-        int indexOfStorage = element.indexOfAttribute(null, "storage");
+        final int indexOfStorage = element.indexOfAttribute(null, "storage");
 
         if (indexOfStorage == -1) {
-            String message =
+            final String message =
                 "The attribute 'storage' of the element '"
                     + element.getLocalName() + "' is missing.";
             LOGGER.error(message);
             throw new InvalidContentException(message);
         }
 
-        Attribute storage = element.getAttribute(indexOfStorage);
+        final Attribute storage = element.getAttribute(indexOfStorage);
 
         return storage.getValue();
     }

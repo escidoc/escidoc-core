@@ -113,7 +113,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
     @Override
     public String renderDefaultDc(final String componentId)
         throws WebserverSystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         values.put("title", "component " + componentId);
         values.put("componentId", componentId);
         return ItemFoXmlProvider.getInstance().getComponentDefaultDc(values);
@@ -154,7 +154,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         if ((contentRelations != null) && (!contentRelations.isEmpty())) {
             values.put("contentRelations", contentRelations);
         }
-        Collection<String> componentsVector = new ArrayList<String>();
+        final Collection<String> componentsVector = new ArrayList<String>();
         if ((components != null) && (components.length > 0)) {
 
             componentsVector.addAll(Arrays.asList(components).subList(1, components.length));
@@ -163,7 +163,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
     }
 
-    private void addRelsExtNamespaceValues(Map<String, Object> values) {
+    private void addRelsExtNamespaceValues(final Map<String, Object> values) {
 
         // values.put("itemNamespace", Constants.ITEM_NAMESPACE_URI);
         // values.put("itemNamespacePrefix", Constants.ITEM_NAMESPACE_PREFIX);
@@ -222,7 +222,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         final Map<String, String> propertiesVersion)
         throws WebserverSystemException {
 
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addRelsExtValues(values, itemId, lastModificationDate, components,
             properties, contentRelations, propertiesAsReferences,
             propertiesVersion);
@@ -275,7 +275,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
     public String renderComponentRelsExt(
         final String id, final Map<String, String> properties,
         final boolean inCreate) throws WebserverSystemException {
-        Map<String, Object> values = new HashMap<String, Object>();
+        final Map<String, Object> values = new HashMap<String, Object>();
         addRelsExtNamespaceValues(values);
         if (this.buildNumber == null) {
             this.buildNumber = Utility.getInstance().getBuildNumber();

@@ -64,7 +64,7 @@ public class RoleGrant extends RoleGrantBase {
      */
     public String getTitle() {
 
-        String objectTitle = getObjectTitle();
+        final String objectTitle = getObjectTitle();
         if (objectTitle != null) {
             return getEscidocRole().getRoleName() + " of " + objectTitle;
         }

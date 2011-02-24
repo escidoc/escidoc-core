@@ -138,23 +138,23 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     private void initDatastreams() throws FedoraSystemException {
 
         // initialize datastreams with Fedora Datastream Informations
-        org.fcrepo.server.types.gen.Datastream[] datastreamInfos =
+        final org.fcrepo.server.types.gen.Datastream[] datastreamInfos =
             getFedoraUtility().getDatastreamsInformation(getId(),
                 this.parentVersionDate);
 
         this.mdRecords = new HashMap<String, Datastream>();
 
-        for (org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
+        for (final org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
 
-            List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
-            String name = datastreamInfo.getID();
-            String label = datastreamInfo.getLabel();
-            String controlGroupValue =
+            final List<String> altIDs = Arrays.asList(datastreamInfo.getAltIDs());
+            final String name = datastreamInfo.getID();
+            final String label = datastreamInfo.getLabel();
+            final String controlGroupValue =
                     datastreamInfo.getControlGroup().getValue();
-            String mimeType = datastreamInfo.getMIMEType();
-            String location = datastreamInfo.getLocation();
+            final String mimeType = datastreamInfo.getMIMEType();
+            final String location = datastreamInfo.getLocation();
 
-            Datastream ds;
+            final Datastream ds;
             if (altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 // found md-record
                 ds =
@@ -215,7 +215,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
     private void getSomeValuesFromFedora() throws TripleStoreSystemException,
         WebserverSystemException, XmlParserSystemException {
 
-        Map<String, String> properties = new HashMap<String, String>();
+        final Map<String, String> properties = new HashMap<String, String>();
         properties.putAll(obtainRelsExtValues());
 
         final StaxParser sp = new StaxParser();
@@ -225,7 +225,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             sp.parse(new ByteArrayInputStream(this.getDc().getStream()));
         }
         catch (final Exception e) {
-            String msg = "Unexpected exception during DC datastream parsing.";
+            final String msg = "Unexpected exception during DC datastream parsing.";
             log.info(msg + e);
             throw new XmlParserSystemException(msg, e);
         }
@@ -243,7 +243,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
         // }
 
-        String title =
+        final String title =
             properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
                 + Elements.ELEMENT_DC_TITLE);
         if ((title == null) || title.length() == 0) {
@@ -342,16 +342,16 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         // get list of names of data streams with alternateId = "metadata"
         final Set<String> namesInFedora = getMdRecords().keySet();
         // delete data streams which are in fedora but not in mdRecords
-        for (String nameInFedora : namesInFedora) {
+        for (final String nameInFedora : namesInFedora) {
             if (!ds.containsKey(nameInFedora)) {
-                Datastream fedoraDs = getMdRecord(nameInFedora);
+                final Datastream fedoraDs = getMdRecord(nameInFedora);
                 fedoraDs.delete();
                 if ("escidoc".equals(fedoraDs.getName())) {
                     // Datastream dcDs = getDc();
                     final ItemFoXmlRendererInterface iri =
                             new VelocityXmlItemFoXmlRenderer();
                     final String dcContent = iri.renderDefaultDc(getId());
-                    Datastream newDc;
+                    final Datastream newDc;
                     try {
                         newDc =
                                 new Datastream("DC", getId(),
@@ -374,7 +374,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         final Iterator<Entry<String, Datastream>> nameIt = ds.entrySet().iterator();
         // create/activate data streams which are in mdRecords but not in fedora
         while (nameIt.hasNext()) {
-            Entry<String, Datastream> mapEntry = nameIt.next();
+            final Entry<String, Datastream> mapEntry = nameIt.next();
             final String name = mapEntry.getKey();
             final Datastream currentMdRecord = mapEntry.getValue();
             setMdRecord(name, currentMdRecord);
@@ -420,7 +420,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         // ds.addAlternateId("metadata");
         final String type = ds.getAlternateIDs().get(1);
         final String schema = ds.getAlternateIDs().get(2);
-        String mimeType = ds.getMimeType();
+        final String mimeType = ds.getMimeType();
         try {
             boolean contentChanged = false;
             boolean isNew = false;
@@ -430,7 +430,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                 isNew = true;
             }
             else {
-                String curMimeType = curDs.getMimeType();
+                final String curMimeType = curDs.getMimeType();
                 String curType = "";
                 String curSchema = "";
                 final List<String> altIds = curDs.getAlternateIDs();
@@ -462,12 +462,12 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                             // no content model id for component dc-mapping,
                             // default mapping
                             // should be applied
-                            String dcNewContent =
+                            final String dcNewContent =
                                 XmlUtility.createDC(nsUri, ds.toStringUTF8(),
                                     getId(), null);
                             if (dcNewContent != null
                                 && dcNewContent.trim().length() > 0) {
-                                Datastream dcNew;
+                                final Datastream dcNew;
                                 try {
                                     dcNew =
                                         new Datastream(
@@ -590,8 +590,8 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         final String xml, final String itemId) throws InvalidContentException,
         ComponentNotFoundException, SystemException {
 
-        StaxParser sp = new StaxParser();
-        ComponentPropertiesUpdateHandler cpuh =
+        final StaxParser sp = new StaxParser();
+        final ComponentPropertiesUpdateHandler cpuh =
             new ComponentPropertiesUpdateHandler(getResourceProperties(), '/'
                 + Elements.ELEMENT_PROPERTIES, sp);
         sp.addHandler(cpuh);
@@ -605,7 +605,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
-        Map<String, String> properties = cpuh.getProperties();
+        final Map<String, String> properties = cpuh.getProperties();
         setRelsExt(getFoxmlRenderer().renderComponentRelsExt(getId(),
             properties, false));
 
@@ -643,18 +643,18 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             sp.parse(getRelsExt().getStream());
         }
         catch (final IntegritySystemException e) {
-            String msg = "Unexpected exception during RELS-EXT parsing.";
+            final String msg = "Unexpected exception during RELS-EXT parsing.";
             log.warn(msg + e);
             throw new XmlParserSystemException(e);
         }
         catch (final Exception e) {
-            String msg = "Unexpected exception during RELS-EXT parsing.";
+            final String msg = "Unexpected exception during RELS-EXT parsing.";
             log.warn(msg + e);
             throw new XmlParserSystemException(msg, e);
         }
         final Map<String, String> properties = new HashMap<String, String>();
         final List<Triple> triples = eve.getElementValues().getTriples();
-        for (Triple triple : triples) {
+        for (final Triple triple : triples) {
             properties.put(triple.getPredicate(), triple.getObject());
         }
         return properties;

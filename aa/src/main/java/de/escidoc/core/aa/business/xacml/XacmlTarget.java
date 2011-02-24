@@ -118,9 +118,9 @@ public class XacmlTarget extends Target {
 
         if (actions != null && !actions.isEmpty()) {
             actionsList = new ArrayList<List<TargetMatch>>();
-            List<TargetMatch> action = new ArrayList<TargetMatch>();
-            Iterator<Action> iter = actions.iterator();
-            StringBuilder values = new StringBuilder();
+            final List<TargetMatch> action = new ArrayList<TargetMatch>();
+            final Iterator<Action> iter = actions.iterator();
+            final StringBuilder values = new StringBuilder();
             while (iter.hasNext()) {
                 values.append(iter.next().getName());
                 values.append(' ');
@@ -148,7 +148,7 @@ public class XacmlTarget extends Target {
             // get the factory that handles Target functions and get an
             // instance of the right function
             if (function == null) {
-                FunctionFactory factory = FunctionFactory.getTargetInstance();
+                final FunctionFactory factory = FunctionFactory.getTargetInstance();
                 function = factory.createFunction(XacmlFunctionContains.NAME);
             }
 
@@ -172,9 +172,9 @@ public class XacmlTarget extends Target {
      */
     public String toString() {
 
-        ByteArrayOutputStream writer = new ByteArrayOutputStream();
+        final ByteArrayOutputStream writer = new ByteArrayOutputStream();
         encode(writer, new Indenter());
-        String ret = writer.toString();
+        final String ret = writer.toString();
         try {
             writer.close();
         }

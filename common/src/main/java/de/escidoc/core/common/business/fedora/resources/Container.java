@@ -151,7 +151,7 @@ public class Container extends GenericVersionableResourcePid
              */
 
             try {
-                org.fcrepo.server.types.gen.Datastream[] datastreams =
+                final org.fcrepo.server.types.gen.Datastream[] datastreams =
                     getFedoraUtility().getDatastreamHistory(getId(),
                         DATASTREAM_ESCIDOC_RELS_EXT);
                 this.creationDate =
@@ -177,8 +177,8 @@ public class Container extends GenericVersionableResourcePid
          * written to TrippleSTore by Fedora.
          */
         // parse DC data stream
-        StaxParser sp = new StaxParser();
-        DcReadHandler dch = new DcReadHandler(sp);
+        final StaxParser sp = new StaxParser();
+        final DcReadHandler dch = new DcReadHandler(sp);
         sp.addHandler(dch);
         try {
             sp.parse(this.getDc().getStream());
@@ -220,11 +220,11 @@ public class Container extends GenericVersionableResourcePid
      * @throws TripleStoreSystemException
      * @throws WebserverSystemException
      */
-    public void setCts(Datastream ds) throws StreamNotFoundException,
+    public void setCts(final Datastream ds) throws StreamNotFoundException,
         FedoraSystemException, TripleStoreSystemException,
         WebserverSystemException {
         try {
-            Datastream curDs = getCts();
+            final Datastream curDs = getCts();
             if (!ds.equals(curDs)) {
                 ds.merge();
                 this.cts = ds;
@@ -257,21 +257,21 @@ public class Container extends GenericVersionableResourcePid
     public Map<String, Datastream> getMdRecords()
         throws IntegritySystemException, FedoraSystemException, WebserverSystemException {
 
-        Map<String, Datastream> result = new HashMap<String, Datastream>();
-        org.fcrepo.server.types.gen.Datastream[] datastreams =
+        final Map<String, Datastream> result = new HashMap<String, Datastream>();
+        final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getDatastreamInfos();
 
-        Collection<String> names = new ArrayList<String>();
-        for (org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
-            List<String> altIDs = Arrays.asList(datastream.getAltIDs());
+        final Collection<String> names = new ArrayList<String>();
+        for (final org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
+            final List<String> altIDs = Arrays.asList(datastream.getAltIDs());
             if (altIDs != null
                     && altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 names.add(datastream.getID());
             }
         }
-        for (String name : names) {
+        for (final String name : names) {
             try {
-                Datastream newDs = new Datastream(name, getId(), getVersionDate());
+                final Datastream newDs = new Datastream(name, getId(), getVersionDate());
                 result.put(name, newDs);
             } catch (StreamNotFoundException e) {
                 final String message = "Metadata record \"" + name + "\" not found for container " + getId() + '.';
@@ -302,13 +302,13 @@ public class Container extends GenericVersionableResourcePid
         // changed data stream to fedora
 
         // get list of names of data streams with alternateId = "metadata"
-        Set<String> namesInFedora = getMdRecords().keySet();
+        final Set<String> namesInFedora = getMdRecords().keySet();
         
         // delete data streams which are in fedora but not in mdRecords
-        for (String nameInFedora : namesInFedora) {
+        for (final String nameInFedora : namesInFedora) {
             if (!mdRecords.containsKey(nameInFedora)) {
                 try {
-                    Datastream fedoraDs = getMdRecord(nameInFedora);
+                    final Datastream fedoraDs = getMdRecord(nameInFedora);
                     if (fedoraDs != null) {
                         // FIXME remove the entire datastream
                         fedoraDs.delete();
@@ -322,19 +322,19 @@ public class Container extends GenericVersionableResourcePid
         
         // create or activate data streams which are in mdRecords but not in
         // fedora
-        Iterator<Entry<String, Datastream>> nameIt = mdRecords.entrySet().iterator();
+        final Iterator<Entry<String, Datastream>> nameIt = mdRecords.entrySet().iterator();
         while (nameIt.hasNext()) {
-            Entry<String, Datastream> mapEntry = nameIt.next();
-            String name = mapEntry.getKey();
+            final Entry<String, Datastream> mapEntry = nameIt.next();
+            final String name = mapEntry.getKey();
             if (namesInFedora.contains(name)) {
                 // update Datastreams which already exist
                 setMdRecord(name, mdRecords.get(name));
             } else {
 
-                Datastream currentMdRecord = mapEntry.getValue();
-                byte[] stream = currentMdRecord.getStream();
-                List<String> altIds = currentMdRecord.getAlternateIDs();
-                String[] altIDs = new String[altIds.size()];
+                final Datastream currentMdRecord = mapEntry.getValue();
+                final byte[] stream = currentMdRecord.getStream();
+                final List<String> altIds = currentMdRecord.getAlternateIDs();
+                final String[] altIDs = new String[altIds.size()];
                 for (int i = 0; i < altIds.size(); i++) {
                     altIDs[i] = altIds.get(i);
                 }
@@ -356,7 +356,7 @@ public class Container extends GenericVersionableResourcePid
         // check if the ds is set
         if (!this.mdRecords.containsKey(name)) {
             // retrieve from fedora and add to map
-            Datastream ds;
+            final Datastream ds;
             try {
                 ds = new Datastream(name, getId(), getVersionDate());
             }
@@ -386,15 +386,15 @@ public class Container extends GenericVersionableResourcePid
 
         // don't trust the handler
         // ds.addAlternateId("metadata");
-        String type = ds.getAlternateIDs().get(1);
-        String schema = ds.getAlternateIDs().get(2);
-        String mimeType = ds.getMimeType();
+        final String type = ds.getAlternateIDs().get(1);
+        final String schema = ds.getAlternateIDs().get(2);
+        final String mimeType = ds.getMimeType();
         try {
-            Datastream curDs = getMdRecord(name);
-            String curMimeType = curDs.getMimeType();
+            final Datastream curDs = getMdRecord(name);
+            final String curMimeType = curDs.getMimeType();
             String curType = "";
             String curSchema = "";
-            List<String> altIds = curDs.getAlternateIDs();
+            final List<String> altIds = curDs.getAlternateIDs();
             if (altIds.size() > 1) {
                 curType = altIds.get(1);
                 if (altIds.size() > 2) {
@@ -409,11 +409,11 @@ public class Container extends GenericVersionableResourcePid
                 || !schema.equals(curSchema) || !mimeType.equals(curMimeType)) {
                 if (contentChanged && "escidoc".equals(name)) {
 
-                    Map<String, String> mdProperties = ds.getProperties();
+                    final Map<String, String> mdProperties = ds.getProperties();
                     if (mdProperties != null) {
                         if (mdProperties.containsKey("nsUri")) {
-                            String nsUri = mdProperties.get("nsUri");
-                            String dcNewContent =
+                            final String nsUri = mdProperties.get("nsUri");
+                            final String dcNewContent =
                                 XmlUtility
                                     .createDC(
                                         nsUri,
@@ -422,7 +422,7 @@ public class Container extends GenericVersionableResourcePid
                                         getResourcePropertiesValue(PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID));
                             if (dcNewContent != null
                                 && dcNewContent.trim().length() > 0) {
-                                Datastream dcNew;
+                                final Datastream dcNew;
                                 try {
                                     dcNew =
                                         new Datastream(
@@ -439,7 +439,7 @@ public class Container extends GenericVersionableResourcePid
                             }
                         }
                         else {
-                            String message =
+                            final String message =
                                 "namespace uri of 'escidoc' metadata"
                                     + " does not set in datastream.";
 
@@ -448,7 +448,7 @@ public class Container extends GenericVersionableResourcePid
                         }
                     }
                     else {
-                        String message =
+                        final String message =
                             "Properties of 'md-record' datastream"
                                 + " with then name 'escidoc' does not exist";
                         log.error(message);
@@ -539,7 +539,7 @@ public class Container extends GenericVersionableResourcePid
     }
 
     @Override
-    public void setMembers(Datastream ds) {
+    public void setMembers(final Datastream ds) {
         // TODO Auto-generated method stub
 
     }
@@ -630,7 +630,7 @@ public class Container extends GenericVersionableResourcePid
         throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException {
 
-        Datastream datastreamWithRelations;
+        final Datastream datastreamWithRelations;
         try {
             if (getVersionNumber() == null) {
                 datastreamWithRelations = getRelsExt();
@@ -642,13 +642,13 @@ public class Container extends GenericVersionableResourcePid
         catch (StreamNotFoundException e1) {
             throw new IntegritySystemException("Datastream not found.", e1);
         }
-        byte[] datastreamWithRelationsContent =
+        final byte[] datastreamWithRelationsContent =
             datastreamWithRelations.getStream();
 
-        StaxParser sp = new StaxParser();
-        ByteArrayInputStream relsExtInputStream = new ByteArrayInputStream(datastreamWithRelationsContent);
+        final StaxParser sp = new StaxParser();
+        final ByteArrayInputStream relsExtInputStream = new ByteArrayInputStream(datastreamWithRelationsContent);
 
-        RelsExtContentRelationsReadHandler reHandler =
+        final RelsExtContentRelationsReadHandler reHandler =
             new RelsExtContentRelationsReadHandler(sp);
         sp.addHandler(reHandler);
         try {
@@ -691,7 +691,7 @@ public class Container extends GenericVersionableResourcePid
             }
         }
         catch (StreamNotFoundException e) {
-            String message =
+            final String message =
                 "RELS-EXT datastream not found in" + " container with id "
                     + getId();
             log.error(message);
@@ -707,7 +707,7 @@ public class Container extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setDc(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    public void setDc(Datastream ds) throws StreamNotFoundException,
+    public void setDc(final Datastream ds) throws StreamNotFoundException,
         FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException {
         // TODO should lock only be checked in handler?
@@ -717,7 +717,7 @@ public class Container extends GenericVersionableResourcePid
         // check if relsExt is set, is equal to ds and save to fedora
         try {
 
-            Datastream curDs = getDc();
+            final Datastream curDs = getDc();
 
             if (!ds.equals(curDs)) {
 
@@ -801,7 +801,7 @@ public class Container extends GenericVersionableResourcePid
      */
     public String getContextTitle() throws WebserverSystemException {
 
-        String contextTitle;
+        final String contextTitle;
 
         try {
             contextTitle =
@@ -828,7 +828,7 @@ public class Container extends GenericVersionableResourcePid
     private Collection<String> expandPropertiesNames(
         final Collection<String> propertiesNames) {
 
-        Collection<String> newPropertiesNames;
+        final Collection<String> newPropertiesNames;
         if (propertiesNames != null) {
             newPropertiesNames = propertiesNames;
         }
@@ -856,7 +856,7 @@ public class Container extends GenericVersionableResourcePid
     private Map<String, String> expandPropertiesNamesMapping(
         final Map<String, String> propertiesMapping) {
 
-        Map<String, String> newPropertiesNames;
+        final Map<String, String> newPropertiesNames;
         if (propertiesMapping != null) {
             newPropertiesNames = propertiesMapping;
         }

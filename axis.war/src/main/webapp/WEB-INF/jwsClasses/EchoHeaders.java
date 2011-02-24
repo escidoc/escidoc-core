@@ -32,15 +32,15 @@ public class EchoHeaders {
      * @return list of request headers
      */
     public String[] list() {
-        HttpServletRequest request = getRequest();
-        Enumeration headers=request.getHeaderNames();
-        ArrayList list=new ArrayList();
+        final HttpServletRequest request = getRequest();
+        final Enumeration headers=request.getHeaderNames();
+        final ArrayList list=new ArrayList();
         while (headers.hasMoreElements()) {
-            String h = (String) headers.nextElement();
-            String header=h+':'+request.getHeader(h);
+            final String h = (String) headers.nextElement();
+            final String header=h+':'+request.getHeader(h);
             list.add(header);
         }
-        String[] results=new String[list.size()];
+        final String[] results=new String[list.size()];
         for(int i=0;i<list.size();i++) {
             results[i]=(String) list.get(i);
         }
@@ -52,8 +52,8 @@ public class EchoHeaders {
      * @return
      */
     public String whoami() {
-        HttpServletRequest request = getRequest();
-        String remote=request.getRemoteHost();
+        final HttpServletRequest request = getRequest();
+        final String remote=request.getRemoteHost();
         return "Hello caller from "+remote;
     }
 
@@ -62,25 +62,25 @@ public class EchoHeaders {
      * @param param
      * @return
      */
-    public String echo(String param) {
+    public String echo(final String param) {
         return param;
     }
     
     /**
      * throw an axis fault with the text included
      */
-    public void throwAxisFault(String param) throws AxisFault {
+    public void throwAxisFault(final String param) throws AxisFault {
         throw new AxisFault(param);
     }
     
-    public void throwException(String param) throws Exception { 
+    public void throwException(final String param) throws Exception {
         throw new Exception(param);
     }
 
     /**
      * thow a runtime exception
      */
-    public void throwRuntimeException(String param) { 
+    public void throwRuntimeException(final String param) {
         throw new RuntimeException(param);
     }
     
@@ -89,8 +89,8 @@ public class EchoHeaders {
      * @return
      */
     private HttpServletRequest getRequest() {
-        MessageContext context = MessageContext.getCurrentContext();
-        HttpServletRequest req = (HttpServletRequest) context.getProperty(HTTPConstants.MC_HTTP_SERVLETREQUEST);
+        final MessageContext context = MessageContext.getCurrentContext();
+        final HttpServletRequest req = (HttpServletRequest) context.getProperty(HTTPConstants.MC_HTTP_SERVLETREQUEST);
         return req;
     }
 

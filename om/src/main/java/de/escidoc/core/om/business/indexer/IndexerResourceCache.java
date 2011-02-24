@@ -141,7 +141,7 @@ public final class IndexerResourceCache {
      * 
      */
     public Object getResource(final String identifier) throws SystemException {
-        String href = getHref(identifier);
+        final String href = getHref(identifier);
         if (getResourceWithInternalKey(href) == null) {
             if (identifier.startsWith("http")) {
                 cacheExternalResource(href);
@@ -165,7 +165,7 @@ public final class IndexerResourceCache {
      */
     public void setResource(final String identifier, final Object resource)
         throws SystemException {
-        String href = getHref(identifier);
+        final String href = getHref(identifier);
         synchronized (resources) {
             resources.put(href, resource);
         }
@@ -197,15 +197,15 @@ public final class IndexerResourceCache {
      *             e
      */
     public void deleteResource(final String identifier) throws SystemException {
-        String href = getHref(identifier);
+        final String href = getHref(identifier);
         synchronized (resources) {
-            Collection<String> keys = new ArrayList<String>();
-            for (String key : resources.keySet()) {
+            final Collection<String> keys = new ArrayList<String>();
+            for (final String key : resources.keySet()) {
                 if (key.startsWith(href)) {
                     keys.add(key);
                 }
             }
-            for (String key : keys) {
+            for (final String key : keys) {
                 resources.remove(key);
             }
         }
@@ -222,15 +222,15 @@ public final class IndexerResourceCache {
     public void replaceResource(
         final String identifier, 
         final Object resource) throws SystemException {
-        String href = getHref(identifier);
+        final String href = getHref(identifier);
         synchronized (resources) {
-            Collection<String> keys = new ArrayList<String>();
-            for (String key : resources.keySet()) {
+            final Collection<String> keys = new ArrayList<String>();
+            for (final String key : resources.keySet()) {
                 if (key.startsWith(href)) {
                     keys.add(key);
                 }
             }
-            for (String key : keys) {
+            for (final String key : keys) {
                 resources.remove(key);
             }
             resources.put(href, resource);
@@ -252,25 +252,25 @@ public final class IndexerResourceCache {
             if (UserContext.getHandle() != null) {
                 UserContext.setRestAccess(Constants.USE_REST_REQUEST_PROTOCOL);
             }
-            BeanMethod method =
+            final BeanMethod method =
                 methodMapper.getMethod(identifier, null, null, "GET", "");
-            Object content =
+            final Object content =
                 method.invokeWithProtocol(null,
                     Constants.USE_REST_REQUEST_PROTOCOL);
             if (content != null
                 && "EscidocBinaryContent".equals(content.getClass().getSimpleName())) {
-                EscidocBinaryContent escidocBinaryContent =
+                final EscidocBinaryContent escidocBinaryContent =
                     (EscidocBinaryContent) content;
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
-                InputStream in = escidocBinaryContent.getContent();
+                final ByteArrayOutputStream out = new ByteArrayOutputStream();
+                final InputStream in = escidocBinaryContent.getContent();
                 try {
-                     byte[] bytes = new byte[BUFFER_SIZE];
+                     final byte[] bytes = new byte[BUFFER_SIZE];
                      int i;
                      while ((i = in.read(bytes)) > -1) {
                         out.write(bytes, 0, i);
                      }
                 out.flush();
-                MIMETypedStream stream = new MIMETypedStream(
+                final MIMETypedStream stream = new MIMETypedStream(
                         escidocBinaryContent.getMimeType(), out.toByteArray(), null);
                 setResource(identifier, stream);
                 } catch (Exception e) {
@@ -290,7 +290,7 @@ public final class IndexerResourceCache {
                 }
             }
             else if (content != null) {
-                String xml = (String) content;
+                final String xml = (String) content;
                 setResource(identifier, xml);
             }
         }
@@ -323,13 +323,13 @@ public final class IndexerResourceCache {
         ByteArrayOutputStream out = null;
         InputStream in = null;
         try {
-            HttpResponse httpResponse = connectionUtility.getRequestURL(new URL(identifier));
+            final HttpResponse httpResponse = connectionUtility.getRequestURL(new URL(identifier));
 
             if (httpResponse != null) {
-                String mimeType;
+                final String mimeType;
 
                 // TODO testen ob header mitgeschickt wird
-                Header ctype = httpResponse.getFirstHeader("Content-Type");
+                final Header ctype = httpResponse.getFirstHeader("Content-Type");
                 if (ctype != null) {
                     mimeType = ctype.getValue();
                 }
@@ -343,7 +343,7 @@ public final class IndexerResourceCache {
                 while ((byteval = in.read()) > -1) {
                     out.write(byteval);
                 }
-                MIMETypedStream stream =
+                final MIMETypedStream stream =
                     new MIMETypedStream(mimeType, out.toByteArray(), null);
                 setResource(identifier, stream);
             }
@@ -381,7 +381,7 @@ public final class IndexerResourceCache {
             // objectId provided, generate href
             // get object-type
             href = XmlUtility.getObjidWithoutVersion(href);
-            String objectType = tripleStoreUtility.getObjectType(href);
+            final String objectType = tripleStoreUtility.getObjectType(href);
             if (objectType == null) {
             	throw new SystemException(
             			"couldnt get objectType for object " + href);

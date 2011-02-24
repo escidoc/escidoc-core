@@ -119,7 +119,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
         // we can only update the latest version
         if (!getItem().isLatestVersion()) {
-            String message =
+            final String message =
                 "Version " + getItem().getVersionNumber()
                     + " is not a latest version of the item. "
                     + "Assignment of version PID is restricted"
@@ -264,7 +264,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
         // we can only update the latest version
         if (!getItem().isLatestVersion()) {
-            String message =
+            final String message =
                 "Version " + getItem().getVersionNumber()
                     + " is not a latest version of the item. "
                     + "Assignment of version PID is restricted"
@@ -402,11 +402,11 @@ public class ItemHandlerPid extends ItemHandlerContent {
                 else {
                     result = true;
 
-                    Collection<String> componentIds =
+                    final Collection<String> componentIds =
                         getItem().getComponentIds();
 
                     if (componentIds != null) {
-                        for (String componentId : componentIds) {
+                        for (final String componentId : componentIds) {
                             if (!getItem()
                                 .getComponent(componentId).hasObjectPid()) {
                                 result = false;
@@ -451,7 +451,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         final String curCm =
             getItem().getProperty(
                 PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
-        String tocCm;
+        final String tocCm;
         try {
             tocCm =
                 EscidocConfiguration.getInstance().get(
@@ -492,7 +492,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         final String curCm =
             getItem().getProperty(
                 PropertyMapKeys.CURRENT_VERSION_CONTENT_MODEL_ID);
-        String tocCm;
+        final String tocCm;
         try {
             tocCm =
                 EscidocConfiguration.getInstance().get(
@@ -531,8 +531,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
         checkStatus(Constants.STATUS_WITHDRAWN);
         checkVersionStatusNot(Constants.STATUS_WITHDRAWN);
 
-        Boolean setPidAfterRelease;
-        Boolean setPidBeforeRelease;
+        final Boolean setPidAfterRelease;
+        final Boolean setPidBeforeRelease;
         try {
             setPidAfterRelease =
                 Boolean.valueOf(EscidocConfiguration.getInstance().get(
@@ -579,8 +579,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
         checkStatus(Constants.STATUS_WITHDRAWN);
         checkVersionStatusNot(Constants.STATUS_WITHDRAWN);
 
-        Boolean setPidAfterRelease;
-        Boolean setPidBeforeRelease;
+        final Boolean setPidAfterRelease;
+        final Boolean setPidBeforeRelease;
         try {
             setPidAfterRelease =
                 Boolean.valueOf(EscidocConfiguration.getInstance().get(
@@ -626,8 +626,8 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
         checkStatus(Constants.STATUS_WITHDRAWN);
 
-        Boolean setPidAfterRelease;
-        Boolean setPidBeforeRelease;
+        final Boolean setPidAfterRelease;
+        final Boolean setPidBeforeRelease;
         try {
             setPidAfterRelease =
                 Boolean.valueOf(EscidocConfiguration.getInstance().get(
@@ -711,7 +711,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
     private String prepareResponse(final String pid)
         throws TripleStoreSystemException, WebserverSystemException {
 
-        String lmd;
+        final String lmd;
         try {
             lmd = getItem().getLastModificationDate();
         }
@@ -719,9 +719,9 @@ public class ItemHandlerPid extends ItemHandlerContent {
             throw new WebserverSystemException(e);
         }
 
-        String result;
+        final String result;
         try {
-            DateTime t = new DateTime(lmd, DateTimeZone.UTC);
+            final DateTime t = new DateTime(lmd, DateTimeZone.UTC);
             result =
                 getUtility().prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
         }

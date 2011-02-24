@@ -73,7 +73,7 @@ public class RemoteJndiLocator extends JndiObjectFactoryBean {
             setInitialContextJndiProperties();
         }
         catch (WebserverSystemException e) {
-            NamingException ex = new NamingException();
+            final NamingException ex = new NamingException();
             ex.setRootCause(e);
             throw ex;
         }
@@ -121,7 +121,7 @@ public class RemoteJndiLocator extends JndiObjectFactoryBean {
         catch (IOException e) {
             throw new WebserverSystemException(e);
         }
-        Properties properties = new Properties();
+        final Properties properties = new Properties();
         properties.setProperty(Context.URL_PKG_PREFIXES,
             "org.jboss.naming:org.jnp.interfaces");
         // properties.setProperty(Context.INITIAL_CONTEXT_FACTORY,

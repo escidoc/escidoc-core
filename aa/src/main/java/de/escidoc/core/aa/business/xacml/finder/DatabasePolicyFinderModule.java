@@ -189,8 +189,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
         // The policyId is concatenated String
         // containing <roleName>/<user or group>/<userOrGroupId>
-        String[] parts = idReference.toString().split("/");
-        StringBuilder roleIdentifier = new StringBuilder("");
+        final String[] parts = idReference.toString().split("/");
+        final StringBuilder roleIdentifier = new StringBuilder("");
         if (parts.length > 2) {
             for (int i = 0; i < parts.length - 2; i++) {
                 roleIdentifier.append(parts[i]);
@@ -199,7 +199,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         else {
             roleIdentifier.append(idReference);
         }
-        URI roleIdentifierUri;
+        final URI roleIdentifierUri;
         try {
             roleIdentifierUri = new URI(roleIdentifier.toString());
         }
@@ -306,28 +306,28 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     @Override
     public PolicyFinderResult findPolicy(final EvaluationCtx context) {
         try {
-            List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
+            final List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
 
             // first get the user id and action from the request
-            String userId =
+            final String userId =
                 FinderModuleHelper.retrieveSingleSubjectAttribute(context,
                     Constants.URI_SUBJECT_ID, true);
 
             // get policySet for policies attached to the user
-            XacmlPolicySet userPolicySet = getUserPolicies(userId);
+            final XacmlPolicySet userPolicySet = getUserPolicies(userId);
             policies.add(userPolicySet);
 
             // get policySet for policies attached via groups the user belongs
             // to
             if (!UserContext.isIdOfAnonymousUser(userId)) {
-                XacmlPolicySet userGroupsPolicySet =
+                final XacmlPolicySet userGroupsPolicySet =
                     getUserGroupPolicies(userId);
                 if (userGroupsPolicySet != null) {
                     policies.add(userGroupsPolicySet);
                 }
             }
 
-            XacmlPolicySet result =
+            final XacmlPolicySet result =
                 new XacmlPolicySet(
                     "UserGroupPolicies-" + userId,
                     XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES,
@@ -363,16 +363,16 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         // if no policies found in the cache, get them from the database
         if (result == null) {
 
-            List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
+            final List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
 
             // retrieve user's roles policies
-            XacmlPolicySet rolesPolicySet = retrieveUserRolesPolicies(userId);
+            final XacmlPolicySet rolesPolicySet = retrieveUserRolesPolicies(userId);
             if (rolesPolicySet != null) {
                 policies.add(rolesPolicySet);
             }
 
             // add the default policies
-            AbstractPolicy defPolicies = retrieveDefaultPolicies();
+            final AbstractPolicy defPolicies = retrieveDefaultPolicies();
             if (defPolicies != null) {
                 policies.add(defPolicies);
             }
@@ -409,13 +409,13 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     private XacmlPolicySet getUserGroupPolicies(final String userId)
         throws Exception {
 
-        List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
+        final List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
         // get groups the user belongs to
-        Set<String> userGroups = policiesCacheProxy.getUserGroups(userId);
+        final Set<String> userGroups = policiesCacheProxy.getUserGroups(userId);
         if (userGroups != null && !userGroups.isEmpty()) {
-            List<String> nonCachedGroupPolicies = new ArrayList<String>();
-            for (String groupId : userGroups) {
-                XacmlPolicySet groupPolicySet = PoliciesCache.getGroupPolicies(groupId);
+            final List<String> nonCachedGroupPolicies = new ArrayList<String>();
+            for (final String groupId : userGroups) {
+                final XacmlPolicySet groupPolicySet = PoliciesCache.getGroupPolicies(groupId);
                 if (groupPolicySet == null) {
                     nonCachedGroupPolicies.add(groupId);
                 }
@@ -428,9 +428,9 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
             }
             if (!nonCachedGroupPolicies.isEmpty()) {
                 // retrieve group's roles policies
-                Map<String, XacmlPolicySet> groupsPolicies =
+                final Map<String, XacmlPolicySet> groupsPolicies =
                     retrieveGroupRolesPolicies(nonCachedGroupPolicies);
-                for (String groupId : nonCachedGroupPolicies) {
+                for (final String groupId : nonCachedGroupPolicies) {
                     XacmlPolicySet thisGroupPolicySet =
                         groupsPolicies.get(groupId);
                     if (thisGroupPolicySet == null) {
@@ -474,7 +474,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         final String msg, final Exception e) {
 
         log.error(msg, e);
-        Exception ex;
+        final Exception ex;
         if (e instanceof EscidocException) {
             ex = e;
         }
@@ -539,7 +539,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         }
 
         try {
-            Map<String, Map<String, List<RoleGrant>>> roleGrants = userAccountHandler.retrieveCurrentGrantsAsMap(userId);
+            final Map<String, Map<String, List<RoleGrant>>> roleGrants = userAccountHandler.retrieveCurrentGrantsAsMap(userId);
             // cache grants for later retrieval during policy evaluation
             PoliciesCache.putUserGrants(userId, roleGrants);
 
@@ -575,20 +575,20 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     private Map<String, XacmlPolicySet> retrieveGroupRolesPolicies(
         final List<String> groupIds) throws WebserverSystemException {
 
-        Map<String, XacmlPolicySet> ret =
+        final Map<String, XacmlPolicySet> ret =
             new HashMap<String, XacmlPolicySet>();
         try {
-            Map<String, Map<String, Map<String, List<RoleGrant>>>> roleGrants = userGroupHandler.retrieveManyCurrentGrantsAsMap(groupIds);
+            final Map<String, Map<String, Map<String, List<RoleGrant>>>> roleGrants = userGroupHandler.retrieveManyCurrentGrantsAsMap(groupIds);
             // cache grants for later retrieval during policy evaluation
             if (roleGrants != null) {
-                for (Entry<String, Map<String, 
+                for (final Entry<String, Map<String,
                         Map<String, List<RoleGrant>>>> entry 
                                     : roleGrants.entrySet()) {
                     PoliciesCache.putGroupGrants(entry.getKey(),
                         entry.getValue());
                     if (entry.getValue() != null
                         && !entry.getValue().isEmpty()) {
-                        XacmlPolicySet policies =
+                        final XacmlPolicySet policies =
                             retrieveRolesPolicies(entry.getValue(),
                                 entry.getKey(), false);
                         if (policies != null) {
@@ -635,10 +635,10 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         if (!isUser) {
             userOrGroupIdentifier = "group";
         }
-        List<AbstractPolicy> rolesPolicies = new ArrayList<AbstractPolicy>();
+        final List<AbstractPolicy> rolesPolicies = new ArrayList<AbstractPolicy>();
         try {
-            for (Object o : roleGrants.keySet()) {
-                String roleId = (String) o;
+            for (final Object o : roleGrants.keySet()) {
+                final String roleId = (String) o;
                 EscidocRole role = PoliciesCache.getRole(roleId);
                 if (role == null) {
                     role = roleDao.retrieveRole(roleId);
@@ -647,7 +647,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                 }
                 // The policyId is concatenated String
                 // containing <roleName>/<user or group>/<userOrGroupId>
-                URI policySetId =
+                final URI policySetId =
                         new URI(role.getPolicySetId().toString() + '/'
                                 + userOrGroupIdentifier + '/' + userOrGroupId);
                 rolesPolicies.add(new XacmlPolicyReference(policySetId,

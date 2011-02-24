@@ -120,7 +120,7 @@ public class ContentStreamsHandler extends DefaultHandler {
             this.contentStreamHandler.startElement(element);
         }
         else {
-            String currentPath = parser.getCurPath();
+            final String currentPath = parser.getCurPath();
 
             if (xpathContentStream.equals(currentPath)) {
 
@@ -148,7 +148,7 @@ public class ContentStreamsHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws WebserverSystemException, InvalidContentException {
 
-        String currentPath = parser.getCurPath();
+        final String currentPath = parser.getCurPath();
 
         if (xpathContentStream.equals(currentPath)) {
             LOG.debug("Reached end of " + xpathContentStream);
@@ -215,9 +215,9 @@ public class ContentStreamsHandler extends DefaultHandler {
     private void checkUniqueContentStreamNames(final String name)
         throws InvalidContentException {
 
-        for (ContentStreamCreate contentStream : this.contentStreams) {
+        for (final ContentStreamCreate contentStream : this.contentStreams) {
             if (name.equals(contentStream.getName())) {
-                String message =
+                final String message =
                         "The item representation contains multiple "
                                 + "content streams with a name '" + name + "'.";
                 LOG.debug(message);

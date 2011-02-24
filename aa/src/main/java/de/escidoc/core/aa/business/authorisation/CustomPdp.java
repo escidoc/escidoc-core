@@ -167,9 +167,9 @@ public class CustomPdp {
     private void init() throws WebserverSystemException {
 
         // setup the PolicyFinder that this PDP will use
-        PolicyFinder policyFinder = new PolicyFinder();
+        final PolicyFinder policyFinder = new PolicyFinder();
         databasePolicyFinder.setPolicyFinder(policyFinder);
-        Set<PolicyFinderModule> policyModules =
+        final Set<PolicyFinderModule> policyModules =
             new HashSet<PolicyFinderModule>();
         policyModules.add(databasePolicyFinder);
         policyFinder.setModules(policyModules);
@@ -178,8 +178,8 @@ public class CustomPdp {
         // Setup the AttributeFinder just like we setup the PolicyFinder. Note
         // that unlike with the policy finder, the order matters here. See the
         // the javadocs for more details.
-        AttributeFinder attributeFinder = new AttributeFinder();
-        List<AttributeFinderModule> attributeModules =
+        final AttributeFinder attributeFinder = new AttributeFinder();
+        final List<AttributeFinderModule> attributeModules =
             new ArrayList<AttributeFinderModule>();
         // first the standard XACML Modules
         attributeModules.add(new CurrentEnvModule());
@@ -209,9 +209,9 @@ public class CustomPdp {
         attributeFinder.setModules(attributeModules);
 
         // Setup the FunctionFactory
-        FunctionFactoryProxy proxy =
+        final FunctionFactoryProxy proxy =
             StandardFunctionFactory.getNewFactoryProxy();
-        FunctionFactory factory = proxy.getTargetFactory();
+        final FunctionFactory factory = proxy.getTargetFactory();
         factory.addFunction(new XacmlFunctionContains());
         factory.addFunction(new XacmlFunctionIsIn());
         factory.addFunction(new XacmlFunctionRoleInList());
@@ -249,7 +249,7 @@ public class CustomPdp {
         }
 
         // setup the request based on the file
-        RequestCtx request =
+        final RequestCtx request =
             RequestCtx.getInstance(new FileInputStream(requestFile));
 
         // evaluate the request

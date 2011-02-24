@@ -114,7 +114,7 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
      */
     @Override
     public String characters(final String data, final StartElement element) {
-        String curPath = parser.getCurPath();
+        final String curPath = parser.getCurPath();
         if (curPath.equals(XPATH_CONTENT_MODEL_PROPERTIES + '/'
             + Elements.ELEMENT_NAME)) {
             this.properties.getObjectProperties().setTitle(data);

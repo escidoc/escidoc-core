@@ -192,12 +192,12 @@ public class XacmlStaxHandler extends DefaultHandler {
                     }
 
                     if (escidocPolicies.isEmpty()) {
-                        EscidocPolicy policy =
+                        final EscidocPolicy policy =
                             new EscidocPolicy(policyXml, role);
                         escidocPolicies.add(policy);
                     }
                     else {
-                        EscidocPolicy policy =
+                        final EscidocPolicy policy =
                             escidocPolicies.iterator().next();
                         policy.setXml(policyXml);
                     }

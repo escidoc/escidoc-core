@@ -39,11 +39,11 @@ public abstract class MPTStringUtil {
 
     public static String escapeLiteralValueForSql(final CharSequence s) {
 
-        int len = s.length();
-        StringBuilder out = new StringBuilder(len * 2);
+        final int len = s.length();
+        final StringBuilder out = new StringBuilder(len * 2);
 
         for (int i = 0; i < len; i++) {
-            char c = s.charAt(i);
+            final char c = s.charAt(i);
             if (c == '\'') {
                 out.append("\\\'");
             }
@@ -116,9 +116,9 @@ public abstract class MPTStringUtil {
      * @return The uppercase hex string.
      */
     private static String hexString(final int num, final int len) {
-        StringBuilder out = new StringBuilder(len);
-        String hex = Integer.toHexString(num).toUpperCase();
-        int n = len - hex.length();
+        final StringBuilder out = new StringBuilder(len);
+        final String hex = Integer.toHexString(num).toUpperCase();
+        final int n = len - hex.length();
         for (int i = 0; i < n; i++) {
             out.append('0');
         }

@@ -410,7 +410,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         XmlParserSystemException, IntegritySystemException, TmeException,
         XMLStreamException, XmlCorruptedException {
 
-        ByteArrayInputStream in;
+        final ByteArrayInputStream in;
         try {
             in =
                 new ByteArrayInputStream(
@@ -495,10 +495,10 @@ public class StaxParser implements DefaultHandlerStackInterface {
         XmlParserSystemException, IntegritySystemException,
         MissingMdRecordException, TmeException, XmlCorruptedException {
 
-        XMLStreamReader parser =
+        final XMLStreamReader parser =
             factory.createXMLStreamReader(in, XmlUtility.CHARACTER_ENCODING);
         while (parser.hasNext()) {
-            int event = parser.next();
+            final int event = parser.next();
             switch (event) {
 
                 case XMLStreamConstants.START_DOCUMENT:
@@ -521,11 +521,11 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     }
 
                     (startElements.peek()).setHasChild(true);
-                    StartElement startElement =
+                    final StartElement startElement =
                         new StartElement(parser.getLocalName(),
                             parser.getNamespaceURI(), parser.getPrefix(),
                             parser.getNamespaceContext());
-                    int xmlBaseIndex =
+                    final int xmlBaseIndex =
                         startElement.indexOfAttribute(
                             "http://www.w3.org/XML/1998/namespace", "base");
                     if (xmlBaseIndex > -1) {
@@ -533,9 +533,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
                             startElement.getAttribute(xmlBaseIndex).getValue();
                     }
                     // add attributes
-                    int attCount = parser.getAttributeCount();
+                    final int attCount = parser.getAttributeCount();
                     for (int i = 0; i < attCount; i++) {
-                        Attribute attribute =
+                        final Attribute attribute =
                             new Attribute(parser.getAttributeLocalName(i),
                                 parser.getAttributeNamespace(i),
                                 parser.getAttributePrefix(i),
@@ -550,7 +550,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     break;
 
                 case XMLStreamConstants.CHARACTERS:
-                    String data = parser.getText();
+                    final String data = parser.getText();
                     if (data.length() != 0) {
                         (startElements.peek()).setHasCharacters(true);
                         handle(data);
@@ -558,7 +558,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     break;
 
                 case XMLStreamConstants.CDATA:
-                    String cdata = "<![CDATA[" + parser.getText() + "]]>";
+                    final String cdata = "<![CDATA[" + parser.getText() + "]]>";
                     // FIXME cdata length is always != 0
                     if (cdata.length() != 0) {
                         (startElements.peek()).setHasCharacters(true);
@@ -570,7 +570,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     if ((startElements.peek()).isEmpty()) {
                         handle("");
                     }
-                    EndElement endElement =
+                    final EndElement endElement =
                         new EndElement(parser.getLocalName(),
                             parser.getNamespaceURI(), parser.getPrefix());
                     handle(endElement);
@@ -646,10 +646,10 @@ public class StaxParser implements DefaultHandlerStackInterface {
         OrganizationalUnitNotFoundException, ContentRelationNotFoundException,
         PidAlreadyAssignedException, MissingMdRecordException, TmeException {
 
-        XMLEventReader parser = factory.createXMLEventReader(in);
+        final XMLEventReader parser = factory.createXMLEventReader(in);
 
         while (parser.hasNext()) {
-            XMLEvent event = parser.nextEvent();
+            final XMLEvent event = parser.nextEvent();
 
             switch (event.getEventType()) {
                 case XMLStreamConstants.START_DOCUMENT:
@@ -673,19 +673,19 @@ public class StaxParser implements DefaultHandlerStackInterface {
                         init();
                     }
                     (startElements.peek()).setHasChild(true);
-                    javax.xml.stream.events.StartElement se =
+                    final javax.xml.stream.events.StartElement se =
                         event.asStartElement();
-                    StartElement startElement =
+                    final StartElement startElement =
                         new StartElement(se.getName().getLocalPart(), se
                             .getName().getNamespaceURI(), se
                             .getName().getPrefix(), se.getNamespaceContext());
                     // add attributes
-                    Iterator<javax.xml.stream.events.Attribute> attIt =
+                    final Iterator<javax.xml.stream.events.Attribute> attIt =
                         se.getAttributes();
                     while (attIt.hasNext()) {
-                        javax.xml.stream.events.Attribute a = attIt.next();
-                        QName name = a.getName();
-                        Attribute attribute =
+                        final javax.xml.stream.events.Attribute a = attIt.next();
+                        final QName name = a.getName();
+                        final Attribute attribute =
                             new Attribute(name.getLocalPart(),
                                 name.getNamespaceURI(), name.getPrefix(),
                                 a.getValue());
@@ -698,7 +698,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     break;
 
                 case XMLStreamConstants.CHARACTERS:
-                    String data = event.asCharacters().getData();
+                    final String data = event.asCharacters().getData();
                     if (data.length() != 0) {
                         (startElements.peek()).setHasCharacters(true);
                         handle(data);
@@ -706,7 +706,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     break;
 
                 case XMLStreamConstants.CDATA:
-                    String cdata =
+                    final String cdata =
                         "<![CDATA[" + event.asCharacters().getData() + "]]>";
                     // FIXME this length is always != 0
                     if (cdata.length() != 0) {
@@ -716,9 +716,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     break;
 
                 case XMLStreamConstants.END_ELEMENT:
-                    javax.xml.stream.events.EndElement ee =
+                    final javax.xml.stream.events.EndElement ee =
                         event.asEndElement();
-                    EndElement endElement =
+                    final EndElement endElement =
                         new EndElement(ee.getName().getLocalPart(), ee
                             .getName().getNamespaceURI(), ee
                             .getName().getPrefix());
@@ -856,7 +856,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
             }
             rootChecked = true;
         }
-        for (DefaultHandler handler : handlerChain) {
+        for (final DefaultHandler handler : handlerChain) {
             if (handler != null) {
                 try {
                     element = handler.startElement(element);
@@ -959,7 +959,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         InvalidContentException, XmlCorruptedException {
 
         EndElement element = endElement;
-        for (DefaultHandler handler : handlerChain) {
+        for (final DefaultHandler handler : handlerChain) {
             if (handler != null) {
                 try {
                     element = handler.endElement(element);
@@ -1047,9 +1047,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
         IntegritySystemException, InvalidStatusException, TmeException {
 
         String chars = characters;
-        for (DefaultHandler handler : handlerChain) {
+        for (final DefaultHandler handler : handlerChain) {
             if (handler != null) {
-                StartElement e = startElements.peek();
+                final StartElement e = startElements.peek();
                 try {
                     chars = handler.characters(chars, e);
                 } catch (ReadonlyAttributeViolationException ex) {

@@ -245,11 +245,11 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
     public List<Map<String, String>> getMetadataRecordsMap(
         final Iterable<MdRecordCreate> mdRecords) throws SystemException {
 
-        List<Map<String, String>> values =
+        final List<Map<String, String>> values =
             new ArrayList<Map<String, String>>();
 
         if (mdRecords != null) {
-            for (MdRecordCreate mdRecord : mdRecords) {
+            for (final MdRecordCreate mdRecord : mdRecords) {
                 values.add(mdRecord.getValueMap());
             }
         }

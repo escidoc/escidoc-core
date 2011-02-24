@@ -128,14 +128,14 @@ public class Reindexer {
      * @return true if the index contains objects of the given type
      */
     private boolean contains(final String indexName, final ResourceType type) {
-        boolean result;
+        final boolean result;
 
         if (indexName == null || indexName.trim().length() == 0
             || "all".equalsIgnoreCase(indexName)) {
             result = true;
         }
         else {
-            Map<String, Map<String, Object>> resourceParameters =
+            final Map<String, Map<String, Object>> resourceParameters =
                 objectTypeParameters.get(type.getUri());
             if (resourceParameters == null) {
                 return false;
@@ -164,50 +164,50 @@ public class Reindexer {
         if ("errorTest".equals(indexName)) {
             return testReindexError();
         }
-        StringBuilder result = new StringBuilder();
-        ReindexStatus reindexStatus = ReindexStatus.getInstance();
+        final StringBuilder result = new StringBuilder();
+        final ReindexStatus reindexStatus = ReindexStatus.getInstance();
 
         if (reindexStatus.startMethod()) {
             boolean idListEmpty = true;
 
             try {
                 // Get all Containers
-                Collection<String> containerHrefs =
+                final Collection<String> containerHrefs =
                     getIds(indexName, ResourceType.CONTAINER,
                         CONTAINER_LIST_QUERY, clearIndex);
 
                 idListEmpty &= containerHrefs.isEmpty();
 
                 // Get all Content Models
-                Collection<String> contentModelHrefs =
+                final Collection<String> contentModelHrefs =
                     getIds(indexName, ResourceType.CONTENT_MODEL,
                         CONTENT_MODEL_LIST_QUERY, clearIndex);
 
                 idListEmpty &= contentModelHrefs.isEmpty();
 
                 // Get all Content Relations
-                Collection<String> contentRelationHrefs =
+                final Collection<String> contentRelationHrefs =
                     getIds(indexName, ResourceType.CONTENT_RELATION,
                         CONTENT_RELATION_LIST_QUERY, clearIndex);
 
                 idListEmpty &= contentRelationHrefs.isEmpty();
 
                 // Get all Contexts
-                Collection<String> contextHrefs =
+                final Collection<String> contextHrefs =
                     getIds(indexName, ResourceType.CONTEXT, CONTEXT_LIST_QUERY,
                         clearIndex);
 
                 idListEmpty &= contextHrefs.isEmpty();
 
                 // Get all Items
-                Collection<String> itemHrefs =
+                final Collection<String> itemHrefs =
                     getIds(indexName, ResourceType.ITEM, ITEM_LIST_QUERY,
                         clearIndex);
 
                 idListEmpty &= itemHrefs.isEmpty();
 
                 // Get all Organizational Units
-                Collection<String> orgUnitHrefs =
+                final Collection<String> orgUnitHrefs =
                     getIds(indexName, ResourceType.OU, OU_LIST_QUERY,
                         clearIndex);
 
@@ -250,37 +250,37 @@ public class Reindexer {
                 result.append("</message>\n");
 
                 // re-index Containers
-                for (String containerHref : containerHrefs) {
+                for (final String containerHref : containerHrefs) {
                     sendUpdateIndexMessage(containerHref,
                         ResourceType.CONTAINER, indexName);
                 }
 
                 // re-index Content Models
-                for (String contentModelHref : contentModelHrefs) {
+                for (final String contentModelHref : contentModelHrefs) {
                     sendUpdateIndexMessage(contentModelHref,
                         ResourceType.CONTENT_MODEL, indexName);
                 }
 
                 // re-index Content Relations
-                for (String contentRelationHref : contentRelationHrefs) {
+                for (final String contentRelationHref : contentRelationHrefs) {
                     sendUpdateIndexMessage(contentRelationHref,
                         ResourceType.CONTENT_RELATION, indexName);
                 }
 
                 // re-index Contexts
-                for (String contextHref : contextHrefs) {
+                for (final String contextHref : contextHrefs) {
                     sendUpdateIndexMessage(contextHref, ResourceType.CONTEXT,
                         indexName);
                 }
 
                 // re-index Items
-                for (String itemHref : itemHrefs) {
+                for (final String itemHref : itemHrefs) {
                     sendUpdateIndexMessage(itemHref, ResourceType.ITEM,
                         indexName);
                 }
 
                 // re-index Organizational Units
-                for (String orgUnitHref : orgUnitHrefs) {
+                for (final String orgUnitHref : orgUnitHrefs) {
                     sendUpdateIndexMessage(orgUnitHref, ResourceType.OU,
                         indexName);
                 }
@@ -327,7 +327,7 @@ public class Reindexer {
         String result = null;
 
         if (triple != null) {
-            int index = triple.indexOf(' ');
+            final int index = triple.indexOf(' ');
 
             if (index > 0) {
                 result = triple.substring(triple.indexOf('/') + 1, index - 1);
@@ -349,7 +349,7 @@ public class Reindexer {
         final ResourceType objectType, final String indexName)
         throws ApplicationServerSystemException {
         try {
-            IndexRequest indexRequest =
+            final IndexRequest indexRequest =
                 IndexRequestBuilder
                     .createIndexRequest()
                     .withAction(
@@ -374,7 +374,7 @@ public class Reindexer {
     public void sendDeleteObjectMessage(final String resource)
         throws ApplicationServerSystemException {
         try {
-            IndexRequest indexRequest =
+            final IndexRequest indexRequest =
                 IndexRequestBuilder
                     .createIndexRequest()
                     .withAction(
@@ -403,7 +403,7 @@ public class Reindexer {
         final String resource, final ResourceType objectType,
         final String indexName) throws ApplicationServerSystemException {
         try {
-            IndexRequest indexRequest =
+            final IndexRequest indexRequest =
                 IndexRequestBuilder
                     .createIndexRequest()
                     .withAction(
@@ -439,7 +439,7 @@ public class Reindexer {
         final String indexName, final ResourceType type,
         final String listQuery, final boolean clearIndex)
         throws SystemException {
-        Collection<String> result = new LinkedList<String>();
+        final Collection<String> result = new LinkedList<String>();
 
         if (contains(indexName, type)) {
             BufferedReader input = null;
@@ -449,8 +449,8 @@ public class Reindexer {
                     new BufferedReader(new InputStreamReader(
                         fedoraUtility.query(listQuery)));
 
-                ReindexStatus reindexStatus = ReindexStatus.getInstance();
-                String objectType = type.getUri();
+                final ReindexStatus reindexStatus = ReindexStatus.getInstance();
+                final String objectType = type.getUri();
                 String line;
 
                 while ((line = input.readLine()) != null) {

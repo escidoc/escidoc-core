@@ -117,11 +117,11 @@ public final class CustomTargetBuilder {
         throws URISyntaxException, UnknownIdentifierException,
         FunctionTypeException {
 
-        StringAttribute value = new StringAttribute(attributeValue);
+        final StringAttribute value = new StringAttribute(attributeValue);
         AttributeDesignator designator = null;
         if (designatorId != null && designatorType != null) {
-            URI designatorTypeUri = new URI(designatorType);
-            URI designatorIdUri = new URI(designatorId);
+            final URI designatorTypeUri = new URI(designatorType);
+            final URI designatorIdUri = new URI(designatorId);
             designator =
                 new AttributeDesignator(AttributeDesignator.SUBJECT_TARGET,
                     designatorTypeUri, designatorIdUri, false);
@@ -155,8 +155,8 @@ public final class CustomTargetBuilder {
         final AttributeDesignator designator, final AttributeValue value)
         throws UnknownIdentifierException, FunctionTypeException {
 
-        FunctionFactory factory = FunctionFactory.getTargetInstance();
-        Function function = factory.createFunction(functionId);
+        final FunctionFactory factory = FunctionFactory.getTargetInstance();
+        final Function function = factory.createFunction(functionId);
         return new TargetMatch(type, function, designator, value);
 
     }

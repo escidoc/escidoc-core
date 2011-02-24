@@ -114,8 +114,8 @@ public final class ContentRelationsUtility {
         WebserverSystemException, XmlParserSystemException,
         InvalidContentException {
 
-        String location = getLocation();
-        InputStream in = getInputStream(location);
+        final String location = getLocation();
+        final InputStream in = getInputStream(location);
 
         predicates = parseOntology(in);
     }
@@ -156,7 +156,7 @@ public final class ContentRelationsUtility {
     private static InputStream getInputStream(final String location)
         throws WebserverSystemException {
 
-        URLConnection conn;
+        final URLConnection conn;
         try {
             conn = new URL(location).openConnection();
         }
@@ -166,7 +166,7 @@ public final class ContentRelationsUtility {
         catch (IOException e) {
             throw new WebserverSystemException(e);
         }
-        InputStream in;
+        final InputStream in;
         try {
             in = conn.getInputStream();
         }
@@ -193,8 +193,8 @@ public final class ContentRelationsUtility {
     private static List<String> parseOntology(final InputStream in)
         throws XmlCorruptedException, InvalidContentException,
         XmlParserSystemException {
-        StaxParser sp = new StaxParser();
-        ContentRelationsOntologyHandler handler =
+        final StaxParser sp = new StaxParser();
+        final ContentRelationsOntologyHandler handler =
             new ContentRelationsOntologyHandler(sp);
         sp.addHandler(handler);
         try {

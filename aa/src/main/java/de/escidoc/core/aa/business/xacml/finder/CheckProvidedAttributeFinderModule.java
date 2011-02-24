@@ -154,11 +154,11 @@ public class CheckProvidedAttributeFinderModule
                 getAttributeId(), null).getAttributeValue();
         putInCache("", "", "", PROVIDED_ATTRIBUTES_ID, ctx,
             new EvaluationResult(providedAttributesIds));
-        Iterator<StringAttribute> iter =
+        final Iterator<StringAttribute> iter =
             ((BagAttribute) providedAttributesIds).iterator();
         while (iter.hasNext()) {
             final String attributeId = iter.next().getValue();
-            Matcher m =
+            final Matcher m =
                 PATTERN_ID_ATTRIBUTE_OR_NEW_ATTRIBUTE.matcher(attributeId);
             if (m.find()) {
                 final String expectedObjectType = m.group(1);
@@ -186,10 +186,10 @@ public class CheckProvidedAttributeFinderModule
                                 resourceName + " not found", id);
 
                         try {
-                            Class<ResourceNotFoundException> exceptionClass =
+                            final Class<ResourceNotFoundException> exceptionClass =
                                 (Class<ResourceNotFoundException>) Class
                                     .forName(exceptionName);
-                            Constructor<ResourceNotFoundException> constructor =
+                            final Constructor<ResourceNotFoundException> constructor =
                                 exceptionClass.getConstructor(new Class[] {
                                     String.class, Throwable.class });
                             throw constructor.newInstance(errorMsg, null);

@@ -103,9 +103,9 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) {
         if (!props.isEmpty()) {
-            String curPath = parser.getCurPath();
-            String theKey = element.getLocalName();
-            String curElementNamespace = element.getNamespace();
+            final String curPath = parser.getCurPath();
+            final String theKey = element.getLocalName();
+            final String curElementNamespace = element.getNamespace();
             if (curPath.endsWith(this.path + theKey)
                 && (props.containsKey(theKey) || props
                     .containsKey(curElementNamespace + theKey))) {
@@ -146,14 +146,14 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
                     || (count == replacementElement.getPosition())) {
 
                     if (replacementElement.getAttributeCount() > 0) {
-                        Attribute replacementAttribute =
+                        final Attribute replacementAttribute =
                             replacementElement.getAttribute(0);
-                        String replacementAttributeValue = replacementAttribute.getValue();
+                        final String replacementAttributeValue = replacementAttribute.getValue();
                         int indexOfAttributeToReplace = 0;
                         boolean attributeMatch = false;
                         Attribute attributeToReplace = null;
                         for (int i = 0; i <= element.getAttributeCount(); i++) {
-                            Attribute attribute = element.getAttribute(i);
+                            final Attribute attribute = element.getAttribute(i);
                             if (attribute.getLocalName().equals(
                                 replacementAttribute.getLocalName())
                                 && attribute.getNamespace().equals(
@@ -190,8 +190,8 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
 
         String newData = data;
         if (!props.isEmpty()) {
-            String curPath = parser.getCurPath();
-            String theKey = element.getLocalName();
+            final String curPath = parser.getCurPath();
+            final String theKey = element.getLocalName();
 
             if (curPath.endsWith(this.path + theKey)
                 && (props.containsKey(theKey) || props.containsKey(element

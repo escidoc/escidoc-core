@@ -34,25 +34,25 @@ public class HandlerBase implements InitializingBean {
 
     private Utility utility = null;
 
-    protected String transformSearchResponse2relations(String searchResponse)
+    protected String transformSearchResponse2relations(final String searchResponse)
         throws SystemException {
 
         try {
-            TransformerFactory tf = TransformerFactory.newInstance();
+            final TransformerFactory tf = TransformerFactory.newInstance();
 
-            URL xsltUrl =
+            final URL xsltUrl =
                 new URL(EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.ESCIDOC_CORE_SELFURL)
                     + "/xsl/searchResponse2relations.xsl");
-            HttpURLConnection conn =
+            final HttpURLConnection conn =
                 (HttpURLConnection) xsltUrl.openConnection();
-            Transformer t =
+            final Transformer t =
                 tf.newTransformer(new StreamSource(conn.getInputStream()));
             t.setParameter("XSLT", EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.ESCIDOC_CORE_XSLT_STD));
 
             // searchResponse is already a String; so, no effort to stream
-            StringWriter sw = new StringWriter();
+            final StringWriter sw = new StringWriter();
             t.transform(new StreamSource(new ByteArrayInputStream(
                 searchResponse.getBytes(XmlUtility.CHARACTER_ENCODING))),
                 new StreamResult(sw));

@@ -162,24 +162,24 @@ public class ScopeStaxHandler extends DefaultHandler {
             final String currentPath = element.getPath();
             if (BASE_PATH.equals(currentPath)) {
 
-                Collection<ScopeDef> scopeDefs = role.getScopeDefs();
+                final Collection<ScopeDef> scopeDefs = role.getScopeDefs();
 
                 // remove old scope defs
                 scopeDefs.clear();
 
                 // add new scope defs
-                Iterator<String> resourceTypesIterator =
+                final Iterator<String> resourceTypesIterator =
                     scopeDefResourceTypes.iterator();
-                Iterator<String> attributeIdsIterator =
+                final Iterator<String> attributeIdsIterator =
                     scopeDefAttributeIds.iterator();
-                Iterator<String> attributeObjectTypesIterator =
+                final Iterator<String> attributeObjectTypesIterator =
                     scopeDefAttributeObjectTypes.iterator();
                 while (resourceTypesIterator.hasNext()) {
-                    String resourceType = resourceTypesIterator.next();
-                    String attributeId = attributeIdsIterator.next();
-                    String attributeObjectType = 
+                    final String resourceType = resourceTypesIterator.next();
+                    final String attributeId = attributeIdsIterator.next();
+                    final String attributeObjectType =
                         attributeObjectTypesIterator.next();
-                    ScopeDef scopeDef =
+                    final ScopeDef scopeDef =
                         new ScopeDef(
                             resourceType, attributeId, attributeObjectType, role);
                     scopeDefs.add(scopeDef);

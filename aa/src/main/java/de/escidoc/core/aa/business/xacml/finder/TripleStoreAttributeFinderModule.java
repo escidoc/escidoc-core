@@ -388,7 +388,7 @@ public class TripleStoreAttributeFinderModule
         final String resourceVersionNumber) throws EscidocException {
 
         List<String> cachedAttribute = new ArrayList<String>();
-        MapResult mapresult = mapIt(attributeIdValue);
+        final MapResult mapresult = mapIt(attributeIdValue);
 
         if (mapresult == null) {
             return null;
@@ -428,7 +428,7 @@ public class TripleStoreAttributeFinderModule
                             mapresult.getCacheId(), tsu);
         }
 
-        List<StringAttribute> stringAttributes =
+        final List<StringAttribute> stringAttributes =
             new ArrayList<StringAttribute>();
         if (cachedAttribute.isEmpty()) {
             // if Attribute was not found it is not there
@@ -436,7 +436,7 @@ public class TripleStoreAttributeFinderModule
             stringAttributes.add(new StringAttribute("nonresolvable"));
         }
         else {
-            for (String stringAttribute : cachedAttribute) {
+            for (final String stringAttribute : cachedAttribute) {
                 stringAttributes.add(new StringAttribute(stringAttribute));
             }
         }
@@ -471,8 +471,8 @@ public class TripleStoreAttributeFinderModule
         throws ResourceNotFoundException, SystemException {
         List<String> hierarchicalAttributesList = totalAttributesList;
         if (attributesList != null && !attributesList.isEmpty()) {
-            for (String attribute : attributesList) {
-                List<String> theseAttributes =
+            for (final String attribute : attributesList) {
+                final List<String> theseAttributes =
                     FinderModuleHelper.retrieveFromTripleStore(mapresult
                         .isInverse(), mapresult.getResolveCurrentWhereClause(
                         attribute, tsu), attribute, mapresult.getCacheId(), tsu);
@@ -780,7 +780,7 @@ public class TripleStoreAttributeFinderModule
             return null;
         }
 
-        String[] elements =
+        final String[] elements =
             attributeIdValue
                 .substring(AttributeIds.RESOURCE_ATTR_PREFIX_LENGTH).split(":");
 
@@ -792,7 +792,7 @@ public class TripleStoreAttributeFinderModule
         int indexLongestMatch = -1;
         for (int i = 0; i < elements.length; i++) {
             String element = elements[i];
-            int dotIndex = element.indexOf('.');
+            final int dotIndex = element.indexOf('.');
             if (dotIndex != -1) {
                 contentModelTitle = element.substring(dotIndex + 1);
                 element = element.substring(0, dotIndex);
@@ -808,7 +808,7 @@ public class TripleStoreAttributeFinderModule
             }
 
             if (mapping.get(currentPath) != null) {
-                MapResult currentMatch = new MapResult(
+                final MapResult currentMatch = new MapResult(
                     mapping.get(currentPath).getCacheId(),
                     mapping.get(currentPath).isInverse(),
                     mapping.get(currentPath).isHierarchical(),
@@ -829,7 +829,7 @@ public class TripleStoreAttributeFinderModule
 
         String tail = null;
         if (indexLongestMatch < elements.length - 1) {
-            StringBuilder tailBuf =
+            final StringBuilder tailBuf =
                     new StringBuilder(AttributeIds.RESOURCE_ATTR_PREFIX);
             tail = AttributeIds.RESOURCE_ATTR_PREFIX;
             for (int i = indexLongestMatch; i < elements.length; i++) {

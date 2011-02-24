@@ -101,9 +101,9 @@ public class PolicyParser {
      * @return list of matching rules
      */
     public List<String> getMatchingRules(final ResourceType resourceType) {
-        List<String> result = new LinkedList<String>();
+        final List<String> result = new LinkedList<String>();
 
-        for (Entry<Object, AttributeValue> objectAttributeValueEntry : actions.entrySet()) {
+        for (final Entry<Object, AttributeValue> objectAttributeValueEntry : actions.entrySet()) {
             if (matches(objectAttributeValueEntry.getValue(),
                 MATCH_PREFIX + resourceType.getLabel())) {
                 if (objectAttributeValueEntry.getKey() instanceof Policy) {
@@ -153,7 +153,7 @@ public class PolicyParser {
                 "only XMLSchema#string is supported");
         }
         boolean result = false;
-        for (String match : MATCHES) {
+        for (final String match : MATCHES) {
             if (matches(valueList, match)) {
                 result = true;
                 break;
@@ -180,7 +180,7 @@ public class PolicyParser {
             throw new IllegalArgumentException(
                 "only XMLSchema#string is supported");
         }
-        Pattern p = Pattern.compile(".*(\\A|\\s)" + action + "(\\s|\\z).*", Pattern.MULTILINE | Pattern.DOTALL);
+        final Pattern p = Pattern.compile(".*(\\A|\\s)" + action + "(\\s|\\z).*", Pattern.MULTILINE | Pattern.DOTALL);
         return p.matcher(((StringAttribute) valueList).getValue()).matches();
     }
 
@@ -194,7 +194,7 @@ public class PolicyParser {
     public void parse(final AbstractPolicy policy) {
         actions.clear();
         parsePolicy(policy);
-        for (Object action : actions.keySet()) {
+        for (final Object action : actions.keySet()) {
             if (action instanceof Rule) {
                 parseRule((Rule) action);
             }
@@ -232,7 +232,7 @@ public class PolicyParser {
                 }
             }
             else if (match instanceof Iterable< ? >) {
-                for (Object m : (Iterable< ? >) match) {
+                for (final Object m : (Iterable< ? >) match) {
                     parseAction(targetObject, m);
                 }
             }
@@ -251,7 +251,7 @@ public class PolicyParser {
      */
     private void parseChildren(final Iterable<?> children) {
         if (children != null) {
-            for (Object child : children) {
+            for (final Object child : children) {
                 if (child instanceof AbstractPolicy) {
                     parsePolicy((AbstractPolicy) child);
                 }
@@ -347,7 +347,7 @@ public class PolicyParser {
     private void parseTarget(final Object targetObject, final Target target) {
         if ((target != null) 
             && (target.getActions() != null)) {
-            for (Object match : target.getActions()) {
+            for (final Object match : target.getActions()) {
                 parseAction(targetObject, match);
             }
         }

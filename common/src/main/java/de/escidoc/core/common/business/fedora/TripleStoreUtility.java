@@ -393,8 +393,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
 
         final List<String> result = new ArrayList<String>();
 
-        List<String> results = executeQueryId(id, true, PROP_PARENT);
-        for (String result1 : results) {
+        final List<String> results = executeQueryId(id, true, PROP_PARENT);
+        for (final String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
             String entry = result1;
@@ -418,8 +418,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
 
         final List<String> result = new ArrayList<String>();
 
-        List<String> results = executeQueryForList(ids, true, PROP_PARENT);
-        for (String result1 : results) {
+        final List<String> results = executeQueryForList(ids, true, PROP_PARENT);
+        for (final String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
             String entry = result1;
@@ -445,11 +445,11 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         List<String> result = totalList;
-        Collection<String> parentsList = new ArrayList<String>();
+        final Collection<String> parentsList = new ArrayList<String>();
 
-        List<String> results = executeQueryForList(ids, true, PROP_PARENT);
+        final List<String> results = executeQueryForList(ids, true, PROP_PARENT);
         if (results != null && !results.isEmpty()) {
-            for (String result1 : results) {
+            for (final String result1 : results) {
                 String entry = result1;
                 entry = XmlUtility.getIdFromURI(entry);
                 result.add(entry);
@@ -476,8 +476,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final Collection<String> queryIDs = new ArrayList<String>();
         queryIDs.add(id);
 
-        List<String> results = executeQueryForList(queryIDs, true, PROP_MEMBER);
-        for (String result1 : results) {
+        final List<String> results = executeQueryForList(queryIDs, true, PROP_MEMBER);
+        for (final String result1 : results) {
             // List<Node> row = results.next();
             // String entry = row.get(0).getValue();
             String entry = result1;
@@ -577,7 +577,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
 
         // may use getPropertiesElements(pid,
 
-        String date;
+        final String date;
 
         // use fedora to avoid TripleStore syncs
         try {
@@ -602,8 +602,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public String getCreationDate(final String pid)
         throws TripleStoreSystemException {
 
-        String result;
-        List<String> results = executeQueryId(pid, false, PROP_CREATION_DATE);
+        final String result;
+        final List<String> results = executeQueryId(pid, false, PROP_CREATION_DATE);
         if (results.size() == 1) {
             result = results.get(0);
         }
@@ -639,7 +639,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public String getItemForComponent(final String id)
         throws TripleStoreSystemException {
 
-        List<String> results = executeQueryId(id, true, PROP_COMPONENT);
+        final List<String> results = executeQueryId(id, true, PROP_COMPONENT);
         final Iterator<String> it = results.iterator();
         String item = null;
         if (it.hasNext()) {
@@ -669,8 +669,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
 
         final List<String> result = new ArrayList<String>();
         try {
-            List<String> results = executeQueryLiteral(name, true, PROP_DC_TITLE);
-            for (String entry : results) {
+            final List<String> results = executeQueryLiteral(name, true, PROP_DC_TITLE);
+            for (final String entry : results) {
                 result.add(XmlUtility.getIdFromURI(entry));
             }
         }
@@ -756,7 +756,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final List<String> entries =
             getPropertiesElementsVector(parentId,
                 Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
-        for (String entry : entries) {
+        for (final String entry : entries) {
             if (entry.equals(memberId)) {
                 isMember = true;
                 break;
@@ -781,7 +781,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         boolean isParent = false;
         final List<String> entries =
             getPropertiesElementsVector(ouId, PROP_PARENT);
-        for (String entry : entries) {
+        for (final String entry : entries) {
             if (entry.equals(parentId)) {
                 isParent = true;
                 break;
@@ -902,7 +902,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
             executeQueryId(pid, false, fullqualifiedPropertyName);
 
         // work around for more than one dc:identifier
-        for (String result : results) {
+        for (final String result : results) {
             value = result;
         }
 
@@ -938,7 +938,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final String pid, final String fullPropertyElementName,
         final boolean targetIsSubject) throws TripleStoreSystemException {
 
-        List<String> result;
+        final List<String> result;
         if (targetIsSubject) {
             result =
                     new ArrayList<String>(executeQueryId(pid, targetIsSubject,
@@ -983,7 +983,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
             getPropertiesElementsVector(pid, PROP_OBJECT_TYPE);
         // TODO what should we do if more than one object type is found for one
         // id?
-        for (String result1 : results) {
+        for (final String result1 : results) {
             result = result1;
             if (PATTERN_RESOURCE_NS.matcher(result).matches()) {
                 result =
@@ -1084,15 +1084,15 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     }
 
     // FIXME don't use triplestore?
-    public List<String> getMethodNames(String id)
+    public List<String> getMethodNames(final String id)
         throws TripleStoreSystemException {
-        List<String> methodNames = new ArrayList<String>();
+        final List<String> methodNames = new ArrayList<String>();
 
-        String cmPid = getContentModel(id);
-        List<String> sdefPids =
+        final String cmPid = getContentModel(id);
+        final List<String> sdefPids =
             getPropertiesElementsVector(cmPid,
                 "info:fedora/fedora-system:def/model#hasService");
-        for (String sdefPid : sdefPids) {
+        for (final String sdefPid : sdefPids) {
             methodNames.add(getProperty(sdefPid,
                     "info:fedora/fedora-system:def/model#definesMethod"));
         }
@@ -1111,8 +1111,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      */
     public List<String> getSurrogates(final String id)
         throws TripleStoreSystemException {
-        List<String> surrogates = new ArrayList<String>();
-        List<String> surrogateIds =
+        final List<String> surrogates = new ArrayList<String>();
+        final List<String> surrogateIds =
             executeQueryId(id, true, TripleStoreUtility.PROP_ORIGIN);
         final Iterator<String> it = surrogateIds.iterator();
         if (it.hasNext()) {
@@ -1130,10 +1130,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         return LOGGER;
     }
 
-    public boolean hasReferringResource(String id)
+    public boolean hasReferringResource(final String id)
         throws TripleStoreSystemException {
 
-        List<String> results = executeQueryId(id, true, PROP_CONTENT_MODEL_ID);
+        final List<String> results = executeQueryId(id, true, PROP_CONTENT_MODEL_ID);
         final Iterator<String> it = results.iterator();
         return it.hasNext();
     }
