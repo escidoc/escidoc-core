@@ -128,7 +128,6 @@ public class AdditionalWhereFieldVo {
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DAYDATE)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_XPATH_BOOLEAN)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_XPATH_STRING)
-            && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_FREE_SQL))) {
             throw new SqlDatabaseSystemException("wrong fieldType given");
         }
