@@ -379,10 +379,7 @@ public class ContentModel extends GenericVersionableResourcePid
         WebserverSystemException {
 
         final String status = this.getProperty(PropertyMapKeys.PUBLIC_STATUS);
-        if (status.equals(Constants.STATUS_WITHDRAWN)) {
-            return true;
-        }
-        return false;
+        return status.equals(Constants.STATUS_WITHDRAWN);
     }
 
     /**
@@ -400,10 +397,7 @@ public class ContentModel extends GenericVersionableResourcePid
         WebserverSystemException {
 
         final String status = this.getProperty(PropertyMapKeys.PUBLIC_STATUS);
-        if (status.equals(Constants.STATUS_RELEASED)) {
-            return true;
-        }
-        return false;
+        return status.equals(Constants.STATUS_RELEASED);
     }
 
     /**
@@ -420,10 +414,7 @@ public class ContentModel extends GenericVersionableResourcePid
         WebserverSystemException {
 
         final String status = this.getProperty(PropertyMapKeys.PUBLIC_STATUS);
-        if (status.equals(Constants.STATUS_PENDING)) {
-            return true;
-        }
-        return false;
+        return status.equals(Constants.STATUS_PENDING);
     }
 
     /**
@@ -440,10 +431,7 @@ public class ContentModel extends GenericVersionableResourcePid
         WebserverSystemException {
 
         final String status = this.getProperty(PropertyMapKeys.PUBLIC_STATUS);
-        if (status.equals(Constants.STATUS_IN_REVISION)) {
-            return true;
-        }
-        return false;
+        return status.equals(Constants.STATUS_IN_REVISION);
     }
 
     public List<DsTypeModel> getMdRecordDefinitionIDs()

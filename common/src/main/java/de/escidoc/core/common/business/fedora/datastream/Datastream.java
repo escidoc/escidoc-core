@@ -636,10 +636,7 @@ public class Datastream {
      */
     public boolean isDeleted() {
 
-        if (this.mimeType.equals(Constants.MIME_TYPE_DELETED)) {
-            return true;
-        }
-        return false;
+        return this.mimeType.equals(Constants.MIME_TYPE_DELETED);
     }
 
     /**
