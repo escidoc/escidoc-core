@@ -96,6 +96,14 @@ public final class Constants {
         + ESCIDOC_FEDORA_REPOSITORY
         + "&indexName=${INDEX_NAME}";
         
+    /**
+     * common srw Constants.
+     */
+    public static final String SRW_SCAN_PARAMS = 
+        "?operation=scan&scanClause=PID%3D%22${TERM}%22&maximumTerms=${MAXIMUM_TERMS}";
+    public static final int SRW_MAXIMUM_SCAN_TERMS = 10000;
+    
+    
     private static final Pattern INDEX_NAME_PATTERN = 
                     Pattern.compile("\\$\\{INDEX_NAME\\}");
     private static final Pattern VALUE_PATTERN = Pattern.compile("\\$\\{VALUE\\}");
@@ -112,6 +120,10 @@ public final class Constants {
     private static final Pattern DOC_COUNT_PATTERN = 
         Pattern.compile(".*?docCount=\"(.*?)\".*"
                 , Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+    private static final Pattern SRW_TERM_PATTERN = 
+                            Pattern.compile("\\$\\{TERM\\}");
+    private static final Pattern SRW_MAXIMUM_TERMS_PATTERN = 
+        Pattern.compile("\\$\\{MAXIMUM_TERMS\\}");
 
     private static final Pattern EXCEPTION_PATTERN = 
                     Pattern.compile(".*Exception.*", 
@@ -136,6 +148,8 @@ public final class Constants {
     public static final Matcher INDEX_FULLTEXT_VISIBILITIES_TOTAL_MATCHER =
             INDEX_FULLTEXT_VISIBILITIES_TOTAL_PATTERN.matcher("");
     public static final Matcher DOC_COUNT_MATCHER = DOC_COUNT_PATTERN.matcher("");
+    public static final Matcher SRW_TERM_MATCHER = SRW_TERM_PATTERN.matcher("");
+    public static final Matcher SRW_MAXIMUM_TERMS_MATCHER = SRW_MAXIMUM_TERMS_PATTERN.matcher("");
     public static final Matcher EXCEPTION_MATCHER = EXCEPTION_PATTERN.matcher("");
     public static final Matcher NO_INDEX_DIR_MATCHER = NO_INDEX_DIR_PATTERN.matcher("");
     public static final Matcher NO_INDEX_DIR_INDEX_NAME_MATCHER = NO_INDEX_DIR_INDEX_NAME_PATTERN.matcher("");
@@ -156,10 +170,5 @@ public final class Constants {
     public static final String[] INDEX_PRIM_KEY_FIELDS = 
                     new String[] {"PID","distinction.rootPid"};
     
-
-    /**
-     * optimize index after each OPTIMIZE_DOCUMENT_COUNT-th document.
-     */
-    public static final int OPTIMIZE_DOCUMENT_COUNT = 100;
 
 }

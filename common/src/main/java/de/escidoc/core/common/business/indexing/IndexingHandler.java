@@ -859,19 +859,22 @@ public class IndexingHandler implements ResourceListener {
                         new SrwScanResponseHandler(sp);
             sp.addHandler(handler);
 
-            String query = 
-                "operation=scan&scanClause=PID%3D%22${Term}%22&maximumTerms=1";
+            String query = Constants.SRW_MAXIMUM_TERMS_MATCHER.reset(
+                Constants.SRW_SCAN_PARAMS).replaceFirst(
+                    Integer.toString(Constants.SRW_MAXIMUM_SCAN_TERMS));
             String lastTerm = "";
             String lastLastTerm = "";
             boolean running = true;
             while (running) {
                 handler.resetNoOfDocumentTerms();
-                HttpGet httpGet = new HttpGet(EscidocConfiguration.getInstance().get(
+                HttpGet httpGet =
+                    new HttpGet(EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.SRW_URL)
                         + "/search/"
                         + indexName
-                        + '?'
-                        + query.replaceFirst("\\$\\{Term\\}", lastTerm));
+                        + Constants.SRW_TERM_MATCHER.reset(query)
+                                            .replaceFirst(lastTerm));
+
                 HttpResponse response = client.execute(httpGet);
                 if (response.getStatusLine().getStatusCode() 
                                     == HttpURLConnection.HTTP_OK) {

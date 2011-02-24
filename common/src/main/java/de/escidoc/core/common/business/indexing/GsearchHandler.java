@@ -168,10 +168,6 @@ public class GsearchHandler {
             handleGsearchException(
                     index, updateIndexParams, response, 0);
             
-            //Optimize Index?
-            //MIH: dont check optimize, do it with cronjob
-            //checkOptimize(response, index);
-
             return response;
         }
         catch (IOException e) {
@@ -251,9 +247,6 @@ public class GsearchHandler {
             handleGsearchException(
                     index, deleteIndexParams, response, 0);
 
-            //Optimize Index?
-            //MIH: dont check optimize, do it with cronjob
-            //checkOptimize(response, index);
             return response;
         }
         catch (Exception e) {
@@ -463,35 +456,6 @@ public class GsearchHandler {
         }
         catch (Exception e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * checks if index has to get optimized
-     * (if mod(docCount/Constants.OPTIMIZE_DOCUMENT_COUNT) == 0,
-     * index has to get optimized.
-     * exctracts the docCount out of the given xml-String
-     * docCount is the number of docs in the index.
-     * 
-     * @param response xml returned by request to fedoragsearch.
-     * @param index name of the index to check/optimize.
-     */
-    public void checkOptimize(final CharSequence response, final String index) {
-        String docCountStr = "";
-        if (Constants.DOC_COUNT_MATCHER.reset(response).matches()) {
-            docCountStr = Constants.DOC_COUNT_MATCHER.group(1);
-        }
-        int docCount = 1;
-        try {
-            docCount = Integer.parseInt(docCountStr);
-        } catch (Exception e){}
-        if (docCount 
-                % Constants.OPTIMIZE_DOCUMENT_COUNT == 0) {
-            try {
-                requestOptimize(index);
-            } catch (Exception e) {
-                log.error(e);
-            }
         }
     }
 
