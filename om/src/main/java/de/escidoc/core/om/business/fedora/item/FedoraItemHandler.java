@@ -195,7 +195,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         this.pdp = pdp;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * @param id
      * @return
@@ -2291,7 +2291,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         return renderComponentProperties(componentId);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * @param id
      *            The id of the item.
@@ -2421,7 +2421,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             getFedoraUtility());
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * Injects the content relation handler.
@@ -2491,7 +2491,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         super.setIdProvider(idProvider);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Sets the metadata datastream with name <code>name</code> for this item.

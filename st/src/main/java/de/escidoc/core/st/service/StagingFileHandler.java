@@ -67,7 +67,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         this.handler = stagingFileHandler;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

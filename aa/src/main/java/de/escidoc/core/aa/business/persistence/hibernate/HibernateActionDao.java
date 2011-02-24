@@ -48,7 +48,7 @@ import java.util.List;
 public class HibernateActionDao extends AbstractHibernateDao
     implements ActionDaoInterface {
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -105,7 +105,7 @@ public class HibernateActionDao extends AbstractHibernateDao
         super.delete(unsecuredActionList);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Wrapper of setSessionFactory to enable bean stuff generation for this

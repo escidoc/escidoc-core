@@ -112,7 +112,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
     private RoleGrantFilter roleGrantFilter;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * Constructor to initialize filter-names with RoleFilter-Class.
@@ -1350,7 +1350,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         }
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Checks if the provided

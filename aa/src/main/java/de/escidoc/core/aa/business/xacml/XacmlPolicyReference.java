@@ -61,7 +61,7 @@ public class XacmlPolicyReference extends PolicyReference {
         super(referenceId, type, finder);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * See Interface for functional description.
      * 
@@ -81,5 +81,5 @@ public class XacmlPolicyReference extends PolicyReference {
         }
         return ret;
     }
-    // CHECKSTYLE:JAVADOC-ON
+
 }

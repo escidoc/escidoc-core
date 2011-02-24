@@ -71,7 +71,7 @@ public class UserAccountPropertiesStaxHandler
         this.dao = dao;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -130,7 +130,7 @@ public class UserAccountPropertiesStaxHandler
         return s;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Asserts that the loginname of the provided UserAccount is unique.

@@ -180,7 +180,7 @@ public class XacmlPolicySet extends PolicySet {
 
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * See Interface for functional description.
      * 
@@ -197,6 +197,6 @@ public class XacmlPolicySet extends PolicySet {
             return super.toString();
         }
     }
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

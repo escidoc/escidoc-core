@@ -60,7 +60,7 @@ public class StaxEscapingWriter extends Writer {
         this.writer = writer;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -102,6 +102,6 @@ public class StaxEscapingWriter extends Writer {
             off, len)));
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

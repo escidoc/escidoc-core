@@ -70,7 +70,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     private VelocityXmlUserAccountRenderer() {
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -381,7 +381,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         return getUserAccountXmlProvider().getUserAccountsXml(values);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Adds the common values to the provided map.

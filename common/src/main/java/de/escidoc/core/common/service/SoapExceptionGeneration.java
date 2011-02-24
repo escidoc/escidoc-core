@@ -140,7 +140,7 @@ import de.escidoc.core.common.service.interfaces.SoapExceptionGenerationInterfac
 public class SoapExceptionGeneration
     implements SoapExceptionGenerationInterface {
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -294,5 +294,5 @@ public class SoapExceptionGeneration
         UserGroupHierarchyViolationException, ResourceInUseException {
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 }

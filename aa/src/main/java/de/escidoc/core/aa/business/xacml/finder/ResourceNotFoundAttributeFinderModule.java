@@ -72,7 +72,7 @@ public class ResourceNotFoundAttributeFinderModule
     private static final String ERROR_MSG_RESOURCE_NOT_FOUND_DUE_TO_WRONG_TYPE =
         "The resource with the specified id is not of the expected type.";
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -152,6 +152,6 @@ public class ResourceNotFoundAttributeFinderModule
         return null;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

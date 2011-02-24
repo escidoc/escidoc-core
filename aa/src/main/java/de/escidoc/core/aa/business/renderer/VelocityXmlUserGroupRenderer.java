@@ -68,7 +68,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     private VelocityXmlUserGroupRenderer() {
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -337,7 +337,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         return getUserGroupXmlProvider().getUserGroupsSrwXml(values);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Adds the common values to the provided map.

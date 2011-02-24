@@ -59,7 +59,7 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
         loader = new ClasspathResourceLoader();
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -122,6 +122,6 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
         return loader.isSourceModified(resource);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

@@ -85,7 +85,7 @@ public class ContextHandler implements ContextHandlerInterface {
         this.handler = contextHandler;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     // FIXME: exception handling
     /**

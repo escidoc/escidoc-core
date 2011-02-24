@@ -282,7 +282,7 @@ public class SecurityInterceptor implements Ordered {
         return joinPoint.proceed();
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -297,7 +297,7 @@ public class SecurityInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_SECURITY_INTERCEPTOR;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Does the authorization part of the interception.

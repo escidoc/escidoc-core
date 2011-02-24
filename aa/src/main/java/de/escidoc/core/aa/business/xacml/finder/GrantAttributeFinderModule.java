@@ -117,7 +117,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private TripleStoreUtility tsu;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -513,7 +513,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         }
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Injects the user account data access object if "called" via Spring.

@@ -60,7 +60,7 @@ public class ParameterCheckInterceptor implements Ordered {
     private static final AppLogger LOG =
         new AppLogger(ParameterCheckInterceptor.class.getName());
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -75,7 +75,7 @@ public class ParameterCheckInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_PARAMETER_CHECK_INTERCEPTOR;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
         + " && !call(* de.escidoc.core..*.PolicyDecisionPoint*.evaluateRoles(..))"

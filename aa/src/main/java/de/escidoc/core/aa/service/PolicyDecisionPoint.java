@@ -72,7 +72,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -183,7 +183,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
             argumentList);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Setter for the business object.

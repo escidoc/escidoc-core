@@ -112,7 +112,7 @@ public class RoleHandler implements RoleHandlerInterface {
 
     private XacmlParser xacmlParser;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

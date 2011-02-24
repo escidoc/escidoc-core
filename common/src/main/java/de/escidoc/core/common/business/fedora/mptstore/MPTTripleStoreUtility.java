@@ -1802,7 +1802,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         this.tableManager = tableManager;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     @Override
     public String getObjectList(
@@ -2149,7 +2149,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         return executeSqlQuery(query);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Get the context id of the context with the given name.

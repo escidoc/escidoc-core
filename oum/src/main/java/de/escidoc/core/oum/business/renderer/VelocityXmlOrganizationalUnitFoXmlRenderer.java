@@ -47,7 +47,7 @@ import java.util.Map;
 public class VelocityXmlOrganizationalUnitFoXmlRenderer
     implements OrganizationalUnitFoXmlRendererInterface {
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * See Interface for functional description.
      * 
@@ -99,5 +99,5 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
         return OrganizationalUnitFoXmlProvider.getInstance().getRelsExt(values);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 }

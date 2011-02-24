@@ -37,7 +37,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
         setAuthenticated(true);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * Gets the original {@link Authentication}.
@@ -119,6 +119,6 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
         return orginalAuthentication.getName();
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

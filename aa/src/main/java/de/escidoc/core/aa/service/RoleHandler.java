@@ -59,7 +59,7 @@ public class RoleHandler implements RoleHandlerInterface {
     /** The business layer implementation bean. */
     private de.escidoc.core.aa.business.interfaces.RoleHandlerInterface business;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -206,7 +206,7 @@ public class RoleHandler implements RoleHandlerInterface {
         return business.retrieveRoles(filter);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Injects the business object.

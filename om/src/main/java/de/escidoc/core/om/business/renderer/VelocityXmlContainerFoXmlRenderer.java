@@ -27,7 +27,7 @@ public class VelocityXmlContainerFoXmlRenderer
     private final VelocityXmlCommonFoXmlRenderer commonRenderer =
         new VelocityXmlCommonFoXmlRenderer();
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * See Interface for functional description.
      * 
@@ -206,5 +206,5 @@ public class VelocityXmlContainerFoXmlRenderer
             Constants.CONTAINER_URL_BASE);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 }

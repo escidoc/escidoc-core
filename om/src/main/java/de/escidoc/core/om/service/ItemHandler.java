@@ -101,7 +101,7 @@ public class ItemHandler implements ItemHandlerInterface {
         this.handler = itemHandler;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     // FIXME: exception handling
     /**

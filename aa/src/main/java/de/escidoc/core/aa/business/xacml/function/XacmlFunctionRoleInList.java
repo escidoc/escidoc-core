@@ -82,7 +82,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
             BooleanAttribute.identifier, false);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

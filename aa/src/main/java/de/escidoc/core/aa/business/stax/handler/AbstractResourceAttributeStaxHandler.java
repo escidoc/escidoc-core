@@ -94,7 +94,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
         this.urnVersionStatus = urnVersionStatus;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -185,7 +185,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
         return data;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Creates and caches the result for the provided attribute values using the

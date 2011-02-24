@@ -65,7 +65,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
     private static final AppLogger LOG = new AppLogger(
         VelocityXmlRoleRenderer.class.getName());
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

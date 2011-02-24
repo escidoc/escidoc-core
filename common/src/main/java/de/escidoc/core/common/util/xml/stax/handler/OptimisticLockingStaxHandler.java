@@ -123,5 +123,5 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
         return element;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 }

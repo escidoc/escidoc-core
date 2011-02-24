@@ -131,7 +131,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
         this.objectsToFindIdList = new HashSet<String>();
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * See Interface for functional description.
      * 
@@ -252,7 +252,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
         return element;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Temporary Method to transform filter-names for method retreiveGrants into

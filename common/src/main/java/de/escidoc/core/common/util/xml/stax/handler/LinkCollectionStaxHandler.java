@@ -88,7 +88,7 @@ public class LinkCollectionStaxHandler extends LinkStaxHandler {
         super(elementPath, hrefBaseUri, exceptionClass);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     
     /**
      * See Interface for functional description.
@@ -133,5 +133,5 @@ public class LinkCollectionStaxHandler extends LinkStaxHandler {
         return index;
     }
     
-    // CHECKSTYLE:JAVADOC-ON
+
 }

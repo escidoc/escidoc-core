@@ -70,7 +70,7 @@ public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
             AttributeIds.URN_ITEM_VERSION_STATUS_ATTR);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

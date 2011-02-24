@@ -286,7 +286,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         return doCreate(xmlData, false);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * See Interface for functional description.
      * 
@@ -690,7 +690,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         return getContainerXml(this.getContainer());
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
     /**
      * Sets content model specific properties datastream of the container.
      * 
@@ -3241,7 +3241,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         this.contentRelationHandler = contentRelationHandler;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * Set the SRURequest object.
@@ -3298,6 +3298,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         super.setIdProvider(idProvider);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

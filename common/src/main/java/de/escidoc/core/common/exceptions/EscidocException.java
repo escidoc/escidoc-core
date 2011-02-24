@@ -93,7 +93,7 @@ public abstract class EscidocException extends Exception {
         return httpStatusMsg;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -105,7 +105,7 @@ public abstract class EscidocException extends Exception {
         return toXmlString();
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Returns a xml-representation of this Exception.

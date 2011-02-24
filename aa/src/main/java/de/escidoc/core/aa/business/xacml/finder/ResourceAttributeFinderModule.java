@@ -127,7 +127,7 @@ public class ResourceAttributeFinderModule
 
     private ContainerHandlerInterface containerHandler;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -212,7 +212,7 @@ public class ResourceAttributeFinderModule
 
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * Fetches the attribute of a container or item. The component is identified

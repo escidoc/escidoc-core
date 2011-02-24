@@ -87,7 +87,7 @@ public class ScopeStaxHandler extends DefaultHandler {
         this.role = role;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -191,7 +191,7 @@ public class ScopeStaxHandler extends DefaultHandler {
         return element;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Gets the unlimited flag.

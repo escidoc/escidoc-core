@@ -73,7 +73,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
         this.dao = dao;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

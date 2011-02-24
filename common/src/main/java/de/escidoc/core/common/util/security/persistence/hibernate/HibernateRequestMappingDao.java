@@ -64,7 +64,7 @@ public class HibernateRequestMappingDao extends HibernateDaoSupport
         super.setSessionFactory(requestMappingSessionFactory);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -106,6 +106,6 @@ public class HibernateRequestMappingDao extends HibernateDaoSupport
         }
         return methodMappings;
     }
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

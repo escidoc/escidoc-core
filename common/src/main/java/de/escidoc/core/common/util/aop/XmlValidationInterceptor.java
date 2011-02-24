@@ -56,7 +56,7 @@ import java.lang.reflect.Method;
 @Aspect
 public class XmlValidationInterceptor implements Ordered {
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -71,7 +71,7 @@ public class XmlValidationInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_XML_VALIDATION_INTERCEPTOR;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Before advice to perform the schema validation of xml data of the current

@@ -67,7 +67,7 @@ public final class VelocityXmlReportDefinitionRenderer
     private VelocityXmlReportDefinitionRenderer() {
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -224,7 +224,7 @@ public final class VelocityXmlReportDefinitionRenderer
             values);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Adds the report definition name space values.

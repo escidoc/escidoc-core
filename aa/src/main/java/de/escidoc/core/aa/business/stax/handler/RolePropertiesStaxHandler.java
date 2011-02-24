@@ -77,7 +77,7 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
         this.roleDao = roleDao;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -116,7 +116,7 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
         return s;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Asserts that the role name is valid and unique.

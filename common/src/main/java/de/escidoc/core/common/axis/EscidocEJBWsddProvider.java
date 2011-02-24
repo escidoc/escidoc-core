@@ -45,7 +45,7 @@ public class EscidocEJBWsddProvider extends WSDDProvider {
 
     private static final String NAME = "EscidocEJB";
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -77,6 +77,6 @@ public class EscidocEJBWsddProvider extends WSDDProvider {
 
         return new EscidocEjbProvider();
     }
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

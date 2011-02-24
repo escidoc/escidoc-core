@@ -48,7 +48,7 @@ public class TokenGenerator implements org.hibernate.id.IdentifierGenerator {
 
     private final UUIDGen uuidGenerator = UUIDGenFactory.getUUIDGen();
     
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

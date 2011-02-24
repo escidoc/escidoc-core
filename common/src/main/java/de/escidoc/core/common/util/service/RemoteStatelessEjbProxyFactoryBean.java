@@ -80,7 +80,7 @@ public class RemoteStatelessEjbProxyFactoryBean
     private static final AppLogger logger =
         new AppLogger(RemoteStatelessEjbProxyFactoryBean.class.getName());
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     private String packageName;
 
@@ -226,6 +226,6 @@ public class RemoteStatelessEjbProxyFactoryBean
         this.packageName = packageName;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

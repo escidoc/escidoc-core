@@ -101,7 +101,7 @@ public class XacmlPolicy extends Policy {
         return roleId;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

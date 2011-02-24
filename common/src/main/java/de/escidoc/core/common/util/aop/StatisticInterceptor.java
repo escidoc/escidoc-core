@@ -138,7 +138,7 @@ public class StatisticInterceptor implements Ordered {
 
     private StatisticService statisticService;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -152,7 +152,7 @@ public class StatisticInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_STATISTIC_INTERCEPTOR;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Around advice to create a statistic record for the current method call.<br>

@@ -71,7 +71,7 @@ public class XacmlFunctionIsIn extends FunctionBase {
         super(NAME, 0, PARAMS, BAG_PARAMS, BooleanAttribute.identifier, false);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

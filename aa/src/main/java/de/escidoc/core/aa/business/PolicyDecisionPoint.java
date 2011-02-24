@@ -233,7 +233,7 @@ public class PolicyDecisionPoint
         }
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -502,7 +502,7 @@ public class PolicyDecisionPoint
         return ret;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Handles the provided result.<br>
@@ -929,7 +929,7 @@ public class PolicyDecisionPoint
         this.cache = cache;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -949,6 +949,6 @@ public class PolicyDecisionPoint
         // do nothing
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

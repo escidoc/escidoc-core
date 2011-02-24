@@ -72,7 +72,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
 
     private UserGroupFilter userGroupFilter;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * Constructor to initialize filter-names with RoleFilter-Class.
@@ -630,7 +630,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         super.update(userGroup);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * See Interface for functional description.

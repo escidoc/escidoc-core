@@ -93,7 +93,7 @@ public class UserGroupAttributeFinderModule
 
     private UserGroupDaoInterface userGroupDao;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -277,7 +277,7 @@ public class UserGroupAttributeFinderModule
         return userGroup;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Injects the user group data access object if "called" via Spring.

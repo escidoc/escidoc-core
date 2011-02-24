@@ -47,7 +47,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 public class ActionHandler implements ActionHandlerInterface {
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     private ActionHandlerInterface business;
 
@@ -118,7 +118,7 @@ public class ActionHandler implements ActionHandlerInterface {
         return business.retrieveUnsecuredActions(contextId);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Injects the business object.

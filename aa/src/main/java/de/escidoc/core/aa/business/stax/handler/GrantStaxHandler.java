@@ -55,7 +55,7 @@ public class GrantStaxHandler extends DefaultHandler {
         this.grant = grant;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

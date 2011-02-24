@@ -76,7 +76,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
     private VelocityXmlAggregationDefinitionRenderer() {
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -328,7 +328,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
             .getAggregationDefinitionsSrwXml(values);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Adds the aggregation definition name space values.

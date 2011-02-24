@@ -111,7 +111,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
 
     private EscidocRoleDaoInterface roleDao;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -210,7 +210,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
         return new Object[] { result, resolvedAttributeIdValue };
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Retrieve role from the system.

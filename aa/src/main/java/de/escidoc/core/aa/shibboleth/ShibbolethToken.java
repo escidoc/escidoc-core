@@ -46,7 +46,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
         this.user = user;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     @Override
     public GrantedAuthority[] getAuthorities() {
@@ -91,6 +91,6 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
         return user.getName();
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

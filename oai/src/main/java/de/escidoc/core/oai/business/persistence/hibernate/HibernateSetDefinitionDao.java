@@ -62,7 +62,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
 
     private SetDefinitionFilter setDefinitionFilter;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * Constructor to initialize filter-names with RoleFilter-Class.
@@ -302,7 +302,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
         super.update(setDefinition);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 
 

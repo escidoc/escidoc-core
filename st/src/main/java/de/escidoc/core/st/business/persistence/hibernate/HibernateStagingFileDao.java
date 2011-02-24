@@ -66,7 +66,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
         super.setSessionFactory(stagingSessionFactory);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

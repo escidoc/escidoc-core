@@ -44,7 +44,7 @@ import java.io.Writer;
 public class StaxAttributeEscapingWriterFactory
     implements EscapingWriterFactory {
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -82,6 +82,6 @@ public class StaxAttributeEscapingWriterFactory
             "createEscapingWriterFor(OutputStream out, enc) not implemented");
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

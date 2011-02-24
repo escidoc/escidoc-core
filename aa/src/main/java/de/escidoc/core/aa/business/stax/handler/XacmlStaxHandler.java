@@ -80,7 +80,7 @@ public class XacmlStaxHandler extends DefaultHandler {
         this.role = role;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.<br>
@@ -209,7 +209,7 @@ public class XacmlStaxHandler extends DefaultHandler {
         return element;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Gets the xml representation of the XACML policy (set).

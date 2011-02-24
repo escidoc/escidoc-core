@@ -55,7 +55,7 @@ public class CheckRootElementStaxHandler extends DefaultHandler {
         this.expectedRootElement = expectedRootElement;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -80,5 +80,5 @@ public class CheckRootElementStaxHandler extends DefaultHandler {
                             element.getLocalName()));
         }
     }
-    // CHECKSTYLE:JAVADOC-ON
+
 }

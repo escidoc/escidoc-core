@@ -119,7 +119,7 @@ public class LinkStaxHandler extends DefaultHandler {
         this.exceptionClass = exceptionClass;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.<br>
@@ -229,7 +229,7 @@ public class LinkStaxHandler extends DefaultHandler {
         return element;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Processes the end of the parent element.<br>

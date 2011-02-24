@@ -58,7 +58,7 @@ import de.escidoc.core.oai.business.renderer.interfaces.SetDefinitionRendererInt
 public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
     implements SetDefinitionRendererInterface {
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -155,7 +155,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
         return getSetDefinitionXmlProvider().getSetDefinitionsSrwXml(values);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Adds the common values to the provided map.

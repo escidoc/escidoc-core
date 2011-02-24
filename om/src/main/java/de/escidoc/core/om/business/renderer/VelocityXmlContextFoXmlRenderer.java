@@ -43,7 +43,7 @@ import java.util.Map;
 public class VelocityXmlContextFoXmlRenderer
     implements ContextFoXmlRendererInterface {
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * See Interface for functional description.
      * 
@@ -87,5 +87,5 @@ public class VelocityXmlContextFoXmlRenderer
         return ContextFoXmlProvider.getInstance().getDc(values);
     }
     
-    // CHECKSTYLE:JAVADOC-ON
+
 }

@@ -668,7 +668,7 @@ public class ItemClient extends ClientBase
                 Constants.SUB_ASSIGN_CONTENT_PID }, param);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -839,7 +839,7 @@ public class ItemClient extends ClientBase
                 itemId, Constants.SUB_WITHDRAW }, param);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * Lock an Item for offlien use.

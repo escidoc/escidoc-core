@@ -135,7 +135,7 @@ public class HandlerBase implements InitializingBean {
         this.idProvider = idProvider;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -163,7 +163,7 @@ public class HandlerBase implements InitializingBean {
         }
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * @return Returns the utility.

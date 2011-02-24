@@ -140,7 +140,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
     private PolicyDecisionPointInterface pdp;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -1849,7 +1849,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         sendUserGroupUpdateEvent(groupId);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Fetches the current grants of the user group identified by the provided

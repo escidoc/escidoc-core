@@ -274,7 +274,7 @@ public class TripleStoreAttributeFinderModule
         initMapping();
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.<br>
@@ -487,7 +487,7 @@ public class TripleStoreAttributeFinderModule
         return hierarchicalAttributesList;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Initializes the mapping from the attribute id to the id used inside the

@@ -46,7 +46,7 @@ public class UnsecuredActionStaxHandler extends DefaultHandler {
 
     private final StringBuffer unsecuredActions = new StringBuffer();
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -71,7 +71,7 @@ public class UnsecuredActionStaxHandler extends DefaultHandler {
         return s;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Gets the parsed unsecured actions.

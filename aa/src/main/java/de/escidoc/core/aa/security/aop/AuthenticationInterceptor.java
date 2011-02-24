@@ -102,7 +102,7 @@ public class AuthenticationInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_AUTHENTICATION_INTERCEPTOR;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Before advice to perform the authentication of the user of the current

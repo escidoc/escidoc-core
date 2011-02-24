@@ -159,7 +159,7 @@ public class MapResult {
         return nextAttributeId != null;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -182,7 +182,7 @@ public class MapResult {
         return toStringBuilder.toString();
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * @param contentTypePredicateId

@@ -162,7 +162,7 @@ public class XacmlTarget extends Target {
 
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -184,5 +184,5 @@ public class XacmlTarget extends Target {
         return ret;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 }

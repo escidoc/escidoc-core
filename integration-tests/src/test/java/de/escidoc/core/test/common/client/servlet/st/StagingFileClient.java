@@ -95,7 +95,7 @@ public class StagingFileClient extends ClientBase {
             new String[] { id }, null);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * See Interface for functional description.
      * 
@@ -116,6 +116,6 @@ public class StagingFileClient extends ClientBase {
         throw new UnsupportedOperationException("SOAP not supported");
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

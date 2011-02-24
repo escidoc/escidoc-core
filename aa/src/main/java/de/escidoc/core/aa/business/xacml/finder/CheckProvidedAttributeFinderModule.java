@@ -209,7 +209,7 @@ public class CheckProvidedAttributeFinderModule
 
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Gets the id of the environment attribute used to forward the ids of the

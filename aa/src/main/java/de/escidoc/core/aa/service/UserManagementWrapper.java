@@ -45,7 +45,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
 
     private de.escidoc.core.aa.business.interfaces.UserManagementWrapperInterface business;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -79,7 +79,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
         throws AuthenticationException, SystemException {
         business.initHandleExpiryTimestamp(handle);
     }
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Setter for the business object.

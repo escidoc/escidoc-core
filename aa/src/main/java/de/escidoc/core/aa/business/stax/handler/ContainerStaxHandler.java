@@ -76,7 +76,7 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
             AttributeIds.URN_CONTAINER_VERSION_STATUS_ATTR);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -143,6 +143,6 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
         return element;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

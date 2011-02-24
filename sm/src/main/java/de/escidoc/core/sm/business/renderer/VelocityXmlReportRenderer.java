@@ -80,7 +80,7 @@ public final class VelocityXmlReportRenderer
     private VelocityXmlReportRenderer() {
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -194,7 +194,7 @@ public final class VelocityXmlReportRenderer
                 XmlUtility.getReportDefinitionHref(reportDefinition.getId()));
     }
     
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Adds the scope name space values.

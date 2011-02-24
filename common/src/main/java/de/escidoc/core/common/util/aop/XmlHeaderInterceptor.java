@@ -69,7 +69,7 @@ public class XmlHeaderInterceptor implements Ordered {
     private static final Pattern XML_DOCUMENT_START_XSLT_PATTERN =
         Pattern.compile("<?xml version=[^>]+<?xml-stylesheet ");
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -84,7 +84,7 @@ public class XmlHeaderInterceptor implements Ordered {
         return AopUtil.PRECEDENCE_XML_HEADER_INTERCEPTOR;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Around advice to add xml header information and (in case of REST) a style

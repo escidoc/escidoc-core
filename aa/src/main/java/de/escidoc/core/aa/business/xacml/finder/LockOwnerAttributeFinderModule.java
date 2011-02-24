@@ -69,7 +69,7 @@ public class LockOwnerAttributeFinderModule
 
     private LockHandler lockHandler;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

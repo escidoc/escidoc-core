@@ -83,7 +83,7 @@ public class ResourceIdentifierAttributeFinderModule
             + "(component|container|content-type|context|grant|item"
             + "|organizational-unit|role|user-account|user-group)(-id){0,1}$");
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -168,5 +168,5 @@ public class ResourceIdentifierAttributeFinderModule
         return null;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 }

@@ -76,7 +76,7 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
         }
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

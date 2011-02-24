@@ -56,7 +56,7 @@ public class VelocityXmlAdminRenderer
     private static final AppLogger LOG =
         new AppLogger(VelocityXmlAdminRenderer.class.getName());
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.

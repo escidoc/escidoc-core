@@ -57,7 +57,7 @@ public class InvocationMapping extends InvocationMappingBase {
 
     public static final String SUBRESOURCE_PATTERN = ".*-id";
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * Creates a invocation mapping for single parameter .
      */

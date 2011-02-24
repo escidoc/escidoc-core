@@ -73,7 +73,7 @@ public class ActionHandler implements ActionHandlerInterface {
 
     private Utility utility;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -184,7 +184,7 @@ public class ActionHandler implements ActionHandlerInterface {
 
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Validates data of a unsecured action list.

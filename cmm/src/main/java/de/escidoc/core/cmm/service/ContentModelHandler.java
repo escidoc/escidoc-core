@@ -84,7 +84,7 @@ public class ContentModelHandler
         this.business = business;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -363,5 +363,5 @@ public class ContentModelHandler
         return business.retrieveResourceDefinitionXsltContent(id, name);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 }

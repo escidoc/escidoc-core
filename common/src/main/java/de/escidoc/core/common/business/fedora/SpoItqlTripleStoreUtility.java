@@ -316,7 +316,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         return result;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -337,7 +337,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         return executeQuery(false, id, targetIsSubject, predicate);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     protected List<String> executeQuery(
         final boolean queryByLiteral, final String idOrLiteral,
@@ -418,7 +418,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         return result;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -741,7 +741,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         return new StringBuffer(retrieveSelectClause);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     private String getQueryPartProperties(final Map<String, String> filters) {
         if (filters.isEmpty()) {
@@ -771,7 +771,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         return queryPart.toString();
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -884,7 +884,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         return rdfObjectList;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     private String getQueryPartId(final Set<String> ids) {
         if (ids == null || ids.isEmpty()) {

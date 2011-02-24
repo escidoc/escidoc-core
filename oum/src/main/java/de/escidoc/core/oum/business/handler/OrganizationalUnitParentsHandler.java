@@ -72,7 +72,7 @@ public class OrganizationalUnitParentsHandler
         super(null, parser);
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * See Interface for functional description.
      * 
@@ -123,7 +123,7 @@ public class OrganizationalUnitParentsHandler
         return element;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * @return the parentOus

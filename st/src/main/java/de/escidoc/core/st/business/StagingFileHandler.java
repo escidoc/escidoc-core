@@ -61,7 +61,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
     private static final AppLogger LOG = new AppLogger(StagingFileHandler.class.getName());
     private StagingFileDao dao;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -185,7 +185,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         return binaryContent;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * Setter for the dao.

@@ -89,7 +89,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
         }
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.<br/>

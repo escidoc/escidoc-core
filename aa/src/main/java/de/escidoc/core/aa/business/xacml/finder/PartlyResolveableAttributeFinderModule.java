@@ -78,7 +78,7 @@ public class PartlyResolveableAttributeFinderModule
     /** The length of the marker. */
     public static final int MARKER_LENGTH = AttributeIds.MARKER.length();
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -173,6 +173,6 @@ public class PartlyResolveableAttributeFinderModule
         return new Object[] { result, firstPartAttributeId };
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

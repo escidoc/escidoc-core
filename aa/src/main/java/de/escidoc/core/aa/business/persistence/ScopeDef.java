@@ -43,7 +43,7 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      */
     private static final long serialVersionUID = 1L;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * @see de.escidoc.core.aa.business.persistence.ScopeDefBase()
@@ -142,6 +142,6 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
         return getId().hashCode();
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

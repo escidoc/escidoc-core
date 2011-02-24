@@ -62,7 +62,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
     private VelocityXmlScopeRenderer() {
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -165,7 +165,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
         return getScopeXmlProvider().getScopesSrwXml(values);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Adds the scope name space values.

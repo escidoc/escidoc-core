@@ -1719,7 +1719,7 @@ public class UserAccountHandler
         return ret;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Gets the grant for the provided user id and grant id.
@@ -2115,7 +2115,7 @@ public class UserAccountHandler
         this.userGroupHandler = userGroupHandler;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -2129,7 +2129,7 @@ public class UserAccountHandler
         LOG.debug("Properties set");
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * See Interface for functional description.

@@ -48,7 +48,7 @@ public class EscidocIdGenerator implements org.hibernate.id.IdentifierGenerator 
 
     private EscidocIdProvider idProvider;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -74,7 +74,7 @@ public class EscidocIdGenerator implements org.hibernate.id.IdentifierGenerator 
 
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Gets (an initializes if needed) the {@link EscidocIdProvider}.

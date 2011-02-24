@@ -141,7 +141,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
 
     private ScopeHandlerInterface scopeHandler;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -251,7 +251,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
         return new Object[] { result, resolvedAttributeIdValue };
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Evaluate an attribute from an resource-xml.

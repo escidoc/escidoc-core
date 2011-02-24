@@ -77,7 +77,7 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
         this.tsu = tsu;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -102,5 +102,5 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
         return super.endLinkElement(element);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 }

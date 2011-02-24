@@ -66,7 +66,7 @@ public class ItemUpdateHandler extends DefaultHandler {
         this.parser = parser;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -176,6 +176,6 @@ public class ItemUpdateHandler extends DefaultHandler {
         return element;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
 }

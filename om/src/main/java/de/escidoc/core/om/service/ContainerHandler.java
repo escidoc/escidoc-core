@@ -100,7 +100,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
         this.handler = containerHandler;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     // FIXME: exception handling
     /**

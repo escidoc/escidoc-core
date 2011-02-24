@@ -55,7 +55,7 @@ public class VelocityXmlActionRenderer extends AbstractRenderer
      */
     private static final Pattern PATTERN_WHITESPACE = Pattern.compile("\\s");
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -90,7 +90,7 @@ public class VelocityXmlActionRenderer extends AbstractRenderer
         return getActionXmlProvider().getUnsecuredActionsXml(values);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Gets the {@link ActionXmlProvider} object.

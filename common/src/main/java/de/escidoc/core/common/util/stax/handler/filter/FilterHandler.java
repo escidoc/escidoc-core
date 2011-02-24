@@ -121,7 +121,7 @@ public class FilterHandler extends DefaultHandler {
         this.objectsToFindIdList = new HashSet<String>();
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
     /**
      * See Interface for functional description.
      * 
@@ -240,7 +240,7 @@ public class FilterHandler extends DefaultHandler {
         return element;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Returns a Map with the filter names as keys for the filter values. A

@@ -69,7 +69,7 @@ public class ComponentStaxHandler extends DefaultHandler {
         this.componentId = componentId;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -140,5 +140,5 @@ public class ComponentStaxHandler extends DefaultHandler {
         return data;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 }

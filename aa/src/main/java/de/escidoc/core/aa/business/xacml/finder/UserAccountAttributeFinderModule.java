@@ -290,7 +290,7 @@ public class UserAccountAttributeFinderModule
         return set;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -511,7 +511,7 @@ public class UserAccountAttributeFinderModule
         return new Object[] { result, resolvedAttributeIdValue };
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Fetches the value of the attribute <code>ATTR_USER_OU</code> for the

@@ -160,7 +160,7 @@ public class Login extends HttpServlet {
      */
     private final Random random = new Random(new Date().getTime());
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -252,7 +252,7 @@ public class Login extends HttpServlet {
         }
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * This method provides the logout of the user.<br>

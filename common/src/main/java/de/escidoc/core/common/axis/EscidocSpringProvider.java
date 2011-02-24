@@ -77,7 +77,7 @@ public class EscidocSpringProvider extends RPCProvider {
 
     protected static final String OPTION_SPRING_BEAN = "springBean";
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.<br>
@@ -155,7 +155,7 @@ public class EscidocSpringProvider extends RPCProvider {
         return OPTION_SPRING_BEAN;
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Method that fetches the user credentials from the axis message context

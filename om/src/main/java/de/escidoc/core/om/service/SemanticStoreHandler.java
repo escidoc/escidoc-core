@@ -66,7 +66,7 @@ public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
         this.handler = semanticStoreHandler;
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * Retrieves a result of provided triple store query in a provided output

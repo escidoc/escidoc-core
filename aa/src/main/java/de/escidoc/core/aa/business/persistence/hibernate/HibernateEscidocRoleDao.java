@@ -68,7 +68,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
     
     private RoleFilter roleFilter;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * Constructor to initialize filter-names with RoleFilter-Class.
@@ -364,7 +364,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
         super.delete(scopeDef);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Wrapper of setSessionFactory to enable bean stuff generation for this

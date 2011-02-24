@@ -56,7 +56,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
 
     private EscidocUserDetailsServiceInterface escidocUserDetailsService;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -101,7 +101,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(cls);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Injects the {@link EscidocUserDetailsServiceInterface}.

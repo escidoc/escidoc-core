@@ -63,7 +63,7 @@ public class EscidocUserDetailsService
 
     private UserAccountHandlerInterface userAccountHandler;
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -117,7 +117,7 @@ public class EscidocUserDetailsService
         }
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Gets the user account handler.

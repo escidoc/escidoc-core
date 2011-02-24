@@ -163,7 +163,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         PoliciesCache.clear();
     }
 
-    // CHECKSTYLE:JAVADOC-OFF
+
 
     /**
      * See Interface for functional description.
@@ -260,7 +260,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         return new PolicyFinderResult(result);
     }
 
-    // CHECKSTYLE:JAVADOC-ON
+
 
     /**
      * Finds a policy based on a request's context.
