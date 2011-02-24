@@ -399,6 +399,11 @@ public class RoleHandler implements RoleHandlerInterface {
                 new RoleFilter(null).getPropertyNames());
             result = ExplainXmlProvider.getInstance().getExplainRoleXml(values);
         }
+        else if (limit == 0) {
+            result =
+                renderer.renderRoles(new ArrayList<EscidocRole>(0),
+                    parameters.getRecordPacking());
+        }
         else {
             int needed = offset + limit;
             int currentLimit = needed;

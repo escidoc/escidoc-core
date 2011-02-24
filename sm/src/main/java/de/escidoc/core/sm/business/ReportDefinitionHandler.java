@@ -259,6 +259,12 @@ public class ReportDefinitionHandler
                 ExplainXmlProvider.getInstance().getExplainReportDefinitionXml(
                     values);
         }
+        else if (limit == 0) {
+            result =
+                renderer.renderReportDefinitions(
+                    new ArrayList<ReportDefinition>(0),
+                    params.getRecordPacking());
+        }
         else {
             // get all scope-ids from database
             Collection<String> scopeIds = scopesDao.retrieveScopeIds();

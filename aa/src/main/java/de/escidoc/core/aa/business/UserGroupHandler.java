@@ -867,6 +867,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             result =
                 ExplainXmlProvider.getInstance().getExplainUserGroupXml(values);
         }
+        else if (limit == 0) {
+            result =
+                renderer.renderUserGroups(new ArrayList<UserGroup>(0),
+                    parameters.getRecordPacking());
+        }
         else {
             int needed = offset + limit;
             int currentLimit = needed;

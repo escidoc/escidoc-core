@@ -215,6 +215,11 @@ public class ScopeHandler implements ScopeHandlerInterface {
             result =
                 ExplainXmlProvider.getInstance().getExplainScopeXml(values);
         }
+        else if (limit == 0) {
+            result =
+                renderer.renderScopes(new ArrayList<Scope>(0),
+                    params.getRecordPacking());
+        }
         else {
             // get all scope-ids from database
             Collection<String> scopeIds = dao.retrieveScopeIds();

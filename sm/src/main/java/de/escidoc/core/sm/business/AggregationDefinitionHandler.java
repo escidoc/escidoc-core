@@ -316,6 +316,12 @@ public class AggregationDefinitionHandler
                 ExplainXmlProvider
                     .getInstance().getExplainAggregationDefinitionXml(values);
         }
+        else if (limit == 0) {
+            result =
+                renderer.renderAggregationDefinitions(
+                    new ArrayList<AggregationDefinition>(0),
+                    params.getRecordPacking());
+        }
         else {
             // get all scope ids from database
             Collection<String> scopeIds = scopesDao.retrieveScopeIds();
@@ -334,8 +340,6 @@ public class AggregationDefinitionHandler
                 aggregationDefinitions =
                     dao.retrieveAggregationDefinitions(filteredScopeIds, query,
                         offset, limit);
-                if (aggregationDefinitions != null) {
-                }
             }
 
             result =
