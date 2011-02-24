@@ -652,6 +652,13 @@ public class UserAccountHandler
             result =
                 ExplainXmlProvider.getInstance().getExplainRoleGrantXml(values);
         }
+        else if (limit == 0) {
+            result =
+                renderer.renderGrants(new ArrayList<RoleGrant>(0),
+                    Integer.toString(0),
+                    Integer.toString(offset), Integer.toString(limit),
+                    parameters.getRecordPacking());
+        }
         else {
             int needed = offset + limit;
             final List<RoleGrant> permittedRoleGrants =
@@ -1350,6 +1357,11 @@ public class UserAccountHandler
             result =
                 ExplainXmlProvider.getInstance().getExplainUserAccountXml(
                     values);
+        }
+        else if (limit == 0) {
+            result =
+                renderer.renderUserAccounts(new ArrayList<UserAccount>(0),
+                    parameters.getRecordPacking());
         }
         else {
             int needed = offset + limit;
