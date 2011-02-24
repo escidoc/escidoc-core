@@ -131,19 +131,13 @@ public class EscidocSpringProvider extends RPCProvider {
      * @common
      */
     @Override
-    protected Class getServiceClass(
-        final String className, final SOAPService service,
-        final MessageContext messageContext) throws AxisFault {
-
+    protected Class getServiceClass(final String className, final SOAPService service,
+                                    final MessageContext messageContext) throws AxisFault {
         try {
-            final Class beanType =
-                BeanLocator.getBeanType(BeanLocator.COMMON_FACTORY_ID,
-                    getSpringBeanId(service));
-            return beanType;
+            return BeanLocator.getBeanType(BeanLocator.COMMON_FACTORY_ID,getSpringBeanId(service));
         }
         catch (WebserverSystemException e) {
-            throw new AxisFault(StringUtility.format(
-                "Spring bean type lookup failed", getSpringBeanId(service)), e);
+            throw new AxisFault(StringUtility.format("Spring bean type lookup failed", getSpringBeanId(service)), e);
         }
     }
 

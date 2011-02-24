@@ -86,8 +86,7 @@ public class ComponentUpdateHandler extends DefaultHandler {
                         TripleStoreUtility.getInstance().getComponents(
                             itemId);
                     for (String existingComponent : existingComponents) {
-                        String existingId = existingComponent;
-                        if (existingId.equals(componentId)) {
+                        if (existingComponent.equals(componentId)) {
                             componentExists = true;
                             break;
                         }

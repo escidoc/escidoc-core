@@ -489,8 +489,7 @@ public class ContentModel extends GenericVersionableResourcePid
                     "Can not access triplestore.", e);
             }
 
-            for (Entry<String, String> stringStringEntry : services.entrySet()) {
-                Entry<String, String> entry = stringStringEntry;
+            for (Entry<String, String> entry : services.entrySet()) {
                 String serviceName =
                         entry.getValue().substring(
                                 entry.getValue().lastIndexOf('-') + 1);
@@ -565,8 +564,7 @@ public class ContentModel extends GenericVersionableResourcePid
         }
 
         // delete data streams which are in fedora but not in given list
-        for (String aNamesInFedora : namesInFedora) {
-            final String nameInFedora = aNamesInFedora;
+        for (String nameInFedora : namesInFedora) {
             if (!contentStreamDatastreams.containsKey(nameInFedora)) {
                 Datastream fedoraDs = getContentStream(nameInFedora);
                 fedoraDs.delete();

@@ -280,8 +280,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         final Collection<HashMap<String, String>> adminDescriptors =
             new ArrayList<HashMap<String, String>>();
 
-        for (String s : dataStreams.keySet()) {
-            final String name = s;
+        for (String name : dataStreams.keySet()) {
             final HashMap<String, String> adminDescriptor =
                     new HashMap<String, String>();
             adminDescriptor.put("name", name);

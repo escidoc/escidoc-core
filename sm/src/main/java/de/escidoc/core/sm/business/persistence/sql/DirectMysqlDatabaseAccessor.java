@@ -851,12 +851,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      */
     @Override
     public String getXpathBoolean(final String xpath, final String field) {
-        String xpathBol = XPATH_MATCHER
-            .reset(XPATH_BOOLEAN_FUNCTION)
-            .replaceAll(Matcher.quoteReplacement(field) 
-                    + "$1" 
+        return XPATH_MATCHER.reset(XPATH_BOOLEAN_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
                     + Matcher.quoteReplacement(xpath));
-        return xpathBol;
     }
 
     /**
@@ -872,12 +868,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      */
     @Override
     public String getXpathString(final String xpath, final String field) {
-        String xpathString = XPATH_MATCHER
-            .reset(XPATH_STRING_FUNCTION)
-            .replaceAll(Matcher.quoteReplacement(field) 
-                    + "$1" 
+        return XPATH_MATCHER.reset(XPATH_STRING_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
                     + Matcher.quoteReplacement(xpath));
-        return xpathString;
     }
 
     /**
@@ -892,12 +884,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @sm
      */
     public String getXpathNumeric(final String xpath, final String field) {
-        String xpathNumber = XPATH_MATCHER
-            .reset(XPATH_NUMBER_FUNCTION)
-            .replaceAll(Matcher.quoteReplacement(field) 
-                    + "$1" 
+        return XPATH_MATCHER.reset(XPATH_NUMBER_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
                     + Matcher.quoteReplacement(xpath));
-        return xpathNumber;
     }
 
     /**
@@ -1218,9 +1206,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         if (tablename.matches(".*\\..*")) {
             return tablename;
         } else {
-            String extendedTablename =
-                    Constants.SM_SCHEMA_NAME + '.' + tablename;
-            return extendedTablename;
+            return Constants.SM_SCHEMA_NAME + '.' + tablename;
         }
 
     }

@@ -83,18 +83,12 @@ public final class CustomTargetBuilder {
         final String designatorId, final String designatorType)
         throws URISyntaxException, UnknownIdentifierException,
         FunctionTypeException {
-
-        URI designatorTypeUri = new URI(designatorType);
-        URI designatorIdUri = new URI(designatorId);
-        AttributeDesignator designator =
-            new AttributeDesignator(AttributeDesignator.RESOURCE_TARGET,
+        final URI designatorTypeUri = new URI(designatorType);
+        final URI designatorIdUri = new URI(designatorId);
+        final AttributeDesignator designator = new AttributeDesignator(AttributeDesignator.RESOURCE_TARGET,
                 designatorTypeUri, designatorIdUri, false);
-
-        StringAttribute value = new StringAttribute(attributeValue);
-
-        final TargetMatch targetMatch =
-            createTargetMatch(TargetMatch.RESOURCE, matchId, designator, value);
-        return targetMatch;
+        final StringAttribute value = new StringAttribute(attributeValue);
+        return createTargetMatch(TargetMatch.RESOURCE, matchId, designator, value);
     }
 
     /**

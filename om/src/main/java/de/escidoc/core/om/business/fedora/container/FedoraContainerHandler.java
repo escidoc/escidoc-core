@@ -614,11 +614,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         // remove member entries referring this
         List<String> containers =
             getTripleStoreUtility().getContainers(getContainer().getId());
-        for (String container1 : containers) {
+        for (String parent : containers) {
             try {
-                String parent = container1;
                 final Container container = new Container(parent);
-
                 // call removeMember with current user context (access rights)
                 String param =
                     "<param last-modification-date=\""
@@ -1377,8 +1375,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final Map<String, Datastream> dsMap =
             new HashMap<String, Datastream>();
 
-        for (String s : mdMap.keySet()) {
-            final String name = s;
+        for (String name : mdMap.keySet()) {
             final ByteArrayOutputStream stream = mdMap.get(name);
             final byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
@@ -1665,8 +1662,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         // for each refered item or container
 
-        for (String memberId1 : memberIds) {
-            final String memberId = memberId1;
+        for (String memberId : memberIds) {
             final String objectType =
                 getTripleStoreUtility().getObjectType(memberId);
 
@@ -2020,8 +2016,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         // for each refered item or container
 
-        for (String memberId1 : memberIds) {
-            final String memberId = memberId1;
+        for (String memberId : memberIds) {
             final String objectType =
                 getTripleStoreUtility().getObjectType(memberId);
 
@@ -2552,14 +2547,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             sp.clearHandlerChain();
             // check for same context
             final List<String> memberIds = bremeftph.getMemberIds();
-            for (String memberId2 : memberIds) {
-                final String memberId = memberId2;
-                // if (!TripleStoreUtility.getInstance().exists(memberId)) {
-                // final String message =
-                // "Member with id " + memberId + " does not exist.";
-                // log.error(message);
-                // throw new InvalidContentException(message);
-                // }
+            for (String memberId : memberIds) {
                 if (!Utility.getInstance().hasSameContext(memberId,
                     getContainer().getId())) {
                     throw new InvalidContextException(
@@ -2571,9 +2559,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
 
-            for (String memberId1 : memberIds) {
-                final String memberId = memberId1;
-
+            for (String memberId : memberIds) {
                 final StartElementWithChildElements newComponentIdElement =
                     new StartElementWithChildElements();
                 newComponentIdElement.setLocalName("member");
@@ -3016,13 +3002,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
             boolean resourceUpdated = false;
-            for (Map<String, String> aRelationsData : relationsData) {
+            for (Map<String, String> relation : relationsData) {
                 resourceUpdated = true;
-                final Map<String, String> relation = aRelationsData;
                 final String predicateValue = relation.get("predicateValue");
                 final String predicateNs = relation.get("predicateNs");
                 final String target = relation.get("target");
-
                 final StartElementWithChildElements newContentRelationElement =
                     new StartElementWithChildElements();
                 newContentRelationElement.setLocalName(predicateValue);
@@ -3033,9 +3017,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI,
                         Constants.RDF_NAMESPACE_PREFIX, "info:fedora/" + target);
                 newContentRelationElement.addAttribute(resource);
-                // newComponentIdElement.setElementText(componentId);
                 newContentRelationElement.setChildrenElements(null);
-
                 elements.add(newContentRelationElement);
             }
             final byte[] relsExtNewBytes =
@@ -3184,18 +3166,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             }
             Set<String> keySet = predicateValuesVectorAssignment.keySet();
-            for (String aKeySet : keySet) {
-                String predicateValue = aKeySet;
+            for (String predicateValue : keySet) {
                 List<StartElementWithChildElements> elements =
                     predicateValuesVectorAssignment.get(predicateValue);
                 toRemove.put("/RDF/Description/" + predicateValue, elements);
             }
-
-            final byte[] relsExtNewBytes =
-                Utility.updateRelsExt(null, toRemove, null, getContainer(),
-                    null);
+            final byte[] relsExtNewBytes = Utility.updateRelsExt(null, toRemove, null, getContainer(), null);
             try {
-
                 getContainer().setRelsExt(
                     new Datastream(Datastream.RELS_EXT_DATASTREAM,
                         getContainer().getId(), relsExtNewBytes, "text/xml"));
@@ -3247,9 +3224,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             contentRelationHandler
                 .retrieveContentRelations(new LuceneRequestParameters(
                     filterParams));
-        String result = transformSearchResponse2relations(searchResponse);
-
-        return result;
+        return transformSearchResponse2relations(searchResponse);
 
     }
 

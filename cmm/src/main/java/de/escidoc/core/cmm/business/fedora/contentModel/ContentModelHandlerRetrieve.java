@@ -122,9 +122,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         values.putAll(commonValues);
 
         StringBuilder content = new StringBuilder();
-        for (String s : getContentModel()
+        for (String contentStreamName : getContentModel()
                 .getContentStreams().keySet()) {
-            String contentStreamName = s;
             content.append(renderContentStream(contentStreamName, false));
         }
         values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF,
@@ -516,11 +515,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
             getContentModel().getMdRecordDefinitionIDs();
 
         if (datastreamEntries != null) {
-            for (DsTypeModel datastreamEntry1 : datastreamEntries) {
-                DsTypeModel datastreamEntry = datastreamEntry1;
-
-                Map<String, String> mdRecordDefinition =
-                        new HashMap<String, String>();
+            for (DsTypeModel datastreamEntry : datastreamEntries) {
+                final Map<String, String> mdRecordDefinition = new HashMap<String, String>();
                 mdRecordDefinition.put("name", datastreamEntry.getName());
                 if (datastreamEntry.hasSchema()) {
                     mdRecordDefinition
@@ -531,7 +527,6 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                                             + "/md-record-definitions/md-record-definition/"
                                             + datastreamEntry.getName() + "/schema/content");
                 }
-
                 mdRecordDefinitions.add(mdRecordDefinition);
             }
         }
@@ -577,9 +572,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
         }
 
         if (!methodNames.isEmpty()) {
-            for (String methodName1 : methodNames) {
-                String methodName = methodName1;
-
+            for (String methodName : methodNames) {
                 Map<String, String> resourceDefinition =
                         new HashMap<String, String>();
                 resourceDefinition.put("name", methodName);

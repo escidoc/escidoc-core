@@ -367,11 +367,9 @@ public class Context extends GenericResource implements ContextInterface {
             }
         }
 
-        for (String name : names) {
-            final String dsNname = name;
+        for (String dsNname : names) {
             try {
                 final Datastream newDs = new Datastream(dsNname, getId(), null);
-                // new Datastream(name, getId(), this.versionDate);
                 result.put(dsNname, newDs);
             } catch (final StreamNotFoundException e) {
                 final String message =
@@ -435,8 +433,7 @@ public class Context extends GenericResource implements ContextInterface {
                     de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID);
 
         // add only new Datastreams to HashMap
-        for (String dsName1 : dsNames) {
-            final String dsName = dsName1;
+        for (String dsName : dsNames) {
             if (!this.adminDescriptors.containsKey(dsName)) {
                 try {
                     final Datastream newDs =

@@ -436,8 +436,7 @@ public class ContentRelationCreate extends GenericResourceCreate
         if (getMetadataRecords() == null && nCr.getMetadataRecords() != null) {
 
             // add all md-records
-            for (MdRecordCreate mdRecordCreate : nCr.getMetadataRecords()) {
-                MdRecordCreate mdRecord = mdRecordCreate;
+            for (MdRecordCreate mdRecord : nCr.getMetadataRecords()) {
                 mdRecord.getRepositoryIndicator().setResourceIsNew(true);
                 addMdRecord(mdRecord);
                 changes++;
@@ -447,8 +446,7 @@ public class ContentRelationCreate extends GenericResourceCreate
             && nCr.getMetadataRecords() == null) {
 
             // mark all md-records as deleted
-            for (MdRecordCreate mdRecordCreate : getMetadataRecords()) {
-                MdRecordCreate mdRecord = mdRecordCreate;
+            for (MdRecordCreate mdRecord : getMetadataRecords()) {
                 mdRecord.getRepositoryIndicator().setResourceToDelete(true);
                 changes++;
             }

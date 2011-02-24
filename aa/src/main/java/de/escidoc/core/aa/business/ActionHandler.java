@@ -131,10 +131,7 @@ public class ActionHandler implements ActionHandlerInterface {
                 .getUnsecuredActions());
         }
         actionDao.saveOrUpdate(unsecuredActionList);
-
-        final String ret =
-            renderer.renderUnsecuredActionList(unsecuredActionList);
-        return ret;
+        return renderer.renderUnsecuredActionList(unsecuredActionList);
     }
 
     /**
@@ -183,10 +180,7 @@ public class ActionHandler implements ActionHandlerInterface {
         if (unsecuredActionList == null) {
             unsecuredActionList = new UnsecuredActionList(contextId, null);
         }
-
-        final String ret =
-            renderer.renderUnsecuredActionList(unsecuredActionList);
-        return ret;
+        return renderer.renderUnsecuredActionList(unsecuredActionList);
 
     }
 

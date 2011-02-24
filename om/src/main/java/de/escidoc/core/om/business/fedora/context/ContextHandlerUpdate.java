@@ -709,21 +709,15 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
             final AddNewSubTreesToDatastream addNewEntriesHandler =
                 new AddNewSubTreesToDatastream("/dc", sp);
-            final List<StartElementWithChildElements> elementsToAdd =
-                new ArrayList<StartElementWithChildElements>();
-
+            final List<StartElementWithChildElements> elementsToAdd = new ArrayList<StartElementWithChildElements>();
             final Set<String> keysToAdd = propertiesToAdd.keySet();
-            for (String aKeysToAdd : keysToAdd) {
+            for (String propertyKey : keysToAdd) {
                 final StartElementWithChildElements newPropertyElement =
                         new StartElementWithChildElements();
-                final String propertyKey = aKeysToAdd;
                 newPropertyElement.setLocalName(propertyKey);
-                newPropertyElement
-                        .setPrefix(Constants.DC_NS_PREFIX);
-                newPropertyElement
-                        .setNamespace(Constants.DC_NS_URI);
-                newPropertyElement.setElementText(propertiesToAdd
-                        .get(propertyKey));
+                newPropertyElement.setPrefix(Constants.DC_NS_PREFIX);
+                newPropertyElement.setNamespace(Constants.DC_NS_URI);
+                newPropertyElement.setElementText(propertiesToAdd.get(propertyKey));
                 elementsToAdd.add(newPropertyElement);
             }
             final StartElement pointer = new StartElement();
@@ -894,7 +888,6 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
         for(Entry<String, Object> entry : streamsEntrySet) {
             final String name = entry.getKey();
-            final String label = name;
             Boolean newDS = true;
             if (adminDescriptors.containsKey(name)) {
                 Datastream oldDs = adminDescriptors.get(name);
@@ -928,7 +921,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                         getContext().getId(),
                         name,
                         new String[] { de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID },
-                        label,
+                        name,
                         true,
                         ((ByteArrayOutputStream) streams.get(name))
                             .toByteArray(), false);

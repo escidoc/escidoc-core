@@ -251,10 +251,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      * @return Set merged set
      */
     protected Set<String> mergeSets(
-        final Set<String> set1, final Set<String> set2) {
-        
-        Set<String> s1 = set1;
-        Set<String> s2 = set2;
+        final Set<String> s1, final Set<String> s2) {
         if (s1 == null && s2 == null) {
             return null;
         }

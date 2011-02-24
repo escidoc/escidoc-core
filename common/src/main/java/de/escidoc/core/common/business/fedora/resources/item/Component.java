@@ -342,8 +342,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         // get list of names of data streams with alternateId = "metadata"
         final Set<String> namesInFedora = getMdRecords().keySet();
         // delete data streams which are in fedora but not in mdRecords
-        for (String aNamesInFedora : namesInFedora) {
-            final String nameInFedora = aNamesInFedora;
+        for (String nameInFedora : namesInFedora) {
             if (!ds.containsKey(nameInFedora)) {
                 Datastream fedoraDs = getMdRecord(nameInFedora);
                 fedoraDs.delete();
@@ -653,17 +652,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             log.warn(msg + e);
             throw new XmlParserSystemException(msg, e);
         }
-
-        final Map<String, String> properties =
-            new HashMap<String, String>();
-
-        List<Triple> triples = eve.getElementValues().getTriples();
-
+        final Map<String, String> properties = new HashMap<String, String>();
+        final List<Triple> triples = eve.getElementValues().getTriples();
         for (Triple triple : triples) {
-            Triple t = triple;
-            properties.put(t.getPredicate(), t.getObject());
+            properties.put(triple.getPredicate(), triple.getObject());
         }
-
         return properties;
     }
 }

@@ -300,8 +300,7 @@ public final class CustomPolicyBuilder {
         List<AbstractPolicy> xacmlPolicies = new ArrayList<AbstractPolicy>();
         // List<Rule> rules = new ArrayList<Rule>();
         // List<Action> rulesActions = new Vector<Action>();
-        for (EscidocPolicy escidocPolicy1 : escidocRole.getEscidocPolicies()) {
-            EscidocPolicy escidocPolicy = escidocPolicy1;
+        for (EscidocPolicy escidocPolicy : escidocRole.getEscidocPolicies()) {
             final String xmlData = escidocPolicy.getXml();
             final Element root;
             final String name;

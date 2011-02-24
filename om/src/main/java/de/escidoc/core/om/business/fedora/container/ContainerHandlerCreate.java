@@ -125,9 +125,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
             values.put(XmlTemplateProvider.DC, dcXml);
         }
 
-        for (Entry<String, Object> stringObjectEntry : containerDataStreams.entrySet()) {
-
-            Entry entry = stringObjectEntry;
+        for (Entry<String, Object> entry : containerDataStreams.entrySet()) {
             String outsideKey = (String) entry.getKey();
             if (entry.getValue() instanceof ByteArrayOutputStream) {
                 ByteArrayOutputStream outsideValue = (ByteArrayOutputStream) entry.getValue();

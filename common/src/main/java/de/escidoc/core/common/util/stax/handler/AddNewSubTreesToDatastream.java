@@ -211,10 +211,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
             isNew = true;
 
-            for (StartElementWithChildElements aSubtreesToInsert : subtreesToInsert) {
-                StartElementWithChildElements subtreeToInsert =
-                        aSubtreesToInsert;
-
+            for (StartElementWithChildElements subtreeToInsert : subtreesToInsert) {
                 String subtreeName = subtreeToInsert.getLocalName();
                 String subtreeNsUri = subtreeToInsert.getNamespace();
                 String subtreePrefix = subtreeToInsert.getPrefix();
@@ -240,9 +237,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 List<StartElementWithText> children =
                         subtreeToInsert.getChildrenElements();
                 if ((children != null) && (!children.isEmpty())) {
-                    for (StartElementWithText aChildren : children) {
-                        StartElementWithText inserted =
-                                aChildren;
+                    for (StartElementWithText inserted : children) {
                         String insertedName = inserted.getLocalName();
                         String insertedNsUri = inserted.getNamespace();
                         String insertedPrefix = inserted.getPrefix();

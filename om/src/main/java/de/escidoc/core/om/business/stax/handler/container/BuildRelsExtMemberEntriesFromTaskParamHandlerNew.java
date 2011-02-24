@@ -62,14 +62,12 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
     }
 
     @Override
-    public String characters(String data, StartElement element)
+    public String characters(String objid, StartElement element)
         throws InvalidContentException, TripleStoreSystemException,
         WebserverSystemException {
         String localName = element.getLocalName();
 
         if ("id".equals(localName)) {
-            String objid = data;
-
             if (!TripleStoreUtility.getInstance().exists(objid)) {
                 if ("add".equals(this.methodName)) {
                 throw new InvalidContentException("Object with id " + objid
@@ -87,8 +85,7 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
                 memberIds.add(objid);
             }
         }
-
-        return data;
+        return objid;
     }
 
     public List<String> getMemberIds() {

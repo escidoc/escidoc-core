@@ -383,15 +383,9 @@ public class ContentModelCreate extends GenericResourceCreate {
     private String getSDefFoXML(
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
-
         Map<String, Object> valueMap = new HashMap<String, Object>();
-
         valueMap.putAll(getBehaviorValues(resourceDefinition));
-
-        String foxml =
-            ContentModelFoXmlProvider.getInstance().getServiceDefinitionFoXml(
-                valueMap);
-        return foxml;
+        return ContentModelFoXmlProvider.getInstance().getServiceDefinitionFoXml(valueMap);
     }
 
     /**
@@ -411,15 +405,9 @@ public class ContentModelCreate extends GenericResourceCreate {
     private String getSDepFoXML(
         final ResourceDefinitionCreate resourceDefinition)
         throws WebserverSystemException {
-
-        Map<String, Object> valueMap = new HashMap<String, Object>();
-
+        final Map<String, Object> valueMap = new HashMap<String, Object>();
         valueMap.putAll(getBehaviorValues(resourceDefinition));
-
-        String foxml =
-            ContentModelFoXmlProvider.getInstance().getServiceDeploymentFoXml(
-                valueMap);
-        return foxml;
+        return ContentModelFoXmlProvider.getInstance().getServiceDeploymentFoXml(valueMap);
     }
 
     private Map<String, Object> getBehaviorValues(
@@ -708,26 +696,19 @@ public class ContentModelCreate extends GenericResourceCreate {
 
         for (ContentStreamCreate contentStream : this.contentStreams) {
             HashMap<String, String> valueMap = new HashMap<String, String>();
-
-            ContentStreamCreate cont = contentStream;
-
-            valueMap.put(XmlTemplateProvider.CONTROL_GROUP, cont
+            valueMap.put(XmlTemplateProvider.CONTROL_GROUP, contentStream
                     .getContent().getStorageType().getAbbreviation());
-            valueMap.put(XmlTemplateProvider.VAR_ID, cont.getName());
-            valueMap.put(XmlTemplateProvider.VAR_VERSIONABLE,
-                    XmlTemplateProvider.TRUE);
+            valueMap.put(XmlTemplateProvider.VAR_ID, contentStream.getName());
+            valueMap.put(XmlTemplateProvider.VAR_VERSIONABLE, XmlTemplateProvider.TRUE);
             valueMap.put(XmlTemplateProvider.VAR_ALT_IDS, "content-stream");
-            valueMap.put(XmlTemplateProvider.MIME_TYPE, cont.getMimeType());
-
-            valueMap.put(XmlTemplateProvider.VAR_LABEL, cont.getTitle());
-
-            if (cont.getContent().getDataLocation() != null) {
-                valueMap.put(XmlTemplateProvider.VAR_URL, cont
+            valueMap.put(XmlTemplateProvider.MIME_TYPE, contentStream.getMimeType());
+            valueMap.put(XmlTemplateProvider.VAR_LABEL, contentStream.getTitle());
+            if (contentStream.getContent().getDataLocation() != null) {
+                valueMap.put(XmlTemplateProvider.VAR_URL, contentStream
                         .getContent().getDataLocation().toString());
             }
-            valueMap.put(XmlTemplateProvider.VAR_CONTENT, cont
+            valueMap.put(XmlTemplateProvider.VAR_CONTENT, contentStream
                     .getContent().getContent());
-
             contStreams.add(valueMap);
         }
 

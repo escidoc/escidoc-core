@@ -124,8 +124,7 @@ public class EscidocRole extends EscidocRoleBase {
             if (isLimited()) {
                 Collection<ScopeDef> scopeDefs = getScopeDefs();
                 objectTypes = new ArrayList<String>(scopeDefs.size());
-                for (ScopeDef scopeDef1 : scopeDefs) {
-                    ScopeDef scopeDef = scopeDef1;
+                for (ScopeDef scopeDef : scopeDefs) {
                     objectTypes.add(scopeDef.getObjectType());
                 }
             } else {

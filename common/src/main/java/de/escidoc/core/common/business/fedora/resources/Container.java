@@ -269,23 +269,18 @@ public class Container extends GenericVersionableResourcePid
                 names.add(datastream.getID());
             }
         }
-        for (String name1 : names) {
-            String name = name1;
+        for (String name : names) {
             try {
-                Datastream newDs =
-                        new Datastream(name, getId(), getVersionDate());
+                Datastream newDs = new Datastream(name, getId(), getVersionDate());
                 result.put(name, newDs);
             } catch (StreamNotFoundException e) {
-                final String message =
-                        "Metadata record \"" + name + "\" not found for container "
-                                + getId() + '.';
+                final String message = "Metadata record \"" + name + "\" not found for container " + getId() + '.';
                 log.error(message, e);
                 throw new IntegritySystemException(message, e);
             } catch (WebserverSystemException e) {
                 // FIXME getVersionDate throws an WebserverSystemException in case of IntegritySystemException
                 throw new FedoraSystemException(e);
             }
-
         }
         this.mdRecords = result;
         return result;
@@ -310,8 +305,7 @@ public class Container extends GenericVersionableResourcePid
         Set<String> namesInFedora = getMdRecords().keySet();
         
         // delete data streams which are in fedora but not in mdRecords
-        for (String aNamesInFedora : namesInFedora) {
-            String nameInFedora = aNamesInFedora;
+        for (String nameInFedora : namesInFedora) {
             if (!mdRecords.containsKey(nameInFedora)) {
                 try {
                     Datastream fedoraDs = getMdRecord(nameInFedora);
@@ -703,10 +697,7 @@ public class Container extends GenericVersionableResourcePid
             log.error(message);
             throw new WebserverSystemException(message, e);
         }
-
-        String timestamp = this.escidocRelsExt.merge(); // Maybe would it be better, if we use the
-
-        return timestamp;
+        return this.escidocRelsExt.merge();
     }
 
     /*
