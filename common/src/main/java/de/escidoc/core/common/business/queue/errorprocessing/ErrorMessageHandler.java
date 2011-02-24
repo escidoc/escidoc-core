@@ -41,7 +41,7 @@ import java.util.Map.Entry;
  */
 public class ErrorMessageHandler {
 
-    private static AppLogger errorLogger = null;
+    private AppLogger errorLogger = null;
 
     private static final String DELIMITER = 
             "######################################################"
