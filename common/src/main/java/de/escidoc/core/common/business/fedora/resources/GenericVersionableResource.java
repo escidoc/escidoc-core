@@ -573,10 +573,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return true if the resource is latest version. False otherwise.
      */
     public boolean isLatestVersion() {
-        if (this.versionNumber == null) {
-            return true;
-        }
-        else if (this.versionNumber.equals(getLatestVersionNumber())) {
+        if (this.versionNumber == null || this.versionNumber.equals(getLatestVersionNumber())) {
             return true;
         }
         return false;

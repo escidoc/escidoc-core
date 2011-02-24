@@ -634,18 +634,11 @@ public class ContentModel extends GenericVersionableResourcePid
                     else {
                         ds.setContentUnchanged(true);
                     }
-                    if (!curDs.getControlGroup().equals(ds.getControlGroup())) {
+                    if (!curDs.getControlGroup().equals(ds.getControlGroup()) || !curDs.getMimeType().equals(ds.getMimeType())) {
                         contentChanged = true;
                     }
-                    else if (!curDs.getMimeType().equals(ds.getMimeType())) {
-                        contentChanged = true;
-                    }
-                    // label = null means: don't change label
                     else if (ds.getLabel() != null && curDs.getLabel() != null
-                        && !curDs.getLabel().equals(ds.getLabel())) {
-                        contentChanged = true;
-                    }
-                    else if (!ds.equals(curDs)) {
+                            && !curDs.getLabel().equals(ds.getLabel()) || !ds.equals(curDs)) {
                         contentChanged = true;
                     }
                 }

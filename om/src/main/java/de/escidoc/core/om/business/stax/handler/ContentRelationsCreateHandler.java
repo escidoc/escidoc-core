@@ -345,14 +345,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
         }
         if (targetVersion != null) {
             String targetLatestVersion = null;
-            if ("item".equals(targetObjectType)) {
-                targetLatestVersion =
-                    TripleStoreUtility.getInstance().getPropertiesElements(
-                        targetIdWithoutVersion,
-                        TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
-            }
-
-            else if ("container".equals(targetObjectType)) {
+            if ("item".equals(targetObjectType) || "container".equals(targetObjectType)) {
                 targetLatestVersion =
                     TripleStoreUtility.getInstance().getPropertiesElements(
                         targetIdWithoutVersion,

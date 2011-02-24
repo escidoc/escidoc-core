@@ -132,10 +132,7 @@ public class Version implements Comparable<Version> {
 
         Version other = (Version) obj;
 
-        if (majorNumber != other.majorNumber || minorNumber != other.minorNumber) {
-            return false;
-        }
-        else if (revisionNumber != other.revisionNumber) {
+        if (majorNumber != other.majorNumber || minorNumber != other.minorNumber || revisionNumber != other.revisionNumber) {
             return false;
         }
         return true;
