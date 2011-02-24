@@ -751,12 +751,12 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         final StringBuilder queryPart = new StringBuilder();
 
-        for (final String predicate : filters.keySet()) {
+        for (final Map.Entry<String, String> stringStringEntry : filters.entrySet()) {
             final String object;
-            final String val = filters.get(predicate);
+            final String val = stringStringEntry.getValue();
             // make URIs from given IDs or HREFs for all structural-relation
             // predicates
-            if (predicate.startsWith(Constants.STRUCTURAL_RELATIONS_NS_URI)) {
+            if (stringStringEntry.getKey().startsWith(Constants.STRUCTURAL_RELATIONS_NS_URI)) {
                 String id = val;
                 if (val.startsWith("http://") || val.startsWith("/")) {
                     id = Utility.getId(val);
@@ -766,7 +766,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 object = '\'' + val + '\'';
             }
 
-            queryPart.append(" and $s <").append(predicate).append("> ").append(object).append(' ');
+            queryPart.append(" and $s <").append(stringStringEntry.getKey()).append("> ").append(object).append(' ');
         }
         return queryPart.toString();
     }

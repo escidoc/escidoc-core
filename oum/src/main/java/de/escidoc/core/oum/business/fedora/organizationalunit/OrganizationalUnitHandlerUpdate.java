@@ -82,23 +82,22 @@ public class OrganizationalUnitHandlerUpdate
         final Map<String, Datastream> updated = new HashMap<String, Datastream>();
 
         // iterate over md-record names (keys) with
-        for (final String name : xml.keySet()) {
+        for (final Map.Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : xml.entrySet()) {
             // for every retrieved md-record XML create a Datastream
             Map<String, String> mdProperties = null;
-            if (name.equals(OrganizationalUnit.ESCIDOC)) {
+            if (stringByteArrayOutputStreamEntry.getKey().equals(OrganizationalUnit.ESCIDOC)) {
                 mdProperties = new HashMap<String, String>();
                 mdProperties.put(OrganizationalUnit.NS_URI,
                         escidocMdRecordnsUri);
             }
             final Datastream ds =
-                    new Datastream(name, getOrganizationalUnit().getId(), xml.get(
-                            name).toByteArray(), Datastream.MIME_TYPE_TEXT_XML,
+                    new Datastream(stringByteArrayOutputStreamEntry.getKey(), getOrganizationalUnit().getId(), stringByteArrayOutputStreamEntry.getValue().toByteArray(), Datastream.MIME_TYPE_TEXT_XML,
                             mdProperties);
-            final Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
+            final Map<String, String> mdRecordAttributes = mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId(mdRecordAttributes.get("type"));
             ds.addAlternateId(mdRecordAttributes.get("schema"));
-            updated.put(name, ds);
+            updated.put(stringByteArrayOutputStreamEntry.getKey(), ds);
         }
         // set Datastreams from retrieved md-record XML in OU
         getOrganizationalUnit().setMdRecords(updated);

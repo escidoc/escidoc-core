@@ -1352,11 +1352,11 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         final Map<String, String> properties = new HashMap<String, String>();
 
-        for (final String sourceKey : tripleStoreMap.keySet()) {
-            final String value = tripleStoreMap.get(sourceKey);
+        for (final Map.Entry<String, String> stringStringEntry : tripleStoreMap.entrySet()) {
+            final String value = stringStringEntry.getValue();
 
             if (value != null) {
-                final String targetKey = getPropertiesNamesMapping().get(sourceKey);
+                final String targetKey = getPropertiesNamesMapping().get(stringStringEntry.getKey());
 
                 if (targetKey != null) {
                     properties.put(targetKey, value);
@@ -1399,7 +1399,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                         }
                     }
                 } else {
-                    properties.put(sourceKey, value);
+                    properties.put(stringStringEntry.getKey(), value);
 
                 }
             }

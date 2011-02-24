@@ -2418,7 +2418,7 @@ public class FedoraItemHandler extends ItemHandlerPid
     private void makeVersion(final String comment, final String newStatus)
         throws SystemException {
         getUtility().makeVersion(comment, newStatus, getItem(),
-            getFedoraUtility());
+                getFedoraUtility());
     }
 
 
@@ -2603,18 +2603,18 @@ public class FedoraItemHandler extends ItemHandlerPid
         final Map<String, Datastream> contentStreamDatastreams =
             new HashMap<String, Datastream>();
 
-        for (final String name : contentStreamMap.keySet()) {
-            final Map<String, Object> csValues = contentStreamMap.get(name);
+        for (final Map.Entry<String, Map<String, Object>> stringMapEntry : contentStreamMap.entrySet()) {
+            final Map<String, Object> csValues = stringMapEntry.getValue();
             final Datastream ds;
             if (csValues.containsKey(Elements.ELEMENT_CONTENT)) {
                 final ByteArrayOutputStream stream = (ByteArrayOutputStream) csValues.get(Elements.ELEMENT_CONTENT);
                 final byte[] xmlBytes = stream.toByteArray();
-                ds = new Datastream(name, getItem().getId(), xmlBytes,
+                ds = new Datastream(stringMapEntry.getKey(), getItem().getId(), xmlBytes,
                         (String) csValues.get(Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
             }
             else if (csValues.containsKey(Elements.ATTRIBUTE_XLINK_HREF)) {
                 ds =
-                    new Datastream(name, getItem().getId(),
+                    new Datastream(stringMapEntry.getKey(), getItem().getId(),
                         (String) csValues.get(Elements.ATTRIBUTE_XLINK_HREF),
                         (String) csValues.get(Elements.ATTRIBUTE_STORAGE),
                         (String) csValues
@@ -2630,7 +2630,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 title = "";
             }
             ds.setLabel(title.trim());
-            contentStreamDatastreams.put(name, ds);
+            contentStreamDatastreams.put(stringMapEntry.getKey(), ds);
         }
 
         getItem().setContentStreams(contentStreamDatastreams);

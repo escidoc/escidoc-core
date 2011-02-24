@@ -711,13 +711,13 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 new AddNewSubTreesToDatastream("/dc", sp);
             final List<StartElementWithChildElements> elementsToAdd = new ArrayList<StartElementWithChildElements>();
             final Set<String> keysToAdd = propertiesToAdd.keySet();
-            for (final String propertyKey : keysToAdd) {
+            for (final Entry<String, String> stringStringEntry : propertiesToAdd.entrySet()) {
                 final StartElementWithChildElements newPropertyElement =
                         new StartElementWithChildElements();
-                newPropertyElement.setLocalName(propertyKey);
+                newPropertyElement.setLocalName(stringStringEntry.getKey());
                 newPropertyElement.setPrefix(Constants.DC_NS_PREFIX);
                 newPropertyElement.setNamespace(Constants.DC_NS_URI);
-                newPropertyElement.setElementText(propertiesToAdd.get(propertyKey));
+                newPropertyElement.setElementText(stringStringEntry.getValue());
                 elementsToAdd.add(newPropertyElement);
             }
             final StartElement pointer = new StartElement();

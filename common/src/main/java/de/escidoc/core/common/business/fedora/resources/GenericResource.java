@@ -752,14 +752,14 @@ public class GenericResource implements FedoraResource {
 
         final Map<String, String> properties = new HashMap<String, String>();
 
-        for (final String sourceKey : tripleStoreMap.keySet()) {
-            final String value = tripleStoreMap.get(sourceKey);
+        for (final Map.Entry<String, String> stringStringEntry : tripleStoreMap.entrySet()) {
+            final String value = stringStringEntry.getValue();
             if (value != null) {
-                final String targetKey = this.propertiesNamesMapping.get(sourceKey);
+                final String targetKey = this.propertiesNamesMapping.get(stringStringEntry.getKey());
                 if (targetKey != null) {
                     properties.put(targetKey, value);
                 } else {
-                    properties.put(sourceKey, value);
+                    properties.put(stringStringEntry.getKey(), value);
                 }
             }
         }

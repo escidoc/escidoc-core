@@ -356,9 +356,9 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         // FIXME: Remove this iteration. All base-URIs are like
         // /<ir, um, oum, ...>/<resourcename>
         final Map<String, Resource> resourcesMap = getResources();
-        for (final String baseUri : resourcesMap.keySet()) {
-            if (uri.startsWith(baseUri)) {
-                result = resourcesMap.get(baseUri);
+        for (final Map.Entry<String, Resource> stringResourceEntry : resourcesMap.entrySet()) {
+            if (uri.startsWith(stringResourceEntry.getKey())) {
+                result = stringResourceEntry.getValue();
                 break;
             }
         }

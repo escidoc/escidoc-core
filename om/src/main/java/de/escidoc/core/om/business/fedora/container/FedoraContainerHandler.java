@@ -1375,24 +1375,24 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final Map<String, Datastream> dsMap =
             new HashMap<String, Datastream>();
 
-        for (final String name : mdMap.keySet()) {
-            final ByteArrayOutputStream stream = mdMap.get(name);
+        for (final Map.Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : mdMap.entrySet()) {
+            final ByteArrayOutputStream stream = stringByteArrayOutputStreamEntry.getValue();
             final byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
-            if ("escidoc".equals(name)) {
+            if ("escidoc".equals(stringByteArrayOutputStreamEntry.getKey())) {
                 mdProperties = new HashMap<String, String>();
                 mdProperties.put("nsUri", escidocMdRecordnsUri);
 
             }
             final Datastream ds =
-                new Datastream(name, getContainer().getId(), xmlBytes,
+                new Datastream(stringByteArrayOutputStreamEntry.getKey(), getContainer().getId(), xmlBytes,
                     "text/xml", mdProperties);
             final Map mdRecordAttributes =
-                (HashMap) mdAttributesMap.get(name);
+                (HashMap) mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId((String) mdRecordAttributes.get("type"));
             ds.addAlternateId((String) mdRecordAttributes.get("schema"));
-            dsMap.put(name, ds);
+            dsMap.put(stringByteArrayOutputStreamEntry.getKey(), ds);
         }
         getContainer().setMdRecords(dsMap);
     }
@@ -1639,7 +1639,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             .getId()));
 
         return getUtility().prepareReturnXmlFromLastModificationDate(
-            getContainer().getLastModificationDate());
+                getContainer().getLastModificationDate());
     }
 
     /**
@@ -1951,7 +1951,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         final String curStatus =
             getTripleStoreUtility().getPropertiesElements(id,
-                TripleStoreUtility.PROP_PUBLIC_STATUS);
+                    TripleStoreUtility.PROP_PUBLIC_STATUS);
 
         if (curStatus.equals(Constants.STATUS_WITHDRAWN)) {
             throw new AlreadyWithdrawnException(
@@ -2884,7 +2884,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     private void makeVersion(final String comment, final String newStatus)
         throws SystemException {
         getUtility().makeVersion(comment, newStatus, getContainer(),
-            getFedoraUtility());
+                getFedoraUtility());
     }
 
     /**

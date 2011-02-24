@@ -594,19 +594,19 @@ public class OrganizationalUnit extends GenericResource
         }
         
         // create or update Datastreams which are send
-        for (final String name : mdRecords.keySet()) {
-            if (namesInFedora.contains(name)) {
-                setMdRecord(name, mdRecords.get(name));
-                namesInFedora.remove(name);
+        for (final Map.Entry<String, Datastream> stringDatastreamEntry : mdRecords.entrySet()) {
+            if (namesInFedora.contains(stringDatastreamEntry.getKey())) {
+                setMdRecord(stringDatastreamEntry.getKey(), stringDatastreamEntry.getValue());
+                namesInFedora.remove(stringDatastreamEntry.getKey());
             } else {
-                final Datastream currentMdRecord = mdRecords.get(name);
+                final Datastream currentMdRecord = stringDatastreamEntry.getValue();
                 final byte[] stream = currentMdRecord.getStream();
                 final List<String> altIds = currentMdRecord.getAlternateIDs();
                 final String[] altIDs = new String[altIds.size()];
                 for (int i = 0; i < altIds.size(); i++) {
                     altIDs[i] = altIds.get(i);
                 }
-                getFedoraUtility().addDatastream(getId(), name, altIDs,
+                getFedoraUtility().addDatastream(getId(), stringDatastreamEntry.getKey(), altIDs,
                         XmlUtility.NAME_MDRECORD, false, stream, false);
                 // TODO should new Datastream be put in list of md-records of this OU?
             }

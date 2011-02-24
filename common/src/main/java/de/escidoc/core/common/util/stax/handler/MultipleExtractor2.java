@@ -294,12 +294,12 @@ public class MultipleExtractor2 extends DefaultHandler {
         final XMLStreamWriter writer =
             XmlUtility.createXmlStreamWriterNamespaceRepairing(out);
         if (namespaceMap != null && !namespaceMap.isEmpty()) {
-            for (final String namespace : namespaceMap.keySet()) {
-                final String prefix = namespaceMap.get(namespace);
+            for (final Map.Entry<String, String> stringStringEntry : namespaceMap.entrySet()) {
+                final String prefix = stringStringEntry.getValue();
                 if (prefix != null) {
-                    writer.setPrefix(prefix, namespace);
+                    writer.setPrefix(prefix, stringStringEntry.getKey());
                 } else {
-                    writer.setDefaultNamespace(namespace);
+                    writer.setDefaultNamespace(stringStringEntry.getKey());
                 }
             }
         }

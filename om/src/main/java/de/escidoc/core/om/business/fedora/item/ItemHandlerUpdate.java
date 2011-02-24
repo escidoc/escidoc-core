@@ -277,20 +277,20 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         ComponentNotFoundException {
 
         final Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
-        for (final String name : mdMap.keySet()) {
-            final ByteArrayOutputStream stream = mdMap.get(name);
+        for (final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : mdMap.entrySet()) {
+            final ByteArrayOutputStream stream = stringByteArrayOutputStreamEntry.getValue();
             final byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
-            if ("escidoc".equals(name)) {
+            if ("escidoc".equals(stringByteArrayOutputStreamEntry.getKey())) {
                 mdProperties = new HashMap<String, String>();
                 mdProperties.put("nsUri", escidocMdRecordnsUri);
             }
-            final Datastream ds = new Datastream(name, c.getId(), xmlBytes, "text/xml", mdProperties);
-            final Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
+            final Datastream ds = new Datastream(stringByteArrayOutputStreamEntry.getKey(), c.getId(), xmlBytes, "text/xml", mdProperties);
+            final Map<String, String> mdRecordAttributes = mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId(mdRecordAttributes.get("type"));
             ds.addAlternateId(mdRecordAttributes.get("schema"));
-            dsMap.put(name, ds);
+            dsMap.put(stringByteArrayOutputStreamEntry.getKey(), ds);
         }
         c.setMdRecords(dsMap);
     }

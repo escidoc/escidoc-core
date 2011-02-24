@@ -397,14 +397,14 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 Boolean.valueOf(active1)));
         }
 
-        for (final String key : criteriaMap.keySet()) {
-            if (key.equals(Constants.FILTER_ORGANIZATIONAL_UNIT)
-                    || key.equals(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT)) {
+        for (final Entry<String, Object[]> stringEntry : criteriaMap.entrySet()) {
+            if (stringEntry.getKey().equals(Constants.FILTER_ORGANIZATIONAL_UNIT)
+                    || stringEntry.getKey().equals(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT)) {
                 continue;
             }
-            final Object criteriaValue = clonedCriterias.remove(key);
+            final Object criteriaValue = clonedCriterias.remove(stringEntry.getKey());
             if (criteriaValue != null) {
-                final Object[] parts = criteriaMap.get(key);
+                final Object[] parts = stringEntry.getValue();
                 if (parts[0].equals(COMPARE_EQ)) {
                     detachedCriteria.add(Restrictions.eq((String) parts[1],
                             criteriaValue));

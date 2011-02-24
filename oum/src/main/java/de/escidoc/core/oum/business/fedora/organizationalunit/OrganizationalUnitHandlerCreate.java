@@ -90,26 +90,26 @@ public class OrganizationalUnitHandlerCreate
         if (metadataStreams != null) {
             final Collection<Map<String, String>> mdRecords =
                 new ArrayList<Map<String, String>>(metadataStreams.size());
-            for (final String name : metadataStreams.keySet()) {
+            for (final Map.Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : metadataStreams.entrySet()) {
                 final Map<String, String> mdRecord = new HashMap<String, String>();
                 if (metadataProperties != null) {
                     final Map<String, String> properties =
-                            metadataProperties.get(name);
+                            metadataProperties.get(stringByteArrayOutputStreamEntry.getKey());
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_TYPE, properties
                             .get(Elements.MD_RECORD_ATTRIBUTE_TYPE));
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
                             properties.get(Elements.MD_RECORD_ATTRIBUTE_SCHEMA));
                 }
-                mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, name);
+                mdRecord.put(XmlTemplateProvider.MD_RECORD_NAME, stringByteArrayOutputStreamEntry.getKey());
                 try {
                     final String metadata =
-                            metadataStreams.get(name).toString(
+                            stringByteArrayOutputStreamEntry.getValue().toString(
                                     XmlUtility.CHARACTER_ENCODING);
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT,
                             metadata);
                 } catch (UnsupportedEncodingException e) {
                     throw new EncodingSystemException("Metadata record '"
-                            + name + "' has wrong encoding!", e);
+                            + stringByteArrayOutputStreamEntry.getKey() + "' has wrong encoding!", e);
                 }
                 mdRecords.add(mdRecord);
             }

@@ -277,17 +277,14 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         values.put("id", id);
         values.put("contextTitle", dcProperties.get(Elements.ELEMENT_DC_TITLE));
 
-        final Collection<HashMap<String, String>> adminDescriptors =
-            new ArrayList<HashMap<String, String>>();
+        final Collection<Map<String, String>> adminDescriptors = new ArrayList<Map<String, String>>();
 
-        for (final String name : dataStreams.keySet()) {
-            final HashMap<String, String> adminDescriptor =
-                    new HashMap<String, String>();
-            adminDescriptor.put("name", name);
-            adminDescriptor.put("id", name);
+        for (final Map.Entry<String, Object> stringObjectEntry : dataStreams.entrySet()) {
+            final Map<String, String> adminDescriptor = new HashMap<String, String>();
+            adminDescriptor.put("name", stringObjectEntry.getKey());
+            adminDescriptor.put("id", stringObjectEntry.getKey());
             try {
-                adminDescriptor.put("ds", ((ByteArrayOutputStream) dataStreams
-                        .get(name)).toString(XmlUtility.CHARACTER_ENCODING));
+                adminDescriptor.put("ds", ((ByteArrayOutputStream) stringObjectEntry.getValue()).toString(XmlUtility.CHARACTER_ENCODING));
             } catch (final UnsupportedEncodingException e) {
                 throw new SystemException(e);
             }
