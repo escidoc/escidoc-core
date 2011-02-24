@@ -77,14 +77,10 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
     @Override
     public String render(final Scope scope) throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
-
         values.put("isRootScope", XmlTemplateProvider.TRUE);
         addScopeNamespaceValues(values);
         addScopeValues(scope, values);
-
-        final String ret = getScopeXmlProvider().getScopeXml(values);
-
-        return ret;
+        return getScopeXmlProvider().getScopeXml(values);
     }
 
     /**

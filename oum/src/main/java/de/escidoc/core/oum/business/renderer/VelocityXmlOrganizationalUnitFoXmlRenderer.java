@@ -70,10 +70,8 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
             Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put(XmlTemplateProvider.VAR_RESOURCES_ONTOLOGIES_NAMESPACE,
             Constants.RESOURCES_NS_URI);
-
-        String result = OrganizationalUnitFoXmlProvider
+        return OrganizationalUnitFoXmlProvider
                 .getInstance().getOrganizationalUnitFoXml(values);
-        return result;
     }
 
     /**
@@ -98,8 +96,7 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
             Constants.STRUCTURAL_RELATIONS_NS_URI);
         values.put(XmlTemplateProvider.VAR_RESOURCES_ONTOLOGIES_NAMESPACE,
             Constants.RESOURCES_NS_URI);
-        String result = OrganizationalUnitFoXmlProvider.getInstance().getRelsExt(values);
-        return result;
+        return OrganizationalUnitFoXmlProvider.getInstance().getRelsExt(values);
     }
 
     // CHECKSTYLE:JAVADOC-ON

@@ -83,15 +83,10 @@ public final class VelocityXmlReportDefinitionRenderer
     public String render(final ReportDefinition reportDefinition)
         throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
-
         values.put("isRootReportDefinition", XmlTemplateProvider.TRUE);
         addReportDefinitionNamespaceValues(values);
         addReportDefinitionValues(reportDefinition, values);
-
-        final String ret =
-            getReportDefinitionXmlProvider().getReportDefinitionXml(values);
-
-        return ret;
+        return getReportDefinitionXmlProvider().getReportDefinitionXml(values);
     }
 
     /**

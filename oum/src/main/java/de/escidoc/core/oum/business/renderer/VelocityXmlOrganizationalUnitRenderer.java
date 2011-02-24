@@ -102,9 +102,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         addResourcesValues(organizationalUnit, values);
         addParentsValues(organizationalUnit, values);
         addPredecessorsValues(organizationalUnit, values);
-        String result = OrganizationalUnitXmlProvider
-                .getInstance().getOrganizationalUnitXml(values);
-        return result;
+        return OrganizationalUnitXmlProvider.getInstance().getOrganizationalUnitXml(values);
     }
 
     /**
@@ -124,9 +122,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         addCommonValues(organizationalUnit, values);
         values.put("isRootProperties", XmlTemplateProvider.TRUE);
         addPropertiesValues(organizationalUnit, values);
-        String result = OrganizationalUnitXmlProvider
-                .getInstance().getPropertiesXml(values);
-        return result;
+        return OrganizationalUnitXmlProvider.getInstance().getPropertiesXml(values);
     }
 
     /**
@@ -145,8 +141,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         addCommonValues(organizationalUnit, values);
         values.put("isRootResources", XmlTemplateProvider.TRUE);
         addResourcesValues(organizationalUnit, values);
-        String result = OrganizationalUnitXmlProvider.getInstance().getResourcesXml(values);
-        return result;
+        return OrganizationalUnitXmlProvider.getInstance().getResourcesXml(values);
     }
 
     /**
@@ -165,8 +160,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
             XmlTemplateProvider.TRUE);
         addMdRecordsValues(organizationalUnit, values);
-        String result = OrganizationalUnitXmlProvider.getInstance().getMdRecordsXml(values);
-        return result;
+        return OrganizationalUnitXmlProvider.getInstance().getMdRecordsXml(values);
     }
 
     /**
@@ -196,9 +190,7 @@ public class VelocityXmlOrganizationalUnitRenderer
 
         values.put(XmlTemplateProvider.IS_ROOT_MD_RECORD,
             XmlTemplateProvider.TRUE);
-
-        String result = MetadataRecordsXmlProvider.getInstance().getMdRecordXml(values);
-        return result;
+        return MetadataRecordsXmlProvider.getInstance().getMdRecordXml(values);
     }
 
     /**
@@ -218,8 +210,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         addCommonValues(organizationalUnit, values);
         values.put("isRootParents", XmlTemplateProvider.TRUE);
         addParentsValues(organizationalUnit, values);
-        String result = OrganizationalUnitXmlProvider.getInstance().getParentsXml(values);
-        return result;
+        return OrganizationalUnitXmlProvider.getInstance().getParentsXml(values);
     }
 
     /**
@@ -248,9 +239,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             .getOrganizationalUnitResourcesChildObjectsHref(organizationalUnit
                 .getId()));
         values.put("entries", children);
-        String result = OrganizationalUnitXmlProvider.getInstance().getChildObjectsXml(
-                values);
-        return result;
+        return OrganizationalUnitXmlProvider.getInstance().getChildObjectsXml(values);
     }
 
     /**
@@ -280,9 +269,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             .getOrganizationalUnitResourcesParentObjectsHref(organizationalUnit
                 .getId()));
         values.put("entries", parents);
-        String result = OrganizationalUnitXmlProvider.getInstance().getParentObjectsXml(
-                values);
-        return result;
+        return OrganizationalUnitXmlProvider.getInstance().getParentObjectsXml(values);
     }
 
     /**
@@ -317,8 +304,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             pathList.add(retrieveRefValues(pathIter.next()));
         }
         values.put("pathes", pathList);
-        String result = OrganizationalUnitXmlProvider.getInstance().getPathListXml(values);
-        return result;
+        return OrganizationalUnitXmlProvider.getInstance().getPathListXml(values);
     }
 
     /*
@@ -346,9 +332,7 @@ public class VelocityXmlOrganizationalUnitRenderer
 
         addPropertiesValues(organizationalUnit, values);
         addSuccessorsValues(organizationalUnit, values);
-        String result = OrganizationalUnitXmlProvider
-                .getInstance().getSuccessorsXml(values);
-        return result;
+        return OrganizationalUnitXmlProvider.getInstance().getSuccessorsXml(values);
     }
 
     /**
@@ -367,9 +351,8 @@ public class VelocityXmlOrganizationalUnitRenderer
         throws SystemException {
         List<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(ids.size());
-        for (String id1 : ids) {
+        for (String id : ids) {
             Map<String, String> entry = new HashMap<String, String>(THREE);
-            String id = id1;
             entry.put("id", id);
             entry.put("href", XmlUtility.getOrganizationalUnitHref(id));
             entry.put("title", TripleStoreUtility.getInstance().getTitle(id));

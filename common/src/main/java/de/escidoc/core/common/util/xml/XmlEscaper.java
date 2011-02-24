@@ -49,10 +49,7 @@ public final class XmlEscaper {
      * @return Returns the escpaed value.
      */
     public static String escapeAttribute(final String attributeValue) {
-
-        final String ret =
-            XmlUtility.escapeForbiddenXmlCharacters(attributeValue);
-        return ret;
+        return XmlUtility.escapeForbiddenXmlCharacters(attributeValue);
     }
 
     /**
@@ -63,10 +60,7 @@ public final class XmlEscaper {
      * @return Returns the escpaed value.
      */
     public static String escapeTextContent(final String textContent) {
-
-        final String ret =
-            XmlUtility.escapeForbiddenXmlCharacters(textContent);
-        return ret;
+        return XmlUtility.escapeForbiddenXmlCharacters(textContent);
     }
 
     /**
@@ -77,10 +71,7 @@ public final class XmlEscaper {
      * @return Returns the unescpaed value.
      */
     public static String unescape(final String value) {
-
-        final String ret =
-            XmlUtility.unescapeForbiddenXmlCharacters(value, true);
-        return ret;
+        return XmlUtility.unescapeForbiddenXmlCharacters(value, true);
     }
 
 }

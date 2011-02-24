@@ -94,17 +94,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         addCommonValues(values);
 
         addUserAccountValues(userAccount, values);
-
-        final String ret =
-            getUserAccountXmlProvider().getUserAccountXml(values);
-
-        // if (LOG.isDebugEnabled()) {
-        // long runtime = System.nanoTime() - start;
-        // LOG.debug(StringUtility.concatenateToString("Built XML in ", Long
-        // .valueOf(runtime), "ns."));
-        // }
-
-        return ret;
+        return getUserAccountXmlProvider().getUserAccountXml(values);
     }
 
     /**
@@ -189,13 +179,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, lmd);
-
         addEscidocBaseUrl(values);
-
-        final String ret =
-            getUserAccountXmlProvider().getCurrentGrantsXml(values);
-
-        return ret;
+        return getUserAccountXmlProvider().getCurrentGrantsXml(values);
     }
 
     /**
@@ -330,10 +315,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         lmdDateTime = lmdDateTime.withZone(DateTimeZone.UTC);
         String lmd = lmdDateTime.toString(Constants.TIMESTAMP_FORMAT);
         values.put("grantLastModificationDate", lmd);
-
-        final String ret = getUserAccountXmlProvider().getGrantXml(values);
-
-        return ret;
+        return getUserAccountXmlProvider().getGrantXml(values);
     }
 
     /**
@@ -389,8 +371,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
         final Collection<Map<String, Object>> userAccountsValues =
             new ArrayList<Map<String, Object>>(userAccounts.size());
-        for (UserAccount userAccount1 : userAccounts) {
-            UserAccount userAccount = userAccount1;
+        for (UserAccount userAccount : userAccounts) {
             Map<String, Object> userAccountValues =
                 new HashMap<String, Object>();
             addUserAccountValues(userAccount, userAccountValues);
@@ -545,10 +526,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
 
         values.put("userAccountPreferenceName", preference.getName());
         values.put("userAccountPreferenceValue", preference.getValue());
-
-        final String ret = getUserAccountXmlProvider().getPreferenceXml(values);
-
-        return ret;
+        return getUserAccountXmlProvider().getPreferenceXml(values);
     }
 
     @Override
@@ -571,18 +549,13 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         Collection<Map<String, String>> userAccountPreferencesValues =
             new ArrayList<Map<String, String>>();
         for (UserPreference preference : preferences) {
-            UserPreference p = preference;
             Map<String, String> m = new HashMap<String, String>();
-            m.put("userAccountPreferenceName", p.getName());
-            m.put("userAccountPreferenceValue", p.getValue());
+            m.put("userAccountPreferenceName", preference.getName());
+            m.put("userAccountPreferenceValue", preference.getValue());
             userAccountPreferencesValues.add(m);
         }
         values.put("userAccountPreferences", userAccountPreferencesValues);
-
-        final String ret =
-            getUserAccountXmlProvider().getPreferencesXml(values);
-
-        return ret;
+        return getUserAccountXmlProvider().getPreferencesXml(values);
     }
 
     private static void addPreferencesCommonValues(
@@ -644,10 +617,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         values.put("userAccountAttributeName", attribute.getName());
         values.put("userAccountAttributeValue", attribute.getValue());
         values.put("userAccountAttributeIsInternal", attribute.getInternal());
-
-        final String ret = getUserAccountXmlProvider().getAttributeXml(values);
-
-        return ret;
+        return getUserAccountXmlProvider().getAttributeXml(values);
     }
 
     /**
@@ -683,20 +653,16 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         Collection<Map<String, Object>> userAccountAttributesValues =
             new ArrayList<Map<String, Object>>();
         for (UserAttribute attribute : attributes) {
-            UserAttribute p = attribute;
             Map<String, Object> m = new HashMap<String, Object>();
             m.put("userAccountId", userAccount.getId());
-            m.put("userAccountAttributeId", p.getId());
-            m.put("userAccountAttributeName", p.getName());
-            m.put("userAccountAttributeValue", p.getValue());
-            m.put("userAccountAttributeIsInternal", p.getInternal());
+            m.put("userAccountAttributeId", attribute.getId());
+            m.put("userAccountAttributeName", attribute.getName());
+            m.put("userAccountAttributeValue", attribute.getValue());
+            m.put("userAccountAttributeIsInternal", attribute.getInternal());
             userAccountAttributesValues.add(m);
         }
         values.put("userAccountAttributes", userAccountAttributesValues);
-
-        final String ret = getUserAccountXmlProvider().getAttributesXml(values);
-
-        return ret;
+        return getUserAccountXmlProvider().getAttributesXml(values);
     }
 
     /**

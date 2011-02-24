@@ -84,14 +84,10 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     @Override
     public String render(final UserGroup userGroup) throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
-
         values.put("isRootUserGroup", "true");
         addCommonValues(values);
         addUserGroupValues(userGroup, values);
-
-        final String ret = getUserGroupXmlProvider().getUserGroupXml(values);
-
-        return ret;
+        return getUserGroupXmlProvider().getUserGroupXml(values);
     }
 
     /**
@@ -331,14 +327,9 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
         values.put("recordPacking", recordPacking);
         addCommonValues(values);
         addUserGroupListValues(values);
-
-        final Collection<Map<String, Object>> userGroupsValues =
-            new ArrayList<Map<String, Object>>(userGroups.size());
-
-        for (UserGroup userGroup1 : userGroups) {
-            UserGroup userGroup = userGroup1;
+        final Collection<Map<String, Object>> userGroupsValues = new ArrayList<Map<String, Object>>(userGroups.size());
+        for (UserGroup userGroup : userGroups) {
             Map<String, Object> userGroupValues = new HashMap<String, Object>();
-
             addUserGroupValues(userGroup, userGroupValues);
             userGroupsValues.add(userGroupValues);
         }

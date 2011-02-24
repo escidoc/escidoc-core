@@ -97,8 +97,7 @@ public class XMLHashHandler extends DefaultHandler {
                 atts.put(attName, attributes.getValue(i));
             }
         }
-        for (String s : atts.keySet()) {
-            String name = s;
+        for (String name : atts.keySet()) {
             string.append('#');
             string.append(name);
             string.append('=');

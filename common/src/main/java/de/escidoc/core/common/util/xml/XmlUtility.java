@@ -2013,13 +2013,11 @@ public final class XmlUtility {
      */
     public static String getSpoTaskParamSchemaLocation()
         throws WebserverSystemException {
-
         if (spoTaskParamSchemaLocation == null) {
             spoTaskParamSchemaLocation =
                 getSchemaBaseUrl() + "common/0.3/query.xsd";
         }
-        String result = spoTaskParamSchemaLocation;
-        return result;
+        return spoTaskParamSchemaLocation;
     }
 
     /**

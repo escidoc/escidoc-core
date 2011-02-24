@@ -82,17 +82,13 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         addRelsExtValues(values, itemId, lastModificationDate, components,
             properties, contentRelations, propertiesAsReferences,
             propertiesVersion);
-
-        String result = ItemFoXmlProvider.getInstance().getItemFoXml(values);
-        return result;
+        return ItemFoXmlProvider.getInstance().getItemFoXml(values);
     }
 
     @Override
     public String renderComponent(final Map<String, Object> values)
         throws WebserverSystemException {
-
-        String result = ItemFoXmlProvider.getInstance().getComponentFoXml(values);
-        return result;
+        return ItemFoXmlProvider.getInstance().getComponentFoXml(values);
     }
 
     /**
@@ -117,15 +113,10 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
     @Override
     public String renderDefaultDc(final String componentId)
         throws WebserverSystemException {
-
         Map<String, Object> values = new HashMap<String, Object>();
-
         values.put("title", "component " + componentId);
         values.put("componentId", componentId);
-
-        String result =
-            ItemFoXmlProvider.getInstance().getComponentDefaultDc(values);
-        return result;
+        return ItemFoXmlProvider.getInstance().getComponentDefaultDc(values);
     }
 
     private void addRelsExtValues(
@@ -285,13 +276,10 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         final String id, final Map<String, String> properties,
         final boolean inCreate) throws WebserverSystemException {
         Map<String, Object> values = new HashMap<String, Object>();
-
         addRelsExtNamespaceValues(values);
-        // values.put("itemId", itemId);
         if (this.buildNumber == null) {
             this.buildNumber = Utility.getInstance().getBuildNumber();
         }
-
         values.put(XmlTemplateProvider.OBJECT_PID,
             properties.get(TripleStoreUtility.PROP_OBJECT_PID));
         values
@@ -317,15 +305,6 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
             getEscpapedValue(
                     properties.get(TripleStoreUtility.PROP_VISIBILITY),
                 false));
-        // values.put(XmlTemplateProvider.VAR_FILESIZE, getEscpapedValue(
-        // (String) properties.get(TripleStoreUtility.PROP_FILESIZE), false));
-        // values.put(XmlTemplateProvider.VAR_FILENAME, getEscpapedValue(
-        // (String) properties.get(TripleStoreUtility.PROP_FILENAME), false));
-        // if (properties.get(TripleStoreUtility.PROP_DESCRIPTION) != null) {
-        // values.put(XmlTemplateProvider.VAR_DESCRIPTION, getEscpapedValue(
-        // (String) properties.get(TripleStoreUtility.PROP_DESCRIPTION),
-        // false));
-        // }
         if (properties.get(TripleStoreUtility.PROP_MIME_TYPE) != null) {
             values.put(
                 XmlTemplateProvider.MIME_TYPE,
@@ -339,18 +318,10 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
                 getEscpapedValue(properties
                     .get(TripleStoreUtility.PROP_VALID_STATUS), false));
         }
-        // if (properties.get(TripleStoreUtility.PROP_LOCATOR_URL) != null) {
-        // values.put(XmlTemplateProvider.VAR_LOCATOR_URL, getEscpapedValue(
-        // (String) properties.get(TripleStoreUtility.PROP_LOCATOR_URL),
-        // false));
-        // }
         if (inCreate) {
             values.put("inCreate", inCreate);
         }
-
-        String result =
-            ItemFoXmlProvider.getInstance().getComponentRelsExt(values);
-        return result;
+        return ItemFoXmlProvider.getInstance().getComponentRelsExt(values);
     }
 
     /**

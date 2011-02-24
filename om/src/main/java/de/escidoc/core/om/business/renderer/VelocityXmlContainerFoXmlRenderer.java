@@ -62,8 +62,7 @@ public class VelocityXmlContainerFoXmlRenderer
         addRelsExtValues(values, properties, members, containerId,
             lastModificationDate, contentRelations, comment,
             propertiesAsReferences);
-        String result = ContainerFoXmlProvider.getInstance().getContainerFoXml(values);
-        return result;
+        return ContainerFoXmlProvider.getInstance().getContainerFoXml(values);
     }
 
     /**

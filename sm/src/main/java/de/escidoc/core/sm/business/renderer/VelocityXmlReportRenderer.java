@@ -103,12 +103,7 @@ public final class VelocityXmlReportRenderer
         addReportNamespaceValues(values);
         addReportValues(reportDefinition, values);
         addDataValues(dbResult, values);
-
-        final String ret =
-            getReportXmlProvider()
-                .getReportXml(values);
-
-        return ret;
+        return getReportXmlProvider().getReportXml(values);
     }
 
     /**

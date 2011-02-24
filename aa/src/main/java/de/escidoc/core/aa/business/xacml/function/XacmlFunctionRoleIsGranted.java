@@ -267,8 +267,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                 if (role.getObjectTypes().contains(objectType)) {
                     // role is defined for the object type. Find the related
                     // scope definition
-                    for (ScopeDef scopeDef1 : role.getScopeDefs()) {
-                        final ScopeDef scopeDef = scopeDef1;
+                    for (ScopeDef scopeDef : role.getScopeDefs()) {
                         if (scopeDef.getObjectType().equals(objectType)) {
                             // scope definition for the current object type has
                             // been found

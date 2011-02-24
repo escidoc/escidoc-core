@@ -561,8 +561,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
 
         StringBuilder sb = new StringBuilder();
 
-        for (String aMemberList : memberList) {
-            String objectId = aMemberList;
+        for (String objectId : memberList) {
             final String objectType =
                     TripleStoreUtility.getInstance().getObjectType(objectId);
             try {

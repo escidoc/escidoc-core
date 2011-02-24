@@ -288,9 +288,7 @@ public class XMLBase {
         XMLSerializer serial = new XMLSerializer(stringOut, format);
         serial.asDOMSerializer();
         serial.serialize(document);
-        String result = stringOut.toString();
-
-        return result;
+        return stringOut.toString();
     }
 
     /**
@@ -303,8 +301,7 @@ public class XMLBase {
      */
     public InputStream getFileInputStream(final String filename) {
         getLogger().debug("getFileInputStream: Looking for file: " + filename);
-        InputStream result = this.getClass().getResourceAsStream(filename);
-        return result;
+        return this.getClass().getResourceAsStream(filename);
     }
 
     /**

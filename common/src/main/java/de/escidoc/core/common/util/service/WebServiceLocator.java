@@ -252,11 +252,8 @@ public class WebServiceLocator extends Service {
      */
     // TODO: remove this method later. only use getService(mappings, handle)
     public Remote getService(final Iterable<BeanMapping> mappings) throws ServiceException {
-
         Call call = (Call) this.createCall();
-
-        for (BeanMapping mapping1 : mappings) {
-            BeanMapping mapping = mapping1;
+        for (BeanMapping mapping : mappings) {
             // Class mapping = (Class) mappings.get(namespace);
             QName poqn =
                     new QName(mapping.getNamespaceUri(), mapping.getNamespace());

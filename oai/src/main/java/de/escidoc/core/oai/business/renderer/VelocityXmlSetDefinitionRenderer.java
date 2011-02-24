@@ -77,9 +77,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
         values.put("isRootSetDefinition", XmlTemplateProvider.TRUE);
         addCommonValues(values);
         addSetDefinitionValues(setDefinition, values);
-        final String ret =
-            getSetDefinitionXmlProvider().getSetDefinitionXml(values);
-        return ret;
+        return getSetDefinitionXmlProvider().getSetDefinitionXml(values);
     }
 
     /**
@@ -148,12 +146,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
 
         final Collection<Map<String, Object>> setDefinitionsValues =
             new ArrayList<Map<String, Object>>(setDefinitions.size());
-
-        for (SetDefinition setDefinition1 : setDefinitions) {
-            SetDefinition setDefinition = setDefinition1;
-            Map<String, Object> setDefinitionValues =
-                new HashMap<String, Object>();
-
+        for (SetDefinition setDefinition : setDefinitions) {
+            Map<String, Object> setDefinitionValues = new HashMap<String, Object>();
             addSetDefinitionValues(setDefinition, setDefinitionValues);
             setDefinitionsValues.add(setDefinitionValues);
         }

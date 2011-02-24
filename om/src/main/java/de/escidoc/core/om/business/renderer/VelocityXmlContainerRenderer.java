@@ -155,8 +155,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         addNamespaceValues(values);
         values.put("isRootProperties", XmlTemplateProvider.TRUE);
         addPropertiesValus(values, container);
-        String result = ContainerXmlProvider.getInstance().getPropertiesXml(values);
-        return result;
+        return ContainerXmlProvider.getInstance().getPropertiesXml(values);
     }
 
     /*
@@ -176,8 +175,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         addNamespaceValues(values);
         values.put("isRootResources", XmlTemplateProvider.TRUE);
         addResourcesValues(container, values);
-        String result = ContainerXmlProvider.getInstance().getResourcesXml(values);
-        return result;
+        return ContainerXmlProvider.getInstance().getResourcesXml(values);
     }
 
     /**
@@ -203,8 +201,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             container.getHref(), values);
         values.put("contentRelationsTitle", "Relations of Container");
         commonRenderer.addRelationsNamespaceValues(values);
-        String result = RelationsXmlProvider.getInstance().getRelationsXml(values);
-        return result;
+        return RelationsXmlProvider.getInstance().getRelationsXml(values);
     }
 
     /**
@@ -233,8 +230,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         values.put("isRootParents", XmlTemplateProvider.TRUE);
         addParentsValues(containerId, values);
         commonRenderer.addParentsNamespaceValues(values);
-        String result = ContainerXmlProvider.getInstance().getParentsXml(values);
-        return result;
+        return ContainerXmlProvider.getInstance().getParentsXml(values);
     }
 
     /**
