@@ -64,8 +64,6 @@ import java.util.Map;
  */
 public final class IndexerResourceCache {
 
-    private static final IndexerResourceCache instance = new IndexerResourceCache();
-
     /**
      * Fall back value if reading property
      * {@link <code>EscidocConfiguration.INDEXER_CACHE_SIZE</code>} fails.
@@ -88,6 +86,8 @@ public final class IndexerResourceCache {
 
     private static final AppLogger log =
         new AppLogger(IndexerResourceCache.class.getName());
+
+    private static final IndexerResourceCache instance = new IndexerResourceCache();
 
     /**
      * private Constructor for Singleton.
