@@ -68,14 +68,14 @@ public class ComponentProperties {
      * @param contentCatagory
      *            the contentCatagory to set
      */
-    public void setContentCatagory(final String contentCatagory) {
+    public final void setContentCatagory(final String contentCatagory) {
         this.contentCatagory = contentCatagory;
     }
 
     /**
      * @return the contentCatagory
      */
-    public String getContentCatagory() {
+    public final String getContentCatagory() {
         return contentCatagory;
     }
 
@@ -90,7 +90,7 @@ public class ComponentProperties {
     /**
      * @return the createdById
      */
-    public String getCreatedById() {
+    public final String getCreatedById() {
         return createdById;
     }
 
@@ -105,7 +105,7 @@ public class ComponentProperties {
     /**
      * @return the createdByName
      */
-    public String getCreatedByName() {
+    public final String getCreatedByName() {
         return createdByName;
     }
 
@@ -113,14 +113,14 @@ public class ComponentProperties {
      * @param visibility
      *            the visibility to set
      */
-    public void setVisibility(final String visibility) {
+    public final void setVisibility(final String visibility) {
         this.visibility = visibility;
     }
 
     /**
      * @return the visibility
      */
-    public String getVisibility() {
+    public final String getVisibility() {
         return visibility;
     }
 
@@ -128,14 +128,14 @@ public class ComponentProperties {
      * @param validStatus
      *            the validStatus to set
      */
-    public void setValidStatus(final String validStatus) {
+    public final void setValidStatus(final String validStatus) {
         this.validStatus = validStatus;
     }
 
     /**
      * @return the validStatus
      */
-    public String getValidStatus() {
+    public final String getValidStatus() {
         return validStatus;
     }
 
@@ -143,14 +143,14 @@ public class ComponentProperties {
      * @param mimeType
      *            the mimeType to set
      */
-    public void setMimeType(final String mimeType) {
+    public final void setMimeType(final String mimeType) {
         this.mimeType = mimeType;
     }
 
     /**
      * @return the mimeType
      */
-    public String getMimeType() {
+    public final String getMimeType() {
         return mimeType;
     }
 

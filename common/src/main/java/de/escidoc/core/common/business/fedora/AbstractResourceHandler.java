@@ -79,11 +79,11 @@ public abstract class AbstractResourceHandler extends HandlerBase {
 
     private GenericResource theResource;
 
-    protected void setResource(final String id) throws ResourceNotFoundException, SystemException {
+    protected final void setResource(final String id) throws ResourceNotFoundException, SystemException {
         theResource = new GenericResource(id);
     }
 
-    public String retrieve(final String id) throws ResourceNotFoundException,
+    public final String retrieve(final String id) throws ResourceNotFoundException,
         SystemException {
         setResource(id);
 
@@ -98,7 +98,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
         return xml;
     }
 
-    protected String getDatastream() throws StreamNotFoundException,
+    protected final String getDatastream() throws StreamNotFoundException,
         FedoraSystemException, EncodingSystemException, WebserverSystemException {
         final Datastream datastream = theResource.getDatastream();
         final String xml;
@@ -386,7 +386,7 @@ public abstract class AbstractResourceHandler extends HandlerBase {
      * @throws WebserverSystemException
      *             Thrown if schema location cannot be determined.
      */
-    protected String getXMLSchemaUrl(final String xmlData)
+    protected final String getXMLSchemaUrl(final String xmlData)
         throws WebserverSystemException {
         return getXMLSchemaUrl();
     }

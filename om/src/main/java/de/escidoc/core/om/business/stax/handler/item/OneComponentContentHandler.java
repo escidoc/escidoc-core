@@ -95,7 +95,7 @@ public class OneComponentContentHandler extends DefaultHandler {
      * 
      * @return Map with Component content.
      */
-    public Map<String, String> getComponentBinary() {
+    public final Map<String, String> getComponentBinary() {
         return this.componentBinary;
     }
 

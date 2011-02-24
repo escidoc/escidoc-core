@@ -75,8 +75,8 @@ public class IndexingCacheHandler {
      * @throws SystemException
      *             The resource could not be removed.
      */
-    public void replaceObjectInCache(
-        final String id, final String xml)
+    public final void replaceObjectInCache(
+            final String id, final String xml)
                                 throws SystemException {
         try {
             fedoraRestDeviationHandler.replaceInCache(id, xml);
@@ -95,7 +95,7 @@ public class IndexingCacheHandler {
      * @throws SystemException
      *             The resource could not be removed.
      */
-    public void writeObjectInCache(final String id, final String xml)
+    public final void writeObjectInCache(final String id, final String xml)
                                 throws SystemException {
         try {
             fedoraRestDeviationHandler.cache(id, xml);
@@ -113,7 +113,7 @@ public class IndexingCacheHandler {
      * @throws SystemException
      *             The resource could not be removed.
      */
-    public String retrieveObjectFromCache(final String id)
+    public final String retrieveObjectFromCache(final String id)
                                 throws SystemException {
         try {
             final String xml =

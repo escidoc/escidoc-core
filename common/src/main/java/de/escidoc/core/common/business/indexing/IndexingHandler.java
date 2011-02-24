@@ -218,8 +218,8 @@ public class IndexingHandler implements ResourceListener {
      *             The resource could not be deleted and newly created.
      */
     @Override
-    public void resourceModified(
-        final String id, final String restXml, final String soapXml)
+    public final void resourceModified(
+            final String id, final String restXml, final String soapXml)
         throws SystemException {
         if (!notifyIndexerEnabled) {
             return;
@@ -374,9 +374,9 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             e
      */
-    public void doIndexing(
-        final String resource, final String objectType, final String action,
-        final boolean isAsynch, final String xml) throws SystemException {
+    public final void doIndexing(
+            final String resource, final String objectType, final String action,
+            final boolean isAsynch, final String xml) throws SystemException {
         if (log.isDebugEnabled()) {
             log.debug("calling do Indexing with resource: " + resource
                 + ", objectType: " + objectType + ", action: " + action
@@ -435,9 +435,9 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             e
      */
-    public void doIndexing(
-        final String resource, final String objectType, final String indexName,
-        final String action, final boolean isAsynch, final String xml)
+    public final void doIndexing(
+            final String resource, final String objectType, final String indexName,
+            final String action, final boolean isAsynch, final String xml)
         throws SystemException {
 
         if (log.isDebugEnabled()) {
@@ -708,8 +708,8 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    public boolean exists(
-        final String id, final String objectType, final String indexName)
+    public final boolean exists(
+            final String id, final String objectType, final String indexName)
         throws SystemException {
         boolean result = false;
         final Map<String, Map<String, Object>> resourceParameters =
@@ -1078,7 +1078,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws WebserverSystemException
      *             e
      */
-    public Map<String, Map<String, Map<String, Object>>> getObjectTypeParameters()
+    public final Map<String, Map<String, Map<String, Object>>> getObjectTypeParameters()
         throws WebserverSystemException {
         if (objectTypeParameters == null) {
             try {

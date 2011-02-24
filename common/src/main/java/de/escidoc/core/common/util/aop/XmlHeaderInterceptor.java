@@ -79,7 +79,7 @@ public class XmlHeaderInterceptor implements Ordered {
      * @common
      */
     @Override
-    public int getOrder() {
+    public final int getOrder() {
 
         return AopUtil.PRECEDENCE_XML_HEADER_INTERCEPTOR;
     }

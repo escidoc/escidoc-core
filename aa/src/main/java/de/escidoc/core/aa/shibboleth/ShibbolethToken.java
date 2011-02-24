@@ -49,7 +49,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
 
 
     @Override
-    public GrantedAuthority[] getAuthorities() {
+    public final GrantedAuthority[] getAuthorities() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -60,7 +60,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
      * @aa
      */
     @Override
-    public Object getCredentials() {
+    public final Object getCredentials() {
 
         return null;
     }
@@ -73,7 +73,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
      * @aa
      */
     @Override
-    public Object getPrincipal() {
+    public final Object getPrincipal() {
 
         return user;
     }
@@ -86,7 +86,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
      * @aa
      */
     @Override
-    public String getName() {
+    public final String getName() {
 
         return user.getName();
     }

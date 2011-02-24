@@ -78,8 +78,8 @@ public class OumUtility {
      * 
      * @oum
      */
-    public void detectCycles(
-        final String organizationalUnitId, final Collection<String> parentIds)
+    public final void detectCycles(
+            final String organizationalUnitId, final Collection<String> parentIds)
         throws OrganizationalUnitHierarchyViolationException, SystemException {
         if (!parentIds.isEmpty()) {
             for (final String id : parentIds) {

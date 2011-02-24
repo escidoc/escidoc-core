@@ -17,7 +17,7 @@ public class ShibbolethAuthenticationProvider implements AuthenticationProvider 
      * @aa
      */
     @Override
-    public Authentication authenticate(final Authentication authentication)
+    public final Authentication authenticate(final Authentication authentication)
         throws AuthenticationException {
 
         if (supports(authentication.getClass())) {
@@ -37,7 +37,7 @@ public class ShibbolethAuthenticationProvider implements AuthenticationProvider 
      * @aa
      */
     @Override
-    public boolean supports(final Class authentication) {
+    public final boolean supports(final Class authentication) {
 
         return ShibbolethToken.class.isAssignableFrom(authentication);
     }

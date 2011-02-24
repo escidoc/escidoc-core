@@ -61,7 +61,7 @@ public class Triples {
      * 
      * @return triples
      */
-    public List<Triple> getTriples() {
+    public final List<Triple> getTriples() {
 
         return this.triples;
     }
@@ -84,7 +84,7 @@ public class Triples {
      * @param triple
      *            New triple.
      */
-    public void add(final Triple triple) {
+    public final void add(final Triple triple) {
 
         this.triples.add(triple);
     }
@@ -106,7 +106,7 @@ public class Triples {
      * @param triple
      *            The triple which is to delete.
      */
-    public void delTriples(final Triple triple) {
+    public final void delTriples(final Triple triple) {
 
         delTriple(triple, true);
     }

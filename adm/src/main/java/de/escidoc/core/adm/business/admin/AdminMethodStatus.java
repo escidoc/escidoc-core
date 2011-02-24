@@ -51,18 +51,18 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
     private final Semaphore semaphore = new Semaphore(1);
     protected final Map<ResourceType, Integer> treeMap = new EnumMap<ResourceType, Integer>(ResourceType.class);
 
-    protected boolean isFillingComplete() {
+    protected final boolean isFillingComplete() {
         return fillingComplete;
     }
 
-    protected void setFillingComplete(final boolean fillingComplete) {
+    protected final void setFillingComplete(final boolean fillingComplete) {
         this.fillingComplete = fillingComplete;
     }
 
     /**
      * This method must be called if the admin method has been finished.
      */
-    public void finishMethod() {
+    public final void finishMethod() {
         completionDate = new Date();
         semaphore.release();
     }
@@ -73,7 +73,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
      *
      * @return completion date
      */
-    public Date getCompletionDate() {
+    public final Date getCompletionDate() {
         return completionDate;
     }
 
@@ -83,7 +83,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
      *
      * @return true if the method is allowed to be started
      */
-    public boolean startMethod() {
+    public final boolean startMethod() {
         boolean result = false;
 
         if (semaphore.tryAcquire()) {
@@ -94,61 +94,61 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         return result;
     }
 
-    public boolean isEmpty() {
+    public final boolean isEmpty() {
         return treeMap.isEmpty();
     }
 
-    public boolean equals(final Object o) {
+    public final boolean equals(final Object o) {
         return treeMap.equals(o);
     }
 
-    public int hashCode() {
+    public final int hashCode() {
         return treeMap.hashCode();
     }
 
-    public void clear() {
+    public final void clear() {
         treeMap.clear();
     }
 
-    public boolean containsKey(final Object key) {
+    public final boolean containsKey(final Object key) {
         return treeMap.containsKey(key);
     }
 
-    public boolean containsValue(final Object value) {
+    public final boolean containsValue(final Object value) {
         return treeMap.containsValue(value);
     }
 
-    public Set<Map.Entry<ResourceType, Integer>> entrySet() {
+    public final Set<Map.Entry<ResourceType, Integer>> entrySet() {
         return treeMap.entrySet();
     }
 
-    public Integer get(final Object key) {
+    public final Integer get(final Object key) {
         return treeMap.get(key);
     }
 
     @Override
-    public Integer put(final ResourceType key, final Integer value) {
+    public final Integer put(final ResourceType key, final Integer value) {
         return this.treeMap.put(key, value);
     }
 
-    public Set<ResourceType> keySet() {
+    public final Set<ResourceType> keySet() {
         return treeMap.keySet();
     }
 
-    public Integer remove(final Object key) {
+    public final Integer remove(final Object key) {
         return treeMap.remove(key);
     }
 
     @Override
-    public void putAll(final Map<? extends ResourceType, ? extends Integer> m) {
+    public final void putAll(final Map<? extends ResourceType, ? extends Integer> m) {
         this.treeMap.putAll(m);
     }
 
-    public int size() {
+    public final int size() {
         return treeMap.size();
     }
 
-    public Collection<Integer> values() {
+    public final Collection<Integer> values() {
         return treeMap.values();
     }
 }

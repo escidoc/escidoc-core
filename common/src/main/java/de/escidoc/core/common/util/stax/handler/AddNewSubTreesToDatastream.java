@@ -125,16 +125,16 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
     }
 
-    public void setSubtreeToInsert(
-        final List<StartElementWithChildElements> subtreesToInsert) {
+    public final void setSubtreeToInsert(
+            final List<StartElementWithChildElements> subtreesToInsert) {
         this.subtreesToInsert = subtreesToInsert;
     }
 
-    public ByteArrayOutputStream getOutputStreams() {
+    public final ByteArrayOutputStream getOutputStreams() {
         return this.out;
     }
 
-    public void setPointerElement(final StartElement pointerElement) {
+    public final void setPointerElement(final StartElement pointerElement) {
         this.pointerElement = pointerElement;
     }
 

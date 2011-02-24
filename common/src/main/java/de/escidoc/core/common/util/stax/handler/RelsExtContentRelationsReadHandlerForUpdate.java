@@ -43,7 +43,7 @@ public class RelsExtContentRelationsReadHandlerForUpdate
         super(parser);
     }
 
-    public List<String> getRelationsStrings() {
+    public final List<String> getRelationsStrings() {
         return this.relationsStrings;
     }
 

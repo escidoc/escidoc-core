@@ -82,7 +82,7 @@ public class Version implements Comparable<Version> {
      *         the specified object.
      */
     @Override
-    public int compareTo(final Version o) {
+    public final int compareTo(final Version o) {
         final int result;
 
         if (o.majorNumber > majorNumber) {
@@ -122,7 +122,7 @@ public class Version implements Comparable<Version> {
      * @return true if this object is the same as the obj argument; false
      *         otherwise
      */
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -145,7 +145,7 @@ public class Version implements Comparable<Version> {
      * 
      * @return a hash code value for this object
      */
-    public int hashCode() {
+    public final int hashCode() {
         final int prime = 31;
         int result = 1;
 
@@ -160,7 +160,7 @@ public class Version implements Comparable<Version> {
      * 
      * @return a string representation of the object
      */
-    public String toString() {
+    public final String toString() {
         return majorNumber + "." + minorNumber + '.' + revisionNumber;
     }
 }

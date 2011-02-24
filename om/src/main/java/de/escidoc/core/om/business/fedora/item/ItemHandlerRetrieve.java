@@ -92,7 +92,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * #render()
      */
     @Override
-    public String render() throws SystemException, ComponentNotFoundException,
+    public final String render() throws SystemException, ComponentNotFoundException,
         ItemNotFoundException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
@@ -126,7 +126,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      *             Thrown if an unexpected error occurs
      */
     @Override
-    public String renderComponents(final boolean isRoot)
+    public final String renderComponents(final boolean isRoot)
         throws ComponentNotFoundException, SystemException {
 
         return renderComponents(getCommonValues(getItem()), isRoot);
@@ -139,8 +139,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface
      * #renderComponents(boolean)
      */
-    public String renderComponents(
-        final Map<String, String> commonValues, final boolean isRoot)
+    public final String renderComponents(
+            final Map<String, String> commonValues, final boolean isRoot)
         throws ComponentNotFoundException, SystemException {
 
         final Map<String, String> values = new HashMap<String, String>();
@@ -202,7 +202,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      *             Thrown if an unexpected error occurs
      */
     @Override
-    public String renderComponent(final String id, final boolean isRoot)
+    public final String renderComponent(final String id, final boolean isRoot)
         throws ComponentNotFoundException, SystemException {
 
         return renderComponent(id, getCommonValues(getItem()), isRoot);
@@ -215,9 +215,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * de.escidoc.core.om.business.renderer.interfaces.ItemRendererInterface
      * #renderComponent(java.lang.String, boolean)
      */
-    public String renderComponent(
-        final String id, final Map<String, String> commonValues,
-        final boolean isRoot) throws ComponentNotFoundException,
+    public final String renderComponent(
+            final String id, final Map<String, String> commonValues,
+            final boolean isRoot) throws ComponentNotFoundException,
         SystemException {
 
         Component component = getComponent(id);
@@ -297,7 +297,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return ItemXmlProvider.getInstance().getComponentXml(values);
     }
 
-    public String renderComponentProperties(final String id)
+    public final String renderComponentProperties(final String id)
         throws ComponentNotFoundException, FedoraSystemException,
         SystemException {
 
@@ -328,15 +328,15 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     }
 
     @Override
-    public String renderMdRecords(final boolean isRoot)
+    public final String renderMdRecords(final boolean isRoot)
         throws WebserverSystemException, EncodingSystemException,
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
         return renderMdRecords(getCommonValues(getItem()), isRoot);
     }
 
-    public String renderMdRecords(
-        final Map<String, String> commonValues, final boolean isRoot)
+    public final String renderMdRecords(
+            final Map<String, String> commonValues, final boolean isRoot)
         throws WebserverSystemException, EncodingSystemException,
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
@@ -421,9 +421,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * @throws MdRecordNotFoundException
      * @throws TripleStoreSystemException
      */
-    public String renderMdRecord(
-        final String name, final Map<String, String> commonValues,
-        final boolean isOrigin, final boolean isRoot)
+    public final String renderMdRecord(
+            final String name, final Map<String, String> commonValues,
+            final boolean isOrigin, final boolean isRoot)
         throws WebserverSystemException, IntegritySystemException,
         EncodingSystemException, MdRecordNotFoundException,
         TripleStoreSystemException {
@@ -505,8 +505,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * @throws TripleStoreSystemException
      */
     @Override
-    public String renderMdRecord(
-        final String name, final boolean isOrigin, final boolean isRoot)
+    public final String renderMdRecord(
+            final String name, final boolean isOrigin, final boolean isRoot)
         throws WebserverSystemException, IntegritySystemException,
         EncodingSystemException, MdRecordNotFoundException,
         TripleStoreSystemException {
@@ -516,7 +516,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     }
 
     @Deprecated
-    public String retrieveMdRecord(final String name, final boolean isOrigin)
+    public final String retrieveMdRecord(final String name, final boolean isOrigin)
         throws MdRecordNotFoundException {
         final Datastream mdRecord;
         if (isOrigin) {
@@ -536,7 +536,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return mdRecord.toString();
     }
 
-    public String renderContentStreams(final boolean isRoot)
+    public final String renderContentStreams(final boolean isRoot)
         throws WebserverSystemException, EncodingSystemException,
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
@@ -544,8 +544,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return renderContentStreams(getCommonValues(getItem()), isRoot);
     }
 
-    public String renderContentStreams(
-        final Map<String, String> commonValues, final boolean isRoot)
+    public final String renderContentStreams(
+            final Map<String, String> commonValues, final boolean isRoot)
         throws WebserverSystemException, EncodingSystemException,
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
@@ -587,16 +587,16 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return ItemXmlProvider.getInstance().getContentStreamsXml(values);
     }
 
-    public String renderContentStream(final String name, final boolean isRoot)
+    public final String renderContentStream(final String name, final boolean isRoot)
         throws WebserverSystemException, IntegritySystemException,
         TripleStoreSystemException {
 
         return renderContentStream(name, getCommonValues(getItem()), isRoot);
     }
 
-    public String renderContentStream(
-        final String name, final Map<String, String> commonValues,
-        final boolean isRoot) throws WebserverSystemException,
+    public final String renderContentStream(
+            final String name, final Map<String, String> commonValues,
+            final boolean isRoot) throws WebserverSystemException,
         IntegritySystemException, TripleStoreSystemException {
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -655,17 +655,17 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return ItemXmlProvider.getInstance().getContentStreamXml(values);
     }
 
-    public String renderComponentMdRecords(
-        final String componentId, final boolean isRoot)
+    public final String renderComponentMdRecords(
+            final String componentId, final boolean isRoot)
         throws ComponentNotFoundException, SystemException {
 
         return renderComponentMdRecords(componentId,
             getCommonValues(getItem()), isRoot);
     }
 
-    public String renderComponentMdRecords(
-        final String componentId, final Map<String, String> commonValues,
-        final boolean isRoot) throws ComponentNotFoundException,
+    public final String renderComponentMdRecords(
+            final String componentId, final Map<String, String> commonValues,
+            final boolean isRoot) throws ComponentNotFoundException,
         SystemException {
 
         final Component component;
@@ -722,8 +722,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return ItemXmlProvider.getInstance().getMdRecordsXml(values);
     }
 
-    public String renderComponentMdRecord(
-        final String componentId, final String name, final boolean isRoot)
+    public final String renderComponentMdRecord(
+            final String componentId, final String name, final boolean isRoot)
         throws MdRecordNotFoundException, ComponentNotFoundException,
         FedoraSystemException, SystemException {
 
@@ -731,9 +731,9 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             getCommonValues(getItem()), isRoot);
     }
 
-    public String renderComponentMdRecord(
-        final String componentId, final String name,
-        final Map<String, String> commonValues, final boolean isRoot)
+    public final String renderComponentMdRecord(
+            final String componentId, final String name,
+            final Map<String, String> commonValues, final boolean isRoot)
         throws MdRecordNotFoundException, ComponentNotFoundException,
         FedoraSystemException, SystemException {
 
@@ -804,7 +804,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * #renderProperties(de.escidoc.core.common.business.fedora.resources.Item)
      */
     @Override
-    public String renderProperties() throws WebserverSystemException,
+    public final String renderProperties() throws WebserverSystemException,
         TripleStoreSystemException, IntegritySystemException,
         XmlParserSystemException, EncodingSystemException,
         FedoraSystemException, ItemNotFoundException {
@@ -828,7 +828,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * #renderRelations(de.escidoc.core.common.business.fedora.resources.Item)
      */
     @Override
-    public String renderRelations() throws WebserverSystemException,
+    public final String renderRelations() throws WebserverSystemException,
         FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, TripleStoreSystemException {
 
@@ -847,7 +847,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * #renderResources(de.escidoc.core.common.business.fedora.resources.Item)
      */
     @Override
-    public String renderResources() throws WebserverSystemException {
+    public final String renderResources() throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put(XmlTemplateProvider.IS_ROOT_PROPERTIES,
@@ -871,7 +871,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    public String renderParents(final String itemId) throws SystemException {
+    public final String renderParents(final String itemId) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         addXlinkValues(values);
@@ -989,7 +989,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * @throws FedoraSystemException
      * @throws ItemNotFoundException
      */
-    public Map<String, String> getPropertiesValues(final Item item)
+    public final Map<String, String> getPropertiesValues(final Item item)
         throws TripleStoreSystemException, WebserverSystemException,
         IntegritySystemException, XmlParserSystemException,
         EncodingSystemException, FedoraSystemException, ItemNotFoundException {
@@ -1374,7 +1374,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return values;
     }
 
-    protected void addParentsNamespaceValues(final Map values)
+    protected final void addParentsNamespaceValues(final Map values)
         throws WebserverSystemException {
         values.put("parentsNamespacePrefix",
             de.escidoc.core.common.business.Constants.PARENTS_NAMESPACE_PREFIX);
@@ -1383,7 +1383,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
     }
 
-    protected void addXlinkValues(final Map values)
+    protected final void addXlinkValues(final Map values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -1394,7 +1394,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             de.escidoc.core.common.business.Constants.XLINK_NS_URI);
     }
 
-    protected void addStructuralRelationsValues(final Map values)
+    protected final void addStructuralRelationsValues(final Map values)
         throws WebserverSystemException {
         values
             .put(

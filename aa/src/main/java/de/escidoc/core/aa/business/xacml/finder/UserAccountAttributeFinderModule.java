@@ -283,7 +283,7 @@ public class UserAccountAttributeFinderModule
      * @aa
      */
     @Override
-    public Set getSupportedDesignatorTypes() {
+    public final Set getSupportedDesignatorTypes() {
         final Set<Integer> set = new HashSet<Integer>();
         set.add(AttributeDesignator.SUBJECT_TARGET);
         set.add(AttributeDesignator.RESOURCE_TARGET);

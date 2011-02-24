@@ -59,7 +59,7 @@ public class HandlerBase extends DefaultHandler {
     /**
      * @return the parser
      */
-    public DefaultHandlerStackInterface getParser() {
+    public final DefaultHandlerStackInterface getParser() {
 
         return parser;
     }
@@ -78,7 +78,7 @@ public class HandlerBase extends DefaultHandler {
      * 
      * @return TripleStoreUtility Returns the {@link TripleStoreUtility} object.
      */
-    protected TripleStoreUtility getTripleStoreUtility() {
+    protected final TripleStoreUtility getTripleStoreUtility() {
 
         return this.tripleStoreUtility;
     }

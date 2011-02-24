@@ -123,7 +123,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
      * 
      * @return Vector with ids of the Components.
      */
-    public List<String> getComponentIds() {
+    public final List<String> getComponentIds() {
         return this.componentIds;
     }
 
@@ -132,7 +132,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
      * 
      * @return PID of version.
      */
-    public String getVersionPid() {
+    public final String getVersionPid() {
         return this.versionPid;
     }
 }

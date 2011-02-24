@@ -82,7 +82,7 @@ public class ComponentCreate extends GenericResourceCreate
      *            The properties of Item.
      * @throws WebserverSystemException
      */
-    public void setProperties(final ComponentProperties properties) {
+    public final void setProperties(final ComponentProperties properties) {
 
         this.properties = properties;
     }
@@ -93,7 +93,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @param mdRecord
      *            New metadata record.
      */
-    public void addMdRecord(final MdRecordCreate mdRecord) {
+    public final void addMdRecord(final MdRecordCreate mdRecord) {
 
         if (this.mdRecords == null) {
             this.mdRecords = new ArrayList<MdRecordCreate>();
@@ -109,7 +109,7 @@ public class ComponentCreate extends GenericResourceCreate
      *            Name of MetadataRecord.
      * @return MetadataRecord with required name or null.
      */
-    public MdRecordCreate getMetadataRecord(final String name) {
+    public final MdRecordCreate getMetadataRecord(final String name) {
 
         if (this.mdRecords != null) {
             for (final MdRecordCreate mdRecord : this.mdRecords) {
@@ -127,7 +127,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @param content
      *            New content of Component
      */
-    public void setContent(final BinaryContent content) {
+    public final void setContent(final BinaryContent content) {
 
         this.content = content;
     }
@@ -137,7 +137,7 @@ public class ComponentCreate extends GenericResourceCreate
      * 
      * @return Content of Component
      */
-    public BinaryContent getContent() {
+    public final BinaryContent getContent() {
 
         return this.content;
     }
@@ -150,7 +150,7 @@ public class ComponentCreate extends GenericResourceCreate
      * 
      * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
-    public void setIdProvider(final EscidocIdProvider idProvider) {
+    public final void setIdProvider(final EscidocIdProvider idProvider) {
 
         this.idProvider = idProvider;
     }
@@ -164,7 +164,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @throws IOException
      *             Thrown if preparing of properties, meta data record failed.
      */
-    public String getFOXML() throws SystemException, IOException {
+    public final String getFOXML() throws SystemException, IOException {
 
         // objid
         if (getObjid() == null) {
@@ -200,7 +200,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @throws EncodingSystemException
      *             Thrown if the conversion to default encoding failed.
      */
-    public String getDC() throws WebserverSystemException,
+    public final String getDC() throws WebserverSystemException,
         EncodingSystemException {
 
         if (this.dcXml == null) {
@@ -239,7 +239,7 @@ public class ComponentCreate extends GenericResourceCreate
      * @throws IOException
      *             Thrown if preparing of properties, meta data record failed.
      */
-    public String persist(final boolean forceSync) throws SystemException,
+    public final String persist(final boolean forceSync) throws SystemException,
         InvalidContentException, IOException {
 
         validate();
@@ -256,7 +256,7 @@ public class ComponentCreate extends GenericResourceCreate
      *             Thrown if a Thread failed.
      */
     @Override
-    public String call() throws Exception {
+    public final String call() throws Exception {
 
         persist(false);
         return getObjid();

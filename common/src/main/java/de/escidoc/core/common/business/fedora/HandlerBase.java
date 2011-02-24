@@ -34,7 +34,7 @@ public class HandlerBase implements InitializingBean {
 
     private Utility utility = null;
 
-    protected String transformSearchResponse2relations(final String searchResponse)
+    protected final String transformSearchResponse2relations(final String searchResponse)
         throws SystemException {
 
         try {
@@ -74,7 +74,7 @@ public class HandlerBase implements InitializingBean {
      * 
      * @return FedoraUtility Returns the {@link FedoraUtility} object.
      */
-    protected FedoraUtility getFedoraUtility() {
+    protected final FedoraUtility getFedoraUtility() {
 
         return this.fedoraUtility;
     }
@@ -95,7 +95,7 @@ public class HandlerBase implements InitializingBean {
      * 
      * @return TripleStoreUtility Returns the {@link TripleStoreUtility} object.
      */
-    protected TripleStoreUtility getTripleStoreUtility() {
+    protected final TripleStoreUtility getTripleStoreUtility() {
 
         return this.tripleStoreUtility;
     }
@@ -118,7 +118,7 @@ public class HandlerBase implements InitializingBean {
      * @return Returns the {@link EscidocIdProvider} object.
      * @common
      */
-    protected EscidocIdProvider getIdProvider() {
+    protected final EscidocIdProvider getIdProvider() {
 
         return this.idProvider;
     }
@@ -146,7 +146,7 @@ public class HandlerBase implements InitializingBean {
      * @common
      */
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public final void afterPropertiesSet() throws Exception {
 
         if (this.fedoraUtility == null) {
             throw new BeanInitializationException(

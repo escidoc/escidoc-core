@@ -43,7 +43,7 @@ public class ActionXmlProvider extends InfrastructureXmlProvider {
 
     private static final ActionXmlProvider PROVIDER = new ActionXmlProvider();
 
-    public String getUnsecuredActionsXml(final Map values)
+    public final String getUnsecuredActionsXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(UNSECURED_ACTIONS_RESOURCE_NAME, RESOURCES_PATH, values);

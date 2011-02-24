@@ -66,7 +66,7 @@ public class XmlValidationInterceptor implements Ordered {
      * @common
      */
     @Override
-    public int getOrder() {
+    public final int getOrder() {
 
         return AopUtil.PRECEDENCE_XML_VALIDATION_INTERCEPTOR;
     }

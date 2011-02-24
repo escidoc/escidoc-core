@@ -77,7 +77,7 @@ public class MdRecordDefinitionCreate {
      * @throws MissingAttributeValueException
      *             Thrown if name is an empty String.
      */
-    public void setName(final String name)
+    public final void setName(final String name)
         throws MissingAttributeValueException {
 
         if ((name == null) || name.length() == 0) {
@@ -95,7 +95,7 @@ public class MdRecordDefinitionCreate {
      * 
      * @return name of metadata record.
      */
-    public String getName() {
+    public final String getName() {
 
         return this.mdRecordDefinitionName;
     }
@@ -111,7 +111,7 @@ public class MdRecordDefinitionCreate {
      *             If the eSciDoc configuration file can not be read. FIXME
      *             should probably not be thrown so late.
      */
-    public void setSchemaHref(final String schemaHref)
+    public final void setSchemaHref(final String schemaHref)
         throws MalformedURLException, IOException {
         final URL url;
         if (schemaHref.startsWith("/")) {
@@ -131,7 +131,7 @@ public class MdRecordDefinitionCreate {
      * 
      * @return XML SchemaHref URL
      */
-    public String getSchemaHref() {
+    public final String getSchemaHref() {
 
         return this.schemaHref;
     }
@@ -153,7 +153,7 @@ public class MdRecordDefinitionCreate {
      * 
      * @return Content of MdRecord.
      */
-    public ByteArrayOutputStream getMdRecordDefinition() {
+    public final ByteArrayOutputStream getMdRecordDefinition() {
 
         if (this.mdRecordDefinition == null) {
             this.mdRecordDefinition = new ByteArrayOutputStream();
@@ -182,7 +182,7 @@ public class MdRecordDefinitionCreate {
      * @throws SystemException
      *             Thrown if character encoding failed.
      */
-    public Map<String, String> getValueMap() throws SystemException {
+    public final Map<String, String> getValueMap() throws SystemException {
 
         final Map<String, String> templateValues = new HashMap<String, String>();
 

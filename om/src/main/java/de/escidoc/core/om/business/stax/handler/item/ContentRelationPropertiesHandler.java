@@ -85,7 +85,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
      * 
      * @return ContentRelationProperties.
      */
-    public ContentRelationProperties getProperties() {
+    public final ContentRelationProperties getProperties() {
 
         return this.properties;
     }
@@ -96,7 +96,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
      * @return StartElement
      */
     @Override
-    public StartElement startElement(final StartElement element) {
+    public final StartElement startElement(final StartElement element) {
 
         final String currentPath = parser.getCurPath();
         if (XPATH_DESCRIPTION.equals(currentPath)) {
@@ -113,7 +113,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
      * @return EndElement
      */
     @Override
-    public EndElement endElement(final EndElement element) {
+    public final EndElement endElement(final EndElement element) {
 
         final String currentPath = parser.getCurPath();
         if (XPATH_DESCRIPTION.equals(currentPath)) {
@@ -140,7 +140,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
      *             Thrown if value of status is invalid text.
      */
     @Override
-    public String characters(final String s, final StartElement element)
+    public final String characters(final String s, final StartElement element)
         throws InvalidStatusException {
 
         final String curPath = parser.getCurPath();

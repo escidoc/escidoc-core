@@ -70,7 +70,7 @@ public class ParameterCheckInterceptor implements Ordered {
      * @common
      */
     @Override
-    public int getOrder() {
+    public final int getOrder() {
 
         return AopUtil.PRECEDENCE_PARAMETER_CHECK_INTERCEPTOR;
     }

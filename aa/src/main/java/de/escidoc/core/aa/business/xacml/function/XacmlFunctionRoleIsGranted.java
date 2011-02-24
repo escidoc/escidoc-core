@@ -129,7 +129,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      *      com.sun.xacml.EvaluationCtx)
      */
     @Override
-    public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
+    public final EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
 
         try {
             final AttributeValue[] argValues =

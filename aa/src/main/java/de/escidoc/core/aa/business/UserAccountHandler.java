@@ -2124,7 +2124,7 @@ public class UserAccountHandler
      * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
      */
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public final void afterPropertiesSet() throws Exception {
 
         LOG.debug("Properties set");
     }

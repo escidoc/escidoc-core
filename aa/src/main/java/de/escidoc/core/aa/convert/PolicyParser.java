@@ -100,7 +100,7 @@ public class PolicyParser {
      * 
      * @return list of matching rules
      */
-    public List<String> getMatchingRules(final ResourceType resourceType) {
+    public final List<String> getMatchingRules(final ResourceType resourceType) {
         final List<String> result = new LinkedList<String>();
 
         for (final Entry<Object, AttributeValue> objectAttributeValueEntry : actions.entrySet()) {
@@ -191,7 +191,7 @@ public class PolicyParser {
      * @param policy
      *            policy to be parsed
      */
-    public void parse(final AbstractPolicy policy) {
+    public final void parse(final AbstractPolicy policy) {
         actions.clear();
         parsePolicy(policy);
         for (final Object action : actions.keySet()) {

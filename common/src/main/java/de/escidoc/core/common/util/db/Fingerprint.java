@@ -122,7 +122,7 @@ public class Fingerprint implements Comparable<Object> {
      *         less than, equal to, or greater than the specified object.
      */
     @Override
-    public int compareTo(final Object o) {
+    public final int compareTo(final Object o) {
         try {
             final ByteArrayOutputStream b1 = new ByteArrayOutputStream();
             final ByteArrayOutputStream b2 = new ByteArrayOutputStream();

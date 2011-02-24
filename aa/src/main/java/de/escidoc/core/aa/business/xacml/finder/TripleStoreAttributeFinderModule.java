@@ -465,9 +465,9 @@ public class TripleStoreAttributeFinderModule
      * 
      * @aa
      */
-    protected List<String> getHierarchicalCachedAttributes(
-        final Collection<String> attributesList,
-        final List<String> totalAttributesList, final MapResult mapresult)
+    protected final List<String> getHierarchicalCachedAttributes(
+            final Collection<String> attributesList,
+            final List<String> totalAttributesList, final MapResult mapresult)
         throws ResourceNotFoundException, SystemException {
         List<String> hierarchicalAttributesList = totalAttributesList;
         if (attributesList != null && !attributesList.isEmpty()) {
@@ -774,7 +774,7 @@ public class TripleStoreAttributeFinderModule
      *         If no match can be found, <code>null</code> is returned.
      * 
      */
-    public MapResult mapIt(final String attributeIdValue) {
+    public final MapResult mapIt(final String attributeIdValue) {
 
         if (attributeIdValue == null) {
             return null;

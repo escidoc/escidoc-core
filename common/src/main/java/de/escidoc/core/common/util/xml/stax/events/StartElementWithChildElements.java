@@ -130,7 +130,7 @@ public class StartElementWithChildElements extends StartElementWithText {
      * @param childs
      *            Vector of child elements.
      */
-    public void setChildrenElements(final List<StartElementWithText> childs) {
+    public final void setChildrenElements(final List<StartElementWithText> childs) {
         this.children = childs;
     }
 
@@ -152,7 +152,7 @@ public class StartElementWithChildElements extends StartElementWithText {
      * 
      * @return all child elements
      */
-    public List<StartElementWithText> getChildrenElements() {
+    public final List<StartElementWithText> getChildrenElements() {
         return this.children;
     }
 

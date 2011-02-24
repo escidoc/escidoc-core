@@ -471,7 +471,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             Thrown in case of internal failure (get configuration)
      */
-    public String merge() throws FedoraSystemException,
+    public final String merge() throws FedoraSystemException,
         WebserverSystemException {
 
         if (this.getStream() == null && this.location != null) {
@@ -580,7 +580,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             Thrown if getting Fedora instance fails.
      */
-    public String persist(final boolean sync) throws FedoraSystemException,
+    public final String persist(final boolean sync) throws FedoraSystemException,
         WebserverSystemException {
 
         if (this.getStream() == null && this.location != null) {
@@ -609,7 +609,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             If an error ocurres.
      */
-    public void delete() throws FedoraSystemException, WebserverSystemException {
+    public final void delete() throws FedoraSystemException, WebserverSystemException {
         try {
             // TODO: check of the 'concurrent' flag have to be done too
             if ("text/xml".equals(this.mimeType)) {
@@ -634,7 +634,7 @@ public class Datastream {
      * 
      * @return true/false
      */
-    public boolean isDeleted() {
+    public final boolean isDeleted() {
 
         return this.mimeType.equals(Constants.MIME_TYPE_DELETED);
     }
@@ -645,7 +645,7 @@ public class Datastream {
      * 
      * @return The name of this datastream.
      */
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
@@ -663,7 +663,7 @@ public class Datastream {
      * 
      * @return The alternate IDs of this datastream.
      */
-    public List<String> getAlternateIDs() {
+    public final List<String> getAlternateIDs() {
         return alternateIDs;
     }
 
@@ -675,7 +675,7 @@ public class Datastream {
      * @param alternateId
      *            An alternate ID to add to this Datastream.
      */
-    public void addAlternateId(final String alternateId) {
+    public final void addAlternateId(final String alternateId) {
         this.alternateIDs.add(alternateId);
     }
 
@@ -701,7 +701,7 @@ public class Datastream {
      * @param alternateIDs
      *            A {@link java.util.Set Set} of strings with alternate IDs.
      */
-    public void setAlternateIDs(final List<String> alternateIDs) {
+    public final void setAlternateIDs(final List<String> alternateIDs) {
         this.alternateIDs = alternateIDs;
     }
 
@@ -710,7 +710,7 @@ public class Datastream {
      * 
      * @return The ID of the parent of this datastream.
      */
-    public String getParentId() {
+    public final String getParentId() {
         return parentId;
     }
 
@@ -721,7 +721,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             If an error ocurres.
      */
-    public byte[] getStream() throws WebserverSystemException {
+    public final byte[] getStream() throws WebserverSystemException {
         // Workaround for the issue INFR666, now the content of a data stream
         // with a managed content should be pulled
         if (this.theStream == null
@@ -759,7 +759,7 @@ public class Datastream {
      * 
      * @return Map with datastream properties.
      */
-    public Map<String, String> getProperties() {
+    public final Map<String, String> getProperties() {
         return this.properties;
     }
 
@@ -772,7 +772,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             If an error ocurres.
      */
-    public String toStringUTF8() throws EncodingSystemException,
+    public final String toStringUTF8() throws EncodingSystemException,
         WebserverSystemException {
 
         return toString(XmlUtility.CHARACTER_ENCODING).trim();
@@ -787,7 +787,7 @@ public class Datastream {
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString() {
+    public final String toString() {
         try {
             return toStringUTF8();
         }
@@ -811,7 +811,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             If an error ocurres.
      */
-    public String toString(final String charset)
+    public final String toString(final String charset)
         throws EncodingSystemException, WebserverSystemException {
         try {
             return new String(getStream(), XmlUtility.CHARACTER_ENCODING);
@@ -835,7 +835,7 @@ public class Datastream {
      * @throws StreamNotFoundException
      *             If the stream can not be retrieved.
      */
-    public void setStream(final byte[] theStream) throws FedoraSystemException,
+    public final void setStream(final byte[] theStream) throws FedoraSystemException,
         WebserverSystemException, StreamNotFoundException {
 
         try {
@@ -872,7 +872,7 @@ public class Datastream {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
 
         if (!(obj instanceof Datastream)) {
             return false;
@@ -920,7 +920,7 @@ public class Datastream {
      * 
      * @return The label of this datastream.
      */
-    public String getLabel() {
+    public final String getLabel() {
         return label;
     }
 
@@ -930,7 +930,7 @@ public class Datastream {
      * @param label
      *            The label of this datastream.
      */
-    public void setLabel(final String label) {
+    public final void setLabel(final String label) {
         this.label = label;
     }
 
@@ -948,7 +948,7 @@ public class Datastream {
      * @throws WebserverSystemException
      *             If an error ocurres.
      */
-    public String getMd5Hash() throws ParserConfigurationException,
+    public final String getMd5Hash() throws ParserConfigurationException,
         SAXException, WebserverSystemException {
         if ("text/xml".equals(this.mimeType)) {
             if (this.md5Hash == null && getStream() != null) {
@@ -973,7 +973,7 @@ public class Datastream {
      * @see java.lang.Object#hashCode()
      */
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         // not needed for HashTables in eSciDoc Business Layer because
         // Datastreams are values not keys
 
@@ -995,7 +995,7 @@ public class Datastream {
      * 
      * @return controlGroup
      */
-    public String getControlGroup() {
+    public final String getControlGroup() {
         return this.controlGroupValue;
     }
 
@@ -1005,21 +1005,21 @@ public class Datastream {
      * @param controlGroup
      *            Fedora controlGroup type
      */
-    public void setControlGroup(final String controlGroup) {
+    public final void setControlGroup(final String controlGroup) {
         this.controlGroupValue = controlGroup;
     }
 
     /**
      * @return the mimeType
      */
-    public String getMimeType() {
+    public final String getMimeType() {
         return mimeType;
     }
 
     /**
      * @return the location
      */
-    public String getLocation() {
+    public final String getLocation() {
         return this.location;
     }
 
@@ -1032,7 +1032,7 @@ public class Datastream {
      * @throws FedoraSystemException
      *             Thrown if getting the object failed.
      */
-    protected FedoraUtility getFedoraUtility() throws FedoraSystemException {
+    protected final FedoraUtility getFedoraUtility() throws FedoraSystemException {
 
         if (fu == null) {
             fu = FedoraUtility.getInstance();
@@ -1043,18 +1043,18 @@ public class Datastream {
     /**
      * @return The method by which the checksum was calculated.
      */
-    public String getChecksumMethod() {
+    public final String getChecksumMethod() {
         return checksumMethod;
     }
 
     /**
      * @return The checksum of the stream.
      */
-    public String getChecksum() {
+    public final String getChecksum() {
         return checksum;
     }
 
-    public void setContentUnchanged(final boolean b) {
+    public final void setContentUnchanged(final boolean b) {
         this.contentUnchanged = b;
     }
 }

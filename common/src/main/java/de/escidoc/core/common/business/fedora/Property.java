@@ -50,7 +50,7 @@ public class Property implements Serializable {
         this.value = value;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
@@ -58,7 +58,7 @@ public class Property implements Serializable {
         this.name = name;
     }
 
-    public String getValue() {
+    public final String getValue() {
         return value;
     }
 
@@ -66,7 +66,7 @@ public class Property implements Serializable {
         this.value = value;
     }
 
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         if (!(obj instanceof Property)) {
             return false;
         }
@@ -89,7 +89,7 @@ public class Property implements Serializable {
         }
     }
 
-    public int hashCode() {
+    public final int hashCode() {
         if (__hashCodeCalc) {
             return 0;
         }

@@ -57,7 +57,7 @@ public class StaxAttributeEscapingWriterFactory
      *      #createEscapingWriterFor(java.io.Writer, java.lang.String)
      */
     @Override
-    public Writer createEscapingWriterFor(final Writer writer, final String enc)
+    public final Writer createEscapingWriterFor(final Writer writer, final String enc)
         throws UnsupportedEncodingException {
 
         return new StaxEscapingWriter(writer, true);
@@ -74,8 +74,8 @@ public class StaxAttributeEscapingWriterFactory
      *      #createEscapingWriterFor(java.io.OutputStream, java.lang.String)
      */
     @Override
-    public Writer createEscapingWriterFor(
-        final OutputStream out, final String enc)
+    public final Writer createEscapingWriterFor(
+            final OutputStream out, final String enc)
         throws UnsupportedEncodingException {
 
         throw new UnsupportedOperationException(

@@ -102,14 +102,14 @@ public class PreprocessingInformationStaxHandler extends DefaultHandler {
     /**
      * @return the startDate
      */
-    public Date getStartDate() {
+    public final Date getStartDate() {
         return startDate;
     }
 
     /**
      * @return the endDate
      */
-    public Date getEndDate() {
+    public final Date getEndDate() {
         return endDate;
     }
 

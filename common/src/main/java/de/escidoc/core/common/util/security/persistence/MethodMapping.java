@@ -41,7 +41,7 @@ public class MethodMapping extends MethodMappingBase {
      *
      * @return a string representation of this object
      */
-    public String toString() {
+    public final String toString() {
         return
             "[id=" + getId() + "," + "class=" + getClassName() + "," + "method="
             + getMethodName() + "," + "action=" + getActionName() + ","

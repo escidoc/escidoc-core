@@ -123,7 +123,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * @see org.apache.commons.pool.BaseKeyedPoolableObjectFactory#makeObject(java.lang.Object)
      */
     @Override
-    public Object makeObject(final Object key)
+    public final Object makeObject(final Object key)
         throws WebserverSystemException, FedoraSystemException {
         if (!(key instanceof String)) {
             throw new UnsupportedOperationException(

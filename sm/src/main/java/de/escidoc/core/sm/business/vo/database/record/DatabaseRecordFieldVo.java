@@ -49,7 +49,7 @@ public class DatabaseRecordFieldVo {
     /**
      * @return the fieldName
      */
-    public String getFieldName() {
+    public final String getFieldName() {
         return fieldName;
     }
 
@@ -59,7 +59,7 @@ public class DatabaseRecordFieldVo {
      *            
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setFieldName(final String fieldName) 
+    public final void setFieldName(final String fieldName)
                     throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(fieldName);
         this.fieldName = fieldName;
@@ -70,7 +70,7 @@ public class DatabaseRecordFieldVo {
      * 
      * @return the fieldType
      */
-    public String getFieldType() {
+    public final String getFieldType() {
         return fieldType;
     }
 
@@ -82,7 +82,7 @@ public class DatabaseRecordFieldVo {
      * @throws SqlDatabaseSystemException
      *             e
      */
-    public void setFieldType(final String fieldType)
+    public final void setFieldType(final String fieldType)
         throws SqlDatabaseSystemException {
         if (fieldType == null || (!fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)
@@ -95,7 +95,7 @@ public class DatabaseRecordFieldVo {
     /**
      * @return the fieldValue
      */
-    public String getFieldValue() {
+    public final String getFieldValue() {
         return fieldValue;
     }
 
@@ -103,7 +103,7 @@ public class DatabaseRecordFieldVo {
      * @param fieldValue
      *            the fieldValue to set
      */
-    public void setFieldValue(final String fieldValue) {
+    public final void setFieldValue(final String fieldValue) {
         this.fieldValue = fieldValue;
     }
 

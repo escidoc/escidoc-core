@@ -142,7 +142,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
         return s;
     }
     
-    public Map<String, String> getSetProperties() {
+    public final Map<String, String> getSetProperties() {
         return this.setDefinitionProperties;
     }
   

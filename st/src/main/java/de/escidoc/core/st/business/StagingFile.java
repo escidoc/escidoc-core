@@ -54,7 +54,7 @@ public class StagingFile
      *         there does not exist an associated file.
      * @st
      */
-    public boolean hasFile() {
+    public final boolean hasFile() {
 
         if (getReference() == null) {
             return false;
@@ -101,7 +101,7 @@ public class StagingFile
      * @return Returns <code>true</code> if this staging file has been expired.
      * @st
      */
-    public boolean isExpired() {
+    public final boolean isExpired() {
 
         return getExpiryTs() <= System.currentTimeMillis();
     }
@@ -132,7 +132,7 @@ public class StagingFile
      *             If file cannot be retrieved.
      * @st
      */
-    public File createFile() throws IOException {
+    public final File createFile() throws IOException {
 
         if (getReference() == null) {
             throw new IOException();
@@ -154,7 +154,7 @@ public class StagingFile
      *             If file input stream cannot be retrieved.
      * @st
      */
-    public FileInputStream getFileInputStream() throws IOException {
+    public final FileInputStream getFileInputStream() throws IOException {
 
         try {
             return new FileInputStream(getFile());
@@ -205,7 +205,7 @@ public class StagingFile
      *             If operation fails.
      * @st
      */
-    public boolean read(final InputStream inputStream) throws IOException {
+    public final boolean read(final InputStream inputStream) throws IOException {
 
         if (inputStream == null) {
             throw new IOException();
@@ -261,7 +261,7 @@ public class StagingFile
      *             If clear fails.
      * @st
      */
-    public void clear() throws IOException {
+    public final void clear() throws IOException {
 
         if (hasFile()) {
             getFile().delete();

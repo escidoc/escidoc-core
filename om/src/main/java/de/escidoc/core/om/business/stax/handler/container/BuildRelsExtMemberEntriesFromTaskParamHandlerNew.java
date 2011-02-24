@@ -88,11 +88,11 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
         return objid;
     }
 
-    public List<String> getMemberIds() {
+    public final List<String> getMemberIds() {
         return memberIds;
     }
 
-    public List<String> getMemberIdsToRemove() {
+    public final List<String> getMemberIdsToRemove() {
         return memberIdsToRemove;
     }
 

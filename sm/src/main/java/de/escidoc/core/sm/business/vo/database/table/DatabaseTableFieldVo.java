@@ -48,7 +48,7 @@ public class DatabaseTableFieldVo {
     /**
      * @return the fieldName
      */
-    public String getFieldName() {
+    public final String getFieldName() {
         return fieldName;
     }
 
@@ -57,7 +57,7 @@ public class DatabaseTableFieldVo {
      *            the fieldName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setFieldName(final String fieldName) 
+    public final void setFieldName(final String fieldName)
                         throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(fieldName);
         this.fieldName = fieldName;
@@ -68,7 +68,7 @@ public class DatabaseTableFieldVo {
      * 
      * @return the fieldType
      */
-    public CharSequence getFieldType() {
+    public final CharSequence getFieldType() {
         return fieldType;
     }
 
@@ -80,7 +80,7 @@ public class DatabaseTableFieldVo {
      * @throws SqlDatabaseSystemException
      *             e
      */
-    public void setFieldType(final String fieldType)
+    public final void setFieldType(final String fieldType)
         throws SqlDatabaseSystemException {
         if (fieldType == null 
         		|| (!fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)

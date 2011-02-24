@@ -54,7 +54,7 @@ public class ResourceMapperDao {
      *
      * @return Returns the list of resourceMappers
      */
-    public List<ResourceMapperBean> getResourceMappers() {
+    public final List<ResourceMapperBean> getResourceMappers() {
         return resourceMappers;
     }
 
@@ -74,7 +74,7 @@ public class ResourceMapperDao {
      * @return the IngestableResource responsible for the given resource.
      * @throws EscidocException
      */
-    public ResourceMapperBean getIngestableForResource(final String xmlData)
+    public final ResourceMapperBean getIngestableForResource(final String xmlData)
         throws EscidocException {
         final StringBuilder exceptions = new StringBuilder();
         for (final ResourceMapperBean bean : getResourceMappers()) {

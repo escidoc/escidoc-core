@@ -70,7 +70,7 @@ public class DsCompositeModelHandler extends DefaultHandler {
         this.dsTypeModels = new ArrayList<DsTypeModel>();
     }
 
-    public List<DsTypeModel> getDsTypeModels() {
+    public final List<DsTypeModel> getDsTypeModels() {
         return dsTypeModels;
     }
 

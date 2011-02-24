@@ -41,7 +41,7 @@ public class EscidocIdProvider {
      *             Thrown in case of an internal system error.
      * @common
      */
-    public String getNextPid() throws SystemException {
+    public final String getNextPid() throws SystemException {
 
         return getNextPids(1)[0];
     }
@@ -56,7 +56,7 @@ public class EscidocIdProvider {
      *             Thrown in case of an internal system error.
      * @common
      */
-    public synchronized String[] getNextPids(final int noOfPids)
+    public final synchronized String[] getNextPids(final int noOfPids)
         throws SystemException {
 
         final String[] ret = new String[noOfPids];

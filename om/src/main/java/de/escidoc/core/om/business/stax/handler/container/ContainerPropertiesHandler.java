@@ -102,7 +102,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      * 
      * @return The properties.
      */
-    public Map<String, String> getProperties() {
+    public final Map<String, String> getProperties() {
         return this.properties;
     }
 

@@ -78,7 +78,7 @@ public class StagingCleaner {
      * 
      * @st
      */
-    public void cleanUp() {
+    public final void cleanUp() {
 
         LOG.debug("Cleaning up the staging file area");
 

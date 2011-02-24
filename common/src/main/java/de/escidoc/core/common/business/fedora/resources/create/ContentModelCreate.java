@@ -73,7 +73,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     private Map<String, ResourceDefinitionCreate> resourceDefinitions;
 
-    public Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
+    public final Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
         return resourceDefinitions;
     }
 
@@ -83,7 +83,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @param properties
      *            The properties of Content Model.
      */
-    public void setProperties(final ContentModelProperties properties) {
+    public final void setProperties(final ContentModelProperties properties) {
 
         this.properties = properties;
     }
@@ -93,15 +93,15 @@ public class ContentModelCreate extends GenericResourceCreate {
      * 
      * @return ContentModelProperties
      */
-    public ContentModelProperties getProperties() {
+    public final ContentModelProperties getProperties() {
         return this.properties;
     }
 
     /**
      * Set metadata record definitions.
      */
-    public void setMdRecordDefinitions(
-        final List<MdRecordDefinitionCreate> mdRecordDefinitions) {
+    public final void setMdRecordDefinitions(
+            final List<MdRecordDefinitionCreate> mdRecordDefinitions) {
 
         this.mdRecordDefinitions = mdRecordDefinitions;
     }
@@ -109,8 +109,8 @@ public class ContentModelCreate extends GenericResourceCreate {
     /**
      * Set resource definitions.
      */
-    public void setResourceDefinitions(
-        final Map<String, ResourceDefinitionCreate> resourceDefinitions) {
+    public final void setResourceDefinitions(
+            final Map<String, ResourceDefinitionCreate> resourceDefinitions) {
 
         this.resourceDefinitions = resourceDefinitions;
     }
@@ -120,7 +120,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * 
      * @return All MdRecords.
      */
-    public List<MdRecordDefinitionCreate> getMetadataRecordDefinitions() {
+    public final List<MdRecordDefinitionCreate> getMetadataRecordDefinitions() {
         return this.mdRecordDefinitions;
     }
 
@@ -133,7 +133,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      *            FIXME This Spring construct seams not to work.
      * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
-    public void setIdProvider(final EscidocIdProvider idProvider) {
+    public final void setIdProvider(final EscidocIdProvider idProvider) {
 
         this.idProvider = idProvider;
     }
@@ -166,7 +166,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @throws WebserverSystemException
      * @throws FedoraSystemException
      */
-    public void persist(final boolean forceSync)
+    public final void persist(final boolean forceSync)
         throws WebserverSystemException, FedoraSystemException {
 
         // FIXME persist behavior
@@ -239,7 +239,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @param contentStreams
      *            the contentStreams to set
      */
-    public void setContentStreams(final List<ContentStreamCreate> contentStreams) {
+    public final void setContentStreams(final List<ContentStreamCreate> contentStreams) {
         this.contentStreams = contentStreams;
     }
 
@@ -715,7 +715,7 @@ public class ContentModelCreate extends GenericResourceCreate {
         return contStreams;
     }
 
-    public List<MdRecordCreate> getMetadataRecords() {
+    public final List<MdRecordCreate> getMetadataRecords() {
         // TODO Auto-generated method stub
         return null;
     }

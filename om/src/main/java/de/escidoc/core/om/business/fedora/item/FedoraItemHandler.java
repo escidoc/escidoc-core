@@ -178,7 +178,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * 
      * @return PolicyDecisionPointInterface
      */
-    PolicyDecisionPointInterface getPdp() {
+    final PolicyDecisionPointInterface getPdp() {
 
         return pdp;
     }
@@ -207,7 +207,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws ItemNotFoundException,
+    public final String retrieve(final String id) throws ItemNotFoundException,
         MissingMethodParameterException, SystemException,
         ComponentNotFoundException, AuthorizationException {
 
@@ -486,7 +486,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#create(java.lang.String)
      */
     @Override
-    public String create(final String xml) throws MissingContentException,
+    public final String create(final String xml) throws MissingContentException,
         ContextNotFoundException, ContentModelNotFoundException,
         ReadonlyElementViolationException, MissingAttributeValueException,
         MissingElementValueException, ReadonlyAttributeViolationException,
@@ -663,7 +663,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecord(java.lang.String,java.lang.String)
      */
     @Override
-    public String retrieveMdRecord(final String id, final String mdRecordId)
+    public final String retrieveMdRecord(final String id, final String mdRecordId)
         throws ItemNotFoundException, MdRecordNotFoundException,
         MissingMethodParameterException, SystemException,
         AuthorizationException {
@@ -956,7 +956,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#createMdRecord(java.lang.String,java.lang.String)
      */
     @Override
-    public String createMdRecord(final String id, final String xmlData)
+    public final String createMdRecord(final String id, final String xmlData)
         throws ItemNotFoundException, SystemException,
         XmlSchemaValidationException, LockingException,
         MissingAttributeValueException, InvalidStatusException,
@@ -1045,7 +1045,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveComponents(java.lang.String)
      */
     @Override
-    public String retrieveComponents(final String id)
+    public final String retrieveComponents(final String id)
         throws ItemNotFoundException, ComponentNotFoundException,
         MissingMethodParameterException, SystemException,
         AuthorizationException {
@@ -1302,7 +1302,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveComponent(java.lang.String,java.lang.String)
      */
     @Override
-    public String retrieveComponent(final String id, final String componentId)
+    public final String retrieveComponent(final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException,
         MissingMethodParameterException, SystemException,
         AuthorizationException {
@@ -1613,7 +1613,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#release(java.lang.String,java.lang.String)
      */
     @Override
-    public String release(final String id, final String param)
+    public final String release(final String id, final String param)
         throws ItemNotFoundException, LockingException, InvalidStatusException,
         MissingMethodParameterException, SystemException,
         OptimisticLockingException, ReadonlyViolationException,
@@ -1802,7 +1802,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#withdraw(java.lang.String,java.lang.String)
      */
     @Override
-    public String withdraw(final String id, final String param)
+    public final String withdraw(final String id, final String param)
         throws ItemNotFoundException, NotPublishedException, LockingException,
         AlreadyWithdrawnException, InvalidStatusException,
         MissingMethodParameterException, SystemException,
@@ -2189,7 +2189,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveVersionHistory(java.lang.String)
      */
     @Override
-    public String retrieveVersionHistory(final String id)
+    public final String retrieveVersionHistory(final String id)
         throws ItemNotFoundException, SystemException {
 
         setItem(id);

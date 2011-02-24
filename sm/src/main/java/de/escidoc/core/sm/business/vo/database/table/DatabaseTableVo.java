@@ -50,7 +50,7 @@ public class DatabaseTableVo {
     /**
      * @return the databaseFieldVos
      */
-    public Collection<DatabaseTableFieldVo> getDatabaseFieldVos() {
+    public final Collection<DatabaseTableFieldVo> getDatabaseFieldVos() {
         return databaseFieldVos;
     }
 
@@ -58,15 +58,15 @@ public class DatabaseTableVo {
      * @param databaseFieldVos
      *            the databaseFieldVos to set
      */
-    public void setDatabaseFieldVos(
-        final Collection<DatabaseTableFieldVo> databaseFieldVos) {
+    public final void setDatabaseFieldVos(
+            final Collection<DatabaseTableFieldVo> databaseFieldVos) {
         this.databaseFieldVos = databaseFieldVos;
     }
 
     /**
      * @return the databaseIndexVos
      */
-    public Collection<DatabaseIndexVo> getDatabaseIndexVos() {
+    public final Collection<DatabaseIndexVo> getDatabaseIndexVos() {
         return databaseIndexVos;
     }
 
@@ -74,15 +74,15 @@ public class DatabaseTableVo {
      * @param databaseIndexVos
      *            the databaseIndexVos to set
      */
-    public void setDatabaseIndexVos(
-        final Collection<DatabaseIndexVo> databaseIndexVos) {
+    public final void setDatabaseIndexVos(
+            final Collection<DatabaseIndexVo> databaseIndexVos) {
         this.databaseIndexVos = databaseIndexVos;
     }
 
     /**
      * @return the tableName
      */
-    public String getTableName() {
+    public final String getTableName() {
         return tableName;
     }
 
@@ -91,7 +91,7 @@ public class DatabaseTableVo {
      *            the tableName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public void setTableName(final String tableName) 
+    public final void setTableName(final String tableName)
                         throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(tableName);
         this.tableName = tableName;

@@ -103,8 +103,8 @@ public class SecurityInterceptorCache {
      *             Thrown in case of an internal error.
      * @common
      */
-    public synchronized MethodMappingList getMethodMappings(
-        final String className, final String methodName)
+    public final synchronized MethodMappingList getMethodMappings(
+            final String className, final String methodName)
         throws WebserverSystemException {
 
         final String key =
@@ -152,8 +152,8 @@ public class SecurityInterceptorCache {
      * 
      * @common
      */
-    public MethodMappingList retrieveMethodMappings(
-        final String className, final String methodName)
+    public final MethodMappingList retrieveMethodMappings(
+            final String className, final String methodName)
         throws MissingMethodParameterException, SystemException {
 
         return new MethodMappingList(this.requestMappingDao

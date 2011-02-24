@@ -188,7 +188,7 @@ public class MultipleExtractor extends WriteHandler {
      * 
      * @return outputStreams
      */
-    public Map<String, Object> getOutputStreams() {
+    public final Map<String, Object> getOutputStreams() {
         return this.outputStreams;
     }
 
@@ -198,7 +198,7 @@ public class MultipleExtractor extends WriteHandler {
      * @param pids
      *            List with ids of components.
      */
-    public void setPids(final List<String> pids) {
+    public final void setPids(final List<String> pids) {
         this.pids = pids;
     }
 
@@ -208,8 +208,8 @@ public class MultipleExtractor extends WriteHandler {
      * @param elements
      *            Elements which are to remove.
      */
-    public void removeElements(
-        final Map<String, List<StartElementWithChildElements>> elements) {
+    public final void removeElements(
+            final Map<String, List<StartElementWithChildElements>> elements) {
         // TODO extend this to List<StartElement>
         this.removeElements = elements;
     }
@@ -224,7 +224,7 @@ public class MultipleExtractor extends WriteHandler {
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public StartElement startElement(final StartElement element)
+    public final StartElement startElement(final StartElement element)
         throws InvalidContentException, WebserverSystemException {
         final NamespaceContext nscontext = element.getNamespaceContext();
         this.increaseDeepLevel();
@@ -555,7 +555,7 @@ public class MultipleExtractor extends WriteHandler {
      * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
-    public EndElement endElement(final EndElement element)
+    public final EndElement endElement(final EndElement element)
         throws WebserverSystemException {
         final String theName = element.getLocalName();
         final String currentPath = parser.getCurPath();
@@ -650,7 +650,7 @@ public class MultipleExtractor extends WriteHandler {
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public String characters(final String data, final StartElement element)
+    public final String characters(final String data, final StartElement element)
         throws WebserverSystemException {
 
         try {

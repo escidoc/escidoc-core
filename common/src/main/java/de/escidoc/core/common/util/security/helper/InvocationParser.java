@@ -182,8 +182,8 @@ public class InvocationParser {
      * 
      * @aa
      */
-    public List<Map<String, String>> buildRequestsList(
-        final Object[] arguments, final MethodMapping methodMapping)
+    public final List<Map<String, String>> buildRequestsList(
+            final Object[] arguments, final MethodMapping methodMapping)
         throws MissingMethodParameterException, MissingAttributeValueException,
         MissingElementValueException, InvalidXmlException, SystemException {
 
@@ -217,8 +217,8 @@ public class InvocationParser {
      * 
      * @aa
      */
-    public List<Map<String, String>> buildRequestsList(
-        final Object argument, final MethodMapping methodMapping)
+    public final List<Map<String, String>> buildRequestsList(
+            final Object argument, final MethodMapping methodMapping)
         throws MissingMethodParameterException, MissingAttributeValueException,
         MissingElementValueException, InvalidXmlException, SystemException {
 

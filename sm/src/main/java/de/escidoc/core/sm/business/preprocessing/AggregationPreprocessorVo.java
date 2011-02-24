@@ -83,14 +83,14 @@ public class AggregationPreprocessorVo {
     /**
      * @return the aggregationDefinition
      */
-    public AggregationDefinition getAggregationDefinition() {
+    public final AggregationDefinition getAggregationDefinition() {
         return aggregationDefinition;
     }
 
     /**
      * @param aggregationDefinition the aggregationDefinition to set
      */
-    public void setAggregationDefinition(
+    public final void setAggregationDefinition(
             final AggregationDefinition aggregationDefinition) {
         this.aggregationDefinition = aggregationDefinition;
     }
@@ -98,7 +98,7 @@ public class AggregationPreprocessorVo {
     /**
      * @return the dataHash
      */
-    public Map getDataHash() {
+    public final Map getDataHash() {
         return dataHash;
     }
 
@@ -112,7 +112,7 @@ public class AggregationPreprocessorVo {
     /**
      * @return the differencesHash
      */
-    public Map getDifferencesHash() {
+    public final Map getDifferencesHash() {
         return differencesHash;
     }
 
@@ -126,7 +126,7 @@ public class AggregationPreprocessorVo {
     /**
      * @return the fieldTypeHash
      */
-    public Map getFieldTypeHash() {
+    public final Map getFieldTypeHash() {
         return fieldTypeHash;
     }
 
@@ -140,28 +140,28 @@ public class AggregationPreprocessorVo {
     /**
      * @return the fieldHashForOneRecord
      */
-    public Map getFieldHashForOneRecord() {
+    public final Map getFieldHashForOneRecord() {
         return fieldHashForOneRecord;
     }
 
     /**
      * @param fieldHashForOneRecord the fieldHashForOneRecord to set
      */
-    public void setFieldHashForOneRecord(final Map fieldHashForOneRecord) {
+    public final void setFieldHashForOneRecord(final Map fieldHashForOneRecord) {
         this.fieldHashForOneRecord = fieldHashForOneRecord;
     }
 
     /**
      * @return the differenceHashForOneRecord
      */
-    public Map getDifferenceHashForOneRecord() {
+    public final Map getDifferenceHashForOneRecord() {
         return differenceHashForOneRecord;
     }
 
     /**
      * @param differenceHashForOneRecord the differenceHashForOneRecord to set
      */
-    public void setDifferenceHashForOneRecord(
+    public final void setDifferenceHashForOneRecord(
             final Map differenceHashForOneRecord) {
         this.differenceHashForOneRecord = differenceHashForOneRecord;
     }
@@ -169,14 +169,14 @@ public class AggregationPreprocessorVo {
     /**
      * @return the uniqueKeyForOneRecord
      */
-    public StringBuffer getUniqueKeyForOneRecord() {
+    public final StringBuffer getUniqueKeyForOneRecord() {
         return uniqueKeyForOneRecord;
     }
 
     /**
      * @param uniqueKeyForOneRecord the uniqueKeyForOneRecord to set
      */
-    public void setUniqueKeyForOneRecord(
+    public final void setUniqueKeyForOneRecord(
             final StringBuffer uniqueKeyForOneRecord) {
         this.uniqueKeyForOneRecord = uniqueKeyForOneRecord;
     }

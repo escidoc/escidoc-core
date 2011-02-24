@@ -52,7 +52,7 @@ public class XMLHashHandler extends DefaultHandler {
     private String hash = null;
 
     @Override
-    public void characters(final char[] ch, final int start, final int length)
+    public final void characters(final char[] ch, final int start, final int length)
         throws SAXException {
         final StringBuilder cb = new StringBuilder();
 
@@ -68,19 +68,19 @@ public class XMLHashHandler extends DefaultHandler {
         }
     }
 
-    public String getHash() {
+    public final String getHash() {
         return hash;
     }
 
     @Override
-    public void startDocument() throws SAXException {
+    public final void startDocument() throws SAXException {
         string = new StringBuffer();
         string.append("begin");
     }
 
     @Override
-    public void startElement(
-        final String uri, final String localName, final String qName, final Attributes attributes)
+    public final void startElement(
+            final String uri, final String localName, final String qName, final Attributes attributes)
         throws SAXException {
 
         final String fqName = createFqName(uri, localName, qName);
@@ -108,15 +108,15 @@ public class XMLHashHandler extends DefaultHandler {
     }
 
     @Override
-    public void endElement(
-        final String uri, final String localName, final String qName)
+    public final void endElement(
+            final String uri, final String localName, final String qName)
         throws SAXException {
         string.append('#');
         string.append(createFqName(uri, localName, qName));
     }
 
     @Override
-    public void endDocument() throws SAXException {
+    public final void endDocument() throws SAXException {
         string.append("#end");
         try {
             final MessageDigest md = MessageDigest.getInstance("MD5");
@@ -129,7 +129,7 @@ public class XMLHashHandler extends DefaultHandler {
     }
 
     @Override
-    public void error(final SAXParseException e) throws SAXException {
+    public final void error(final SAXParseException e) throws SAXException {
         throw new SAXException(e);
     }
 

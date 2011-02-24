@@ -112,14 +112,14 @@ public class ScopeStaxHandler extends DefaultHandler {
     /**
      * @return the scope
      */
-    public Scope getScope() {
+    public final Scope getScope() {
         return scope;
     }
 
     /**
      * @param scope the scope to set
      */
-    public void setScope(final Scope scope) {
+    public final void setScope(final Scope scope) {
         this.scope = scope;
     }
 

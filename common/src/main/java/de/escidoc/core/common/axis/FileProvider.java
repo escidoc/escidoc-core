@@ -199,7 +199,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @return WSDDDeployment the deployment
      */
     @Override
-    public WSDDDeployment getDeployment() {
+    public final WSDDDeployment getDeployment() {
         return deployment;
     }
 
@@ -322,7 +322,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *             e
      */
     @Override
-    public void configureEngine(final AxisEngine engine)
+    public final void configureEngine(final AxisEngine engine)
         throws ConfigurationException {
         try {
             if (getInputStream() == null) {
@@ -367,7 +367,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *             e
      */
     @Override
-    public void writeEngineConfig(final AxisEngine engine)
+    public final void writeEngineConfig(final AxisEngine engine)
         throws ConfigurationException {
         if (!readOnly) {
             try {
@@ -397,7 +397,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *             e
      */
     @Override
-    public Handler getHandler(final QName qname) throws ConfigurationException {
+    public final Handler getHandler(final QName qname) throws ConfigurationException {
         return deployment.getHandler(qname);
     }
 
@@ -411,7 +411,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *             e
      */
     @Override
-    public SOAPService getService(final QName qname)
+    public final SOAPService getService(final QName qname)
         throws ConfigurationException {
         final SOAPService service = deployment.getService(qname);
         if (service == null) {
@@ -431,7 +431,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *             e
      */
     @Override
-    public SOAPService getServiceByNamespaceURI(final String namespace)
+    public final SOAPService getServiceByNamespaceURI(final String namespace)
         throws ConfigurationException {
         return deployment.getServiceByNamespaceURI(namespace);
     }
@@ -446,7 +446,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *             e
      */
     @Override
-    public Handler getTransport(final QName qname)
+    public final Handler getTransport(final QName qname)
         throws ConfigurationException {
         return deployment.getTransport(qname);
     }
@@ -459,7 +459,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *             e
      */
     @Override
-    public TypeMappingRegistry getTypeMappingRegistry()
+    public final TypeMappingRegistry getTypeMappingRegistry()
         throws ConfigurationException {
         return deployment.getTypeMappingRegistry();
     }
@@ -472,7 +472,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *             e
      */
     @Override
-    public Handler getGlobalRequest() throws ConfigurationException {
+    public final Handler getGlobalRequest() throws ConfigurationException {
         return deployment.getGlobalRequest();
     }
 
@@ -484,7 +484,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *             e
      */
     @Override
-    public Handler getGlobalResponse() throws ConfigurationException {
+    public final Handler getGlobalResponse() throws ConfigurationException {
         return deployment.getGlobalResponse();
     }
 
@@ -498,7 +498,7 @@ public class FileProvider implements WSDDEngineConfiguration {
     // Needs to be a HashTable
     // Interface org.apache.axis.EngineConfiguration
     @Override
-    public Hashtable getGlobalOptions() throws ConfigurationException {
+    public final Hashtable getGlobalOptions() throws ConfigurationException {
         final WSDDGlobalConfiguration globalConfig =
             deployment.getGlobalConfiguration();
 
@@ -517,7 +517,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *             e
      */
     @Override
-    public Iterator getDeployedServices() throws ConfigurationException {
+    public final Iterator getDeployedServices() throws ConfigurationException {
         return deployment.getDeployedServices();
     }
 
@@ -528,7 +528,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @return a <code>List</code> of the roles for this engine
      */
     @Override
-    public List getRoles() {
+    public final List getRoles() {
         return deployment.getRoles();
     }
 }

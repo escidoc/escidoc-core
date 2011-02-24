@@ -173,7 +173,7 @@ public class RelsExtReadHandler extends DefaultHandler {
      *            Set true to remove info:fedora/ from object. False (default)
      *            keeps object value untouched.
      */
-    public void cleanIdentifier(final boolean clean) {
+    public final void cleanIdentifier(final boolean clean) {
         this.cleanIdentifier = clean;
     }
 
@@ -182,7 +182,7 @@ public class RelsExtReadHandler extends DefaultHandler {
      * 
      * @return Triples
      */
-    public Triples getElementValues() {
+    public final Triples getElementValues() {
         return this.triples;
     }
 

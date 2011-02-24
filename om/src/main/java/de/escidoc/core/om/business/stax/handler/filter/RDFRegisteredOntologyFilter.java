@@ -49,7 +49,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
     private boolean workaroundForItemList = false;
 
     @Override
-    public boolean accept(final XMLEvent event) {
+    public final boolean accept(final XMLEvent event) {
         if (event instanceof StartElement) {
             final StartElement element = event.asStartElement();
             return accept(element);
@@ -72,7 +72,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
         return true;
     }
 
-    public boolean accept(final StartElement element) {
+    public final boolean accept(final StartElement element) {
         try {
             if (workaroundForItemList
                 && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {

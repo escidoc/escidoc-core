@@ -305,7 +305,7 @@ public class ContentModelCreateHandler extends DefaultHandler {
      * 
      * @return Component
      */
-    public ContentModelCreate getContentModel() {
+    public final ContentModelCreate getContentModel() {
 
         return this.contentModel;
     }

@@ -34,12 +34,12 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     private ContentModel contentModel;
 
     // TODO ContentModelHandlerBase ?
-    public ContentModel getContentModel() {
+    public final ContentModel getContentModel() {
         return this.contentModel;
     }
 
     // TODO ContentModelHandlerBase ?
-    protected void setContentModel(final String id)
+    protected final void setContentModel(final String id)
         throws ContentModelNotFoundException, SystemException {
 
         try {
@@ -54,7 +54,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected String render() throws WebserverSystemException,
+    protected final String render() throws WebserverSystemException,
         ContentModelNotFoundException, TripleStoreSystemException,
         IntegritySystemException, XmlParserSystemException,
         EncodingSystemException, FedoraSystemException {
@@ -73,7 +73,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected String renderProperties() throws ContentModelNotFoundException,
+    protected final String renderProperties() throws ContentModelNotFoundException,
         WebserverSystemException, TripleStoreSystemException,
         IntegritySystemException, XmlParserSystemException,
         EncodingSystemException, FedoraSystemException {
@@ -87,7 +87,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected String renderResources() throws ContentModelNotFoundException,
+    protected final String renderResources() throws ContentModelNotFoundException,
         WebserverSystemException, TripleStoreSystemException,
         IntegritySystemException, XmlParserSystemException,
         EncodingSystemException, FedoraSystemException {
@@ -101,17 +101,17 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected String renderResourceDefinitions() {
+    protected final String renderResourceDefinitions() {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     // TODO ContentHandlerRetrieve ?
-    protected String renderResourceDefinition(final String name) {
+    protected final String renderResourceDefinition(final String name) {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    protected String renderContentStreams(final boolean isRoot)
+    protected final String renderContentStreams(final boolean isRoot)
         throws WebserverSystemException, EncodingSystemException,
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
@@ -147,7 +147,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    protected String renderContentStream(final String name, final boolean isRoot)
+    protected final String renderContentStream(final String name, final boolean isRoot)
         throws WebserverSystemException, IntegritySystemException,
         TripleStoreSystemException {
 

@@ -193,7 +193,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      *             If case of internal error.
      */
     @Override
-    public String retrieveContentRelations(final SRURequestParameters parameters)
+    public final String retrieveContentRelations(final SRURequestParameters parameters)
         throws SystemException {
         final StringWriter result = new StringWriter();
 
@@ -539,7 +539,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @param listener
      *            listener which will be added to the list
      */
-    public void addContentRelationListener(final ResourceListener listener) {
+    public final void addContentRelationListener(final ResourceListener listener) {
         contentRelationListeners.add(listener);
     }
 
@@ -907,7 +907,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws WebserverSystemException
      *             Thrown by assignPid().
      */
-    public String getPid(final String id, final String param)
+    public final String getPid(final String id, final String param)
         throws PidSystemException, MissingMethodParameterException,
         WebserverSystemException {
 
@@ -951,7 +951,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown in case of an internal system error.
      */
-    protected ContentRelationCreate setContentRelation(final String id)
+    protected final ContentRelationCreate setContentRelation(final String id)
         throws ContentRelationNotFoundException, SystemException {
 
         final ContentRelationCreate cr = new ContentRelationCreate();

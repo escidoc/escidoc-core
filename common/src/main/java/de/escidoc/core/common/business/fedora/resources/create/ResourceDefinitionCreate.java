@@ -68,7 +68,7 @@ public class ResourceDefinitionCreate {
      * @throws MissingAttributeValueException
      *             Thrown if name is an empty String.
      */
-    public void setName(final String name)
+    public final void setName(final String name)
         throws MissingAttributeValueException {
 
         if ((name == null) || name.length() == 0) {
@@ -87,7 +87,7 @@ public class ResourceDefinitionCreate {
      * 
      * @return name of metadata record.
      */
-    public String getName() {
+    public final String getName() {
 
         return this.name;
     }
@@ -113,15 +113,15 @@ public class ResourceDefinitionCreate {
      * @throws SystemException
      *             Thrown if character encoding failed.
      */
-    public Map<String, String> getValueMap() throws SystemException {
+    public final Map<String, String> getValueMap() throws SystemException {
         return new HashMap<String, String>();
     }
 
-    public String getXsltHref() {
+    public final String getXsltHref() {
         return xsltHref;
     }
 
-    public void setXsltHref(final String xsltHref) throws MalformedURLException,
+    public final void setXsltHref(final String xsltHref) throws MalformedURLException,
         IOException {
         final URL url;
         if (xsltHref.startsWith("/")) {
@@ -137,15 +137,15 @@ public class ResourceDefinitionCreate {
         this.xsltHref = url.toString();
     }
 
-    public String getMdRecordName() {
+    public final String getMdRecordName() {
         return mdRecordName;
     }
 
-    public void setMdRecordName(final String mdRecordName) {
+    public final void setMdRecordName(final String mdRecordName) {
         this.mdRecordName = mdRecordName;
     }
 
-    public String getFedoraId(final String parentId) {
+    public final String getFedoraId(final String parentId) {
         if (name == null) {
             throw new NullPointerException(
                 "Name must not be null to provide FedoraId.");

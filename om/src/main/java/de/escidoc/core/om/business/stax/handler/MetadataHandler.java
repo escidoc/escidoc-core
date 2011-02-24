@@ -234,7 +234,7 @@ public class MetadataHandler extends DefaultHandler {
     /**
      * @return Returns metadata attributes.
      */
-    public Map<String, Map<String, String>> getMetadataAttributes() {
+    public final Map<String, Map<String, String>> getMetadataAttributes() {
         return this.metadataAttributes;
     }
 
@@ -244,7 +244,7 @@ public class MetadataHandler extends DefaultHandler {
      * 
      * @return namespace
      */
-    public String getEscidocMdRecordNameSpace() {
+    public final String getEscidocMdRecordNameSpace() {
         return this.escidocMdRecordNameSpace;
     }
 }

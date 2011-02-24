@@ -850,7 +850,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @sm
      */
     @Override
-    public String getXpathBoolean(final String xpath, final String field) {
+    public final String getXpathBoolean(final String xpath, final String field) {
         return XPATH_MATCHER.reset(XPATH_BOOLEAN_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
                 + Matcher.quoteReplacement(xpath));
     }
@@ -867,7 +867,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @sm
      */
     @Override
-    public String getXpathString(final String xpath, final String field) {
+    public final String getXpathString(final String xpath, final String field) {
         return XPATH_MATCHER.reset(XPATH_STRING_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
                 + Matcher.quoteReplacement(xpath));
     }
@@ -883,7 +883,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
-    public String getXpathNumeric(final String xpath, final String field) {
+    public final String getXpathNumeric(final String xpath, final String field) {
         return XPATH_MATCHER.reset(XPATH_NUMBER_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
                 + Matcher.quoteReplacement(xpath));
     }
@@ -898,7 +898,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
-    public void checkDatabaseTableVo(final DatabaseTableVo databaseTableVo)
+    public final void checkDatabaseTableVo(final DatabaseTableVo databaseTableVo)
         throws SqlDatabaseSystemException {
         if (databaseTableVo.getTableName() == null
             || databaseTableVo.getTableName().length() == 0) {
@@ -963,7 +963,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
-    public void checkDatabaseRecordVo(final DatabaseRecordVo databaseRecordVo)
+    public final void checkDatabaseRecordVo(final DatabaseRecordVo databaseRecordVo)
         throws SqlDatabaseSystemException {
         if (databaseRecordVo.getTableName() == null
             || databaseRecordVo.getTableName().length() == 0) {
@@ -1008,7 +1008,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
-    public void checkDatabaseSelectVo(final DatabaseSelectVo databaseSelectVo)
+    public final void checkDatabaseSelectVo(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException {
         if (databaseSelectVo.getTableNames() == null
             || databaseSelectVo.getTableNames().isEmpty()) {
@@ -1202,7 +1202,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * 
      * @sm
      */
-    public String handleTableName(final String tablename) {
+    public final String handleTableName(final String tablename) {
         if (tablename.matches(".*\\..*")) {
             return tablename;
         } else {

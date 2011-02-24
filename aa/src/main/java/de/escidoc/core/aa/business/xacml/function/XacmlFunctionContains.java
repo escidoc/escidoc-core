@@ -86,8 +86,8 @@ public class XacmlFunctionContains extends FunctionBase {
      *      com.sun.xacml.EvaluationCtx)
      */
     @Override
-    public EvaluationResult evaluate(
-        final List inputs, final EvaluationCtx context) {
+    public final EvaluationResult evaluate(
+            final List inputs, final EvaluationCtx context) {
 
         final AttributeValue[] argValues = new AttributeValue[inputs.size()];
         final EvaluationResult result = evalArgs(inputs, context, argValues);

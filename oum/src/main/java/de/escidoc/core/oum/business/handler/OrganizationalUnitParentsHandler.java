@@ -128,7 +128,7 @@ public class OrganizationalUnitParentsHandler
     /**
      * @return the parentOus
      */
-    public List<String> getParentOus() {
+    public final List<String> getParentOus() {
         return parents;
     }
 
@@ -136,7 +136,7 @@ public class OrganizationalUnitParentsHandler
      * @param rootElement
      *            the rootElement to set
      */
-    public void setRootElement(final String rootElement) {
+    public final void setRootElement(final String rootElement) {
         this.rootElement = rootElement;
     }
 

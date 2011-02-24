@@ -66,9 +66,9 @@ public class VelocityXmlCommonRenderer {
      * @throws TripleStoreSystemException
      * @oum
      */
-    public void addRelationsValues(
-        final List<Map<String, String>> relations, final String href,
-        final Map<String, Object> values)
+    public final void addRelationsValues(
+            final List<Map<String, String>> relations, final String href,
+            final Map<String, Object> values)
         throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException,
         TripleStoreSystemException {
@@ -111,7 +111,7 @@ public class VelocityXmlCommonRenderer {
         }
     }
 
-    protected void addXlinkValues(final Map values)
+    protected final void addXlinkValues(final Map values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
@@ -122,7 +122,7 @@ public class VelocityXmlCommonRenderer {
             Constants.XLINK_NS_URI);
     }
 
-    protected void addRelationsNamespaceValues(final Map values)
+    protected final void addRelationsNamespaceValues(final Map values)
         throws WebserverSystemException {
         values.put("contentRelationsNamespacePrefix",
             Constants.CONTENT_RELATIONS_NAMESPACE_PREFIX);
@@ -131,7 +131,7 @@ public class VelocityXmlCommonRenderer {
 
     }
 
-    protected void addStructuralRelationsValues(final Map values)
+    protected final void addStructuralRelationsValues(final Map values)
         throws WebserverSystemException {
         values
             .put(
@@ -143,7 +143,7 @@ public class VelocityXmlCommonRenderer {
                 de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
-    protected void addParentsNamespaceValues(final Map values)
+    protected final void addParentsNamespaceValues(final Map values)
         throws WebserverSystemException {
         values
             .put("parentsNamespacePrefix", Constants.PARENTS_NAMESPACE_PREFIX);
@@ -161,8 +161,8 @@ public class VelocityXmlCommonRenderer {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    protected void addCommonValues(
-        final GenericVersionableResourcePid resource, final Map values)
+    protected final void addCommonValues(
+            final GenericVersionableResourcePid resource, final Map values)
         throws WebserverSystemException {
 
         final String lmd;

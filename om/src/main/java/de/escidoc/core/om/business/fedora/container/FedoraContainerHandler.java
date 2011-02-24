@@ -683,7 +683,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @om
      */
     @Override
-    public String retrieve(final String id) throws ContainerNotFoundException,
+    public final String retrieve(final String id) throws ContainerNotFoundException,
         SystemException, MissingMethodParameterException {
 
         setContainer(id);
@@ -969,8 +969,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *      de.escidoc.core.common.business.filter.SRURequestParameters)
      */
     @Override
-    public String retrieveMembers(
-        final String id, final SRURequestParameters parameters)
+    public final String retrieveMembers(
+            final String id, final SRURequestParameters parameters)
         throws ContainerNotFoundException, SystemException {
         final StringWriter result = new StringWriter();
 
@@ -1458,9 +1458,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     }
 
     @Override
-    public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName,
-        final Map<String, String[]> parameters) throws SystemException,
+    public final EscidocBinaryContent retrieveResource(
+            final String id, final String resourceName,
+            final Map<String, String[]> parameters) throws SystemException,
         ContainerNotFoundException, OperationNotFoundException {
 
         final EscidocBinaryContent content = new EscidocBinaryContent();
@@ -2218,7 +2218,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#retrieveVersionHistory(java.lang.String)
      */
     @Override
-    public String retrieveVersionHistory(final String id)
+    public final String retrieveVersionHistory(final String id)
         throws ContainerNotFoundException, SystemException {
 
         setContainer(id);
@@ -2510,7 +2510,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *      java.lang.String)
      */
     @Override
-    public String addMembers(final String id, final String taskParam)
+    public final String addMembers(final String id, final String taskParam)
         throws ContainerNotFoundException, LockingException,
         InvalidContentException, OptimisticLockingException, SystemException,
         InvalidContextException, MissingAttributeValueException {

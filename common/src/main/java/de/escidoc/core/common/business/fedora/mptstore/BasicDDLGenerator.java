@@ -60,7 +60,7 @@ public class BasicDDLGenerator
     /**
      * Copied from superclass.
      */
-    protected void addSelectGrants(final Collection<String> cmds, final String table) {
+    protected final void addSelectGrants(final Collection<String> cmds, final String table) {
         for (final String name : users) {
             cmds.add("GRANT SELECT ON TABLE " + table + " TO " + name);
         }

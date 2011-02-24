@@ -264,7 +264,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @aa
      */
     @Override
-    public UserAccount retrieveUserAccountById(final String id)
+    public final UserAccount retrieveUserAccountById(final String id)
         throws SqlDatabaseSystemException {
 
         UserAccount result = null;
@@ -298,7 +298,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @aa
      */
     @Override
-    public UserAccount retrieveUserAccountByLoginName(final String loginName)
+    public final UserAccount retrieveUserAccountByLoginName(final String loginName)
         throws SqlDatabaseSystemException {
 
         try {
@@ -327,7 +327,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @aa
      */
     @Override
-    public UserAccount retrieveUserAccountByHandle(final String handle)
+    public final UserAccount retrieveUserAccountByHandle(final String handle)
         throws SqlDatabaseSystemException {
 
         try {
@@ -1187,7 +1187,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @aa
      */
     @Override
-    public UserLoginData retrieveUserLoginDataByHandle(final String handle)
+    public final UserLoginData retrieveUserLoginDataByHandle(final String handle)
         throws SqlDatabaseSystemException {
 
         final UserLoginData result;
@@ -1302,7 +1302,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @aa
      */
     @Override
-    public void delete(final UserLoginData data)
+    public final void delete(final UserLoginData data)
         throws SqlDatabaseSystemException {
         // remove UserData from Cache
         PoliciesCache.clearUserDetails(data.getHandle());

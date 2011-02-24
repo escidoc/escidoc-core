@@ -128,7 +128,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *             If anything fails. This depends on the implementation of the
      *             handlers in the used handler chain
      */
-    public void parse(final InputStream in) throws Exception {
+    public final void parse(final InputStream in) throws Exception {
         if (handlerChain == null || handlerChain.isEmpty()) {
             throw new XMLStreamException(
                 "Parser has no handlers. Try StaxParser sp.addHandler"
@@ -146,7 +146,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *             If anything fails. This depends on the implementation of the
      *             handlers in the used handler chain
      */
-    protected void parseStream(final InputStream in) throws Exception {
+    protected final void parseStream(final InputStream in) throws Exception {
 
         final XMLStreamReader parser =
             factory.createXMLStreamReader(in, XmlUtility.CHARACTER_ENCODING);
@@ -298,7 +298,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     /**
      * Set start state.
      */
-    protected void init() {
+    protected final void init() {
         startElements.clear();
         startElements.push(new StartElement("root", null, null, null));
         curPath.setLength(0);
@@ -312,7 +312,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @param dh
      *            A DefaultHandler implementation.
      */
-    public void addHandler(final DefaultHandler dh) {
+    public final void addHandler(final DefaultHandler dh) {
         handlerChain.add(dh);
     }
 
@@ -347,7 +347,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *             If anything fails. This depends on the implementation of the
      *             handlers in the used handler chain.
      */
-    protected void handle(final StartElement e) throws Exception {
+    protected final void handle(final StartElement e) throws Exception {
 
         StartElement element = e;
         if (!rootChecked) {
@@ -379,7 +379,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *             If anything fails. This depends on the implementation of the
      *             handlers in the used handler chain
      */
-    protected void handle(final EndElement e) throws Exception {
+    protected final void handle(final EndElement e) throws Exception {
         EndElement element = e;
 //        int chainSize = handlerChain.size();
         for (final Object aHandlerChain : handlerChain) {
@@ -399,7 +399,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *             If anything fails. This depends on the implementation of the
      *             handlers in the used handler chain
      */
-    protected void handle(final String s) throws Exception {
+    protected final void handle(final String s) throws Exception {
         String chars = s;
 //        int chainSize = handlerChain.size();
         for (final Object aHandlerChain : handlerChain) {

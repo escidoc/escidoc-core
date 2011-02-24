@@ -115,7 +115,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      * @throws InvalidStatusException
      *             Thrown if an organizational unit is in an invalid status.
      */
-    public String createContext(final String xmlData)
+    public final String createContext(final String xmlData)
         throws ContextNameNotUniqueException, ContentModelNotFoundException,
         ReadonlyElementViolationException, MissingAttributeValueException,
         MissingElementValueException, ReadonlyAttributeViolationException,
@@ -267,11 +267,11 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      * @throws SystemException
      *             Thrown if the FOXML rendering failed.
      */
-    protected String buildContextFoxml(
-        final String id, final Map<String, Object> properties,
-        final Map<String, String> dcProperties,
-        final Map<String, String> propertiesAsReferences,
-        final Map<String, Object> dataStreams) throws SystemException {
+    protected final String buildContextFoxml(
+            final String id, final Map<String, Object> properties,
+            final Map<String, String> dcProperties,
+            final Map<String, String> propertiesAsReferences,
+            final Map<String, Object> dataStreams) throws SystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("id", id);
@@ -348,7 +348,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      * 
      * @return The foxml renderer.
      */
-    public ContextFoXmlRendererInterface getFoxmlRenderer() {
+    public final ContextFoXmlRendererInterface getFoxmlRenderer() {
 
         if (foxmlRenderer == null) {
             foxmlRenderer = new VelocityXmlContextFoXmlRenderer();

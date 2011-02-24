@@ -97,7 +97,7 @@ public class AuthenticationInterceptor implements Ordered {
      * @common
      */
     @Override
-    public int getOrder() {
+    public final int getOrder() {
 
         return AopUtil.PRECEDENCE_AUTHENTICATION_INTERCEPTOR;
     }

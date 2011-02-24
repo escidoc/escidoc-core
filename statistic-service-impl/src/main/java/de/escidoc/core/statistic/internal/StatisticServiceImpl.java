@@ -46,7 +46,7 @@ public class StatisticServiceImpl {
      * {@inheritDoc}
      */
     @Override
-    public String toString() {
+    public final String toString() {
         return "StatisticServiceImpl{" +
                 "statisticDataHandler=" + statisticDataHandler +
                 '}';

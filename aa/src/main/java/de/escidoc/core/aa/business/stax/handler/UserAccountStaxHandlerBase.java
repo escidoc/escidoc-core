@@ -104,7 +104,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * @return Returns the stored <code>UserAccount</code> object or
      *         <code>null</code>.
      */
-    protected UserAccount getUserAccount() {
+    protected final UserAccount getUserAccount() {
 
         return userAccount;
     }
@@ -115,7 +115,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * @return Returns the stored <code>UserAccount</code> object or
      *         <code>null</code>.
      */
-    protected RoleGrant getGrant() {
+    protected final RoleGrant getGrant() {
 
         return grant;
     }

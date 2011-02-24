@@ -72,7 +72,7 @@ public class ContentModelProperties {
     /**
      * @return the currentVersion
      */
-    public VersionProperties getCurrentVersion() {
+    public final VersionProperties getCurrentVersion() {
         return currentVersion;
     }
 
@@ -87,7 +87,7 @@ public class ContentModelProperties {
     /**
      * @return the latestVersion
      */
-    public VersionProperties getLatestVersion() {
+    public final VersionProperties getLatestVersion() {
         return latestVersion;
     }
 
@@ -103,7 +103,7 @@ public class ContentModelProperties {
     /**
      * @return the latestReleasedVersion
      */
-    public VersionProperties getLatestReleasedVersion() {
+    public final VersionProperties getLatestReleasedVersion() {
         return latestReleasedVersion;
     }
 
@@ -118,7 +118,7 @@ public class ContentModelProperties {
     /**
      * @return the objectProperties
      */
-    public ObjectProperties getObjectProperties() {
+    public final ObjectProperties getObjectProperties() {
         return objectProperties;
     }
 

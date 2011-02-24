@@ -170,9 +170,9 @@ public class PermissionsQuery {
      * @throws WebserverSystemException
      *             Thrown if a framework internal error occurs.
      */
-    public String getFilterQuery(
-        final Iterable<ResourceType> resourceTypes, final String userId,
-        final FilterInterface filter) throws InvalidSearchQueryException,
+    public final String getFilterQuery(
+            final Iterable<ResourceType> resourceTypes, final String userId,
+            final FilterInterface filter) throws InvalidSearchQueryException,
         WebserverSystemException {
         final StringBuffer result = new StringBuffer();
 
@@ -375,7 +375,7 @@ public class PermissionsQuery {
      *            user id
      * @return set of user groups or empty set
      */
-    protected Set<String> retrieveGroupsForUser(final String userId) {
+    protected final Set<String> retrieveGroupsForUser(final String userId) {
         Set<String> result = new HashSet<String>();
 
         if ((userId != null) && (userId.length() > 0)) {

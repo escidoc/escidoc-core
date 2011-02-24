@@ -255,7 +255,7 @@ public class UserAccountFilter extends CqlFilter {
      * @return all property names for that filter
      */
     @Override
-    public Set<String> getPropertyNames() {
+    public final Set<String> getPropertyNames() {
         final Set<String> result = new TreeSet<String>();
 
         result.addAll(super.getPropertyNames());

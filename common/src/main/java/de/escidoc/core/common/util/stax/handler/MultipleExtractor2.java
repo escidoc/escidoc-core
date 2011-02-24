@@ -102,7 +102,7 @@ public class MultipleExtractor2 extends DefaultHandler {
         this.paths.put(extractPath, extractAtt);
     }
 
-    public Map<String, Object> getOutputStreams() {
+    public final Map<String, Object> getOutputStreams() {
 
         return this.outputStreams;
     }

@@ -104,7 +104,7 @@ public class TripleStoreConnector {
      * 
      *             TODO move to TriplestoreUtility implementation
      */
-    public String requestMPT(final String spoQuery, final String outputFormat)
+    public final String requestMPT(final String spoQuery, final String outputFormat)
         throws TripleStoreSystemException,
         InvalidTripleStoreOutputFormatException,
         InvalidTripleStoreQueryException {

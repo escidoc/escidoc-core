@@ -106,7 +106,7 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
         return s;
     }
     
-    public Map<String, String> getSetProperties() {
+    public final Map<String, String> getSetProperties() {
         return this.setDefinitionProperties;
     }
   

@@ -76,7 +76,7 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      * @aa
      */
     @Override
-    public int compareTo(final ScopeDef o) {
+    public final int compareTo(final ScopeDef o) {
 
         if (o == null) {
             throw new NullPointerException("Parameter may not be null");
@@ -120,7 +120,7 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      * @aa
      */
     @Override
-    public boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
 
         boolean ret = false;
         if (obj instanceof ScopeDef) {
@@ -137,7 +137,7 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      * @aa
      */
     @Override
-    public int hashCode() {
+    public final int hashCode() {
 
         return getId().hashCode();
     }

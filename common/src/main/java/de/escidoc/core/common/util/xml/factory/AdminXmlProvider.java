@@ -56,7 +56,7 @@ public class AdminXmlProvider extends InfrastructureXmlProvider {
      *             Thrown if the instance cannot be created due to an internal
      *             error.
      */
-    public String getIndexConfigurationXml(final Map values)
+    public final String getIndexConfigurationXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(INDEX_CONFIGURATION_RESOURCE_NAME, ADMIN_PATH, values);

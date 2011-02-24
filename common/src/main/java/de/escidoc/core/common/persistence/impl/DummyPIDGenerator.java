@@ -74,7 +74,7 @@ public class DummyPIDGenerator implements PIDSystem {
      * @see de.escidoc.core.common.persistence.PIDSystem#generatePID(java.lang.String)
      */
     @Override
-    public String generatePID(final String systemID) throws PidSystemException {
+    public final String generatePID(final String systemID) throws PidSystemException {
         String result = pidNamespace + ':' + globalPrefix + separator;
         if (localPrefix != null && localPrefix.length() > 0) {
             result += localPrefix + separator;
@@ -103,7 +103,7 @@ public class DummyPIDGenerator implements PIDSystem {
      * @throws MissingMethodParameterException
      *             If <code>globalPrefix</code> is null.
      */
-    public void setGlobalPrefix(final String globalPrefix)
+    public final void setGlobalPrefix(final String globalPrefix)
         throws MissingMethodParameterException {
         Utility.getInstance().checkNotNull(globalPrefix,
             "global prefix for PID");
@@ -118,7 +118,7 @@ public class DummyPIDGenerator implements PIDSystem {
      * @param localPrefix
      *            The localPrefix for generated PIDs
      */
-    public void setLocalPrefix(final String localPrefix) {
+    public final void setLocalPrefix(final String localPrefix) {
         this.localPrefix = localPrefix;
     }
 
@@ -130,7 +130,7 @@ public class DummyPIDGenerator implements PIDSystem {
      * @throws MissingMethodParameterException
      *             If <code>separator</code> is null.
      */
-    public void setSeparator(final String separator)
+    public final void setSeparator(final String separator)
         throws MissingMethodParameterException {
         Utility.getInstance().checkNotNull(separator, "separator");
         this.separator = separator;
@@ -144,7 +144,7 @@ public class DummyPIDGenerator implements PIDSystem {
      * @throws MissingMethodParameterException
      *             If <code>pidNamespace</code> is null.
      */
-    public void setPidNamespace(final String pidNamespace)
+    public final void setPidNamespace(final String pidNamespace)
         throws MissingMethodParameterException {
         Utility.getInstance().checkNotNull(pidNamespace, "namespace for PID");
         this.pidNamespace = pidNamespace;

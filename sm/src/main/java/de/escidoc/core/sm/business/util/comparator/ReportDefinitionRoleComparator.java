@@ -53,8 +53,8 @@ public class ReportDefinitionRoleComparator
      * @sm
      */
     @Override
-    public int compare(
-            final ReportDefinitionRole a1, 
+    public final int compare(
+            final ReportDefinitionRole a1,
             final ReportDefinitionRole a2) {
         return Integer.toString(a1.getListIndex())
                 .compareTo(Integer.toString(a2.getListIndex()));

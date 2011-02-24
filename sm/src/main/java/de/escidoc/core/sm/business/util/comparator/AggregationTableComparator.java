@@ -52,7 +52,7 @@ public class AggregationTableComparator implements Comparator<AggregationTable>,
      * @sm
      */
     @Override
-    public int compare(final AggregationTable a1, final AggregationTable a2) {
+    public final int compare(final AggregationTable a1, final AggregationTable a2) {
         return Integer.toString(a1.getListIndex())
                 .compareTo(Integer.toString(a2.getListIndex()));
     }

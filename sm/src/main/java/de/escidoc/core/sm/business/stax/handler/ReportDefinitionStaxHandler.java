@@ -146,14 +146,14 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
     /**
      * @return the reportDefinition
      */
-    public ReportDefinition getReportDefinition() {
+    public final ReportDefinition getReportDefinition() {
         return reportDefinition;
     }
 
     /**
      * @param reportDefinition the reportDefinition to set
      */
-    public void setReportDefinition(
+    public final void setReportDefinition(
             final ReportDefinition reportDefinition) {
         this.reportDefinition = reportDefinition;
     }

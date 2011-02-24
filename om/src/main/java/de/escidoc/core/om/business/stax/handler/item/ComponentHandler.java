@@ -106,7 +106,7 @@ public class ComponentHandler extends DefaultHandler {
      * @throws IOException
      */
     @Override
-    public StartElement startElement(final StartElement element)
+    public final StartElement startElement(final StartElement element)
         throws InvalidContentException, MissingAttributeValueException,
         XMLStreamException, WebserverSystemException, IOException {
 
@@ -161,7 +161,7 @@ public class ComponentHandler extends DefaultHandler {
      *             Thrown if writting event failed.
      */
     @Override
-    public EndElement endElement(final EndElement element)
+    public final EndElement endElement(final EndElement element)
         throws WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
@@ -209,7 +209,7 @@ public class ComponentHandler extends DefaultHandler {
      * 
      */
     @Override
-    public String characters(final String s, final StartElement element)
+    public final String characters(final String s, final StartElement element)
         throws InvalidContentException, MissingElementValueException,
         WebserverSystemException, XMLStreamException {
 
@@ -233,7 +233,7 @@ public class ComponentHandler extends DefaultHandler {
      * 
      * @return Component
      */
-    public ComponentCreate getComponent() {
+    public final ComponentCreate getComponent() {
 
         return this.component;
     }

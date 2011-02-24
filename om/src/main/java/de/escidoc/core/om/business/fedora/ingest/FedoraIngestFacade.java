@@ -68,7 +68,7 @@ public class FedoraIngestFacade implements IngestFacade {
     /**
      * @return the formatter
      */
-    public ValueFormatter getFormatter() {
+    public final ValueFormatter getFormatter() {
         return formatter;
     }
 
@@ -77,7 +77,7 @@ public class FedoraIngestFacade implements IngestFacade {
      *
      * @return the resourceMapperDao
      */
-    public ResourceMapperDao getResourceMapperDao() {
+    public final ResourceMapperDao getResourceMapperDao() {
         return resourceMapperDao;
     }
 

@@ -56,35 +56,35 @@ public abstract class WriteHandler extends DefaultHandler {
 
     private int deepLevel = 0;
 
-    protected XMLStreamWriter getWriter() {
+    protected final XMLStreamWriter getWriter() {
         return writer;
     }
 
-    protected void setWriter(final XMLStreamWriter writer) {
+    protected final void setWriter(final XMLStreamWriter writer) {
         this.writer = writer;
     }
 
-    protected Map<String, List> getNsuris() {
+    protected final Map<String, List> getNsuris() {
         return nsuris;
     }
 
-    protected void setNsuris(final Map<String, List> nsuris) {
+    protected final void setNsuris(final Map<String, List> nsuris) {
         this.nsuris = nsuris;
     }
 
-    protected int getDeepLevel() {
+    protected final int getDeepLevel() {
         return deepLevel;
     }
 
-    protected void increaseDeepLevel() {
+    protected final void increaseDeepLevel() {
         deepLevel++;
     }
 
-    protected void decreaseDeepLevel() {
+    protected final void decreaseDeepLevel() {
         deepLevel--;
     }
 
-    protected void writeElement(final StartElement element) throws XMLStreamException {
+    protected final void writeElement(final StartElement element) throws XMLStreamException {
 
         final String name = element.getLocalName();
         final String uri = element.getNamespace();
@@ -120,9 +120,9 @@ public abstract class WriteHandler extends DefaultHandler {
 
     }
 
-    protected void writeAttribute(
-        final String uri, final String elementName, final String attributeName,
-        final String attributeValue, String prefix, final NamespaceContext nscontext)
+    protected final void writeAttribute(
+            final String uri, final String elementName, final String attributeName,
+            final String attributeValue, String prefix, final NamespaceContext nscontext)
         throws XMLStreamException {
         if (uri != null) {
             if (nsuris.containsKey(uri)) {
@@ -194,8 +194,8 @@ public abstract class WriteHandler extends DefaultHandler {
 
     }
 
-    protected void handleAttributeInInsideElement(
-        final Attribute attribute, final NamespaceContext nscontext, final String theName)
+    protected final void handleAttributeInInsideElement(
+            final Attribute attribute, final NamespaceContext nscontext, final String theName)
         throws XMLStreamException {
         final String attLocalName = attribute.getLocalName();
         final String attrNameSpace = attribute.getNamespace();
@@ -206,9 +206,9 @@ public abstract class WriteHandler extends DefaultHandler {
 
     }
 
-    protected String handleAttributeInOutsideElement(
-        final Attribute attribute, final NamespaceContext nscontext, final String theName,
-        final String attributeName) throws XMLStreamException {
+    protected final String handleAttributeInOutsideElement(
+            final Attribute attribute, final NamespaceContext nscontext, final String theName,
+            final String attributeName) throws XMLStreamException {
         String attributeValue = null;
         final String attLocalName = attribute.getLocalName();
         final String attrNameSpace = attribute.getNamespace();
