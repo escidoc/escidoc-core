@@ -538,8 +538,6 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                         .setPrefix(Constants.RELEASE_NS_PREFIX);
                     latestReleasePidElement
                         .setNamespace(Constants.RELEASE_NS_URI);
-                    latestReleasePidElement.setElementText(latestReleasePid);
-
                     elements.add(latestReleasePidElement);
                 }
             }
