@@ -1,9 +1,0 @@
-#parse("common/macros.vm")<${scopeNamespacePrefix}:scope #restInsertConditionalRoot(${isRootScope} "true" "true" ${scopeNamespacePrefix} ${scopeNamespace} "#escA(${scopeName})" ${scopeHref} ${scopeLastModificationDate}) #if(${isRootScope} == "false") last-modification-date="${scopeLastModificationDate}"#end>
-    <${scopeNamespacePrefix}:properties>
-        #creationDate(${scopeCreationDate})
-        #restCreatedBy("#escA(${scopeCreatedByTitle})" ${scopeCreatedByHref})
-        #restModifiedBy("#escA(${scopeModifiedByTitle})" ${scopeModifiedByHref})
-        <${escidocPropertiesNamespacePrefix}:name>#escT(${scopeName})</${escidocPropertiesNamespacePrefix}:name>
-        <${scopeNamespacePrefix}:type>${scopeType}</${scopeNamespacePrefix}:type>
-    </${scopeNamespacePrefix}:properties>
-</${scopeNamespacePrefix}:scope>

@@ -1,7 +1,0 @@
-#if ($reportDefinitionRoles)
-    <${reportDefinitionNamespacePrefix}:allowed-roles>
-#foreach( $reportDefinitionRole in $reportDefinitionRoles )
-        #restLink(${structuralRelationsNamespacePrefix} "role" ${reportDefinitionRole.title} ${reportDefinitionRole.href})
-#end
-    </${reportDefinitionNamespacePrefix}:allowed-roles>
-#end

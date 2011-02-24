@@ -1,9 +1,0 @@
-#parse("common/macros.vm")<${scopeNamespacePrefix}:scope #soapInsertConditionalRoot(${isRootScope} "true" "true" ${scopeNamespacePrefix} ${scopeNamespace} ${scopeId} ${scopeLastModificationDate}) #if(${isRootScope} == "false") last-modification-date="${scopeLastModificationDate}"#end>
-    <${scopeNamespacePrefix}:properties>
-        #creationDate(${scopeCreationDate})
-        #soapCreatedBy(${scopeCreatedById})
-        #soapModifiedBy(${scopeModifiedById})
-        <${escidocPropertiesNamespacePrefix}:name>#escT(${scopeName})</${escidocPropertiesNamespacePrefix}:name>
-        <${scopeNamespacePrefix}:type>${scopeType}</${scopeNamespacePrefix}:type>
-    </${scopeNamespacePrefix}:properties>
-</${scopeNamespacePrefix}:scope>
