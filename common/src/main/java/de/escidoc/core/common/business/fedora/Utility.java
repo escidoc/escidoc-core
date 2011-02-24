@@ -164,16 +164,16 @@ public class Utility {
         result = result.replace("\\", "/");
         append = append.replace("\\", "/");
         if (result.endsWith("/")) {
-            if (!append.startsWith("/")) {
-                result += append;
-            } else {
+            if (append.startsWith("/")) {
                 result += append.substring(1);
+            } else {
+                result += append;
             }
         } else {
-            if (!append.startsWith("/")) {
-                result += '/' + append;
-            } else {
+            if (append.startsWith("/")) {
                 result += append;
+            } else {
+                result += '/' + append;
             }
         }
         return result;
