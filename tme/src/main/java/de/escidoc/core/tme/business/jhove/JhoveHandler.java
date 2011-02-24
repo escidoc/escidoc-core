@@ -107,10 +107,18 @@ public class JhoveHandler extends TmeHandlerBase
         }
         finally {
             if (inputStream != null) {
-                inputStream.close();
+                try {
+                    inputStream.close();
+                } catch(IOException e) {
+                    // Ignore this exception
+                }
             }
             if (outputStream != null) {
-                outputStream.close();
+                try {
+                    outputStream.close();
+                } catch(IOException e) {
+                    // Ignore this exception
+                }
             }
         }
     }
