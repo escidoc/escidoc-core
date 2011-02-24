@@ -112,10 +112,7 @@ public class SmPreprocessingLogsHibernateDao
     public Collection<PreprocessingLog>
         retrievePreprocessingLogs(final String aggregationDefinitionId)
         throws SqlDatabaseSystemException {
-        List<PreprocessingLog> results = getHibernateTemplate().find(
-                QUERY_LOGS_BY_AGG_DEF_ID,
-                new Object[] { aggregationDefinitionId });
-        return results;
+        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID, new Object[] { aggregationDefinitionId });
     }
 
     /**
@@ -136,10 +133,7 @@ public class SmPreprocessingLogsHibernateDao
     public Collection<PreprocessingLog>
         retrievePreprocessingLogs(final Date processingDate)
         throws SqlDatabaseSystemException {
-        List<PreprocessingLog> results = getHibernateTemplate().find(
-                QUERY_LOGS_BY_DATE,
-                new Object[] { processingDate });
-        return results;
+        return getHibernateTemplate().find(QUERY_LOGS_BY_DATE, new Object[] { processingDate });
         
     }
 
@@ -164,10 +158,8 @@ public class SmPreprocessingLogsHibernateDao
         retrievePreprocessingLogs(final String aggregationDefinitionId, 
                 final Date processingDate)
         throws SqlDatabaseSystemException {
-        List<PreprocessingLog> results = getHibernateTemplate().find(
-                QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE,
+        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE,
                 new Object[] { aggregationDefinitionId, processingDate });
-        return results;
     }
 
     /**
@@ -191,10 +183,8 @@ public class SmPreprocessingLogsHibernateDao
         retrievePreprocessingLogs(final String aggregationDefinitionId, 
                 final boolean hasError)
         throws SqlDatabaseSystemException {
-        List<PreprocessingLog> results = getHibernateTemplate().find(
-                QUERY_LOGS_BY_AGG_DEF_ID_AND_ERROR,
+        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_ERROR,
                 new Object[] { aggregationDefinitionId, hasError });
-        return results;
     }
 
     /**
@@ -219,10 +209,7 @@ public class SmPreprocessingLogsHibernateDao
         retrievePreprocessingLogs(
                 final Date processingDate, final boolean hasError)
         throws SqlDatabaseSystemException {
-        List<PreprocessingLog> results = getHibernateTemplate().find(
-                QUERY_LOGS_BY_DATE_AND_ERROR,
-                new Object[] { processingDate, hasError });
-        return results;
+        return getHibernateTemplate().find(QUERY_LOGS_BY_DATE_AND_ERROR, new Object[] { processingDate, hasError });
     }
 
     /**
@@ -249,11 +236,8 @@ public class SmPreprocessingLogsHibernateDao
         retrievePreprocessingLogs(final String aggregationDefinitionId,
                 final Date processingDate, final boolean hasError)
         throws SqlDatabaseSystemException {
-        List<PreprocessingLog> results = getHibernateTemplate().find(
-                QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE_AND_ERROR,
-                new Object[] { 
+        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE_AND_ERROR, new Object[] {
                        aggregationDefinitionId, processingDate, hasError });
-        return results;
     }
 
     /**

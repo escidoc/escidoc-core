@@ -44,7 +44,6 @@ public abstract class MPTStringUtil {
 
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
-            int cNum = c;
             if (c == '\'') {
                 out.append("\\\'");
             }
@@ -63,13 +62,13 @@ public abstract class MPTStringUtil {
             else if (c == '\t') {
                 out.append("\\\\t");
             }
-            else if (isLowUnicode(cNum)) {
+            else if (isLowUnicode(c)) {
                 out.append("\\\\u");
-                out.append(hexString(cNum, SHORT_ESCAPE_LENGTH - 1));
+                out.append(hexString(c, SHORT_ESCAPE_LENGTH - 1));
             }
-            else if (isHighUnicode(cNum)) {
+            else if (isHighUnicode(c)) {
                 out.append("\\\\U");
-                out.append(hexString(cNum, LONG_ESCAPE_LENGTH - 2));
+                out.append(hexString(c, LONG_ESCAPE_LENGTH - 2));
             }
             else {
                 out.append(c);

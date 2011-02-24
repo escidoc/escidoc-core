@@ -406,14 +406,13 @@ public class RoleHandler implements RoleHandlerInterface {
         }
         else {
             int needed = offset + limit;
-            int currentLimit = needed;
             int currentOffset = 0;
             final List<EscidocRole> permittedObjects =
                 new ArrayList<EscidocRole>();
             final int size = permittedObjects.size();
             while (size <= needed) {
 
-                List<EscidocRole> tmpObjects = roleDao.retrieveRoles(query, currentOffset, currentLimit);
+                List<EscidocRole> tmpObjects = roleDao.retrieveRoles(query, currentOffset, needed);
                 if (tmpObjects == null || tmpObjects.isEmpty()) {
                     break;
                 }
@@ -461,7 +460,7 @@ public class RoleHandler implements RoleHandlerInterface {
                     throw new SystemException("Unexpected exception "
                         + "during evaluating access rights.", e);
                 }
-                currentOffset += currentLimit;
+                currentOffset += needed;
             }
 
             final List<EscidocRole> offsetObjects;

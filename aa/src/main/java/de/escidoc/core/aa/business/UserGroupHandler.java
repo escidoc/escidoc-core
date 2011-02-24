@@ -873,14 +873,13 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                     parameters.getRecordPacking());
         }
         else {
-            int needed = offset + limit;
-            int currentLimit = needed;
+            final int currentLimit = offset + limit;
             int currentOffset = 0;
             final List<UserGroup> permittedUserGroups =
                 new ArrayList<UserGroup>();
             final int size = permittedUserGroups.size();
 
-            while (size <= needed) {
+            while (size <= currentLimit) {
 
                 List<UserGroup> tmpUserGroups = userGroupDao.retrieveUserGroups(query, currentOffset,
                         currentLimit);
@@ -938,7 +937,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             final int numberPermitted = permittedUserGroups.size();
             if (offset < numberPermitted) {
                 offsetUserGroups = new ArrayList<UserGroup>(limit);
-                for (int i = offset; i < numberPermitted && i < needed; i++) {
+                for (int i = offset; i < numberPermitted && i < currentLimit; i++) {
                     offsetUserGroups.add(permittedUserGroups.get(i));
                 }
             }
@@ -1342,10 +1341,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @aa
      */
     private Set<String> retrieveGroupsByGroupIds(
-        final Set<String> groupIds, final boolean activeOnly)
+        final Set<String> userGroupIds, final boolean activeOnly)
         throws SqlDatabaseSystemException {
-        Set<String> userGroupIds = groupIds;
-
         if (userGroupIds != null && !userGroupIds.isEmpty()) {
             // retrieve all groupMembers that are of type
             // user-group and have one of the groupIds as value

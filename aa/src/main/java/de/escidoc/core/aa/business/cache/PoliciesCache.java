@@ -723,9 +723,7 @@ public final class PoliciesCache {
 
         // iterate over all maps stored in roleIsGrantedCache to remove the ones
         // relevant for the provided role id.
-        for (Map<String, Map<String, EvaluationResult>> stringMapMap : getRoleIsGrantedCache().values()) {
-            Map<String, Map<String, EvaluationResult>> userCache =
-                    stringMapMap;
+        for (Map<String, Map<String, EvaluationResult>> userCache : getRoleIsGrantedCache().values()) {
             userCache.remove(roleId);
         }
     }

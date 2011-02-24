@@ -115,13 +115,10 @@ public class Triples {
      * Clean the list from redundant entries.
      */
     public void distinct() {
-
         List<Triple> newTripleList = new LinkedList<Triple>();
-
         for (Triple triple : this.triples) {
-            Triple t = triple;
-            newTripleList.add(t);
-            delTriples(t);
+            newTripleList.add(triple);
+            delTriples(triple);
         }
         this.triples = newTripleList;
     }

@@ -92,16 +92,10 @@ public final class VelocityXmlAggregationDefinitionRenderer
     public String render(final AggregationDefinition aggregationDefinition)
         throws SystemException {
         Map<String, Object> values = new HashMap<String, Object>();
-
         values.put("isRootAggregationDefinition", XmlTemplateProvider.TRUE);
         addAggregationDefinitionNamespaceValues(values);
         addAggregationDefinitionValues(aggregationDefinition, values);
-
-        final String ret =
-            getAggregationDefinitionXmlProvider().getAggregationDefinitionXml(
-                values);
-
-        return ret;
+        return getAggregationDefinitionXmlProvider().getAggregationDefinitionXml(values);
     }
 
     /**

@@ -670,8 +670,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final List<String> result = new ArrayList<String>();
         try {
             List<String> results = executeQueryLiteral(name, true, PROP_DC_TITLE);
-            for (String result1 : results) {
-                final String entry = result1;
+            for (String entry : results) {
                 result.add(XmlUtility.getIdFromURI(entry));
             }
         }
@@ -757,8 +756,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final List<String> entries =
             getPropertiesElementsVector(parentId,
                 Constants.STRUCTURAL_RELATIONS_NS_URI + "member");
-        for (String entry1 : entries) {
-            final String entry = entry1;
+        for (String entry : entries) {
             if (entry.equals(memberId)) {
                 isMember = true;
                 break;
@@ -783,8 +781,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         boolean isParent = false;
         final List<String> entries =
             getPropertiesElementsVector(ouId, PROP_PARENT);
-        for (String entry1 : entries) {
-            final String entry = entry1;
+        for (String entry : entries) {
             if (entry.equals(parentId)) {
                 isParent = true;
                 break;

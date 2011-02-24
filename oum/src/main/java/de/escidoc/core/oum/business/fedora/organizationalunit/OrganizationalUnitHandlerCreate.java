@@ -90,8 +90,7 @@ public class OrganizationalUnitHandlerCreate
         if (metadataStreams != null) {
             Collection<Map<String, String>> mdRecords =
                 new ArrayList<Map<String, String>>(metadataStreams.size());
-            for (String s : metadataStreams.keySet()) {
-                String name = s;
+            for (String name : metadataStreams.keySet()) {
                 Map<String, String> mdRecord = new HashMap<String, String>();
                 if (metadataProperties != null) {
                     Map<String, String> properties =

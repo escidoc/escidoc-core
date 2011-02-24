@@ -238,9 +238,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         catch (final UnsupportedEncodingException e) {
             throw new TripleStoreSystemException(e);
         }
-        String result = doRequest(queryAddress);
-
-        return result;
+        return doRequest(queryAddress);
     }
 
     private static String doRequest(final String address)
@@ -458,13 +456,9 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final String pid, final String fullqualifiedPropertyName)
         throws TripleStoreSystemException {
         String result = null;
-
-        try {
-            final String entry =
-                executeQueryId(pid, false, fullqualifiedPropertyName).get(0);
-            result = entry;
-        }
-        catch (final ArrayIndexOutOfBoundsException e) {
+        List<String> resultList = executeQueryId(pid, false, fullqualifiedPropertyName);
+        if(resultList != null && !resultList.isEmpty()) {
+            result = resultList.get(0);
         }
         return result;
     }
@@ -757,12 +751,9 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         final StringBuilder queryPart = new StringBuilder();
 
-        for (String s : filters.keySet()) {
-            final String predicate = s;
+        for (String predicate : filters.keySet()) {
             String object;
-
             final String val = filters.get(predicate);
-
             // make URIs from given IDs or HREFs for all structural-relation
             // predicates
             if (predicate.startsWith(Constants.STRUCTURAL_RELATIONS_NS_URI)) {
@@ -1129,15 +1120,13 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final String containerId, final Map filterMap, final String whereClause)
         throws MissingMethodParameterException, TripleStoreSystemException,
         XmlParserSystemException {
-
         // TODO check functionality
-        List<String> result = evaluate("member", filterMap, "and $parent <"
+        return evaluate("member", filterMap, "and $parent <"
                 + Constants.STRUCTURAL_RELATIONS_NS_URI + "member> $s "
                 + "and $parent <" + PROP_OBJECT_TYPE
                 + "> <http://escidoc.de/core/01/resources/Container> "
                 + "and $parent <http://purl.org/dc/elements/1.1/identifier> '"
                 + containerId + "' ", whereClause);
-        return result;
     }
 
     /**
@@ -1148,17 +1137,10 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final String contextId, final Map filterMap, final String whereClause)
         throws TripleStoreSystemException, XmlParserSystemException,
         MissingMethodParameterException {
-
         // TODO check functionality
-        List<String> result = evaluate("member", filterMap, "and ($s <"
+        return evaluate("member", filterMap, "and ($s <"
                 + Constants.STRUCTURAL_RELATIONS_NS_URI
                 + "context> <info:fedora/" + contextId + ">) ", whereClause);
-        // $parent "
-        // + "and $parent <" + PROP_OBJECT_TYPE
-        // + "> <http://escidoc.de/core/01/resources/Context> "
-        // + "and $parent <http://purl.org/dc/elements/1.1/identifier> '"
-        // + contextId + "' ");
-        return result;
     }
 
     /**
@@ -1244,8 +1226,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         }
         sb.append('>');
 
-        for (String aList : list) {
-            final String id = aList;
+        for (String id : list) {
             sb.append('<');
             sb.append(prefixedListElement);
             if (UserContext.isRestAccess()) {

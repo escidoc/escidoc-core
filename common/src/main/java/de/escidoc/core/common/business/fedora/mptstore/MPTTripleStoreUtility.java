@@ -98,8 +98,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final String pid, final Collection<String> fullqualifiedNamedProperties)
         throws TripleStoreSystemException {
         Map<String, String> result = new HashMap<String, String>();
-        for (String fullqualifiedNamedProperty : fullqualifiedNamedProperties) {
-            String property = fullqualifiedNamedProperty;
+        for (String property : fullqualifiedNamedProperties) {
             result.put(property, getRelation(pid, property));
         }
         return result;
@@ -1031,9 +1030,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         if (!checkQuery(queryResult)) {
             return new ArrayList<String>();
         }
-        List<String> resultList = executeSqlQuery(queryResult);
-
-        return resultList;
+        return executeSqlQuery(queryResult);
 
     }
 
@@ -1141,11 +1138,10 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @return
      */
     private static String getQueryPartId(
-        final String columnName, final Set<String> idSet) {
+        final String columnName, final Set<String> objects) {
 
         StringBuilder queryPart = new StringBuilder();
         String queryPartString = "";
-        Set<String> objects = idSet;
 
         // TODO or rule for every id
         if ((objects != null) && (!objects.isEmpty())) {
@@ -1521,18 +1517,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final String contextId, final Map<String, Object> filterMap,
         final String whereClause) throws SystemException,
         MissingMethodParameterException {
-
         // TODO check functionality
-        List<String> result =
-            evaluate("member", filterMap, "* <"
-                + Constants.STRUCTURAL_RELATIONS_NS_URI
+        return evaluate("member", filterMap, "* <" + Constants.STRUCTURAL_RELATIONS_NS_URI
                 + "context> <info:fedora/" + contextId + '>');
-        // $parent "
-        // + "and $parent <" + PROP_OBJECT_TYPE
-        // + "> <http://escidoc.de/core/01/resources/Context> "
-        // + "and $parent <http://purl.org/dc/elements/1.1/identifier> '"
-        // + contextId + "' ");
-        return result;
     }
 
     /*
@@ -1587,8 +1574,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         }
         sb.append('>');
 
-        for (String aList : list) {
-            String id = aList;
+        for (String id : list) {
             sb.append('<');
             sb.append(prefixedListElement);
             if (UserContext.isRestAccess()) {

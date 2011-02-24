@@ -180,12 +180,8 @@ public class PolicyParser {
             throw new IllegalArgumentException(
                 "only XMLSchema#string is supported");
         }
-        Pattern p =
-            Pattern.compile(".*(\\A|\\s)" + action + "(\\s|\\z).*",
-                Pattern.MULTILINE | Pattern.DOTALL);
-
-        boolean result = p.matcher(((StringAttribute) valueList).getValue()).matches();
-        return result;
+        Pattern p = Pattern.compile(".*(\\A|\\s)" + action + "(\\s|\\z).*", Pattern.MULTILINE | Pattern.DOTALL);
+        return p.matcher(((StringAttribute) valueList).getValue()).matches();
     }
 
     /**

@@ -45,8 +45,7 @@ public class UserAttributeReadHandler extends DefaultHandler {
         throws Exception {
         if (element.getLocalName().equals(Elements.ELEMENT_USER_ATTRIBUTE)) {
             String name = element.getAttributeValue(null, "name");
-            String value = data;
-            this.attributes.put(name, value);
+            this.attributes.put(name, data);
         }
         return super.characters(data, element);
     }

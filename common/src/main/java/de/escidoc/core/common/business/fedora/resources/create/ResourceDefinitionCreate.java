@@ -114,16 +114,7 @@ public class ResourceDefinitionCreate {
      *             Thrown if character encoding failed.
      */
     public Map<String, String> getValueMap() throws SystemException {
-
-        Map<String, String> templateValues = new HashMap<String, String>();
-
-        // templateValues.put(XmlTemplateProvider.MD_RECOD_TYPE, this.type);
-        // templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
-        // this.schema);
-        // templateValues.put(XmlTemplateProvider.MD_RECORD_NAME,
-        // this.name);
-
-        return templateValues;
+        return new HashMap<String, String>();
     }
 
     public String getXsltHref() {

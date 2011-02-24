@@ -177,10 +177,7 @@ public class SmReportDefinitionsHibernateDao
         throws SqlDatabaseSystemException {
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(ReportDefinition.class, "r");
-
-            Collection<ReportDefinition> reportDefinitions =
-                    getHibernateTemplate().findByCriteria(detachedCriteria);
-            return reportDefinitions;
+            return getHibernateTemplate().findByCriteria(detachedCriteria);
     }
 
     /**
@@ -222,11 +219,7 @@ public class SmReportDefinitionsHibernateDao
                     DetachedCriteria.forClass(ReportDefinition.class, "r");
             }
             detachedCriteria.add(Restrictions.in("scope.id", scopeIds));
-
-            Collection<ReportDefinition> reportDefinitions =
-                getHibernateTemplate().findByCriteria(detachedCriteria, offset,
-                    maxResults);
-            return reportDefinitions;
+            return getHibernateTemplate().findByCriteria(detachedCriteria, offset, maxResults);
 
         }
         return null;

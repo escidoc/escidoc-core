@@ -200,10 +200,7 @@ public class SmAggregationDefinitionsHibernateDao
         throws SqlDatabaseSystemException {
         final DetachedCriteria detachedCriteria =
         DetachedCriteria.forClass(AggregationDefinition.class, "a");
-
-        Collection<AggregationDefinition> aggregationDefinitions =
-                getHibernateTemplate().findByCriteria(detachedCriteria);
-        return aggregationDefinitions;
+        return getHibernateTemplate().findByCriteria(detachedCriteria);
     }
 
     /**

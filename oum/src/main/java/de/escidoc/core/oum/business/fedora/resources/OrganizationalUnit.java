@@ -460,8 +460,7 @@ public class OrganizationalUnit extends GenericResource
                 names.add(datastream.getID());
             }
         }
-        for (String name1 : names) {
-            final String name = name1;
+        for (String name : names) {
             try {
                 result.put(name, new Datastream(name, getId(), null));
             } catch (final StreamNotFoundException e) {
@@ -577,8 +576,7 @@ public class OrganizationalUnit extends GenericResource
         final Set<String> namesInFedora = getMdRecords().keySet();
 
         // delete Datastreams which are in Fedora but not in mdRecords
-        for (String aNamesInFedora : namesInFedora) {
-            final String nameInFedora = aNamesInFedora;
+        for (String nameInFedora : namesInFedora) {
             if (!mdRecords.containsKey(nameInFedora)) {
                 try {
                     Datastream fedoraDs = getMdRecord(nameInFedora);
@@ -596,8 +594,7 @@ public class OrganizationalUnit extends GenericResource
         }
         
         // create or update Datastreams which are send
-        for (String s : mdRecords.keySet()) {
-            final String name = s;
+        for (String name : mdRecords.keySet()) {
             if (namesInFedora.contains(name)) {
                 setMdRecord(name, mdRecords.get(name));
                 namesInFedora.remove(name);

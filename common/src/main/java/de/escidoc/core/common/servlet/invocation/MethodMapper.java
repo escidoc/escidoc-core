@@ -230,8 +230,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         String xPath =
             appendToXpath(appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT,
                 DEFINITION_ELEMENT), type);
-        for (Document methodMapping1 : methodMappings) {
-            Document methodMapping = methodMapping1;
+        for (Document methodMapping : methodMappings) {
             NodeList methodDefinitions = parse(xPath, methodMapping);
             int noOfDefinitions = methodDefinitions.getLength();
             for (int i = 0; i < noOfDefinitions; ++i) {
@@ -357,8 +356,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         // FIXME: Remove this iteration. All base-URIs are like
         // /<ir, um, oum, ...>/<resourcename>
         Map<String, Resource> resourcesMap = getResources();
-        for (String s : resourcesMap.keySet()) {
-            String baseUri = s;
+        for (String baseUri : resourcesMap.keySet()) {
             if (uri.startsWith(baseUri)) {
                 result = resourcesMap.get(baseUri);
                 break;

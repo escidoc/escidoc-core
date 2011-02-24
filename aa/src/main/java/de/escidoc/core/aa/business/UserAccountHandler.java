@@ -1364,13 +1364,12 @@ public class UserAccountHandler
                     parameters.getRecordPacking());
         }
         else {
-            int needed = offset + limit;
-            int currentLimit = needed;
+            int currentLimit = offset + limit;
             int currentOffset = 0;
             final List<UserAccount> permittedUserAccounts =
                 new ArrayList<UserAccount>();
             final int size = permittedUserAccounts.size();
-            while (size <= needed) {
+            while (size <= currentLimit) {
 
                 List<UserAccount> tmpUserAccounts = dao
                         .retrieveUserAccounts(query, currentOffset,
@@ -1432,7 +1431,7 @@ public class UserAccountHandler
             final int numberPermitted = permittedUserAccounts.size();
             if (offset < numberPermitted) {
                 offsetUserAccounts = new ArrayList<UserAccount>(limit);
-                for (int i = offset; i < numberPermitted && i < needed; i++) {
+                for (int i = offset; i < numberPermitted && i < currentLimit; i++) {
                     offsetUserAccounts.add(permittedUserAccounts.get(i));
                 }
             }
@@ -1901,8 +1900,7 @@ public class UserAccountHandler
         List<RoleGrant> grants = dao.retrieveGrantsByUserId(userId);
         List<RoleGrant> currentGrants = new ArrayList<RoleGrant>(grants.size());
         if (!grants.isEmpty()) {
-            for (RoleGrant grant1 : grants) {
-                final RoleGrant grant = grant1;
+            for (RoleGrant grant : grants) {
                 if (grant.getRevocationDate() == null) {
                     currentGrants.add(grant);
                 }
@@ -2149,15 +2147,10 @@ public class UserAccountHandler
     @Override
     public String retrievePreferences(final String userId)
         throws UserAccountNotFoundException, SystemException {
-
         UserAccount userAccount = retrieveUserAccountById(userId);
         Set<UserPreference> currentPreferences =
             userAccount.getUserPreferencesByUserId();
-
-        String result =
-            renderer.renderPreferences(userAccount, currentPreferences);
-
-        return result;
+        return renderer.renderPreferences(userAccount, currentPreferences);
     }
 
     /**
@@ -2187,8 +2180,7 @@ public class UserAccountHandler
             userAccount.getUserPreferencesByUserId();
 
         String result = null;
-        for (UserPreference currentPreference : currentPreferences) {
-            UserPreference preference = currentPreference;
+        for (UserPreference preference : currentPreferences) {
             String preferenceName = preference.getName();
             if (preferenceName.equals(name)) {
                 result = renderer.renderPreference(userAccount, preference);
@@ -2423,15 +2415,11 @@ public class UserAccountHandler
 
         // PrimKey(userId,name)
         for (UserPreference userPreference : userPreferences) {
-            UserPreference curPref = userPreference;
-            if (curPref.getName().equals(preferenceName)) {
-                userPreferences.remove(curPref);
-
+            if (userPreference.getName().equals(preferenceName)) {
+                userPreferences.remove(userPreference);
                 // update user in policy cache; rights may depend on preferences
                 sendUserAccountUpdateEvent(userId);
-
                 userAccount.touch();
-
                 return;
             }
         }
@@ -2630,15 +2618,9 @@ public class UserAccountHandler
     @Override
     public String retrieveAttributes(final String userId)
         throws UserAccountNotFoundException, SystemException {
-
         UserAccount userAccount = retrieveUserAccountById(userId);
-        Set<UserAttribute> currentAttributes =
-            userAccount.getUserAttributesByUserId();
-
-        String result =
-            renderer.renderAttributes(userAccount, currentAttributes);
-
-        return result;
+        Set<UserAttribute> currentAttributes = userAccount.getUserAttributesByUserId();
+        return renderer.renderAttributes(userAccount, currentAttributes);
     }
 
     /**
@@ -2676,10 +2658,7 @@ public class UserAccountHandler
                 }
             }
         }
-        String result =
-            renderer.renderAttributes(userAccount, selectedAttributes);
-
-        return result;
+        return renderer.renderAttributes(userAccount, selectedAttributes);
     }
 
     /**
@@ -2711,9 +2690,7 @@ public class UserAccountHandler
         catch (ReadonlyElementViolationException e) {
             throw new SystemException(e);
         }
-        String result = renderer.renderAttribute(attribute);
-
-        return result;
+        return renderer.renderAttribute(attribute);
     }
 
     /**

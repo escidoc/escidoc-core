@@ -82,9 +82,8 @@ public class OrganizationalUnitHandlerUpdate
         Map<String, Datastream> updated = new HashMap<String, Datastream>();
 
         // iterate over md-record names (keys) with
-        for (String s : xml.keySet()) {
+        for (String name : xml.keySet()) {
             // for every retrieved md-record XML create a Datastream
-            String name = s;
             Map<String, String> mdProperties = null;
             if (name.equals(OrganizationalUnit.ESCIDOC)) {
                 mdProperties = new HashMap<String, String>();
@@ -221,8 +220,7 @@ public class OrganizationalUnitHandlerUpdate
         throws InvalidStatusException, SystemException {
 
         List<String> parents = getOrganizationalUnit().getParents();
-        for (String parent1 : parents) {
-            String parent = parent1;
+        for (String parent : parents) {
             String parentState =
                     getTripleStoreUtility().getPropertiesElements(parent,
                             TripleStoreUtility.PROP_PUBLIC_STATUS);
@@ -251,8 +249,7 @@ public class OrganizationalUnitHandlerUpdate
         throws InvalidStatusException, SystemException {
 
         // all parents must be in state created or opened
-        for (String parent1 : parents) {
-            String parent = parent1;
+        for (String parent : parents) {
             String parentState =
                     getTripleStoreUtility().getPropertiesElements(parent,
                             TripleStoreUtility.PROP_PUBLIC_STATUS);
@@ -283,8 +280,7 @@ public class OrganizationalUnitHandlerUpdate
         String status = getOrganizationalUnit().getPublicStatus();
         if (Constants.STATUS_OU_CREATED.equals(status)) {
             // all parents must be in state created or opened
-            for (String parent1 : parents) {
-                String parent = parent1;
+            for (String parent : parents) {
                 String parentState =
                         getTripleStoreUtility().getPropertiesElements(parent,
                                 TripleStoreUtility.PROP_PUBLIC_STATUS);
@@ -360,8 +356,7 @@ public class OrganizationalUnitHandlerUpdate
 
         List<String> children = getOrganizationalUnit().getChildrenIds();
         if (!children.isEmpty()) {
-            for (String aChildren : children) {
-                String child = aChildren;
+            for (String child : children) {
                 String childState =
                         getTripleStoreUtility().getPropertiesElements(child,
                                 TripleStoreUtility.PROP_PUBLIC_STATUS);

@@ -198,9 +198,8 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
             if (organizationalUnitIds.isEmpty()) {
                 getPathes().push(new ArrayList<String>(path));
             } else {
-                for (String organizationalUnitId : organizationalUnitIds) {
+                for (String parent : organizationalUnitIds) {
                     List<String> newPath = new ArrayList<String>(path);
-                    String parent = organizationalUnitId;
                     newPath.add(parent);
                     getPathes().push(newPath);
 

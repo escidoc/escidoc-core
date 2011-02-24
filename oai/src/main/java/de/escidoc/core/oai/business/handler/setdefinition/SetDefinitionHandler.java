@@ -343,7 +343,6 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         }
         else {
             int needed = offset + limit;
-            int currentLimit = needed;
             int currentOffset = 0;
             final List<SetDefinition> permittedSetDefinitions =
                 new ArrayList<SetDefinition>();
@@ -352,7 +351,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             while (size <= needed) {
 
                 final List<SetDefinition> tmpSetDefinitions = setDefinitionDao.retrieveSetDefinitions(query,
-                        currentOffset, currentLimit);
+                        currentOffset, needed);
                 if (tmpSetDefinitions == null || tmpSetDefinitions.isEmpty()) {
                     break;
                 }
@@ -400,7 +399,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                         "Unexpected exception during evaluating access "
                             + "rights.", e);
                 }
-                currentOffset += currentLimit;
+                currentOffset += needed;
             }
 
             final List<SetDefinition> offsetSetDefinitions;

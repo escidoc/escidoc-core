@@ -124,8 +124,7 @@ public class Resource extends XMLBase {
 
         BeanMethod result = null;
         Set<String> regexps = getDescriptors().keySet();
-        for (String regexp1 : regexps) {
-            String regexp = regexp1;
+        for (String regexp : regexps) {
             if (uri.matches(regexp)) {
                 Node descriptor = getDescriptors().get(regexp);
                 Node invokeNode;
@@ -255,7 +254,6 @@ public class Resource extends XMLBase {
         if (!paramNames.isEmpty()) {
             result = new Object[paramNames.size()];
             for (int i = 0; i < paramNames.size(); ++i) {
-                String replace = uriRegexp;
                 Object value;
                 String param = (String) ((List) paramNames).get(i);
                 if (param.equals(VAR_PREFIX + VAR_BODY + VAR_POSTFIX)) {
@@ -279,7 +277,7 @@ public class Resource extends XMLBase {
                 }
                 else {
                     try {
-                        value = uri.replaceAll(replace, "$" + (i + 1));
+                        value = uri.replaceAll(uriRegexp, "$" + (i + 1));
                         if ("".equals(value)) {
                             value = null;
                         }
@@ -332,9 +330,8 @@ public class Resource extends XMLBase {
         String result = xPath.replaceAll("\\?", "\\\\?");
 
         for (Node varDefinition : varDefinitions) {
-            Node var = varDefinition;
-            String varName = getAttributeValue(var, DEFINITION_VAR_NAME_ATTR);
-            String regexp = getAttributeValue(var, DEFINITION_VAR_REGEXP_ATTR);
+            String varName = getAttributeValue(varDefinition, DEFINITION_VAR_NAME_ATTR);
+            String regexp = getAttributeValue(varDefinition, DEFINITION_VAR_REGEXP_ATTR);
             if (result.contains('/' + VAR_PREFIX + varName + VAR_POSTFIX)) {
                 result =
                         result.replace('/' + VAR_PREFIX + varName + VAR_POSTFIX,

@@ -430,11 +430,10 @@ public class SecurityInterceptor implements Ordered {
                     if (latestReleaseVersionNumber == null) {
                         throw e;
                     }
-                    Object[] replacedArguments = arguments;
-                    replacedArguments[0] =
+                    arguments[0] =
                         arguments[0] + ":"
                             + latestReleaseVersionNumber;
-                    doAuthorisation(className, methodName, replacedArguments);
+                    doAuthorisation(className, methodName, arguments);
                 }
                 catch (TripleStoreSystemException ex) {
                     throw e;
@@ -532,9 +531,7 @@ public class SecurityInterceptor implements Ordered {
             Constructor<ResourceNotFoundException> constructor = (Constructor<ResourceNotFoundException>) Class.forName(
                     exceptionName).getConstructor(new Class[]{String.class});
             String msg = e.getMessage();
-            ResourceNotFoundException resourceNotFoundException =
-                (constructor.newInstance(msg));
-            return resourceNotFoundException;
+            return constructor.newInstance(msg);
         }
         catch (Exception e1) {
             StringBuilder errorMsg =

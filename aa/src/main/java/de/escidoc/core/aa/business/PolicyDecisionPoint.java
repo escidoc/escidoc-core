@@ -257,8 +257,7 @@ public class PolicyDecisionPoint
         boolean[] allowedObjects = new boolean[requests.size()];
         int i = 0;
 
-        for (Map<String, String> request : requests) {
-            final Map<String, String> attributeMap = request;
+        for (Map<String, String> attributeMap : requests) {
             Iterator<Entry<String, String>> attributeUriIter =
                     attributeMap.entrySet().iterator();
             Set<Subject> subjects = null;
@@ -357,10 +356,8 @@ public class PolicyDecisionPoint
         buf.append(Constants.XACML_CONTEXT_NS_URI);
         buf.append("\">");
 
-        for (ResponseCtx responseCtx1 : responseCtxs) {
-            ResponseCtx responseCtx = responseCtx1;
+        for (ResponseCtx responseCtx : responseCtxs) {
             Result result = extractSingleResultWithoutObligations(responseCtx);
-
             String decision;
             if (result.getDecision() == Result.DECISION_PERMIT) {
                 decision = "permit";
@@ -475,8 +472,7 @@ public class PolicyDecisionPoint
         try {
             final MethodMappingList methodMappings =
                 cache.getMethodMappings(className, "retrieve");
-            for (String id1 : ids) {
-                String id = id1;
+            for (String id : ids) {
                 boolean allowed = true;
                 final Iterator<MethodMapping> iter =
                         methodMappings.iteratorBefore();

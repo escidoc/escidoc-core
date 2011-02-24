@@ -82,8 +82,7 @@ public class OumUtility {
         final String organizationalUnitId, final Collection<String> parentIds)
         throws OrganizationalUnitHierarchyViolationException, SystemException {
         if (!parentIds.isEmpty()) {
-            for (String parentId1 : parentIds) {
-                String id = parentId1;
+            for (String id : parentIds) {
                 if (id.equals(organizationalUnitId)) {
                     String message =
                             "Ou with id "
@@ -100,8 +99,7 @@ public class OumUtility {
             expand(organizationalUnitId);
             while (!this.open.empty()) {
                 String toClosedId = this.open.pop();
-                for (String parentId : parentIds) {
-                    String id = parentId;
+                for (String id : parentIds) {
                     if (id.equals(toClosedId)) {
                         String message =
                                 "Ou with id " + id
@@ -133,8 +131,7 @@ public class OumUtility {
         Collection<String> children =
             TripleStoreUtility.getInstance().getChildren(currentOuId);
         if (children != null) {
-            for (String aChildren : children) {
-                String childId = aChildren;
+            for (String childId : children) {
                 if (!this.closed.contains(childId)) {
                     this.open.push(childId);
                 }

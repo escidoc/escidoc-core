@@ -173,19 +173,18 @@ public class StatisticPreprocessor {
         try {
             AggregationDefinition aggregationDefinition = 
                 dao.retrieve(aggregationDefinitionId);
-            Date internalStartDate = determineStartDate(
+            Date executionDate = determineStartDate(
                     startDate, aggregationDefinition.getScope().getId());
             Date internalEndDate = determineEndDate(endDate);
             if (log.isInfoEnabled()) {
-                log.info("ComputedStartDate: " + internalStartDate);
+                log.info("ComputedStartDate: " + executionDate);
                 log.info("ComputedEndDate: " + internalEndDate);
             } 
-            if (internalEndDate.before(internalStartDate)) {
+            if (internalEndDate.before(executionDate)) {
                 return;
             }
             Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(internalStartDate.getTime());
-            Date executionDate = internalStartDate;
+            cal.setTimeInMillis(executionDate.getTime());
             while (internalEndDate.after(executionDate)) {
                 execute(executionDate, aggregationDefinition);
                 cal.add(Calendar.DATE, 1);

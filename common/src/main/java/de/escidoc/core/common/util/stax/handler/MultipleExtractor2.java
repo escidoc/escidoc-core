@@ -294,8 +294,7 @@ public class MultipleExtractor2 extends DefaultHandler {
         XMLStreamWriter writer =
             XmlUtility.createXmlStreamWriterNamespaceRepairing(out);
         if (namespaceMap != null && !namespaceMap.isEmpty()) {
-            for (String s : namespaceMap.keySet()) {
-                String namespace = s;
+            for (String namespace : namespaceMap.keySet()) {
                 String prefix = namespaceMap.get(namespace);
                 if (prefix != null) {
                     writer.setPrefix(prefix, namespace);

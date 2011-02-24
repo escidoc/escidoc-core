@@ -45,8 +45,7 @@ public class UserPreferenceReadHandler extends DefaultHandler {
         throws Exception {
         if (element.getLocalName().equals(Elements.ELEMENT_USER_PREFERENCE)) {
             String name = element.getAttributeValue(null, "name");
-            String value = data;
-            this.preferences.put(name, value);
+            this.preferences.put(name, data);
         }
         return super.characters(data, element);
     }

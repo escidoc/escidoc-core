@@ -1129,13 +1129,8 @@ public class Utility {
             Constants.PREMIS_ID_TYPE_ESCIDOC);
         newVersionEntry.put(XmlTemplateProvider.VAR_OBJECT_ID_VALUE,
             resource.getId());
-
         // get xml representation of new version
-        String newVersionXml =
-            CommonFoXmlProvider.getInstance().getWovVersionEntryXml(
-                newVersionEntry);
-
-        return newVersionXml;
+        return CommonFoXmlProvider.getInstance().getWovVersionEntryXml(newVersionEntry);
     }
 
     /**

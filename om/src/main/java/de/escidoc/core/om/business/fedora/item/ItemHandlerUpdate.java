@@ -277,20 +277,15 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         ComponentNotFoundException {
 
         Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
-
-        for (String s : mdMap.keySet()) {
-            String name = s;
+        for (String name : mdMap.keySet()) {
             ByteArrayOutputStream stream = mdMap.get(name);
             byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
             if ("escidoc".equals(name)) {
                 mdProperties = new HashMap<String, String>();
                 mdProperties.put("nsUri", escidocMdRecordnsUri);
-
             }
-            Datastream ds =
-                    new Datastream(name, c.getId(), xmlBytes, "text/xml",
-                            mdProperties);
+            Datastream ds = new Datastream(name, c.getId(), xmlBytes, "text/xml", mdProperties);
             Map<String, String> mdRecordAttributes = mdAttributesMap.get(name);
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId(mdRecordAttributes.get("type"));

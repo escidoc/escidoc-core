@@ -79,10 +79,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
                 storedContexts.put(contextPath, jc);
             }
             Unmarshaller u = jc.createUnmarshaller();
-            Object bindingObject =
-                u.unmarshal(new ByteArrayInputStream(xml
-                    .getBytes(XmlUtility.CHARACTER_ENCODING)));
-            return bindingObject;
+            return u.unmarshal(new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING)));
         }
         catch (Exception e) {
             throw new XmlParserSystemException(e);

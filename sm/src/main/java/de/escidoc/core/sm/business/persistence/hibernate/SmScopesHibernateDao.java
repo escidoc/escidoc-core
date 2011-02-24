@@ -179,12 +179,8 @@ public class SmScopesHibernateDao
      */
     @Override
     public Collection<Scope> retrieveScopes() throws SqlDatabaseSystemException {
-        final DetachedCriteria detachedCriteria =
-            DetachedCriteria.forClass(Scope.class, "s");
-
-        Collection<Scope> scopes =
-                getHibernateTemplate().findByCriteria(detachedCriteria);
-        return scopes;
+        final DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Scope.class, "s");
+        return getHibernateTemplate().findByCriteria(detachedCriteria);
     }
 
     /**
@@ -211,11 +207,7 @@ public class SmScopesHibernateDao
         final DetachedCriteria detachedCriteria =
             DetachedCriteria.forClass(Scope.class, "s");
         detachedCriteria.add(Restrictions.in("id", scopeIds));
-
-        Collection<Scope> scopes =
-                getHibernateTemplate().findByCriteria(detachedCriteria);
-
-        return scopes;
+        return getHibernateTemplate().findByCriteria(detachedCriteria);
     }
 
     /**
