@@ -114,12 +114,11 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
                                 + element.getLocalName() + "' is missing.";
                 LOGGER.error(message);
                 throw new WebserverSystemException(message);
-            } else {
-                String resourceValue =
-                        element.getAttribute(indexOfResource).getValue();
-                String[] target = resourceValue.split("/");
-                targetId = target[1];
             }
+            String resourceValue =
+                    element.getAttribute(indexOfResource).getValue();
+            String[] target = resourceValue.split("/");
+            targetId = target[1];
             String predicateNs = element.getNamespace();
             predicateNs =
                 predicateNs.substring(0, predicateNs.length() - 1);
