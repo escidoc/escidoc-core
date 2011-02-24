@@ -305,11 +305,9 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
                             .createResourceNotFoundResult(new ItemNotFoundException(
                                 "item for component " + assignedOnObjectId
                                     + " not found"));
-                }
-                if(itemIds != null && !itemIds.isEmpty()) {
+                } else {
                     assignedOnObjectId = itemIds.get(0);
                 }
-
             }
         }
         result =
