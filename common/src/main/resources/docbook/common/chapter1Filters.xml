@@ -302,10 +302,8 @@
           <para><literal>maximumRecords:</literal> the maximum number of
           records you want to retrieve with your request (combined with
           <literal>startRecord</literal>, this verb allows for paging through
-          a large result set). The default value is 1000. If you set
-          <literal>maximumRecords=0</literal>, the method will retrieve all
-          objects matching your query. In large repositories, this may lead to
-          problems with too large result sets, causing out-of-memory
+          a large result set). The default value is 1000. Please be aware that increasing
+          this value may lead to problems with too large result sets, causing out-of-memory
           conditions.</para>
 
           <para>Example: <literal>maximumRecords=20</literal></para>
