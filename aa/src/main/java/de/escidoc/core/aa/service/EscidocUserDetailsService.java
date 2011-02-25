@@ -75,7 +75,7 @@ public class EscidocUserDetailsService
      * @aa
      */
     @Override
-    public final UserDetails loadUserByUsername(final String identifier) {
+    public UserDetails loadUserByUsername(final String identifier) {
 
         LOG.debug("loadUserByUsername");
         boolean wasExternalBefore = false;

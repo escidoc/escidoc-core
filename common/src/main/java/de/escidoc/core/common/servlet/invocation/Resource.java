@@ -117,10 +117,10 @@ public class Resource extends XMLBase {
      *             If no matching method is found.
      * @common
      */
-    public final BeanMethod getMethod(
-            final String uri, final String query,
-            final Map<String, String[]> parameters, final String httpMethod,
-            final Object body) throws MethodNotFoundException {
+    public BeanMethod getMethod(
+        final String uri, final String query,
+        final Map<String, String[]> parameters, final String httpMethod,
+        final Object body) throws MethodNotFoundException {
 
         BeanMethod result = null;
         final Set<String> regexps = getDescriptors().keySet();
@@ -423,7 +423,7 @@ public class Resource extends XMLBase {
      * @return Returns the descriptors.
      * @common
      */
-    public final Map<String, Node> getDescriptors() {
+    public Map<String, Node> getDescriptors() {
         return descriptors;
     }
 
@@ -440,7 +440,7 @@ public class Resource extends XMLBase {
      * @return Returns the resource.
      * @common
      */
-    public final Node getResource() {
+    public Node getResource() {
         return resource;
     }
 
@@ -457,7 +457,7 @@ public class Resource extends XMLBase {
      * @return Returns the baseUri.
      * @common
      */
-    public final String getBaseUri() {
+    public String getBaseUri() {
         return baseUri;
     }
 
@@ -474,7 +474,7 @@ public class Resource extends XMLBase {
      * @return Returns the name.
      * @common
      */
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
@@ -491,7 +491,7 @@ public class Resource extends XMLBase {
      * @return Returns the definitions.
      * @common
      */
-    public final Map getDefinitions() {
+    public Map getDefinitions() {
         return definitions;
     }
 
@@ -511,7 +511,7 @@ public class Resource extends XMLBase {
      * @common
      */
     @Override
-    public final String toString() {
+    public String toString() {
         return "Resource name='" + getName() + "', base-uri='" + getBaseUri()
             + "' has descriptors for uris '" + getDescriptors().keySet() + "'.";
     }
@@ -519,7 +519,7 @@ public class Resource extends XMLBase {
     /**
      * @return the beanName
      */
-    public final String getBeanId() {
+    public String getBeanId() {
         return beanId;
     }
 

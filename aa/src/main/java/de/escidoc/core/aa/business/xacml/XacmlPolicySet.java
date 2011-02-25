@@ -188,7 +188,7 @@ public class XacmlPolicySet extends PolicySet {
      * @see java.lang.Object#toString()
      */
     @Override
-    public final String toString() {
+    public String toString() {
 
         try {
             return CustomPolicyBuilder.encode(this);

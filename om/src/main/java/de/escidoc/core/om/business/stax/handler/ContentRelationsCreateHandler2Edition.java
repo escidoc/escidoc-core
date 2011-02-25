@@ -197,7 +197,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
     /**
      * @return Returns the title.
      */
-    public final List<Map<String, String>> getContentRelationsData() {
+    public List<Map<String, String>> getContentRelationsData() {
         return relationsData;
     }
 

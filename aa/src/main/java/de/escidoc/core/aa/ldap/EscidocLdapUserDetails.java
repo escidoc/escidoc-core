@@ -62,7 +62,7 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
      * 
      * @aa
      */
-    public final void addStringAttribute(final String name, final String value) {
+    public void addStringAttribute(final String name, final String value) {
         if (stringAttributes.get(name) == null) {
             stringAttributes.put(name, new ArrayList<String>());
         }
@@ -72,7 +72,7 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
     /**
      * @return the attributes
      */
-    public final Map<String, List<String>> getStringAttributes() {
+    public Map<String, List<String>> getStringAttributes() {
         return stringAttributes;
     }
     
@@ -90,14 +90,14 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
      * @return the dn
      */
     @Override
-    public final String getDn() {
+    public String getDn() {
         return dn;
     }
 
     /**
      * @param dn the dn to set
      */
-    public final void setDn(final String dn) {
+    public void setDn(final String dn) {
         this.dn = dn;
     }
 
@@ -105,14 +105,14 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
      * @return the username
      */
     @Override
-    public final String getUsername() {
+    public String getUsername() {
         return username;
     }
 
     /**
      * @param username the username to set
      */
-    public final void setUsername(final String username) {
+    public void setUsername(final String username) {
         this.username = username;
     }
 

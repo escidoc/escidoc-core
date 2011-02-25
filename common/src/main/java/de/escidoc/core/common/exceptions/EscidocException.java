@@ -78,7 +78,7 @@ public abstract class EscidocException extends Exception {
      * @return The HttpStatusCode associated with this Exception.
      * @common
      */
-    public final int getHttpStatusCode() {
+    public int getHttpStatusCode() {
         return httpStatusCode;
     }
 
@@ -89,7 +89,7 @@ public abstract class EscidocException extends Exception {
      * @return The HttpStatusMessage associated with this Exception.
      * @common
      */
-    public final String getHttpStatusMsg() {
+    public String getHttpStatusMsg() {
         return httpStatusMsg;
     }
 
@@ -101,7 +101,7 @@ public abstract class EscidocException extends Exception {
      * @return
      * @see java.lang.Throwable#toString()
      */
-    public final String toString() {
+    public String toString() {
         return toXmlString();
     }
 
@@ -113,7 +113,7 @@ public abstract class EscidocException extends Exception {
      * @return A xml-representation of this Exception.
      * @common
      */
-    public final String toXmlString() {
+    public String toXmlString() {
 
         return getXml(this);
     }

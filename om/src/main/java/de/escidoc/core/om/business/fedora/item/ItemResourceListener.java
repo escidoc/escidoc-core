@@ -85,7 +85,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected final void fireItemCreated(final String id, final String xmlData)
+    protected void fireItemCreated(final String id, final String xmlData)
         throws SystemException {
         final String restXml;
         final String soapXml;
@@ -118,7 +118,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected final void fireItemModified(final String id)
+    protected void fireItemModified(final String id)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
 
@@ -149,7 +149,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    public final void fireItemModified(final String id, final String xmlData)
+    public void fireItemModified(final String id, final String xmlData)
         throws SystemException {
         final String restXml;
         final String soapXml;
@@ -176,7 +176,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected final void fireItemDeleted(final String id) throws SystemException {
+    protected void fireItemDeleted(final String id) throws SystemException {
         for (final ResourceListener itemListener : itemListeners) {
             itemListener.resourceDeleted(id);
         }
@@ -236,7 +236,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected final void queueItemsModified(final Iterable<String> ids)
+    protected void queueItemsModified(final Iterable<String> ids)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
         if (indexingHandler != null) {

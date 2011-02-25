@@ -198,9 +198,9 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The attribute values.
      * @aa
      */
-    protected final void cacheAttribute(
-            final String attributeId,
-            final Collection<StringAttribute> attributeValues) {
+    protected void cacheAttribute(
+        final String attributeId,
+        final Collection<StringAttribute> attributeValues) {
 
         cacheAttribute(ctx, resourceId, attributeId, attributeValues);
     }
@@ -216,8 +216,8 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The attribute value.
      * @aa
      */
-    protected final void cacheAttribute(
-            final String attributeId, final String attributeValue) {
+    protected void cacheAttribute(
+        final String attributeId, final String attributeValue) {
 
         cacheAttribute(ctx, resourceId, attributeId, attributeValue);
     }
@@ -278,14 +278,14 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     /**
      * @return the inMetadata
      */
-    protected final boolean isInMetadata() {
+    protected boolean isInMetadata() {
         return inMetadata;
     }
 
     /**
      * @param inMetadata the inMetadata to set
      */
-    protected final void setInMetadata(final boolean inMetadata) {
+    protected void setInMetadata(final boolean inMetadata) {
         this.inMetadata = inMetadata;
     }
 }

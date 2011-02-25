@@ -118,7 +118,7 @@ public class EscidocEngineConfigurationFactory
      * @return a client EngineConfiguration
      */
     @Override
-    public final EngineConfiguration getClientEngineConfig() {
+    public EngineConfiguration getClientEngineConfig() {
 
         return new FileProvider(clientConfigFile);
     }
@@ -129,7 +129,7 @@ public class EscidocEngineConfigurationFactory
      * @return a server EngineConfiguration
      */
     @Override
-    public final EngineConfiguration getServerEngineConfig() {
+    public EngineConfiguration getServerEngineConfig() {
 
         return new FileProvider(serverConfigFile);
     }

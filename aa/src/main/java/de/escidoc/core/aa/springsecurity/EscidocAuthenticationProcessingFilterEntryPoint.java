@@ -58,9 +58,9 @@ public class EscidocAuthenticationProcessingFilterEntryPoint extends
      * @aa
      */
     @Override
-    protected final String buildRedirectUrlToLoginPage(final HttpServletRequest request,
-                                                       final HttpServletResponse response,
-                                                       final AuthenticationException authException) {
+    protected String buildRedirectUrlToLoginPage(final HttpServletRequest request,
+            final HttpServletResponse response,
+            final AuthenticationException authException) {
         final String loginForm =
             determineUrlToUseForThisRequest(request, response, authException);
         if (loginForm.startsWith("http://") || loginForm.startsWith("https://")) {

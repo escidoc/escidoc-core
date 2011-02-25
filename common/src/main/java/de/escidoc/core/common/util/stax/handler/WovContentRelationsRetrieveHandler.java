@@ -72,7 +72,7 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
         }
     }
 
-    public final String getStatus() {
+    public String getStatus() {
         return this.status;
     }
 

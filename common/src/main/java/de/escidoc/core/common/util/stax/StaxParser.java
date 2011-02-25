@@ -142,7 +142,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @return The path to the current element consisting of local names.
      */
     @Override
-    public final String getCurPath() {
+    public String getCurPath() {
         return curPath.toString();
     }
 
@@ -168,14 +168,14 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *            implementations. Same as call <code>clearHandlerChain()</code>
      *            and add every single Handler in list order.
      */
-    public final void setHandlerChain(final List<DefaultHandler> hc) {
+    public void setHandlerChain(final List<DefaultHandler> hc) {
         handlerChain = hc;
     }
 
     /**
      * Removes all Handlers from this Parser.
      */
-    public final void clearHandlerChain() {
+    public void clearHandlerChain() {
         handlerChain.clear();
     }
 
@@ -237,7 +237,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws TmeException
      *             eSciDoc specific; thrown by some Handlers.
      */
-    public final void parse(final byte[] in) throws XMLStreamException,
+    public void parse(final byte[] in) throws XMLStreamException,
         ContentModelNotFoundException, ContextNotFoundException,
         MissingContentException, LockingException,
         ReadonlyElementViolationException, MissingAttributeValueException,
@@ -313,7 +313,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws XmlCorruptedException
      *             eSciDoc specific; thrown by some Handlers.
      */
-    public final void parse(final InputStream in) throws XMLStreamException,
+    public void parse(final InputStream in) throws XMLStreamException,
         ContentModelNotFoundException, ContextNotFoundException,
         MissingContentException, LockingException,
         ReadonlyElementViolationException, MissingAttributeValueException,
@@ -396,7 +396,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws XmlCorruptedException
      *             eSciDoc specific; thrown by some Handlers.
      */
-    public final void parse(final String xml) throws EncodingSystemException,
+    public void parse(final String xml) throws EncodingSystemException,
         ReadonlyElementViolationException, ReadonlyAttributeViolationException,
         ContentModelNotFoundException, ContextNotFoundException,
         MissingContentException, LockingException,
@@ -481,7 +481,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws XmlCorruptedException
      *             eSciDoc specific; thrown by some Handlers.
      */
-    protected final void parseStream(final InputStream in) throws XMLStreamException,
+    protected void parseStream(final InputStream in) throws XMLStreamException,
         ContentModelNotFoundException, ContextNotFoundException,
         MissingContentException, LockingException,
         ReadonlyElementViolationException, MissingAttributeValueException,
@@ -735,7 +735,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     /**
      * Set start state.
      */
-    protected final void init() {
+    protected void init() {
         startElements.clear();
         startElements.push(new StartElement("root", null, null, null));
         curPath.setLength(0);
@@ -748,7 +748,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @param dh
      *            A DefaultHandler implementation.
      */
-    public final void addHandler(final DefaultHandler dh) {
+    public void addHandler(final DefaultHandler dh) {
         handlerChain.add(dh);
     }
 
@@ -758,7 +758,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @param c
      *            A Collection of DefaultHandler implementations.
      */
-    public final void addHandler(final Collection<DefaultHandler> c) {
+    public void addHandler(final Collection<DefaultHandler> c) {
         handlerChain.addAll(c);
     }
 
@@ -833,7 +833,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws XmlCorruptedException
      *             eSciDoc specific; thrown by some Handlers.
      */
-    protected final void handle(final StartElement startElement)
+    protected void handle(final StartElement startElement)
         throws XMLStreamException, ContentModelNotFoundException,
         ContextNotFoundException, LockingException,
         MissingAttributeValueException, ReadonlyAttributeViolationException,
@@ -949,7 +949,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws XmlCorruptedException
      *             eSciDoc specific; thrown by some Handlers.
      */
-    protected final void handle(final EndElement endElement)
+    protected void handle(final EndElement endElement)
         throws MissingContentException, ReadonlyElementViolationException,
         AlreadyExistsException, ReferencedResourceNotFoundException,
         RelationPredicateNotFoundException, ContentRelationNotFoundException,
@@ -1037,7 +1037,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * @throws TmeException
      *             eSciDoc specific; thrown by some Handlers.
      */
-    protected final void handle(final String characters) throws XMLStreamException,
+    protected void handle(final String characters) throws XMLStreamException,
         ReadonlyElementViolationException, MissingElementValueException,
         ReferencedResourceNotFoundException,
         RelationPredicateNotFoundException,

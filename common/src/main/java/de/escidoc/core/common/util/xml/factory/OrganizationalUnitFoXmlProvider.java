@@ -69,14 +69,14 @@ public class OrganizationalUnitFoXmlProvider
         return PROVIDER;
     }
 
-    public final String getOrganizationalUnitFoXml(final Map values)
+    public String getOrganizationalUnitFoXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(ORGANIZATIONAL_UNIT_RESOURCE_NAME,
             ORGANIZATIONAL_UNIT_PATH, values);
     }
 
-    public final String getRelsExt(final Map values) throws WebserverSystemException {
+    public String getRelsExt(final Map values) throws WebserverSystemException {
 
         return getXml(RELS_EXT_RESOURCE_NAME, ORGANIZATIONAL_UNIT_PATH, values);
     }

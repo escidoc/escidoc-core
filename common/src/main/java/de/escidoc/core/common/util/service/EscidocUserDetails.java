@@ -58,7 +58,7 @@ public class EscidocUserDetails implements UserDetails {
      * @return Returns the id of the user.
      * @aa
      */
-    public final String getId() {
+    public String getId() {
 
         return id;
     }
@@ -71,7 +71,7 @@ public class EscidocUserDetails implements UserDetails {
      *            The id of the user.
      * @aa
      */
-    public final void setId(final String id) {
+    public void setId(final String id) {
 
         this.id = id;
     }
@@ -82,7 +82,7 @@ public class EscidocUserDetails implements UserDetails {
      * @return Returns the real name of the user as stored in the UserAccount.
      * @aa
      */
-    public final String getRealName() {
+    public String getRealName() {
 
         return realName;
     }
@@ -95,7 +95,7 @@ public class EscidocUserDetails implements UserDetails {
      *            The real name of the user as stored in the UserAccount.
      * @aa
      */
-    public final void setRealName(final String realName) {
+    public void setRealName(final String realName) {
 
         this.realName = realName;
     }
@@ -120,7 +120,7 @@ public class EscidocUserDetails implements UserDetails {
      * @aa
      */
     @Override
-    public final GrantedAuthority[] getAuthorities() {
+    public GrantedAuthority[] getAuthorities() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -134,7 +134,7 @@ public class EscidocUserDetails implements UserDetails {
      * @aa
      */
     @Override
-    public final String getPassword() {
+    public String getPassword() {
         // TODO Auto-generated method stub
         return null;
     }
@@ -148,7 +148,7 @@ public class EscidocUserDetails implements UserDetails {
      * @aa
      */
     @Override
-    public final String getUsername() {
+    public String getUsername() {
 
         return getRealName();
     }
@@ -162,7 +162,7 @@ public class EscidocUserDetails implements UserDetails {
      * @aa
      */
     @Override
-    public final boolean isAccountNonExpired() {
+    public boolean isAccountNonExpired() {
         // TODO Auto-generated method stub
         return false;
     }
@@ -176,7 +176,7 @@ public class EscidocUserDetails implements UserDetails {
      * @aa
      */
     @Override
-    public final boolean isAccountNonLocked() {
+    public boolean isAccountNonLocked() {
         // TODO Auto-generated method stub
         return false;
     }
@@ -190,7 +190,7 @@ public class EscidocUserDetails implements UserDetails {
      * @aa
      */
     @Override
-    public final boolean isCredentialsNonExpired() {
+    public boolean isCredentialsNonExpired() {
         // TODO Auto-generated method stub
         return false;
     }
@@ -204,7 +204,7 @@ public class EscidocUserDetails implements UserDetails {
      * @aa
      */
     @Override
-    public final boolean isEnabled() {
+    public boolean isEnabled() {
         // TODO Auto-generated method stub
         return false;
     }

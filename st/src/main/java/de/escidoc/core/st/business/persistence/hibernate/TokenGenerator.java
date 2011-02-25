@@ -60,8 +60,8 @@ public class TokenGenerator implements org.hibernate.id.IdentifierGenerator {
      *      org.hibernate.engine.SessionImplementor, java.lang.Object)
      */
     @Override
-    public final Serializable generate(final SessionImplementor sessionImplementor,
-                                       final Object arg1) {
+    public Serializable generate(final SessionImplementor sessionImplementor,
+                                 final Object arg1) {
 
         return ID_PREFIX + uuidGenerator.nextUUID();
     }

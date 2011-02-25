@@ -232,7 +232,7 @@ public class NewComponentExtractor extends DefaultHandler {
         writer.writeAttribute(prefix, uri, attributeName, attributeValue);
     }
 
-    public final List getOutputStreams() {
+    public List getOutputStreams() {
         return outputStreams;
     }
 }

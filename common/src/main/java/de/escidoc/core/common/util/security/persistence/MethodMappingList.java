@@ -100,7 +100,7 @@ public class MethodMappingList {
      * 
      * @return The number of mapping for before-mappings.
      */
-    public final int sizeBefore() {
+    public int sizeBefore() {
 
         return methodMappingsBefore.size();
     }
@@ -110,7 +110,7 @@ public class MethodMappingList {
      * 
      * @return The number of mapping for after-mappings.
      */
-    public final int sizeAfter() {
+    public int sizeAfter() {
 
         return methodMappingsAfter.size();
     }
@@ -120,7 +120,7 @@ public class MethodMappingList {
      * 
      * @return Returns an <code>Iterator</code> over before-mappings.
      */
-    public final Iterator<MethodMapping> iteratorBefore() {
+    public Iterator<MethodMapping> iteratorBefore() {
 
         return methodMappingsBefore.iterator();
     }
@@ -143,7 +143,7 @@ public class MethodMappingList {
      *            list.
      * @return Returns the specified element.
      */
-    public final MethodMapping getBefore(final int index) {
+    public MethodMapping getBefore(final int index) {
 
         return methodMappingsBefore.get(index);
     }
@@ -165,7 +165,7 @@ public class MethodMappingList {
      *
      * @return a string representation of this object
      */
-    public final String toString() {
+    public String toString() {
         return
             "[methodMappingsBefore=" + methodMappingsBefore + ','
             + "methodMappingsAfter=" + methodMappingsAfter + ']';

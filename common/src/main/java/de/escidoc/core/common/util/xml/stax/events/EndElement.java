@@ -62,7 +62,7 @@ public class EndElement extends AbstractElement {
         this.prefix = parser.getPrefix();
     }
 
-    public final String getLocalName() {
+    public String getLocalName() {
         return localName;
     }
 
@@ -70,7 +70,7 @@ public class EndElement extends AbstractElement {
         this.localName = localName;
     }
 
-    public final String getNamespace() {
+    public String getNamespace() {
         return namespace;
     }
 
@@ -78,7 +78,7 @@ public class EndElement extends AbstractElement {
         this.namespace = namespace;
     }
 
-    public final String getPrefix() {
+    public String getPrefix() {
         return prefix;
     }
 

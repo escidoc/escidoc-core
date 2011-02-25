@@ -178,7 +178,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
     /**
      * @return Returns the title.
      */
-    public final List<String> getContentRelationsData() {
+    public List<String> getContentRelationsData() {
         return relationsData;
     }
 

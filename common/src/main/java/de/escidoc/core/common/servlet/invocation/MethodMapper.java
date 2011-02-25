@@ -311,10 +311,10 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @common
      */
     @Override
-    public final BeanMethod getMethod(
-            final String uri, final String query,
-            final Map<String, String[]> parameters, final String httpMethod,
-            final Object body) throws MethodNotFoundException,
+    public BeanMethod getMethod(
+        final String uri, final String query,
+        final Map<String, String[]> parameters, final String httpMethod,
+        final Object body) throws MethodNotFoundException,
         EncodingSystemException {
         String decodedUri = null;
         try {
@@ -343,7 +343,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return The resource name.
      * @common
      */
-    public final Resource getResource(final String requestUri) {
+    public Resource getResource(final String requestUri) {
 
         final String uri;
         if (requestUri.endsWith("/")) {
@@ -392,7 +392,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return The definitions.
      * @common
      */
-    public final Collection getDefinitions(final String type) {
+    public Collection getDefinitions(final String type) {
 
         return getDefinitions().get(type);
     }
@@ -406,8 +406,8 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *            The collection of definitions.
      * @common
      */
-    public final void putDefinitions(
-            final String type, final Collection<Node> newDefinitions) {
+    public void putDefinitions(
+        final String type, final Collection<Node> newDefinitions) {
 
         if (this.definitions == null) {
             this.definitions = new HashMap<String, Collection>();
@@ -419,7 +419,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return Returns the definitions.
      * @common
      */
-    public final Map<String, Collection> getDefinitions() {
+    public Map<String, Collection> getDefinitions() {
         return definitions;
     }
 
@@ -437,7 +437,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return Returns the resources.
      * @common
      */
-    public final Map<String, Resource> getResources() {
+    public Map<String, Resource> getResources() {
         return resources;
     }
 
@@ -446,7 +446,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *            The resources to set.
      * @common
      */
-    public final void setResources(final Map<String, Resource> resources) {
+    public void setResources(final Map<String, Resource> resources) {
         this.resources = resources;
     }
 }

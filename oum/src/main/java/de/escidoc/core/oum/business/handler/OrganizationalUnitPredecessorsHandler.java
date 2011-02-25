@@ -148,7 +148,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
      * 
      * @return list of predecessors
      */
-    public final List<Predecessor> getPredecessors() {
+    public List<Predecessor> getPredecessors() {
         return predecessors;
     }
 

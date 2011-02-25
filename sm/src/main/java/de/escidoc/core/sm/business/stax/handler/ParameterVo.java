@@ -48,7 +48,7 @@ public class ParameterVo {
     /**
      * @return the name
      */
-    public final String getName() {
+    public String getName() {
         return name;
     }
     /**
@@ -60,37 +60,37 @@ public class ParameterVo {
     /**
      * @return the stringValue
      */
-    public final String getStringValue() {
+    public String getStringValue() {
         return stringValue;
     }
     /**
      * @param stringValue the stringValue to set
      */
-    public final void setStringValue(final String stringValue) {
+    public void setStringValue(final String stringValue) {
         this.stringValue = stringValue;
     }
     /**
      * @return the decimalValue
      */
-    public final Double getDecimalValue() {
+    public Double getDecimalValue() {
         return decimalValue;
     }
     /**
      * @param decimalValue the decimalValue to set
      */
-    public final void setDecimalValue(final Double decimalValue) {
+    public void setDecimalValue(final Double decimalValue) {
         this.decimalValue = decimalValue;
     }
     /**
      * @return the dateValue
      */
-    public final ReadableDateTime getDateValue() {
+    public ReadableDateTime getDateValue() {
         return dateValue;
     }
     /**
      * @param dateValue the dateValue to set
      */
-    public final void setDateValue(final DateTime dateValue) {
+    public void setDateValue(final DateTime dateValue) {
         this.dateValue = dateValue;
     }
 

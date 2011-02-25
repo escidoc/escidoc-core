@@ -228,7 +228,7 @@ public class RoleFilter extends CqlFilter {
      * @return all property names for that filter
      */
     @Override
-    public final Set<String> getPropertyNames() {
+    public Set<String> getPropertyNames() {
         final Set<String> result = new TreeSet<String>();
         result.addAll(super.getPropertyNames());
         return result;

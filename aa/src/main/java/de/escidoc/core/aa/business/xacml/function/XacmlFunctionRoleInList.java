@@ -95,7 +95,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      * @aa
      */
     @Override
-    public final EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
+    public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
 
         try {
             final AttributeValue[] argValues =

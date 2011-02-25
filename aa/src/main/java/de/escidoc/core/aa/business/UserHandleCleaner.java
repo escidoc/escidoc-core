@@ -36,7 +36,7 @@ public class UserHandleCleaner {
      * 
      * @st
      */
-    public final void cleanUp() {
+    public void cleanUp() {
 
         LOG.debug("Cleaning up the staging file area");
 

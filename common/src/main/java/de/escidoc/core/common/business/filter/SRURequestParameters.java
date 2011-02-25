@@ -92,27 +92,27 @@ public abstract class SRURequestParameters {
         }
     }
 
-    public final String getQuery() {
+    public String getQuery() {
         return query;
     }
 
-    public final int getLimit() {
+    public int getLimit() {
         return limit;
     }
 
-    public final int getOffset() {
+    public int getOffset() {
         return offset;
     }
 
-    public final boolean isExplain() {
+    public boolean isExplain() {
         return explain;
     }
 
-    public final String getUser() {
+    public String getUser() {
         return user;
     }
 
-    public final String getRole() {
+    public String getRole() {
         return role;
     }
 

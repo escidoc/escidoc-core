@@ -80,7 +80,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
      * 
      * @return Map with properties of Component.
      */
-    public final Map<String, String> getProperties() {
+    public Map<String, String> getProperties() {
         return this.properties;
     }
 

@@ -138,7 +138,7 @@ public class ParameterImpl implements Parameter {
      * {@inheritDoc}
      */
     @Override
-    public final String toString() {
+    public String toString() {
         return "ParameterImpl{" +
                 "name='" + name + '\'' +
                 ", datevalue=" + datevalue +

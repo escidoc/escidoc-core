@@ -49,7 +49,7 @@ public class UserGroup extends UserGroupBase {
      *         {@link de.escidoc.core.aa.business.persistence.UserGroup}
      *         object.
      */
-    public final String getHref() {
+    public String getHref() {
 
         return XmlUtility.getUserGroupHref(getId());
     }

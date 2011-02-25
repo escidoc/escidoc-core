@@ -60,11 +60,11 @@ public class StartElementWithText extends StartElement {
         this.elementText = elementText;
     }
 
-    public final String getElementText() {
+    public String getElementText() {
         return elementText;
     }
 
-    public final void setElementText(final String elementText) {
+    public void setElementText(final String elementText) {
         this.elementText = elementText;
     }
 

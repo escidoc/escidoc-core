@@ -110,7 +110,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      *      #getXml(java.lang.String, java.lang.String, java.util.Map)
      */
     @Override
-    public final String getXml(
+    public String getXml(
             final String resource, final String path, final Map values)
             throws WebserverSystemException {
 

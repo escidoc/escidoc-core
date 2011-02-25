@@ -98,7 +98,7 @@ public class ComponentsHandler extends DefaultHandler {
      * @throws IOException
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws InvalidContentException, MissingAttributeValueException,
         XMLStreamException, WebserverSystemException, IOException {
 
@@ -132,7 +132,7 @@ public class ComponentsHandler extends DefaultHandler {
      * @throws XMLStreamException
      */
     @Override
-    public final EndElement endElement(final EndElement element)
+    public EndElement endElement(final EndElement element)
         throws MissingContentException, WebserverSystemException {
 
         final String currentPath = parser.getCurPath();
@@ -162,7 +162,7 @@ public class ComponentsHandler extends DefaultHandler {
      * 
      */
     @Override
-    public final String characters(final String s, final StartElement element)
+    public String characters(final String s, final StartElement element)
         throws InvalidContentException, MissingElementValueException,
         WebserverSystemException, XMLStreamException {
 
@@ -178,7 +178,7 @@ public class ComponentsHandler extends DefaultHandler {
      * 
      * @return Vector with all Components.
      */
-    public final List<ComponentCreate> getComponents() {
+    public List<ComponentCreate> getComponents() {
 
         return this.components;
     }

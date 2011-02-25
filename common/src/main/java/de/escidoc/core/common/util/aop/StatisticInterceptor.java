@@ -148,7 +148,7 @@ public class StatisticInterceptor implements Ordered {
      * @common
      */
     @Override
-    public final int getOrder() {
+    public int getOrder() {
         return AopUtil.PRECEDENCE_STATISTIC_INTERCEPTOR;
     }
 

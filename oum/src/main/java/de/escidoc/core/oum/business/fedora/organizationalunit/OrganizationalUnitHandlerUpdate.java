@@ -74,10 +74,10 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    protected final void setMdRecords(
-            final Map<String, ByteArrayOutputStream> xml,
-            final Map<String, Map<String, String>> mdAttributesMap,
-            final String escidocMdRecordnsUri) throws StreamNotFoundException,
+    protected void setMdRecords(
+        final Map<String, ByteArrayOutputStream> xml,
+        final Map<String, Map<String, String>> mdAttributesMap,
+        final String escidocMdRecordnsUri) throws StreamNotFoundException,
         SystemException {
         final Map<String, Datastream> updated = new HashMap<String, Datastream>();
 
@@ -132,7 +132,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    protected final void updateState(final String state) throws SystemException {
+    protected void updateState(final String state) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         final String buildNumber = Utility.getInstance().getBuildNumber();
@@ -168,7 +168,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws TripleStoreSystemException
      *             Thrown if request of TripleStore failed.
      */
-    protected final void checkUpToDate(final String timestamp)
+    protected void checkUpToDate(final String timestamp)
         throws OptimisticLockingException, WebserverSystemException,
         TripleStoreSystemException, FedoraSystemException {
 
@@ -188,7 +188,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws InvalidStatusException
      *             If the organizational unit is in another state.
      */
-    protected final void checkInState(final String methodText, final String state)
+    protected void checkInState(final String methodText, final String state)
         throws InvalidStatusException {
 
         if (!getOrganizationalUnit().getPublicStatus().equals(state)) {
@@ -214,8 +214,8 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    protected final void checkParentsInState(
-            final String methodText, final String state)
+    protected void checkParentsInState(
+        final String methodText, final String state)
         throws InvalidStatusException, SystemException {
 
         final List<String> parents = getOrganizationalUnit().getParents();
@@ -244,7 +244,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    protected final void checkCreateParentsConditions(final Iterable<String> parents)
+    protected void checkCreateParentsConditions(final Iterable<String> parents)
         throws InvalidStatusException, SystemException {
 
         // all parents must be in state created or opened
@@ -273,7 +273,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             If anything else fails.
      */
-    protected final void checkUpdateParentsConditions(final Collection<String> parents)
+    protected void checkUpdateParentsConditions(final Collection<String> parents)
         throws InvalidStatusException, SystemException {
 
         final String status = getOrganizationalUnit().getPublicStatus();
@@ -327,7 +327,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    protected final void checkWithoutChildren(final String methodText)
+    protected void checkWithoutChildren(final String methodText)
         throws OrganizationalUnitHasChildrenException, SystemException {
 
         if (!getOrganizationalUnit().getChildrenIds().isEmpty()) {
@@ -350,7 +350,7 @@ public class OrganizationalUnitHandlerUpdate
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    protected final void checkWithoutChildrenOrChildrenClosed(final String methodText)
+    protected void checkWithoutChildrenOrChildrenClosed(final String methodText)
         throws InvalidStatusException, SystemException {
 
         final List<String> children = getOrganizationalUnit().getChildrenIds();

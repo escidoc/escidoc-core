@@ -244,7 +244,7 @@ public class LinkStaxHandler extends DefaultHandler {
      *             Thrown exceptions depend on sub class implementation.
      * @common
      */
-    protected final void endParentElement(final EndElement parentElement)
+    protected void endParentElement(final EndElement parentElement)
         throws EscidocException {
     }
 
@@ -259,7 +259,7 @@ public class LinkStaxHandler extends DefaultHandler {
      *             Thrown exceptions depend on sub class implementation.
      * @common
      */
-    protected final void startLinkElement(final StartElement linkElement)
+    protected void startLinkElement(final StartElement linkElement)
         throws EscidocException {
     }
 
@@ -294,7 +294,7 @@ public class LinkStaxHandler extends DefaultHandler {
      *            The currently processed <code>EndElement</code>.
      * @common
      */
-    protected final void checkReady(final EndElement endElement) {
+    protected void checkReady(final EndElement endElement) {
 
         setReady();
     }
@@ -303,7 +303,7 @@ public class LinkStaxHandler extends DefaultHandler {
      * @return the href
      * @common
      */
-    public final String getHref() {
+    public String getHref() {
         return href;
     }
 
@@ -311,7 +311,7 @@ public class LinkStaxHandler extends DefaultHandler {
      * @return the objid
      * @common
      */
-    public final String getObjid() {
+    public String getObjid() {
         return objid;
     }
 

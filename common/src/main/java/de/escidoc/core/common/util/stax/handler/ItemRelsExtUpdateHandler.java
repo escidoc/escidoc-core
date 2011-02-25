@@ -240,7 +240,7 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
      *            XPath
      */
     @Deprecated
-    public final void setPath(final String path) {
+    public void setPath(final String path) {
         this.path = path;
     }
 

@@ -444,7 +444,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * @throws WebserverSystemException
      *             e
      */
-    public final void setPdpHandler() throws WebserverSystemException {
+    public void setPdpHandler() throws WebserverSystemException {
         if (this.pdp == null) {
             this.pdp = BeanLocator.locatePolicyDecisionPoint();
         }
@@ -455,7 +455,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * @return the renderer
      * 
      */
-    public final SetDefinitionRendererInterface getRenderer() {
+    public SetDefinitionRendererInterface getRenderer() {
         if (renderer == null) {
             renderer = new VelocityXmlSetDefinitionRenderer();
         }

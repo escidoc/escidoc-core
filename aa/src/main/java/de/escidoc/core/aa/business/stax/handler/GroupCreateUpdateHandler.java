@@ -139,7 +139,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
         return s;
     }
     
-    public final Map<String, String> getGroupProperties() {
+    public Map<String, String> getGroupProperties() {
         return this.groupProperties;
     }
     

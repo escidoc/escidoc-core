@@ -86,7 +86,7 @@ public class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
      * @return
      * @throws WebserverSystemException
      */
-    public final String getItemFoXml(final Map values)
+    public String getItemFoXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(ITEM_RESOURCE_NAME, ITEM_PATH, values);
@@ -98,7 +98,7 @@ public class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
      * @return
      * @throws WebserverSystemException
      */
-    public final String getComponentFoXml(final Map values)
+    public String getComponentFoXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(COMPONENT_RESOURCE_NAME, COMPONENT_PATH, values);
@@ -124,7 +124,7 @@ public class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
      * @return
      * @throws WebserverSystemException
      */
-    public final String getComponentDefaultDc(final Map values)
+    public String getComponentDefaultDc(final Map values)
         throws WebserverSystemException {
 
         return getXml(DEFAULT_DC_RESOURCE_NAME, COMPONENT_PATH, values);
@@ -136,7 +136,7 @@ public class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
      * @return
      * @throws WebserverSystemException
      */
-    public final String getItemRelsExt(final Map values)
+    public String getItemRelsExt(final Map values)
         throws WebserverSystemException {
 
         return getXml(RELS_EXT_RESOURCE_NAME, ITEM_RELS_EXT_PATH, values);
@@ -148,7 +148,7 @@ public class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
      * @return
      * @throws WebserverSystemException
      */
-    public final String getComponentRelsExt(final Map values)
+    public String getComponentRelsExt(final Map values)
         throws WebserverSystemException {
 
         return getXml(RELS_EXT_RESOURCE_NAME, COMPONENT_RELS_EXT_PATH, values);

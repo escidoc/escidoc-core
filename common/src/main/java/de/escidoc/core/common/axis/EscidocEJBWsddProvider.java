@@ -54,7 +54,7 @@ public class EscidocEJBWsddProvider extends WSDDProvider {
      * @see org.apache.axis.deployment.wsdd.WSDDProvider#getName()
      */
     @Override
-    public final String getName() {
+    public String getName() {
 
         return NAME;
     }
@@ -71,9 +71,9 @@ public class EscidocEJBWsddProvider extends WSDDProvider {
      *      org.apache.axis.EngineConfiguration)
      */
     @Override
-    public final Handler newProviderInstance(
-            final WSDDService wsddservice,
-            final EngineConfiguration engineconfiguration) throws Exception {
+    public Handler newProviderInstance(
+        final WSDDService wsddservice,
+        final EngineConfiguration engineconfiguration) throws Exception {
 
         return new EscidocEjbProvider();
     }

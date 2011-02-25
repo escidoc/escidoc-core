@@ -75,7 +75,7 @@ public class RelationsXmlProvider extends InfrastructureXmlProvider {
      * @throws WebserverSystemException
      *             Thrown if rending failed
      */
-    public final String getRelationsXml(final Map values)
+    public String getRelationsXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(RELATIONS_RESOURCE_NAME, RELATIONS_PATH, values);

@@ -225,7 +225,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
      * 
      * @return map of properties without organizational units.
      */
-    public final Map<String, Object> getPropertiesMap() {
+    public Map<String, Object> getPropertiesMap() {
         return this.propertiesMap;
     }
 
@@ -234,7 +234,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
      * 
      * @return organizational units
      */
-    public final Collection<String> getOrganizationalUnits() {
+    public Collection<String> getOrganizationalUnits() {
         return this.orgunits;
     }
 }

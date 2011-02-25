@@ -24,7 +24,7 @@ public class VelocityOutputLogger implements LogChute {
      *             Shouldn't happen.
      */
     @Override
-    public final void init(final RuntimeServices arg0) throws Exception {
+    public void init(final RuntimeServices arg0) throws Exception {
     }
 
     /**
@@ -35,7 +35,7 @@ public class VelocityOutputLogger implements LogChute {
      * @return true if log level is enabled, false otherwise
      */
     @Override
-    public final boolean isLevelEnabled(final int arg0) {
+    public boolean isLevelEnabled(final int arg0) {
         return true;
     }
 
@@ -50,7 +50,7 @@ public class VelocityOutputLogger implements LogChute {
      *            Exception
      */
     @Override
-    public final void log(final int arg0, final String arg1, final Throwable arg2) {
+    public void log(final int arg0, final String arg1, final Throwable arg2) {
 
         LOG.debug(arg1);
     }
@@ -64,7 +64,7 @@ public class VelocityOutputLogger implements LogChute {
      *            log message
      */
     @Override
-    public final void log(final int arg0, final String arg1) {
+    public void log(final int arg0, final String arg1) {
         LOG.debug(arg1);
     }
 }

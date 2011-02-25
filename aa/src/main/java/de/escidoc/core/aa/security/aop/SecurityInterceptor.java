@@ -292,7 +292,7 @@ public class SecurityInterceptor implements Ordered {
      * @common
      */
     @Override
-    public final int getOrder() {
+    public int getOrder() {
 
         return AopUtil.PRECEDENCE_SECURITY_INTERCEPTOR;
     }

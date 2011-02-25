@@ -109,7 +109,7 @@ public class ComponentMetadataHandler extends DefaultHandler {
      * @param objids
      *            list of objid of Components.
      */
-    public final void setObjids(final List<String> objids) {
+    public void setObjids(final List<String> objids) {
         this.pids = objids;
     }
 
@@ -254,14 +254,14 @@ public class ComponentMetadataHandler extends DefaultHandler {
     /**
      * @return Returns metadata attributes.
      */
-    public final Map<String, Map<String, Map<String, String>>> getMetadataAttributes() {
+    public Map<String, Map<String, Map<String, String>>> getMetadataAttributes() {
         return this.metadataAttributes;
     }
 
     /**
      * @return Returns a map with a namespaces.
      */
-    public final Map<String, String> getNamespacesMap() {
+    public Map<String, String> getNamespacesMap() {
         return this.escidocMdNamespacesMap;
     }
 }

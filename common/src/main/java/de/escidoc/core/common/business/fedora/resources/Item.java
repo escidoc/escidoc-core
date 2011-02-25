@@ -164,7 +164,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws IntegritySystemException
      * @throws EncodingSystemException
      */
-    public final void addComponent(final Component c) throws FedoraSystemException,
+    public void addComponent(final Component c) throws FedoraSystemException,
         WebserverSystemException, IntegritySystemException,
         EncodingSystemException {
 
@@ -184,7 +184,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws IntegritySystemException
      * @throws EncodingSystemException
      */
-    public final void addComponent(final String componentId)
+    public void addComponent(final String componentId)
         throws FedoraSystemException, WebserverSystemException,
         IntegritySystemException, EncodingSystemException {
 
@@ -202,7 +202,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws InvalidStatusException
      * @throws SystemException
      */
-    public final void deleteComponent(final String componentId)
+    public void deleteComponent(final String componentId)
         throws LockingException, ComponentNotFoundException,
         InvalidStatusException, SystemException {
 
@@ -224,7 +224,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws IntegritySystemException
      * @throws EncodingSystemException
      */
-    public final void deleteComponent(final FedoraResource c) throws LockingException,
+    public void deleteComponent(final FedoraResource c) throws LockingException,
         ComponentNotFoundException, InvalidStatusException,
         WebserverSystemException, TripleStoreSystemException,
         FedoraSystemException, XmlParserSystemException,
@@ -248,7 +248,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws FedoraSystemException
      * @throws SystemException
      */
-    public final Component getComponent(final String componentId)
+    public Component getComponent(final String componentId)
         throws ComponentNotFoundException, WebserverSystemException,
         FedoraSystemException, SystemException {
 
@@ -284,7 +284,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      * @throws ComponentNotFoundException
      */
-    public final Map<String, Component> getComponentsByLocalName()
+    public Map<String, Component> getComponentsByLocalName()
         throws ComponentNotFoundException, WebserverSystemException,
         FedoraSystemException, SystemException {
 
@@ -304,7 +304,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws FedoraSystemException
      * @throws SystemException
      */
-    public final Component getComponentByLocalName(final String componentName)
+    public Component getComponentByLocalName(final String componentName)
         throws ComponentNotFoundException, WebserverSystemException,
         FedoraSystemException, SystemException {
 
@@ -341,7 +341,7 @@ public class Item extends GenericVersionableResourcePid
      * @throws TripleStoreSystemException
      * @throws WebserverSystemException
      */
-    public final Collection<String> getComponentIds()
+    public Collection<String> getComponentIds()
         throws XmlParserSystemException, TripleStoreSystemException,
         WebserverSystemException {
 
@@ -431,7 +431,7 @@ public class Item extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #getRelsExt()
      */
-    public final Datastream getDc() throws FedoraSystemException,
+    public Datastream getDc() throws FedoraSystemException,
         WebserverSystemException {
 
         if (this.dc == null) {
@@ -459,7 +459,7 @@ public class Item extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    public final void setDc(final Datastream ds) throws FedoraSystemException,
+    public void setDc(final Datastream ds) throws FedoraSystemException,
         WebserverSystemException {
         // TODO should lock only be checked in handler?
         // if (this.isLocked) {
@@ -483,11 +483,11 @@ public class Item extends GenericVersionableResourcePid
      * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
      * #getGenericProperties()
      */
-    public final Datastream getCts() {
+    public Datastream getCts() {
         return this.cts;
     }
 
-    public final void setCts(final Datastream ds) throws FedoraSystemException,
+    public void setCts(final Datastream ds) throws FedoraSystemException,
         WebserverSystemException {
         // TODO should lock only be checked in handler?
         // if (this.isLocked) {
@@ -519,7 +519,7 @@ public class Item extends GenericVersionableResourcePid
      * @see de.escidoc.core.common.business.fedora.resources.interfaces.ItemInterface#getMdRecords()
      */
     @Override
-    public final Map<String, Datastream> getMdRecords() {
+    public Map<String, Datastream> getMdRecords() {
 
         return this.mdRecords;
     }
@@ -532,7 +532,7 @@ public class Item extends GenericVersionableResourcePid
      * #setMdRecords(java.util.HashMap)
      */
     @Override
-    public final void setMdRecords(final Map<String, Datastream> mdRecords)
+    public void setMdRecords(final Map<String, Datastream> mdRecords)
         throws WebserverSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException,
         TripleStoreSystemException {
@@ -586,7 +586,7 @@ public class Item extends GenericVersionableResourcePid
      * #getMdRecord(java.lang.String)
      */
     @Override
-    public final Datastream getMdRecord(final String name)
+    public Datastream getMdRecord(final String name)
         throws MdRecordNotFoundException {
         if (!this.mdRecords.containsKey(name)) {
             final String message =
@@ -608,7 +608,7 @@ public class Item extends GenericVersionableResourcePid
      */
 
     @Override
-    public final void setMdRecord(final String name, final Datastream ds)
+    public void setMdRecord(final String name, final Datastream ds)
         throws WebserverSystemException, EncodingSystemException,
         IntegritySystemException, FedoraSystemException,
         TripleStoreSystemException {
@@ -717,15 +717,15 @@ public class Item extends GenericVersionableResourcePid
         }
     }
 
-    public final Map<String, Datastream> getContentStreams() {
+    public Map<String, Datastream> getContentStreams() {
         return this.contentStreams;
     }
 
-    public final Datastream getContentStream(final String name) {
+    public Datastream getContentStream(final String name) {
         return this.contentStreams.get(name);
     }
 
-    public final void setContentStream(final String name, final Datastream ds)
+    public void setContentStream(final String name, final Datastream ds)
         throws FedoraSystemException, WebserverSystemException {
         // don't trust the handler
         final List<String> alternateIDs = new ArrayList<String>();
@@ -765,8 +765,8 @@ public class Item extends GenericVersionableResourcePid
         }
     }
 
-    public final void setContentStreams(
-            final Map<String, Datastream> contentStreamDatastreams)
+    public void setContentStreams(
+        final Map<String, Datastream> contentStreamDatastreams)
         throws FedoraSystemException, WebserverSystemException,
         IntegritySystemException {
 
@@ -868,7 +868,7 @@ public class Item extends GenericVersionableResourcePid
      * @see de.escidoc.core.common.business.fedora.resources.GenericResource#getResourceProperties()
      */
     @Override
-    public final Map<String, String> getResourceProperties()
+    public Map<String, String> getResourceProperties()
         throws TripleStoreSystemException, WebserverSystemException {
 
         if (!this.resourceInit) {
@@ -898,7 +898,7 @@ public class Item extends GenericVersionableResourcePid
      *             Thrown if connection or writing to Fedora failed or internal
      *             errors.
      */
-    public final boolean persistComponents() throws ComponentNotFoundException,
+    public boolean persistComponents() throws ComponentNotFoundException,
         SystemException {
 
         boolean resourceUpdated = false;
@@ -938,7 +938,7 @@ public class Item extends GenericVersionableResourcePid
      *             Thrown in case of internal failure.
      */
     @Override
-    public final String persist() throws FedoraSystemException,
+    public String persist() throws FedoraSystemException,
         WebserverSystemException {
 
         try {

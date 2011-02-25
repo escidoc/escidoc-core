@@ -59,7 +59,7 @@ public class ObjectAttributeResolver {
      * @throws AuthenticationException
      *             e
      */
-    public final Map<String, String> resolveObjectAttributes(final String objectId)
+    public Map<String, String> resolveObjectAttributes(final String objectId)
         throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
         return resolveObjectAttributes(objectId, false);
@@ -80,7 +80,7 @@ public class ObjectAttributeResolver {
      * @throws AuthenticationException
      *             e
      */
-    public final String resolveObjectType(final String objectId)
+    public String resolveObjectType(final String objectId)
         throws MissingMethodParameterException, SystemException,
         AuthorizationException, AuthenticationException {
         final Map<String, String> objectAttributes =

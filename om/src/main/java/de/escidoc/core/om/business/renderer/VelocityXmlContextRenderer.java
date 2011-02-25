@@ -116,9 +116,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *             Thrown if character encoding failed.
      */
     @Override
-    public final String renderAdminDescriptors(
-            final FedoraContextHandler contextHandler,
-            final Map<String, Object> values) throws FedoraSystemException,
+    public String renderAdminDescriptors(
+        final FedoraContextHandler contextHandler,
+        final Map<String, Object> values) throws FedoraSystemException,
         WebserverSystemException, EncodingSystemException {
 
         addCommonValues(contextHandler.getContext(), values);
@@ -171,9 +171,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      */
 
     @Override
-    public final String renderAdminDescriptor(
-            final FedoraContextHandler contextHandler, final String name,
-            final Datastream admDesc, final boolean isRoot)
+    public String renderAdminDescriptor(
+        final FedoraContextHandler contextHandler, final String name,
+        final Datastream admDesc, final boolean isRoot)
         throws EncodingSystemException, WebserverSystemException {
         if (admDesc.isDeleted()) {
             return "";
@@ -377,8 +377,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            Value Map for Velocity
      */
-    protected final void addStructuralRelationsNamespaceValues(
-            final Map<String, Object> values) {
+    protected void addStructuralRelationsNamespaceValues(
+        final Map<String, Object> values) {
 
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
             Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
@@ -392,7 +392,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @param values
      *            Value Map for Velocity
      */
-    protected final void addPropertiesNamespaceValues(final Map<String, Object> values) {
+    protected void addPropertiesNamespaceValues(final Map<String, Object> values) {
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
@@ -464,8 +464,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown if retrieving OU context failed.
      */
-    public final Collection<Map<String, String>> getOrganizationalUnitsContext(
-            final Iterable<String> ouids) throws SystemException {
+    public Collection<Map<String, String>> getOrganizationalUnitsContext(
+        final Iterable<String> ouids) throws SystemException {
 
         final Collection<Map<String, String>> ousContext =
             new ArrayList<Map<String, String>>();
@@ -486,7 +486,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @throws SystemException
      *             Thrown if instance of TripleStore failed.
      */
-    public final Map<String, String> getOrganizationalUnitContext(final String id)
+    public Map<String, String> getOrganizationalUnitContext(final String id)
         throws SystemException {
         final Map<String, String> ouContext = new HashMap<String, String>();
 

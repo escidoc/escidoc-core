@@ -62,7 +62,7 @@ public class RoleGrant extends RoleGrantBase {
      * @return Returns the title.
      * @aa
      */
-    public final String getTitle() {
+    public String getTitle() {
 
         final String objectTitle = getObjectTitle();
         if (objectTitle != null) {
@@ -79,7 +79,7 @@ public class RoleGrant extends RoleGrantBase {
      * @return Returns the Href
      * @aa
      */
-    public final String getHref() {
+    public String getHref() {
         if (this.getUserAccountByUserId() != null) {
             return XmlUtility.getUserAccountGrantHref(this
                 .getUserAccountByUserId().getId(), this.getId());
@@ -142,7 +142,7 @@ public class RoleGrant extends RoleGrantBase {
      * 
      * @aa
      */
-    public final Date getLastModificationDate() {
+    public Date getLastModificationDate() {
 
         if (getRevocationDate() != null) {
             return getRevocationDate();

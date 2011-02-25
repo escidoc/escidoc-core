@@ -62,8 +62,8 @@ public class EscidocIdGenerator implements org.hibernate.id.IdentifierGenerator 
      * @common
      */
     @Override
-    public final Serializable generate(
-            final SessionImplementor sessionImplementor, final Object arg1) {
+    public Serializable generate(
+        final SessionImplementor sessionImplementor, final Object arg1) {
 
         try {
             return getIdProvider().getNextPid();
@@ -84,7 +84,7 @@ public class EscidocIdGenerator implements org.hibernate.id.IdentifierGenerator 
      *             Thrown in case of an internal system error.
      * @common
      */
-    public final EscidocIdProvider getIdProvider() throws SystemException {
+    public EscidocIdProvider getIdProvider() throws SystemException {
 
         if (idProvider == null) {
             idProvider =

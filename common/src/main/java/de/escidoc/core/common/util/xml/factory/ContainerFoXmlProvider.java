@@ -76,7 +76,7 @@ public class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
      */
-    public final String getContainerFoXml(final Map values)
+    public String getContainerFoXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(CONTAINER_RESOURCE_NAME, CONTAINER_PATH, values);
@@ -91,7 +91,7 @@ public class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
      */
-    public final String getContainerRelsExt(final Map values)
+    public String getContainerRelsExt(final Map values)
         throws WebserverSystemException {
 
         return getXml(RELS_EXT_RESOURCE_NAME, RELS_EXT_PATH, values);

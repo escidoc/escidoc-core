@@ -69,7 +69,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
      * @common
      */
     @Override
-    public final Authentication authenticate(final Authentication authentication)
+    public Authentication authenticate(final Authentication authentication)
         throws AuthenticationException {
 
         LOG.debug("authenticate");
@@ -96,7 +96,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
      * @common
      */
     @Override
-    public final boolean supports(final Class cls) {
+    public boolean supports(final Class cls) {
 
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(cls);
     }

@@ -57,7 +57,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @param listener
      *            listener which will be added to the list
      */
-    public final void addContainerListener(final ResourceListener listener) {
+    public void addContainerListener(final ResourceListener listener) {
         containerListeners.add(listener);
     }
 
@@ -77,7 +77,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @param listener
      *            listener which will be added to the list
      */
-    public final void addContainerMemberListener(final ResourceListener listener) {
+    public void addContainerMemberListener(final ResourceListener listener) {
         containerMemberListeners.add(listener);
     }
 
@@ -102,7 +102,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected final void fireContainerCreated(final String id, final String xmlData)
+    protected void fireContainerCreated(final String id, final String xmlData)
         throws SystemException {
         final String restXml;
         final String soapXml;
@@ -130,7 +130,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected final void fireContainerDeleted(final String id) throws SystemException {
+    protected void fireContainerDeleted(final String id) throws SystemException {
         for (final ResourceListener containerListener : containerListeners) {
             containerListener.resourceDeleted(id);
         }
@@ -148,7 +148,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected final void fireContainerModified(final String id)
+    protected void fireContainerModified(final String id)
         throws ContainerNotFoundException, SystemException {
 
         setContainer(id);
@@ -179,7 +179,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected final void fireContainerModified(final String id, final String xmlData)
+    protected void fireContainerModified(final String id, final String xmlData)
         throws SystemException {
         final String restXml;
         final String soapXml;
@@ -206,7 +206,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      * @throws SystemException
      *             One of the listeners threw an exception.
      */
-    protected final void fireContainerMembersModified(final String id)
+    protected void fireContainerMembersModified(final String id)
         throws SystemException {
         final String restXml = null;
         final String soapXml = null;

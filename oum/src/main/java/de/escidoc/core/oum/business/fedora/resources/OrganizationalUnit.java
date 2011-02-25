@@ -179,7 +179,7 @@ public class OrganizationalUnit extends GenericResource
      * @throws TripleStoreSystemException
      *             Thrown if request TripleStore failed.
      */
-    public final List<Predecessor> getPredecessors(final String ouId)
+    public List<Predecessor> getPredecessors(final String ouId)
         throws TripleStoreSystemException {
 
         final List<Predecessor> predecessors = new ArrayList<Predecessor>();
@@ -251,7 +251,7 @@ public class OrganizationalUnit extends GenericResource
      * @throws TripleStoreSystemException
      *             Thrown if request TripleStore failed.
      */
-    public final List<Predecessor> getSuccessors(final String ouId)
+    public List<Predecessor> getSuccessors(final String ouId)
         throws TripleStoreSystemException {
 
         final List<Predecessor> successors = new ArrayList<Predecessor>();
@@ -319,7 +319,7 @@ public class OrganizationalUnit extends GenericResource
     /**
      * @return the createdByTitle
      */
-    public final String getCreatedByTitle() {
+    public String getCreatedByTitle() {
         return createdByTitle;
     }
 
@@ -334,7 +334,7 @@ public class OrganizationalUnit extends GenericResource
     /**
      * @return the hasChildren
      */
-    public final boolean hasChildren() {
+    public boolean hasChildren() {
         return hasChildren;
     }
 
@@ -346,7 +346,7 @@ public class OrganizationalUnit extends GenericResource
      * @throws SystemException
      *             If access to the triplestore fails.
      */
-    public final List<String> getChildrenIds() throws SystemException {
+    public List<String> getChildrenIds() throws SystemException {
 
         return TripleStoreUtility.getInstance().getChildren(getId());
     }
@@ -362,7 +362,7 @@ public class OrganizationalUnit extends GenericResource
     /**
      * @return the modifiedBy
      */
-    public final String getModifiedBy() {
+    public String getModifiedBy() {
         return modifiedBy;
     }
 
@@ -377,7 +377,7 @@ public class OrganizationalUnit extends GenericResource
     /**
      * @return the modifiedByTitle
      */
-    public final String getModifiedByTitle() {
+    public String getModifiedByTitle() {
         return modifiedByTitle;
     }
 
@@ -392,7 +392,7 @@ public class OrganizationalUnit extends GenericResource
     /**
      * @return the name
      */
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
@@ -410,7 +410,7 @@ public class OrganizationalUnit extends GenericResource
      * @return the title
      */
     @Override
-    public final String getTitle() {
+    public String getTitle() {
         return this.name;
     }
 
@@ -427,7 +427,7 @@ public class OrganizationalUnit extends GenericResource
      * OrganizationalUnitInterface#getMdRecord(java.lang.String)
      */
     @Override
-    public final Datastream getMdRecord(final String name)
+    public Datastream getMdRecord(final String name)
         throws FedoraSystemException, StreamNotFoundException {
 
         return new Datastream(name, getId(), null);
@@ -444,7 +444,7 @@ public class OrganizationalUnit extends GenericResource
      * OrganizationalUnitInterface#getMdRecords()
      */
     @Override
-    public final Map<String, Datastream> getMdRecords() throws FedoraSystemException,
+    public Map<String, Datastream> getMdRecords() throws FedoraSystemException,
         IntegritySystemException {
 
         final Map<String, Datastream> result =
@@ -484,7 +484,7 @@ public class OrganizationalUnit extends GenericResource
      *      de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
     @Override
-    public final void setMdRecord(final String name, final Datastream ds)
+    public void setMdRecord(final String name, final Datastream ds)
         throws SystemException {
         final String mimeType = ds.getMimeType();
         String type = Constants.DEFAULT_ALTID_TYPE;
@@ -566,7 +566,7 @@ public class OrganizationalUnit extends GenericResource
      * @throws FedoraSystemException
      */
     @Override
-    public final void setMdRecords(final Map<String, Datastream> mdRecords)
+    public void setMdRecords(final Map<String, Datastream> mdRecords)
         throws SystemException {
         // Container.setMdRecords throws FedoraSystemException, WebserverSystemException,
         // TripleStoreSystemException, IntegritySystemException,
@@ -624,7 +624,7 @@ public class OrganizationalUnit extends GenericResource
      *             Thrown in case of an internal system error caused by failed
      *             Fedora access.
      */
-    public final Datastream getDc() throws StreamNotFoundException,
+    public Datastream getDc() throws StreamNotFoundException,
         FedoraSystemException {
 
         return new Datastream(Datastream.DC_DATASTREAM, getId(), null);
@@ -642,7 +642,7 @@ public class OrganizationalUnit extends GenericResource
      *             Thrown in case of an internal system error caused by failed
      *             fedora access.
      */
-    public final void setDc(final Datastream ds) throws StreamNotFoundException,
+    public void setDc(final Datastream ds) throws StreamNotFoundException,
         SystemException {
 
         try {
@@ -660,7 +660,7 @@ public class OrganizationalUnit extends GenericResource
     /**
      * @return the publicStatus
      */
-    public final String getPublicStatus() {
+    public String getPublicStatus() {
         return publicStatus;
     }
 
@@ -675,7 +675,7 @@ public class OrganizationalUnit extends GenericResource
     /**
      * @return the parentOus
      */
-    public final List<String> getParents() {
+    public List<String> getParents() {
         return parents;
     }
 
@@ -684,7 +684,7 @@ public class OrganizationalUnit extends GenericResource
      * 
      * @return the predecessors of the OU
      */
-    public final List<Predecessor> getPredecessors() {
+    public List<Predecessor> getPredecessors() {
         return this.predecessors;
     }
 
@@ -697,7 +697,7 @@ public class OrganizationalUnit extends GenericResource
      * @throws TripleStoreSystemException
      *             Thrown if TripleStore request failed.
      */
-    public final List<Predecessor> getSuccessors() throws TripleStoreSystemException,
+    public List<Predecessor> getSuccessors() throws TripleStoreSystemException,
         WebserverSystemException {
         if (this.successors == null) {
             this.successors = getSuccessors(getId());
@@ -708,7 +708,7 @@ public class OrganizationalUnit extends GenericResource
     /**
      * @return the description
      */
-    public final String getDescription() {
+    public String getDescription() {
         return description;
     }
 

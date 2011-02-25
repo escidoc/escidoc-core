@@ -67,8 +67,8 @@ public abstract class GenericResourceCreate {
      *             Thrown if converting of characters to default character set
      *             failed.
      */
-    protected final List<Map<String, String>> getMetadataRecordsMap(
-            final Iterable<MdRecordCreate> mdRecords) throws SystemException {
+    protected List<Map<String, String>> getMetadataRecordsMap(
+        final Iterable<MdRecordCreate> mdRecords) throws SystemException {
 
         final List<Map<String, String>> values =
             new ArrayList<Map<String, String>>();
@@ -96,8 +96,8 @@ public abstract class GenericResourceCreate {
      * @throws EncodingSystemException
      *             Thrown if the conversion to default encoding failed.
      */
-    public final String getDC(
-            final MdRecordCreate mdRecord, final String contentModelId)
+    public String getDC(
+        final MdRecordCreate mdRecord, final String contentModelId)
         throws WebserverSystemException, EncodingSystemException {
         return XmlUtility.createDC(mdRecord.getNameSpace(), mdRecord.getContent(), this.objid, contentModelId);
     }
@@ -150,14 +150,14 @@ public abstract class GenericResourceCreate {
      * @param objid
      *            the objid to set
      */
-    public final void setObjid(final String objid) {
+    public void setObjid(final String objid) {
         this.objid = objid;
     }
 
     /**
      * @return the objid
      */
-    public final String getObjid() {
+    public String getObjid() {
         return objid;
     }
 
@@ -165,7 +165,7 @@ public abstract class GenericResourceCreate {
      * @param buildNumber
      *            the buildNumber to set
      */
-    public final void setBuildNumber(final String buildNumber) {
+    public void setBuildNumber(final String buildNumber) {
         this.buildNumber = buildNumber;
     }
 
@@ -176,7 +176,7 @@ public abstract class GenericResourceCreate {
      * @throws WebserverSystemException
      *             Thrown by Utility instance.
      */
-    public final String getBuildNumber() throws WebserverSystemException {
+    public String getBuildNumber() throws WebserverSystemException {
         if (this.buildNumber == null) {
             this.buildNumber = Utility.getInstance().getBuildNumber();
         }

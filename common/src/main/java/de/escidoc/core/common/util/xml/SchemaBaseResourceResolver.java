@@ -66,9 +66,9 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
      * 
      */
     @Override
-    public final LSInput resolveResource(final String type,
-                                         final String namespaceURI, final String publicId,
-                                         final String systemId, final String baseURI) {
+    public LSInput resolveResource(final String type,
+            final String namespaceURI, final String publicId,
+            final String systemId, final String baseURI) {
         if (systemId != null) {
             final Matcher schemaLocationMatcher =
                     PATTERN_SCHEMA_LOCATION_BASE.matcher(systemId);

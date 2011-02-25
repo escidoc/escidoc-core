@@ -74,7 +74,7 @@ public class ItemProperties {
     /**
      * @return the currentVersion
      */
-    public final VersionProperties getCurrentVersion() {
+    public VersionProperties getCurrentVersion() {
         return currentVersion;
     }
 
@@ -89,7 +89,7 @@ public class ItemProperties {
     /**
      * @return the latestVersion
      */
-    public final VersionProperties getLatestVersion() {
+    public VersionProperties getLatestVersion() {
         return latestVersion;
     }
 
@@ -97,15 +97,15 @@ public class ItemProperties {
      * @param latestReleasedVersion
      *            the latestReleasedVersion to set
      */
-    public final void setLatestReleasedVersion(
-            final VersionProperties latestReleasedVersion) {
+    public void setLatestReleasedVersion(
+        final VersionProperties latestReleasedVersion) {
         this.latestReleasedVersion = latestReleasedVersion;
     }
 
     /**
      * @return the latestReleasedVersion
      */
-    public final VersionProperties getLatestReleasedVersion() {
+    public VersionProperties getLatestReleasedVersion() {
         return latestReleasedVersion;
     }
 
@@ -120,7 +120,7 @@ public class ItemProperties {
     /**
      * @return the objectProperties
      */
-    public final ObjectProperties getObjectProperties() {
+    public ObjectProperties getObjectProperties() {
         return objectProperties;
     }
 
@@ -128,14 +128,14 @@ public class ItemProperties {
      * @param contentModelSpecific
      *            the contentModelSpecific to set
      */
-    public final void setContentModelSpecific(final String contentModelSpecific) {
+    public void setContentModelSpecific(final String contentModelSpecific) {
         this.contentModelSpecific = contentModelSpecific;
     }
 
     /**
      * @return the contentModelSpecific
      */
-    public final String getContentModelSpecific() {
+    public String getContentModelSpecific() {
         return contentModelSpecific;
     }
 

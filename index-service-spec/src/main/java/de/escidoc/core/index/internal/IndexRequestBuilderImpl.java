@@ -81,7 +81,7 @@ public class IndexRequestBuilderImpl extends IndexRequestBuilder {
      * {@inheritDoc}
      */
     @Override
-    public final String toString() {
+    public String toString() {
         return "IndexRequestBuilderImpl{" +
                 "indexRequest=" + indexRequest +
                 '}';

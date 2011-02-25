@@ -211,7 +211,7 @@ public class StructMapCreateHandler extends DefaultHandler {
      * 
      * @return struct-map entries.
      */
-    public final List<String> getEntries() {
+    public List<String> getEntries() {
         return entries;
     }
 

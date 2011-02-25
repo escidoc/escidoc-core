@@ -79,7 +79,7 @@ public class UnsecuredActionStaxHandler extends DefaultHandler {
      * @return Returns the unsecured actions in a {@link String} with spaces as
      *         delimiters.
      */
-    public final String getUnsecuredActions() {
+    public String getUnsecuredActions() {
 
         return unsecuredActions.toString();
     }

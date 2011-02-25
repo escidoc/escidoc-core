@@ -95,7 +95,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
      * 
      * @return terms set.
      */
-    public final Set<String> getTerms() {
+    public Set<String> getTerms() {
         return terms;
     }
 
@@ -103,7 +103,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
      * Reset number of Terms in last document.
      * 
      */
-    public final void resetNoOfDocumentTerms() {
+    public void resetNoOfDocumentTerms() {
         noOfDocumentTerms = 0;
     }
 
@@ -112,7 +112,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
      * 
      * @return number of Terms in last document.
      */
-    public final int getNoOfDocumentTerms() {
+    public int getNoOfDocumentTerms() {
         return noOfDocumentTerms;
     }
 
@@ -121,7 +121,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
      * 
      * @return last term parsed.
      */
-    public final String getLastTerm() {
+    public String getLastTerm() {
         return lastTerm;
     }
 

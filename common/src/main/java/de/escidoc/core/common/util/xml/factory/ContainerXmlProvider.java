@@ -95,19 +95,19 @@ public class ContainerXmlProvider extends InfrastructureXmlProvider {
         return PROVIDER;
     }
 
-    public final String getContainerXml(final Map values)
+    public String getContainerXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(CONTAINER_RESOURCE_NAME, CONTAINER_PATH, values);
     }
 
-    public final String getPropertiesXml(final Map values)
+    public String getPropertiesXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(PROPERTIES_RESOURCE_NAME, PROPERTIES_PATH, values);
     }
 
-    public final String getStructMapXml(final Map values)
+    public String getStructMapXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(STRUCTMAP_RESOURCE_NAME, STRUCTMAP_PATH, values);
@@ -139,7 +139,7 @@ public class ContainerXmlProvider extends InfrastructureXmlProvider {
         return getXml(MEMBER_LIST_RESOURCE_NAME, MEMBER_LIST_PATH, values);
     }
 
-    public final String getParentsXml(final Map values)
+    public String getParentsXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(PARENTS_RESOURCE_NAME, COMMON_PATH, values);
@@ -151,7 +151,7 @@ public class ContainerXmlProvider extends InfrastructureXmlProvider {
         return getXml(CONTAINER_LIST_RESOURCE_NAME, CONTAINER_LIST_PATH, values);
     }
 
-    public final String getResourcesXml(final Map values)
+    public String getResourcesXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(RESOURCES_RESOURCE_NAME, RESOURCES_PATH, values);

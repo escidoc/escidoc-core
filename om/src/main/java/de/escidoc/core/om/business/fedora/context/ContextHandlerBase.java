@@ -54,7 +54,7 @@ public class ContextHandlerBase extends HandlerBase {
     /**
      * @return Return the Context.
      */
-    public final Context getContext() {
+    public Context getContext() {
         return (this.context);
     }
 
@@ -71,7 +71,7 @@ public class ContextHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If anything else fails.
      */
-    public final void setContext(final String id) throws ContextNotFoundException,
+    public void setContext(final String id) throws ContextNotFoundException,
         SystemException {
 
         this.context = new Context(id);
@@ -82,7 +82,7 @@ public class ContextHandlerBase extends HandlerBase {
      * 
      * @return renderer
      */
-    public final ContextRendererInterface getRenderer() {
+    public ContextRendererInterface getRenderer() {
         if (this.renderer == null) {
             this.renderer = new VelocityXmlContextRenderer();
         }
@@ -93,7 +93,7 @@ public class ContextHandlerBase extends HandlerBase {
      * @return Returns the utility.
      */
     @Override
-    public final Utility getUtility() {
+    public Utility getUtility() {
         if (this.utility == null) {
             this.utility = Utility.getInstance();
         }
@@ -111,7 +111,7 @@ public class ContextHandlerBase extends HandlerBase {
      * @throws SystemException
      *             If anything else fails.
      */
-    protected final void checkStatus(final String status)
+    protected void checkStatus(final String status)
         throws InvalidStatusException, SystemException {
         final String objectStatus =
             getTripleStoreUtility().getPropertiesElements(this.context.getId(),

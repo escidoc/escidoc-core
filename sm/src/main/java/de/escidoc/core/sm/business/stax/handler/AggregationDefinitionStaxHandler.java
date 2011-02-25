@@ -345,7 +345,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @param aggregationDefinition the aggregationDefinition
      * @throws SystemException e
      */
-    public final void setAggregationDefinition(
+    public void setAggregationDefinition(
             final AggregationDefinition aggregationDefinition) 
                                         throws SystemException {
         this.aggregationDefinition = aggregationDefinition;
@@ -397,14 +397,14 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
     /**
      * @return the aggregationDefinition
      */
-    public final AggregationDefinition getAggregationDefinition() {
+    public AggregationDefinition getAggregationDefinition() {
         return aggregationDefinition;
     }
 
     /**
      * @return the aggregationStatisticDataSelectors
      */
-    public final Set<AggregationStatisticDataSelector>
+    public Set<AggregationStatisticDataSelector> 
                 getAggregationStatisticDataSelectors() {
         return aggregationStatisticDataSelectors;
     }
@@ -412,7 +412,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
     /**
      * @return the aggregationTables
      */
-    public final Set<AggregationTable> getAggregationTables() {
+    public Set<AggregationTable> getAggregationTables() {
         return aggregationTables;
     }
 

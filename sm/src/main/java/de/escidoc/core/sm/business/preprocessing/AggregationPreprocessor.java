@@ -212,9 +212,9 @@ public class AggregationPreprocessor {
      *             e
      * 
      */
-    public final AggregationPreprocessorVo processAggregation(
-            final AggregationDefinition aggregationDefinitionIn,
-            final Iterable statisticDatas)
+    public AggregationPreprocessorVo processAggregation(
+        final AggregationDefinition aggregationDefinitionIn,
+        final Iterable statisticDatas)
         throws StatisticPreprocessingSystemException,
         SqlDatabaseSystemException {
         xpathFactory = XPathFactory.newInstance();
@@ -641,9 +641,9 @@ public class AggregationPreprocessor {
      *             e
      * @tx
      */
-    public final void persistAggregation(
-            final AggregationPreprocessorVo aggregationPreprocessorVo,
-            final String aggregationDefinitionId,
+    public void persistAggregation(
+            final AggregationPreprocessorVo aggregationPreprocessorVo, 
+            final String aggregationDefinitionId, 
             final Date date) 
                                     throws SqlDatabaseSystemException {
         // dont process statistic-data for this date and

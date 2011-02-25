@@ -68,7 +68,7 @@ public class RemoteJndiLocator extends JndiObjectFactoryBean {
      *             From the lookup
      */
     @Override
-    public final void afterPropertiesSet() throws NamingException {
+    public void afterPropertiesSet() throws NamingException {
         try {
             setInitialContextJndiProperties();
         }
@@ -95,7 +95,7 @@ public class RemoteJndiLocator extends JndiObjectFactoryBean {
      * @return boolean true because is a Spring singleton
      */
     @Override
-    public final boolean isSingleton() {
+    public boolean isSingleton() {
         return true;
     }
 

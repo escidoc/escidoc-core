@@ -95,7 +95,7 @@ public class RelationHandler2 extends DefaultHandler {
      *             Thrown if check of transport protocol failed.
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws InvalidContentException, WebserverSystemException {
 
         if (this.relationXPath.equals(parser.getCurPath())
@@ -171,7 +171,7 @@ public class RelationHandler2 extends DefaultHandler {
      * @return StAX EndElement
      */
     @Override
-    public final EndElement endElement(final EndElement element) {
+    public EndElement endElement(final EndElement element) {
 
         return element;
     }
@@ -187,7 +187,7 @@ public class RelationHandler2 extends DefaultHandler {
     /**
      * @return the relation
      */
-    public final RelationCreate getRelation() {
+    public RelationCreate getRelation() {
         return relation;
     }
 

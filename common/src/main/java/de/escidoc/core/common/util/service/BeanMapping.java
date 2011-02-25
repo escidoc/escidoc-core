@@ -45,7 +45,7 @@ public class BeanMapping {
      * 
      * @return Class The
      */
-    public final Class getBean() {
+    public Class getBean() {
         return bean;
     }
 
@@ -64,7 +64,7 @@ public class BeanMapping {
      * 
      * @return String Returns the NamespaceUri
      */
-    public final String getNamespaceUri() {
+    public String getNamespaceUri() {
         return namespaceUri;
     }
 
@@ -83,7 +83,7 @@ public class BeanMapping {
      * 
      * @return String The Namespace
      */
-    public final String getNamespace() {
+    public String getNamespace() {
         return namespace;
     }
 

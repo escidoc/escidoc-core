@@ -88,7 +88,7 @@ public class SemanticQueryHandler extends DefaultHandler {
      * 
      * @return the format of triple store request
      */
-    public final String getFormat() {
+    public String getFormat() {
         return this.format;
     }
 
@@ -96,7 +96,7 @@ public class SemanticQueryHandler extends DefaultHandler {
      * 
      * @return the query
      */
-    public final String getQuery() {
+    public String getQuery() {
         return this.query;
     }
 
@@ -110,7 +110,7 @@ public class SemanticQueryHandler extends DefaultHandler {
     /**
      * @return the query predicate part
      */
-    public final String getPredicate() {
+    public String getPredicate() {
         return predicate;
     }
 

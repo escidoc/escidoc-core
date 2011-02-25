@@ -110,7 +110,7 @@ public class MetadataHandler2 extends DefaultHandler {
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
-    public final StartElement startElement(final StartElement element)
+    public StartElement startElement(final StartElement element)
         throws MissingAttributeValueException, WebserverSystemException,
         InvalidContentException {
 
@@ -168,7 +168,7 @@ public class MetadataHandler2 extends DefaultHandler {
      * @om
      */
     @Override
-    public final EndElement endElement(final EndElement element)
+    public EndElement endElement(final EndElement element)
         throws WebserverSystemException {
 
         if (this.metadataXPath.equals(parser.getCurPath())
@@ -211,7 +211,7 @@ public class MetadataHandler2 extends DefaultHandler {
      * @om
      */
     @Override
-    public final String characters(final String s, final StartElement element)
+    public String characters(final String s, final StartElement element)
         throws WebserverSystemException {
 
         if (this.parsingMetadata) {
@@ -226,7 +226,7 @@ public class MetadataHandler2 extends DefaultHandler {
      * 
      * @return Return the MetadataRecord.
      */
-    public final MdRecordCreate getMetadataRecord() {
+    public MdRecordCreate getMetadataRecord() {
 
         return this.metadataRecord;
     }

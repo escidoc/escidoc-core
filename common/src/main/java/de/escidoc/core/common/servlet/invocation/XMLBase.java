@@ -146,7 +146,7 @@ public class XMLBase {
      *             If anything fails.
      * @common
      */
-    public final NodeList parse(final String xPath, final Node node)
+    public NodeList parse(final String xPath, final Node node)
         throws TransformerException {
         return XPathAPI.selectNodeList(node, xPath);
     }
@@ -161,7 +161,7 @@ public class XMLBase {
      * @return The value of teh attribute.
      * @common
      */
-    public final String getAttributeValue(final Node node, final String attribute) {
+    public String getAttributeValue(final Node node, final String attribute) {
 
         String result = null;
         if (node != null) {
@@ -185,7 +185,7 @@ public class XMLBase {
      *            The name of the child node.
      * @return The child node.
      */
-    public final Node getChild(final Node node, final String childName) {
+    public Node getChild(final Node node, final String childName) {
 
         Node result = null;
         try {
@@ -209,7 +209,7 @@ public class XMLBase {
      * @return The resulting xPath.
      * @common
      */
-    public final String appendToXpath(final String xPath, final String path) {
+    public String appendToXpath(final String xPath, final String path) {
 
         String result = xPath;
         if ((xPath != null) && (path != null)) {
@@ -242,7 +242,7 @@ public class XMLBase {
      *             If anything fails.
      * @common
      */
-    public final Document getDocument(final String filename)
+    public Document getDocument(final String filename)
         throws ParserConfigurationException, SAXException, IOException {
 
         final DocumentBuilderFactory docBuilderFactory =
@@ -299,7 +299,7 @@ public class XMLBase {
      * @return The file input stream.
      * @common
      */
-    public final InputStream getFileInputStream(final String filename) {
+    public InputStream getFileInputStream(final String filename) {
         getLogger().debug("getFileInputStream: Looking for file: " + filename);
         return this.getClass().getResourceAsStream(filename);
     }
@@ -314,7 +314,7 @@ public class XMLBase {
      *             If anything fails.
      * @common
      */
-    public final String getFileContents(final String filename) throws IOException {
+    public String getFileContents(final String filename) throws IOException {
 
         getLogger().info("looking for file " + filename);
 

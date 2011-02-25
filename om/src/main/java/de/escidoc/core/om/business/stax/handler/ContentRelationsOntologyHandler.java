@@ -209,7 +209,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
         }
     }
 
-    public final List<String> getPredicates() {
+    public List<String> getPredicates() {
         return this.predicates;
     }
 }

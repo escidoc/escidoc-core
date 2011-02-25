@@ -120,10 +120,10 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws SystemException
      *             Thrown in case of internal error.
      */
-    protected final void setComponents(
-            final Map<String, Object> components,
-            final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
-            final Map<String, String> nsUris) throws ComponentNotFoundException,
+    protected void setComponents(
+        final Map<String, Object> components,
+        final Map<String, Map<String, Map<String, String>>> mdRecordsAttributes,
+        final Map<String, String> nsUris) throws ComponentNotFoundException,
         LockingException, InvalidStatusException, SystemException,
         InvalidContentException, MissingContentException,
         FileNotFoundException, XmlCorruptedException,
@@ -202,10 +202,10 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      *             Thrown if Component with provided id was not found.
      * 
      */
-    protected final void setComponent(
-            final Component c, final Map streams,
-            final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
-            final String nsUri) throws InvalidContentException, SystemException,
+    protected void setComponent(
+        final Component c, final Map streams,
+        final Map<String, Map<String, String>> mdRecordsMetadataAttribures,
+        final String nsUri) throws InvalidContentException, SystemException,
         MissingContentException, FileNotFoundException,
         ComponentNotFoundException {
 
@@ -371,7 +371,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws IntegritySystemException
      *             If the integrity of the repository is violated.
      */
-    protected final void setContentTypeSpecificProperties(final String xml)
+    protected void setContentTypeSpecificProperties(final String xml)
         throws FedoraSystemException, LockingException,
         WebserverSystemException, TripleStoreSystemException,
         EncodingSystemException, IntegritySystemException {
@@ -414,9 +414,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws ComponentNotFoundException
      *             Thrown if Component with provided objid was not found.
      */
-    protected final void setComponentContent(
-            final Component component, final String xml, final String fileName,
-            final String mimeType) throws MissingContentException,
+    protected void setComponentContent(
+        final Component component, final String xml, final String fileName,
+        final String mimeType) throws MissingContentException,
         InvalidContentException, FileNotFoundException,
         ComponentNotFoundException, SystemException {
 

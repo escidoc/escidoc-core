@@ -124,7 +124,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final String getRequestURLAsString(final URL url)
+    public String getRequestURLAsString(final URL url)
         throws WebserverSystemException {
 
         final HttpResponse httpResponse = getRequestURL(url);
@@ -147,8 +147,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final String getRequestURLAsString(
-            final URL url, final String username, final String password)
+    public String getRequestURLAsString(
+        final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         final HttpResponse httpResponse = getRequestURL(url, username, password);
@@ -188,7 +188,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final HttpResponse getRequestURL(final URL url)
+    public HttpResponse getRequestURL(final URL url)
         throws WebserverSystemException {
 
         final String username;
@@ -224,8 +224,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final HttpResponse getRequestURL(
-            final URL url, final String username, final String password)
+    public HttpResponse getRequestURL(
+        final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         setAuthentication(url, username, password);
@@ -243,7 +243,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final HttpResponse getRequestURL(final URL url, final Cookie cookie)
+    public HttpResponse getRequestURL(final URL url, final Cookie cookie)
         throws WebserverSystemException {
 
         return get(url.toString(), cookie);
@@ -317,9 +317,9 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final HttpResponse putRequestURL(
-            final URL url, final String body, final String username,
-            final String password) throws WebserverSystemException {
+    public HttpResponse putRequestURL(
+        final URL url, final String body, final String username,
+        final String password) throws WebserverSystemException {
 
         setAuthentication(url, username, password);
         return put(url.toString(), body);
@@ -338,8 +338,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final HttpResponse putRequestURL(
-            final URL url, final String body, final Cookie cookie)
+    public HttpResponse putRequestURL(
+        final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
         return put(url.toString(), body, cookie);
@@ -410,9 +410,9 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final HttpResponse postRequestURL(
-            final URL url, final String body, final String username,
-            final String password) throws WebserverSystemException {
+    public HttpResponse postRequestURL(
+        final URL url, final String body, final String username,
+        final String password) throws WebserverSystemException {
 
         setAuthentication(url, username, password);
         return post(url.toString(), body);
@@ -431,8 +431,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final HttpResponse postRequestURL(
-            final URL url, final String body, final Cookie cookie)
+    public HttpResponse postRequestURL(
+        final URL url, final String body, final Cookie cookie)
         throws WebserverSystemException {
 
         return post(url.toString(), body, cookie);
@@ -491,8 +491,8 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             e
      */
-    public final void setAuthentication(
-            final URL url, final String username, final String password)
+    public void setAuthentication(
+        final URL url, final String username, final String password)
         throws WebserverSystemException {
 
         final CredentialsProvider credsProvider = new BasicCredentialsProvider();
@@ -551,7 +551,7 @@ public class ConnectionUtility {
      * @param url
      *            The URL to the resource.
      */
-    public final void resetAuthentication(final URL url) {
+    public void resetAuthentication(final URL url) {
 
         final AuthScope authScope =
             new AuthScope(url.getHost(), AuthScope.ANY_PORT,
@@ -653,7 +653,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             e
      */
-    public final DefaultHttpClient getHttpClient(final String url)
+    public DefaultHttpClient getHttpClient(final String url)
         throws WebserverSystemException {
         if (this.httpClient == null) {
 
@@ -945,7 +945,7 @@ public class ConnectionUtility {
      * @throws WebserverSystemException
      *             Thrown if connection failed.
      */
-    public final String readResponse(final HttpResponse httpResponse)
+    public String readResponse(final HttpResponse httpResponse)
         throws WebserverSystemException {
         try {
             return EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
@@ -959,7 +959,7 @@ public class ConnectionUtility {
      * @param timeout
      *            the timeout to set
      */
-    public final void setTimeout(final int timeout) {
+    public void setTimeout(final int timeout) {
         this.timeout = timeout;
         if (this.httpClient != null) {
 

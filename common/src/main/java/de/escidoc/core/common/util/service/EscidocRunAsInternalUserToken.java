@@ -45,7 +45,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * @return Returns the original {@link Authentication}.
      * @common
      */
-    public final Authentication getOrginalAuthentication() {
+    public Authentication getOrginalAuthentication() {
         return orginalAuthentication;
     }
 
@@ -58,7 +58,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * @common
      */
     @Override
-    public final Object getCredentials() {
+    public Object getCredentials() {
 
         return orginalAuthentication.getCredentials();
     }
@@ -72,7 +72,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * @common
      */
     @Override
-    public final Object getPrincipal() {
+    public Object getPrincipal() {
 
         return orginalAuthentication.getPrincipal();
     }
@@ -86,7 +86,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * @common
      */
     @Override
-    public final Object getDetails() {
+    public Object getDetails() {
 
         return orginalAuthentication.getDetails();
     }
@@ -100,7 +100,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * @common
      */
     @Override
-    public final GrantedAuthority[] getAuthorities() {
+    public GrantedAuthority[] getAuthorities() {
 
         return orginalAuthentication.getAuthorities();
     }
@@ -114,7 +114,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * @common
      */
     @Override
-    public final String getName() {
+    public String getName() {
 
         return orginalAuthentication.getName();
     }

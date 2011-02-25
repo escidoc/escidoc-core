@@ -97,7 +97,7 @@ public class BeanMethod {
      *             If the invocation of the method causes an error.
      * @common
      */
-    public final Object invoke(final String username, final String password)
+    public Object invoke(final String username, final String password)
         throws InvocationTargetException, MethodNotFoundException,
         WebserverSystemException {
         return invokeWithProtocol(password, true);
@@ -122,8 +122,8 @@ public class BeanMethod {
      *             If the invocation of the method causes an error.
      * @common
      */
-    public final Object invokeWithProtocol(
-            final String eSciDocUserHandle, final boolean restAccess)
+    public Object invokeWithProtocol(
+        final String eSciDocUserHandle, final boolean restAccess)
         throws InvocationTargetException, MethodNotFoundException,
         WebserverSystemException {
 
@@ -209,7 +209,7 @@ public class BeanMethod {
      * @return The String representation of the resource method.
      */
     @Override
-    public final String toString() {
+    public String toString() {
 
         return '[' + getBeanId() + '.' + getMethod() + ']';
     }
@@ -248,7 +248,7 @@ public class BeanMethod {
      * @return Returns the method name.
      * @common
      */
-    public final String getMethod() {
+    public String getMethod() {
         return method;
     }
 
@@ -265,7 +265,7 @@ public class BeanMethod {
      * @return Returns the parameters.
      * @common
      */
-    public final Object[] getParameters() {
+    public Object[] getParameters() {
         return parameters;
     }
 
@@ -290,7 +290,7 @@ public class BeanMethod {
      * @return Returns the bean id.
      * @common
      */
-    public final String getBeanId() {
+    public String getBeanId() {
         return beanId;
     }
 

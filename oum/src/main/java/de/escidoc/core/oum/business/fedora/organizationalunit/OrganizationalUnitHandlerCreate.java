@@ -72,12 +72,12 @@ public class OrganizationalUnitHandlerCreate
      * @throws SystemException
      *             If anything fails.
      */
-    protected final String getOrganizationalUnitFoxml(
-            final String id, final Map<String, Object> relsExtValues,
-            final List<String> parents,
-            final Map<String, Map<String, String>> metadataProperties,
-            final Map<String, ByteArrayOutputStream> metadataStreams,
-            final String dcStream) throws SystemException {
+    protected String getOrganizationalUnitFoxml(
+        final String id, final Map<String, Object> relsExtValues,
+        final List<String> parents,
+        final Map<String, Map<String, String>> metadataProperties,
+        final Map<String, ByteArrayOutputStream> metadataStreams,
+        final String dcStream) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);
@@ -136,9 +136,9 @@ public class OrganizationalUnitHandlerCreate
      * @throws SystemException
      *             If anything fails.
      */
-    protected final String getOrganizationalUnitRelsExt(
-            final String id, final Map<String, Object> relsExtValues,
-            final List<String> parents) throws SystemException {
+    protected String getOrganizationalUnitRelsExt(
+        final String id, final Map<String, Object> relsExtValues,
+        final List<String> parents) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);

@@ -126,7 +126,7 @@ public class FedoraOrganizationalUnitHandler
      * @param listener
      *            listener which will be added to the list
      */
-    public final void addOuListener(final ResourceListener listener) {
+    public void addOuListener(final ResourceListener listener) {
         ouListeners.add(listener);
     }
 
@@ -341,7 +341,7 @@ public class FedoraOrganizationalUnitHandler
      * @throws MissingMdRecordException
      *             If the required md-record is missing
      */
-    public final String doCreate(final String xml, final boolean isCreate)
+    public String doCreate(final String xml, final boolean isCreate)
         throws InvalidStatusException, MissingElementValueException,
         MissingAttributeValueException, SystemException,
         OrganizationalUnitNotFoundException, XmlCorruptedException,
@@ -497,7 +497,7 @@ public class FedoraOrganizationalUnitHandler
      * @oum
      */
     @Override
-    public final String retrieve(final String id)
+    public String retrieve(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
@@ -639,9 +639,9 @@ public class FedoraOrganizationalUnitHandler
      * @throws SystemException
      *             e
      */
-    protected final void updateModifiedParents(
-            final Collection<String> parentsBeforeUpdate,
-            final Collection<String> updatedParents)
+    protected void updateModifiedParents(
+        final Collection<String> parentsBeforeUpdate,
+        final Collection<String> updatedParents)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         for (final String id : parentsBeforeUpdate) {
@@ -1001,7 +1001,7 @@ public class FedoraOrganizationalUnitHandler
      * @oum
      */
     @Override
-    public final String retrieveMdRecords(final String id)
+    public String retrieveMdRecords(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
@@ -1053,7 +1053,7 @@ public class FedoraOrganizationalUnitHandler
      * @oum
      */
     @Override
-    public final String retrieveParents(final String id)
+    public String retrieveParents(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
@@ -1073,7 +1073,7 @@ public class FedoraOrganizationalUnitHandler
      *      OrganizationalUnitHandlerInterface#retrieveChildObjects(java.lang.String)
      */
     @Override
-    public final String retrieveChildObjects(final String id)
+    public String retrieveChildObjects(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
         final StringWriter result = new StringWriter();
 
@@ -1098,7 +1098,7 @@ public class FedoraOrganizationalUnitHandler
      *      OrganizationalUnitHandlerInterface#retrieveParentObjects(java.lang.String)
      */
     @Override
-    public final String retrieveParentObjects(final String id)
+    public String retrieveParentObjects(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
         final StringWriter result = new StringWriter();
 
@@ -1134,7 +1134,7 @@ public class FedoraOrganizationalUnitHandler
      *      OrganizationalUnitHandlerInterface#retrievePathList(java.lang.String)
      */
     @Override
-    public final String retrievePathList(final String id)
+    public String retrievePathList(final String id)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(id);
@@ -1366,7 +1366,7 @@ public class FedoraOrganizationalUnitHandler
      *             Thrown if render failed.
      */
     @Override
-    public final String retrieveSuccessors(final String objid)
+    public String retrieveSuccessors(final String objid)
         throws OrganizationalUnitNotFoundException, SystemException {
 
         setOrganizationalUnit(objid);

@@ -170,7 +170,7 @@ public class XacmlTarget extends Target {
      * @return
      * @see java.lang.Object#toString()
      */
-    public final String toString() {
+    public String toString() {
 
         final ByteArrayOutputStream writer = new ByteArrayOutputStream();
         encode(writer, new Indenter());

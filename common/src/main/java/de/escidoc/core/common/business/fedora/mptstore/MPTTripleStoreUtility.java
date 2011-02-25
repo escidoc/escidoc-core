@@ -520,8 +520,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * (java.lang.String, boolean, java.lang.String)
      */
     @Override
-    public final List<String> executeQueryId(
-            final String id, final boolean targetIsSubject, final String predicate)
+    public List<String> executeQueryId(
+        final String id, final boolean targetIsSubject, final String predicate)
         throws TripleStoreSystemException {
         return executeQuery(false, id, targetIsSubject, predicate);
     }
@@ -742,8 +742,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * (java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    public final String getRelation(
-            final String pid, final String fullQualifiedPropertyName)
+    public String getRelation(
+        final String pid, final String fullQualifiedPropertyName)
         throws TripleStoreSystemException {
         String result = null;
         Connection connection = null;
@@ -805,9 +805,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /**
      * 
      */
-    public final List<String> evaluate(
-            final String objectType, final Map<String, Object> filterMap,
-            final String whereClause) throws SystemException,
+    public List<String> evaluate(
+        final String objectType, final Map<String, Object> filterMap,
+        final String whereClause) throws SystemException,
         MissingMethodParameterException {
 
         return evaluate(objectType, filterMap, null, whereClause);
@@ -821,9 +821,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * (java.lang.String, java.lang.String)
      */
     @Override
-    public final List<String> evaluate(
-            final String objectType, final Map<String, Object> filterMap,
-            final String additionalConditionTriple, final String whereClause)
+    public List<String> evaluate(
+        final String objectType, final Map<String, Object> filterMap,
+        final String additionalConditionTriple, final String whereClause)
         throws SystemException, MissingMethodParameterException {
 
         final Map filter = (Map) filterMap.get("filter");
@@ -1607,7 +1607,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             Thrown if request of TripleStore failed.
      */
-    public final String getTableName(final String predicate)
+    public String getTableName(final String predicate)
         throws TripleStoreSystemException {
         String result = null;
         if (predicate != null) {
@@ -1666,7 +1666,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * reinitialize()
      */
     @Override
-    public final Object reinitialize() throws TripleStoreSystemException {
+    public Object reinitialize() throws TripleStoreSystemException {
         return setUpTableManager();
     }
 
@@ -1738,7 +1738,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public final List<String> executeSqlQuery(final String query)
+    public List<String> executeSqlQuery(final String query)
         throws TripleStoreSystemException {
 
         final List<String> result = new LinkedList<String>();
@@ -1787,7 +1787,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    public final TableManager getTableManager() throws TripleStoreSystemException {
+    public TableManager getTableManager() throws TripleStoreSystemException {
         if (tableManager == null) {
             setUpTableManager();
         }
@@ -1798,7 +1798,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @param tableManager
      *            the tableManager to set
      */
-    public final void setTableManager(final TableManager tableManager) {
+    public void setTableManager(final TableManager tableManager) {
         this.tableManager = tableManager;
     }
 

@@ -66,7 +66,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown in case of an internal database access error.
      * @aa
      */
-    public final void delete(final Object object) throws SqlDatabaseSystemException {
+    public void delete(final Object object) throws SqlDatabaseSystemException {
 
         if (object != null) {
             try {
@@ -88,7 +88,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      * 
      * @throws SqlDatabaseSystemException Thrown in case of Hibernate errors
      */
-    public final void flush() throws SqlDatabaseSystemException {
+    public void flush() throws SqlDatabaseSystemException {
         getHibernateTemplate().flush();
     }
 
@@ -102,7 +102,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown in case of an internal database access error.
      * @aa
      */
-    protected final Object save(final Object object)
+    protected Object save(final Object object)
         throws SqlDatabaseSystemException {
 
         Object result = null;
@@ -129,7 +129,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown in case of an internal database access error.
      * @aa
      */
-    protected final String saveOrUpdate(final Object object)
+    protected String saveOrUpdate(final Object object)
         throws SqlDatabaseSystemException {
 
         if (object != null) {
@@ -153,7 +153,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
-    protected final void update(final Object object)
+    protected void update(final Object object)
         throws SqlDatabaseSystemException {
 
         if (object != null) {
@@ -228,7 +228,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *         <code>null</code>.
      * @aa
      */
-    protected final Object getUniqueResult(final List<Object> results) {
+    protected Object getUniqueResult(final List<Object> results) {
 
         final int resultSize = results.size();
         if (resultSize == 1) {
@@ -250,8 +250,8 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *            
      * @return Set merged set
      */
-    protected final Set<String> mergeSets(
-            final Set<String> s1, final Set<String> s2) {
+    protected Set<String> mergeSets(
+        final Set<String> s1, final Set<String> s2) {
         if (s1 == null && s2 == null) {
             return null;
         }

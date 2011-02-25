@@ -158,7 +158,7 @@ public class Context extends GenericResource implements ContextInterface {
      * #getProperties()
      */
     @Override
-    public final Datastream getProperties() throws StreamNotFoundException,
+    public Datastream getProperties() throws StreamNotFoundException,
         FedoraSystemException {
         // if properties is unset, instantiate the Datastream
         if (this.properties == null) {
@@ -202,7 +202,7 @@ public class Context extends GenericResource implements ContextInterface {
         return this.organizationalUnits;
     }
 
-    public final void setOrganizationalUnits(final List<String> ous)
+    public void setOrganizationalUnits(final List<String> ous)
         throws InvalidContentException, TripleStoreSystemException,
         WebserverSystemException {
 
@@ -296,7 +296,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @return href.
      */
     @Override
-    public final String getHref() {
+    public String getHref() {
         return (Constants.CONTEXT_URL_BASE + getId());
     }
 
@@ -307,7 +307,7 @@ public class Context extends GenericResource implements ContextInterface {
      * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #getRelsExt()
      */
-    public final Datastream getDc() throws StreamNotFoundException,
+    public Datastream getDc() throws StreamNotFoundException,
         FedoraSystemException {
         if (this.dc == null) {
             this.dc = new Datastream("DC", getId(), null);
@@ -322,7 +322,7 @@ public class Context extends GenericResource implements ContextInterface {
      * de.escidoc.core.om.business.fedora.resources.interfaces.ContextInterface
      * #setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
      */
-    public final void setDc(final Datastream ds) throws StreamNotFoundException,
+    public void setDc(final Datastream ds) throws StreamNotFoundException,
         FedoraSystemException, WebserverSystemException,
         TripleStoreSystemException {
         // check if dc is set, is equal to ds and save to fedora
@@ -391,7 +391,7 @@ public class Context extends GenericResource implements ContextInterface {
      * #getAdminDescriptor(java.lang.String)
      */
     @Override
-    public final Datastream getAdminDescriptor(final String adminDescriptorName)
+    public Datastream getAdminDescriptor(final String adminDescriptorName)
         throws FedoraSystemException {
 
         return getAdminDescriptorsMap().get(adminDescriptorName);
@@ -406,7 +406,7 @@ public class Context extends GenericResource implements ContextInterface {
      * Datastream)
      */
     @Override
-    public final void setAdminDescriptor(final Datastream ds)
+    public void setAdminDescriptor(final Datastream ds)
         throws FedoraSystemException, WebserverSystemException {
 
         // TODO never reached by create, therefore no persist is needed. Correct
@@ -423,7 +423,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws FedoraSystemException
      *             Thrown if retrieve of datastreams fail.
      */
-    public final Map<String, Datastream> getAdminDescriptorsMap()
+    public Map<String, Datastream> getAdminDescriptorsMap()
         throws FedoraSystemException {
 
         final Collection<String> dsNames =
@@ -485,7 +485,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws SystemException
      *             If anything fails.
      */
-    public final String getModifiedBy() throws SystemException {
+    public String getModifiedBy() throws SystemException {
         return getResourceProperties().get(
             PropertyMapKeys.LATEST_VERSION_MODIFIED_BY_ID);
     }
@@ -499,7 +499,7 @@ public class Context extends GenericResource implements ContextInterface {
      * @throws WebserverSystemException
      *             If anything fails.
      */
-    public final List<String> getOrganizationalUnitObjids()
+    public List<String> getOrganizationalUnitObjids()
         throws TripleStoreSystemException, WebserverSystemException {
         return (TripleStoreUtility.getInstance().getPropertiesElementsVector(
             getId(), TripleStoreUtility.PROP_ORGANIZATIONAL_UNIT));
@@ -604,7 +604,7 @@ public class Context extends GenericResource implements ContextInterface {
      * 
      * @return true if Organizational Unit was updated. False otherwise.
      */
-    public final boolean isOuUpdated() {
+    public boolean isOuUpdated() {
         return this.ouUpdated;
     }
 

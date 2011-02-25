@@ -56,7 +56,7 @@ public class UserFilter {
      * @throws SystemException
      * @throws MissingMethodParameterException
      */
-    public final List<String> getMemberRefList(final Container container)
+    public List<String> getMemberRefList(final Container container)
         throws MissingMethodParameterException, SystemException {
 
         final List<String> memberRefs;

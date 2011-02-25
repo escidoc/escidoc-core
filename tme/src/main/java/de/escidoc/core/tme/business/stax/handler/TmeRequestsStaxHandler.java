@@ -98,7 +98,7 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
     /**
      * @return the files
      */
-    public final String[] getFiles() {
+    public String[] getFiles() {
 
         return files.toArray(new String[files.size()]);
     }

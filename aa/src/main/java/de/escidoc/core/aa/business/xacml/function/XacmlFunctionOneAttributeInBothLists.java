@@ -86,8 +86,8 @@ public class XacmlFunctionOneAttributeInBothLists extends FunctionBase {
      *      com.sun.xacml.EvaluationCtx)
      */
     @Override
-    public final EvaluationResult evaluate(
-            final List inputs, final EvaluationCtx context) {
+    public EvaluationResult evaluate(
+        final List inputs, final EvaluationCtx context) {
 
         final AttributeValue[] argValues = new AttributeValue[inputs.size()];
         final EvaluationResult result = evalArgs(inputs, context, argValues);

@@ -104,49 +104,49 @@ public class MapResult {
     /**
      * @return Returns the contentTypePredicateId.
      */
-    public final String getContentTypePredicateId() {
+    public String getContentTypePredicateId() {
         return contentTypePredicateId;
     }
 
     /**
      * @return Returns the contentTypeTitle.
      */
-    public final String getContentTypeTitle() {
+    public String getContentTypeTitle() {
         return contentTypeTitle;
     }
 
     /**
      * @return Returns the longestMatch.
      */
-    public final String getCacheId() {
+    public String getCacheId() {
         return cacheId;
     }
 
     /**
      * @return Returns the tail.
      */
-    public final String getNextAttributeId() {
+    public String getNextAttributeId() {
         return nextAttributeId;
     }
 
     /**
      * @return Returns the inverse.
      */
-    public final boolean isInverse() {
+    public boolean isInverse() {
         return inverse;
     }
 
     /**
      * @return Returns the hierarchical.
      */
-    public final boolean isHierarchical() {
+    public boolean isHierarchical() {
         return hierarchical;
     }
 
     /**
      * @return Returns the includeHierarchyBase.
      */
-    public final boolean isIncludeHierarchyBase() {
+    public boolean isIncludeHierarchyBase() {
         return includeHierarchyBase;
     }
 
@@ -168,7 +168,7 @@ public class MapResult {
      * @see java.lang.Object#toString()
      */
     @Override
-    public final String toString() {
+    public String toString() {
 
         final ToStringBuilder toStringBuilder = new ToStringBuilder(this);
         toStringBuilder.append(super.toString());
@@ -188,8 +188,8 @@ public class MapResult {
      * @param contentTypePredicateId
      *            the contentTypePredicateId to set
      */
-    public final void setContentTypePredicateId(
-            final String contentTypePredicateId) {
+    public void setContentTypePredicateId(
+        final String contentTypePredicateId) {
         this.contentTypePredicateId = contentTypePredicateId;
     }
 
@@ -197,7 +197,7 @@ public class MapResult {
      * @param contentTypeTitle
      *            the contentTypeTitle to set
      */
-    public final void setContentTypeTitle(final String contentTypeTitle) {
+    public void setContentTypeTitle(final String contentTypeTitle) {
         this.contentTypeTitle = contentTypeTitle;
     }
 
@@ -205,7 +205,7 @@ public class MapResult {
      * @param nextAttributeId
      *            the nextAttributeId to set
      */
-    public final void setNextAttributeId(final String nextAttributeId) {
+    public void setNextAttributeId(final String nextAttributeId) {
         this.nextAttributeId = nextAttributeId;
     }
 
@@ -213,7 +213,7 @@ public class MapResult {
      * @return Returns the attribute id that is resolvable by this
      *         {@link MapResult}.
      */
-    public final String getresolvableAttributeId() {
+    public String getresolvableAttributeId() {
         return resolvableAttributeId;
     }
 
@@ -223,7 +223,7 @@ public class MapResult {
      * @param resolvableAttributeId
      *            The resolvable attribute id.
      */
-    public final void setResolvableAttributeId(final String resolvableAttributeId) {
+    public void setResolvableAttributeId(final String resolvableAttributeId) {
         this.resolvableAttributeId = resolvableAttributeId;
     }
 
@@ -239,7 +239,7 @@ public class MapResult {
      * @return Returns the where clause.
      * @throws TripleStoreSystemException e
      */
-    public final StringBuffer getResolveCurrentWhereClause(
+    public StringBuffer getResolveCurrentWhereClause(
             final String objectId,
             final TripleStoreUtility tsu)
         throws TripleStoreSystemException {

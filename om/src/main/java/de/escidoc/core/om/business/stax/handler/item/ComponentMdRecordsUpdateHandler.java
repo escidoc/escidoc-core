@@ -243,14 +243,14 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
      * 
      * @return Attributes of md-record element.
      */
-    public final Map<String, Map<String, Map<String, String>>> getMetadataAttributes() {
+    public Map<String, Map<String, Map<String, String>>> getMetadataAttributes() {
         return metadataAttributes;
     }
 
     /**
      * @return Returns a map with a namespaces.
      */
-    public final Map<String, String> getNamespacesMap() {
+    public Map<String, String> getNamespacesMap() {
         return this.escidocMdNamespacesMap;
     }
 }

@@ -216,7 +216,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * 
      * @return changed values
      */
-    public final Map<String, String> getChangedValuesInRelsExt() {
+    public Map<String, String> getChangedValuesInRelsExt() {
         return (this.changedValuesInRelsExt);
     }
 
@@ -225,7 +225,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * 
      * @return changed values
      */
-    public final Map<String, String> getChangedValuesInDc() {
+    public Map<String, String> getChangedValuesInDc() {
         return (this.changedValuesInDc);
     }
 
@@ -283,7 +283,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * 
      * @return
      */
-    public final List<String> getPropertiesToRemove() {
+    public List<String> getPropertiesToRemove() {
         return deletableValues;
     }
 
@@ -291,7 +291,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * 
      * @return
      */
-    public final Map<String, String> getPropertiesToAdd() {
+    public Map<String, String> getPropertiesToAdd() {
         return valuesToAdd;
     }
 
@@ -300,7 +300,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * 
      * @return organizational units
      */
-    public final List<String> getOrganizationalUnits() {
+    public List<String> getOrganizationalUnits() {
         return this.orgunits;
     }
 

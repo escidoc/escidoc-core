@@ -143,7 +143,7 @@ public class ContentModel extends GenericVersionableResourcePid
      * @see de.escidoc.core.common.business.fedora.resources.GenericResource#getResourceProperties()
      */
     @Override
-    public final Map<String, String> getResourceProperties()
+    public Map<String, String> getResourceProperties()
         throws TripleStoreSystemException, WebserverSystemException {
 
         if (!this.resourceInit) {
@@ -178,7 +178,7 @@ public class ContentModel extends GenericVersionableResourcePid
         return dch.getPropertiesMap();
     }
 
-    public final Datastream getDc() throws FedoraSystemException,
+    public Datastream getDc() throws FedoraSystemException,
         WebserverSystemException {
 
         if (this.dc == null) {
@@ -196,7 +196,7 @@ public class ContentModel extends GenericVersionableResourcePid
         return this.dc;
     }
 
-    public final void setDc(final Datastream ds) throws FedoraSystemException,
+    public void setDc(final Datastream ds) throws FedoraSystemException,
         WebserverSystemException {
         final Datastream curDs = getDc();
         if (!ds.equals(curDs)) {
@@ -212,7 +212,7 @@ public class ContentModel extends GenericVersionableResourcePid
      * 
      * @return The content streams of this content model.
      */
-    public final Map<String, Datastream> getContentStreams() {
+    public Map<String, Datastream> getContentStreams() {
         return this.contentStreams;
     }
 
@@ -224,7 +224,7 @@ public class ContentModel extends GenericVersionableResourcePid
      * 
      * @return The specified content stream of this content model.
      */
-    public final Datastream getContentStream(final String name) {
+    public Datastream getContentStream(final String name) {
         return this.contentStreams.get(name);
     }
 
@@ -236,7 +236,7 @@ public class ContentModel extends GenericVersionableResourcePid
      * 
      * @return The specified content stream of this content model.
      */
-    public final Datastream getOtherStream(final String name) {
+    public Datastream getOtherStream(final String name) {
         return this.otherStreams.get(name);
     }
 
@@ -375,7 +375,7 @@ public class ContentModel extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public final boolean isWithdrawn() throws TripleStoreSystemException,
+    public boolean isWithdrawn() throws TripleStoreSystemException,
         WebserverSystemException {
 
         final String status = this.getProperty(PropertyMapKeys.PUBLIC_STATUS);
@@ -410,7 +410,7 @@ public class ContentModel extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public final boolean isPending() throws TripleStoreSystemException,
+    public boolean isPending() throws TripleStoreSystemException,
         WebserverSystemException {
 
         final String status = this.getProperty(PropertyMapKeys.PUBLIC_STATUS);
@@ -427,14 +427,14 @@ public class ContentModel extends GenericVersionableResourcePid
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    public final boolean isInRevision() throws TripleStoreSystemException,
+    public boolean isInRevision() throws TripleStoreSystemException,
         WebserverSystemException {
 
         final String status = this.getProperty(PropertyMapKeys.PUBLIC_STATUS);
         return status.equals(Constants.STATUS_IN_REVISION);
     }
 
-    public final List<DsTypeModel> getMdRecordDefinitionIDs()
+    public List<DsTypeModel> getMdRecordDefinitionIDs()
         throws IntegritySystemException, WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
@@ -470,7 +470,7 @@ public class ContentModel extends GenericVersionableResourcePid
         return dcmh.getDsTypeModels();
     }
 
-    public final Map<String, ResourceDefinitionCreate> getResourceDefinitions()
+    public Map<String, ResourceDefinitionCreate> getResourceDefinitions()
         throws WebserverSystemException, IntegritySystemException {
 
         if (this.resourceDefinitions == null) {
@@ -516,7 +516,7 @@ public class ContentModel extends GenericVersionableResourcePid
         return this.dsCompositeModel;
     }
 
-    public final void setDsCompositeModel(final String xml)
+    public void setDsCompositeModel(final String xml)
         throws WebserverSystemException {
 
         try {
@@ -530,7 +530,7 @@ public class ContentModel extends GenericVersionableResourcePid
         }
     }
 
-    public final void setDsCompositeModel(final Datastream ds) {
+    public void setDsCompositeModel(final Datastream ds) {
 
         if (!getDsCompositeModel().equals(ds)) {
             this.dsCompositeModel = ds;
@@ -538,8 +538,8 @@ public class ContentModel extends GenericVersionableResourcePid
         }
     }
 
-    public final void setContentStreams(
-            final Map<String, Datastream> contentStreamDatastreams)
+    public void setContentStreams(
+        final Map<String, Datastream> contentStreamDatastreams)
         throws FedoraSystemException, WebserverSystemException {
 
         final Set<String> namesInFedora = getContentStreams().keySet();
@@ -573,7 +573,7 @@ public class ContentModel extends GenericVersionableResourcePid
         }
     }
 
-    public final void setContentStream(final String name, final Datastream ds)
+    public void setContentStream(final String name, final Datastream ds)
         throws WebserverSystemException, FedoraSystemException {
         // don't trust the handler
         final List<String> alternateIDs = new ArrayList<String>();
@@ -586,7 +586,7 @@ public class ContentModel extends GenericVersionableResourcePid
         this.contentStreams.put(name, ds);
     }
 
-    public final void setOtherStream(final String name, final Datastream ds)
+    public void setOtherStream(final String name, final Datastream ds)
         throws WebserverSystemException, FedoraSystemException {
         final Datastream curDs = getOtherStream(name);
         setStream(name, ds, curDs);
@@ -660,7 +660,7 @@ public class ContentModel extends GenericVersionableResourcePid
      *             Thrown in case of internal error.
      */
     @Override
-    public final String persist() throws FedoraSystemException,
+    public String persist() throws FedoraSystemException,
         WebserverSystemException {
 
         if (this.isNeedSync()) {

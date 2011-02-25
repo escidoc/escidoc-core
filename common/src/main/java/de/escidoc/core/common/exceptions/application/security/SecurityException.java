@@ -208,7 +208,7 @@ public class SecurityException extends EscidocException {
      * @return Returns the redirect location in a <code>String</code>.
      * @common
      */
-    public final String getRedirectLocation() {
+    public String getRedirectLocation() {
         return redirectLocation;
     }
 

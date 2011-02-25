@@ -80,7 +80,7 @@ public class OrganizationalUnitHandlerRetrieve
      * @throws SystemException
      *             If anything fails while rendering the xml representation.
      */
-    protected final String getOrganizationalUnitXml() throws SystemException {
+    protected String getOrganizationalUnitXml() throws SystemException {
 
         return getRenderer().render(getOrganizationalUnit());
     }
@@ -95,7 +95,7 @@ public class OrganizationalUnitHandlerRetrieve
      * @throws SystemException
      *             If anything fails while rendering the xml representation.
      */
-    protected final String getPropertiesXml() throws SystemException {
+    protected String getPropertiesXml() throws SystemException {
 
         return getRenderer().renderProperties(getOrganizationalUnit());
     }
@@ -108,7 +108,7 @@ public class OrganizationalUnitHandlerRetrieve
      * @throws SystemException
      *             If anything fails while rendering the xml representation.
      */
-    protected final String getResourcesXml() throws SystemException {
+    protected String getResourcesXml() throws SystemException {
 
         return getRenderer().renderResources(getOrganizationalUnit());
     }
@@ -123,7 +123,7 @@ public class OrganizationalUnitHandlerRetrieve
      * @throws SystemException
      *             If anything fails while rendering the xml representation.
      */
-    protected final String getMdRecordsXml() throws SystemException {
+    protected String getMdRecordsXml() throws SystemException {
 
         return getRenderer().renderMdRecords(getOrganizationalUnit());
     }
@@ -140,7 +140,7 @@ public class OrganizationalUnitHandlerRetrieve
      * @throws SystemException
      *             If anything fails while rendering the xml representation.
      */
-    protected final String getMdRecordXml(final String name) throws SystemException {
+    protected String getMdRecordXml(final String name) throws SystemException {
 
         return getRenderer().renderMdRecord(getOrganizationalUnit(), name);
     }
@@ -155,7 +155,7 @@ public class OrganizationalUnitHandlerRetrieve
      * @throws SystemException
      *             If anything fails while rendering the xml representation.
      */
-    protected final String getParentsXml() throws SystemException {
+    protected String getParentsXml() throws SystemException {
 
         return getRenderer().renderParents(getOrganizationalUnit());
     }
@@ -244,7 +244,7 @@ public class OrganizationalUnitHandlerRetrieve
      * @throws SystemException
      *             If anything fails while rendering the xml representation.
      */
-    protected final String getPathListXml() throws SystemException {
+    protected String getPathListXml() throws SystemException {
 
         return getRenderer().renderPathList(getOrganizationalUnit(),
             computePathes());

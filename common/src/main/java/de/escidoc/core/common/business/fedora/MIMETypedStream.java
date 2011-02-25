@@ -52,7 +52,7 @@ public class MIMETypedStream implements Serializable {
         this.header = header;
     }
 
-    public final String getMIMEType() {
+    public String getMIMEType() {
         return mimeType;
     }
 
@@ -60,7 +60,7 @@ public class MIMETypedStream implements Serializable {
         this.mimeType = mimeType;
     }
 
-    public final byte[] getStream() {
+    public byte[] getStream() {
         return stream;
     }
 
@@ -68,7 +68,7 @@ public class MIMETypedStream implements Serializable {
         this.stream = stream;
     }
 
-    public final Property[] getHeader() {
+    public Property[] getHeader() {
         return header;
     }
 
@@ -76,7 +76,7 @@ public class MIMETypedStream implements Serializable {
         this.header = header;
     }
 
-    public final boolean equals(final Object obj) {
+    public boolean equals(final Object obj) {
         if (!(obj instanceof MIMETypedStream)) {
             return false;
         }
@@ -100,7 +100,7 @@ public class MIMETypedStream implements Serializable {
         }
     }
 
-    public final int hashCode() {
+    public int hashCode() {
         if (hashCodeCalc) {
             return 0;
         }

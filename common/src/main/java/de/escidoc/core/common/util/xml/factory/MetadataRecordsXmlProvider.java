@@ -52,13 +52,13 @@ public class MetadataRecordsXmlProvider extends InfrastructureXmlProvider {
         return PROVIDER;
     }
 
-    public final String getMdRecordsXml(final Map values)
+    public String getMdRecordsXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(MD_RECORDS_RESOURCE_NAME, MD_RECORDS_PATH, values);
     }
 
-    public final String getMdRecordXml(final Map values)
+    public String getMdRecordXml(final Map values)
         throws WebserverSystemException {
 
         return getXml(MD_RECORD_RESOURCE_NAME, MD_RECORD_PATH, values);

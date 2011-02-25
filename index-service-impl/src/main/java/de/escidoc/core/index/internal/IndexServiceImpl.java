@@ -61,7 +61,7 @@ public class IndexServiceImpl {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         return "IndexServiceImpl{" +
                 "indexingHandler=" + indexingHandler +
                 '}';

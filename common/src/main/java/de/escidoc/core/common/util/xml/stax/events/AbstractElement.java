@@ -42,7 +42,7 @@ public abstract class AbstractElement {
         this.path = path;
     }
 
-    public final int getLineNumber() {
+    public int getLineNumber() {
 
         if (null != parser) {
             return parser.getLocation().getLineNumber();
@@ -52,7 +52,7 @@ public abstract class AbstractElement {
         }
     }
 
-    public final int getColumnNumber() {
+    public int getColumnNumber() {
 
         if (parser != null) {
             return parser.getLocation().getColumnNumber();
@@ -62,7 +62,7 @@ public abstract class AbstractElement {
         }
     }
 
-    public final String getLocationString() {
+    public String getLocationString() {
 
         return "line " + getLineNumber() + ", column " + getColumnNumber();
     }
@@ -73,7 +73,7 @@ public abstract class AbstractElement {
      * @return Returns the path to the element.
      * @common
      */
-    public final String getPath() {
+    public String getPath() {
         return path;
     }
 

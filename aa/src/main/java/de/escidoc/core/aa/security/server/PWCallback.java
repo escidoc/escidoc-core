@@ -62,7 +62,7 @@ public class PWCallback implements CallbackHandler {
      *             Exception
      */
     @Override
-    public final void handle(final Callback[] callbacks) throws IOException,
+    public void handle(final Callback[] callbacks) throws IOException,
         UnsupportedCallbackException {
         for (final Callback callback : callbacks) {
 

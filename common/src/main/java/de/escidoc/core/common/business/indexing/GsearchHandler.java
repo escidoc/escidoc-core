@@ -92,11 +92,11 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *             e
      */
-    public final String requestIndexing(
-            final String resource,
-            String index,
-            final String pidSuffix,
-            final String indexFulltextVisibilities)
+    public String requestIndexing(
+        final String resource, 
+        String index, 
+        final String pidSuffix,
+        final String indexFulltextVisibilities)
         throws ApplicationServerSystemException {
         long time = System.currentTimeMillis();
         if (index == null) {
@@ -207,8 +207,8 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *             e
      */
-    public final String requestDeletion(
-            String resource, String index, final String pidSuffix)
+    public String requestDeletion(
+        String resource, String index, final String pidSuffix)
         throws ApplicationServerSystemException {
         if (index == null) {
             index = "";
@@ -271,7 +271,7 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *             e
      */
-    public final String requestCreateEmpty(String index)
+    public String requestCreateEmpty(String index)
         throws ApplicationServerSystemException {
         if (index == null) {
             index = "";
@@ -342,7 +342,7 @@ public class GsearchHandler {
      * @throws ApplicationServerSystemException
      *             e
      */
-    public final String requestOptimize(String index)
+    public String requestOptimize(String index)
         throws ApplicationServerSystemException {
         if (index == null) {
             index = "";
@@ -463,7 +463,7 @@ public class GsearchHandler {
      * @return the indexConfigurations
      * @throws ApplicationServerSystemException e
      */
-    public final Map<String, Map<String, String>> getIndexConfigurations()
+    public Map<String, Map<String, String>> getIndexConfigurations() 
                                     throws ApplicationServerSystemException {
         if (indexConfigurations == null) {
             indexConfigurations = requestIndexConfiguration();
@@ -475,7 +475,7 @@ public class GsearchHandler {
      * @return the repositoryInfo
      * @throws ApplicationServerSystemException e
      */
-    public final Map<String, String> getRepositoryInfo()
+    public Map<String, String> getRepositoryInfo() 
                                     throws ApplicationServerSystemException {
         if (repositoryInfo == null) {
             repositoryInfo = requestRepositoryInfo();
@@ -654,7 +654,7 @@ public class GsearchHandler {
      * 
      * @sb
      */
-    public final boolean deleteDir(final File path) {
+    public boolean deleteDir(final File path) {
         if (path.exists()) {
             final File[] files = path.listFiles();
             for (final File file : files) {

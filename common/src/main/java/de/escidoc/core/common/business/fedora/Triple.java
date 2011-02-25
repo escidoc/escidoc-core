@@ -98,7 +98,7 @@ public class Triple {
     /**
      * @return the predicate
      */
-    public final String getPredicate() {
+    public String getPredicate() {
         return predicate;
     }
 
@@ -113,7 +113,7 @@ public class Triple {
     /**
      * @return the object
      */
-    public final String getObject() {
+    public String getObject() {
         return object;
     }
 
@@ -122,7 +122,7 @@ public class Triple {
      * 
      * @return string representation of this object
      */
-    public final String toString() {
+    public String toString() {
         return "[subject=" + subject + ", predicate=" + predicate + ", object="
             + object + ']';
     }

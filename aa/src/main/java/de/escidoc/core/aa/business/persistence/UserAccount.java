@@ -50,12 +50,12 @@ public class UserAccount extends UserAccountBase {
      *         {@link de.escidoc.core.aa.business.persistence.UserAccount}
      *         object.
      */
-    public final String getHref() {
+    public String getHref() {
 
         return XmlUtility.getUserAccountHref(getId());
     }
 
-    public final void touch() {
+    public void touch() {
         this.setLastModificationDate(new Date(System.currentTimeMillis()));
     }
 }

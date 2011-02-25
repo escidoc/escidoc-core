@@ -44,19 +44,19 @@ public class ReportParametersVo {
     /**
      * @return the reportDefinitionId
      */
-    public final String getReportDefinitionId() {
+    public String getReportDefinitionId() {
         return reportDefinitionId;
     }
     /**
      * @param reportDefinitionId the reportDefinitionId to set
      */
-    public final void setReportDefinitionId(final String reportDefinitionId) {
+    public void setReportDefinitionId(final String reportDefinitionId) {
         this.reportDefinitionId = reportDefinitionId;
     }
     /**
      * @return the parameterVos
      */
-    public final Collection<ParameterVo> getParameterVos() {
+    public Collection<ParameterVo> getParameterVos() {
         return parameterVos;
     }
 

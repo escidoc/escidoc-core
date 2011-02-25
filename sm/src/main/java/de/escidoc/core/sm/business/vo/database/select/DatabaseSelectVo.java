@@ -56,7 +56,7 @@ public class DatabaseSelectVo {
     /**
      * @return the additionalWhereGroupVos
      */
-    public final Collection<AdditionalWhereGroupVo> getAdditionalWhereGroupVos() {
+    public Collection<AdditionalWhereGroupVo> getAdditionalWhereGroupVos() {
         return additionalWhereGroupVos;
     }
 
@@ -72,7 +72,7 @@ public class DatabaseSelectVo {
     /**
      * @return the rootWhereGroupVo
      */
-    public final RootWhereGroupVo getRootWhereGroupVo() {
+    public RootWhereGroupVo getRootWhereGroupVo() {
         return rootWhereGroupVo;
     }
 
@@ -80,14 +80,14 @@ public class DatabaseSelectVo {
      * @param rootWhereGroupVo
      *            the rootWhereGroupVo to set
      */
-    public final void setRootWhereGroupVo(final RootWhereGroupVo rootWhereGroupVo) {
+    public void setRootWhereGroupVo(final RootWhereGroupVo rootWhereGroupVo) {
         this.rootWhereGroupVo = rootWhereGroupVo;
     }
 
     /**
      * @return the selectFieldVos
      */
-    public final Collection<SelectFieldVo> getSelectFieldVos() {
+    public Collection<SelectFieldVo> getSelectFieldVos() {
         return selectFieldVos;
     }
 
@@ -95,7 +95,7 @@ public class DatabaseSelectVo {
      * @param selectFieldVos
      *            the selectFieldVos to set
      */
-    public final void setSelectFieldVos(final Collection<SelectFieldVo> selectFieldVos) {
+    public void setSelectFieldVos(final Collection<SelectFieldVo> selectFieldVos) {
         this.selectFieldVos = selectFieldVos;
     }
 
@@ -104,7 +104,7 @@ public class DatabaseSelectVo {
      * 
      * @return the selectType
      */
-    public final String getSelectType() {
+    public String getSelectType() {
         return selectType;
     }
 
@@ -116,7 +116,7 @@ public class DatabaseSelectVo {
      * @throws SqlDatabaseSystemException
      *             e
      */
-    public final void setSelectType(final String selectType)
+    public void setSelectType(final String selectType)
         throws SqlDatabaseSystemException {
         if (selectType == null || (!selectType.equals(Constants.DATABASE_SELECT_TYPE_SELECT)
             && !selectType.equals(Constants.DATABASE_SELECT_TYPE_UPDATE)
@@ -129,7 +129,7 @@ public class DatabaseSelectVo {
     /**
      * @return the tableNames
      */
-    public final Collection<String> getTableNames() {
+    public Collection<String> getTableNames() {
         return tableNames;
     }
 
@@ -138,7 +138,7 @@ public class DatabaseSelectVo {
      *            the tableNames to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public final void setTableNames(final Collection<String> tableNames)
+    public void setTableNames(final Collection<String> tableNames) 
                                     throws SqlDatabaseSystemException {
         for (final String tableName : tableNames) {
             DatabaseConventionChecker.checkName(tableName);

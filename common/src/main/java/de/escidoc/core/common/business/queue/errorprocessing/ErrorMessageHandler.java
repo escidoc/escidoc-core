@@ -58,8 +58,8 @@ public class ErrorMessageHandler {
      *            name of the logfile error-message has to get written to
      * @common
      */
-    public final void putErrorMessage(final Map<String, String> parameters,
-                                      final Throwable exception, final String logfile) {
+    public void putErrorMessage(final Map<String, String> parameters,
+            final Throwable exception, final String logfile) {
 
         final StringBuffer messageBuf = new StringBuffer(DELIMITER);
         

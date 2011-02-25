@@ -114,7 +114,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
      * 
      * @return current database version
      */
-    public final Version getVersion() {
+    public Version getVersion() {
         Version result;
 
         try {
@@ -158,7 +158,7 @@ public class FrameworkInfo extends JdbcDaoSupport {
      *             Thrown if the structure of the database could not be
      *             determined
      */
-    public final boolean isConsistent() throws IOException, SQLException {
+    public boolean isConsistent() throws IOException, SQLException {
         boolean result = false;
         Connection conn = null;
 

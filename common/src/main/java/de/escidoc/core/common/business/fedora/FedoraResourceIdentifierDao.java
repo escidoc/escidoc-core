@@ -60,7 +60,7 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
      * 
      * @return FedoraUtility Returns the {@link FedoraUtility} object.
      */
-    protected final FedoraUtility getFedoraUtility() {
+    protected FedoraUtility getFedoraUtility() {
 
         return this.fedoraUtility;
     }

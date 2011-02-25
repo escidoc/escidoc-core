@@ -92,61 +92,61 @@ public class AccessRights extends JdbcDaoSupport {
     public static class RightsMap implements Map<String, Rules> {
         private final HashMap<String, Rules> hashMap = new HashMap<String, Rules>();
 
-        public final boolean equals(final Object o) {
+        public boolean equals(final Object o) {
             return hashMap.equals(o);
         }
 
-        public final int hashCode() {
+        public int hashCode() {
             return hashMap.hashCode();
         }
 
-        public final int size() {
+        public int size() {
             return hashMap.size();
         }
 
-        public final boolean isEmpty() {
+        public boolean isEmpty() {
             return hashMap.isEmpty();
         }
 
-        public final Rules get(final Object key) {
+        public Rules get(final Object key) {
             return hashMap.get(key);
         }
 
         @Override
-        public final Rules put(final String key, final Rules value) {
+        public Rules put(final String key, final Rules value) {
             return this.hashMap.put(key, value);
         }
 
-        public final boolean containsKey(final Object key) {
+        public boolean containsKey(final Object key) {
             return hashMap.containsKey(key);
         }
 
-        public final Rules remove(final Object key) {
+        public Rules remove(final Object key) {
             return hashMap.remove(key);
         }
 
         @Override
-        public final void putAll(final Map<? extends String, ? extends Rules> m) {
+        public void putAll(final Map<? extends String, ? extends Rules> m) {
             this.hashMap.putAll(m);
         }
 
-        public final void clear() {
+        public void clear() {
             hashMap.clear();
         }
 
-        public final boolean containsValue(final Object value) {
+        public boolean containsValue(final Object value) {
             return hashMap.containsValue(value);
         }
 
-        public final Set<String> keySet() {
+        public Set<String> keySet() {
             return hashMap.keySet();
         }
 
-        public final Collection<Rules> values() {
+        public Collection<Rules> values() {
             return hashMap.values();
         }
 
-        public final Set<Map.Entry<String, Rules>> entrySet() {
+        public Set<Map.Entry<String, Rules>> entrySet() {
             return hashMap.entrySet();
         }
     }
@@ -166,7 +166,7 @@ public class AccessRights extends JdbcDaoSupport {
      * @param roleId
      *            role id
      */
-    public final void deleteAccessRight(final String roleId) {
+    public void deleteAccessRight(final String roleId) {
         synchronized (rightsMap) {
             for (final RightsMap aRightsMap : rightsMap) {
                 aRightsMap.remove(roleId);
@@ -177,7 +177,7 @@ public class AccessRights extends JdbcDaoSupport {
     /**
      * Delete all access rights.
      */
-    public final void deleteAccessRights() {
+    public void deleteAccessRights() {
         synchronized (rightsMap) {
             for (int index = 0; index < rightsMap.length; index++) {
                 rightsMap[index] = null;
@@ -228,13 +228,13 @@ public class AccessRights extends JdbcDaoSupport {
      * @return SQL WHERE clause that represents the read policies for the given
      *         user role and user.
      */
-    public final String getAccessRights(
-            final ResourceType type, final String roleId, final String userId,
-            final Set<String> groupIds,
-            final Map<String, Map<String, List<RoleGrant>>> userGrants,
-            final Map<String, Map<String, List<RoleGrant>>> userGroupGrants,
-            final Set<String> hierarchicalContainers,
-            final Set<String> hierarchicalOUs) {
+    public String getAccessRights(
+        final ResourceType type, final String roleId, final String userId,
+        final Set<String> groupIds, 
+        final Map<String, Map<String, List<RoleGrant>>> userGrants,
+        final Map<String, Map<String, List<RoleGrant>>> userGroupGrants,
+        final Set<String> hierarchicalContainers,
+        final Set<String> hierarchicalOUs) {
         final StringBuilder accessRights = new StringBuilder();
         final String containerGrants =
             ensureNotEmpty(getSetAsString(hierarchicalContainers));
@@ -387,7 +387,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return list of all role ids
      */
-    public final Iterable<String> getRoleIds(final ResourceType type) {
+    public Iterable<String> getRoleIds(final ResourceType type) {
         return rightsMap[type.ordinal()].keySet();
     }
 
@@ -444,8 +444,8 @@ public class AccessRights extends JdbcDaoSupport {
      * @return true if the rule set contains place holders for hierarchical
      *         resources
      */
-    public final boolean needsHierarchicalPermissions(
-            final ResourceType type, final CharSequence roleId, final CharSequence placeHolder) {
+    public boolean needsHierarchicalPermissions(
+        final ResourceType type, final CharSequence roleId, final CharSequence placeHolder) {
         boolean result = false;
 
         synchronized (rightsMap) {
@@ -478,9 +478,9 @@ public class AccessRights extends JdbcDaoSupport {
      *            SQL statement representing the policy rules for the given
      *            combination of resource type and role
      */
-    public final void putAccessRight(
-            final ResourceType type, String roleId, final String scopeRules,
-            final String policyRules) {
+    public void putAccessRight(
+        final ResourceType type, String roleId, final String scopeRules,
+        final String policyRules) {
         final int resourceType = type.ordinal();
         synchronized (rightsMap) {
             if (rightsMap[resourceType] == null) {
@@ -504,9 +504,9 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return set of ids of all scopes
      */
-    public final Set<String> getScopeIds(
-            final Map<String, Map<String, List<RoleGrant>>> userGrants,
-            final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
+    public Set<String> getScopeIds(
+                final Map<String, Map<String, List<RoleGrant>>> userGrants,
+                    final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
         final Set<String> result = new HashSet<String>();
         if (userGrants != null) {
             for (final Entry<String, Map<String, List<RoleGrant>>> entry
@@ -543,9 +543,9 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return set of ids of all scopes
      */
-    public final Set<String> getOptimizedScopeIds(final ResourceType resourceType,
-                                                  final Map<String, Map<String, List<RoleGrant>>> userGrants,
-                                                  final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
+    public Set<String> getOptimizedScopeIds(final ResourceType resourceType,
+                final Map<String, Map<String, List<RoleGrant>>> userGrants,
+                    final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
         final Set<String> result = new HashSet<String>();
         if (userGrants != null) {
             for (final Entry<String, Map<String, List<RoleGrant>>> entry
@@ -604,7 +604,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return resource type for that HREF
      */
-    public final ResourceType getResourceTypeFromHref(final String href) {
+    public ResourceType getResourceTypeFromHref(final String href) {
         ResourceType result = null;
 
         if (href != null) {
@@ -651,7 +651,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return string representation of the rights map
      */
-    public final String toString() {
+    public String toString() {
         final StringBuilder result = new StringBuilder();
 
         if (rightsMap != null) {

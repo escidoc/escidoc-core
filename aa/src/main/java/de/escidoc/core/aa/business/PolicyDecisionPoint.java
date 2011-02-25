@@ -249,8 +249,8 @@ public class PolicyDecisionPoint
      *      #evaluate(java.lang.String)
      */
     @Override
-    public final boolean[] evaluateRequestList(
-            final List<Map<String, String>> requests)
+    public boolean[] evaluateRequestList(
+        final List<Map<String, String>> requests)
         throws ResourceNotFoundException, MissingMethodParameterException,
         AuthenticationException, AuthorizationException, SystemException {
 
@@ -939,7 +939,7 @@ public class PolicyDecisionPoint
      * @aa
      */
     @Override
-    public final void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() throws Exception {
 
         LOG.debug("Properties set");
     }

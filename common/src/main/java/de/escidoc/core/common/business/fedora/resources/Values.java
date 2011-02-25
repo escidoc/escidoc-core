@@ -103,7 +103,7 @@ public abstract class Values {
      * 
      * @return corresponding filter operation name
      */
-    public final String getFunction(final String name) {
+    public String getFunction(final String name) {
         return FUNCTION_MAP.get(name);
     }
 
@@ -114,7 +114,7 @@ public abstract class Values {
      *            scope name
      * @return whether or not the given scope may be ignored for filters
      */
-    public final boolean ignoreScope(final String name) {
+    public boolean ignoreScope(final String name) {
         return IGNORED_SCOPES.contains(name);
     }
 
@@ -126,7 +126,7 @@ public abstract class Values {
      * 
      * @return operand usable in filter query
      */
-    public final String getOperand(final String name) {
+    public String getOperand(final String name) {
         return OPERAND_MAP.get(name);
     }
 
@@ -138,7 +138,7 @@ public abstract class Values {
      * 
      * @return sub query representing the given scope usable in filter query
      */
-    public final String getScope(final String name) {
+    public String getScope(final String name) {
         return SCOPE_MAP.get(name);
     }
 

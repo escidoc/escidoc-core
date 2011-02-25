@@ -207,8 +207,8 @@ public class EscidocServlet extends HttpServlet {
      * @common
      */
     @Override
-    public final void service(
-            final ServletRequest request, final ServletResponse response)
+    public void service(
+        final ServletRequest request, final ServletResponse response)
         throws ServletException, IOException {
 
         try {
@@ -827,8 +827,8 @@ public class EscidocServlet extends HttpServlet {
      * @return The value of the param.
      * @common
      */
-    protected final String getQueryParamValue(
-            final HttpServletRequest request, final String param) {
+    protected String getQueryParamValue(
+        final HttpServletRequest request, final String param) {
         String result = null;
         if (request.getQueryString() != null) {
             final StringTokenizer queryToken =

@@ -250,7 +250,7 @@ public class FilterHandler extends DefaultHandler {
      * @return Filter Map
      * @common
      */
-    public final Map<String, Object> getRules() {
+    public Map<String, Object> getRules() {
         return rules;
     }
 
@@ -296,7 +296,7 @@ public class FilterHandler extends DefaultHandler {
      *         value {@link FilterHandler.DEFAULT_OFFSET} is returned
      * @common
      */
-    public final int getOffset() {
+    public int getOffset() {
 
         return offset;
     }
@@ -308,7 +308,7 @@ public class FilterHandler extends DefaultHandler {
      *         value {@link FilterHandler.DEFAULT_LIMIT} is returned.
      * @common
      */
-    public final int getLimit() {
+    public int getLimit() {
 
         return limit;
     }
@@ -320,7 +320,7 @@ public class FilterHandler extends DefaultHandler {
      *         <code>null</code> is returned.
      * @common
      */
-    public final String getOrderBy() {
+    public String getOrderBy() {
         return orderBy;
     }
 
@@ -332,7 +332,7 @@ public class FilterHandler extends DefaultHandler {
      *         returned.
      * @common
      */
-    public final ListSorting getSorting() {
+    public ListSorting getSorting() {
         return sorting;
     }
 

@@ -83,7 +83,7 @@ public class LockHandler extends JdbcDaoSupport {
      *             Thrown if an error occurs accessing the database.
      * @common
      */
-    public final void lock(final String objid, final String[] lockOwner)
+    public void lock(final String objid, final String[] lockOwner)
         throws SqlDatabaseSystemException {
 
         try {
@@ -109,7 +109,7 @@ public class LockHandler extends JdbcDaoSupport {
      *             Thrown if an error occurs accessing the database.
      * @common
      */
-    public final void unlock(final String objid) throws SqlDatabaseSystemException {
+    public void unlock(final String objid) throws SqlDatabaseSystemException {
 
         try {
             getJdbcTemplate().update(
@@ -134,7 +134,7 @@ public class LockHandler extends JdbcDaoSupport {
      *             Thrown in case of an internal error.
      * @common
      */
-    public final String getLockOwner(final String objid)
+    public String getLockOwner(final String objid)
         throws WebserverSystemException {
 
         // TODO: use other query method to avoid exception in case of unlocked.
@@ -163,7 +163,7 @@ public class LockHandler extends JdbcDaoSupport {
      *             Thrown in case of an internal error.
      * @common
      */
-    public final String getLockOwnerTitle(final String objid)
+    public String getLockOwnerTitle(final String objid)
         throws WebserverSystemException {
         // TODO: use other query method to avoid exception in case of unlocked.
         try {
@@ -191,7 +191,7 @@ public class LockHandler extends JdbcDaoSupport {
      *             Thrown in case of an internal error.
      * @common
      */
-    public final String getLockDate(final String objid)
+    public String getLockDate(final String objid)
         throws WebserverSystemException {
         final String result;
 
@@ -232,7 +232,7 @@ public class LockHandler extends JdbcDaoSupport {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    public final boolean isLocked(final String objid) throws WebserverSystemException {
+    public boolean isLocked(final String objid) throws WebserverSystemException {
 
         // TODO: use other query method to avoid exception in case of unlocked.
         try {

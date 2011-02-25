@@ -49,7 +49,7 @@ public class PurgeRequestImpl implements PurgeRequest {
      *
      * @param resourceId the resource identifier
      */
-    public final void setResourceId(final String resourceId) {
+    public void setResourceId(final String resourceId) {
         this.resourceId = resourceId;
     }
 
@@ -57,7 +57,7 @@ public class PurgeRequestImpl implements PurgeRequest {
      * {@inheritDoc}
      */
     @Override
-    public final String toString() {
+    public String toString() {
         return "PurgeRequestImpl{" +
                 "requestId='" + requestId + '\'' +
                 ", creationTimestamp=" + creationTimestamp +

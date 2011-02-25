@@ -119,7 +119,7 @@ public class WovReadHandler extends DefaultHandler {
      * 
      * @return version data
      */
-    public final Map<String, String> getVersionData() {
+    public Map<String, String> getVersionData() {
         return this.versionData;
     }
 

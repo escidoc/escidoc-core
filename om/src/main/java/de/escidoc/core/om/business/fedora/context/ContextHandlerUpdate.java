@@ -133,8 +133,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      *             Thrown if anything else fails.
      * @throws InvalidContentException
      */
-    public final boolean update(
-            final FedoraContextHandler contextHandler, final String xmlData)
+    public boolean update(
+        final FedoraContextHandler contextHandler, final String xmlData)
         throws ContextNotFoundException, InvalidStatusException,
         OptimisticLockingException, ReadonlyAttributeViolationException,
         ReadonlyElementViolationException, ContextNameNotUniqueException,
@@ -274,8 +274,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException
      *             Thrown if Context is locked.
      */
-    public final void open(
-            final FedoraContextHandler contextHandler, final String taskParam)
+    public void open(
+        final FedoraContextHandler contextHandler, final String taskParam)
         throws ContextNotFoundException, InvalidStatusException,
         InvalidXmlException, OptimisticLockingException, SystemException,
         LockingException, StreamNotFoundException {
@@ -385,8 +385,8 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws LockingException
      *             Thrown if Context is locked.
      */
-    public final void close(
-            final FedoraContextHandler contextHandler, final String taskParam)
+    public void close(
+        final FedoraContextHandler contextHandler, final String taskParam)
         throws ContextNotFoundException, InvalidStatusException,
         InvalidXmlException, OptimisticLockingException, SystemException,
         LockingException, StreamNotFoundException {
@@ -878,7 +878,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
      * @throws SystemException
      *             TODO
      */
-    final boolean handleAdminDescriptors(final Map<String, Object> streams)
+    boolean handleAdminDescriptors(final Map<String, Object> streams)
         throws SystemException {
         boolean updated = false;
         final Set<Entry<String, Object>> streamsEntrySet = streams.entrySet();

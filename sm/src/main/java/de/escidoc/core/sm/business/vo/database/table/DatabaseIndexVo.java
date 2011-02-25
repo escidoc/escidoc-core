@@ -47,7 +47,7 @@ public class DatabaseIndexVo {
     /**
      * @return the fields
      */
-    public final Collection<String> getFields() {
+    public Collection<String> getFields() {
         return fields;
     }
 
@@ -56,7 +56,7 @@ public class DatabaseIndexVo {
      *            the fields to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public final void setFields(final Collection<String> fields)
+    public void setFields(final Collection<String> fields) 
                             throws SqlDatabaseSystemException {
         for (final String field : fields) {
             DatabaseConventionChecker.checkName(field);
@@ -67,7 +67,7 @@ public class DatabaseIndexVo {
     /**
      * @return the indexName
      */
-    public final String getIndexName() {
+    public String getIndexName() {
         return indexName;
     }
 
@@ -76,7 +76,7 @@ public class DatabaseIndexVo {
      *            the indexName to set
      * @throws SqlDatabaseSystemException databaseException
      */
-    public final void setIndexName(final String indexName)
+    public void setIndexName(final String indexName) 
                     throws SqlDatabaseSystemException {
         DatabaseConventionChecker.checkName(indexName);
         this.indexName = indexName;

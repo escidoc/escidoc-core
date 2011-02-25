@@ -56,10 +56,10 @@ public class VelocityXmlCommonFoXmlRenderer {
      *      java.lang.String, java.lang.String, java.lang.String,
      *      java.lang.String, java.lang.String, java.lang.String)
      */
-    public final String renderWov(
-            final String id, final String title, final String versionNo,
-            final String lastModificationDate, final String versionStatus,
-            final String comment, final String baseUrl)
+    public String renderWov(
+        final String id, final String title, final String versionNo,
+        final String lastModificationDate, final String versionStatus,
+        final String comment, final String baseUrl)
         throws WebserverSystemException {
 
         final String currentUserId = Utility.getInstance().getCurrentUser()[0];

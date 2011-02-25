@@ -53,8 +53,8 @@ public class AggregationTableIndexFieldComparator
      * @sm
      */
     @Override
-    public final int compare(
-            final AggregationTableIndexField a1,
+    public int compare(
+            final AggregationTableIndexField a1, 
             final AggregationTableIndexField a2) {
         return Integer.toString(a1.getListIndex())
                 .compareTo(Integer.toString(a2.getListIndex()));

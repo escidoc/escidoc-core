@@ -119,7 +119,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @aa
      */
     @Override
-    public final boolean isRequestSupported() {
+    public boolean isRequestSupported() {
         return true;
     }
 
@@ -133,7 +133,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @aa
      */
     @Override
-    public final boolean isIdReferenceSupported() {
+    public boolean isIdReferenceSupported() {
         return true;
     }
 
@@ -146,7 +146,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @aa
      */
     @Override
-    public final void init(final PolicyFinder finder) {
+    public void init(final PolicyFinder finder) {
 
     }
 
@@ -158,7 +158,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @aa
      */
     @Override
-    public final void invalidateCache() {
+    public void invalidateCache() {
 
         PoliciesCache.clear();
     }
@@ -176,7 +176,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      *      int)
      */
     @Override
-    public final PolicyFinderResult findPolicy(final URI idReference, final int type) {
+    public PolicyFinderResult findPolicy(final URI idReference, final int type) {
 
         if (type != PolicyReference.POLICY_REFERENCE
             && type != PolicyReference.POLICYSET_REFERENCE) {
@@ -304,7 +304,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @aa
      */
     @Override
-    public final PolicyFinderResult findPolicy(final EvaluationCtx context) {
+    public PolicyFinderResult findPolicy(final EvaluationCtx context) {
         try {
             final List<AbstractPolicy> policies = new ArrayList<AbstractPolicy>();
 
@@ -684,7 +684,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @param policyFinder
      *            The <code>PolicyFinder</code> object to set.
      */
-    public final void setPolicyFinder(final PolicyFinder policyFinder) {
+    public void setPolicyFinder(final PolicyFinder policyFinder) {
 
         if (policyFinder == null) {
             throw new IllegalArgumentException(

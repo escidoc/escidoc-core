@@ -331,7 +331,7 @@ public class ItemHandler extends DefaultHandler {
      * 
      * @return ItemCreate
      */
-    public final ItemCreate getItem() {
+    public ItemCreate getItem() {
 
         return this.item;
     }

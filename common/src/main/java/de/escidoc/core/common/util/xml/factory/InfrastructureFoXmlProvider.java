@@ -86,7 +86,7 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
      * @throws WebserverSystemException
      *             Thrown if rendering failed.
      */
-    public final String getMetadataFoXml(final Map<String, String> values)
+    public String getMetadataFoXml(final Map<String, String> values)
         throws WebserverSystemException {
 
         return getXml(METADATA_RECORD_RESOURCE_NAME, COMMON_TEMPLATE_PATH,
@@ -242,8 +242,8 @@ public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {
      *             Thrown if converting of characters to default character set
      *             failed.
      */
-    public final List<Map<String, String>> getMetadataRecordsMap(
-            final Iterable<MdRecordCreate> mdRecords) throws SystemException {
+    public List<Map<String, String>> getMetadataRecordsMap(
+        final Iterable<MdRecordCreate> mdRecords) throws SystemException {
 
         final List<Map<String, String>> values =
             new ArrayList<Map<String, String>>();
