@@ -670,9 +670,7 @@
 									<cargo.rmi.port>1099</cargo.rmi.port>
 									<cargo.logging>medium</cargo.logging>
 									<cargo.jvmargs>-Xmx1624m -Xms312m -XX:MaxPermSize=320m
-										-Dhttp.proxyHost=proxy.fiz-karlsruhe.de
-										-Dhttp.proxyPort=8888
-										-Dhttp.nonProxyHosts="localhost"</cargo.jvmargs>
+									</cargo.jvmargs>
 								</properties>
 								<deployables>
 									<deployable>

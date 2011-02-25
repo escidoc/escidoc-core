@@ -302,11 +302,11 @@
           <para><literal>maximumRecords:</literal> the maximum number of
           records you want to retrieve with your request (combined with
           <literal>startRecord</literal>, this verb allows for paging through
-          a large result set). The default value is 1000. Please be aware that increasing
+          a large result set). The default value is 20. Please be aware that increasing
           this value may lead to problems with too large result sets, causing out-of-memory
           conditions.</para>
 
-          <para>Example: <literal>maximumRecords=20</literal></para>
+          <para>Example: <literal>maximumRecords=10</literal></para>
 
           <para>EBNF:</para>
 
@@ -561,7 +561,7 @@
     <literal>maximumRecords</literal> specifies the number of hits to be
     retrieved by the system, starting from the hit number specified
     <literal>startRecord</literal> value. The default value for
-    <literal>maximumRecords</literal> is 1000.</para>
+    <literal>maximumRecords</literal> is 20.</para>
 
     <para>For paging, the first request should set
     <literal>maximumRecords</literal> to a manageable size, e.g. 20.
@@ -591,7 +591,7 @@
     <para>Generic template for filter requests:</para>
 
     <para><programlisting>GET &lt;host&gt;:&lt;port&gt;/&lt;service-group&gt;/&lt;method&gt;?version=1.1
-    &amp;operation=searchRetrieve&amp;query=<quote>&lt;CQL&gt;</quote>&amp;maximumRecords=1000
+    &amp;operation=searchRetrieve&amp;query=<quote>&lt;CQL&gt;</quote>&amp;maximumRecords=20
     &amp;startRecord=1</programlisting></para>
 
     <para>In the following, we will just focus on the actual query, which is
@@ -618,7 +618,7 @@ sortby <quote>/id</quote>/sort.ascending</programlisting></para>
 filterParams.put("operation",      new String[] {"searchRetrieve"});
 filterParams.put("version",        new String[] {"1.1"});
 filterParams.put("query ",         new String[] {"\"/id\"=escidoc:5"});
-filterParams.put("maximumRecords", new String[] {"20"});
+filterParams.put("maximumRecords", new String[] {"10"});
 filterParams.put("startRecord",    new String[] {"100"});
 
 String result = retrieveItems(filterParams);    </programlisting></para>

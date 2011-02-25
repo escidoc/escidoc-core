@@ -37,7 +37,7 @@ import java.util.Map;
  * @author SCHE
  */
 public class DbRequestParameters extends SRURequestParameters {
-    public static final int DEFAULT_LIMIT = 1000;
+    public static final int DEFAULT_LIMIT = 20;
 
     // SQL starts counting from 0
     public static final int DEFAULT_OFFSET = 0;
