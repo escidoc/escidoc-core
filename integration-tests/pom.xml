@@ -121,6 +121,7 @@
 								'fedoraAdmin'
 								VALID
 								UNTIL 'infinity';</sqlCommand>
+							<onError>continue</onError>
 						</configuration>
 					</execution>
 					<execution>
