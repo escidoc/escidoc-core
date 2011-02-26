@@ -219,7 +219,6 @@
 					</execution>
 				</executions>
 				<configuration>
-					<skip>${skipITs}</skip>
 					<testCases>false</testCases>
 					<serverSide>true</serverSide>
 					<noImports>true</noImports>
@@ -509,7 +508,6 @@
 					</execution>
 				</executions>
 				<configuration>
-					<skip>${skipITs}</skip>
 					<source>1.6</source>
 					<target>1.6</target>
 					<showDeprecation>true</showDeprecation>
@@ -824,7 +822,6 @@
 							</execution>
 						</executions>
 						<configuration>
-							<skip>${skipITs}</skip>
 							<container>
 								<containerId>jboss42x</containerId>
 								<timeout>240000</timeout>
