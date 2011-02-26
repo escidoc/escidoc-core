@@ -692,7 +692,7 @@
     <xdoclet.version>1.2.3</xdoclet.version>
     <xjavadoc.version>1.5-050611</xjavadoc.version>
     <jdbc.postgresql.version>9.0-801.jdbc4</jdbc.postgresql.version>
-    <fcrepo.version>3.4.1</fcrepo.version>
+    <fcrepo.version>3.4.2</fcrepo.version>
     <!-- <jaxb.xsd.folder>src/main/resources/xsd</jaxb.xsd.folder> <jaxb.xjb.folder>src/main/resources/META-INF/bindings</jaxb.xjb.folder> 
       <jaxb.temporary.folder>target/generated-sources/resources/jaxb</jaxb.temporary.folder> -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

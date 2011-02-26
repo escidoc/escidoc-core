@@ -60,6 +60,8 @@ public class PropertiesProvider {
 
     public static final String FEDORA_PASSWORD = "fedora.passwd";
 
+    public static final String TESTDATA_URL = "testdata.url";
+
     public static final String DIGILIB_SCALER_URL = "digilib.scaler";
 
     public static final String PERFORMANCE_DB_DRIVER_CLASSNAME =

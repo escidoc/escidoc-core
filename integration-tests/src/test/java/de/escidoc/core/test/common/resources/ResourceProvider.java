@@ -164,7 +164,7 @@ public class ResourceProvider {
 
     /**
      * Concatenates the two given path segments and returns a valid path, i.e.
-     * the method takes care that there is only one path seperator between the
+     * the method takes care that there is only one path separator between the
      * path segments.
      * 
      * @param path

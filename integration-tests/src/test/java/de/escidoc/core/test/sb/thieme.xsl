@@ -137,7 +137,7 @@
 					<escidocComponents:content xlink:type="simple"
 						xlink:title="PDF">
 						<xsl:attribute name="xlink:href">
-							<xsl:value-of select="concat('http://localhost:8082/ir/',/DOCGRP/pdfpath)"/>
+							<xsl:value-of select="concat('http://localhost:8080/testdata/ir/',/DOCGRP/pdfpath)"/>
 						</xsl:attribute>
 					</escidocComponents:content>	
 				</escidocComponents:component>

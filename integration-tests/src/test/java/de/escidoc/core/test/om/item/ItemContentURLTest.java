@@ -358,7 +358,10 @@ public class ItemContentURLTest extends ItemTestBase {
                 + "/" + getTransport(false), "escidoc_item_198_for_create.xml");
 
         // content to staging
-        String url = "http://localhost:8082/fedora/get/escidoc:ex6/content";
+        String fedoraUrl =
+            this.properties.getProperty("fedora.url",
+                "http://localhost:8082/fedora");
+        String url = fedoraUrl + "/get/escidoc:ex6/content";
 
         deleteElement(this.theItemDoc,
             "/item/components/component[not(content/@href)]");
@@ -399,7 +402,10 @@ public class ItemContentURLTest extends ItemTestBase {
         this.theItemId = getObjidValue(this.theItemDoc);
 
         // content to staging
-        String url = "http://localhost:8082/fedora/get/escidoc:ex6/content";
+        String fedoraUrl =
+            this.properties.getProperty("fedora.url",
+                "http://localhost:8082/fedora");
+        String url = fedoraUrl + "/get/escidoc:ex6/content";
 
         this.theItemDoc =
             (Document) substitute(this.theItemDoc,
