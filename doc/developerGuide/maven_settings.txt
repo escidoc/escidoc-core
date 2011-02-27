@@ -1,6 +1,20 @@
 
 What's to set for Maven
 
+Use Maven 3.
+
+Maven install does -beside compiling, etc.- install a new JBoss, Fedora and ingests test data to Fedora. All required databases are 
+dropped and re-created! 
+
+You can call Maven with following parameter to influence the behavior:
+
+	mvn install 
+		-P!install-jboss 			- does not install JBoss
+		-P!install-fedora			- does not install Fedora and skips ingesting test data
+  		-DskipTests					- skip running unit tests
+  		-DskipITs					- skip running integration tests (IT)
+ 
+
 - increase memory via MAVEN_OPTS
 
 

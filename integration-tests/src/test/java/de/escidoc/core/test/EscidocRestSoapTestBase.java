@@ -3816,14 +3816,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         String fedoraUrl = prop.getProperty(PropertiesProvider.FEDORA_URL);
 
         if (fedoraUrl != null && !fedoraTemplateUrl.equals(fedoraUrl)) {
-            template = template.replace(fedoraTemplateUrl, fedoraUrl);
+            template = template.replaceAll(fedoraTemplateUrl, fedoraUrl);
         }
 
         String testdataTemplateUrl = "http://localhost:8082/ir/";
         String testdataUrl = prop.getProperty(PropertiesProvider.TESTDATA_URL);
         
-        if (testdataUrl != null && !testdataTemplateUrl.equals(fedoraUrl)) {
-            template = template.replace(testdataTemplateUrl, testdataUrl + "/testDocuments/ir/");
+        if (testdataUrl != null && !testdataTemplateUrl.equals(testdataUrl)) {
+            template = template.replaceAll(testdataTemplateUrl, testdataUrl + "/testDocuments/ir/");
         }
         
         return template;
