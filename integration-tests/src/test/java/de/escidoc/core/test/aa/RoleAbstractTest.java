@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.test.aa;
 
-
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
@@ -81,8 +80,8 @@ import static org.junit.Assert.assertNotNull;
  */
 public class RoleAbstractTest extends AaTestBase {
 
-    public static final String RDF_ROLE_BASE_URI =
-        "http://localhost:8080" + Constants.ROLE_BASE_URI;
+    public static final String RDF_ROLE_BASE_URI = "http://localhost:8080"
+        + Constants.ROLE_BASE_URI;
 
     public static final String RDF_RESOURCE_ROLE =
         "http://www.escidoc.de/core/01/resources/Role";
@@ -91,8 +90,8 @@ public class RoleAbstractTest extends AaTestBase {
 
     public static final String NAME_POLICY_SET_ID = "PolicySetId";
 
-    public static final String NAME_POLICY_COMBINING_ALG_ID 
-    = "PolicyCombiningAlgId";
+    public static final String NAME_POLICY_COMBINING_ALG_ID =
+        "PolicyCombiningAlgId";
 
     public static final String NAME_RELATION_ATTRIBUTE_ID =
         "relation-attribute-id";
@@ -103,24 +102,24 @@ public class RoleAbstractTest extends AaTestBase {
 
     public static final String NAME_RESOURCE_TYPE = "resource-type";
 
-    public static final String XPATH_RESOURCES_XLINK_TITLE =
-        XPATH_RESOURCES + "/@" + EscidocTestBase.NAME_TITLE;
+    public static final String XPATH_RESOURCES_XLINK_TITLE = XPATH_RESOURCES
+        + "/@" + EscidocTestBase.NAME_TITLE;
 
-    public static final String XPATH_RESOURCES_HREF =
-        XPATH_RESOURCES + "/@" + EscidocTestBase.NAME_HREF;
+    public static final String XPATH_RESOURCES_HREF = XPATH_RESOURCES + "/@"
+        + EscidocTestBase.NAME_HREF;
 
-    public static final String XPATH_RESOURCES_XLINK_TYPE =
-        XPATH_RESOURCES + "/@" + EscidocTestBase.NAME_TYPE;
+    public static final String XPATH_RESOURCES_XLINK_TYPE = XPATH_RESOURCES
+        + "/@" + EscidocTestBase.NAME_TYPE;
 
-    public static final String XPATH_RESOURCES_OBJID =
-        XPATH_RESOURCES + "/@" + EscidocTestBase.NAME_OBJID;
+    public static final String XPATH_RESOURCES_OBJID = XPATH_RESOURCES + "/@"
+        + EscidocTestBase.NAME_OBJID;
 
     public static final String NAME_UNLIMITED = "unlimited";
 
     public static final String XPATH_ROLE = "/role";
 
-    public static final String XPATH_ROLE_RESOURCES =
-        XPATH_ROLE + XPATH_RESOURCES;
+    public static final String XPATH_ROLE_RESOURCES = XPATH_ROLE
+        + XPATH_RESOURCES;
 
     public static final String XPATH_ROLE_XLINK_TYPE = XPATH_ROLE + "/@type";
 
@@ -130,14 +129,14 @@ public class RoleAbstractTest extends AaTestBase {
 
     public static final String XPATH_ROLE_OBJID = XPATH_ROLE + "/@objid";
 
-    public static final String XPATH_ROLE_LAST_MOD_DATE =
-        XPATH_ROLE + "/@last-modification-date";
+    public static final String XPATH_ROLE_LAST_MOD_DATE = XPATH_ROLE
+        + "/@last-modification-date";
 
-    public static final String XPATH_ROLE_PROPERTIES =
-        XPATH_ROLE + "/properties";
+    public static final String XPATH_ROLE_PROPERTIES = XPATH_ROLE
+        + "/properties";
 
-    public static final String XPATH_ROLE_MODIFIED_BY =
-        XPATH_ROLE_PROPERTIES + "/" + EscidocTestBase.NAME_MODIFIED_BY;
+    public static final String XPATH_ROLE_MODIFIED_BY = XPATH_ROLE_PROPERTIES
+        + "/" + EscidocTestBase.NAME_MODIFIED_BY;
 
     public static final String XPATH_ROLE_MODIFIED_BY_OBJID =
         XPATH_ROLE_MODIFIED_BY + "/@" + EscidocTestBase.NAME_OBJID;
@@ -151,11 +150,11 @@ public class RoleAbstractTest extends AaTestBase {
     public static final String XPATH_ROLE_MODIFIED_BY_XLINK_TYPE =
         XPATH_ROLE_MODIFIED_BY + "/@" + EscidocTestBase.NAME_TYPE;
 
-    public static final String XPATH_ROLE_CREATION_DATE =
-        XPATH_ROLE_PROPERTIES + "/creation-date";
+    public static final String XPATH_ROLE_CREATION_DATE = XPATH_ROLE_PROPERTIES
+        + "/creation-date";
 
-    public static final String XPATH_ROLE_CREATED_BY =
-        XPATH_ROLE_PROPERTIES + "/created-by";
+    public static final String XPATH_ROLE_CREATED_BY = XPATH_ROLE_PROPERTIES
+        + "/created-by";
 
     public static final String XPATH_ROLE_CREATED_BY_XLINK_TYPE =
         XPATH_ROLE_CREATED_BY + "/@type";
@@ -169,19 +168,19 @@ public class RoleAbstractTest extends AaTestBase {
     public static final String XPATH_ROLE_CREATED_BY_OBJID =
         XPATH_ROLE_CREATED_BY + "/@objid";
 
-    public static final String XPATH_ROLE_DESCRIPTION =
-        XPATH_ROLE_PROPERTIES + "/description";
+    public static final String XPATH_ROLE_DESCRIPTION = XPATH_ROLE_PROPERTIES
+        + "/description";
 
-    public static final String XPATH_ROLE_NAME =
-        XPATH_ROLE_PROPERTIES + "/name";
+    public static final String XPATH_ROLE_NAME = XPATH_ROLE_PROPERTIES
+        + "/name";
 
     public static final String XPATH_ROLE_SCOPE = XPATH_ROLE + "/" + NAME_SCOPE;
 
-    public static final String XPATH_ROLE_SCOPE_UNLIMITED =
-        XPATH_ROLE_SCOPE + "/@" + NAME_UNLIMITED;
+    public static final String XPATH_ROLE_SCOPE_UNLIMITED = XPATH_ROLE_SCOPE
+        + "/@" + NAME_UNLIMITED;
 
-    public static final String XPATH_ROLE_SCOPE_DEF =
-        XPATH_ROLE_SCOPE + "/" + NAME_SCOPE_DEF;
+    public static final String XPATH_ROLE_SCOPE_DEF = XPATH_ROLE_SCOPE + "/"
+        + NAME_SCOPE_DEF;
 
     public static final String XPATH_ROLE_SCOPE_DEF_RESOURCE_TYPE =
         XPATH_ROLE_SCOPE_DEF + "/@" + NAME_RESOURCE_TYPE;
@@ -191,14 +190,14 @@ public class RoleAbstractTest extends AaTestBase {
 
     public static final String XPATH_ROLE_POLICY = XPATH_ROLE + "/" + "Policy";
 
-    public static final String XPATH_ROLE_POLICY_SET =
-        XPATH_ROLE + "/" + "PolicySet";
+    public static final String XPATH_ROLE_POLICY_SET = XPATH_ROLE + "/"
+        + "PolicySet";
 
     public static final String XPATH_ROLE_POLICY_OR_POLICY_SET =
         XPATH_ROLE_POLICY + "|" + XPATH_ROLE_POLICY_SET;
 
-    public static final String XPATH_ROLE_POLICY_SET_ID =
-        XPATH_ROLE_POLICY_SET + "/@" + NAME_POLICY_SET_ID;
+    public static final String XPATH_ROLE_POLICY_SET_ID = XPATH_ROLE_POLICY_SET
+        + "/@" + NAME_POLICY_SET_ID;
 
     public static final String XPATH_ROLE_POLICY_COMBINING_ALG_ID =
         XPATH_ROLE_POLICY_SET + "/@" + NAME_POLICY_COMBINING_ALG_ID;
@@ -225,8 +224,8 @@ public class RoleAbstractTest extends AaTestBase {
 
     public static final String XPATH_ROLE_LIST = "/" + "role-list";
 
-    public static final String XPATH_ROLE_LIST_ROLE =
-        XPATH_ROLE_LIST + "/" + NAME_ROLE;
+    public static final String XPATH_ROLE_LIST_ROLE = XPATH_ROLE_LIST + "/"
+        + NAME_ROLE;
 
     public static final String XPATH_SRW_ROLE_LIST_ROLE =
         XPATH_SRW_RESPONSE_OBJECT + NAME_ROLE;
@@ -384,7 +383,8 @@ public class RoleAbstractTest extends AaTestBase {
         // assert scope
         final boolean toBeAssertedUnlimitedValue =
             Boolean.parseBoolean(getAttributeValue(toBeAssertedDocument,
-                RoleAbstractTest.XPATH_ROLE_SCOPE, RoleAbstractTest.NAME_UNLIMITED));
+                RoleAbstractTest.XPATH_ROLE_SCOPE,
+                RoleAbstractTest.NAME_UNLIMITED));
         if (!toBeAssertedUnlimitedValue) {
             assertXmlExists(msg + "Expected at least one scope-def element",
                 toBeAssertedDocument, XPATH_ROLE_SCOPE_DEF);
@@ -674,8 +674,8 @@ public class RoleAbstractTest extends AaTestBase {
                 "role_cone_invalid.xml");
         final Node nameNode =
             selectSingleNode(toBeCreatedDocument, XPATH_ROLE_NAME);
-        nameNode.setTextContent(nameNode.getTextContent() 
-                            + System.currentTimeMillis());
+        nameNode.setTextContent(nameNode.getTextContent()
+            + System.currentTimeMillis());
 
         try {
             create(toString(toBeCreatedDocument, false));
@@ -709,8 +709,8 @@ public class RoleAbstractTest extends AaTestBase {
                 "role_without_policy.xml");
         final Node nameNode =
             selectSingleNode(toBeCreatedDocument, XPATH_ROLE_NAME);
-        nameNode.setTextContent(nameNode.getTextContent() 
-                            + System.currentTimeMillis());
+        nameNode.setTextContent(nameNode.getTextContent()
+            + System.currentTimeMillis());
 
         try {
             create(toString(toBeCreatedDocument, false));
@@ -819,7 +819,7 @@ public class RoleAbstractTest extends AaTestBase {
         }
         catch (Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
-                    XmlCorruptedException.class, e);
+                XmlCorruptedException.class, e);
         }
     }
 
@@ -1610,8 +1610,8 @@ public class RoleAbstractTest extends AaTestBase {
         final String id = getObjidValue(toBeUpdatedDocument);
 
         final Node policyCombiningAlgIdAttr =
-            selectSingleNode(toBeUpdatedDocument, 
-                    XPATH_ROLE_POLICY_COMBINING_ALG_ID);
+            selectSingleNode(toBeUpdatedDocument,
+                XPATH_ROLE_POLICY_COMBINING_ALG_ID);
         policyCombiningAlgIdAttr.setTextContent("testing-algorithm");
 
         final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
@@ -1619,17 +1619,18 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             update(id, toBeUpdatedXml);
             EscidocRestSoapTestBase
-            .failMissingException(XmlCorruptedException.class);
+                .failMissingException(XmlCorruptedException.class);
         }
         catch (Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
-                    XmlCorruptedException.class, e);
+                XmlCorruptedException.class, e);
         }
         String roleXml = retrieve(id);
         Document roleDocument = getDocument(roleXml);
-        assertNotEquals("PolicyCombiningAlg has wrong value", 
-            "testing-algorithm", selectSingleNode(roleDocument, 
-                    XPATH_ROLE_POLICY_COMBINING_ALG_ID).getTextContent());
+        assertNotEquals("PolicyCombiningAlg has wrong value",
+            "testing-algorithm",
+            selectSingleNode(roleDocument, XPATH_ROLE_POLICY_COMBINING_ALG_ID)
+                .getTextContent());
     }
 
     /**
@@ -1654,14 +1655,13 @@ public class RoleAbstractTest extends AaTestBase {
             createSuccessfully("role_for_create.xml");
         final String id = getObjidValue(toBeUpdatedDocument);
 
-        
         deleteElement(toBeUpdatedDocument, XPATH_ROLE_POLICY_SET);
         final String toBeUpdatedXml = toString(toBeUpdatedDocument, false);
 
         try {
             update(id, toBeUpdatedXml);
             EscidocRestSoapTestBase
-            .failMissingException(XmlSchemaValidationException.class);
+                .failMissingException(XmlSchemaValidationException.class);
         }
         catch (Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
@@ -1694,8 +1694,8 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocTestBase.NAME_LAST_MODIFICATION_DATE);
 
         try {
-            update(getObjidValue(toBeUpdatedDocument), toString(
-                toBeUpdatedDocument, false));
+            update(getObjidValue(toBeUpdatedDocument),
+                toString(toBeUpdatedDocument, false));
             EscidocRestSoapTestBase
                 .failMissingException(MissingAttributeValueException.class);
         }
@@ -1732,8 +1732,8 @@ public class RoleAbstractTest extends AaTestBase {
             NAME_RESOURCE_TYPE);
 
         try {
-            update(getObjidValue(toBeUpdatedDocument), toString(
-                toBeUpdatedDocument, false));
+            update(getObjidValue(toBeUpdatedDocument),
+                toString(toBeUpdatedDocument, false));
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
@@ -1766,8 +1766,8 @@ public class RoleAbstractTest extends AaTestBase {
         deleteElement(toBeUpdatedDocument, XPATH_ROLE_POLICY_SET);
 
         try {
-            update(getObjidValue(toBeUpdatedDocument), toString(
-                toBeUpdatedDocument, false));
+            update(getObjidValue(toBeUpdatedDocument),
+                toString(toBeUpdatedDocument, false));
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
@@ -1800,8 +1800,8 @@ public class RoleAbstractTest extends AaTestBase {
         deleteElement(toBeUpdatedDocument, XPATH_ROLE_SCOPE);
 
         try {
-            update(getObjidValue(toBeUpdatedDocument), toString(
-                toBeUpdatedDocument, false));
+            update(getObjidValue(toBeUpdatedDocument),
+                toString(toBeUpdatedDocument, false));
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
@@ -1890,13 +1890,16 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase.getDocument(updatedXml);
         deleteAttribute(toBeUpdatedDocument2, XPATH_ROLE,
             EscidocTestBase.NAME_LAST_MODIFICATION_DATE);
-        addAttribute(toBeUpdatedDocument2, XPATH_ROLE, createAttributeNode(
-            toBeUpdatedDocument2, XLINK_NS_URI, null,
-            EscidocTestBase.NAME_LAST_MODIFICATION_DATE, lastModificationDate));
+        addAttribute(
+            toBeUpdatedDocument2,
+            XPATH_ROLE,
+            createAttributeNode(toBeUpdatedDocument2, XLINK_NS_URI, null,
+                EscidocTestBase.NAME_LAST_MODIFICATION_DATE,
+                lastModificationDate));
 
         try {
-            update(getObjidValue(toBeUpdatedDocument2), toString(
-                toBeUpdatedDocument2, false));
+            update(getObjidValue(toBeUpdatedDocument2),
+                toString(toBeUpdatedDocument2, false));
             EscidocRestSoapTestBase
                 .failMissingException(OptimisticLockingException.class);
         }
@@ -1930,14 +1933,14 @@ public class RoleAbstractTest extends AaTestBase {
         nameNode.setTextContent("Default-User");
 
         try {
-            update(getObjidValue(toBeUpdatedDocument), toString(
-                toBeUpdatedDocument, false));
+            update(getObjidValue(toBeUpdatedDocument),
+                toString(toBeUpdatedDocument, false));
             EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
         catch (Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
-                    XmlCorruptedException.class, e);
+                XmlCorruptedException.class, e);
         }
     }
 
@@ -1964,8 +1967,8 @@ public class RoleAbstractTest extends AaTestBase {
             createSuccessfully("role_for_create.xml");
 
         try {
-            update("escidoc:role-default-user", toString(toBeUpdatedDocument,
-                false));
+            update("escidoc:role-default-user",
+                toString(toBeUpdatedDocument, false));
             EscidocRestSoapTestBase
                 .failMissingException(RoleNotFoundException.class);
         }
@@ -2077,6 +2080,8 @@ public class RoleAbstractTest extends AaTestBase {
 
         filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
             + FILTER_NAME + "\"=%" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
+            new String[] { "1000" });
 
         String retrievedXml = null;
 
@@ -2156,8 +2161,8 @@ public class RoleAbstractTest extends AaTestBase {
         catch (Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving roles with providing corrupted filter params"
-                    + "not declined, properly. ", InvalidSearchQueryException.class,
-                e);
+                    + "not declined, properly. ",
+                InvalidSearchQueryException.class, e);
         }
     }
 
@@ -2239,8 +2244,8 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase.getDocument(retrievedXml);
         final NodeList roleNodes =
             selectNodeList(retrievedDocument, XPATH_SRW_ROLE_LIST_ROLE);
-        assertEquals("Unexpected number of roles in list.", 2, roleNodes
-            .getLength());
+        assertEquals("Unexpected number of roles in list.", 2,
+            roleNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
         assertXmlExists("Missing role Administrator.", retrievedDocument,
             XPATH_SRW_ROLE_LIST_ROLE + "[properties/name='Administrator']");
@@ -2288,8 +2293,8 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase.getDocument(retrievedXml);
         final NodeList roleNodes =
             selectNodeList(retrievedDocument, XPATH_SRW_ROLE_LIST_ROLE);
-        assertEquals("Unexpected number of roles in list.", 1, roleNodes
-            .getLength());
+        assertEquals("Unexpected number of roles in list.", 1,
+            roleNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
         assertXmlExists("Missing role System-Administrator.",
             retrievedDocument, XPATH_SRW_ROLE_LIST_ROLE
@@ -2553,7 +2558,7 @@ public class RoleAbstractTest extends AaTestBase {
                 + "\"" + FILTER_IDENTIFIER
                 + "\"=escidoc:role-system-administrator) and " + "\""
                 + FILTER_NAME + "\"=A%or and limited=true and granted=true" });
-        
+
         String retrievedXml = null;
 
         try {
@@ -2610,8 +2615,8 @@ public class RoleAbstractTest extends AaTestBase {
                 + "\"" + FILTER_IDENTIFIER
                 + "\"=escidoc:role-system-inspector or " + "\""
                 + FILTER_IDENTIFIER
-                + "\"=escidoc:role-system-administrator and "
-                + "\"" + FILTER_NAME + "\"=A%or and " + "\"" + FILTER_CONTEXT
+                + "\"=escidoc:role-system-administrator and " + "\""
+                + FILTER_NAME + "\"=A%or and " + "\"" + FILTER_CONTEXT
                 + "\"=escidoc:persistent3 and limited=true "
                 + "and granted=true" });
         try {
@@ -2685,13 +2690,16 @@ public class RoleAbstractTest extends AaTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
 
         assertXmlExists("Missing role MD-Editor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3]" + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+            XPATH_SRW_RESPONSE_RECORD + "[3]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
                 + "/properties[name='MD-Editor']");
         assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2]" + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+            XPATH_SRW_RESPONSE_RECORD + "[2]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
                 + "/properties[name='Depositor']");
         assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1]" + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+            XPATH_SRW_RESPONSE_RECORD + "[1]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
                 + "/properties[name='Administrator']");
         assertXmlNotExists("Unexpected 4.th role.", retrievedDocument,
             XPATH_SRW_ROLE_LIST_ROLE + "[4]");
@@ -2756,16 +2764,16 @@ public class RoleAbstractTest extends AaTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
 
         assertXmlExists("Missing role MD-Editor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+            XPATH_SRW_RESPONSE_RECORD + "[1]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
                 + "/properties[name='MD-Editor']");
         assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+            XPATH_SRW_RESPONSE_RECORD + "[2]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
                 + "/properties[name='Depositor']");
         assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+            XPATH_SRW_RESPONSE_RECORD + "[3]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
                 + "/properties[name='Administrator']");
         assertXmlNotExists("Unexpected 4.th role.", retrievedDocument,
             XPATH_SRW_ROLE_LIST_ROLE + "[4]");
@@ -2831,18 +2839,21 @@ public class RoleAbstractTest extends AaTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
 
         assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+            XPATH_SRW_RESPONSE_RECORD + "[1]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
                 + "/properties[name='Depositor']");
         assertXmlExists("Missing role Administrator.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+            XPATH_SRW_RESPONSE_RECORD + "[2]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
                 + "/properties[name='Administrator']");
-        assertXmlNotExists("Unexpected 3.th role.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH.substring(
-                0, XPATH_SRW_RESPONSE_OBJECT_SUBPATH.length() - 1) 
-                + "[" + NAME_ROLE + "]");
+        assertXmlNotExists(
+            "Unexpected 3.th role.",
+            retrievedDocument,
+            XPATH_SRW_RESPONSE_RECORD
+                + "[3]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH.substring(0,
+                    XPATH_SRW_RESPONSE_OBJECT_SUBPATH.length() - 1) + "["
+                + NAME_ROLE + "]");
     }
 
     /**
@@ -2906,14 +2917,17 @@ public class RoleAbstractTest extends AaTestBase {
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_ROLE);
 
         assertXmlExists("Missing role Depositor.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
+            XPATH_SRW_RESPONSE_RECORD + "[1]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_ROLE
                 + "/properties[name='Depositor']");
-        assertXmlNotExists("Unexpected 2.th role.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH.substring(
-                0, XPATH_SRW_RESPONSE_OBJECT_SUBPATH.length() - 1) 
-                + "[" + NAME_ROLE + "]");
+        assertXmlNotExists(
+            "Unexpected 2.th role.",
+            retrievedDocument,
+            XPATH_SRW_RESPONSE_RECORD
+                + "[2]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH.substring(0,
+                    XPATH_SRW_RESPONSE_OBJECT_SUBPATH.length() - 1) + "["
+                + NAME_ROLE + "]");
     }
 
     /**
