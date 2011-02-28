@@ -60,7 +60,7 @@ public class PropertiesProvider {
 
     public static final String FEDORA_PASSWORD = "fedora.passwd";
 
-    public static final String TESTDATA_URL = "testdata.url";
+    public static final String TESTDATA_URL = "testdata.baseurl";
 
     public static final String DIGILIB_SCALER_URL = "digilib.scaler";
 
