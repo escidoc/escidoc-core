@@ -387,9 +387,81 @@
 					<artifactId>log4j-over-slf4j</artifactId>
 				</exclusion>
 				<exclusion>
-                                        <groupId>com.sun.xml.stream</groupId>
-                                        <artifactId>sjsxp</artifactId>
-                        	</exclusion>
+					<groupId>com.sun.xml.stream</groupId>
+					<artifactId>sjsxp</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>axis</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.akubraproject</groupId>
+					<artifactId>akubra-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.akubraproject</groupId>
+					<artifactId>akubra-fs</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.akubraproject</groupId>
+					<artifactId>akubra-map</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.akubraproject</groupId>
+					<artifactId>akubra-mem</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>axis</groupId>
+					<artifactId>axis-wsdl4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.abdera</groupId>
+					<artifactId>abdera-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.abdera</groupId>
+					<artifactId>abdera-i18n</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.abdera</groupId>
+					<artifactId>abdera-parser</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.abdera</groupId>
+					<artifactId>abdera-extensions-main</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>one-jar-boot</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>trippi-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>trippi-mptstore</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>Tidy</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>wsdl4j</groupId>
+					<artifactId>wsdl4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>jai_core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.codehaus.jettison</groupId>
+					<artifactId>jettison</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>jaxen</groupId>
+					<artifactId>jaxen</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -412,20 +484,23 @@
 					<groupId>org.apache.lucene</groupId>
 					<artifactId>lucene-core</artifactId>
 				</exclusion>
-			</exclusions>
-		</dependency>
-<!-- 		
-		<dependency>
-			<groupId>org.fcrepo</groupId>
-			<artifactId>fcrepo-server</artifactId>
-			<exclusions>
 				<exclusion>
-					<artifactId>ch.qos.logback</artifactId>
-					<groupId>logback-classic</groupId>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>axis</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>mulgara-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>wsdl4j</groupId>
+					<artifactId>wsdl4j</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
- -->		
+		<!-- <dependency> <groupId>org.fcrepo</groupId> <artifactId>fcrepo-server</artifactId> 
+			<exclusions> <exclusion> <artifactId>ch.qos.logback</artifactId> <groupId>logback-classic</groupId> 
+			</exclusion> </exclusions> </dependency> -->
 		<dependency>
 			<groupId>org.z3950.zing</groupId>
 			<artifactId>cql</artifactId>
@@ -474,11 +549,9 @@
 						<configuration>
 							<driver>org.postgresql.Driver</driver>
 							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<!-- 
-							<username>postgres</username>
-							<password>postgres</password>
-								You can comment out username/password configurations and have 
-								maven to look them up in your settings.xml using ${settingsKey} -->
+							<!-- <username>postgres</username> <password>postgres</password> You 
+								can comment out username/password configurations and have maven to look them 
+								up in your settings.xml using ${settingsKey} -->
 							<settingsKey>escidoc-core-db-admin</settingsKey>
 							<!--all executions are ignored if -Dmaven.test.skip=true -->
 							<skip>${maven.test.skip}</skip>
@@ -555,7 +628,8 @@
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
 									<srcFiles>
-										<srcFile>src/main/resources/sql/postgres/create-language.sql</srcFile>
+										<srcFile>src/main/resources/sql/postgres/create-language.sql
+										</srcFile>
 									</srcFiles>
 								</configuration>
 							</execution>
@@ -575,12 +649,18 @@
 										<!-- the initialize phase allows no filtering. Furthermore is creating 
 											database part of the test phase. That's why here should only be these tables 
 											are generated where hibernate depends on. -->
-										<srcFile>src/main/resources/sql/postgres/aa/aa.create.sql</srcFile>
-										<srcFile>src/main/resources/sql/postgres/adm/adm.create.sql</srcFile>
-										<srcFile>src/main/resources/sql/postgres/oai/oai.create.sql</srcFile>
-										<srcFile>src/main/resources/sql/postgres/om/om.create.sql</srcFile>
-										<srcFile>src/main/resources/sql/postgres/sm/sm.create.sql</srcFile>
-										<srcFile>src/main/resources/sql/postgres/st/st.create.sql</srcFile>
+										<srcFile>src/main/resources/sql/postgres/aa/aa.create.sql
+										</srcFile>
+										<srcFile>src/main/resources/sql/postgres/adm/adm.create.sql
+										</srcFile>
+										<srcFile>src/main/resources/sql/postgres/oai/oai.create.sql
+										</srcFile>
+										<srcFile>src/main/resources/sql/postgres/om/om.create.sql
+										</srcFile>
+										<srcFile>src/main/resources/sql/postgres/sm/sm.create.sql
+										</srcFile>
+										<srcFile>src/main/resources/sql/postgres/st/st.create.sql
+										</srcFile>
 									</srcFiles>
 								</configuration>
 							</execution>
@@ -600,8 +680,10 @@
 									<password>escidoc</password>
 									<autocommit>true</autocommit>
 									<srcFiles>
-										<srcFile>src/main/resources/sql/postgres/aa/aa.init.user-accounts.common.sql</srcFile>
-										<srcFile>src/main/resources/sql/postgres/aa/aa.init.user-accounts.MPDL.sql</srcFile>
+										<srcFile>src/main/resources/sql/postgres/aa/aa.init.user-accounts.common.sql
+										</srcFile>
+										<srcFile>src/main/resources/sql/postgres/aa/aa.init.user-accounts.MPDL.sql
+										</srcFile>
 									</srcFiles>
 								</configuration>
 							</execution>
@@ -623,7 +705,8 @@
 									<fileset>
 										<basedir>${basedir}</basedir>
 										<includes>
-											<include>src/main/resources/sql/postgres/aa/aa.init.handles.*.sql</include>
+											<include>src/main/resources/sql/postgres/aa/aa.init.handles.*.sql
+											</include>
 										</includes>
 									</fileset>
 								</configuration>
@@ -646,7 +729,8 @@
 									<fileset>
 										<basedir>${basedir}</basedir>
 										<includes>
-											<include>src/main/resources/sql/postgres/aa/aa.init.roles.*.sql</include>
+											<include>src/main/resources/sql/postgres/aa/aa.init.roles.*.sql
+											</include>
 										</includes>
 									</fileset>
 								</configuration>
@@ -669,9 +753,12 @@
 									<fileset>
 										<basedir>${basedir}</basedir>
 										<includes>
-											<include>src/main/resources/sql/postgres/aa/aa.init.grants.*.sql</include>
-											<include>src/main/resources/sql/postgres/aa/aa.init.actions.sql</include>
-											<include>src/main/resources/sql/postgres/aa/aa.init.method-mappings.*.sql</include>
+											<include>src/main/resources/sql/postgres/aa/aa.init.grants.*.sql
+											</include>
+											<include>src/main/resources/sql/postgres/aa/aa.init.actions.sql
+											</include>
+											<include>src/main/resources/sql/postgres/aa/aa.init.method-mappings.*.sql
+											</include>
 										</includes>
 									</fileset>
 								</configuration>
@@ -692,10 +779,14 @@
 										<!-- the initialize phase allows no filtering. Furthermore is creating 
 											database part of the test phase. That's why here should only be these tables 
 											are generated where hibernate depends on. -->
-										<srcFile>src/main/resources/sql/postgres/test/test.aa.init.roles.sql</srcFile>
-										<srcFile>src/main/resources/sql/postgres/test/test.aa.init.users.sql</srcFile>
-										<srcFile>src/main/resources/sql/postgres/test/test.aa.init.groups.sql</srcFile>
-										<srcFile>src/main/resources/sql/postgres/test/test.sm.create.sql</srcFile>
+										<srcFile>src/main/resources/sql/postgres/test/test.aa.init.roles.sql
+										</srcFile>
+										<srcFile>src/main/resources/sql/postgres/test/test.aa.init.users.sql
+										</srcFile>
+										<srcFile>src/main/resources/sql/postgres/test/test.aa.init.groups.sql
+										</srcFile>
+										<srcFile>src/main/resources/sql/postgres/test/test.sm.create.sql
+										</srcFile>
 									</srcFiles>
 								</configuration>
 							</execution>

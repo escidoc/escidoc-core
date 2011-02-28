@@ -463,6 +463,30 @@
                 <groupId>org.apache.lucene</groupId>
                 <artifactId>lucene-core</artifactId>
               </exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>jta</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>log4j-over-slf4j</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>axis</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.fcrepo</groupId>
+					<artifactId>mulgara-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>wsdl4j</groupId>
+					<artifactId>wsdl4j</artifactId>
+				</exclusion>
             </exclusions>
           </dependency>
           <dependency>
@@ -693,6 +717,7 @@
     <xjavadoc.version>1.5-050611</xjavadoc.version>
     <jdbc.postgresql.version>9.0-801.jdbc4</jdbc.postgresql.version>
     <fcrepo.version>3.4.2</fcrepo.version>
+    <lucene.version>3.0.2</lucene.version>
     <!-- <jaxb.xsd.folder>src/main/resources/xsd</jaxb.xsd.folder> <jaxb.xjb.folder>src/main/resources/META-INF/bindings</jaxb.xjb.folder> 
       <jaxb.temporary.folder>target/generated-sources/resources/jaxb</jaxb.temporary.folder> -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
