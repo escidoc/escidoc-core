@@ -107,6 +107,9 @@
         <listitem>
           <para>retrieve user-group if user created that group</para>
         </listitem>
+        <listitem>
+          <para>evaluate actions against pdp for own user</para>
+        </listitem>
       </itemizedlist></para>
 
     <para>Additionally, every user is allowed to perform a search request, as
@@ -164,6 +167,7 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
                     info:escidoc/names:aa:1.0:action:retrieve-role 
                     info:escidoc/names:aa:1.0:action:retrieve-user-group 
                     info:escidoc/names:aa:1.0:action:retrieve-permission-filter-query 
+              		info:escidoc/names:aa:1.0:action:evaluate 
                     </AttributeValue>
                     <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
                 </ActionMatch>
@@ -783,5 +787,41 @@ INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:default-poli
                 </Apply>
             </Apply>
         </Condition>
+    </Rule>
+    <Rule RuleId="Default-User-policy-rule-15" Effect="Permit">
+        <Target>
+            <Subjects>
+                <AnySubject/>
+            </Subjects>
+            <Resources>
+                <AnyResource/>
+            </Resources>
+            <Actions>
+                <Action>
+                    <ActionMatch MatchId="info:escidoc/names:aa:1.0:function:string-contains">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+                            info:escidoc/names:aa:1.0:action:evaluate  
+                        </AttributeValue>
+                        <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                    </ActionMatch>
+                </Action>
+            </Actions>
+        </Target>
+        <Condition FunctionId="urn:oasis:names:tc:xacml:1.0:function:or">
+        	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+            	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                	<SubjectAttributeDesignator SubjectCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+            	</Apply>
+            	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                	<ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+            	</Apply>
+        	</Apply>
+        	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string"></AttributeValue>
+            	<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-one-and-only">
+                	<ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+            	</Apply>
+        	</Apply>
+		</Condition>
     </Rule>
 </Policy>');

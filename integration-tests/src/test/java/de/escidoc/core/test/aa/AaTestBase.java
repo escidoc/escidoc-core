@@ -31,6 +31,7 @@ package de.escidoc.core.test.aa;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.aa.PolicyDecisionPointClient;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserGroupClient;
@@ -118,6 +119,8 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     protected static final int STATISTIC_DATA_HANDLER_CODE = 15;
 
     protected static final int USER_GROUP_HANDLER_CODE = 16;
+
+    protected static final int POLICY_DECISION_POINT_HANDLER_CODE = 17;
 
     protected static final String STATUS_PENDING = "pending";
 
@@ -290,6 +293,8 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     
     protected final ContentRelationClient contentRelationClient;
     
+    protected final PolicyDecisionPointClient policyDecisionPointClient;
+    
     protected final OrganizationalUnitHelper orgUnitHelper;
 
     private SmTestBase smTestBase = null;
@@ -334,6 +339,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
         this.statisticDataClient = new StatisticDataClient(transport);
         this.preprocessingClient = new PreprocessingClient(transport);
         this.contentRelationClient = new ContentRelationClient(transport);
+        this.policyDecisionPointClient = new PolicyDecisionPointClient(transport);
         this.orgUnitHelper = new OrganizationalUnitHelper(transport);
         this.smTestBase = new SmTestBase(transport);
     }
@@ -464,6 +470,13 @@ public class AaTestBase extends EscidocRestSoapTestBase {
      */
     public StatisticDataClient getStatisticDataClient() {
         return statisticDataClient;
+    }
+
+    /**
+     * @return Returns the policyDecisionPointClient.
+     */
+    public PolicyDecisionPointClient getPolicyDecisionPointClient() {
+        return policyDecisionPointClient;
     }
 
     public String create(final int handlerCode, final String xml)

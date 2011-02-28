@@ -14,6 +14,13 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
          */
 INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_before, single_resource)
   VALUES ('escidoc:mm-aa-evaluate', 'de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface', 'evaluate', 'info:escidoc/names:aa:1.0:action:evaluate', true, true);    
+INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
+  VALUES ('escidoc-im-aa-evaluate-1', 'info:escidoc/names:aa:1.0:resource:subject-id', '/requests/Request/Subject/Attribute/AttributeValue', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 2, true, '', 'escidoc:mm-aa-evaluate');
+INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
+  VALUES ('escidoc-im-aa-evaluate-2', 'info:escidoc/names:aa:1.0:resource:object-type', '', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 3, false, 'evaluate', 'escidoc:mm-aa-evaluate');
+
      
      
         /**

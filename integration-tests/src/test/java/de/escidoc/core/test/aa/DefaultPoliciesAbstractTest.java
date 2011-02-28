@@ -2440,4 +2440,137 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         }
     }
 
+    /**
+     * Tests evaluating requests for anonymous user
+     * 
+     * @test.name Default Policies - evaluate
+     * @test.id testAaDefAnonymousEvaluateAnonymous
+     * @test.expected: OK
+     * @test.status Implemented
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testAaDefAnonymousEvaluateAnonymous() throws Exception {
+        try {
+            PWCallback.setAnonymousHandle();
+            String requestsXml =
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests2.xml");
+            assertXmlValidRequests(requestsXml);
+            String responseXml = handleXmlResult(getPolicyDecisionPointClient().evaluate(
+                requestsXml));
+        } finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
+    }
+
+    /**
+     * Tests declining evaluating requests for anonymous user
+     * 
+     * @test.name Default Policies - evaluate
+     * @test.id testAaDefAnonymousEvaluateUserDecline
+     * @test.expected: AuthorizationException
+     * @test.status Implemented
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testAaDefAnonymousEvaluateUserDecline() throws Exception {
+        try {
+            PWCallback.setAnonymousHandle();
+            String requestsXml =
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests1.xml");
+            assertXmlValidRequests(requestsXml);
+            String responseXml = handleXmlResult(getPolicyDecisionPointClient().evaluate(
+                requestsXml));
+            EscidocRestSoapTestBase
+            .failMissingException(AuthorizationException.class);
+        } catch (Exception e) {
+            EscidocRestSoapTestBase.assertExceptionType(
+                AuthorizationException.class, e);
+        } finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
+    }
+
+    /**
+     * Tests evaluating requests for anonymous user
+     * 
+     * @test.name Default Policies - evaluate
+     * @test.id testAaDefAnonymousEvaluateAnonymous
+     * @test.expected: OK
+     * @test.status Implemented
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testAaDefUserEvaluateAnonymous() throws Exception {
+        try {
+            revokeAllGrants(TEST_USER_ACCOUNT_ID);
+            PWCallback.setHandle(PWCallback.TEST_HANDLE);
+            String requestsXml =
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests2.xml");
+            assertXmlValidRequests(requestsXml);
+            String responseXml = handleXmlResult(getPolicyDecisionPointClient().evaluate(
+                requestsXml));
+        } finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
+    }
+
+    /**
+     * Tests declining evaluating requests for anonymous user
+     * 
+     * @test.name Default Policies - evaluate
+     * @test.id testAaDefAnonymousEvaluateUserDecline
+     * @test.expected: AuthorizationException
+     * @test.status Implemented
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testAaDefUserEvaluateUser() throws Exception {
+        try {
+            revokeAllGrants(TEST_USER_ACCOUNT_ID);
+            PWCallback.setHandle(PWCallback.TEST_HANDLE);
+            String requestsXml =
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests1.xml");
+            assertXmlValidRequests(requestsXml);
+            String responseXml = handleXmlResult(getPolicyDecisionPointClient().evaluate(
+                requestsXml));
+        } finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
+    }
+
+    /**
+     * Tests declining evaluating requests for anonymous user
+     * 
+     * @test.name Default Policies - evaluate
+     * @test.id testAaDefAnonymousEvaluateUserDecline
+     * @test.expected: AuthorizationException
+     * @test.status Implemented
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testAaDefUserEvaluateUserDecline() throws Exception {
+        try {
+            revokeAllGrants(TEST_USER_ACCOUNT_ID);
+            PWCallback.setHandle(PWCallback.TEST_HANDLE);
+            String requestsXml =
+                EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests.xml");
+            assertXmlValidRequests(requestsXml);
+            String responseXml = handleXmlResult(getPolicyDecisionPointClient().evaluate(
+                requestsXml));
+            EscidocRestSoapTestBase
+            .failMissingException(AuthorizationException.class);
+        } catch (Exception e) {
+            EscidocRestSoapTestBase.assertExceptionType(
+                AuthorizationException.class, e);
+        } finally {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+        }
+    }
+
 }
