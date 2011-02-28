@@ -64,27 +64,27 @@ import static org.junit.Assert.fail;
  * 
  * @author TTE
  * 
- * changed for schema version 0.5:
- * <ul>
- * <li>Removed testAACua8 (primary attribute has been removed) </li>
- * <li>Removed testAACua9 (primary attribute has been removed) </li>
- * <li>Removed testAARuas11 (primary attribute has been removed)</li>
- * <li>Modified testAARuas13 (primary attribute has been removed)</li>
- * </ul>
+ *         changed for schema version 0.5:
+ *         <ul>
+ *         <li>Removed testAACua8 (primary attribute has been removed)</li>
+ *         <li>Removed testAACua9 (primary attribute has been removed)</li>
+ *         <li>Removed testAARuas11 (primary attribute has been removed)</li>
+ *         <li>Modified testAARuas13 (primary attribute has been removed)</li>
+ *         </ul>
  * 
- * changes for schema version 0.3:
- * <ul>
- * <li>Replaced UM_CUA-4, UM_CUA-4-2, UM_CUA-10 by
- * UM_CUA-10-rest/UM_CUA-10-soap</li>
- * <li>Replaced UM_CUA-4-3 by UM_CUA-4-3-rest</li>
- * <li>Replaced UM_UUA-7 by UM_UUA-7-rest/UM_UUA-7-soap</li>
- * <li>Replaced UM_UUA-10 by UM_UUA-10-rest/UM_UUA-10-soap</li>
- * <li>Replaced UM_UUA-11, UM_UUA-11-2, UM_UUA-11-3 by UM_UUA-11-rest,
- * UM_UUA-11-2-rest, UM_UUA-11-3-rest</li>
- * <li>Replaced UM_UUA-11-4 by UM_UUA-11-4-soap</li>
- * <li>Replaced UM_RVR-1, UM_RVR-2, UM_RVR-2-2, and UM_RVR-3 by UM_RVR-1-rest,
- * UM_RVR-2-rest, UM_RVR-2-2-rest, and UM_RVR-3-rest</li>
- * </ul>
+ *         changes for schema version 0.3:
+ *         <ul>
+ *         <li>Replaced UM_CUA-4, UM_CUA-4-2, UM_CUA-10 by
+ *         UM_CUA-10-rest/UM_CUA-10-soap</li>
+ *         <li>Replaced UM_CUA-4-3 by UM_CUA-4-3-rest</li>
+ *         <li>Replaced UM_UUA-7 by UM_UUA-7-rest/UM_UUA-7-soap</li>
+ *         <li>Replaced UM_UUA-10 by UM_UUA-10-rest/UM_UUA-10-soap</li>
+ *         <li>Replaced UM_UUA-11, UM_UUA-11-2, UM_UUA-11-3 by UM_UUA-11-rest,
+ *         UM_UUA-11-2-rest, UM_UUA-11-3-rest</li>
+ *         <li>Replaced UM_UUA-11-4 by UM_UUA-11-4-soap</li>
+ *         <li>Replaced UM_RVR-1, UM_RVR-2, UM_RVR-2-2, and UM_RVR-3 by
+ *         UM_RVR-1-rest, UM_RVR-2-rest, UM_RVR-2-2-rest, and UM_RVR-3-rest</li>
+ *         </ul>
  */
 public abstract class UserAccountTest extends UserAccountTestBase {
 
@@ -99,7 +99,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
     public static final String XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT =
         XPATH_SRW_RESPONSE_OBJECT + NAME_USER_ACCOUNT;
-    
+
     private static UserAttributeTestBase userAttributeTestBase = null;
 
     private static UserPreferenceTestBase userPreferenceTestBase = null;
@@ -109,17 +109,17 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     private static UserGroupTestBase userGroupTestBase = null;
 
     private static OrganizationalUnitTestBase organizationalUnitTestBase = null;
-    
+
     private static String userAccountFilterGroup;
 
     private static String userAccountFilterUser;
 
     private static String userAccountFilterUser1;
-    
+
     private static int additonalGroupFilterSearchUsersCount = 5;
 
-    private static String[] additonalGroupFilterSearchUsers = 
-                    new String[additonalGroupFilterSearchUsersCount];
+    private static String[] additonalGroupFilterSearchUsers =
+        new String[additonalGroupFilterSearchUsersCount];
 
     private static String uniqueIdentifier;
 
@@ -281,7 +281,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     }
 
     /**
-     * Test declining creation of UserAccount with reserved String as login Name.
+     * Test declining creation of UserAccount with reserved String as login
+     * Name.
      * 
      * @test.name Reserved String as login Name
      * @test.id AA_CUA-61
@@ -412,7 +413,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         assertUserAccount(retrievedXml, toString(createdDocument, false),
             startTimestamp, startTimestamp, true);
     }
-    
+
     /**
      * Test successful retrieving an existing UserAccount resource by its
      * loginname.
@@ -430,8 +431,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     public void testAARuaWithLoginNameContainingSpace() throws Exception {
 
         final Document createdDocument =
-            createSuccessfully(
-                "escidoc_useraccount_WithSpaceInLoginName_create.xml");
+            createSuccessfully("escidoc_useraccount_WithSpaceInLoginName_create.xml");
         final String loginname =
             selectSingleNode(createdDocument, XPATH_USER_ACCOUNT_LOGINNAME)
                 .getTextContent();
@@ -439,7 +439,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         String retrievedXml = null;
         try {
             retrievedXml = retrieve(encodedLoginName);
-            //System.out.println("ua " + retrievedXml);
+            // System.out.println("ua " + retrievedXml);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
@@ -448,14 +448,13 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             startTimestamp, startTimestamp, true);
     }
 
-
     /**
      * Test retrieving the current user.
      * 
      * @test.name retrieve current user. Current user is systemadministrator.
      * @test.id AA_RETRIEVE_CURRENT_USER
-     * @test.input 
-     * @test.inputDescription: 
+     * @test.input
+     * @test.inputDescription:
      * @test.expected: xml of systemadministrator
      * @test.status Implemented
      * 
@@ -476,13 +475,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     /**
      * Test retrieving the current user.
      * 
-     * @test.name retrieve current user. 
-     * Current user is anonymous (no user logged in).
-     * Therefore UserAccountNotFoundException is thrown.
+     * @test.name retrieve current user. Current user is anonymous (no user
+     *            logged in). Therefore UserAccountNotFoundException is thrown.
      * 
      * @test.id AA_DECLINE_RETRIEVE_CURRENT_USER
-     * @test.input 
-     * @test.inputDescription: 
+     * @test.input
+     * @test.inputDescription:
      * @test.expected: UserAccountNotFoundException
      * @test.status Implemented
      * 
@@ -495,7 +493,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         try {
             retrieveCurrentUser(PWCallback.ANONYMOUS_HANDLE);
             EscidocRestSoapTestBase
-            .failMissingException(UserAccountNotFoundException.class);
+                .failMissingException(UserAccountNotFoundException.class);
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
@@ -589,11 +587,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Activate an UserAccount
      * @test.id AA_AUA-1
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>existing user-id</li>
-     *             <li>timestamp of the last modification of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>existing user-id</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         </ul>
      * @test.expected: No result, no exception, UserAccount has been activated.
      * @test.status Implemented
      * 
@@ -667,11 +665,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name: Non-existent UserAccount
      * @test.id AA_AUA-2
      * @test.input: UserAccount id.
-     * @test.inputDescription:
-     *              <ul>
-     *              <li>not-existing user-id</li>
-     *              <li>timestamp of the last modification of the UserAccount</li>
-     *              </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>not-existing user-id</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         </ul>
      * @test.expected: UserAccountNotFoundException
      * @test.status Implemented
      * 
@@ -702,11 +700,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name: Activate User Account - Wrong Id
      * @test.id AA_AUA-2-2
      * @test.input: UserAccount id.
-     * @test.inputDescription:
-     *              <ul>
-     *              <li>if of existing resource of another resource type</li>
-     *              <li>timestamp of the last modification of the UserAccount</li>
-     *              </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>if of existing resource of another resource
+     *                         type</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         </ul>
      * @test.expected: UserAccountNotFoundException
      * @test.status Implemented
      * 
@@ -737,11 +736,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name: UserID not provided
      * @test.id AA_AUA-3
      * @test.input: UserAccount id.
-     * @test.inputDescription:
-     *              <ul>
-     *              <li>user-id is not provided</li>
-     *              <li>timestamp of the last modification of the UserAccount</li>
-     *              </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>user-id is not provided</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -771,11 +770,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name: UserAccount already active
      * @test.id AA_AUA-4
      * @test.input: UserAccount id.
-     * @test.inputDescription:
-     *              <ul>
-     *              <li>user-id, where status is already "active"</li>
-     *              <li>timestamp of the last modification of the UserAccount</li>
-     *              </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>user-id, where status is already "active"</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         </ul>
      * @test.expected: AlreadyActiveException
      * @test.status Implemented
      * 
@@ -842,11 +841,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Successful Deactivating an UserAccount.
      * @test.id AA_DUA-1
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>user-id</li>
-     *             <li>timestamp of the last modification of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>user-id</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         </ul>
      * @test.expected: No result, no exception, UserAccount has been
      *                 deactivated. User is not able to login.
      * @test.status Implemented
@@ -896,10 +895,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         // Currently, new created user accounts have predefined password
         // PubManR2
-        getUserManagementWrapperClient()
-            .login(loginName, "PubManR2", false, true,
-                "http%3A%2F%2Flocalhost%3A8080%2Fir%2Fitem%2Fescidoc%3A1",
-                true);
+        getUserManagementWrapperClient().login(loginName, "PubManR2", false,
+            true, "http%3A%2F%2Flocalhost%3A8080%2Fir%2Fitem%2Fescidoc%3A1",
+            true);
     }
 
     /**
@@ -909,11 +907,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name: Non-existent user-id
      * @test.id AA_DUA-2
      * @test.input: UserAccount id.
-     * @test.inputDescription:
-     *              <ul>
-     *              <li>not-existing user-id</li>
-     *              <li>timestamp of the last modification of the UserAccount</li>
-     *              </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>not-existing user-id</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         </ul>
      * @test.expected: UserAccountNotFoundException
      * @test.status Implemented
      * 
@@ -944,11 +942,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name: Deacivate User Account - Wrong Id
      * @test.id AA_DUA-2-2
      * @test.input: UserAccount id.
-     * @test.inputDescription:
-     *              <ul>
-     *              <li>id of existing resource of another resource type</li>
-     *              <li>timestamp of the last modification of the UserAccount</li>
-     *              </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>id of existing resource of another resource
+     *                         type</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         </ul>
      * @test.expected: UserAccountNotFoundException
      * @test.status Implemented
      * 
@@ -979,11 +978,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name: User-id not provided
      * @test.id AA_DUA-3
      * @test.input: UserAccount id.
-     * @test.inputDescription:
-     *              <ul>
-     *              <li>user-id is not provided</li>
-     *              <li>timestamp of the last modification of the UserAccount</li>
-     *              </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>user-id is not provided</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -1014,11 +1013,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name: UserID already deactive
      * @test.id AA_DUA-4
      * @test.input: UserAccount id.
-     * @test.inputDescription:
-     *              <ul>
-     *              <li>user-id, where status is already "deactive"</li>
-     *              <li>timestamp of the last modification of the UserAccount</li>
-     *              </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>user-id, where status is already "deactive"</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         </ul>
      * @test.expected: AlreadyDeactiveException
      * @test.status Implemented
      * 
@@ -1245,12 +1244,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Optimistic locking error
      * @test.id AA_UUA-5
      * @test.input UserAccount XML representation
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>existing user-id</li>
-     *             <li>XML representation of the UserAccount, where the last
-     *             modification timestamp does not matchh the current one</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>existing user-id</li>
+     *                         <li>XML representation of the UserAccount, where
+     *                         the last modification timestamp does not matchh
+     *                         the current one</li>
+     *                         </ul>
      * @test.expected: OptimisticLockingException
      * @test.status Implemented
      * 
@@ -1282,12 +1281,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Invalid XML representation
      * @test.id AA_UUA-6
      * @test.input UserAccount XML representation
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>existing user-id</li>
-     *             <li>invalid XML representation of the UserAccount to be
-     *             updated</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>existing user-id</li>
+     *                         <li>invalid XML representation of the UserAccount
+     *                         to be updated</li>
+     *                         </ul>
      * @test.expected: XmlCorruptedException
      * @test.status Implemented
      * 
@@ -1319,13 +1317,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Mandatory parameter is missing
      * @test.id AA_UUA-8
      * @test.input UserAccount XML representation
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>existing user-id</li>
-     *             <li>UserAccount XML representation of the UserAccount
-     *             provided, where one of the mandatory elements is missing
-     *             (login-name)</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>existing user-id</li>
+     *                         <li>UserAccount XML representation of the
+     *                         UserAccount provided, where one of the mandatory
+     *                         elements is missing (login-name)</li>
+     *                         </ul>
      * @test.expected: XmlSchemaValidationException
      * @test.status Implemented
      * 
@@ -1358,12 +1355,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Chosen loginname not unique
      * @test.id AA_UUA-9
      * @test.input UserAccount XML representation
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>existing user-id</li>
-     *             <li>XML representation of the UserAccount provided, where
-     *             loginname is n o t unique </li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>existing user-id</li>
+     *                         <li>XML representation of the UserAccount
+     *                         provided, where loginname is n o t unique</li>
+     *                         </ul>
      * @test.expected: UniqueConstraintViolationException
      * @test.status Implemented
      * 
@@ -1400,11 +1396,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Update UserAccount - Unknown Objid
      * @test.id AA_UUA-12
-     * @test.input:
-     *          <ul>
-     *          <li>id that is unknown to the system</li>
-     *          <li>Valid UserAccount XML representation for update</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>id that is unknown to the system</li>
+     *              <li>Valid UserAccount XML representation for update</li>
+     *              </ul>
      * @test.expected: UserAccountNotFoundException
      * @test.status Implemented
      * 
@@ -1434,11 +1429,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Update UserAccount - Wrong Id
      * @test.id AA_UUA-12-2
-     * @test.input:
-     *          <ul>
-     *          <li>id of an existing context instead of an user account</li>
-     *          <li>Valid UserAccount XML representation for update</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>id of an existing context instead of an user account</li>
+     *              <li>Valid UserAccount XML representation for update</li>
+     *              </ul>
      * @test.expected: UserAccountNotFoundException
      * @test.status Implemented
      * 
@@ -1511,12 +1505,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Update Password of an UserAccount
      * @test.id AA_AUP-1
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>existing user-id</li>
-     *             <li>timestamp of the last modification of the UserAccount</li>
-     *             <li>new password of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>existing user-id</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         <li>new password of the UserAccount</li>
+     *                         </ul>
      * @test.expected: No result, no exception, UserAccount password has been
      *                 updated.
      * @test.status Implemented
@@ -1554,11 +1548,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Update Password of an UserAccount
      * @test.id AA_AUP-2
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>timestamp of the last modification of the UserAccount</li>
-     *             <li>new password of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         <li>new password of the UserAccount</li>
+     *                         </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -1589,7 +1583,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         catch (final Exception e) {
             assertExceptionType(
                 "Updating the password of an UserAccount without id has not been "
-                + "declined correctly.", ec, e);
+                    + "declined correctly.", ec, e);
         }
     }
 
@@ -1600,11 +1594,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Update Password of an UserAccount
      * @test.id AA_AUP-3
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>timestamp of the last modification of the UserAccount</li>
-     *             <li>new password of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         <li>new password of the UserAccount</li>
+     *                         </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -1630,7 +1624,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         catch (final Exception e) {
             assertExceptionType(
                 "Updating the password of an UserAccount without param has not "
-                + "been declined correctly.", ec, e);
+                    + "been declined correctly.", ec, e);
         }
     }
 
@@ -1641,11 +1635,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Update Password of an UserAccount
      * @test.id AA_AUP-4
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>existing user-id</li>
-     *             <li>timestamp of the last modification of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>existing user-id</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -1675,7 +1669,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         catch (final Exception e) {
             assertExceptionType(
                 "Updating the password of an UserAccount without password has not"
-                + " been declined correctly.", ec, e);
+                    + " been declined correctly.", ec, e);
         }
     }
 
@@ -1686,11 +1680,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Update Password of an UserAccount
      * @test.id AA_AUP-5
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>existing user-id</li>
-     *             <li>new password of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>existing user-id</li>
+     *                         <li>new password of the UserAccount</li>
+     *                         </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -1717,7 +1710,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         catch (final Exception e) {
             assertExceptionType(
                 "Updating the password of an UserAccount with an empty "
-                + "last-modification timestamp has not been declined correctly.",
+                    + "last-modification timestamp has not been declined correctly.",
                 ec, e);
         }
     }
@@ -1729,11 +1722,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Update Password of an UserAccount
      * @test.id AA_AUP-6
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>existing user-id</li>
-     *             <li>new password of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>existing user-id</li>
+     *                         <li>new password of the UserAccount</li>
+     *                         </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -1770,12 +1762,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Update Password of an UserAccount
      * @test.id AA_AUP-7
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>unknown user-id</li>
-     *             <li>timestamp of the last modification of the UserAccount</li>
-     *             <li>new password of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>unknown user-id</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         <li>new password of the UserAccount</li>
+     *                         </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -1805,7 +1797,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         catch (final Exception e) {
             assertExceptionType(
                 "Updating the password of an UserAccount with an unknown id has "
-                + "not been declined correctly.", ec, e);
+                    + "not been declined correctly.", ec, e);
         }
     }
 
@@ -1816,12 +1808,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Update Password of an UserAccount
      * @test.id AA_AUP-8
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>user-id of a deactivated UserAccount</li>
-     *             <li>timestamp of the last modification of the UserAccount</li>
-     *             <li>new password of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>user-id of a deactivated UserAccount</li>
+     *                         <li>timestamp of the last modification of the
+     *                         UserAccount</li>
+     *                         <li>new password of the UserAccount</li>
+     *                         </ul>
      * @test.expected: InvalidStatusException
      * @test.status Implemented
      * 
@@ -1859,7 +1851,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         catch (final Exception e) {
             assertExceptionType(
                 "Updating the password of an deactivated UserAccount has not been"
-                + " declined correctly.", ec, e);
+                    + " declined correctly.", ec, e);
         }
     }
 
@@ -1870,13 +1862,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Update Password of an UserAccount
      * @test.id AA_AUP-9
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>user-id of a UserAccount</li>
-     *             <li>wrong timestamp of the last modification of the
-     *             UserAccount</li>
-     *             <li>new password of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>user-id of a UserAccount</li>
+     *                         <li>wrong timestamp of the last modification of
+     *                         the UserAccount</li>
+     *                         <li>new password of the UserAccount</li>
+     *                         </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -1918,13 +1909,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Update Password of an UserAccount
      * @test.id AA_AUP-10
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>user-id of a UserAccount</li>
-     *             <li>wrong timestamp of the last modification of the
-     *             UserAccount</li>
-     *             <li>new password of the UserAccount</li>
-     *             </ul>
+     * @test.inputDescription: <ul>
+     *                         <li>user-id of a UserAccount</li>
+     *                         <li>wrong timestamp of the last modification of
+     *                         the UserAccount</li>
+     *                         <li>new password of the UserAccount</li>
+     *                         </ul>
      * @test.expected: MissingMethodParameterException
      * @test.status Implemented
      * 
@@ -1965,11 +1955,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Delete UserAccount
      * @test.id testDeleteUserWithoutReferences
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>user-id of a UserAccount</li>
-     *             </ul>
-     * @test.expected: 
+     * @test.inputDescription: <ul>
+     *                         <li>user-id of a UserAccount</li>
+     *                         </ul>
+     * @test.expected:
      * @test.status Implemented
      * 
      * @throws Exception
@@ -1981,20 +1970,19 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             createSuccessfully("escidoc_useraccount_for_create.xml");
 
         final String id = getObjidValue(createdDocument);
-        userAttributeTestBase.createAttribute(id,
-                "<attribute xmlns="
-                + "\"http://www.escidoc.de/schemas/attributes/0.1\""
-                    + " name=\"key\">value</attribute>");
+        userAttributeTestBase.createAttribute(id, "<attribute xmlns="
+            + "\"http://www.escidoc.de/schemas/attributes/0.1\""
+            + " name=\"key\">value</attribute>");
         userPreferenceTestBase.createPreference(id,
-                "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
-                    + " name=\"key\">value</preference>");
+            "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
+                + " name=\"key\">value</preference>");
         delete(id);
         try {
             retrieve(id);
             fail("No exception on retrieve user after delete.");
         }
         catch (Exception e) {
-            Class< ? > ec = UserAccountNotFoundException.class;
+            Class<?> ec = UserAccountNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
 
@@ -2006,11 +1994,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * @test.name Delete UserAccount
      * @test.id testDecliningDeleteUserWithReferences
      * @test.input UserAccount id
-     * @test.inputDescription:
-     *             <ul>
-     *             <li>user-id of a UserAccount</li>
-     *             </ul>
-     * @test.expected: 
+     * @test.inputDescription: <ul>
+     *                         <li>user-id of a UserAccount</li>
+     *                         </ul>
+     * @test.expected:
      * @test.status Implemented
      * 
      * @throws Exception
@@ -2019,28 +2006,29 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testDecliningDeleteUserWithReferences() throws Exception {
         String grantId = null;
-        String grantXml = 
+        String grantXml =
             grantTestBase.doTestCreateGrant(
-                PWCallback.SYSTEMADMINISTRATOR_HANDLE, 
-                TEST_SYSTEMADMINISTRATOR_ID1, 
-            Constants.CONTEXT_BASE_URI + "/" 
-            + CONTEXT_ID, ROLE_HREF_DEPOSITOR, null);
+                PWCallback.SYSTEMADMINISTRATOR_HANDLE,
+                TEST_SYSTEMADMINISTRATOR_ID1, Constants.CONTEXT_BASE_URI + "/"
+                    + CONTEXT_ID, ROLE_HREF_DEPOSITOR, null);
         grantId = getObjidValue(grantXml);
         try {
             delete(TEST_SYSTEMADMINISTRATOR_ID1);
             fail("No exception on delete user with references.");
         }
         catch (Exception e) {
-            Class< ? > ec = SqlDatabaseSystemException.class;
+            Class<?> ec = SqlDatabaseSystemException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
-        } finally {
+        }
+        finally {
             if (grantId != null) {
-                grantTestBase.doTestRevokeGrant(
-                    null, TEST_SYSTEMADMINISTRATOR_ID1, grantId, null);
+                grantTestBase.doTestRevokeGrant(null,
+                    TEST_SYSTEMADMINISTRATOR_ID1, grantId, null);
             }
         }
 
     }
+
     /**
      * Test successful retrieving a list of existing UserAccount resources.
      * 
@@ -2057,11 +2045,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas1CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_NAME + "\"=%"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_NAME + "\"=%" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2096,10 +2084,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Corrupted
      * @test.id AA_RUAS-3
-     * @test.input:
-     *          <ul>
-     *          <li>corrupted filter parameter xml representation is provided</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>corrupted filter parameter xml representation is
+     *              provided</li>
+     *              </ul>
      * @test.expected: XmlCorruptedException
      * @test.status Implemented
      * 
@@ -2123,8 +2111,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving user accounts with providing corrupted filter params"
-                    + "not declined, properly. ", InvalidSearchQueryException.class,
-                e);
+                    + "not declined, properly. ",
+                InvalidSearchQueryException.class, e);
         }
     }
 
@@ -2134,10 +2122,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Invalid Filter
      * @test.id AA_RUAS-4
-     * @test.input:
-     *          <ul>
-     *          <li>filter parameter is provided containing an invalid filter</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>filter parameter is provided containing an invalid
+     *              filter</li>
+     *              </ul>
      * @test.expected: InvalidXmlException
      * @test.status Implemented
      * 
@@ -2147,11 +2135,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas4CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + NAME_CREATED_BY + "\"=\"Some value\""});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + NAME_CREATED_BY + "\"=\"Some value\"" });
         try {
             retrieveUserAccounts(filterParams);
             EscidocRestSoapTestBase.failMissingException(
@@ -2172,9 +2160,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve UserAccounts - Filter user-accounts.
      * @test.id AA_RUAS-5
-     * @test.input Valid filter criteria containing filter
-     *             user-accounts addressing the Depositor User and the System
-     *             Administrator User.
+     * @test.input Valid filter criteria containing filter user-accounts
+     *             addressing the Depositor User and the System Administrator
+     *             User.
      * @test.expected: XML representation of the list of user accounts only
      *                 containing the two addresses user accounts.
      * @test.status ToBeImplemented
@@ -2185,12 +2173,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas5CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser4" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2208,8 +2196,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 2, userAccountNodes
-            .getLength());
+        assertEquals("Unexpected number of user accounts.", 2,
+            userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.",
             retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
@@ -2226,8 +2214,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve UserAccounts - Filter active.
      * @test.id AA_RUAS-6
-     * @test.input Valid filter criteria containing filter
-     *             active that is set to true.
+     * @test.input Valid filter criteria containing filter active that is set to
+     *             true.
      * @test.expected: XML representation of the list of user accounts at least
      *                 containing the predefined, activated user accounts, but
      *                 not containing a deactivated user account.
@@ -2239,11 +2227,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas6CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_ACTIVE + "\"=true"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_ACTIVE + "\"=true" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2312,11 +2300,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             EscidocRestSoapTestBase.failException(e);
         }
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_ACTIVE + "\"=false"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_ACTIVE + "\"=false" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2347,8 +2335,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve declining UserAccounts - unsupported Filter email.
      * @test.id AA_RUAS-8
-     * @test.input filter criteria containing filter
-     *             email addressing the System Administrator User.
+     * @test.input filter criteria containing filter email addressing the System
+     *             Administrator User.
      * @test.expected: Exception.
      * @test.status ToBeImplemented
      * 
@@ -2361,11 +2349,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Class<InvalidSearchQueryException> ec =
             InvalidSearchQueryException.class;
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_EMAIL + "\"=\"system.administrator@superuser\""});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_EMAIL + "\"=\"system.administrator@superuser\"" });
 
         try {
             retrieveUserAccounts(filterParams);
@@ -2386,8 +2374,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve UserAccounts - Filter login-name.
      * @test.id AA_RUAS-9
-     * @test.input Valid filter criteria containing filter
-     *             login-name addressing the System Administrator User.
+     * @test.input Valid filter criteria containing filter login-name addressing
+     *             the System Administrator User.
      * @test.expected: XML representation of the list of user accounts only
      *                 containing the system administrator user account.
      * @test.status ToBeImplemented
@@ -2398,11 +2386,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas9CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_LOGIN_NAME + "\"=%ysad%"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_LOGIN_NAME + "\"=%ysad%" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2420,8 +2408,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 1, userAccountNodes
-            .getLength());
+        assertEquals("Unexpected number of user accounts.", 1,
+            userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.",
             retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
@@ -2435,8 +2423,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve UserAccounts - Filter name.
      * @test.id AA_RUAS-10
-     * @test.input Valid filter criteria containing filter
-     *             name addressing the System Administrator User.
+     * @test.input Valid filter criteria containing filter name addressing the
+     *             System Administrator User.
      * @test.expected: XML representation of the list of user accounts only
      *                 containing the system administrator user account.
      * @test.status ToBeImplemented
@@ -2447,11 +2435,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas10CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_NAME + "\"=\"%System Administrator%\""});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_NAME + "\"=\"%System Administrator%\"" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2469,8 +2457,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 3, userAccountNodes
-            .getLength());
+        assertEquals("Unexpected number of user accounts.", 3,
+            userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.",
             retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
@@ -2497,11 +2485,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas12CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_ORGANIZATIONAL_UNIT + "\"=escidoc:ex3"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_ORGANIZATIONAL_UNIT + "\"=escidoc:ex3" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2550,11 +2538,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      */
     @Test
     public void testAARuas121CQL() throws Exception {
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_URI_GROUP + "\"=" + userAccountFilterGroup});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_URI_GROUP + "\"=" + userAccountFilterGroup });
 
         String retrievedUserAccountsXml = null;
 
@@ -2565,7 +2553,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             EscidocRestSoapTestBase.failException(
                 "Retrieving of list of user accounts failed. ", e);
         }
-        
+
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
         final Document retrievedDocument =
             EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
@@ -2574,8 +2562,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 3, userAccountNodes
-                .getLength());
+        assertEquals("Unexpected number of user accounts.", 3,
+            userAccountNodes.getLength());
 
         String href = "";
         String attributeName = "objid";
@@ -2584,17 +2572,14 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             attributeName = "href";
         }
         assertXmlExists("Missing user " + TEST_USER_ACCOUNT_ID,
-            retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[@" + attributeName + "='" 
-                + href + TEST_USER_ACCOUNT_ID + "']");
+            retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[@"
+                + attributeName + "='" + href + TEST_USER_ACCOUNT_ID + "']");
         assertXmlExists("Missing user " + userAccountFilterUser,
-                retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-                    + "[@" + attributeName + "='" 
-                    + href + userAccountFilterUser + "']");
+            retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[@"
+                + attributeName + "='" + href + userAccountFilterUser + "']");
         assertXmlExists("Missing user " + userAccountFilterUser1,
-                retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-                    + "[@" + attributeName + "='" 
-                    + href + userAccountFilterUser1 + "']");
+            retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[@"
+                + attributeName + "='" + href + userAccountFilterUser1 + "']");
     }
 
     /**
@@ -2602,12 +2587,11 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Empty list
      * @test.id AA_RUAS-13
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters active and
-     *          identifier . The latter points to a resource that is not a
-     *          user-account </li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>valid task parameter containing filters active and
+     *              identifier . The latter points to a resource that is not a
+     *              user-account</li>
+     *              </ul>
      * @test.expected: Valid XML representation of the list of user accounts
      *                 that is empty.
      * @test.status Implemented
@@ -2618,12 +2602,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas13CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_ACTIVE + "\"=true and "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:persistent3"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_ACTIVE + "\"=true and " + "\"" + FILTER_IDENTIFIER
+            + "\"=escidoc:persistent3" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2648,11 +2632,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Multiple filter
      * @test.id AA_RUAS-14
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters user-accounts,
-     *          login-name, name, and active.</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>valid task parameter containing filters user-accounts,
+     *              login-name, name, and active.</li>
+     *              </ul>
      * @test.expected: Valid XML representation of the list of user accounts
      *                 only containing the System Administrator user account and
      *                 the System Inspector user account.
@@ -2664,16 +2647,15 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas14CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "(\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4) and "
-            + "\"" + FILTER_LOGIN_NAME + "\"=sys% and "
-            + "\"" + FILTER_NAME + "\"=%Sys% and "
-            + "\"" + FILTER_ACTIVE + "\"=true"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser4) and " + "\""
+            + FILTER_LOGIN_NAME + "\"=sys% and " + "\"" + FILTER_NAME
+            + "\"=%Sys% and " + "\"" + FILTER_ACTIVE + "\"=true" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2691,8 +2673,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 2, userAccountNodes
-            .getLength());
+        assertEquals("Unexpected number of user accounts.", 2,
+            userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
         assertXmlExists("Missing user System Administrator User.",
             retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
@@ -2706,13 +2688,13 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * Test successfully retrieving a list of user-accounts using multiple
      * filters including group-filter.
      * 
-     * @test.name Retrieve User Accounts - Multiple filter including group-filter
+     * @test.name Retrieve User Accounts - Multiple filter including
+     *            group-filter
      * @test.id AA_RUAS-14
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters user-accounts,
-     *          login-name, group, and active.</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>valid task parameter containing filters user-accounts,
+     *              login-name, group, and active.</li>
+     *              </ul>
      * @test.expected: Valid XML representation of the list of user accounts
      *                 only containing the expected user accounts.
      * @test.status Implemented
@@ -2723,18 +2705,16 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas141CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "(\"" + FILTER_IDENTIFIER + "\"=" 
-            + additonalGroupFilterSearchUsers[0] + " or "
-            + "\"" + FILTER_IDENTIFIER + "\"=" 
-            + additonalGroupFilterSearchUsers[1] + " or "
-            + "\"" + FILTER_USER_ACCOUNT_GROUP + "\"=" 
-            + userAccountFilterGroup + ") and "
-            + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-            + "\"" + FILTER_ACTIVE + "\"=true"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
+            + FILTER_IDENTIFIER + "\"=" + additonalGroupFilterSearchUsers[0]
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"="
+            + additonalGroupFilterSearchUsers[1] + " or " + "\""
+            + FILTER_USER_ACCOUNT_GROUP + "\"=" + userAccountFilterGroup
+            + ") and " + "\"" + FILTER_LOGIN_NAME + "\"=%test% and " + "\""
+            + FILTER_ACTIVE + "\"=true" });
 
         String retrievedUserAccountsXml = null;
 
@@ -2754,8 +2734,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 4, userAccountNodes
-                .getLength());
+        assertEquals("Unexpected number of user accounts.", 4,
+            userAccountNodes.getLength());
 
         String href = "";
         String attributeName = "objid";
@@ -2764,33 +2744,30 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             attributeName = "href";
         }
         assertXmlExists("Missing user " + additonalGroupFilterSearchUsers[0],
-                retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[@" + attributeName + "='"
-                + href + additonalGroupFilterSearchUsers[0] + "']");
+            retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[@"
+                + attributeName + "='" + href
+                + additonalGroupFilterSearchUsers[0] + "']");
         assertXmlExists("Missing user " + additonalGroupFilterSearchUsers[1],
-                retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[@" + attributeName + "='"
-                + href + additonalGroupFilterSearchUsers[1] + "']");
+            retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[@"
+                + attributeName + "='" + href
+                + additonalGroupFilterSearchUsers[1] + "']");
         assertXmlExists("Missing user " + userAccountFilterUser1,
-                retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[@" + attributeName + "='"
-                + href + userAccountFilterUser1 + "']");
+            retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[@"
+                + attributeName + "='" + href + userAccountFilterUser1 + "']");
         assertXmlExists("Missing user " + TEST_USER_ACCOUNT_ID,
-                retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT
-                + "[@" + attributeName + "='"
-                + href + TEST_USER_ACCOUNT_ID + "']");
+            retrievedDocument, XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT + "[@"
+                + attributeName + "='" + href + TEST_USER_ACCOUNT_ID + "']");
     }
 
     /**
      * Test filters including group-filter.
      * 
-     * @test.name Retrieve User Accounts 
-     *      - filter including group-filter with nonexisting group
+     * @test.name Retrieve User Accounts - filter including group-filter with
+     *            nonexisting group
      * @test.id AA_RUAS-143-CQL
-     * @test.input:
-     *          <ul>
-     *          <li>duplicate group-filter.</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>duplicate group-filter.</li>
+     *              </ul>
      * @test.expected: Exception.
      * @test.status Implemented
      * 
@@ -2799,16 +2776,15 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      */
     @Test
     public void testAARuas143CQL() throws Exception {
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                "(\"" + FILTER_IDENTIFIER + "\"=" 
-                + additonalGroupFilterSearchUsers[0] + " or "
-                + "\"" + FILTER_IDENTIFIER + "\"=" 
-                + additonalGroupFilterSearchUsers[1] + " or "
-                + "\"" + FILTER_USER_ACCOUNT_GROUP + "\"=\"neuegruppe\") and "
-                + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-                + "\"" + FILTER_ACTIVE + "\"=true"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
+            + FILTER_IDENTIFIER + "\"=" + additonalGroupFilterSearchUsers[0]
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"="
+            + additonalGroupFilterSearchUsers[1] + " or " + "\""
+            + FILTER_USER_ACCOUNT_GROUP + "\"=\"neuegruppe\") and " + "\""
+            + FILTER_LOGIN_NAME + "\"=%test% and " + "\"" + FILTER_ACTIVE
+            + "\"=true" });
 
         String retrievedUserAccountsXml = null;
         try {
@@ -2816,7 +2792,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         }
         catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
-                    "Retrieving list of user accounts failed. ", e);
+                "Retrieving list of user accounts failed. ", e);
         }
         assertXmlValidSrwResponse(retrievedUserAccountsXml);
         final Document retrievedDocument =
@@ -2826,8 +2802,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 2, userAccountNodes
-                .getLength());
+        assertEquals("Unexpected number of user accounts.", 2,
+            userAccountNodes.getLength());
 
     }
 
@@ -2836,10 +2812,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Invalid filter including group-filter
      * @test.id AA_RUAS-144-CQL
-     * @test.input:
-     *          <ul>
-     *          <li>group-filter containing wildcard.</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>group-filter containing wildcard.</li>
+     *              </ul>
      * @test.expected: Exception.
      * @test.status Implemented
      * 
@@ -2848,31 +2823,27 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      */
     @Test
     public void testAARuas144CQL() throws Exception {
-        final Class<InvalidSearchQueryException> ec = 
-                        InvalidSearchQueryException.class;
+        final Class<InvalidSearchQueryException> ec =
+            InvalidSearchQueryException.class;
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                "(\"" + FILTER_IDENTIFIER + "\"=" 
-                + additonalGroupFilterSearchUsers[0] + " or "
-                + "\"" + FILTER_IDENTIFIER + "\"=" 
-                + additonalGroupFilterSearchUsers[1] + " or "
-                + "\"" + FILTER_USER_ACCOUNT_GROUP + "\"=neuegru%) and "
-                + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-                + "\"" + FILTER_ACTIVE + "\"=true"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
+            + FILTER_IDENTIFIER + "\"=" + additonalGroupFilterSearchUsers[0]
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"="
+            + additonalGroupFilterSearchUsers[1] + " or " + "\""
+            + FILTER_USER_ACCOUNT_GROUP + "\"=neuegru%) and " + "\""
+            + FILTER_LOGIN_NAME + "\"=%test% and " + "\"" + FILTER_ACTIVE
+            + "\"=true" });
 
         try {
             retrieveUserAccounts(filterParams);
-            failMissingException(
-                    "Retrieving with wildcard group filter "
-                    + "criteria not declined.", ec);
+            failMissingException("Retrieving with wildcard group filter "
+                + "criteria not declined.", ec);
         }
         catch (final Exception e) {
-            assertExceptionType(
-               "Retrieving with wildcard group filter "
-                    + "criteria not declined properly.",
-                    ec, e);
+            assertExceptionType("Retrieving with wildcard group filter "
+                + "criteria not declined properly.", ec, e);
         }
 
     }
@@ -2882,10 +2853,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Invalid filter including group-filter
      * @test.id AA_RUAS-145-CQL
-     * @test.input:
-     *          <ul>
-     *          <li>group-filter containing non-allowed relation.</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>group-filter containing non-allowed relation.</li>
+     *              </ul>
      * @test.expected: Exception.
      * @test.status Implemented
      * 
@@ -2894,31 +2864,29 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      */
     @Test
     public void testAARuas145CQL() throws Exception {
-        final Class<InvalidSearchQueryException> ec = 
-                        InvalidSearchQueryException.class;
+        final Class<InvalidSearchQueryException> ec =
+            InvalidSearchQueryException.class;
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                "(\"" + FILTER_IDENTIFIER + "\"=" 
-                + additonalGroupFilterSearchUsers[0] + " or "
-                + "\"" + FILTER_IDENTIFIER + "\"=" 
-                + additonalGroupFilterSearchUsers[1] + " or "
-                + "\"" + FILTER_USER_ACCOUNT_GROUP + "\" any neuegruppe) and "
-                + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-                + "\"" + FILTER_ACTIVE + "\"=true"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
+            + FILTER_IDENTIFIER + "\"=" + additonalGroupFilterSearchUsers[0]
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"="
+            + additonalGroupFilterSearchUsers[1] + " or " + "\""
+            + FILTER_USER_ACCOUNT_GROUP + "\" any neuegruppe) and " + "\""
+            + FILTER_LOGIN_NAME + "\"=%test% and " + "\"" + FILTER_ACTIVE
+            + "\"=true" });
 
         try {
             retrieveUserAccounts(filterParams);
             failMissingException(
-                    "Retrieving with non-allowed relation group filter "
+                "Retrieving with non-allowed relation group filter "
                     + "criteria not declined.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(
-               "Retrieving with non-allowed relation group filter "
-                    + "criteria not declined properly.",
-                    ec, e);
+                "Retrieving with non-allowed relation group filter "
+                    + "criteria not declined properly.", ec, e);
         }
 
     }
@@ -2928,10 +2896,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Invalid filter including group-filter
      * @test.id AA_RUAS-146-CQL
-     * @test.input:
-     *          <ul>
-     *          <li>group-filter containing non-allowed relation.</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>group-filter containing non-allowed relation.</li>
+     *              </ul>
      * @test.expected: Exception.
      * @test.status Implemented
      * 
@@ -2940,31 +2907,29 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      */
     @Test
     public void testAARuas146CQL() throws Exception {
-        final Class<InvalidSearchQueryException> ec = 
-                        InvalidSearchQueryException.class;
+        final Class<InvalidSearchQueryException> ec =
+            InvalidSearchQueryException.class;
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                "(\"" + FILTER_IDENTIFIER + "\"=" 
-                + additonalGroupFilterSearchUsers[0] + " or "
-                + "\"" + FILTER_IDENTIFIER + "\"=" 
-                + additonalGroupFilterSearchUsers[1] + " or "
-                + "\"" + FILTER_USER_ACCOUNT_GROUP + "\" > neuegruppe) and "
-                + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-                + "\"" + FILTER_ACTIVE + "\"=true"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
+            + FILTER_IDENTIFIER + "\"=" + additonalGroupFilterSearchUsers[0]
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"="
+            + additonalGroupFilterSearchUsers[1] + " or " + "\""
+            + FILTER_USER_ACCOUNT_GROUP + "\" > neuegruppe) and " + "\""
+            + FILTER_LOGIN_NAME + "\"=%test% and " + "\"" + FILTER_ACTIVE
+            + "\"=true" });
 
         try {
             retrieveUserAccounts(filterParams);
             failMissingException(
-                    "Retrieving with non-allowed relation group filter "
+                "Retrieving with non-allowed relation group filter "
                     + "criteria not declined.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(
-               "Retrieving with non-allowed relation group filter "
-                    + "criteria not declined properly.",
-                    ec, e);
+                "Retrieving with non-allowed relation group filter "
+                    + "criteria not declined properly.", ec, e);
         }
 
     }
@@ -2974,10 +2939,9 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Invalid filter including group-filter
      * @test.id AA_RUAS-147-CQL
-     * @test.input:
-     *          <ul>
-     *          <li>group-filter containing non-allowed relation.</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>group-filter containing non-allowed relation.</li>
+     *              </ul>
      * @test.expected: Exception.
      * @test.status Implemented
      * 
@@ -2986,31 +2950,29 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      */
     @Test
     public void testAARuas147CQL() throws Exception {
-        final Class<InvalidSearchQueryException> ec = 
-                        InvalidSearchQueryException.class;
+        final Class<InvalidSearchQueryException> ec =
+            InvalidSearchQueryException.class;
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-                "(\"" + FILTER_IDENTIFIER + "\"=" 
-                + additonalGroupFilterSearchUsers[0] + " or "
-                + "\"" + FILTER_IDENTIFIER + "\"=" 
-                + additonalGroupFilterSearchUsers[1] + " or "
-                + "\"" + FILTER_USER_ACCOUNT_GROUP + "\" >= neuegruppe) and "
-                + "\"" + FILTER_LOGIN_NAME + "\"=%test% and "
-                + "\"" + FILTER_ACTIVE + "\"=true"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
+            + FILTER_IDENTIFIER + "\"=" + additonalGroupFilterSearchUsers[0]
+            + " or " + "\"" + FILTER_IDENTIFIER + "\"="
+            + additonalGroupFilterSearchUsers[1] + " or " + "\""
+            + FILTER_USER_ACCOUNT_GROUP + "\" >= neuegruppe) and " + "\""
+            + FILTER_LOGIN_NAME + "\"=%test% and " + "\"" + FILTER_ACTIVE
+            + "\"=true" });
 
         try {
             retrieveUserAccounts(filterParams);
             failMissingException(
-                    "Retrieving with non-allowed relation group filter "
+                "Retrieving with non-allowed relation group filter "
                     + "criteria not declined.", ec);
         }
         catch (final Exception e) {
             assertExceptionType(
-               "Retrieving with non-allowed relation group filter "
-                    + "criteria not declined properly.",
-                    ec, e);
+                "Retrieving with non-allowed relation group filter "
+                    + "criteria not declined properly.", ec, e);
         }
 
     }
@@ -3020,13 +2982,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Unsupported filter
      * @test.id AA_RUAS-16
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing filters user-accounts,
-     *          login-name, name, and active. Additionally, a filter
-     *          criteria that is unsupported by retrieve user accounts is used
-     *          (context).</li>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>valid task parameter containing filters user-accounts,
+     *              login-name, name, and active. Additionally, a filter
+     *              criteria that is unsupported by retrieve user accounts is
+     *              used (context).</li>
+     *              </ul>
      * @test.expected: Valid XML representation of an empty list of user
      *                 accounts.
      * @test.status Implemented
@@ -3039,17 +3000,16 @@ public abstract class UserAccountTest extends UserAccountTestBase {
 
         final Class<InvalidSearchQueryException> ec =
             InvalidSearchQueryException.class;
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "(\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4) and "
-            + "\"" + FILTER_LOGIN_NAME + "\"=sys% and "
-            + "\"" + FILTER_NAME + "\"=%Sys% and "
-            + "\"" + FILTER_ACTIVE + "\"=true and "
-            + "\"" + FILTER_CONTEXT + "\"=escidoc:persistent3"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "(\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser4) and " + "\""
+            + FILTER_LOGIN_NAME + "\"=sys% and " + "\"" + FILTER_NAME
+            + "\"=%Sys% and " + "\"" + FILTER_ACTIVE + "\"=true and " + "\""
+            + FILTER_CONTEXT + "\"=escidoc:persistent3" });
         try {
             retrieveUserAccounts(filterParams);
             failMissingException(
@@ -3068,20 +3028,19 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Order-By Name Ascending
      * @test.id AA_RUAS-17
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-accounts
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id ascending definition</li>
-     *          </ul>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>valid task parameter containing
+     *              <ul>
+     *              <li>filter ids addressing user-accounts
+     *              <ul>
+     *              <li>System Administrator User</li>
+     *              <li>System Inspector User (Read Only Super User)</li>
+     *              <li>Depositor User</li>
+     *              </ul>
+     *              </li>
+     *              <li>order-by id ascending definition</li>
+     *              </ul>
+     *              </ul>
      * @test.expected: Valid XML representation of the list of user accounts
      *                 containing user accounts
      *                 <ul>
@@ -3097,14 +3056,14 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas17CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby "
-            + "\"" + FILTER_NAME + "\"/sort.ascending"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby " + "\""
+            + FILTER_NAME + "\"/sort.ascending" });
 
         String retrievedUserAccountsXml = null;
 
@@ -3122,25 +3081,26 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 3, userAccountNodes
-            .getLength());
+        assertEquals("Unexpected number of user accounts.", 3,
+            userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         assertXmlExists(
             "Missing user System Inspector User.",
             retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
-            + "/properties[name='System Inspector User (Read Only Super User)']");
+            XPATH_SRW_RESPONSE_RECORD
+                + "[3]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH
+                + NAME_USER_ACCOUNT
+                + "/properties[name='System Inspector User (Read Only Super User)']");
         assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
-            + "/properties[name='System Administrator User']");
+            retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[2]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+                + "/properties[name='System Administrator User']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
-            + "/properties[name='Depositor User']");
+            XPATH_SRW_RESPONSE_RECORD + "[1]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+                + "/properties[name='Depositor User']");
     }
 
     /**
@@ -3149,20 +3109,19 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Order-By Name Descending
      * @test.id AA_RUAS-18
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-accounts
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id descending definition</li>
-     *          </ul>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>valid task parameter containing
+     *              <ul>
+     *              <li>filter ids addressing user-accounts
+     *              <ul>
+     *              <li>System Administrator User</li>
+     *              <li>System Inspector User (Read Only Super User)</li>
+     *              <li>Depositor User</li>
+     *              </ul>
+     *              </li>
+     *              <li>order-by id descending definition</li>
+     *              </ul>
+     *              </ul>
      * @test.expected: Valid XML representation of the list of user accounts
      *                 containing user accounts
      *                 <ul>
@@ -3178,14 +3137,14 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas18CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby "
-            + "\"" + FILTER_NAME + "\"/sort.descending"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby " + "\""
+            + FILTER_NAME + "\"/sort.descending" });
 
         String retrievedUserAccountsXml = null;
 
@@ -3203,25 +3162,26 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 3, userAccountNodes
-            .getLength());
+        assertEquals("Unexpected number of user accounts.", 3,
+            userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         assertXmlExists(
             "Missing user System Inspector User.",
             retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
-            + "/properties[name='System Inspector User (Read Only Super User)']");
+            XPATH_SRW_RESPONSE_RECORD
+                + "[1]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH
+                + NAME_USER_ACCOUNT
+                + "/properties[name='System Inspector User (Read Only Super User)']");
         assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
-            + "/properties[name='System Administrator User']");
+            retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[2]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+                + "/properties[name='System Administrator User']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[3]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
-            + "/properties[name='Depositor User']");
+            XPATH_SRW_RESPONSE_RECORD + "[3]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+                + "/properties[name='Depositor User']");
     }
 
     /**
@@ -3230,21 +3190,20 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Offset
      * @test.id AA_RUAS-19
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-accounts
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id descending definition</li>
-     *          <li>offset = 1</li>
-     *          </ul>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>valid task parameter containing
+     *              <ul>
+     *              <li>filter ids addressing user-accounts
+     *              <ul>
+     *              <li>System Administrator User</li>
+     *              <li>System Inspector User (Read Only Super User)</li>
+     *              <li>Depositor User</li>
+     *              </ul>
+     *              </li>
+     *              <li>order-by id descending definition</li>
+     *              <li>offset = 1</li>
+     *              </ul>
+     *              </ul>
      * @test.expected: Valid XML representation of the list of user accounts
      *                 containing user accounts
      *                 <ul>
@@ -3259,15 +3218,15 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas19CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby "
-            + "\"" + FILTER_NAME + "\"/sort.descending"});
-        filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby " + "\""
+            + FILTER_NAME + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] { "2" });
 
         String retrievedUserAccountsXml = null;
 
@@ -3285,19 +3244,18 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 2, userAccountNodes
-            .getLength());
+        assertEquals("Unexpected number of user accounts.", 2,
+            userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
-            + "/properties[name='System Administrator User']");
+            retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[1]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+                + "/properties[name='System Administrator User']");
         assertXmlExists("Missing user Depositor User.", retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[2]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
-            + "/properties[name='Depositor User']");
+            XPATH_SRW_RESPONSE_RECORD + "[2]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+                + "/properties[name='Depositor User']");
     }
 
     /**
@@ -3306,22 +3264,21 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Limit
      * @test.id AA_RUAS-20
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter ids addressing user-accounts
-     *          <ul>
-     *          <li>System Administrator User</li>
-     *          <li>System Inspector User (Read Only Super User)</li>
-     *          <li>Depositor User</li>
-     *          </ul>
-     *          </li>
-     *          <li>order-by id descending definition</li>
-     *          <li>offset = 1</li>
-     *          <li>limit = 1</li>
-     *          </ul>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>valid task parameter containing
+     *              <ul>
+     *              <li>filter ids addressing user-accounts
+     *              <ul>
+     *              <li>System Administrator User</li>
+     *              <li>System Inspector User (Read Only Super User)</li>
+     *              <li>Depositor User</li>
+     *              </ul>
+     *              </li>
+     *              <li>order-by id descending definition</li>
+     *              <li>offset = 1</li>
+     *              <li>limit = 1</li>
+     *              </ul>
+     *              </ul>
      * @test.expected: Valid XML representation of the list of user accounts
      *                 containing user accounts
      *                 <ul>
@@ -3335,16 +3292,16 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas20CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or "
-            + "\"" + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby "
-            + "\"" + FILTER_NAME + "\"/sort.descending"});
-        filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
-        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"1"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser1 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser2 or " + "\""
+            + FILTER_IDENTIFIER + "\"=escidoc:exuser4 sortby " + "\""
+            + FILTER_NAME + "\"/sort.descending" });
+        filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] { "2" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "1" });
 
         String retrievedUserAccountsXml = null;
 
@@ -3362,15 +3319,14 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 1, userAccountNodes
-            .getLength());
+        assertEquals("Unexpected number of user accounts.", 1,
+            userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         assertXmlExists("Missing user System Administrator User.",
-            retrievedDocument,
-            XPATH_SRW_RESPONSE_RECORD + "[1]" 
-            + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
-            + "/properties[name='System Administrator User']");
+            retrievedDocument, XPATH_SRW_RESPONSE_RECORD + "[1]"
+                + XPATH_SRW_RESPONSE_OBJECT_SUBPATH + NAME_USER_ACCOUNT
+                + "/properties[name='System Administrator User']");
     }
 
     /**
@@ -3378,13 +3334,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Author
      * @test.id AA_RUAS-21
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter name addressing all user-accounts</li>
-     *          </ul>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>valid task parameter containing
+     *              <ul>
+     *              <li>filter name addressing all user-accounts</li>
+     *              </ul>
+     *              </ul>
      * @test.expected: Valid XML representation of the list of user accounts
      *                 containing the user's own user account, only.
      * @test.status Implemented
@@ -3395,11 +3350,13 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas21CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_NAME + "\"=%"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_NAME + "\"=%" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
+            new String[] { "1000" });
 
         String retrievedUserAccountsXml = null;
 
@@ -3421,8 +3378,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 1, userAccountNodes
-            .getLength());
+        assertEquals("Unexpected number of user accounts.", 1,
+            userAccountNodes.getLength());
         assertRdfDescriptions(retrievedDocument, RDF_RESOURCE_USER_ACCOUNT);
 
         assertXmlExists("Missing user Test Author.", retrievedDocument,
@@ -3436,14 +3393,13 @@ public abstract class UserAccountTest extends UserAccountTestBase {
      * 
      * @test.name Retrieve User Accounts - Author And Offset is 1
      * @test.id AA_RUAS-22
-     * @test.input:
-     *          <ul>
-     *          <li>valid task parameter containing
-     *          <ul>
-     *          <li>filter name addressing all user-accounts</li>
-     *          <li>offset = 1</li>
-     *          </ul>
-     *          </ul>
+     * @test.input: <ul>
+     *              <li>valid task parameter containing
+     *              <ul>
+     *              <li>filter name addressing all user-accounts</li>
+     *              <li>offset = 1</li>
+     *              </ul>
+     *              </ul>
      * @test.expected: Valid XML representation of an empty list of user
      *                 accounts.
      * @test.status Implemented
@@ -3454,12 +3410,12 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     @Test
     public void testAARuas22CQL() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] {
-            "\"" + FILTER_NAME + "\"=%"});
-        filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] {"2"});
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + FILTER_NAME + "\"=%" });
+        filterParams.put(FILTER_PARAMETER_STARTRECORD, new String[] { "2" });
 
         String retrievedUserAccountsXml = null;
 
@@ -3481,10 +3437,10 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final NodeList userAccountNodes =
             selectNodeList(retrievedDocument,
                 XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
-        assertEquals("Unexpected number of user accounts.", 0, userAccountNodes
-            .getLength());
+        assertEquals("Unexpected number of user accounts.", 0,
+            userAccountNodes.getLength());
     }
-    
+
     /**
      * Test successfully retrieving an explain response.
      * 
@@ -3501,7 +3457,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
 
-        filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] {""});
+        filterParams.put(FILTER_PARAMETER_EXPLAIN, new String[] { "" });
 
         String result = null;
 
@@ -3511,31 +3467,33 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         catch (Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
-        assertXmlValidSrwResponse(result);        
+        assertXmlValidSrwResponse(result);
     }
 
     /**
      * Prepare data to test userAccountFilter with group.
-     * @throws Exception e
+     * 
+     * @throws Exception
+     *             e
      * 
      */
     private void prepareUserAccountGroupFilterData() throws Exception {
-        //create ou and open it
+        // create ou and open it
         String ouXml =
             organizationalUnitTestBase
-                    .createSuccessfully("escidoc_ou_create.xml");
+                .createSuccessfully("escidoc_ou_create.xml");
         Document createdDocument = getDocument(ouXml);
         String ouId = getObjidValue(getTransport(), createdDocument);
         String ouTitle = getTitleValue(createdDocument);
         String lastModDate = getLastModificationDateValue(createdDocument);
         organizationalUnitTestBase.open(ouId,
             "<param last-modification-date=\"" + lastModDate + "\" />");
-        
-        //create ou with parent=otherOu
+
+        // create ou with parent=otherOu
         String[] parentValues = new String[2];
         parentValues[0] = ouId;
         parentValues[1] = ouTitle;
-        
+
         Document toBeCreatedDocument =
             getTemplateAsDocument(TEMPLATE_ORGANIZATIONAL_UNIT_PATH,
                 "escidoc_ou_create.xml");
@@ -3551,47 +3509,47 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         organizationalUnitTestBase.open(ouId1,
             "<param last-modification-date=\"" + lastModDate + "\" />");
 
-        //create user with child ou
+        // create user with child ou
         Document createdUser =
-            createSuccessfully(
-                "escidoc_useraccount_for_create1.xml");
+            createSuccessfully("escidoc_useraccount_for_create1.xml");
         userAccountFilterUser = getObjidValue(getTransport(), createdUser);
-        userAttributeTestBase.createAttribute(
-                userAccountFilterUser, "<attribute xmlns="
+        userAttributeTestBase.createAttribute(userAccountFilterUser,
+            "<attribute xmlns="
                 + "\"http://www.escidoc.de/schemas/attributes/0.1\""
-                + " name=\"o\">"
-                + ouId1 + "</attribute>");
-        
-        //create user with attribute
+                + " name=\"o\">" + ouId1 + "</attribute>");
+
+        // create user with attribute
         String attributeName = "uafiltertestkey" + System.currentTimeMillis();
-        String attributeValue = "uafiltertestvalue" + System.currentTimeMillis();
-        createdUser = createSuccessfully(
-                "escidoc_useraccount_for_create.xml");
+        String attributeValue =
+            "uafiltertestvalue" + System.currentTimeMillis();
+        createdUser = createSuccessfully("escidoc_useraccount_for_create.xml");
         userAccountFilterUser1 = getObjidValue(getTransport(), createdUser);
-        userAttributeTestBase.createAttribute(
-                userAccountFilterUser1, "<attribute xmlns="
+        userAttributeTestBase.createAttribute(userAccountFilterUser1,
+            "<attribute xmlns="
                 + "\"http://www.escidoc.de/schemas/attributes/0.1\""
-                + " name=\"" + attributeName + "\">"
-                + attributeValue + "</attribute>");
-        
-        //create searchable users with no group
+                + " name=\"" + attributeName + "\">" + attributeValue
+                + "</attribute>");
+
+        // create searchable users with no group
         for (int i = 0; i < additonalGroupFilterSearchUsersCount; i++) {
             toBeCreatedDocument =
                 getTemplateAsDocument(TEMPLATE_USER_ACCOUNT_PATH,
                     "escidoc_useraccount_for_groupfilter_test.xml");
             uniqueIdentifier = Long.toString(System.currentTimeMillis());
-            insertUserAccountValues(toBeCreatedDocument, 
-                    "filtertestname_" + i + "_" + uniqueIdentifier, 
-                    "filtertestloginname_" + i + "_" + uniqueIdentifier);
-            String userXml = handleXmlResult(
-                    getClient().create(toString(toBeCreatedDocument, false)));
-            additonalGroupFilterSearchUsers[i] = 
+            insertUserAccountValues(toBeCreatedDocument, "filtertestname_" + i
+                + "_" + uniqueIdentifier, "filtertestloginname_" + i + "_"
+                + uniqueIdentifier);
+            String userXml =
+                handleXmlResult(getClient().create(
+                    toString(toBeCreatedDocument, false)));
+            additonalGroupFilterSearchUsers[i] =
                 getObjidValue(getTransport(), getDocument(userXml));
         }
-        
-        //create group with attribute-user-selector
-        Document createdGroup = userGroupTestBase.createSuccessfully(
-                "escidoc_usergroup_for_create.xml");
+
+        // create group with attribute-user-selector
+        Document createdGroup =
+            userGroupTestBase
+                .createSuccessfully("escidoc_usergroup_for_create.xml");
         String groupId = getObjidValue(getTransport(), createdGroup);
         String lastModificationDate =
             getLastModificationDateValue(createdGroup);
@@ -3602,14 +3560,14 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         ArrayList<String[]> selectors = new ArrayList<String[]>();
         selectors.add(selector1);
         String taskParam =
-            userGroupTestBase.getAddSelectorsTaskParam(
-                            selectors, lastModificationDate);
+            userGroupTestBase.getAddSelectorsTaskParam(selectors,
+                lastModificationDate);
         userGroupTestBase.addSelectors(groupId, taskParam);
-        
-        
-        //create group with user, ou and group selectors
-        createdGroup = userGroupTestBase.createSuccessfully(
-        "escidoc_usergroup_for_create.xml");
+
+        // create group with user, ou and group selectors
+        createdGroup =
+            userGroupTestBase
+                .createSuccessfully("escidoc_usergroup_for_create.xml");
         userAccountFilterGroup = getObjidValue(getTransport(), createdGroup);
         lastModificationDate = getLastModificationDateValue(createdGroup);
         selector1[0] = "o";
@@ -3628,8 +3586,8 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         selectors.add(selector2);
         selectors.add(selector3);
         taskParam =
-            userGroupTestBase.getAddSelectorsTaskParam(
-                    selectors, lastModificationDate);
+            userGroupTestBase.getAddSelectorsTaskParam(selectors,
+                lastModificationDate);
         userGroupTestBase.addSelectors(userAccountFilterGroup, taskParam);
 
     }
