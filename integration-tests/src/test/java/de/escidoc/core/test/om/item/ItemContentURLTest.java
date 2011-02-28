@@ -47,6 +47,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -364,7 +365,7 @@ public class ItemContentURLTest extends ItemTestBase {
      *            URL to file
      * @return File handler for temporary file.
      */
-    private File downloadTempFile(final URL url) {
+    private File downloadTempFile(final URL url) throws IOException, java.io.FileNotFoundException {
 
         java.io.BufferedInputStream in =
             new java.io.BufferedInputStream(url.openStream());
@@ -372,7 +373,7 @@ public class ItemContentURLTest extends ItemTestBase {
         File temp = File.createTempFile("escidoc-core-testfile", ".tmp");
         temp.deleteOnExit();
 
-        FileOutputStream fos = new java.io.FileOutputStream(temp);
+        FileOutputStream fos = new FileOutputStream(temp);
         BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
 
         byte[] data = new byte[1024];
