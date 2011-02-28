@@ -32,6 +32,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.FileNotFoun
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.st.StagingFileTestBase;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
@@ -42,7 +43,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.URL;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -314,8 +320,13 @@ public class ItemContentURLTest extends ItemTestBase {
      */
     private String createStagingFile(boolean withXmlBase) throws Exception {
 
-        InputStream fileInputStream =
-            StagingFileTestBase.getFileInputStream(testUploadFile);
+        // download file from test data service to local tempfile
+        File f =
+            downloadTempFile(new URL(
+                properties.getProperty(PropertiesProvider.TESTDATA_URL) + "/"
+                    + testUploadFile));
+
+        InputStream fileInputStream = new FileInputStream(f);
 
         HttpResponse httpRes = null;
         try {
@@ -331,8 +342,9 @@ public class ItemContentURLTest extends ItemTestBase {
         }
         assertNotNull("No HTTPMethod. ", httpRes);
         assertHttpStatusOfMethod("Create failed", httpRes);
-        final String stagingFileXml = EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
-     
+        final String stagingFileXml =
+            EntityUtils.toString(httpRes.getEntity(), HTTP.UTF_8);
+
         String url = "";
         if (withXmlBase) {
             url =
@@ -343,6 +355,36 @@ public class ItemContentURLTest extends ItemTestBase {
             selectSingleNode(getDocument(stagingFileXml), "//@href")
                 .getNodeValue();
         return url;
+    }
+
+    /**
+     * Download file an save as temp.
+     * 
+     * @param url
+     *            URL to file
+     * @return File handler for temporary file.
+     */
+    private File downloadTempFile(final URL url) {
+
+        java.io.BufferedInputStream in =
+            new java.io.BufferedInputStream(url.openStream());
+
+        File temp = File.createTempFile("escidoc-core-testfile", ".tmp");
+        temp.deleteOnExit();
+
+        FileOutputStream fos = new java.io.FileOutputStream(temp);
+        BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
+
+        byte[] data = new byte[1024];
+        int x = 0;
+        while ((x = in.read(data, 0, 1024)) >= 0) {
+            bout.write(data, 0, x);
+        }
+
+        bout.close();
+        in.close();
+
+        return temp;
     }
 
     /**
@@ -359,7 +401,7 @@ public class ItemContentURLTest extends ItemTestBase {
 
         // content to staging
         String fedoraUrl =
-            this.properties.getProperty("fedora.url",
+            this.properties.getProperty(PropertiesProvider.FEDORA_URL,
                 "http://localhost:8082/fedora");
         String url = fedoraUrl + "/get/escidoc:ex6/content";
 
@@ -403,7 +445,7 @@ public class ItemContentURLTest extends ItemTestBase {
 
         // content to staging
         String fedoraUrl =
-            this.properties.getProperty("fedora.url",
+            this.properties.getProperty(PropertiesProvider.FEDORA_URL,
                 "http://localhost:8082/fedora");
         String url = fedoraUrl + "/get/escidoc:ex6/content";
 
