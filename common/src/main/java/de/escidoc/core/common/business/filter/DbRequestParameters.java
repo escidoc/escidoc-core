@@ -28,7 +28,11 @@
  */
 package de.escidoc.core.common.business.filter;
 
+import java.io.IOException;
 import java.util.Map;
+
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.logger.AppLogger;
 
 /**
  * This class is a value object for all parameters used in an SRU request with a
@@ -43,6 +47,14 @@ public class DbRequestParameters extends SRURequestParameters {
     public static final int DEFAULT_START_RECORD = 0;
 
     /**
+     * Logging goes there.
+     */
+    private static final AppLogger LOG = new AppLogger(
+        DbRequestParameters.class.getName());
+
+    private int defaultMaximumRecords = DEFAULT_MAXIMUM_RECORDS;
+
+    /**
      * Create a new parameters object from the given map.
      * 
      * @param parameters
@@ -50,6 +62,16 @@ public class DbRequestParameters extends SRURequestParameters {
      */
     public DbRequestParameters(final Map<String, String[]> parameters) {
         super(parameters);
+        try {
+            defaultMaximumRecords =
+                (int) EscidocConfiguration
+                    .getInstance()
+                    .getAsLong(
+                        EscidocConfiguration.ESCIDOC_CORE_FILTER_DEFAULT_MAXIMUM_RECORDS);
+        }
+        catch (IOException e) {
+            LOG.error(e.getMessage(), e);
+        }
     }
 
     /**
@@ -59,7 +81,7 @@ public class DbRequestParameters extends SRURequestParameters {
      */
     @Override
     protected int getDefaultMaximumRecords() {
-        return DEFAULT_MAXIMUM_RECORDS;
+        return defaultMaximumRecords;
     }
 
     /**

@@ -28,19 +28,19 @@
  */
 package de.escidoc.core.common.util.configuration;
 
-import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.Properties;
+
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Properties;
+import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
 
 /**
  * Handles properties.
@@ -159,8 +159,8 @@ public final class EscidocConfiguration {
     public static final String ESCIDOC_CORE_QUEUE_PASSWORD =
         "escidoc-core.queue.password";
 
-    public static final String ESCIDOC_CORE_DATASOURCE_INDEX_PREFIX_LENGTH =
-        "escidoc-core.datasource.index.prefix.length";
+    public static final String ESCIDOC_CORE_FILTER_DEFAULT_MAXIMUM_RECORDS =
+        "escidoc-core.filter.default.maximumRecords";
 
     public static final String CONTENT_RELATIONS_URL =
         "escidoc-core.ontology.url";
@@ -251,10 +251,12 @@ public final class EscidocConfiguration {
     static {
         try {
             instance = new EscidocConfiguration();
-        } catch (EscidocException e) {
+        }
+        catch (EscidocException e) {
             final StringWriter w = new StringWriter();
-            final PrintWriter pw = new PrintWriter(w);
-            System.err.println("Problem while loading properties! Caused by:\n" + w.toString());
+
+            System.err.println("Problem while loading properties! Caused by:\n"
+                + w.toString());
         }
     }
 
@@ -292,8 +294,7 @@ public final class EscidocConfiguration {
      * 
      * @common
      */
-    public static EscidocConfiguration getInstance()
-        throws IOException {
+    public static EscidocConfiguration getInstance() throws IOException {
         return instance;
     }
 
