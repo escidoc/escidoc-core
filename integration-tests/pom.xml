@@ -21,6 +21,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<escidoc.url>http://localhost:8080</escidoc.url>
 		<fedora.home>${project.build.directory}/fedora</fedora.home>
+		<fedora.database>fedora3</fedora.database>
+		<fedora.database.user>fedoraAdmin</fedora.database.user>
+		<fedora.database.password>fedoraAdmin</fedora.database.password>
+		<triplestore.database>riTriples</triplestore.database>
 	</properties>
 
 	<!-- Setting up the integration test infrastructure is a little bit complex 
@@ -378,7 +382,7 @@
 				first (but compiling test-sources comes first in standard lifecycle) -->
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.5</version>
+				<version>2.7.1</version>
 				<configuration>
 					<skipTests>true</skipTests>
 				</configuration>
@@ -394,7 +398,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.6</version>
+				<version>2.7.1</version>
 				<executions>
 					<execution>
 						<id>integration-test</id>
@@ -675,7 +679,7 @@
 									<!-- need another database to drop the targeted one -->
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE "fedora3"</sqlCommand>
+									<sqlCommand>DROP DATABASE "${fedora.database}"</sqlCommand>
 									<!-- ignore error when database is not avaiable -->
 									<onError>continue</onError>
 								</configuration>
@@ -690,7 +694,7 @@
 									<!-- need another database to drop the targeted one -->
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE "riTriples"</sqlCommand>
+									<sqlCommand>DROP DATABASE "${triplestore.database}"</sqlCommand>
 									<!-- ignore error when database is not avaiable -->
 									<onError>continue</onError>
 								</configuration>
@@ -705,7 +709,7 @@
 									<!-- need another database to drop the targeted one -->
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP ROLE "fedoraAdmin"</sqlCommand>
+									<sqlCommand>DROP ROLE "${fedora.database.user}"</sqlCommand>
 									<!-- ignore error when database is not avaiable -->
 									<onError>continue</onError>
 								</configuration>
@@ -721,8 +725,8 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
-									<sqlCommand>CREATE ROLE "fedoraAdmin" LOGIN PASSWORD
-										'fedoraAdmin'
+									<sqlCommand>CREATE ROLE "${fedora.database.user}" LOGIN PASSWORD
+										'${fedora.database.password}'
 										VALID
 										UNTIL 'infinity';</sqlCommand>
 									<onError>continue</onError>
@@ -738,8 +742,8 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
-									<sqlCommand>CREATE DATABASE "fedora3" WITH ENCODING='UTF8'
-										OWNER="fedoraAdmin"</sqlCommand>
+									<sqlCommand>CREATE DATABASE "${fedora.database}" WITH ENCODING='UTF8'
+										OWNER="${fedora.database.user}"</sqlCommand>
 								</configuration>
 							</execution>
 							<execution>
@@ -752,9 +756,51 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
-									<sqlCommand>CREATE DATABASE "riTriples" WITH
+									<sqlCommand>CREATE DATABASE "${triplestore.database}" WITH
 										ENCODING='SQL_ASCII'
-										OWNER="fedoraAdmin" TEMPLATE=template0</sqlCommand>
+										OWNER="${fedora.database.user}" TEMPLATE=template0</sqlCommand>
+								</configuration>
+							</execution>
+							
+							<!--  clean up -->
+							<execution>
+								<id>cleanup-fedora-database</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<!-- no transaction -->
+									<autocommit>true</autocommit>
+									<sqlCommand>DROP DATABASE "${fedora.database}"</sqlCommand>
+								</configuration>
+							</execution>
+							<execution>
+								<id>cleanup-triplestore-database</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<!-- no transaction -->
+									<autocommit>true</autocommit>
+									<sqlCommand>DROP DATABASE "${triplestore.database}"</sqlCommand>
+								</configuration>
+							</execution>
+							<execution>
+								<id>cleanup-database-user</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<!-- no transaction -->
+									<autocommit>true</autocommit>
+									<sqlCommand>DROP ROLE "${fedora.database.user}"</sqlCommand>
+									<onError>continue</onError>
 								</configuration>
 							</execution>
 						</executions>
