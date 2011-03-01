@@ -38,7 +38,7 @@ public final class IndexOptimizerServiceTimer {
      */
     public long getLastExecutionTime() {
         long newLastExecutionTime = System.currentTimeMillis();
-        synchronized (this) {
+        synchronized (instance) {
             final long savedLastExecutionTime = lastExecutionTime;
             lastExecutionTime = newLastExecutionTime;
             return savedLastExecutionTime;
