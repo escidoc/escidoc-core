@@ -25,6 +25,9 @@
 		<fedora.database.user>fedoraAdmin</fedora.database.user>
 		<fedora.database.password>fedoraAdmin</fedora.database.password>
 		<triplestore.database>riTriples</triplestore.database>
+		<escidoc.database>escidoc-core</escidoc.database>
+		<escidoc.database.user>escidoc</escidoc.database.user>
+		<escidoc.database.password>escidoc</escidoc.database.password>
 	</properties>
 
 	<!-- Setting up the integration test infrastructure is a little bit complex 
@@ -642,6 +645,273 @@
 
 	<profiles>
 		<profile>
+			<id>create-escidoc-database</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>sql-maven-plugin</artifactId>
+						<version>1.3</version>
+						<dependencies>
+							<!-- specify the dependent jdbc driver here -->
+							<dependency>
+								<groupId>postgresql</groupId>
+								<artifactId>postgresql</artifactId>
+								<version>${jdbc.postgresql.version}</version>
+							</dependency>
+						</dependencies>
+						<!-- common configuration shared by all executions -->
+						<configuration>
+							<driver>org.postgresql.Driver</driver>
+							<url>jdbc:postgresql://localhost:5432/postgres</url>
+							<settingsKey>escidoc-core-db-admin</settingsKey>
+							<!--all executions are ignored if -DskipITs=true -->
+							<skip>${skipITs}</skip>
+						</configuration>
+						<executions>
+							<execution>
+								<id>drop-escidoc-db-before-compile</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<!-- need another database to drop the targeted one -->
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>DROP DATABASE "${escidoc.database}"</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
+							<execution>
+								<id>drop-role-before-compile</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<!-- need another database to drop the targeted one -->
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>DROP ROLE "${escidoc.database.user}"</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
+
+							<execution>
+								<id>create-role</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<!-- no transaction -->
+									<autocommit>true</autocommit>
+									<sqlCommand>CREATE ROLE "${escidoc.database.user}" LOGIN PASSWORD '${escidoc.database.password}'
+										VALID
+										UNTIL 'infinity';</sqlCommand>
+								</configuration>
+							</execution>
+							<execution>
+								<id>create-escidoc-db</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<!-- no transaction -->
+									<autocommit>true</autocommit>
+									<sqlCommand>CREATE DATABASE "${escidoc.database}" WITH ENCODING='UTF8'
+										OWNER="${escidoc.database.user}"</sqlCommand>
+								</configuration>
+							</execution>
+							<execution>
+								<id>create-escidoc-db-lang</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
+									<!-- no transaction -->
+									<autocommit>true</autocommit>
+									<srcFiles>
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/create-language.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+							<execution>
+								<id>create-schemas</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>org.postgresql.Driver</driver>
+									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
+									<autocommit>true</autocommit>
+									<srcFiles>
+										<!-- the initialize phase allows no filtering. Furthermore is creating 
+											database part of the test phase. That's why here should only be these tables 
+											are generated where hibernate depends on. -->
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/aa/aa.create.sql
+										</srcFile>
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/adm/adm.create.sql
+										</srcFile>
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/oai/oai.create.sql
+										</srcFile>
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/om/om.create.sql
+										</srcFile>
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/sm/sm.create.sql
+										</srcFile>
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/st/st.create.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+							<execution>
+								<!-- the initialize phase allows no filtering. Furthermore is creating 
+									database part of the test phase. That's why here should only be these tables 
+									are generated where hibernate depends on. -->
+								<id>insert-accounts-into-db</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>org.postgresql.Driver</driver>
+									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
+									<autocommit>true</autocommit>
+									<srcFiles>
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/aa/aa.init.user-accounts.common.sql
+										</srcFile>
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/aa/aa.init.user-accounts.MPDL.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+							<execution>
+								<!-- the initialize phase allows no filtering. Furthermore is creating 
+									database part of the test phase. That's why here should only be these tables 
+									are generated where hibernate depends on. -->
+								<id>init-handles-into-db</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>org.postgresql.Driver</driver>
+									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
+									<autocommit>true</autocommit>
+									<fileset>
+										<basedir>${basedir}/../common/src/main/resources/sql/postgres/</basedir>
+										<includes>
+											<include>aa/aa.init.handles.*.sql
+											</include>
+										</includes>
+									</fileset>
+								</configuration>
+							</execution>
+							<execution>
+								<!-- the initialize phase allows no filtering. Furthermore is creating 
+									database part of the test phase. That's why here should only be these tables 
+									are generated where hibernate depends on. -->
+								<id>insert-roles-into-db</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>org.postgresql.Driver</driver>
+									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
+									<autocommit>true</autocommit>
+									<fileset>
+										<basedir>${basedir}/../common/src/main/resources/sql/postgres/</basedir>
+										<includes>
+											<include>aa/aa.init.roles.*.sql
+											</include>
+										</includes>
+									</fileset>
+								</configuration>
+							</execution>
+							<execution>
+								<!-- the initialize phase allows no filtering. Furthermore is creating 
+									database part of the test phase. That's why here should only be these tables 
+									are generated where hibernate depends on. -->
+								<id>insert-into-db</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>org.postgresql.Driver</driver>
+									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
+									<autocommit>true</autocommit>
+									<fileset>
+										<basedir>${basedir}/../common/src/main/resources/sql/postgres/</basedir>
+										<includes>
+											<include>aa/aa.init.grants.*.sql
+											</include>
+											<include>aa/aa.init.actions.sql
+											</include>
+											<include>aa/aa.init.method-mappings.*.sql
+											</include>
+										</includes>
+									</fileset>
+								</configuration>
+							</execution>
+							<execution>
+								<id>insert-test-user</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<driver>org.postgresql.Driver</driver>
+									<url>jdbc:postgresql://localhost:5432/${escidoc.database}</url>
+									<username>${escidoc.database.user}</username>
+									<password>${escidoc.database.password}</password>
+									<autocommit>true</autocommit>
+									<srcFiles>
+										<!-- the initialize phase allows no filtering. Furthermore is creating 
+											database part of the test phase. That's why here should only be these tables 
+											are generated where hibernate depends on. -->
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/test/test.aa.init.roles.sql
+										</srcFile>
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/test/test.aa.init.users.sql
+										</srcFile>
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/test/test.aa.init.groups.sql
+										</srcFile>
+										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/test/test.sm.create.sql
+										</srcFile>
+									</srcFiles>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- Fedora -->
+
+		<profile>
 			<id>install-fedora</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -670,7 +940,7 @@
 						</configuration>
 						<executions>
 							<execution>
-								<id>drop-db-before-compile</id>
+								<id>drop-fedora-db-before-compile</id>
 								<phase>validate</phase>
 								<goals>
 									<goal>execute</goal>
@@ -685,7 +955,7 @@
 								</configuration>
 							</execution>
 							<execution>
-								<id>drop-tripledb-before-compile</id>
+								<id>drop-triplestore-db-before-compile</id>
 								<phase>validate</phase>
 								<goals>
 									<goal>execute</goal>
@@ -725,7 +995,8 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
-									<sqlCommand>CREATE ROLE "${fedora.database.user}" LOGIN PASSWORD
+									<sqlCommand>CREATE ROLE "${fedora.database.user}" LOGIN
+										PASSWORD
 										'${fedora.database.password}'
 										VALID
 										UNTIL 'infinity';</sqlCommand>
@@ -733,7 +1004,7 @@
 								</configuration>
 							</execution>
 							<execution>
-								<id>create-db</id>
+								<id>create-fedora-db</id>
 								<phase>validate</phase>
 								<goals>
 									<goal>execute</goal>
@@ -742,12 +1013,13 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
-									<sqlCommand>CREATE DATABASE "${fedora.database}" WITH ENCODING='UTF8'
+									<sqlCommand>CREATE DATABASE "${fedora.database}" WITH
+										ENCODING='UTF8'
 										OWNER="${fedora.database.user}"</sqlCommand>
 								</configuration>
 							</execution>
 							<execution>
-								<id>create-mpt-db</id>
+								<id>create-triplestore-db</id>
 								<phase>validate</phase>
 								<goals>
 									<goal>execute</goal>
@@ -758,11 +1030,12 @@
 									<autocommit>true</autocommit>
 									<sqlCommand>CREATE DATABASE "${triplestore.database}" WITH
 										ENCODING='SQL_ASCII'
-										OWNER="${fedora.database.user}" TEMPLATE=template0</sqlCommand>
+										OWNER="${fedora.database.user}"
+										TEMPLATE=template0</sqlCommand>
 								</configuration>
 							</execution>
-							
-							<!--  clean up -->
+
+							<!-- clean up -->
 							<execution>
 								<id>cleanup-fedora-database</id>
 								<phase>post-integration-test</phase>
@@ -865,7 +1138,7 @@
 							</execution>
 							<execution>
 								<id>start-container</id>
-								<phase>initialize</phase>
+								<phase>compile</phase>
 								<goals>
 									<goal>start</goal>
 								</goals>
@@ -914,8 +1187,8 @@
 										<artifactId>testdata</artifactId>
 										<type>war</type>
 										<properties>
-          									<context>testdata</context>
-        								</properties>
+											<context>testdata</context>
+										</properties>
 									</deployable>
 									<deployable>
 										<groupId>org.escidoc</groupId>
@@ -1083,7 +1356,7 @@
 						<executions>
 							<execution>
 								<id>ingest-fedora-resources</id>
-								<phase>generate-sources</phase>
+								<phase>pre-integration-test</phase>
 								<goals>
 									<goal>exec</goal>
 								</goals>
