@@ -70,7 +70,7 @@
 				<executions>
 					<execution>
 						<id>wsdl2java</id>
-						<phase>generate-resources</phase>
+						<phase>generate-test-sources</phase>
 						<goals>
 							<goal>wsdl2java</goal>
 						</goals>
