@@ -1852,14 +1852,12 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         for (final String grantId : grantIds) {
             // set revoke-date, -user and -remark
-            grantsHash.get(grantId).setUserAccountByRevokerId(authenticateUser);
-            grantsHash.get(grantId).setRevocationDate(
-                new Date(System.currentTimeMillis()));
-            grantsHash.get(grantId).setRevocationRemark(
-                tph.getRevokationRemark());
-
+            final RoleGrant roleGrant = grantsHash.get(grantId);
+            roleGrant.setUserAccountByRevokerId(authenticateUser);
+            roleGrant.setRevocationDate(new Date(System.currentTimeMillis()));
+            roleGrant.setRevocationRemark(tph.getRevokationRemark());
             // update grant
-            userGroupDao.update(grantsHash.get(grantId));
+            userGroupDao.update(roleGrant);
         }
         sendUserGroupUpdateEvent(groupId);
     }

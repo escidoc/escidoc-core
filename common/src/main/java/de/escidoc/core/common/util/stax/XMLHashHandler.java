@@ -38,6 +38,8 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -97,11 +99,12 @@ public class XMLHashHandler extends DefaultHandler {
                 atts.put(attName, attributes.getValue(i));
             }
         }
-        for (final String name : atts.keySet()) {
+        final Set<Map.Entry<String, String>> attsEntrySet = atts.entrySet();
+        for (final Map.Entry entry : attsEntrySet) {
             string.append('#');
-            string.append(name);
+            string.append(entry.getKey());
             string.append('=');
-            string.append(atts.get(name));
+            string.append(entry.getValue());
         }
         // mark for begin of element content, either complex or simple
         string.append('#');
