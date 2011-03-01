@@ -79,7 +79,7 @@ public class SecurityInterceptorCache {
      * @common
      */
     public SecurityInterceptorCache() {
-        mappingsCache = new Cache(new CacheConfiguration("mappingsCache", Integer.MAX_VALUE));;
+        mappingsCache = new Cache(new CacheConfiguration("securityInterceptorMappingsCache", Integer.MAX_VALUE));;
         CACHE_MANAGER.addCache(mappingsCache);
         clear();
     }
