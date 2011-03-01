@@ -34,8 +34,10 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.aa.PolicyDecisionPointClient;
 import org.junit.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 /**
  * PDP test suite.
@@ -171,6 +173,78 @@ public class PdpAbstractTest extends AaTestBase {
         catch (Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
         }
+    }
+
+    /**
+     * Test declining evaluation of authorization requests 
+     * with providing unknown action.
+     * 
+     * @test.name Evaluate Authorization Requests - unknown action
+     * @test.id AA_EAR-4
+     * @test.input: XML representation of a list of authorization requests 
+     *              with unknown action is provided.
+     * @test.expected: MissingMethodParameterException
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testAAEar4() throws Exception {
+
+        String requestsXML =
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests3.xml");
+        assertXmlValidRequests(requestsXML);
+        String evaluationResponsesXml = null;
+        try {
+            evaluationResponsesXml = evaluate(requestsXML);
+        }
+        catch (Exception e) {
+            EscidocRestSoapTestBase.failException(e);
+        }
+        assertNotNull(evaluationResponsesXml);
+        assertXmlValidResults(evaluationResponsesXml);
+        Document evaluationDocument = EscidocRestSoapTestBase.getDocument(evaluationResponsesXml);
+        NodeList nodes = selectNodeList(evaluationDocument, "/results/result/@decision");
+        assertEquals("result-node not found", 1, nodes.getLength());
+        assertEquals("wrong decision", "deny", nodes.item(0).getTextContent());
+
+    }
+
+    /**
+     * Test evaluation of authorization requests 
+     * with providing load-examples action.
+     * 
+     * @test.name Evaluate Authorization Requests - unknown action
+     * @test.id AA_EAR-4
+     * @test.input: XML representation of a list of authorization requests 
+     *              with unknown action is provided.
+     * @test.expected: MissingMethodParameterException
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testAAEar5() throws Exception {
+
+        String requestsXML =
+            EscidocRestSoapTestBase.getTemplateAsString(TEMPLATE_REQUESTS_PATH, "requests4.xml");
+        assertXmlValidRequests(requestsXML);
+        String evaluationResponsesXml = null;
+        try {
+            evaluationResponsesXml = evaluate(requestsXML);
+        }
+        catch (Exception e) {
+            EscidocRestSoapTestBase.failException(e);
+        }
+        assertNotNull(evaluationResponsesXml);
+        assertXmlValidResults(evaluationResponsesXml);
+        Document evaluationDocument = EscidocRestSoapTestBase.getDocument(evaluationResponsesXml);
+        NodeList nodes = selectNodeList(evaluationDocument, "/results/result/@decision");
+        assertEquals("result-node not found", 1, nodes.getLength());
+        assertEquals("wrong decision", "permit", nodes.item(0).getTextContent());
+
     }
 
 }
