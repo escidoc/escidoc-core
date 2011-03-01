@@ -40,6 +40,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.axis.types.NonNegativeInteger;
 import org.apache.commons.pool.BasePoolableObjectFactory;
+import org.apache.commons.pool.PoolUtils;
 import org.apache.commons.pool.impl.StackObjectPool;
 import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
@@ -1327,7 +1328,7 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown in case of an internal error.
      */
-    private synchronized FedoraClient borrowFedoraClient()
+    private FedoraClient borrowFedoraClient()
         throws FedoraSystemException {
         try {
             return (FedoraClient) fedoraClientPool.borrowObject();
@@ -1345,7 +1346,7 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown in case of an internal error.
      */
-    private synchronized void returnFedoraClient(final FedoraClient fedoraClient)
+    private void returnFedoraClient(final FedoraClient fedoraClient)
         throws FedoraSystemException {
         try {
             fedoraClientPool.returnObject(fedoraClient);
@@ -1362,8 +1363,7 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown in case of an internal error.
      */
-    private synchronized FedoraAPIA borrowApia() throws FedoraSystemException {
-
+    private FedoraAPIA borrowApia() throws FedoraSystemException {
         try {
             return (FedoraAPIA) apiaPool.borrowObject();
         }
@@ -1380,7 +1380,7 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown in case of an internal error.
      */
-    private synchronized void returnApia(final FedoraAPIA fedoraApia)
+    private void returnApia(final FedoraAPIA fedoraApia)
         throws FedoraSystemException {
         try {
             apiaPool.returnObject(fedoraApia);
@@ -1397,8 +1397,7 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown in case of an internal error.
      */
-    private synchronized FedoraAPIM borrowApim() throws FedoraSystemException {
-
+    private FedoraAPIM borrowApim() throws FedoraSystemException {
         try {
             return (FedoraAPIM) apimPool.borrowObject();
         }
@@ -1415,7 +1414,7 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown in case of an internal error.
      */
-    private synchronized void returnApim(final FedoraAPIM fedoraApim)
+    private void returnApim(final FedoraAPIM fedoraApim)
         throws FedoraSystemException {
         try {
             apimPool.returnObject(fedoraApim);
@@ -1433,7 +1432,7 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown in case of an internal error.
      */
-    private synchronized void invalidateApiaObject(final FedoraAPIA fedoraApia)
+    private void invalidateApiaObject(final FedoraAPIA fedoraApia)
         throws FedoraSystemException {
 
         try {
@@ -1452,7 +1451,7 @@ public class FedoraUtility implements InitializingBean {
      * @throws FedoraSystemException
      *             Thrown in case of an internal error.
      */
-    private synchronized void invalidateApimObject(final FedoraAPIM fedoraApim)
+    private void invalidateApimObject(final FedoraAPIM fedoraApim)
         throws FedoraSystemException {
         try {
             apimPool.invalidateObject(fedoraApim);
@@ -1489,7 +1488,7 @@ public class FedoraUtility implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
 
-        fedoraClientPool = new StackObjectPool(new BasePoolableObjectFactory() {
+        fedoraClientPool = new StackObjectPool(PoolUtils.synchronizedPoolableFactory(new BasePoolableObjectFactory() {
             /**
              * See Interface for functional description.
              *
@@ -1499,12 +1498,12 @@ public class FedoraUtility implements InitializingBean {
              *      #makeObject()
              */
             @Override
-            public synchronized Object makeObject() throws Exception {
+            public Object makeObject() throws Exception {
                 return new FedoraClient(fedoraUrl, fedoraUser, fedoraPassword);
             }
-        }, MAX_IDLE, INIT_IDLE_CAPACITY);
+        }), MAX_IDLE, INIT_IDLE_CAPACITY);
 
-        apiaPool = new StackObjectPool(new BasePoolableObjectFactory() {
+        apiaPool = new StackObjectPool(PoolUtils.synchronizedPoolableFactory(new BasePoolableObjectFactory() {
             /**
              * See Interface for functional description.
              *
@@ -1514,10 +1513,10 @@ public class FedoraUtility implements InitializingBean {
              *      #makeObject()
              */
             @Override
-            public synchronized Object makeObject() throws Exception {
+            public Object makeObject() throws Exception {
                 return new FedoraClient(fedoraUrl, fedoraUser, fedoraPassword).getAPIA();
             }
-        }, MAX_IDLE, INIT_IDLE_CAPACITY);
+        }), MAX_IDLE, INIT_IDLE_CAPACITY);
 
         apimPool = new StackObjectPool(new BasePoolableObjectFactory() {
             /**
@@ -1529,7 +1528,7 @@ public class FedoraUtility implements InitializingBean {
              *      #makeObject()
              */
             @Override
-            public synchronized Object makeObject() throws Exception {
+            public Object makeObject() throws Exception {
                 return new FedoraClient(fedoraUrl, fedoraUser, fedoraPassword).getAPIM();
             }
         }, MAX_IDLE, INIT_IDLE_CAPACITY);
