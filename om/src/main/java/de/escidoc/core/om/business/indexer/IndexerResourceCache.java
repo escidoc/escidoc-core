@@ -250,7 +250,7 @@ public final class IndexerResourceCache {
      * @throws SystemException
      *             e
      */
-    private synchronized void cacheInternalResource(final String identifier)
+    private void cacheInternalResource(final String identifier)
         throws SystemException {
         try {
             if (UserContext.getHandle() != null) {
@@ -322,7 +322,7 @@ public final class IndexerResourceCache {
      * @throws SystemException
      *             e
      */
-    private synchronized void cacheExternalResource(final String identifier)
+    private void cacheExternalResource(final String identifier)
         throws SystemException {
         ByteArrayOutputStream out = null;
         InputStream in = null;
