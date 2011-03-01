@@ -34,12 +34,18 @@ import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
+import net.sf.ehcache.config.CacheConfiguration;
 import org.apache.commons.collections.map.LRUMap;
 import org.springframework.security.userdetails.UserDetails;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -107,7 +113,7 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    private static Map<String, XacmlPolicySet> userPoliciesCache;
+    private static Cache userPoliciesCache;
 
     /**
      * The user grants cache is implemented as an <code>LRUMap</code>
@@ -115,7 +121,7 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    private static Map<String, Map<Object, Object>> userGrantsCache;
+    private static Cache userGrantsCache;
 
     /**
      * The user details cache is implemented as an <code>LRUMap</code>
@@ -123,7 +129,7 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    private static Map<String, UserDetails> userDetailsCache;
+    private static Cache userDetailsCache;
 
     /**
      * The group grants cache is implemented as an <code>LRUMap</code>
@@ -131,7 +137,7 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    private static Map<String, XacmlPolicySet> groupPoliciesCache;
+    private static Cache groupPoliciesCache;
 
     /**
      * The group grants cache is implemented as an <code>LRUMap</code>
@@ -139,7 +145,7 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    private static Map<String, Map<Object, Object>> groupGrantsCache;
+    private static Cache groupGrantsCache;
 
     /**
      * The group grants cache is implemented as an <code>LRUMap</code>
@@ -147,7 +153,7 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    private static Map<String, Set<String>> userGroupsCache;
+    private static Cache userGroupsCache;
 
     /**
      * The role policies cache is implemented as a <code>LRUMap</code>
@@ -155,7 +161,7 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    private static Map<URI, XacmlPolicySet> rolePoliciesCache;
+    private static Cache rolePoliciesCache;
 
     /**
      * The roles cache is implemented as a <code>LRUMap</code>
@@ -163,7 +169,7 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    private static Map<String, EscidocRole> rolesCache;
+    private static Cache rolesCache;
 
     /**
      * The roleIsGranted result cache is implemented as a <code>LRUMap</code>
@@ -174,7 +180,7 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    private static Map<String, Map<String, Map<String, EvaluationResult>>> roleIsGrantedCache;
+    private static Cache roleIsGrantedCache;
 
     private static int rolesCacheSize;
 
@@ -238,18 +244,24 @@ public final class PoliciesCache {
             resourcesInXacmlFunctionRoleIsGrantedCacheSize =
                 AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE_FALL_BACK;
         }
-
-        rolesCache = new LRUMap(rolesCacheSize);
-        rolePoliciesCache = new LRUMap(rolesCacheSize);
-        userGrantsCache = new LRUMap(usersCacheSize);
-        userPoliciesCache = new LRUMap(usersCacheSize);
-        groupGrantsCache = new LRUMap(groupsCacheSize);
-        groupPoliciesCache = new LRUMap(groupsCacheSize);
-        userDetailsCache = new LRUMap(usersCacheSize);
-        userGroupsCache = new LRUMap(usersCacheSize);
-
-        roleIsGrantedCache = new LRUMap(usersCacheSize);
-
+        final CacheManager cacheManager = CacheManager.create();
+        rolesCache = new Cache(new CacheConfiguration("rolesCache", rolesCacheSize));
+        cacheManager.addCache(rolesCache);
+        rolePoliciesCache = new Cache(new CacheConfiguration("rolePoliciesCache", rolesCacheSize));
+        cacheManager.addCache(rolePoliciesCache);
+        userGrantsCache = new Cache(new CacheConfiguration("userGrantsCache", usersCacheSize));
+        cacheManager.addCache(userGrantsCache);
+        userPoliciesCache = new Cache(new CacheConfiguration("userPoliciesCache", usersCacheSize));
+        cacheManager.addCache(userPoliciesCache);
+        groupGrantsCache = new Cache(new CacheConfiguration("groupGrantsCache", groupsCacheSize));
+        cacheManager.addCache(groupGrantsCache);
+        groupPoliciesCache = new Cache(new CacheConfiguration("groupPoliciesCache", groupsCacheSize));
+        cacheManager.addCache(groupPoliciesCache);
+        userDetailsCache = new Cache(new CacheConfiguration("userDetailsCache", usersCacheSize));
+        cacheManager.addCache(userDetailsCache);
+        userGroupsCache = new Cache(new CacheConfiguration("userGroupsCache", usersCacheSize));
+        cacheManager.addCache(userGroupsCache);
+        roleIsGrantedCache = new Cache(new CacheConfiguration("roleIsGrantedCache", usersCacheSize));
     }
 
     /**
@@ -279,7 +291,7 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    public static synchronized void putRoleIsGrantedEvaluationResult(
+    public static void putRoleIsGrantedEvaluationResult(
         final String userOrGroupId, final String roleId, final String resourceId,
         final EvaluationResult roleIsGranted) {
 
@@ -287,12 +299,11 @@ public final class PoliciesCache {
             return;
         }
 
+        final Element element = roleIsGrantedCache.get(userOrGroupId);
         Map<String, Map<String, EvaluationResult>> roleMap =
-            roleIsGrantedCache.get(userOrGroupId);
-        if (roleMap == null) {
-            roleMap = new LRUMap(rolesCacheSize);
-            roleIsGrantedCache.put(userOrGroupId, roleMap);
-        }
+                (Map<String, Map<String, EvaluationResult>>) element.getValue();
+        final Element roleElement = new Element(userOrGroupId, roleMap);
+        roleIsGrantedCache.put(element);
         Map<String, EvaluationResult> resourceMap = roleMap.get(roleId);
         if (resourceMap == null) {
             resourceMap =
@@ -320,13 +331,12 @@ public final class PoliciesCache {
      *            <code>XacmlPolicySet</code>.
      * @aa
      */
-    public static synchronized void putUserPolicies(
-        final String userId, final XacmlPolicySet userPolicies) {
-
+    public static void putUserPolicies(final String userId, final XacmlPolicySet userPolicies) {
         if (userId == null) {
             return;
         }
-        getUserPoliciesCache().put(userId, userPolicies);
+        final Element element = new Element(userId, userPolicies);
+        getUserPoliciesCache().put(element);
     }
 
     /**
@@ -347,13 +357,13 @@ public final class PoliciesCache {
      *            <code>XacmlPolicySet</code>.
      * @aa
      */
-    public static synchronized void putGroupPolicies(
+    public static void putGroupPolicies(
         final String groupId, final XacmlPolicySet groupPolicies) {
-
         if (groupId == null) {
             return;
         }
-        getGroupPoliciesCache().put(groupId, groupPolicies);
+        final Element element = new Element(groupId, groupPolicies);
+        getGroupPoliciesCache().put(element);
     }
 
     /**
@@ -367,13 +377,12 @@ public final class PoliciesCache {
      *            The grants of the user contained in a <code>Map</code>.
      * @aa
      */
-    public static synchronized void putUserGrants(
-        final String userId, final Map userGrants) {
-
+    public static void putUserGrants(final String userId, final Map userGrants) {
         if (userId == null) {
             return;
         }
-        getUserGrantsCache().put(userId, userGrants);
+        final Element element = new Element(userId, userGrants);
+        getUserGrantsCache().put(element);
     }
 
     /**
@@ -387,13 +396,12 @@ public final class PoliciesCache {
      *            The grants of the group contained in a <code>Map</code>.
      * @aa
      */
-    public static synchronized void putGroupGrants(
-        final String groupId, final Map groupGrants) {
-
+    public static void putGroupGrants(final String groupId, final Map groupGrants) {
         if (groupId == null) {
             return;
         }
-        getGroupGrantsCache().put(groupId, groupGrants);
+        Element element = new Element(groupId, groupGrants);
+        getGroupGrantsCache().put(element);
     }
 
     /**
@@ -407,13 +415,13 @@ public final class PoliciesCache {
      *            The details of the user contained in a <code>Map</code>.
      * @aa
      */
-    public static synchronized void putUserDetails(
+    public static void putUserDetails(
         final String handle, final UserDetails userDetails) {
-
         if (handle == null) {
             return;
         }
-        getUserDetailsCache().put(handle, userDetails);
+        final Element element = new Element(handle, userDetails);
+        getUserDetailsCache().put(element);
     }
 
     /**
@@ -427,17 +435,17 @@ public final class PoliciesCache {
      *            The groups of the user contained in a <code>Set</code>.
      * @aa
      */
-    public static synchronized void putUserGroups(
-        final String userId, final Set<String> userGroups) {
-
+    public static void putUserGroups(final String userId, final Set<String> userGroups) {
         if (userId == null) {
             return;
         }
+        Element element;
         if (userGroups == null) {
-            getUserGroupsCache().put(userId, new HashSet<String>());
+            element = new Element(userId, new HashSet<String>());
         } else {
-            getUserGroupsCache().put(userId, userGroups);
+            element = new Element(userId, userGroups);
         }
+        getUserGroupsCache().put(element);
     }
 
     /**
@@ -450,10 +458,10 @@ public final class PoliciesCache {
      *            <code>PolicyFinderResult</code>
      * @aa
      */
-    public static synchronized void putRolePolicySet(
+    public static void putRolePolicySet(
         final URI idReference, final XacmlPolicySet rolePolicies) {
-
-        getRolePoliciesCache().put(idReference, rolePolicies);
+        final Element element = new Element(idReference, rolePolicies);
+        getRolePoliciesCache().put(element);
     }
 
     /**
@@ -465,10 +473,10 @@ public final class PoliciesCache {
      *            The role to cache.
      * @aa
      */
-    public static synchronized void putRole(
+    public static void putRole(
         final String roleId, final EscidocRole role) {
-
-        getRolesCache().put(roleId, role);
+        Element element = new Element(roleId, role);
+        getRolesCache().put(element);
     }
 
     /**
@@ -497,11 +505,11 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    public static synchronized EvaluationResult getRoleIsGrantedEvaluationResult(
+    public static EvaluationResult getRoleIsGrantedEvaluationResult(
         final String userOrGroupId, final String roleId, final String resourceId) {
-
+        final Element element = roleIsGrantedCache.get(userOrGroupId);
         final Map<String, Map<String, EvaluationResult>> roleMap =
-            roleIsGrantedCache.get(userOrGroupId);
+                (Map<String, Map<String, EvaluationResult>>) element.getValue();
         if (roleMap == null) {
             return null;
         }
@@ -523,10 +531,9 @@ public final class PoliciesCache {
      *         that consists of the user's polices, or <code>null</code>.
      * @aa
      */
-    public static synchronized XacmlPolicySet getUserPolicies(
-        final String userId) {
-
-        return getUserPoliciesCache().get(userId);
+    public static XacmlPolicySet getUserPolicies(final String userId) {
+        final Element element = getUserPoliciesCache().get(userId);
+        return (XacmlPolicySet) element.getValue();
     }
 
     /**
@@ -540,10 +547,9 @@ public final class PoliciesCache {
      *         that consists of the group's polices, or <code>null</code>.
      * @aa
      */
-    public static synchronized XacmlPolicySet getGroupPolicies(
-        final String groupId) {
-
-        return getGroupPoliciesCache().get(groupId);
+    public static XacmlPolicySet getGroupPolicies(final String groupId) {
+        final Element element = getGroupPoliciesCache().get(groupId);
+        return (XacmlPolicySet) element.getValue();
     }
 
     /**
@@ -555,9 +561,9 @@ public final class PoliciesCache {
      *         <code>null</code>.
      * @aa
      */
-    public static synchronized Map getUserGrants(final String userId) {
-
-        return getUserGrantsCache().get(userId);
+    public static Map getUserGrants(final String userId) {
+        final Element element = getUserGrantsCache().get(userId);
+        return (Map) element.getValue();
     }
 
     /**
@@ -569,9 +575,9 @@ public final class PoliciesCache {
      *         <code>null</code>.
      * @aa
      */
-    public static synchronized Map getGroupGrants(final String groupId) {
-
-        return getGroupGrantsCache().get(groupId);
+    public static Map getGroupGrants(final String groupId) {
+        final Element element = getGroupGrantsCache().get(groupId);
+        return (Map) element.getValue();
     }
 
     /**
@@ -583,9 +589,9 @@ public final class PoliciesCache {
      *         <code>null</code>.
      * @aa
      */
-    public static synchronized UserDetails getUserDetails(final String handle) {
-
-        return getUserDetailsCache().get(handle);
+    public static UserDetails getUserDetails(final String handle) {
+        final Element element = getUserDetailsCache().get(handle);
+        return (UserDetails) element.getValue();
     }
 
     /**
@@ -597,9 +603,9 @@ public final class PoliciesCache {
      *         <code>null</code>.
      * @aa
      */
-    public static synchronized Set<String> getUserGroups(final String userId) {
-
-        return getUserGroupsCache().get(userId);
+    public static Set<String> getUserGroups(final String userId) {
+        final Element element = getUserGroupsCache().get(userId);
+        return (Set<String>) element.getValue();
     }
 
     /**
@@ -611,10 +617,10 @@ public final class PoliciesCache {
      *         policy set of the addressed role.
      * @aa
      */
-    public static synchronized XacmlPolicySet getRolePolicySet(
+    public static XacmlPolicySet getRolePolicySet(
         final URI idReference) {
-
-        return getRolePoliciesCache().get(idReference);
+        final Element element = getRolePoliciesCache().get(idReference);
+        return (XacmlPolicySet) element.getValue();
     }
 
     /**
@@ -625,9 +631,9 @@ public final class PoliciesCache {
      * @return Returns the <code>EscidocRole</code> for the provided key.
      * @aa
      */
-    public static synchronized EscidocRole getRole(final String roleId) {
-
-        return getRolesCache().get(roleId);
+    public static EscidocRole getRole(final String roleId) {
+        final Element element = getRolesCache().get(roleId);
+        return (EscidocRole) element.getValue();
     }
 
     /**
@@ -639,8 +645,7 @@ public final class PoliciesCache {
      *            The user ID to remove policies from the cache for
      * @aa
      */
-    public static synchronized void clearUserPolicies(final String userId) {
-
+    public static void clearUserPolicies(final String userId) {
         getUserPoliciesCache().remove(userId);
         getRoleIsGrantedCache().remove(userId);
         getUserGrantsCache().remove(userId);
@@ -655,7 +660,7 @@ public final class PoliciesCache {
      *            The group ID to remove policies from the cache for
      * @aa
      */
-    public static synchronized void clearGroupPolicies(final String groupId) {
+    public static void clearGroupPolicies(final String groupId) {
         getGroupPoliciesCache().remove(groupId);
         getRoleIsGrantedCache().remove(groupId);
         getGroupGrantsCache().remove(groupId);
@@ -670,8 +675,7 @@ public final class PoliciesCache {
      *            The handle to remove from the cache for
      * @aa
      */
-    public static synchronized void clearUserDetails(final String handle) {
-
+    public static void clearUserDetails(final String handle) {
         getUserDetailsCache().remove(handle);
     }
 
@@ -680,8 +684,8 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    public static synchronized void clearUserGroups() {
-        getUserGroupsCache().clear();
+    public static void clearUserGroups() {
+        getUserGroupsCache().removeAll();
     }
 
     /**
@@ -690,8 +694,7 @@ public final class PoliciesCache {
      * 
      * @aa
      */
-    public static synchronized void clearUserGroups(final String userId) {
-
+    public static void clearUserGroups(final String userId) {
         getUserGroupsCache().remove(userId);
     }
 
@@ -704,9 +707,7 @@ public final class PoliciesCache {
      *            The id of the role to remove from the cache.
      * @throws SystemException e
      */
-    public static synchronized void clearRole(final String roleId) 
-                                                throws SystemException {
-
+    public static void clearRole(final String roleId)  throws SystemException {
         try {
             getRolePoliciesCache().remove(new URI(roleId));
         } catch (URISyntaxException e) {
@@ -715,15 +716,22 @@ public final class PoliciesCache {
 
         // FIXME: roles may be cached by name, not id. As a quick fix, the
         // cache is completely cleared. This should be optimized
-        getRolesCache().clear();
+        getRolesCache().removeAll();
 
         // The user policies cache still holds policies for the removed role.
         // To avoid usage of invalidated roles, the caches are cleared.
-        getUserPoliciesCache().clear();
+        getUserPoliciesCache().removeAll();
 
         // iterate over all maps stored in roleIsGrantedCache to remove the ones
         // relevant for the provided role id.
-        for (final Map<String, Map<String, EvaluationResult>> userCache : getRoleIsGrantedCache().values()) {
+        List roleIsGrantedKeys = getRoleIsGrantedCache().getKeys();
+        List<Map<String, Map<String, EvaluationResult>>> roleIsGrantedValues =
+                new ArrayList<Map<String, Map<String, EvaluationResult>>>();
+        for(Object key : roleIsGrantedKeys) {
+            Element element = getRoleIsGrantedCache().get(key);
+            roleIsGrantedValues.add((Map<String, Map<String, EvaluationResult>>) element.getValue());
+        }
+        for (final Map<String, Map<String, EvaluationResult>> userCache : roleIsGrantedValues) {
             userCache.remove(roleId);
         }
     }
@@ -734,77 +742,77 @@ public final class PoliciesCache {
      * @aa
      */
     public static void clear() {
-        getRolePoliciesCache().clear();
-        getRolesCache().clear();
-        getUserPoliciesCache().clear();
-        getRoleIsGrantedCache().clear();
-        getUserGrantsCache().clear();
-        getUserDetailsCache().clear();
-        getGroupPoliciesCache().clear();
-        getGroupGrantsCache().clear();
-        getUserGroupsCache().clear();
+        getRolePoliciesCache().removeAll();
+        getRolesCache().removeAll();
+        getUserPoliciesCache().removeAll();
+        getRoleIsGrantedCache().removeAll();
+        getUserGrantsCache().removeAll();
+        getUserDetailsCache().removeAll();
+        getGroupPoliciesCache().removeAll();
+        getGroupGrantsCache().removeAll();
+        getUserGroupsCache().removeAll();
     }
 
     /**
      * @return the rolePoliciesCache
      */
-    private static Map<URI, XacmlPolicySet> getRolePoliciesCache() {
+    private static Cache getRolePoliciesCache() {
         return rolePoliciesCache;
     }
 
     /**
      * @return the rolesCache
      */
-    private static Map<String, EscidocRole> getRolesCache() {
+    private static Cache getRolesCache() {
         return rolesCache;
     }
 
     /**
      * @return the userGrantsCache
      */
-    private static Map<String, Map<Object, Object>> getUserGrantsCache() {
+    private static Cache getUserGrantsCache() {
         return userGrantsCache;
     }
 
     /**
      * @return the userPoliciesCache
      */
-    private static Map<String, XacmlPolicySet> getUserPoliciesCache() {
+    private static Cache getUserPoliciesCache() {
         return userPoliciesCache;
     }
 
     /**
      * @return the userDetailsCache
      */
-    private static Map<String, UserDetails> getUserDetailsCache() {
+    private static Cache getUserDetailsCache() {
         return userDetailsCache;
     }
 
     /**
      * @return the groupGrantsCache
      */
-    private static Map<String, Map<Object, Object>> getGroupGrantsCache() {
+    private static Cache getGroupGrantsCache() {
         return groupGrantsCache;
     }
 
     /**
      * @return the groupPoliciesCache
      */
-    private static Map<String, XacmlPolicySet> getGroupPoliciesCache() {
+    private static Cache getGroupPoliciesCache() {
         return groupPoliciesCache;
     }
 
     /**
      * @return the userGroupsCache
      */
-    private static Map<String, Set<String>> getUserGroupsCache() {
+    private static Cache getUserGroupsCache() {
         return userGroupsCache;
     }
 
     /**
      * @return the roleIsGrantedCache
      */
-    private static Map<String, Map<String, Map<String, EvaluationResult>>> getRoleIsGrantedCache() {
+    private static Cache getRoleIsGrantedCache() {
         return roleIsGrantedCache;
     }
 
