@@ -537,30 +537,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     }
 
     /**
-     * Retrieve all groups the user currently belongs to as Set of groupIds.
-     * 
-     * @param userId
-     *            the id of the user
-     * 
-     * @return Set with groupIds
-     * @throws UserAccountNotFoundException
-     *             in case the userAccount for the userId is not found
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc user handle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
-     */
-    @Override
-    public Set<String> retrieveGroupsForUser(final String userId)
-        throws UserAccountNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
-        return business.retrieveGroupsForUser(userId);
-    }
-
-    /**
      * Retrieve the resources section of a user group.
      * 
      * @param groupId

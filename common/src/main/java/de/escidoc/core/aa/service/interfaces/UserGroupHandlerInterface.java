@@ -711,28 +711,6 @@ public interface UserGroupHandlerInterface {
         AuthenticationException, AuthorizationException, SystemException;
 
     /**
-     * Retrieve all User Groups the User currently belongs to as Set of
-     * groupIds.
-     * 
-     * @param userId
-     *            User Account ID
-     * 
-     * @return Set with User Group IDs
-     * @throws UserAccountNotFoundException
-     *             in case the User Account is not found
-     * @throws AuthenticationException
-     *             Thrown if the authentication fails due to an invalid provided
-     *             eSciDoc User Handle.
-     * @throws AuthorizationException
-     *             Thrown if the authorization fails.
-     * @throws SystemException
-     *             Thrown in case of an internal system error.
-     */
-    Set<String> retrieveGroupsForUser(String userId)
-        throws UserAccountNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException;
-
-    /**
      * Retrieve the resources section of a User Group.
      * 
      * @param groupId
