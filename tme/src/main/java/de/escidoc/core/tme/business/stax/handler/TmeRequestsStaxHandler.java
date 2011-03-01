@@ -28,19 +28,19 @@
  */
 package de.escidoc.core.tme.business.stax.handler;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.application.invalid.TmeException;
-import de.escidoc.core.common.util.string.StringUtility;
-import de.escidoc.core.common.util.xml.stax.events.StartElement;
-import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-
-import javax.naming.directory.NoSuchAttributeException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
+import javax.naming.directory.NoSuchAttributeException;
+
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.application.invalid.TmeException;
+import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 /**
  * Stax handler that handles the last modification attribute and checks the
@@ -113,7 +113,8 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
         if (iter.hasNext()) {
             result = result.append(iter.next());
             while (iter.hasNext()) {
-                result = StringUtility.concatenate(result, ",", iter.next());
+                result.append(",");
+                result.append(iter.next());
             }
         }
         return result.toString();

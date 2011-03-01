@@ -238,7 +238,8 @@ public class UserAccountHandler
         if (StringUtils.isEmpty(UserContext.getId())) {
             throw new UserAccountNotFoundException("No user logged in");
         }
-        final UserAccount userAccount = dao.retrieveUserAccount(UserContext.getId());
+        final UserAccount userAccount =
+            dao.retrieveUserAccount(UserContext.getId());
         assertUserAccount(UserContext.getId(), userAccount);
 
         return renderer.render(userAccount);
@@ -465,7 +466,8 @@ public class UserAccountHandler
                 "Password must not be updated on inactive user-account!");
         }
 
-        final TaskParamHandler handler = XmlUtility.parseTaskParam(taskParam, true);
+        final TaskParamHandler handler =
+            XmlUtility.parseTaskParam(taskParam, true);
 
         final String password = handler.getPassword();
         if (password == null || "".equals(password)) {
@@ -590,9 +592,11 @@ public class UserAccountHandler
 
         final UserAccount userAccount = retrieveUserAccountById(userId);
         final List<RoleGrant> currentGrants = fetchCurrentGrants(userId);
-        final HashMap<String, RoleGrant> grantsMap = new HashMap<String, RoleGrant>();
+        final HashMap<String, RoleGrant> grantsMap =
+            new HashMap<String, RoleGrant>();
         final List<Object[]> argumentList = new ArrayList<Object[]>();
-        final List<RoleGrant> filteredCurrentGrants = new ArrayList<RoleGrant>();
+        final List<RoleGrant> filteredCurrentGrants =
+            new ArrayList<RoleGrant>();
 
         // AA-filter
         for (final RoleGrant roleGrant : currentGrants) {
@@ -655,16 +659,16 @@ public class UserAccountHandler
         else if (limit == 0) {
             result =
                 renderer.renderGrants(new ArrayList<RoleGrant>(0),
-                    Integer.toString(0),
-                    Integer.toString(offset), Integer.toString(limit),
-                    parameters.getRecordPacking());
+                    Integer.toString(0), Integer.toString(offset),
+                    Integer.toString(limit), parameters.getRecordPacking());
         }
         else {
             final int needed = offset + limit;
             final List<RoleGrant> permittedRoleGrants =
                 new ArrayList<RoleGrant>();
 
-            final List<RoleGrant> tmpRoleGrants = dao.retrieveGrants(query, 0, 0, userGroupHandler);
+            final List<RoleGrant> tmpRoleGrants =
+                dao.retrieveGrants(query, 0, 0, userGroupHandler);
             if (tmpRoleGrants != null && !tmpRoleGrants.isEmpty()) {
                 final List<String> userIds = new ArrayList<String>();
                 final List<String> groupIds = new ArrayList<String>();
@@ -892,11 +896,11 @@ public class UserAccountHandler
             throw e;
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility.concatenate(MSG_UNEXPECTED_EXCEPTION, getClass()
-                    .getName(), ".deactivate: ", e.getClass().getName());
-            LOG.error(msg.toString(), e);
-            throw new SystemException(msg.toString(), e);
+            final String msg =
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
+                    + ".deactivate: " + e.getClass().getName();
+            LOG.error(msg, e);
+            throw new SystemException(msg, e);
         }
 
         // check ative flag and change value
@@ -972,11 +976,11 @@ public class UserAccountHandler
             throw e;
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility.concatenate(MSG_UNEXPECTED_EXCEPTION, getClass()
-                    .getName(), ".createGrant: ", e.getClass().getName());
-            LOG.error(msg.toString(), e);
-            throw new SystemException(msg.toString(), e);
+            final String msg =
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
+                    + ".createGrant: " + e.getClass().getName();
+            LOG.error(msg, e);
+            throw new SystemException(msg, e);
         }
 
         final Date creationDate = new Date(System.currentTimeMillis());
@@ -1014,8 +1018,10 @@ public class UserAccountHandler
                 throw new XmlCorruptedException(StringUtility.format(
                     MSG_GRANT_RESTRICTION_VIOLATED, objectId));
             }
-            final String objectType = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
-            String objectTitle = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TITLE);
+            final String objectType =
+                objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
+            String objectTitle =
+                objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TITLE);
 
             // check if objectType may be scope
             boolean checkOk = false;
@@ -1122,7 +1128,8 @@ public class UserAccountHandler
         final GrantStaxHandler grantHandler = new GrantStaxHandler(grant);
         sp.addHandler(grantHandler);
 
-        final RevokeStaxHandler revokeStaxHandler = new RevokeStaxHandler(grant, dao);
+        final RevokeStaxHandler revokeStaxHandler =
+            new RevokeStaxHandler(grant, dao);
         sp.addHandler(revokeStaxHandler);
 
         try {
@@ -1141,11 +1148,11 @@ public class UserAccountHandler
             throw e;
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility.concatenate(MSG_UNEXPECTED_EXCEPTION, getClass()
-                    .getName(), ".parse: ", e.getClass().getName());
-            LOG.error(msg.toString(), e);
-            throw new SystemException(msg.toString(), e);
+            final String msg =
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: "
+                    + e.getClass().getName();
+            LOG.error(msg, e);
+            throw new SystemException(msg, e);
         }
 
         dao.update(grant);
@@ -1310,7 +1317,8 @@ public class UserAccountHandler
     public List<UserLoginData> retrieveUserHandles(final String userId)
         throws UserAccountNotFoundException, SystemException {
 
-        final List<UserLoginData> ret = dao.retrieveUserLoginDataByUserId(userId);
+        final List<UserLoginData> ret =
+            dao.retrieveUserLoginDataByUserId(userId);
         if (ret == null || ret.isEmpty()) {
             assertUserAccount(userId, dao.retrieveUserAccountById(userId));
         }
@@ -1341,7 +1349,8 @@ public class UserAccountHandler
         // then remove groupId from filter
         castedFilter = fixCqlGroupFilter(castedFilter);
 
-        final SRURequestParameters parameters = new DbRequestParameters(castedFilter);
+        final SRURequestParameters parameters =
+            new DbRequestParameters(castedFilter);
 
         final String query = parameters.getQuery();
         final int limit = parameters.getLimit();
@@ -1371,9 +1380,10 @@ public class UserAccountHandler
             final int size = permittedUserAccounts.size();
             while (size <= currentLimit) {
 
-                final List<UserAccount> tmpUserAccounts = dao
+                final List<UserAccount> tmpUserAccounts =
+                    dao
                         .retrieveUserAccounts(query, currentOffset,
-                                currentLimit);
+                            currentLimit);
                 if (tmpUserAccounts == null || tmpUserAccounts.isEmpty()) {
                     break;
                 }
@@ -1401,8 +1411,7 @@ public class UserAccountHandler
                         while (userAccountIter.hasNext()) {
                             final UserAccount userAccount =
                                 userAccountIter.next();
-                            if (currentPermittedId.equals(userAccount
-                                .getId())) {
+                            if (currentPermittedId.equals(userAccount.getId())) {
                                 permittedUserAccounts.add(userAccount);
                                 ++permittedIndex;
                                 if (permittedIndex < numberPermitted) {
@@ -1461,7 +1470,8 @@ public class UserAccountHandler
         SystemException {
 
         Map<String, String[]> returnFilter = filter;
-        final Object[] queryPartsObject = filter.get(Constants.SRU_PARAMETER_QUERY);
+        final Object[] queryPartsObject =
+            filter.get(Constants.SRU_PARAMETER_QUERY);
         if (queryPartsObject != null) {
             final String[] queryParts = new String[queryPartsObject.length];
             for (int i = 0; i < queryPartsObject.length; i++) {
@@ -1471,7 +1481,8 @@ public class UserAccountHandler
             }
             boolean groupFilterFound = false;
             for (int i = 0; i < queryParts.length; i++) {
-                final Matcher matcher = GROUP_FILTER_PATTERN.matcher(queryParts[i]);
+                final Matcher matcher =
+                    GROUP_FILTER_PATTERN.matcher(queryParts[i]);
                 if (matcher.find()) {
                     groupFilterFound = true;
                     final Matcher groupFilterMatcher =
@@ -1490,9 +1501,11 @@ public class UserAccountHandler
                                 "non-supported relation in group-filter");
                         }
                         // get users for group
-                        final StringBuilder replacement = new StringBuilder(" (");
+                        final StringBuilder replacement =
+                            new StringBuilder(" (");
                         try {
-                            final Set<String> userIds = retrieveUsersForGroup(groupFilterMatcher
+                            final Set<String> userIds =
+                                retrieveUsersForGroup(groupFilterMatcher
                                     .group(6));
                             // write user-cql-query
                             // and replace group-expression with it.
@@ -1532,7 +1545,8 @@ public class UserAccountHandler
                 }
             }
             if (groupFilterFound) {
-                final Map<String, String[]> filter1 = new HashMap<String, String[]>();
+                final Map<String, String[]> filter1 =
+                    new HashMap<String, String[]>();
                 for (final Entry<String, String[]> entry : filter.entrySet()) {
                     if (entry.getValue() != null) {
                         // noinspection RedundantCast
@@ -1669,7 +1683,8 @@ public class UserAccountHandler
         throws SystemException {
 
         List<String> addableList = totalList;
-        final List<String> orgUnitIds = tripleStoreUtility.getChildren(orgUnitId);
+        final List<String> orgUnitIds =
+            tripleStoreUtility.getChildren(orgUnitId);
         if (orgUnitIds != null && !orgUnitIds.isEmpty()) {
             addableList.addAll(orgUnitIds);
             for (final String childOrgUnitId : orgUnitIds) {
@@ -1718,8 +1733,6 @@ public class UserAccountHandler
         LOG.debug("business: Returning user details");
         return ret;
     }
-
-
 
     /**
      * Gets the grant for the provided user id and grant id.
@@ -1776,7 +1789,8 @@ public class UserAccountHandler
         throws SqlDatabaseSystemException, UserAccountNotFoundException,
         UserAttributeNotFoundException, ReadonlyElementViolationException {
 
-        final UserAttribute attribute = dao.retrieveAttribute(userId, attributeId);
+        final UserAttribute attribute =
+            dao.retrieveAttribute(userId, attributeId);
         if (attribute == null) {
             if (dao.retrieveUserAccountById(userId) == null) {
                 throw new UserAccountNotFoundException();
@@ -1898,7 +1912,8 @@ public class UserAccountHandler
         throws SqlDatabaseSystemException {
 
         final List<RoleGrant> grants = dao.retrieveGrantsByUserId(userId);
-        final List<RoleGrant> currentGrants = new ArrayList<RoleGrant>(grants.size());
+        final List<RoleGrant> currentGrants =
+            new ArrayList<RoleGrant>(grants.size());
         if (!grants.isEmpty()) {
             for (final RoleGrant grant : grants) {
                 if (grant.getRevocationDate() == null) {
@@ -2115,8 +2130,6 @@ public class UserAccountHandler
         this.userGroupHandler = userGroupHandler;
     }
 
-
-
     /**
      * See Interface for functional description.
      * 
@@ -2128,8 +2141,6 @@ public class UserAccountHandler
 
         LOG.debug("Properties set");
     }
-
-
 
     /**
      * See Interface for functional description.
@@ -2339,11 +2350,11 @@ public class UserAccountHandler
             throw e;
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility.concatenate(MSG_UNEXPECTED_EXCEPTION, getClass()
-                    .getName(), ".createPreference: ", e.getClass().getName());
-            LOG.error(msg.toString(), e);
-            throw new SystemException(msg.toString(), e);
+            final String msg =
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
+                    + ".createPreference: " + e.getClass().getName();
+            LOG.error(msg, e);
+            throw new SystemException(msg, e);
         }
 
         final Map<String, String> preferences = uprh.getPreferences();
@@ -2480,11 +2491,11 @@ public class UserAccountHandler
             throw e;
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility.concatenate(MSG_UNEXPECTED_EXCEPTION, getClass()
-                    .getName(), ".updatePreference: ", e.getClass().getName());
-            LOG.error(msg.toString(), e);
-            throw new SystemException(msg.toString(), e);
+            final String msg =
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
+                    + ".updatePreference: " + e.getClass().getName();
+            LOG.error(msg, e);
+            throw new SystemException(msg, e);
         }
 
         // delete all existing preferences
@@ -2619,7 +2630,8 @@ public class UserAccountHandler
     public String retrieveAttributes(final String userId)
         throws UserAccountNotFoundException, SystemException {
         final UserAccount userAccount = retrieveUserAccountById(userId);
-        final Set<UserAttribute> currentAttributes = userAccount.getUserAttributesByUserId();
+        final Set<UserAttribute> currentAttributes =
+            userAccount.getUserAttributesByUserId();
         return renderer.renderAttributes(userAccount, currentAttributes);
     }
 
@@ -2649,7 +2661,8 @@ public class UserAccountHandler
         final Set<UserAttribute> currentAttributes =
             userAccount.getUserAttributesByUserId();
 
-        final Set<UserAttribute> selectedAttributes = new HashSet<UserAttribute>();
+        final Set<UserAttribute> selectedAttributes =
+            new HashSet<UserAttribute>();
         if (currentAttributes != null) {
             for (final UserAttribute attribute : currentAttributes) {
                 final String attributeName = attribute.getName();
@@ -2824,7 +2837,8 @@ public class UserAccountHandler
         final Map<String, String[]> parameters)
         throws InvalidSearchQueryException, SystemException {
         final Utility utility = Utility.getInstance();
-        final Set<ResourceType> resourceTypes = EnumSet.noneOf(ResourceType.class);
+        final Set<ResourceType> resourceTypes =
+            EnumSet.noneOf(ResourceType.class);
         final String[] types = parameters.get("index");
 
         if (types != null) {

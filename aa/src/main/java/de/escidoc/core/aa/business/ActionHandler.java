@@ -111,12 +111,11 @@ public class ActionHandler implements ActionHandlerInterface {
             throw new XmlCorruptedException(e);
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility.concatenate("Unexpected exception in ",
-                    getClass().getName(), ".createUnsecuredActions: ", e
-                        .getClass().getName());
-            log.error(msg.toString(), e);
-            throw new WebserverSystemException(msg.toString(), e);
+            final String msg =
+                "Unexpected exception in " + getClass().getName()
+                    + ".createUnsecuredActions: " + e.getClass().getName();
+            log.error(msg, e);
+            throw new WebserverSystemException(msg, e);
         }
 
         UnsecuredActionList unsecuredActionList =

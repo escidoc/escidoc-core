@@ -140,7 +140,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
     private PolicyDecisionPointInterface pdp;
 
-
+    private static final String MSG_UNEXPECTED_EXCEPTION =
+        "Unexpected exception in ";
 
     /**
      * See Interface for functional description.
@@ -349,12 +350,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             throw e;
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility
-                    .concatenate("Unexpected exception in ", getClass()
-                        .getName(), ".activate: ", e.getClass().getName());
-            LOG.error(msg.toString(), e);
-            throw new SystemException(msg.toString(), e);
+            final String msg =
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
+                    + ".activate: " + e.getClass().getName();
+            LOG.error(msg, e);
+            throw new SystemException(msg, e);
         }
 
         // check active flag and change value
@@ -426,12 +426,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             throw e;
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility
-                    .concatenate("Unexpected exception in ", getClass()
-                        .getName(), ".activate: ", e.getClass().getName());
-            LOG.error(msg.toString(), e);
-            throw new SystemException(msg.toString(), e);
+            final String msg =
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
+                    + ".activate: " + e.getClass().getName();
+            LOG.error(msg, e);
+            throw new SystemException(msg, e);
         }
 
         // check active flag and change value
@@ -514,13 +513,12 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             throw e;
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility.concatenate("Unexpected exception in ",
-                    getClass().getName(), ".createGrant: ", e
-                        .getClass().getName());
+            final String msg =
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName()
+                    + ".createGrant: " + e.getClass().getName();
 
-            LOG.error(msg.toString(), e);
-            throw new SystemException(msg.toString(), e);
+            LOG.error(msg, e);
+            throw new SystemException(msg, e);
         }
 
         final Date creationDate = new Date(System.currentTimeMillis());
@@ -557,8 +555,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 throw new XmlCorruptedException(StringUtility.format(
                     MSG_GRANT_RESTRICTION_VIOLATED, objectId));
             }
-            final String objectType = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
-            String objectTitle = objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TITLE);
+            final String objectType =
+                objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TYPE);
+            String objectTitle =
+                objectAttributes.get(ObjectAttributeResolver.ATTR_OBJECT_TITLE);
 
             // check if objectType may be scope
             boolean checkOk = false;
@@ -682,7 +682,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
         final List<String[]> selectors = groupHandler.getGroupSelectors();
         final Set<UserGroupMember> existingMembers = userGroup.getMembers();
-        final Collection<UserGroupMember> newMembers = new HashSet<UserGroupMember>();
+        final Collection<UserGroupMember> newMembers =
+            new HashSet<UserGroupMember>();
 
         for (final String[] selector : selectors) {
             final UserGroupMember member = new UserGroupMember(userGroup);
@@ -809,7 +810,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         catch (Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        final List<String> membersToRemove = groupHandler.getMemberIdsToRemove();
+        final List<String> membersToRemove =
+            groupHandler.getMemberIdsToRemove();
         final Set<UserGroupMember> existingMembers = userGroup.getMembers();
 
         for (final String memberId : membersToRemove) {
@@ -851,7 +853,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         // then remove userId from filter
         castedFilter = fixCqlUserFilter(castedFilter);
 
-        final SRURequestParameters parameters = new DbRequestParameters(castedFilter);
+        final SRURequestParameters parameters =
+            new DbRequestParameters(castedFilter);
 
         final String query = parameters.getQuery();
         final int limit = parameters.getLimit();
@@ -881,7 +884,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
             while (size <= currentLimit) {
 
-                final List<UserGroup> tmpUserGroups = userGroupDao.retrieveUserGroups(query, currentOffset,
+                final List<UserGroup> tmpUserGroups =
+                    userGroupDao.retrieveUserGroups(query, currentOffset,
                         currentLimit);
                 if (tmpUserGroups == null || tmpUserGroups.isEmpty()) {
                     break;
@@ -894,8 +898,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
                 try {
                     final List<String> tmpPermitted =
-                        pdp.evaluateRetrieve(XmlUtility.NAME_USER_GROUP,
-                            ids);
+                        pdp.evaluateRetrieve(XmlUtility.NAME_USER_GROUP, ids);
                     final int numberPermitted = tmpPermitted.size();
                     if (numberPermitted == 0) {
                         break;
@@ -905,8 +908,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                         String currentPermittedId =
                             tmpPermitted.get(permittedIndex);
                         for (final UserGroup userGroup : tmpUserGroups) {
-                            if (currentPermittedId
-                                .equals(userGroup.getId())) {
+                            if (currentPermittedId.equals(userGroup.getId())) {
                                 permittedUserGroups.add(userGroup);
                                 ++permittedIndex;
                                 if (permittedIndex < numberPermitted) {
@@ -966,7 +968,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         final Map<String, String[]> filter) throws InvalidSearchQueryException,
         SystemException {
         Map<String, String[]> returnFilter = filter;
-        final Object[] queryPartsObject = filter.get(Constants.SRU_PARAMETER_QUERY);
+        final Object[] queryPartsObject =
+            filter.get(Constants.SRU_PARAMETER_QUERY);
         if (queryPartsObject != null) {
             final String[] queryParts = new String[queryPartsObject.length];
             for (int i = 0; i < queryPartsObject.length; i++) {
@@ -976,7 +979,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             }
             boolean userFilterFound = false;
             for (int i = 0; i < queryParts.length; i++) {
-                final Matcher matcher = USER_FILTER_PATTERN.matcher(queryParts[i]);
+                final Matcher matcher =
+                    USER_FILTER_PATTERN.matcher(queryParts[i]);
                 if (matcher.find()) {
                     userFilterFound = true;
                     final Matcher userFilterMatcher =
@@ -994,10 +998,12 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                             throw new InvalidSearchQueryException(
                                 "non-supported relation in user-filter");
                         }
-                        final StringBuilder replacement = new StringBuilder(" (");
+                        final StringBuilder replacement =
+                            new StringBuilder(" (");
                         try {
                             // get groups for user
-                            final Set<String> groupIds = retrieveGroupsForUser(userFilterMatcher
+                            final Set<String> groupIds =
+                                retrieveGroupsForUser(userFilterMatcher
                                     .group(6));
 
                             // write group-cql-query
@@ -1038,7 +1044,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 }
             }
             if (userFilterFound) {
-                final Map<String, String[]> filter1 = new HashMap<String, String[]>();
+                final Map<String, String[]> filter1 =
+                    new HashMap<String, String[]>();
                 for (final Entry<String, String[]> entry : filter.entrySet()) {
                     if (entry.getValue() != null) {
                         // noinspection RedundantCast
@@ -1093,7 +1100,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         boolean proceed = true;
         while (proceed) {
             final Collection<String> superMembers = new HashSet<String>();
-            final List<UserGroupMember> userGroupMembers = userGroupDao.retrieveUserGroupMembers(criteria);
+            final List<UserGroupMember> userGroupMembers =
+                userGroupDao.retrieveUserGroupMembers(criteria);
             if (userGroupMembers != null && !userGroupMembers.isEmpty()) {
                 for (final UserGroupMember userGroupMember : userGroupMembers) {
                     final String id = userGroupMember.getUserGroup().getId();
@@ -1155,7 +1163,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         // may not return null, so return empty list!!
         Set<String> userGroups = new HashSet<String>();
         // Try getting the userAccount
-        final UserAccount userAccount = userAccountDao.retrieveUserAccount(userId);
+        final UserAccount userAccount =
+            userAccountDao.retrieveUserAccount(userId);
         if (userAccount == null) {
             throw new UserAccountNotFoundException(StringUtility.format(
                 MSG_USER_NOT_FOUND_BY_ID, userId));
@@ -1181,7 +1190,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         catch (IOException e) {
             throw new SystemException(e);
         }
-        final Set<UserAttribute> attributes = userAccount.getUserAttributesByUserId();
+        final Set<UserAttribute> attributes =
+            userAccount.getUserAttributesByUserId();
 
         final Map<String, Set<UserGroupMember>> groupMemberMap =
             retrieveGroupMembersWithAttributeSelector();
@@ -1198,7 +1208,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                     if (ouAttributeName != null
                         && ouAttributeName.length() != 0
                         && attribute.getName().equals(ouAttributeName)) {
-                        final List<String> initialList = new ArrayList<String>();
+                        final List<String> initialList =
+                            new ArrayList<String>();
                         initialList.add(attribute.getValue());
                         pathList =
                             getOrgUnitPathList(attribute.getValue(),
@@ -1373,7 +1384,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 }
                 if (superMembers.isEmpty()) {
                     proceed = false;
-                } else {
+                }
+                else {
                     criteria.put(Constants.FILTER_PATH_VALUE, superMembers);
                 }
             }
@@ -1538,9 +1550,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 MSG_GROUP_NOT_FOUND_BY_ID, groupId));
         }
         final List<RoleGrant> currentGrants = fetchCurrentGrants(groupId);
-        final HashMap<String, RoleGrant> grantsMap = new HashMap<String, RoleGrant>();
+        final HashMap<String, RoleGrant> grantsMap =
+            new HashMap<String, RoleGrant>();
         final List<Object[]> argumentList = new ArrayList<Object[]>();
-        final List<RoleGrant> filteredCurrentGrants = new ArrayList<RoleGrant>();
+        final List<RoleGrant> filteredCurrentGrants =
+            new ArrayList<RoleGrant>();
 
         // AA-filter
         for (final RoleGrant roleGrant : currentGrants) {
@@ -1686,7 +1700,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         final de.escidoc.core.common.util.xml.stax.StaxParser sp =
             new de.escidoc.core.common.util.xml.stax.StaxParser(
                 XmlUtility.NAME_PARAM);
-        final GrantStaxHandler grantHandler = new GrantStaxHandler(grantToRevoke);
+        final GrantStaxHandler grantHandler =
+            new GrantStaxHandler(grantToRevoke);
 
         sp.addHandler(grantHandler);
 
@@ -1708,11 +1723,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             throw e;
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility.concatenate("Unexpected exception in ",
-                    getClass().getName(), ".parse: ", e.getClass().getName());
-            LOG.error(msg.toString(), e);
-            throw new SystemException(msg.toString(), e);
+            final String msg =
+                MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: "
+                    + e.getClass().getName();
+            LOG.error(msg, e);
+            throw new SystemException(msg, e);
         }
         userGroupDao.update(grantToRevoke);
         sendUserGroupUpdateEvent(groupId);
@@ -1849,8 +1864,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         sendUserGroupUpdateEvent(groupId);
     }
 
-
-
     /**
      * Fetches the current grants of the user group identified by the provided
      * id.
@@ -1970,10 +1983,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             if (checkLabelUnique(label)) {
                 changed = true;
                 userGroup.setLabel(label);
-            } else {
+            }
+            else {
                 if (oldLabel == null || !oldLabel.equals(label)) {
                     final String message =
-                            "The provided user group label is not unique.";
+                        "The provided user group label is not unique.";
                     LOG.error(message);
                     throw new UniqueConstraintViolationException(message);
                 }

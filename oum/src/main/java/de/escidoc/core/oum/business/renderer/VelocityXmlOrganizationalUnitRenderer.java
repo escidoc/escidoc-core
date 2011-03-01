@@ -614,9 +614,8 @@ public class VelocityXmlOrganizationalUnitRenderer
                     mdRecordValues.put(
                         XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
                         XmlTemplateProvider.FALSE);
-                    mdRecordsContent =
-                        StringUtility.concatenate(mdRecordsContent,
-                            MetadataRecordsXmlProvider
+                    mdRecordsContent.append(mdRecordsContent);
+                    mdRecordsContent.append(MetadataRecordsXmlProvider
                                 .getInstance().getMdRecordXml(mdRecordValues));
                 }
             }

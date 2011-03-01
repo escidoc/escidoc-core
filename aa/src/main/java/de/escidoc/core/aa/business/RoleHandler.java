@@ -156,11 +156,11 @@ public class RoleHandler implements RoleHandlerInterface {
             throw e;
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility.concatenate("Unexpected exception in ",
-                    getClass().getName(), ".create: ", e.getClass().getName());
-            log.error(msg.toString(), e);
-            throw new WebserverSystemException(msg.toString(), e);
+            final String msg =
+                "Unexpected exception in " + getClass().getName() + ".create: "
+                    + e.getClass().getName();
+            log.error(msg, e);
+            throw new WebserverSystemException(msg, e);
         }
 
         // check if policy is parsable by XACML-Parser
@@ -294,11 +294,11 @@ public class RoleHandler implements RoleHandlerInterface {
             throw new XmlCorruptedException(e);
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility.concatenate("Unexpected exception in ",
-                    getClass().getName(), ".update: ", e.getClass().getName());
-            log.error(msg.toString(), e);
-            throw new WebserverSystemException(msg.toString(), e);
+            final String msg =
+                "Unexpected exception in " + getClass().getName() + ".update: "
+                    + e.getClass().getName();
+            log.error(msg, e);
+            throw new WebserverSystemException(msg, e);
         }
         // check if policy is parseable by XACML-Parser
         try {
@@ -351,11 +351,10 @@ public class RoleHandler implements RoleHandlerInterface {
             throw e;
         }
         catch (Exception e) {
-            final StringBuffer msg =
-                StringUtility.concatenate("Unexpected exception in ",
-                    getClass().getName(), ".update: ", e.getClass().getName());
-            log.error(msg.toString(), e);
-            throw new WebserverSystemException(msg.toString(), e);
+            final String msg = "Unexpected exception in " +
+                    getClass().getName() + ".update: "+ e.getClass().getName();
+            log.error(msg, e);
+            throw new WebserverSystemException(msg, e);
         }
 
         setModificationValues(role);

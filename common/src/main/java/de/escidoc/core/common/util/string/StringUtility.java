@@ -90,23 +90,6 @@ public final class StringUtility {
     }
 
     /**
-     * Concatenates the provided values.
-     *
-     * @param parts
-     *            The values to concatenate.
-     * @return Returns the created StringBuffer object with content
-     *         "firstPartsecondPartthirdPartfourthPart".
-     */
-    @Deprecated
-    public static StringBuffer concatenate(final Object... parts) {
-        final StringBuffer ret = new StringBuffer();
-        for (final Object part : parts) {
-            ret.append(part);
-        }
-        return ret;
-    }
-
-    /**
      * Concatenates the first value with a colon and then with the second value.
      * 
      * @param firstPart
