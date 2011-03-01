@@ -221,24 +221,20 @@ public final class IndexerResourceCache {
      * @throws SystemException
      *             e
      */
-    public void replaceResource(
-        final String identifier, 
-        final Object resource) throws SystemException {
+    public void replaceResource(final String identifier, final Object resource) throws SystemException {
         final String href = getHref(identifier);
-        synchronized (resources) {
-            final Collection<String> keys = new ArrayList<String>();
-            for (final Object key : resources.getKeys()) {
-                String keyAsString = (String) key;
-                if (keyAsString.startsWith(href)) {
-                    keys.add(keyAsString);
-                }
+        final Collection<String> keys = new ArrayList<String>();
+        for (final Object key : resources.getKeys()) {
+            String keyAsString = (String) key;
+            if (keyAsString.startsWith(href)) {
+                keys.add(keyAsString);
             }
-            for (final String key : keys) {
-                resources.remove(key);
-            }
-            final Element element = new Element(href, resource);
-            resources.put(element);
         }
+        for (final String key : keys) {
+            resources.remove(key);
+        }
+        final Element element = new Element(href, resource);
+        resources.put(element);
     }
 
     /**
