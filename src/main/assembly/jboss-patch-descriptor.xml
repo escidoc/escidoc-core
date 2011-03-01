@@ -7,7 +7,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}/data/jboss</directory>
+      <directory>${project.basedir}/data/jboss/*</directory>
       <outputDirectory>/jboss-patch-${project.version}</outputDirectory>
     </fileSet>
   </fileSets>
