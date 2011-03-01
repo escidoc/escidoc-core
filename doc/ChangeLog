@@ -68,6 +68,10 @@ changes since version 1.2
     	-Deprecate URI-Like Filter-Names
     	-Surround object-xml in SRW-Search-Result of Filters with element search-result-record
     	
+    March 2011:
+    	-remove Interface-Method UserGrouphandler.retrieveGroupsForUser 
+    	 (use filter-method with filter /structural-relations/user/id)
+    	
 changes since version 1.1
 --------------------------
     October 2009:
