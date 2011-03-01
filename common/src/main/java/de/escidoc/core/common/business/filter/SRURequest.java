@@ -178,7 +178,7 @@ public class SRURequest {
         final Writer output, final ResourceType[] resourceTypes,
         final SRURequestParameters parameters) throws WebserverSystemException {
         searchRetrieve(output, resourceTypes, parameters.getQuery(),
-            parameters.getLimit(), parameters.getOffset(),
+            parameters.getMaximumRecords(), parameters.getStartRecord(),
             parameters.getUser(), parameters.getRole(),
             parameters.getRecordPacking());
     }

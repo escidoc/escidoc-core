@@ -37,10 +37,10 @@ import java.util.Map;
  * @author SCHE
  */
 public class DbRequestParameters extends SRURequestParameters {
-    public static final int DEFAULT_LIMIT = 20;
+    public static final int DEFAULT_MAXIMUM_RECORDS = 20;
 
     // SQL starts counting from 0
-    public static final int DEFAULT_OFFSET = 0;
+    public static final int DEFAULT_START_RECORD = 0;
 
     /**
      * Create a new parameters object from the given map.
@@ -53,22 +53,22 @@ public class DbRequestParameters extends SRURequestParameters {
     }
 
     /**
-     * Get the default search limit.
+     * Get the default maximum records value for search.
      * 
-     * @return default search limit
+     * @return default maximum records value for search
      */
     @Override
-    protected int getDefaultLimit() {
-        return DEFAULT_LIMIT;
+    protected int getDefaultMaximumRecords() {
+        return DEFAULT_MAXIMUM_RECORDS;
     }
 
     /**
-     * Get the default search offset.
+     * Get the default start record for search.
      * 
-     * @return default search offset
+     * @return default start record for search
      */
     @Override
-    protected int getDefaultOffset() {
-        return DEFAULT_OFFSET;
+    protected int getDefaultStartRecord() {
+        return DEFAULT_START_RECORD;
     }
 }

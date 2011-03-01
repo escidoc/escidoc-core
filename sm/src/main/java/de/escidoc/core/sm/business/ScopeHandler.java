@@ -204,8 +204,8 @@ public class ScopeHandler implements ScopeHandlerInterface {
         final SRURequestParameters params =
             new DbRequestParameters(parameters);
         final String query = params.getQuery();
-        final int limit = params.getLimit();
-        final int offset = params.getOffset();
+        final int limit = params.getMaximumRecords();
+        final int offset = params.getStartRecord();
 
         if (params.isExplain()) {
             final Map<String, Object> values = new HashMap<String, Object>();

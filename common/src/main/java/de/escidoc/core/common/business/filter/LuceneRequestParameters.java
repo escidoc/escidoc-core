@@ -37,11 +37,11 @@ import java.util.Map;
  * @author SCHE
  */
 public class LuceneRequestParameters extends SRURequestParameters {
-    // Do not set a default search limit on client side.
-    public static final int DEFAULT_LIMIT = -1;
+    // Do not set a default value for maximum records on client side.
+    public static final int DEFAULT_MAXIMUM_RECORDS = -1;
 
     // Lucene starts counting from 1
-    public static final int DEFAULT_OFFSET = 1;
+    public static final int DEFAULT_START_RECORD = 1;
 
     /**
      * Create a new parameters object from the given map.
@@ -54,22 +54,22 @@ public class LuceneRequestParameters extends SRURequestParameters {
     }
 
     /**
-     * Get the default search limit.
+     * Get the default maximum records value for search.
      * 
-     * @return default search limit
+     * @return default maximum value for search
      */
     @Override
-    protected int getDefaultLimit() {
-        return DEFAULT_LIMIT;
+    protected int getDefaultMaximumRecords() {
+        return DEFAULT_MAXIMUM_RECORDS;
     }
 
     /**
-     * Get the default search offset.
+     * Get the default start record for search.
      * 
-     * @return default search offset
+     * @return default start record for search
      */
     @Override
-    protected int getDefaultOffset() {
-        return DEFAULT_OFFSET;
+    protected int getDefaultStartRecord() {
+        return DEFAULT_START_RECORD;
     }
 }

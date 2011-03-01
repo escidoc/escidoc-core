@@ -40,9 +40,9 @@ import java.util.Map;
 public abstract class SRURequestParameters {
     private final String query;
 
-    private final int limit;
+    private final int maximumRecords;
 
-    private final int offset;
+    private final int startRecord;
 
     private final boolean explain;
 
@@ -61,18 +61,18 @@ public abstract class SRURequestParameters {
     public SRURequestParameters(final Map<String, String[]> parameters) {
         query =
             getStringParameter(parameters.get(Constants.SRU_PARAMETER_QUERY));
-        limit =
+        maximumRecords =
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_MAXIMUM_RECORDS),
-                getDefaultLimit());
-        final int givenOffset =
+                getDefaultMaximumRecords());
+        final int givenStartRecord =
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_START_RECORD), -1);
-        if (givenOffset > -1) {
-            offset = givenOffset + getDefaultOffset() - 1;
+        if (givenStartRecord > -1) {
+            startRecord = givenStartRecord + getDefaultStartRecord() - 1;
         }
         else {
-            offset = getDefaultOffset();
+            startRecord = getDefaultStartRecord();
         }
         user = getStringParameter(parameters.get(Constants.SRU_PARAMETER_USER));
         role = getStringParameter(parameters.get(Constants.SRU_PARAMETER_ROLE));
@@ -96,12 +96,12 @@ public abstract class SRURequestParameters {
         return query;
     }
 
-    public int getLimit() {
-        return limit;
+    public int getMaximumRecords() {
+        return maximumRecords;
     }
 
-    public int getOffset() {
-        return offset;
+    public int getStartRecord() {
+        return startRecord;
     }
 
     public boolean isExplain() {
@@ -121,18 +121,18 @@ public abstract class SRURequestParameters {
     }
 
     /**
-     * Read the search limit from properties.
+     * Get the default maximum records value for search.
      * 
-     * @return default search limit
+     * @return default maximum records value for search
      */
-    protected abstract int getDefaultLimit();
+    protected abstract int getDefaultMaximumRecords();
 
     /**
-     * Get the default search offset.
+     * Get the default start record for search.
      * 
-     * @return default search offset
+     * @return default start record for search
      */
-    protected abstract int getDefaultOffset();
+    protected abstract int getDefaultStartRecord();
 
     /**
      * Get the first parameter from the given array and convert it into an

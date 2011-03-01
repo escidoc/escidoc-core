@@ -386,8 +386,8 @@ public class RoleHandler implements RoleHandlerInterface {
         throws InvalidSearchQueryException, SystemException {
         final SRURequestParameters parameters = new DbRequestParameters(filter);
         final String query = parameters.getQuery();
-        final int limit = parameters.getLimit();
-        final int offset = parameters.getOffset();
+        final int limit = parameters.getMaximumRecords();
+        final int offset = parameters.getStartRecord();
         final boolean explain = parameters.isExplain();
 
         final String result;
