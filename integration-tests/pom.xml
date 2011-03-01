@@ -354,9 +354,9 @@
 					</execution>
 					<execution>
 						<id>compile-sources</id>
-						<phase>compile</phase>
+						<phase>test-compile</phase>
 						<goals>
-							<goal>compile</goal>
+							<goal>testCompile</goal>
 						</goals>
 						<configuration>
 							<excludes>
