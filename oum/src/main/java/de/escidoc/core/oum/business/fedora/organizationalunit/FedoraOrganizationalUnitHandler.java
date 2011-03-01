@@ -357,8 +357,8 @@ public class FedoraOrganizationalUnitHandler
         sp.addHandler(predecessorsHandler);
 
         final OrganizationalUnitMetadataHandler metadataHandler =
-            new OrganizationalUnitMetadataHandler(sp, '/'
-                + XmlUtility.NAME_ORGANIZATIONAL_UNIT);
+            new OrganizationalUnitMetadataHandler(sp,
+                '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT);
         sp.addHandler(metadataHandler);
         final MultipleExtractor2 me =
             createMultipleExtractor(sp, metadataHandler.getMdRecordPath());
@@ -434,7 +434,8 @@ public class FedoraOrganizationalUnitHandler
         }
         // reload all predecessor OUs in the DB cache to update the property
         // "successor"
-        for (final Predecessor predecessor : predecessorsHandler.getPredecessors()) {
+        for (final Predecessor predecessor : predecessorsHandler
+            .getPredecessors()) {
             fireOuModified(predecessor.getObjid(),
                 retrieve(predecessor.getObjid()));
         }
@@ -537,7 +538,8 @@ public class FedoraOrganizationalUnitHandler
         OrganizationalUnitHierarchyViolationException, InvalidStatusException {
 
         setOrganizationalUnit(id);
-        final List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
+        final List<String> parentsBeforeUpdate =
+            getOrganizationalUnit().getParents();
         final List<Predecessor> predecessorsBeforeUpdate =
             getOrganizationalUnit().getPredecessors();
 
@@ -550,8 +552,8 @@ public class FedoraOrganizationalUnitHandler
         sp.addHandler(optimisticLockingHandler);
 
         final OrganizationalUnitMetadataHandler metadataHandler =
-            new OrganizationalUnitMetadataHandler(sp, '/'
-                + XmlUtility.NAME_ORGANIZATIONAL_UNIT);
+            new OrganizationalUnitMetadataHandler(sp,
+                '/' + XmlUtility.NAME_ORGANIZATIONAL_UNIT);
         sp.addHandler(metadataHandler);
         final MultipleExtractor2 me =
             createMultipleExtractor(sp, metadataHandler.getMdRecordPath());
@@ -817,7 +819,8 @@ public class FedoraOrganizationalUnitHandler
         InvalidStatusException {
 
         setOrganizationalUnit(id);
-        final List<String> parentsBeforeUpdate = getOrganizationalUnit().getParents();
+        final List<String> parentsBeforeUpdate =
+            getOrganizationalUnit().getParents();
         final String startTimeStamp =
             getOrganizationalUnit().getLastFedoraModificationDate();
         final StaxParser sp = new StaxParser();
@@ -1080,7 +1083,7 @@ public class FedoraOrganizationalUnitHandler
         Utility.getInstance().checkIsOrganizationalUnit(id);
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, "\"/parents/parent/id\"="
-                + id, LuceneRequestParameters.DEFAULT_LIMIT,
+                + id, LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS,
             LuceneRequestParameters.DEFAULT_START_RECORD, null, null, null);
         return result.toString();
     }
@@ -1115,7 +1118,7 @@ public class FedoraOrganizationalUnitHandler
         }
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, filter.toString(),
-            LuceneRequestParameters.DEFAULT_LIMIT,
+            LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS,
             LuceneRequestParameters.DEFAULT_START_RECORD, null, null, null);
         return result.toString();
     }
@@ -1269,8 +1272,8 @@ public class FedoraOrganizationalUnitHandler
 
         setOrganizationalUnit(id);
         filterParams.put("query", new String[] { "\"/subject/id\"="
-            + getOrganizationalUnit().getId() + " or "
-            + "\"/object/id\"=" + getOrganizationalUnit().getId() });
+            + getOrganizationalUnit().getId() + " or " + "\"/object/id\"="
+            + getOrganizationalUnit().getId() });
 
         final String result;
         try {
