@@ -69,7 +69,7 @@ public class ItemContentURLTest extends ItemTestBase {
 
     private Document theItemDoc = null;
 
-    private final String testUploadFile = "UploadTest.zip";
+    private final String testUploadFile = "testDocuments/UploadTest.zip";
 
     private final String testUploadFileMimeType = "application/zip";
 
@@ -358,35 +358,6 @@ public class ItemContentURLTest extends ItemTestBase {
         return url;
     }
 
-    /**
-     * Download file an save as temp.
-     * 
-     * @param url
-     *            URL to file
-     * @return File handler for temporary file.
-     */
-    private File downloadTempFile(final URL url) throws IOException, java.io.FileNotFoundException {
-
-        java.io.BufferedInputStream in =
-            new java.io.BufferedInputStream(url.openStream());
-
-        File temp = File.createTempFile("escidoc-core-testfile", ".tmp");
-        temp.deleteOnExit();
-
-        FileOutputStream fos = new FileOutputStream(temp);
-        BufferedOutputStream bout = new BufferedOutputStream(fos, 1024);
-
-        byte[] data = new byte[1024];
-        int x = 0;
-        while ((x = in.read(data, 0, 1024)) >= 0) {
-            bout.write(data, 0, x);
-        }
-
-        bout.close();
-        in.close();
-
-        return temp;
-    }
 
     /**
      * Decline create an item with a component with content referred by Fedora

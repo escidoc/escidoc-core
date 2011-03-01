@@ -4,6 +4,7 @@ import de.escidoc.core.common.exceptions.remote.application.invalid.TmeException
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.security.client.PWCallback;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,14 +12,15 @@ import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import java.io.File;
 import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
 
 /**
  * 
- * @author 
- *
+ * @author
+ * 
  */
 @RunWith(value = Parameterized.class)
 public class JhoveTest extends JhoveTestBase {
@@ -58,9 +60,11 @@ public class JhoveTest extends JhoveTestBase {
     public void testJhoveEtm1() throws Exception {
 
         // prepare item with pdf content
-        URL file =
-            uploadFileToStagingServlet("ges-eSciDoc-article.pdf",
-                "application/pdf");
+        File f =
+            downloadTempFile(new URL(
+                properties.getProperty(PropertiesProvider.TESTDATA_URL) + "/"
+                    + "ges-eSciDoc-article.pdf"));
+        URL file = uploadFileToStagingServlet(f, "application/pdf");
 
         Document template =
             getTemplateAsDocument(TEMPLATE_TME_PATH, "request.xml");
@@ -71,9 +75,9 @@ public class JhoveTest extends JhoveTestBase {
         String result = extract(request);
         Document resultDoc = getDocument(result);
         selectSingleNodeAsserted(resultDoc, "/jhove");
-        assertJhoveRepInfo(resultDoc, "http://localhost:8080/images/escidoc-logo.jpg",
-            "JPEG-hul", "1.2", "5304", "JPEG", "1.02", "Well-Formed and valid",
-            "JPEG-hul");
+        assertJhoveRepInfo(resultDoc,
+            "http://localhost:8080/images/escidoc-logo.jpg", "JPEG-hul", "1.2",
+            "5304", "JPEG", "1.02", "Well-Formed and valid", "JPEG-hul");
         assertJhoveRepInfo(resultDoc, file.toString(), "PDF-hul", "1.7",
             "129361", "PDF", "1.4", "Well-Formed and valid", "PDF-hul");
         assertEquals(
@@ -211,13 +215,16 @@ public class JhoveTest extends JhoveTestBase {
         final String repInfoXpath = "/jhove/repInfo[@uri=\"" + uri + "\"]";
         selectSingleNodeAsserted(node, repInfoXpath);
 
-        assertEquals("ReportingModule not as expected! ", reportingModule,
+        assertEquals(
+            "ReportingModule not as expected! ",
+            reportingModule,
             selectSingleNodeAsserted(
                 node,
                 repInfoXpath + "/reportingModule[@release=\""
                     + reportingModuleRelease + "\"]").getTextContent());
-        assertEquals("Size not as expected! ", size, selectSingleNodeAsserted(
-            node, repInfoXpath + "/size").getTextContent());
+        assertEquals("Size not as expected! ", size,
+            selectSingleNodeAsserted(node, repInfoXpath + "/size")
+                .getTextContent());
         assertEquals("Format not as expected! ", format,
             selectSingleNodeAsserted(node, repInfoXpath + "/format")
                 .getTextContent());

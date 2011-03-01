@@ -51,6 +51,7 @@ import de.escidoc.core.test.common.client.servlet.sm.ReportDefinitionClient;
 import de.escidoc.core.test.common.client.servlet.sm.ScopeClient;
 import de.escidoc.core.test.common.client.servlet.sm.StatisticDataClient;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import de.escidoc.core.test.sm.SmTestBase;
@@ -66,7 +67,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -299,7 +304,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
     private SmTestBase smTestBase = null;
     
-    private final String testUploadFile = "UploadTest.zip";
+    private final String testUploadFile = "testDocuments/UploadTest.zip";
 
     private final String testUploadFileMimeType = "application/zip";
 
@@ -2800,8 +2805,13 @@ public class AaTestBase extends EscidocRestSoapTestBase {
         throws Exception {
 
         PWCallback.setHandle(userHandle);
-        InputStream fileInputStream =
-            StagingFileTestBase.getFileInputStream(getUploadFile());
+
+        File f =
+            downloadTempFile(new URL(
+                properties.getProperty(PropertiesProvider.TESTDATA_URL) + "/"
+                    + testUploadFile));
+
+        InputStream fileInputStream = new FileInputStream(f);
 
         try {
             createStagingFile(fileInputStream, getUploadFileMimeType(),
