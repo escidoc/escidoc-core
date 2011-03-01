@@ -300,17 +300,18 @@ public final class PoliciesCache {
         }
 
         final Element element = roleIsGrantedCache.get(userOrGroupId);
-        Map<String, Map<String, EvaluationResult>> roleMap =
-                (Map<String, Map<String, EvaluationResult>>) element.getValue();
-        final Element roleElement = new Element(userOrGroupId, roleMap);
-        roleIsGrantedCache.put(element);
-        Map<String, EvaluationResult> resourceMap = roleMap.get(roleId);
-        if (resourceMap == null) {
-            resourceMap =
-                new LRUMap(resourcesInXacmlFunctionRoleIsGrantedCacheSize);
-            roleMap.put(roleId, resourceMap);
+        if(element != null) {
+            Map<String, Map<String, EvaluationResult>> roleMap =
+                    (Map<String, Map<String, EvaluationResult>>) element.getValue();
+            final Element roleElement = new Element(userOrGroupId, roleMap);
+            roleIsGrantedCache.put(roleElement);
+            Map<String, EvaluationResult> resourceMap = roleMap.get(roleId);
+            if (resourceMap == null) {
+                resourceMap = new LRUMap(resourcesInXacmlFunctionRoleIsGrantedCacheSize);
+                roleMap.put(roleId, resourceMap);
+            }
+            resourceMap.put(resourceId, roleIsGranted);
         }
-        resourceMap.put(resourceId, roleIsGranted);
     }
 
     /**
@@ -335,8 +336,7 @@ public final class PoliciesCache {
         if (userId == null) {
             return;
         }
-        final Element element = new Element(userId, userPolicies);
-        getUserPoliciesCache().put(element);
+        getUserPoliciesCache().put(new Element(userId, userPolicies));
     }
 
     /**
@@ -362,8 +362,7 @@ public final class PoliciesCache {
         if (groupId == null) {
             return;
         }
-        final Element element = new Element(groupId, groupPolicies);
-        getGroupPoliciesCache().put(element);
+        getGroupPoliciesCache().put(new Element(groupId, groupPolicies));
     }
 
     /**
@@ -381,8 +380,7 @@ public final class PoliciesCache {
         if (userId == null) {
             return;
         }
-        final Element element = new Element(userId, userGrants);
-        getUserGrantsCache().put(element);
+        getUserGrantsCache().put(new Element(userId, userGrants));
     }
 
     /**
@@ -400,8 +398,7 @@ public final class PoliciesCache {
         if (groupId == null) {
             return;
         }
-        Element element = new Element(groupId, groupGrants);
-        getGroupGrantsCache().put(element);
+        getGroupGrantsCache().put(new Element(groupId, groupGrants));
     }
 
     /**
@@ -420,8 +417,7 @@ public final class PoliciesCache {
         if (handle == null) {
             return;
         }
-        final Element element = new Element(handle, userDetails);
-        getUserDetailsCache().put(element);
+        getUserDetailsCache().put(new Element(handle, userDetails));
     }
 
     /**
@@ -460,8 +456,7 @@ public final class PoliciesCache {
      */
     public static void putRolePolicySet(
         final URI idReference, final XacmlPolicySet rolePolicies) {
-        final Element element = new Element(idReference, rolePolicies);
-        getRolePoliciesCache().put(element);
+        getRolePoliciesCache().put(new Element(idReference, rolePolicies));
     }
 
     /**
@@ -475,8 +470,7 @@ public final class PoliciesCache {
      */
     public static void putRole(
         final String roleId, final EscidocRole role) {
-        Element element = new Element(roleId, role);
-        getRolesCache().put(element);
+        getRolesCache().put(new Element(roleId, role));
     }
 
     /**
@@ -508,16 +502,20 @@ public final class PoliciesCache {
     public static EvaluationResult getRoleIsGrantedEvaluationResult(
         final String userOrGroupId, final String roleId, final String resourceId) {
         final Element element = roleIsGrantedCache.get(userOrGroupId);
-        final Map<String, Map<String, EvaluationResult>> roleMap =
+        if(element != null) {
+            final Map<String, Map<String, EvaluationResult>> roleMap =
                 (Map<String, Map<String, EvaluationResult>>) element.getValue();
-        if (roleMap == null) {
+            if (roleMap == null) {
+                return null;
+            }
+            final Map<String, EvaluationResult> resourceMap = roleMap.get(roleId);
+            if (resourceMap == null) {
+                return null;
+            }
+            return resourceMap.get(resourceId);
+        } else {
             return null;
         }
-        final Map<String, EvaluationResult> resourceMap = roleMap.get(roleId);
-        if (resourceMap == null) {
-            return null;
-        }
-        return resourceMap.get(resourceId);
     }
 
     /**
@@ -533,7 +531,11 @@ public final class PoliciesCache {
      */
     public static XacmlPolicySet getUserPolicies(final String userId) {
         final Element element = getUserPoliciesCache().get(userId);
-        return (XacmlPolicySet) element.getValue();
+        if(element != null) {
+            return (XacmlPolicySet) element.getValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -549,7 +551,11 @@ public final class PoliciesCache {
      */
     public static XacmlPolicySet getGroupPolicies(final String groupId) {
         final Element element = getGroupPoliciesCache().get(groupId);
-        return (XacmlPolicySet) element.getValue();
+        if(element != null) {
+            return (XacmlPolicySet) element.getValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -563,7 +569,11 @@ public final class PoliciesCache {
      */
     public static Map getUserGrants(final String userId) {
         final Element element = getUserGrantsCache().get(userId);
-        return (Map) element.getValue();
+        if(element != null) {
+            return (Map) element.getValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -577,7 +587,11 @@ public final class PoliciesCache {
      */
     public static Map getGroupGrants(final String groupId) {
         final Element element = getGroupGrantsCache().get(groupId);
-        return (Map) element.getValue();
+        if(element != null) {
+            return (Map) element.getValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -591,7 +605,11 @@ public final class PoliciesCache {
      */
     public static UserDetails getUserDetails(final String handle) {
         final Element element = getUserDetailsCache().get(handle);
-        return (UserDetails) element.getValue();
+        if(element != null) {
+            return (UserDetails) element.getValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -605,7 +623,11 @@ public final class PoliciesCache {
      */
     public static Set<String> getUserGroups(final String userId) {
         final Element element = getUserGroupsCache().get(userId);
-        return (Set<String>) element.getValue();
+        if(element != null) {
+            return (Set<String>) element.getValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -620,7 +642,11 @@ public final class PoliciesCache {
     public static XacmlPolicySet getRolePolicySet(
         final URI idReference) {
         final Element element = getRolePoliciesCache().get(idReference);
-        return (XacmlPolicySet) element.getValue();
+        if(element != null) {
+            return (XacmlPolicySet) element.getValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -633,7 +659,11 @@ public final class PoliciesCache {
      */
     public static EscidocRole getRole(final String roleId) {
         final Element element = getRolesCache().get(roleId);
-        return (EscidocRole) element.getValue();
+        if(element != null) {
+            return (EscidocRole) element.getValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -728,8 +758,10 @@ public final class PoliciesCache {
         List<Map<String, Map<String, EvaluationResult>>> roleIsGrantedValues =
                 new ArrayList<Map<String, Map<String, EvaluationResult>>>();
         for(Object key : roleIsGrantedKeys) {
-            Element element = getRoleIsGrantedCache().get(key);
-            roleIsGrantedValues.add((Map<String, Map<String, EvaluationResult>>) element.getValue());
+            final Element element = getRoleIsGrantedCache().get(key);
+            if(element != null) {
+                roleIsGrantedValues.add((Map<String, Map<String, EvaluationResult>>) element.getValue());
+            }
         }
         for (final Map<String, Map<String, EvaluationResult>> userCache : roleIsGrantedValues) {
             userCache.remove(roleId);
