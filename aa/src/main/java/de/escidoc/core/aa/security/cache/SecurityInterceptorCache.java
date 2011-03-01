@@ -112,7 +112,7 @@ public class SecurityInterceptorCache {
         final String key = StringUtility.concatenateWithColon(className, methodName).toString();
         final Element element = mappingsCache.get(key);
         MethodMappingList methodMappings;
-        if (element == null || element.getValue() == null) {
+        if (element == null || element.getObjectValue() == null) {
             try {
                 methodMappings = retrieveMethodMappings(className, methodName);
             } catch (Exception e) {
@@ -127,7 +127,7 @@ public class SecurityInterceptorCache {
             final Element newElement = new Element (key, methodMappings);
             mappingsCache.put(newElement);
         } else {
-            methodMappings = (MethodMappingList) element.getValue();
+            methodMappings = (MethodMappingList) element.getObjectValue();
         }
         return methodMappings;
     }

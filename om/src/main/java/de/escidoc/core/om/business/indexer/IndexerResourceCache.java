@@ -185,7 +185,7 @@ public final class IndexerResourceCache {
         throws SystemException {
         Element element = resources.get(identifier);
         if(element != null) {
-            return element.getValue();
+            return element.getObjectValue();
         } else {
             return null;
         }
