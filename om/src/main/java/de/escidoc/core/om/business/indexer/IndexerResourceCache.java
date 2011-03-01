@@ -43,10 +43,7 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.FoXmlProvider;
 import de.escidoc.core.om.business.fedora.deviation.Constants;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
-import net.sf.ehcache.config.CacheConfiguration;
+import org.apache.commons.collections.map.LRUMap;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 
@@ -56,6 +53,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * @author mih
@@ -78,7 +76,7 @@ public final class IndexerResourceCache {
     private static final int BUFFER_SIZE = 0xFFFF;
 
     /** Holds identifier and object. */
-    private Cache resources;
+    private final Map<String, Object> resources;
 
     private MethodMapper methodMapper;
 
@@ -86,7 +84,8 @@ public final class IndexerResourceCache {
 
     private ConnectionUtility connectionUtility;
 
-    private static final AppLogger LOG = new AppLogger(IndexerResourceCache.class.getName());
+    private static final AppLogger log =
+        new AppLogger(IndexerResourceCache.class.getName());
 
     private static final IndexerResourceCache instance = new IndexerResourceCache();
 
@@ -116,10 +115,9 @@ public final class IndexerResourceCache {
             }
         }
         catch (Exception e) {
-            LOG.debug(e);
+            log.debug(e);
         }
-        final CacheManager cacheManager = CacheManager.create();
-        resources = new Cache(new CacheConfiguration("resourcesCache", indexerCacheSize));
+        resources = new LRUMap(indexerCacheSize);
     }
 
     /**
@@ -168,8 +166,9 @@ public final class IndexerResourceCache {
     public void setResource(final String identifier, final Object resource)
         throws SystemException {
         final String href = getHref(identifier);
-        final Element element = new Element(href, resource);
-        resources.put(element);
+        synchronized (resources) {
+            resources.put(href, resource);
+        }
     }
 
     /**
@@ -183,11 +182,9 @@ public final class IndexerResourceCache {
      */
     private Object getResourceWithInternalKey(final String identifier)
         throws SystemException {
-        Element element = resources.get(identifier);
-        if(element != null) {
-            return element.getObjectValue();
-        } else {
-            return null;
+
+        synchronized (resources) {
+            return resources.get(identifier);
         }
     }
 
@@ -201,15 +198,16 @@ public final class IndexerResourceCache {
      */
     public void deleteResource(final String identifier) throws SystemException {
         final String href = getHref(identifier);
-        final Collection<String> keys = new ArrayList<String>();
-        for (final Object key : resources.getKeys()) {
-            final String keyAsString = (String) key;
-            if (keyAsString.startsWith(href)) {
-                keys.add(keyAsString);
+        synchronized (resources) {
+            final Collection<String> keys = new ArrayList<String>();
+            for (final String key : resources.keySet()) {
+                if (key.startsWith(href)) {
+                    keys.add(key);
+                }
             }
-        }
-        for (final String key : keys) {
-            resources.remove(key);
+            for (final String key : keys) {
+                resources.remove(key);
+            }
         }
     }
 
@@ -221,20 +219,22 @@ public final class IndexerResourceCache {
      * @throws SystemException
      *             e
      */
-    public void replaceResource(final String identifier, final Object resource) throws SystemException {
+    public void replaceResource(
+        final String identifier, 
+        final Object resource) throws SystemException {
         final String href = getHref(identifier);
-        final Collection<String> keys = new ArrayList<String>();
-        for (final Object key : resources.getKeys()) {
-            String keyAsString = (String) key;
-            if (keyAsString.startsWith(href)) {
-                keys.add(keyAsString);
+        synchronized (resources) {
+            final Collection<String> keys = new ArrayList<String>();
+            for (final String key : resources.keySet()) {
+                if (key.startsWith(href)) {
+                    keys.add(key);
+                }
             }
+            for (final String key : keys) {
+                resources.remove(key);
+            }
+            resources.put(href, resource);
         }
-        for (final String key : keys) {
-            resources.remove(key);
-        }
-        final Element element = new Element(href, resource);
-        resources.put(element);
     }
 
     /**
@@ -246,7 +246,7 @@ public final class IndexerResourceCache {
      * @throws SystemException
      *             e
      */
-    private void cacheInternalResource(final String identifier)
+    private synchronized void cacheInternalResource(final String identifier)
         throws SystemException {
         try {
             if (UserContext.getHandle() != null) {
@@ -274,7 +274,7 @@ public final class IndexerResourceCache {
                         escidocBinaryContent.getMimeType(), out.toByteArray(), null);
                 setResource(identifier, stream);
                 } catch (Exception e) {
-                    LOG.error(e.toString());
+                    log.error(e.toString());
                     throw new SystemException(e);
                 } finally {
                     if (in != null) {
@@ -295,17 +295,17 @@ public final class IndexerResourceCache {
             }
         }
         catch (InvocationTargetException e) {
-            LOG.error(e);
+            log.error(e);
             if (!"AuthorizationException".equals(e.getTargetException().getClass().getSimpleName())
                 && !"InvalidStatusException".equals(e.getTargetException().getClass().getSimpleName())) {
                 throw new SystemException(e);
             }
         }
         catch (MethodNotFoundException e) {
-            LOG.error(e);
+            log.error(e);
         }
         catch (Exception e) {
-            LOG.error(e);
+            log.error(e);
             throw new SystemException(e);
         }
     }
@@ -318,7 +318,7 @@ public final class IndexerResourceCache {
      * @throws SystemException
      *             e
      */
-    private void cacheExternalResource(final String identifier)
+    private synchronized void cacheExternalResource(final String identifier)
         throws SystemException {
         ByteArrayOutputStream out = null;
         InputStream in = null;
@@ -349,7 +349,7 @@ public final class IndexerResourceCache {
             }
         }
         catch (Exception e) {
-            LOG.error(e);
+            log.error(e);
         }
         finally {
             if (in != null) {
@@ -375,7 +375,7 @@ public final class IndexerResourceCache {
      * @throws SystemException
      *             e
      */
-    private String getHref(final String identifier) throws SystemException {
+    private synchronized String getHref(final String identifier) throws SystemException {
         String href = identifier;
         if (!href.contains("/")) {
             // objectId provided, generate href
