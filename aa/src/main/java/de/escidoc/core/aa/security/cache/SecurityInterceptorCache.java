@@ -36,6 +36,10 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.security.persistence.MethodMappingList;
 import de.escidoc.core.common.util.security.persistence.RequestMappingDaoInterface;
 import de.escidoc.core.common.util.string.StringUtility;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
+import net.sf.ehcache.config.CacheConfiguration;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -53,16 +57,16 @@ public class SecurityInterceptorCache {
     /**
      * The logger.
      */
-    private static final AppLogger log =
-        new AppLogger(SecurityInterceptorCache.class.getName());
+    private static final AppLogger log = new AppLogger(SecurityInterceptorCache.class.getName());
+
+    private static final CacheManager CACHE_MANAGER = CacheManager.create();
 
     /**
      * Cache for method mappings.
      * 
      * @common
      */
-    private final Map<String, MethodMappingList> mappingsCache =
-        new TreeMap<String, MethodMappingList>();
+    private final Cache mappingsCache;
 
     /**
      * The data access object to access request mappings.
@@ -75,7 +79,8 @@ public class SecurityInterceptorCache {
      * @common
      */
     public SecurityInterceptorCache() {
-
+        mappingsCache = new Cache(new CacheConfiguration("mappingsCache", Integer.MAX_VALUE));;
+        CACHE_MANAGER.addCache(mappingsCache);
         clear();
     }
 
@@ -85,8 +90,7 @@ public class SecurityInterceptorCache {
      * @common
      */
     public final void clear() {
-
-        mappingsCache.clear();
+        mappingsCache.removeAll();
     }
 
     /**
@@ -103,34 +107,27 @@ public class SecurityInterceptorCache {
      *             Thrown in case of an internal error.
      * @common
      */
-    public synchronized MethodMappingList getMethodMappings(
-        final String className, final String methodName)
+    public MethodMappingList getMethodMappings(final String className, final String methodName)
         throws WebserverSystemException {
-
-        final String key =
-            StringUtility
-                .concatenateWithColon(className, methodName).toString();
-        MethodMappingList methodMappings = mappingsCache.get(key);
-
-        if (methodMappings == null) {
+        final String key = StringUtility.concatenateWithColon(className, methodName).toString();
+        final Element element = mappingsCache.get(key);
+        MethodMappingList methodMappings;
+        if (element == null || element.getValue() == null) {
             try {
                 methodMappings = retrieveMethodMappings(className, methodName);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new WebserverSystemException(
                     "Exception during method mappings retrieval. ", e);
             }
-
-            if (methodMappings == null
-                || (methodMappings.sizeBefore() == 0 && methodMappings
-                    .sizeAfter() == 0)) {
-                final String errorMsg =
-                        StringUtility.format(
-                                "No mapping found for key", key);
+            if (methodMappings == null || (methodMappings.sizeBefore() == 0 && methodMappings .sizeAfter() == 0)) {
+                final String errorMsg = StringUtility.format("No mapping found for key", key);
                 log.error(errorMsg);
                 throw new WebserverSystemException(errorMsg);
             }
-            mappingsCache.put(key, methodMappings);
+            final Element newElement = new Element (key, methodMappings);
+            mappingsCache.put(newElement);
+        } else {
+            methodMappings = (MethodMappingList) element.getValue();
         }
         return methodMappings;
     }
