@@ -34,6 +34,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,6 +62,9 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
 
     private static int methodCounter = 0;
 
+    public static final String XPATH_SRW_AGG_DEF_LIST_AGG_DEF =
+        XPATH_SRW_RESPONSE_OBJECT + NAME_AGG_DEF;
+    
     /**
      * @param transport
      *            The transport identifier.
@@ -521,6 +526,51 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
         String result =
             retrieveAggregationDefinitions(new HashMap<String, String[]>());
         assertXmlValidSrwResponse(result);
+    }
+
+    /**
+     * Test successful retrieving a list of existing 
+     * AggregationDefinitions resources.
+     * Test if maximumRecords=0 delivers 0 Roles
+     * 
+     * @test.name Retrieve AggregationDefinitions - Success.
+     * @test.id emptyFilterZeroMaximumRecords
+     * @test.input Valid filter criteria.
+     * @test.expected: XML representation of the list of AggregationDefinitions
+     *                 containing 0 AggregationDefinitions.
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void emptyFilterZeroMaximumRecords() throws Exception {
+
+        final Map <String, String[]> filterParams =
+            new HashMap<String, String[]>();
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+
+        String result = null;
+
+        try {
+            result = retrieveAggregationDefinitions(filterParams);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.failException(
+                "Retrieving of list of AggregationDefinitions failed. ", e);
+        }
+
+        assertXmlValidSrwResponse(result);
+        Document retrievedDocument =
+            EscidocRestSoapTestBase.getDocument(result);
+        NodeList resultNodes =
+            selectNodeList(retrievedDocument,
+                XPATH_SRW_AGG_DEF_LIST_AGG_DEF);
+        final int totalRecordsWithZeroMaximum = resultNodes.getLength();
+        
+        assertEquals("Unexpected number of records.", 
+            totalRecordsWithZeroMaximum, 0);
+
     }
 
     /**

@@ -2986,6 +2986,50 @@ public abstract class UserGroupTest extends UserGroupTestBase {
     }
 
     /**
+     * Test successful retrieving a list of existing UserGroup resources.
+     * Test if maximumRecords=0 delivers 0 UserGroup
+     * 
+     * @test.name Retrieve UserGroup - Success.
+     * @test.id emptyFilterZeroMaximumRecords
+     * @test.input Valid filter criteria.
+     * @test.expected: XML representation of the list of UserGroup
+     *                 containing all UserGroup.
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void emptyFilterZeroMaximumRecords() throws Exception {
+
+        final Map <String, String[]> filterParams =
+            new HashMap<String, String[]>();
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+
+        String result = null;
+
+        try {
+            result = retrieveUserGroups(filterParams);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.failException(
+                "Retrieving of list of UserGroup failed. ", e);
+        }
+
+        assertXmlValidSrwResponse(result);
+        Document retrievedDocument =
+            EscidocRestSoapTestBase.getDocument(result);
+        NodeList resultNodes =
+            selectNodeList(retrievedDocument,
+                XPATH_SRW_USER_GROUP_LIST_USER_GROUP);
+        final int totalRecordsWithZeroMaximum = resultNodes.getLength();
+        
+        assertEquals("Unexpected number of records.", 
+            totalRecordsWithZeroMaximum, 0);
+
+    }
+
+    /**
      * Test successfully retrieving an explain response.
      * 
      * @test.name explainTest

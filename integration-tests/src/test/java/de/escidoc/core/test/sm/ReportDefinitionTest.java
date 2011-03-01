@@ -69,6 +69,9 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
 
     private static int methodCounter = 0;
 
+    public static final String XPATH_SRW_REP_DEF_LIST_REP_DEF =
+        XPATH_SRW_RESPONSE_OBJECT + NAME_REP_DEF;
+    
     /**
      * @param transport
      *            The transport identifier.
@@ -523,6 +526,51 @@ public class ReportDefinitionTest extends ReportDefinitionTestBase {
         assertXmlExists("Missing report definition with name " + NAME,
             retrievedDocument, XPATH_SRW_REPOR_DEFINITION_LIST_REPOR_DEFINITION
                 + "[name='" + NAME + "']");
+    }
+
+    /**
+     * Test successful retrieving a list of existing 
+     * ReportDefinitions resources.
+     * Test if maximumRecords=0 delivers 0 Roles
+     * 
+     * @test.name Retrieve ReportDefinitions - Success.
+     * @test.id emptyFilterZeroMaximumRecords
+     * @test.input Valid filter criteria.
+     * @test.expected: XML representation of the list of ReportDefinitions
+     *                 containing 0 ReportDefinitions.
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void emptyFilterZeroMaximumRecords() throws Exception {
+
+        final Map <String, String[]> filterParams =
+            new HashMap<String, String[]>();
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+
+        String result = null;
+
+        try {
+            result = retrieveReportDefinitions(filterParams);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.failException(
+                "Retrieving of list of ReportDefinitions failed. ", e);
+        }
+
+        assertXmlValidSrwResponse(result);
+        Document retrievedDocument =
+            EscidocRestSoapTestBase.getDocument(result);
+        NodeList resultNodes =
+            selectNodeList(retrievedDocument,
+                XPATH_SRW_REP_DEF_LIST_REP_DEF);
+        final int totalRecordsWithZeroMaximum = resultNodes.getLength();
+        
+        assertEquals("Unexpected number of records.", 
+            totalRecordsWithZeroMaximum, 0);
+
     }
 
     /**

@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.aa;
 
+import static org.junit.Assert.assertEquals;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
@@ -39,6 +40,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -3322,6 +3324,50 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                     + "not declined properly. ",
                 InvalidSearchQueryException.class, e);
         }
+    }
+
+    /**
+     * Test successful retrieving a list of existing Grant resources.
+     * Test if maximumRecords=0 delivers 0 Grant
+     * 
+     * @test.name Retrieve Grant - Success.
+     * @test.id emptyFilterZeroMaximumRecords
+     * @test.input Valid filter criteria.
+     * @test.expected: XML representation of the list of Grant
+     *                 containing all Grant.
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void emptyFilterZeroMaximumRecords() throws Exception {
+
+        final Map <String, String[]> filterParams =
+            new HashMap<String, String[]>();
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+
+        String result = null;
+
+        try {
+            result = retrieveGrants(filterParams);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.failException(
+                "Retrieving of list of Grants failed. ", e);
+        }
+
+        assertXmlValidSrwResponse(result);
+        Document retrievedDocument =
+            EscidocRestSoapTestBase.getDocument(result);
+        NodeList resultNodes =
+            selectNodeList(retrievedDocument,
+                XPATH_SRW_GRANT_LIST_GRANT);
+        final int totalRecordsWithZeroMaximum = resultNodes.getLength();
+        
+        assertEquals("Unexpected number of records.", 
+            totalRecordsWithZeroMaximum, 0);
+
     }
 
     /**

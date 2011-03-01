@@ -2931,6 +2931,50 @@ public class RoleAbstractTest extends AaTestBase {
     }
 
     /**
+     * Test successful retrieving a list of existing Roles resources.
+     * Test if maximumRecords=0 delivers 0 Roles
+     * 
+     * @test.name Retrieve Roles - Success.
+     * @test.id emptyFilterZeroMaximumRecords
+     * @test.input Valid filter criteria.
+     * @test.expected: XML representation of the list of Roles
+     *                 containing 0 Roles.
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void emptyFilterZeroMaximumRecords() throws Exception {
+
+        final Map <String, String[]> filterParams =
+            new HashMap<String, String[]>();
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+
+        String result = null;
+
+        try {
+            result = retrieveRoles(filterParams);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.failException(
+                "Retrieving of list of Roles failed. ", e);
+        }
+
+        assertXmlValidSrwResponse(result);
+        Document retrievedDocument =
+            EscidocRestSoapTestBase.getDocument(result);
+        NodeList resultNodes =
+            selectNodeList(retrievedDocument,
+                XPATH_SRW_ROLE_LIST_ROLE);
+        final int totalRecordsWithZeroMaximum = resultNodes.getLength();
+        
+        assertEquals("Unexpected number of records.", 
+            totalRecordsWithZeroMaximum, 0);
+
+    }
+
+    /**
      * Test successfully retrieving an explain response.
      * 
      * @test.name explainTest

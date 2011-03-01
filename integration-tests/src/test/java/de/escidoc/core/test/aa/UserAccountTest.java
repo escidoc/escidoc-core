@@ -3442,6 +3442,50 @@ public abstract class UserAccountTest extends UserAccountTestBase {
     }
 
     /**
+     * Test successful retrieving a list of existing UserAccount resources.
+     * Test if maximumRecords=0 delivers 0 UserAccounts
+     * 
+     * @test.name Retrieve UserAccounts - Success.
+     * @test.id emptyFilterZeroMaximumRecords
+     * @test.input Valid filter criteria.
+     * @test.expected: XML representation of the list of user accounts
+     *                 containing all user_accounts.
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void emptyFilterZeroMaximumRecords() throws Exception {
+
+        final Map <String, String[]> filterParams =
+            new HashMap<String, String[]>();
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+
+        String retrievedUserAccountsXml = null;
+
+        try {
+            retrievedUserAccountsXml = retrieveUserAccounts(filterParams);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.failException(
+                "Retrieving of list of user accounts failed. ", e);
+        }
+
+        assertXmlValidSrwResponse(retrievedUserAccountsXml);
+        final Document retrievedDocument =
+            EscidocRestSoapTestBase.getDocument(retrievedUserAccountsXml);
+        final NodeList userAccountNodes =
+            selectNodeList(retrievedDocument,
+                XPATH_SRW_USER_ACCOUNT_LIST_USER_ACCOUNT);
+        final int totalRecordsWithZeroMaximum = userAccountNodes.getLength();
+        
+        assertEquals("Unexpected number of user accounts.", 
+            totalRecordsWithZeroMaximum, 0);
+
+    }
+
+    /**
      * Test successfully retrieving an explain response.
      * 
      * @test.name explainTest

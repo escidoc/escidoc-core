@@ -34,6 +34,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,6 +58,9 @@ public class ScopeAbstractTest extends ScopeTestBase {
 
     private static int methodCounter = 0;
 
+    public static final String XPATH_SRW_SCOPE_LIST_SCOPE =
+        XPATH_SRW_RESPONSE_OBJECT + NAME_SCOPE;
+    
     /**
      * @param transport
      *            The transport identifier.
@@ -302,6 +307,51 @@ public class ScopeAbstractTest extends ScopeTestBase {
     public void testSMSC10CQL() throws Exception {
         String result = retrieveScopes(new HashMap<String, String[]>());
         assertXmlValidSrwResponse(result);
+    }
+
+    /**
+     * Test successful retrieving a list of existing 
+     * Scopes resources.
+     * Test if maximumRecords=0 delivers 0 Scopes
+     * 
+     * @test.name Retrieve Scopes - Success.
+     * @test.id emptyFilterZeroMaximumRecords
+     * @test.input Valid filter criteria.
+     * @test.expected: XML representation of the list of Scopes
+     *                 containing 0 Scopes.
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void emptyFilterZeroMaximumRecords() throws Exception {
+
+        final Map <String, String[]> filterParams =
+            new HashMap<String, String[]>();
+            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+
+        String result = null;
+
+        try {
+            result = retrieveScopes(filterParams);
+        }
+        catch (final Exception e) {
+            EscidocRestSoapTestBase.failException(
+                "Retrieving of list of Scopes failed. ", e);
+        }
+
+        assertXmlValidSrwResponse(result);
+        Document retrievedDocument =
+            EscidocRestSoapTestBase.getDocument(result);
+        NodeList resultNodes =
+            selectNodeList(retrievedDocument,
+                XPATH_SRW_SCOPE_LIST_SCOPE);
+        final int totalRecordsWithZeroMaximum = resultNodes.getLength();
+        
+        assertEquals("Unexpected number of records.", 
+            totalRecordsWithZeroMaximum, 0);
+
     }
 
     /**

@@ -133,6 +133,12 @@ public abstract class EscidocTestBase {
 
     public static final String NAME_LATEST_VERSION = "latest-version";
 
+    public static final String NAME_AGG_DEF = "aggregation-definition";
+
+    public static final String NAME_REP_DEF = "report-definition";
+
+    public static final String NAME_SCOPE = "scope";
+
     private static Map<String, URL> urlCache = new HashMap<String, URL>();
 
     private static Map<URL, Schema> schemaCache = new HashMap<URL, Schema>();
