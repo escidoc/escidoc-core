@@ -157,4 +157,21 @@ public class ContainerCreateTest extends ContainerTestBase {
         }
     }
 
+    /**
+     * https://www.escidoc.org/jira/browse/INFR-1096
+     * 
+     * Create a container without a content-model-specific element.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testCreateContainerWithoutContentModel() throws Exception {
+        Document container =
+            EscidocRestSoapTestBase.getTemplateAsDocument(
+                TEMPLATE_CONTAINER_PATH + this.path, "create_container.xml");
+
+        deleteNodes(container, XPATH_CONTAINER_PROPERTIES_CMS);
+        create(toString(container, false));
+    }
 }

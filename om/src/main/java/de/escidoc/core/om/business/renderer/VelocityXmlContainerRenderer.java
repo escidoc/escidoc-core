@@ -515,10 +515,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 xml);
         }
         catch (StreamNotFoundException e) {
-            throw new IntegritySystemException("Can not get stream '"
-                + Elements.ELEMENT_CONTENT_MODEL_SPECIFIC + "'.", e);
+            // This element is now optional.
         }
-
     }
 
     /**
