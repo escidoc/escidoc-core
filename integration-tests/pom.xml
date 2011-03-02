@@ -668,8 +668,6 @@
 							<driver>org.postgresql.Driver</driver>
 							<url>jdbc:postgresql://localhost:5432/postgres</url>
 							<settingsKey>escidoc-core-db-admin</settingsKey>
-							<!--all executions are ignored if -DskipITs=true -->
-							<skip>${skipITs}</skip>
 						</configuration>
 						<executions>
 							<execution>
