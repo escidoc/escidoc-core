@@ -37,6 +37,7 @@ import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ import java.util.List;
  * 
  * @aa
  */
-public class XacmlPolicySet extends PolicySet {
+public class XacmlPolicySet extends PolicySet implements Serializable {
 
     private static final CombiningAlgFactory factory = CombiningAlgFactory
         .getInstance();
