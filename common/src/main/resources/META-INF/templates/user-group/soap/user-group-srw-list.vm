@@ -9,7 +9,6 @@
       <zs:recordSchema>${userGroupNamespace}</zs:recordSchema>
       <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
-      <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $userGroupName = ${userGroup.userGroupName} )
 #set( $userGroupId = ${userGroup.userGroupId} )
 #set( $userGroupLastModificationDate = ${userGroup.userGroupLastModificationDate} )
@@ -23,7 +22,6 @@
 #set( $userGroupSelectors = ${userGroup.userGroupSelectors} )
 #set( $userGroupType = ${userGroup.userGroupType} )
 #searchResultRecord("user-group/soap/user-group.vm")
-	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>
     </zs:record>

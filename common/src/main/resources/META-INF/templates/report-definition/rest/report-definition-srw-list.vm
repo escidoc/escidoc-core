@@ -9,7 +9,6 @@
       <zs:recordSchema>${reportDefinitionNamespace}</zs:recordSchema>
       <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
-	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
     #set( $reportDefinitionRoles = ${reportDefinition.reportDefinitionRoles} )
     #set( $reportDefinitionName = ${reportDefinition.reportDefinitionName} )
     #set( $reportDefinitionHref = ${reportDefinition.reportDefinitionHref} )
@@ -24,7 +23,6 @@
     #set( $reportDefinitionSql = ${reportDefinition.reportDefinitionSql} )
 	#set( $isRootReportDefinition = "true")
     #searchResultRecord("report-definition/rest/report-definition.vm")
-	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>
     </zs:record>

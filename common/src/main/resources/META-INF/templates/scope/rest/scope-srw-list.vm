@@ -9,7 +9,6 @@
       <zs:recordSchema>${scopeNamespace}</zs:recordSchema>
       <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
-	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
     #set( $scopeName = ${scope.scopeName} )
     #set( $scopeHref = ${scope.scopeHref} )
     #set( $scopeType = ${scope.scopeType} )
@@ -21,7 +20,6 @@
     #set( $scopeModifiedByHref = ${scope.scopeModifiedByHref} )
 	#set( $isRootScope = "true")
     #searchResultRecord("scope/rest/scope.vm")
-	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>
     </zs:record>

@@ -49,4 +49,4 @@
 ##
 #macro( virtualResourceRootForResourceList $namespacePrefix $namespace $title) #namespaceDecl(${namespacePrefix} ${namespace}) #commonRootNsDecls() #linkTitleAndTypeAttributes(${title})#end
 #macro( virtualResourceRoot $namespacePrefix $namespace $title) #virtualResourceRootForResourceList(${namespacePrefix} ${namespace} ${title}) #xmlBase()#end
-#macro( searchResultRecord $file) #set($body = "#parse(${file})") #if(${recordPacking.getType()} == "string") #escT($body) #else $body #end #end
+#macro( searchResultRecord $file) #set($body = "<search-result:search-result-record #namespaceDecl('search-result' ${searchResultNamespace})>" + "#parse(${file})" + "</search-result:search-result-record>") #if(${recordPacking.getType()} == "string") #escT($body) #else $body #end #end

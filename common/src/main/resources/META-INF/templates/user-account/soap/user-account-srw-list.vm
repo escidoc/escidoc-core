@@ -9,7 +9,6 @@
       <zs:recordSchema>${userAccountNamespace}</zs:recordSchema>
       <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
-      <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $userAccountName = ${userAccount.userAccountName} )
 #set( $userAccountId = ${userAccount.userAccountId} )
 #set( $userAccountLastModificationDate = ${userAccount.userAccountLastModificationDate} )
@@ -22,7 +21,6 @@
 #set( $userAccountOus = ${userAccount.userAccountOus} )
 #set( $userAccountCreationDate = ${userAccount.userAccountCreationDate} )
 #searchResultRecord("user-account/soap/user-account.vm")
-	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>
     </zs:record>

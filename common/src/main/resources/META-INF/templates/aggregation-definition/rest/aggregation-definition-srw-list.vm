@@ -9,7 +9,6 @@
       <zs:recordSchema>${aggregationDefinitionNamespace}</zs:recordSchema>
       <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
-	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
     #set( $aggregationStatisticDataSelectors = ${aggregationDefinition.aggregationStatisticDataSelectors} )
     #set( $aggregationTables = ${aggregationDefinition.aggregationTables} )
     #set( $aggregationDefinitionName = ${aggregationDefinition.aggregationDefinitionName} )
@@ -21,7 +20,6 @@
     #set( $aggregationDefinitionScopeHref = ${aggregationDefinition.aggregationDefinitionScopeHref} )
 	#set( $isRootAggregationDefinition = "true")
     #searchResultRecord("aggregation-definition/rest/aggregation-definition.vm")
-	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>
     </zs:record>

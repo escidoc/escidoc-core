@@ -9,7 +9,6 @@
       <zs:recordSchema>${setDefinitionNamespace}</zs:recordSchema>
       <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
-	  <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $setDefinitionName = ${setDefinition.setDefinitionName} )
 #set( $setDefinitionHref = ${setDefinition.setDefinitionHref} )
 #set( $setDefinitionLastModificationDate = ${setDefinition.setDefinitionLastModificationDate} )
@@ -22,7 +21,6 @@
 #set( $setDefinitionSpecification = ${setDefinition.setDefinitionSpecification} )
 #set( $setDefinitionQuery = ${setDefinition.setDefinitionQuery} )
 #searchResultRecord("set-definition/rest/set-definition.vm")
-	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>$velocityCount</zs:recordPosition>
     </zs:record>

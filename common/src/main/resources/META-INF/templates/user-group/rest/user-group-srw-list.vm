@@ -9,7 +9,6 @@
       <zs:recordSchema>${userGroupNamespace}</zs:recordSchema>
       <zs:recordPacking>${recordPacking.getType()}</zs:recordPacking>
       <zs:recordData>
-      <search-result:search-result-record #namespaceDecl("search-result" ${searchResultNamespace})>
 #set( $userGroupName = ${userGroup.userGroupName} )
 #set( $userGroupHref = ${userGroup.userGroupHref} )
 #set( $userGroupLastModificationDate = ${userGroup.userGroupLastModificationDate} )
@@ -27,7 +26,6 @@
 #set( $resourcesHref = ${userGroup.resourcesHref} )
 #set( $currentGrantsHref = ${userGroup.currentGrantsHref} )
 #searchResultRecord("user-group/rest/user-group.vm")
-	  </search-result:search-result-record>
       </zs:recordData>
       <zs:recordPosition>${velocityCount}</zs:recordPosition>
     </zs:record>
