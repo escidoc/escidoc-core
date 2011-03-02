@@ -51,16 +51,9 @@ public class DbRequestParameters extends SRURequestParameters {
     private static final AppLogger LOG = new AppLogger(
         DbRequestParameters.class.getName());
 
-    private int defaultMaximumRecords = DEFAULT_MAXIMUM_RECORDS;
+    private static int defaultMaximumRecords = DEFAULT_MAXIMUM_RECORDS;
 
-    /**
-     * Create a new parameters object from the given map.
-     * 
-     * @param parameters
-     *            map map containing the CQL request parameters
-     */
-    public DbRequestParameters(final Map<String, String[]> parameters) {
-        super(parameters);
+    static {
         try {
             defaultMaximumRecords =
                 (int) EscidocConfiguration
@@ -71,6 +64,16 @@ public class DbRequestParameters extends SRURequestParameters {
         catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
+    }
+
+    /**
+     * Create a new parameters object from the given map.
+     * 
+     * @param parameters
+     *            map map containing the CQL request parameters
+     */
+    public DbRequestParameters(final Map<String, String[]> parameters) {
+        super(parameters);
     }
 
     /**
