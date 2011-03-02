@@ -674,7 +674,7 @@
 						<executions>
 							<execution>
 								<id>drop-escidoc-db-before-compile</id>
-								<phase>initialize</phase>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -688,7 +688,7 @@
 							</execution>
 							<execution>
 								<id>drop-role-before-compile</id>
-								<phase>initialize</phase>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -703,7 +703,7 @@
 
 							<execution>
 								<id>create-role</id>
-								<phase>initialize</phase>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -711,14 +711,15 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
-									<sqlCommand>CREATE ROLE "${escidoc.database.user}" LOGIN PASSWORD '${escidoc.database.password}'
+									<sqlCommand>CREATE ROLE "${escidoc.database.user}" LOGIN
+										PASSWORD '${escidoc.database.password}'
 										VALID
 										UNTIL 'infinity';</sqlCommand>
 								</configuration>
 							</execution>
 							<execution>
 								<id>create-escidoc-db</id>
-								<phase>initialize</phase>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -726,13 +727,14 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
-									<sqlCommand>CREATE DATABASE "${escidoc.database}" WITH ENCODING='UTF8'
+									<sqlCommand>CREATE DATABASE "${escidoc.database}" WITH
+										ENCODING='UTF8'
 										OWNER="${escidoc.database.user}"</sqlCommand>
 								</configuration>
 							</execution>
 							<execution>
 								<id>create-escidoc-db-lang</id>
-								<phase>initialize</phase>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -748,7 +750,7 @@
 							</execution>
 							<execution>
 								<id>create-schemas</id>
-								<phase>initialize</phase>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -782,7 +784,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>insert-accounts-into-db</id>
-								<phase>initialize</phase>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -805,7 +807,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>init-handles-into-db</id>
-								<phase>initialize</phase>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -829,7 +831,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>insert-roles-into-db</id>
-								<phase>initialize</phase>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -853,7 +855,7 @@
 									database part of the test phase. That's why here should only be these tables 
 									are generated where hibernate depends on. -->
 								<id>insert-into-db</id>
-								<phase>initialize</phase>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -878,7 +880,7 @@
 							</execution>
 							<execution>
 								<id>insert-test-user</id>
-								<phase>initialize</phase>
+								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1038,7 +1040,9 @@
 							<!-- clean up -->
 							<execution>
 								<id>cleanup-fedora-database</id>
-								<phase>post-integration-test</phase>
+								<!-- actually should the phase be post-integration-tests, but the 
+									JBoss could be still active if the same phase to shutwon it is used. -->
+								<phase>verify</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1081,6 +1085,30 @@
 
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.2</version>
+						<executions>
+							<execution>
+								<id>install-fedora</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>java</executable>
+									<arguments>
+										<argument>-jar</argument>
+										<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}/fcrepo-installer-${fcrepo.version}.jar</argument>
+										<argument>src/test/resources/fedora/install.properties</argument>
+									</arguments>
+									<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>wagon-maven-plugin</artifactId>
 						<version>1.0-beta-3</version>
 						<executions>
@@ -1110,8 +1138,6 @@
 							</execution>
 						</executions>
 					</plugin>
-
-
 				</plugins>
 			</build>
 		</profile>
@@ -1412,5 +1438,6 @@
 				</plugins>
 			</build>
 		</profile>
+
 	</profiles>
 </project>
