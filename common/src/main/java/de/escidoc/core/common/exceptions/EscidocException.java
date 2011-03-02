@@ -301,7 +301,7 @@ public abstract class EscidocException extends Exception {
 
         // cause
         final Throwable throwableCause = throwable.getCause();
-        if (throwableCause != null && throwableCause != throwable) {
+        if (throwableCause != null && !throwableCause.equals(throwable)) {
             result.append("\n\n\n  <cause>");
             result.append(getXml(throwableCause));
             result.append("</cause>\n");
