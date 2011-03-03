@@ -643,6 +643,10 @@
 		<profile>
 			<id>create-escidoc-database</id>
 			<activation>
+				<property>
+					<name>env</name>
+					<value>dev</value>
+				</property>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<build>
@@ -899,6 +903,21 @@
 									</srcFiles>
 								</configuration>
 							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>drop-escidoc-database</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<executions>
 							<execution>
 								<id>cleanup-escidoc-db</id>
 								<!-- actually should the phase be post-integration-tests, but the 
