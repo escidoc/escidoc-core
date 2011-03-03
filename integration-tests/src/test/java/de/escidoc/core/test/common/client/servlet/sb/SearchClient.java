@@ -163,7 +163,8 @@ public class SearchClient extends ClientBase {
      * @throws Exception
      *             If the service call fails.
      */
-    public Object scan(final HashMap parameters, final String database)
+    public Object scan(
+        final HashMap<String, String> parameters, final String database)
         throws Exception {
 
         StringBuffer paramString = new StringBuffer("?");
@@ -172,7 +173,12 @@ public class SearchClient extends ClientBase {
             if (paramString.length() > 1) {
                 paramString.append("&");
             }
-            paramString.append(key).append("=").append(parameters.get(key));
+            String value = parameters.get(key);
+            if (getTransport() == Constants.TRANSPORT_REST) {
+                value =
+                    URLEncoder.encode(value, HttpHelper.HTTP_DEFAULT_CHARSET);
+            }
+            paramString.append(key).append("=").append(value);
         }
         parameters.put("database", database);
         switch (getTransport()) {

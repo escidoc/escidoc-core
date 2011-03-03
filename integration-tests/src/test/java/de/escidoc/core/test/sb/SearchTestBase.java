@@ -47,6 +47,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
@@ -54,6 +55,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.xml.transform.TransformerException;
 
 import static org.junit.Assert.assertEquals;
 
@@ -593,6 +596,22 @@ public class SearchTestBase extends SbTestBase {
             numberOfHits = m.group(1);
         }
         return numberOfHits;
+    }
+
+    /**
+     * get number of scan hits from xml String.
+     * 
+     * @param scanResult
+     *            String scanResult
+     * @return String number of hits
+     * 
+     */
+    protected String getNumberOfScanHits(final String scanResult) 
+                                        throws Exception {
+        Document scanResultDoc = getDocument(scanResult);
+        NodeList nodes =
+            selectNodeList(scanResultDoc, "/scanResponse/terms/term");
+        return Integer.toString(nodes.getLength());
     }
 
     /**

@@ -131,22 +131,22 @@ public class ExpiredIndexSearcherTest extends SearchTestBase {
         scanParameters.put("scanClause", "PID=\"\"");
         
         String response = search(parameters, INDEX_NAME);
-        String scanResponse = scan(parameters, INDEX_NAME);
+        String scanResponse = scan(scanParameters, INDEX_NAME);
         assertEquals("1", getNumberOfHits(response));
-        assertEquals("1", getNumberOfHits(scanResponse));
+        assertEquals("1", getNumberOfScanHits(scanResponse));
 
         String itemXml = item.create(xmlData);
         String itemId = getObjidValue(itemXml);
-        scanResponse = scan(parameters, INDEX_NAME);
+        scanResponse = scan(scanParameters, INDEX_NAME);
         response = search(parameters, INDEX_NAME);
-        assertEquals("1", getNumberOfHits(response));
-        assertEquals("2", getNumberOfHits(scanResponse));
+        assertEquals("2", getNumberOfHits(response));
+        assertEquals("2", getNumberOfScanHits(scanResponse));
 
         item.delete(itemId);
         response = search(parameters, INDEX_NAME);
-        scanResponse = scan(parameters, INDEX_NAME);
+        scanResponse = scan(scanParameters, INDEX_NAME);
         assertEquals("1", getNumberOfHits(response));
-        assertEquals("1", getNumberOfHits(scanResponse));
+        assertEquals("1", getNumberOfScanHits(scanResponse));
     }
 
 }
