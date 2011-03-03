@@ -177,8 +177,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             final StringBuilder renderedComponents = new StringBuilder();
             for (final String componentId : componentIds) {
                 try {
-                    renderedComponents.append(renderComponent(componentId, commonValues, false));
-                } catch (ComponentNotFoundException e) {
+                    renderedComponents.append(renderComponent(componentId,
+                        commonValues, false));
+                }
+                catch (ComponentNotFoundException e) {
                     throw new IntegritySystemException(e);
                 }
             }
@@ -374,11 +376,12 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 if (!mdRecords.keySet().contains(mdRecordName)) {
                     try {
                         content.append(renderMdRecord(mdRecordName,
-                                commonValues, true, false));
-                    } catch (MdRecordNotFoundException e) {
+                            commonValues, true, false));
+                    }
+                    catch (MdRecordNotFoundException e) {
                         throw new WebserverSystemException(
-                                "Metadata record previously found in list not found.",
-                                e);
+                            "Metadata record previously found in list not found.",
+                            e);
                     }
                 }
             }
@@ -554,7 +557,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         final StringBuilder content = new StringBuilder();
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            for (final String contentStreamName : getOriginItem().getContentStreams().keySet()) {
+            for (final String contentStreamName : getOriginItem()
+                .getContentStreams().keySet()) {
                 content.append(renderContentStream(contentStreamName, false));
             }
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF,
@@ -564,8 +568,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 "Content streams of Item " + getOriginId());
         }
         else {
-            for (final String contentStreamName : getItem().getContentStreams().keySet()) {
-                content.append(renderContentStream(contentStreamName, commonValues, false));
+            for (final String contentStreamName : getItem()
+                .getContentStreams().keySet()) {
+                content.append(renderContentStream(contentStreamName,
+                    commonValues, false));
             }
             values.put(XmlTemplateProvider.VAR_CONTENT_STREAMS_HREF, getItem()
                 .getHref() + Constants.CONTENT_STREAMS_URL_PART);
@@ -699,8 +705,10 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         final StringBuilder content = new StringBuilder();
         for (final String mdRecordName : mdRecords.keySet()) {
             try {
-                content.append(renderComponentMdRecord(componentId, mdRecordName, commonValues, false));
-            } catch (MdRecordNotFoundException e) {
+                content.append(renderComponentMdRecord(componentId,
+                    mdRecordName, commonValues, false));
+            }
+            catch (MdRecordNotFoundException e) {
                 throw new IntegritySystemException(e.getMessage(), e);
             }
         }
@@ -718,7 +726,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
         values.put("mdRecordsTitle", "Metadata Records of Component "
             + component.getId());
-        values.put("mdRecordsContent", content.toString());
+        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT,
+            content.toString());
         return ItemXmlProvider.getInstance().getMdRecordsXml(values);
     }
 
@@ -919,7 +928,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             final Collection<Map<String, String>> entries =
                 new ArrayList<Map<String, String>>(ids.size());
             while (idIter.hasNext()) {
-                final Map<String, String> entry = new HashMap<String, String>(3);
+                final Map<String, String> entry =
+                    new HashMap<String, String>(3);
                 final String id = idIter.next();
                 entry.put("id", id);
                 entry.put("href", XmlUtility.getContainerHref(id));
@@ -950,11 +960,12 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             try {
                 setItem(itemId);
                 renderedEntries.add(render());
-            } catch (ResourceNotFoundException e) {
+            }
+            catch (ResourceNotFoundException e) {
                 final String msg =
-                        "FedoraItemHandler.retrieveItems: can not retrieve object "
-                                + itemId + ". ResourceNotFoundException: "
-                                + e.getCause() + '.';
+                    "FedoraItemHandler.retrieveItems: can not retrieve object "
+                        + itemId + ". ResourceNotFoundException: "
+                        + e.getCause() + '.';
                 LOGGER.error(msg);
                 throw new WebserverSystemException(msg, e);
             }
@@ -1089,7 +1100,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
         // version
         final StringBuilder versionIdBase =
-                new StringBuilder(item.getId()).append(':');
+            new StringBuilder(item.getId()).append(':');
 
         values.put(XmlTemplateProvider.VAR_ITEM_CURRENT_VERSION_HREF,
             item.getVersionHref());
@@ -1366,7 +1377,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             .put(
                 "contentRelationsNamespace",
                 de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NAMESPACE_URI);
-        final VelocityXmlCommonRenderer renderer = new VelocityXmlCommonRenderer();
+        final VelocityXmlCommonRenderer renderer =
+            new VelocityXmlCommonRenderer();
         renderer
             .addRelationsValues(item.getRelations(), item.getHref(), values);
         values.put("contentRelationsTitle", "Relations of Item");
@@ -1442,7 +1454,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         final Component component) throws TripleStoreSystemException,
         WebserverSystemException {
 
-        final Map<String, String> properties = component.getResourceProperties();
+        final Map<String, String> properties =
+            component.getResourceProperties();
         final String baseHRef = getItem().getHref() + component.getHrefPart();
         // TODO version
         final Map<String, String> values = new HashMap<String, String>();
@@ -1452,19 +1465,17 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             + Constants.PROPERTIES_URL_PART);
 
         if ((properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
-            + Elements.ELEMENT_DESCRIPTION) != null
-            && component.getMdRecords().containsKey(
+            + Elements.ELEMENT_DESCRIPTION) != null && component
+            .getMdRecords().containsKey(
                 XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING))
             && (!component
                 .getMdRecord(
                     XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
                 .isDeleted())) {
-            values
-                .put(
-                    XmlTemplateProvider.VAR_COMPONENT_DESCRIPTION,
-                    properties
-                        .get(de.escidoc.core.common.business.Constants.DC_NS_URI
-                            + Elements.ELEMENT_DESCRIPTION));
+            values.put(XmlTemplateProvider.VAR_COMPONENT_DESCRIPTION,
+                properties
+                    .get(de.escidoc.core.common.business.Constants.DC_NS_URI
+                        + Elements.ELEMENT_DESCRIPTION));
         }
         values.put(XmlTemplateProvider.VAR_COMPONENT_CREATION_DATE,
             component.getCreationDate());
@@ -1493,19 +1504,16 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         }
 
         if ((properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
-            + Elements.ELEMENT_DC_TITLE) != null
-            && component.getMdRecords().containsKey(
+            + Elements.ELEMENT_DC_TITLE) != null && component
+            .getMdRecords().containsKey(
                 XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING))
             && (!component
                 .getMdRecord(
                     XmlTemplateProvider.DEFAULT_METADATA_FOR_DC_MAPPING)
                 .isDeleted())) {
-            values
-                .put(
-                    XmlTemplateProvider.VAR_COMPONENT_FILE_NAME,
-                    properties
-                        .get(de.escidoc.core.common.business.Constants.DC_NS_URI
-                            + Elements.ELEMENT_DC_TITLE));
+            values.put(XmlTemplateProvider.VAR_COMPONENT_FILE_NAME, properties
+                .get(de.escidoc.core.common.business.Constants.DC_NS_URI
+                    + Elements.ELEMENT_DC_TITLE));
         }
         if (properties.get(TripleStoreUtility.PROP_COMPONENT_PID) != null) {
             values.put(XmlTemplateProvider.VAR_COMPONENT_PID,

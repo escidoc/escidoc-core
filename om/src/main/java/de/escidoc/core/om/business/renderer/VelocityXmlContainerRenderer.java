@@ -683,7 +683,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             final String md = renderMetadataRecord(container, mdRecord, false);
             content.append(md);
         }
-        values.put("mdRecordsContent", content.toString());
+        values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, content.toString());
 
     }
 

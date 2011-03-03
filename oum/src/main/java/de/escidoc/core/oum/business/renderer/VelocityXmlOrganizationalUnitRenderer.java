@@ -617,7 +617,7 @@ public class VelocityXmlOrganizationalUnitRenderer
                                 .getInstance().getMdRecordXml(mdRecordValues));
                 }
             }
-            values.put("mdRecordsContent", mdRecordsContent);
+            values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, mdRecordsContent.toString());
         }
         catch (SystemException e) {
             throw new WebserverSystemException(
