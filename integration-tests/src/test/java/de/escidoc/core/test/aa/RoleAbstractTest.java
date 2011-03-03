@@ -2437,6 +2437,8 @@ public class RoleAbstractTest extends AaTestBase {
 
         filterParams.put(FILTER_PARAMETER_QUERY,
             new String[] { "granted=true" });
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS,
+            new String[] { "1000" });
 
         String retrievedXml = null;
 
@@ -2931,14 +2933,14 @@ public class RoleAbstractTest extends AaTestBase {
     }
 
     /**
-     * Test successful retrieving a list of existing Roles resources.
-     * Test if maximumRecords=0 delivers 0 Roles
+     * Test successful retrieving a list of existing Roles resources. Test if
+     * maximumRecords=0 delivers 0 Roles
      * 
      * @test.name Retrieve Roles - Success.
      * @test.id emptyFilterZeroMaximumRecords
      * @test.input Valid filter criteria.
-     * @test.expected: XML representation of the list of Roles
-     *                 containing 0 Roles.
+     * @test.expected: XML representation of the list of Roles containing 0
+     *                 Roles.
      * @test.status Implemented
      * 
      * @throws Exception
@@ -2947,9 +2949,9 @@ public class RoleAbstractTest extends AaTestBase {
     @Test
     public void emptyFilterZeroMaximumRecords() throws Exception {
 
-        final Map <String, String[]> filterParams =
+        final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
-            filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] {"0"});
+        filterParams.put(FILTER_PARAMETER_MAXIMUMRECORDS, new String[] { "0" });
 
         String result = null;
 
@@ -2965,11 +2967,10 @@ public class RoleAbstractTest extends AaTestBase {
         Document retrievedDocument =
             EscidocRestSoapTestBase.getDocument(result);
         NodeList resultNodes =
-            selectNodeList(retrievedDocument,
-                XPATH_SRW_ROLE_LIST_ROLE);
+            selectNodeList(retrievedDocument, XPATH_SRW_ROLE_LIST_ROLE);
         final int totalRecordsWithZeroMaximum = resultNodes.getLength();
-        
-        assertEquals("Unexpected number of records.", 
+
+        assertEquals("Unexpected number of records.",
             totalRecordsWithZeroMaximum, 0);
 
     }
