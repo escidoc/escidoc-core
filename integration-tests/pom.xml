@@ -903,6 +903,38 @@
 									</srcFiles>
 								</configuration>
 							</execution>
+							<execution>
+								<id>cleanup-escidoc-db</id>
+								<!-- actually should the phase be post-integration-tests, but the 
+									JBoss could be still active if the same phase to shutwon it is used. -->
+								<phase>verify</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<!-- need another database to drop the targeted one -->
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>DROP DATABASE "${escidoc.database}"</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
+							<execution>
+								<id>drop-escidoc-role</id>
+								<!-- actually should the phase be post-integration-tests, but the 
+									JBoss could be still active if the same phase to shutwon it is used. -->
+								<phase>verify</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<!-- need another database to drop the targeted one -->
+									<url>jdbc:postgresql://localhost:5432/postgres</url>
+									<autocommit>true</autocommit>
+									<sqlCommand>DROP ROLE "${escidoc.database.user}"</sqlCommand>
+									<onError>continue</onError>
+								</configuration>
+							</execution>
 						</executions>
 					</plugin>
 				</plugins>
@@ -1049,11 +1081,14 @@
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP DATABASE "${fedora.database}"</sqlCommand>
+									<onError>continue</onError>
 								</configuration>
 							</execution>
 							<execution>
 								<id>cleanup-triplestore-database</id>
-								<phase>post-integration-test</phase>
+								<!-- actually should the phase be post-integration-tests, but the 
+									JBoss could be still active if the same phase to shutwon it is used. -->
+								<phase>verify</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1062,11 +1097,14 @@
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP DATABASE "${triplestore.database}"</sqlCommand>
+									<onError>continue</onError>
 								</configuration>
 							</execution>
 							<execution>
 								<id>cleanup-database-user</id>
-								<phase>post-integration-test</phase>
+								<!-- actually should the phase be post-integration-tests, but the 
+									JBoss could be still active if the same phase to shutwon it is used. -->
+								<phase>verify</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
