@@ -350,9 +350,7 @@
 					<execution>
 						<id>default-compile</id>
 						<configuration>
-							<excludes>
-								<exclude>**/*</exclude>
-							</excludes>
+							<skip>true</skip>
 						</configuration>
 					</execution>
 					<execution>
@@ -362,9 +360,7 @@
 							<goal>testCompile</goal>
 						</goals>
 						<configuration>
-							<excludes>
-								<exclude>**/*</exclude>
-							</excludes>
+							<skip>true</skip>
 						</configuration>
 					</execution>
 				</executions>
