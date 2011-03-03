@@ -72,7 +72,8 @@ import java.util.Set;
 public class Container extends GenericVersionableResourcePid
     implements ContainerInterface {
 
-    private static final AppLogger log = new AppLogger(Container.class.getName());
+    private static final AppLogger log = new AppLogger(
+        Container.class.getName());
 
     private Datastream dc = null;
 
@@ -190,12 +191,14 @@ public class Container extends GenericVersionableResourcePid
         setDescription(dch.getPropertiesMap().get(Elements.ELEMENT_DESCRIPTION));
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Get Content Model Specific.
      * 
-     * @see
-     * de.escidoc.core.om.business.fedora.resources.interfaces.FedoraResource
-     * #getGenericProperties()
+     * @return content model specific datastream (if exist)
+     * @throws StreamNotFoundException
+     *             If datastream with content-model-specific id does not exist
+     * @throws FedoraSystemException
+     *             If access to Fedora fail
      */
     public Datastream getCts() throws StreamNotFoundException,
         FedoraSystemException {
@@ -255,9 +258,11 @@ public class Container extends GenericVersionableResourcePid
      */
     @Override
     public Map<String, Datastream> getMdRecords()
-        throws IntegritySystemException, FedoraSystemException, WebserverSystemException {
+        throws IntegritySystemException, FedoraSystemException,
+        WebserverSystemException {
 
-        final Map<String, Datastream> result = new HashMap<String, Datastream>();
+        final Map<String, Datastream> result =
+            new HashMap<String, Datastream>();
         final org.fcrepo.server.types.gen.Datastream[] datastreams =
             getDatastreamInfos();
 
@@ -265,20 +270,26 @@ public class Container extends GenericVersionableResourcePid
         for (final org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             final List<String> altIDs = Arrays.asList(datastream.getAltIDs());
             if (altIDs != null
-                    && altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
+                && altIDs.contains(Datastream.METADATA_ALTERNATE_ID)) {
                 names.add(datastream.getID());
             }
         }
         for (final String name : names) {
             try {
-                final Datastream newDs = new Datastream(name, getId(), getVersionDate());
+                final Datastream newDs =
+                    new Datastream(name, getId(), getVersionDate());
                 result.put(name, newDs);
-            } catch (StreamNotFoundException e) {
-                final String message = "Metadata record \"" + name + "\" not found for container " + getId() + '.';
+            }
+            catch (StreamNotFoundException e) {
+                final String message =
+                    "Metadata record \"" + name + "\" not found for container "
+                        + getId() + '.';
                 log.error(message, e);
                 throw new IntegritySystemException(message, e);
-            } catch (WebserverSystemException e) {
-                // FIXME getVersionDate throws an WebserverSystemException in case of IntegritySystemException
+            }
+            catch (WebserverSystemException e) {
+                // FIXME getVersionDate throws an WebserverSystemException in
+                // case of IntegritySystemException
                 throw new FedoraSystemException(e);
             }
         }
@@ -303,7 +314,7 @@ public class Container extends GenericVersionableResourcePid
 
         // get list of names of data streams with alternateId = "metadata"
         final Set<String> namesInFedora = getMdRecords().keySet();
-        
+
         // delete data streams which are in fedora but not in mdRecords
         for (final String nameInFedora : namesInFedora) {
             if (!mdRecords.containsKey(nameInFedora)) {
@@ -313,23 +324,25 @@ public class Container extends GenericVersionableResourcePid
                         // FIXME remove the entire datastream
                         fedoraDs.delete();
                     }
-                } catch (StreamNotFoundException e) {
+                }
+                catch (StreamNotFoundException e) {
                     log.warn("Failed to set MdRecords.");
                 }
             }
         }
 
-        
         // create or activate data streams which are in mdRecords but not in
         // fedora
-        final Iterator<Entry<String, Datastream>> nameIt = mdRecords.entrySet().iterator();
+        final Iterator<Entry<String, Datastream>> nameIt =
+            mdRecords.entrySet().iterator();
         while (nameIt.hasNext()) {
             final Entry<String, Datastream> mapEntry = nameIt.next();
             final String name = mapEntry.getKey();
             if (namesInFedora.contains(name)) {
                 // update Datastreams which already exist
                 setMdRecord(name, mdRecords.get(name));
-            } else {
+            }
+            else {
 
                 final Datastream currentMdRecord = mapEntry.getValue();
                 final byte[] stream = currentMdRecord.getStream();
@@ -339,7 +352,7 @@ public class Container extends GenericVersionableResourcePid
                     altIDs[i] = altIds.get(i);
                 }
                 getFedoraUtility().addDatastream(getId(), name, altIDs,
-                        "md-record", true, stream, false);
+                    "md-record", true, stream, false);
                 this.mdRecords.put(name, currentMdRecord);
                 nameIt.remove();
             }
@@ -646,7 +659,8 @@ public class Container extends GenericVersionableResourcePid
             datastreamWithRelations.getStream();
 
         final StaxParser sp = new StaxParser();
-        final ByteArrayInputStream relsExtInputStream = new ByteArrayInputStream(datastreamWithRelationsContent);
+        final ByteArrayInputStream relsExtInputStream =
+            new ByteArrayInputStream(datastreamWithRelationsContent);
 
         final RelsExtContentRelationsReadHandler reHandler =
             new RelsExtContentRelationsReadHandler(sp);
