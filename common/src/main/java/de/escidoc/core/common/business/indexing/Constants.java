@@ -100,7 +100,8 @@ public final class Constants {
      * common srw Constants.
      */
     public static final String SRW_SCAN_PARAMS = 
-        "?operation=scan&scanClause=PID%3D%22${TERM}%22&maximumTerms=${MAXIMUM_TERMS}";
+        "?operation=scan&scanClause=PID%3D%22${TERM}%22"
+        + "&maximumTerms=${MAXIMUM_TERMS}&responsePosition=0";
     public static final int SRW_MAXIMUM_SCAN_TERMS = 10000;
     
     
