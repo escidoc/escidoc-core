@@ -685,7 +685,7 @@
 								</configuration>
 							</execution>
 							<execution>
-								<id>drop-role-before-compile</id>
+								<id>drop-escidoc-role-before-compile</id>
 								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
@@ -1034,7 +1034,7 @@
 								</configuration>
 							</execution>
 							<execution>
-								<id>drop-role-before-compile</id>
+								<id>drop-fedora-role-before-compile</id>
 								<phase>validate</phase>
 								<goals>
 									<goal>execute</goal>
