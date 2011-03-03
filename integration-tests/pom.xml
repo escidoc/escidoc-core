@@ -700,7 +700,7 @@
 							</execution>
 
 							<execution>
-								<id>create-role</id>
+								<id>create-escidoc-role</id>
 								<phase>process-resources</phase>
 								<goals>
 									<goal>execute</goal>
@@ -1050,7 +1050,7 @@
 							</execution>
 
 							<execution>
-								<id>create-role</id>
+								<id>create-fedora-role</id>
 								<phase>validate</phase>
 								<goals>
 									<goal>execute</goal>
