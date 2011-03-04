@@ -131,11 +131,9 @@ public class ContainerHandlerBase extends HandlerBase {
             LOG.error("Error on setting item", e);
         }
         catch (final StreamNotFoundException e) {
-            LOG.debug(e.toString());
             throw new ItemNotFoundException(e);
         }
         catch (final ResourceNotFoundException e) {
-            LOG.debug(e.toString());
             throw new ItemNotFoundException(e);
         }
     }
@@ -159,11 +157,9 @@ public class ContainerHandlerBase extends HandlerBase {
             this.container = new Container(id);
         }
         catch (final StreamNotFoundException e) {
-            LOG.debug(e.toString());
             throw new IntegritySystemException(e);
         }
         catch (final ResourceNotFoundException e) {
-            LOG.debug(e.toString());
             throw new ContainerNotFoundException(e);
         }
 
@@ -204,16 +200,11 @@ public class ContainerHandlerBase extends HandlerBase {
         if (getContainer().isLocked()
             && !getContainer().getLockOwner().equals(
                 getUtility().getCurrentUser()[0])) {
-            final String message =
-                "Container + "
+            throw new LockingException("Container + "
                     + getContainer().getId()
                     + " is locked by "
                     + XmlUtility.escapeForbiddenXmlCharacters(getContainer()
-                        .getLockOwner()) + '.';
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(message);
-            }
-            throw new LockingException(message);
+                        .getLockOwner()) + '.');
         }
     }
 
@@ -269,11 +260,7 @@ public class ContainerHandlerBase extends HandlerBase {
                 getContainer().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
         if (!status.equals(curStatus)) {
-            final String msg = "The object is in not state '" + status + "'.";
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(msg);
-            }
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The object is in not state '" + status + "'.");
         }
     }
 
@@ -304,14 +291,8 @@ public class ContainerHandlerBase extends HandlerBase {
             // seems to be the same because all methods that call checkReleased
             // also call checkLatestVersion. But the semantic should be true
             // without another method call. (? FRS)
-
-            final String msg =
-                "The object is in state '" + Constants.STATUS_RELEASED
-                    + "' and can not be" + " changed.";
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(msg);
-            }
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The object is in state '" + Constants.STATUS_RELEASED
+                    + "' and can not be" + " changed.");
         }
     }
 
@@ -351,21 +332,13 @@ public class ContainerHandlerBase extends HandlerBase {
             status = xpath.evaluate(xpathStatus, xmlDom);
         }
         catch (final Exception e) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Error on checking version.", e);
-            }
-            throw new InvalidStatusException(e);
+            throw new InvalidStatusException("Error on checking version.", e);
         }
 
         // In first release, if object is once released no changes are allowed
         if (status.equals(checkStatus)) {
-            final String msg =
-                "The object is in state '" + checkStatus + "' and can not be"
-                    + " changed.";
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(msg);
-            }
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The object is in state '" + checkStatus + "' and can not be"
+                    + " changed.");
         }
     }
 
@@ -388,13 +361,8 @@ public class ContainerHandlerBase extends HandlerBase {
 
         // In first release, if object is once released no changes are allowed
         if (!status.equals(checkStatus)) {
-            final String msg =
-                "The object is in state '" + checkStatus + "' and can not be"
-                    + " changed.";
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(msg);
-            }
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The object is in state '" + checkStatus + "' and can not be"
+                    + " changed.");
         }
     }
 
@@ -417,13 +385,8 @@ public class ContainerHandlerBase extends HandlerBase {
                 getContainer().getId(), TripleStoreUtility.PROP_OBJECT_PID);
         // In first release, if object is once released no changes are allowed
         if ((pid != null) && (pid.length() > 0)) {
-            final String msg =
-                "The object is already assigned with PID '" + pid
-                    + "' and can not be reassigned.";
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(msg);
-            }
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The object is already assigned with PID '" + pid
+                    + "' and can not be reassigned.");
         }
     }
 
@@ -457,21 +420,13 @@ public class ContainerHandlerBase extends HandlerBase {
             pid = xpath.evaluate(xpathPid, xmlDom);
         }
         catch (final Exception e) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Error on checking version.", e);
-            }
-            throw new InvalidStatusException(e);
+            throw new InvalidStatusException("Error on checking version.");
         }
 
         // FIXME pid structure check ?
         if (pid.length() > 0) {
-            final String msg =
-                "This object version is already assigned with PID '" + pid
-                    + "' and can not be reassigned.";
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(msg);
-            }
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("This object version is already assigned with PID '" + pid
+                    + "' and can not be reassigned.");
         }
     }
 
@@ -496,13 +451,8 @@ public class ContainerHandlerBase extends HandlerBase {
                 getContainer().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
         if (status.equals(Constants.STATUS_WITHDRAWN)) {
-            final String msg =
-                "The object is in state '" + Constants.STATUS_WITHDRAWN + "'. "
-                    + additionalMessage;
-            if (LOG.isInfoEnabled()) {
-                LOG.info(msg);
-            }
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The object is in state '" + Constants.STATUS_WITHDRAWN + "'. "
+                    + additionalMessage);
 
         }
     }
@@ -551,11 +501,7 @@ public class ContainerHandlerBase extends HandlerBase {
         final String thisVersion = container.getVersionNumber();
         if (thisVersion != null
             && !thisVersion.equals(container.getLatestVersionNumber())) {
-            final String message = "Only latest version can be modified.";
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(message);
-            }
-            throw new ReadonlyVersionException(message);
+            throw new ReadonlyVersionException("Only latest version can be modified.");
         }
     }
 
@@ -576,13 +522,8 @@ public class ContainerHandlerBase extends HandlerBase {
             getTripleStoreUtility().getPropertiesElements(container.getId(),
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (!(objectStatus.equals(status))) {
-            final String msg =
-                "Container " + container.getId() + " is in status '"
-                    + objectStatus + "'.";
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(msg);
-            }
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("Container " + container.getId() + " is in status '"
+                    + objectStatus + "'.");
         }
     }
 
@@ -610,13 +551,8 @@ public class ContainerHandlerBase extends HandlerBase {
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
         if (!curStatus.equals(status)) {
-            final String msg =
-                "The Context is in state '" + curStatus
-                    + "' and not in status " + status + '.';
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(msg);
-            }
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The Context is in state '" + curStatus
+                    + "' and not in status " + status + '.');
         }
     }
 
@@ -637,13 +573,8 @@ public class ContainerHandlerBase extends HandlerBase {
             getTripleStoreUtility().getPropertiesElements(container.getId(),
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (objectStatus.equals(status)) {
-            final String msg =
-                "Container " + container.getId() + " is in status '"
-                    + objectStatus + "'.";
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(msg);
-            }
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("Container " + container.getId() + " is in status '"
+                    + objectStatus + "'.");
         }
     }
 }

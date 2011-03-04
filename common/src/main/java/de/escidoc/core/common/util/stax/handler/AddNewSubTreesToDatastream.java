@@ -169,32 +169,23 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         if (inside) {
             writeElement(nsuri, theName, prefix, deepLevel, isRelsExt, isNew,
                 false);
-            final int attCount = element.getAttributeCount();
-            for (int i = 0; i < attCount; i++) {
-                final Attribute curAtt = element.getAttribute(i);
-                handleAttribute(curAtt, theName, deepLevel, isRelsExt, isNew,
-                    false);
-
+            final List<Attribute> attributes = element.getAttributes();
+            for (Attribute curAtt : attributes) {
+                handleAttribute(curAtt, theName, deepLevel, isRelsExt, isNew, false);
             }
-
             insideLevel++;
         }
         else {
             final String currentPath = parser.getCurPath();
-
             if (path.equals(currentPath)) {
                 this.out = new ByteArrayOutputStream();
                 this.writer = XmlUtility.createXmlStreamWriter(out);
                 inside = true;
                 nsuris = new HashMap();
-                writeElement(nsuri, theName, prefix, deepLevel, isRelsExt,
-                    isNew, false);
-
-                final int attCount = element.getAttributeCount();
-                for (int i = 0; i < attCount; i++) {
-                    final Attribute curAtt = element.getAttribute(i);
-                    handleAttribute(curAtt, theName, deepLevel, isRelsExt,
-                        isNew, false);
+                writeElement(nsuri, theName, prefix, deepLevel, isRelsExt, isNew, false);
+                final List<Attribute> attributes = element.getAttributes();
+                for (Attribute curAtt : attributes) {
+                    handleAttribute(curAtt, theName, deepLevel, isRelsExt, isNew, false);
                 }
                 insideLevel++;
                 if (insideLevel != 1) {
@@ -307,7 +298,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
             // TODO iteration is a hack, use
             // javax.xml.namespace.NamespaceContext
             Iterator it = nsuris.keySet().iterator();
-            final Collection toRemove = new ArrayList();
+            final Collection<String> toRemove = new ArrayList<String>();
             while (it.hasNext()) {
                 try {
                     final String key = (String) it.next();
@@ -320,12 +311,9 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                     throw new XMLStreamException(e.getMessage(), e);
                 }
             }
-            it = toRemove.iterator();
-            while (it.hasNext()) {
-                final String key = (String) it.next();
+            for(String key : toRemove) {
                 nsuris.remove(key);
             }
-
             if (insideLevel == 0) {
                 inside = false;
 

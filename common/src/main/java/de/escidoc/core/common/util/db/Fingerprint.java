@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.common.util.db;
 
+import de.escidoc.core.common.util.IOUtils;
+
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
@@ -158,24 +160,24 @@ public class Fingerprint implements Comparable<Object> {
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
-        final ResultSet rs =
-            metaData.getColumns(conn.getCatalog(), schema, table, null);
-
-        while (rs.next()) {
-            final StringBuilder column = new StringBuilder();
-
-            for (int index = 4; index <= 22; index++) {
-                // ignore column position
-                if (index != 17) {
-                    if (column.length() > 0) {
-                        column.append('/');
+        final ResultSet rs = metaData.getColumns(conn.getCatalog(), schema, table, null);
+        try {
+            while (rs.next()) {
+                final StringBuilder column = new StringBuilder();
+                for (int index = 4; index <= 22; index++) {
+                    // ignore column position
+                    if (index != 17) {
+                        if (column.length() > 0) {
+                            column.append('/');
+                        }
+                        column.append(rs.getString(index));
                     }
-                    column.append(rs.getString(index));
                 }
+                result.add(column.toString());
             }
-            result.add(column.toString());
+        } finally {
+            IOUtils.closeResultSet(rs);
         }
-        rs.close();
         return result.toArray(new String[result.size()]);
     }
 
@@ -198,21 +200,21 @@ public class Fingerprint implements Comparable<Object> {
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
-        final ResultSet rs =
-            metaData.getImportedKeys(conn.getCatalog(), schema, table);
-
-        while (rs.next()) {
-            final StringBuilder indexInfo = new StringBuilder();
-
-            for (int index = 4; index <= 14; index++) {
-                if (indexInfo.length() > 0) {
-                    indexInfo.append('/');
+        final ResultSet rs = metaData.getImportedKeys(conn.getCatalog(), schema, table);
+        try {
+            while (rs.next()) {
+                final StringBuilder indexInfo = new StringBuilder();
+                for (int index = 4; index <= 14; index++) {
+                    if (indexInfo.length() > 0) {
+                        indexInfo.append('/');
+                    }
+                    indexInfo.append(rs.getString(index));
                 }
-                indexInfo.append(rs.getString(index));
+                result.add(indexInfo.toString());
             }
-            result.add(indexInfo.toString());
+        } finally {
+            IOUtils.closeResultSet(rs);
         }
-        rs.close();
         return result.toArray(new String[result.size()]);
     }
 
@@ -236,22 +238,21 @@ public class Fingerprint implements Comparable<Object> {
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
-        final ResultSet rs =
-            metaData
-                .getIndexInfo(conn.getCatalog(), schema, table, false, true);
-
-        while (rs.next()) {
-            final StringBuilder indexInfo = new StringBuilder();
-
-            for (int index = 4; index <= 10; index++) {
-                if (indexInfo.length() > 0) {
-                    indexInfo.append('/');
+        final ResultSet rs = metaData.getIndexInfo(conn.getCatalog(), schema, table, false, true);
+        try {
+            while (rs.next()) {
+                final StringBuilder indexInfo = new StringBuilder();
+                for (int index = 4; index <= 10; index++) {
+                    if (indexInfo.length() > 0) {
+                        indexInfo.append('/');
+                    }
+                    indexInfo.append(rs.getString(index));
                 }
-                indexInfo.append(rs.getString(index));
+                result.add(indexInfo.toString());
             }
-            result.add(indexInfo.toString());
+        } finally {
+            IOUtils.closeResultSet(rs);
         }
-        rs.close();
         return result.toArray(new String[result.size()]);
     }
 
@@ -274,21 +275,21 @@ public class Fingerprint implements Comparable<Object> {
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
-        final ResultSet rs =
-            metaData.getPrimaryKeys(conn.getCatalog(), schema, table);
-
-        while (rs.next()) {
-            final StringBuilder indexInfo = new StringBuilder();
-
-            for (int index = 4; index <= 6; index++) {
-                if (indexInfo.length() > 0) {
-                    indexInfo.append('/');
+        final ResultSet rs = metaData.getPrimaryKeys(conn.getCatalog(), schema, table);
+        try {
+            while (rs.next()) {
+                final StringBuilder indexInfo = new StringBuilder();
+                for (int index = 4; index <= 6; index++) {
+                    if (indexInfo.length() > 0) {
+                        indexInfo.append('/');
+                    }
+                    indexInfo.append(rs.getString(index));
                 }
-                indexInfo.append(rs.getString(index));
+                result.add(indexInfo.toString());
             }
-            result.add(indexInfo.toString());
+        } finally {
+            IOUtils.closeResultSet(rs);
         }
-        rs.close();
         return result.toArray(new String[result.size()]);
     }
 
@@ -306,15 +307,16 @@ public class Fingerprint implements Comparable<Object> {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
         final ResultSet rs = metaData.getSchemas();
-
-        while (rs.next()) {
-            final String schema = rs.getString(1);
-
-            if (!IGNORED_SCHEMAS.containsKey(schema)) {
-                result.add(schema);
+        try {
+            while (rs.next()) {
+                final String schema = rs.getString(1);
+                if (!IGNORED_SCHEMAS.containsKey(schema)) {
+                    result.add(schema);
+                }
             }
+        } finally {
+            IOUtils.closeResultSet(rs);
         }
-        rs.close();
         return result.toArray(new String[result.size()]);
     }
 
@@ -343,19 +345,18 @@ public class Fingerprint implements Comparable<Object> {
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
-        final ResultSet rs =
-            metaData.getTables(conn.getCatalog(), schema, null,
-                new String[] { "TABLE" });
-
-        while (rs.next()) {
-            final String name = rs.getString(3);
-
-            // ignore dynamically created tables for statistics manager
-            if (!name.startsWith("_")) {
-                result.add(name);
+        final ResultSet rs = metaData.getTables(conn.getCatalog(), schema, null, new String[] { "TABLE" });
+        try {
+            while (rs.next()) {
+                final String name = rs.getString(3);
+                // ignore dynamically created tables for statistics manager
+                if (!name.startsWith("_")) {
+                    result.add(name);
+                }
             }
+        } finally {
+            IOUtils.closeResultSet(rs);
         }
-        rs.close();
         return result.toArray(new String[result.size()]);
     }
 

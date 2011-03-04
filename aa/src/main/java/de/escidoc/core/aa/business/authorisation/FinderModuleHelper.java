@@ -370,11 +370,8 @@ public final class FinderModuleHelper {
                             msg);
             }
             catch (final Exception e) {
-                final String emsg =
-                    StringUtility.format(
-                            ERROR_EXCEPTION_INSTANTIATION, exceptionClassName);
-                LOG.error(emsg);
-                throw new WebserverSystemException(emsg);
+                throw new WebserverSystemException(StringUtility.format(
+                            ERROR_EXCEPTION_INSTANTIATION, exceptionClassName), e);
             }
             LOG.error(exceptionClassName + ' ' + msg + ' ' + statusCode);
             throw exceptionInstance;
@@ -384,7 +381,6 @@ public final class FinderModuleHelper {
             final String emsg =
                 StringUtility.format(
                         "Error during attribute fetching", msg);
-            LOG.error(emsg);
             throw new WebserverSystemException(emsg);
         }
     }
@@ -435,12 +431,7 @@ public final class FinderModuleHelper {
             tsu.getRetrieveSelectClause(targetIsSubject, predicateId).append(whereClause);
         final List<String> result = tsu.retrieve(query.toString());
 
-        if (result == null || result.isEmpty()) {
-            return handleAttributeFromTripleStoreNotFound(objectId, tsu);
-        }
-        else {
-            return result;
-        }
+        return result == null || result.isEmpty() ? handleAttributeFromTripleStoreNotFound(objectId, tsu) : result;
     }
 
     /**

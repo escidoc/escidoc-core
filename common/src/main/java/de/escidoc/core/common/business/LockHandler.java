@@ -69,7 +69,7 @@ public class LockHandler extends JdbcDaoSupport {
      * @common
      */
     public void setMyDataSource(final DataSource myDataSource) {
-        super.setDataSource(myDataSource);
+        setDataSource(myDataSource);
     }
 
     /**
@@ -143,10 +143,11 @@ public class LockHandler extends JdbcDaoSupport {
                         new Object[] { objid }, String.class);
         }
         catch (IncorrectResultSizeDataAccessException e) {
+            logger.debug("Error on quering for lock owner.", e);
             return null;
         }
         catch (DataAccessException e) {
-            throw new WebserverSystemException(e);
+            throw new WebserverSystemException("Error on quering for lock owner.", e);
             // TODO throw this Exception
             // throw new SqlDatabaseSystemException(
             // "Could not find lock owner for object '" + objid + "!", e);
@@ -171,6 +172,7 @@ public class LockHandler extends JdbcDaoSupport {
                         new Object[] { objid }, String.class);
         }
         catch (IncorrectResultSizeDataAccessException e) {
+            logger.debug("Error on quering for lock owner title.", e);
             return null;
         }
         catch (DataAccessException e) {
@@ -210,6 +212,7 @@ public class LockHandler extends JdbcDaoSupport {
             result = xmlcal.toString();
         }
         catch (IncorrectResultSizeDataAccessException e) {
+            logger.debug("Error on quering for lock date.", e);
             return null;
         }
         catch (DataAccessException e) {
@@ -240,6 +243,7 @@ public class LockHandler extends JdbcDaoSupport {
                         new Object[] { objid }, Boolean.class);
         }
         catch (IncorrectResultSizeDataAccessException e) {
+            logger.debug("Error on quering for lock.", e);
             return false;
         }
         catch (DataAccessException e) {

@@ -192,7 +192,7 @@ public class AuthenticationInterceptor implements Ordered {
         catch (UsernameNotFoundException e) {
             throw new AuthenticationException(StringUtility
                     .format(
-                            FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, handle));
+                            FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, handle), e);
         }
         catch (DataAccessException e) {
             throw new WebserverSystemException(e.getMessage(), e);

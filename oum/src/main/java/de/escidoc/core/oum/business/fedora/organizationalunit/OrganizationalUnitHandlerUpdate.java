@@ -192,12 +192,10 @@ public class OrganizationalUnitHandlerUpdate
         throws InvalidStatusException {
 
         if (!getOrganizationalUnit().getPublicStatus().equals(state)) {
-            final String message =
-                "Organizational unit with id='"
+            throw new InvalidStatusException("Organizational unit with id='"
                     + getOrganizationalUnit().getId() + "' cannot be "
                     + methodText + " because it is in status '"
-                    + getOrganizationalUnit().getPublicStatus() + "'!";
-            throw new InvalidStatusException(message);
+                    + getOrganizationalUnit().getPublicStatus() + "'!");
         }
     }
 
@@ -224,12 +222,10 @@ public class OrganizationalUnitHandlerUpdate
                     getTripleStoreUtility().getPropertiesElements(parent,
                             TripleStoreUtility.PROP_PUBLIC_STATUS);
             if (!state.equals(parentState)) {
-                final String message =
-                        "Organizational unit with id='"
+                throw new InvalidStatusException("Organizational unit with id='"
                                 + getOrganizationalUnit().getId() + "' cannot be "
                                 + methodText + " because parent with id='" + parent
-                                + "' is in status '" + parentState + "'!";
-                throw new InvalidStatusException(message);
+                                + "' is in status '" + parentState + "'!");
             }
         }
     }
@@ -254,10 +250,8 @@ public class OrganizationalUnitHandlerUpdate
                             TripleStoreUtility.PROP_PUBLIC_STATUS);
             if (!(Constants.STATUS_OU_CREATED.equals(parentState) || Constants.STATUS_OU_OPENED
                     .equals(parentState))) {
-                final String message =
-                        "Organizational unit cannot be created  because parent with id='"
-                                + parent + "' is in status '" + parentState + "'!";
-                throw new InvalidStatusException(message);
+                throw new InvalidStatusException("Organizational unit cannot be created  because parent with id='"
+                                + parent + "' is in status '" + parentState + "'!");
             }
         }
 
@@ -285,12 +279,10 @@ public class OrganizationalUnitHandlerUpdate
                                 TripleStoreUtility.PROP_PUBLIC_STATUS);
                 if (!(Constants.STATUS_OU_CREATED.equals(parentState) || Constants.STATUS_OU_OPENED
                         .equals(parentState))) {
-                    final String message =
-                            "Organizational unit with objid='"
+                    throw new InvalidStatusException("Organizational unit with objid='"
                                     + getOrganizationalUnit().getId()
                                     + "' cannot be updated because parent with objid='"
-                                    + parent + "' is in status '" + parentState + "'!";
-                    throw new InvalidStatusException(message);
+                                    + parent + "' is in status '" + parentState + "'!");
                 }
             }
         }
@@ -299,19 +291,15 @@ public class OrganizationalUnitHandlerUpdate
             // InvalidStatusException
             final List<String> currentParents = getOrganizationalUnit().getParents();
             if (currentParents.size() != parents.size()) {
-                final String message =
-                    "Parent list of organizational unit with id='"
+                throw new InvalidStatusException("Parent list of organizational unit with id='"
                         + getOrganizationalUnit().getId() + "' in status '"
-                        + status + "' must not be updated!";
-                throw new InvalidStatusException(message);
+                        + status + "' must not be updated!");
             }
             for (final String parent : parents) {
                 if (!currentParents.contains(parent)) {
-                    final String message =
-                            "Parent list of organizational unit with id='"
+                    throw new InvalidStatusException("Parent list of organizational unit with id='"
                                     + getOrganizationalUnit().getId() + "' in status '"
-                                    + status + "' must not be updated!";
-                    throw new InvalidStatusException(message);
+                                    + status + "' must not be updated!");
                 }
             }
         }
@@ -331,12 +319,10 @@ public class OrganizationalUnitHandlerUpdate
         throws OrganizationalUnitHasChildrenException, SystemException {
 
         if (!getOrganizationalUnit().getChildrenIds().isEmpty()) {
-            final String message =
-                "Organizational unit with id='"
+            throw new OrganizationalUnitHasChildrenException("Organizational unit with id='"
                     + getOrganizationalUnit().getId() + "' cannot be "
                     + methodText + " because it has children:  '"
-                    + getOrganizationalUnit().getChildrenIds() + "'!";
-            throw new OrganizationalUnitHasChildrenException(message);
+                    + getOrganizationalUnit().getChildrenIds() + "'!");
         }
     }
 
@@ -361,13 +347,10 @@ public class OrganizationalUnitHandlerUpdate
                                 TripleStoreUtility.PROP_PUBLIC_STATUS);
 
                 if (!Constants.STATUS_OU_CLOSED.equals(childState)) {
-                    final String message =
-                            "Organizational unit with id='"
+                    throw new InvalidStatusException("Organizational unit with id='"
                                     + getOrganizationalUnit().getId() + "' cannot be "
                                     + methodText + " because it has a child '" + child
-                                    + "' not in state 'closed'!";
-
-                    throw new InvalidStatusException(message);
+                                    + "' not in state 'closed'!");
                 }
             }
         }

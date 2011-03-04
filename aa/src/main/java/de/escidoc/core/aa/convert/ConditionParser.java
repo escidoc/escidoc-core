@@ -316,14 +316,8 @@ public class ConditionParser {
         final String[] listValues = list.split(" ");
 
         for (final String listvalue : listValues) {
-            if (result.length() > 0) {
-                result =
-                    values.getOrCondition(result,
-                        values.getKeyValueCondition(value, listvalue));
-            }
-            else {
-                result = values.getKeyValueCondition(value, listvalue);
-            }
+            result = result.length() > 0 ? values.getOrCondition(result,
+                    values.getKeyValueCondition(value, listvalue)) : values.getKeyValueCondition(value, listvalue);
         }
         return result;
     }

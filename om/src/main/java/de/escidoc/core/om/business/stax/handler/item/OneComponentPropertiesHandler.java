@@ -142,11 +142,8 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
                     properties.put(TripleStoreUtility.PROP_VISIBILITY, s);
                 }
                 else {
-                    LOGGER
-                        .error("the value of element " + theName
-                            + " is missing");
                     throw new MissingElementValueException(
-                        "the value of element " + theName + " is missing");
+                        "The value of element " + theName + " is missing");
                 }
             }
             else if (theName
@@ -156,11 +153,8 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
                         TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY, s);
                 }
                 else {
-                    LOGGER
-                        .error("the value of element " + theName
-                            + " is missing");
                     throw new MissingElementValueException(
-                        "the value of element " + theName + " is missing");
+                        "The value of element " + theName + " is missing");
                 }
             }
         }

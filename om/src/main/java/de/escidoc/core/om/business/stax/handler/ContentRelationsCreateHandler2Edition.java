@@ -130,23 +130,17 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             if (indexOfHref != -1) {
                 href = element.getAttribute(indexOfHref).getValue();
                 if (href.length() == 0) {
-                    final String message =
-                        "The value of attribute 'xlink:href' of "
+                    throw new InvalidContentException("The value of attribute 'xlink:href' of "
                             + " the element '" + theName
-                            + "' may not be an empty string";
-                    LOGGER.error(message);
-                    throw new InvalidContentException(message);
+                            + "' may not be an empty string");
                 }
             }
             String objid = null;
             if (indexOfObjId != -1) {
                 objid = element.getAttribute(indexOfObjId).getValue();
                 if (objid.length() == 0) {
-                    final String message =
-                        "The value of attribute 'objid' of " + " the element '"
-                            + theName + "' may not be an empty string";
-                    LOGGER.error(message);
-                    throw new InvalidContentException(message);
+                    throw new InvalidContentException("The value of attribute 'objid' of " + " the element '"
+                            + theName + "' may not be an empty string");
                 }
             }
 
@@ -154,9 +148,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
             final int indexOfPredicate = element.indexOfAttribute(null, "predicate");
             predicate = element.getAttribute(indexOfPredicate).getValue();
             if (!ContentRelationsUtility.validPredicate(predicate)) {
-                final String message = "Predicate " + predicate + " is wrong. ";
-                LOGGER.error(message);
-                throw new RelationPredicateNotFoundException(message);
+                throw new RelationPredicateNotFoundException("Predicate " + predicate + " is wrong.");
             }
         }
         return element;
@@ -205,68 +197,45 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
         throws InvalidContentException, TripleStoreSystemException,
         ReferencedResourceNotFoundException, WebserverSystemException {
         targetId = null;
-        if (href != null) {
-            targetId = Utility.getId(href);
-        }
-        else {
-            targetId = objectId;
-        }
+        targetId = href != null ? Utility.getId(href) : objectId;
         final String targetIdWithoutVersion =
             XmlUtility.getObjidWithoutVersion(targetId);
         String targetVersion =
             targetId.replaceFirst(targetIdWithoutVersion, "");
         if (targetVersion.length() > 0) {
             targetVersion = targetVersion.substring(1);
-            final String message =
-                "A relation target may not be referenced by an "
+            throw new InvalidContentException("A relation target may not be referenced by an "
                     + " identifier containing a version number. Use a floating "
-                    + "identifier like 'escidoc:123' to reference a target";
-            LOGGER.error(message);
-            throw new InvalidContentException(message);
+                    + "identifier like 'escidoc:123' to reference a target");
         }
 
         final String targetObjectType =
             TripleStoreUtility.getInstance().getObjectType(targetId);
 
         if (!TripleStoreUtility.getInstance().exists(targetId)) {
-            final String message =
-                "Related " + targetObjectType + " with id " + targetId
-                    + " does not exist.";
-            LOGGER.error(message);
-            throw new ReferencedResourceNotFoundException(message);
+            throw new ReferencedResourceNotFoundException("Related " + targetObjectType + " with id " + targetId
+                    + " does not exist.");
         }
 
         if (!Constants.ITEM_OBJECT_TYPE.equals(targetObjectType)
             && !Constants.CONTAINER_OBJECT_TYPE.equals(targetObjectType)) {
-            final String message =
-                "A related resource has to be either 'item' or 'container'. "
+            throw new InvalidContentException("A related resource has to be either 'item' or 'container'. "
                     + "A object with id " + targetId
-                    + " is neither 'item' nor 'container' ";
-
-            LOGGER.error(message);
-            throw new InvalidContentException(message);
+                    + " is neither 'item' nor 'container' ");
         }
         if (href != null) {
             if (targetObjectType.equals(Constants.ITEM_OBJECT_TYPE)
                 && !href.equals("/ir/item/" + targetId)) {
-
-                final String message =
-                    "The 'href' attribute, which represents"
+                throw new InvalidContentException("The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
-                        + "/ir/item/" + targetId;
-                LOGGER.error(message);
-                throw new InvalidContentException(message);
+                        + "/ir/item/" + targetId);
 
             }
             else if (targetObjectType.equals(Constants.CONTAINER_OBJECT_TYPE)
                 && !href.equals("/ir/container/" + targetId)) {
-
-                final String message =
-                    "The 'href' attribute, which represents"
+                throw new InvalidContentException("The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
-                        + "/ir/container/" + targetId;
-                LOGGER.error(message);
-                throw new InvalidContentException(message);
+                        + "/ir/container/" + targetId);
 
             }
         }

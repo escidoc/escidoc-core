@@ -95,12 +95,7 @@ public class OrganizationalUnitMetadataHandler
     public OrganizationalUnitMetadataHandler(final StaxParser parser,
         final String rootPath) {
         super(null, parser);
-        if (rootPath == null || "/".equals(rootPath)) {
-            this.rootPath = "";
-        }
-        else {
-            this.rootPath = rootPath;
-        }
+        this.rootPath = rootPath == null || "/".equals(rootPath) ? "" : rootPath;
     }
 
     /**
@@ -129,11 +124,8 @@ public class OrganizationalUnitMetadataHandler
                 this.currentMdRecordName = name.getValue();
 
                 if (currentMdRecordName.length() == 0) {
-                    final String message =
-                        "The value of attribute 'name' of the element "
-                            + elementName + " was not set!";
-                    LOGGER.error(message);
-                    throw new MissingAttributeValueException(message);
+                    throw new MissingAttributeValueException("The value of attribute 'name' of the element "
+                            + elementName + " was not set!");
 
                 }
                 else if (MANDATORY_MD_RECORD_NAME.equals(currentMdRecordName)) {
@@ -141,11 +133,8 @@ public class OrganizationalUnitMetadataHandler
                 }
             }
             catch (NoSuchAttributeException e) {
-                final String message =
-                    "The mandatory attribute 'name' of the element "
-                        + elementName + " was not found!";
-                LOGGER.error(message);
-                throw new MissingAttributeValueException(message);
+                throw new MissingAttributeValueException("The mandatory attribute 'name' of the element "
+                        + elementName + " was not found!", e);
             }
             final Map<String, String> md = new HashMap<String, String>();
             final int indexOfType = element.indexOfAttribute(null, TYPE);
@@ -193,11 +182,8 @@ public class OrganizationalUnitMetadataHandler
         }
         else if ((getMdRecordsPath().equals(getParser().getCurPath()))
             && (!mandatoryMdRecordFound)) {
-            final String message =
-                "Mandatory md-record with a name "
-                    + MANDATORY_MD_RECORD_NAME + " is missing.";
-            LOGGER.error(message);
-            throw new MissingMdRecordException(message);
+            throw new MissingMdRecordException("Mandatory md-record with a name "
+                    + MANDATORY_MD_RECORD_NAME + " is missing.");
         }
         return element;
     }

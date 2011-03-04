@@ -109,12 +109,7 @@ public class StatisticPreprocessor {
             log.info("Preprocessing Statistics for Date " + inputDate);
         }
         final Date date;
-        if (inputDate != null) {
-            date = inputDate;
-        }
-        else {
-            date = new Date();
-        }
+        date = inputDate != null ? inputDate : new Date();
         if (log.isInfoEnabled()) {
             log.info("ComputedDate: " + date);
         }
@@ -195,7 +190,6 @@ public class StatisticPreprocessor {
                     new HashMap<String, String>(), e,
                 de.escidoc.core.common.business.Constants.
                 STATISTIC_PREPROCESSING_ERROR_LOGFILE);
-            log.error(e);
             throw new StatisticPreprocessingSystemException(e);
         }
     }
@@ -221,12 +215,7 @@ public class StatisticPreprocessor {
                         "aggregationDefinition may not be null");
         }
         final Date date;
-        if (inputDate != null) {
-            date = inputDate;
-        }
-        else {
-            date = new Date();
-        }
+        date = inputDate != null ? inputDate : new Date();
         try {
             // dont process statistic-data for this date and
             // aggregation-definition
@@ -304,7 +293,9 @@ public class StatisticPreprocessor {
             preprocessingLog.setProcessingDate(new java.sql.Date(date.getTime()));
             try {
                 preprocessingLogsDao.savePreprocessingLog(preprocessingLog);
-            } catch (SqlDatabaseSystemException e1) {}
+            } catch (SqlDatabaseSystemException e1) {
+                log.debug("Error on saving preprocessing log.", e1);
+            }
             final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             throw new StatisticPreprocessingSystemException(
                     "error while preprocessing aggregationDefinition "
@@ -499,7 +490,7 @@ public class StatisticPreprocessor {
         }
         catch (Exception e) {
             throw new StatisticPreprocessingSystemException(
-                "Cannot handle xpath-query for statistic-table");
+                "Cannot handle xpath-query for statistic-table", e);
         }
     }
     

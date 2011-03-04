@@ -123,6 +123,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             roleGrantFilter = new RoleGrantFilter(null);
         }
         catch (InvalidSearchQueryException e) {
+            logger.debug("Expected exception for null-query", e);
             // Dont do anything because null-query is given
         }
         criteriaMap = userAccountFilter.getCriteriaMap();
@@ -421,12 +422,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         final String organizationalUnit2 =
             (String) clonedCriterias.remove(Constants.FILTER_PATH_ORGANIZATIONAL_UNIT);
         final String organizationalUnit;
-        if (organizationalUnit1 != null) {
-            organizationalUnit = organizationalUnit1;
-        }
-        else {
-            organizationalUnit = organizationalUnit2;
-        }
+        organizationalUnit = organizationalUnit1 != null ? organizationalUnit1 : organizationalUnit2;
         if (organizationalUnit != null) {
 
             final String ouAttributeName;
@@ -913,6 +909,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                             .retrieveGroupsForUser(userId));
                     }
                     catch (UserAccountNotFoundException e) {
+                        logger.debug("Error on retrieving groups for user.", e);
                     }
                 }
                 filter.setGroupIds(groupIds);
@@ -1464,7 +1461,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 
-        super.setSessionFactory(mySessionFactory);
+        setSessionFactory(mySessionFactory);
     }
 
     /**
@@ -1548,13 +1545,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         final Collection<String> criteria, final String fieldName) {
         if (criteria.contains("")) {
             criteria.remove("");
-            if (criteria.isEmpty()) {
-                return Restrictions.isNull(fieldName);
-            }
-            else {
-                return Restrictions.or(Restrictions.isNull(fieldName),
+            return criteria.isEmpty() ? Restrictions.isNull(fieldName) : Restrictions.or(Restrictions.isNull(fieldName),
                     Restrictions.in(fieldName, criteria.toArray()));
-            }
         }
         else {
             return Restrictions.in(fieldName, criteria.toArray());

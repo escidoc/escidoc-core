@@ -132,13 +132,9 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             inContentRelation = true;
             final int indexOfObjId = element.indexOfAttribute(null, "objid");
             if (indexOfObjId != (-1)) {
-
-                final String message =
-                    "Read only attribute \"objid\" of the " + "element "
+                throw new ReadonlyAttributeViolationException("Read only attribute \"objid\" of the " + "element "
                         + element.getLocalName()
-                        + " may not exist while create";
-                LOGGER.info(message);
-                throw new ReadonlyAttributeViolationException(message);
+                        + " may not exist while create");
             }
 
         }
@@ -155,18 +151,13 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                     if (OntologyUtility.checkPredicate(xlinkHref)) {
                         predicate = xlinkHref;
                     } else {
-                        final String message =
-                                "Predicate " + xlinkHref + " is wrong. ";
-                        throw new RelationPredicateNotFoundException(message);
+                        throw new RelationPredicateNotFoundException("Predicate " + xlinkHref + " is wrong. ");
                     }
 
                 }
                 catch (NoSuchAttributeException e) {
-                    final String message =
-                        "Attribute 'href' of the element '" + theName
-                            + "' is missing.";
-                    LOGGER.info(message);
-                    throw new InvalidContentException(message);
+                    throw new InvalidContentException("Attribute 'href' of the element '" + theName
+                            + "' is missing.", e);
                 }
                 final int indexOfType =
                     element.indexOfAttribute(Constants.XLINK_URI, "type");
@@ -174,10 +165,8 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                 final Attribute type = element.getAttribute(indexOfType);
                 final String typeValue = type.getValue();
                 if (!typeValue.equals(Constants.XLINK_TYPE_SIMPLE)) {
-                    final String message =
-                        "Attribute " + Constants.XLINK_URI + ':'
-                            + "type must be set to 'simple'";
-                    throw new InvalidContentException(message);
+                    throw new InvalidContentException("Attribute " + Constants.XLINK_URI + ':'
+                            + "type must be set to 'simple'");
                 }
 
             }
@@ -188,35 +177,27 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                 element.indexOfAttribute(Constants.XLINK_URI, "title");
 
             if (indexOfTitle != (-1)) {
-                final String message =
-                    "Read only attribute \"title\" of the " + "element "
+                throw new ReadonlyAttributeViolationException("Read only attribute \"title\" of the " + "element "
                         + element.getLocalName()
-                        + " may not exist while create";
-                LOGGER.info(message);
-                throw new ReadonlyAttributeViolationException(message);
+                        + " may not exist while create");
             }
             final int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");
-
             if (indexOfHref != (-1)) {
-                final String message =
-                    "Read only attribute \"href\" of the " + "element "
+                throw new ReadonlyAttributeViolationException("Read only attribute \"href\" of the " + "element "
                         + element.getLocalName()
-                        + " may not exist while create";
-                LOGGER.error(message);
-                throw new ReadonlyAttributeViolationException(message);
+                        + " may not exist while create");
             }
             try {
                 final Attribute type =
                     element.getAttribute(Constants.XLINK_URI, "type");
                 if (!"simple".equals(type.getValue())) {
-                    final String message =
-                        "Attribute " + Constants.XLINK_URI + ':'
-                            + "type must be set to 'simple'";
-                    throw new InvalidContentException(message);
+                    throw new InvalidContentException("Attribute " + Constants.XLINK_URI + ':'
+                            + "type must be set to 'simple'");
                 }
             }
             catch (NoSuchAttributeException e) {
+                LOGGER.debug("Error on getting attribute.", e);
                 element.addAttribute(new Attribute("type", Constants.XLINK_URI,
                     Constants.XLINK_PREFIX, "simple"));
             }
@@ -276,53 +257,36 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                 element.getAttribute(Constants.XLINK_URI, "href").getValue();
             targetId = XmlUtility.getIdFromURI(xlinkHref);
             if (!objectId.equals(targetId)) {
-                final String message =
-                    "Value of the attribute 'href' is wrong. It must contain "
-                        + objectId + " instead of " + targetId;
-                LOGGER.info(message);
-                throw new InvalidContentException(message);
+                throw new InvalidContentException("Value of the attribute 'href' is wrong. It must contain "
+                        + objectId + " instead of " + targetId);
             }
             targetIdWithoutVersion =
                 XmlUtility.getObjidWithoutVersion(targetId);
             targetVersion = targetId.replaceFirst(targetIdWithoutVersion, "");
-            if (targetVersion.length() > 0) {
-                targetVersion = targetVersion.substring(1);
-            }
-            else {
-                targetVersion = null;
-            }
+            targetVersion = targetVersion.length() > 0 ? targetVersion.substring(1) : null;
 
             final String targetObjectType =
                 TripleStoreUtility.getInstance().getObjectType(
                     targetIdWithoutVersion);
             targetExist(targetObjectType);
             if (!xlinkHref.equals("/ir/" + targetObjectType + '/' + targetId)) {
-                final String message =
-                    "Value of the attribute 'href' is wrong. It must be"
-                        + "/ir/" + targetObjectType + '/' + targetId;
-                LOGGER.info(message);
-                throw new InvalidContentException(message);
+                throw new InvalidContentException("Value of the attribute 'href' is wrong. It must be"
+                        + "/ir/" + targetObjectType + '/' + targetId);
             }
 
             final int indexOfTitle =
                 element.indexOfAttribute(Constants.XLINK_URI, "title");
             if (indexOfTitle != (-1)) {
-                final String message =
-                    "Read only attribute \"title\" of the " + "element "
+                throw new ReadonlyAttributeViolationException("Read only attribute \"title\" of the " + "element "
                         + element.getLocalName()
-                        + " may not exist while create";
-                LOGGER.info(message);
-                throw new ReadonlyAttributeViolationException(message);
+                        + " may not exist while create");
             }
             // targetId = "<info:fedora/" + targetId + ">";
 
         }
         catch (NoSuchAttributeException e) {
-            final String msg =
-                "Expected attribute in object reference " + "in 'relation' of "
-                    + id + " is not set. (create item)";
-            LOGGER.info(msg, e);
-            throw new InvalidContentException(msg, e);
+            throw new InvalidContentException("Expected attribute in object reference " + "in 'relation' of "
+                    + id + " is not set. (create item)", e);
 
         }
     }
@@ -336,11 +300,8 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
     private void targetExist(final String targetObjectType)
         throws ReferencedResourceNotFoundException, SystemException {
         if (!TripleStoreUtility.getInstance().exists(targetIdWithoutVersion)) {
-            final String message =
-                "Referenced target resource with id " + targetIdWithoutVersion
-                    + " does not exist.";
-            LOGGER.error(message);
-            throw new ReferencedResourceNotFoundException(message);
+            throw new ReferencedResourceNotFoundException("Referenced target resource with id " + targetIdWithoutVersion
+                    + " does not exist.");
 
         }
         if (targetVersion != null) {
@@ -353,12 +314,9 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             }
             if (targetLatestVersion == null || Integer.parseInt(targetVersion) > Integer
                 .parseInt(targetLatestVersion)) {
-                final String message =
-                    "Referenced target resource with id "
+                throw new ReferencedResourceNotFoundException("Referenced target resource with id "
                         + targetIdWithoutVersion + ':' + targetVersion
-                        + " does not exist.";
-                LOGGER.info(message);
-                throw new ReferencedResourceNotFoundException(message);
+                        + " does not exist.");
             }
         }
     }

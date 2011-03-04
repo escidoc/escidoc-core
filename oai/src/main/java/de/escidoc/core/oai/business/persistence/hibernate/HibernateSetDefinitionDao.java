@@ -72,6 +72,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
             setDefinitionFilter = new SetDefinitionFilter(null);
         }
         catch (InvalidSearchQueryException e) {
+            logger.debug("Expected exception for null-query", e);
             // Dont do anything because null-query is given
         }
         criteriaMap = setDefinitionFilter.getCriteriaMap();
@@ -315,6 +316,6 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      * @spring.property ref="eSciDoc.core.om.SessionFactory"
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
-        super.setSessionFactory(mySessionFactory);
+        setSessionFactory(mySessionFactory);
     }
 }

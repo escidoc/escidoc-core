@@ -82,6 +82,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             userGroupFilter = new UserGroupFilter(null);
         }
         catch (InvalidSearchQueryException e) {
+            logger.debug("Expected exception for null-query", e);
             // Dont do anything because null-query is given
         }
         criteriaMap = userGroupFilter.getCriteriaMap();
@@ -683,6 +684,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * @spring.property ref="eSciDoc.core.aa.SessionFactory"
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
-        super.setSessionFactory(mySessionFactory);
+        setSessionFactory(mySessionFactory);
     }
 }

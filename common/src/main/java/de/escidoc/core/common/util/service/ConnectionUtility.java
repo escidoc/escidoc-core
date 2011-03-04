@@ -581,14 +581,8 @@ public class ConnectionUtility {
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_PROXY_PORT);
                 if (proxyHostName != null && proxyHostName.trim().length() != 0) {
-                    if (proxyPort != null && proxyPort.trim().length() != 0) {
-                        this.proxyHost =
-                            new HttpHost(proxyHostName,
-                                Integer.parseInt(proxyPort));
-                    }
-                    else {
-                        this.proxyHost = new HttpHost(proxyHostName);
-                    }
+                    this.proxyHost = proxyPort != null && proxyPort.trim().length() != 0 ? new HttpHost(proxyHostName,
+                            Integer.parseInt(proxyPort)) : new HttpHost(proxyHostName);
                 }
                 proxyConfigured = true;
             }
@@ -798,8 +792,6 @@ public class ConnectionUtility {
             final int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (httpResponse.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
                 final String errorPage = readResponse(httpResponse);
-                LOG.debug("Connection to '" + url
-                    + "' failed with response code " + responseCode);
                 throw new WebserverSystemException("HTTP connection to \""
                     + url + "\" failed: " + errorPage);
             }
@@ -856,9 +848,6 @@ public class ConnectionUtility {
             final int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (responseCode != HttpServletResponse.SC_OK) {
                 final String errorPage = readResponse(httpResponse);
-
-                LOG.debug("Connection to '" + url
-                    + "' failed with response code " + responseCode);
                 throw new WebserverSystemException("HTTP connection to \""
                     + url + "\" failed: " + errorPage);
             }
@@ -905,16 +894,6 @@ public class ConnectionUtility {
         throws WebserverSystemException {
 
         final HttpResponse httpResponse;
-        // RequestEntity entity;
-        // try {
-        // entity =
-        // new StringRequestEntity(body, Constants.DEFAULT_MIME_TYPE,
-        // XmlUtility.CHARACTER_ENCODING);
-        // }
-        // catch (UnsupportedEncodingException e) {
-        // throw new WebserverSystemException(e);
-        // }
-
         try {
             // TODO
             // entitys für Body Posts

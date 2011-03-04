@@ -94,7 +94,6 @@ public class ReportHandler implements ReportHandlerInterface {
             LOGGER.debug("ReportHandler does create");
         }
         if (xml == null || xml.length() == 0) {
-            LOGGER.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
 
@@ -106,7 +105,6 @@ public class ReportHandler implements ReportHandlerInterface {
         try {
             sp.parse(xml);
         } catch (Exception e) {
-            LOGGER.error(e);
             throw new SystemException(e);
         }
         
@@ -150,7 +148,6 @@ public class ReportHandler implements ReportHandlerInterface {
         throws MissingMethodParameterException {
         String sql = reportDefinition.getSql();
         if (sql == null || sql.length() == 0) {
-            LOGGER.error("sql in reportDefinition may not be null");
             throw new MissingMethodParameterException(
                 "sql in reportDefinition may not be null");
         }

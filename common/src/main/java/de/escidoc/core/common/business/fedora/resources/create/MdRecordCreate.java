@@ -102,9 +102,7 @@ public class MdRecordCreate implements Serializable {
     public void setName(final String name) throws InvalidContentException {
 
         if ((name == null) || name.length() == 0) {
-            final String errorMsg = "Empty name of meta data record";
-            LOG.debug(errorMsg);
-            throw new InvalidContentException(errorMsg);
+            throw new InvalidContentException("Empty name of meta data record");
         }
 
         this.mdRecordName = name;

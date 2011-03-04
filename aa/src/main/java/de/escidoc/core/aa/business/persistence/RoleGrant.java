@@ -65,12 +65,7 @@ public class RoleGrant extends RoleGrantBase {
     public String getTitle() {
 
         final String objectTitle = getObjectTitle();
-        if (objectTitle != null) {
-            return getEscidocRole().getRoleName() + " of " + objectTitle;
-        }
-        else {
-            return getEscidocRole().getRoleName();
-        }
+        return objectTitle != null ? getEscidocRole().getRoleName() + " of " + objectTitle : getEscidocRole().getRoleName();
     }
 
     /**
@@ -80,14 +75,9 @@ public class RoleGrant extends RoleGrantBase {
      * @aa
      */
     public String getHref() {
-        if (this.getUserAccountByUserId() != null) {
-            return XmlUtility.getUserAccountGrantHref(this
-                .getUserAccountByUserId().getId(), this.getId());
-        }
-        else {
-            return XmlUtility.getUserGroupGrantHref(this
+        return this.getUserAccountByUserId() != null ? XmlUtility.getUserAccountGrantHref(this
+                .getUserAccountByUserId().getId(), this.getId()) : XmlUtility.getUserGroupGrantHref(this
                 .getUserGroupByGroupId().getId(), this.getId());
-        }
     }
 
     /**
@@ -144,12 +134,7 @@ public class RoleGrant extends RoleGrantBase {
      */
     public Date getLastModificationDate() {
 
-        if (getRevocationDate() != null) {
-            return getRevocationDate();
-        }
-        else {
-            return getCreationDate();
-        }
+        return getRevocationDate() != null ? getRevocationDate() : getCreationDate();
     }
 
 }

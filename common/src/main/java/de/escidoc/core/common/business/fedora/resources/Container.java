@@ -234,6 +234,7 @@ public class Container extends GenericVersionableResourcePid
             }
         }
         catch (StreamNotFoundException e) {
+            log.debug("Error on setting datastream.", e);
             // this is not an update; its a create
             ds.persist(false);
             this.cts = ds;
@@ -241,6 +242,7 @@ public class Container extends GenericVersionableResourcePid
         // FedoraException when datastreams are preinitialized (see Item) and
         // getCts does not throw an exception on non-existing datastream.
         catch (final FedoraSystemException e) {
+            log.debug("Error on setting datastream.", e);
             // this is not an update; its a create
             ds.persist(false);
             this.cts = ds;
@@ -326,7 +328,7 @@ public class Container extends GenericVersionableResourcePid
                     }
                 }
                 catch (StreamNotFoundException e) {
-                    log.warn("Failed to set MdRecords.");
+                    log.debug("Failed to set MdRecords.", e);
                 }
             }
         }
@@ -374,7 +376,6 @@ public class Container extends GenericVersionableResourcePid
                 ds = new Datastream(name, getId(), getVersionDate());
             }
             catch (WebserverSystemException e) {
-                log.error(e);
                 throw new FedoraSystemException(e);
             }
             this.mdRecords.put(name, ds);
@@ -452,20 +453,13 @@ public class Container extends GenericVersionableResourcePid
                             }
                         }
                         else {
-                            final String message =
-                                "namespace uri of 'escidoc' metadata"
-                                    + " does not set in datastream.";
-
-                            log.error(message);
-                            throw new IntegritySystemException(message);
+                            throw new IntegritySystemException("namespace uri of 'escidoc' metadata"
+                                    + " does not set in datastream.");
                         }
                     }
                     else {
-                        final String message =
-                            "Properties of 'md-record' datastream"
-                                + " with then name 'escidoc' does not exist";
-                        log.error(message);
-                        throw new IntegritySystemException(message);
+                        throw new IntegritySystemException("Properties of 'md-record' datastream"
+                                + " with then name 'escidoc' does not exist");
                     }
                 }
 
@@ -475,6 +469,7 @@ public class Container extends GenericVersionableResourcePid
             }
         }
         catch (StreamNotFoundException e) {
+            log.debug("Failed to set MdRecords.", e);
             // this is not an update; its a create
             ds.addAlternateId(type);
             ds.addAlternateId(schema);
@@ -541,11 +536,7 @@ public class Container extends GenericVersionableResourcePid
         throws StreamNotFoundException, FedoraSystemException,
         WebserverSystemException {
 
-        if (this.escidocRelsExt == null) {
-            this.escidocRelsExt = ds;
-
-        }
-        else if (!this.escidocRelsExt.equals(ds)) {
+        if (this.escidocRelsExt == null || !this.escidocRelsExt.equals(ds)) {
             this.escidocRelsExt = ds;
 
         }
@@ -645,12 +636,7 @@ public class Container extends GenericVersionableResourcePid
 
         final Datastream datastreamWithRelations;
         try {
-            if (getVersionNumber() == null) {
-                datastreamWithRelations = getRelsExt();
-            }
-            else {
-                datastreamWithRelations = getEscidocRelsExt();
-            }
+            datastreamWithRelations = getVersionNumber() == null ? getRelsExt() : getEscidocRelsExt();
         }
         catch (StreamNotFoundException e1) {
             throw new IntegritySystemException("Datastream not found.", e1);
@@ -705,11 +691,8 @@ public class Container extends GenericVersionableResourcePid
             }
         }
         catch (StreamNotFoundException e) {
-            final String message =
-                "RELS-EXT datastream not found in" + " container with id "
-                    + getId();
-            log.error(message);
-            throw new WebserverSystemException(message, e);
+            throw new WebserverSystemException("RELS-EXT datastream not found in" + " container with id "
+                    + getId(), e);
         }
         return this.escidocRelsExt.merge();
     }
@@ -843,12 +826,7 @@ public class Container extends GenericVersionableResourcePid
         final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
-        if (propertiesNames != null) {
-            newPropertiesNames = propertiesNames;
-        }
-        else {
-            newPropertiesNames = new ArrayList<String>();
-        }
+        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE);
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_CATEGORY);
@@ -871,12 +849,7 @@ public class Container extends GenericVersionableResourcePid
         final Map<String, String> propertiesMapping) {
 
         final Map<String, String> newPropertiesNames;
-        if (propertiesMapping != null) {
-            newPropertiesNames = propertiesMapping;
-        }
-        else {
-            newPropertiesNames = new HashMap<String, String>();
-        }
+        newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
 
         newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_VERSION_PID,
             PropertyMapKeys.LATEST_VERSION_PID);

@@ -143,7 +143,7 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
                     "Configuration could not be read.", e);
             }
             catch (NoSuchAttributeException e) {
-                throw new InvalidContentException("No href for schema element.");
+                throw new InvalidContentException("No href for schema element.", e);
             }
         }
 

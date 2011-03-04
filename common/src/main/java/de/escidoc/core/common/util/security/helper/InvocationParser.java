@@ -31,6 +31,7 @@ package de.escidoc.core.common.util.security.helper;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -520,7 +521,7 @@ public class InvocationParser {
                     if (invocationMapping.isMultiValue()) {
                         length = nodeList.getLength();
                     }
-                    HashSet<String> values = new HashSet<String>();
+                    Collection<String> values = new HashSet<String>();
                     for (int i = 0; i < length; i++) {
                         final Node node = nodeList.item(i);
                         String tmpValue = null;

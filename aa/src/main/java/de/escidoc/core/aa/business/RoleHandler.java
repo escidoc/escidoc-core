@@ -63,7 +63,6 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.stax.handler.filter.FilterHandler;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
@@ -159,7 +158,6 @@ public class RoleHandler implements RoleHandlerInterface {
             final String msg =
                 "Unexpected exception in " + getClass().getName() + ".create: "
                     + e.getClass().getName();
-            log.error(msg, e);
             throw new WebserverSystemException(msg, e);
         }
 
@@ -297,7 +295,6 @@ public class RoleHandler implements RoleHandlerInterface {
             final String msg =
                 "Unexpected exception in " + getClass().getName() + ".update: "
                     + e.getClass().getName();
-            log.error(msg, e);
             throw new WebserverSystemException(msg, e);
         }
         // check if policy is parseable by XACML-Parser
@@ -353,7 +350,6 @@ public class RoleHandler implements RoleHandlerInterface {
         catch (Exception e) {
             final String msg = "Unexpected exception in " +
                     getClass().getName() + ".update: "+ e.getClass().getName();
-            log.error(msg, e);
             throw new WebserverSystemException(msg, e);
         }
 

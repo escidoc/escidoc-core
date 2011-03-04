@@ -120,32 +120,20 @@ public class GsearchHandler {
                                     getRepositoryInfo()
                                         .get("SupportedMimeTypes")
                                     , XmlUtility.CHARACTER_ENCODING));
-            if (pidSuffix == null || pidSuffix.length() == 0) {
-                stylesheetParameters =
-                    Constants.PID_VERSION_IDENTIFIER_TOTAL_MATCHER.reset(
-                                            stylesheetParameters)
-                                                .replaceFirst("");
-            } else {
-                stylesheetParameters =
-                    Constants.PID_VERSION_IDENTIFIER_MATCHER.reset(
-                                            stylesheetParameters)
-                                                .replaceFirst(pidSuffix);
-            }
-            if (indexFulltextVisibilities == null 
-                || indexFulltextVisibilities.length() == 0) {
-                stylesheetParameters =
-                    Constants.INDEX_FULLTEXT_VISIBILITIES_TOTAL_MATCHER.reset(
-                                            stylesheetParameters)
-                                                .replaceFirst("");
-            } else {
-                stylesheetParameters =
-                    Constants.INDEX_FULLTEXT_VISIBILITIES_MATCHER.reset(
-                                            stylesheetParameters)
-                                                .replaceFirst(
-                                                        URLEncoder.encode(
-                                                                indexFulltextVisibilities, 
-                                                                XmlUtility.CHARACTER_ENCODING));
-            }
+            stylesheetParameters = pidSuffix == null || pidSuffix.length() == 0 ? Constants.PID_VERSION_IDENTIFIER_TOTAL_MATCHER.reset(
+                    stylesheetParameters)
+                    .replaceFirst("") : Constants.PID_VERSION_IDENTIFIER_MATCHER.reset(
+                    stylesheetParameters)
+                    .replaceFirst(pidSuffix);
+            stylesheetParameters = indexFulltextVisibilities == null
+                    || indexFulltextVisibilities.length() == 0 ? Constants.INDEX_FULLTEXT_VISIBILITIES_TOTAL_MATCHER.reset(
+                    stylesheetParameters)
+                    .replaceFirst("") : Constants.INDEX_FULLTEXT_VISIBILITIES_MATCHER.reset(
+                    stylesheetParameters)
+                    .replaceFirst(
+                            URLEncoder.encode(
+                                    indexFulltextVisibilities,
+                                    XmlUtility.CHARACTER_ENCODING));
             updateIndexParams += stylesheetParameters;
 
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
@@ -167,16 +155,10 @@ public class GsearchHandler {
             return response;
         }
         catch (IOException e) {
-            log
-                .error("error while indexing resource " + resource
-                    + " " + e.getMessage());
-            throw new ApplicationServerSystemException(e.getMessage(), e);
+            throw new ApplicationServerSystemException("Error while indexing resource.", e);
         }
         catch (WebserverSystemException e) {
-            log
-                .error("error while indexing resource " + resource
-                        + " " + e.getMessage(), e);
-            throw new ApplicationServerSystemException(e.getMessage(), e);
+            throw new ApplicationServerSystemException("Error while indexing resource.", e);
         }
     }
 
@@ -241,7 +223,6 @@ public class GsearchHandler {
             return response;
         }
         catch (Exception e) {
-            log.error(e);
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -308,7 +289,6 @@ public class GsearchHandler {
             return response;
         }
         catch (Exception e) {
-            log.error(e);
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -523,19 +503,11 @@ public class GsearchHandler {
                     if (StringUtils.isEmpty(myIndex)) {
                         if (!Constants.NO_INDEX_DIR_INDEX_NAME_MATCHER
                             .reset(response).matches()) {
-                            if (log.isDebugEnabled()) {
-                                log.debug(
-                                    "handleGsearchException is throwing Exception1");
-                            }
                             throw new ApplicationServerSystemException(response);
                         }
                         myIndex = 
                             Constants.NO_INDEX_DIR_INDEX_NAME_MATCHER.group(1);
                         if (StringUtils.isEmpty(myIndex)) {
-                            if (log.isDebugEnabled()) {
-                                log.debug(
-                                    "handleGsearchException is throwing Exception2");
-                            }
                             throw new ApplicationServerSystemException(response);
                         }
                     }
@@ -549,10 +521,6 @@ public class GsearchHandler {
                     response = connectionUtility.getRequestURLAsString(
                             new URL(gsearchUrl + createEmptyParams));
                     if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
-                        if (log.isDebugEnabled()) {
-                            log.debug(
-                                "handleGsearchException is throwing Exception3");
-                        }
                         throw new ApplicationServerSystemException(response);
                     }
                     if (log.isDebugEnabled()) {
@@ -566,19 +534,11 @@ public class GsearchHandler {
                             handleGsearchException(
                                 index, request, response, retries);
                         } else {
-                            if (log.isDebugEnabled()) {
-                                log.debug(
-                                    "handleGsearchException is throwing Exception4");
-                            }
                             throw new ApplicationServerSystemException(response);
                         }
                     }
                 }
                 else {
-                    if (log.isDebugEnabled()) {
-                        log.debug(
-                            "handleGsearchException is throwing Exception5");
-                    }
                     throw new ApplicationServerSystemException(response);
                 }
             }

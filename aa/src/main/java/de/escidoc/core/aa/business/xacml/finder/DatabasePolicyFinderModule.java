@@ -220,6 +220,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                     PoliciesCache.putRole(role.getId(), role);
                 }
                 catch (SqlDatabaseSystemException e) {
+                    log.debug("Error on retrieving role '" + roleIdentifier + "'", e);
                     role = null;
                 }
             }
@@ -242,7 +243,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                 catch (WebserverSystemException e) {
                     log.debug(StringUtility.format(
                         "Fetching of role's policy set failed.",
-                        role.toString()));
+                        role.toString()), e);
                 }
             }
 
@@ -475,12 +476,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
         log.error(msg, e);
         final Exception ex;
-        if (e instanceof EscidocException) {
-            ex = e;
-        }
-        else {
-            ex = new WebserverSystemException(e);
-        }
+        ex = e instanceof EscidocException ? e : new WebserverSystemException(e);
         return new PolicyFinderResult(CustomStatusBuilder.createErrorStatus(
             Status.STATUS_PROCESSING_ERROR, ex));
     }

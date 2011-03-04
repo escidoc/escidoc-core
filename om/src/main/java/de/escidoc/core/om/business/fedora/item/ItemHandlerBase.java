@@ -124,8 +124,6 @@ public class ItemHandlerBase extends HandlerBase {
                 Utility.getInstance().upload(streamContent, fileName, mimeType);
         }
         catch (final FileSystemException e) {
-            LOGGER.error("Error while uploading of content to the staging area. "
-                + e.getMessage());
             throw new WebserverSystemException(
                 "Error while uploading of content to the staging area. ", e);
         }
@@ -261,20 +259,10 @@ public class ItemHandlerBase extends HandlerBase {
 
         Component c;
         try {
-            if (getOriginItem() != null) {
-                c = getOriginItem().getComponent(id);
-            }
-            else {
-                c = getItem().getComponent(id);
-            }
+            c = getOriginItem() != null ? getOriginItem().getComponent(id) : getItem().getComponent(id);
         }
         catch (ComponentNotFoundException e) {
-            if (getOriginItem() != null) {
-                c = getOriginItem().getComponentByLocalName(id);
-            }
-            else {
-                c = getItem().getComponentByLocalName(id);
-            }
+            c = getOriginItem() != null ? getOriginItem().getComponentByLocalName(id) : getItem().getComponentByLocalName(id);
         }
         return c;
     }
@@ -365,12 +353,8 @@ public class ItemHandlerBase extends HandlerBase {
             if (getItem().getProperty(
                 PropertyMapKeys.LATEST_VERSION_VERSION_STATUS).equals(
                 Constants.STATUS_RELEASED)) {
-
-                final String msg =
-                    "The object is in state '" + Constants.STATUS_RELEASED
-                        + "' and can not be" + " changed.";
-                LOGGER.debug(msg);
-                throw new InvalidStatusException(msg);
+                throw new InvalidStatusException("The object is in state '" + Constants.STATUS_RELEASED
+                        + "' and can not be" + " changed.");
             }
         }
     }
@@ -404,18 +388,12 @@ public class ItemHandlerBase extends HandlerBase {
             getTripleStoreUtility().getPropertiesElements(contextId,
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus == null || curStatus.length() == 0) {
-            final String msg =
-                "Can not get status of context " + contextId + '.';
-            LOGGER.error(msg);
-            throw new WebserverSystemException(msg);
+            throw new WebserverSystemException("Can not get status of context " + contextId + '.');
         }
         // In first release, if object is once released no changes are allowed
         if (!curStatus.equals(status)) {
-            final String msg =
-                "The Context '" + contextId + "' is in state '" + curStatus
-                    + "' and not in status " + status + '.';
-            LOGGER.debug(msg);
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The Context '" + contextId + "' is in state '" + curStatus
+                    + "' and not in status " + status + '.');
         }
     }
 
@@ -468,9 +446,7 @@ public class ItemHandlerBase extends HandlerBase {
 
         // In first release, if object is once released no changes are allowed
         if (!status.equals(getItem().getStatus())) {
-            final String msg = "The object is in not state '" + status + "'.";
-            LOGGER.debug(msg);
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The object is in not state '" + status + "'.");
         }
     }
 
@@ -491,9 +467,7 @@ public class ItemHandlerBase extends HandlerBase {
 
         // In first release, if object is once released no changes are allowed
         if (status.equals(getItem().getStatus())) {
-            final String msg = "The object is in state '" + status + "'.";
-            LOGGER.debug(msg);
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The object is in state '" + status + "'.");
         }
     }
 
@@ -516,11 +490,8 @@ public class ItemHandlerBase extends HandlerBase {
 
         // In first release, if object is once released no changes are allowed
         if (!status.equals(checkStatus)) {
-            final String msg =
-                "The object is in state '" + checkStatus + "' and can not be"
-                    + " changed.";
-            LOGGER.debug(msg);
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The object is in state '" + checkStatus + "' and can not be"
+                    + " changed.");
         }
     }
 
@@ -537,15 +508,10 @@ public class ItemHandlerBase extends HandlerBase {
      */
     final void checkVersionStatusNot(final String checkStatus)
         throws InvalidStatusException, IntegritySystemException {
-
         final String status = getItem().getVersionStatus();
-
         if (status.equals(checkStatus)) {
-            final String msg =
-                "The object is in state '" + checkStatus + "' and can not be"
-                    + " changed.";
-            LOGGER.debug(msg);
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The object is in state '" + checkStatus + "' and can not be"
+                    + " changed.");
         }
     }
 
@@ -568,11 +534,8 @@ public class ItemHandlerBase extends HandlerBase {
         final String status =
             getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
         if (status.equals(Constants.STATUS_WITHDRAWN)) {
-            final String msg =
-                "The object is in state '" + Constants.STATUS_WITHDRAWN + "'. "
-                    + additionalMessage;
-            LOGGER.debug(msg);
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The object is in state '" + Constants.STATUS_WITHDRAWN + "'. "
+                    + additionalMessage);
 
         }
     }
@@ -612,11 +575,8 @@ public class ItemHandlerBase extends HandlerBase {
             final HttpResponse response = client.execute(method);
             final int resultCode = response.getStatusLine().getStatusCode();
             if (resultCode != HttpServletResponse.SC_OK) {
-                final String errorMsg =
-                    StringUtility.format(
-                            "Bad request. ", response.getStatusLine(), url);
-                LOGGER.error(errorMsg);
-                throw new FileNotFoundException(errorMsg);
+                throw new FileNotFoundException(StringUtility.format(
+                            "Bad request. ", response.getStatusLine(), url));
             }
 
         }

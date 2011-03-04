@@ -140,10 +140,8 @@ public class ComponentMetadataHandler extends DefaultHandler {
             this.nameValue = name.getValue();
 
             if (nameValue.length() == 0) {
-                final String errorMsg =
-                    "the value of the" + " \"name\" atribute of the element "
-                        + theName + " is missing";
-                throw new MissingAttributeValueException(errorMsg);
+                throw new MissingAttributeValueException("The value of the" + " \"name\" atribute of the element "
+                        + theName + " is missing");
 
             }
 

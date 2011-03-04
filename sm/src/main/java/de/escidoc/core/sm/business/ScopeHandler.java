@@ -91,7 +91,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
             LOGGER.debug("ScopeHandler does create");
         }
         if (xmlData == null || xmlData.length() == 0) {
-            LOGGER.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
 
@@ -103,7 +102,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
             sp.parse(xmlData);
         }
         catch (Exception e) {
-            LOGGER.error(e);
             throw new SystemException(e);
         }
 
@@ -144,7 +142,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
             LOGGER.debug("ScopeHandler does delete");
         }
         if (id == null) {
-            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         final Scope scope = dao.retrieve(id);
@@ -176,7 +173,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
             LOGGER.debug("ScopeHandler does retrieve");
         }
         if (id == null) {
-            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         return renderer.render(dao.retrieve(id));
@@ -272,11 +268,9 @@ public class ScopeHandler implements ScopeHandlerInterface {
             LOGGER.debug("ScopeHandler does update");
         }
         if (id == null) {
-            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         if (xmlData == null) {
-            LOGGER.error("xmlData may not be null");
             throw new MissingMethodParameterException("xmlData may not be null");
         }
 
@@ -289,7 +283,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
             sp.parse(xmlData);
         }
         catch (Exception e) {
-            LOGGER.error(e);
             throw new SystemException(e);
         }
 

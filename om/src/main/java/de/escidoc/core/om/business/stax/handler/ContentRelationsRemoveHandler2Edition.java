@@ -78,22 +78,16 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
         if (this.inRelation) {
             if ("targetId".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
-                    final String message =
-                        "The value of the element " + element.getLocalName()
-                            + " is missing.";
-                    LOG.debug(message);
-                    throw new MissingElementValueException(message);
+                    throw new MissingElementValueException("The value of the element " + element.getLocalName()
+                            + " is missing.");
                 }
                 data = XmlUtility.getObjidWithoutVersion(data);
                 this.targetId = data;
             }
             else if ("predicate".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
-                    final String message =
-                        "The value of the element " + element.getLocalName()
-                            + " is missing.";
-                    LOG.debug(message);
-                    throw new MissingElementValueException(message);
+                    throw new MissingElementValueException("The value of the element " + element.getLocalName()
+                            + " is missing.");
                 }
                 this.predicate = data;
             }
@@ -127,13 +121,9 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
                     predicate);
 
             if (existRelationTarget == null) {
-
-                final String message =
-                    "A relation with predicate " + predicate
+                throw new ContentRelationNotFoundException("A relation with predicate " + predicate
                         + " between resources with ids " + sourceId
-                        + " and " + targetId + " does not exist.";
-                LOG.debug(message);
-                throw new ContentRelationNotFoundException(message);
+                        + " and " + targetId + " does not exist.");
 
             }
 

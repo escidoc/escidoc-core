@@ -69,15 +69,8 @@ public class ComponentUpdateHandler extends DefaultHandler {
             final int indexHref =
                 element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
             if (indexObjid >= 0 || indexHref >= 0) {
-                if (indexObjid >= 0) {
-                    componentId =
-                        element.getAttribute(indexObjid).getValue();
-                }
-                else {
-                    componentId =
-                        Utility.getId(element
-                            .getAttribute(indexHref).getValue());
-                }
+                componentId = indexObjid >= 0 ? element.getAttribute(indexObjid).getValue() : Utility.getId(element
+                        .getAttribute(indexHref).getValue());
 
                 if (componentId.length() > 0) {
                     // check if component exists
@@ -92,7 +85,6 @@ public class ComponentUpdateHandler extends DefaultHandler {
                         }
                     }
                     if (!componentExists) {
-                        // isExist(componentId)){
                         throw new InvalidContentException(
                             "Component with id " + componentId
                                 + " does not exist in item " + itemId + '.');

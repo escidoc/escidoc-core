@@ -217,11 +217,8 @@ public class ContentStreamsHandler extends DefaultHandler {
 
         for (final ContentStreamCreate contentStream : this.contentStreams) {
             if (name.equals(contentStream.getName())) {
-                final String message =
-                        "The item representation contains multiple "
-                                + "content streams with a name '" + name + "'.";
-                LOG.debug(message);
-                throw new InvalidContentException(message);
+                throw new InvalidContentException("The item representation contains multiple "
+                                + "content streams with a name '" + name + "'.");
             }
         }
     }

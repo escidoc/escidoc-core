@@ -452,14 +452,11 @@ public class MultipleExtractor extends WriteHandler {
                                     component.put("md-records", mdRecords);
                                 }
                                 if (mdRecords.containsKey(attributeValue)) {
-                                    final String message =
+                                    throw new InvalidContentException(
                                         "A component md-record with the name '"
                                             + attributeValue
                                             + "' occurs multiple times in the representation"
-                                            + " of a component.";
-                                    LOGGER.error(message);
-                                    throw new InvalidContentException(
-                                        message);
+                                            + " of a component.");
 
                                 }
                                 else {
@@ -484,14 +481,11 @@ public class MultipleExtractor extends WriteHandler {
                                         metadata);
                                 }
                                 if (metadata.containsKey(attributeValue)) {
-                                    final String message =
+                                    throw new InvalidContentException(
                                         "A md-record with the name '"
                                             + attributeValue
                                             + "' occurs multiple times in the representation"
-                                            + " of the resource";
-                                    LOGGER.error(message);
-                                    throw new InvalidContentException(
-                                        message);
+                                            + " of the resource");
 
                                 }
                                 else {
@@ -503,23 +497,14 @@ public class MultipleExtractor extends WriteHandler {
                                 if (outputStreams
                                     .containsKey(attributeValue)) {
                                     final String message;
-                                    if ("/context/admin-descriptors/admin-descriptor".equals(currentPath)) {
-                                        message =
-                                            "An admin-descriptor with the name '"
-                                                + attributeValue
-                                                + "' occurs multiple times in the "
-                                                + "representation of the context";
-                                    }
-                                    else {
-                                        message =
-                                            "A subresource with the name '"
-                                                + attributeValue
-                                                + "' occurs multiple times in the"
-                                                + " representation of the resource";
-                                    }
-                                    LOGGER.error(message);
-                                    throw new InvalidContentException(
-                                        message);
+                                    message = "/context/admin-descriptors/admin-descriptor".equals(currentPath) ? "An admin-descriptor with the name '"
+                                            + attributeValue
+                                            + "' occurs multiple times in the "
+                                            + "representation of the context" : "A subresource with the name '"
+                                            + attributeValue
+                                            + "' occurs multiple times in the"
+                                            + " representation of the resource";
+                                    throw new InvalidContentException(message);
 
                                 }
                                 else {
@@ -537,10 +522,8 @@ public class MultipleExtractor extends WriteHandler {
                     }
                 }
             }
-        }
-        catch (XMLStreamException e) {
-            throw new WebserverSystemException(
-                "Error occured writing XML data.", e);
+        } catch (XMLStreamException e) {
+            throw new WebserverSystemException("Error occured writing XML data.", e);
         }
         // this have to be the last handler
         return element;
@@ -615,8 +598,7 @@ public class MultipleExtractor extends WriteHandler {
                         if ((Integer) nsTrace.get(0) == (this.getDeepLevel() + 1)) {
                             toRemove.add(key);
                         }
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         throw new XMLStreamException(e.getMessage(), e);
                     }
                 }
@@ -632,10 +614,8 @@ public class MultipleExtractor extends WriteHandler {
                     this.getWriter().close();
                 }
             }
-        }
-        catch (XMLStreamException e) {
-            throw new WebserverSystemException(
-                "Error occured writing XML data.", e);
+        } catch (XMLStreamException e) {
+            throw new WebserverSystemException("Error occured writing XML data.", e);
         }
         return element;
     }
@@ -677,8 +657,7 @@ public class MultipleExtractor extends WriteHandler {
             }
         }
         catch (XMLStreamException e) {
-            throw new WebserverSystemException(
-                "Error occured writing XML data.", e);
+            throw new WebserverSystemException("Error occured writing XML data.", e);
         }
         return data;
     }

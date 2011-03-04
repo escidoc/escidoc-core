@@ -62,22 +62,11 @@ public class ShibbolethAuthenticationEntryPoint
             target.append(queryString);
         }
         final String redirectUrl;
-        if (httpRequest.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null) {
-            // seems to be request to the url without protection by shibboleth
-            // redirect to shibbolized url
-            redirectUrl = target.toString();
-        }
-        else {
-            // seems to be request to the url protected by shibboleth, but
-            // shibboleth session has to be initiated as the user could not be
-            // authenticated
-            redirectUrl =
-                serviceProviderBaseUrl
-                    + sessionInitiatorPath
-                    + "?target="
-                    + URLEncoder.encode(target.toString(),
-                        XmlUtility.CHARACTER_ENCODING);
-        }
+        redirectUrl = httpRequest.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null ? target.toString() : serviceProviderBaseUrl
+                + sessionInitiatorPath
+                + "?target="
+                + URLEncoder.encode(target.toString(),
+                XmlUtility.CHARACTER_ENCODING);
         if(response instanceof HttpServletResponse) {
             ((HttpServletResponse) response).sendRedirect(redirectUrl);
         }
@@ -92,12 +81,7 @@ public class ShibbolethAuthenticationEntryPoint
      */
     public void setServiceProviderBaseUrl(final String serviceProviderBaseUrl) {
 
-        if (serviceProviderBaseUrl.endsWith("/")) {
-            this.serviceProviderBaseUrl = serviceProviderBaseUrl;
-        }
-        else {
-            this.serviceProviderBaseUrl = serviceProviderBaseUrl + '/';
-        }
+        this.serviceProviderBaseUrl = serviceProviderBaseUrl.endsWith("/") ? serviceProviderBaseUrl : serviceProviderBaseUrl + '/';
     }
 
     /**
@@ -110,12 +94,7 @@ public class ShibbolethAuthenticationEntryPoint
      */
     public void setSessionInitiatorPath(final String sessionInitiatorPath) {
 
-        if (sessionInitiatorPath.startsWith("/")) {
-            this.sessionInitiatorPath = sessionInitiatorPath.substring(1);
-        }
-        else {
-            this.sessionInitiatorPath = sessionInitiatorPath;
-        }
+        this.sessionInitiatorPath = sessionInitiatorPath.startsWith("/") ? sessionInitiatorPath.substring(1) : sessionInitiatorPath;
     }
 
 }

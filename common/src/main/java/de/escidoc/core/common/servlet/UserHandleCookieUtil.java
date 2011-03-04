@@ -147,15 +147,11 @@ public final class UserHandleCookieUtil {
     public static String createDecodedUserHandle(final String userHandle) 
                                 throws WebserverSystemException {
         try {
-            return new String(Base64.decodeBase64(
-                userHandle.getBytes(XmlUtility.CHARACTER_ENCODING)), 
+            return new String(Base64.decodeBase64(userHandle.getBytes(XmlUtility.CHARACTER_ENCODING)),
                 XmlUtility.CHARACTER_ENCODING);
         } catch (UnsupportedEncodingException e) {
             throw new WebserverSystemException(
-                StringUtility
-                    .format(
-                        "Can't decode UserHandle Base64",
-                        e.getMessage()), e);
+                StringUtility.format("Can't decode UserHandle Base64", e.getMessage()), e);
         }
     }
 

@@ -93,33 +93,17 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
             final String origin;
 
             // get origin
-            if (StringUtils.isNotEmpty(details.getShibIdentityProvider())) {
-                origin = details.getShibIdentityProvider();
-            }
-            else {
-                origin = shibSessionId;
-            }
+            origin = StringUtils.isNotEmpty(details.getShibIdentityProvider()) ? details.getShibIdentityProvider() : shibSessionId;
 
             // get name
             final String name;
-            if (StringUtils.isNotEmpty(cnAttribute)
-                && StringUtils.isNotEmpty(request.getHeader(cnAttribute))) {
-                name = request.getHeader(cnAttribute);
-            }
-            else {
-                name = shibSessionId;
-            }
+            name = StringUtils.isNotEmpty(cnAttribute)
+                    && StringUtils.isNotEmpty(request.getHeader(cnAttribute)) ? request.getHeader(cnAttribute) : shibSessionId;
 
             // get loginname
             final String loginname;
-            if (StringUtils.isNotEmpty(uidAttribute)
-                && StringUtils.isNotEmpty(request.getHeader(uidAttribute))) {
-                loginname =
-                    request.getHeader(uidAttribute).replaceAll("\\s", "");
-            }
-            else {
-                loginname = name.replaceAll("\\s", "_") + '@' + origin;
-            }
+            loginname = StringUtils.isNotEmpty(uidAttribute)
+                    && StringUtils.isNotEmpty(request.getHeader(uidAttribute)) ? request.getHeader(uidAttribute).replaceAll("\\s", "") : name.replaceAll("\\s", "_") + '@' + origin;
 
             user.setLoginName(loginname);
             user.setName(name);

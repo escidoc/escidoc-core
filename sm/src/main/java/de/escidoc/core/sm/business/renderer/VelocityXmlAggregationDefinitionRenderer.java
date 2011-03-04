@@ -305,14 +305,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
         addAggregationDefinitionListNamespaceValues(values);
 
         final List<Map<String, Object>> aggregationDefinitionsValues;
-        if (aggregationDefinitions != null) {
-            aggregationDefinitionsValues =
-                new ArrayList<Map<String, Object>>(
-                    aggregationDefinitions.size());
-        }
-        else {
-            aggregationDefinitionsValues = new ArrayList();
-        }
+        aggregationDefinitionsValues = aggregationDefinitions != null ? new ArrayList<Map<String, Object>>(
+                aggregationDefinitions.size()) : new ArrayList();
         if (aggregationDefinitions != null) {
             for (final AggregationDefinition aggregationDefinition : aggregationDefinitions) {
                 final Map<String, Object> aggregationDefinitionValues =

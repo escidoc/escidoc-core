@@ -82,15 +82,11 @@ public class AggregationDataSelector {
                     selector = aggregationStatisticDataSelector;
                 }
             }
-            if (selector != null) {
-                return dbAccessor
-                .executeSql(generateStatisticTableSelectVo(
-                        selector,
-                aggregationDefinition.getScope().getId(),
-                date));
-            } else {
-                return null;
-            }
+            return selector != null ? dbAccessor
+                    .executeSql(generateStatisticTableSelectVo(
+                            selector,
+                            aggregationDefinition.getScope().getId(),
+                            date)) : null;
         } else {
             return null;
         }
@@ -276,9 +272,8 @@ public class AggregationDataSelector {
             return dbXpathQuery.toString();
         }
         catch (Exception e) {
-            log.error("Cannot handle xpath-query for statistic-table");
             throw new StatisticPreprocessingSystemException(
-                "Cannot handle xpath-query for statistic-table");
+                "Cannot handle xpath-query for statistic-table", e);
         }
     }
 

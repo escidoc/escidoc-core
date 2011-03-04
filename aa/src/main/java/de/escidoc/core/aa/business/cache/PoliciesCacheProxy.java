@@ -31,6 +31,7 @@ package de.escidoc.core.aa.business.cache;
 import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
+import de.escidoc.core.aa.servlet.Login;
 
 import java.util.List;
 import java.util.Map;

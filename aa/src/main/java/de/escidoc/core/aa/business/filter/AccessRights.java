@@ -100,14 +100,17 @@ public class AccessRights extends JdbcDaoSupport {
             return hashMap.hashCode();
         }
 
+        @Override
         public int size() {
             return hashMap.size();
         }
 
+        @Override
         public boolean isEmpty() {
             return hashMap.isEmpty();
         }
 
+        @Override
         public Rules get(final Object key) {
             return hashMap.get(key);
         }
@@ -117,10 +120,12 @@ public class AccessRights extends JdbcDaoSupport {
             return this.hashMap.put(key, value);
         }
 
+        @Override
         public boolean containsKey(final Object key) {
             return hashMap.containsKey(key);
         }
 
+        @Override
         public Rules remove(final Object key) {
             return hashMap.remove(key);
         }
@@ -130,22 +135,27 @@ public class AccessRights extends JdbcDaoSupport {
             this.hashMap.putAll(m);
         }
 
+        @Override
         public void clear() {
             hashMap.clear();
         }
 
+        @Override
         public boolean containsValue(final Object value) {
             return hashMap.containsValue(value);
         }
 
+        @Override
         public Set<String> keySet() {
             return hashMap.keySet();
         }
 
+        @Override
         public Collection<Rules> values() {
             return hashMap.values();
         }
 
+        @Override
         public Set<Map.Entry<String, Rules>> entrySet() {
             return hashMap.entrySet();
         }
@@ -368,7 +378,7 @@ public class AccessRights extends JdbcDaoSupport {
                     result.append('\'');
                 }
             }
-            catch (Exception e) {
+            catch (Exception ignored) {
                 result.append("FALSE");
             }
         }
@@ -632,7 +642,7 @@ public class AccessRights extends JdbcDaoSupport {
      *            data source from Spring
      */
     public void setMyDataSource(final DataSource myDataSource) {
-        super.setDataSource(myDataSource);
+        setDataSource(myDataSource);
     }
 
     /**

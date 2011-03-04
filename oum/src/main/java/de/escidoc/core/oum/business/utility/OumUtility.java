@@ -84,15 +84,12 @@ public class OumUtility {
         if (!parentIds.isEmpty()) {
             for (final String id : parentIds) {
                 if (id.equals(organizationalUnitId)) {
-                    final String message =
+                    throw new OrganizationalUnitHierarchyViolationException(
                             "Ou with id "
                                     + id
                                     + " cannot be referenced as a parent of ou with id "
                                     + organizationalUnitId
-                                    + " because it is one of its subnodes";
-                    logger.error(message);
-                    throw new OrganizationalUnitHierarchyViolationException(
-                            message);
+                                    + " because it is one of its subnodes");
                 }
             }
             this.closed.add(organizationalUnitId);
@@ -101,14 +98,11 @@ public class OumUtility {
                 final String toClosedId = this.open.pop();
                 for (final String id : parentIds) {
                     if (id.equals(toClosedId)) {
-                        final String message =
+                        throw new OrganizationalUnitHierarchyViolationException(
                                 "Ou with id " + id
                                         + " cannot be referenced as a parent of "
                                         + "ou with id " + organizationalUnitId
-                                        + " because it is one of its subnodes";
-                        logger.error(message);
-                        throw new OrganizationalUnitHierarchyViolationException(
-                                message);
+                                        + " because it is one of its subnodes");
                     }
                 }
                 this.closed.add(toClosedId);

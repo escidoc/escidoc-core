@@ -158,38 +158,27 @@ public class StructMapCreateHandler extends DefaultHandler {
         if (indexOfObjId != -1) {
             entryId = element.getAttribute(indexOfObjId).getValue();
             if (entryId.length() == 0) {
-                final String message =
-                    "Value of attribute 'objid' of the element '"
-                        + parser.getCurPath() + "' is missing.";
-                logger.error(message);
-                throw new MissingAttributeValueException(message);
+                throw new MissingAttributeValueException("Value of attribute 'objid' of the element '"
+                        + parser.getCurPath() + "' is missing.");
             }
         }
         else if (indexOfHref != -1) {
             final Attribute xlinkHref = element.getAttribute(indexOfHref);
             final String xlinkHrefValue = xlinkHref.getValue();
             if (xlinkHrefValue.length() == 0) {
-                final String message =
-                    "Value of attribute 'objid' of the element '"
-                        + parser.getCurPath() + "' is missing.";
-                logger.error(message);
-                throw new MissingAttributeValueException(message);
+                throw new MissingAttributeValueException("Value of attribute 'objid' of the element '"
+                        + parser.getCurPath() + "' is missing.");
             }
             final String xlinkPrefix = xlinkHref.getPrefix();
             entryId = Utility.getId(xlinkHrefValue);
             if (!xlinkHrefValue.equals("/ir/" + elementName + '/' + entryId)) {
-                final String message =
-                    "The value of attribute " + element.getLocalName() + '.'
+                throw new InvalidContentException("The value of attribute " + element.getLocalName() + '.'
                         + xlinkPrefix + ":href has to look like: ir/"
-                        + elementName + '/' + entryId;
-                logger.error(message);
-                throw new InvalidContentException(message);
+                        + elementName + '/' + entryId);
             }
         }
         if (!TripleStoreUtility.getInstance().exists(entryId)) {
-            final String message = "Referenced object in struct-map does not exist.";
-            logger.error(message);
-            throw new InvalidContentException(message);
+            throw new InvalidContentException("Referenced object in struct-map does not exist.");
         }
         if (!objectType.equals(TripleStoreUtility.getInstance().getObjectType(
             entryId))) {

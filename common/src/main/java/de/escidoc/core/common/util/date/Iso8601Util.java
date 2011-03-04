@@ -104,13 +104,9 @@ public final class Iso8601Util {
         if (preformatted.endsWith("Z")) {
             return preformatted;
         }
-        else if (preformatted.endsWith("+0000")) {
-            return preformatted.substring(0, preformatted.length() - "+0000".length()) + 'Z';
-        }
-        else {
-            return preformatted.substring(0, preformatted.length() - 2) + ':'
+        else
+            return preformatted.endsWith("+0000") ? preformatted.substring(0, preformatted.length() - "+0000".length()) + 'Z' : preformatted.substring(0, preformatted.length() - 2) + ':'
                     + preformatted.substring(preformatted.length() - 2, preformatted.length());
-        }
     }
 
     /**
@@ -137,14 +133,7 @@ public final class Iso8601Util {
         final String tmpDateText;
         if (dateText.endsWith("Z")) {
             // FIXME quick workaround (FRS)
-            if (dateText.length() == 20) {
-                tmpDateText =
-                    dateText.substring(0, dateText.length() - 1) + ".0+0000";
-            }
-            else {
-                tmpDateText =
-                    dateText.substring(0, dateText.length() - 1) + "+0000";
-            }
+            tmpDateText = dateText.length() == 20 ? dateText.substring(0, dateText.length() - 1) + ".0+0000" : dateText.substring(0, dateText.length() - 1) + "+0000";
         }
         else {
             final int pos = dateText.length() - SIX;

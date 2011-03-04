@@ -78,8 +78,7 @@ public class EscidocAuthenticationProvider implements AuthenticationProvider {
         if (credentials == null || "".equals(credentials)) {
             final GrantedAuthority grantedAuthority =
                 new GrantedAuthorityImpl("");
-            final GrantedAuthority[] grantedAuthorities =
-                new GrantedAuthority[] { grantedAuthority };
+            final GrantedAuthority[] grantedAuthorities = { grantedAuthority };
             return new AnonymousAuthenticationToken("key", "Anonymous", grantedAuthorities);
         }
         final UserDetails userDetails = escidocUserDetailsService.loadUserByUsername(credentials);

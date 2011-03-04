@@ -429,7 +429,7 @@ public class Datastream {
         }
         catch (final FedoraSystemException e1) {
             throw new StreamNotFoundException("Fedora datastream '" + this.name
-                + "' not found.");
+                + "' not found.", e1);
         }
 
         if (fedoraDatastream == null) {
@@ -495,7 +495,6 @@ public class Datastream {
                 }
             }
             catch (final IOException e) {
-                LOG.warn(e);
                 throw new WebserverSystemException(e);
             }
             try {
@@ -504,6 +503,7 @@ public class Datastream {
                     this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false);
             }
             catch (FedoraSystemException e) {
+                LOG.debug("Error on modifing datastream.", e);
                 getFedoraUtility().setDatastreamState(this.parentId, this.name,
                     "A");
                 timestamp =
@@ -522,6 +522,7 @@ public class Datastream {
                             this.getStream(), false);
                 }
                 catch (FedoraSystemException e) {
+                    LOG.debug("Error on modifing datastream.", e);
                     getFedoraUtility().setDatastreamState(this.parentId,
                         this.name, "A");
                     timestamp =
@@ -539,14 +540,11 @@ public class Datastream {
                             Utility.getInstance().upload(this.getStream(),
                                 this.parentId + this.name, "text/xml");
                     }
-                    catch (FileSystemException e) {
-                        final String message =
-                            "Error while uploading of content of datastream '"
+                    catch (final FileSystemException e) {
+                        throw new WebserverSystemException("Error while uploading of content of datastream '"
                                 + this.name
                                 + "' of the fedora object with id '"
-                                + this.parentId + "' to the staging area. ";
-                        LOG.error(message + e.getMessage());
-                        throw new WebserverSystemException(message, e);
+                                + this.parentId + "' to the staging area. ", e);
                     }
                     timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId,
@@ -555,6 +553,7 @@ public class Datastream {
                             false);
                 }
                 catch (FedoraSystemException e) {
+                    LOG.debug("Error on modifing datastream.", e);
                     getFedoraUtility().setDatastreamState(this.parentId,
                         this.name, "A");
                     timestamp =
@@ -792,10 +791,11 @@ public class Datastream {
             return toStringUTF8();
         }
         catch (final EncodingSystemException e) {
+            LOG.debug("Can not convert Datastream to string.", e);
             return super.toString();
         }
         catch (final WebserverSystemException e) {
-            LOG.error("Can not convert Datastream to string.", e);
+            LOG.debug("Can not convert Datastream to string.", e);
             return super.toString();
         }
     }
@@ -898,13 +898,15 @@ public class Datastream {
                 }
             }
             catch (final ParserConfigurationException e) {
+                LOG.debug("Can not compare datastreams.", e);
                 return false;
             }
             catch (final SAXException e) {
+                LOG.debug("Can not compare datastreams.", e);
                 return false;
             }
             catch (final WebserverSystemException e) {
-                LOG.error("Can not compare datastreams.", e);
+                LOG.debug("Can not compare datastreams.", e);
                 return false;
             }
             return true;

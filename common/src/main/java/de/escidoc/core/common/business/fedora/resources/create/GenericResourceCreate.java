@@ -131,18 +131,12 @@ public abstract class GenericResourceCreate {
             TripleStoreUtility.getInstance().getPropertiesElements(contextId,
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
         if (curStatus == null || curStatus.length() == 0) {
-            final String msg =
-                "Can not get status of context " + contextId + '.';
-            LOG.debug(msg);
-            throw new WebserverSystemException(msg);
+            throw new WebserverSystemException("Can not get status of context " + contextId + '.');
         }
         // In first release, if object is once released no changes are allowed
         if (!curStatus.equals(status)) {
-            final String msg =
-                "The Context '" + contextId + "' is in state '" + curStatus
-                    + "' and not in status " + status + '.';
-            LOG.debug(msg);
-            throw new InvalidStatusException(msg);
+            throw new InvalidStatusException("The Context '" + contextId + "' is in state '" + curStatus
+                    + "' and not in status " + status + '.');
         }
     }
 

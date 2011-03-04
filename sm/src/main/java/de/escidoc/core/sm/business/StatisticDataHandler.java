@@ -82,7 +82,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
             LOGGER.debug("StatisticDataHandler does create");
         }
         if (xmlData == null || xmlData.length() == 0) {
-            LOGGER.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
         final ProducerTemplate producerTemplate = this.camelContext.createProducerTemplate();
@@ -114,7 +113,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         throws ScopeNotFoundException, MissingMethodParameterException,
         XmlSchemaValidationException, XmlCorruptedException, SystemException {
         if (xmlData == null || xmlData.length() == 0) {
-            LOGGER.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
         XmlUtility.validate(xmlData, XmlUtility
@@ -123,7 +121,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         final String scopeId = xmlUtility.getScopeId(xmlData);
 
         if (scopeId == null || scopeId.length() == 0) {
-            LOGGER.error("scopeId is null");
             throw new ScopeNotFoundException("scopeId is null");
         }
         try {
@@ -133,9 +130,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
             if (e.getCause() != null
                 && e.getCause().getClass() != null
                 && "ConstraintViolationException".equals(e.getCause().getClass().getSimpleName())) {
-                LOGGER
-                    .error("scope with id " + scopeId
-                        + " not found in database");
                 throw new ScopeNotFoundException("scope with id " + scopeId
                     + " not found in database");
             }

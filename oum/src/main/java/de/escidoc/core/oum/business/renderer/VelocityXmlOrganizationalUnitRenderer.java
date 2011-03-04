@@ -670,7 +670,6 @@ public class VelocityXmlOrganizationalUnitRenderer
                 mdRecord.toStringUTF8());
         }
         catch (EncodingSystemException e) {
-            log.warn("encoding error: " + e);
             throw new WebserverSystemException(
                 "Rendering of md-record failed. ", e);
         }

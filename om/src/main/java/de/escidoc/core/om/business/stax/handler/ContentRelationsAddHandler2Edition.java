@@ -91,11 +91,8 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
         if (this.inRelation) {
             if ("targetId".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
-                    final String message =
-                        "The value of the element " + element.getLocalName()
-                            + " is missing.";
-                    log.debug(message);
-                    throw new MissingElementValueException(message);
+                    throw new MissingElementValueException("The value of the element " + element.getLocalName()
+                            + " is missing.");
                 }
 
                 this.targetId = data;
@@ -105,19 +102,13 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
                     targetId.replaceFirst(targetIdWithoutVersion, "");
                 if (targetVersion.length() > 0) {
                     targetVersion = targetVersion.substring(1);
-                    final String message =
-                        "A relation target may not be referenced by an "
+                    throw new InvalidContentException("A relation target may not be referenced by an "
                             + " identifier containing a version number. Use a floating "
-                            + "identifier like 'escidoc:123' to reference a target";
-                    log.debug(message);
-                    throw new InvalidContentException(message);
+                            + "identifier like 'escidoc:123' to reference a target");
                 }
                 if (!TripleStoreUtility.getInstance().exists(targetId)) {
-                    final String message =
-                        "Referenced target resource with id " + targetId
-                            + " does not exist.";
-                    log.debug(message);
-                    throw new ReferencedResourceNotFoundException(message);
+                    throw new ReferencedResourceNotFoundException("Referenced target resource with id " + targetId
+                            + " does not exist.");
                 }
                 final String targetObjectType =
                     TripleStoreUtility.getInstance().getObjectType(targetId);
@@ -125,28 +116,19 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
                 if (!Constants.ITEM_OBJECT_TYPE.equals(targetObjectType)
                     && !Constants.CONTAINER_OBJECT_TYPE
                         .equals(targetObjectType)) {
-                    final String message =
-                        "A related resource has to be either 'item' or 'container'. "
+                    throw new InvalidContentException("A related resource has to be either 'item' or 'container'. "
                             + "A object with id " + targetId
-                            + " is neither 'item' nor 'container' ";
-
-                    log.debug(message);
-                    throw new InvalidContentException(message);
+                            + " is neither 'item' nor 'container' ");
                 }
             }
             else if ("predicate".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
-                    final String message =
-                        "The value of the element " + element.getLocalName()
-                            + " is missing.";
-                    log.debug(message);
-                    throw new MissingElementValueException(message);
+                    throw new MissingElementValueException("The value of the element " + element.getLocalName()
+                            + " is missing.");
                 }
                 this.predicate = data;
                 if (!ContentRelationsUtility.validPredicate(data)) {
-                    final String message = "Predicate " + data + " is wrong. ";
-                    log.debug(message);
-                    throw new RelationPredicateNotFoundException(message);
+                    throw new RelationPredicateNotFoundException("Predicate " + data + " is wrong. ");
                 }
             }
         }
@@ -178,12 +160,9 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
                     predicate);
             if ((existRelationTarget != null)
                 && (existRelationTarget.equals(targetId))) {
-                final String message =
-                    "A relation with predicate " + predicate
+                throw new AlreadyExistsException("A relation with predicate " + predicate
                         + " between resources with ids " + sourceId
-                        + " and " + targetId + " already exists.";
-                log.debug(message);
-                throw new AlreadyExistsException(message);
+                        + " and " + targetId + " already exists.");
             }
             final String relationDataCheck = predicate + "###" + targetId;
             if (!relationsDataCheck.contains(relationDataCheck)) {

@@ -236,15 +236,8 @@ public class ContentStreamHandler extends WriteHandler {
 
                     // storage
                     final String storage;
-                    if (element.hasAttribute(null, Elements.ATTRIBUTE_STORAGE)) {
-                        storage =
-                            element.getAttributeValue(null,
-                                Elements.ATTRIBUTE_STORAGE);
-                    }
-                    else {
-                        storage =
-                            de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED;
-                    }
+                    storage = element.hasAttribute(null, Elements.ATTRIBUTE_STORAGE) ? element.getAttributeValue(null,
+                            Elements.ATTRIBUTE_STORAGE) : de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED;
                     contentStreams.get(contentStreamName).put(
                         Elements.ATTRIBUTE_STORAGE, storage);
 

@@ -133,6 +133,7 @@ import de.escidoc.core.om.business.stax.handler.item.ComponentUpdateHandler;
 import de.escidoc.core.om.business.stax.handler.item.ContentStreamHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
+import sun.util.LocaleServiceProviderPool;
 
 /**
  * The retrieve, update, create and delete methods implement the
@@ -510,11 +511,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             resultItem = retrieve(objid);
         }
         catch (ResourceNotFoundException e) {
-            final String msg =
-                "The Item with id '" + objid + "', which was just created, "
-                    + "could not be found for retrieve.";
-            LOGGER.warn(msg);
-            throw new IntegritySystemException(msg, e);
+            throw new IntegritySystemException("The Item with id '" + objid + "', which was just created, "
+                    + "could not be found for retrieve.", e);
         }
         fireItemCreated(objid, resultItem);
         return resultItem;
@@ -574,11 +572,8 @@ public class FedoraItemHandler extends ItemHandlerPid
                 "The eSciDoc configuration could not be read", e);
         }
         catch (ResourceNotFoundException e) {
-            final String msg =
-                "The Item with id '" + objid + "', which was just ingested, "
-                    + "could not be found for retrieve.";
-            LOGGER.warn(msg);
-            throw new IntegritySystemException(msg, e);
+            throw new IntegritySystemException("The Item with id '" + objid + "', which was just ingested, "
+                    + "could not be found for retrieve.", e);
         }
         return objid;
 
@@ -698,11 +693,8 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         if (mdRecord.length() == 0) {
-            final String message =
-                "Metadata record with name " + mdRecordId
-                    + " not found in item " + id + '.';
-            LOGGER.debug(message);
-            throw new MdRecordNotFoundException(message);
+            throw new MdRecordNotFoundException("Metadata record with name " + mdRecordId
+                    + " not found in item " + id + '.');
         }
         return mdRecord;
     }
@@ -746,11 +738,8 @@ public class FedoraItemHandler extends ItemHandlerPid
                 mdRecord = retrieveMdRecord(mdRecordId, true);
             }
             else {
-                message =
-                    "Metadata record with name " + mdRecordId
-                        + " not found in item " + id + '.';
-                LOGGER.debug(message);
-                throw new MdRecordNotFoundException(message);
+                message = "Metadata record with name " + mdRecordId + " not found in item " + id + '.';
+                throw new MdRecordNotFoundException(message, e);
             }
         }
         return mdRecord;
@@ -794,11 +783,8 @@ public class FedoraItemHandler extends ItemHandlerPid
                 dc = getOriginItem().getDc().toString();
             }
             else {
-                message =
-                    "Metadata record with name DC" + " not found in item " + id
-                        + '.';
-                LOGGER.debug(message);
-                throw new MdRecordNotFoundException(message);
+                message = "Metadata record with name DC" + " not found in item " + id + '.';
+                throw new MdRecordNotFoundException(message, e);
             }
 
         }
@@ -1188,6 +1174,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             updatedXmlData = retrieveComponents(id);
         }
         catch (AuthorizationException e) {
+            LOGGER.debug("Error on retrieving components.", e);
             // can not occur
         }
         final String endTimestamp = getItem().getLastFedoraModificationDate();
@@ -2756,23 +2743,8 @@ public class FedoraItemHandler extends ItemHandlerPid
                 .getProperty("cmm.Item.objectPid.releaseWithoutPid")))
 
             && (item.getProperties().getObjectProperties().getPid() == null)) {
-                final String msg =
-                    "Item with public-status released requires an PID.";
-                LOGGER.debug(msg);
-                throw new InvalidStatusException(msg);
+                throw new InvalidStatusException("Item with public-status released requires an PID.");
             }
-
-            // make sure that version 1 is also in status released
-            // if (!Boolean.valueOf(System
-            // .getProperty("cmm.Item.versionPid.releaseWithoutPid"))) {
-            //
-            // if (item.getProperties().getCurrentVersion().getPid() == null) {
-            // String msg =
-            // "Item with version-status released requires an PID.";
-            // log.debug(msg);
-            // throw new InvalidStatusException(msg);
-            // }
-            // }
             item.getProperties().getCurrentVersion()
                 .setStatus(StatusType.RELEASED);
             item.getProperties().setLatestReleasedVersion(
@@ -2841,13 +2813,8 @@ public class FedoraItemHandler extends ItemHandlerPid
                 checkRefElement(relation.getTarget());
                 if (!ContentRelationsUtility.validPredicate(relation
                     .getPredicateNs() + '#' + relation.getPredicate())) {
-                    final String message =
-                        "Predicate '" + relation.getPredicate()
-                            + "' is invalid. ";
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug(message);
-                    }
-                    throw new RelationPredicateNotFoundException(message);
+                    throw new RelationPredicateNotFoundException("Predicate '" + relation.getPredicate()
+                            + "' is invalid. ");
                 }
             }
         }
@@ -2887,75 +2854,51 @@ public class FedoraItemHandler extends ItemHandlerPid
                 getTripleStoreUtility().getPropertiesElements(objid,
                     TripleStoreUtility.PROP_PUBLIC_STATUS);
             if (publicStatus == null) {
-                final String message =
-                    "A referenced Item '" + origin + "' does not exist.";
-                LOGGER.error(message);
-                throw new InvalidContentException();
+                throw new InvalidContentException("A referenced Item '" + origin + "' does not exist.");
             }
             else if (publicStatus.equals(Constants.STATUS_WITHDRAWN)) {
-                final String message =
-                    "The referenced Item '" + origin
+                throw new InvalidStatusException("The referenced Item '" + origin
                         + "' is in status 'withdrawn'. The surrogate Item can "
-                        + "not be created.";
-                LOGGER.error(message);
-                throw new InvalidStatusException();
+                        + "not be created.");
             }
 
             final String latestReleaseNumber =
                 getTripleStoreUtility().getPropertiesElements(objid,
                     TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
             if (latestReleaseNumber == null) {
-
-                final String message =
-                    "The referenced Item with id '" + origin
-                        + "' is not released.";
-                LOGGER.error(message);
-                throw new InvalidStatusException(message);
+                throw new InvalidStatusException("The referenced Item with id '" + origin
+                        + "' is not released.");
             }
             if (versionNumber == null) {
                 origin = objid + ':' + latestReleaseNumber;
             }
 
             if (!checkUserRights(origin)) {
-                final String message =
-                    "You can not create a surrogate Item based "
+                throw new AuthorizationException("You can not create a surrogate Item based "
                         + "on the Item '" + origin
                         + "' because you have no access "
-                        + "rights on this Item.";
-                LOGGER.debug(message);
-                throw new AuthorizationException(message);
+                        + "rights on this Item.");
             }
             try {
                 setOriginItem(origin);
-
             }
             catch (ItemNotFoundException e) {
-                final String message =
-                    "The referenced Item '" + origin + "' does not exist.";
-                LOGGER.debug(message);
-                throw new InvalidContentException();
+                throw new InvalidContentException("The referenced Item '" + origin + "' does not exist.");
             }
 
             if (getOriginItem().getResourceProperties().get(
                 PropertyMapKeys.ORIGIN) != null) {
-                final String message =
-                    "A referenced original Item should be "
-                        + "a regular Item, not a surrogate Item.";
-                LOGGER.debug(message);
-                throw new InvalidContentException(message);
+                throw new InvalidContentException("A referenced original Item should be "
+                        + "a regular Item, not a surrogate Item.");
             }
             final String versionStatus =
                 getOriginItem().getResourceProperties().get(
                     PropertyMapKeys.CURRENT_VERSION_STATUS);
             if (!versionStatus.equals(Constants.STATUS_RELEASED)) {
-                final String message =
-                    "The referenced Item version is not released. "
+                throw new InvalidStatusException("The referenced Item version is not released. "
                         + "You can create a surrogate Item only based on a "
-                        + "released Item version.";
-                LOGGER.debug(message);
-                throw new InvalidStatusException(message);
+                        + "released Item version.");
             }
-
         }
 
     }
@@ -2985,12 +2928,9 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         if ((mdRecords == null) || mdRecords.size() < 1) {
             if (item.getProperties().getObjectProperties().getOrigin() == null) {
-                final String message =
-                    "The Item representation doesn't contain a "
+                throw new MissingMdRecordException("The Item representation doesn't contain a "
                         + "mandatory md-record. A regular Item must contain a "
-                        + "mandatory md-record. ";
-                LOGGER.error(message);
-                throw new MissingMdRecordException(message);
+                        + "mandatory md-record.");
             }
 
         }
@@ -3005,7 +2945,6 @@ public class FedoraItemHandler extends ItemHandlerPid
                 if (mdRecordNames.contains(name)) {
                     throw new InvalidContentException(
                         "Metadata 'md-record' with name='"
-                        // + Elements.MANDATORY_MD_RECORD_NAME
                             + name + "' exists multiple times.");
                 }
 
@@ -3013,12 +2952,9 @@ public class FedoraItemHandler extends ItemHandlerPid
             }
             if (!mdRecordNames.contains(Elements.MANDATORY_MD_RECORD_NAME)
                 && item.getProperties().getObjectProperties().getOrigin() == null) {
-                final String message =
-                    "The item representation doesn't contain a "
+                throw new MissingMdRecordException("The item representation doesn't contain a "
                         + "mandatory md-record. A regular item must contain a "
-                        + "mandatory md-record. ";
-                LOGGER.error(message);
-                throw new MissingMdRecordException(message);
+                        + "mandatory md-record. ");
             }
 
         }
@@ -3042,26 +2978,16 @@ public class FedoraItemHandler extends ItemHandlerPid
         throws InvalidContentException, TripleStoreSystemException,
         ReferencedResourceNotFoundException, WebserverSystemException {
 
-        final String targetObjectType =
-            getTripleStoreUtility().getObjectType(targetId);
-
+        final String targetObjectType = getTripleStoreUtility().getObjectType(targetId);
         if (targetObjectType == null) {
-            final String message =
-                "Resource with id '" + targetId + "' does not exist.";
-            LOGGER.debug(message);
-            throw new ReferencedResourceNotFoundException(message);
+            throw new ReferencedResourceNotFoundException("Resource with id '" + targetId + "' does not exist.");
         }
-
         if (!de.escidoc.core.common.business.Constants.ITEM_OBJECT_TYPE
             .equals(targetObjectType)
             && !de.escidoc.core.common.business.Constants.CONTAINER_OBJECT_TYPE
                 .equals(targetObjectType)) {
-            final String message =
-                "A related resource '" + targetId
-                    + "' is neither 'Item' nor 'Container' ";
-
-            LOGGER.debug(message);
-            throw new InvalidContentException(message);
+            throw new InvalidContentException("A related resource '" + targetId
+                    + "' is neither 'Item' nor 'Container' ");
         }
     }
 
@@ -3125,42 +3051,6 @@ public class FedoraItemHandler extends ItemHandlerPid
 
     }
 
-    // /**
-    // * Check if Item is surrogate Item and set objid of origin Item.
-    // *
-    // * @throws ItemNotFoundException
-    // * Thrown if the resource for the obtained objid is no Item.
-    // * @throws AuthorizationException
-    // * Thrown if user has no permission to origin Item.
-    // * @throws SystemException
-    // * Thrown in case of internal error.
-    // */
-    // private void setOriginItem() throws ItemNotFoundException,
-    // AuthorizationException, SystemException {
-    //
-    // String originObjectId =
-    // getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
-    //
-    // if (originObjectId != null) {
-    // prepareAndSetOriginItem();
-    // if (!checkUserRights(getOriginItem().getFullId())) {
-    // String message =
-    // "You cannot access a full surrogate item representation"
-    // + " because you have no access rights on the item "
-    // + getOriginId()
-    // + " . You can access subressourcess owned by a "
-    // + "surrogate item using retrieve methods on "
-    // + "subresources.";
-    //
-    // log.debug(message);
-    // throw new AuthorizationException(message);
-    // }
-    // }
-    // else {
-    // setOriginItem(null);
-    // }
-    // }
-
     /**
      * Load origin Item. User permissions are checked.
      * 
@@ -3187,7 +3077,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             origin = true;
             prepareAndSetOriginItem();
             if (!checkUserRights(getOriginItem().getFullId())) {
-                LOGGER.debug(errorMessage);
                 throw new AuthorizationException(errorMessage);
             }
         }

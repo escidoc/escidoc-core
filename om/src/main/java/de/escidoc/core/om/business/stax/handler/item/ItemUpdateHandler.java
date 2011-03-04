@@ -82,57 +82,7 @@ public class ItemUpdateHandler extends DefaultHandler {
         throws InvalidContentException {
 
         final String curPath = parser.getCurPath();
-
         if (!done && curPath.equals(ITEM_PATH)) {
-
-            // handle xml:base attribute
-            //
-            // FIXME: check base if it has been provided?
-            // in case of non lax handling, an exception must be thrown if no
-            // base attribute has been provided.
-            // try {
-            // String base = element.getAttribute(Constants.XML_NSURI, "base")
-            // .getValue();
-            // // check base
-            // }
-            // catch (NoSuchAttributeException e) {
-            // // LAX
-            // }
-
-            // handle xlink:title attribute
-            //
-            // FIXME: check title if it has been provided?
-            // in case of non lax handling, an exception must be thrown if the
-            // xlink title attribute has not been provided
-            //
-            // try {
-            // String title = element.getAttribute(Constants.XLINK_URI,
-            // "title").getValue();
-            // // check title
-            // }
-            // catch (NoSuchAttributeException e) {
-            // // LAX
-            // }
-
-            // handle xlink:type attribute
-            //
-            // FIXME: check xlink type value, if provided?
-            // in case of non lax, an exception must be thrown if xlink type has
-            // not been provided.
-            //
-            // try {
-            // String linkType = element.getAttribute(Constants.XLINK_URI,
-            // "type").getValue();
-            // check link type
-            // if(! "simple".equals(linkType)){
-            // throw new InvalidContentException("Item.@xlink:type must
-            // be 'simple'.");
-            // }
-            // }
-            // catch (NoSuchAttributeException e) {
-            // // LAX
-            // }
-
             // handle xlink:href attribute
             try {
                 final String href = element

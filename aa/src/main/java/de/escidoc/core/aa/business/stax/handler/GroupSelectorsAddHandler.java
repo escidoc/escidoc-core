@@ -65,8 +65,7 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
                 final String selectorName =
                     element.getAttribute(indexName).getValue();
                 if (selectorName.length() == 0) {
-                    final String message = "The value of the attribute 'selector/@name is missing.";
-                    throw new XmlCorruptedException(message);
+                    throw new XmlCorruptedException("The value of the attribute 'selector/@name is missing.");
                 }
                 this.selector[0] = selectorName;
             } 
@@ -75,8 +74,7 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
                 final String selectorType =
                     element.getAttribute(indexType).getValue();
                 if (selectorType.length() == 0) {
-                    final String message = "The value of the attribute 'selector/@type is missing.";
-                    throw new XmlCorruptedException(message);
+                    throw new XmlCorruptedException("The value of the attribute 'selector/@type is missing.");
                 }
                 this.selector[1] = selectorType;
             } 
@@ -102,8 +100,7 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
         final String theName = element.getLocalName();
         if ((inSelector) && ("selector".equals(theName)) && ((s != null))) {
             if (s.length() == 0) {
-                final String message = "the value of element 'selector' is missing";
-                throw new XmlCorruptedException(message);   
+                throw new XmlCorruptedException("the value of element 'selector' is missing");
             }
             this.selector[2] = s; 
         }

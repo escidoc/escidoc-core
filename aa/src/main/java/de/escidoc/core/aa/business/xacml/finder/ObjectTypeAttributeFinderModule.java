@@ -117,17 +117,8 @@ public class ObjectTypeAttributeFinderModule
         final String resourceId, final String resourceObjid,
         final String resourceVersionNumber) throws EscidocException {
 
-        if (FinderModuleHelper.isNewResourceId(resourceId)) {
-            // This is the case if a new resource shall be created and no
-            // resource-id can exists. In this case, object-type can not exist,
-            // but object-type-new should be specified in case of an access to
-            // a resource.
-            return resolveObjectTypeNew(attributeIdValue, ctx);
-        }
-        else {
-            return resolveObjectType(attributeIdValue, resourceId,
+        return FinderModuleHelper.isNewResourceId(resourceId) ? resolveObjectTypeNew(attributeIdValue, ctx) : resolveObjectType(attributeIdValue, resourceId,
                 resourceObjid);
-        }
     }
 
     /**
@@ -204,6 +195,7 @@ public class ObjectTypeAttributeFinderModule
                     AttributeIds.URN_OBJECT_TYPE_NEW);
         }
         catch (WebserverSystemException e) {
+            log.debug("Error on fetching resource attribute.", e);
             // This can happen due to an internal error or because the
             // object-type-new attribute has not been provided, e.g. in case
             // of a task like logout or evaluate where neither resource-id

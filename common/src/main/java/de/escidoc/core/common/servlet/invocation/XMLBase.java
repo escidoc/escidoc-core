@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.common.servlet.invocation;
 
+import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.logger.AppLogger;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
@@ -217,13 +218,8 @@ public class XMLBase {
                 && (!path.startsWith(XPATH_DELIMITER))) {
                 result += XPATH_DELIMITER + path;
             }
-            else if ((xPath.endsWith(XPATH_DELIMITER))
-                && (path.startsWith(XPATH_DELIMITER))) {
-                result += path.substring(1);
-            }
-            else {
-                result += path;
-            }
+            else result += (xPath.endsWith(XPATH_DELIMITER))
+                    && (path.startsWith(XPATH_DELIMITER)) ? path.substring(1) : path;
         }
         return result;
     }
@@ -248,17 +244,16 @@ public class XMLBase {
         final DocumentBuilderFactory docBuilderFactory =
             DocumentBuilderFactory.newInstance();
         final DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-
-        final InputStream inputStream = getFileInputStream(filename);
-        if (inputStream == null) {
-            throw new FileNotFoundException("XML file not found [" + filename
-                + ']');
-        }
         Document result = null;
+        InputStream inputStream = null;
         try {
+            inputStream = getFileInputStream(filename);
+            if (inputStream == null) {
+                throw new FileNotFoundException("XML file not found [" + filename + ']');
+            }
             result = docBuilder.parse(inputStream);
         } finally {
-            inputStream.close();
+            IOUtils.closeStream(inputStream);
         }
         result.getDocumentElement().normalize();
         return result;
@@ -351,13 +346,7 @@ public class XMLBase {
             fos.write(contents.getBytes());
             fos.flush();
         } finally {
-            if(fos != null) {
-                try {
-                    fos.close();
-                } catch(IOException e) {
-                    // Ignore exception
-                }
-            }
+            IOUtils.closeStream(fos);
         }
     }
 

@@ -99,9 +99,6 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
                     groupProperties.put(Elements.ELEMENT_NAME, s);
                 }
                 else {
-                    log
-                        .error("the value of element " + theName
-                            + " is missing");
                     throw new XmlCorruptedException(
                         "the value of element " + theName + " is missing");
                 }
@@ -122,9 +119,6 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
                     groupProperties.put("label", s);
                 }
                 else {
-                    log
-                        .error("the value of element " + theName
-                            + " is missing");
                     throw new XmlCorruptedException(
                         "the value of element " + theName + " is missing");
                 }

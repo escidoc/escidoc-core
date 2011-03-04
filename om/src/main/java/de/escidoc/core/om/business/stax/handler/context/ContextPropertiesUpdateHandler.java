@@ -134,15 +134,11 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
             if (!orgUnitStatus
                 .equals(de.escidoc.core.common.business.Constants.STATUS_OU_OPENED)) {
-                final String message =
-                    "organizational-unit with id "
+                throw new InvalidStatusException("Organizational unit with id "
                         + id
                         + " should be in status "
                         + de.escidoc.core.common.business.Constants.STATUS_OU_OPENED
-                        + " but is in status " + orgUnitStatus;
-
-                log.error(message);
-                throw new InvalidStatusException(message);
+                        + " but is in status " + orgUnitStatus);
             }
             this.orgunits.add(id);
         }
@@ -250,25 +246,12 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
         throws SystemException {
         final String repositoryValue;
 
-        if (key.equals(Elements.ELEMENT_DESCRIPTION)) {
-            repositoryValue =
-                TripleStoreUtility.getInstance().getPropertiesElements(
-                    contextId,
-                    de.escidoc.core.common.business.Constants.DC_NS_URI + key);
-
-        }
-        else if (key.equals(Elements.ELEMENT_NAME)) {
-            repositoryValue =
-                TripleStoreUtility.getInstance().getTitle(contextId);
-        }
-        else {
-
-            repositoryValue =
-                TripleStoreUtility.getInstance().getPropertiesElements(
-                    contextId,
-                    de.escidoc.core.common.business.Constants.PROPERTIES_NS_URI
+        repositoryValue = key.equals(Elements.ELEMENT_DESCRIPTION) ? TripleStoreUtility.getInstance().getPropertiesElements(
+                contextId,
+                de.escidoc.core.common.business.Constants.DC_NS_URI + key) : key.equals(Elements.ELEMENT_NAME) ? TripleStoreUtility.getInstance().getTitle(contextId) : TripleStoreUtility.getInstance().getPropertiesElements(
+                contextId,
+                de.escidoc.core.common.business.Constants.PROPERTIES_NS_URI
                         + key);
-        }
 
         boolean changed = false;
         if (!XmlUtility.escapeForbiddenXmlCharacters(value).equals(

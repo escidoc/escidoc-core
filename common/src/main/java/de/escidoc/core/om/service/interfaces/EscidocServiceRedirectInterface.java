@@ -33,23 +33,23 @@ public interface EscidocServiceRedirectInterface {
     /**
      * @return the redirectUrl
      */
-    public abstract String getRedirectUrl();
+    String getRedirectUrl();
 
     /**
      * @param redirectUrl
      *            the redirectUrl to set
      */
-    public abstract void setRedirectUrl(final String redirectUrl);
+    void setRedirectUrl(final String redirectUrl);
 
     /**
      * @return the content
      */
-    public abstract String getContent();
+    String getContent();
 
     /**
      * @param content
      *            the content to set
      */
-    public abstract void setContent(final String content);
+    void setContent(final String content);
 
 }

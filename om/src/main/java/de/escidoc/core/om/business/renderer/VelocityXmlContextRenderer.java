@@ -586,10 +586,8 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 final String msg = "FedoraContextHandler.retrieveMemberRefs:"
                         + " can not retrieve object";
                 extValues.put("msg", msg);
-                sb.append(ContextXmlProvider
-                        .getInstance().getWithdrawnMessageXml(extValues));
-
-                log.error(msg);
+                sb.append(ContextXmlProvider.getInstance().getWithdrawnMessageXml(extValues));
+                log.debug(msg, e);
             } catch (ComponentNotFoundException e) {
                 final Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
@@ -598,14 +596,10 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 extValues.put("objid", objectId);
                 final String msg = "FedoraContextHandler.retrieveMemberRefs:can not retrieve object";
                 extValues.put("msg", msg);
-                sb.append(ContextXmlProvider
-                        .getInstance().getWithdrawnMessageXml(extValues));
-
-                log.error(msg);
+                sb.append(ContextXmlProvider.getInstance().getWithdrawnMessageXml(extValues));
+                log.debug(msg, e);
             } catch (MissingParameterException e) {
-                throw new SystemException(
-                        "Should not occure in FedoraContextHandler.retrieveMembers",
-                        e);
+                throw new SystemException("Should not occure in FedoraContextHandler.retrieveMembers", e);
             } catch (ContainerNotFoundException e) {
                 final Map<String, Object> extValues = new HashMap<String, Object>();
                 addXlinkValues(extValues);
@@ -616,11 +610,9 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
                 extValues.put("msg", msg);
                 sb.append(ContextXmlProvider
                         .getInstance().getWithdrawnMessageXml(extValues));
-                log.error(msg);
+                log.debug(msg, e);
             } catch (EncodingSystemException e) {
-                throw new SystemException(
-                        "Should not occure in FedoraContextHandler.retrieveMembers",
-                        e);
+                throw new SystemException("Should not occure in FedoraContextHandler.retrieveMembers", e);
             }
 
         }

@@ -53,7 +53,6 @@ import de.escidoc.core.common.exceptions.application.violated.UserGroupHierarchy
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The interface for access to a User Group resource.

@@ -159,7 +159,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             }
         }
         catch (Exception e) {
-            LOG.error(e);
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -187,7 +186,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             }
         }
         catch (Exception e) {
-            LOG.error(e);
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -231,12 +229,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 // (is 'now' in postgres)
                 if (field.getFieldType().equalsIgnoreCase(
                     Constants.DATABASE_FIELD_TYPE_DATE)) {
-                    if ("sysdate".equalsIgnoreCase(value)) {
-                        value = SYSDATE;
-                    }
-                    else {
-                        value = '\'' + convertDate(value) + '\'';
-                    }
+                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : '\'' + convertDate(value) + '\'';
                 } else if (field.getFieldType().equalsIgnoreCase(
                     Constants.DATABASE_FIELD_TYPE_TEXT)) {
                     value = value.replaceAll("'", "''");
@@ -252,7 +245,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             getJdbcTemplate().execute(sql.toString());
         }
         catch (Exception e) {
-            LOG.error(e);
             throw new SqlDatabaseSystemException(e);
         }
 
@@ -289,7 +281,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             getJdbcTemplate().execute(sql.toString());
         }
         catch (Exception e) {
-            LOG.error(e);
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -336,7 +327,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             getJdbcTemplate().execute(sql.toString());
         }
         catch (Exception e) {
-            LOG.error(e);
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -430,14 +420,8 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             condition = true;
         }
         final String fromClause;
-        if (condition) {
-            fromClause =
-                executionSql.replaceFirst(
-                    "(?i).*?from(.*?)(where|order by|group by).*", "$1");
-        }
-        else {
-            fromClause = executionSql.replaceFirst("(?i).*?from(.*)", "$1");
-        }
+        fromClause = condition ? executionSql.replaceFirst(
+                "(?i).*?from(.*?)(where|order by|group by).*", "$1") : executionSql.replaceFirst("(?i).*?from(.*)", "$1");
         final String[] tables = fromClause.split(",");
         final StringBuilder replacedFromClause = new StringBuilder(" ");
         for (int i = 0; i < tables.length; i++) {
@@ -447,20 +431,13 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             replacedFromClause.append(handleTableName(tables[i].trim()));
         }
         replacedFromClause.append(' ');
-        if (condition) {
-            executionSql =
-                executionSql.replaceFirst(
-                    "(?i)(.*?from).*?((where|order by|group by).*)", "$1"
+        executionSql = condition ? executionSql.replaceFirst(
+                "(?i)(.*?from).*?((where|order by|group by).*)", "$1"
                         + Matcher
-                        .quoteReplacement(replacedFromClause.toString()) 
-                        + "$2");
-        }
-        else {
-            executionSql =
-                executionSql.replaceFirst("(?i)(.*?from).*", "$1"
-                    + Matcher
-                    .quoteReplacement(replacedFromClause.toString()));
-        }
+                        .quoteReplacement(replacedFromClause.toString())
+                        + "$2") : executionSql.replaceFirst("(?i)(.*?from).*", "$1"
+                + Matcher
+                .quoteReplacement(replacedFromClause.toString()));
 
         try {
             return getJdbcTemplate().queryForList(executionSql);
@@ -730,12 +707,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 whereClause.append(longFieldName).append(operator).append(' ');
             }
             final String value;
-            if ("sysdate".equalsIgnoreCase(fieldValue)) {
-                value = SYSDATE;
-            }
-            else {
-                value = '\'' + convertDate(fieldValue) + '\'';
-            }
+            value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : '\'' + convertDate(fieldValue) + '\'';
             whereClause.append(value).append(' ');
         }
         else if (fieldType
@@ -765,7 +737,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             whereClause.append(fieldValue);
         }
         else {
-            LOG.error("wrong fieldType given");
             throw new SqlDatabaseSystemException("wrong fieldType given");
         }
         return whereClause.append(' ').toString();
@@ -882,12 +853,10 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
         throws SqlDatabaseSystemException {
         if (databaseTableVo.getTableName() == null
             || databaseTableVo.getTableName().length() == 0) {
-            LOG.error("tablename may not be empty");
             throw new SqlDatabaseSystemException("tablename may not be empty");
         }
         if (databaseTableVo.getDatabaseFieldVos() == null
             || databaseTableVo.getDatabaseFieldVos().isEmpty()) {
-            LOG.error("database-fields may not be empty");
             throw new SqlDatabaseSystemException(
                 "database-fields may not be empty");
         }
@@ -895,13 +864,11 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 : databaseTableVo.getDatabaseFieldVos()) {
             if (databaseTableFieldVo.getFieldName() == null
                 || databaseTableFieldVo.getFieldName().length() == 0) {
-                LOG.error("fieldname may not be empty");
                 throw new SqlDatabaseSystemException(
                     "fieldname may not be empty");
             }
             if (databaseTableFieldVo.getFieldType() == null
                 || databaseTableFieldVo.getFieldType().length() == 0) {
-                LOG.error("fieldtype may not be empty");
                 throw new SqlDatabaseSystemException(
                     "fieldtype may not be empty");
             }
@@ -912,18 +879,15 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 : databaseTableVo.getDatabaseIndexVos()) {
                 if (databaseIndexVo.getIndexName() == null
                     || databaseIndexVo.getIndexName().length() == 0) {
-                    LOG.error("indexname may not be empty");
                     throw new SqlDatabaseSystemException(
                         "indexname may not be empty");
                 }
                 if (databaseIndexVo.getFields() == null) {
-                    LOG.error("indexfields may not be empty");
                     throw new SqlDatabaseSystemException(
                         "indexfields may not be empty");
                 }
                 for (final String field : databaseIndexVo.getFields()) {
                     if (field == null || field.length() == 0) {
-                        LOG.error("indexfield may not be null");
                         throw new SqlDatabaseSystemException(
                             "indexfield may not be null");
                     }
@@ -946,12 +910,10 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
         throws SqlDatabaseSystemException {
         if (databaseRecordVo.getTableName() == null
             || databaseRecordVo.getTableName().length() == 0) {
-            LOG.error("tablename may not be empty");
             throw new SqlDatabaseSystemException("tablename may not be empty");
         }
         if (databaseRecordVo.getDatabaseRecordFieldVos() == null
             || databaseRecordVo.getDatabaseRecordFieldVos().isEmpty()) {
-            LOG.error("database-fields may not be empty");
             throw new SqlDatabaseSystemException(
                 "database-fields may not be empty");
         }
@@ -959,18 +921,15 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             : databaseRecordVo.getDatabaseRecordFieldVos()) {
             if (databaseRecordFieldVo.getFieldName() == null
                 || databaseRecordFieldVo.getFieldName().length() == 0) {
-                LOG.error("fieldname may not be empty");
                 throw new SqlDatabaseSystemException(
                     "fieldname may not be empty");
             }
             if (databaseRecordFieldVo.getFieldType() == null
                 || databaseRecordFieldVo.getFieldType().length() == 0) {
-                LOG.error("fieldtype may not be empty");
                 throw new SqlDatabaseSystemException(
                     "fieldtype may not be empty");
             }
             if (databaseRecordFieldVo.getFieldValue() == null) {
-                LOG.error("fieldvalue may not be empty");
                 throw new SqlDatabaseSystemException(
                     "fieldvalue may not be empty");
             }
@@ -990,19 +949,16 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
         throws SqlDatabaseSystemException {
         if (databaseSelectVo.getTableNames() == null
             || databaseSelectVo.getTableNames().isEmpty()) {
-            LOG.error("tablenames may not be empty");
             throw new SqlDatabaseSystemException("tablenames may not be empty");
         }
         for (final String tablename : databaseSelectVo.getTableNames()) {
             if (tablename == null || tablename.length() == 0) {
-                LOG.error("tablename may not be null");
                 throw new SqlDatabaseSystemException(
                     "tablename may not be null");
             }
         }
         if (databaseSelectVo.getSelectType() == null
             || databaseSelectVo.getSelectType().length() == 0) {
-            LOG.error("database-fields may not be empty");
             throw new SqlDatabaseSystemException(
                 "database-fields may not be empty");
         }
@@ -1012,7 +968,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 Constants.DATABASE_SELECT_TYPE_UPDATE)) {
             if (databaseSelectVo.getSelectFieldVos() == null
                 || databaseSelectVo.getSelectFieldVos().isEmpty()) {
-                LOG.error("select-fields may not be empty");
                 throw new SqlDatabaseSystemException(
                     "select-fields may not be empty");
             }
@@ -1020,27 +975,23 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 : databaseSelectVo.getSelectFieldVos()) {
                 if (selectFieldVo.getFieldName() == null
                     || selectFieldVo.getFieldName().length() == 0) {
-                    LOG.error("select-fieldname may not be empty");
                     throw new SqlDatabaseSystemException(
                         "select-fieldname may not be empty");
                 }
                 if (databaseSelectVo.getTableNames().size() > 1
                     && (selectFieldVo.getTableName() == null || selectFieldVo
                         .getTableName().length() == 0)) {
-                    LOG.error("select-field-tablename may not be empty");
                     throw new SqlDatabaseSystemException(
                         "select-field-tablename may not be empty");
                 }
                 if (databaseSelectVo.getSelectType().equals(
                     Constants.DATABASE_SELECT_TYPE_UPDATE)) {
                     if (selectFieldVo.getFieldValue() == null) {
-                        LOG.error("select-field-value may not be null");
                         throw new SqlDatabaseSystemException(
                             "select-field-value may not be null");
                     }
                     if (selectFieldVo.getFieldType() == null
                         || selectFieldVo.getFieldType().length() == 0) {
-                        LOG.error("select-field-type may not be empty");
                         throw new SqlDatabaseSystemException(
                             "select-field-type may not be empty");
                     }
@@ -1050,7 +1001,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
         if (databaseSelectVo.getAdditionalWhereGroupVos() != null
             && !databaseSelectVo.getAdditionalWhereGroupVos().isEmpty()
             && databaseSelectVo.getRootWhereGroupVo() == null) {
-            LOG.error("root where group may not be empty");
             throw new SqlDatabaseSystemException(
                 "root where group may not be empty");
         }
@@ -1058,7 +1008,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             final RootWhereGroupVo rootWhereGroupVo =
                 databaseSelectVo.getRootWhereGroupVo();
             if (rootWhereGroupVo.getRootWhereFieldVo() == null) {
-                LOG.error("root where field may not be empty");
                 throw new SqlDatabaseSystemException(
                     "root where field may not be empty");
             }
@@ -1084,7 +1033,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             for (final AdditionalWhereGroupVo additionalWhereGroupVo
                 : databaseSelectVo.getAdditionalWhereGroupVos()) {
                 if (additionalWhereGroupVo.getRootWhereFieldVo() == null) {
-                    LOG.error("root where field may not be empty");
                     throw new SqlDatabaseSystemException(
                         "root where field may not be empty");
                 }
@@ -1135,35 +1083,28 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
         throws SqlDatabaseSystemException {
         if (type == null || type.length() == 0
             || (!"root".equals(type) && !"additional".equals(type))) {
-            LOG.error("wrong type given");
             throw new SqlDatabaseSystemException("wrong type given");
         }
         if ("additional".equals(type)
             && (operator == null || operator.length() == 0)) {
-            LOG.error("operator may not be null");
             throw new SqlDatabaseSystemException("operator may not be null");
         }
         if (fieldType == null || fieldType.length() == 0) {
-            LOG.error("fieldtype may not be null");
             throw new SqlDatabaseSystemException("fieldtype may not be null");
         }
         if (fieldValue == null) {
-            LOG.error("fieldvalue may not be null");
             throw new SqlDatabaseSystemException("fieldvalue may not be null");
         }
         if (!fieldType.equals(Constants.DATABASE_FIELD_TYPE_FREE_SQL)) {
             if (fieldName == null || fieldName.length() == 0) {
-                LOG.error("fieldname may not be null");
                 throw new SqlDatabaseSystemException(
                     "fieldname may not be null");
             }
             if (operator == null || operator.length() == 0) {
-                LOG.error("operator may not be null");
                 throw new SqlDatabaseSystemException(
                             "operator may not be null");
             }
             if ((fieldType.startsWith("xpath")) && (xpath == null || xpath.length() == 0)) {
-                LOG.error("xpath may not be null");
                 throw new SqlDatabaseSystemException(
                     "xpath may not be null");
             }
@@ -1179,11 +1120,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      * 
      */
     public String handleTableName(final String tablename) {
-        if (tablename.matches(".*\\..*")) {
-            return tablename;
-        } else {
-            return Constants.SM_SCHEMA_NAME + '.' + tablename;
-        }
+        return tablename.matches(".*\\..*") ? tablename : Constants.SM_SCHEMA_NAME + '.' + tablename;
 
     }
 
@@ -1216,7 +1153,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      * 
      */
     public void setMyDataSource(final DataSource myDataSource) {
-        super.setDataSource(myDataSource);
+        setDataSource(myDataSource);
     }
 
 }

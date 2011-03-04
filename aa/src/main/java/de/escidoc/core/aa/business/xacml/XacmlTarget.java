@@ -37,9 +37,9 @@ import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionFactory;
 import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
+import de.escidoc.core.common.util.IOUtils;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -171,17 +171,15 @@ public class XacmlTarget extends Target {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-
         final ByteArrayOutputStream writer = new ByteArrayOutputStream();
-        encode(writer, new Indenter());
-        final String ret = writer.toString();
+        String returnValue;
         try {
-            writer.close();
+            encode(writer, new Indenter());
+            returnValue = writer.toString();
+        } finally {
+            IOUtils.closeStream(writer);
         }
-        catch (IOException e) {
-            // Ignore exception
-        }
-        return ret;
+        return returnValue;
     }
 
 
