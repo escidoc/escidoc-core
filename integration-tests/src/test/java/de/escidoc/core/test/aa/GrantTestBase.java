@@ -1226,15 +1226,9 @@ public class GrantTestBase extends UserAccountTestBase {
      */
     private void assertNumberOfGrants(
             final String id, final int expectedNumberOfGrants) throws Exception {
-        String grantsXml = retrieveCurrentGrants(id);
-        grantMatcher.reset(grantsXml);
-        int matches = 0;
-        while (grantMatcher.find()) {
-            matches++;
-        }
         assertEquals(
                 "number of grants is not as expected", 
-                    expectedNumberOfGrants, matches);
+                    expectedNumberOfGrants, getGrantCount(id));
     }
     
     /**
