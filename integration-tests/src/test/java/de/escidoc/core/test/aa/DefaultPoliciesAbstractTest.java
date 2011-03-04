@@ -2275,6 +2275,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
     public void testAaDefRetrieveGroupGrant() throws Exception {
         try {
             super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            revokeAllGrants(groupId1);
             String grantXml = doTestCreateGrant(
                 PWCallback.DEFAULT_HANDLE, groupId1, 
                 itemHref1, ROLE_HREF_COLLABORATOR, null);
@@ -2305,6 +2306,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
     public void testAaDefRetrieveGroupGrant1() throws Exception {
         try {
             super.setClient((GrantClient) getClient(USER_GROUP_HANDLER_CODE));
+            revokeAllGrants(TEST_USER_GROUP_ID);
             String grantXml = doTestCreateGrant(
                 PWCallback.TEST_HANDLE1, TEST_USER_GROUP_ID, 
                 itemHref1, ROLE_HREF_COLLABORATOR, null);

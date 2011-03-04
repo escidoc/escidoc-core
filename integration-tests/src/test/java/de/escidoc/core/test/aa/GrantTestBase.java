@@ -1243,13 +1243,19 @@ public class GrantTestBase extends UserAccountTestBase {
      */
     private int getGrantCount(
             final String id) throws Exception {
-        String grantsXml = retrieveCurrentGrants(id);
-        grantMatcher.reset(grantsXml);
-        int matches = 0;
-        while (grantMatcher.find()) {
-            matches++;
+        String savedHandle = PWCallback.getHandle();
+        try {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+            String grantsXml = retrieveCurrentGrants(id);
+            grantMatcher.reset(grantsXml);
+            int matches = 0;
+            while (grantMatcher.find()) {
+                matches++;
+            }
+            return matches;
+        } finally {
+            PWCallback.setHandle(savedHandle);
         }
-        return matches;
     }
     /**
      * @param client the client to set
