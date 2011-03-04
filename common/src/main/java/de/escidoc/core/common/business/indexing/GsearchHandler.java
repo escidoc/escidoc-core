@@ -98,7 +98,6 @@ public class GsearchHandler {
         final String pidSuffix,
         final String indexFulltextVisibilities)
         throws ApplicationServerSystemException {
-        long time = System.currentTimeMillis();
         if (index == null) {
             index = "";
         }
@@ -153,15 +152,12 @@ public class GsearchHandler {
             if (log.isDebugEnabled()) {
                 log.debug("requesting " + updateIndexParams 
                                 + " from " + gsearchUrl);
-                time = System.currentTimeMillis();
             }
             
             final String response = connectionUtility.getRequestURLAsString(
                                     new URL(gsearchUrl + updateIndexParams));
             if (log.isDebugEnabled()) {
-                log.debug("request needed " 
-                        + (System.currentTimeMillis() - time) 
-                        + " ms, response: " + response);
+                log.debug("response: " + response);
             }
 
             // Catch Exceptions
@@ -173,15 +169,13 @@ public class GsearchHandler {
         catch (IOException e) {
             log
                 .error("error while indexing resource " + resource
-                    + ", waited " + (System.currentTimeMillis() - time)
-                    + " ms " + e.getMessage());
+                    + " " + e.getMessage());
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
         catch (WebserverSystemException e) {
             log
                 .error("error while indexing resource " + resource
-                        + ", waited " + (System.currentTimeMillis() - time)
-                        + " ms " + e.getMessage(), e);
+                        + " " + e.getMessage(), e);
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -234,13 +228,10 @@ public class GsearchHandler {
                 log.debug("requesting " + deleteIndexParams 
                                 + " from " + gsearchUrl);
             }
-            final long time = System.currentTimeMillis();
             final String response = connectionUtility.getRequestURLAsString(
                                     new URL(gsearchUrl + deleteIndexParams));
             if (log.isDebugEnabled()) {
-                log.debug("request needed " 
-                        + (System.currentTimeMillis() - time) 
-                        + " ms, response: " + response);
+                log.debug("response: " + response);
             }
 
             // Catch Exceptions
@@ -301,13 +292,10 @@ public class GsearchHandler {
                         log.debug("requesting " + createEmptyParams 
                                         + " from " + gsearchUrl);
                     }
-                    final long time = System.currentTimeMillis();
                     response = connectionUtility.getRequestURLAsString(
                             new URL(gsearchUrl + createEmptyParams));
                     if (log.isDebugEnabled()) {
-                        log.debug("request needed " 
-                                + (System.currentTimeMillis() - time) 
-                                + " ms, response: " + response);
+                        log.debug("response: " + response);
                     }
                     if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                         throw new Exception(response);
@@ -360,13 +348,10 @@ public class GsearchHandler {
                 log.debug("requesting " + optimizeIndexParams 
                                 + " from " + gsearchUrl);
             }
-            final long time = System.currentTimeMillis();
             final String response = connectionUtility.getRequestURLAsString(
                             new URL(gsearchUrl + optimizeIndexParams));
             if (log.isDebugEnabled()) {
-                log.debug("request needed " 
-                        + (System.currentTimeMillis() - time) 
-                        + " ms, response: " + response);
+                log.debug("response: " + response);
             }
             // Catch Exceptions
             if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {

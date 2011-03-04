@@ -483,8 +483,6 @@ public final class CustomPolicyBuilder {
     public static String encode(final PolicyTreeElement policy)
         throws WebserverSystemException {
 
-        final long start = System.nanoTime();
-
         final ByteArrayOutputStream writer = new ByteArrayOutputStream();
         policy.encode(writer, new Indenter());
         String ret = null;
@@ -500,8 +498,7 @@ public final class CustomPolicyBuilder {
         }
 
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Encoded AbstractPolicy in "
-                + (System.nanoTime() - start) + "ns");
+            LOG.debug("Encoded AbstractPolicy");
         }
 
         ret = insertXacmlPrefix(ret);

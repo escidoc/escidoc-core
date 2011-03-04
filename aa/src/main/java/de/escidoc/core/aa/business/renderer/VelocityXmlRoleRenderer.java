@@ -81,7 +81,6 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
     public String render(final EscidocRole role)
         throws WebserverSystemException {
 
-        final long start = System.nanoTime();
         final Map<String, Object> values = new HashMap<String, Object>();
 
         addCommonValues(values);
@@ -90,8 +89,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
 
         final String ret = getRoleXmlProvider().getRoleXml(values);
         if (LOG.isDebugEnabled()) {
-            final long runtime = System.nanoTime() - start;
-            LOG.debug("Built XML in " + runtime + "ns");
+            LOG.debug("Built XML");
         }
         return ret;
     }

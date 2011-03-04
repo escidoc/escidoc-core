@@ -85,9 +85,6 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     @Override
     public String render(final UserAccount userAccount) throws SystemException {
 
-        // long start = System.nanoTime();
-
-        // start = System.nanoTime();
         final Map<String, Object> values = new HashMap<String, Object>();
 
         values.put("isRootUserAccount", "true");

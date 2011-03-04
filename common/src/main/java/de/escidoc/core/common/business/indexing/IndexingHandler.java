@@ -159,7 +159,6 @@ public class IndexingHandler implements ResourceListener {
         if (log.isDebugEnabled()) {
             log.debug("gsearchindexing STARTING, xml is " + restXml);
         }
-        final long time = System.currentTimeMillis();
         if (restXml != null && restXml.length() > 0) {
             if (log.isDebugEnabled()) {
                 log.debug("writing xml in cache");
@@ -167,15 +166,14 @@ public class IndexingHandler implements ResourceListener {
             indexingCacheHandler.writeObjectInCache(id, restXml);
             if (log.isDebugEnabled()) {
                 log.debug("gsearchindexing caching xml via deviation handler "
-                    + " needed " + (System.currentTimeMillis() - time) + " ms");
+                    + " finished.");
             }
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
         addResource(id, objectType, restXml);
         if (log.isDebugEnabled()) {
             log.debug("gsearchindexing whole indexing of resource " + id
-                + " of type " + objectType + " needed "
-                + (System.currentTimeMillis() - time) + " ms");
+                + " of type " + objectType + " finished");
         }
     }
 
@@ -196,11 +194,10 @@ public class IndexingHandler implements ResourceListener {
         if (log.isDebugEnabled()) {
             log.debug("gsearchindexing STARTING deletion");
         }
-        final long time = System.currentTimeMillis();
         deleteResource(id);
         if (log.isDebugEnabled()) {
             log.debug("gsearchindexing whole deletion of resource " + id
-                + " needed " + (System.currentTimeMillis() - time) + " ms");
+                + " finished");
         }
     }
 
@@ -227,7 +224,6 @@ public class IndexingHandler implements ResourceListener {
         if (log.isDebugEnabled()) {
             log.debug("gsearchindexing STARTING, xml is " + restXml);
         }
-        final long time = System.currentTimeMillis();
         if (restXml != null && restXml.length() > 0) {
             if (log.isDebugEnabled()) {
                 log.debug("replacing xml in cache");
@@ -235,15 +231,14 @@ public class IndexingHandler implements ResourceListener {
             indexingCacheHandler.replaceObjectInCache(id, restXml);
             if (log.isDebugEnabled()) {
                 log.debug("gsearchindexing caching xml via deviation handler "
-                    + " needed " + (System.currentTimeMillis() - time) + " ms");
+                    + " finished");
             }
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
         addResource(id, objectType, restXml);
         if (log.isDebugEnabled()) {
             log.debug("gsearchindexing whole indexing of resource " + id
-                + " of type " + objectType + " needed "
-                + (System.currentTimeMillis() - time) + " ms");
+                + " of type " + objectType + " finished");
         }
     }
 
@@ -308,8 +303,6 @@ public class IndexingHandler implements ResourceListener {
         final String resource, final String objectType, final String action,
         final String xml) throws SystemException {
 
-        final long time = System.currentTimeMillis();
-
         if (log.isDebugEnabled()) {
             log.debug("Do indexing for resource " + resource + ", objectType: "
                 + objectType);
@@ -351,8 +344,7 @@ public class IndexingHandler implements ResourceListener {
         }
         if (log.isDebugEnabled()) {
             log.debug("gsearchindexing resource " + resource + " of type "
-                + objectType + ", action=" + action + " needed "
-                + (System.currentTimeMillis() - time) + " ms");
+                + objectType + ", action=" + action + " finished");
         }
     }
 
@@ -651,7 +643,6 @@ public class IndexingHandler implements ResourceListener {
                 if (log.isDebugEnabled()) {
                     log.debug("xml is: " + xml);
                 }
-                final long time = System.currentTimeMillis();
                 if (domObject == null) {
                     domObject = getXmlAsDocument(xml);
                 }
@@ -662,9 +653,7 @@ public class IndexingHandler implements ResourceListener {
                     if (log.isDebugEnabled()) {
                         log
                             .debug("gsearchindexing xpath-exec on DOM-Object "
-                                    + " needed "
-                                    + (System.currentTimeMillis() - time)
-                                    + " ms");
+                                    + " finished");
                     }
                     if (updateNode != null) {
                         return Constants.DO_UPDATE;
@@ -677,9 +666,7 @@ public class IndexingHandler implements ResourceListener {
                     if (log.isDebugEnabled()) {
                         log
                             .debug("gsearchindexing xpath-exec on DOM-Object "
-                                    + " needed "
-                                    + (System.currentTimeMillis() - time)
-                                    + " ms");
+                                    + " finished");
                     }
                     if (deleteNode != null) {
                         return Constants.DO_DELETE;
