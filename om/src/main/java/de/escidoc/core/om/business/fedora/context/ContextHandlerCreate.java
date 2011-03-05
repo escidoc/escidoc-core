@@ -189,7 +189,10 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
         // check that at least one OU is given
         if (propertiesHandler.getOrganizationalUnits().isEmpty()) {
-            throw new InvalidContentException("No 'organizational-unit' element is given.");
+            final String message =
+                "No 'organizational-unit' element is given. ";
+            LOGGER.error(message);
+            throw new InvalidContentException(message);
         }
 
         // set status created

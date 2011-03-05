@@ -37,7 +37,6 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import sun.util.LocaleServiceProviderPool;
 
 import javax.xml.XMLConstants;
 import java.net.URI;
@@ -101,9 +100,12 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                     element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
                         "resource");
                 if (indexOfResource == -1) {
-                    throw new XmlCorruptedException("The ontology-xml is not valide rdf/xml. "
+                    final String message =
+                            "The ontology-xml is not valide rdf/xml. "
                                     + "The element 'rdf:type' must have "
-                                    + "the attribute 'resource'.");
+                                    + "the attribute 'resource'.";
+                    LOGGER.debug(message);
+                    throw new XmlCorruptedException(message);
                 } else {
                     final String resourceValue =
                             element.getAttribute(indexOfResource).getValue();
@@ -118,9 +120,12 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
             && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
             setPredicate(element);
             if (this.predicate == null) {
-                throw new XmlCorruptedException("The ontology-xml is not valide rdf/xml."
+                final String message =
+                    "The ontology-xml is not valide rdf/xml."
                         + "The element 'rdf:Property' must have "
-                        + "one of the attributes 'id' or 'about'");
+                        + "one of the attributes 'id' or 'about'";
+                LOGGER.debug(message);
+                throw new XmlCorruptedException(message);
             }
         }
         else if (DESCRIPTION_PATH.equals(currentPath)
@@ -128,9 +133,12 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
             inDescription = true;
             setPredicate(element);
             if (this.predicate == null) {
-                throw new XmlCorruptedException("The ontology-xml is not valide rdf/xml."
+                final String message =
+                    "The ontology-xml is not valide rdf/xml."
                         + "The element 'rdf:Description' must have "
-                        + "one of the attributes 'id' or 'about'");
+                        + "one of the attributes 'id' or 'about'";
+                LOGGER.debug(message);
+                throw new XmlCorruptedException(message);
             }
         }
         return element;
@@ -180,7 +188,6 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                         final URI aboutUri = new URI(about);
                         this.predicate = about;
                     } catch (URISyntaxException e) {
-                        LOGGER.debug("Invalid URL '" + about + "'", e);
                         this.predicate = this.base + about;
                     }
                 } else {
@@ -192,9 +199,12 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
             if (this.base != null) {
                 this.predicate = this.base + '#' + id;
             } else {
-                throw new InvalidContentException("The ontology-xml does not contain a "
+                final String message =
+                        "The ontology-xml does not contain a "
                                 + "base-url. Therefore the element 'Description' "
-                                + "may not contain the attribute 'id'.");
+                                + "may not contain the attribute 'id'.";
+                LOGGER.debug(message);
+                throw new InvalidContentException(message);
             }
         }
     }

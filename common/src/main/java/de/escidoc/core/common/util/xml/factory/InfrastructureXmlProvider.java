@@ -55,7 +55,12 @@ public abstract class InfrastructureXmlProvider extends VelocityXmlProvider {
 
     @Override
     protected String completePath() throws WebserverSystemException {
-        return UserContext.isRestAccess() ? REST_PATH : SOAP_PATH;
+        if (UserContext.isRestAccess()) {
+            return REST_PATH;
+        }
+        else {
+            return SOAP_PATH;
+        }
     }
 
 }

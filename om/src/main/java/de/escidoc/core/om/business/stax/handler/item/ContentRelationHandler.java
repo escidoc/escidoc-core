@@ -320,7 +320,7 @@ public class ContentRelationHandler extends DefaultHandler {
             }
             catch (NoSuchAttributeException e1) {
                 throw new MissingAttributeValueException(
-                    "Objid or href is missing for subject reference", e);
+                    "objid or href is missing for subject reference", e);
             }
         }
 

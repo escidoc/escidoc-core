@@ -39,22 +39,22 @@ import java.util.Map;
 
 public interface TripleStoreFilterUtility {
 
-    String MEMBER_RELATION_PREDICATE =
+    final String MEMBER_RELATION_PREDICATE =
         "<http://www.nsdl.org/ontologies/relationships/hasMember>";
 
-    String PARENT_RELATION_PREDICATE =
+    final String PARENT_RELATION_PREDICATE =
         "<http://www.nsdl.org/ontologies/relationships/hasParent>";
 
-    String ITEM_PREDICATE_PREFIX =
+    final String ITEM_PREDICATE_PREFIX =
             '<' + Constants.ITEM_PROPERTIES_NAMESPACE_URI + '/';
 
-    String CONTAINER_PREDICATE_PREFIX =
+    final String CONTAINER_PREDICATE_PREFIX =
         "<http://www.escidoc.de/schemas/container/0.1/";
 
-    String ITEMS_CONTEXT_PREDICATE =
+    final String ITEMS_CONTEXT_PREDICATE =
         ITEM_PREDICATE_PREFIX + "context>";
 
-    String CONTAINERS_CONTEXT_PREDICATE =
+    final String CONTAINERS_CONTEXT_PREDICATE =
         CONTAINER_PREDICATE_PREFIX + "context>";
 
     /**

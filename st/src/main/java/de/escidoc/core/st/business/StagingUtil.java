@@ -112,9 +112,17 @@ public final class StagingUtil {
         result = result.replace("\\", "/");
         append = append.replace("\\", "/");
         if (result.endsWith("/")) {
-            result += append.startsWith("/") ? append.substring(1) : append;
+            if (append.startsWith("/")) {
+                result += append.substring(1);
+            } else {
+                result += append;
+            }
         } else {
-            result += append.startsWith("/") ? append : '/' + append;
+            if (append.startsWith("/")) {
+                result += append;
+            } else {
+                result += '/' + append;
+            }
         }
         return result;
     }

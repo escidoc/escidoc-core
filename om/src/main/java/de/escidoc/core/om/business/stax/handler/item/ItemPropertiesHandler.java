@@ -52,7 +52,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import sun.util.LocaleServiceProviderPool;
 
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.stream.XMLStreamException;
@@ -289,10 +288,13 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
             if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                 Constants.CONTEXT_URL_BASE)) {
-                throw new ContextNotFoundException("The " + Elements.ELEMENT_CONTEXT
+                final String message =
+                    "The " + Elements.ELEMENT_CONTEXT
                         + " element has a wrong url."
                         + "the url have to look like: "
-                        + Constants.CONTEXT_URL_BASE + "[id] ", e);
+                        + Constants.CONTEXT_URL_BASE + "[id] ";
+                LOGGER.error(message);
+                throw new ContextNotFoundException(message, e);
             }
         }
         this.properties.getObjectProperties().setContextId(contextId);
@@ -347,10 +349,13 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
             if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                 Constants.CONTENT_MODEL_URL_BASE)) {
-                throw new ContentModelNotFoundException("The " + Elements.ELEMENT_CONTENT_MODEL
+                final String message =
+                    "The " + Elements.ELEMENT_CONTENT_MODEL
                         + " element has a wrong url."
                         + "the url have to look like: "
-                        + Constants.CONTENT_MODEL_URL_BASE + "[id] ", e);
+                        + Constants.CONTENT_MODEL_URL_BASE + "[id] ";
+                LOGGER.error(message);
+                throw new ContentModelNotFoundException(message, e);
             }
         }
         this.properties.getObjectProperties().setContentModelId(contentModelId);
@@ -402,10 +407,13 @@ public class ItemPropertiesHandler extends DefaultHandler {
             }
             if (!href.substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                 Constants.ITEM_URL_BASE)) {
-                throw new InvalidContentException("The " + Elements.ELEMENT_ORIGIN
+                final String message =
+                    "The " + Elements.ELEMENT_ORIGIN
                         + " element has a wrong url."
                         + "the url have to look like: "
-                        + Constants.ITEM_URL_BASE + "[id] ", e);
+                        + Constants.ITEM_URL_BASE + "[id] ";
+                LOGGER.error(message);
+                throw new InvalidContentException(message, e);
             }
         }
         this.properties.getObjectProperties().setOrigin(originId);
@@ -441,6 +449,9 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 return StatusType.INREVISION;
             }
         }
-        throw new InvalidStatusException("Invalid status '" + type + '\'');
+
+        final String msg = "Invalid status '" + type + '\'';
+        LOGGER.debug(msg);
+        throw new InvalidStatusException(msg);
     }
 }

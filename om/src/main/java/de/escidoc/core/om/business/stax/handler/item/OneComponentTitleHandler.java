@@ -51,22 +51,59 @@ public class OneComponentTitleHandler extends DefaultHandler {
         throws ReadonlyAttributeViolationException, InvalidContentException {
 
         final String componentPath = "/component";
+
         final String theName = element.getLocalName();
+
         final String currenrPath = parser.getCurPath();
         if (componentPath.equals(currenrPath)) {
+
+            // componentNumber ++;
             final int indexOfobjId = element.indexOfAttribute(null, "objid");
             if (indexOfobjId != (-1)
                 && element.getAttribute(indexOfobjId).getValue().length() > 0) {
-                throw new ReadonlyAttributeViolationException("Read only attribute \"objid\" of the " + "element "
-                        + theName + " may not exist while create");
+                final String message =
+                    "Read only attribute \"objid\" of the " + "element "
+                        + theName + " may not exist while create";
+                LOG.error(message);
+                throw new ReadonlyAttributeViolationException(message);
             }
-            final int indexOfhref = element.indexOfAttribute(Constants.XLINK_URI, "href");
+
+            final int indexOfhref =
+                element.indexOfAttribute(Constants.XLINK_URI, "href");
             if (indexOfhref != (-1)
                 && element.getAttribute(indexOfhref).getValue().length() > 0) {
-                throw new ReadonlyAttributeViolationException("Read only attribute \"href\" of the " + "element "
-                        + theName + " may not exist while create");
+                final String message =
+                    "Read only attribute \"href\" of the " + "element "
+                        + theName + " may not exist while create";
+                LOG.error(message);
+                throw new ReadonlyAttributeViolationException(message);
             }
+
+            // not longer needed
+            // type is restricted to "simple" by schema
+            // not necessary to add non-existing type
+            // int indexOfType =
+            // element.indexOfAttribute(Constants.XLINK_URI, "type");
+            // if (indexOfType == (-1)) {
+            // Attribute type =
+            // new Attribute("type", Constants.XLINK_URI,
+            // Constants.XLINK_PREFIX, "simple");
+            // element.addAttribute(type);
+            // }
+            // else {
+            // Attribute type = element.getAttribute(indexOfType);
+            // String typeValue = type.getValue();
+            // if (!typeValue.equals(Constants.XLINK_TYPE_SIMPLE)) {
+            // String message =
+            // "the attribute xlink:type must be "
+            // + "set to \"simple\"";
+            // LOG.error(message);
+            // throw new InvalidContentException(message);
+            // }
+            // }
+
         }
+
         return element;
     }
 

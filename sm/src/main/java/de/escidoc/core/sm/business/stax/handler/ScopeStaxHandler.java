@@ -48,7 +48,7 @@ public class ScopeStaxHandler extends DefaultHandler {
 
     private Scope scope = new Scope();
     
-    private final Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
+    private Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
     
     private static final String MSG_INCONSISTENT_IDS = 
         "id in xml is not the same as id provided in method.";
@@ -70,8 +70,7 @@ public class ScopeStaxHandler extends DefaultHandler {
                 if (scope.getId() != null && !scope.getId().equals(scopeId)) {
                     throw new IntegritySystemException(MSG_INCONSISTENT_IDS);
                 }
-            } catch (MissingAttributeValueException e) {
-            }
+            } catch (MissingAttributeValueException e) {}
         }
         return element;
     }

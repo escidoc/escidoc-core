@@ -260,7 +260,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 ids = tsu.retrieve(query.toString());
             }
             catch (TripleStoreSystemException e) {
-                log.debug("Error on quering triple strore.", e);
             }
 
             final Iterator<String> idIter = ids.iterator();
@@ -517,7 +516,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         }
         catch (StreamNotFoundException e) {
             // This element is now optional.
-            log.debug("Error on getting container content model.", e);
         }
     }
 

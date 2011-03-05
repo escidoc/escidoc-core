@@ -70,8 +70,11 @@ public class ContextHandlerDelete extends ContextHandlerCreate {
 
         if (!getTripleStoreUtility().exists(context.getId())
             || !Constants.CONTEXT_OBJECT_TYPE.equals(objectType)) {
-            throw new ContextNotFoundException(StringUtility.format(
-                    "Context not found", context.getId()));
+            final String msg =
+                StringUtility.format(
+                    "Context not found", context.getId());
+            LOGGER.debug(msg);
+            throw new ContextNotFoundException(msg);
         }
 
         checkStatus(Constants.STATUS_CONTEXT_CREATED);

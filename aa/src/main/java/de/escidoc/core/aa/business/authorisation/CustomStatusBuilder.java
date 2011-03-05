@@ -32,9 +32,9 @@ import com.sun.xacml.ctx.Status;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -139,14 +139,16 @@ public final class CustomStatusBuilder {
                 final StringBuilder errorMsg = new StringBuilder(message);
                 errorMsg.append('\n');
                 final StringWriter sw = new StringWriter();
+                final PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                errorMsg.append(sw.toString());
+                errorMsg.append("\n\nException deserializing failed due to ");
+                errorMsg.append(e1);
                 try {
-                    final PrintWriter pw = new PrintWriter(sw);
-                    e.printStackTrace(pw);
-                    errorMsg.append(sw.toString());
-                    errorMsg.append("\n\nException deserializing failed due to ");
-                    errorMsg.append(e1);
-                } finally {
-                    IOUtils.closeWriter(sw);
+                    sw.close();
+                }
+                catch (IOException e2) {
+                    // Ignore exceptions
                 }
                 return new Status(codeList, errorMsg.toString());
             }
@@ -180,8 +182,13 @@ public final class CustomStatusBuilder {
     public static String getResourceNotFoundStatusCode(
         final ResourceNotFoundException exception) {
 
-        return exception == null ? AttributeIds.STATUS_PREFIX
-                + ResourceNotFoundException.class.getName() : AttributeIds.STATUS_PREFIX
+        if (exception == null) {
+            return AttributeIds.STATUS_PREFIX
+                + ResourceNotFoundException.class.getName();
+        }
+        else {
+            return AttributeIds.STATUS_PREFIX
                 + exception.getClass().getName();
+        }
     }
 }

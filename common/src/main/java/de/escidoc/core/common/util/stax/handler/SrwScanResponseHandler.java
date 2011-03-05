@@ -45,7 +45,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private final Set<String> terms = new HashSet<String>();
+    private Set<String> terms = new HashSet<String>();
     
     private String lastTerm = "";
     
@@ -76,7 +76,6 @@ public class SrwScanResponseHandler extends DefaultHandler {
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
-    @Override
     public String characters(
             final String s,
             final StartElement element)

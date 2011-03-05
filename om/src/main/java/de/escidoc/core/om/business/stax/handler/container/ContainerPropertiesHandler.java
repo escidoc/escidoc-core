@@ -160,7 +160,6 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                                 Elements.ATTRIBUTE_XLINK_HREF);
                     }
                     catch (NoSuchAttributeException e1) {
-                        log.debug("Error on getting attribute value.", e1);
                         String att = Elements.ATTRIBUTE_XLINK_OBJID;
                         if (UserContext.isRestAccess()) {
                             att = Elements.ATTRIBUTE_XLINK_HREF;
@@ -181,10 +180,13 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     if (!href
                         .substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                             Constants.CONTEXT_URL_BASE)) {
-                        throw new ContextNotFoundException( "The " + Elements.ELEMENT_CONTEXT
+                        final String message =
+                            "The " + Elements.ELEMENT_CONTEXT
                                 + " element has a wrong url."
                                 + "the url have to look like: "
-                                + Constants.CONTEXT_URL_BASE + "[id] ", e);
+                                + Constants.CONTEXT_URL_BASE + "[id] ";
+                        log.debug(message);
+                        throw new ContextNotFoundException(message, e);
                     }
                 }
                 properties.put(theName, contextId);
@@ -209,7 +211,6 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                                 Elements.ATTRIBUTE_XLINK_HREF);
                     }
                     catch (NoSuchAttributeException e1) {
-                        log.debug("Error on getting attribute value.", e1);
                         String att = Elements.ATTRIBUTE_XLINK_OBJID;
                         if (UserContext.isRestAccess()) {
                             att = Elements.ATTRIBUTE_XLINK_HREF;
@@ -230,10 +231,13 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     if (!href
                         .substring(0, indexOfLastSlash + 1).equalsIgnoreCase(
                             Constants.CONTENT_MODEL_URL_BASE)) {
-                        throw new ContentModelNotFoundException("The " + Elements.ELEMENT_CONTENT_MODEL
+                        final String message =
+                            "The " + Elements.ELEMENT_CONTENT_MODEL
                                 + " element has a wrong url."
                                 + "the url have to look like: "
-                                + Constants.CONTENT_MODEL_URL_BASE + "[id] ", e);
+                                + Constants.CONTENT_MODEL_URL_BASE + "[id] ";
+                        log.debug(message);
+                        throw new ContentModelNotFoundException(message, e);
                     }
                 }
                 properties.put(theName, contextId);
@@ -320,13 +324,34 @@ public class ContainerPropertiesHandler extends DefaultHandler {
         final String curPath = staxParser.getCurPath();
         // String theName = element.getLocalName();
         if (curPath.startsWith(PROPERTIES_PATH)) {
+            // Now properties.description is read only element.
+            // It value origins from the corresponding element of the escidoc
+            // meta data set
+            // and is stored in dc data stream as dc.description element as
+            // result of a mapping escidoc->dc.
+            // if (theName.equals("description")) {
+            // if ((s != null)) {
+            // properties.put("description", s);
+            // }
+            // else {
+            // getLog().debug(
+            // "the value of" + " of the element " + theName
+            // + " is missing");
+            // throw new MissingElementValueException(
+            // "the value of the element " + theName + " is missing");
+            // }
+            // }
+
             if ("/container/properties/public-status".equals(curPath)) {
                 if ((s != null)) {
                     properties.put(Elements.ELEMENT_PUBLIC_STATUS, s);
                 }
                 else {
-                    throw new MissingElementValueException("Value of the element "
-                            + Elements.ELEMENT_PUBLIC_STATUS + " is missing");
+                    final String msg =
+                        "Value of the element "
+                            + Elements.ELEMENT_PUBLIC_STATUS + " is missing";
+                    log.debug(msg);
+                    throw new MissingElementValueException(msg);
                 }
             }
             else if ("/container/properties/pid".equals(curPath)) {
@@ -334,8 +359,11 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     properties.put(Elements.ELEMENT_PID, s);
                 }
                 else {
-                    throw new MissingElementValueException("Value of the element " + Elements.ELEMENT_PID
-                            + " is missing");
+                    final String msg =
+                        "Value of the element " + Elements.ELEMENT_PID
+                            + " is missing";
+                    log.debug(msg);
+                    throw new MissingElementValueException(msg);
                 }
             }
         }

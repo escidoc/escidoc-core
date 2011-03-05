@@ -323,7 +323,12 @@ public class ContentModel extends GenericVersionableResourcePid
         final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        if (propertiesNames != null) {
+            newPropertiesNames = propertiesNames;
+        }
+        else {
+            newPropertiesNames = new ArrayList<String>();
+        }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_CATEGORY);
         newPropertiesNames.add(TripleStoreUtility.PROP_DESCRIPTION);
@@ -346,7 +351,12 @@ public class ContentModel extends GenericVersionableResourcePid
         final Map<String, String> propertiesMapping) {
 
         final Map<String, String> newPropertiesNames;
-        newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
+        if (propertiesMapping != null) {
+            newPropertiesNames = propertiesMapping;
+        }
+        else {
+            newPropertiesNames = new HashMap<String, String>();
+        }
         newPropertiesNames.put(TripleStoreUtility.PROP_CONTENT_CATEGORY,
             PropertyMapKeys.LATEST_VERSION_CONTENT_CATEGORY);
         newPropertiesNames.put(TripleStoreUtility.PROP_DESCRIPTION,
@@ -610,7 +620,10 @@ public class ContentModel extends GenericVersionableResourcePid
                     else {
                         ds.setContentUnchanged(true);
                     }
-                    if (!curDs.getControlGroup().equals(ds.getControlGroup()) || !curDs.getMimeType().equals(ds.getMimeType()) || ds.getLabel() != null && curDs.getLabel() != null
+                    if (!curDs.getControlGroup().equals(ds.getControlGroup()) || !curDs.getMimeType().equals(ds.getMimeType())) {
+                        contentChanged = true;
+                    }
+                    else if (ds.getLabel() != null && curDs.getLabel() != null
                             && !curDs.getLabel().equals(ds.getLabel()) || !ds.equals(curDs)) {
                         contentChanged = true;
                     }
@@ -628,7 +641,6 @@ public class ContentModel extends GenericVersionableResourcePid
             }
         }
         catch (final FedoraSystemException e) {
-            log.debug("Error on setting stream.", e);
             // this is not an update; its a create
             ds.persist(false);
         }

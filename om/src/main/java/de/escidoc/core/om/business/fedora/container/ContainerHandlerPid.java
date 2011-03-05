@@ -148,10 +148,13 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
 
         setContainer(id);
         if (!getContainer().isLatestVersion()) {
-            throw new ReadonlyVersionException("The version " + getContainer().getVersionNumber()
+            final String message =
+                "The version " + getContainer().getVersionNumber()
                     + " is not a latest version of the container. "
                     + " Assignment of version PID is restricted to "
-                    + "the latest version.");
+                    + "the latest version.";
+            log.debug(message);
+            throw new ReadonlyVersionException(message);
         }
         // check Container status/values
         checkLocked();
@@ -272,6 +275,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
             pid = xpath.evaluate(xpathPid, xmlDom);
         }
         catch (final Exception e) {
+            log.error(e.toString());
             throw new InvalidStatusException(e);
         }
 
@@ -285,8 +289,11 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         // }
         // FIXME pid structure check ?
         if (pid.length() > 0) {
-            throw new InvalidStatusException("This object version is already assigned with PID '" + pid
-                    + "' and can not be reassigned.");
+            final String msg =
+                "This object version is already assigned with PID '" + pid
+                    + "' and can not be reassigned.";
+            log.info(msg);
+            throw new InvalidStatusException(msg);
         }
     }
 
@@ -349,8 +356,11 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
                 TripleStoreUtility.PROP_LATEST_RELEASE_PID);
 
         if ((pid != null) && (pid.length() > 0)) {
-            throw new InvalidStatusException("The object is already assigned with PID '" + pid
-                    + "' and can not be reassigned.");
+            final String msg =
+                "The object is already assigned with PID '" + pid
+                    + "' and can not be reassigned.";
+            log.info(msg);
+            throw new InvalidStatusException(msg);
         }
     }
 

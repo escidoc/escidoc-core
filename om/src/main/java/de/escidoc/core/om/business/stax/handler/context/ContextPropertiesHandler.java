@@ -136,10 +136,13 @@ public class ContextPropertiesHandler extends DefaultHandler {
                         id = XmlUtility.getIdFromURI(xlinkHref);
 
                         if (!xlinkHref.equals("/oum/organizational-unit/" + id)) {
-                            throw new OrganizationalUnitNotFoundException(
+                            final String message =
                                 "The 'organizational-unit' element has a wrong "
                                     + "url. the url have to look like: "
-                                    + "/oum/organizational-unit/id");
+                                    + "/oum/organizational-unit/id";
+                            logger.error(message);
+                            throw new OrganizationalUnitNotFoundException(
+                                message);
                         }
                     }
                     else {
@@ -155,11 +158,15 @@ public class ContextPropertiesHandler extends DefaultHandler {
 
                     if (!orgUnitStatus
                         .equals(de.escidoc.core.common.business.Constants.STATUS_OU_OPENED)) {
-                        throw new InvalidStatusException("organizational-unit with id "
+                        final String message =
+                            "organizational-unit with id "
                                 + id
                                 + " should be in status "
                                 + de.escidoc.core.common.business.Constants.STATUS_OU_OPENED
-                                + " but is in status " + orgUnitStatus);
+                                + " but is in status " + orgUnitStatus;
+
+                        logger.error(message);
+                        throw new InvalidStatusException(message);
                     }
                     this.orgunits.add(id);
                     this.propertiesMap.put(
@@ -171,8 +178,10 @@ public class ContextPropertiesHandler extends DefaultHandler {
             }
             else if (theName.equals(Elements.ELEMENT_NAME)) {
                 if (data.length() == 0) {
+                    logger.error("the value of" + " of the element " + theName
+                        + " is missing");
                     throw new MissingElementValueException(
-                        "The value of the element " + theName + " is missing");
+                        "the value of the element " + theName + " is missing");
                 }
                 else {
                     // propertiesMap.put(theName, data);
@@ -181,8 +190,10 @@ public class ContextPropertiesHandler extends DefaultHandler {
             }
             else if (theName.equals(Elements.ELEMENT_TYPE)) {
                 if (data.length() == 0) {
+                    logger.error("the value of" + " of the element " + theName
+                        + " is missing");
                     throw new MissingElementValueException(
-                        "The value of the element " + theName + " is missing");
+                        "the value of the element " + theName + " is missing");
                 }
                 else {
                     propertiesMap.put(Elements.ELEMENT_TYPE, data);

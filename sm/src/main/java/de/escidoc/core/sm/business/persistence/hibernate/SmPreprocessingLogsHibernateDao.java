@@ -35,6 +35,7 @@ import org.hibernate.SessionFactory;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Database-Backend for the PreprocessingLogs database-table.
@@ -87,8 +88,8 @@ public class SmPreprocessingLogsHibernateDao
     public String savePreprocessingLog(
             final PreprocessingLog preprocessingLog) 
                         throws SqlDatabaseSystemException {
-        final String savedPreprocessingLog = (String) save(preprocessingLog);
-        flush();
+        final String savedPreprocessingLog = (String) super.save(preprocessingLog);
+        super.flush();
         return savedPreprocessingLog;
         
     }
@@ -250,7 +251,7 @@ public class SmPreprocessingLogsHibernateDao
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 
-        setSessionFactory(mySessionFactory);
+        super.setSessionFactory(mySessionFactory);
     }
     
 }

@@ -18,6 +18,7 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.filter.FilterHandler;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -122,7 +123,10 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
         final String specification = setProperties.get("specification");
         if (!checkSpecificationUnique(specification)) {
-            throw new UniqueConstraintViolationException("The provided set specification is not unique.");
+
+            final String message = "The provided set specification is not unique.";
+            LOG.error(message);
+            throw new UniqueConstraintViolationException(message);
         }
         setDefinition.setSpecification(specification);
         final String query = setProperties.get("query");
@@ -233,8 +237,11 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         final SetDefinition setDefinition =
             setDefinitionDao.retrieveSetDefinition(setDefinitionId);
         if (setDefinition == null) {
-            throw new ResourceNotFoundException(StringUtility.format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
-                    setDefinitionId));
+            final String message =
+                StringUtility.format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
+                    setDefinitionId);
+            LOG.error(message);
+            throw new ResourceNotFoundException(message);
         }
 
         final ByteArrayInputStream in =

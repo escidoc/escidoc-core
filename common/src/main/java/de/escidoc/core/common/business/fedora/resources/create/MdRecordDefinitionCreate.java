@@ -81,8 +81,10 @@ public class MdRecordDefinitionCreate {
         throws MissingAttributeValueException {
 
         if ((name == null) || name.length() == 0) {
-            throw new MissingAttributeValueException("the value of the" +
-                    " \"name\" atribute of the element 'name' is missing");
+            final String errorMsg = "the value of the" +
+                    " \"name\" atribute of the element 'name' is missing";
+            LOG.debug(errorMsg);
+            throw new MissingAttributeValueException(errorMsg);
         }
 
         this.mdRecordDefinitionName = name;
@@ -112,9 +114,15 @@ public class MdRecordDefinitionCreate {
     public void setSchemaHref(final String schemaHref)
         throws MalformedURLException, IOException {
         final URL url;
-        url = schemaHref.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
+        if (schemaHref.startsWith("/")) {
+            url = new URL(EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.ESCIDOC_CORE_BASEURL)
-                + schemaHref) : new URL(schemaHref);
+                + schemaHref);
+            // FIXME how to handle IOException from configuration
+        }
+        else {
+            url = new URL(schemaHref);
+        }
         this.schemaHref = url.toString();
     }
 
@@ -191,6 +199,7 @@ public class MdRecordDefinitionCreate {
                     .toString(XmlUtility.CHARACTER_ENCODING).trim());
         }
         catch (UnsupportedEncodingException e) {
+            LOG.error(e.getMessage());
             throw new SystemException(e);
         }
 

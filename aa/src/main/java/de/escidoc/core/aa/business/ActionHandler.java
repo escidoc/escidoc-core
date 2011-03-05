@@ -113,6 +113,7 @@ public class ActionHandler implements ActionHandlerInterface {
             final String msg =
                 "Unexpected exception in " + getClass().getName()
                     + ".createUnsecuredActions: " + e.getClass().getName();
+            log.error(msg, e);
             throw new WebserverSystemException(msg, e);
         }
 

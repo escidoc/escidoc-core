@@ -535,20 +535,23 @@ public class OrganizationalUnit extends GenericResource
                             }
                         }
                         else {
-                            throw new IntegritySystemException("Namespace URI of 'escidoc' metadata"
-                                    + " is not set in datastream.");
+                            final String message =
+                                "namespace uri of 'escidoc' metadata"
+                                    + " is not set in datastream.";
+                            throw new IntegritySystemException(message);
                         }
                     }
                     else {
-                        throw new IntegritySystemException("Properties of 'md-record' datastream"
-                                + " with then name 'escidoc' do not exist");
+                        final String message =
+                            "Properties of 'md-record' datastream"
+                                + " with then name 'escidoc' do not exist";
+                        throw new IntegritySystemException(message);
                     }
                 }
                 ds.merge();
             }
         }
         catch (final StreamNotFoundException e) {
-            LOG.debug("Error on setting MD-records.", e);
             // this is not an update; its a create
             ds.addAlternateId(type);
             ds.addAlternateId(schema);

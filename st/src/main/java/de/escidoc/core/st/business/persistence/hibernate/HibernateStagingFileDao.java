@@ -63,7 +63,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
     public final void setStagingSessionFactory(
         final SessionFactory stagingSessionFactory) {
 
-        setSessionFactory(stagingSessionFactory);
+        super.setSessionFactory(stagingSessionFactory);
     }
 
 

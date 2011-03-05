@@ -71,6 +71,11 @@ public class DcReadHandler extends DefaultHandler {
         // organizational-unit
         if (curPath.equals(DC_PATH + '/' + Elements.ELEMENT_DC_TITLE)) {
             if (data.length() == 0) {
+                // logger.error("the value of" + " of the element " + theName
+                // + " is missing");
+                // throw new IntegritySystemException(
+                // "the value of the dc data stream element " + theName
+                // + " is missing");
                 properties.put(Elements.ELEMENT_DC_TITLE, "");
                 properties.put(TripleStoreUtility.PROP_DC_TITLE, "");
             }

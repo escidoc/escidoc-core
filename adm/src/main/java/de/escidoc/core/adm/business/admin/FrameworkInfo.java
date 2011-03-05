@@ -29,13 +29,11 @@
 package de.escidoc.core.adm.business.admin;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.Version;
 import de.escidoc.core.common.util.db.Fingerprint;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import sun.util.LocaleServiceProviderPool;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -143,7 +141,6 @@ public class FrameworkInfo extends JdbcDaoSupport {
             }
         }
         catch (DataAccessException e) {
-            logger.debug("Error on getting database version.", e);
             // version table doesn't exist
             result = new Version(1, 0, 0);
         }
@@ -163,15 +160,22 @@ public class FrameworkInfo extends JdbcDaoSupport {
      */
     public boolean isConsistent() throws IOException, SQLException {
         boolean result = false;
-        Connection connection = null;
+        Connection conn = null;
+
         try {
-            connection = getConnection();
-            final Fingerprint currentFingerprint = new Fingerprint(connection);
+            conn = getConnection();
+
+            final Fingerprint currentFingerprint = new Fingerprint(conn);
             final Fingerprint storedFingerprint =
-                    Fingerprint.readObject(getClass().getResourceAsStream(FINGERPRINT_FILE));
+                Fingerprint.readObject(getClass().getResourceAsStream(
+                    FINGERPRINT_FILE));
+
             result = storedFingerprint.compareTo(currentFingerprint) == 0;
-        } finally {
-            IOUtils.closeConnection(connection);
+        }
+        finally {
+            if (conn != null) {
+                conn.close();
+            }
         }
         return result;
     }

@@ -31,7 +31,6 @@ package de.escidoc.core.adm.business.admin;
 import de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -111,15 +110,24 @@ public class Examples {
 
         if (xml != null) {
             ByteArrayInputStream input = null;
+
             try {
-                input = new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING));
-                final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                input =
+                    new ByteArrayInputStream(
+                        xml.getBytes(XmlUtility.CHARACTER_ENCODING));
+
+                final DocumentBuilder db =
+                    DocumentBuilderFactory.newInstance().newDocumentBuilder();
                 final Document xmlDom = db.parse(input);
                 final XPath xpath = XPathFactory.newInstance().newXPath();
-                result = xpath.evaluate("/result/@last-modification-date", xmlDom);
+
+                result =
+                    xpath.evaluate("/result/@last-modification-date", xmlDom);
             }
             finally {
-                IOUtils.closeStream(input);
+                if (input != null) {
+                    input.close();
+                }
             }
         }
         return result;
@@ -142,14 +150,25 @@ public class Examples {
 
         if (xml != null) {
             ByteArrayInputStream input = null;
+
             try {
-                input = new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING));
-                final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                input =
+                    new ByteArrayInputStream(
+                        xml.getBytes(XmlUtility.CHARACTER_ENCODING));
+
+                final DocumentBuilder db =
+                    DocumentBuilderFactory.newInstance().newDocumentBuilder();
                 final Document xmlDom = db.parse(input);
                 final XPath xpath = XPathFactory.newInstance().newXPath();
-                result = xpath.evaluate('/' + type.getLabel() + "/@last-modification-date", xmlDom);
-            } finally {
-                IOUtils.closeStream(input);
+
+                result =
+                    xpath.evaluate('/' + type.getLabel()
+                        + "/@last-modification-date", xmlDom);
+            }
+            finally {
+                if (input != null) {
+                    input.close();
+                }
             }
         }
         return result;
@@ -172,17 +191,29 @@ public class Examples {
 
         if (xml != null) {
             ByteArrayInputStream input = null;
+
             try {
-                input = new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING));
-                final DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+                input =
+                    new ByteArrayInputStream(
+                        xml.getBytes(XmlUtility.CHARACTER_ENCODING));
+
+                final DocumentBuilder db =
+                    DocumentBuilderFactory.newInstance().newDocumentBuilder();
                 final Document xmlDom = db.parse(input);
                 final XPath xpath = XPathFactory.newInstance().newXPath();
-                final String href = xpath.evaluate('/' + type.getLabel() + "/@href|/" + type.getLabel()
+                final String href =
+                    xpath.evaluate(
+                            '/' + type.getLabel() + "/@href|/" + type.getLabel()
                             + "/@objid", xmlDom);
+
                 result = href.substring(href.lastIndexOf('/') + 1);
-            } finally {
-                IOUtils.closeStream(input);
             }
+            finally {
+                if (input != null) {
+                    input.close();
+                }
+            }
+
         }
         return result;
     }

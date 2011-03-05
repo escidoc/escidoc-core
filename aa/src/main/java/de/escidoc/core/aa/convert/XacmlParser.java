@@ -48,7 +48,6 @@ import de.escidoc.core.common.business.fedora.resources.Values;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.list.ListSorting;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -147,7 +146,12 @@ public class XacmlParser {
 
         for (final String rule : ruleList) {
             if ((rule != null) && (rule.length() > 0)) {
-                result = result.length() > 0 ? values.getAndCondition(result, rule) : rule;
+                if (result.length() > 0) {
+                    result = values.getAndCondition(result, rule);
+                }
+                else {
+                    result = rule;
+                }
             }
         }
         if (result.length() == 0) {
@@ -187,7 +191,12 @@ public class XacmlParser {
                     }
                 }
                 else {
-                    result = result.length() > 0 ? values.getOrCondition(result, rule) : rule;
+                    if (result.length() > 0) {
+                        result = values.getOrCondition(result, rule);
+                    }
+                    else {
+                        result = rule;
+                    }
                 }
             }
         }
@@ -262,7 +271,9 @@ public class XacmlParser {
             pol.parse(role.getXacmlPolicySet());
         }
         finally {
-            IOUtils.closeStream(in);
+            if (in != null) {
+                in.close();
+            }
         }
     }
 

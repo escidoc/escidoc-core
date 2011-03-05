@@ -91,9 +91,12 @@ public class BinaryContent {
                 this.storageType = StorageType.INTERNAL_MANAGED;
             }
             else {
-                throw new InvalidContentException("The component section 'content' with the attribute "
+                final String message =
+                    "The component section 'content' with the attribute "
                         + "'storage' set to 'external-url' or "
-                        + "'external-managed' may not have an inline content.");
+                        + "'external-managed' may not have an inline content.";
+                LOG.debug(message);
+                throw new InvalidContentException(message);
             }
         }
     }
@@ -157,9 +160,15 @@ public class BinaryContent {
                 this.dataLocation = null;
             }
             else {
-                this.dataLocation = url.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_BASEURL)
-                        + url) : new URL(url);
+                if (url.startsWith("/")) {
+                    this.dataLocation =
+                        new URL(EscidocConfiguration.getInstance().get(
+                            EscidocConfiguration.ESCIDOC_CORE_BASEURL)
+                            + url);
+                }
+                else {
+                    this.dataLocation = new URL(url);
+                }
             }
         }
         catch (MalformedURLException e) {

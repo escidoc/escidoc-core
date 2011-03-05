@@ -32,7 +32,6 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.EscidocServlet;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.service.UserContext;
@@ -105,15 +104,25 @@ public class SRURequest {
                 final HttpEntity entity = response.getEntity();
                 BufferedReader input = null;
                 try {
-                    input = new BufferedReader(new InputStreamReader(
-                                entity.getContent(), getCharset(entity.getContentType().getValue())));
+                    input =
+                        new BufferedReader(new InputStreamReader(
+                            entity.getContent(), getCharset(entity
+                                .getContentType().getValue())));
                     String line;
                     while ((line = input.readLine()) != null) {
                         output.write(line);
                         output.write('\n');
                     }
-                } finally {
-                    IOUtils.closeStream(input);
+                }
+                finally {
+                    if (input != null) {
+                        try {
+                            input.close();
+                        }
+                        catch (IOException e) {
+                            // ignore this exception
+                        }
+                    }
                 }
             }
         }
@@ -278,15 +287,25 @@ public class SRURequest {
                 final HttpEntity entity = response.getEntity();
                 BufferedReader input = null;
                 try {
-                    input = new BufferedReader(new InputStreamReader(entity.getContent(), getCharset(entity
+                    input =
+                        new BufferedReader(new InputStreamReader(
+                            entity.getContent(), getCharset(entity
                                 .getContentType().getValue())));
                     String line;
                     while ((line = input.readLine()) != null) {
                         output.write(line);
                         output.write('\n');
                     }
-                } finally {
-                    IOUtils.closeStream(input);
+                }
+                finally {
+                    if (input != null) {
+                        try {
+                            input.close();
+                        }
+                        catch (IOException e) {
+                            // ignore this exception
+                        }
+                    }
                 }
             }
         }

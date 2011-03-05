@@ -117,7 +117,6 @@ public final class RequestAttributesCache {
                     EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_USERS_SIZE));
         }
         catch (Exception e) {
-            LOG.debug("Error on parsing user cache size.", e);
             usersCacheSize = USERS_CACHE_SIZE_FALL_BACK;
         }
         try {
@@ -129,7 +128,6 @@ public final class RequestAttributesCache {
                             EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_ATTRIBUTES_SIZE));
         }
         catch (Exception e) {
-            LOG.debug("Error on parsing internal cache size.", e);
             internalCacheSize = INTERNAL_CACHE_SIZE_FALL_BACK;
         }
 

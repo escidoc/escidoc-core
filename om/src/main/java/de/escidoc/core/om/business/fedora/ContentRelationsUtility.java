@@ -201,12 +201,15 @@ public final class ContentRelationsUtility {
             sp.parse(in);
         }
         catch (XmlCorruptedException e) {
+            log.debug(e);
             throw new XmlCorruptedException(e);
         }
         catch (InvalidContentException e) {
+            log.debug(e);
             throw new InvalidContentException(e);
         }
         catch (XMLStreamException e) {
+            log.debug(e);
             throw new XmlParserSystemException(e);
         }
         catch (Exception e) {

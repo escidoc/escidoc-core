@@ -148,7 +148,12 @@ public class XMLHashHandler extends DefaultHandler {
         final String uri, final String localName, final String qName) {
 
         String fqName = '{' + uri + '}';
-        fqName += localName != null && localName.length() > 0 ? localName : qName.split(":")[1];
+        if (localName != null && localName.length() > 0) {
+            fqName += localName;
+        }
+        else {
+            fqName += qName.split(":")[1];
+        }
 
         return fqName;
     }

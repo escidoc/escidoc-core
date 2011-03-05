@@ -162,6 +162,7 @@ public class TripleStoreConnector {
                     }
                 }
                 else {
+                    log.error("Request failed:\n" + responseContent);
                     responseContent =
                         XmlUtility.CDATA_START + responseContent
                             + XmlUtility.CDATA_END;
@@ -172,9 +173,11 @@ public class TripleStoreConnector {
             return responseContent;
         }
         catch (IOException e) {
+            log.error("Error requesting MPT", e);
             throw new TripleStoreSystemException(e.toString(), e);
         }
         catch (WebserverSystemException e) {
+            log.error("Error requesting MPT", e);
             throw new TripleStoreSystemException(e.toString(), e);
         }
     }

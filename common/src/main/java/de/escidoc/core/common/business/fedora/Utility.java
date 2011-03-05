@@ -164,9 +164,17 @@ public class Utility {
         result = result.replace("\\", "/");
         append = append.replace("\\", "/");
         if (result.endsWith("/")) {
-            result += append.startsWith("/") ? append.substring(1) : append;
+            if (append.startsWith("/")) {
+                result += append.substring(1);
+            } else {
+                result += append;
+            }
         } else {
-            result += append.startsWith("/") ? append : '/' + append;
+            if (append.startsWith("/")) {
+                result += append;
+            } else {
+                result += '/' + append;
+            }
         }
         return result;
     }
@@ -248,6 +256,7 @@ public class Utility {
                     + " does not match most recent version (requested:"
                     + updateLatestVersionDate + " saved:"
                     + fedoraLatestVersionDate + ")! Changes are not permitted.";
+            LOGGER.info(message);
             throw new OptimisticLockingException(message);
         }
     }
@@ -1199,7 +1208,12 @@ public class Utility {
         final String versionComment) {
         String comment = versionComment;
         if (versionComment == null) {
-            comment = newStatus != null ? "Status changed to " + newStatus : "New version created";
+            if (newStatus != null) {
+                comment = "Status changed to " + newStatus;
+            }
+            else {
+                comment = "New version created";
+            }
             comment +=
                 " for " + resource.getClass().getSimpleName() + ' '
                     + resource.getId() + '.';
@@ -1427,6 +1441,7 @@ public class Utility {
                 sp.parse(relsExtIs);
             }
             catch (XMLStreamException e) {
+                LOGGER.error(e.getMessage());
                 throw new XmlParserSystemException(e.getMessage(), e);
             }
             catch (NullPointerException e) {
@@ -1469,6 +1484,7 @@ public class Utility {
                 sp.parse(relsExtIs);
             }
             catch (XMLStreamException e) {
+                LOGGER.error(e.getMessage());
                 throw new XmlParserSystemException(e.getMessage(), e);
             }
             catch (NullPointerException e) {
@@ -1517,7 +1533,13 @@ public class Utility {
                 (ByteArrayOutputStream) streams.get("RDF");
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
-        return relsExtNewBytes != null ? relsExtNewBytes : relsExtContent;
+        if (relsExtNewBytes != null) {
+            return relsExtNewBytes;
+        }
+        else {
+
+            return relsExtContent;
+        }
 
     }
 
@@ -1660,7 +1682,12 @@ public class Utility {
                 + t.withZone(DateTimeZone.UTC).toString(
                     Constants.TIMESTAMP_FORMAT) + '\"';
 
-        xml += content == null ? " />" : ">\n" + content + "</result>\n";
+        if (content == null) {
+            xml += " />";
+        }
+        else {
+            xml += ">\n" + content + "</result>\n";
+        }
 
         return xml;
     }
@@ -1755,9 +1782,12 @@ public class Utility {
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.BUILD_NUMBER);
         }
-        catch (final Exception e) {
-            throw new WebserverSystemException("Failed to retrieve configuration parameter "
-                    + EscidocConfiguration.FEDORA_URL, e);
+        catch (Exception e) {
+            final String errorMsg =
+                "Failed to retrieve configuration parameter "
+                    + EscidocConfiguration.FEDORA_URL;
+            LOGGER.error(errorMsg, e);
+            throw new WebserverSystemException(errorMsg, e);
         }
         return buildNumber;
     }

@@ -74,6 +74,11 @@ public class BasicDDLGenerator
      */
     protected static String[] splitProperty(final String name) {
         final String val = System.getProperty(name);
-        return val == null || val.trim().length() == 0 ? new String[0] : val.trim().split(" +");
+        if (val == null || val.trim().length() == 0) {
+            return new String[0];
+        }
+        else {
+            return val.trim().split(" +");
+        }
     }
 }

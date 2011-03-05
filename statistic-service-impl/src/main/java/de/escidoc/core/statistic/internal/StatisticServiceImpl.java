@@ -27,7 +27,9 @@ public class StatisticServiceImpl {
             // TODO: Refactor StatisticDataHandler and move to this module.
             this.statisticDataHandler.insertStatisticData(statisticData);
         } catch (final Exception e) {
-            throw new StatisticServiceException("Error on saving statistic data.", e);
+            final String errorMessage = "Error on saving statistic data.";
+            LOG.error(errorMessage, e);
+            throw new StatisticServiceException(statisticData + '\n' + e);
         }
     }
 

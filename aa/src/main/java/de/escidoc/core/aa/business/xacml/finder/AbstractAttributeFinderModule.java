@@ -553,7 +553,12 @@ public abstract class AbstractAttributeFinderModule
      */
     protected String fixObjectType(final String objectType) {
 
-        return objectType == null ? null : convertToObjectType.get(objectType);
+        if (objectType == null) {
+            return null;
+        }
+        else {
+            return convertToObjectType.get(objectType);
+        }
     }
 
     /**
@@ -616,8 +621,15 @@ public abstract class AbstractAttributeFinderModule
             || ((BagAttribute) resolvedAttributeValue).size() == 1) {
             // as we only support string attributes, the attribute value is a
             // StringAttribute
-            newResourceId = attributeValueIsBag ? ((StringAttribute) ((BagAttribute) resolvedAttributeValue)
-                    .iterator().next()).getValue() : ((StringAttribute) resolvedAttributeValue).getValue();
+            if (attributeValueIsBag) {
+                // this is a bag attribute containing one StringAttribute
+                newResourceId =
+                        ((StringAttribute) ((BagAttribute) resolvedAttributeValue)
+                                .iterator().next()).getValue();
+            } else {
+                newResourceId =
+                        ((StringAttribute) resolvedAttributeValue).getValue();
+            }
 
             // determine to which object-type the new resource id points
             resolvedObjectType =
@@ -932,7 +944,7 @@ public abstract class AbstractAttributeFinderModule
             return constructor.newInstance(errorMsg, cause);
         }
         catch (final Exception e) {
-            return new ResourceNotFoundException(errorMsg, e);
+            return new ResourceNotFoundException(errorMsg);
         }
     }
 

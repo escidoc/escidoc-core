@@ -55,6 +55,7 @@ import de.escidoc.core.common.exceptions.application.violated.UserGroupHierarchy
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * User group handler implementation for the service layer of the AA component.

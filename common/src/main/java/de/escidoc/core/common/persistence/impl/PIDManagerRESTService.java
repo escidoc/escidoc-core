@@ -33,7 +33,6 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.PIDSystem;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.ConnectionUtility;
@@ -127,18 +126,27 @@ public class PIDManagerRESTService implements PIDSystem {
         final String pidResult;
         try {
             final String xmlParam = preparePidManagerDatastructure(systemID, param);
+
             final URL url = new URL(this.pidGeneratorServer + this.globalPrefix + '/');
-            final HttpResponse httpPostRes = this.connectionUtility.postRequestURL(url, xmlParam, username, password);
+            final HttpResponse httpPostRes = this.connectionUtility.postRequestURL(url, xmlParam, username,
+                    password);
+
             final int status = httpPostRes.getStatusLine().getStatusCode();
+            
             if (status == HttpURLConnection.HTTP_OK) {
+
                 pidResult = obtainPidResult(httpPostRes.getEntity().getContent());
             }
             else if (status == HttpURLConnection.HTTP_UNAUTHORIZED) {
+                log.warn("Authorization failure at PIDManager. ");
                 throw new Exception("Authorization at PIDManager fails.");
             }
             else {
-                throw new PidSystemException(EntityUtils.toString(httpPostRes.getEntity(), XmlUtility.CHARACTER_ENCODING));
+                final String msg = EntityUtils.toString(httpPostRes.getEntity(), XmlUtility.CHARACTER_ENCODING);
+                log.warn(msg);
+                throw new PidSystemException(msg);
             }
+
         }
         catch (Exception e) {
             throw new PidSystemException(e);
@@ -172,7 +180,8 @@ public class PIDManagerRESTService implements PIDSystem {
      */
     @Override
     public void neverGeneratePID(final String pid) {
-        throw new UnsupportedOperationException("Method neverGeneratePID() not supported by used PID System.");
+        throw new UnsupportedOperationException(
+            "Method neverGeneratePID() not supported by used PID System.");
     }
 
     /**
@@ -198,14 +207,18 @@ public class PIDManagerRESTService implements PIDSystem {
 
         try {
             final URL url = new URL(pidServer + suffix);
+
             final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("DELETE");
             conn.setUseCaches(false);
             conn.setInstanceFollowRedirects(false);
+
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                throw new Exception("PID System connetion broken (" + url.toString() + ") " + conn.getResponseCode());
+                throw new Exception("PID System connetion broken ("
+                    + url.toString() + ") " + conn.getResponseCode());
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new PidSystemException(e);
         }
     }
@@ -337,18 +350,17 @@ public class PIDManagerRESTService implements PIDSystem {
      */
     private String obtainPidResult(final InputStream in)
         throws ParserConfigurationException, SAXException, IOException {
-        String returnValue;
-        try {
-            final javax.xml.parsers.DocumentBuilder db =
-                javax.xml.parsers.DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            final org.w3c.dom.Document doc = db.parse(in);
-            // retrieve PID result
-            final org.w3c.dom.NodeList nl = doc.getElementsByTagName("pid");
-            final org.w3c.dom.Node n = nl.item(0);
-            returnValue = n.getTextContent();
-        } finally {
-            IOUtils.closeStream(in);
-        }
-        return returnValue;
+
+        final javax.xml.parsers.DocumentBuilder db =
+            javax.xml.parsers.DocumentBuilderFactory
+                .newInstance().newDocumentBuilder();
+        final org.w3c.dom.Document doc = db.parse(in);
+        in.close();
+
+        // retrieve PID result
+        final org.w3c.dom.NodeList nl = doc.getElementsByTagName("pid");
+        final org.w3c.dom.Node n = nl.item(0);
+
+        return n.getTextContent();
     }
 }

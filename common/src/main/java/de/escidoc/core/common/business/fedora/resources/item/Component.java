@@ -225,7 +225,9 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             sp.parse(new ByteArrayInputStream(this.getDc().getStream()));
         }
         catch (final Exception e) {
-            throw new XmlParserSystemException("Unexpected exception during DC datastream parsing.", e);
+            final String msg = "Unexpected exception during DC datastream parsing.";
+            log.info(msg + e);
+            throw new XmlParserSystemException(msg, e);
         }
 
         properties.put(de.escidoc.core.common.business.Constants.DC_NS_URI
@@ -482,13 +484,20 @@ public class Component extends GenericResourcePid implements ComponentInterface 
                             }
                         }
                         else {
-                            throw new IntegritySystemException("namespace uri of 'escidoc' metadata"
-                                    + " does not set in datastream.");
+                            final String message =
+                                "namespace uri of 'escidoc' metadata"
+                                    + " does not set in datastream.";
+
+                            log.error(message);
+                            throw new IntegritySystemException(message);
                         }
                     }
                     else {
-                        throw new IntegritySystemException("Properties of 'md-record' datastream"
-                                + " with then name 'escidoc' does not exist");
+                        final String message =
+                            "Properties of 'md-record' datastream"
+                                + " with then name 'escidoc' does not exist";
+                        log.error(message);
+                        throw new IntegritySystemException(message);
                     }
                 }
 
@@ -634,10 +643,14 @@ public class Component extends GenericResourcePid implements ComponentInterface 
             sp.parse(getRelsExt().getStream());
         }
         catch (final IntegritySystemException e) {
-            throw new XmlParserSystemException("Unexpected exception during RELS-EXT parsing.", e);
+            final String msg = "Unexpected exception during RELS-EXT parsing.";
+            log.warn(msg + e);
+            throw new XmlParserSystemException(e);
         }
         catch (final Exception e) {
-            throw new XmlParserSystemException("Unexpected exception during RELS-EXT parsing.", e);
+            final String msg = "Unexpected exception during RELS-EXT parsing.";
+            log.warn(msg + e);
+            throw new XmlParserSystemException(msg, e);
         }
         final Map<String, String> properties = new HashMap<String, String>();
         final List<Triple> triples = eve.getElementValues().getTriples();

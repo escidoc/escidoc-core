@@ -239,7 +239,14 @@ public class SmAggregationDefinitionsHibernateDao
         if ((scopeIds != null) && (!scopeIds.isEmpty())) {
             final DetachedCriteria detachedCriteria;
 
-            detachedCriteria = (criteria != null) && (criteria.length() > 0) ? new AggregationDefinitionFilter(criteria).toSql() : DetachedCriteria.forClass(AggregationDefinition.class, "a");
+            if ((criteria != null) && (criteria.length() > 0)) {
+                detachedCriteria =
+                    new AggregationDefinitionFilter(criteria).toSql();
+            }
+            else {
+                detachedCriteria =
+                    DetachedCriteria.forClass(AggregationDefinition.class, "a");
+            }
             detachedCriteria.add(Restrictions.in("scope.id", scopeIds));
 
             final Collection<AggregationDefinition> aggregationDefinitions =
@@ -329,7 +336,7 @@ public class SmAggregationDefinitionsHibernateDao
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 
-        setSessionFactory(mySessionFactory);
+        super.setSessionFactory(mySessionFactory);
     }
     
 }

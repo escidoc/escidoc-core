@@ -311,7 +311,8 @@ public class FedoraUtility implements InitializingBean {
             return apim.export(pid, FOXML_FORMAT, "public");
         }
         catch (RemoteException e) {
-            throw new FedoraSystemException("APIM export failure: " + e.getMessage(), e);
+            LOG.warn("APIM export failure: " + e);
+            throw new FedoraSystemException(e.getMessage(), e);
         }
         finally {
             returnApim(apim);
@@ -339,7 +340,8 @@ public class FedoraUtility implements InitializingBean {
             pids = apim.getNextPID(number, this.identifierPrefix);
         }
         catch (RemoteException e) {
-            throw new FedoraSystemException("Unable to get Obids from Fedora: " + e.getMessage(), e);
+            LOG.warn("Unable to get Obids from Fedora: " + e);
+            throw new FedoraSystemException(e.getMessage(), e);
         }
         finally {
             returnApim(apim);
@@ -373,7 +375,8 @@ public class FedoraUtility implements InitializingBean {
                     "ds state is changed.");
         }
         catch (RemoteException e) {
-            throw new FedoraSystemException("APIM setDatastreamState failure: " + e.getMessage(), e);
+            LOG.debug("APIM setDatastreamState failure: " + e);
+            throw new FedoraSystemException(e.getMessage(), e);
         }
         finally {
             returnApim(apim);
@@ -418,9 +421,10 @@ public class FedoraUtility implements InitializingBean {
                     timestamp);
             }
             catch (RemoteException e1) {
-                throw new FedoraSystemException("Retrieve datastream (pid='" + pid
+                LOG.warn("Retrieve datastream (pid='" + pid
                     + "', dataStreamId='" + dataStreamId + "', timestamp='"
-                    + timestamp + "') ", e1);
+                    + timestamp + "') " + e1);
+                throw new FedoraSystemException(e.toString(), e1);
             }
         }
         finally {
@@ -517,7 +521,8 @@ public class FedoraUtility implements InitializingBean {
                     "Modified by reference.", true);
         }
         catch (Exception e) {
-            throw new FedoraSystemException("Failed to modify Fedora datastream by reference: " + url, e);
+            LOG.warn("Failed to modify Fedora datastream by reference: " + url);
+            throw new FedoraSystemException(e.toString(), e);
         }
         finally {
             returnApim(apim);
@@ -570,7 +575,11 @@ public class FedoraUtility implements InitializingBean {
                     null, true);
         }
         catch (Exception e) {
-            throw new FedoraSystemException("Failed to modify Fedora datastream.", e);
+            LOG.warn("Failed to modify Fedora datastream:\n"
+                + "======== begin data stream ================\n"
+                + new String(datastream) + '\n'
+                + "======== end data stream ==================\n" + e);
+            throw new FedoraSystemException(e.toString(), e);
         }
         finally {
             returnApim(apim);
@@ -605,7 +614,13 @@ public class FedoraUtility implements InitializingBean {
                 "datastream purged", false);
         }
         catch (Exception e) {
-            throw new FedoraSystemException("Failed to purge Fedora datastream.", e);
+            if (LOG.isWarnEnabled()) {
+                LOG
+                    .warn("Failed to purge Fedora datastream:\n======== begin data stream ================\n"
+                        + datastreamName
+                        + "\n======== end data stream ==================\n" + e);
+            }
+            throw new FedoraSystemException(e.toString(), e);
         }
         finally {
             returnApim(apim);
@@ -899,9 +914,12 @@ public class FedoraUtility implements InitializingBean {
                 Utility.getInstance().upload(stream, pid + name, "text/xml");
         }
         catch (FileSystemException e) {
-            throw new WebserverSystemException("Error while uploading of content of datastream '" + name
+            final String message =
+                "Error while uploading of content of datastream '" + name
                     + "' of the fedora object with id '" + pid
-                    + "' to the staging area. ", e);
+                    + "' to the staging area. ";
+            LOG.error(message + e.getMessage());
+            throw new WebserverSystemException(message, e);
         }
         final String datastreamID =
             addDatastream(pid, name, altIDs, label, versionable, "text/xml",
@@ -949,9 +967,12 @@ public class FedoraUtility implements InitializingBean {
                 Utility.getInstance().upload(stream, pid + name, "text/xml");
         }
         catch (FileSystemException e) {
-            throw new WebserverSystemException("Error while uploading of content of datastream '" + name
+            final String message =
+                "Error while uploading of content of datastream '" + name
                     + "' of the fedora object with id '" + pid
-                    + "' to the staging area. ", e);
+                    + "' to the staging area. ";
+            LOG.error(message + e.getMessage());
+            throw new WebserverSystemException(message, e);
         }
         final String datastreamID =
             addDatastream(pid, name, altIDs, label, versionable, "text/xml",
@@ -1193,7 +1214,6 @@ public class FedoraUtility implements InitializingBean {
         try {
             Thread.sleep(i + 1000);
         } catch (InterruptedException e1) {
-            LOG.debug("Error on waiting for Fedora.", e1);
             // Ignore exception
         }
     }
@@ -1450,7 +1470,11 @@ public class FedoraUtility implements InitializingBean {
      * @return Returns the {@link FedoraSystemException}
      */
     private FedoraSystemException convertPoolException(final Exception e) {
-        return e instanceof FedoraSystemException ? (FedoraSystemException) e : new FedoraSystemException(e.getMessage(), e);
+        if(e instanceof FedoraSystemException) {
+            return ((FedoraSystemException) e);
+        } else {
+            return new FedoraSystemException(e.getMessage(), e);
+        }
     }
 
     /**

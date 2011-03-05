@@ -120,6 +120,7 @@ public class AggregationDefinitionHandler
             log.debug("AggregationDefinitionHandler does create");
         }
         if (xmlData == null || xmlData.length() == 0) {
+            log.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
 
@@ -132,6 +133,7 @@ public class AggregationDefinitionHandler
             sp.parse(xmlData);
         }
         catch (Exception e) {
+            log.error(e);
             throw new SystemException(e);
         }
 
@@ -205,6 +207,7 @@ public class AggregationDefinitionHandler
             log.debug("AggregationDefinitionHandler does delete");
         }
         if (id == null) {
+            log.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         final AggregationDefinition aggregationDefinition;
@@ -213,6 +216,7 @@ public class AggregationDefinitionHandler
             aggregationDefinition = dao.retrieve(id);
         }
         catch (Exception e) {
+            log.error("AggregationDefinition with id " + id + " not found");
             throw new AggregationDefinitionNotFoundException(
                 "AggregationDefinition with id " + id + " not found", e);
         }
@@ -261,6 +265,7 @@ public class AggregationDefinitionHandler
             log.debug("AggregationDefinitionHandler does retrieve");
         }
         if (id == null) {
+            log.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         try {
@@ -268,6 +273,7 @@ public class AggregationDefinitionHandler
             return renderer.render(aggregationDefinition);
         }
         catch (NumberFormatException e) {
+            log.error("AggregationDefinition with id " + id + " not found");
             throw new AggregationDefinitionNotFoundException(
                 "AggregationDefinition with id " + id + " not found", e);
         }
@@ -380,7 +386,14 @@ public class AggregationDefinitionHandler
             for (final AggregationTableField field : sortedAggregationTableFields) {
                 final DatabaseTableFieldVo databaseTableFieldVo =
                     new DatabaseTableFieldVo();
-                if (field.getFieldTypeId() == Constants.COUNT_CUMULATION_FIELD_ID || field.getFieldTypeId() == Constants.DIFFERENCE_CUMULATION_FIELD_ID) {
+                if (field.getFieldTypeId() == Constants.COUNT_CUMULATION_FIELD_ID) {
+                    dbAccessor.checkReservedExpressions(field.getName());
+                    databaseTableFieldVo.setFieldName(field
+                        .getName().toLowerCase());
+                    databaseTableFieldVo
+                        .setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
+                }
+                else if (field.getFieldTypeId() == Constants.DIFFERENCE_CUMULATION_FIELD_ID) {
                     dbAccessor.checkReservedExpressions(field.getName());
                     databaseTableFieldVo.setFieldName(field
                         .getName().toLowerCase());
@@ -401,6 +414,8 @@ public class AggregationDefinitionHandler
                         .setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
                 }
                 else {
+                    log
+                        .error("Table-Fields may not be empty in aggregation definition");
                     throw new SqlDatabaseSystemException(
                         "Table-Fields may not be empty in aggregation definition");
                 }

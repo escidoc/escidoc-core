@@ -90,6 +90,9 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
                     setDefinitionProperties.put(Elements.ELEMENT_NAME, s);
                 }
                 else {
+                    log
+                        .error("the value of element " + theName
+                            + " is missing");
                     throw new XmlCorruptedException("the value of element "
                         + theName + " is missing");
                 }

@@ -57,7 +57,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.common.util.xml.transformer.PoolableTransformerFactory;
 import org.apache.commons.pool.impl.StackKeyedObjectPool;
 import org.codehaus.stax2.XMLOutputFactory2;
-import org.fcrepo.client.actions.Login;
 import org.joda.time.ReadableDateTime;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -1729,7 +1728,12 @@ public final class XmlUtility {
         }
         final Matcher matcher =
             PATTERN_GET_ID_FROM_URI_OR_FEDORA_ID.matcher(uri);
-        return matcher.find() ? matcher.group(1) : uri;
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        else {
+            return uri;
+        }
     }
 
     /**
@@ -1745,7 +1749,12 @@ public final class XmlUtility {
     public static String getIdFromXml(final CharSequence resourceXml) {
 
         final Matcher matcher = PATTERN_OBJID_FROM_XML.matcher(resourceXml);
-        return matcher.find() ? matcher.group(2) : null;
+        if (matcher.find()) {
+            return matcher.group(2);
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -1766,9 +1775,14 @@ public final class XmlUtility {
 
         try {
             final String objid;
-            objid = element.indexOfAttribute(null, NAME_OBJID) == -1 ? getIdFromURI(element.getAttributeValue(
-                    Constants.XLINK_NS_URI,
-                    NAME_HREF)) : element.getAttributeValue(null, NAME_OBJID);
+            if (element.indexOfAttribute(null, NAME_OBJID) == -1) {
+                objid =
+                        getIdFromURI(element.getAttributeValue(
+                                Constants.XLINK_NS_URI,
+                                NAME_HREF));
+            } else {
+                objid = element.getAttributeValue(null, NAME_OBJID);
+            }
             return objid;
         }
         catch (final NoSuchAttributeException e) {
@@ -1823,7 +1837,12 @@ public final class XmlUtility {
     public static String extractNameFromXml(final CharSequence resourceXml) {
 
         final Matcher matcher = PATTERN_NAME_FROM_XML.matcher(resourceXml);
-        return matcher.find() ? matcher.group(1).trim() : null;
+        if (matcher.find()) {
+            return matcher.group(1).trim();
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -1914,8 +1933,14 @@ public final class XmlUtility {
                 final String xslt =
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_XSLT_STD);
-                stylesheetDefinition = xslt != null && xslt.length() > 0 ? "<?xml-stylesheet type=\"text/xsl\" " + "href=\""
-                        + getEscidocBaseUrl() + xslt + "\"?>\n" : "";
+                if (xslt != null && xslt.length() > 0) {
+                    stylesheetDefinition =
+                        "<?xml-stylesheet type=\"text/xsl\" " + "href=\""
+                            + getEscidocBaseUrl() + xslt + "\"?>\n";
+                }
+                else {
+                    stylesheetDefinition = "";
+                }
             }
             catch (final IOException e) {
                 throw new WebserverSystemException(e.getMessage(), e);
@@ -2902,7 +2927,12 @@ public final class XmlUtility {
         final String message, final Exception e)
         throws XmlParserSystemException {
         final String text;
-        text = message != null ? message + e.getMessage() : e.getMessage();
+        if (message != null) {
+            text = message + e.getMessage();
+        }
+        else {
+            text = e.getMessage();
+        }
         throw new XmlParserSystemException(text, e);
     }
 
@@ -3101,8 +3131,17 @@ public final class XmlUtility {
     public static String getHref(final String objectType, final String objectId) {
 
         final String type;
-        type = PATTERN_RESOURCE_OBJECT_TYPE.matcher(objectType).find() ? objectType : Constants.RESOURCES_NS_URI
-                + StringUtility.convertToUpperCaseLetterFormat(objectType);
+        if (PATTERN_RESOURCE_OBJECT_TYPE.matcher(objectType).find()) {
+            // objectType in expected resource format, can be used, directly.
+            type = objectType;
+        }
+        else {
+            // objectType not in triple store format, seems to be e.g.
+            // "organizational-unit" and needs to be converted.
+            type =
+                Constants.RESOURCES_NS_URI
+                    + StringUtility.convertToUpperCaseLetterFormat(objectType);
+        }
 
         String objectHref = null;
         if (Constants.CONTAINER_OBJECT_TYPE.equals(type)) {

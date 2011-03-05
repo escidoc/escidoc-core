@@ -775,7 +775,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        if (propertiesNames != null) {
+            newPropertiesNames = propertiesNames;
+        }
+        else {
+            newPropertiesNames = new ArrayList<String>();
+        }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_LATEST_VERSION_PID);
         newPropertiesNames.add(TripleStoreUtility.PROP_LATEST_RELEASE_PID);
@@ -797,7 +802,12 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         final Map<String, String> propertiesNamesMap) {
 
         final Map<String, String> newPropertiesNamesMap;
-        newPropertiesNamesMap = propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
+        if (propertiesNamesMap != null) {
+            newPropertiesNamesMap = propertiesNamesMap;
+        }
+        else {
+            newPropertiesNamesMap = new HashMap<String, String>();
+        }
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_PID,
             PropertyMapKeys.LATEST_VERSION_PID);
@@ -891,6 +901,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
             sp.parse(relsExtInputStream);
         }
         catch (XMLStreamException e) {
+            LOG.error(e.getMessage(), e);
             throw new XmlParserSystemException(e.getMessage(), e);
         }
         catch (Exception e) {

@@ -120,18 +120,24 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                 try {
                     throw e.getCause();
                 } catch (AuthorizationException ee) { // Ignore FindBugs
-                    throw new AuthorizationException("Can not delete all member entries for item "
-                                    + getItem().getId() + ". item can not be deleted.", ee);
+                    final String msg =
+                            "Can not delete all member entries for item "
+                                    + getItem().getId() + ". item can not be deleted.";
+                    throw new AuthorizationException(msg, ee);
                 } catch (Throwable ee) { // Ignore FindBugs
                     if (ee instanceof Error) {
                         throw (Error) ee;
                     }
-                    throw new SystemException("An error occured removing member entries for item "
-                                    + getItem().getId() + ". item can not be deleted.", ee); // Ignore FindBugs
+                    final String msg =
+                            "An error occured removing member entries for item "
+                                    + getItem().getId() + ". item can not be deleted.";
+                    throw new SystemException(msg, ee); // Ignore FindBugs
                 }
             } catch (Exception e) {
-                throw new SystemException("An error occured removing member entries for item "
-                                + getItem().getId() + ". Container can not be deleted.", e);
+                final String msg =
+                        "An error occured removing member entries for item "
+                                + getItem().getId() + ". Container can not be deleted.";
+                throw new SystemException(msg, e);
             }
         }
 

@@ -36,7 +36,6 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexRequestBuilder;
@@ -360,6 +359,7 @@ public class Reindexer {
             this.indexService.index(indexRequest);
         }
         catch (Exception e) {
+            LOG.error(e);
             throw new ApplicationServerSystemException(e);
         }
     }
@@ -383,6 +383,7 @@ public class Reindexer {
             this.indexService.index(indexRequest);
         }
         catch (Exception e) {
+            LOG.error(e);
             throw new ApplicationServerSystemException(e);
         }
     }
@@ -413,6 +414,7 @@ public class Reindexer {
             this.indexService.index(indexRequest);
         }
         catch (Exception e) {
+            LOG.error(e);
             throw new ApplicationServerSystemException(e);
         }
     }
@@ -433,32 +435,52 @@ public class Reindexer {
      * @throws SystemException
      *             Thrown if eSciDoc failed to receive a resource.
      */
-    private Collection<String> getIds(final String indexName,
-                                      final ResourceType type,
-                                      final String listQuery,
-                                      final boolean clearIndex) throws SystemException {
+    private Collection<String> getIds(
+        final String indexName, final ResourceType type,
+        final String listQuery, final boolean clearIndex)
+        throws SystemException {
         final Collection<String> result = new LinkedList<String>();
+
         if (contains(indexName, type)) {
             BufferedReader input = null;
+
             try {
-                input = new BufferedReader(new InputStreamReader(fedoraUtility.query(listQuery)));
+                input =
+                    new BufferedReader(new InputStreamReader(
+                        fedoraUtility.query(listQuery)));
+
                 final ReindexStatus reindexStatus = ReindexStatus.getInstance();
                 final String objectType = type.getUri();
                 String line;
+
                 while ((line = input.readLine()) != null) {
                     final String subject = getSubject(line);
+
                     if (subject != null) {
-                        final String id = subject.substring(subject.indexOf('/') + 1);
-                        if (clearIndex || !indexingHandler.exists(id, objectType, indexName)) {
+                        final String id =
+                            subject.substring(subject.indexOf('/') + 1);
+
+                        if (clearIndex
+                            || !indexingHandler.exists(id, objectType,
+                                indexName)) {
                             reindexStatus.inc(type);
                             result.add(id);
                         }
                     }
                 }
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 throw new SystemException(e);
-            } finally {
-                IOUtils.closeStream(input);
+            }
+            finally {
+                if (input != null) {
+                    try {
+                        input.close();
+                    }
+                    catch (IOException e) {
+                        throw new SystemException(e);
+                    }
+                }
             }
         }
         return result;

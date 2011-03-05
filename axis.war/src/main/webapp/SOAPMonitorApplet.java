@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import de.escidoc.core.common.util.IOUtils;
 import org.apache.axis.monitor.SOAPMonitorConstants;
 
 import javax.swing.*;
@@ -405,7 +404,11 @@ public class SOAPMonitorApplet extends JApplet {
                     out = null;
                 }
                 if (in != null) {
-                    IOUtils.closeStream(in);
+                    try {
+                        in.close();
+                    } catch (IOException ioe) {
+                    }
+                    in = null;
                 }
                 if (socket != null) {
                     try {

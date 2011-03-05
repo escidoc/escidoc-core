@@ -48,7 +48,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import de.escidoc.core.common.util.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.mq.il.uil2.msgs.CreateDestMsg;
 import org.springframework.security.Authentication;
@@ -678,7 +677,12 @@ public class Login extends HttpServlet {
         }
         else {
             final char delimiter;
-            delimiter = redirectUrl.indexOf('?') == -1 ? '?' : '&';
+            if (redirectUrl.indexOf('?') == -1) {
+                delimiter = '?';
+            }
+            else {
+                delimiter = '&';
+            }
             return redirectUrl + delimiter + AUTHENTICATION + '='
                 + UserHandleCookieUtil.createEncodedUserHandle(userHandle);
         }
@@ -770,7 +774,12 @@ public class Login extends HttpServlet {
             }
         }
         finally {
-            IOUtils.closeStream(inputStream);
+            try {
+                inputStream.close();
+            }
+            catch (IOException e) {
+                LOGGER.debug("Error on closing stream: " + e);
+            }
         }
         templates.put(templateFileName, result.toString());
     }
@@ -827,12 +836,9 @@ public class Login extends HttpServlet {
         final int statusCode) throws IOException {
 
         final PrintWriter writer = response.getWriter();
-        try {
-            writer.print(page);
-            response.setStatus(statusCode);
-        } finally {
-            IOUtils.closeWriter(writer);
-        }
+        writer.print(page);
+        response.setStatus(statusCode);
+        writer.close();
     }
 
     /**

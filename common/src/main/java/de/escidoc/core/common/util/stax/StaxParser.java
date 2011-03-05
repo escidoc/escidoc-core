@@ -903,6 +903,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                 } catch (TmeException ex) {
                     throw ex;
                 } catch (Exception ex) {
+                    LOG.error("Should not be reached. StaxParser.handle(StartElement)", ex);
                     throw new WebserverSystemException(
                             "Should not be reached. StaxParser.handle(StartElement)",
                             ex);
@@ -992,7 +993,9 @@ public class StaxParser implements DefaultHandlerStackInterface {
                 } catch (InvalidContentException ex) {
                     throw ex;
                 } catch (Exception ex) {
-                    throw new WebserverSystemException("Unexpected exception in handle().", ex);
+                    final String errorMsg = "Unexpected exception in handle().";
+                    LOG.error(errorMsg, ex);
+                    throw new WebserverSystemException(errorMsg, ex);
                 }
             }
         }

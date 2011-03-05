@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.sm.business.stax.handler;
 
-import de.escidoc.core.aa.servlet.Login;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -53,7 +52,7 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
     
     private int allowedRolesIndex = 0;
     
-    private final Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
+    private Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
     
     private static final String MSG_INCONSISTENT_IDS = 
         "id in xml is not the same as id provided in method.";
@@ -97,9 +96,7 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
                         && !reportDefinition.getId().equals(reportDefinitionId)) {
                     throw new IntegritySystemException(MSG_INCONSISTENT_IDS);
                 }
-            } catch (MissingAttributeValueException e) {
-
-            }
+            } catch (MissingAttributeValueException e) {}
         }
         return element;
     }

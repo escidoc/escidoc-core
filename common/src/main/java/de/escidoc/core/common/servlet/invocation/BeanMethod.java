@@ -150,7 +150,9 @@ public class BeanMethod {
                         }
                         else {
                             throw new InvocationTargetException(
-                                new SystemException("Unsupported parameter type [" + parameters[i].getClass().getName()
+                                new SystemException(
+                                    "Unsupported parameter type ["
+                                        + parameters[i].getClass().getName()
                                         + ']'));
                         }
                     }
@@ -164,24 +166,39 @@ public class BeanMethod {
             result = execute.invoke(getBean(), getParameters());
         }
         catch (SecurityException e) {
-            throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
-                    + getBeanId(), e);
+            final String errorMsg =
+                "Cannot execute method '" + method + "' on resource "
+                    + getBeanId();
+            getLogger().error(errorMsg, e);
+            throw new WebserverSystemException(errorMsg, e);
         }
         catch (IllegalArgumentException e) {
-            throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
-                    + getBeanId(), e);
+            final String errorMsg =
+                "Cannot execute method '" + method + "' on resource "
+                    + getBeanId();
+            getLogger().error(errorMsg, e);
+            throw new WebserverSystemException(e);
         }
         catch (NoSuchMethodException e) {
-            throw new MethodNotFoundException("Cannot execute method '" + method + "' on resource "
-                    + getBeanId(), e);
+            final String errorMsg =
+                "Cannot execute method '" + method + "' on resource "
+                    + getBeanId();
+            getLogger().error(errorMsg, e);
+            throw new MethodNotFoundException(errorMsg, e);
         }
         catch (IllegalAccessException e) {
-            throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
-                    + getBeanId(), e);
+            final String errorMsg =
+                "Cannot execute method '" + method + "' on resource "
+                    + getBeanId();
+            getLogger().error(errorMsg, e);
+            throw new WebserverSystemException(errorMsg, e);
         }
         catch (MissingMethodParameterException e) {
-            throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
-                    + getBeanId(), e);
+            final String errorMsg =
+                "Cannot execute method '" + method + "' on resource "
+                    + getBeanId();
+            getLogger().error(errorMsg, e);
+            throw new WebserverSystemException(errorMsg, e);
         }
         return result;
     }
@@ -214,8 +231,14 @@ public class BeanMethod {
                     StringUtility.format(
                         "Create Bean", getBeanId()));
             }
-
-            result = "service.StagingFileHandlerBean".equals(getBeanId()) ? BeanLocator.getBean(BeanLocator.ST_FACTORY_ID, getBeanId()) : BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID, getBeanId());
+            
+            if("service.StagingFileHandlerBean".equals(getBeanId())) {
+                result =
+                    BeanLocator.getBean(BeanLocator.ST_FACTORY_ID, getBeanId());
+            } else {
+            result =
+                BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID, getBeanId());
+            }
             RESOURCE_POOL.put(getBeanId(), result);
         }
         return result;

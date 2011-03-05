@@ -411,7 +411,10 @@ public class GenericResource implements FedoraResource {
 
         if (this.id == null
             || !TripleStoreUtility.getInstance().exists(this.id)) {
-            throw new ResourceNotFoundException("Resource with id " + this.id + " does not exist.");
+            final String msg =
+                "Resource with id " + this.id + " does not exist.";
+            log.debug(msg);
+            throw new ResourceNotFoundException(msg);
         }
     }
 
@@ -462,6 +465,7 @@ public class GenericResource implements FedoraResource {
                     XmlUtility.CHARACTER_ENCODING);
         }
         catch (final UnsupportedEncodingException e) {
+            log.debug(e.getMessage());
             throw new EncodingSystemException(e);
         }
         return xml;
@@ -537,6 +541,7 @@ public class GenericResource implements FedoraResource {
             setRelsExt(relsExt.toString(XmlUtility.CHARACTER_ENCODING));
         }
         catch (final UnsupportedEncodingException e) {
+            log.debug(e.getMessage());
             throw new EncodingSystemException(e);
         }
     }
@@ -567,6 +572,7 @@ public class GenericResource implements FedoraResource {
             setRelsExt(relsExt.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
         catch (final UnsupportedEncodingException e) {
+            log.debug(e.getMessage());
             throw new EncodingSystemException(e);
         }
     }
@@ -614,6 +620,7 @@ public class GenericResource implements FedoraResource {
             setRelsExt((ByteArrayOutputStream) me.getOutputStreams().get("RDF"));
         }
         catch (final Exception e) {
+            log.debug(e.getMessage());
             throw new WebserverSystemException("Unexpected Exception.", e);
         }
     }
@@ -884,7 +891,9 @@ public class GenericResource implements FedoraResource {
         // Should lock only be checked in handler? No, it is part of the
         // resource representation.
         if ((lock) && (lockOwner == null)) {
-            throw new NullPointerException("Need lockOwner.");
+            final String msg = "Need lockOwner.";
+            log.debug(msg);
+            throw new NullPointerException(msg);
         }
 
         if (lock && !isLocked()) {
@@ -932,6 +941,7 @@ public class GenericResource implements FedoraResource {
 
         if (isLocked()) {
             final String msg = "Resource " + this.id + " is locked.";
+            log.debug(msg);
             throw new LockingException(msg);
         }
         // check if datastream is set, is equal to ds and save to fedora
@@ -1112,7 +1122,12 @@ public class GenericResource implements FedoraResource {
         final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        if (propertiesNames != null) {
+            newPropertiesNames = propertiesNames;
+        }
+        else {
+            newPropertiesNames = new ArrayList<String>();
+        }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_DC_TITLE);
         // FIXME only container has description
@@ -1153,7 +1168,12 @@ public class GenericResource implements FedoraResource {
         final Map<String, String> propertiesNamesMap) {
 
         final Map<String, String> newPropertiesNamesMap;
-        newPropertiesNamesMap = propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
+        if (propertiesNamesMap != null) {
+            newPropertiesNamesMap = propertiesNamesMap;
+        }
+        else {
+            newPropertiesNamesMap = new HashMap<String, String>();
+        }
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_DC_TITLE,
             PropertyMapKeys.LATEST_VERSION_TITLE);
@@ -1317,7 +1337,9 @@ public class GenericResource implements FedoraResource {
             sp.parse(new ByteArrayInputStream(tmpRelsExt.getStream()));
         }
         catch (final Exception e) {
-            throw new WebserverSystemException("Unexpected exception during RELS-EXT parsing.", e);
+            final String msg = "Unexpected exception during RELS-EXT parsing.";
+            log.warn(msg + e);
+            throw new WebserverSystemException(msg, e);
         }
 
         return eve.getElementValues().getTriples();

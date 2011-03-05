@@ -203,6 +203,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         if (userGroup == null) {
             final String message =
                 "User group with id " + groupId + " does not exist.";
+            LOG.error(message);
             throw new UserGroupNotFoundException(message);
         }
         userGroupDao.delete(userGroup);
@@ -262,6 +263,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         if (userGroup == null) {
             final String message =
                 "User group with id " + groupId + " does not exist.";
+            LOG.error(message);
             throw new UserGroupNotFoundException(message);
         }
 
@@ -351,6 +353,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".activate: " + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -363,7 +366,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
         catch (UniqueConstraintViolationException e) {
             // can not occur
-            LOG.debug("Error on setting modification values.", e);
         }
         userGroup.setActive(Boolean.TRUE);
         userGroupDao.update(userGroup);
@@ -427,6 +429,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".activate: " + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -439,7 +442,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
         catch (UniqueConstraintViolationException e) {
             // can not occur
-            LOG.debug("Error on setting modification values.", e);
         }
         userGroup.setActive(Boolean.FALSE);
         userGroupDao.update(userGroup);
@@ -514,6 +516,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createGrant: " + e.getClass().getName();
+
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -651,6 +655,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         if (userGroup == null) {
             final String message =
                 "User group with id " + groupId + " does not exist.";
+            LOG.error(message);
             throw new UserGroupNotFoundException(message);
         }
         final ByteArrayInputStream in =
@@ -693,6 +698,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                         final String message =
                             StringUtility.format(MSG_USER_NOT_FOUND_BY_ID,
                                 value);
+                        LOG.error(message);
                         throw new UserAccountNotFoundException(message);
                     }
                 }
@@ -703,6 +709,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                         final String message =
                             "Referenced user group with id " + value
                                 + " does not exist.";
+                        LOG.error(message);
                         throw new UserGroupNotFoundException(message);
                     }
                     if (!isCycleFree(groupId, value)) {
@@ -714,11 +721,13 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                 + "  because user group with id "
                                 + value
                                 + " is already ranked higher in the group hierarchy.";
+                        LOG.error(message);
                         throw new UserGroupHierarchyViolationException(message);
                     }
                 }
                 else {
                     final String message = MSG_GROUP_INVALID_SELECTOR_NAME;
+                    LOG.error(message);
                     throw new XmlCorruptedException(message);
                 }
             }
@@ -776,6 +785,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         if (userGroup == null) {
             final String message =
                 "User group with id " + groupId + " does not exist.";
+            LOG.error(message);
             throw new UserGroupNotFoundException(message);
         }
         final ByteArrayInputStream in =
@@ -1016,7 +1026,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                             }
                         }
                         catch (UserAccountNotFoundException e) {
-                            LOG.debug("Error on getting user account.", e);
                             // if user has no groups or user not found,
                             // write nonexisting group in query
                             replacement.append('\"');
@@ -1550,7 +1559,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         // AA-filter
         for (final RoleGrant roleGrant : currentGrants) {
             grantsMap.put(roleGrant.getId(), roleGrant);
-            final Object[] args = { groupId, roleGrant.getId() };
+            final Object[] args = new Object[] { groupId, roleGrant.getId() };
             argumentList.add(args);
         }
         try {
@@ -1717,6 +1726,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: "
                     + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
         userGroupDao.update(grantToRevoke);
@@ -1813,7 +1823,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         // AA-filter grants to revoke
         final List<Object[]> argumentList = new ArrayList<Object[]>();
         for (final String grantId : grantIds) {
-            final Object[] args = { groupId, grantId };
+            final Object[] args = new Object[] { groupId, grantId };
             argumentList.add(args);
         }
         try {
@@ -1976,6 +1986,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 if (oldLabel == null || !oldLabel.equals(label)) {
                     final String message =
                         "The provided user group label is not unique.";
+                    LOG.error(message);
                     throw new UniqueConstraintViolationException(message);
                 }
             }

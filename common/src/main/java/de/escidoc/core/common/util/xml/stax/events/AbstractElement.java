@@ -44,12 +44,22 @@ public abstract class AbstractElement {
 
     public int getLineNumber() {
 
-        return parser != null ? parser.getLocation().getLineNumber() : -1;
+        if (null != parser) {
+            return parser.getLocation().getLineNumber();
+        }
+        else {
+            return -1;
+        }
     }
 
     public int getColumnNumber() {
 
-        return parser != null ? parser.getLocation().getColumnNumber() : -1;
+        if (parser != null) {
+            return parser.getLocation().getColumnNumber();
+        }
+        else {
+            return -1;
+        }
     }
 
     public String getLocationString() {

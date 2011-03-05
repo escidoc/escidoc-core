@@ -37,7 +37,6 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.list.ListSorting;
 import de.escidoc.core.common.util.logger.AppLogger;
@@ -49,6 +48,7 @@ import org.nsdl.mptstore.util.NTriplesUtil;
 
 import javax.sql.DataSource;
 import javax.xml.stream.FactoryConfigurationError;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -103,8 +103,11 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                     EscidocConfiguration.FEDORA_URL);
         }
         catch (final Exception e) {
-            throw new TripleStoreSystemException("Failed to retrieve configuration parameter "
-                    + EscidocConfiguration.FEDORA_URL, e);
+            final String errorMsg =
+                "Failed to retrieve configuration parameter "
+                    + EscidocConfiguration.FEDORA_URL;
+            LOGGER.error(errorMsg, e);
+            throw new TripleStoreSystemException(e);
         }
         fedoraRdfXmlUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_RDF_XML;
         fedoraItqlNtriplesUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_NTRIPLES;
@@ -126,7 +129,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @param driverManagerDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
-        setDataSource(myDataSource);
+        super.setDataSource(myDataSource);
     }
 
     private static final String HTTP_QUERY_BASE_SPO_NTRIPLES =
@@ -196,8 +199,12 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             else if (format == Format.N_TRIPLES) {
                 queryAddress = new StringBuffer(fedoraItqlNtriplesUrl);
             }
-            else
-                queryAddress = format == Format.CSV ? new StringBuffer(fedoraItqlCsvUrl) : new StringBuffer(fedoraItqlNtriplesUrl);
+            else if (format == Format.CSV) {
+                queryAddress = new StringBuffer(fedoraItqlCsvUrl);
+            }
+            else {
+                queryAddress = new StringBuffer(fedoraItqlNtriplesUrl);
+            }
 
             queryAddress.append(URLEncoder.encode(itqlQuery,
                 XmlUtility.CHARACTER_ENCODING));
@@ -246,12 +253,25 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             final URL url = new URL(address);
             final URLConnection con = url.openConnection();
             final InputStream in = con.getInputStream();
+            final ByteArrayOutputStream out = new ByteArrayOutputStream();
+
             try {
-                result = IOUtils.readStringFromStream(in);
+                final byte[] buf = new byte[4096];
+                int len;
+                while ((len = in.read(buf)) > 0) {
+                    out.write(buf, 0, len);
+                }
             }
             finally {
-                IOUtils.closeStream(in);
+                try {
+                    in.close();
+                }
+                catch (final IOException e) {
+                    LOGGER.warn("Could not close result inputstream.");
+                }
             }
+
+            result = out.toString(XmlUtility.CHARACTER_ENCODING);
         }
         catch (final MalformedURLException e) {
             throw new TripleStoreSystemException(e);
@@ -285,6 +305,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
                 }
             }
             else {
+                LOGGER.error("Request failed:\n" + result);
                 result =
                     XmlUtility.CDATA_START + result + XmlUtility.CDATA_END;
                 throw new TripleStoreSystemException(
@@ -326,15 +347,26 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final List<String> result = new ArrayList<String>();
 
         final String source;
-        source = queryByLiteral ? '\"'
-                + idOrLiteral.replaceAll("\\\\", "\\\\\\\\").replaceAll(
-                "\"", "\\\\\"") + '\"' : "<info:fedora/" + idOrLiteral + '>';
+        if (queryByLiteral) {
+            source =
+                    '\"'
+                    + idOrLiteral.replaceAll("\\\\", "\\\\\\\\").replaceAll(
+                        "\"", "\\\\\"") + '\"';
+        }
+        else {
+            source = "<info:fedora/" + idOrLiteral + '>';
+        }
 
         try {
 
             // get the triples in n-triples
             final String spoQuery;
-            spoQuery = targetIsSubject ? "* <" + predicate + ">  " + source : source + " <" + predicate + "> *";
+            if (targetIsSubject) {
+                spoQuery = "* <" + predicate + ">  " + source;
+            }
+            else {
+                spoQuery = source + " <" + predicate + "> *";
+            }
             final String response = requestSPO(spoQuery);
             final String[] triples = response.split("\\s\\.");
             for (final String triple : triples) {

@@ -180,7 +180,12 @@ public class RoleFilter extends CqlFilter {
 
             if (columnName != null) {
                 if ("limited".equals(columnName)) {
-                    result = Boolean.parseBoolean(value) ? Restrictions.isNotEmpty("scopeDefs") : Restrictions.isEmpty("scopeDefs");
+                    if (Boolean.parseBoolean(value)) {
+                        result = Restrictions.isNotEmpty("scopeDefs");
+                    }
+                    else {
+                        result = Restrictions.isEmpty("scopeDefs");
+                    }
                 }
                 else if ("granted".equals(columnName)) {
                     final DetachedCriteria subQuery =
@@ -190,7 +195,12 @@ public class RoleFilter extends CqlFilter {
                     subQuery.add(Restrictions.eqProperty("escidocRole.id",
                         "r.id"));
 
-                    result = Boolean.parseBoolean(value) ? Subqueries.lt(0, subQuery) : Subqueries.eq(0, subQuery);
+                    if (Boolean.parseBoolean(value)) {
+                        result = Subqueries.lt(0, subQuery);
+                    }
+                    else {
+                        result = Subqueries.eq(0, subQuery);
+                    }
                 }
                 else if (columnName.equals(Constants.FILTER_CREATION_DATE)
                         || columnName.equals(Constants.FILTER_PATH_CREATION_DATE)) {

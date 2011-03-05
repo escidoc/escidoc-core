@@ -78,16 +78,22 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
         if (this.inRelation) {
             if ("targetId".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
-                    throw new MissingElementValueException("The value of the element " + element.getLocalName()
-                            + " is missing.");
+                    final String message =
+                        "The value of the element " + element.getLocalName()
+                            + " is missing.";
+                    LOG.debug(message);
+                    throw new MissingElementValueException(message);
                 }
                 data = XmlUtility.getObjidWithoutVersion(data);
                 this.targetId = data;
             }
             else if ("predicate".equals(element.getLocalName())) {
                 if ((data == null) || (data.length() == 0)) {
-                    throw new MissingElementValueException("The value of the element " + element.getLocalName()
-                            + " is missing.");
+                    final String message =
+                        "The value of the element " + element.getLocalName()
+                            + " is missing.";
+                    LOG.debug(message);
+                    throw new MissingElementValueException(message);
                 }
                 this.predicate = data;
             }
@@ -121,9 +127,13 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
                     predicate);
 
             if (existRelationTarget == null) {
-                throw new ContentRelationNotFoundException("A relation with predicate " + predicate
+
+                final String message =
+                    "A relation with predicate " + predicate
                         + " between resources with ids " + sourceId
-                        + " and " + targetId + " does not exist.");
+                        + " and " + targetId + " does not exist.";
+                LOG.debug(message);
+                throw new ContentRelationNotFoundException(message);
 
             }
 

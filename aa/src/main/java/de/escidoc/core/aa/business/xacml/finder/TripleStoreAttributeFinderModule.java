@@ -798,15 +798,22 @@ public class TripleStoreAttributeFinderModule
                 element = element.substring(0, dotIndex);
                 elements[i] = element;
             }
-            currentPath = i == 0 ? element : StringUtility
-                    .concatenateWithColon(currentPath, element).toString();
+            if (i == 0) {
+                currentPath = element;
+            }
+            else {
+                currentPath =
+                    StringUtility
+                        .concatenateWithColon(currentPath, element).toString();
+            }
 
             if (mapping.get(currentPath) != null) {
-                longestMatch = new MapResult(
+                final MapResult currentMatch = new MapResult(
                     mapping.get(currentPath).getCacheId(),
                     mapping.get(currentPath).isInverse(),
                     mapping.get(currentPath).isHierarchical(),
                     mapping.get(currentPath).isIncludeHierarchyBase());
+                longestMatch = currentMatch;
                 longestPath = currentPath;
                 indexLongestMatch = i;
             }

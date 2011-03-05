@@ -2,7 +2,6 @@ package de.escidoc.core.tme.business.jhove;
 
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.tme.business.TmeHandlerBase;
 import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
@@ -89,16 +88,38 @@ public class JhoveHandler extends TmeHandlerBase
         try {
             inputStream = getClass().getClassLoader().getResourceAsStream(CONFIG_FILE);
             if (inputStream == null) {
-                throw new FileNotFoundException(CONFIG_FILE + " not found!");
+                final String message = CONFIG_FILE + " not found!";
+                logger.error(message);
+                throw new FileNotFoundException(message);
             }
 
             jhoveConfigFile = File.createTempFile(NAME, null);
             jhoveConfigFile.deleteOnExit();
+
             inputStream = new BufferedInputStream(inputStream);
             outputStream = new FileOutputStream(jhoveConfigFile);
-            IOUtils.copyAndCloseInput(inputStream, outputStream);
-        } finally {
-            IOUtils.closeStream(outputStream);
+
+            final byte[] buffer = new byte[BUFFER_SIZE];
+            int length;
+            while ((length = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, length);
+            }
+        }
+        finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch(IOException e) {
+                    // Ignore this exception
+                }
+            }
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch(IOException e) {
+                    // Ignore this exception
+                }
+            }
         }
     }
 
@@ -174,9 +195,11 @@ public class JhoveHandler extends TmeHandlerBase
             }
         }
         catch (IOException e) {
+            logger.error(e.getMessage(), e);
             throw new SystemException("Error in Jhove output handling!", e);
         }
         catch (Exception e) {
+            logger.error(e.getMessage(), e);
             throw new TmeException(e.getMessage(), e);
         }
         finally {

@@ -85,7 +85,12 @@ public class ObjectAttributeResolver {
         AuthorizationException, AuthenticationException {
         final Map<String, String> objectAttributes =
             resolveObjectAttributes(objectId, true);
-        return objectAttributes != null ? objectAttributes.get(ATTR_OBJECT_TYPE) : null;
+        if (objectAttributes != null) {
+            return objectAttributes.get(ATTR_OBJECT_TYPE);
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -211,7 +216,6 @@ public class ObjectAttributeResolver {
             }
         }
         catch (ScopeNotFoundException e) {
-            LOG.debug("Error on getting object.", e);
             return null;
         }
 

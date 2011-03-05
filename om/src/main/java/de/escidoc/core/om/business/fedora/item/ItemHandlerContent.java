@@ -42,7 +42,6 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.UserContext;
@@ -486,7 +485,13 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             }
             templates.put(templateFileName, result.toString());
         } finally {
-            IOUtils.closeStream(inputStream);
+            if(inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch(IOException e) {
+                    // ignore this exception
+                }
+            }
         }
         return result.toString(XmlUtility.CHARACTER_ENCODING);
     }
@@ -541,9 +546,12 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         setItem(itemId);
         final String contentStream = renderContentStream(name, true);
         if (contentStream.length() == 0) {
-            throw new ContentStreamNotFoundException("The item with id " + itemId
+            final String message =
+                "The item with id " + itemId
                     + " does not contain a content stream" + " with name "
-                    + name);
+                    + name;
+            LOGGER.error(message);
+            throw new ContentStreamNotFoundException(message);
         }
         return contentStream;
     }

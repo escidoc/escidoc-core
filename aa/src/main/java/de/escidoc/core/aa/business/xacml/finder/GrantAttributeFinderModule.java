@@ -266,8 +266,13 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         }
         else {
             final RoleGrant grant;
-            grant = resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
-                    + ".*") ? getUserAccountGrant(ctx, userOrGroupId, grantId) : getUserGroupGrant(ctx, grantId);
+            if (resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
+                + ".*")) {
+                grant = getUserAccountGrant(ctx, userOrGroupId, grantId);
+            }
+            else {
+                grant = getUserGroupGrant(ctx, grantId);
+            }
             assertGrant(grantId, grant);
             assignedOnObjectId = grant.getObjectId();
         }
@@ -341,8 +346,13 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             throw new GrantNotFoundException("no grantId found");
         }
         final RoleGrant grant;
-        grant = resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
-                + ".*") ? userAccountDao.retrieveGrant(userOrGroupId, grantId) : userGroupDao.retrieveGrant(grantId);
+        if (resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
+            + ".*")) {
+            grant = userAccountDao.retrieveGrant(userOrGroupId, grantId);
+        }
+        else {
+            grant = userGroupDao.retrieveGrant(grantId);
+        }
         assertGrant(grantId, grant);
         final String createdBy = grant.getCreatorId();
 
@@ -386,8 +396,13 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
         }
         else {
             final RoleGrant grant;
-            grant = resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
-                    + ".*") ? getUserAccountGrant(ctx, userOrGroupId, grantId) : getUserGroupGrant(ctx, grantId);
+            if (resolvableAttribute.matches(".*" + XmlUtility.NAME_USER_ACCOUNT
+                + ".*")) {
+                grant = getUserAccountGrant(ctx, userOrGroupId, grantId);
+            }
+            else {
+                grant = getUserGroupGrant(ctx, grantId);
+            }
             assertGrant(grantId, grant);
             roleId = grant.getRoleId();
         }

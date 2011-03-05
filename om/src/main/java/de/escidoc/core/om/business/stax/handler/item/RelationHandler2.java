@@ -113,7 +113,9 @@ public class RelationHandler2 extends DefaultHandler {
                 if (predicateUri != null) {
                     final String[] predicateAndTarget = predicateUri.split("#");
                     if (predicateAndTarget.length != 2) {
-                        throw new InvalidContentException("Attribute has invalid predicate.");
+                        final String msg = "Attribute has invalid predicate";
+                        LOGGER.debug(msg + " '" + predicateUri + '\'');
+                        throw new InvalidContentException(msg);
                     }
 
                     predicateNs = predicateAndTarget[0];
@@ -145,13 +147,18 @@ public class RelationHandler2 extends DefaultHandler {
             catch (NoSuchAttributeException e) {
                 LOGGER.debug(e);
             }
+
             // handle objid
             if (XmlUtility.getVersionNumberFromObjid(id) != null) {
-                throw new InvalidContentException("A relation target may not be referenced by an "
+                final String message =
+                    "A relation target may not be referenced by an "
                         + " identifier containing a version number. "
                         + "Use a floating identifier like 'escidoc:123' "
-                        + "to reference a target");
+                        + "to reference a target";
+                LOGGER.debug(message);
+                throw new InvalidContentException(message);
             }
+
             this.relation = new RelationCreate(predicateNs, predicate, id);
 
         }

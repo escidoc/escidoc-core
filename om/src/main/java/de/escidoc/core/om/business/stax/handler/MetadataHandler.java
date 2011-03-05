@@ -122,7 +122,9 @@ public class MetadataHandler extends DefaultHandler {
             this.nameValue = name.getValue();
 
             if (nameValue.length() == 0) {
-                throw new MissingAttributeValueException("The value of the"
+                LOGGER.error("the value of" + " \"name\" atribute of the element "
+                    + theName + " is missing");
+                throw new MissingAttributeValueException("the value of the"
                     + " \"name\" atribute of the element " + theName
                     + " is missing");
 
@@ -194,8 +196,11 @@ public class MetadataHandler extends DefaultHandler {
         }
         else if ((mdRecordsPath.equals(parser.getCurPath()))
             && (!isMandatoryName)) {
-            throw new MissingMdRecordException("Mandatory md-record with a name "
-                    + MANDATORY_MD_RECORD_NAME + " is missing.");
+            final String message =
+                "Mandatory md-record with a name "
+                    + MANDATORY_MD_RECORD_NAME + " is missing.";
+            LOGGER.error(message);
+            throw new MissingMdRecordException(message);
         }
         return element;
     }

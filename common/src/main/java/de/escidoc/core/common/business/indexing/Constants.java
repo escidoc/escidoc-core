@@ -168,8 +168,8 @@ public final class Constants {
     /**
      * Names of fields containing Primary-Keys.
      */
-    public static final String[] INDEX_PRIM_KEY_FIELDS =
-            {"PID","distinction.rootPid"};
+    public static final String[] INDEX_PRIM_KEY_FIELDS = 
+                    new String[] {"PID","distinction.rootPid"};
     
 
 }

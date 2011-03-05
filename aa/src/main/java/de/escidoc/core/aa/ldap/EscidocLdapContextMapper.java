@@ -30,7 +30,6 @@
 package de.escidoc.core.aa.ldap;
 
 import de.escidoc.core.aa.business.authorisation.Constants;
-import de.escidoc.core.common.util.logger.AppLogger;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.AuthenticationCredentialsNotFoundException;
@@ -54,9 +53,6 @@ import java.util.HashSet;
  * @aa
  */
 public class EscidocLdapContextMapper implements UserDetailsContextMapper {
-
-    private static final AppLogger LOG = new AppLogger(
-        EscidocLdapContextMapper.class.getName());
     
     private static final Collection<String> IGNORED_VALUES = new HashSet<String>() {
         private static final long serialVersionUID = -5594739057849019019L;
@@ -109,9 +105,7 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
                                     if (val != null && val.length() != 0) {
                                         user.addStringAttribute(key, val);
                                     }
-                                } catch (Exception e) {
-                                    LOG.debug("Error on setting attribute.", e);
-                                }
+                                } catch (Exception e) {}
                             }
                         }
                     }
@@ -119,7 +113,7 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
             }
         } catch (NamingException e) {
             throw new AuthenticationCredentialsNotFoundException(
-                    "User-Attributes not found", e);
+                    "User-Attributes not found");
         }
 
 

@@ -75,7 +75,6 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 import de.escidoc.core.om.business.stax.handler.context.ContextPropertiesUpdateHandler;
-import sun.util.LocaleServiceProviderPool;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayInputStream;
@@ -785,6 +784,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             dcNew = new String(dcNewBytes, XmlUtility.CHARACTER_ENCODING);
         }
         catch (final UnsupportedEncodingException e) {
+            LOGGER.error(e);
             throw new EncodingSystemException(e);
         }
 
@@ -865,7 +865,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         catch (final StreamNotFoundException e) {
             throw new IntegritySystemException(
                 "Error accessing dc datastream of context '"
-                    + getContext().getId() + "'!", e);
+                    + getContext().getId() + "'!");
         }
     }
 

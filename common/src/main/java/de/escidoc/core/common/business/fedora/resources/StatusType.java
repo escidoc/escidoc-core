@@ -94,7 +94,9 @@ public enum StatusType {
                 return INREVISION;
             }
         }
-        throw new InvalidStatusException("Invalid status '" + type + '\'');
+
+        final String msg = "Invalid status '" + type + '\'';
+        throw new InvalidStatusException(msg);
     }
 
 }

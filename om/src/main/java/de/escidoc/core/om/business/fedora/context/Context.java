@@ -208,7 +208,10 @@ public class Context extends GenericResource implements ContextInterface {
 
         // check that at least one OU is given
         if (ous.isEmpty()) {
-            throw new InvalidContentException("No 'organizational-unit' element is given.");
+            final String message =
+                "No 'organizational-unit' element is given. ";
+            LOGGER.error(message);
+            throw new InvalidContentException(message);
         }
 
         final List<String> currentOus = getOrganizationalUnitObjids();
@@ -369,8 +372,11 @@ public class Context extends GenericResource implements ContextInterface {
                 final Datastream newDs = new Datastream(dsNname, getId(), null);
                 result.put(dsNname, newDs);
             } catch (final StreamNotFoundException e) {
-                throw new IntegritySystemException("Admin-descriptor \"" + dsNname
-                                + "\" not found for Context " + getId() + '.', e);
+                final String message =
+                        "Admin-descriptor \"" + dsNname
+                                + "\" not found for Context " + getId() + '.';
+                LOGGER.error(message, e);
+                throw new IntegritySystemException(message, e);
             }
 
         }
@@ -551,7 +557,12 @@ public class Context extends GenericResource implements ContextInterface {
         final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        if (propertiesNames != null) {
+            newPropertiesNames = propertiesNames;
+        }
+        else {
+            newPropertiesNames = new ArrayList<String>();
+        }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTEXT_TYPE);
         newPropertiesNames.add(Constants.DC_NS_URI + "description");
@@ -574,7 +585,12 @@ public class Context extends GenericResource implements ContextInterface {
         final Map<String, String> propertiesMapping) {
 
         final Map<String, String> newPropertiesNames;
-        newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
+        if (propertiesMapping != null) {
+            newPropertiesNames = propertiesMapping;
+        }
+        else {
+            newPropertiesNames = new HashMap<String, String>();
+        }
 
         newPropertiesNames.put(Constants.DC_NS_URI + "description",
             PropertyMapKeys.LATEST_VERSION_DESCRIPTION);

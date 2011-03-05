@@ -31,7 +31,6 @@ package de.escidoc.core.common.servlet.invocation;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -153,9 +152,12 @@ public class Resource extends XMLBase {
             }
         }
         if (result == null) {
-            throw new MethodNotFoundException("Error: No method configured in resource '" + getName()
+            final String message =
+                "Error: No method configured in resource '" + getName()
                     + "' for " + httpMethod + "-request with uri '" + uri
-                    + "'!");
+                    + "'!";
+            getLogger().error(message);
+            throw new MethodNotFoundException(message);
         }
         return result;
     }
@@ -407,12 +409,12 @@ public class Resource extends XMLBase {
                                 XmlUtility.CHARACTER_ENCODING);
                     }
                 } finally {
-                    IOUtils.closeStream(out);
+                    out.close();
                 }
             }
         }
         catch (IOException e) {
-            getLogger().debug("No request body found!", e);
+            getLogger().debug("No request body found!");
         }
         return result;
     }

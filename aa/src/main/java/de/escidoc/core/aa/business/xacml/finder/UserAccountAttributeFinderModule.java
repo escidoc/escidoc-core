@@ -728,6 +728,7 @@ public class UserAccountAttributeFinderModule
                 final String errorMsg =
                     StringUtility.format(
                             "Retrieving of attribute failed", attributeIdValue);
+                log.error(errorMsg, e);
                 throw new WebserverSystemException(errorMsg, e);
             }
             result = new HashSet<AttributeValue>();

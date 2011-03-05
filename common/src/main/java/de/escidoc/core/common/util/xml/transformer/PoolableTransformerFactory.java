@@ -31,7 +31,6 @@ package de.escidoc.core.common.util.xml.transformer;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
@@ -141,7 +140,13 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         } catch (TransformerConfigurationException e) {
             throw new WebserverSystemException("Transformer for DC-mapping can not be created.", e);
         } finally {
-            IOUtils.closeStream(xslt);
+            try {
+                if (xslt != null) {
+                    xslt.close();
+                }
+            } catch (IOException e) {
+                LOG.error("error on closing stream", e);
+            }
         }
         return result;
     }
@@ -169,9 +174,15 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         final String contentModelId = keyParts[1];
 
         InputStream xslt;
-        xslt = nsUri != null
-                && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? new URL(EscidocConfiguration.getInstance().appendToSelfURL(
-                XSL_MAPPING_MPDL_TO_DC)).openStream() : new URL(defaultXsltUrl).openStream();
+        if (nsUri != null
+            && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE)) {
+            xslt =
+                new URL(EscidocConfiguration.getInstance().appendToSelfURL(
+                    XSL_MAPPING_MPDL_TO_DC)).openStream();
+        }
+        else {
+            xslt = new URL(defaultXsltUrl).openStream();
+        }
         // xslt is the mpdl-xslt- or default-xslt-stream
         if (contentModelId.length() > 0
             && !"null".equalsIgnoreCase(contentModelId)) {
@@ -186,7 +197,6 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
 
             }
             catch (WebserverSystemException e) {
-                LOG.debug("Error on requesting URL '" + dcMappingXsltFedoraUrl + "'", e);
                 // xslt is still the stream set above
             }
         }

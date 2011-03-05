@@ -135,7 +135,11 @@ public final class CustomPolicyBuilder {
 
     static {
         final String schemaName = System.getProperty(POLICY_SCHEMA_PROPERTY);
-        SCHEMA_FILE = schemaName == null ? null : new File(schemaName);
+        if (schemaName == null) {
+            SCHEMA_FILE = null;
+        } else {
+            SCHEMA_FILE = new File(schemaName);
+        }
     }
 
     private static final String UNSUPPORTED_ROOT_ELEMENT =

@@ -48,7 +48,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import de.escidoc.core.common.util.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -492,7 +491,11 @@ public class IndexingHandler implements ResourceListener {
                     pidSuffix = Constants.LATEST_VERSION_PID_SUFFIX;
                 }
                 else {
-                    pidSuffix = latestReleasedVersion.equals(thisVersion) ? Constants.LATEST_RELEASE_PID_SUFFIX : Constants.LATEST_VERSION_PID_SUFFIX;
+                    if (latestReleasedVersion.equals(thisVersion)) {
+                        pidSuffix = Constants.LATEST_RELEASE_PID_SUFFIX;
+                    } else {
+                        pidSuffix = Constants.LATEST_VERSION_PID_SUFFIX;
+                    }
                 }
             }
         }
@@ -800,7 +803,7 @@ public class IndexingHandler implements ResourceListener {
 
         if ((resourceParameters != null)) {
             if (indexName == null || indexName.trim().length() == 0
-                || "all".equalsIgnoreCase(indexName)) {
+                || indexName.equalsIgnoreCase("all")) {
                 for (final String indexName2 : resourceParameters.keySet()) {
                     result.addAll(getPids(indexName2));
                 }
@@ -946,7 +949,13 @@ public class IndexingHandler implements ResourceListener {
                 }
                 indexProps.load(propStream);
             } finally {
-                IOUtils.closeStream(propStream);
+                if(propStream != null) {
+                    try {
+                        propStream.close();
+                    } catch(IOException e) {
+                        // ignore this exception
+                    }
+                }
             }
             final Pattern objectTypePattern = Pattern.compile(".*?\\.(.*?)\\..*");
             final Matcher objectTypeMatcher = objectTypePattern.matcher("");

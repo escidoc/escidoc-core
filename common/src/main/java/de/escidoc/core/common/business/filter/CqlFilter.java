@@ -173,7 +173,12 @@ public abstract class CqlFilter {
                 result = Restrictions.le(propertyName, value);
             }
             else if ("=".equals(rel)) {
-                result = useLike ? Restrictions.like(propertyName, value) : Restrictions.eq(propertyName, value);
+                if (useLike) {
+                    result = Restrictions.like(propertyName, value);
+                }
+                else {
+                    result = Restrictions.eq(propertyName, value);
+                }
             }
             else if (">=".equals(rel)) {
                 result = Restrictions.ge(propertyName, value);
@@ -232,7 +237,12 @@ public abstract class CqlFilter {
     private Criterion getAndRestriction(final Criterion criterion) {
         final Criterion result;
 
-        result = criterion != null ? criterion : Restrictions.sqlRestriction("TRUE");
+        if (criterion != null) {
+            result = criterion;
+        }
+        else {
+            result = Restrictions.sqlRestriction("TRUE");
+        }
         return result;
     }
 
@@ -249,8 +259,13 @@ public abstract class CqlFilter {
         final Collection<String> criteria, final String fieldName) {
         if (criteria.contains("")) {
             criteria.remove("");
-            return criteria.isEmpty() ? Restrictions.isNull(fieldName) : Restrictions.or(Restrictions.isNull(fieldName),
+            if (criteria.isEmpty()) {
+                return Restrictions.isNull(fieldName);
+            }
+            else {
+                return Restrictions.or(Restrictions.isNull(fieldName),
                     Restrictions.in(fieldName, criteria.toArray()));
+            }
         }
         else {
             return Restrictions.in(fieldName, criteria.toArray());
@@ -267,7 +282,12 @@ public abstract class CqlFilter {
     private Criterion getOrRestriction(final Criterion criterion) {
         final Criterion result;
 
-        result = criterion != null ? criterion : Restrictions.sqlRestriction("FALSE");
+        if (criterion != null) {
+            result = criterion;
+        }
+        else {
+            result = Restrictions.sqlRestriction("FALSE");
+        }
         return result;
     }
 
@@ -335,9 +355,9 @@ public abstract class CqlFilter {
                                 "attribute \"" + modifier.getBase()
                                         + "\" not allowed for sorting");
                     }
-                    if ("sort.ascending".equals(mod.getType())) {
+                    if (mod.getType().equals("sort.ascending")) {
                         detachedCriteria.addOrder(Order.asc(columnName));
-                    } else if ("sort.descending".equals(mod.getType())) {
+                    } else if (mod.getType().equals("sort.descending")) {
                         detachedCriteria.addOrder(Order.desc(columnName));
                     } else {
                         throw new InvalidSearchQueryException(

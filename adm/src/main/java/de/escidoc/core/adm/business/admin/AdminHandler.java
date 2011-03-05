@@ -255,6 +255,7 @@ public class AdminHandler {
             config = EscidocConfiguration.getInstance();
         }
         catch (IOException e) {
+            LOG.error(e);
             throw new WebserverSystemException(e);
         }
 
@@ -293,6 +294,7 @@ public class AdminHandler {
                 String.valueOf(frameworkInfo.isConsistent()));
         }
         catch (Exception e) {
+            LOG.error(e);
             throw new WebserverSystemException(e);
         }
 
@@ -314,6 +316,7 @@ public class AdminHandler {
             properties.storeToXML(os, null);
         }
         catch (IOException e) {
+            LOG.error(e);
             throw new WebserverSystemException(e);
         }
         final String propertiesXml;
@@ -321,6 +324,7 @@ public class AdminHandler {
             propertiesXml = os.toString(XmlUtility.CHARACTER_ENCODING);
         }
         catch (UnsupportedEncodingException e) {
+            LOG.error(e);
             throw new EncodingSystemException(e);
         }
         return propertiesXml;
@@ -380,6 +384,7 @@ public class AdminHandler {
             result.append(examples.load(selfUrl + "examples/escidoc/"));
         }
         catch (Exception e) {
+            LOG.error(e);
             throw new SystemException(e);
         }
 

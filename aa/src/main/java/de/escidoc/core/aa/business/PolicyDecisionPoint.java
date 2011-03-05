@@ -63,7 +63,6 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.security.helper.InvocationParser;
 import de.escidoc.core.common.util.security.persistence.MethodMapping;
@@ -85,6 +84,7 @@ import org.springframework.beans.factory.InitializingBean;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -224,6 +224,9 @@ public class PolicyDecisionPoint
                         "The translation from XACML to SQL failed. Please try to "
                             + "paraphrase your policy or contact the developer team "
                             + "to extend the conversion rules accordingly.";
+
+                    LOG.error(message);
+                    LOG.error("error message: " + e.getMessage());
                     throw new WebserverSystemException(message, e);
                 }
             }
@@ -356,7 +359,11 @@ public class PolicyDecisionPoint
         for (final ResponseCtx responseCtx : responseCtxs) {
             final Result result = extractSingleResultWithoutObligations(responseCtx);
             final String decision;
-            decision = result.getDecision() == Result.DECISION_PERMIT ? "permit" : "deny";
+            if (result.getDecision() == Result.DECISION_PERMIT) {
+                decision = "permit";
+            } else {
+                decision = "deny";
+            }
 
             buf.append("<result decision=\"");
             buf.append(decision);
@@ -592,14 +599,18 @@ public class PolicyDecisionPoint
     private static String encode(final Status status) 
                             throws WebserverSystemException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        status.encode(out, new Indenter());
         final String ret;
         try {
-            status.encode(out, new Indenter());
             ret = out.toString(XmlUtility.CHARACTER_ENCODING);
         } catch (UnsupportedEncodingException e) {
-            throw new WebserverSystemException("Error on encoding policy.", e);
-        } finally {
-            IOUtils.closeStream(out);
+            throw new WebserverSystemException(e.getMessage(), e);
+        }
+        try {
+            out.close();
+        }
+        catch (IOException e1) {
+            // Ignore exception
         }
         return ret;
     }
@@ -730,14 +741,17 @@ public class PolicyDecisionPoint
      */
     private ResponseCtx doEvaluate(final RequestCtx requestCtx)
         throws WebserverSystemException {
+
         if (LOG.isDebugEnabled()) {
             LOG.debug("Request: ");
             final ByteArrayOutputStream writer = new ByteArrayOutputStream();
+            requestCtx.encode(writer, new Indenter());
+            LOG.debug(writer.toString());
             try {
-                requestCtx.encode(writer, new Indenter());
-                LOG.debug(writer.toString());
-            } finally {
-                IOUtils.closeStream(writer);
+                writer.close();
+            }
+            catch (IOException e) {
+                // Ignore exception
             }
         }
 
@@ -761,13 +775,16 @@ public class PolicyDecisionPoint
         if (LOG.isDebugEnabled()) {
             LOG.debug("Response: ");
             final ByteArrayOutputStream writer = new ByteArrayOutputStream();
+            response.encode(writer, new Indenter());
+            LOG.debug(writer.toString());
             try {
-                response.encode(writer, new Indenter());
-                LOG.debug(writer.toString());
-            } finally {
-                IOUtils.closeStream(writer);
+                writer.close();
+            }
+            catch (IOException e) {
+                // Ignore exception
             }
         }
+
         return response;
     }
 

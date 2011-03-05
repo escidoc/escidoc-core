@@ -100,7 +100,6 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
-import sun.util.LocaleServiceProviderPool;
 
 /**
  * @author FRS
@@ -168,6 +167,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 "The object is in state '"
                     + de.escidoc.core.common.business.Constants.STATUS_WITHDRAWN
                     + "'. Content is not accessible.";
+            log.debug(msg);
             throw new InvalidStatusException(msg);
         }
 
@@ -284,7 +284,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         }
         catch (StreamNotFoundException e) {
             throw new ResourceNotFoundException("No XSLT for operation '"
-                + name + "' in content model " + id + '.', e);
+                + name + "' in content model " + id + '.');
         }
 
         return getContent(ds);
@@ -382,6 +382,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 "The Content Model with id '" + objid
                     + "', which was just created, "
                     + "could not be found for retrieve.";
+            log.warn(msg);
             throw new IntegritySystemException(msg, e);
         }
         fireContentModelCreated(objid, resultContentModel);
@@ -547,6 +548,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 dcNew = new String(dcNewBytes, XmlUtility.CHARACTER_ENCODING);
             }
             catch (final UnsupportedEncodingException e) {
+                log.error(e);
                 throw new EncodingSystemException(e);
             }
 

@@ -297,6 +297,7 @@ public class UserAccountHandler
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".create: "
                     + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -415,6 +416,7 @@ public class UserAccountHandler
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: "
                     + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -599,7 +601,7 @@ public class UserAccountHandler
         // AA-filter
         for (final RoleGrant roleGrant : currentGrants) {
             grantsMap.put(roleGrant.getId(), roleGrant);
-            final Object[] args = { userId, roleGrant.getId() };
+            final Object[] args = new Object[] { userId, roleGrant.getId() };
             argumentList.add(args);
         }
         try {
@@ -822,6 +824,7 @@ public class UserAccountHandler
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".activate: "
                     + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -896,6 +899,7 @@ public class UserAccountHandler
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".deactivate: " + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -975,6 +979,7 @@ public class UserAccountHandler
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createGrant: " + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -1146,6 +1151,7 @@ public class UserAccountHandler
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: "
                     + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -1248,7 +1254,7 @@ public class UserAccountHandler
         // AA-filter grants to revoke
         final List<Object[]> argumentList = new ArrayList<Object[]>();
         for (final String grantId : grantIds) {
-            final Object[] args = { userId, grantId };
+            final Object[] args = new Object[] { userId, grantId };
             argumentList.add(args);
         }
         try {
@@ -1518,7 +1524,6 @@ public class UserAccountHandler
                             }
                         }
                         catch (UserGroupNotFoundException e) {
-                            LOG.debug("Error on getting users for group.", e);
                             // if group has no users or group not found,
                             // write nonexisting user in query
                             replacement.append('\"');
@@ -2240,6 +2245,7 @@ public class UserAccountHandler
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createPreference: " + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -2344,6 +2350,7 @@ public class UserAccountHandler
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createPreference: " + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -2484,6 +2491,7 @@ public class UserAccountHandler
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".updatePreference: " + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -2562,6 +2570,7 @@ public class UserAccountHandler
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createAttribute: " + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -2749,6 +2758,7 @@ public class UserAccountHandler
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".updateAttribute: " + e.getClass().getName();
+            LOG.error(msg, e);
             throw new SystemException(msg, e);
         }
 
@@ -2858,14 +2868,24 @@ public class UserAccountHandler
                         public String getRoleId() {
                             final String[] parameter = parameters.get("role");
 
-                            return (parameter != null) && (parameter.length > 0) ? parameter[0] : null;
+                            if ((parameter != null) && (parameter.length > 0)) {
+                                return parameter[0];
+                            }
+                            else {
+                                return null;
+                            }
                         }
 
                         @Override
                         public String getUserId() {
                             final String[] parameter = parameters.get("user");
 
-                            return (parameter != null) && (parameter.length > 0) ? parameter[0] : null;
+                            if ((parameter != null) && (parameter.length > 0)) {
+                                return parameter[0];
+                            }
+                            else {
+                                return null;
+                            }
                         }
                     }) + "</filter>");
     }

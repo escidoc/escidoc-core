@@ -522,10 +522,18 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
     public String retrieveMdRecord(final String name, final boolean isOrigin)
         throws MdRecordNotFoundException {
         final Datastream mdRecord;
-        mdRecord = isOrigin ? getOriginItem().getMdRecord(name) : getItem().getMdRecord(name);
+        if (isOrigin) {
+            mdRecord = getOriginItem().getMdRecord(name);
+        }
+        else {
+            mdRecord = getItem().getMdRecord(name);
+        }
         if (mdRecord.isDeleted()) {
-            throw new MdRecordNotFoundException("Metadata record with name " + name + " not found in item "
-                    + getItem().getId() + '.');
+            final String message =
+                "Metadata record with name " + name + " not found in item "
+                    + getItem().getId() + '.';
+            LOGGER.error(message);
+            throw new MdRecordNotFoundException();
         }
 
         return mdRecord.toString();
@@ -915,7 +923,6 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 ids = getTripleStoreUtility().retrieve(query.toString());
             }
             catch (TripleStoreSystemException e) {
-
             }
             final Iterator<String> idIter = ids.iterator();
             final Collection<Map<String, String>> entries =
@@ -955,9 +962,12 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 renderedEntries.add(render());
             }
             catch (ResourceNotFoundException e) {
-                throw new WebserverSystemException("FedoraItemHandler.retrieveItems: can not retrieve object "
+                final String msg =
+                    "FedoraItemHandler.retrieveItems: can not retrieve object "
                         + itemId + ". ResourceNotFoundException: "
-                        + e.getCause() + '.', e);
+                        + e.getCause() + '.';
+                LOGGER.error(msg);
+                throw new WebserverSystemException(msg, e);
             }
         }
         values.put(XmlTemplateProvider.VAR_ITEM_LIST_MEMBERS, renderedEntries);

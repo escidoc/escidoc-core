@@ -250,9 +250,15 @@ public class MapResult {
         // identifier need inverse lookup to get the correct dc identifier.
         // Therefore, these attributes have to be handled in a special
         // way.
-        return isInverse() ? tsu.getRetrieveWhereClause(true, getCacheId(), objectId,
-                null, getContentTypePredicateId(), getContentTypeTitle()) : tsu.getRetrieveWhereClause(false, getCacheId(),
+        if (isInverse()) {
+            return tsu.getRetrieveWhereClause(true, getCacheId(), objectId,
+                null, getContentTypePredicateId(), getContentTypeTitle());
+
+        }
+        else {
+            return tsu.getRetrieveWhereClause(false, getCacheId(),
                 objectId, null, null, null);
+        }
     }
 
     /**
@@ -287,10 +293,15 @@ public class MapResult {
         // we perform an inverse lookup here, therefore, the
         // inverse flag of the map result must be switched
         // (inverse -> forward, forward -> inverse)
-        return isInverse() ? tsu.getRetrieveWhereClause(false, getCacheId(),
-                objectId, null, null, null) : tsu.getRetrieveWhereClause(true, getCacheId(), objectId,
+        if (isInverse()) {
+            return tsu.getRetrieveWhereClause(false, getCacheId(),
+                objectId, null, null, null);
+        }
+        else {
+            return tsu.getRetrieveWhereClause(true, getCacheId(), objectId,
                 resourceType, getContentTypePredicateId(),
                 getContentTypeTitle());
+        }
     }
 }
 

@@ -198,7 +198,7 @@ public class CheckProvidedAttributeFinderModule
                             throw e;
                         }
                         catch (Exception e) {
-                            throw new ResourceNotFoundException(errorMsg, e);
+                            throw new ResourceNotFoundException(errorMsg);
                         }
                     }
                 }

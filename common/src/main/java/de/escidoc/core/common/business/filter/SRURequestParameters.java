@@ -68,7 +68,12 @@ public abstract class SRURequestParameters {
         final int givenStartRecord =
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_START_RECORD), -1);
-        startRecord = givenStartRecord > -1 ? givenStartRecord + getDefaultStartRecord() - 1 : getDefaultStartRecord();
+        if (givenStartRecord > -1) {
+            startRecord = givenStartRecord + getDefaultStartRecord() - 1;
+        }
+        else {
+            startRecord = getDefaultStartRecord();
+        }
         user = getStringParameter(parameters.get(Constants.SRU_PARAMETER_USER));
         role = getStringParameter(parameters.get(Constants.SRU_PARAMETER_ROLE));
 

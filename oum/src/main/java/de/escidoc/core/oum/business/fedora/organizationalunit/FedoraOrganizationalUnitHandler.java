@@ -1033,8 +1033,11 @@ public class FedoraOrganizationalUnitHandler
         setOrganizationalUnit(id);
         final String mdRecord = getMdRecordXml(name);
         if (mdRecord.length() == 0) {
-            throw new MdRecordNotFoundException("Md-record with a name " + name + " does not "
-                    + " exist in the organization unit with id " + id);
+            final String message =
+                "Md-record with a name " + name + " does not "
+                    + " exist in the organization unit with id " + id;
+            LOG.error(message);
+            throw new MdRecordNotFoundException(message);
         }
         return getMdRecordXml(name);
     }

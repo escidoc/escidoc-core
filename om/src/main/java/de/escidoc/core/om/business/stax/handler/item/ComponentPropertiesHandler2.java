@@ -159,7 +159,8 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
             this.properties.setVisibility(s);
         }
         else {
-            throw new MissingElementValueException("The value of element "
+            LOGGER.error("the value of element " + currentPath + " is missing");
+            throw new MissingElementValueException("the value of element "
                 + currentPath + " is missing");
         }
     }
@@ -177,7 +178,8 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
             this.properties.setContentCatagory(s);
         }
         else {
-            throw new MissingElementValueException("The value of element "
+            LOGGER.error("the value of element " + currentPath + " is missing");
+            throw new MissingElementValueException("the value of element "
                 + currentPath + " is missing");
         }
 

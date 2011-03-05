@@ -138,7 +138,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
         catch (StreamNotFoundException e) {
             throw new MdRecordNotFoundException("Md-record with a name  "
                 + mdRecordId + " does not exist in the Container with Id "
-                + getContainer().getId(), e);
+                + getContainer().getId());
         }
 
     }

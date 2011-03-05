@@ -63,7 +63,6 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
-import sun.util.LocaleServiceProviderPool;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;
@@ -504,7 +503,6 @@ public class Item extends GenericVersionableResourcePid
                 this.cts = ds;
             }
             catch (final FedoraSystemException e) {
-                log.debug("Error on merging datastream.", e);
                 // this is not an update; its a create
                 ds.persist(false);
                 this.cts = ds;
@@ -591,8 +589,11 @@ public class Item extends GenericVersionableResourcePid
     public Datastream getMdRecord(final String name)
         throws MdRecordNotFoundException {
         if (!this.mdRecords.containsKey(name)) {
-            throw new MdRecordNotFoundException("Metadata record with name " + name + " not found in item "
-                    + getId() + '.');
+            final String message =
+                "Metadata record with name " + name + " not found in item "
+                    + getId() + '.';
+            log.debug(message);
+            throw new MdRecordNotFoundException(message);
         }
         return this.mdRecords.get(name);
     }
@@ -627,7 +628,6 @@ public class Item extends GenericVersionableResourcePid
                 curDs = getMdRecord(name);
             }
             catch (MdRecordNotFoundException e1) {
-                log.debug("Error on getting MD-records.", e1);
                 isNew = true; // curDs is null
             }
             boolean contentChanged = false;
@@ -684,13 +684,20 @@ public class Item extends GenericVersionableResourcePid
                             }
                         }
                         else {
-                            throw new IntegritySystemException("namespace uri of 'escidoc' metadata"
-                                    + " is not set in datastream.");
+                            final String message =
+                                "namespace uri of 'escidoc' metadata"
+                                    + " is not set in datastream.";
+
+                            log.error(message);
+                            throw new IntegritySystemException(message);
                         }
                     }
                     else {
-                        throw new IntegritySystemException("Properties of 'md-record' datastream"
-                                + " with the name 'escidoc' does not exist");
+                        final String message =
+                            "Properties of 'md-record' datastream"
+                                + " with the name 'escidoc' does not exist";
+                        log.error(message);
+                        throw new IntegritySystemException(message);
                     }
                 }
 
@@ -702,7 +709,6 @@ public class Item extends GenericVersionableResourcePid
             }
         }
         catch (final FedoraSystemException e) {
-            log.debug("Error on setting MD-records.", e);
             // this is not an update; its a create
             ds.addAlternateId(type);
             ds.addAlternateId(schema);
@@ -753,7 +759,6 @@ public class Item extends GenericVersionableResourcePid
             }
         }
         catch (final FedoraSystemException e) {
-            log.debug("Error on setting content stream.", e);
             // this is not an update; its a create
             this.contentStreams.put(name, ds);
             ds.persist(false);
@@ -804,7 +809,12 @@ public class Item extends GenericVersionableResourcePid
         final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        if (propertiesNames != null) {
+            newPropertiesNames = propertiesNames;
+        }
+        else {
+            newPropertiesNames = new ArrayList<String>();
+        }
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_MODEL_TITLE);
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_CATEGORY);
@@ -827,7 +837,12 @@ public class Item extends GenericVersionableResourcePid
         final Map<String, String> propertiesMapping) {
 
         final Map<String, String> newPropertiesNames;
-        newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
+        if (propertiesMapping != null) {
+            newPropertiesNames = propertiesMapping;
+        }
+        else {
+            newPropertiesNames = new HashMap<String, String>();
+        }
 
         newPropertiesNames.put(TripleStoreUtility.PROP_LATEST_VERSION_PID,
             PropertyMapKeys.LATEST_VERSION_PID);
@@ -1120,6 +1135,7 @@ public class Item extends GenericVersionableResourcePid
             sp.parse(getRelsExt().getStream());
         }
         catch (final Exception e) {
+            log.error(e.getMessage());
             throw new WebserverSystemException(e);
         }
         sp.clearHandlerChain();
@@ -1130,6 +1146,7 @@ public class Item extends GenericVersionableResourcePid
             setRelsExt(relsExtNew);
         }
         catch (final StreamNotFoundException e1) {
+            log.error(e1.getMessage());
             throw new IntegritySystemException(e1);
         }
     }

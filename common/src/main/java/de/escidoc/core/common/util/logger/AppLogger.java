@@ -54,22 +54,12 @@ public final class AppLogger {
 
     /**
      * Error messages.
-     *
+     * 
      * @param msg
      *            The message to print.
      */
     public void debug(final Object msg) {
         log.debug(msg);
-    }
-
-    /**
-     * Error messages.
-     *
-     * @param msg
-     *            The message to print.
-     */
-    public void debug(final Object msg, final Throwable throwable) {
-        log.debug(msg, throwable);
     }
 
     /**

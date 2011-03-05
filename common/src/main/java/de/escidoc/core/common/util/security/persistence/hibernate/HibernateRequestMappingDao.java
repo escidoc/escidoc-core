@@ -61,7 +61,7 @@ public class HibernateRequestMappingDao extends HibernateDaoSupport
     public final void setRequestMappingSessionFactory(
         final SessionFactory requestMappingSessionFactory) {
 
-        setSessionFactory(requestMappingSessionFactory);
+        super.setSessionFactory(requestMappingSessionFactory);
     }
 
 

@@ -55,8 +55,11 @@ public class SemanticQueryHandler extends DefaultHandler {
 
         if ("query".equals(element.getLocalName())) {
             if ((data == null) || (data.length() == 0)) {
-                throw new MissingElementValueException("The value of the element " + element.getLocalName()
-                        + " is missing.");
+                final String message =
+                    "The value of the element " + element.getLocalName()
+                        + " is missing.";
+                LOGGER.error(message);
+                throw new MissingElementValueException(message);
             }
             this.query =
                 XmlUtility.unescapeForbiddenXmlCharacters(data.trim(), false);
@@ -68,8 +71,11 @@ public class SemanticQueryHandler extends DefaultHandler {
         }
         else if ("format".equals(element.getLocalName())) {
             if ((data == null) || (data.length() == 0)) {
-                throw new MissingElementValueException("The value of the element " + element.getLocalName()
-                        + " is missing.");
+                final String message =
+                    "The value of the element " + element.getLocalName()
+                        + " is missing.";
+                LOGGER.error(message);
+                throw new MissingElementValueException(message);
             }
             this.format = data;
 

@@ -138,8 +138,9 @@ public class OneComponentContentHandler extends DefaultHandler {
 
                 }
                 else {
+                    LOGGER.error("the content of one component is missing");
                     throw new MissingContentException(
-                        "The content of one component is missing");
+                        "the content of one component is missing");
                 }
             }
             inContent = false;

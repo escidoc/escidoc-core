@@ -168,7 +168,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * Attention: The spring/beans setter methods has to be defined in this and
      * not in one of the super classes.
      */
-    private static final AppLogger LOG = new AppLogger(
+    private static final AppLogger log = new AppLogger(
         FedoraContainerHandler.class.getName());
 
     private static final String MODIFIED_DATE_ATT_NAME =
@@ -367,6 +367,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         catch (final XMLStreamException e) {
+            getLogger().error(e.getMessage());
             throw new XmlParserSystemException(e);
         }
         catch (final LockingException e) {
@@ -442,7 +443,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 if ((!Boolean.valueOf(System
                     .getProperty("cmm.Container.objectPid.releaseWithoutPid")))
                     && (properties.get(Elements.ELEMENT_PID) == null)) {
-                    throw new InvalidStatusException("Missing object PID for public-status 'released'.");
+                    final String msg =
+                        "Missing object PID for public-status 'released'.";
+                    log.debug(msg);
+                    throw new InvalidStatusException(msg);
                 }
             }
             else {
@@ -479,6 +483,13 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         catch (UnsupportedEncodingException e1) {
             throw new EncodingSystemException(e1);
         }
+        // Work around for Fedora30 bug APIM.getDatastreams()
+
+        // // String lastModificationDate =
+        // // TripleStoreUtility.getInstance().getLastModificationDate(
+        // // pids[0], getFedoraUtility());
+        //
+
         String lastModifiedDate = null;
         final org.fcrepo.server.types.gen.Datastream[] relsExtInfo =
             FedoraUtility.getInstance().getDatastreamsInformation(containerId,
@@ -496,6 +507,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     }
                 }
                 catch (ParseException e) {
+                    log.error(e);
                     throw new WebserverSystemException(e);
                 }
             }
@@ -629,23 +641,29 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     throw e.getCause();
                 }
                 catch (AuthorizationException ee) {
-                    throw new AuthorizationException("Can not delete all member entries for container "
+                    final String msg =
+                        "Can not delete all member entries for container "
                             + getContainer().getId()
-                            + ". Container can not be deleted.", ee); // Ignore
+                            + ". Container can not be deleted.";
+                    throw new AuthorizationException(msg, ee); // Ignore
                                                                // FindBugs
                 }
                 catch (Throwable ee) { // Ignore FindBugs
                     if (ee instanceof Error) {
                         throw (Error) ee;
                     }
-                    throw new SystemException("An error occured removing member entries for container "
+                    final String msg =
+                        "An error occured removing member entries for container "
                             + getItem().getId()
-                            + ". Container can not be deleted.", ee); // Ignore Findbugs
+                            + ". Container can not be deleted.";
+                    throw new SystemException(msg, ee); // Ignore Findbugs
                 }
             }
             catch (Exception e) {
-                throw new SystemException("An error occured removing member entries for container "
-                        + getItem().getId() + ". Container can not be deleted.", e);
+                final String msg =
+                    "An error occured removing member entries for container "
+                        + getItem().getId() + ". Container can not be deleted.";
+                throw new SystemException(msg, e);
             }
         }
 
@@ -1671,15 +1689,14 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 }
                 catch (final InvalidStatusException e) {
                     // do next member
-                    LOG.warn("Member '" + memberId + "' of container '"
+                    log.warn("Member '" + memberId + "' of container '"
                         + getContainer().getId() + "' not released.", e);
                 }
                 catch (final LockingException e) {
-                    LOG.warn("Member '" + memberId + "' of container '"
-                            + getContainer().getId() + "' locked.", e);
+                    // do next member
                 }
                 catch (final OptimisticLockingException e) {
-                    LOG.warn("Member '" + memberId + "' of container '"
+                    log.warn("Member '" + memberId + "' of container '"
                         + getContainer().getId() + "' not released.", e);
                     throw e;
                     // do next member
@@ -1688,6 +1705,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     throw e;
                 }
                 catch (final Exception e) {
+
+                    log.error(e.getMessage());
                     throw new IntegritySystemException(e);
                 }
             }
@@ -1703,7 +1722,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     setItem(memberId);
                 }
                 catch (final Exception e) {
-                    LOG.debug("Error on setting item.", e);
                     // do nothing
                     continue;
                 }
@@ -1713,20 +1731,25 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
                 try {
                     itemHandler.release(memberId, param);
-                } catch (final InvalidStatusException e) {
-                    LOG.debug("Error on releasing item.", e);
+                }
+                catch (final InvalidStatusException e) {
                     // do next member
-                } catch (final Exception e) {
+                }
+                catch (final Exception e) {
+                    log.error(e.getMessage());
                     throw new IntegritySystemException(e);
 
                 }
 
             }
             else {
-                throw new IntegritySystemException(StringUtility
+                final String msg =
+                    StringUtility
                         .format("Wrong object type of the member: "
                             + "member must be either item or container",
-                            objectType));
+                            objectType);
+                log.error(msg);
+                throw new IntegritySystemException(msg);
             }
         }
     }
@@ -1913,11 +1936,17 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         ReadonlyVersionException, InvalidXmlException {
 
         if (id == null || !getTripleStoreUtility().exists(id)) {
-            throw new ContainerNotFoundException("Container with id " + id + " does not exist.");
+            final String msg = "Container with id " + id + " does not exist.";
+            log.debug(msg);
+            throw new ContainerNotFoundException(msg);
         }
         else if (!Constants.CONTAINER_OBJECT_TYPE
             .equals(getTripleStoreUtility().getObjectType(id))) {
-            throw new ContainerNotFoundException(StringUtility.format("Object is no container", id));
+
+            final String msg =
+                StringUtility.format("Object is no container", id);
+            log.error(msg);
+            throw new ContainerNotFoundException(msg);
         }
 
         final String curStatus =
@@ -2006,10 +2035,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     // withdraw(memberId, param);
                 }
                 catch (final InvalidStatusException e) {
-                   LOG.debug("Error on withdraw container.", e);
                     // do next member
                 }
                 catch (final Exception e) {
+
+                    log.error(e.getMessage());
                     throw new IntegritySystemException(e);
                 }
             }
@@ -2019,7 +2049,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     setItem(memberId);
                 }
                 catch (final Exception e) {
-                    LOG.debug("Error on setting item.", e);
                     // do nothing
                 }
 
@@ -2035,19 +2064,23 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     itemHandler.withdraw(memberId, param);
                 }
                 catch (final InvalidStatusException e) {
-                    LOG.debug("Error on withdraw item.", e);
                     // do next member
                 }
                 catch (final Exception e) {
+                    log.error(e.getMessage());
                     throw new IntegritySystemException(e);
 
                 }
             }
             else {
-                throw new IntegritySystemException(StringUtility
+                final String msg =
+                    StringUtility
                         .format("Wrong object type of the member: "
                             + "member must be either item or container",
-                            objectType));
+                            objectType);
+
+                log.info(msg);
+                throw new IntegritySystemException(msg);
             }
         }
     }
@@ -2089,8 +2122,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             checkStatusNot(Constants.STATUS_WITHDRAWN);
         }
         catch (final InvalidStatusException e) {
-            throw new InvalidStatusException("Container can not be locked, because it "
-                    + "is in an inappropriate state.", e);
+            final String message =
+                "Container can not be locked, because it "
+                    + "is in an inappropriate state.";
+            throw new InvalidStatusException(message, e);
         }
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
 
@@ -2148,8 +2183,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             checkStatusNot(Constants.STATUS_WITHDRAWN);
         }
         catch (final InvalidStatusException e) {
-            throw new InvalidStatusException("Container can not be unlocked, because it "
-                    + "is in an inappropriate state.", e);
+            final String message =
+                "Container can not be unlocked, because it "
+                    + "is in an inappropriate state.";
+            throw new InvalidStatusException(message, e);
         }
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         if (!getContainer().isLocked()) {
@@ -2234,7 +2271,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @return Returns the logger.
      */
     public static AppLogger getLogger() {
-        return LOG;
+        return log;
     }
 
     /**
@@ -2486,8 +2523,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 checkStatusNot(Constants.STATUS_WITHDRAWN);
             }
             catch (final InvalidStatusException e) {
-                throw new InvalidStatusException("Members can not be added, because the "
-                        + "container is in an inappropriate state.", e);
+                final String message =
+                    "Members can not be added, because the "
+                        + "container is in an inappropriate state.";
+                throw new InvalidStatusException(message, e);
             }
             final String startTimestamp =
                 getContainer().getLastFedoraModificationDate();
@@ -2676,8 +2715,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 getTripleStoreUtility().getProperty(memberId,
                     TripleStoreUtility.PROP_CONTENT_MODEL_ID);
             if (!tocContentModel.equals(memberContentModel)) {
-                throw new InvalidContentException("Object with id " + memberId + " must have content model "
-                        + tocContentModel + '.');
+                final String message =
+                    "Object with id " + memberId + " must have content model "
+                        + tocContentModel + '.';
+                log.error(message);
+                throw new InvalidContentException(message);
             }
         }
 
@@ -2724,8 +2766,10 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 checkStatusNot(Constants.STATUS_RELEASED);
             }
             catch (final InvalidStatusException e) {
-                throw new InvalidStatusException("Members can not be removed, because the "
-                        + "container is in an inappropriate state.", e);
+                final String message =
+                    "Members can not be removed, because the "
+                        + "container is in an inappropriate state.";
+                throw new InvalidStatusException(message, e);
 
             }
 
@@ -2912,6 +2956,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
 
         catch (final XMLStreamException e) {
+            log.error(e.getMessage());
             throw new XmlParserSystemException(e.getMessage(), e);
         }
         catch (final ContextNotFoundException e) {

@@ -29,7 +29,6 @@
 package de.escidoc.core.om.business.fedora.deviation;
 
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface;
 
@@ -44,9 +43,6 @@ import java.util.Map.Entry;
  */
 public class FedoraDescribeDeviationHandler
     implements FedoraDescribeDeviationHandlerInterface {
-
-    private static final AppLogger LOG = new AppLogger(
-        FedoraDescribeDeviationHandler.class.getName());
 
     private ConnectionUtility connectionUtility;
 
@@ -99,7 +95,6 @@ public class FedoraDescribeDeviationHandler
                     connectionUtility.resetAuthentication(new URL(describeUrl));
                 }
                 catch (Exception e) {
-                    LOG.debug("Error on reseting authentication.", e);
                 }
             }
         }

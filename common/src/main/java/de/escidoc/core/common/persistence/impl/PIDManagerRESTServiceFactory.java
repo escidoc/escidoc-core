@@ -70,23 +70,39 @@ public class PIDManagerRESTServiceFactory extends PIDSystemFactory {
             new PIDManagerRESTService();
         try {
             final EscidocConfiguration conf = EscidocConfiguration.getInstance();
-            String param = conf.get(EscidocConfiguration.ESCIDOC_CORE_PID_SERVICE_HOST);
+
+            String param =
+                conf
+                    .get(EscidocConfiguration.ESCIDOC_CORE_PID_SERVICE_HOST);
             if (param != null) {
                 pidRestGenerator.setPidGeneratorServer(param);
             }
-            param = conf.get(EscidocConfiguration.ESCIDOC_CORE_PID_NAMESPACE);
+
+            param =
+                conf
+                    .get(EscidocConfiguration.ESCIDOC_CORE_PID_NAMESPACE);
             if (param != null) {
                 pidRestGenerator.setPidNamespace(param);
             }
-            param = conf.get(EscidocConfiguration.ESCIDOC_CORE_PID_GLOBALPREFIX);
+
+            param =
+                conf
+                    .get(EscidocConfiguration.ESCIDOC_CORE_PID_GLOBALPREFIX);
             if (param != null) {
                 pidRestGenerator.setGlobalPrefix(param);
             }
-            pidRestGenerator.setLocalPrefix(conf.get(EscidocConfiguration.ESCIDOC_CORE_PID_LOCALPREFIX,""));
+
+            pidRestGenerator
+                .setLocalPrefix(conf.get(
+                    EscidocConfiguration.ESCIDOC_CORE_PID_LOCALPREFIX,
+                    ""));
             pidRestGenerator.setSeparator(conf.get(
                 EscidocConfiguration.ESCIDOC_CORE_PID_SEPARATOR, "/"));
-        } catch (Exception e) {
-            throw new PidSystemException("Can not initialise PID System.", e);
+
+        }
+        catch (Exception e) {
+            throw new PidSystemException(
+                "Can not initialise PID System.", e);
         }
         pidGenerator = pidRestGenerator;
     }

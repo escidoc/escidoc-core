@@ -32,7 +32,6 @@ import com.sun.xacml.cond.EvaluationResult;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
-import de.escidoc.core.aa.servlet.Login;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import net.sf.ehcache.Cache;
@@ -438,7 +437,11 @@ public final class PoliciesCache {
             return;
         }
         Element element;
-        element = userGroups == null ? new Element(userId, new HashSet<String>()) : new Element(userId, userGroups);
+        if (userGroups == null) {
+            element = new Element(userId, new HashSet<String>());
+        } else {
+            element = new Element(userId, userGroups);
+        }
         getUserGroupsCache().put(element);
     }
 
@@ -529,7 +532,11 @@ public final class PoliciesCache {
      */
     public static XacmlPolicySet getUserPolicies(final String userId) {
         final Element element = getUserPoliciesCache().get(userId);
-        return element != null ? (XacmlPolicySet) element.getObjectValue() : null;
+        if(element != null) {
+            return (XacmlPolicySet) element.getObjectValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -545,7 +552,11 @@ public final class PoliciesCache {
      */
     public static XacmlPolicySet getGroupPolicies(final String groupId) {
         final Element element = getGroupPoliciesCache().get(groupId);
-        return element != null ? (XacmlPolicySet) element.getObjectValue() : null;
+        if(element != null) {
+            return (XacmlPolicySet) element.getObjectValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -559,7 +570,11 @@ public final class PoliciesCache {
      */
     public static Map getUserGrants(final String userId) {
         final Element element = getUserGrantsCache().get(userId);
-        return element != null ? (Map) element.getObjectValue() : null;
+        if(element != null) {
+            return (Map) element.getObjectValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -573,7 +588,11 @@ public final class PoliciesCache {
      */
     public static Map getGroupGrants(final String groupId) {
         final Element element = getGroupGrantsCache().get(groupId);
-        return element != null ? (Map) element.getObjectValue() : null;
+        if(element != null) {
+            return (Map) element.getObjectValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -587,7 +606,11 @@ public final class PoliciesCache {
      */
     public static UserDetails getUserDetails(final String handle) {
         final Element element = getUserDetailsCache().get(handle);
-        return element != null ? (UserDetails) element.getObjectValue() : null;
+        if(element != null) {
+            return (UserDetails) element.getObjectValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -601,7 +624,11 @@ public final class PoliciesCache {
      */
     public static Set<String> getUserGroups(final String userId) {
         final Element element = getUserGroupsCache().get(userId);
-        return element != null ? (Set<String>) element.getObjectValue() : null;
+        if(element != null) {
+            return (Set<String>) element.getObjectValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -616,7 +643,11 @@ public final class PoliciesCache {
     public static XacmlPolicySet getRolePolicySet(
         final URI idReference) {
         final Element element = getRolePoliciesCache().get(idReference);
-        return element != null ? (XacmlPolicySet) element.getObjectValue() : null;
+        if(element != null) {
+            return (XacmlPolicySet) element.getObjectValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -629,7 +660,11 @@ public final class PoliciesCache {
      */
     public static EscidocRole getRole(final String roleId) {
         final Element element = getRolesCache().get(roleId);
-        return element != null ? (EscidocRole) element.getObjectValue() : null;
+        if(element != null) {
+            return (EscidocRole) element.getObjectValue();
+        } else {
+            return null;
+        }
     }
 
     /**

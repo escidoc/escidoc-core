@@ -37,7 +37,6 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContentRelationFoXmlProvider;
@@ -583,9 +582,13 @@ public class ContentRelationCreate extends GenericResourceCreate
         for (final MdRecordCreate record : records) {
             final String recordName = record.getName();
             if (recordName.equals(name)) {
-                throw new InvalidContentException("A md-record with the name '" + name
+
+                final String message =
+                        "A md-record with the name '" + name
                                 + "' occurs multiple times "
-                                + "in the representation of a content relation.");
+                                + "in the representation of a content relation.";
+                LOG.error(message);
+                throw new InvalidContentException(message);
             }
         }
 
@@ -785,19 +788,14 @@ public class ContentRelationCreate extends GenericResourceCreate
         try {
             final ByteArrayOutputStream os = new ByteArrayOutputStream();
             final ObjectOutputStream oos = new ObjectOutputStream(os);
-            try {
-                oos.writeObject(this);
-            } finally {
-                IOUtils.closeStream(oos);
-            }
+            oos.writeObject(this);
+            oos.close();
             final InputStream fis = new ByteArrayInputStream(os.toByteArray());
             final ObjectInputStream ois = new ObjectInputStream(fis);
-            try {
-                result = ois.readObject();
-            } finally {
-                IOUtils.closeStream(ois);
-            }
-        } catch (Exception e) {
+            result = ois.readObject();
+            ois.close();
+        }
+        catch (Exception e) {
             final CloneNotSupportedException cnse = new CloneNotSupportedException(e.toString()); // Ignore FindBugs
             cnse.initCause(e);
             throw cnse;

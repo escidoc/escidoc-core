@@ -74,7 +74,7 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao
         final StatisticData data =
             new StatisticData(xmlData,
                 new Timestamp(System.currentTimeMillis()), scope);
-        save(data);
+        super.save(data);
     }
 
     /**
@@ -99,7 +99,12 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao
         final List results =
             getHibernateTemplate().find(QUERY_MIN_TIMESTAMP_FOR_SCOPE,
                 new Object[] { scopeId });
-        return results != null ? (Date) results.get(0) : null;
+        if (results != null) {
+            return (Date) results.get(0);
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -113,7 +118,7 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 
-        setSessionFactory(mySessionFactory);
+        super.setSessionFactory(mySessionFactory);
     }
 
 }

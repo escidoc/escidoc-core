@@ -32,7 +32,6 @@ import de.escidoc.core.aa.business.persistence.EscidocPolicy;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -182,7 +181,7 @@ public class XacmlStaxHandler extends DefaultHandler {
                 policyLevel--;
                 if (policyLevel == 0) {
                     insidePolicy = false;
-                    IOUtils.closeWriter(writer);
+                    policyWriter.close();
                     policyXml = writer.toString();
 
                     Collection<EscidocPolicy> escidocPolicies =

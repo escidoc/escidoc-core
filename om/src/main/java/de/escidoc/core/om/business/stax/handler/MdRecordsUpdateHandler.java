@@ -105,6 +105,9 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                 try {
                     name = element.getAttribute(null, "name").getValue();
                     if (name.length() == 0) {
+                        LOGGER.error("the value of"
+                            + " \"name\" atribute of the element " + theName
+                            + " is missing");
                         throw new MissingAttributeValueException(
                             "the value of the"
                                 + " \"name\" atribute of the element "
@@ -116,7 +119,11 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                     }
                 }
                 catch (NoSuchAttributeException e) {
-                    LOGGER.debug("Error on getting attribute.", e);
+                    // LAX
+                    // throw new InvalidContentException(
+                    // "md-record element has no attribute 'name'.");
+                    // element.addAttribute(new Attribute("name", null, null,
+                    // onlyName));
                 }
 
                 String typeValue = null;
@@ -177,8 +184,11 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
         }
         else if ((mdRecordsPath.equals(parser.getCurPath()))
             && (!isMandatoryName && !origin)) {
-            throw new MissingMdRecordException("Mandatory md-record with a name "
-                    + Elements.MANDATORY_MD_RECORD_NAME + " is missing.");
+            final String message =
+                "Mandatory md-record with a name "
+                    + Elements.MANDATORY_MD_RECORD_NAME + " is missing.";
+            LOGGER.error(message);
+            throw new MissingMdRecordException(message);
         }
         return element;
     }

@@ -36,7 +36,6 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
-import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.Elements;
@@ -88,7 +87,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @param myDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
-        setDataSource(myDataSource);
+        super.setDataSource(myDataSource);
     }
 
     /**
@@ -673,18 +672,33 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             final StringBuilder from =
                     new StringBuilder("FROM ").append(table).append(' ');
             StringBuffer where = new StringBuffer("WHERE (");
-            select = targetIsSubject ? select.append(table).append(".s ") : select.append(table).append(".o ");
+            if (targetIsSubject) {
+                select = select.append(table).append(".s ");
+            }
+            else {
+                select = select.append(table).append(".o ");
+            }
             final Iterator<String> iterator = ids.iterator();
             boolean firstStep = true;
             while (iterator.hasNext()) {
                 final String id = iterator.next();
                 if (firstStep) {
                     firstStep = false;
-                    where = targetIsSubject ? where.append(table).append(".o = ") : where.append(table).append(".s = ");
+                    if (targetIsSubject) {
+                        where = where.append(table).append(".o = ");
+                    }
+                    else {
+                        where = where.append(table).append(".s = ");
+                    }
                 }
                 else {
                     where = where.append(" OR ");
-                    where = targetIsSubject ? where.append(table).append(".o = ") : where.append(table).append(".s = ");
+                    if (targetIsSubject) {
+                        where = where.append(table).append(".o = ");
+                    }
+                    else {
+                        where = where.append(table).append(".s = ");
+                    }
                 }
 
                 try {
@@ -752,19 +766,38 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             if (resultSet.next()) {
                 result = getValue(resultSet.getString(1));
             }
-        } catch (URISyntaxException e) {
+        }
+        catch (URISyntaxException e) {
+            log.error("", e);
             throw new TripleStoreSystemException(e.getMessage(), e);
-        } catch (CannotGetJdbcConnectionException e) {
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            log.error("", e);
             throw new TripleStoreSystemException(e.getMessage(), e);
-        } catch (SQLException e) {
-            throw new TripleStoreSystemException("Failed to execute query " + query, e);
-        } catch (SystemException e) {
-            throw new TripleStoreSystemException("Failed to escape forbidden xml characters ", e);
-        } finally {
+        }
+        catch (SQLException e) {
+            log.error("", e);
+            throw new TripleStoreSystemException("Failed to execute query "
+                + query, e);
+        }
+        catch (SystemException e) {
+            log.error("", e);
+            throw new TripleStoreSystemException(
+                "Failed to escape forbidden xml characters ", e);
+        }
+        finally {
             if (connection != null) {
                 releaseConnection(connection);
             }
-            IOUtils.closeResultSet(resultSet);
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                }
+                catch (SQLException e) {
+                    log.error("", e);
+                    // Ignore because the result set is already closed.
+                }
+            }
         }
         return result;
     }
@@ -1716,17 +1749,34 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             rs = con.prepareStatement(query).executeQuery();
             while (rs.next()) {
                 final String entry = getValue(rs.getString(1));
+                // entry = NTriplesUtil.unescapeLiteralValue(value);
+
                 result.add(entry);
             }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new TripleStoreSystemException("Failed to get JDBC connection.", e);
-        } catch (SQLException e) {
-            throw new TripleStoreSystemException("Failed to execute query " + query, e);
-        } finally {
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            final String msg = "Failed to get JDBC connection " + e;
+            log.error(msg);
+            throw new TripleStoreSystemException(e.getMessage(), e);
+        }
+        catch (SQLException e) {
+            log.error("Failed to execute query '" + query + "'.", e);
+            throw new TripleStoreSystemException("Failed to execute query "
+                + query, e);
+        }
+        finally {
             if (con != null) {
                 releaseConnection(con);
             }
-            IOUtils.closeResultSet(rs);
+            if (rs != null) {
+                try {
+                    rs.close();
+                }
+                catch (SQLException e) {
+                    log.error("", e);
+                    // Ignore because the result set is already closed.
+                }
+            }
         }
         return result;
 
@@ -1825,25 +1875,45 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             queryBuffer.append(" WHERE (");
             queryBuffer.append(table);
             queryBuffer.append(" .s = '");
-            queryBuffer.append(new URIReference("info:fedora/" + pid).toString());
+            queryBuffer.append(new URIReference("info:fedora/" + pid)
+                .toString());
             queryBuffer.append("')");
             query = queryBuffer.toString();
             connection = getConnection();
             resultSet = connection.prepareStatement(query).executeQuery();
             return resultSet.next();
-        } catch (URISyntaxException e) {
+        }
+        catch (URISyntaxException e) {
+            log.error("", e);
             throw new TripleStoreSystemException(e.getMessage(), e);
-        } catch (CannotGetJdbcConnectionException e) {
+        }
+        catch (CannotGetJdbcConnectionException e) {
+            log.error("", e);
             throw new TripleStoreSystemException(e.getMessage(), e);
-        } catch (SQLException e) {
-            throw new TripleStoreSystemException("Failed to execute query " + query, e);
-        } catch (SystemException e) {
-            throw new TripleStoreSystemException("Failed to escape forbidden xml characters ", e);
-        } finally {
+        }
+        catch (SQLException e) {
+            log.error("", e);
+            throw new TripleStoreSystemException("Failed to execute query "
+                + query, e);
+        }
+        catch (SystemException e) {
+            log.error("", e);
+            throw new TripleStoreSystemException(
+                "Failed to escape forbidden xml characters ", e);
+        }
+        finally {
             if (connection != null) {
                 releaseConnection(connection);
             }
-            IOUtils.closeResultSet(resultSet);
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                }
+                catch (SQLException e) {
+                    log.error("", e);
+                    // Ignore because the result set is already closed.
+                }
+            }
         }
 
     }

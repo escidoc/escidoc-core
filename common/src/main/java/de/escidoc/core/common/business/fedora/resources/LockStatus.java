@@ -89,7 +89,9 @@ public enum LockStatus {
                 return LockStatus.UNLOCKED;
             }
         }
-        throw new InvalidStatusException("Invalid lock status '" + status + '\'');
+
+        final String msg = "Invalid lock status '" + status + '\'';
+        throw new InvalidStatusException(msg);
     }
 
 }

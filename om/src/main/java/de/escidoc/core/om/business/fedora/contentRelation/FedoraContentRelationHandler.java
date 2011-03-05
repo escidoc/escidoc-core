@@ -578,9 +578,12 @@ public class FedoraContentRelationHandler extends HandlerBase
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         checkLocked(cr);
         checkReleased(cr);
-        if (cr.getProperties().getStatus() != StatusType.SUBMITTED) {
-            throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_SUBMITTED
-                    + "' and can not be " + Constants.STATUS_RELEASED + '.');
+        if (StatusType.SUBMITTED != cr.getProperties().getStatus()) {
+            final String message =
+                "The object is not in state '" + Constants.STATUS_SUBMITTED
+                    + "' and can not be " + Constants.STATUS_RELEASED + '.';
+            log.debug(message);
+            throw new InvalidStatusException(message);
         }
         getUtility().checkOptimisticLockingCriteria(
             cr.getProperties().getLastModificationDate(),
@@ -643,9 +646,12 @@ public class FedoraContentRelationHandler extends HandlerBase
         final ContentRelationCreate cr = setContentRelation(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(taskParam);
         checkLocked(cr);
-        if (cr.getProperties().getStatus() != StatusType.SUBMITTED) {
-            throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_SUBMITTED
-                    + "' and can not be revised.");
+        if (StatusType.SUBMITTED != cr.getProperties().getStatus()) {
+            final String message =
+                "The object is not in state '" + Constants.STATUS_SUBMITTED
+                    + "' and can not be revised.";
+            log.debug(message);
+            throw new InvalidStatusException(message);
         }
         getUtility().checkOptimisticLockingCriteria(
             cr.getProperties().getLastModificationDate(),
@@ -831,8 +837,11 @@ public class FedoraContentRelationHandler extends HandlerBase
 
         final ContentRelationCreate cr = setContentRelation(id);
         if (cr.getProperties().getPid() != null) {
-            throw new PidAlreadyAssignedException("A content relation with id " + id
-                    + " is already assigned a PID");
+            final String message =
+                "A content relation with id " + id
+                    + " is already assigned a PID";
+            log.debug(message);
+            throw new PidAlreadyAssignedException(message);
         }
         final TaskParamHandler taskParameter =
             XmlUtility.parseTaskParam(taskParam);
@@ -996,9 +1005,13 @@ public class FedoraContentRelationHandler extends HandlerBase
             && !cr
                 .getProperties().getLockOwnerId()
                 .equals(getUtility().getCurrentUserId())) {
-            throw new LockingException("Content Relation + " + cr.getObjid() + " is locked by "
+
+            final String message =
+                "Content Relation + " + cr.getObjid() + " is locked by "
                     + cr.getProperties().getLockOwnerId() + " ("
-                    + cr.getProperties().getLockOwnerName() + ") .");
+                    + cr.getProperties().getLockOwnerName() + ") .";
+            log.debug(message);
+            throw new LockingException(message);
         }
     }
 
@@ -1015,8 +1028,11 @@ public class FedoraContentRelationHandler extends HandlerBase
 
         final StatusType status = cr.getProperties().getStatus();
         if (status == StatusType.RELEASED) {
-            throw new InvalidStatusException("The object is in state '" + Constants.STATUS_RELEASED
-                    + "' and can not be" + " changed.");
+            final String msg =
+                "The object is in state '" + Constants.STATUS_RELEASED
+                    + "' and can not be" + " changed.";
+            log.debug(msg);
+            throw new InvalidStatusException(msg);
         }
     }
 
@@ -1097,6 +1113,7 @@ public class FedoraContentRelationHandler extends HandlerBase
                 }
                 catch (InvalidStatusException e) {
                     // shouldn't happen
+                    log.info("Invalid status: " + e);
                     throw new SystemException(e);
                 }
                 cr.getProperties().setStatus(st);
@@ -1134,13 +1151,19 @@ public class FedoraContentRelationHandler extends HandlerBase
                 }
                 catch (URISyntaxException e) {
                     // shouldn't happen
-                    throw new SystemException("Stored value for URI in invalid.", e);
+                    log.warn("Stored value for URI in invalid: " + e);
+                    throw new SystemException(e);
                 }
             }
             else if (triple.getPredicate().equals(
                 TripleStoreUtility.PROP_CONTENT_RELATION_OBJECT_VERSION)) {
                 cr.setObjectVersion(triple.getObject());
-            } else {
+            }
+            else if (triple.getPredicate().equals(
+                TripleStoreUtility.PROP_CONTENT_RELATION_SUBJECT)) {
+                cr.setSubjectVersion(triple.getObject());
+            }
+            else {
                 // add values for mapping
                 log.warn("Predicate not mapped " + triple.getPredicate() + " = "
                     + triple.getObject());
@@ -1269,8 +1292,11 @@ public class FedoraContentRelationHandler extends HandlerBase
         throws InvalidContentException, WebserverSystemException,
         RelationPredicateNotFoundException {
         if (!ContentRelationsUtility.validPredicate(predicate)) {
-            throw new RelationPredicateNotFoundException("Predicate " + predicate
-                    + " is not on the registered predicate list. ");
+            final String message =
+                "Predicate " + predicate
+                    + " is not on the registered predicate list. ";
+            log.debug(message);
+            throw new RelationPredicateNotFoundException(message);
         }
 
     }
@@ -1425,10 +1451,13 @@ public class FedoraContentRelationHandler extends HandlerBase
          * Resource has to have status pending or in-revision when submit is
          * possible.
          */
-        if (!(cr.getProperties().getStatus() == StatusType.PENDING || cr.getProperties().getStatus() == StatusType.INREVISION)) {
-            throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_PENDING
+        if (!(StatusType.PENDING == cr.getProperties().getStatus() || StatusType.INREVISION == cr.getProperties().getStatus())) {
+            final String message =
+                "The object is not in state '" + Constants.STATUS_PENDING
                     + "' or '" + Constants.STATUS_IN_REVISION
-                    + "' and can not be" + " submitted.");
+                    + "' and can not be" + " submitted.";
+            log.debug(message);
+            throw new InvalidStatusException(message);
         }
 
     }
@@ -1539,6 +1568,7 @@ public class FedoraContentRelationHandler extends HandlerBase
                     "<pid>" + pid + "</pid>\n");
         }
         catch (SystemException e) {
+            log.error(e);
             throw new WebserverSystemException(e);
         }
         return result;

@@ -160,11 +160,17 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             setContext(id);
         }
         catch (ContextNotFoundException e) {
+            LOG.error("Created resource not found.", e);
             throw new SystemException("Created resource not found.", e);
         }
         final String contextXml = getContextXml(this);
         fireContextCreated(id, contextXml);
-        return isCreate ? contextXml : id;
+        if (isCreate) {
+            return contextXml;
+        }
+        else {
+            return id;
+        }
     }
 
     /*
@@ -462,6 +468,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
         // check status(closed)
         // FIXME implement updateAdminDescriptor
+        LOG.error("FedoraContextHandler.updateAdminDescriptor "
+            + "not yet implemented");
         throw new UnsupportedOperationException(
             "FedoraContextHandler.updateAdminDescriptor not implemented yet");
     }

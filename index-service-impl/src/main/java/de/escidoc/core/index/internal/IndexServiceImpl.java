@@ -46,7 +46,9 @@ public class IndexServiceImpl {
                 }
             }
         } catch (final EscidocException e) {
-            throw new IndexServiceException( "Error on indexing resource.", e);
+            final String errorMessage = "Error on indexing resource."; // NON-NLS
+            LOG.error(errorMessage, e);
+            throw new IndexServiceException(indexRequest.toString() + '\n' + e.getMessage());
         }
     }
 

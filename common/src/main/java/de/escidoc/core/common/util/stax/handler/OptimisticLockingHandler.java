@@ -108,7 +108,7 @@ public class OptimisticLockingHandler extends DefaultHandler {
             catch (NoSuchAttributeException e) {
                 throw new MissingAttributeValueException(
                     "Attribute \"last-modification-date\" of the element "
-                        + element.getLocalName() + " is missing.", e);
+                        + element.getLocalName() + " is missing.");
             }
 
             requestedModificationDate = requestedDate.getValue();

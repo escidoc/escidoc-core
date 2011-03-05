@@ -124,7 +124,13 @@ public class EscidocBinaryContent {
 
         if ((this.mimeType == null) && (this.getMethod != null)) {
             final Header ctype = this.getMethod.getFirstHeader("Content-Type");
-            this.mimeType = ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
+            if (ctype != null) {
+                this.mimeType = ctype.getValue();
+            }
+            else {
+                this.mimeType =
+                    FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
+            }
         }
         return this.mimeType;
     }
@@ -134,7 +140,12 @@ public class EscidocBinaryContent {
      *            the mimeType to set
      */
     public void setMimeType(final String mimeType) {
-        this.mimeType = mimeType != null ? mimeType.trim() : null;
+        if (mimeType != null) {
+            this.mimeType = mimeType.trim();
+        }
+        else {
+            this.mimeType = null;
+        }
     }
 
     /**

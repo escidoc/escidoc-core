@@ -109,8 +109,11 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
                 element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
                     "resource");
             if (indexOfResource == -1) {
-                throw new WebserverSystemException("The attribute 'rdf:resource' of the element '"
-                                + element.getLocalName() + "' is missing.");
+                final String message =
+                        "The attribute 'rdf:resource' of the element '"
+                                + element.getLocalName() + "' is missing.";
+                LOGGER.error(message);
+                throw new WebserverSystemException(message);
             }
             final String resourceValue =
                     element.getAttribute(indexOfResource).getValue();

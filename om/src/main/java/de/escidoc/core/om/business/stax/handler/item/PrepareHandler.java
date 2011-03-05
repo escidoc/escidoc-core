@@ -103,17 +103,25 @@ public class PrepareHandler extends DefaultHandler {
         throws MissingContentException {
 
         if (inContent) {
-            final Map<String, String> componentBinary = (HashMap<String, String>) binaryData.get(componentNumber);
+
+            final Map<String, String> componentBinary =
+                (HashMap<String, String>) binaryData.get(componentNumber);
             if (this.content == null) {
                 if ((this.uploadUrl != null) && (this.uploadUrl.length() > 0)) {
                     // FIXME use constant as in
                     // ItemHandlerCreate.handleComponent()
                     componentBinary.put("uploadUrl", this.uploadUrl);
-                } else {
-                    throw new MissingContentException("The content of component with id " + componentNumber
+                }
+                else {
+                    LOGGER.error("the content of component with id "
+                        + componentNumber + " is missing");
+                    throw new MissingContentException(
+                        "the content of component with id " + componentNumber
                             + " is missing");
                 }
+
             }
+
             inContent = false;
             componentNumber++;
             this.uploadUrl = null;
@@ -136,8 +144,11 @@ public class PrepareHandler extends DefaultHandler {
                     .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)
                     || this.storageValue
                         .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED)) {
-                    throw new InvalidContentException("The component section 'content' with the attribute 'storage' set to 'external-url' "
-                            + "or 'external-managed' may not have an inline content.");
+                    final String message =
+                        "The component section 'content' with the attribute 'storage' set to 'external-url' "
+                            + "or 'external-managed' may not have an inline content.";
+                    LOGGER.error(message);
+                    throw new InvalidContentException(message);
                 }
 
                 this.content = s;
@@ -163,11 +174,17 @@ public class PrepareHandler extends DefaultHandler {
         throws InvalidContentException {
 
         final int indexOfStorage = element.indexOfAttribute(null, "storage");
+
         if (indexOfStorage == -1) {
-            throw new InvalidContentException("The attribute 'storage' of the element '"
-                    + element.getLocalName() + "' is missing.");
+            final String message =
+                "The attribute 'storage' of the element '"
+                    + element.getLocalName() + "' is missing.";
+            LOGGER.error(message);
+            throw new InvalidContentException(message);
         }
+
         final Attribute storage = element.getAttribute(indexOfStorage);
+
         return storage.getValue();
     }
 }
