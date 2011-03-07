@@ -63,9 +63,7 @@ public class ParameterImpl implements Parameter {
         try {
             this.datevalue = DatatypeFactory.newInstance().newXMLGregorianCalendar(gregorianCalendar);
         } catch (final DatatypeConfigurationException e) {
-            final String errorMessage = "Error on instantiating datatype factory."; // NON-NLS
-            LOG.error(errorMessage, e);
-            throw new IllegalStateException(errorMessage, e);
+            throw new IllegalStateException("Error on instantiating datatype factory.", e);
         }
     }
 

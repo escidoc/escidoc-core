@@ -66,7 +66,7 @@ public class EscidocAuthenticationProcessingFilterEntryPoint extends
         if (loginForm.startsWith("http://") || loginForm.startsWith("https://")) {
             return loginForm;
         }
-        final int serverPort = super.getPortResolver().getServerPort(request);
+        final int serverPort = getPortResolver().getServerPort(request);
         final String scheme = request.getScheme();
         final RedirectUrlBuilder urlBuilder = new RedirectUrlBuilder();
         urlBuilder.setScheme(scheme);
@@ -74,8 +74,8 @@ public class EscidocAuthenticationProcessingFilterEntryPoint extends
         urlBuilder.setPort(serverPort);
         urlBuilder.setContextPath(request.getContextPath());
         urlBuilder.setPathInfo(loginForm);
-        if (super.isForceHttps() && "http".equals(scheme)) {
-            final Integer httpsPort = super.getPortMapper()
+        if (isForceHttps() && "http".equals(scheme)) {
+            final Integer httpsPort = getPortMapper()
                     .lookupHttpsPort(serverPort);
             if (httpsPort != null) {
                 urlBuilder.setScheme("https");

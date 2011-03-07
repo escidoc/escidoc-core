@@ -259,7 +259,7 @@ public class OrganizationalUnitHandlerRetrieve
      */
     private List<List<String>> computePathes() throws SystemException {
 
-        super.initPathes();
+        initPathes();
         final List<List<String>> result = new ArrayList<List<String>>();
         final List<String> initialPath = new ArrayList<String>();
         initialPath.add(getOrganizationalUnit().getId());

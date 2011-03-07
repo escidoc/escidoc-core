@@ -28,8 +28,10 @@
  */
 package de.escidoc.core.common.axis;
 
+import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.axis.AxisEngine;
 import org.apache.axis.ConfigurationException;
 import org.apache.axis.Handler;
@@ -44,9 +46,9 @@ import org.apache.axis.utils.ClassUtils;
 import org.apache.axis.utils.Messages;
 import org.apache.axis.utils.XMLUtils;
 import org.w3c.dom.Document;
+import sun.util.LocaleServiceProviderPool;
 
 import javax.xml.namespace.QName;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -54,10 +56,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -104,7 +106,7 @@ public class FileProvider implements WSDDEngineConfiguration {
                 throw new RuntimeException(
                     "Default jndi url not found in properties! No value for key '"
                         + EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL
-                        + "'.");
+                        + "'.", e);
             }
         }
         check();
@@ -147,6 +149,7 @@ public class FileProvider implements WSDDEngineConfiguration {
             readOnly = !configFile.canWrite();
         }
         catch (SecurityException se) {
+            log.debug("Error on checking the configuration file.", se);
             readOnly = true;
         }
 
@@ -232,30 +235,17 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @return InputStream replaced InputStream
      */
     private InputStream replaceVariables(final InputStream in) {
-        final StringBuilder xml = new StringBuilder("");
+        String xmlString = null;
         try {
-            final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            String str;
-            while ((str = reader.readLine()) != null) {
-                xml.append(str);
-            }
-        }
-        catch (Exception e) {
+            xmlString = IOUtils.readStringFromStream(in);
+            xmlString = insertSystemProperties(xmlString);
+        } catch (IOException e) {
             log.error(e);
         }
         finally {
-            if (in != null) {
-                try {
-                    in.close();
-                }
-                catch (IOException e) {
-                    log.error(e);
-                }
-            }
+            IOUtils.closeStream(in);
         }
-        String xmlString = xml.toString();
-        xmlString = insertSystemProperties(xmlString);
-        return new ByteArrayInputStream(xmlString.getBytes());
+        return new ByteArrayInputStream(xmlString.getBytes(Charset.forName(XmlUtility.CHARACTER_ENCODING)));
     }
 
     /**
@@ -330,6 +320,7 @@ public class FileProvider implements WSDDEngineConfiguration {
                     setInputStream(new FileInputStream(configFile));
                 }
                 catch (Exception e) {
+                    log.debug("Error on creating input stream.", e);
                     if (searchClasspath) {
                         setInputStream(ClassUtils.getResourceAsStream(engine
                             .getClass(), configFile.getName(), true));
@@ -370,19 +361,18 @@ public class FileProvider implements WSDDEngineConfiguration {
     public void writeEngineConfig(final AxisEngine engine)
         throws ConfigurationException {
         if (!readOnly) {
+            PrintWriter writer = null;
             try {
                 final Document doc = Admin.listConfig(engine);
-                final Writer osWriter =
-                    new OutputStreamWriter(new FileOutputStream(configFile),
-                        XMLUtils.getEncoding());
-                final PrintWriter writer =
-                    new PrintWriter(new BufferedWriter(osWriter));
+                final Writer osWriter = new OutputStreamWriter(
+                        new FileOutputStream(configFile), XMLUtils.getEncoding());
+                writer = new PrintWriter(new BufferedWriter(osWriter));
                 XMLUtils.DocumentToWriter(doc, writer);
                 writer.println();
-                writer.close();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 throw new ConfigurationException(e);
+            } finally {
+                IOUtils.closeWriter(writer);
             }
         }
     }

@@ -30,6 +30,7 @@ package de.escidoc.core.common.util.service;
 
 import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
+import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -38,9 +39,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -194,12 +193,7 @@ public class HttpRequester {
     private String request(
         final String resource, final String method, final String body)
         throws Exception {
-        if (SSL) {
-            return requestSsl(resource, method, body);
-        }
-        else {
-            return requestNoSsl(resource, method, body);
-        }
+        return SSL ? requestSsl(resource, method, body) : requestNoSsl(resource, method, body);
     }
 
     /**
@@ -220,7 +214,7 @@ public class HttpRequester {
     private String requestSsl( // Ignore FindBugs
         final String resource, final String method, final String body)
         throws Exception {
-        final StringBuilder response = new StringBuilder();
+        final String response;
 
         // Open Connection to given resource
         final URL url = new URL(domain + resource);
@@ -253,9 +247,12 @@ public class HttpRequester {
             && body != null) {
             con.setDoOutput(true);
             final OutputStream out = con.getOutputStream();
-            out.write(body.getBytes(XmlUtility.CHARACTER_ENCODING));
-            out.flush();
-            out.close();
+            try {
+                out.write(body.getBytes(XmlUtility.CHARACTER_ENCODING));
+                out.flush();
+            } finally {
+                IOUtils.closeStream(out);
+            }
         }
 
         // Request
@@ -265,21 +262,11 @@ public class HttpRequester {
         // Read response
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));
-            String currentLine;
-            while ((currentLine = br.readLine()) != null) {
-                response.append(currentLine).append('\n');
-            }
+            response = IOUtils.readStringFromStream(is);
         } finally {
-            if(br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    // ignore this exception
-                }
-            }
+            IOUtils.closeStream(br);
         }
-        return response.toString();
+        return response;
     }
 
     /**
@@ -300,80 +287,64 @@ public class HttpRequester {
     private String requestNoSsl(
         final String resource, final String method, final String body)
         throws Exception {
-        HttpURLConnection con = null;
+        HttpURLConnection connection = null;
         InputStream is = null;
         OutputStream out = null;
-        final StringBuilder response = new StringBuilder();
+        final String response;
 
         try {
             // Open Connection to given resource
             final URL url = new URL(domain + resource);
-            con = (HttpURLConnection) url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
 
             // Set Basic-Authentication Header
             if (securityHandle != null && securityHandle.length() != 0) {
                 final String encoding =
                     UserHandleCookieUtil
                         .createEncodedUserHandle(securityHandle);
-                con.setRequestProperty("Authorization", "Basic " + encoding);
+                connection.setRequestProperty("Authorization", "Basic " + encoding);
                 // Set Cookie
-                con.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN
+                connection.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN
                     + '=' + securityHandle);
             }
             else if (getCookie() != null) {
-                con.setRequestProperty("Cookie", getCookie());
+                connection.setRequestProperty("Cookie", getCookie());
             }
 
             // Set request-method and timeout
-            con.setRequestMethod(method.toUpperCase());
-            con.setReadTimeout(timeout);
+            connection.setRequestMethod(method.toUpperCase());
+            connection.setReadTimeout(timeout);
 
             // If PUT or POST, write given body in Output-Stream
             if (("PUT".equalsIgnoreCase(method) || "POST".equalsIgnoreCase(method)) && body != null) {
-                con.setDoOutput(true);
-                out = con.getOutputStream();
-                out.write(body.getBytes(XmlUtility.CHARACTER_ENCODING));
-                out.flush();
-                out.close();
+                connection.setDoOutput(true);
+                out = connection.getOutputStream();
+                try {
+                    out.write(body.getBytes(XmlUtility.CHARACTER_ENCODING));
+                    out.flush();
+                } finally {
+                    IOUtils.closeStream(out);
+                }
             }
 
             // Request
-            is = con.getInputStream();
-            setCookie(con.getHeaderField("Set-cookie"));
+            is = connection.getInputStream();
+            setCookie(connection.getHeaderField("Set-cookie"));
 
             // Read response
             BufferedReader br = null;
             try {
-                br = new BufferedReader(new InputStreamReader(is, XmlUtility.CHARACTER_ENCODING));
-                String currentLine;
-                while ((currentLine = br.readLine()) != null) {
-                    response.append(currentLine).append('\n');
-                }
+                response = IOUtils.readStringFromStream(is);
             } finally {
-            if(br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    // ignore this exception
-                }
+                IOUtils.closeStream(br);
             }
-        }
-        }
-        finally {
+        } finally {
+            IOUtils.closeStream(out);;
+            IOUtils.closeStream(is);
             try {
-                out.close();
-            }
-            catch (Exception e) {
-            }
-            try {
-                is.close();
-            }
-            catch (Exception e) {
-            }
-            try {
-                con.disconnect();
-            }
-            catch (Exception e) {
+                connection.disconnect();
+            } catch (Exception e) {
+
             }
         }
         return response.toString();

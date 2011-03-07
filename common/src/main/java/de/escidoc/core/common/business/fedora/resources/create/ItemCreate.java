@@ -685,15 +685,8 @@ public class ItemCreate extends GenericResourceCreate {
             }
         }
         catch (Exception e) {
-            /*
-             * Try to create something like transaction by removing depending
-             * objects if parent object failed.
-             */
-
-            LOG.debug("Failure during create Fedora object.");
-
             rollbackCreate(componentIds);
-            throw new SystemException(e);
+            throw new SystemException("Failure during create Fedora object.", e);
         }
     }
 
@@ -869,8 +862,8 @@ public class ItemCreate extends GenericResourceCreate {
             try {
                 FedoraUtility.getInstance().deleteObject(componentId, false);
             } catch (Exception e2) {
-                LOG.error("Purging of Fedora Object (" + componentId
-                        + ") failed.");
+                LOG.debug("Purging of Fedora Object (" + componentId
+                        + ") failed.", e2);
             }
         }
     }
@@ -986,11 +979,8 @@ public class ItemCreate extends GenericResourceCreate {
             final int resultCode = response.getStatusLine().getStatusCode();
 
             if (resultCode != HttpServletResponse.SC_OK) {
-                final String errorMsg =
-                    "Bad request. [" + response.getStatusLine() + ", " + url
-                        + ']';
-                LOG.debug(errorMsg);
-                throw new FileNotFoundException(errorMsg);
+                throw new FileNotFoundException("Bad request. [" + response.getStatusLine() + ", " + url
+                        + ']');
             }
         }
         catch (final Exception e1) {

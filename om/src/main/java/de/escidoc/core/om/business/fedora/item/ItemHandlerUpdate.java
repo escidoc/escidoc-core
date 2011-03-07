@@ -240,14 +240,8 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             throw new EncodingSystemException(e.getMessage(), e);
         }
         final Map<String, ByteArrayOutputStream> mdRecords;
-        if (streams.get("md-records") == null) {
-            mdRecords = new HashMap<String, ByteArrayOutputStream>();
-        }
-        else {
-            mdRecords =
-                    (Map<String, ByteArrayOutputStream>) streams
-                            .get("md-records");
-        }
+        mdRecords = streams.get("md-records") == null ? new HashMap<String, ByteArrayOutputStream>() : (Map<String, ByteArrayOutputStream>) streams
+                .get("md-records");
 
         setComponentMetadataRecords(c, mdRecords, mdRecordsMetadataAttribures,
             nsUri);
@@ -487,14 +481,11 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             if (content.getControlGroup().equals(FoXmlProvider.CONTROL_GROUP_E)
                 || content.getControlGroup().equals(
                     FoXmlProvider.CONTROL_GROUP_R)) {
-                final String message =
-                    "A binary content of the component " + component.getId()
+                throw new InvalidContentException("A binary content of the component " + component.getId()
                         + " has to be referenced by a URL, "
                         + "because the attribute 'storage' of the section"
                         + " 'content' was set to 'external-url' or "
-                        + "'external-managed' while create.";
-                LOGGER.error(message);
-                throw new InvalidContentException(message);
+                        + "'external-managed' while create.");
             }
             final String url =
                 uploadBase64EncodedContent(

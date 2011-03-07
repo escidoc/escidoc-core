@@ -31,6 +31,7 @@ package de.escidoc.core.common.persistence;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import org.fcrepo.client.actions.Login;
 
 import java.io.IOException;
 

@@ -36,6 +36,7 @@ public class PurgeServiceImpl implements InitializingBean {
                 }
             }
             catch (final Exception e) {
+                LOG.debug("Error on setting user context.", e);
                 UserContext.setUserContext("");
                 UserContext.runAsInternalUser();
             }

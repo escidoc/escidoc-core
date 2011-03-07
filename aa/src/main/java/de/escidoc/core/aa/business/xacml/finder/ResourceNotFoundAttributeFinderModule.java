@@ -143,7 +143,6 @@ public class ResourceNotFoundAttributeFinderModule
                         resourceId, "expectedObjectType:" + expectedObjectType
                             + ", attributeIdValue:" + attributeIdValue
                             + ", resourceObjectType:" + resourceObjectType);
-                log.error(emsg);
                 throw new ResourceNotFoundException(emsg);
             }
         }

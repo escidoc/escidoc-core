@@ -104,7 +104,6 @@ public class AggregationPreprocessor {
         }
         if (aggregationDefinitionIn.getAggregationTables() == null
                 || aggregationDefinitionIn.getAggregationTables().isEmpty()) {
-                log.error("Aggregation-Tables is null");
                 throw new StatisticPreprocessingSystemException(
                     "Aggregation-Tables is null");
         }
@@ -116,7 +115,6 @@ public class AggregationPreprocessor {
                 : aggregationDefinitionIn.getAggregationTables()) {
             if (aggregationTable.getName() == null
                 || aggregationTable.getName().length() == 0) {
-                log.error("Aggregation-Table-Name is null");
                 throw new StatisticPreprocessingSystemException(
                     "Aggregation-Table-Name is null");
             }
@@ -152,7 +150,6 @@ public class AggregationPreprocessor {
         final HashMap fieldtypes = new HashMap();
         final HashMap dbtypes = new HashMap();
         if (fieldList == null || fieldList.isEmpty()) {
-            log.error("Field-List is null");
             throw new StatisticPreprocessingSystemException(
                 "Field-List is null");
         }
@@ -186,7 +183,6 @@ public class AggregationPreprocessor {
                     Constants.DATABASE_FIELD_TYPE_TEXT);
             }
             else {
-                log.error("Field is empty");
                 throw new StatisticPreprocessingSystemException(
                     "Field is empty");
             }
@@ -270,7 +266,6 @@ public class AggregationPreprocessor {
             || aggregationPreprocessorVo
                 .getAggregationDefinition()
                     .getAggregationTables().isEmpty()) {
-            log.error("Aggregation-Tables is null");
             throw new StatisticPreprocessingSystemException(
                 "Aggregation-Tables is null");
         }
@@ -954,7 +949,6 @@ public class AggregationPreprocessor {
                     }
                 }
             } catch (Exception e) {
-                log.error(e);
                 throw new SqlDatabaseSystemException(e);
             }
             databaseSelectVo.setRootWhereGroupVo(rootWhereGroupVo);

@@ -62,14 +62,8 @@ public class SmXmlUtility {
                 condition = true;
             }
             final String fromClause;
-            if (condition) {
-                fromClause =
-                    workSql.replaceFirst(
-                        "(?i).*?from(.*?)(where|order by|group by).*", "$1");
-            }
-            else {
-                fromClause = workSql.replaceFirst("(?i).*?from(.*)", "$1");
-            }
+            fromClause = condition ? workSql.replaceFirst(
+                    "(?i).*?from(.*?)(where|order by|group by).*", "$1") : workSql.replaceFirst("(?i).*?from(.*)", "$1");
             final String[] tables = fromClause.split(",");
             for (final String table : tables) {
                 if (table.matches(".*?_.*?_.*")) {

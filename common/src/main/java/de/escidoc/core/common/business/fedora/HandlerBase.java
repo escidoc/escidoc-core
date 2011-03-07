@@ -4,8 +4,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.xml.XmlUtility;
-import org.springframework.beans.factory.BeanInitializationException;
-import org.springframework.beans.factory.InitializingBean;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -24,7 +22,7 @@ import java.net.URL;
  * @author tte
  * @common
  */
-public class HandlerBase implements InitializingBean {
+public class HandlerBase {
 
     private FedoraUtility fedoraUtility = null;
 
@@ -134,36 +132,6 @@ public class HandlerBase implements InitializingBean {
 
         this.idProvider = idProvider;
     }
-
-
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @throws Exception
-     * @see org.springframework.beans.factory.InitializingBean
-     *      #afterPropertiesSet()
-     * @common
-     */
-    @Override
-    public void afterPropertiesSet() throws Exception {
-
-        if (this.fedoraUtility == null) {
-            throw new BeanInitializationException(
-                "Fedora utility has not been set");
-        }
-        // TSU is used just for Item and Container
-        // if (this.tripleStoreUtility == null) {
-        // throw new BeanInitializationException(
-        // "TripleStore utility has not been set");
-        // }
-        if (this.idProvider == null) {
-            throw new BeanInitializationException(
-                "Id provider has not been set");
-        }
-    }
-
-
 
     /**
      * @return Returns the utility.

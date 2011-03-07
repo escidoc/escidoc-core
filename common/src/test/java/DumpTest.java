@@ -17,10 +17,7 @@ public class DumpTest {
 
     @Test
     public void testHelloWorld() throws Exception {
-
-        Constants c = new Constants();
-
         assertEquals("Just a test to see if everything works", "deleted",
-            c.MIME_TYPE_DELETED);
+            Constants.MIME_TYPE_DELETED);
     }
 }

@@ -939,13 +939,8 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         final boolean targetIsSubject) throws TripleStoreSystemException {
 
         final List<String> result;
-        if (targetIsSubject) {
-            result =
-                    new ArrayList<String>(executeQueryId(pid, targetIsSubject,
-                            fullPropertyElementName));
-        } else {
-            result = getPropertiesElementsVector(pid, fullPropertyElementName);
-        }
+        result = targetIsSubject ? new ArrayList<String>(executeQueryId(pid, targetIsSubject,
+                fullPropertyElementName)) : getPropertiesElementsVector(pid, fullPropertyElementName);
         return result;
 
     }

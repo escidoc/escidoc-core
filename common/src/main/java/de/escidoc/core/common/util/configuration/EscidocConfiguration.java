@@ -31,6 +31,7 @@ package de.escidoc.core.common.util.configuration;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Properties;
 
@@ -253,10 +254,11 @@ public final class EscidocConfiguration {
             instance = new EscidocConfiguration();
         }
         catch (EscidocException e) {
-            final StringWriter w = new StringWriter();
-
+            final StringWriter stringWriter = new StringWriter();
+            final PrintWriter printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
             System.err.println("Problem while loading properties! Caused by:\n"
-                + w.toString());
+                + stringWriter.toString());
         }
     }
 
@@ -397,7 +399,7 @@ public final class EscidocConfiguration {
         catch (IOException e) {
             specific = new Properties();
             if (LOG.isDebugEnabled()) {
-                LOG.debug("Error on loading specific properties.");
+                LOG.debug("Error on loading specific properties.", e);
             }
         }
         if (LOG.isDebugEnabled()) {

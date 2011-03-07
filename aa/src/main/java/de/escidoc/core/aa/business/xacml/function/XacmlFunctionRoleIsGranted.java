@@ -159,14 +159,8 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
             }
             // Get the userOrGroupid from the policyId
             final String userOrGroupId;
-            if (parts.length > 2) {
-                userOrGroupId = parts[parts.length - 1];
-            }
-            else {
-                userOrGroupId =
-                    FinderModuleHelper.retrieveSingleSubjectAttribute(ctx,
-                        Constants.URI_SUBJECT_ID, true);
-            }
+            userOrGroupId = parts.length > 2 ? parts[parts.length - 1] : FinderModuleHelper.retrieveSingleSubjectAttribute(ctx,
+                    Constants.URI_SUBJECT_ID, true);
 
             // Get the resource id from the context
             final String resourceId = FinderModuleHelper.getResourceId(ctx);

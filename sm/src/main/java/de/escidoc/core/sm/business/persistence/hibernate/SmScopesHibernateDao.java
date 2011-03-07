@@ -240,12 +240,7 @@ public class SmScopesHibernateDao
         if ((scopeIds != null) && (!scopeIds.isEmpty())) {
             final DetachedCriteria detachedCriteria;
 
-            if ((criteria != null) && (criteria.length() > 0)) {
-                detachedCriteria = new ScopeFilter(criteria).toSql();
-            }
-            else {
-                detachedCriteria = DetachedCriteria.forClass(Scope.class, "s");
-            }
+            detachedCriteria = (criteria != null) && (criteria.length() > 0) ? new ScopeFilter(criteria).toSql() : DetachedCriteria.forClass(Scope.class, "s");
             detachedCriteria.add(Restrictions.in("id", scopeIds));
 
             final Collection<Scope> scopes =
@@ -302,7 +297,7 @@ public class SmScopesHibernateDao
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 
-        super.setSessionFactory(mySessionFactory);
+        setSessionFactory(mySessionFactory);
     }
     
 }

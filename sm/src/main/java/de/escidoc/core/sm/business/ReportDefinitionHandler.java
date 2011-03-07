@@ -119,7 +119,6 @@ public class ReportDefinitionHandler
             LOGGER.debug("ReportDefinitionHandler does create");
         }
         if (xmlData == null || xmlData.length() == 0) {
-            LOGGER.error("xml may not be null");
             throw new MissingMethodParameterException("xml may not be null");
         }
         // parse
@@ -182,7 +181,6 @@ public class ReportDefinitionHandler
             LOGGER.debug("ReportDefinitionHandler does delete");
         }
         if (id == null) {
-            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
 
@@ -217,7 +215,6 @@ public class ReportDefinitionHandler
             LOGGER.debug("ReportDefinitionHandler does retrieve");
         }
         if (id == null) {
-            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         return renderer.render(dao.retrieve(id));
@@ -329,11 +326,9 @@ public class ReportDefinitionHandler
             LOGGER.debug("ReportDefinitionHandler does update");
         }
         if (id == null || id.length() == 0) {
-            LOGGER.error("id may not be null");
             throw new MissingMethodParameterException("id may not be null");
         }
         if (xmlData == null) {
-            LOGGER.error("xmlData may not be null");
             throw new MissingMethodParameterException("xmlData may not be null");
         }
 

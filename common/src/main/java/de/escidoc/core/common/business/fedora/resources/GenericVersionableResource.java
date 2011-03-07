@@ -167,15 +167,10 @@ public class GenericVersionableResource extends GenericResourcePid {
         }
         catch (WebserverSystemException e) {
             if (TripleStoreUtility.getInstance().exists(id)) {
-                final String msg = "Unexpected exception during RELS-EXT parsing.";
-                LOG.warn(msg + e);
-                throw new WebserverSystemException(e);
+                throw new WebserverSystemException("Unexpected exception during RELS-EXT parsing.", e);
             } else {
-                final String msg =
-                        "Resource with the provided objid '" + id
-                                + "' does not exist.";
-                LOG.debug(msg);
-                throw new ResourceNotFoundException(msg, e);
+                throw new ResourceNotFoundException("Resource with the provided objid '" + id
+                                + "' does not exist.", e);
             }
 
         }
@@ -213,10 +208,8 @@ public class GenericVersionableResource extends GenericResourcePid {
             if ((latestVersionNumber == null)
                 || (Integer.valueOf(this.versionId) > Integer
                     .valueOf(latestVersionNumber))) {
-                final String message =
-                    "The version " + versionNumber
-                        + " of the requested resource " + "does not exist.";
-                throw new ResourceNotFoundException(message);
+                throw new ResourceNotFoundException("The version " + versionNumber
+                        + " of the requested resource " + "does not exist.");
             }
             if (this.versionNumber.equals(latestVersionNumber)) {
                 this.versionNumber = null;
@@ -573,10 +566,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return true if the resource is latest version. False otherwise.
      */
     public boolean isLatestVersion() {
-        if (this.versionNumber == null || this.versionNumber.equals(getLatestVersionNumber())) {
-            return true;
-        }
-        return false;
+        return this.versionNumber == null || this.versionNumber.equals(getLatestVersionNumber());
     }
 
     /**
@@ -666,7 +656,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         final Map<String, String> versionData;
 
         try {
-            versionData = super.getResourceProperties();
+            versionData = getResourceProperties();
         }
         catch (TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
@@ -1254,12 +1244,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
-        if (propertiesNames != null) {
-            newPropertiesNames = propertiesNames;
-        }
-        else {
-            newPropertiesNames = new ArrayList<String>();
-        }
+        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         // latest version ------------------------------------------------------
         newPropertiesNames.add(TripleStoreUtility.PROP_LATEST_VERSION_DATE);
@@ -1290,12 +1275,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         final Map<String, String> propertiesNamesMap) {
 
         final Map<String, String> newPropertiesNamesMap;
-        if (propertiesNamesMap != null) {
-            newPropertiesNamesMap = propertiesNamesMap;
-        }
-        else {
-            newPropertiesNamesMap = new HashMap<String, String>();
-        }
+        newPropertiesNamesMap = propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
 
         newPropertiesNamesMap.put(TripleStoreUtility.PROP_LATEST_VERSION_DATE,
             PropertyMapKeys.LATEST_VERSION_DATE);
@@ -1374,14 +1354,8 @@ public class GenericVersionableResource extends GenericResourcePid {
                                     .equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS)) {
                                 currentVersionKey =
                                         PropertyMapKeys.CURRENT_VERSION_STATUS;
-                            } else if (targetKey
-                                    .equals(PropertyMapKeys.LATEST_VERSION_DATE)) {
-                                currentVersionKey =
-                                        PropertyMapKeys.CURRENT_VERSION_VERSION_DATE;
-                            } else {
-                                currentVersionKey =
-                                        targetKey.replace("LATEST_", "CURRENT_");
-                            }
+                            } else currentVersionKey = targetKey
+                                    .equals(PropertyMapKeys.LATEST_VERSION_DATE) ? PropertyMapKeys.CURRENT_VERSION_VERSION_DATE : targetKey.replace("LATEST_", "CURRENT_");
                             properties.put(currentVersionKey, value);
                         }
                     } else {
@@ -1444,15 +1418,9 @@ public class GenericVersionableResource extends GenericResourcePid {
                 // The RELS-EXT in the Fedora repository is newer than the
                 // version specified by versionDate. The difference between both
                 // versions are timestamps (version/date, release/date).
-                if (isLatestVersion()) {
-                    ds =
-                            new Datastream(name, getId(), null, mimeType, location,
-                                    controlGroupValue);
-                } else {
-                    ds =
-                            new Datastream(name, getId(), getVersionDate(),
-                                    mimeType, location, controlGroupValue);
-                }
+                ds = isLatestVersion() ? new Datastream(name, getId(), null, mimeType, location,
+                        controlGroupValue) : new Datastream(name, getId(), getVersionDate(),
+                        mimeType, location, controlGroupValue);
 
                 ds.setAlternateIDs(new ArrayList<String>(altIDs));
                 ds.setLabel(label);

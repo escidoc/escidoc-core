@@ -144,25 +144,15 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                 }
             }
             else if (curPath.equals(componentPath + "/md-records")) {
-                if (this.metadataAttributes.containsKey(componentId)) {
-                    this.componentMdRecords =
-                        this.metadataAttributes.get(componentId);
-                }
-                else {
-                    this.componentMdRecords =
-                        new HashMap<String, Map<String, String>>();
-                }
+                this.componentMdRecords = this.metadataAttributes.containsKey(componentId) ? this.metadataAttributes.get(componentId) : new HashMap<String, Map<String, String>>();
             }
             else if (curPath.equals(componentPath + "/md-records/md-record")) {
 
                 try {
                     name = element.getAttribute(null, "name").getValue();
                     if (name.length() == 0) {
-                        LOG.error("the value of"
-                            + " \"name\" atribute of the element " + theName
-                            + " is missing");
                         throw new MissingAttributeValueException(
-                            "the value of the"
+                            "The value of the"
                                 + " \"name\" atribute of the element "
                                 + theName + " is missing");
 

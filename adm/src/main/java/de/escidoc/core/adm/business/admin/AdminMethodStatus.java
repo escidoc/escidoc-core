@@ -93,6 +93,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         return result;
     }
 
+    @Override
     public boolean isEmpty() {
         return treeMap.isEmpty();
     }
@@ -105,22 +106,27 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         return treeMap.hashCode();
     }
 
+    @Override
     public void clear() {
         treeMap.clear();
     }
 
+    @Override
     public boolean containsKey(final Object key) {
         return treeMap.containsKey(key);
     }
 
+    @Override
     public boolean containsValue(final Object value) {
         return treeMap.containsValue(value);
     }
 
+    @Override
     public Set<Map.Entry<ResourceType, Integer>> entrySet() {
         return treeMap.entrySet();
     }
 
+    @Override
     public Integer get(final Object key) {
         return treeMap.get(key);
     }
@@ -130,10 +136,12 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         return this.treeMap.put(key, value);
     }
 
+    @Override
     public Set<ResourceType> keySet() {
         return treeMap.keySet();
     }
 
+    @Override
     public Integer remove(final Object key) {
         return treeMap.remove(key);
     }
@@ -143,10 +151,12 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         this.treeMap.putAll(m);
     }
 
+    @Override
     public int size() {
         return treeMap.size();
     }
 
+    @Override
     public Collection<Integer> values() {
         return treeMap.values();
     }

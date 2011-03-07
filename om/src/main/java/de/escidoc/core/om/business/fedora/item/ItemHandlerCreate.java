@@ -416,11 +416,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
             cmh.getMetadataAttributes().get(componentId);
         final String escidocMdNsUri = cmh.getNamespacesMap().get(componentId);
         if (componentBinary.get("storage") == null) {
-            final String message =
-                "The attribute 'storage' of the element "
-                    + "'content' is missing.";
-            LOGGER.error(message);
-            throw new InvalidContentException(message);
+            throw new InvalidContentException("The attribute 'storage' of the element "
+                    + "'content' is missing.");
         }
         if ((componentBinary.get(DATASTREAM_CONTENT) != null)
             && (componentBinary
@@ -430,11 +427,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
                 .get("storage")
                 .equals(
                     de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED))) {
-            final String message =
-                "The component section 'content' with the attribute 'storage' set to 'external-url' "
-                    + "or 'external-managed' may not have an inline content.";
-            LOGGER.error(message);
-            throw new InvalidContentException(message);
+            throw new InvalidContentException("The component section 'content' with the attribute 'storage' set to 'external-url' "
+                    + "or 'external-managed' may not have an inline content.");
         }
         handleComponent(componentId, properties, componentBinary,
             componentStreams, componentMdAttributes, escidocMdNsUri);
@@ -471,7 +465,6 @@ public class ItemHandlerCreate extends ItemResourceListener {
             sp.parse(getItem().getRelsExt().getStream());
         }
         catch (final XMLStreamException e) {
-            LOGGER.error(e.getMessage());
             throw new XmlParserSystemException(e.getMessage(), e);
         }
         catch (final Exception e) {
@@ -485,7 +478,6 @@ public class ItemHandlerCreate extends ItemResourceListener {
             getItem().setRelsExt(relsExtNew);
         }
         catch (final StreamNotFoundException e1) {
-            LOGGER.error(e1.getMessage());
             throw new IntegritySystemException(e1);
         }
         getFedoraUtility().sync();
@@ -498,9 +490,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             component = renderComponent(componentId, false);
         }
         catch (final ResourceNotFoundException e) {
-            final String msg = "Just created component not found.";
-            LOGGER.error(msg, e);
-            throw new IntegritySystemException(msg, e);
+            throw new IntegritySystemException("Component not found.", e);
         }
         return component;
 
@@ -616,11 +606,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
             cmh.getMetadataAttributes().get(componentId);
         final String escidocMdNsUri = cmh.getNamespacesMap().get(componentId);
         if (componentBinary.get("storage") == null) {
-            final String message =
-                "The attribute 'storage' of the element "
-                    + "'content' is missing.";
-            LOGGER.debug(message);
-            throw new InvalidContentException(message);
+            throw new InvalidContentException("The attribute 'storage' of the element "
+                    + "'content' is missing.");
         }
         if ((componentBinary.get(DATASTREAM_CONTENT) != null)
             && (componentBinary
@@ -630,11 +617,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
                 .get("storage")
                 .equals(
                     de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED))) {
-            final String message =
-                "The component section 'content' with the attribute 'storage' set to 'external-url' "
-                    + "or 'external-managed' may not have an inline content.";
-            LOGGER.debug(message);
-            throw new InvalidContentException(message);
+            throw new InvalidContentException("The component section 'content' with the attribute 'storage' set to 'external-url' "
+                    + "or 'external-managed' may not have an inline content.");
         }
         handleComponent(componentId, properties, componentBinary,
             componentStreams, componentMdAttributes, escidocMdNsUri);

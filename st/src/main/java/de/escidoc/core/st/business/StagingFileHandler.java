@@ -82,7 +82,6 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
         StagingFile stagingFile = null;
         String token = null;
-        boolean bytesRead;
         try {
             if (binaryContent == null || binaryContent.getContent() == null) {
                 throw new MissingMethodParameterException(
@@ -92,15 +91,12 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
             token = stagingFile.getToken();
             stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil
                 .getUploadStagingArea(), token));
-            bytesRead = stagingFile.read(binaryContent.getContent());
+            stagingFile.read(binaryContent.getContent());
+        } catch (IOException e) {
+            throw new MissingMethodParameterException("Binary content must be provided.", e);
         }
-        catch (IOException e) {
-            bytesRead = false;
-        }
-  
-        if (!bytesRead || stagingFile == null) {
-                     throw new MissingMethodParameterException(
-                "Binary content must be provided.");
+        if (stagingFile == null) {
+            throw new MissingMethodParameterException("Missing staging file.");
         }
         stagingFile.setMimeType(binaryContent.getMimeType());
         dao.update(stagingFile);
@@ -174,7 +170,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         }
         catch (IOException e) {
             throw new StagingFileNotFoundException(
-                "Binary content of addressed staging file cannot be found.");
+                "Binary content of addressed staging file cannot be found.", e);
         }
 
         // finally, the staging file is set to expired to prevent further

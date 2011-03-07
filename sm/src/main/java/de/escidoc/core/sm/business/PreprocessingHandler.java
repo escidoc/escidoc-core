@@ -82,7 +82,6 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
         try {
             sp.parse(xmlData);
         } catch (Exception e) {
-            LOGGER.error(e);
             throw new SystemException(e);
         }
         

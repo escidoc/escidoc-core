@@ -38,6 +38,7 @@ import de.escidoc.core.common.servlet.invocation.BeanMethod;
 import de.escidoc.core.common.servlet.invocation.MapperInterface;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.servlet.invocation.XMLBase;
+import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -59,7 +60,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.UndeclaredThrowableException;
@@ -615,20 +615,7 @@ public class EscidocServlet extends HttpServlet {
                 }
                 final ServletOutputStream out = httpResponse.getOutputStream();
                 final InputStream content = binaryContent.getContent();
-                try {
-                    copyStreams(content, out);
-                    out.flush();
-                }
-                finally {
-                    if (content != null) {
-                        try {
-                            content.close();
-                        }
-                        catch (IOException e) {
-                            LOG.debug("Error on closing stream: " + e);
-                        }
-                    }
-                }
+                IOUtils.copyAndCloseInput(content, out);
             }
         }
         else {
@@ -637,26 +624,6 @@ public class EscidocServlet extends HttpServlet {
                 new WebserverSystemException(StringUtility
                     .format(
                         UNEXPECTED_INTERNAL_RESPONSE, httpMethod, "void")));
-        }
-    }
-
-    /**
-     * Copy InputStream to OutputStream.
-     * 
-     * @param ins
-     *            InputStream
-     * @param out
-     *            OutputStream
-     * @throws IOException
-     *             Thrown if copy failed.
-     */
-    private void copyStreams(final InputStream ins, final OutputStream out)
-        throws IOException {
-
-        final byte[] buffer = new byte[BUFFER_SIZE];
-        int length;
-        while ((length = ins.read(buffer)) != -1) {
-            out.write(buffer, 0, length);
         }
     }
 
@@ -720,8 +687,8 @@ public class EscidocServlet extends HttpServlet {
                 XmlUtility.DOCUMENT_START
                     + XmlUtility.getStylesheetDefinition()
                     + exception.toXmlString();
-        }
-        catch (final WebserverSystemException e) {
+        } catch (final WebserverSystemException e) {
+            LOG.error(e);
             body = XmlUtility.DOCUMENT_START + exception.toXmlString();
         }
         httpResponse.getWriter().println(body);
@@ -971,8 +938,7 @@ public class EscidocServlet extends HttpServlet {
                     decoded.substring(i + 1) };
             }
             catch (WebserverSystemException e) {
-                getLOG().error("cannot decode user handle", e);
-                throw new IOException(e);
+                throw new IOException("cannot decode user handle", e);
             }
         }
         else {

@@ -86,12 +86,7 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
         final String oId = o.getId();
 
         if (ownId == null) {
-            if (oId == null) {
-                return 0;
-            }
-            else {
-                return -1;
-            }
+            return oId == null ? 0 : -1;
         }
         else {
             if (oId == null) {
@@ -101,12 +96,7 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
                 if (ownId.length() == oId.length()) {
                     return ownId.compareTo(oId);
                 }
-                else if (ownId.length() > oId.length()) {
-                    return 1;
-                }
-                else {
-                    return -1;
-                }
+                else return ownId.length() > oId.length() ? 1 : -1;
             }
         }
     }

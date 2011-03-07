@@ -436,6 +436,7 @@ public class SecurityInterceptor implements Ordered {
                     doAuthorisation(className, methodName, arguments);
                 }
                 catch (TripleStoreSystemException ex) {
+                    LOG.debug(ex);
                     throw e;
                 }
 
@@ -466,7 +467,6 @@ public class SecurityInterceptor implements Ordered {
             throw e;
         }
         catch (Exception e) {
-            LOG.error(INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION, e);
             throw new WebserverSystemException(
                 INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION, e);
         }
@@ -524,7 +524,6 @@ public class SecurityInterceptor implements Ordered {
                 StringUtility.format(
                     "Error in method mapping, missing specified"
                         + " ResourceNotFoundException", methodMapping.getId());
-            LOG.error(errorMsg);
             throw new WebserverSystemException(errorMsg);
         }
         try {
@@ -547,9 +546,6 @@ public class SecurityInterceptor implements Ordered {
             errorMsg.append("]. Error message of ResourceNotFoundException");
             errorMsg.append(" was: ");
             errorMsg.append(e.getMessage());
-            LOG.error(errorMsg.toString(), e1);
-            LOG.error("Original exception was:");
-            LOG.error(e);
             throw new WebserverSystemException(errorMsg.toString(), e1);
         }
     }

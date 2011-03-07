@@ -29,6 +29,7 @@
 package de.escidoc.core.common.util.xml.factory;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 import java.io.ByteArrayOutputStream;
@@ -863,13 +864,7 @@ public class XmlTemplateProvider {
         // replaceAll does not like null if there is a match FRS 20070823
         if (matcher.find()) {
             // quoteReplacement does not like null
-            if (replacement == null) {
-                ret = matcher.replaceAll(""); // changed from null to "" FRS
-                // 20070823
-            }
-            else {
-                ret = matcher.replaceAll(Matcher.quoteReplacement(replacement));
-            }
+            ret = replacement == null ? matcher.replaceAll("") : matcher.replaceAll(Matcher.quoteReplacement(replacement));
         }
 
         return ret;
@@ -938,12 +933,7 @@ public class XmlTemplateProvider {
     private String getTemplatePath(final String path) {
         final String result;
 
-        if (path.startsWith("/")) {
-            result = XmlTemplateProvider.BASE_TEMPLATE_PATH + path;
-        }
-        else {
-            result = XmlTemplateProvider.BASE_TEMPLATE_PATH + '/' + path;
-        }
+        result = path.startsWith("/") ? XmlTemplateProvider.BASE_TEMPLATE_PATH + path : XmlTemplateProvider.BASE_TEMPLATE_PATH + '/' + path;
         return result;
     }
 
@@ -968,13 +958,7 @@ public class XmlTemplateProvider {
                 length = inputStream.read(buffer);
             }
         } finally {
-            if(inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    // Ignore this exception
-                }
-            }
+            IOUtils.closeStream(inputStream);
         }
         return result.toString(XmlUtility.CHARACTER_ENCODING);
     }

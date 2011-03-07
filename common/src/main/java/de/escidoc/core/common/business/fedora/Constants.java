@@ -68,4 +68,10 @@ public class Constants {
     public static final Pattern TABULATOR = Pattern.compile("\\S+");
 
     public static final String MIME_TYPE_DELETED = "deleted";
+
+    /**
+     * Private constructor to avoid instanziation.
+     */
+    private Constants() {
+    }
 }

@@ -133,16 +133,6 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
                         + " has invalid value.");
                 }
             }
-            // else if (curPath.equals(propertiesPath + "/file-name")) {
-            // // ensure there is a value and save
-            // if (data.length() > 0) {
-            // properties.put(TripleStoreUtility.PROP_FILENAME, data);
-            // }
-            // else {
-            // throw new InvalidContentException("Components.properties."
-            // + "file-name" + " has invalid value.");
-            // }
-            // }
             else if (curPath.equals(propertiesPath + "/mime-type")) {
                 // should be saved/deleted
                 expected.remove(TripleStoreUtility.PROP_MIME_TYPE);
@@ -153,22 +143,6 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
                 expected.remove(TripleStoreUtility.PROP_VALID_STATUS);
                 properties.put(TripleStoreUtility.PROP_VALID_STATUS, data);
             }
-            // else if (curPath.equals(propertiesPath + "/file-size")) {
-            // // ensure there is a value and save
-            // if (data.length() > 0) {
-            // properties.put(TripleStoreUtility.PROP_FILESIZE, data);
-            // }
-            // else {
-            // throw new InvalidContentException("Components.properties."
-            // + "file-size" + " has invalid value.");
-            // }
-            // }
-            // locator-url
-            // else if (curPath.equals(propertiesPath + "/locator-url")) {
-            // // should be saved/deleted
-            // expected.remove(TripleStoreUtility.PROP_LOCATOR_URL);
-            // properties.put(TripleStoreUtility.PROP_LOCATOR_URL, data);
-            // }
         }
         return data;
     }

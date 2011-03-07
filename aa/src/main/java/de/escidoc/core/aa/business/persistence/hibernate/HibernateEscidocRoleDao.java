@@ -46,6 +46,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
 import org.springframework.dao.DataAccessException;
+import sun.util.LocaleServiceProviderPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,8 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
         try {
             roleFilter = new RoleFilter(null);
         } catch (InvalidSearchQueryException e) {
-            //Dont do anything because null-query is given
+            logger.debug("Expected exception for null-query", e);
+            // Dont do anything because null-query is given.
         }
         criteriaMap = roleFilter.getCriteriaMap();
         propertiesNamesMap = roleFilter.getPropertyMap();
@@ -135,7 +137,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
     public void deleteRole(final EscidocRole role)
         throws SqlDatabaseSystemException {
 
-        super.delete(role);
+        delete(role);
     }
 
     /**
@@ -361,7 +363,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
     public void deleteScopeDef(final ScopeDef scopeDef)
         throws SqlDatabaseSystemException {
 
-        super.delete(scopeDef);
+        delete(scopeDef);
     }
 
 
@@ -377,7 +379,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 
-        super.setSessionFactory(mySessionFactory);
+        setSessionFactory(mySessionFactory);
     }
 
 }

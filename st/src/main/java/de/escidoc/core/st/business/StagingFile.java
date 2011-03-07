@@ -28,6 +28,8 @@
  */
 package de.escidoc.core.st.business;
 
+import de.escidoc.core.common.util.IOUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -160,7 +162,7 @@ public class StagingFile
             return new FileInputStream(getFile());
         }
         catch (FileNotFoundException e) {
-            throw new IOException(e.getMessage());
+            throw new IOException(e);
         }
     }
 
@@ -181,12 +183,10 @@ public class StagingFile
         InputStream inputStream = null;
         try {
             inputStream = getFileInputStream();
-            copy(inputStream, outputStream);
+            IOUtils.copyAndCloseInput(inputStream,  outputStream);
         }
         finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
+            IOUtils.closeStream(outputStream);
         }
     }
 
@@ -205,7 +205,7 @@ public class StagingFile
      *             If operation fails.
      * @st
      */
-    public boolean read(final InputStream inputStream) throws IOException {
+    public void read(final InputStream inputStream) throws IOException {
 
         if (inputStream == null) {
             throw new IOException();
@@ -213,42 +213,13 @@ public class StagingFile
         OutputStream outputStream = null;
         try {
             outputStream = new FileOutputStream(createFile());
-            return copy(inputStream, outputStream);
+            IOUtils.copyAndCloseInput(inputStream,  outputStream);
         }
         finally {
             if (outputStream != null) {
                 outputStream.close();
             }
         }
-    }
-
-    /**
-     * Copies data from given input stream to given output stream.
-     * 
-     * @param inputStream
-     *            The source of the copy opeation.
-     * @param outputStream
-     *            The destination of the copy operation.
-     * @return Returns <code>true</code> if bytes have been copied,
-     *         <code>false</code> else.
-     * @throws IOException
-     *             If copy fails.
-     * @st
-     */
-    private boolean copy(
-        final InputStream inputStream, final OutputStream outputStream)
-        throws IOException {
-
-        final byte[] buffer = new byte[BUFFER_SIZE];
-        boolean bytesCopied = false;
-        int length = inputStream.read(buffer);
-        while (length != -1) {
-            bytesCopied = true;
-            outputStream.write(buffer, 0, length);
-            length = inputStream.read(buffer);
-        }
-
-        return bytesCopied;
     }
 
     /**

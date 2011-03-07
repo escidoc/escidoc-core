@@ -428,8 +428,6 @@ public class ComponentCreate extends GenericResourceCreate
                 Utility.getInstance().upload(streamContent, fileName, mimeType);
         }
         catch (final FileSystemException e) {
-            LOG.error("Error while uploading of content to the staging area. "
-                + e.getMessage());
             throw new WebserverSystemException(
                 "Error while uploading of content to the staging area. ", e);
         }

@@ -211,13 +211,7 @@ public class SmReportDefinitionsHibernateDao
         if ((scopeIds != null) && (!scopeIds.isEmpty())) {
             final DetachedCriteria detachedCriteria;
 
-            if ((criteria != null) && (criteria.length() > 0)) {
-                detachedCriteria = new ReportDefinitionFilter(criteria).toSql();
-            }
-            else {
-                detachedCriteria =
-                    DetachedCriteria.forClass(ReportDefinition.class, "r");
-            }
+            detachedCriteria = (criteria != null) && (criteria.length() > 0) ? new ReportDefinitionFilter(criteria).toSql() : DetachedCriteria.forClass(ReportDefinition.class, "r");
             detachedCriteria.add(Restrictions.in("scope.id", scopeIds));
             return getHibernateTemplate().findByCriteria(detachedCriteria, offset, maxResults);
 
@@ -236,7 +230,7 @@ public class SmReportDefinitionsHibernateDao
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 
-        super.setSessionFactory(mySessionFactory);
+        setSessionFactory(mySessionFactory);
     }
     
 }

@@ -35,6 +35,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.servlet.invocation.BeanMethod;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
+import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
@@ -50,6 +51,7 @@ import net.sf.ehcache.config.CacheConfiguration;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 
+import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -78,7 +80,7 @@ public final class IndexerResourceCache {
     private static final int BUFFER_SIZE = 0xFFFF;
 
     /** Holds identifier and object. */
-    private Cache resources;
+    private final Cache resources;
 
     private MethodMapper methodMapper;
 
@@ -112,11 +114,12 @@ public final class IndexerResourceCache {
                         EscidocConfiguration.ESCIDOC_CORE_INDEXER_CACHE_SIZE));
             }
             catch (Exception e) {
+                LOG.debug("Error on parsing indexer resource cache size.", e);
                 indexerCacheSize = INDEXER_CACHE_SIZE_FALL_BACK;
             }
         }
         catch (Exception e) {
-            LOG.debug(e);
+            LOG.debug("Error on initializing indexer resource cache.", e);
         }
         final CacheManager cacheManager = CacheManager.create();
         resources = new Cache(new CacheConfiguration("resourcesCache", indexerCacheSize));
@@ -185,11 +188,7 @@ public final class IndexerResourceCache {
     private Object getResourceWithInternalKey(final String identifier)
         throws SystemException {
         Element element = resources.get(identifier);
-        if(element != null) {
-            return element.getObjectValue();
-        } else {
-            return null;
-        }
+        return element != null ? element.getObjectValue() : null;
     }
 
     /**
@@ -275,19 +274,10 @@ public final class IndexerResourceCache {
                         escidocBinaryContent.getMimeType(), out.toByteArray(), null);
                 setResource(identifier, stream);
                 } catch (Exception e) {
-                    LOG.error(e.toString());
                     throw new SystemException(e);
                 } finally {
-                    if (in != null) {
-                        try {
-                            in.close();
-                        } catch (Exception e) {}
-                    }
-                    if (out != null) {
-                        try {
-                                out.close();
-                        } catch (Exception e) {}
-                    }
+                    IOUtils.closeStream(in);
+                    IOUtils.closeStream(out);
                 }
             }
             else if (content != null) {
@@ -296,7 +286,6 @@ public final class IndexerResourceCache {
             }
         }
         catch (InvocationTargetException e) {
-            LOG.error(e);
             if (!"AuthorizationException".equals(e.getTargetException().getClass().getSimpleName())
                 && !"InvalidStatusException".equals(e.getTargetException().getClass().getSimpleName())) {
                 throw new SystemException(e);
@@ -306,7 +295,6 @@ public final class IndexerResourceCache {
             LOG.error(e);
         }
         catch (Exception e) {
-            LOG.error(e);
             throw new SystemException(e);
         }
     }
@@ -331,12 +319,7 @@ public final class IndexerResourceCache {
 
                 // TODO testen ob header mitgeschickt wird
                 final Header ctype = httpResponse.getFirstHeader("Content-Type");
-                if (ctype != null) {
-                    mimeType = ctype.getValue();
-                }
-                else {
-                    mimeType = FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
-                }
+                mimeType = ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
 
                 out = new ByteArrayOutputStream();
                 in = httpResponse.getEntity().getContent();
@@ -353,17 +336,8 @@ public final class IndexerResourceCache {
             LOG.error(e);
         }
         finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (Exception e) {}
-            }
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (Exception e) {}
-            }
-           
+            IOUtils.closeStream(in);
+            IOUtils.closeStream(out);
         }
     }
 
