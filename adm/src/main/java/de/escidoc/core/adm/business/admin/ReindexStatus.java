@@ -120,15 +120,17 @@ public final class ReindexStatus extends AdminMethodStatus {
         final StringBuilder result = new StringBuilder();
 
         if (getCompletionDate() != null) {
-            result.append("<message>reindexing finished at ").append(getCompletionDate()).append("</message>\n");
+            result
+                .append("<message>reindexing finished at ")
+                .append(getCompletionDate()).append("</message>\n");
         }
         else {
             result.append("<message>reindexing currently running</message>\n");
-            for (final Entry e : entrySet()) {
+            for (final Entry<ResourceType, Integer> e : entrySet()) {
                 result.append("<message>\n");
                 result.append(e.getValue());
                 result.append(' ');
-                result.append(e.getLabel());
+                result.append(e.getKey().getLabel());
                 result.append("(s) still to be reindexed\n");
                 result.append("</message>\n");
             }
