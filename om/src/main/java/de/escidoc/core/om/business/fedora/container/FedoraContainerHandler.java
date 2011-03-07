@@ -624,23 +624,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                         de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
             }
             catch (InvocationTargetException e) {
-                // unpack Exception from reflection API
-                try {
-                    throw e.getCause();
-                }
-                catch (AuthorizationException ee) {
-                    throw new AuthorizationException("Can not delete all member entries for container "
-                            + getContainer().getId()
-                            + ". Container can not be deleted.", ee); // Ignore
-                                                               // FindBugs
-                }
-                catch (Throwable ee) { // Ignore FindBugs
-                    if (ee instanceof Error) {
-                        throw (Error) ee;
-                    }
+                final Throwable cause = e.getCause();
+                if(cause instanceof Error) {
+                    throw (Error)cause;
+                } else {
                     throw new SystemException("An error occured removing member entries for container "
-                            + getItem().getId()
-                            + ". Container can not be deleted.", ee); // Ignore Findbugs
+                        + getItem().getId() + ". Container can not be deleted.", cause);
                 }
             }
             catch (Exception e) {

@@ -157,11 +157,7 @@ public class FedoraSemanticStoreHandler
                     }
 
                     result = sw.toString();
-                }
-                catch (FactoryConfigurationError e) {
-                    throw new WebserverSystemException(e);
-                }
-                catch (XMLStreamException e) {
+                } catch (XMLStreamException e) {
                     throw new WebserverSystemException(e);
                 }
             }

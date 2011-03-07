@@ -29,6 +29,7 @@
 package de.escidoc.core.sm.business.stax.handler;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -42,6 +43,8 @@ import org.joda.time.DateTime;
  * @sm
  */
 public class ReportParametersStaxHandler extends DefaultHandler {
+
+    private static final AppLogger LOG = new AppLogger(ReportParametersStaxHandler.class.getName());
     
     private final ReportParametersVo reportParametersVo = new ReportParametersVo();
     
@@ -62,7 +65,9 @@ public class ReportParametersStaxHandler extends DefaultHandler {
             try {
                 reportParametersVo.setReportDefinitionId(
                         XmlUtility.getIdFromStartElement(element));
-            } catch (MissingAttributeValueException e) {}
+            } catch (MissingAttributeValueException e) {
+                LOG.debug("Missing attribute value.", e);
+            }
         }
         else if ("parameter".equals(element.getLocalName())) {
             parameterVo = new ParameterVo();

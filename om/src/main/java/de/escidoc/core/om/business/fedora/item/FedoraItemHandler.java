@@ -133,7 +133,6 @@ import de.escidoc.core.om.business.stax.handler.item.ComponentUpdateHandler;
 import de.escidoc.core.om.business.stax.handler.item.ContentStreamHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemHandler;
 import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
-import sun.util.LocaleServiceProviderPool;
 
 /**
  * The retrieve, update, create and delete methods implement the

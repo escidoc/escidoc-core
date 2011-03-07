@@ -56,8 +56,7 @@ public class Resource extends XMLBase {
 
     public static final String INTERFACE_SOAP = "SOAP";
 
-    private static final AppLogger LOG =
-        new AppLogger(Resource.class.getName());
+    private static final AppLogger LOG = new AppLogger(Resource.class.getName());
 
     private static final boolean VISIBILTY_DEFAULT = true;
 
@@ -1001,7 +1000,7 @@ public class Resource extends XMLBase {
 
         }
         catch (Exception e) {
-            e.printStackTrace();
+            LOG.debug("Error on configured class for the bean '" + springBeanName + "'.");
         }
 
         return result;

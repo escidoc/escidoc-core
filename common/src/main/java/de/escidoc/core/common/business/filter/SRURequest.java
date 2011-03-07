@@ -60,19 +60,16 @@ import java.util.Map;
  */
 public class SRURequest {
     // map from resource type to the corresponding admin index
-    private static final Map<ResourceType, String> ADMIN_INDEXES =
-        new HashMap<ResourceType, String>() {
-            private static final long serialVersionUID = -8847071005592073142L;
+    private static final Map<ResourceType, String> ADMIN_INDEXES = new HashMap<ResourceType, String>();
 
-            {
-                put(ResourceType.CONTAINER, "item_container_admin");
-                put(ResourceType.CONTENT_MODEL, "content_model_admin");
-                put(ResourceType.CONTENT_RELATION, "content_relation_admin");
-                put(ResourceType.CONTEXT, "context_admin");
-                put(ResourceType.ITEM, "item_container_admin");
-                put(ResourceType.OU, "ou_admin");
-            }
-        };
+    static {
+        ADMIN_INDEXES.put(ResourceType.CONTAINER, "item_container_admin");
+        ADMIN_INDEXES.put(ResourceType.CONTENT_MODEL, "content_model_admin");
+        ADMIN_INDEXES.put(ResourceType.CONTENT_RELATION, "content_relation_admin");
+        ADMIN_INDEXES.put(ResourceType.CONTEXT, "context_admin");
+        ADMIN_INDEXES.put(ResourceType.ITEM, "item_container_admin");
+        ADMIN_INDEXES.put(ResourceType.OU, "ou_admin");
+    }
 
     private ConnectionUtility connectionUtility = null;
 

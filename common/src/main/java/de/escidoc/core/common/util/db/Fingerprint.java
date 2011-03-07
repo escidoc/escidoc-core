@@ -62,17 +62,14 @@ public class Fingerprint implements Comparable<Object> {
     // taken from method compareTo in order to make it static final
     private static final String JAVA_VERSION_PATTERN = "^<java version=\\S+";
     
-    private static final Map<String, String> IGNORED_SCHEMAS =
-        new HashMap<String, String>() {
-            private static final long serialVersionUID = 6182156177577971112L;
+    private static final Map<String, String> IGNORED_SCHEMAS = new HashMap<String, String>();
 
-            {
-                put("information_schema", "");
-                put("pg_catalog", "");
-                put("pg_toast_temp_1", "");
-                put("public", "");
-            }
-        };
+    static {
+        IGNORED_SCHEMAS.put("information_schema", "");
+        IGNORED_SCHEMAS.put("pg_catalog", "");
+        IGNORED_SCHEMAS.put("pg_toast_temp_1", "");
+        IGNORED_SCHEMAS.put("public", "");
+    }
 
     private Schema[] schemas = null;
 

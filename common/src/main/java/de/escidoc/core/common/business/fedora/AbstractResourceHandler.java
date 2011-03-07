@@ -198,151 +198,64 @@ public abstract class AbstractResourceHandler extends HandlerBase {
     }
 
     public String create(String xmlData) throws XmlSchemaValidationException,
-        InvalidXmlException, SystemException {
+            InvalidXmlException, SystemException {
 
         final String createdXml;
+        final StaxParser sp = new StaxParser();
+        final String id = getIdProvider().getNextPid();
+        // handler to set id
+        xmlData = xmlData.replaceAll("objid=\"\"", "objid=\"" + id + '\"');
+        xmlData = xmlData.replaceAll("xlink:href=\"\"", "xlink:href=\"" + getFirstPathPart()
+                + getRootElement() + '/' + id + '\"');
+        // handler to extract properties ?
 
-        try {
-            final StaxParser sp = new StaxParser();
-
-            final String id = getIdProvider().getNextPid();
-            // handler to set id
-            xmlData = xmlData.replaceAll("objid=\"\"", "objid=\"" + id + '\"');
-            xmlData =
-                xmlData.replaceAll("xlink:href=\"\"", "xlink:href=\""
-                    + getFirstPathPart() + getRootElement() + '/' + id + '\"');
-            // handler to extract properties ?
-
-            // handler to extract datastreams from xml
-            final HashMap<String, String> extractPathes =
+        // handler to extract datastreams from xml
+        final HashMap<String, String> extractPathes =
                 new HashMap<String, String>();
-            extractPathes.put(getRootElementPath(), null);
-            final MultipleExtractor me = new MultipleExtractor(extractPathes, sp);
-            sp.addHandler(me);
-
-            try {
-                sp.parse(xmlData);
-            }
-            catch (ContentModelNotFoundException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (ContextNotFoundException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (MissingContentException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-
-            catch (LockingException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (ReadonlyElementViolationException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (MissingAttributeValueException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (MissingElementValueException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (ReadonlyAttributeViolationException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (TripleStoreSystemException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (InvalidContentException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (InvalidStatusException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (ContentRelationNotFoundException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (ReferencedResourceNotFoundException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (RelationPredicateNotFoundException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (OptimisticLockingException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (AlreadyExistsException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (OrganizationalUnitNotFoundException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (PidAlreadyAssignedException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            catch (MissingMdRecordException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-
-            catch (TmeException e) {
-                XmlUtility.handleUnexpectedStaxParserException("", e);
-            }
-            final Map streams = me.getOutputStreams();
-
-            final String label = getRootElement();
-
-            // create FOXML for ingest
-            String foXml =
-                "<foxml:digitalObject VERSION=\"1.1\" PID=\""
-                    + id
-                    + "\" "
-                    + "fedoraxsi:schemaLocation=\"info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd\" "
-                    + "xmlns:audit=\"info:fedora/fedora-system:def/audit#\" xmlns:fedoraxsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:foxml=\"info:fedora/fedora-system:def/foxml#\"> "
-                    + "<foxml:objectProperties>"
-                    + "<foxml:property NAME=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\" VALUE=\"FedoraObject\"/>"
-                    + "<foxml:property NAME=\"info:fedora/fedora-system:def/model#state\" VALUE=\"Active\"/>"
-                    + "<foxml:property NAME=\"info:fedora/fedora-system:def/model#label\" VALUE=\""
-                    + label + "\"/>" + "</foxml:objectProperties>";
-
-            foXml +=
-                "<foxml:datastream CONTROL_GROUP=\"X\" ID=\"datastream\" STATE=\"A\" VERSIONABLE=\"true\">"
-                    + "<foxml:datastreamVersion ALT_IDS=\"\" ID=\"datastream.0\" LABEL=\"datastream\" MIMETYPE=\"text/xml\">"
-                    + "<foxml:xmlContent>";
-
-            final ByteArrayOutputStream datastreamXml =
-                (ByteArrayOutputStream) streams.get(getRootElement());
-            foXml += datastreamXml.toString();
-
-            foXml +=
-                "</foxml:xmlContent></foxml:datastreamVersion></foxml:datastream>";
-
-            foXml += "</foxml:digitalObject>";
-
-            getFedoraUtility().storeObjectInFedora(foXml, true);
-
-            try {
-                createdXml = retrieve(id);
-            }
-            catch (ResourceNotFoundException e) {
-                throw new IntegritySystemException(e);
-            }
+        extractPathes.put(getRootElementPath(), null);
+        final MultipleExtractor me = new MultipleExtractor(extractPathes, sp);
+        sp.addHandler(me);
+        try {
+            sp.parse(xmlData);
+        } catch (Exception e) {
+            XmlUtility.handleUnexpectedStaxParserException("Unexpected exception during XML parsing.", e);
         }
-        catch (XMLStreamException xse) {
-            throw new SystemException(xse);
+        final Map streams = me.getOutputStreams();
+        final String label = getRootElement();
+        // create FOXML for ingest
+        String foXml =
+                "<foxml:digitalObject VERSION=\"1.1\" PID=\"" + id + "\" "
+                        + "fedoraxsi:schemaLocation=\"info:fedora/fedora-system:def/foxml# http://www.fedora.info/definitions/1/0/foxml1-1.xsd\" "
+                        + "xmlns:audit=\"info:fedora/fedora-system:def/audit#\" xmlns:fedoraxsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:foxml=\"info:fedora/fedora-system:def/foxml#\"> "
+                        + "<foxml:objectProperties>"
+                        + "<foxml:property NAME=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\" VALUE=\"FedoraObject\"/>"
+                        + "<foxml:property NAME=\"info:fedora/fedora-system:def/model#state\" VALUE=\"Active\"/>"
+                        + "<foxml:property NAME=\"info:fedora/fedora-system:def/model#label\" VALUE=\""
+                        + label + "\"/>" + "</foxml:objectProperties>";
+        foXml += "<foxml:datastream CONTROL_GROUP=\"X\" ID=\"datastream\" STATE=\"A\" VERSIONABLE=\"true\">"
+                        + "<foxml:datastreamVersion ALT_IDS=\"\" ID=\"datastream.0\" LABEL=\"datastream\" MIMETYPE=\"text/xml\">"
+                        + "<foxml:xmlContent>";
+        final ByteArrayOutputStream datastreamXml = (ByteArrayOutputStream) streams.get(getRootElement());
+        foXml += datastreamXml.toString();
+        foXml += "</foxml:xmlContent></foxml:datastreamVersion></foxml:datastream>";
+        foXml += "</foxml:digitalObject>";
+        getFedoraUtility().storeObjectInFedora(foXml, true);
+        try {
+            createdXml = retrieve(id);
+        } catch (ResourceNotFoundException e) {
+            throw new IntegritySystemException(e);
         }
-
         return createdXml;
     }
 
     public void delete(final String id) throws LockingException,
         ResourceNotFoundException, SystemException {
         setResource(id);
-
         if (theResource.isLocked()) {
             throw new LockingException("Resource + " + theResource.getId()
                 + " is locked.");
         }
-
         getFedoraUtility().deleteObject(theResource.getId(), true);
-
     }
 
     // TODO should be defined in an utility

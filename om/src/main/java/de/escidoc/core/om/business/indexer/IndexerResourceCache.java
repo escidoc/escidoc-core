@@ -51,7 +51,6 @@ import net.sf.ehcache.config.CacheConfiguration;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 
-import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;

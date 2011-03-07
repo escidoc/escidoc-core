@@ -42,6 +42,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.XMLHashHandler;
@@ -57,7 +58,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.common.util.xml.transformer.PoolableTransformerFactory;
 import org.apache.commons.pool.impl.StackKeyedObjectPool;
 import org.codehaus.stax2.XMLOutputFactory2;
-import org.fcrepo.client.actions.Login;
 import org.joda.time.ReadableDateTime;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -104,6 +104,8 @@ import java.util.regex.Pattern;
  * @author TTE
  */
 public final class XmlUtility {
+
+    private static final AppLogger LOG = new AppLogger(XmlUtility.class.getName());
 
     /**
      * Pattern used to detect Object type is in resource type format, e.g.
@@ -1692,22 +1694,14 @@ public final class XmlUtility {
      * @return Returns the <code>ByteArrayOutputStream</code> for the provided
      *         string.
      */
-    public static ByteArrayOutputStream convertToByteArrayOutputStream(
-        final String str) {
-
+    public static ByteArrayOutputStream convertToByteArrayOutputStream(final String str) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         try {
             stream.write(str.getBytes(CHARACTER_ENCODING));
-        }
-        catch (final UnsupportedEncodingException e) {
-            // this should not happen
-            e.printStackTrace();
-            stream = null;
-        }
-        catch (final IOException e) {
-            // this should not happen
-            e.printStackTrace();
-            stream = null;
+        } catch (final UnsupportedEncodingException e) {
+            LOG.debug("Error on writing to stream.", e);
+        } catch (final IOException e) {
+            LOG.debug("Error on writing to stream.", e);
         }
         return stream;
     }
@@ -3202,18 +3196,14 @@ public final class XmlUtility {
                     .getBytes(CHARACTER_ENCODING))), new StreamResult(out));
 
             result = out.toString(CHARACTER_ENCODING).trim();
-        }
-        catch (final Exception e) {
+        } catch (final Exception e) {
             throw new WebserverSystemException(
                 "Mapping of Metadata to DC failed.", e);
-        }
-        finally {
+        } finally {
             try {
                 TRANSFORMER_POOL.returnObject(transformerKey, t);
-            }
-            catch (final Exception e) {
-                throw new WebserverSystemException(
-                    "Mapping of Metadata to DC failed.", e);
+            } catch (final Exception e) {
+                LOG.debug("Returning transformer to pool failed.", e);
             }
         }
 

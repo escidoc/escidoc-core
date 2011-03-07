@@ -37,6 +37,7 @@ import org.springframework.jmx.export.annotation.ManagedResource;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * StatisticPreprocessor. Preprocesses the raw statistic data into
@@ -87,15 +88,10 @@ public class SpringStatisticPreprocessorService {
             final Date date = new Date(time);
             preprocessor.execute(date);
         } catch (Exception e) {
-            errorMessageHandler.putErrorMessage(
-                    new HashMap<String, String>() { {
-                        final String message = "preprocessing of statistic-data failed";
-                        put("message", message); }
-
-                        private static final long serialVersionUID = 5304590831581021890L;
-                    }, e,
-                        de.escidoc.core.common.business.Constants.
-                        STATISTIC_PREPROCESSING_ERROR_LOGFILE);
+            final Map<String, String> parameters = new HashMap<String, String>();
+            parameters.put("message", "preprocessing of statistic-data failed");
+            errorMessageHandler.putErrorMessage(parameters, e,
+                        de.escidoc.core.common.business.Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
             throw e;
         }
     }
@@ -115,15 +111,10 @@ public class SpringStatisticPreprocessorService {
             final Date date = new Date(millies);
             preprocessor.execute(date);
         } catch (Exception e) {
-            errorMessageHandler.putErrorMessage(
-                    new HashMap<String, String>() { {
-                        final String message = "preprocessing of statistic-data failed";
-                        put("message", message); }
-
-                        private static final long serialVersionUID = -2340916328981929936L;
-                    }, e,
-                        de.escidoc.core.common.business.Constants.
-                        STATISTIC_PREPROCESSING_ERROR_LOGFILE);
+            final Map<String, String> parameters = new HashMap<String, String>();
+            parameters.put("message", "preprocessing of statistic-data failed");
+            errorMessageHandler.putErrorMessage(parameters, e,
+                        de.escidoc.core.common.business.Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
             throw e;
         }
     }

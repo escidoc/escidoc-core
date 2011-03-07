@@ -38,6 +38,7 @@ import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.string.StringUtility;
 
 import java.lang.reflect.Constructor;
@@ -71,6 +72,8 @@ import java.util.regex.Pattern;
 public class CheckProvidedAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
+    private static final AppLogger LOG = new AppLogger(CheckProvidedAttributeFinderModule.class.getName());
+
     private static final String PROVIDED_ATTRIBUTES_ID =
         AttributeIds.INTERNAL_ENVIRONMENT_PREFIX + "provided-attributes";
 
@@ -88,7 +91,7 @@ public class CheckProvidedAttributeFinderModule
             try {
                 PROVIDED_ATTRIBUTES_ID_URI = new URI(PROVIDED_ATTRIBUTES_ID);
             } catch (URISyntaxException e) {
-                e.printStackTrace();
+                LOG.debug("Error on initialising provided attributes ID.", e);
             }
     }
 

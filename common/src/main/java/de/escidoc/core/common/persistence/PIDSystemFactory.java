@@ -31,7 +31,7 @@ package de.escidoc.core.common.persistence;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import org.fcrepo.client.actions.Login;
+import de.escidoc.core.common.util.logger.AppLogger;
 
 import java.io.IOException;
 
@@ -43,14 +43,15 @@ import java.io.IOException;
  */
 public abstract class PIDSystemFactory {
 
+    private static final AppLogger LOG = new AppLogger(PIDSystemFactory.class.getName());
+
     private static PIDSystemFactory pidSystemFactory ;
 
     static {
         try {
             createNewInstanceFromConfig();
         } catch (PidSystemException e) {
-            System.err.println("Error on creating new instance of PIDSystemFactory.");
-            e.printStackTrace(System.err);
+            LOG.debug("Error on creating new instance of PIDSystemFactory.", e);
        }
     }
 

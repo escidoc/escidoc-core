@@ -56,6 +56,6 @@ public class UserAccount extends UserAccountBase {
     }
 
     public void touch() {
-        this.setLastModificationDate(new Date(System.currentTimeMillis()));
+        this.setLastModificationDate(new Date());
     }
 }

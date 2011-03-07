@@ -28,9 +28,9 @@
  */
 package de.escidoc.core.sm.business.stax.handler;
 
-import de.escidoc.core.aa.servlet.Login;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
+import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
@@ -48,6 +48,8 @@ import java.util.Map;
  * @sm
  */
 public class ReportDefinitionStaxHandler extends DefaultHandler {
+
+    private static final AppLogger LOG = new AppLogger(ReportDefinitionStaxHandler.class.getName());
 
     private ReportDefinition reportDefinition = new ReportDefinition();
     
@@ -98,7 +100,7 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
                     throw new IntegritySystemException(MSG_INCONSISTENT_IDS);
                 }
             } catch (MissingAttributeValueException e) {
-
+                LOG.debug("Missing attribute value.", e);
             }
         }
         return element;

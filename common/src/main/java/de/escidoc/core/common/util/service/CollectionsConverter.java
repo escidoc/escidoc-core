@@ -82,9 +82,10 @@ public final class CollectionsConverter {
             // generate a new object of type KeyValuePair, set the values
             // from the Map.Entry and put the object at the next free place
             // in the keyValuePair array
-            keyValuePair[count++] =
+            keyValuePair[count] =
                     new KeyValuePair((String) entry.getKey(), (String) entry
                             .getValue());
+            count++;
         }
 
         return keyValuePair;

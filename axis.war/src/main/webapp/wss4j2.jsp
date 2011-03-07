@@ -30,7 +30,7 @@
              port = (PingPort) service.getPing7(endpoint);
 
         StringHolder text =
-                new StringHolder("WSS4J - Scenario " + scenario + " @ [" + new java.util.Date(System.currentTimeMillis()) + "]");
+                new StringHolder("WSS4J - Scenario " + scenario + " @ [" + new java.util.Date() + "]");
 %>
 <strong>Request:</strong> <%= text.value %><p>
 

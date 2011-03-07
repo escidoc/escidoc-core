@@ -31,6 +31,7 @@ package de.escidoc.core.common.util.service;
 import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
 import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -57,6 +58,9 @@ import java.net.URL;
  * 
  */
 public class HttpRequester {
+
+    private static final AppLogger LOG = new AppLogger(HttpRequester.class.getName());
+
     private int timeout = 180000;
 
     private static final boolean SSL = false;
@@ -344,7 +348,7 @@ public class HttpRequester {
             try {
                 connection.disconnect();
             } catch (Exception e) {
-
+                LOG.debug("Error on disconnecting connection.", e);
             }
         }
         return response.toString();

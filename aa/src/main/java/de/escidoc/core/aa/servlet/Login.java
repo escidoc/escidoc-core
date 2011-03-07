@@ -399,7 +399,7 @@ public class Login extends HttpServlet {
                 userAccount.setActive(Boolean.TRUE);
                 userAccount.setUserAccountByCreatorId(userAccount);
                 userAccount.setUserAccountByModifiedById(userAccount);
-                final Date now = new Date(System.currentTimeMillis());
+                final Date now = new Date();
                 userAccount.setCreationDate(now);
                 userAccount.setLastModificationDate(now);
                 // FIXME: set "random" password (until password is removed)

@@ -978,7 +978,7 @@ public class UserAccountHandler
             throw new SystemException(msg, e);
         }
 
-        final Date creationDate = new Date(System.currentTimeMillis());
+        final Date creationDate = new Date();
         grant.setCreationDate(creationDate);
         grant.setUserAccountByCreatorId(UserAccountHandler
             .getAuthenticatedUser(dao));
@@ -1277,7 +1277,7 @@ public class UserAccountHandler
                 // set revoke-date, -user and -remark
                 final RoleGrant roleGrant = grantsHash.get(grantId);
                 roleGrant.setUserAccountByRevokerId(authenticateUser);
-                roleGrant.setRevocationDate(new Date(System.currentTimeMillis()));
+                roleGrant.setRevocationDate(new Date());
                 roleGrant.setRevocationRemark(tph.getRevokationRemark());
                 // update grant
                 dao.update(roleGrant);
@@ -2062,7 +2062,7 @@ public class UserAccountHandler
         throws SystemException {
 
         userAccount
-            .setLastModificationDate(new Date(System.currentTimeMillis()));
+            .setLastModificationDate(new Date());
         userAccount.setUserAccountByModifiedById(UserAccountHandler
             .getAuthenticatedUser(dao));
     }

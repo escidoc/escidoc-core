@@ -280,9 +280,6 @@ public class ConditionParser {
                 }
                 else if (function.operation
                     .equals(Values.FUNCTION_STRING_ONE_AND_ONLY)) {
-
-                    System.out.println("ONE_AND_ONLY: " + function.operand1);
-
                     result.append(function.operand1);
                 }
                 else {

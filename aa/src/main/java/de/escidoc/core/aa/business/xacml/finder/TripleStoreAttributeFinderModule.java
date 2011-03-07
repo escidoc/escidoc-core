@@ -412,14 +412,9 @@ public class TripleStoreAttributeFinderModule
             if (mapresult.isIncludeHierarchyBase()) {
                 cachedAttribute.add(resourceObjid);
             }
-            cachedAttribute =
-                    getHierarchicalCachedAttributes(new ArrayList<String>() {
-                        {
-                            add(resourceObjid);
-                        }
-
-                        private static final long serialVersionUID = 2641263789045163702L;
-                    }, cachedAttribute, mapresult);
+            final Collection<String> attributesList = new ArrayList<String>();
+            attributesList.add(resourceObjid);
+            cachedAttribute = getHierarchicalCachedAttributes(attributesList, cachedAttribute, mapresult);
         } else {
             cachedAttribute =
                     FinderModuleHelper.retrieveFromTripleStore(mapresult

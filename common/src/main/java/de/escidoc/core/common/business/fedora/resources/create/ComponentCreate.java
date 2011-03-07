@@ -62,8 +62,7 @@ import java.util.concurrent.Callable;
 public class ComponentCreate extends GenericResourceCreate
     implements Callable<String> {
 
-    private static final AppLogger LOG =
-        new AppLogger(ComponentCreate.class.getName());
+    private static final AppLogger LOG = new AppLogger(ComponentCreate.class.getName());
 
     private List<MdRecordCreate> mdRecords = null;
 
@@ -389,12 +388,8 @@ public class ComponentCreate extends GenericResourceCreate
                         .get(
                             EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM,
                             "DISABLED"));
-        }
-        catch (IOException e) {
-            // FIXME IOException will occur earlier if no configuration can be
-            // found, if the retrieved value is not available the default value
-            // will be set
-            e.printStackTrace();
+        } catch (IOException e) {
+            LOG.debug("Error: No configuration can be found.", e);
         }
         values.put(XmlTemplateProvider.REF, this.content
             .getDataLocation().toString());

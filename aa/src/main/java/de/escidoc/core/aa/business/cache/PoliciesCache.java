@@ -32,7 +32,6 @@ import com.sun.xacml.cond.EvaluationResult;
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
-import de.escidoc.core.aa.servlet.Login;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import net.sf.ehcache.Cache;

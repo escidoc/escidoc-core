@@ -39,22 +39,17 @@ public class TestNextHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element)
         throws XMLStreamException {
-        System.out.println("characters by next handler.");
         return data;
     }
 
     @Override
     public EndElement endElement(final EndElement element) throws XMLStreamException {
-        System.out.println("endElement[" + element.getLocalName()
-            + "] by next handler.");
         return element;
     }
 
     @Override
     public StartElement startElement(final StartElement element)
         throws XMLStreamException {
-        System.out.println("startElement[" + element.getLocalName()
-            + "] by next handler.");
         return element;
     }
 

@@ -35,6 +35,7 @@ import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * IndexOptimizerService. sends index.optimize-message to gsearch.
@@ -69,16 +70,11 @@ public class IndexOptimizerService {
             log.info("optimizing search-indices");
             gsearchHandler.requestOptimize(null);
         } catch (Exception e) {
-            errorMessageHandler.putErrorMessage(
-                    new HashMap<String, String>() { {
-                        final String message = "optimizing search-indices failed";
-                        put("message", message); }
-
-                        private static final long serialVersionUID = -6112223886789881292L;
-                    }, e,
-                        de.escidoc.core.common.business.Constants.
-                        INDEXING_ERROR_LOGFILE);
-            log.error(e);
+            final Map<String, String> parameters = new HashMap<String, String>();
+            parameters.put("message", "optimizing search-indices failed");
+            errorMessageHandler.putErrorMessage(parameters, e,
+                    de.escidoc.core.common.business.Constants.INDEXING_ERROR_LOGFILE);
+            log.error("Optimizing search-indices failed.", e);
         }
     }
 

@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.common.util.service;
 
+import de.escidoc.core.common.util.logger.AppLogger;
 import org.apache.axis.ConfigurationException;
 import org.apache.axis.EngineConfiguration;
 import org.apache.axis.client.Call;
@@ -55,6 +56,8 @@ public class WebServiceLocator extends Service {
      * The serial version uid.
      */
     private static final long serialVersionUID = 7521229680302906384L;
+
+    private static final AppLogger LOG = new AppLogger(WebServiceLocator.class.getName());
 
     private String serviceUrl = "http://localhost:8080/axis/services/";
 
@@ -166,9 +169,8 @@ public class WebServiceLocator extends Service {
              * msg._setProperty(Stub.USERNAME_PROPERTY, "fedoraAdmin");
              * msg._setProperty(Stub.PASSWORD_PROPERTY, "fedoraAdmin");
              */
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            LOG.debug("Error on getting service.", e);
         }
         return stub;
     }

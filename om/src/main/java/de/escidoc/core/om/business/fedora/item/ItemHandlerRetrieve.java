@@ -913,9 +913,8 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             List<String> ids = new ArrayList<String>();
             try {
                 ids = getTripleStoreUtility().retrieve(query.toString());
-            }
-            catch (TripleStoreSystemException e) {
-
+            } catch (TripleStoreSystemException e) {
+                LOGGER.debug("Error on retrieving data from triple store.", e);
             }
             final Iterator<String> idIter = ids.iterator();
             final Collection<Map<String, String>> entries =

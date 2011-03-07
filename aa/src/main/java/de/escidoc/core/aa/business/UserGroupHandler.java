@@ -517,7 +517,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             throw new SystemException(msg, e);
         }
 
-        final Date creationDate = new Date(System.currentTimeMillis());
+        final Date creationDate = new Date();
 
         grant.setCreationDate(creationDate);
         grant.setUserAccountByCreatorId(UserAccountHandler
@@ -1081,13 +1081,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         final Map<String, Object> criteria = new HashMap<String, Object>();
         criteria.put(Constants.FILTER_PATH_TYPE, "internal");
         criteria.put(Constants.FILTER_PATH_NAME, XmlUtility.NAME_USER_GROUP);
-        criteria.put(Constants.FILTER_PATH_VALUE, new HashSet<String>() {
-            private static final long serialVersionUID = -2207807626629819089L;
-
-            {
-                add(userGroupId);
-            }
-        });
+        final Set<String> filterPathValue = new HashSet<String>();
+        filterPathValue.add(userGroupId);
+        criteria.put(Constants.FILTER_PATH_VALUE, filterPathValue);
         boolean proceed = true;
         while (proceed) {
             final Collection<String> superMembers = new HashSet<String>();
@@ -1162,13 +1158,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
 
         // Get groups the user is integrated via his userId
-        userGroups.addAll(retrieveGroupsByUserIds(new HashSet<String>() {
-            private static final long serialVersionUID = 3629642185855440792L;
-
-            {
-                add(userId);
-            }
-        }, activeOnly));
+        final Collection<String> userIds = new HashSet<String>();
+        userIds.add(userId);
+        userGroups.addAll(retrieveGroupsByUserIds(userIds, activeOnly));
 
         // Get groups the user is integrated via one of his user attributes
         // check if attribute is ou-attribute. Then resolve path-list
@@ -1333,7 +1325,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
     /**
      * Retrieves a list of userGroupIds by querying for groupId-selector.
      * 
-     * @param groupIds
+     * @param userGroupIds
      * @param activeOnly
      *            if true, only retrun active groups.
      * 
@@ -1844,7 +1836,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             // set revoke-date, -user and -remark
             final RoleGrant roleGrant = grantsHash.get(grantId);
             roleGrant.setUserAccountByRevokerId(authenticateUser);
-            roleGrant.setRevocationDate(new Date(System.currentTimeMillis()));
+            roleGrant.setRevocationDate(new Date());
             roleGrant.setRevocationRemark(tph.getRevokationRemark());
             // update grant
             userGroupDao.update(roleGrant);

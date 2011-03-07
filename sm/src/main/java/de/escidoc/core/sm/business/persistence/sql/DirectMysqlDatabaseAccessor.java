@@ -115,18 +115,12 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     
     private static final Matcher XPATH_MATCHER = XPATH_PATTERN.matcher("");
 
-    private static final Map<String, String> RESERVED_EXPRESSIONS = 
-        new HashMap<String, String>() {
-            /**
-             * Unique identifier.
-             */
-            private static final long serialVersionUID = -3738088857438082126L;
+    private static final Map<String, String> RESERVED_EXPRESSIONS = new HashMap<String, String>();
 
-        {
-            put("user", "");
-            put("timestamp", "");
-        }
-    };
+    static {
+        RESERVED_EXPRESSIONS.put("user", "");
+        RESERVED_EXPRESSIONS.put("timestamp", "");
+    }
 
     /**
      * Converts xmldate into database-specific format.

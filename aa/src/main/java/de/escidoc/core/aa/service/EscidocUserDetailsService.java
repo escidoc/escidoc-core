@@ -91,27 +91,20 @@ public class EscidocUserDetailsService
             LOG.debug(retrievedUserDetails);
 
             return retrievedUserDetails;
-        }
-        catch (UserAccountNotFoundException e) {
-            final String errorMsg =
-                StringUtility.format(
-                    FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, identifier);
-            throw new UsernameNotFoundException(errorMsg, e);
-        }
-        catch (WebserverSystemException e) {
+        } catch (UserAccountNotFoundException e) {
+            throw new UsernameNotFoundException(StringUtility.format(
+                    FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, identifier), e);
+        } catch (WebserverSystemException e) {
             throw new ObjectRetrievalFailureException(e.getMessage(), e);
-        }
-        catch (Exception e) {
-            throw new ObjectRetrievalFailureException(e.getMessage(),
-                new WebserverSystemException(e));
-        }
-        finally {
+        } catch (Exception e) {
+            throw new ObjectRetrievalFailureException(e.getMessage(), new WebserverSystemException(e));
+        } finally {
             if (wasExternalBefore) {
                 try {
                     UserContext.runAsExternalUser();
                 }
                 catch (WebserverSystemException e) {
-                    throw new ObjectRetrievalFailureException(e.getMessage(), e);
+                    LOG.debug("Error on changing user context.", e);
                 }
             }
         }

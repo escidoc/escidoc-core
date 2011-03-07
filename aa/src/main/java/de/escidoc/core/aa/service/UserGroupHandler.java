@@ -381,9 +381,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         catch (ResourceNotFoundException e) {
             if (e instanceof RoleNotFoundException) {
                 throw new RoleNotFoundException(e);
-
-            }
-            else {
+            } else {
                 throw new UserGroupNotFoundException(e);
             }
         }
@@ -431,10 +429,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             business.revokeGrant(groupId, grantId, taskParam);
         }
         catch (ResourceNotFoundException e) {
-
             if (e instanceof GrantNotFoundException) {
                 throw new GrantNotFoundException(e);
-
             }
             else {
                 throw new UserGroupNotFoundException(e);

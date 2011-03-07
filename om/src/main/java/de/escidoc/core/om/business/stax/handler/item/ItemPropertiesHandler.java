@@ -52,7 +52,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import sun.util.LocaleServiceProviderPool;
 
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.stream.XMLStreamException;

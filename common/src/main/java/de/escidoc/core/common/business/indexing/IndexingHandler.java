@@ -567,9 +567,8 @@ public class IndexingHandler implements ResourceListener {
                         indexName, pidSuffix,
                         (String) parameters.get("indexFulltextVisibilities"));
                 }
-            }
-            catch (Error e) {
-                throw new SystemException(e.getMessage(), e);
+            } catch (Exception e) {
+                throw new SystemException(e);
             }
         }
         else if (action

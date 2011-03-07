@@ -37,7 +37,6 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
-import sun.util.LocaleServiceProviderPool;
 
 import javax.xml.XMLConstants;
 import java.net.URI;

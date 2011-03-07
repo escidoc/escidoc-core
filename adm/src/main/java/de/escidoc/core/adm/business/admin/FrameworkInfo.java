@@ -35,7 +35,6 @@ import de.escidoc.core.common.util.db.Fingerprint;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import sun.util.LocaleServiceProviderPool;
 
 import java.io.IOException;
 import java.sql.Connection;

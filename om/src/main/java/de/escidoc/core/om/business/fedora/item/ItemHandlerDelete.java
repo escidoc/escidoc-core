@@ -117,17 +117,12 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                                 de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
             } catch (InvocationTargetException e) {
                 // unpack Exception from reflection API
-                try {
-                    throw e.getCause();
-                } catch (AuthorizationException ee) { // Ignore FindBugs
-                    throw new AuthorizationException("Can not delete all member entries for item "
-                                    + getItem().getId() + ". item can not be deleted.", ee);
-                } catch (Throwable ee) { // Ignore FindBugs
-                    if (ee instanceof Error) {
-                        throw (Error) ee;
-                    }
+                final Throwable cause = e.getCause();
+                if(cause instanceof Error) {
+                    throw (Error)cause;
+                } else {
                     throw new SystemException("An error occured removing member entries for item "
-                                    + getItem().getId() + ". item can not be deleted.", ee); // Ignore FindBugs
+                                + getItem().getId() + ". Container can not be deleted.", cause);
                 }
             } catch (Exception e) {
                 throw new SystemException("An error occured removing member entries for item "

@@ -92,7 +92,7 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
 
         if (isNotReady() && getGrant().getRevocationDate() == null) {
             getGrant().setUserAccountByRevokerId(authenticateUser);
-            getGrant().setRevocationDate(new Date(System.currentTimeMillis()));
+            getGrant().setRevocationDate(new Date());
         }
         return element;
     }

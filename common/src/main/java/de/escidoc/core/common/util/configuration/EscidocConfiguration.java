@@ -244,21 +244,15 @@ public final class EscidocConfiguration {
      */
     public static final String DIGILIB_CLIENT = "digilib.digimage";
 
-    private static final AppLogger LOG = new AppLogger(
-        EscidocConfiguration.class.getName());
+    private static final AppLogger LOG = new AppLogger(EscidocConfiguration.class.getName());
 
     private static EscidocConfiguration instance;
 
     static {
         try {
             instance = new EscidocConfiguration();
-        }
-        catch (EscidocException e) {
-            final StringWriter stringWriter = new StringWriter();
-            final PrintWriter printWriter = new PrintWriter(stringWriter);
-            e.printStackTrace(printWriter);
-            System.err.println("Problem while loading properties! Caused by:\n"
-                + stringWriter.toString());
+        } catch (EscidocException e) {
+            LOG.debug("Problem while loading properties.", e);
         }
     }
 

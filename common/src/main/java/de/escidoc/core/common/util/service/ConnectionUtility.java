@@ -717,14 +717,7 @@ public class ConnectionUtility {
 
         HttpResponse httpResponse = null;
         try {
-            HttpGet httpGet;
-            try {
-                httpGet = new HttpGet(url);
-            }
-            catch (IllegalArgumentException e) {
-                httpGet = new HttpGet(new URI(url));
-
-            }
+            HttpGet httpGet = new HttpGet(new URI(url));
             if (cookie != null) {
                 HttpClientParams.setCookiePolicy(httpGet.getParams(),
                     CookiePolicy.BEST_MATCH);
@@ -744,14 +737,11 @@ public class ConnectionUtility {
                 throw new WebserverSystemException("HTTP connection to \""
                     + url + "\" failed: " + errorPage);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new WebserverSystemException(e);
+        } catch (URISyntaxException e) {
+            throw new WebserverSystemException("Illegal URL '" + url + "'.", e);
         }
-        catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
         return httpResponse;
     }
 

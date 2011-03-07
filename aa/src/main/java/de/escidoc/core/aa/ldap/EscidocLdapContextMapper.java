@@ -58,9 +58,11 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
     private static final AppLogger LOG = new AppLogger(
         EscidocLdapContextMapper.class.getName());
     
-    private static final Collection<String> IGNORED_VALUES = new HashSet<String>() {
-        private static final long serialVersionUID = -5594739057849019019L;
-        { add("objectClass"); } };
+    private static final Collection<String> IGNORED_VALUES = new HashSet<String>();
+
+    static {
+        IGNORED_VALUES.add("objectClass");
+    }
     
     /**
      * Writes data from LDAP into EscidocLdapUserDetails-Object.

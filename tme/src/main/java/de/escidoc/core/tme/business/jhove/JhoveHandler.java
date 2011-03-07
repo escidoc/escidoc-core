@@ -29,6 +29,8 @@ import java.util.Arrays;
 public class JhoveHandler extends TmeHandlerBase
     implements JhoveHandlerInterface {
 
+    private static final AppLogger LOG = new AppLogger(JhoveHandlerInterface.class.getName());
+
     /** Application name. */
     private static final String NAME = "Jhove";
 
@@ -188,6 +190,7 @@ public class JhoveHandler extends TmeHandlerBase
                     outputFileReader.close();
                 }
                 catch (IOException e) {
+                    LOG.debug("Error on closing file stream.", e);
                 }
             }
         }

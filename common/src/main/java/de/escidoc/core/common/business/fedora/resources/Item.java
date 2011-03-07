@@ -63,7 +63,6 @@ import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
-import sun.util.LocaleServiceProviderPool;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;

@@ -375,9 +375,6 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         catch (final InvalidTripleStoreQueryException e) {
             throw new TripleStoreSystemException(e);
         }
-        catch (final FactoryConfigurationError e) {
-            throw new TripleStoreSystemException(e);
-        }
         catch (final ParseException e) {
             throw new TripleStoreSystemException(
                 "While unescaping literal value: ", e);

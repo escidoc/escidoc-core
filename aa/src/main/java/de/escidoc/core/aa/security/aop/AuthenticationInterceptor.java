@@ -206,18 +206,14 @@ public class AuthenticationInterceptor implements Ordered {
             wasExternalBefore = UserContext.runAsInternalUser();
 
             userManagementWrapper.initHandleExpiryTimestamp(handle);
-        }
-        catch (SystemException e) {
+        } catch (SystemException e) {
             throw new WebserverSystemException(e);
-        }
-        finally {
+        } finally {
             if (wasExternalBefore) {
                 try {
                     UserContext.runAsExternalUser();
-                }
-                catch (WebserverSystemException e) {
-                    throw new ObjectRetrievalFailureException(e
-                        .getMessage(), e);
+                } catch (WebserverSystemException e) {
+                    LOG.debug("Error on changing user context.", e);
                 }
             }
         }

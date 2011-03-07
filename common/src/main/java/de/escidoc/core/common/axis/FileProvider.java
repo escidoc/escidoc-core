@@ -46,7 +46,6 @@ import org.apache.axis.utils.ClassUtils;
 import org.apache.axis.utils.Messages;
 import org.apache.axis.utils.XMLUtils;
 import org.w3c.dom.Document;
-import sun.util.LocaleServiceProviderPool;
 
 import javax.xml.namespace.QName;
 import java.io.BufferedWriter;
