@@ -128,7 +128,7 @@ public final class ReindexStatus extends AdminMethodStatus {
                 result.append("<message>\n");
                 result.append(e.getValue());
                 result.append(' ');
-                result.append(e.getKey());
+                result.append(e.getLabel());
                 result.append("(s) still to be reindexed\n");
                 result.append("</message>\n");
             }
