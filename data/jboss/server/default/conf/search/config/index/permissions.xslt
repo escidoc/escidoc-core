@@ -71,10 +71,9 @@ organizational-unit:
         xmlns:xsltxsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:lastdate-helper="xalan://de.escidoc.sb.gsearch.xslt.LastdateHelper"
         xmlns:string-helper="xalan://de.escidoc.sb.gsearch.xslt.StringHelper"
-        xmlns:element-type-helper="xalan://de.escidoc.sb.gsearch.xslt.ElementTypeHelper"
         xmlns:sortfield-helper="xalan://de.escidoc.sb.gsearch.xslt.SortFieldHelper"
         xmlns:escidoc-core-accessor="xalan://de.escidoc.sb.gsearch.xslt.EscidocCoreAccessor" 
-        extension-element-prefixes="lastdate-helper string-helper element-type-helper sortfield-helper escidoc-core-accessor">
+        extension-element-prefixes="lastdate-helper string-helper sortfield-helper escidoc-core-accessor">
     <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
     
     <!-- Parameters that get passed while calling this stylesheet-transformation -->
@@ -153,29 +152,14 @@ organizational-unit:
         <xsl:param name="fieldvalue"/>
         <xsl:param name="indextype"/>
         <xsl:if test="string($fieldvalue) and normalize-space($fieldvalue)!=''">
-            <xsl:variable name="isDateOrDecimal" select="element-type-helper:isDateOrDecimal($fieldvalue)"/>
             <IndexField termVector="NO" store="NO">
                 <xsl:attribute name="index">
-                    <xsl:choose>
-                        <xsl:when test="$isDateOrDecimal = true()">
-                            <xsl:value-of select="string('UN_TOKENIZED')"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$indextype"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                	<xsl:value-of select="$indextype"/>
                 </xsl:attribute>
                 <xsl:attribute name="IFname">
                     <xsl:value-of select="concat($context,'.',$fieldname)"/>
                 </xsl:attribute>
-                <xsl:choose>
-                    <xsl:when test="$isDateOrDecimal = true()">
-                        <xsl:value-of select="translate($fieldvalue, 'TZ', 'tz')"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$fieldvalue"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="$fieldvalue"/>
             </IndexField>
         </xsl:if>
     </xsl:template>

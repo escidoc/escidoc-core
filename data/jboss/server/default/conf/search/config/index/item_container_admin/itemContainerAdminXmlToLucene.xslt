@@ -27,10 +27,9 @@ Notes:
         xmlns:xalan="http://xml.apache.org/xalan"
         xmlns:lastdate-helper="xalan://de.escidoc.sb.gsearch.xslt.LastdateHelper"
         xmlns:string-helper="xalan://de.escidoc.sb.gsearch.xslt.StringHelper"
-        xmlns:element-type-helper="xalan://de.escidoc.sb.gsearch.xslt.ElementTypeHelper"
         xmlns:sortfield-helper="xalan://de.escidoc.sb.gsearch.xslt.SortFieldHelper"
         xmlns:escidoc-core-accessor="xalan://de.escidoc.sb.gsearch.xslt.EscidocCoreAccessor" 
-        extension-element-prefixes="lastdate-helper string-helper element-type-helper sortfield-helper escidoc-core-accessor">
+        extension-element-prefixes="lastdate-helper string-helper sortfield-helper escidoc-core-accessor">
     <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
     
     <!-- Include stylesheet that writes important fields for gsearch -->
@@ -141,6 +140,18 @@ Notes:
 
         <!-- COMPLETE XML -->
         <xsl:for-each select="./*">
+        	<xsl:for-each select="./@*">
+            	<xsl:if test="string(.) and normalize-space(.)!=''
+                        and namespace-uri()!='http://www.w3.org/1999/xlink'">
+        			<xsl:call-template name="writeIndexField">
+            			<xsl:with-param name="context" select="$CONTEXTNAME"/>
+            			<xsl:with-param name="fieldname" select="local-name()"/>
+            			<xsl:with-param name="fieldvalue" select="."/>
+            			<xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
+            			<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+        			</xsl:call-template>
+        		</xsl:if>
+        	</xsl:for-each>
             <xsl:call-template name="processElementTree">
                 <xsl:with-param name="path"/>
                 <xsl:with-param name="context" select="$CONTEXTNAME"/>
@@ -217,6 +228,18 @@ Notes:
 
         <!-- COMPLETE XML -->
         <xsl:for-each select="./*">
+        	<xsl:for-each select="./@*">
+            	<xsl:if test="string(.) and normalize-space(.)!=''
+                        and namespace-uri()!='http://www.w3.org/1999/xlink'">
+        			<xsl:call-template name="writeIndexField">
+            			<xsl:with-param name="context" select="$CONTEXTNAME"/>
+            			<xsl:with-param name="fieldname" select="local-name()"/>
+            			<xsl:with-param name="fieldvalue" select="."/>
+            			<xsl:with-param name="indextype">TOKENIZED</xsl:with-param>
+            			<xsl:with-param name="store" select="$STORE_FOR_SCAN"/>
+        			</xsl:call-template>
+        		</xsl:if>
+        	</xsl:for-each>
             <xsl:call-template name="processElementTree">
                 <xsl:with-param name="path"/>
                 <xsl:with-param name="context" select="$CONTEXTNAME"/>
@@ -406,17 +429,9 @@ Notes:
         <xsl:param name="indextype"/>
         <xsl:param name="store"/>
         <xsl:if test="string($fieldvalue) and normalize-space($fieldvalue)!=''">
-            <xsl:variable name="isDateOrDecimal" select="element-type-helper:isDateOrDecimal($fieldvalue)"/>
             <IndexField termVector="NO">
                 <xsl:attribute name="index">
-                    <xsl:choose>
-                        <xsl:when test="$isDateOrDecimal = true()">
-                            <xsl:value-of select="string('UN_TOKENIZED')"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$indextype"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                	<xsl:value-of select="$indextype"/>
                 </xsl:attribute>
                 <xsl:attribute name="store">
                     <xsl:value-of select="$store"/>
@@ -424,15 +439,7 @@ Notes:
                 <xsl:attribute name="IFname">
                     <xsl:value-of select="concat($context,$FIELDSEPARATOR,$fieldname)"/>
                 </xsl:attribute>
-                <xsl:choose>
-                    <xsl:when test="$isDateOrDecimal = true()">
-                        <xsl:value-of select="translate($fieldvalue, 'TZ', 'tz')"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$fieldvalue"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-                
+                <xsl:value-of select="$fieldvalue"/>
             </IndexField>
             <xsl:call-template name="writeSortField">
                 <xsl:with-param name="context" select="$context"/>
