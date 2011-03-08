@@ -148,8 +148,8 @@
 	            </dependencies>
 				<configuration>
 					<verbose>false</verbose>
-					<source>1.6</source>
-					<complianceLevel>1.6</complianceLevel>
+					<source>${java.source.version}</source>
+					<complianceLevel>${java.target.version}</complianceLevel>
 					<outxml>true</outxml>
 					<showWeaveInfo>true</showWeaveInfo>
 					<aspectLibraries>
@@ -158,18 +158,6 @@
 							<artifactId>spring-aspects</artifactId>
 						</aspectLibrary>
 					</aspectLibraries>
-<!-- 					
-					<weaveDependencies>
-						<weaveDependency>
-							<groupId>eSciDocCore</groupId>
-							<artifactId>common</artifactId>
-						</weaveDependency>
-						<weaveDependency>
-							<groupId>eSciDocCore</groupId>
-							<artifactId>aa</artifactId>
-						</weaveDependency>
-					</weaveDependencies>
- -->					
  					<aspectLibraries>
                         <aspectLibrary>
                             <groupId>eSciDocCore</groupId>
@@ -180,12 +168,6 @@
                             <artifactId>aa</artifactId>
                         </aspectLibrary>
                     </aspectLibraries>
- <!-- 
- 					<includes>
-                        <include>${basedir}/../common/src/main/java/**/*.java</include>
-                        <include>${basedir}/../aa/src/main/java/**/*.java</include>
-                    </includes>
- -->                    
  				</configuration>
 				<executions>
 					<execution>

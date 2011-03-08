@@ -365,8 +365,8 @@
 					</execution>
 				</executions>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>${java.source.version}</source>
+					<target>${java.target.version}</target>
 					<showDeprecation>true</showDeprecation>
 					<showWarnings>true</showWarnings>
 					<verbose>true</verbose>
@@ -671,35 +671,6 @@
 						</configuration>
 						<executions>
 							<execution>
-								<id>drop-escidoc-db-before-compile</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
-									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE "${escidoc.database}"</sqlCommand>
-									<onError>continue</onError>
-								</configuration>
-							</execution>
-							<execution>
-								<id>drop-escidoc-role-before-compile</id>
-								<phase>process-resources</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<!-- need another database to drop the targeted one -->
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
-									<autocommit>true</autocommit>
-									<sqlCommand>DROP ROLE "${escidoc.database.user}"</sqlCommand>
-									<onError>continue</onError>
-								</configuration>
-							</execution>
-
-							<execution>
 								<id>create-escidoc-role</id>
 								<phase>process-resources</phase>
 								<goals>
@@ -936,10 +907,10 @@
 						</configuration>
 						<executions>
 							<execution>
-								<id>cleanup-escidoc-db</id>
+								<id>drop-escidoc-db</id>
 								<!-- actually should the phase be post-integration-tests, but the 
 									JBoss could be still active if the same phase to shutwon it is used. -->
-								<phase>verify</phase>
+								<phase>clean</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -955,7 +926,7 @@
 								<id>drop-escidoc-role</id>
 								<!-- actually should the phase be post-integration-tests, but the 
 									JBoss could be still active if the same phase to shutwon it is used. -->
-								<phase>verify</phase>
+								<phase>clean</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1004,8 +975,8 @@
 						</configuration>
 						<executions>
 							<execution>
-								<id>drop-fedora-db-before-compile</id>
-								<phase>validate</phase>
+								<id>drop-fedora-db</id>
+								<phase>clean</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1019,8 +990,8 @@
 								</configuration>
 							</execution>
 							<execution>
-								<id>drop-triplestore-db-before-compile</id>
-								<phase>validate</phase>
+								<id>drop-triplestore-db</id>
+								<phase>clean</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1034,8 +1005,8 @@
 								</configuration>
 							</execution>
 							<execution>
-								<id>drop-fedora-role-before-compile</id>
-								<phase>validate</phase>
+								<id>drop-fedora-role</id>
+								<phase>clean</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
@@ -1096,56 +1067,6 @@
 										ENCODING='SQL_ASCII'
 										OWNER="${fedora.database.user}"
 										TEMPLATE=template0</sqlCommand>
-								</configuration>
-							</execution>
-
-							<!-- clean up -->
-							<execution>
-								<id>cleanup-fedora-database</id>
-								<!-- actually should the phase be post-integration-tests, but the 
-									JBoss could be still active if the same phase to shutwon it is used. -->
-								<phase>verify</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
-									<!-- no transaction -->
-									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE "${fedora.database}"</sqlCommand>
-									<onError>continue</onError>
-								</configuration>
-							</execution>
-							<execution>
-								<id>cleanup-triplestore-database</id>
-								<!-- actually should the phase be post-integration-tests, but the 
-									JBoss could be still active if the same phase to shutwon it is used. -->
-								<phase>verify</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
-									<!-- no transaction -->
-									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE "${triplestore.database}"</sqlCommand>
-									<onError>continue</onError>
-								</configuration>
-							</execution>
-							<execution>
-								<id>cleanup-database-user</id>
-								<!-- actually should the phase be post-integration-tests, but the 
-									JBoss could be still active if the same phase to shutwon it is used. -->
-								<phase>verify</phase>
-								<goals>
-									<goal>execute</goal>
-								</goals>
-								<configuration>
-									<url>jdbc:postgresql://localhost:5432/postgres</url>
-									<!-- no transaction -->
-									<autocommit>true</autocommit>
-									<sqlCommand>DROP ROLE "${fedora.database.user}"</sqlCommand>
-									<onError>continue</onError>
 								</configuration>
 							</execution>
 						</executions>

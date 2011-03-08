@@ -57,13 +57,6 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-<!-- 			
-				<plugin>
-					<groupId>org.codehaus.sonar</groupId>
-					<artifactId>sonar-maven3-plugin</artifactId>
-					<version>2.6</version>
-				</plugin>
- -->				
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>axistools-maven-plugin</artifactId>
@@ -103,18 +96,12 @@
 			</testResource>
 		</testResources>
 		<plugins>
-<!-- 		
-			<plugin>
-				<groupId>org.codehaus.sonar</groupId>
-				<artifactId>sonar-maven3-plugin</artifactId>
-			</plugin>
- -->			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>${java.source.version}</source>
+					<target>${java.target.version}</target>
 					<showDeprecation>true</showDeprecation>
 					<showWarnings>true</showWarnings>
 					<verbose>true</verbose>
@@ -197,7 +184,7 @@
           </sourcepath>
 
           <quiet>true</quiet>
-          <source>1.6</source>
+          <source>${java.source.version}</source>
           <javadocVersion>1.6</javadocVersion>
 
           <!-- APIViz doclet for UML graphs, only used if Graphviz is installed on local machine, 
@@ -722,6 +709,8 @@
     <jdbc.postgresql.version>9.0-801.jdbc4</jdbc.postgresql.version>
     <fcrepo.version>3.4.2</fcrepo.version>
     <lucene.version>3.0.2</lucene.version>
+	<java.source.version>1.6</java.source.version>
+	<java.target.version>1.6</java.target.version>
     <!-- <jaxb.xsd.folder>src/main/resources/xsd</jaxb.xsd.folder> <jaxb.xjb.folder>src/main/resources/META-INF/bindings</jaxb.xjb.folder> 
       <jaxb.temporary.folder>target/generated-sources/resources/jaxb</jaxb.temporary.folder> -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -1639,8 +1628,8 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-              <source>1.6</source>
-              <target>1.6</target>
+              <source>${java.source.version}</source>
+              <target>${java.target.version}</target>
               <showDeprecation>true</showDeprecation>
               <showWarnings>true</showWarnings>
               <verbose>true</verbose>
@@ -1671,8 +1660,8 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-              <source>1.6</source>
-              <target>1.6</target>
+              <source>${java.source.version}</source>
+              <target>${java.target.version}</target>
               <showDeprecation>true</showDeprecation>
               <showWarnings>true</showWarnings>
               <verbose>true</verbose>
@@ -1703,8 +1692,8 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-              <source>1.6</source>
-              <target>1.6</target>
+              <source>${java.source.version}</source>
+              <target>${java.target.version}</target>
               <showDeprecation>true</showDeprecation>
               <showWarnings>true</showWarnings>
               <verbose>true</verbose>

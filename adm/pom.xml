@@ -145,8 +145,8 @@
 	            </dependencies>
 				<configuration>
 					<verbose>false</verbose>
-					<source>1.6</source>
-					<complianceLevel>1.6</complianceLevel>
+					<source>${java.source.version}</source>
+					<complianceLevel>${java.target.version}</complianceLevel>
 					<outxml>true</outxml>
 					<showWeaveInfo>true</showWeaveInfo>
 					<aspectLibraries>
