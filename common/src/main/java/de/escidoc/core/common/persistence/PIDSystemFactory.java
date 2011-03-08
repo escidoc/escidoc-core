@@ -45,18 +45,33 @@ public abstract class PIDSystemFactory {
 
     private static final AppLogger LOG = new AppLogger(PIDSystemFactory.class.getName());
 
-    private static PIDSystemFactory pidSystemFactory ;
-
-    static {
-        try {
-            createNewInstanceFromConfig();
-        } catch (PidSystemException e) {
-            LOG.debug("Error on creating new instance of PIDSystemFactory.", e);
-       }
-    }
-
     private static final String defaultFactory =
         "de.escidoc.core.common.persistence.impl.DummyPIDGeneratorFactory";
+
+    private static PIDSystemFactory PID_SYSTEM_FACTORY;
+
+    static {
+        String factoryClassName;
+        try {
+            factoryClassName =
+                EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_PID_SYSTEM_FACTORY);
+            if (factoryClassName == null) {
+                factoryClassName = defaultFactory;
+            }
+        } catch (IOException e) {
+            factoryClassName = defaultFactory;
+        }
+        try {
+            final Class<?> factoryClass = Class.forName(factoryClassName);
+            PID_SYSTEM_FACTORY = (PIDSystemFactory) factoryClass.newInstance();
+        } catch (ClassNotFoundException e) {
+            LOG.debug("Error on creating new instance of PIDSystemFactory.", e);
+        } catch (InstantiationException e) {
+            LOG.debug("Error on creating new instance of PIDSystemFactory.", e);
+        } catch (IllegalAccessException e) {
+            LOG.debug("Error on creating new instance of PIDSystemFactory.", e);
+        }
+    }
 
     /**
      * Protected constructor as getInstance() should be used to create an
@@ -78,43 +93,7 @@ public abstract class PIDSystemFactory {
      */
     public static PIDSystemFactory getInstance()
         throws PidSystemException {
-        return pidSystemFactory;
-    }
-
-    /**
-     * @see #getInstance()
-     * 
-     * @throws PidSystemException
-     *             If no instance could be returned
-     */
-    private static void createNewInstanceFromConfig() throws PidSystemException {
-        String factoryClassName;
-
-        try {
-            factoryClassName =
-                EscidocConfiguration.getInstance().get(
-                    EscidocConfiguration.ESCIDOC_CORE_PID_SYSTEM_FACTORY);
-            if (factoryClassName == null) {
-                factoryClassName = defaultFactory;
-            }
-        }
-        catch (IOException e) {
-            factoryClassName = defaultFactory;
-        }
-
-        try {
-            final Class<?> factoryClass = Class.forName(factoryClassName);
-            pidSystemFactory = (PIDSystemFactory) factoryClass.newInstance();
-        }
-        catch (ClassNotFoundException e) {
-            throw new PidSystemException(e);
-        }
-        catch (InstantiationException e) {
-            throw new PidSystemException(e);
-        }
-        catch (IllegalAccessException e) {
-            throw new PidSystemException(e);
-        }
+        return PID_SYSTEM_FACTORY;
     }
 
     /**

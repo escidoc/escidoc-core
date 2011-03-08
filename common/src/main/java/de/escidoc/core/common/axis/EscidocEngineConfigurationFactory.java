@@ -65,7 +65,7 @@ public class EscidocEngineConfigurationFactory
 
     private final String serverConfigFile;
 
-    private static HttpServlet param;
+    private HttpServlet param;
 
     /**
      * Creates and returns a new EngineConfigurationFactory.
@@ -79,16 +79,16 @@ public class EscidocEngineConfigurationFactory
      * @see org.apache.axis.configuration.EngineConfigurationFactoryFinder
      */
     public static EngineConfigurationFactory newFactory(final Object in) {
-
         if (in != null && !in.getClass().equals(AdminServlet.class)
             && !in.getClass().equals(AxisServlet.class)) {
             return null; // not for us.
         }
-
+        final EscidocEngineConfigurationFactory escidocEngineConfigurationFactory =
+                new EscidocEngineConfigurationFactory();
         if (in != null) {
-            setParam((HttpServlet) in);
+            escidocEngineConfigurationFactory.setParam((HttpServlet) in);
         }
-        return new EscidocEngineConfigurationFactory();
+        return escidocEngineConfigurationFactory;
     }
 
     /**
@@ -137,7 +137,7 @@ public class EscidocEngineConfigurationFactory
     /**
      * @return the param
      */
-    public static HttpServlet getParam() {
+    public HttpServlet getParam() {
 
         return param;
     }
@@ -146,9 +146,8 @@ public class EscidocEngineConfigurationFactory
      * @param param
      *            the param to set
      */
-    public static void setParam(final HttpServlet param) {
-
-        EscidocEngineConfigurationFactory.param = param;
+    public void setParam(final HttpServlet param) {
+        this.param = param;
     }
 
 }

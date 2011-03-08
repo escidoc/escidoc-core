@@ -593,7 +593,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         try {
             final Map<String, Datastream> mdRecords = (HashMap<String, Datastream>) organizationalUnit.getMdRecords();
             final Iterator<Datastream> mdRecordsIter = mdRecords.values().iterator();
-            StringBuffer mdRecordsContent = new StringBuffer();
+            final StringBuffer mdRecordsContent = new StringBuffer();
             while (mdRecordsIter.hasNext()) {
                 final String mdRecordName = mdRecordsIter.next().getName();
                 final Datastream mdRecord;

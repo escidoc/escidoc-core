@@ -186,7 +186,7 @@ public final class IndexerResourceCache {
      */
     private Object getResourceWithInternalKey(final String identifier)
         throws SystemException {
-        Element element = resources.get(identifier);
+        final Element element = resources.get(identifier);
         return element != null ? element.getObjectValue() : null;
     }
 
@@ -224,7 +224,7 @@ public final class IndexerResourceCache {
         final String href = getHref(identifier);
         final Collection<String> keys = new ArrayList<String>();
         for (final Object key : resources.getKeys()) {
-            String keyAsString = (String) key;
+            final String keyAsString = (String) key;
             if (keyAsString.startsWith(href)) {
                 keys.add(keyAsString);
             }

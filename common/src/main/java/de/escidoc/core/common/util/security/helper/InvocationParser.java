@@ -422,7 +422,7 @@ public class InvocationParser {
         InvalidXmlException {
 
         // set the value
-        StringAttribute value;
+        final StringAttribute value;
         if (invocationMapping.getMappingType() 
                 == InvocationMapping.VALUE_MAPPING) {
             // fetch the value from inside the invocation mapping
@@ -521,7 +521,7 @@ public class InvocationParser {
                     if (invocationMapping.isMultiValue()) {
                         length = nodeList.getLength();
                     }
-                    Collection<String> values = new HashSet<String>();
+                    final Collection<String> values = new HashSet<String>();
                     for (int i = 0; i < length; i++) {
                         final Node node = nodeList.item(i);
                         String tmpValue = null;
@@ -536,8 +536,8 @@ public class InvocationParser {
                         }
                     }
                     if (values.size() > 0) {
-                        StringBuilder valueBuf = new StringBuilder("");
-                        for (String val : values) {
+                        final StringBuilder valueBuf = new StringBuilder("");
+                        for (final String val : values) {
                             if (!val.isEmpty()) {
                                 if (valueBuf.length() > 0) {
                                     valueBuf.append(' ');

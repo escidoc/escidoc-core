@@ -244,11 +244,11 @@ public final class EscidocConfiguration {
 
     private static final AppLogger LOG = new AppLogger(EscidocConfiguration.class.getName());
 
-    private static EscidocConfiguration instance;
+    private static EscidocConfiguration INSTANCE;
 
     static {
         try {
-            instance = new EscidocConfiguration();
+            INSTANCE = new EscidocConfiguration();
         } catch (EscidocException e) {
             LOG.debug("Problem while loading properties.", e);
         }
@@ -289,7 +289,8 @@ public final class EscidocConfiguration {
      * @common
      */
     public static EscidocConfiguration getInstance() throws IOException {
-        return instance;
+        //noinspection StaticVariableUsedBeforeInitialization
+        return INSTANCE;
     }
 
     /**
@@ -505,7 +506,7 @@ public final class EscidocConfiguration {
      * Get the full URL to the eSciDoc Infrastructure itself extend with the
      * provided path. E.g. path = "/xsd/schema1.xsd" leads to
      * http://localhost:8080/xsd/schema1.xsd.
-     * 
+     *
      * @param path
      *            path which is to append on the eSciDoc selfUrl.
      * @return baseUrl with appended path

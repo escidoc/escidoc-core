@@ -89,8 +89,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
             }
             stagingFile = StagingUtil.generateStagingFile(true, dao);
             token = stagingFile.getToken();
-            stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil
-                .getUploadStagingArea(), token));
+            stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil.UPLOAD_STAGING_AREA, token));
             stagingFile.read(binaryContent.getContent());
         } catch (IOException e) {
             throw new MissingMethodParameterException("Binary content must be provided.", e);

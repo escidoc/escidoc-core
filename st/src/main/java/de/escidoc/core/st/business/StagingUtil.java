@@ -47,9 +47,20 @@ public final class StagingUtil {
 
     private static final String STAGING_AREA_UPLOAD = "upload";
 
-    private static String downloadStagingArea;
+    public static final String DOWNLOAD_STAGING_AREA;
 
-    private static String uploadStagingArea;
+    static {
+        final String systemProperty = System.getProperty(STAGING_AREA_BASE_PATH);
+        final String downloadStagingArea = concatenatePath(systemProperty, STAGING_AREA);
+        DOWNLOAD_STAGING_AREA = concatenatePath(downloadStagingArea, STAGING_AREA_DOWNLOAD);
+    }
+
+    public static String UPLOAD_STAGING_AREA;
+
+    static {
+        final String uploadStagingArea = concatenatePath(System.getProperty(STAGING_AREA_BASE_PATH), STAGING_AREA);
+        UPLOAD_STAGING_AREA = concatenatePath(uploadStagingArea, STAGING_AREA_UPLOAD);
+    }
 
     /**
      * The duration during which a token is valid, i.e. uploading/downloading
@@ -62,35 +73,6 @@ public final class StagingUtil {
      * Private constructor to avoid instantiation.
      */
     private StagingUtil() {
-    }
-
-    /**
-     * 
-     * @return The path to the download staigng area.
-     */
-    public static String getDownloadStagingArea() {
-        if (downloadStagingArea == null) {
-            final String systemProperty = System.getProperty(STAGING_AREA_BASE_PATH);
-            downloadStagingArea = concatenatePath(systemProperty, STAGING_AREA);
-            downloadStagingArea =
-                concatenatePath(downloadStagingArea, STAGING_AREA_DOWNLOAD);
-        }
-        return downloadStagingArea;
-    }
-
-    /**
-     * 
-     * @return The path to the upload staigng area.
-     */
-    public static String getUploadStagingArea() {
-        if (uploadStagingArea == null) {
-            uploadStagingArea =
-                concatenatePath(System.getProperty(STAGING_AREA_BASE_PATH),
-                    STAGING_AREA);
-            uploadStagingArea =
-                concatenatePath(uploadStagingArea, STAGING_AREA_UPLOAD);
-        }
-        return uploadStagingArea;
     }
 
     /**

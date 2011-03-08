@@ -717,7 +717,7 @@ public class ConnectionUtility {
 
         HttpResponse httpResponse = null;
         try {
-            HttpGet httpGet = new HttpGet(new URI(url));
+            final HttpGet httpGet = new HttpGet(new URI(url));
             if (cookie != null) {
                 HttpClientParams.setCookiePolicy(httpGet.getParams(),
                     CookiePolicy.BEST_MATCH);

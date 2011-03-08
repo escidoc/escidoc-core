@@ -264,7 +264,7 @@ public class HttpRequester {
         setCookie(con.getHeaderField("Set-cookie"));
 
         // Read response
-        BufferedReader br = null;
+        final BufferedReader br = null;
         try {
             response = IOUtils.readStringFromStream(is);
         } finally {
@@ -336,7 +336,7 @@ public class HttpRequester {
             setCookie(connection.getHeaderField("Set-cookie"));
 
             // Read response
-            BufferedReader br = null;
+            final BufferedReader br = null;
             try {
                 response = IOUtils.readStringFromStream(is);
             } finally {

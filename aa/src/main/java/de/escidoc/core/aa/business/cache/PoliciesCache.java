@@ -302,7 +302,7 @@ public final class PoliciesCache {
 
         final Element element = roleIsGrantedCache.get(userOrGroupId);
         if(element != null) {
-            Map<String, Map<String, EvaluationResult>> roleMap =
+            final Map<String, Map<String, EvaluationResult>> roleMap =
                     (Map<String, Map<String, EvaluationResult>>) element.getObjectValue();
             final Element roleElement = new Element(userOrGroupId, roleMap);
             roleIsGrantedCache.put(roleElement);
@@ -436,7 +436,7 @@ public final class PoliciesCache {
         if (userId == null) {
             return;
         }
-        Element element;
+        final Element element;
         element = userGroups == null ? new Element(userId, new HashSet<String>()) : new Element(userId, userGroups);
         getUserGroupsCache().put(element);
     }
@@ -719,10 +719,10 @@ public final class PoliciesCache {
 
         // iterate over all maps stored in roleIsGrantedCache to remove the ones
         // relevant for the provided role id.
-        List roleIsGrantedKeys = getRoleIsGrantedCache().getKeys();
-        List<Map<String, Map<String, EvaluationResult>>> roleIsGrantedValues =
+        final List roleIsGrantedKeys = getRoleIsGrantedCache().getKeys();
+        final List<Map<String, Map<String, EvaluationResult>>> roleIsGrantedValues =
                 new ArrayList<Map<String, Map<String, EvaluationResult>>>();
-        for(Object key : roleIsGrantedKeys) {
+        for(final Object key : roleIsGrantedKeys) {
             final Element element = getRoleIsGrantedCache().get(key);
             if(element != null) {
                 roleIsGrantedValues.add((Map<String, Map<String, EvaluationResult>>) element.getObjectValue());
