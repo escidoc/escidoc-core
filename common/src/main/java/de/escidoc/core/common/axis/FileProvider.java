@@ -86,15 +86,6 @@ public class FileProvider implements WSDDEngineConfiguration {
 
     private static String defaultJNDIUrl;
 
-    static {
-        try {
-            defaultJNDIUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL);
-        } catch(IOException e) {
-            throw new RuntimeException("Default jndi url not found in properties! No value for key '" +
-                    EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL + "'.", e);
-        }
-    }
-
     /**
      * Constructor which accesses a file in the current directory of the engine
      * or at an absolute path.
@@ -104,6 +95,19 @@ public class FileProvider implements WSDDEngineConfiguration {
      */
     public FileProvider(final String filename) {
         configFile = new File(filename);
+        if (defaultJNDIUrl == null) {
+            try {
+                defaultJNDIUrl =
+                    EscidocConfiguration.getInstance().get(
+                        EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL);
+            }
+            catch (IOException e) {
+                throw new RuntimeException(
+                    "Default jndi url not found in properties! No value for key '"
+                        + EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL
+                        + "'.", e);
+            }
+        }
         check();
     }
 

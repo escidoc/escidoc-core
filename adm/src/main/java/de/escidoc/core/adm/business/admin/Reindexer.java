@@ -54,8 +54,6 @@ import de.escidoc.core.index.IndexService;
 /**
  * Provides Methods used for Re-indexing.
  * 
- * @spring.bean id="admin.Reindexer"
- * 
  * @author sche
  */
 public class Reindexer {
@@ -485,7 +483,6 @@ public class Reindexer {
     }
 
     /**
-     * @spring.property ref="common.business.indexing.IndexingHandler"
      * @param indexingHandler
      *            indexing handler
      * 
@@ -502,7 +499,6 @@ public class Reindexer {
      * 
      * @param indexService
      *            index service
-     * @spring.property ref="de.escidoc.core.index.IndexService"
      */
     public void setIndexService(final IndexService indexService) {
         this.indexService = indexService;
@@ -510,8 +506,6 @@ public class Reindexer {
 
     /**
      * Injects the {@link FedoraUtility}.
-     * 
-     * @spring.property ref="escidoc.core.business.FedoraUtility"
      * 
      * @param fedoraUtility
      *            the {@link FedoraUtility} to inject.

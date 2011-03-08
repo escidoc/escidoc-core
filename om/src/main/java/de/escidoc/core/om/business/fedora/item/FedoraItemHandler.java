@@ -155,8 +155,7 @@ import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
  * {@link de.escidoc.core.common.util.stax.handler.MultipleExtractor
  * MultipleExtractor} have to be the last Handler in the HandlerChain of a
  * StaxParser.
- * 
- * @spring.bean id="business.FedoraItemHandler" scope="prototype"
+ *
  * @author FRS
  */
 public class FedoraItemHandler extends ItemHandlerPid
@@ -188,7 +187,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      * 
      * @param pdp
      *            the {@link PolicyDecisionPointInterface} to be injected.
-     * @spring.property ref="service.PolicyDecisionPointBean"
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
@@ -2416,7 +2414,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      * 
      * @param contentRelationHandler
      *            The {@link FedoraContentRelationHandler}.
-     * @spring.property ref="business.FedoraContentRelationHandler"
      * 
      */
     public void setContentRelationHandler(
@@ -2429,8 +2426,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      * 
      * @param sruRequest
      *            SRURequest
-     * 
-     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
@@ -2442,8 +2437,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @param fedoraUtility
      * @see de.escidoc.core.common.business.fedora.HandlerBase
      *      #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
-     * 
-     * @spring.property ref="escidoc.core.business.FedoraUtility"
      */
     @Override
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
@@ -2456,7 +2449,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
      * 
      */
     @Override
@@ -2470,8 +2462,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @param idProvider
      * @see de.escidoc.core.common.business.fedora.HandlerBase
      *      #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
-     * 
-     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
     @Override
     public void setIdProvider(final EscidocIdProvider idProvider) {

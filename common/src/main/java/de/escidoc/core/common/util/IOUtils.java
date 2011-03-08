@@ -78,7 +78,7 @@ public final class IOUtils {
         if (i < DEFAULT_BUFFER_SIZE) {
             i = DEFAULT_BUFFER_SIZE;
         }
-        final ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
         copy(input, bos);
         closeStream(input);
         return bos.toByteArray();
@@ -89,7 +89,7 @@ public final class IOUtils {
         if (i < DEFAULT_BUFFER_SIZE) {
             i = DEFAULT_BUFFER_SIZE;
         }
-        final ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
         copy(input, bos);
         closeStream(input);
         return bos.toString(XmlUtility.CHARACTER_ENCODING);
@@ -106,7 +106,7 @@ public final class IOUtils {
         }
     }
 
-    public static String newStringFromBytes(final byte[] bytes) {
+    public static String newStringFromBytes(byte[] bytes) {
         return newStringFromBytes(bytes, UTF8_CHARSET.name());
     }
 
@@ -128,7 +128,7 @@ public final class IOUtils {
         return newStringFromBytes(bytes, UTF8_CHARSET.name(), start, length);
     }
 
-    public static void closeStream(final Closeable stream) {
+    public static void closeStream(Closeable stream) {
         if (stream == null) {
             return;
         }
@@ -139,7 +139,7 @@ public final class IOUtils {
         }
     }
 
-    public static void closeWriter(final Writer writer) {
+    public static void closeWriter(Writer writer) {
         if (writer == null) {
             return;
         }
@@ -150,7 +150,7 @@ public final class IOUtils {
         }
     }
 
-    public static void closeConnection(final Connection connection) {
+    public static void closeConnection(Connection connection) {
         if (connection == null) {
             return;
         }
@@ -161,7 +161,7 @@ public final class IOUtils {
         }
     }
 
-    public static void closeResultSet(final ResultSet resultSet) {
+    public static void closeResultSet(ResultSet resultSet) {
         if (resultSet == null) {
             return;
         }

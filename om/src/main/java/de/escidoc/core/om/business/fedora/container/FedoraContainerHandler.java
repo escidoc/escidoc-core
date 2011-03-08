@@ -159,7 +159,6 @@ import de.escidoc.core.om.business.stax.handler.container.StructMapCreateHandler
  * StaxParser.
  * 
  * @author ROF
- * @spring.bean id="business.FedoraContainerHandler" scope="prototype"
  */
 public class FedoraContainerHandler extends ContainerHandlerPid
     implements ContainerHandlerInterface {
@@ -204,7 +203,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * 
      * @param pdp
      *            the {@link PolicyDecisionPointInterface} to be injected.
-     * @spring.property ref="service.PolicyDecisionPointBean"
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
@@ -214,7 +212,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     /**
      * Injects the indexing handler.
      * 
-     * @spring.property ref="common.business.indexing.IndexingHandler"
      * @param indexingHandler
      *            The indexing handler.
      */
@@ -320,7 +317,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @throws MissingMethodParameterException
      * @see de.escidoc.core.om.business.interfaces.ContainerHandlerInterface#create(java.lang.String)
-     * @om
+     *
      */
     private String doCreate(final String xmlData, final boolean isCreate)
         throws SystemException, ContentModelNotFoundException,
@@ -567,7 +564,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             If further calls fail because of insufficient access rights.
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
      *      #delete(java.lang.String)
-     * @om
+     *
      */
     @Override
     public void delete(final String id) throws ContainerNotFoundException,
@@ -651,7 +648,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @throws MissingMethodParameterException
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
      *      #retrieve(java.lang.String)
-     * @om
+     *
      */
     @Override
     public String retrieve(final String id) throws ContainerNotFoundException,
@@ -1074,7 +1071,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     }
 
     /**
-     * @spring.property ref="business.FedoraItemHandler"
      * @param itemHandler
      *            the itemHandler
      */
@@ -2063,7 +2059,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#lock(java.lang.String,
      *      java.lang.String)
-     * @om
+     *
      */
     @Override
     public String lock(final String id, final String param)
@@ -2122,7 +2118,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#unlock(java.lang.String,
      *      java.lang.String)
-     * @om
+     *
      */
     @Override
     public String unlock(final String id, final String param)
@@ -3178,7 +3174,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * 
      * @param contentRelationHandler
      *            The {@link FedoraContentRelationHandler}.
-     * @spring.property ref="business.FedoraContentRelationHandler"
      * 
      */
     public void setContentRelationHandler(
@@ -3193,8 +3188,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * 
      * @param sruRequest
      *            SRURequest
-     * 
-     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
@@ -3206,8 +3199,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @param fedoraUtility
      * @see de.escidoc.core.common.business.fedora.HandlerBase
      *      #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
-     * 
-     * @spring.property ref="escidoc.core.business.FedoraUtility"
      */
     @Override
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
@@ -3220,7 +3211,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
      * 
      */
     @Override
@@ -3234,8 +3224,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @param idProvider
      * @see de.escidoc.core.common.business.fedora.HandlerBase
      *      #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
-     * 
-     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
     @Override
     public void setIdProvider(final EscidocIdProvider idProvider) {

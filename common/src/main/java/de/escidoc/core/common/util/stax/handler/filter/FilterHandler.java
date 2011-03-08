@@ -112,7 +112,7 @@ public class FilterHandler extends DefaultHandler {
      * @param parser
      *            The {@link StaxParser} to use.
      * 
-     * @common
+     *
      */
     public FilterHandler(final StaxParser parser) {
 
@@ -249,7 +249,7 @@ public class FilterHandler extends DefaultHandler {
      * IDs.
      * 
      * @return Filter Map
-     * @common
+     *
      */
     public Map<String, Object> getRules() {
         return rules;
@@ -263,7 +263,7 @@ public class FilterHandler extends DefaultHandler {
      * @param ruleValues
      *            values for rule
      * 
-     * @common
+     *
      */
     @SuppressWarnings("unchecked")
     public void putRule(final String ruleName, final Collection<String> ruleValues) {
@@ -284,7 +284,7 @@ public class FilterHandler extends DefaultHandler {
      * @param ruleName
      *            name of rule
      * 
-     * @common
+     *
      */
     public void removeRule(final String ruleName) {
         rules.remove(ruleName);
@@ -295,7 +295,7 @@ public class FilterHandler extends DefaultHandler {
      * 
      * @return Returns the parsed offset. If none has been found, the default
      *         value {@link FilterHandler.DEFAULT_OFFSET} is returned
-     * @common
+     *
      */
     public int getOffset() {
 
@@ -307,7 +307,7 @@ public class FilterHandler extends DefaultHandler {
      * 
      * @return Returns the parsed limit. If none has been found, the default
      *         value {@link FilterHandler.DEFAULT_LIMIT} is returned.
-     * @common
+     *
      */
     public int getLimit() {
 
@@ -319,7 +319,7 @@ public class FilterHandler extends DefaultHandler {
      * 
      * @return Returns the parsed ordering information. If none has been found,
      *         <code>null</code> is returned.
-     * @common
+     *
      */
     public String getOrderBy() {
         return orderBy;
@@ -331,7 +331,7 @@ public class FilterHandler extends DefaultHandler {
      * @return Returns the parsed ordering information. If none has been found,
      *         the default value {@link FilterHandler.DEFAULT_SORTING} is
      *         returned.
-     * @common
+     *
      */
     public ListSorting getSorting() {
         return sorting;

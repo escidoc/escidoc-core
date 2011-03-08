@@ -170,7 +170,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
             writeElement(nsuri, theName, prefix, deepLevel, isRelsExt, isNew,
                 false);
             final List<Attribute> attributes = element.getAttributes();
-            for (final Attribute curAtt : attributes) {
+            for (Attribute curAtt : attributes) {
                 handleAttribute(curAtt, theName, deepLevel, isRelsExt, isNew, false);
             }
             insideLevel++;
@@ -184,7 +184,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 nsuris = new HashMap();
                 writeElement(nsuri, theName, prefix, deepLevel, isRelsExt, isNew, false);
                 final List<Attribute> attributes = element.getAttributes();
-                for (final Attribute curAtt : attributes) {
+                for (Attribute curAtt : attributes) {
                     handleAttribute(curAtt, theName, deepLevel, isRelsExt, isNew, false);
                 }
                 insideLevel++;
@@ -297,7 +297,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
             // attribute namespaces
             // TODO iteration is a hack, use
             // javax.xml.namespace.NamespaceContext
-            final Iterator it = nsuris.keySet().iterator();
+            Iterator it = nsuris.keySet().iterator();
             final Collection<String> toRemove = new ArrayList<String>();
             while (it.hasNext()) {
                 try {
@@ -311,7 +311,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                     throw new XMLStreamException(e.getMessage(), e);
                 }
             }
-            for(final String key : toRemove) {
+            for(String key : toRemove) {
                 nsuris.remove(key);
             }
             if (insideLevel == 0) {

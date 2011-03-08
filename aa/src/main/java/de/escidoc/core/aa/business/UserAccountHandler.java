@@ -125,8 +125,7 @@ import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler
 
 /**
  * Implementation for the account handle.
- * 
- * @spring.bean id="business.UserAccountHandler"
+ *
  * @author MSC
  */
 public class UserAccountHandler
@@ -1923,8 +1922,6 @@ public class UserAccountHandler
      * 
      * @param dao
      *            The data access object.
-     * 
-     * @spring.property ref="persistence.UserAccountDao"
      */
     public void setDao(final UserAccountDaoInterface dao) {
 
@@ -1940,8 +1937,6 @@ public class UserAccountHandler
      * 
      * @param userGroupDao
      *            The data access object.
-     * 
-     * @spring.property ref="persistence.UserGroupDao"
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
         if (LOG.isDebugEnabled()) {
@@ -1955,8 +1950,6 @@ public class UserAccountHandler
      * 
      * @param objectAttributeResolver
      *            The objectAttributeResolver.
-     * 
-     * @spring.property ref="eSciDoc.core.aa.ObjectAttributeResolver"
      */
     public void setObjectAttributeResolver(
         final ObjectAttributeResolver objectAttributeResolver) {
@@ -1974,8 +1967,6 @@ public class UserAccountHandler
      * 
      * @param roleDao
      *            The role data access object.
-     * 
-     * @spring.property ref="persistence.EscidocRoleDao"
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
 
@@ -1986,8 +1977,7 @@ public class UserAccountHandler
 
     /**
      * Injects the TripleStore utility.
-     * 
-     * @spring.property ref="business.TripleStoreUtility"
+     *
      * @param tripleStoreUtility
      *            TripleStoreUtility from Spring
      */
@@ -2001,9 +1991,6 @@ public class UserAccountHandler
      * 
      * @param renderer
      *            The renderer to inject.
-     * 
-     * @spring.property 
-     *                  ref="eSciDoc.core.aa.business.renderer.VelocityXmlUserAccountRenderer"
      */
     public void setRenderer(final UserAccountRendererInterface renderer) {
 
@@ -2017,8 +2004,6 @@ public class UserAccountHandler
      * 
      * @param permissionsQuery
      *            The permissions query generator to inject.
-     * 
-     * @spring.property ref="filter.PermissionsQuery"
      */
     public void setPermissionsQuery(final PermissionsQuery permissionsQuery) {
         LOG.debug("setPermissionsQuery");
@@ -2100,7 +2085,6 @@ public class UserAccountHandler
      * 
      * @param pdp
      *            The {@link PolicyDecisionPoint}.
-     * @spring.property ref="business.PolicyDecisionPoint"
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
@@ -2114,7 +2098,6 @@ public class UserAccountHandler
      * 
      * @param userGroupHandler
      *            The {@link UserGroupHandler}.
-     * @spring.property ref="business.UserGroupHandler"
      */
     public void setUserGroupHandler(
         final UserGroupHandlerInterface userGroupHandler) {

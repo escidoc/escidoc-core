@@ -106,8 +106,7 @@ import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler
 
 /**
  * Implementation for the user group handler.
- * 
- * @spring.bean id="business.UserGroupHandler"
+ *
  * @author sche
  * @aa
  */
@@ -153,7 +152,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #create(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String create(final String xmlData)
@@ -193,7 +192,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #delete(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void delete(final String groupId) throws ResourceNotFoundException,
@@ -220,7 +219,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #retrieve(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieve(final String groupId)
@@ -249,7 +248,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #update(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String update(final String groupId, final String xmlData)
@@ -309,7 +308,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #activate(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void activate(final String groupId, final String taskParam)
@@ -385,7 +384,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #deactivate(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void deactivate(final String groupId, final String taskParam)
@@ -463,7 +462,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #createGrant(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String createGrant(final String groupId, final String grantXML)
@@ -636,7 +635,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws OptimisticLockingException
      * @throws XmlCorruptedException
      * 
-     * @tx
+     *
      */
     @Override
     public String addSelectors(final String groupId, final String taskParam)
@@ -764,7 +763,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws MissingAttributeValueException
      * @throws OptimisticLockingException
      * @throws XmlCorruptedException
-     * @tx
+     *
      */
     @Override
     public String removeSelectors(final String groupId, final String taskParam)
@@ -1120,7 +1119,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #retrieveGroupsForUser(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public Set<String> retrieveGroupsForUser(final String userId)
@@ -1141,7 +1140,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #retrieveGroupsForUser(java.lang.String, boolean)
-     * @aa
+     *
      */
     @Override
     public Set<String> retrieveGroupsForUser(
@@ -1226,7 +1225,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #retrieveGroupsForGroup(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public Set<String> retrieveGroupsForGroup(final String groupId)
@@ -1254,7 +1253,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SqlDatabaseSystemException
      *             e
-     * @aa
+     *
      */
     private Collection<String> retrieveGroupsByUserIds(
         final Collection<String> userIds, final boolean activeOnly)
@@ -1332,7 +1331,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @return HashSet userGroupIds
      * @throws SqlDatabaseSystemException
      *             e
-     * @aa
+     *
      */
     private Set<String> retrieveGroupsByGroupIds(
         final Set<String> userGroupIds, final boolean activeOnly)
@@ -1413,7 +1412,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #retrieveCurrentGrantsAsMap(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public Map<String, Map<String, List<RoleGrant>>> retrieveCurrentGrantsAsMap(
@@ -1464,7 +1463,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #retrieveCurrentGrantsAsMap(List)
-     * @aa
+     *
      */
     @Override
     public Map<String, Map<String, Map<String, List<RoleGrant>>>> retrieveManyCurrentGrantsAsMap(
@@ -1521,7 +1520,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #retrieveCurrentGrants(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieveCurrentGrants(final String groupId)
@@ -1580,7 +1579,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #retrieveCurrentGrants(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieveGrant(final String groupId, final String grantId)
@@ -1648,7 +1647,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #revokeGrant(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void revokeGrant(
@@ -1729,8 +1728,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws AuthorizationException
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #revokeGrants(java.lang.String, java.lang.String)
-     * @tx
-     * @aa
+     *
+     *
      */
     @Override
     public void revokeGrants(final String groupId, final String filterXML)
@@ -1859,7 +1858,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *         grant, an empty <code>List</code> is returned.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database error.
-     * @aa
+     *
      */
     private List<RoleGrant> fetchCurrentGrants(final String groupId)
         throws SqlDatabaseSystemException {
@@ -1882,7 +1881,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * 
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private void sendUserGroupUpdateEvent(final String groupId)
         throws WebserverSystemException {
@@ -1898,7 +1897,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * 
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private void sendUserGroupMemberUpdateEvent(final String groupId)
         throws WebserverSystemException {
@@ -2022,10 +2021,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * 
      * @param renderer
      *            The user group renderer to inject.
-     * 
-     * @spring.property 
-     *                  ref="eSciDoc.core.aa.business.renderer.VelocityXmlUserGroupRenderer"
-     * @aa
+     *
      */
     public void setRenderer(final UserGroupRendererInterface renderer) {
         if (LOG.isDebugEnabled()) {
@@ -2039,9 +2035,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * 
      * @param roleDao
      *            The role data access object.
-     * 
-     * @spring.property ref="persistence.EscidocRoleDao"
-     * @aa
+     *
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
         if (LOG.isDebugEnabled()) {
@@ -2055,9 +2049,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * 
-     * @spring.property ref="business.TripleStoreUtility"
-     * @aa
+     *
+     *
      */
     public void setTsu(final TripleStoreUtility tsu) {
         if (LOG.isDebugEnabled()) {
@@ -2071,9 +2064,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * 
      * @param userAccountDao
      *            The data access object.
-     * 
-     * @spring.property ref="persistence.UserAccountDao"
-     * @aa
+     *
      */
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
         if (LOG.isDebugEnabled()) {
@@ -2089,9 +2080,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * 
      * @param userGroupDao
      *            The data access object.
-     * 
-     * @spring.property ref="persistence.UserGroupDao"
-     * @aa
+     *
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
         if (LOG.isDebugEnabled()) {
@@ -2121,8 +2110,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * 
      * @param pdp
      *            The {@link PolicyDecisionPoint}.
-     * @spring.property ref="business.PolicyDecisionPoint"
-     * @aa
+     *
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
@@ -2136,9 +2124,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * 
      * @param objectAttributeResolver
      *            The objectAttributeResolver.
-     * 
-     * @spring.property ref="eSciDoc.core.aa.ObjectAttributeResolver"
-     * @aa
      */
     public void setObjectAttributeResolver(
         final ObjectAttributeResolver objectAttributeResolver) {
