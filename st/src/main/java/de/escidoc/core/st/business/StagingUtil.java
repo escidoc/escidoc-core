@@ -35,7 +35,7 @@ import de.escidoc.core.st.business.persistence.StagingFileDao;
  * Implementation of some staging util.
  * 
  * @author MSC
- * @st
+ *
  */
 public final class StagingUtil {
 
@@ -47,20 +47,9 @@ public final class StagingUtil {
 
     private static final String STAGING_AREA_UPLOAD = "upload";
 
-    public static final String DOWNLOAD_STAGING_AREA;
+    private static String downloadStagingArea;
 
-    static {
-        final String systemProperty = System.getProperty(STAGING_AREA_BASE_PATH);
-        final String downloadStagingArea = concatenatePath(systemProperty, STAGING_AREA);
-        DOWNLOAD_STAGING_AREA = concatenatePath(downloadStagingArea, STAGING_AREA_DOWNLOAD);
-    }
-
-    public static String UPLOAD_STAGING_AREA;
-
-    static {
-        final String uploadStagingArea = concatenatePath(System.getProperty(STAGING_AREA_BASE_PATH), STAGING_AREA);
-        UPLOAD_STAGING_AREA = concatenatePath(uploadStagingArea, STAGING_AREA_UPLOAD);
-    }
+    private static String uploadStagingArea;
 
     /**
      * The duration during which a token is valid, i.e. uploading/downloading
@@ -76,6 +65,35 @@ public final class StagingUtil {
     }
 
     /**
+     * 
+     * @return The path to the download staigng area.
+     */
+    public static String getDownloadStagingArea() {
+        if (downloadStagingArea == null) {
+            final String systemProperty = System.getProperty(STAGING_AREA_BASE_PATH);
+            downloadStagingArea = concatenatePath(systemProperty, STAGING_AREA);
+            downloadStagingArea =
+                concatenatePath(downloadStagingArea, STAGING_AREA_DOWNLOAD);
+        }
+        return downloadStagingArea;
+    }
+
+    /**
+     * 
+     * @return The path to the upload staigng area.
+     */
+    public static String getUploadStagingArea() {
+        if (uploadStagingArea == null) {
+            uploadStagingArea =
+                concatenatePath(System.getProperty(STAGING_AREA_BASE_PATH),
+                    STAGING_AREA);
+            uploadStagingArea =
+                concatenatePath(uploadStagingArea, STAGING_AREA_UPLOAD);
+        }
+        return uploadStagingArea;
+    }
+
+    /**
      * Concatenates the two given path segments and returns a valid path, i.e.
      * the method takes care that there is only one path seperator between the
      * path segments, and converts ':' to '_' in the appendix
@@ -85,7 +103,7 @@ public final class StagingUtil {
      * @param appendix
      *            The path to append.
      * @return The concatenated path.
-     * @st
+     *
      */
     public static String concatenatePath(
         final String path, final String appendix) {
@@ -119,7 +137,7 @@ public final class StagingUtil {
      * @return The generated token.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database error.
-     * @st
+     *
      */
     public static String generateToken(
         final boolean isUpload, final StagingFileDao stagingFileDao)
@@ -142,7 +160,7 @@ public final class StagingUtil {
      * @return Returns the created <code>StagingFile</code> object.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database error.
-     * @st
+     *
      */
     public static StagingFile generateStagingFile(
         final boolean isUpload, final StagingFileDao stagingFileDao)
