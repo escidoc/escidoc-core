@@ -237,7 +237,7 @@
 	</target>
 
 	<target name="create_all" description="Creates every database of eSciDoc Infrastructure.">
-		<echo level="info">Creating databases/scheams on JDBC Url ${escidoc.jdbc.url} with (user/password) (${escidoc.database.userid}/${escidoc.database.password})</echo>
+		<echo level="info">Creating databases/scheams on JDBC Url ${escidoc.jdbc.url} with (user/password) (${escidoc.database.user}/${escidoc.database.password})</echo>
 
 		<!-- Create Database for Security (AA) -->
 		<antcall target="execute-sql">
@@ -279,7 +279,7 @@
 	</target>
 
 	<target name="drop_all" description="Drops every database of eSciDoc Infrastructure. In postgres only the schemas of database 'escidoc-core' are droped.">
-		<echo level="info">Droping databases/schemas on JDBC Url ${escidoc.jdbc.url} with (user/password) (${escidoc.database.userid}/${escidoc.database.password})</echo>
+		<echo level="info">Droping databases/schemas on JDBC Url ${escidoc.jdbc.url} with (user/password) (${escidoc.database.user}/${escidoc.database.password})</echo>
 
 		<!-- Drop Licences/Policies-Database for Security -->
 		<antcall target="execute-sql-continue-on-error">
@@ -325,7 +325,7 @@
 	-->
 
 	<target name="execute-sql-continue-on-error" description="Executes given 'script'. Coninues if an error occurs.">
-		<sql classpathref="database.classpath" driver="${jdbc.driver.class}" url="${escidoc.jdbc.url}" userid="${escidoc.database.userid}" password="${escidoc.database.password}" onerror="continue" expandProperties="true">
+		<sql classpathref="database.classpath" driver="${jdbc.driver.class}" url="${escidoc.jdbc.url}" userid="${escidoc.database.user}" password="${escidoc.database.password}" onerror="continue" expandProperties="true">
 			<fileset dir="${basedir}">
 				<include name="${sql.dir}/${script}" />
 			</fileset>
@@ -333,7 +333,7 @@
 	</target>
 
 	<target name="execute-sql" description="Executes given 'script'.">
-		<sql classpathref="database.classpath" driver="${jdbc.driver.class}" url="${escidoc.jdbc.url}" userid="${escidoc.database.userid}" password="${escidoc.database.password}" expandProperties="true">
+		<sql classpathref="database.classpath" driver="${jdbc.driver.class}" url="${escidoc.jdbc.url}" userid="${escidoc.database.user}" password="${escidoc.database.password}" expandProperties="true">
 			<fileset dir="${basedir}">
 				<include name="${sql.dir}/${script}" />
 			</fileset>

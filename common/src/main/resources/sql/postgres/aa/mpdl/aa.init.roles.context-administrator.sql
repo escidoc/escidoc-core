@@ -22,8 +22,8 @@
 INSERT INTO escidoc_role 
     (id, role_name, description, creator_id, creation_date, modified_by_id, last_modification_date) 
     VALUES 
-    ('escidoc:role-context-administrator', 'Context-Administrator', NULL, 'escidoc:exuser1', 
-    CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    ('escidoc:role-context-administrator', 'Context-Administrator', NULL, '${escidoc.creator.user}', 
+    CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO escidoc_policies 
     (id, role_id, xml) 

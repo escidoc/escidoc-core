@@ -44,7 +44,7 @@ INSERT INTO aa.user_login_data
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
      VALUES
-    ('escidoc:exuser1', 'escidoc:exuser1', 'Shibboleth-Handle-1', 1999999999999);
+    ('${escidoc.creator.user}', '${escidoc.creator.user}', 'Shibboleth-Handle-1', 1999999999999);
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)

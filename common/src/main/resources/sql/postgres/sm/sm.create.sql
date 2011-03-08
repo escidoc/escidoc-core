@@ -138,14 +138,14 @@ CREATE INDEX timestamp_scope_id_idx
 ON sm.statistic_data (date_trunc( 'day',timemarker),scope_id);
 
 INSERT INTO sm.scopes (id, name, scope_type, creator_id, creation_date, modified_by_id, last_modification_date) 
-VALUES ('escidoc:scope1','Scope for Framework', 'normal', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+VALUES ('escidoc:scope1','Scope for Framework', 'normal', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.scopes (id, name, scope_type, creator_id, creation_date, modified_by_id, last_modification_date) 
-VALUES ('escidoc:scope2','Admin Scope', 'admin', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+VALUES ('escidoc:scope2','Admin Scope', 'admin', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.aggregation_definitions (id, scope_id, name, creator_id, creation_date) 
     VALUES 
-    ('escidoc:aggdef1', 'escidoc:scope1', 'Page Statistics for Framework', 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    ('escidoc:aggdef1', 'escidoc:scope1', 'Page Statistics for Framework', '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.aggregation_tables (id, aggregation_definition_id, name, list_index) 
     VALUES 
@@ -383,7 +383,7 @@ ON sm._escidocaggdef1_object_statistics (month, year);
 
 INSERT INTO sm.aggregation_definitions (id, scope_id, name, creator_id, creation_date) 
     VALUES 
-    ('escidoc:aggdef2', 'escidoc:scope1', 'Error Statistics for Framework', 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    ('escidoc:aggdef2', 'escidoc:scope1', 'Error Statistics for Framework', '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.aggregation_tables (id, aggregation_definition_id, name, list_index) 
     VALUES 
@@ -526,7 +526,7 @@ INSERT INTO sm.report_definitions (
   ('escidoc:repdef1', 'escidoc:scope1', 'Successful Framework Requests', 
   'select handler, request, day, month, year, sum(requests) 
     from _escidocaggdef1_request_statistics 
-    group by handler, request, day, month, year;', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    group by handler, request, day, month, year;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
   id,
@@ -539,7 +539,7 @@ INSERT INTO sm.report_definitions (
   id, scope_id, name, sql, creator_id, creation_date, modified_by_id, last_modification_date)
   VALUES
   ('escidoc:repdef2', 'escidoc:scope1', 'Unsuccessful Framework Requests', 
-  'select * from _escidocaggdef2_error_statistics;', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+  'select * from _escidocaggdef2_error_statistics;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
   id,
@@ -552,7 +552,7 @@ INSERT INTO sm.report_definitions (
   id, scope_id, name, sql, creator_id, creation_date, modified_by_id, last_modification_date)
   VALUES
   ('escidoc:repdef3', 'escidoc:scope1', 'Successful Framework Requests by Month and Year', 
-  'select * from _escidocaggdef1_request_statistics where month = {month} and year = {year};', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+  'select * from _escidocaggdef1_request_statistics where month = {month} and year = {year};', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
   id,
@@ -569,7 +569,7 @@ INSERT INTO sm.report_definitions (
     from _escidocaggdef1_object_statistics 
     where object_id = {object_id} 
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
-    and request=''retrieve'' group by object_id;', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    and request=''retrieve'' group by object_id;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
   id,
@@ -587,7 +587,7 @@ INSERT INTO sm.report_definitions (
     where parent_object_id = {object_id} 
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
     and request=''retrieveContent'' 
-    group by parent_object_id;', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    group by parent_object_id;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
   id,
@@ -605,7 +605,7 @@ INSERT INTO sm.report_definitions (
     where object_id = {object_id} 
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
     and request=''retrieveContent'' 
-    group by object_id;', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    group by object_id;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
   id,
@@ -624,7 +624,7 @@ INSERT INTO sm.report_definitions (
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
     and request=''retrieve'' 
     and user_id='''' 
-    group by object_id;', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    group by object_id;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
   id,
@@ -643,7 +643,7 @@ INSERT INTO sm.report_definitions (
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
     and request=''retrieveContent'' 
     and user_id='''' 
-    group by parent_object_id;', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    group by parent_object_id;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
   id,
@@ -662,7 +662,7 @@ INSERT INTO sm.report_definitions (
     and handler=''de.escidoc.core.om.service.ItemHandler'' 
     and request=''retrieveContent'' 
     and user_id='''' 
-    group by object_id;', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    group by object_id;', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.report_definition_roles ( 
   id,

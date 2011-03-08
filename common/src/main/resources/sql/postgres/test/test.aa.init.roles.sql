@@ -6,7 +6,7 @@
 INSERT INTO aa.escidoc_role
     (id, role_name, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
-    ('escidoc:role-grant-test1', 'Grant Test1', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1',
+    ('escidoc:role-grant-test1', 'Grant Test1', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.scope_def 
@@ -43,7 +43,7 @@ INSERT INTO aa.escidoc_policies
 INSERT INTO aa.escidoc_role
     (id, role_name, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
-    ('escidoc:role-grant-test2', 'Grant Test2', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1',
+    ('escidoc:role-grant-test2', 'Grant Test2', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.scope_def 
@@ -79,7 +79,7 @@ INSERT INTO aa.escidoc_policies
 INSERT INTO aa.escidoc_role
     (id, role_name, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
-    ('escidoc:role-grant-test3', 'Grant Test3', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1',
+    ('escidoc:role-grant-test3', 'Grant Test3', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.scope_def 
@@ -116,7 +116,7 @@ INSERT INTO aa.escidoc_policies
 INSERT INTO aa.escidoc_role
     (id, role_name, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
-    ('escidoc:role-grant-test4', 'Grant Test4', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1',
+    ('escidoc:role-grant-test4', 'Grant Test4', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.scope_def 
@@ -153,7 +153,7 @@ INSERT INTO aa.escidoc_policies
 INSERT INTO aa.escidoc_role
     (id, role_name, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
-    ('escidoc:role-grant-test5', 'Grant Test5', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1',
+    ('escidoc:role-grant-test5', 'Grant Test5', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.scope_def 

@@ -78,9 +78,9 @@ INSERT INTO aa.user_account
     'Test System Administrator User',
     'testsystemadministrator',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -96,7 +96,7 @@ INSERT INTO aa.user_login_data
 INSERT INTO aa.role_grant 
     (id, user_id, role_id, creator_id, creation_date)
      VALUES
-    ('escidoc:testsystemadministratorgrant1', 'escidoc:testsystemadministrator', 'escidoc:role-system-administrator', 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    ('escidoc:testsystemadministratorgrant1', 'escidoc:testsystemadministrator', 'escidoc:role-system-administrator', '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 
 
@@ -111,9 +111,9 @@ INSERT INTO aa.user_account
     'Test System Administrator User1',
     'testsystemadministrator1',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -129,7 +129,7 @@ INSERT INTO aa.user_login_data
 INSERT INTO aa.role_grant 
     (id, user_id, role_id, creator_id, creation_date)
      VALUES
-    ('escidoc:testsystemadministratorgrant11', 'escidoc:testsystemadministrator1', 'escidoc:role-system-administrator', 'escidoc:exuser1', CURRENT_TIMESTAMP);
+    ('escidoc:testsystemadministratorgrant11', 'escidoc:testsystemadministrator1', 'escidoc:role-system-administrator', '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 
 
@@ -144,9 +144,9 @@ INSERT INTO aa.user_account
     'Test Administrator User',
     'testadministrator',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -168,7 +168,7 @@ INSERT INTO aa.role_grant
     'escidoc:persistent3', 
     'PubMan Test Collection', 
     '/ir/context/escidoc:persistent3',
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -184,9 +184,9 @@ INSERT INTO aa.user_account
     'Test OU-Administrator User',
     'testouadministrator',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -208,7 +208,7 @@ INSERT INTO aa.role_grant
     'escidoc:persistent11', 
     'Test Org Unit', 
     '/oum/organizational-unit/escidoc:persistent11',
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -224,9 +224,9 @@ INSERT INTO aa.user_account
     'Test Audience User',
     'testaudience',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -252,9 +252,9 @@ INSERT INTO aa.user_account
     'Test Author User',
     'testauthor',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -280,9 +280,9 @@ INSERT INTO aa.user_account
     'Test Collaborator User',
     'testcollaborator',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -308,9 +308,9 @@ INSERT INTO aa.user_account
     'Test Depositor User',
     'testdepositor',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -332,7 +332,7 @@ INSERT INTO aa.role_grant
     'escidoc:persistent3', 
     'PubMan Test Collection', 
     '/ir/context/escidoc:persistent3',
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -348,9 +348,9 @@ INSERT INTO aa.user_account
     'Test Depositor User2',
     'testdepositor2',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -372,7 +372,7 @@ INSERT INTO aa.role_grant
     'escidoc:persistent3', 
     'PubMan Test Collection', 
     '/ir/context/escidoc:persistent3',
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -387,9 +387,9 @@ INSERT INTO aa.user_account
     'Test Depositor User3',
     'testdepositor3',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -411,7 +411,7 @@ INSERT INTO aa.role_grant
     'escidoc:persistent10', 
     'WALS Context', 
     '/ir/context/escidoc:persistent10',
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -426,9 +426,9 @@ INSERT INTO aa.user_account
     'Test Ingester User',
     'testingester',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -454,9 +454,9 @@ INSERT INTO aa.user_account
     'Test Md-Editor User',
     'testmdeditor',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -478,7 +478,7 @@ INSERT INTO aa.role_grant
     'escidoc:persistent3', 
     'PubMan Test Collection', 
     '/ir/context/escidoc:persistent3',
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -494,9 +494,9 @@ INSERT INTO aa.user_account
     'Test Moderator User',
     'testmoderator',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -518,7 +518,7 @@ INSERT INTO aa.role_grant
     'escidoc:persistent3', 
     'PubMan Test Collection', 
     '/ir/context/escidoc:persistent3',
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -534,9 +534,9 @@ INSERT INTO aa.user_account
     'Test Context-Administrator User',
     'testcontextadministrator',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -555,7 +555,7 @@ INSERT INTO aa.role_grant
     ('escidoc:testcontextadministratorgrant1', 
     'escidoc:testcontextadministrator', 
     'escidoc:role-context-administrator', 
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -571,9 +571,9 @@ INSERT INTO aa.user_account
     'Test Content-Relation-Manager User',
     'testcontentrelationmanager',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -592,7 +592,7 @@ INSERT INTO aa.role_grant
     ('escidoc:testcontentrelationmanagergrant1', 
     'escidoc:testcontentrelationmanager', 
     'escidoc:role-content-relation-manager', 
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -608,9 +608,9 @@ INSERT INTO aa.user_account
     'Test Privileged-Viewer User',
     'testprivilegedviewer',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -632,7 +632,7 @@ INSERT INTO aa.role_grant
     'escidoc:persistent3', 
     'PubMan Test Collection', 
     '/ir/context/escidoc:persistent3',
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -648,9 +648,9 @@ INSERT INTO aa.user_account
     'Test Statistics-Editor User',
     'teststatisticseditor',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -672,7 +672,7 @@ INSERT INTO aa.role_grant
     'escidoc:scope3', 
     'Scope with id escidoc:scope3', 
     '/statistic/scope/escidoc:scope3',
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -688,9 +688,9 @@ INSERT INTO aa.user_account
     'Test Statistics-Reader User',
     'teststatisticsreader',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -712,7 +712,7 @@ INSERT INTO aa.role_grant
     'escidoc:scope3', 
     'Scope with id escidoc:scope3', 
     '/statistic/scope/escidoc:scope3',
-    'escidoc:exuser1', 
+    '${escidoc.creator.user}', 
     CURRENT_TIMESTAMP);
 
 
@@ -728,9 +728,9 @@ INSERT INTO aa.user_account
     'Test System-Inspector User',
     'testsysteminspector',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -754,9 +754,9 @@ INSERT INTO aa.user_account
     'Test User',
     'test',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -787,9 +787,9 @@ INSERT INTO aa.user_account
     'Test User1',
     'test1',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute

@@ -46,6 +46,11 @@
 
 	<build>
 		<outputDirectory>target/test-classes</outputDirectory>
+
+		<filters>
+			<filter>${basedir}/src/test/filters/database-filter-values.properties</filter>
+		</filters>
+		
 		<plugins>
 
 			<plugin>
@@ -651,6 +656,33 @@
 			</activation>
 			<build>
 				<plugins>
+
+					<!-- Copy SQL files to local project and filter them. This could be 
+						done with sql-maven-plugin version 1.4 but this version has issues. -->
+					<plugin>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>2.5</version>
+						<executions>
+							<execution>
+								<id>copy-resources</id>
+								<phase>process-sources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/target/sql-resources</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${basedir}/../common/src/main/resources/sql</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>sql-maven-plugin</artifactId>
@@ -712,7 +744,7 @@
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
 									<srcFiles>
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/create-language.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/create-language.sql
 										</srcFile>
 									</srcFiles>
 								</configuration>
@@ -733,17 +765,17 @@
 										<!-- the initialize phase allows no filtering. Furthermore is creating 
 											database part of the test phase. That's why here should only be these tables 
 											are generated where hibernate depends on. -->
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/aa/aa.create.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/aa/aa.create.sql
 										</srcFile>
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/adm/adm.create.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/adm/adm.create.sql
 										</srcFile>
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/oai/oai.create.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/oai/oai.create.sql
 										</srcFile>
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/om/om.create.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/om/om.create.sql
 										</srcFile>
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/sm/sm.create.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/sm/sm.create.sql
 										</srcFile>
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/st/st.create.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/st/st.create.sql
 										</srcFile>
 									</srcFiles>
 								</configuration>
@@ -764,9 +796,9 @@
 									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
 									<srcFiles>
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/aa/aa.init.user-accounts.common.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/aa/aa.init.user-accounts.common.sql
 										</srcFile>
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/aa/aa.init.user-accounts.MPDL.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/aa/aa.init.user-accounts.MPDL.sql
 										</srcFile>
 									</srcFiles>
 								</configuration>
@@ -787,7 +819,7 @@
 									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
 									<fileset>
-										<basedir>${basedir}/../common/src/main/resources/sql/postgres/</basedir>
+										<basedir>${basedir}/target/sql-resources/postgres</basedir>
 										<includes>
 											<include>aa/aa.init.handles.*.sql
 											</include>
@@ -811,7 +843,7 @@
 									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
 									<fileset>
-										<basedir>${basedir}/../common/src/main/resources/sql/postgres/</basedir>
+										<basedir>${basedir}/target/sql-resources/postgres/</basedir>
 										<includes>
 											<include>aa/aa.init.roles.*.sql
 											</include>
@@ -835,7 +867,7 @@
 									<password>${escidoc.database.password}</password>
 									<autocommit>true</autocommit>
 									<fileset>
-										<basedir>${basedir}/../common/src/main/resources/sql/postgres/</basedir>
+										<basedir>${basedir}/target/sql-resources/postgres/</basedir>
 										<includes>
 											<include>aa/aa.init.grants.*.sql
 											</include>
@@ -863,13 +895,13 @@
 										<!-- the initialize phase allows no filtering. Furthermore is creating 
 											database part of the test phase. That's why here should only be these tables 
 											are generated where hibernate depends on. -->
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/test/test.aa.init.roles.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/test/test.aa.init.roles.sql
 										</srcFile>
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/test/test.aa.init.users.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/test/test.aa.init.users.sql
 										</srcFile>
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/test/test.aa.init.groups.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/test/test.aa.init.groups.sql
 										</srcFile>
-										<srcFile>${basedir}/../common/src/main/resources/sql/postgres/test/test.sm.create.sql
+										<srcFile>${basedir}/target/sql-resources/postgres/test/test.sm.create.sql
 										</srcFile>
 									</srcFiles>
 								</configuration>
@@ -1049,8 +1081,7 @@
 									<!-- no transaction -->
 									<autocommit>true</autocommit>
 									<sqlCommand>CREATE DATABASE "${fedora.database}" WITH
-										ENCODING='UTF8'
-										OWNER="${fedora.database.user}"</sqlCommand>
+										ENCODING='UTF8' OWNER="${fedora.database.user}"</sqlCommand>
 								</configuration>
 							</execution>
 							<execution>

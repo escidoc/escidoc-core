@@ -1,10 +1,10 @@
 INSERT INTO sm.scopes (id, name, scope_type, creator_id, creation_date, modified_by_id, last_modification_date) 
 VALUES 
-('escidoc:scope3','Test Scope for JUnit', 'normal', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+('escidoc:scope3','Test Scope for JUnit', 'normal', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.scopes (id, name, scope_type, creator_id, creation_date, modified_by_id, last_modification_date) 
 VALUES 
-('escidoc:scope4','Test Scope1 for JUnit', 'normal', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1', CURRENT_TIMESTAMP);
+('escidoc:scope4','Test Scope1 for JUnit', 'normal', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}', CURRENT_TIMESTAMP);
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES

@@ -12,9 +12,9 @@ INSERT INTO aa.user_account
     'roland',
     'roland',
     'Shibboleth-Handle-1',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -38,9 +38,9 @@ INSERT INTO aa.user_account
     'Inspector (Read Only Super User)',
     'inspector',
     'inspector',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -64,9 +64,9 @@ INSERT INTO aa.user_account
     'Test Depositor Scientist',
     'test_dep_scientist',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -86,9 +86,9 @@ INSERT INTO aa.user_account
     'Test Depositor Library',
     'test_dep_lib',
     'pubman',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -108,9 +108,9 @@ INSERT INTO aa.user_account
     'Test Editor',
     'test_editor',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -130,9 +130,9 @@ INSERT INTO aa.user_account
     'Test Author',
     'test_author',
     'escidoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -153,9 +153,9 @@ INSERT INTO aa.user_account
     'Lexus',
     'lexus',
     'lexus',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -174,9 +174,9 @@ INSERT INTO aa.user_account
     'TestStatistics Editor',
     'test_statistics_editor',
     'test_statistics_editor',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -195,9 +195,9 @@ INSERT INTO aa.user_account
     'TestStatistics Reader',
     'test_statistics_reader',
     'test_statistics_reader',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -216,9 +216,9 @@ INSERT INTO aa.user_account
     'TestPrivileged Viewer',
     'test_privileged_viewer',
     'test_privileged_viewer',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute

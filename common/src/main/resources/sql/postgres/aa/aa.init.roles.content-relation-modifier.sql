@@ -18,7 +18,7 @@
 INSERT INTO aa.escidoc_role
     (id, role_name, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
-    ('escidoc:role-content-relation-modifier', 'ContentRelationModifier', 'escidoc:exuser1', CURRENT_TIMESTAMP, 'escidoc:exuser1',
+    ('escidoc:role-content-relation-modifier', 'ContentRelationModifier', '${escidoc.creator.user}', CURRENT_TIMESTAMP, '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
 
 INSERT INTO aa.scope_def 

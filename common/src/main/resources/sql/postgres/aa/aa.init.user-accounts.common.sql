@@ -7,7 +7,7 @@
 --INSERT INTO aa.user_account
 --	(id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
 --	 VALUES
---	('escidoc:exuser1',
+--	('${escidoc.creator.user}',
 --	true,
 --    'System Administrator User',
 --    'sysadmin',
@@ -21,26 +21,26 @@
 INSERT INTO aa.user_account
 	(id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
 	 VALUES
-	('escidoc:exuser1',
+	('${escidoc.creator.user}',
 	true,
     'System Administrator User',
     'sysadmin',
     'eSciDoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
 
     
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:exuser1ouattribute', 'escidoc:exuser1','o', 'escidoc:ex3', 'TRUE');
+    ('${escidoc.creator.user}ouattribute', '${escidoc.creator.user}','o', 'escidoc:ex3', 'TRUE');
 
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:exuser1emailattribute', 'escidoc:exuser1','email', 'system.administrator@superuser', 'TRUE');
+    ('${escidoc.creator.user}emailattribute', '${escidoc.creator.user}','email', 'system.administrator@superuser', 'TRUE');
 
     /*
      * System Inspector user (Read only super user).
@@ -53,9 +53,9 @@ INSERT INTO aa.user_account
     'System Inspector User (Read Only Super User)',
     'sysinspector',
     'eSciDoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -79,9 +79,9 @@ INSERT INTO aa.user_account
     'Depositor User',
     'depositor',
     'eSciDoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -100,9 +100,9 @@ INSERT INTO aa.user_account
     'Ingestor User',
     'ingester',
     'eSciDoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
 INSERT INTO aa.user_attribute
@@ -121,9 +121,9 @@ INSERT INTO aa.user_account
     'Collaborator User',
     'collaborator',
     'eSciDoc',
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP,
-    'escidoc:exuser1',
+    '${escidoc.creator.user}',
     CURRENT_TIMESTAMP);
     
     

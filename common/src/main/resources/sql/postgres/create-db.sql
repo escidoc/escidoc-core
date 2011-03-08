@@ -5,7 +5,7 @@
 /**
  * create eSciDoc DB user role
  */  
-CREATE ROLE "${escidoc.database.userid}" LOGIN 
+CREATE ROLE "${escidoc.database.user}" LOGIN 
 	PASSWORD '${escidoc.database.password}' 
 	NOINHERIT CREATEDB VALID UNTIL 'infinity'; 
 
@@ -13,12 +13,12 @@ CREATE ROLE "${escidoc.database.userid}" LOGIN
  * create eSciDoc core database
  */   
 CREATE DATABASE "${escidoc.database.name}" WITH ENCODING='UTF8' 
-	OWNER="${escidoc.database.userid}" TEMPLATE=template0;
+	OWNER="${escidoc.database.user}" TEMPLATE=template0;
 
 /**
  * create Fedora DB user role
  */  
-CREATE ROLE "${fedora.database.userid}" LOGIN 
+CREATE ROLE "${fedora.database.user}" LOGIN 
 	PASSWORD '${fedora.database.password}' 
 	NOINHERIT CREATEDB VALID UNTIL 'infinity';    
 
@@ -26,13 +26,13 @@ CREATE ROLE "${fedora.database.userid}" LOGIN
  * create Fedora database
  */
 CREATE DATABASE "${fedora.database.name}" WITH ENCODING='UTF8' 
-	OWNER="${fedora.database.userid}";   
+	OWNER="${fedora.database.user}";   
 
 /**
  * create triple-store database
  */ 
 CREATE DATABASE "riTriples" WITH ENCODING='SQL_ASCII' 
-	OWNER="${fedora.database.userid}" TEMPLATE=template0;
+	OWNER="${fedora.database.user}" TEMPLATE=template0;
 
 /**
  * create database scripting language
