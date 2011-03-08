@@ -906,7 +906,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         List<StartElementWithChildElements> elementsToAdd = null;
 
         // prepare update relations
-        if (relationsToUpdate != null && !relationsToUpdate.isEmpty()) {
+        if (!relationsToUpdate.isEmpty()) {
             elementsToAdd = new ArrayList<StartElementWithChildElements>();
             for (final String relation : relationsToUpdate) {
                 final String[] predicateAndTarget = relation.split("###");
@@ -929,7 +929,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         }
         // prepare add/remove
         Map<String, List<StartElementWithChildElements>> toRemove = null;
-        if (existRelations != null && !existRelations.isEmpty()) {
+        if (!existRelations.isEmpty()) {
             final Iterator<String> iterator = existRelations.iterator();
             final HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
                 new HashMap<String, List<StartElementWithChildElements>>();
