@@ -143,14 +143,12 @@ public class NewComponentExtractor extends DefaultHandler {
                 final int indexObjid = element.indexOfAttribute(null, "objid");
                 final int indexHref =
                     element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
-                if (indexObjid > -1 && element
+                if (!(indexObjid > -1 && element
                     .getAttribute(indexObjid).getValue().length() > 0
                     || indexHref > -1 && Utility.getId(
-                        element.getAttribute(indexHref).getValue()).length() > 0) {
-                    // it's not new because there is an ID
-                }
-                else {
-                    // start new component
+                        element.getAttribute(indexHref).getValue()).length() > 0)) {
+
+                      // start new component if there is no ID
                     final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
                     writer = XmlUtility.createXmlStreamWriter(out);
