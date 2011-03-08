@@ -165,7 +165,7 @@ public class SearchTestBase extends SbTestBase {
                     de.escidoc.core.test.common.client.servlet.Constants.HOST_PORT,
                     de.escidoc.core.test.common.client.servlet.Constants.SEARCH_BASE_URI
                         + "/" + indexName + "?query=" 
-                        + URLEncoder.encode(query, "UTF-8"));
+                        + URLEncoder.encode(query, DEFAULT_CHARSET));
 
         for (;;) {
             HttpResponse httpRes =
@@ -576,6 +576,21 @@ public class SearchTestBase extends SbTestBase {
     protected String getLastModificationDate(final String xml) throws Exception {
 
         return getLastModificationDateValue(EscidocRestSoapTestBase
+            .getDocument(xml));
+    }
+
+    /**
+     * get creation-date from xml String.
+     * 
+     * @param xml
+     *            String xml
+     * @return String creation-date
+     * @throws Exception
+     *             If anything fails.
+     */
+    protected String getCreationDate(final String xml) throws Exception {
+
+        return getCreationDateValue(EscidocRestSoapTestBase
             .getDocument(xml));
     }
 

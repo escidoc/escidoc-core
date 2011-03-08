@@ -435,7 +435,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         final String loginname =
             selectSingleNode(createdDocument, XPATH_USER_ACCOUNT_LOGINNAME)
                 .getTextContent();
-        String encodedLoginName = URLEncoder.encode(loginname, "UTF-8");
+        String encodedLoginName = URLEncoder.encode(loginname, DEFAULT_CHARSET);
         String retrievedXml = null;
         try {
             retrievedXml = retrieve(encodedLoginName);
