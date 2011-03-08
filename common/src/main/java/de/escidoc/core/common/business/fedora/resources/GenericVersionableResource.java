@@ -656,7 +656,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         final Map<String, String> versionData;
 
         try {
-            versionData = getResourceProperties();
+            versionData = super.getResourceProperties();
         }
         catch (TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
