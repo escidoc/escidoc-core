@@ -120,6 +120,9 @@
 			<param name="script" value="aa.init.method-mappings.om.content-relation.sql" />
 		</antcall>
 		<antcall target="execute-sql">
+			<param name="script" value="aa.init.method-mappings.om.fedora-deviation.sql" />
+		</antcall>
+		<antcall target="execute-sql">
 			<param name="script" value="aa.init.method-mappings.oai.set-definition.sql" />
 		</antcall>
 		<antcall target="execute-sql">
@@ -205,6 +208,18 @@
         </antcall>
         <antcall target="execute-sql">
             <param name="script" value="aa.init.roles.audience.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.context-administrator.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.user-account-inspector.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.context-modifier.sql" />
+        </antcall>
+        <antcall target="execute-sql">
+            <param name="script" value="aa.init.roles.user-account-administrator.sql" />
         </antcall>
 
 		<!-- AA Grants -->
