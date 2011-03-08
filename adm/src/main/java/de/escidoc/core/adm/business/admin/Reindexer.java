@@ -28,6 +28,15 @@
  */
 package de.escidoc.core.adm.business.admin;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
+
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
@@ -41,13 +50,6 @@ import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexRequestBuilder;
 import de.escidoc.core.index.IndexService;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.Map;
 
 /**
  * Provides Methods used for Re-indexing.
@@ -444,11 +446,19 @@ public class Reindexer {
                 final ReindexStatus reindexStatus = ReindexStatus.getInstance();
                 final String objectType = type.getUri();
                 String line;
+                Set<String> indexedPids = new HashSet<String>();
+                if (!clearIndex) {
+                    indexedPids = indexingHandler.getPids(objectType, indexName);
+                }
+
                 while ((line = input.readLine()) != null) {
                     final String subject = getSubject(line);
+
                     if (subject != null) {
-                        final String id = subject.substring(subject.indexOf('/') + 1);
-                        if (clearIndex || !indexingHandler.exists(id, objectType, indexName)) {
+                        final String id =
+                            subject.substring(subject.indexOf('/') + 1);
+
+                        if (!indexedPids.contains(id)) {
                             reindexStatus.inc(type);
                             result.add(id);
                         }
