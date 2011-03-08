@@ -48,13 +48,13 @@ import java.util.Map;
  */
 public abstract class WriteHandler extends DefaultHandler {
 
-    private XMLStreamWriter writer = null;
+    private XMLStreamWriter writer;
 
     // must be initialized if an instance is created, see creation in
     // MultipleExtractor
     private Map<String, List> nsuris;
 
-    private int deepLevel = 0;
+    private int deepLevel;
 
     protected XMLStreamWriter getWriter() {
         return writer;
@@ -90,7 +90,7 @@ public abstract class WriteHandler extends DefaultHandler {
         final String uri = element.getNamespace();
         String prefix = element.getPrefix();
 
-        if ((uri) != null) {
+        if (uri != null) {
             if (nsuris.containsKey(uri)) {
                 final List namespaceTrace = nsuris.get(uri);
                 final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
@@ -214,7 +214,7 @@ public abstract class WriteHandler extends DefaultHandler {
         final String attrNameSpace = attribute.getNamespace();
         final String attrPrefix = attribute.getPrefix();
         final String attValue = attribute.getValue();
-        if ((attributeName != null) && attLocalName.equals(attributeName)) {
+        if (attributeName != null && attLocalName.equals(attributeName)) {
             attributeValue = attValue;
         }
         if (!"md-record".equals(theName) && !"admin-descriptor".equals(theName)) {

@@ -49,9 +49,9 @@ import java.util.TreeMap;
  */
 public class XMLHashHandler extends DefaultHandler {
 
-    private StringBuffer string = null;
+    private StringBuffer string;
 
-    private String hash = null;
+    private String hash;
 
     @Override
     public void characters(final char[] ch, final int start, final int length)

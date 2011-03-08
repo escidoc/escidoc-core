@@ -48,7 +48,7 @@ public class LinkCollectionStaxHandler extends LinkStaxHandler {
     
     private final List<String> hrefs = new ArrayList<String>();
     private final List<String> objids = new ArrayList<String>();
-    private int index = 0;
+    private int index;
     
     /**
      * The constructor.

@@ -50,42 +50,6 @@ import java.util.Map;
 public interface ComponentInterface extends FedoraResource {
 
     /**
-     * Gets the RELS-EXT datastream of the fedora object.
-     * 
-     * @return The Fedora RELS-EXT datastream.
-     * @throws StreamNotFoundException
-     *             If there is no RELS-EXT datastream of a fedora object with
-     *             <code>id</code>.
-     */
-    @Override
-    Datastream getRelsExt() throws StreamNotFoundException,
-        FedoraSystemException;
-
-    /**
-     * Sets the RELS-EXT datastream and saves it in fedora. If the datastream is
-     * already set and unchanged, nothing will be done.
-     * 
-     * @param ds
-     *            A Datastream representing the Fedora RELS-EXT datastream.
-     * @throws StreamNotFoundException
-     *             If there is no RELS-EXT datastream of a fedora object with
-     *             <code>id</code>. This is probably an error cause a fedora
-     *             object have to have this datastream.
-     * @throws LockingException
-     * @throws WebserverSystemException
-     * @throws TripleStoreSystemException
-     * @throws TripleStoreSystemException
-     * @throws XmlParserSystemException
-     * @throws XmlParserSystemException
-     * @throws SystemException
-     *             Thrown in case of an internal error.
-     */
-    @Override
-    void setRelsExt(Datastream ds) throws StreamNotFoundException,
-        LockingException, FedoraSystemException, WebserverSystemException,
-        TripleStoreSystemException, XmlParserSystemException;
-
-    /**
      * 
      * @return A Map containing the metadata datastreams of this resource.
      */

@@ -18,8 +18,6 @@ import java.util.GregorianCalendar;
 
 /**
  * Default implementation of {@link Parameter}.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="parameter", namespace="http://www.escidoc.de/schemas/commontypes/0.3",

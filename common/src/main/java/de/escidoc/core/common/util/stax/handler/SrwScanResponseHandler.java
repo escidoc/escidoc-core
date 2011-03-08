@@ -52,7 +52,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
     private static final String TERM_VALUE_PATH = 
                         "/scanResponse/terms/term/value";
     
-    private int noOfDocumentTerms = 0;
+    private int noOfDocumentTerms;
     
     /**
      * Constructor

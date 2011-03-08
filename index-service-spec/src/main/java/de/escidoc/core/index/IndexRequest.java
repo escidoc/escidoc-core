@@ -4,8 +4,6 @@ import java.util.Date;
 
 /**
  * Represents an index request.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public interface IndexRequest {
 

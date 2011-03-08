@@ -163,11 +163,11 @@ public class FedoraUtility implements InitializingBean {
 
     private String identifierPrefix;
 
-    private ClientConnectionManager cm = null;
+    private ClientConnectionManager cm;
 
     private DefaultHttpClient httpClient;
 
-    private TripleStoreUtility tripleStoreUtility = null;
+    private TripleStoreUtility tripleStoreUtility;
 
     // The methods exposed via jmx
 
@@ -670,7 +670,7 @@ public class FedoraUtility implements InitializingBean {
                 names.add(d.getID());
             }
         }
-        return (names);
+        return names;
     }
 
     /**

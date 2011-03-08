@@ -15,8 +15,6 @@ import java.util.List;
 
 /**
  * Default implementation of {@link StatisticRecord}.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="statistic-record",

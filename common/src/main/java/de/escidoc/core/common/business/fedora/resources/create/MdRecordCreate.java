@@ -63,33 +63,33 @@ public class MdRecordCreate implements Serializable {
 
     private final RepositoryIndicator ri = new RepositoryIndicator();
 
-    private String content = null;
+    private String content;
 
-    private String nameSpace = null;
+    private String nameSpace;
 
-    private String mdRecordName = null;
+    private String mdRecordName;
 
     /*
      * Required as alternate ID.
      */
-    private String type = null;
+    private String type;
 
-    private String schema = null;
+    private String schema;
 
     private String mimeType = Constants.DEFAULT_MIME_TYPE;
 
     /*
      * Storage (Fedora) specific values
      */
-    private String label = null;
+    private String label;
 
-    private String checksum = null;
+    private String checksum;
 
-    private boolean checksumEnabled = false;
+    private boolean checksumEnabled;
 
-    private String controlGroup = null; // Datastream.CONTROL_GROUP_MANAGED;
+    private String controlGroup; // Datastream.CONTROL_GROUP_MANAGED;
 
-    private String datastreamLocation = null;
+    private String datastreamLocation;
 
     /**
      * Set Name of Metadata Record.
@@ -101,7 +101,7 @@ public class MdRecordCreate implements Serializable {
      */
     public void setName(final String name) throws InvalidContentException {
 
-        if ((name == null) || name.length() == 0) {
+        if (name == null || name.length() == 0) {
             throw new InvalidContentException("Empty name of meta data record");
         }
 

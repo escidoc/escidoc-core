@@ -69,9 +69,9 @@ public class ContentStreamsHandler extends DefaultHandler {
     private final List<ContentStreamCreate> contentStreams =
         new ArrayList<ContentStreamCreate>();
 
-    private boolean parsingContentStream = false;
+    private boolean parsingContentStream;
 
-    private ContentStreamHandler2 contentStreamHandler = null;
+    private ContentStreamHandler2 contentStreamHandler;
 
     /**
      * ContentStreamsHandler.

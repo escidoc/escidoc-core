@@ -73,17 +73,17 @@ public class PIDManagerRESTService implements PIDSystem {
     private static final AppLogger log =
         new AppLogger(PIDManagerRESTService.class.getName());
 
-    private String pidGeneratorServer = null;
+    private String pidGeneratorServer;
 
     private String separator = "/";
 
     private String pidNamespace = "hdl";
 
-    private String globalPrefix = null;
+    private String globalPrefix;
 
     private String localPrefix = "";
 
-    private ConnectionUtility connectionUtility = null;
+    private ConnectionUtility connectionUtility;
 
     /**
      * PIDManagerRESTService.

@@ -44,7 +44,7 @@ public class HandlerBase extends DefaultHandler {
 
     private StaxParser parser;
 
-    private TripleStoreUtility tripleStoreUtility = null;
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * 

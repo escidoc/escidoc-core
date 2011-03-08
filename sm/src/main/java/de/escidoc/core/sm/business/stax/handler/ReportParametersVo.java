@@ -39,7 +39,7 @@ import java.util.Collection;
  * @sm
  */
 public class ReportParametersVo {
-    private String reportDefinitionId = null;
+    private String reportDefinitionId;
     private final Collection<ParameterVo> parameterVos = new ArrayList<ParameterVo>();
     /**
      * @return the reportDefinitionId

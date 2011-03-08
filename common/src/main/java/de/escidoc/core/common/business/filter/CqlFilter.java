@@ -75,7 +75,7 @@ public abstract class CqlFilter {
      */
     protected final Set<String> specialCriteriaNames = new HashSet<String>();
 
-    protected DetachedCriteria detachedCriteria = null;
+    protected DetachedCriteria detachedCriteria;
 
     public void addCriteria(final String key, final Object[] value) {
         this.criteriaMap.put(key, value);
@@ -97,13 +97,13 @@ public abstract class CqlFilter {
         final Criterion right = evaluate(node.right);
 
         if (node instanceof CQLAndNode) {
-            if ((left != null) || (right != null)) {
+            if (left != null || right != null) {
                 result = Restrictions.and(
                     getAndRestriction(left), getAndRestriction(right));
             }
         }
         else if (node instanceof CQLOrNode) {
-            if ((left != null) || (right != null)) {
+            if (left != null || right != null) {
                 result = Restrictions.or(
                     getOrRestriction(left), getOrRestriction(right));
             }
@@ -162,7 +162,7 @@ public abstract class CqlFilter {
         final Criterion result;
         final String rel = relation.getBase();
 
-        if ((value == null) || (value.toString().length() == 0)) {
+        if (value == null || value.toString().length() == 0) {
             result = Restrictions.isNull(propertyName);
         }
         else {

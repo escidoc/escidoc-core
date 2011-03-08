@@ -55,14 +55,14 @@ import java.util.Map;
  */
 public class ContentStreamHandler extends WriteHandler {
 
-    private boolean inContentStreams = false;
+    private boolean inContentStreams;
 
     private final Map<String, Map<String, Object>> contentStreams =
         new HashMap<String, Map<String, Object>>();
 
-    private String contentStreamName = null;
+    private String contentStreamName;
 
-    private Item item = null;
+    private Item item;
 
     private boolean wrote;
 
@@ -84,11 +84,11 @@ public class ContentStreamHandler extends WriteHandler {
     @Override
     public String characters(final String data, final StartElement element)
         throws XMLStreamException {
-        if ((inContentStreams)
-            && (contentStreamName != null
+        if (inContentStreams
+            && contentStreamName != null
                 && getWriter() != null
                 && "text/xml".equals(contentStreams.get(contentStreamName).get(
-                Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE)))) {
+                Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
             getWriter().writeCharacters(data);
         }
         return data;
@@ -138,13 +138,13 @@ public class ContentStreamHandler extends WriteHandler {
                     }
                 }
                 // check if we got an href or content
-                if ((!contentStreams.get(contentStreamName).containsKey(
-                    Elements.ATTRIBUTE_XLINK_HREF))
-                    && (contentStreams
+                if (!contentStreams.get(contentStreamName).containsKey(
+                    Elements.ATTRIBUTE_XLINK_HREF)
+                    && contentStreams
                         .get(contentStreamName)
                         .get(Elements.ATTRIBUTE_STORAGE)
                         .equals(
-                            de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED))) {
+                            de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
                     // internal-managed content-stream must have either href
                     // or content
                     final ByteArrayOutputStream baos =

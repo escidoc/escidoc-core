@@ -192,7 +192,7 @@ public class RoleGrantFilter extends CqlFilter {
         if (parts != null && !specialCriteriaNames.contains(node.getIndex())) {
             result =
                 evaluate(node.getRelation(), (String) parts[1], value,
-                    (Integer) (parts[0]) == COMPARE_LIKE);
+                    (Integer) parts[0] == COMPARE_LIKE);
         }
         else {
             final String columnName = node.getIndex();
@@ -212,7 +212,7 @@ public class RoleGrantFilter extends CqlFilter {
                         evaluate(
                             node.getRelation(),
                             "revocationDate",
-                            ((value != null) && (value.length() > 0)) ? new Date(
+                            value != null && value.length() > 0 ? new Date(
                                 new DateTime(value).getMillis())
                                 : null, false);
                 }
@@ -222,7 +222,7 @@ public class RoleGrantFilter extends CqlFilter {
                         evaluate(
                             node.getRelation(),
                             "creationDate",
-                            ((value != null) && (value.length() > 0)) ? new Date(
+                            value != null && value.length() > 0 ? new Date(
                                 new DateTime(value).getMillis())
                                 : null, false);
                 }
@@ -232,7 +232,7 @@ public class RoleGrantFilter extends CqlFilter {
                         evaluate(
                             node.getRelation(),
                             "grantedFrom",
-                            ((value != null) && (value.length() > 0)) ? new Date(
+                            value != null && value.length() > 0 ? new Date(
                                 new DateTime(value).getMillis())
                                 : null, false);
                 }
@@ -242,7 +242,7 @@ public class RoleGrantFilter extends CqlFilter {
                         evaluate(
                             node.getRelation(),
                             "grantedTo",
-                            ((value != null) && (value.length() > 0)) ? new Date(
+                            value != null && value.length() > 0 ? new Date(
                                 new DateTime(value).getMillis())
                                 : null, false);
                 }
@@ -321,19 +321,19 @@ public class RoleGrantFilter extends CqlFilter {
         // users
         Criterion userCriterion = null;
 
-        if ((userIds != null) && (!userIds.isEmpty())) {
+        if (userIds != null && !userIds.isEmpty()) {
             userCriterion = getInRestrictions(userIds, "userId");
         }
 
         // groups
         Criterion groupCriterion = null;
 
-        if ((groupIds != null) && (!groupIds.isEmpty())) {
+        if (groupIds != null && !groupIds.isEmpty()) {
             groupCriterion = getInRestrictions(groupIds, "groupId");
         }
 
         // concatenate users and groups with OR
-        if ((userCriterion != null) || (groupCriterion != null)) {
+        if (userCriterion != null || groupCriterion != null) {
             if (userCriterion == null) {
                 result.add(groupCriterion);
             }

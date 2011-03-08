@@ -15,9 +15,6 @@ import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
 
-/**
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
- */
 public class PreemtiveAuthHttpRequestInterceptor implements HttpRequestInterceptor {
     @Override
     public void process(final HttpRequest httpRequest, final HttpContext httpContext) throws HttpException, IOException {

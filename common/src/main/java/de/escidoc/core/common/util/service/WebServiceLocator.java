@@ -63,7 +63,7 @@ public class WebServiceLocator extends Service {
 
     private String serviceName = "Service";
 
-    private String serviceAddress = null;
+    private String serviceAddress;
 
     private final Class serviceInterface;
 
@@ -206,7 +206,7 @@ public class WebServiceLocator extends Service {
              */
         }
         catch (Exception e) {
-            e.printStackTrace();
+            LOG.debug("Error on getting service.", e);
         }
         return stub;
     }
@@ -279,7 +279,7 @@ public class WebServiceLocator extends Service {
              */
         }
         catch (Exception e) {
-            e.printStackTrace();
+            LOG.debug("Error on getting service.", e);
         }
         return stub;
 
@@ -318,7 +318,7 @@ public class WebServiceLocator extends Service {
 
         }
         catch (Exception e) {
-            e.printStackTrace();
+            LOG.debug("Error on getting service.", e);
         }
         return stub;
 

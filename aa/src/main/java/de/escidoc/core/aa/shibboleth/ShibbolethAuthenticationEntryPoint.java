@@ -43,9 +43,9 @@ import java.net.URLEncoder;
 public class ShibbolethAuthenticationEntryPoint
     implements AuthenticationEntryPoint {
 
-    private String serviceProviderBaseUrl = null;
+    private String serviceProviderBaseUrl;
 
-    private String sessionInitiatorPath = null;
+    private String sessionInitiatorPath;
 
     @Override
     public void commence(

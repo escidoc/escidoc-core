@@ -43,7 +43,7 @@ import java.util.Map;
  */
 public class AggregationPreprocessorVo {
 
-    private AggregationDefinition aggregationDefinition = null;
+    private AggregationDefinition aggregationDefinition;
 
     /**
      * DataHash-Structure:.

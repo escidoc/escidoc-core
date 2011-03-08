@@ -43,7 +43,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
 
     private static final String PROPERTIES_PATH = "/user-group/properties";
 
-    private boolean inProperties = false;
+    private boolean inProperties;
 
   
     private final StaxParser parser;
@@ -95,7 +95,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
         final String theName = element.getLocalName();
         if (inProperties) {
             if (theName.equals(Elements.ELEMENT_NAME)) {
-                if ((s != null) && (s.length() > 0)) {
+                if (s != null && s.length() > 0) {
                     groupProperties.put(Elements.ELEMENT_NAME, s);
                 }
                 else {
@@ -104,18 +104,18 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
                 }
             }
             else if (theName.equals(Elements.ELEMENT_DESCRIPTION)) {
-                if ((s != null)) {
+                if (s != null) {
                     groupProperties.put(Elements.ELEMENT_DESCRIPTION, s);
                 }
             }
             else if (theName.equals(Elements.ELEMENT_TYPE)) {
-                if ((s != null)) {
+                if (s != null) {
                     groupProperties.put(Elements.ELEMENT_TYPE, s);
                 }
 
             }
             else if ("label".equals(theName)) {
-                if ((s != null) && (s.length() > 0)) {
+                if (s != null && s.length() > 0) {
                     groupProperties.put("label", s);
                 }
                 else {
@@ -124,8 +124,8 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
                 }
                 
             }
-            else if (("email".equals(theName))
-                && ((s != null))) {
+            else if ("email".equals(theName)
+                && s != null) {
                 groupProperties.put("email", s);
             }
         }

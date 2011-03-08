@@ -48,7 +48,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import org.nsdl.mptstore.util.NTriplesUtil;
 
 import javax.sql.DataSource;
-import javax.xml.stream.FactoryConfigurationError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -260,7 +259,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             throw new TripleStoreSystemException(e);
         }
 
-        if ((result != null) && (result.startsWith("<html"))) {
+        if (result != null && result.startsWith("<html")) {
             final Pattern p =
                 Pattern.compile(TripleStoreConnector.QUERY_ERROR);
             final Matcher m = p.matcher(result);
@@ -771,7 +770,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         itqlQuery.append(" from <#ri> where ");
         // restrict to object-type
         if ("member".equalsIgnoreCase(objectType)) {
-            if ((filters != null) && filters.containsKey(PROP_OBJECT_TYPE)) {
+            if (filters != null && filters.containsKey(PROP_OBJECT_TYPE)) {
                 itqlQuery.append("$s <" + PROP_OBJECT_TYPE + "> <").append(filters.remove(PROP_OBJECT_TYPE)).append("> ");
             }
             else {
@@ -959,7 +958,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
         final Map filter = (Map) filterMap.get("filter");
 
         if ("member".equalsIgnoreCase(objectType)) {
-            if ((filter != null) && filter.containsKey(PROP_OBJECT_TYPE)) {
+            if (filter != null && filter.containsKey(PROP_OBJECT_TYPE)) {
                 query.append("$s <" + PROP_OBJECT_TYPE + "> <").append(filter.remove(PROP_OBJECT_TYPE)).append("> ");
             }
             else {

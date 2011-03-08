@@ -58,7 +58,7 @@ public abstract class SRURequestParameters {
      * @param parameters
      *            map map containing the CQL request parameters
      */
-    public SRURequestParameters(final Map<String, String[]> parameters) {
+    protected SRURequestParameters(final Map<String, String[]> parameters) {
         query =
             getStringParameter(parameters.get(Constants.SRU_PARAMETER_QUERY));
         maximumRecords =
@@ -77,8 +77,8 @@ public abstract class SRURequestParameters {
                 .get(Constants.SRU_PARAMETER_OPERATION));
 
         explain =
-            (getStringParameter(parameters.get(Constants.SRU_PARAMETER_EXPLAIN)) != null)
-                || (Constants.SRU_PARAMETER_EXPLAIN.equalsIgnoreCase(operation));
+            getStringParameter(parameters.get(Constants.SRU_PARAMETER_EXPLAIN)) != null
+                || Constants.SRU_PARAMETER_EXPLAIN.equalsIgnoreCase(operation);
         recordPacking =
             RecordPacking.fromType(getStringParameter(
                 parameters.get(Constants.SRU_PARAMETER_RECORD_PACKING), "xml"));
@@ -144,7 +144,7 @@ public abstract class SRURequestParameters {
     private int getIntParameter(final Object[] parameter, final int defaultValue) {
         int result = defaultValue;
 
-        if ((parameter != null) && (parameter.length > 0)) {
+        if (parameter != null && parameter.length > 0) {
             result = Integer.parseInt(parameter[0].toString());
         }
         return result;
@@ -164,7 +164,7 @@ public abstract class SRURequestParameters {
         final Object[] parameter, final String defaultValue) {
         String result = defaultValue;
 
-        if ((parameter != null) && (parameter.length > 0)) {
+        if (parameter != null && parameter.length > 0) {
             result = parameter[0].toString();
         }
         return result;

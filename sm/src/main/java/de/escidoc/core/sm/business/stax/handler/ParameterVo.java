@@ -40,10 +40,10 @@ import org.joda.time.ReadableDateTime;
  */
 public class ParameterVo {
 
-    private String name = null;
-    private String stringValue = null;
-    private Double decimalValue = null;
-    private DateTime dateValue = null;
+    private String name;
+    private String stringValue;
+    private Double decimalValue;
+    private DateTime dateValue;
 
     /**
      * @return the name

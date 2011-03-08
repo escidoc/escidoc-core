@@ -65,7 +65,7 @@ public class DummyPIDGenerator implements PIDSystem {
                 "Invalid param structure.");
         }
 
-        return (generatePID(systemID));
+        return generatePID(systemID);
     }
 
     /*

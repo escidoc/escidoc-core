@@ -311,7 +311,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     private static final Pattern PATTERN_LOWER_THAN_GREATER_THAN = Pattern
         .compile("&lt;(.*)&gt;");
 
-    private static TripleStoreUtility mptu = null;
+    private static TripleStoreUtility mptu;
 
     /** The logger. */
     private static final AppLogger LOGGER = new AppLogger(

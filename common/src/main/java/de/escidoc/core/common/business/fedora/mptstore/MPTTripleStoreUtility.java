@@ -78,7 +78,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     private static final AppLogger log = new AppLogger(
         MPTTripleStoreUtility.class.getName());
 
-    private TableManager tableManager = null;
+    private TableManager tableManager;
 
     /**
      * Injects the data source.
@@ -626,7 +626,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                         where
                             .append('\'')
                             .append(
-                                (new URIReference("info:fedora/" + idOrLiteral))
+                                new URIReference("info:fedora/" + idOrLiteral)
                                     .toString()).append("')");
                 }
                 catch (URISyntaxException e) {
@@ -692,7 +692,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                         where
                             .append('\'')
                             .append(
-                                (new URIReference("info:fedora/" + id))
+                                new URIReference("info:fedora/" + id)
                                     .toString()).append('\'');
                 }
                 catch (URISyntaxException e) {
@@ -822,7 +822,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         // queryResultBuf.append(" WHERE ");
 
         if ("member".equalsIgnoreCase(objectType)) {
-            if ((filter != null) && filter.containsKey(PROP_OBJECT_TYPE)) {
+            if (filter != null && filter.containsKey(PROP_OBJECT_TYPE)) {
                 final String queryPartObjectTypeMember =
                     objectTypeColumn + '=' + "\'<"
                         + filter.remove(PROP_OBJECT_TYPE) + ">\'";
@@ -1111,7 +1111,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         String queryPartString = "";
 
         // TODO or rule for every id
-        if ((objects != null) && (!objects.isEmpty())) {
+        if (objects != null && !objects.isEmpty()) {
             final Iterator<String> it = objects.iterator();
 
             while (it.hasNext()) {
@@ -1466,7 +1466,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      */
     private boolean checkQuery(final String query) {
         boolean result = false;
-        if ((query != null) && (!query.contains("null."))) {
+        if (query != null && !query.contains("null.")) {
             result = true;
         }
         return result;
@@ -1948,9 +1948,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             queryPartJoinContentModelWithPredicateBuffer.toString();
 
         boolean isFirst = true;
-        if ((contentModelTitleId != null) && (contentModelTitle != null)) {
-            if ((contentModelTitleTableName == null)
-                || (contentModelOfObjectTableName == null)) {
+        if (contentModelTitleId != null && contentModelTitle != null) {
+            if (contentModelTitleTableName == null
+                || contentModelOfObjectTableName == null) {
                 return faultCase;
             }
             isFirst = false;
@@ -2098,7 +2098,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final String titleTableName = getTableName(PROP_DC_TITLE);
         final String typeTableName = getTableName(PROP_OBJECT_TYPE);
 
-        if ((titleTableName != null) && (typeTableName != null)) {
+        if (titleTableName != null && typeTableName != null) {
             final StringBuffer select = new StringBuffer();
 
             select.append("SELECT ");
@@ -2155,7 +2155,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         final String memberTableName = getTableName(PROP_MEMBER);
         final String typeTableName = getTableName(PROP_OBJECT_TYPE);
 
-        if ((memberTableName != null) && (typeTableName != null)) {
+        if (memberTableName != null && typeTableName != null) {
             final String select =
                 MessageFormat.format(
                     "WITH RECURSIVE getChildContainers AS (SELECT {1}.s, {1}.o"

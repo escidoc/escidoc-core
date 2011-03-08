@@ -101,7 +101,7 @@ public class FedoraOrganizationalUnitHandler
         FedoraOrganizationalUnitHandler.class.getName());
 
     /** SRU request. */
-    private SRURequest sruRequest = null;
+    private SRURequest sruRequest;
 
     private final Collection<ResourceListener> ouListeners =
         new ArrayList<ResourceListener>();
@@ -1408,7 +1408,7 @@ public class FedoraOrganizationalUnitHandler
                 // exists yet.)
                 Utility.getInstance().checkIsOrganizationalUnit(
                     predecessor.getObjid());
-                if (oUobjid != null && (predecessor.getObjid().equals(oUobjid))) {
+                if (oUobjid != null && predecessor.getObjid().equals(oUobjid)) {
 
                     throw new InvalidStatusException(
                         "Organizational Unit points to itself as predecessor.");

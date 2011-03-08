@@ -53,33 +53,33 @@ public class ContentRelationProperties implements Serializable {
 
     private String statusComment = "Object created.";
 
-    private String pid = null;
+    private String pid;
 
     private String title = "Content Relation";
 
-    private String createdById = null;
+    private String createdById;
 
-    private String createdByName = null;
+    private String createdByName;
 
-    private String modifiedById = null;
+    private String modifiedById;
 
-    private String modifiedByName = null;
+    private String modifiedByName;
 
-    private DateTime lastModificationDate = null;
+    private DateTime lastModificationDate;
 
-    private DateTime creationDate = null;
+    private DateTime creationDate;
 
-    private DateTime versionDate = null;
+    private DateTime versionDate;
 
     private LockStatus lockStatus = LockStatus.UNLOCKED;
 
-    private DateTime lockDate = null;
+    private DateTime lockDate;
 
-    private String lockOwnerId = null;
+    private String lockOwnerId;
 
-    private String lockOwnerName = null;
+    private String lockOwnerName;
 
-    private String description = null;
+    private String description;
 
 
     /**

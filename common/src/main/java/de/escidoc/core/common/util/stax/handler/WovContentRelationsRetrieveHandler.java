@@ -44,13 +44,13 @@ import java.util.GregorianCalendar;
 
 public class WovContentRelationsRetrieveHandler extends DefaultHandler {
 
-    private boolean inside = false;
+    private boolean inside;
 
-    private int insideLevel = 0;
+    private int insideLevel;
 
     private final StaxParser parser;
 
-    private GregorianCalendar sourceVersionTimeStamp = null;
+    private GregorianCalendar sourceVersionTimeStamp;
 
     private GregorianCalendar latestStatusTimestamp;
 
@@ -115,8 +115,8 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
                     final GregorianCalendar elementTimestamp =
                         DatatypeFactory.newInstance().newXMLGregorianCalendar(
                             elementTimestampString).toGregorianCalendar();
-                    if ((sourceVersionTimeStamp.after(elementTimestamp))
-                        && (elementTimestamp.after(latestStatusTimestamp))) {
+                    if (sourceVersionTimeStamp.after(elementTimestamp)
+                        && elementTimestamp.after(latestStatusTimestamp)) {
                         latestStatusTimestamp = elementTimestamp;
                         this.status = s;
                     }

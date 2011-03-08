@@ -95,8 +95,8 @@ public class XacmlFunctionContains extends FunctionBase {
             return result;
         }
 
-        final StringAttribute encodedList = (StringAttribute) (argValues[0]);
-        final StringAttribute value = (StringAttribute) (argValues[1]);
+        final StringAttribute encodedList = (StringAttribute) argValues[0];
+        final StringAttribute value = (StringAttribute) argValues[1];
         final Pattern p =
             Pattern.compile(".*(\\A|\\s)" + value.getValue() + "(\\s|\\z).*",
                 Pattern.MULTILINE | Pattern.DOTALL);

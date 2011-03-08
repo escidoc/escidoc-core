@@ -213,8 +213,8 @@ public class EscidocServlet extends HttpServlet {
 
         try {
             final String protocol = request.getProtocol();
-            if ((protocol.startsWith("HTTP"))
-                && (request instanceof HttpServletRequest && response instanceof HttpServletResponse)) {
+            if (protocol.startsWith("HTTP")
+                && request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
                     final HttpServletRequest httpRequest =
                         (HttpServletRequest) request;
                     final HttpServletResponse httpResponse =
@@ -228,7 +228,7 @@ public class EscidocServlet extends HttpServlet {
                     final String httpMethod = httpRequest.getMethod();
                     // unsupported request methods,
                     // must be handled before determine bean method
-                    if ((HTTP_HEAD.equals(httpMethod))) {
+                    if (HTTP_HEAD.equals(httpMethod)) {
                         // FIXME check if valid HEAD response can be send
                         doSendStringResponse(httpResponse, null,
                             HttpServletResponse.SC_METHOD_NOT_ALLOWED);
@@ -488,8 +488,8 @@ public class EscidocServlet extends HttpServlet {
         final HttpServletResponse httpResponse, final String httpMethod,
         final String result) throws IOException {
 
-        if ((HTTP_GET.equals(httpMethod)) || (HTTP_PUT.equals(httpMethod))
-            || (HTTP_POST.equals(httpMethod))) {
+        if (HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod)
+            || HTTP_POST.equals(httpMethod)) {
             doSendStringResponse(httpResponse, result,
                 HttpServletResponse.SC_OK);
         }
@@ -518,8 +518,8 @@ public class EscidocServlet extends HttpServlet {
         final HttpServletResponse httpResponse, final String httpMethod,
         final EscidocServiceRedirectInterface result) throws IOException {
 
-        if ((HTTP_GET.equals(httpMethod)) || (HTTP_PUT.equals(httpMethod))
-            || (HTTP_POST.equals(httpMethod))) {
+        if (HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod)
+            || HTTP_POST.equals(httpMethod)) {
 
             initHttpResponse(httpResponse);
             httpResponse.setContentType(HTML_RESPONSE_CONTENT_TYPE);
@@ -555,8 +555,8 @@ public class EscidocServlet extends HttpServlet {
             doSendStringResponse(httpResponse, null,
                 HttpServletResponse.SC_NO_CONTENT);
         }
-        else if ((HTTP_GET.equals(httpMethod)) || (HTTP_PUT.equals(httpMethod))
-            || (HTTP_POST.equals(httpMethod))) {
+        else if (HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod)
+            || HTTP_POST.equals(httpMethod)) {
             doSendStringResponse(httpResponse, null, HttpServletResponse.SC_OK);
         }
         else {
@@ -866,7 +866,7 @@ public class EscidocServlet extends HttpServlet {
         final String name, final HttpServletRequest request) {
         Cookie result = null;
         final Cookie[] cookies = request.getCookies();
-        if ((cookies != null) && (cookies.length > 0)) {
+        if (cookies != null && cookies.length > 0) {
             for (final Cookie cooky : cookies) {
                 if (name.equals(cooky.getName())) {
                     result = cooky;

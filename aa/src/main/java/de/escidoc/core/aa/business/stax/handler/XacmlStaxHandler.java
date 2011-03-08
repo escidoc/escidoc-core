@@ -60,9 +60,9 @@ public class XacmlStaxHandler extends DefaultHandler {
 
     private final EscidocRole role;
 
-    private boolean insidePolicy = false;
+    private boolean insidePolicy;
 
-    private int policyLevel = 0;
+    private int policyLevel;
 
     private XMLStreamWriter policyWriter;
 

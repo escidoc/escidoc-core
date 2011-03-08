@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 
 /**
  * Represents a parameter in a {@link StatisticRecord}.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public interface Parameter {
 

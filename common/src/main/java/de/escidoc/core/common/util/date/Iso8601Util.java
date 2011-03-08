@@ -126,7 +126,7 @@ public final class Iso8601Util {
     public static Date parseIso8601(final String dateText)
         throws ParseException {
 
-        if ((dateText == null) || (dateText.length() == 0)) {
+        if (dateText == null || dateText.length() == 0) {
             throw new ParseException("Could not parse text: [null]", 0);
         }
 

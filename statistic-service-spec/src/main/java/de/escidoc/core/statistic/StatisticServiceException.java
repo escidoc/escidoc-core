@@ -2,8 +2,6 @@ package de.escidoc.core.statistic;
 
 /**
  * Exception thrown by {@link StatisticService} and its components.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public class StatisticServiceException extends Exception {
 

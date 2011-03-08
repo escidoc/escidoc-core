@@ -42,13 +42,13 @@ import java.util.List;
 
 public class ComponentUpdateHandler extends DefaultHandler {
 
-    private StaxParser parser = null;
+    private StaxParser parser;
 
-    private String componentPath = null;
+    private String componentPath;
 
-    private String itemId = null;
+    private String itemId;
 
-    private String componentId = null;
+    private String componentId;
 
     public ComponentUpdateHandler(final String itemId, final String componentPath,
         final StaxParser parser) {
@@ -62,7 +62,7 @@ public class ComponentUpdateHandler extends DefaultHandler {
         throws TripleStoreSystemException, WebserverSystemException,
         InvalidContentException {
         final String curPath = parser.getCurPath();
-        if ((curPath.startsWith(componentPath)) && (curPath.equals(componentPath))) {
+        if (curPath.startsWith(componentPath) && curPath.equals(componentPath)) {
             // do my job
             // save componentId
             final int indexObjid = element.indexOfAttribute(null, "objid");

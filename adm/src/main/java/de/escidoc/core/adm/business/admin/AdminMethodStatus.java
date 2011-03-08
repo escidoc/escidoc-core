@@ -46,7 +46,7 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
 public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
 
     private Date completionDate = new Date();
-    private boolean fillingComplete = false;
+    private boolean fillingComplete;
     private final Semaphore semaphore = new Semaphore(1);
     protected final Map<ResourceType, Integer> treeMap = new EnumMap<ResourceType, Integer>(ResourceType.class);
 

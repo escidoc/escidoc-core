@@ -7,8 +7,6 @@ import java.math.BigDecimal;
 
 /**
  * Builder for {@link StatisticRecord}.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public abstract class StatisticRecordBuilder {
 

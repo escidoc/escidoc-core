@@ -54,9 +54,9 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
 
     private final List<String> predicates = new ArrayList<String>();
 
-    private boolean inDescription = false;
+    private boolean inDescription;
 
-    private boolean inRdfType = false;
+    private boolean inRdfType;
 
     private static final String RDF_PROPERTY_URI =
         Constants.RDF_NAMESPACE_URI + "Property";
@@ -148,10 +148,10 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
             inDescription = false;
         }
 
-        if ((this.predicate != null)
-            && ((PROPERTY_PATH.equals(currentPath) || DESCRIPTION_PATH
+        if (this.predicate != null
+            && (PROPERTY_PATH.equals(currentPath) || DESCRIPTION_PATH
                 .equals(currentPath))
-                && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI))) {
+                && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
             predicates.add(this.predicate);
             this.predicate = null;
         }

@@ -63,15 +63,15 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     public static final String CONTAINER = "/container";
 
-    private boolean inContentRelation = false;
+    private boolean inContentRelation;
 
-    private String currentPath = null;
+    private String currentPath;
 
-    private String contentRelationPath = null;
+    private String contentRelationPath;
 
-    private String targetId = null;
+    private String targetId;
 
-    private String predicate = null;
+    private String predicate;
 
     private final List<String> relationsData = new ArrayList<String>();
 
@@ -110,7 +110,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
         }
         final String theName = element.getLocalName();
         final int indexInherited = element.indexOfAttribute(null, "inherited");
-        if (contentRelationPath.equals(currentPath) && (indexInherited < 0)) {
+        if (contentRelationPath.equals(currentPath) && indexInherited < 0) {
             inContentRelation = true;
             final int indexOfObjId = element.indexOfAttribute(null, "objid");
             final int indexOfHref =

@@ -41,11 +41,11 @@ public class Triple {
      * class (with currently not fits within the framework).
      */
 
-    private String subject = null;
+    private String subject;
 
-    private String predicate = null;
+    private String predicate;
 
-    private String object = null;
+    private String object;
 
     /**
      * Triple.

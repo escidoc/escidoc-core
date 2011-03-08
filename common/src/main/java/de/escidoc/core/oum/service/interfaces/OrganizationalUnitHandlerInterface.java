@@ -142,29 +142,6 @@ public interface OrganizationalUnitHandlerInterface extends IngestableResource {
         XmlCorruptedException, XmlSchemaValidationException;
 
     /**
-     * Ingest an Organizational Unit. This method is essentially a workaround
-     * for a bug in aspectj. (see {@link https
-     * ://bugs.eclipse.org/bugs/show_bug.cgi?id=154427}). Currently, aspectj
-     * cannot find a method within a joinPoint if this method is defined by an
-     * interface that is extended by the class's defining interface. In this
-     * example IngestableInterface extends OrganizationalUnitInterface and
-     * defines the ingest method because an instance implementing
-     * OrganizationalUnitHandlerInterface cannot see the ingest method. Hence it
-     * is defined again here. This method is not included in the generation of
-     * Axis.
-     * 
-     * @param xmlData
-     *            The string that contains the Organizational Unit.
-     * 
-     * @return The string containing the identifier of the created
-     *         Organizational Unit.
-     * @throws EscidocException
-     *             thrown if an internal error has occurred.
-     */
-    @Override
-    String ingest(String xmlData) throws EscidocException;
-
-    /**
      * Delete an Organizational Unit. <br />
      * <br />
      * <b>Prerequisites:</b> <br />

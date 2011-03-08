@@ -39,8 +39,8 @@ import java.util.TreeSet;
  * @author SCHE
  */
 public class Schema {
-    private String name = null;
-    private Set<Table> tables = null;
+    private String name;
+    private Set<Table> tables;
 
     /**
      * Constructor for bean deserialization.

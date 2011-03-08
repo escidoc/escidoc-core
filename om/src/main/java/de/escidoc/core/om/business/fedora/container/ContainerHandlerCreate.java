@@ -146,7 +146,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
 
             } else if ("md-records".equals(outsideKey)) {
 
-                final Map insideHash = (HashMap) entry.getValue();
+                final Map insideHash = (Map) entry.getValue();
                 if (!insideHash.isEmpty()) {
                     final Collection<Map<String, String>> mdRecords =
                             new ArrayList<Map<String, String>>(insideHash.size());

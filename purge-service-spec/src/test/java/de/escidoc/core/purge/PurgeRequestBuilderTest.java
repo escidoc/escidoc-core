@@ -6,8 +6,6 @@ import static junit.framework.Assert.assertEquals;
 
 /**
  * Test for {@link PurgeRequestBuilder}.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public class PurgeRequestBuilderTest {
 

@@ -53,19 +53,19 @@ public class MetadataHandler extends DefaultHandler {
 
     private String title;
 
-    private boolean isInside = false;
+    private boolean isInside;
 
-    private boolean isRootMetadataElement = false;
+    private boolean isRootMetadataElement;
 
-    private String nameValue = null;
+    private String nameValue;
 
     public static final String CONTAINER = "/container";
 
-    private String escidocMdRecordNameSpace = null;
+    private String escidocMdRecordNameSpace;
 
-    private String elementPath = null;
+    private String elementPath;
 
-    private String mdRecordsPath = null;
+    private String mdRecordsPath;
 
     private static final AppLogger LOGGER =
         new AppLogger(MetadataHandler.class.getName());
@@ -77,7 +77,7 @@ public class MetadataHandler extends DefaultHandler {
     // model
     private static final String MANDATORY_MD_RECORD_NAME = "escidoc";
 
-    private boolean isMandatoryName = false;
+    private boolean isMandatoryName;
 
     /**
      * Instantiate a MetaDataHandler.
@@ -192,8 +192,8 @@ public class MetadataHandler extends DefaultHandler {
             isRootMetadataElement = false;
             nameValue = null;
         }
-        else if ((mdRecordsPath.equals(parser.getCurPath()))
-            && (!isMandatoryName)) {
+        else if (mdRecordsPath.equals(parser.getCurPath())
+            && !isMandatoryName) {
             throw new MissingMdRecordException("Mandatory md-record with a name "
                     + MANDATORY_MD_RECORD_NAME + " is missing.");
         }

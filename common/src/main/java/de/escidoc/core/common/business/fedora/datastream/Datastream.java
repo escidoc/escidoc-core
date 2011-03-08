@@ -118,12 +118,12 @@ public class Datastream {
 
     private String checksum;
 
-    private static final boolean versionable = true;
+    private static final boolean VERSIONABLE = true;
 
     /**
      * Indicating the URL should not be sent when storing this in Fedora.
      */
-    private boolean contentUnchanged = false;
+    private boolean contentUnchanged;
 
     /**
      * @deprecated Use constructor with timestamp as third parameter.
@@ -479,10 +479,10 @@ public class Datastream {
             try {
                 // FIXME this location/href is logic of Item!
                 if (this.contentUnchanged
-                    || (loc.startsWith("/ir/item/" + getParentId()) || loc
+                    || loc.startsWith("/ir/item/" + getParentId()) || loc
                         .startsWith(EscidocConfiguration.getInstance().get(
                             EscidocConfiguration.ESCIDOC_CORE_BASEURL)
-                            + "/ir/item/" + getParentId()))) {
+                            + "/ir/item/" + getParentId())) {
                     // TODO assuming unchanged href
                     loc = null;
                 }
@@ -592,7 +592,7 @@ public class Datastream {
             timestamp =
                 getFedoraUtility().addDatastream(this.parentId, this.name,
                     this.alternateIDs.toArray(new String[alternateIDs.size()]), this.label,
-                    this.versionable, this.getStream(), sync);
+                        VERSIONABLE, this.getStream(), sync);
         }
 
         return timestamp;
@@ -892,8 +892,8 @@ public class Datastream {
             // ???
             try {
                 // FIXME compare xml with control group M
-                if ((this.getStream() != null)
-                    && (!this.getMd5Hash().equals(ds.getMd5Hash()))) {
+                if (this.getStream() != null
+                    && !this.getMd5Hash().equals(ds.getMd5Hash())) {
                     return false;
                 }
             }

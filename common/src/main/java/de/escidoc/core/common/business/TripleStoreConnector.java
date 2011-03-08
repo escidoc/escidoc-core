@@ -88,13 +88,13 @@ public class TripleStoreConnector {
     private static final AppLogger log = new AppLogger(
         TripleStoreConnector.class.getName());
 
-    private ConnectionUtility connectionUtility = null;
+    private ConnectionUtility connectionUtility;
 
-    private String fedoraUrl = null;
+    private String fedoraUrl;
 
-    private String fedoraUser = null;
+    private String fedoraUser;
 
-    private String fedoraPassword = null;
+    private String fedoraPassword;
 
     /**
      * 

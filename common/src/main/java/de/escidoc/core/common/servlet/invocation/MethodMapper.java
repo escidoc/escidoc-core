@@ -63,16 +63,16 @@ import java.util.Map;
  */
 public class MethodMapper extends XMLBase implements MapperInterface {
 
-    private List<Document> methodMappings = null;
+    private List<Document> methodMappings;
 
-    private Map descriptors = null;
+    private Map descriptors;
 
     private Map<String, Collection> definitions =
         new HashMap<String, Collection>();
 
-    private Map<String, Resource> resources = null;
+    private Map<String, Resource> resources;
 
-    private Collection<String> descriptorFilenames = null;
+    private Collection<String> descriptorFilenames;
 
     /**
      * Default constructor.

@@ -16,9 +16,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
- */
 public final class IOUtils {
 
     private final static Logger LOG = LoggerFactory.getLogger(IOUtils.class);

@@ -143,12 +143,6 @@ public interface ContentRelationHandlerInterface extends IngestableResource {
         SystemException, LockingException;
 
     /**
-     * 
-     */
-    @Override
-    String ingest(final String xmlData) throws EscidocException;
-
-    /**
      * Submit a resource with a provided id.
      * 
      * @param id

@@ -419,7 +419,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             throw new InvalidContentException("The attribute 'storage' of the element "
                     + "'content' is missing.");
         }
-        if ((componentBinary.get(DATASTREAM_CONTENT) != null)
+        if (componentBinary.get(DATASTREAM_CONTENT) != null
             && (componentBinary
                 .get("storage")
                 .equals(
@@ -609,7 +609,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
             throw new InvalidContentException("The attribute 'storage' of the element "
                     + "'content' is missing.");
         }
-        if ((componentBinary.get(DATASTREAM_CONTENT) != null)
+        if (componentBinary.get(DATASTREAM_CONTENT) != null
             && (componentBinary
                 .get("storage")
                 .equals(
@@ -674,7 +674,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
         }
         String mimeType =
                 properties.get(TripleStoreUtility.PROP_MIME_TYPE);
-        if ((mimeType == null) || (mimeType.length() == 0)) {
+        if (mimeType == null || mimeType.length() == 0) {
             mimeType = FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
         }
         datastreams.put(Datastream.RELS_EXT_DATASTREAM,

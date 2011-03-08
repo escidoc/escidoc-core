@@ -51,7 +51,7 @@ public class EscidocRequestDetail implements Serializable {
      * 
      * @aa
      */
-    private boolean restAccess = false;
+    private boolean restAccess;
 
     /**
      * The restricted permission, if any.

@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
  * @author ?, SWA
  * 
  */
-public class XmlTemplateProvider {
+public abstract class XmlTemplateProvider {
 
     /*
      * Switches to control templates.

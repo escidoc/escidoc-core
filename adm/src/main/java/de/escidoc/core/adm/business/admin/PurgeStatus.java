@@ -41,7 +41,7 @@ public final class PurgeStatus extends AdminMethodStatus {
      */
     private static final PurgeStatus instance = new PurgeStatus();
 
-    private int count = 0;
+    private int count;
 
     /**
      * Create a new PurgeStatus object.
@@ -54,7 +54,7 @@ public final class PurgeStatus extends AdminMethodStatus {
      */
     public synchronized void dec() {
         count--;
-        if (this.isFillingComplete() && (count == 0)) {
+        if (this.isFillingComplete() && count == 0) {
             finishMethod();
         }
     }

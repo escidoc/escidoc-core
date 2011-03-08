@@ -9,8 +9,6 @@ import java.util.UUID;
 
 /**
  * Default implementation of {@link PurgeRequest}.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @XmlRootElement(name="PurgeRequest", namespace = "http://www.escidoc.de/schemas/purge-service/1.0/")
 @XmlType(name="PurgeRequest", namespace = "http://www.escidoc.de/schemas/purge-service/1.0/")

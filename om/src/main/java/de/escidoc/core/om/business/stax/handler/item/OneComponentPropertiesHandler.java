@@ -52,9 +52,9 @@ import java.util.Map;
  */
 public class OneComponentPropertiesHandler extends DefaultHandler {
 
-    private boolean inside = false;
+    private boolean inside;
 
-    private int insideLevel = 0;
+    private int insideLevel;
 
     private final StaxParser parser;
 
@@ -128,17 +128,17 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
 
         if (inside) {
             if (theName.equals(Elements.ELEMENT_MIME_TYPE)) {
-                if ((s != null) && s.length() > 0) {
+                if (s != null && s.length() > 0) {
                     properties.put(TripleStoreUtility.PROP_MIME_TYPE, s);
                 }
             }
             else if (theName.equals(Elements.ELEMENT_VALID_STATUS)) {
-                if ((s != null) && (s.length() > 0)) {
+                if (s != null && s.length() > 0) {
                     properties.put(TripleStoreUtility.PROP_VALID_STATUS, s);
                 }
             }
             else if (theName.equals(Elements.ELEMENT_VISIBILITY)) {
-                if ((s != null) && (s.length() > 0)) {
+                if (s != null && s.length() > 0) {
                     properties.put(TripleStoreUtility.PROP_VISIBILITY, s);
                 }
                 else {
@@ -148,7 +148,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
             }
             else if (theName
                 .equals(Elements.ELEMENT_COMPONENT_CONTENT_CATEGORY)) {
-                if ((s != null) && (s.length() > 0)) {
+                if (s != null && s.length() > 0) {
                     properties.put(
                         TripleStoreUtility.PROP_COMPONENT_CONTENT_CATEGORY, s);
                 }

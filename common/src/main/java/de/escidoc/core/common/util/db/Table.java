@@ -37,15 +37,15 @@ import java.util.TreeSet;
  * @author SCHE
  */
 public class Table implements Comparable<Object> {
-    private String name = null;
+    private String name;
 
-    private TreeSet<String> columns = null;
+    private TreeSet<String> columns;
 
-    private TreeSet<String> foreignKeys = null;
+    private TreeSet<String> foreignKeys;
 
-    private TreeSet<String> indexes = null;
+    private TreeSet<String> indexes;
 
-    private TreeSet<String> primaryKeys = null;
+    private TreeSet<String> primaryKeys;
 
     /**
      * Constructor for bean deserialization.

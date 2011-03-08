@@ -187,7 +187,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     private IndexingHandler indexingHandler;
 
     /** SRU request. */
-    private SRURequest sruRequest = null;
+    private SRURequest sruRequest;
 
     /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
@@ -436,12 +436,12 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final String publicStatus =
                 properties.get(Elements.ELEMENT_PUBLIC_STATUS);
 
-            if ((publicStatus != null)
+            if (publicStatus != null
                 && publicStatus.equals(StatusType.RELEASED.toString())) {
 
-                if ((!Boolean.valueOf(System
-                    .getProperty("cmm.Container.objectPid.releaseWithoutPid")))
-                    && (properties.get(Elements.ELEMENT_PID) == null)) {
+                if (!Boolean.valueOf(System
+                    .getProperty("cmm.Container.objectPid.releaseWithoutPid"))
+                    && properties.get(Elements.ELEMENT_PID) == null) {
                     throw new InvalidStatusException("Missing object PID for public-status 'released'.");
                 }
             }
@@ -581,8 +581,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final String status =
             getContainer().getResourceProperties().get(
                 PropertyMapKeys.PUBLIC_STATUS);
-        if (!(status.equals(Constants.STATUS_PENDING))
-            && !(status.equals(Constants.STATUS_IN_REVISION))) {
+        if (! status.equals(Constants.STATUS_PENDING)
+            && ! status.equals(Constants.STATUS_IN_REVISION)) {
             throw new InvalidStatusException("Container "
                 + getContainer().getId() + " is in status " + status
                 + ". Cannot delete.");
@@ -852,8 +852,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final Map<String, Map<String, String>> mdRecordsAttributes =
                 (HashMap<String, Map<String, String>>) mdHandler
                     .getMetadataAttributes();
-            final Map mdRecordsStreams =
-                (HashMap) streams.get("md-records");
+            final Map mdRecordsStreams = (Map) streams.get("md-records");
             if (!mdRecordsStreams.containsKey("escidoc")) {
                 throw new XmlCorruptedException(
                     "No escidoc internal metadata found "
@@ -1358,8 +1357,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             final Datastream ds =
                 new Datastream(stringByteArrayOutputStreamEntry.getKey(), getContainer().getId(), xmlBytes,
                     "text/xml", mdProperties);
-            final Map mdRecordAttributes =
-                (HashMap) mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
+            final Map mdRecordAttributes = (Map) mdAttributesMap.get(stringByteArrayOutputStreamEntry.getKey());
             ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
             ds.addAlternateId((String) mdRecordAttributes.get("type"));
             ds.addAlternateId((String) mdRecordAttributes.get("schema"));
@@ -1578,11 +1576,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         final String label = "Container " + getContainer().getId();
-        if ((getUtility().checkUnlocked(getContainer().isLocked(), "Release",
-            label, getContainer().getLockOwner()))
-            && (getUtility().checkOptimisticLockingCriteria(getContainer()
+        if (getUtility().checkUnlocked(getContainer().isLocked(), "Release",
+            label, getContainer().getLockOwner())
+            && getUtility().checkOptimisticLockingCriteria(getContainer()
                 .getLastModificationDate(), taskParameter
-                .getLastModificationDate(), label))) {
+                .getLastModificationDate(), label)) {
 
             // check version status
             final String curStatus =
@@ -1762,11 +1760,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         checkReleased();
 
         final String label = "Container " + getContainer().getId();
-        if ((getUtility().checkUnlocked(getContainer().isLocked(), "Submit",
-            label, getContainer().getLockOwner()))
-            && (getUtility().checkOptimisticLockingCriteria(getContainer()
+        if (getUtility().checkUnlocked(getContainer().isLocked(), "Submit",
+            label, getContainer().getLockOwner())
+            && getUtility().checkOptimisticLockingCriteria(getContainer()
                 .getLastModificationDate(), taskParameter
-                .getLastModificationDate(), label))) {
+                .getLastModificationDate(), label)) {
 
             // check version status
             final String curStatus =
@@ -1835,11 +1833,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         checkVersionStatus(Constants.STATUS_SUBMITTED);
 
         final String label = "Container " + getContainer().getId();
-        if ((getUtility().checkUnlocked(getContainer().isLocked(), "Submit",
-            label, getContainer().getLockOwner()))
-            && (getUtility().checkOptimisticLockingCriteria(getContainer()
+        if (getUtility().checkUnlocked(getContainer().isLocked(), "Submit",
+            label, getContainer().getLockOwner())
+            && getUtility().checkOptimisticLockingCriteria(getContainer()
                 .getLastModificationDate(), taskParameter
-                .getLastModificationDate(), label))) {
+                .getLastModificationDate(), label)) {
 
             // check version status
             final String curStatus =
@@ -1926,11 +1924,11 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         checkLatestVersion();
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         final String label = "Container " + getContainer().getId();
-        if ((getUtility().checkUnlocked(getContainer().isLocked(), "Withdraw",
-            label, getContainer().getLockOwner()))
-            && (getUtility().checkOptimisticLockingCriteria(getContainer()
+        if (getUtility().checkUnlocked(getContainer().isLocked(), "Withdraw",
+            label, getContainer().getLockOwner())
+            && getUtility().checkOptimisticLockingCriteria(getContainer()
                 .getLastModificationDate(), taskParameter
-                .getLastModificationDate(), label))) {
+                .getLastModificationDate(), label)) {
 
             // FIXME Under which circumstances members should be withdrawn?
             // Look for content-type-type not for name.
@@ -2942,7 +2940,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final List<Map<String, String>> relationsData =
             addHandler.getRelations();
 
-        if ((relationsData != null) && (!relationsData.isEmpty())) {
+        if (relationsData != null && !relationsData.isEmpty()) {
             final List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
             boolean resourceUpdated = false;
@@ -3069,7 +3067,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         final List<Map<String, String>> relationsData =
             removeHandler.getRelations();
-        if ((relationsData != null) && (!relationsData.isEmpty())) {
+        if (relationsData != null && !relationsData.isEmpty()) {
             final Map<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =

@@ -58,16 +58,16 @@ public class MdRecordDefinitionCreate {
     private static final AppLogger LOG =
         new AppLogger(MdRecordDefinitionCreate.class.getName());
 
-    private ByteArrayOutputStream mdRecordDefinition = null;
+    private ByteArrayOutputStream mdRecordDefinition;
 
-    private String mdRecordDefinitionName = null;
+    private String mdRecordDefinitionName;
 
     /*
      * Required as alternate ID.
      */
-    private static final String type = null;
+    private static final String TYPE = null;
 
-    private String schemaHref = null;
+    private String schemaHref;
 
     /**
      * Set Name of Metadata Record.
@@ -80,7 +80,7 @@ public class MdRecordDefinitionCreate {
     public void setName(final String name)
         throws MissingAttributeValueException {
 
-        if ((name == null) || name.length() == 0) {
+        if (name == null || name.length() == 0) {
             throw new MissingAttributeValueException("the value of the" +
                     " \"name\" atribute of the element 'name' is missing");
         }
@@ -178,7 +178,7 @@ public class MdRecordDefinitionCreate {
 
         final Map<String, String> templateValues = new HashMap<String, String>();
 
-        templateValues.put(XmlTemplateProvider.MD_RECORD_TYPE, this.type);
+        templateValues.put(XmlTemplateProvider.MD_RECORD_TYPE, TYPE);
         templateValues.put(XmlTemplateProvider.MD_RECORD_SCHEMA,
             this.schemaHref);
         templateValues.put(XmlTemplateProvider.MD_RECORD_NAME,

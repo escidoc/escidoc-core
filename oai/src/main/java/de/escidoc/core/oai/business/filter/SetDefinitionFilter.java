@@ -151,7 +151,7 @@ public class SetDefinitionFilter extends CqlFilter {
         if (parts != null) {
             result =
                 evaluate(node.getRelation(), (String) parts[1], value,
-                    (Integer) (parts[0]) == COMPARE_LIKE);
+                    (Integer) parts[0] == COMPARE_LIKE);
         }
         else {
             final String columnName = node.getIndex();

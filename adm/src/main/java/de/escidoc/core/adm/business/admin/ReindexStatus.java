@@ -67,7 +67,7 @@ public final class ReindexStatus extends AdminMethodStatus {
                 treeMap.put(type, oldValue - 1);
             }
         }
-        if (this.isFillingComplete() && (size() == 0)) {
+        if (this.isFillingComplete() && size() == 0) {
             finishMethod();
         }
     }

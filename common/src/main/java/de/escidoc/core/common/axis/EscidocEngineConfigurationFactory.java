@@ -65,7 +65,7 @@ public class EscidocEngineConfigurationFactory
 
     private final String serverConfigFile;
 
-    private static HttpServlet param = null;
+    private static HttpServlet param;
 
     /**
      * Creates and returns a new EngineConfigurationFactory.

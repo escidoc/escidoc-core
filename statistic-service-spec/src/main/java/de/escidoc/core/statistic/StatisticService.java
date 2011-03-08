@@ -4,8 +4,6 @@ import org.apache.camel.InOnly;
 
 /**
  * Service for managing statistic data.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public interface StatisticService {
 

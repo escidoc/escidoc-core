@@ -61,19 +61,19 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     private static final AppLogger log =
         new AppLogger(ContextPropertiesUpdateHandler.class.getName());
 
-    private StaxParser parser = null;
+    private StaxParser parser;
 
     private String propertiesPath = "/context/properties";
 
-    private String contextId = null;
+    private String contextId;
 
-    private Map<String, String> changedValuesInRelsExt = null;
+    private Map<String, String> changedValuesInRelsExt;
 
-    private Map<String, String> changedValuesInDc = null;
+    private Map<String, String> changedValuesInDc;
 
-    private List<String> deletableValues = null;
+    private List<String> deletableValues;
 
-    private Map<String, String> valuesToAdd = null;
+    private Map<String, String> valuesToAdd;
 
     private final List<String> orgunits = new ArrayList<String>();
 
@@ -213,7 +213,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @return changed values
      */
     public Map<String, String> getChangedValuesInRelsExt() {
-        return (this.changedValuesInRelsExt);
+        return this.changedValuesInRelsExt;
     }
 
     /**
@@ -222,7 +222,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @return changed values
      */
     public Map<String, String> getChangedValuesInDc() {
-        return (this.changedValuesInDc);
+        return this.changedValuesInDc;
     }
 
 
@@ -259,7 +259,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
             changed = true;
         }
 
-        return (changed);
+        return changed;
     }
 
     /**

@@ -44,13 +44,13 @@ import javax.naming.directory.NoSuchAttributeException;
  */
 public class ItemUpdateHandler extends DefaultHandler {
 
-    private StaxParser parser = null;
+    private StaxParser parser;
 
     private static final String ITEM_PATH = "/item";
 
-    private String itemId = null;
+    private String itemId;
 
-    private boolean done = false;
+    private boolean done;
 
     /**
      * The constructor.

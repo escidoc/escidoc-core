@@ -305,7 +305,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         if (getLatestReleaseVersionNumber() == null) {
             relsExtS = createLatestReleasePid(pid);
         }
-        else if ((getLatestReleasePid() != null) && pid.length() != 0) {
+        else if (getLatestReleasePid() != null && pid.length() != 0) {
             // relsExtS = updateVersionPid(pid);
             relsExtS = updateLatestReleasePid(pid);
         }
@@ -341,7 +341,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         catch (IntegritySystemException e) {
             throw new WebserverSystemException(e);
         }
-        return (validPidStructure(pid));
+        return validPidStructure(pid);
     }
 
     /**
@@ -395,10 +395,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         if (getVersionPid() == null) {
             relsExtS = createVersionPid(pid);
         }
-        else if ((getVersionPid() != null) && pid.length() != 0) {
+        else if (getVersionPid() != null && pid.length() != 0) {
             relsExtS = updateVersionPid(pid);
         }
-        else if ((pid == null || pid.length() == 0)) {
+        else if (pid == null || pid.length() == 0) {
             relsExtS = deleteLatestReleasePid();
         }
 
@@ -906,7 +906,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         List<StartElementWithChildElements> elementsToAdd = null;
 
         // prepare update relations
-        if ((relationsToUpdate != null) && (!relationsToUpdate.isEmpty())) {
+        if (relationsToUpdate != null && !relationsToUpdate.isEmpty()) {
             elementsToAdd = new ArrayList<StartElementWithChildElements>();
             for (final String relation : relationsToUpdate) {
                 final String[] predicateAndTarget = relation.split("###");
@@ -929,7 +929,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         }
         // prepare add/remove
         Map<String, List<StartElementWithChildElements>> toRemove = null;
-        if ((existRelations != null) && (!existRelations.isEmpty())) {
+        if (existRelations != null && !existRelations.isEmpty()) {
             final Iterator<String> iterator = existRelations.iterator();
             final HashMap<String, List<StartElementWithChildElements>> predicateValuesVectorAssignment =
                 new HashMap<String, List<StartElementWithChildElements>>();
@@ -974,7 +974,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         }
 
         // Update RELS-EXT
-        if ((toRemove != null) || (elementsToAdd != null)) {
+        if (toRemove != null || elementsToAdd != null) {
             final byte[] newRelsExtBytes =
                 Utility.updateRelsExt(elementsToAdd, toRemove, relsExt
                     .getStream(), this, null);

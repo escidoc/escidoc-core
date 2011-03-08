@@ -42,7 +42,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.interfaces.SemanticStoreHandlerInterface;
 import de.escidoc.core.om.business.stax.handler.filter.RDFRegisteredOntologyFilter;
 
-import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLInputFactory;
@@ -63,7 +62,7 @@ public class FedoraSemanticStoreHandler
     private static final AppLogger log = new AppLogger(
         FedoraSemanticStoreHandler.class.getName());
 
-    private TripleStoreConnector tripleStoreConnector = null;
+    private TripleStoreConnector tripleStoreConnector;
 
     /**
      * Retrieves a result of provided triple store query in a provided output
@@ -130,8 +129,8 @@ public class FedoraSemanticStoreHandler
                 final StringBuilder stringBuffer = new StringBuilder();
                 for (final String triple : triples) {
                     final String[] tripleParts = triple.trim().split("\\ +", 3);
-                    if ((tripleParts.length >= 2)
-                            && (OntologyUtility.checkPredicate(tripleParts[1]))) {
+                    if (tripleParts.length >= 2
+                            && OntologyUtility.checkPredicate(tripleParts[1])) {
                         stringBuffer.append(triple);
                         stringBuffer.append(".\n");
                     }

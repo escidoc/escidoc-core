@@ -49,15 +49,15 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
     private static final AppLogger LOG = new AppLogger(ContentRelationsRemoveHandler2Edition.class.getName());
 
-    private StaxParser parser = null;
+    private StaxParser parser;
 
-    private boolean inRelation = false;
+    private boolean inRelation;
 
-    private String sourceId = null;
+    private String sourceId;
 
-    private String targetId = null;
+    private String targetId;
 
-    private String predicate = null;
+    private String predicate;
 
     private final List<Map<String, String>> relationsData = new ArrayList<Map<String, String>>();
 
@@ -77,7 +77,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
         if (this.inRelation) {
             if ("targetId".equals(element.getLocalName())) {
-                if ((data == null) || (data.length() == 0)) {
+                if (data == null || data.length() == 0) {
                     throw new MissingElementValueException("The value of the element " + element.getLocalName()
                             + " is missing.");
                 }
@@ -85,7 +85,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
                 this.targetId = data;
             }
             else if ("predicate".equals(element.getLocalName())) {
-                if ((data == null) || (data.length() == 0)) {
+                if (data == null || data.length() == 0) {
                     throw new MissingElementValueException("The value of the element " + element.getLocalName()
                             + " is missing.");
                 }
@@ -111,8 +111,8 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws ContentRelationNotFoundException, TripleStoreSystemException,
         WebserverSystemException {
-        if ((inRelation)
-            && ("relation".equals(element.getLocalName()))) {
+        if (inRelation
+            && "relation".equals(element.getLocalName())) {
             final String[] splittedPredicate = splitPredicate(predicate);
             final String predicateNs = splittedPredicate[0];
             final String predicateValue = splittedPredicate[1];

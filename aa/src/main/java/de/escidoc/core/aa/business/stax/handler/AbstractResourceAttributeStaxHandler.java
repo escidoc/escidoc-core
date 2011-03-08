@@ -62,9 +62,9 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
 
     private final String urnVersionStatus;
 
-    private boolean statusFound = false;
+    private boolean statusFound;
     
-    private boolean inMetadata = false;
+    private boolean inMetadata;
     
     /**
      * The constructor.

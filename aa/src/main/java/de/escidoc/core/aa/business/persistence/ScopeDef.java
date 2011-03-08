@@ -114,7 +114,7 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
 
         boolean ret = false;
         if (obj instanceof ScopeDef) {
-            ret = (compareTo((ScopeDef) obj) == 0);
+            ret = compareTo((ScopeDef) obj) == 0;
         }
         return ret;
     }

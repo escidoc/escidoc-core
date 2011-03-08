@@ -52,10 +52,10 @@ public class EscidocBinaryContent {
 
     private String mimeType;
 
-    private String redirectUrl = null;
+    private String redirectUrl;
 
     @Deprecated
-    private HttpURLConnection conn = null;
+    private HttpURLConnection conn;
 
     /**
      * @return the redirectUrl
@@ -122,7 +122,7 @@ public class EscidocBinaryContent {
      */
     public String getMimeType() {
 
-        if ((this.mimeType == null) && (this.getMethod != null)) {
+        if (this.mimeType == null && this.getMethod != null) {
             final Header ctype = this.getMethod.getFirstHeader("Content-Type");
             this.mimeType = ctype != null ? ctype.getValue() : FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
         }

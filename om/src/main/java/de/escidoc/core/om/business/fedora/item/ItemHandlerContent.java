@@ -160,7 +160,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 properties
                     .get(de.escidoc.core.common.business.Constants.DC_NS_URI
                         + Elements.ELEMENT_DC_TITLE);
-            if ((fileName == null) || fileName.length() == 0) {
+            if (fileName == null || fileName.length() == 0) {
                 fileName = "Content of component " + componentId;
             }
         }
@@ -338,8 +338,8 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         }
 
         final String url;
-        if ((transformer.equals(TRANSFORM_SERVICE_DIGILIB))
-            && (clientService.equals(TRANSFORM_DIGILIB_CLIENT))) {
+        if (transformer.equals(TRANSFORM_SERVICE_DIGILIB)
+            && clientService.equals(TRANSFORM_DIGILIB_CLIENT)) {
 
             url = getServiceUrl(clientService) + "?fn=" + contentUrl;
         }

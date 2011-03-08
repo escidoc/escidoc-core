@@ -122,8 +122,8 @@ public class SecurityInterceptorCache {
             }
 
             if (methodMappings == null
-                || (methodMappings.sizeBefore() == 0 && methodMappings
-                    .sizeAfter() == 0)) {
+                || methodMappings.sizeBefore() == 0 && methodMappings
+                    .sizeAfter() == 0) {
                 final String errorMsg =
                         StringUtility.format(
                                 "No mapping found for key", key);

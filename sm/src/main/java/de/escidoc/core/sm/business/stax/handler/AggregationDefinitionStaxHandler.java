@@ -76,32 +76,32 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
     private static final String STATISTIC_DATA_SELECTOR_PATH = 
                 "/aggregation-definition/statistic-data";
     
-    private int tableIndex = 0;
+    private int tableIndex;
     
-    private int tableFieldIndex = 0;
+    private int tableFieldIndex;
     
-    private int tableIndexIndex = 0;
+    private int tableIndexIndex;
     
-    private int tableIndexFieldIndex = 0;
+    private int tableIndexFieldIndex;
     
-    private int statisticDataSelectorIndex = 0;
+    private int statisticDataSelectorIndex;
 
-    private boolean inTable = false;
+    private boolean inTable;
     
-    private boolean inTableField = false;
+    private boolean inTableField;
     
-    private boolean inTableIndex = false;
+    private boolean inTableIndex;
     
-    private boolean inStatisticDataSelector = false;
+    private boolean inStatisticDataSelector;
     
-    private AggregationTableField aggregationTableField = null;
+    private AggregationTableField aggregationTableField;
 
-    private AggregationTableIndexe aggregationTableIndex = null;
+    private AggregationTableIndexe aggregationTableIndex;
 
-    private AggregationTable aggregationTable = null;
+    private AggregationTable aggregationTable;
 
     private AggregationStatisticDataSelector 
-                aggregationStatisticDataSelector = null;
+                aggregationStatisticDataSelector;
 
     private final StaxParser parser;
 
@@ -194,8 +194,8 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             }
         }
         else if (inStatisticDataSelector) {
-            if (("xpath".equals(element.getLocalName()))
-                && (s != null)) {
+            if ("xpath".equals(element.getLocalName())
+                && s != null) {
                 if (aggregationStatisticDataSelector.getXpath() != null) {
                     aggregationStatisticDataSelector.setXpath(
                         aggregationStatisticDataSelector.getXpath() + s);
@@ -289,7 +289,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
         } 
         if (fieldRootElement) {
             final int indexOfAttribute = element.indexOfAttribute("", "feed");
-            if (indexOfAttribute != (-1)) {
+            if (indexOfAttribute != -1) {
                 final Attribute att = element.getAttribute(indexOfAttribute);
                 aggregationTableField.setFeed(att.getValue());
             }
@@ -329,7 +329,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
             aggregationStatisticDataSelectors
                                     .add(aggregationStatisticDataSelector);
         }
-        else if ((ROOT_PATH.equals(currentPath))
+        else if (ROOT_PATH.equals(currentPath)
             && (aggregationDefinition.getName() == null
                     || aggregationStatisticDataSelectors == null
                     || aggregationStatisticDataSelectors.isEmpty()

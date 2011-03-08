@@ -115,7 +115,7 @@ public class OrganizationalUnitHandlerCreate
             }
             values.put(XmlTemplateProvider.MD_RECORDS, mdRecords);
         }
-        if (dcStream != null && (dcStream.trim().length() != 0)) {
+        if (dcStream != null && dcStream.trim().length() != 0) {
             values.put(XmlTemplateProvider.DC, dcStream);
         }
         return getFoxmlRenderer().render(values);

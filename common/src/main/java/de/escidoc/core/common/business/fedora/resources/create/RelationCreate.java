@@ -36,11 +36,11 @@ package de.escidoc.core.common.business.fedora.resources.create;
  */
 public class RelationCreate {
 
-    private String predicate = null;
+    private String predicate;
 
-    private String target = null;
+    private String target;
 
-    private String predicateNs = null;
+    private String predicateNs;
 
     /**
      * RelationCreate.

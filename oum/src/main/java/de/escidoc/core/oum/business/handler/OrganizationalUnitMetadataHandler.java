@@ -61,17 +61,17 @@ public class OrganizationalUnitMetadataHandler
 
     public static final String NAME = "name";
 
-    private boolean insideMdRecord = false;
+    private boolean insideMdRecord;
 
-    private boolean rootMetadataElementFound = false;
+    private boolean rootMetadataElementFound;
 
-    private String currentMdRecordName = null;
+    private String currentMdRecordName;
 
-    private String rootPath = null;
+    private String rootPath;
 
     private String dcTitle = "";
 
-    private String escidocMetadataRecordNameSpace = null;
+    private String escidocMetadataRecordNameSpace;
 
     private static final AppLogger LOGGER =
         new AppLogger(OrganizationalUnitMetadataHandler.class.getName());
@@ -81,7 +81,7 @@ public class OrganizationalUnitMetadataHandler
 
     private static final String MANDATORY_MD_RECORD_NAME = "escidoc";
 
-    private boolean mandatoryMdRecordFound = false;
+    private boolean mandatoryMdRecordFound;
 
     /**
      * Instantiate a MetaDataHandler.
@@ -180,8 +180,8 @@ public class OrganizationalUnitMetadataHandler
             rootMetadataElementFound = false;
             currentMdRecordName = null;
         }
-        else if ((getMdRecordsPath().equals(getParser().getCurPath()))
-            && (!mandatoryMdRecordFound)) {
+        else if (getMdRecordsPath().equals(getParser().getCurPath())
+            && !mandatoryMdRecordFound) {
             throw new MissingMdRecordException("Mandatory md-record with a name "
                     + MANDATORY_MD_RECORD_NAME + " is missing.");
         }
@@ -204,9 +204,9 @@ public class OrganizationalUnitMetadataHandler
     @Override
     public String characters(final String s, final StartElement element) {
 
-        if ((MANDATORY_MD_RECORD_NAME.equals(currentMdRecordName))
-            && ("title".equals(element.getLocalName())
-                && Constants.DC_NS_URI.equals(element.getNamespace()))) {
+        if (MANDATORY_MD_RECORD_NAME.equals(currentMdRecordName)
+            && "title".equals(element.getLocalName())
+                && Constants.DC_NS_URI.equals(element.getNamespace())) {
             dcTitle = s;
         }
         return s;

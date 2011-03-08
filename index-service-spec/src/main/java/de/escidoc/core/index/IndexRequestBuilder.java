@@ -4,8 +4,6 @@ import de.escidoc.core.index.internal.IndexRequestBuilderImpl;
 
 /**
  * Builder for {@link IndexRequest}.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public abstract class IndexRequestBuilder {
 

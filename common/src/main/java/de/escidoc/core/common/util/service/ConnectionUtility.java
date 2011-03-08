@@ -104,13 +104,13 @@ public class ConnectionUtility {
 
     private int timeout = -1;
 
-    private DefaultHttpClient httpClient = null;
+    private DefaultHttpClient httpClient;
 
-    private HttpHost proxyHost = null;
+    private HttpHost proxyHost;
 
-    private boolean proxyConfigured = false;
+    private boolean proxyConfigured;
 
-    private ClientConnectionManager cm = null;
+    private ClientConnectionManager cm;
 
     /**
      * Get a response-string for the URL. If the URL contains an Authentication
@@ -728,7 +728,7 @@ public class ConnectionUtility {
 
             final int responseCode = httpResponse.getStatusLine().getStatusCode();
 
-            if ((responseCode / HTTP_RESPONSE_CLASS) != (HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS)) {
+            if (responseCode / HTTP_RESPONSE_CLASS != HttpServletResponse.SC_OK / HTTP_RESPONSE_CLASS) {
                 final String errorPage = readResponse(httpResponse);
 
                 // TODO logging, Url abgelöst?

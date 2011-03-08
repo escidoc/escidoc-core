@@ -44,17 +44,17 @@ import java.util.Map;
 
 public class MdRecordsUpdateHandler extends DefaultHandler {
 
-    private StaxParser parser = null;
+    private StaxParser parser;
 
-    private String mdRecordsPath = null;
+    private String mdRecordsPath;
 
-    private String name = null;
+    private String name;
 
-    private String escidocMdRecordNameSpace = null;
+    private String escidocMdRecordNameSpace;
 
-    private boolean isInside = false;
+    private boolean isInside;
 
-    private boolean isRootMetadataElement = false;
+    private boolean isRootMetadataElement;
 
     private final Map<String, Map<String, String>> metadataAttributes =
         new HashMap<String, Map<String, String>>();
@@ -62,9 +62,9 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
     private static final AppLogger LOGGER =
         new AppLogger(MetadataHandler.class.getName());
 
-    private boolean isMandatoryName = false;
+    private boolean isMandatoryName;
     
-    private boolean origin = false;
+    private boolean origin;
 
     /**
      * 
@@ -96,7 +96,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
         if (curPath.startsWith(mdRecordsPath) || mdRecordsPath.length() == 0) {
 
             if (curPath.equals(mdRecordsPath + "/md-record")
-                && (indexInherited < 0)) {
+                && indexInherited < 0) {
                 // the entire md-record element is stored in fedora, so adjust
                 // all values
                 isInside = true;
@@ -175,8 +175,8 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
             isRootMetadataElement = false;
             this.name = null;
         }
-        else if ((mdRecordsPath.equals(parser.getCurPath()))
-            && (!isMandatoryName && !origin)) {
+        else if (mdRecordsPath.equals(parser.getCurPath())
+            && !isMandatoryName && !origin) {
             throw new MissingMdRecordException("Mandatory md-record with a name "
                     + Elements.MANDATORY_MD_RECORD_NAME + " is missing.");
         }

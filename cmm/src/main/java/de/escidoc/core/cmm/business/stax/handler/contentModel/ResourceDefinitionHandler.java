@@ -62,7 +62,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
     private String resourceDefinitionPath =
         "/content-model/resource-definitions/resource-definition";
 
-    private Map<String, ResourceDefinitionCreate> resourceDefinitions = null;
+    private Map<String, ResourceDefinitionCreate> resourceDefinitions;
 
     private ResourceDefinitionCreate resourceDefinition;
 

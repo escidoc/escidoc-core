@@ -399,7 +399,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         // pid ---------------
         final String pid = container.getObjectPid();
-        if ((pid != null) && (pid.length() > 0)) {
+        if (pid != null && pid.length() > 0) {
             values.put("containerPid", pid);
         }
         // current version
@@ -423,7 +423,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
         final String versionPid = container.getVersionPid();
         // container
-        if ((versionPid != null) && versionPid.length() != 0) {
+        if (versionPid != null && versionPid.length() != 0) {
             values.put("containerCurrentVersionPID", versionPid);
         }
         values.put("containerCurrentVersionDate", container.getVersionDate());
@@ -437,7 +437,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                 final String latestReleasePid =
                     container.getResourceProperties().get(
                         PropertyMapKeys.LATEST_RELEASE_PID);
-                if ((latestReleasePid != null) && latestReleasePid.length() != 0) {
+                if (latestReleasePid != null && latestReleasePid.length() != 0) {
                     values.put("containerCurrentVersionPID", latestReleasePid);
                 }
             }
@@ -504,7 +504,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             final String latestReleasePid =
                 container.getResourceProperties().get(
                     PropertyMapKeys.LATEST_RELEASE_PID);
-            if ((latestReleasePid != null) && latestReleasePid.length() != 0) {
+            if (latestReleasePid != null && latestReleasePid.length() != 0) {
                 values.put("containerLatestReleasePid", latestReleasePid);
             }
         }
@@ -571,8 +571,8 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             final String id = idIter.next();
             final String objectType =
                 TripleStoreUtility.getInstance().getObjectType(id);
-            if ((Constants.ITEM_OBJECT_TYPE.equals(objectType) || Constants.CONTAINER_OBJECT_TYPE
-                .equals(objectType))) {
+            if (Constants.ITEM_OBJECT_TYPE.equals(objectType) || Constants.CONTAINER_OBJECT_TYPE
+                .equals(objectType)) {
                 entry.put("memberId", id);
                 entry.put("memberTitle", TripleStoreUtility
                     .getInstance().getTitle(id));

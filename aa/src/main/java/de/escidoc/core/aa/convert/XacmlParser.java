@@ -77,11 +77,11 @@ public class XacmlParser {
 
     private XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted;
 
-    private PolicyParser pol = null;
+    private PolicyParser pol;
 
-    private EscidocRole role = null;
+    private EscidocRole role;
 
-    private Values values = null;
+    private Values values;
 
     private final EscidocRoleDaoInterface roleDao = new EscidocRoleDaoInterface() {
         @Override
@@ -146,7 +146,7 @@ public class XacmlParser {
         final List<String> ruleList = pol.getMatchingRules(resourceType);
 
         for (final String rule : ruleList) {
-            if ((rule != null) && (rule.length() > 0)) {
+            if (rule != null && rule.length() > 0) {
                 result = result.length() > 0 ? values.getAndCondition(result, rule) : rule;
             }
         }
@@ -173,17 +173,17 @@ public class XacmlParser {
         for (final Object scope : role.getScopeDefs()) {
             if (label.equals(((ScopeDefBase) scope).getObjectType())) {
                 final String rule =
-                    values.getScope(((ScopeDef) scope).getAttributeId());
+                    values.getScope(((ScopeDefBase) scope).getAttributeId());
 
                 if (rule == null) {
-                    if (values.ignoreScope(((ScopeDef) scope).getAttributeId())) {
+                    if (values.ignoreScope(((ScopeDefBase) scope).getAttributeId())) {
                         LOG.info("ignore scope definition "
-                            + ((ScopeDef) scope).getAttributeId());
+                            + ((ScopeDefBase) scope).getAttributeId());
                     }
                     else {
                         throw new IllegalArgumentException(
                             "no translation found for "
-                                + ((ScopeDef) scope).getAttributeId());
+                                + ((ScopeDefBase) scope).getAttributeId());
                     }
                 }
                 else {

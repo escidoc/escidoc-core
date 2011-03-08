@@ -69,7 +69,7 @@ public class Examples {
 
     private static final String EXAMPLE_OU = "organizational-unit.xml";
 
-    private ConnectionUtility connectionUtility = null;
+    private ConnectionUtility connectionUtility;
 
     /**
      * Create an XML snippet for a message that can be displayed on the Web
@@ -353,7 +353,7 @@ public class Examples {
             BeanLocator.locateContainerHandler();
         final ItemHandlerInterface itemHandler = BeanLocator.locateItemHandler();
 
-        if ((containerHandler != null) && (itemHandler != null)) {
+        if (containerHandler != null && itemHandler != null) {
             final String createXml =
                 containerHandler.createItem(
                     containerId,

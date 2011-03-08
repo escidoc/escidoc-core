@@ -76,15 +76,15 @@ public class ContainerHandlerBase extends HandlerBase {
     private static final Logger LOG = LoggerFactory
         .getLogger(ContainerHandlerBase.class);
 
-    private Container container = null;
+    private Container container;
 
-    private GenericResource item = null;
+    private GenericResource item;
 
-    private Utility utility = null;
+    private Utility utility;
 
-    private ContainerRendererInterface renderer = null;
+    private ContainerRendererInterface renderer;
 
-    private ContainerFoXmlRendererInterface foxmlRenderer = null;
+    private ContainerFoXmlRendererInterface foxmlRenderer;
 
     /**
      * @return the container
@@ -281,11 +281,11 @@ public class ContainerHandlerBase extends HandlerBase {
             getTripleStoreUtility().getPropertiesElements(
                 getContainer().getId(), TripleStoreUtility.PROP_PUBLIC_STATUS);
         // In first release, if object is once released no changes are allowed
-        if ((status.equals(Constants.STATUS_RELEASED))
-            && (getTripleStoreUtility().getPropertiesElements(
+        if (status.equals(Constants.STATUS_RELEASED)
+            && getTripleStoreUtility().getPropertiesElements(
                 getContainer().getId(),
                 TripleStoreUtility.PROP_LATEST_VERSION_STATUS).equals(
-                Constants.STATUS_RELEASED))) {
+                Constants.STATUS_RELEASED)) {
             // check if the version is in status released
             // FIXME check if the LATEST version is in status released. That
             // seems to be the same because all methods that call checkReleased
@@ -384,7 +384,7 @@ public class ContainerHandlerBase extends HandlerBase {
             getTripleStoreUtility().getPropertiesElements(
                 getContainer().getId(), TripleStoreUtility.PROP_OBJECT_PID);
         // In first release, if object is once released no changes are allowed
-        if ((pid != null) && (pid.length() > 0)) {
+        if (pid != null && pid.length() > 0) {
             throw new InvalidStatusException("The object is already assigned with PID '" + pid
                     + "' and can not be reassigned.");
         }
@@ -521,7 +521,7 @@ public class ContainerHandlerBase extends HandlerBase {
         final String objectStatus =
             getTripleStoreUtility().getPropertiesElements(container.getId(),
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
-        if (!(objectStatus.equals(status))) {
+        if (! objectStatus.equals(status)) {
             throw new InvalidStatusException("Container " + container.getId() + " is in status '"
                     + objectStatus + "'.");
         }

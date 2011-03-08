@@ -65,11 +65,11 @@ public class PermissionsQuery {
     private static final AppLogger LOG = new AppLogger(
         PermissionsQuery.class.getName());
 
-    private AccessRights accessRights = null;
+    private AccessRights accessRights;
 
-    private PoliciesCacheProxy policiesCacheProxy = null;
+    private PoliciesCacheProxy policiesCacheProxy;
 
-    private TripleStoreUtility tripleStoreUtility = null;
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * Create a new resource cache object.
@@ -111,7 +111,7 @@ public class PermissionsQuery {
             if (userGrants.keySet().contains(roleId) 
                 || userGroupGrants.keySet().contains(roleId)
                 || roleId.equals(AccessRights.getDefaultRole())) {
-                if ((hierarchicalContainers == null)
+                if (hierarchicalContainers == null
                     && accessRights.needsHierarchicalPermissions(resourceType,
                         roleId, HIERARCHICAL_CONTAINERS_PLACEHOLDER)) {
                     hierarchicalContainers =
@@ -119,7 +119,7 @@ public class PermissionsQuery {
                             accessRights.getOptimizedScopeIds(
                                 ResourceType.CONTAINER, userGrants, userGroupGrants));
                 }
-                if ((hierarchicalOUs == null)
+                if (hierarchicalOUs == null
                     && accessRights.needsHierarchicalPermissions(resourceType,
                         roleId, HIERARCHICAL_OUS_PLACEHOLDER)) {
                     hierarchicalOUs =
@@ -132,7 +132,7 @@ public class PermissionsQuery {
                         retrieveGroupsForUser(userId), userGrants, userGroupGrants, hierarchicalContainers,
                         hierarchicalOUs);
 
-                if ((rights != null) && (rights.length() > 0)) {
+                if (rights != null && rights.length() > 0) {
                     LOG.info("OR access rights for (" + userId + ',' + roleId
                         + "): " + rights);
                     statements.add(rights);
@@ -215,7 +215,7 @@ public class PermissionsQuery {
                         userGrants, userGroupGrants, hierarchicalContainers,
                         hierarchicalOUs);
 
-                if ((rights != null) && (rights.length() > 0)) {
+                if (rights != null && rights.length() > 0) {
                     LOG.info("AND restricting access rights from "
                         + "another user (1): " + rights);
                     result.append(" AND ");
@@ -333,7 +333,7 @@ public class PermissionsQuery {
     private Map<String, Map<String, List<RoleGrant>>> getUserGroupGrants(final String userId) {
         final Map<String, Map<String, List<RoleGrant>>> result
             = new HashMap<String, Map<String, List<RoleGrant>>>();
-        if ((userId != null) && (userId.length() > 0)) {
+        if (userId != null && userId.length() > 0) {
             try {
                 final Set<String> groupIds = policiesCacheProxy.getUserGroups(userId);
 
@@ -378,7 +378,7 @@ public class PermissionsQuery {
     protected Set<String> retrieveGroupsForUser(final String userId) {
         Set<String> result = new HashSet<String>();
 
-        if ((userId != null) && (userId.length() > 0)) {
+        if (userId != null && userId.length() > 0) {
             try {
                 result = policiesCacheProxy.getUserGroups(userId);
             }

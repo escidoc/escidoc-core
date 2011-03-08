@@ -85,6 +85,25 @@ public class Login extends HttpServlet {
     /** The logger. */
     private static final AppLogger LOGGER = new AppLogger(Login.class.getName());
 
+    private static final int NUM_CHARS = 10;
+
+    private static final String CHARS = "abcdefghijklmonpqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    private static final Random RANDOM = new Random(new Date().getTime());
+
+    /**
+     * Get a random string.
+     *
+     * @return random string
+     */
+    public static String getUniqueID() {
+        final char[] buf = new char[NUM_CHARS];
+        for(int i = 0; i < buf.length; i++) {
+            buf[i] = CHARS.charAt(RANDOM.nextInt(CHARS.length()));
+        }
+        return new String(buf);
+    }
+
     /**
      * The serial version uid.
      */
@@ -459,7 +478,7 @@ public class Login extends HttpServlet {
             final long timestamp = System.currentTimeMillis();
             final UserLoginData loginData = new UserLoginData();
             loginData.setUserAccount(userAccount);
-            loginData.setHandle("ESCIDOC-" + XUIDGenerator.getUniqueID() + timestamp);
+            loginData.setHandle("ESCIDOC-" + getUniqueID() + timestamp);
             loginData.setExpiryts(timestamp + getESciDocUserHandleLifetime());
             dao.saveOrUpdate(loginData);
             try {
@@ -1047,34 +1066,5 @@ public class Login extends HttpServlet {
                         e.getMessage()), e);
         }
         return escidocCookieVersion;
-    }
-
-    /**
-     * Private class to generate a random string used to build the eSciDoc
-     * cookie.
-     * 
-     * @author sche
-     */
-    private static final class XUIDGenerator {
-        private static final int NUM_CHARS = 10;
-
-        private static final String CHARS =
-            "abcdefghijklmonpqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-        private static final Random R = new Random(new Date().getTime());
-
-        /**
-         * Get a random string.
-         * 
-         * @return random string
-         */
-        public static String getUniqueID() {
-            final char[] buf = new char[NUM_CHARS];
-
-            for (int i = 0; i < buf.length; i++) {
-                buf[i] = CHARS.charAt(R.nextInt(CHARS.length()));
-            }
-            return new String(buf);
-        }
     }
 }

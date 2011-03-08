@@ -45,17 +45,17 @@ import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
  */
 public class ContextHandlerBase extends HandlerBase {
 
-    private Context context = null;
+    private Context context;
 
-    private Utility utility = null;
+    private Utility utility;
 
-    private ContextRendererInterface renderer = null;
+    private ContextRendererInterface renderer;
 
     /**
      * @return Return the Context.
      */
     public Context getContext() {
-        return (this.context);
+        return this.context;
     }
 
     /**
@@ -86,7 +86,7 @@ public class ContextHandlerBase extends HandlerBase {
         if (this.renderer == null) {
             this.renderer = new VelocityXmlContextRenderer();
         }
-        return (this.renderer);
+        return this.renderer;
     }
 
     /**
@@ -117,7 +117,7 @@ public class ContextHandlerBase extends HandlerBase {
             getTripleStoreUtility().getPropertiesElements(this.context.getId(),
                 TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-        if (!(objectStatus.equals(status))) {
+        if (! objectStatus.equals(status)) {
             throw new InvalidStatusException("Context " + context.getId()
                 + " is in " + TripleStoreUtility.PROP_PUBLIC_STATUS + " '"
                 + objectStatus + "'.");

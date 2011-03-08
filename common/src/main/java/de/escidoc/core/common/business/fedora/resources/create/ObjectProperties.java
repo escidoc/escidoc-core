@@ -43,25 +43,25 @@ public class ObjectProperties {
 
     private String statusComment = "Object created.";
 
-    private String pid = null;
+    private String pid;
 
-    private String contextId = null;
+    private String contextId;
 
-    private String contentModelId = null;
+    private String contentModelId;
 
-    private String origin = null;
+    private String origin;
 
-    private String originObjectId = null;
+    private String originObjectId;
 
-    private String originVersionId = null;
+    private String originVersionId;
 
-    private String contextTitle = null;
+    private String contextTitle;
 
-    private String contentModelTitle = null;
+    private String contentModelTitle;
 
-    private String title = null;
+    private String title;
 
-    private String description = null;
+    private String description;
 
     /**
      * Set status of object.

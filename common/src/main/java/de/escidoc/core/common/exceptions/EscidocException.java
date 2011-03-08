@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author FRS
  * 
  */
-public abstract class EscidocException extends Exception {
+public class EscidocException extends Exception {
 
     /**
      * The serial version UID.
@@ -131,7 +131,7 @@ public abstract class EscidocException extends Exception {
      * 
      * @common
      */
-    public EscidocException() {
+    protected EscidocException() {
         this.httpStatusCode = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
         this.httpStatusMsg = DEFAULT_STATUS_MESSAGE;
     }
@@ -146,7 +146,7 @@ public abstract class EscidocException extends Exception {
      *            Throwable
      * @common
      */
-    public EscidocException(final String message, final Throwable cause) {
+    protected EscidocException(final String message, final Throwable cause) {
         super(message, cause);
         this.httpStatusCode = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
         this.httpStatusMsg = DEFAULT_STATUS_MESSAGE;
@@ -159,7 +159,7 @@ public abstract class EscidocException extends Exception {
      *            the detail message.
      * @common
      */
-    public EscidocException(final String message) {
+    protected EscidocException(final String message) {
         super(message);
         this.httpStatusCode = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
         this.httpStatusMsg = DEFAULT_STATUS_MESSAGE;
@@ -172,7 +172,7 @@ public abstract class EscidocException extends Exception {
      *            Throwable
      * @common
      */
-    public EscidocException(final Throwable cause) {
+    protected EscidocException(final Throwable cause) {
         // FIXME: better solution insrtead of empty string needed
         super("", cause);
         this.httpStatusCode = ESCIDOC_HTTP_SC_INTERNAL_SERVER_ERROR;
@@ -188,7 +188,7 @@ public abstract class EscidocException extends Exception {
      *            the http status message
      * @common
      */
-    public EscidocException(final int httpStatusCode, final String httpStatusMsg) {
+    protected EscidocException(final int httpStatusCode, final String httpStatusMsg) {
         this.httpStatusCode = httpStatusCode;
         this.httpStatusMsg = httpStatusMsg;
     }
@@ -207,7 +207,7 @@ public abstract class EscidocException extends Exception {
      *            the http status message
      * @common
      */
-    public EscidocException(final String message, final Throwable cause,
+    protected EscidocException(final String message, final Throwable cause,
         final int httpStatusCode, final String httpStatusMsg) {
         super(message, cause);
         this.httpStatusCode = httpStatusCode;
@@ -225,7 +225,7 @@ public abstract class EscidocException extends Exception {
      *            the http status message
      * @common
      */
-    public EscidocException(final String message, final int httpStatusCode,
+    protected EscidocException(final String message, final int httpStatusCode,
         final String httpStatusMsg) {
         super(message);
         this.httpStatusCode = httpStatusCode;
@@ -243,7 +243,7 @@ public abstract class EscidocException extends Exception {
      *            the http status message
      * @common
      */
-    public EscidocException(final Throwable cause, final int httpStatusCode,
+    protected EscidocException(final Throwable cause, final int httpStatusCode,
         final String httpStatusMsg) {
         // FIXME: better solution instead of empty string needed
         super("", cause);

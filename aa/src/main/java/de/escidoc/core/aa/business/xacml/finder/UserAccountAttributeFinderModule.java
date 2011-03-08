@@ -266,11 +266,11 @@ public class UserAccountAttributeFinderModule
         .compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX
             + "role-grant:(.*?):assigned-on");
 
-    private PoliciesCacheProxy policiesCacheProxy = null;
+    private PoliciesCacheProxy policiesCacheProxy;
 
     private UserAccountDaoInterface userAccountDao;
 
-    private TripleStoreUtility tripleStoreUtility = null;
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * Since this class will retrieve subject attributes and resource

@@ -94,9 +94,8 @@ public class ParameterCheckInterceptor implements Ordered {
         final Object[] arguments = joinPoint.getArgs();
         final int length = arguments.length;
         for (int i = 0; i < length; ++i) {
-            if ((arguments[i] == null) || ("".equals(arguments[i]))) {
-                final MethodSignature methodSignature =
-                    ((MethodSignature) joinPoint.getSignature());
+            if (arguments[i] == null || "".equals(arguments[i])) {
+                final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
                 final Method calledMethod = methodSignature.getMethod();
                 final String target = methodSignature.getDeclaringTypeName();
                 throw new MissingMethodParameterException(StringUtility

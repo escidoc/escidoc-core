@@ -161,20 +161,6 @@ public interface ItemHandlerInterface extends IngestableResource {
         InvalidStatusException, AuthorizationException;
 
     /**
-     * Creates a resource with the provided data.
-     * 
-     * @param xmlData
-     *            The data of the resource.
-     * @return Returns the XML representation of the created resource, now
-     *         containing the id by which the resource can be identified in the
-     *         system.
-     * @throws EscidocException
-     *             Thrown if creating Item failed.
-     */
-    @Override
-    String ingest(final String xmlData) throws EscidocException;
-
-    /**
      * Deletes the specified resource.
      * 
      * @param id

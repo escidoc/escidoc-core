@@ -13,7 +13,7 @@ public final class IndexOptimizerServiceTimer {
 
     private static final IndexOptimizerServiceTimer instance = new IndexOptimizerServiceTimer();
     
-    private long lastExecutionTime = 0;
+    private long lastExecutionTime;
 
     /**
      * private Constructor for Singleton.

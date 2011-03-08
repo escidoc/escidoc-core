@@ -36,15 +36,15 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class SemanticQueryHandler extends DefaultHandler {
 
-    private String query = null;
+    private String query;
 
-    private String subject = null;
+    private String subject;
 
-    private String predicate = null;
+    private String predicate;
 
-    private String object = null;
+    private String object;
 
-    private String format = null;
+    private String format;
 
     private static final AppLogger LOGGER =
         new AppLogger(SemanticQueryHandler.class.getName());
@@ -54,7 +54,7 @@ public class SemanticQueryHandler extends DefaultHandler {
         throws MissingElementValueException {
 
         if ("query".equals(element.getLocalName())) {
-            if ((data == null) || (data.length() == 0)) {
+            if (data == null || data.length() == 0) {
                 throw new MissingElementValueException("The value of the element " + element.getLocalName()
                         + " is missing.");
             }
@@ -67,7 +67,7 @@ public class SemanticQueryHandler extends DefaultHandler {
             this.object = queryParts[2].trim();
         }
         else if ("format".equals(element.getLocalName())) {
-            if ((data == null) || (data.length() == 0)) {
+            if (data == null || data.length() == 0) {
                 throw new MissingElementValueException("The value of the element " + element.getLocalName()
                         + " is missing.");
             }

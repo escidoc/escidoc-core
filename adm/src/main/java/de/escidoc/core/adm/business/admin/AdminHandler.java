@@ -70,11 +70,11 @@ public class AdminHandler {
 
     private FrameworkInfo frameworkInfo;
 
-    private Reindexer reindexer = null;
+    private Reindexer reindexer;
 
-    private Utility utility = null;
+    private Utility utility;
 
-    private IndexingHandler indexingHandler = null;
+    private IndexingHandler indexingHandler;
 
     private AdminRendererInterface renderer;
 

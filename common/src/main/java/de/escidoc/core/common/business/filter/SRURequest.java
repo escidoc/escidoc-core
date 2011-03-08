@@ -71,7 +71,7 @@ public class SRURequest {
         ADMIN_INDEXES.put(ResourceType.OU, "ou_admin");
     }
 
-    private ConnectionUtility connectionUtility = null;
+    private ConnectionUtility connectionUtility;
 
     /**
      * Send an explain request to the SRW servlet and write the response to the

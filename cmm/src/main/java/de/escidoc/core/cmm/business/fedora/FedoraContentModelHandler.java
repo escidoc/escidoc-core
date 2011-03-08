@@ -115,7 +115,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         new ArrayList<ResourceListener>();
 
     /** SRU request. */
-    private SRURequest sruRequest = null;
+    private SRURequest sruRequest;
 
     /**
      * See Interface for functional description.
@@ -124,7 +124,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @return
      * @throws ContentModelNotFoundException
      * @throws SystemException
-     * @see de.escidoc.core.common.business.fedora.AbstractResourceHandler#retrieve(java.lang.String)
      */
     @Override
     public String retrieve(final String id)
@@ -396,7 +395,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws LockingException
      * @throws InvalidStatusException
      * @throws ResourceInUseException
-     * @see de.escidoc.core.common.business.fedora.AbstractResourceHandler#delete(java.lang.String)
      */
     @Override
     public void delete(final String id) throws ContentModelNotFoundException,
@@ -426,9 +424,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
     /**
      * See Interface for functional description.
-     * 
-     * @see de.escidoc.core.common.business.fedora.AbstractResourceHandler#update(java.lang.String,
-     *      java.lang.String)
      * 
      * @param id
      * @param xmlData
@@ -906,7 +901,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
         final List<MdRecordCreate> mdRecords = item.getMetadataRecords();
 
-        if (!((mdRecords == null) || mdRecords.size() < 1)) {
+        if (!(mdRecords == null || mdRecords.size() < 1)) {
             final Collection<String> mdRecordNames = new ArrayList<String>();
             for (final MdRecordCreate mdRecord : mdRecords) {
 

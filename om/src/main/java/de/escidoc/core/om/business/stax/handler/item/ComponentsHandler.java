@@ -69,9 +69,9 @@ public class ComponentsHandler extends DefaultHandler {
 
     private final List<ComponentCreate> components = new ArrayList<ComponentCreate>();
 
-    private boolean parsingComponent = false;
+    private boolean parsingComponent;
 
-    private ComponentHandler componentHandler = null;
+    private ComponentHandler componentHandler;
 
     private final ItemCreate item;
 

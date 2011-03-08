@@ -135,7 +135,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
             }
             else {
                 LOGGER.error(e);
-                throw (e);
+                throw e;
             }
         }
     }

@@ -108,12 +108,12 @@ public class SmScopesHibernateDao
     @Override
     public void delete(final Scope scope)
         throws SqlDatabaseSystemException {
-        if (scope != null && ((scope.getAggregationDefinitions() != null
-            && !scope.getAggregationDefinitions().isEmpty())
-            || (scope.getReportDefinitions() != null 
-            && !scope.getReportDefinitions().isEmpty()) 
-            || (scope.getStatisticDatas() != null
-            && !scope.getStatisticDatas().isEmpty()))) {
+        if (scope != null && (scope.getAggregationDefinitions() != null
+            && !scope.getAggregationDefinitions().isEmpty()
+            || scope.getReportDefinitions() != null
+            && !scope.getReportDefinitions().isEmpty()
+            || scope.getStatisticDatas() != null
+            && !scope.getStatisticDatas().isEmpty())) {
             throw new SqlDatabaseSystemException(
                 "Scope still references dependent objects");
         }
@@ -237,10 +237,10 @@ public class SmScopesHibernateDao
         final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException {
 
-        if ((scopeIds != null) && (!scopeIds.isEmpty())) {
+        if (scopeIds != null && !scopeIds.isEmpty()) {
             final DetachedCriteria detachedCriteria;
 
-            detachedCriteria = (criteria != null) && (criteria.length() > 0) ? new ScopeFilter(criteria).toSql() : DetachedCriteria.forClass(Scope.class, "s");
+            detachedCriteria = criteria != null && criteria.length() > 0 ? new ScopeFilter(criteria).toSql() : DetachedCriteria.forClass(Scope.class, "s");
             detachedCriteria.add(Restrictions.in("id", scopeIds));
 
             final Collection<Scope> scopes =

@@ -80,9 +80,9 @@ public class PolicyParser {
         MATCHES.add(MATCH_PREFIX + ResourceType.OU.getLabel());
     }
 
-    private ConditionParser con = null;
+    private ConditionParser con;
 
-    private Values values = null;
+    private Values values;
 
     /**
      * This map only contains these actions which match the actions collected in
@@ -130,10 +130,10 @@ public class PolicyParser {
      * @return true if the given expression is an action id
      */
     private boolean isActionId(final Evaluatable evaluatable) {
-        return ((evaluatable != null)
-            && (evaluatable instanceof AttributeDesignator)
-            && (((AttributeDesignator) evaluatable)
-            .getId().toString().equals(ACTION_ID)));
+        return evaluatable != null
+            && evaluatable instanceof AttributeDesignator
+            && ((AttributeDesignator) evaluatable)
+            .getId().toString().equals(ACTION_ID);
     }
 
     /**
@@ -216,15 +216,15 @@ public class PolicyParser {
     private void parseAction(final Object targetObject, final Object match) {
         if (match != null) {
             if (match instanceof TargetMatch) {
-                if (!((((TargetMatch) match).getMatchFunction()
-                    instanceof EqualFunction) || (((TargetMatch) match)
-                    .getMatchFunction() instanceof XacmlFunctionContains))) {
+                if (!(((TargetMatch) match).getMatchFunction()
+                    instanceof EqualFunction || ((TargetMatch) match)
+                    .getMatchFunction() instanceof XacmlFunctionContains)) {
                     throw new IllegalArgumentException(((TargetMatch) match)
                         .getMatchFunction().getClass().getName()
                         + ": unknown action");
                 }
-                if ((matches(((TargetMatch) match).getMatchValue()))
-                    && (isActionId(((TargetMatch) match).getMatchEvaluatable()))) {
+                if (matches(((TargetMatch) match).getMatchValue())
+                    && isActionId(((TargetMatch) match).getMatchEvaluatable())) {
                     parseEvaluatable(((TargetMatch) match)
                         .getMatchEvaluatable());
                     actions.put(targetObject,
@@ -256,7 +256,7 @@ public class PolicyParser {
                     parsePolicy((AbstractPolicy) child);
                 }
                 else if (child instanceof Apply) {
-                    parseCondition((Apply) child);
+                    parseCondition((Evaluatable) child);
                 }
                 else if (child instanceof Evaluatable) {
                     parseEvaluatable((Evaluatable) child);
@@ -305,9 +305,9 @@ public class PolicyParser {
     private void parsePolicy(final AbstractPolicy policy) {
         if (policy != null) {
             parseChildren(policy.getChildren());
-            if (!((policy.getCombiningAlg()
-                instanceof OrderedPermitOverridesPolicyAlg) || (policy
-                .getCombiningAlg() instanceof OrderedPermitOverridesRuleAlg))) {
+            if (!(policy.getCombiningAlg()
+                instanceof OrderedPermitOverridesPolicyAlg || policy
+                .getCombiningAlg() instanceof OrderedPermitOverridesRuleAlg)) {
                 throw new IllegalArgumentException(
                     "only ordered-permit-overrides is supported");
             }
@@ -323,7 +323,7 @@ public class PolicyParser {
      */
     private void parseRule(final Rule rule) {
         if (rule != null) {
-            if ((rule.getChildren() != null) && (!rule.getChildren().isEmpty())) {
+            if (rule.getChildren() != null && !rule.getChildren().isEmpty()) {
                 throw new IllegalArgumentException(
                     "rule with children not supported");
             }
@@ -345,8 +345,8 @@ public class PolicyParser {
      *            target
      */
     private void parseTarget(final Object targetObject, final Target target) {
-        if ((target != null) 
-            && (target.getActions() != null)) {
+        if (target != null
+            && target.getActions() != null) {
             for (final Object match : target.getActions()) {
                 parseAction(targetObject, match);
             }

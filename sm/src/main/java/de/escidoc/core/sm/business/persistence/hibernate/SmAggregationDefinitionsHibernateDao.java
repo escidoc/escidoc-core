@@ -236,10 +236,10 @@ public class SmAggregationDefinitionsHibernateDao
         final Collection<AggregationDefinition> result =
                 new ArrayList<AggregationDefinition>();
 
-        if ((scopeIds != null) && (!scopeIds.isEmpty())) {
+        if (scopeIds != null && !scopeIds.isEmpty()) {
             final DetachedCriteria detachedCriteria;
 
-            detachedCriteria = (criteria != null) && (criteria.length() > 0) ? new AggregationDefinitionFilter(criteria).toSql() : DetachedCriteria.forClass(AggregationDefinition.class, "a");
+            detachedCriteria = criteria != null && criteria.length() > 0 ? new AggregationDefinitionFilter(criteria).toSql() : DetachedCriteria.forClass(AggregationDefinition.class, "a");
             detachedCriteria.add(Restrictions.in("scope.id", scopeIds));
 
             final Collection<AggregationDefinition> aggregationDefinitions =

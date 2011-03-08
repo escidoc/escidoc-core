@@ -64,15 +64,15 @@ public class ComponentCreate extends GenericResourceCreate
 
     private static final AppLogger LOG = new AppLogger(ComponentCreate.class.getName());
 
-    private List<MdRecordCreate> mdRecords = null;
+    private List<MdRecordCreate> mdRecords;
 
-    private BinaryContent content = null;
+    private BinaryContent content;
 
-    private EscidocIdProvider idProvider = null;
+    private EscidocIdProvider idProvider;
 
-    private String dcXml = null;
+    private String dcXml;
 
-    private ComponentProperties properties = null;
+    private ComponentProperties properties;
 
     /**
      * Set ItemProperties.
@@ -445,10 +445,10 @@ public class ComponentCreate extends GenericResourceCreate
         }
 
         // check if storage attributes fits to content
-        if (((this.content.getStorageType() == StorageType.EXTERNAL_URL)
-            || (this.content.getStorageType() == StorageType.EXTERNAL_MANAGED))
-            && ((this.content.getDataLocation() == null)
-                && (this.content.getContent() != null))) {
+        if ((this.content.getStorageType() == StorageType.EXTERNAL_URL
+            || this.content.getStorageType() == StorageType.EXTERNAL_MANAGED)
+            && this.content.getDataLocation() == null
+                && this.content.getContent() != null) {
             throw new InvalidContentException(
                 "Attribute 'storage' fits not to inline content.");
         }

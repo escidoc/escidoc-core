@@ -92,7 +92,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     private PolicyDecisionPointInterface pdp;
 
     /** SRU request. */
-    private SRURequest sruRequest = null;
+    private SRURequest sruRequest;
 
     /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
@@ -343,7 +343,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         AdminDescriptorNotFoundException {
 
         setContext(id);
-        return (getAdminDescriptorXml(this, name, true));
+        return getAdminDescriptorXml(this, name, true);
     }
 
     /*
@@ -357,7 +357,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         throws ContextNotFoundException, SystemException {
 
         setContext(id);
-        return (getAdminDescriptorsXml(this));
+        return getAdminDescriptorsXml(this);
     }
 
     /*

@@ -93,7 +93,7 @@ public class IndexingHandler implements ResourceListener {
     private static final AppLogger log = new AppLogger(
         IndexingHandler.class.getName());
 
-    private GsearchHandler gsearchHandler = null;
+    private GsearchHandler gsearchHandler;
 
     private IndexingCacheHandler indexingCacheHandler;
 
@@ -105,10 +105,9 @@ public class IndexingHandler implements ResourceListener {
 
     private boolean notifyIndexerEnabled = true;
 
-    private Collection<String> indexNames = null;
+    private Collection<String> indexNames;
 
-    private Map<String, Map<String, Map<String, Object>>> objectTypeParameters =
-        null;
+    private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
 
     /**
      * Constructor.
@@ -476,7 +475,7 @@ public class IndexingHandler implements ResourceListener {
                     + ", thisVersion: " + thisVersion);
             }
             if (Boolean.valueOf((String) parameters.get("indexReleasedVersion"))) {
-                if ((latestReleasedVersion == null) || (thisVersion == null)) {
+                if (latestReleasedVersion == null || thisVersion == null) {
                     if (log.isDebugEnabled()) {
                         log.debug("returning");
                     }
@@ -698,7 +697,7 @@ public class IndexingHandler implements ResourceListener {
         final Map<String, Map<String, Object>> resourceParameters =
             getObjectTypeParameters().get(objectType);
 
-        if ((id != null) && (resourceParameters != null)) {
+        if (id != null && resourceParameters != null) {
             if (indexName == null || indexName.trim().length() == 0
                 || "all".equalsIgnoreCase(indexName)) {
                 for (final String indexName2 : resourceParameters.keySet()) {
@@ -797,7 +796,7 @@ public class IndexingHandler implements ResourceListener {
             getObjectTypeParameters().get(objectType);
         Set<String> result = new HashSet<String>();
 
-        if ((resourceParameters != null)) {
+        if (resourceParameters != null) {
             if (indexName == null || indexName.trim().length() == 0
                 || "all".equalsIgnoreCase(indexName)) {
                 for (final String indexName2 : resourceParameters.keySet()) {

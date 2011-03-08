@@ -89,13 +89,13 @@ public class Item extends GenericVersionableResourcePid
 
     private static final AppLogger log = new AppLogger(Item.class.getName());
 
-    private Datastream cts = null;
+    private Datastream cts;
 
-    private Map<String, Datastream> mdRecords = null;
+    private Map<String, Datastream> mdRecords;
 
-    private Map<String, Datastream> contentStreams = null;
+    private Map<String, Datastream> contentStreams;
 
-    private Map<String, Component> components = null;
+    private Map<String, Component> components;
 
     private Map<String, Component> componentsByLocalName =
         new HashMap<String, Component>();
@@ -103,7 +103,7 @@ public class Item extends GenericVersionableResourcePid
     private Collection<String> alteredComponent = new ArrayList<String>();
 
     // properties initiation
-    private boolean resourceInit = false;
+    private boolean resourceInit;
 
     /**
      * Constructs the Item with the specified id. The datastreams are

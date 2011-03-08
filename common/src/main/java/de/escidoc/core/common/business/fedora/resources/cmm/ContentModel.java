@@ -77,15 +77,15 @@ public class ContentModel extends GenericVersionableResourcePid
     public static final String DATASTREAM_DS_COMPOSITE_MODEL =
         "DS-COMPOSITE-MODEL";
 
-    private Map<String, Datastream> contentStreams = null;
+    private Map<String, Datastream> contentStreams;
 
-    private Map<String, Datastream> otherStreams = null;
+    private Map<String, Datastream> otherStreams;
 
     private Datastream dsCompositeModel;
 
     private boolean resourceInit;
 
-    private Map<String, ResourceDefinitionCreate> resourceDefinitions = null;
+    private Map<String, ResourceDefinitionCreate> resourceDefinitions;
 
     private static final AppLogger log = new AppLogger(ContentModel.class.getName());
 

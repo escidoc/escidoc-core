@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class RelationsCreate {
 
-    private List<RelationCreate> relations = null;
+    private List<RelationCreate> relations;
 
     /**
      * Add Content Relation to Relations collection.
@@ -72,11 +72,11 @@ public class RelationsCreate {
             while (it.hasNext()) {
                 final RelationCreate rel = it.next();
 
-                if ((rel.equals(relation))
-                    || ((rel.getPredicate().equals(relation.getPredicate()))
-                        && (rel.getPredicateNs()
-                            .equals(relation.getPredicate())) && (rel
-                        .getTarget().equals(relation.getTarget())))) {
+                if (rel.equals(relation)
+                    || rel.getPredicate().equals(relation.getPredicate())
+                        && rel.getPredicateNs()
+                            .equals(relation.getPredicate()) && rel
+                        .getTarget().equals(relation.getTarget())) {
 
                     it.remove();
                     break;

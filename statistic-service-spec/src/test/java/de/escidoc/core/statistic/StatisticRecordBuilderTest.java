@@ -11,8 +11,6 @@ import static junit.framework.Assert.assertEquals;
 
 /**
  * Unit test for {@link StatisticRecordBuilder} and its implementations.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public class StatisticRecordBuilderTest {
 

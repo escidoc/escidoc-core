@@ -56,9 +56,9 @@ public class BeanMethod {
     private static final Map<String, Object> RESOURCE_POOL =
         Collections.synchronizedMap(new HashMap<String, Object>());
 
-    private String beanId = null;
+    private String beanId;
 
-    private String method = null;
+    private String method;
 
     private Object[] parameters;
 
@@ -208,7 +208,7 @@ public class BeanMethod {
     private Object getBean() throws WebserverSystemException {
 
         Object result = RESOURCE_POOL.get(getBeanId());
-        if ((result == null) && (getBeanId() != null)) {
+        if (result == null && getBeanId() != null) {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug(
                     StringUtility.format(

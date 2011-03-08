@@ -39,7 +39,7 @@ import de.escidoc.core.common.persistence.interfaces.ResourceIdentifierDao;
  */
 public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
 
-    private FedoraUtility fedoraUtility = null;
+    private FedoraUtility fedoraUtility;
 
     /**
      * See Interface for functional description.

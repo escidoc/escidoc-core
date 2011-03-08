@@ -53,7 +53,7 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
 
     private ReportDefinition reportDefinition = new ReportDefinition();
     
-    private int allowedRolesIndex = 0;
+    private int allowedRolesIndex;
     
     private final Map<String, Integer> charactersCounter = new HashMap<String, Integer>();
     

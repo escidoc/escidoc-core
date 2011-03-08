@@ -96,7 +96,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         values.put(XmlTemplateProvider.IS_ROOT_SUB_RESOURCE,
             XmlTemplateProvider.FALSE);
 
-        return (ContextXmlProvider.getInstance().getContextXml(values));
+        return ContextXmlProvider.getInstance().getContextXml(values);
     }
 
     /**
@@ -224,7 +224,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
             throw new WebserverSystemException(e);
         }
 
-        return (ContextXmlProvider.getInstance().getPropertiesXml(values));
+        return ContextXmlProvider.getInstance().getPropertiesXml(values);
     }
 
     /*
@@ -273,7 +273,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         addCommonValues(context, values);
         addMemberListValues(context, values, memberList);
 
-        return (ContextXmlProvider.getInstance().getMemberListXml(values));
+        return ContextXmlProvider.getInstance().getMemberListXml(values);
     }
 
     /**
@@ -301,7 +301,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
         addCommonValues(context, values);
         addMemberListValues(context, values, memberList);
 
-        return (ContextXmlProvider.getInstance().getMemberRefListXml(values));
+        return ContextXmlProvider.getInstance().getMemberRefListXml(values);
     }
 
     /**
@@ -474,7 +474,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
             ousContext.add(getOrganizationalUnitContext(ouid));
         }
 
-        return (ousContext);
+        return ousContext;
     }
 
     /**
@@ -496,7 +496,7 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
             TripleStoreUtility.getInstance().getPropertiesElements(id,
                 TripleStoreUtility.PROP_DC_TITLE));
         ouContext.put("href", XmlUtility.getOrganizationalUnitHref(id));
-        return (ouContext);
+        return ouContext;
     }
 
     /**

@@ -220,7 +220,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         }
 
         final StagingFile result = dao.findStagingFile(stagingFileId);
-        if ((result == null) || (result.isExpired())) {
+        if (result == null || result.isExpired()) {
             throw new StagingFileNotFoundException(StringUtility
                 .format(
                         "Provided id does not match valid staging file.",

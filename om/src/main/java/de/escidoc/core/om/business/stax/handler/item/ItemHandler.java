@@ -64,7 +64,7 @@ public class ItemHandler extends DefaultHandler {
     private static final AppLogger LOG =
         new AppLogger(ItemHandler.class.getName());
 
-    private boolean surrogate = false;
+    private boolean surrogate;
 
     private static final String XPATH_ITEM = "/item";
 
@@ -85,27 +85,27 @@ public class ItemHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private boolean parsingProperties = false;
+    private boolean parsingProperties;
 
-    private boolean parsingMetaData = false;
+    private boolean parsingMetaData;
 
-    private boolean parsingContentStreams = false;
+    private boolean parsingContentStreams;
 
-    private boolean parsingComponents = false;
+    private boolean parsingComponents;
 
-    private boolean parsingRelations = false;
+    private boolean parsingRelations;
 
-    private ItemPropertiesHandler propertiesHandler = null;
+    private ItemPropertiesHandler propertiesHandler;
 
-    private ContentStreamsHandler contentStreamsHandler = null;
+    private ContentStreamsHandler contentStreamsHandler;
 
-    private ComponentsHandler componentsHandler = null;
+    private ComponentsHandler componentsHandler;
 
-    private MetadataHandler2 metadataHandler = null;
+    private MetadataHandler2 metadataHandler;
 
-    private RelationHandler2 relationHandler = null;
+    private RelationHandler2 relationHandler;
 
-    private ItemCreate item = null;
+    private ItemCreate item;
 
     /**
      * ItemHandler.

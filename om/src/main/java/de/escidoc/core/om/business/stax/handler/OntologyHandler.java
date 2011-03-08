@@ -46,7 +46,7 @@ public class OntologyHandler extends DefaultHandler {
 
     private String predicateBase;
 
-    private boolean exist = false;
+    private boolean exist;
 
     public OntologyHandler(final StaxParser parser, final String predicate) {
 
@@ -93,8 +93,8 @@ public class OntologyHandler extends DefaultHandler {
 
             if (indexOfId != -1) {
                 final String id = element.getAttribute(indexOfId).getValue();
-                if ((id.equals(this.predicateWithoutBase) && base
-                    .equals(predicateBase))
+                if (id.equals(this.predicateWithoutBase) && base
+                    .equals(predicateBase)
                     || id.equals(this.predicate)) {
                     exist = true;                    
                 }

@@ -53,32 +53,32 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
     private String title;
 
-    private String nameValue = null;
+    private String nameValue;
 
     public static final String CONTAINER = "/container";
 
-    private String elementPath = null;
+    private String elementPath;
 
-    private String mdRecordsPath = null;
+    private String mdRecordsPath;
 
-    private String componentPath = null;
+    private String componentPath;
 
-    private String componentId = null;
+    private String componentId;
 
-    private List<String> pids = null;
+    private List<String> pids;
 
-    private int number = 0;
+    private int number;
 
-    private boolean isInside = false;
+    private boolean isInside;
 
-    private boolean isRootMetadataElement = false;
+    private boolean isRootMetadataElement;
 
-    private String escidocMdRecordNameSpace = null;
+    private String escidocMdRecordNameSpace;
 
     private final Map<String, Map<String, Map<String, String>>> metadataAttributes =
         new HashMap<String, Map<String, Map<String, String>>>();
 
-    private Map<String, Map<String, String>> componentMdRecords = null;
+    private Map<String, Map<String, String>> componentMdRecords;
 
     private final Map<String, String> escidocMdNamespacesMap =
         new HashMap<String, String>();

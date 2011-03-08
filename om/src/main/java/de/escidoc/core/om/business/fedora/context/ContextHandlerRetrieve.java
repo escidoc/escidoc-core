@@ -108,7 +108,7 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
         final Map<String, Object> values = new HashMap<String, Object>();
         values.put(IS_ROOT_RESOURCES, true);
 
-        return (getRenderer().renderAdminDescriptors(contextHandler, values));
+        return getRenderer().renderAdminDescriptors(contextHandler, values);
     }
 
     /**

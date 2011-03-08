@@ -61,13 +61,13 @@ public class MetadataHandler2 extends DefaultHandler {
 
     private String metadataXPath = "//md-record";
 
-    private MdRecordCreate metadataRecord = null;
+    private MdRecordCreate metadataRecord;
 
-    private boolean parsingMetadata = false;
+    private boolean parsingMetadata;
 
-    private MultipleExtractor me = null;
+    private MultipleExtractor me;
 
-    private boolean payloadRootElement = false;
+    private boolean payloadRootElement;
 
     /**
      * Instantiate a MetaDataHandler.
@@ -178,9 +178,7 @@ public class MetadataHandler2 extends DefaultHandler {
             this.parsingMetadata = false;
 
             this.me.endElement(element);
-            final Map<String,?> tmp =
-                (HashMap<String, ?>) this.me.getOutputStreams().get(
-                    Elements.ELEMENT_MD_RECORDS);
+            final Map<String,?> tmp = (Map<String, ?>) this.me.getOutputStreams().get(Elements.ELEMENT_MD_RECORDS);
             try {
                 this.metadataRecord.setContent((ByteArrayOutputStream) tmp
                     .get(this.metadataRecord.getName()));

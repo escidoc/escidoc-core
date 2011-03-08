@@ -83,19 +83,19 @@ public class ItemCreate extends GenericResourceCreate {
     private static final AppLogger LOG = new AppLogger(
         ItemCreate.class.getName());
 
-    private ItemProperties properties = null;
+    private ItemProperties properties;
 
-    private List<MdRecordCreate> mdRecords = null;
+    private List<MdRecordCreate> mdRecords;
 
-    private List<ComponentCreate> components = null;
+    private List<ComponentCreate> components;
 
-    private List<ContentStreamCreate> contentStreams = null;
+    private List<ContentStreamCreate> contentStreams;
 
     private RelationsCreate relations = new RelationsCreate();
 
-    private EscidocIdProvider idProvider = null;
+    private EscidocIdProvider idProvider;
 
-    private String dcXml = null;
+    private String dcXml;
     
     // define pattern
     // taken from method handleFedoraUploadError
@@ -569,7 +569,7 @@ public class ItemCreate extends GenericResourceCreate {
         // DC (inclusive mapping)----------------------------------------------
         final String dcXml = getDC();
 
-        if ((dcXml != null) && dcXml.length() > 0) {
+        if (dcXml != null && dcXml.length() > 0) {
             valueMap.put(XmlTemplateProvider.DC, dcXml);
         }
         if (!valueMap.containsKey(XmlTemplateProvider.VAR_ORIGIN_OBJECT_ID)) {

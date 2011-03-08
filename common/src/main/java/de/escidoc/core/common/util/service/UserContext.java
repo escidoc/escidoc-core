@@ -440,7 +440,7 @@ public final class UserContext {
      */
     public static boolean isInternalUser() throws WebserverSystemException {
 
-        return (getAuthentication() instanceof EscidocRunAsInternalUserToken);
+        return getAuthentication() instanceof EscidocRunAsInternalUserToken;
     }
 
     /**

@@ -44,9 +44,9 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
     private static final AppLogger log =
         new AppLogger(RDFRegisteredOntologyFilter.class.getName());
 
-    private boolean inFilteredEvent = false;
+    private boolean inFilteredEvent;
 
-    private boolean workaroundForItemList = false;
+    private boolean workaroundForItemList;
 
     @Override
     public boolean accept(final XMLEvent event) {

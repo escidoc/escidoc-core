@@ -71,7 +71,7 @@ public class Fingerprint implements Comparable<Object> {
         IGNORED_SCHEMAS.put("public", "");
     }
 
-    private Schema[] schemas = null;
+    private Schema[] schemas;
 
     /**
      * Constructor for bean deserialization.

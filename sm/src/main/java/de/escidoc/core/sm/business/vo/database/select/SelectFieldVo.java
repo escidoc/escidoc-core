@@ -124,14 +124,14 @@ public class SelectFieldVo {
     public void setFieldType(final String fieldType)
         throws SqlDatabaseSystemException {
         if (fieldType == null 
-        		|| (!fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
+        		|| !fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DATE)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DAYDATE)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_XPATH_BOOLEAN)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_XPATH_STRING)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_XPATH_NUMERIC)
-            && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_FREE_SQL))) {
+            && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_FREE_SQL)) {
             throw new SqlDatabaseSystemException("wrong fieldType given");
         }
         this.fieldType = fieldType;

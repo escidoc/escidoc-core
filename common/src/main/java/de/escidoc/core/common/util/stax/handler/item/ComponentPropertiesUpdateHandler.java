@@ -58,11 +58,11 @@ public class ComponentPropertiesUpdateHandler extends DefaultHandler {
 
     private final Map<String, String> properties;
 
-    private StaxParser parser = null;
+    private StaxParser parser;
 
-    private String propertiesPath = null;
+    private String propertiesPath;
 
-    private List<String> expected = null;
+    private List<String> expected;
 
     // names of elements that must be deleted if they do not occur
     private static final String[] expectedElements =

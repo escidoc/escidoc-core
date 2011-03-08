@@ -609,9 +609,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         final List<String> propertiesToRemove,
         final Map<String, String> propertiesToAdd)
         throws ContextNameNotUniqueException, SystemException {
-        if (((changedValues == null) || (changedValues.isEmpty()))
-            && ((propertiesToRemove == null) || (propertiesToRemove.isEmpty()))
-            && ((propertiesToAdd == null) || (propertiesToAdd.isEmpty()))) {
+        if ((changedValues == null || changedValues.isEmpty())
+            && (propertiesToRemove == null || propertiesToRemove.isEmpty())
+            && (propertiesToAdd == null || propertiesToAdd.isEmpty())) {
             return false;
         }
         final Datastream dc;

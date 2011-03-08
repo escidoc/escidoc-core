@@ -82,8 +82,8 @@ public class AdditionalWhereGroupVo {
     public void setAlliance(final String alliance) 
                         throws SqlDatabaseSystemException {
         if (alliance == null 
-        		|| (!alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_AND)
-            && !alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_OR))) {
+        		|| !alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_AND)
+            && !alliance.equalsIgnoreCase(Constants.DATABASE_ALLIANCE_OR)) {
             throw new SqlDatabaseSystemException("wrong alliance given");
         }
         this.alliance = alliance;

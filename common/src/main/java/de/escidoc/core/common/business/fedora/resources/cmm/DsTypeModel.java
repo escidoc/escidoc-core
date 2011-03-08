@@ -32,7 +32,7 @@ public class DsTypeModel {
     
     private String name;
 
-    private boolean hasSchema = false;
+    private boolean hasSchema;
 
     public boolean hasSchema() {
         return hasSchema;

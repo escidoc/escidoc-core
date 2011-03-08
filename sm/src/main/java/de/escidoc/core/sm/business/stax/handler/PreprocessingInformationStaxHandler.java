@@ -43,9 +43,9 @@ import java.util.Date;
  */
 public class PreprocessingInformationStaxHandler extends DefaultHandler {
 
-    private Date startDate = null;
+    private Date startDate;
 
-    private Date endDate = null;
+    private Date endDate;
     
     private static final SimpleDateFormat DATE_FORMAT = 
                 new SimpleDateFormat("yyyy-MM-dd");

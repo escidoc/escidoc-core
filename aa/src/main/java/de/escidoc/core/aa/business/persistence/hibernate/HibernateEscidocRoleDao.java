@@ -312,7 +312,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
 
         final List<EscidocRole> result;
 
-        if ((criterias != null) && (criterias.length() > 0)) {
+        if (criterias != null && criterias.length() > 0) {
             result = getHibernateTemplate().findByCriteria(
                 new RoleFilter(criterias).toSql(), offset, maxResults);
         }

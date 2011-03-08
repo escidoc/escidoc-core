@@ -62,15 +62,15 @@ public class GsearchHandler {
         new AppLogger(GsearchHandler.class.getName());
 
     private Map<String, Map<String, String>> 
-                                indexConfigurations = null;
+                                indexConfigurations;
 
-    private Map<String, String>    repositoryInfo = null;
+    private Map<String, String>    repositoryInfo;
 
-    private Set<String>    supportedMimeTypes = null;
+    private Set<String>    supportedMimeTypes;
     
     private static final int MAX_ERROR_RETRIES = 15;
 
-    private ConnectionUtility connectionUtility = null;
+    private ConnectionUtility connectionUtility;
 
     /**
      * requests indexing by calling fedoragsearch-servlet.
@@ -610,7 +610,7 @@ public class GsearchHandler {
                 }
             }
           }
-          return (path.delete());
+          return path.delete();
     }
     
     /**

@@ -74,7 +74,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
 
     public static final String PID = "pid";
 
-    private StaxParser staxParser = null;
+    private StaxParser staxParser;
 
     private final Map<String, String> properties =
         new HashMap<String, String>();
@@ -223,7 +223,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                     }
                     final int indexOfLastSlash = href.lastIndexOf('/');
                     contextId = href.substring(indexOfLastSlash + 1);
-                    if ((contextId == null) || contextId.length() < 1) {
+                    if (contextId == null || contextId.length() < 1) {
                         throw new MissingAttributeValueException(
                             "No content-model id found.", e);
                     }
@@ -321,7 +321,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
         // String theName = element.getLocalName();
         if (curPath.startsWith(PROPERTIES_PATH)) {
             if ("/container/properties/public-status".equals(curPath)) {
-                if ((s != null)) {
+                if (s != null) {
                     properties.put(Elements.ELEMENT_PUBLIC_STATUS, s);
                 }
                 else {
@@ -330,7 +330,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                 }
             }
             else if ("/container/properties/pid".equals(curPath)) {
-                if ((s != null)) {
+                if (s != null) {
                     properties.put(Elements.ELEMENT_PID, s);
                 }
                 else {

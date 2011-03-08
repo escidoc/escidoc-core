@@ -63,7 +63,7 @@ public class IndexOptimizerService {
         final long lastExecutionTime =
             IndexOptimizerServiceTimer.getInstance().getLastExecutionTime();
         if (lastExecutionTime > 0 
-            && (System.currentTimeMillis() - lastExecutionTime) < 1000) {
+            && System.currentTimeMillis() - lastExecutionTime < 1000) {
             return;
         }
         try {

@@ -22,7 +22,7 @@ import java.net.URL;
  * @author tte
  * @common
  */
-public class HandlerBase {
+public abstract class HandlerBase {
 
     private FedoraUtility fedoraUtility = null;
 

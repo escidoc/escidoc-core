@@ -48,7 +48,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
     
     private final ReportParametersVo reportParametersVo = new ReportParametersVo();
     
-    private ParameterVo parameterVo = null;
+    private ParameterVo parameterVo;
 
     /**
      * Handle startElement event.

@@ -118,9 +118,9 @@ public class DatabaseSelectVo {
      */
     public void setSelectType(final String selectType)
         throws SqlDatabaseSystemException {
-        if (selectType == null || (!selectType.equals(Constants.DATABASE_SELECT_TYPE_SELECT)
+        if (selectType == null || !selectType.equals(Constants.DATABASE_SELECT_TYPE_SELECT)
             && !selectType.equals(Constants.DATABASE_SELECT_TYPE_UPDATE)
-            && !selectType.equals(Constants.DATABASE_SELECT_TYPE_DELETE))) {
+            && !selectType.equals(Constants.DATABASE_SELECT_TYPE_DELETE)) {
             throw new SqlDatabaseSystemException("wrong selectType given");
         }
         this.selectType = selectType;

@@ -1098,7 +1098,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         final String fieldValue, final CharSequence operator, final CharSequence xpath)
         throws SqlDatabaseSystemException {
         if (type == null || type.length() == 0
-            || (!"root".equals(type) && !"additional".equals(type))) {
+            || !"root".equals(type) && !"additional".equals(type)) {
             throw new SqlDatabaseSystemException("wrong type given");
         }
         if ("additional".equals(type)
@@ -1120,7 +1120,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                 throw new SqlDatabaseSystemException(
                             "operator may not be null");
             }
-            if ((fieldType.startsWith("xpath")) && (xpath == null || xpath.length() == 0)) {
+            if (fieldType.startsWith("xpath") && (xpath == null || xpath.length() == 0)) {
                 throw new SqlDatabaseSystemException(
                     "xpath may not be null");
             }

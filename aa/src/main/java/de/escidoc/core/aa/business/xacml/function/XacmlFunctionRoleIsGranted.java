@@ -104,7 +104,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     public static final String NAME = AttributeIds.FUNCTION_PREFIX
         + "role-is-granted";
 
-    private PoliciesCacheProxy policiesCacheProxy = null;
+    private PoliciesCacheProxy policiesCacheProxy;
 
     private EscidocRoleDaoInterface roleDao;
 
@@ -142,7 +142,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
             // role for default policies
             // The policyId is concatenated String
             // containing <roleName>/<user or group>/<userorGroupId>
-            final String policyId = ((StringAttribute) (argValues[0])).getValue();
+            final String policyId = ((StringAttribute) argValues[0]).getValue();
             final String[] parts = policyId.split("/");
             final StringBuilder roleIdentifier = new StringBuilder("");
             if (parts.length > 2) {
@@ -321,8 +321,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
                                         && !resolvedAttributeValues.isEmpty()) {
                                     for (final String resolvedAttributeValue : resolvedAttributeValues) {
                                         final Collection grantsOfRoleAndObject =
-                                                (List) grantsOfRole
-                                                        .get(resolvedAttributeValue);
+                                                (Collection) grantsOfRole.get(resolvedAttributeValue);
                                         if (grantsOfRoleAndObject != null
                                                 && !grantsOfRoleAndObject.isEmpty()) {
                                             return createCachedResult(

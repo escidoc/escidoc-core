@@ -20,10 +20,6 @@ import org.apache.http.params.HttpParams;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-
-/**
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
- */
 public class HttpClientBuilderImpl extends HttpClientBuilder {
 
     private static final int MAX_TOTAL_CONNECTIONS = 90;

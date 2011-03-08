@@ -47,9 +47,9 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private boolean inDescription = false;
+    private boolean inDescription;
 
-    private String versionPid = null;
+    private String versionPid;
 
     private static final String DESCRIPTION_PATH =
         "/digitalObject/datastream/datastreamVersion/xmlContent/RDF/Description";
@@ -85,7 +85,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
             final int indexOfComponentId =
                 element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
                     "resource");
-            if (indexOfComponentId != (-1)) {
+            if (indexOfComponentId != -1) {
                 final Attribute resource = element.getAttribute(indexOfComponentId);
                 String resourceValue = resource.getValue();
                 if (resourceValue.length() > 0) {

@@ -46,9 +46,9 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
 
     private static final String ROOT_PATH = "/set-definition";
     
-    private boolean inProperties = false;
+    private boolean inProperties;
 
-    private boolean inRoot = false;
+    private boolean inRoot;
   
     private final StaxParser parser;
 
@@ -94,7 +94,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
         final String theName = element.getLocalName();
         if (inProperties) {
             if (theName.equals(Elements.ELEMENT_NAME)) {
-                if ((s != null) && (s.length() > 0)) {
+                if (s != null && s.length() > 0) {
                     setDefinitionProperties.put(Elements.ELEMENT_NAME, s);
                 }
                 else {
@@ -102,15 +102,15 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
                         + theName + " is missing");
                 }
             }
-            else if ((theName.equals(Elements.ELEMENT_DESCRIPTION))
-                && ((s != null))) {
+            else if (theName.equals(Elements.ELEMENT_DESCRIPTION)
+                && s != null) {
                 setDefinitionProperties
                     .put(Elements.ELEMENT_DESCRIPTION, s);
             }
         }
         else if (inRoot) {
             if ("query".equals(theName)) {
-                if ((s != null)) {
+                if (s != null) {
                     setDefinitionProperties.put("query", s);
                 }
                 else {
@@ -119,7 +119,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
                 }
             }
             else if ("specification".equals(theName)) {
-                if ((s != null) && (s.length() > 0)) {
+                if (s != null && s.length() > 0) {
                     setDefinitionProperties.put("specification", s);
                 }
                 else {

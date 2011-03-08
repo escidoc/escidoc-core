@@ -55,7 +55,7 @@ import de.escidoc.core.common.exceptions.EscidocException;
  * @author Michael Hoppe (FIZ Karlsruhe)
  * 
  */
-public abstract class ApplicationException extends EscidocException {
+public class ApplicationException extends EscidocException {
 
     private static final long serialVersionUID = 6185967378077511872L;
 
@@ -69,7 +69,7 @@ public abstract class ApplicationException extends EscidocException {
      * 
      * @common
      */
-    public ApplicationException() {
+    protected ApplicationException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -83,7 +83,7 @@ public abstract class ApplicationException extends EscidocException {
      *            Throwable
      * @common
      */
-    public ApplicationException(final String message, final Throwable cause) {
+    protected ApplicationException(final String message, final Throwable cause) {
         super(message, cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -94,7 +94,7 @@ public abstract class ApplicationException extends EscidocException {
      *            - the detail message.
      * @common
      */
-    public ApplicationException(final String message) {
+    protected ApplicationException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -105,7 +105,7 @@ public abstract class ApplicationException extends EscidocException {
      *            Throwable
      * @common
      */
-    public ApplicationException(final Throwable cause) {
+    protected ApplicationException(final Throwable cause) {
         super(cause, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -118,7 +118,7 @@ public abstract class ApplicationException extends EscidocException {
      *            the http status message
      * @common
      */
-    public ApplicationException(final int httpStatusCode,
+    protected ApplicationException(final int httpStatusCode,
         final String httpStatusMsg) {
         super(httpStatusCode, httpStatusMsg);
     }
@@ -137,7 +137,7 @@ public abstract class ApplicationException extends EscidocException {
      *            the http status message
      * @common
      */
-    public ApplicationException(final String message, final Throwable cause,
+    protected ApplicationException(final String message, final Throwable cause,
         final int httpStatusCode, final String httpStatusMsg) {
         super(message, cause, httpStatusCode, httpStatusMsg);
     }
@@ -153,7 +153,7 @@ public abstract class ApplicationException extends EscidocException {
      *            the http status message
      * @common
      */
-    public ApplicationException(final String message, final int httpStatusCode,
+    protected ApplicationException(final String message, final int httpStatusCode,
         final String httpStatusMsg) {
         super(message, httpStatusCode, httpStatusMsg);
     }
@@ -169,7 +169,7 @@ public abstract class ApplicationException extends EscidocException {
      *            the http status message
      * @common
      */
-    public ApplicationException(final Throwable cause,
+    protected ApplicationException(final Throwable cause,
         final int httpStatusCode, final String httpStatusMsg) {
         super(cause, httpStatusCode, httpStatusMsg);
     }

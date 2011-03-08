@@ -92,15 +92,15 @@ public class ExtendedFilterHandler extends DefaultHandler {
             + XmlUtility.NAME_GRANTED_DATE_TO + '|'
             + XmlUtility.NAME_CREATOR_ID + '|' + XmlUtility.NAME_REVOKER_ID);
 
-    private StaxParser parser = null;
+    private StaxParser parser;
 
-    private boolean inFilter = false;
+    private boolean inFilter;
 
-    private boolean inObjectList = false;
+    private boolean inObjectList;
 
-    private Map<String, Set<String>> rules = null;
+    private Map<String, Set<String>> rules;
 
-    private Set<String> objectsToFindIdList = null;
+    private Set<String> objectsToFindIdList;
 
     private int offset = DEFAULT_OFFSET;
 
@@ -108,7 +108,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
 
     private ListSorting sorting = DEFAULT_SORTING;
 
-    private String orderBy = null;
+    private String orderBy;
 
     /**
      * Constructs a {@link FilterHandler} object. This constructor implicitly

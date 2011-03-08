@@ -63,7 +63,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
  */
 public class GenericResourcePid extends GenericResource {
 
-    private String objectPid = null;
+    private String objectPid;
 
     /**
      * Constructor.
@@ -176,7 +176,7 @@ public class GenericResourcePid extends GenericResource {
                 this.objectPid = null;
             }
         }
-        return (this.objectPid);
+        return this.objectPid;
 
     }
 
@@ -199,9 +199,9 @@ public class GenericResourcePid extends GenericResource {
         WebserverSystemException {
 
         if (getObjectPid() == null) {
-            return (false);
+            return false;
         }
-        return (true);
+        return true;
     }
 
     /**
@@ -213,10 +213,10 @@ public class GenericResourcePid extends GenericResource {
      * @return true if the structure is valid, false otherwise.
      */
     public boolean validPidStructure(final CharSequence pid) {
-        if ((pid != null) && (pid.length() > 0)) {
-            return (true);
+        if (pid != null && pid.length() > 0) {
+            return true;
         }
-        return (false);
+        return false;
     }
 
     /**

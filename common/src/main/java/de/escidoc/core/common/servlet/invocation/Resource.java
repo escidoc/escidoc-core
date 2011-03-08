@@ -64,15 +64,15 @@ public class Resource extends XMLBase {
      */
     private static final int BUFFER_SIZE = 0xFFFF;
 
-    private Node resource = null;
+    private Node resource;
 
-    private String baseUri = null;
+    private String baseUri;
 
-    private String name = null;
+    private String name;
 
-    private Map<String, Node> descriptors = null;
+    private Map<String, Node> descriptors;
 
-    private Map definitions = null;
+    private Map definitions;
 
     private String serviceName;
 
@@ -142,10 +142,10 @@ public class Resource extends XMLBase {
                     final Object[] params =
                             getMethodParameters(uri, query, parameters, body,
                                     regexp, invokeNode);
-                    if ((result != null
+                    if (result != null
                             && result.getParameters() != null
                             && (params == null
-                            || result.getParameters().length > params.length))
+                            || result.getParameters().length > params.length)
                             || result == null) {
                         result = new BeanMethod(getBeanId(), method, params);
                     }
@@ -191,8 +191,7 @@ public class Resource extends XMLBase {
             if (!"".equals(getAttributeValue(descriptor, DESCRIPTOR_URI_ATTR))) {
                 final String path =
                     replaceIdentifierToRegexp(getAttributeValue(descriptor,
-                        DESCRIPTOR_URI_ATTR), (Collection) getDefinitions()
-                        .get(DEFINITION_VAR_ELEMENT));
+                        DESCRIPTOR_URI_ATTR), (Iterable<Node>) getDefinitions().get(DEFINITION_VAR_ELEMENT));
                 descriptors.put(path, descriptor);
             }
         }
@@ -270,8 +269,7 @@ public class Resource extends XMLBase {
                     value =
                         getValueFromRequestBody((String) body,
                             replaceIdentifierToRegexp(param,
-                                (Collection<Node>) getDefinitions().get(
-                                    DEFINITION_VAR_ELEMENT)));
+                                    (Iterable<Node>) getDefinitions().get(DEFINITION_VAR_ELEMENT)));
                 }
                 else {
                     try {

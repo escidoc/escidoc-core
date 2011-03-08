@@ -84,9 +84,9 @@ public class DatabaseRecordFieldVo {
      */
     public void setFieldType(final String fieldType)
         throws SqlDatabaseSystemException {
-        if (fieldType == null || (!fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
+        if (fieldType == null || !fieldType.equals(Constants.DATABASE_FIELD_TYPE_TEXT)
             && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_NUMERIC)
-            && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DATE))) {
+            && !fieldType.equals(Constants.DATABASE_FIELD_TYPE_DATE)) {
             throw new SqlDatabaseSystemException("wrong fieldType given");
         }
         this.fieldType = fieldType;

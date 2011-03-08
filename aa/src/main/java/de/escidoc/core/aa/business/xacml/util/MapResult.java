@@ -55,9 +55,9 @@ public class MapResult {
 
     private final boolean inverse;
 
-    private boolean hierarchical = false;
+    private boolean hierarchical;
 
-    private boolean includeHierarchyBase = false;
+    private boolean includeHierarchyBase;
 
     /**
      * The constructor.

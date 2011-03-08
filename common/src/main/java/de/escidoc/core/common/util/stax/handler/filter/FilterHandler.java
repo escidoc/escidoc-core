@@ -82,15 +82,15 @@ public class FilterHandler extends DefaultHandler {
             + "|revocationDateTo|grantedDateFrom|grantedDateTo"
             + "|creatorId|revokerId");
 
-    private StaxParser parser = null;
+    private StaxParser parser;
 
-    private boolean inFilter = false;
+    private boolean inFilter;
 
-    private boolean inObjectList = false;
+    private boolean inObjectList;
 
-    private Map<String, Object> rules = null;
+    private Map<String, Object> rules;
 
-    private Set<String> objectsToFindIdList = null;
+    private Set<String> objectsToFindIdList;
 
     private int offset = DEFAULT_OFFSET;
 
@@ -98,7 +98,7 @@ public class FilterHandler extends DefaultHandler {
 
     private ListSorting sorting = DEFAULT_SORTING;
 
-    private String orderBy = null;
+    private String orderBy;
 
     /**
      * Constructs a {@link FilterHandler} object. This constructor implicitly

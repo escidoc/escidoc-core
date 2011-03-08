@@ -85,30 +85,30 @@ public class GenericVersionableResource extends GenericResourcePid {
     private static final AppLogger LOG =
         new AppLogger(GenericVersionableResource.class.getName());
 
-    private String description = null;
+    private String description;
 
-    protected Datastream wov = null;
+    protected Datastream wov;
 
-    private Map<String, String> currentVersionData = null;
+    private Map<String, String> currentVersionData;
 
     /**
      * Number of the version. Is null if it is the latest version.
      */
-    private String versionNumber = null;
+    private String versionNumber;
 
     // has the version number independent if it is the latest version or not
-    private String versionId = null;
+    private String versionId;
 
     private Map<String, String> lastVersionData;
 
-    private String latestReleaseVersionNumber = null;
+    private String latestReleaseVersionNumber;
 
     private boolean initLastModifiedDate = true;
 
     // ---------------
-    private boolean publicStatusChange = false;
+    private boolean publicStatusChange;
 
-    private boolean versionStatusChange = false;
+    private boolean versionStatusChange;
 
     /**
      * 
@@ -199,15 +199,15 @@ public class GenericVersionableResource extends GenericResourcePid {
         // status is the versionNumber the suffix or null.
         this.versionNumber = id.replaceFirst(getId(), "");
 
-        if ((this.versionNumber != null) && (this.versionNumber.length() > 0)) {
+        if (this.versionNumber != null && this.versionNumber.length() > 0) {
 
             this.versionNumber = this.versionNumber.substring(1);
             final String latestVersionNumber =
                 TripleStoreUtility.getInstance().getPropertiesElements(getId(),
                     TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
-            if ((latestVersionNumber == null)
-                || (Integer.valueOf(this.versionId) > Integer
-                    .valueOf(latestVersionNumber))) {
+            if (latestVersionNumber == null
+                || Integer.valueOf(this.versionId) > Integer
+                    .valueOf(latestVersionNumber)) {
                 throw new ResourceNotFoundException("The version " + versionNumber
                         + " of the requested resource " + "does not exist.");
             }
@@ -239,9 +239,9 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     public String getFullId() {
         if (this.versionId == null || this.versionId.length() <= 0) {
-            return (getId() + VERSION_NUMBER_SEPARATOR + getLatestVersionNumber());
+            return getId() + VERSION_NUMBER_SEPARATOR + getLatestVersionNumber();
         }
-        return (getId() + VERSION_NUMBER_SEPARATOR + this.versionId);
+        return getId() + VERSION_NUMBER_SEPARATOR + this.versionId;
     }
 
     /**
@@ -407,7 +407,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return object identifier with version number
      */
     public String getLatestVersionId() {
-        return (getId() + VERSION_NUMBER_SEPARATOR + getLatestVersionNumber());
+        return getId() + VERSION_NUMBER_SEPARATOR + getLatestVersionNumber();
     }
 
     /**
@@ -656,7 +656,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         final Map<String, String> versionData;
 
         try {
-            versionData = super.getResourceProperties();
+            versionData = super.getResourceProperties();  // TODO: Refactor this!
         }
         catch (TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
@@ -692,7 +692,7 @@ public class GenericVersionableResource extends GenericResourcePid {
     public String getVersionElementData(final String elementName)
         throws IntegritySystemException {
 
-        return (getVersionData().get(elementName));
+        return getVersionData().get(elementName);
     }
 
     /**
@@ -1427,7 +1427,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 this.relsExt = ds;
             }
             // DC
-            else if (("DC".equals(name)) && (this.dc == null)) {
+            else if ("DC".equals(name) && this.dc == null) {
                 ds =
                         new Datastream("DC", getId(), getVersionDate(),
                                 mimeType, location, controlGroupValue);

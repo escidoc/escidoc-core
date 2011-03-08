@@ -80,17 +80,17 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     private static final AppLogger log = new AppLogger(Component.class.getName());
 
-    private Datastream dc = null;
+    private Datastream dc;
 
-    private Map<String, Datastream> mdRecords = null;
+    private Map<String, Datastream> mdRecords;
 
-    private String parent = null;
+    private String parent;
 
     private Datastream content;
 
-    private String parentVersionDate = null;
+    private String parentVersionDate;
 
-    private ItemFoXmlRendererInterface foxmlRenderer = null;
+    private ItemFoXmlRendererInterface foxmlRenderer;
 
     /**
      * Constructs the Component with the specified id from the Repository. The
@@ -234,7 +234,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
         final String description =
             dch.getPropertiesMap().get(Elements.ELEMENT_DESCRIPTION);
-        if ((description != null) && !(description.length() == 0)) {
+        if (description != null && !(description.length() == 0)) {
             properties.put(de.escidoc.core.common.business.Constants.DC_NS_URI
                 + Elements.ELEMENT_DESCRIPTION, description);
         }
@@ -244,7 +244,7 @@ public class Component extends GenericResourcePid implements ComponentInterface 
         final String title =
             properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
                 + Elements.ELEMENT_DC_TITLE);
-        if ((title == null) || title.length() == 0) {
+        if (title == null || title.length() == 0) {
             setTitle("Component " + getId());
         }
         else {

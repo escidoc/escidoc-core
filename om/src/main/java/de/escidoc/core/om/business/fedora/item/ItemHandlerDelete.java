@@ -86,8 +86,8 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
         // check if never released
         final String status =
             getItem().getProperty(PropertyMapKeys.PUBLIC_STATUS);
-        if (!(status.equals(Constants.STATUS_PENDING))
-            && !(status.equals(Constants.STATUS_IN_REVISION))) {
+        if (! status.equals(Constants.STATUS_PENDING)
+            && ! status.equals(Constants.STATUS_IN_REVISION)) {
             throw new InvalidStatusException("Item " + getItem().getId()
                 + " is in status " + status + ". Can not delete.");
         }

@@ -251,7 +251,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
 
         final List<SetDefinition> result;
 
-        if ((criterias != null) && (criterias.length() > 0)) {
+        if (criterias != null && criterias.length() > 0) {
             result =
                 getHibernateTemplate().findByCriteria(
                     new SetDefinitionFilter(criterias).toSql(), offset,

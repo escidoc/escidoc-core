@@ -51,15 +51,15 @@ public class PrepareHandler extends DefaultHandler {
     private final Map<Integer, Map<String, String>> binaryData =
         new HashMap<Integer, Map<String, String>>();
 
-    private String uploadUrl = null;
+    private String uploadUrl;
 
-    private String storageValue = null;
+    private String storageValue;
 
-    private String content = null;
+    private String content;
 
-    private boolean inContent = false;
+    private boolean inContent;
 
-    private int componentNumber = 0;
+    private int componentNumber;
 
     private static final AppLogger LOGGER =
         new AppLogger(PrepareHandler.class.getName());
@@ -105,7 +105,7 @@ public class PrepareHandler extends DefaultHandler {
         if (inContent) {
             final Map<String, String> componentBinary = (HashMap<String, String>) binaryData.get(componentNumber);
             if (this.content == null) {
-                if ((this.uploadUrl != null) && (this.uploadUrl.length() > 0)) {
+                if (this.uploadUrl != null && this.uploadUrl.length() > 0) {
                     // FIXME use constant as in
                     // ItemHandlerCreate.handleComponent()
                     componentBinary.put("uploadUrl", this.uploadUrl);
@@ -131,7 +131,7 @@ public class PrepareHandler extends DefaultHandler {
 
             final Map<String, String> componentBinary =
                 binaryData.get(componentNumber);
-            if ((s != null) && (s.length() > 0)) {
+            if (s != null && s.length() > 0) {
                 if (this.storageValue
                     .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)
                     || this.storageValue

@@ -47,9 +47,9 @@ public class ItemProperties {
 
     private VersionProperties latestVersion;
 
-    private VersionProperties latestReleasedVersion = null;
+    private VersionProperties latestReleasedVersion;
 
-    private String contentModelSpecific = null;
+    private String contentModelSpecific;
 
     /**
      * @throws WebserverSystemException

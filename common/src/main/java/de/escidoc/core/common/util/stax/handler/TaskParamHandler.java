@@ -53,23 +53,23 @@ public class TaskParamHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private String lastModificationDate = null;
+    private String lastModificationDate;
 
-    private String withdrawComment = null;
+    private String withdrawComment;
 
-    private String revokationRemark = null;
+    private String revokationRemark;
 
-    private String comment = null;
+    private String comment;
 
-    private String password = null;
+    private String password;
 
-    private String objectType = null;
+    private String objectType;
 
-    private String format = null;
+    private String format;
 
     private final List<String> ids = new LinkedList<String>();
 
-    private String pid = null;
+    private String pid;
 
     private boolean keepInSync = true;
 

@@ -13,8 +13,6 @@ import org.springframework.beans.factory.InitializingBean;
 
 /**
  * Default implementation of {@link de.escidoc.core.purge.PurgeService}.
- * 
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public class PurgeServiceImpl implements InitializingBean {
 

@@ -44,7 +44,7 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
 
     private static final String PROPERTIES_PATH = "/set-definition/properties";
 
-    private boolean inProperties = false;
+    private boolean inProperties;
   
     private final StaxParser parser;
 
@@ -86,7 +86,7 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
         final String theName = element.getLocalName();
         if (inProperties) {
             if (theName.equals(Elements.ELEMENT_NAME)) {
-                if ((s != null) && (s.length() > 0)) {
+                if (s != null && s.length() > 0) {
                     setDefinitionProperties.put(Elements.ELEMENT_NAME, s);
                 }
                 else {
@@ -94,8 +94,8 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
                         + theName + " is missing");
                 }
             }
-            else if ((theName.equals(Elements.ELEMENT_DESCRIPTION))
-                && ((s != null))) {
+            else if (theName.equals(Elements.ELEMENT_DESCRIPTION)
+                && s != null) {
                 setDefinitionProperties
                     .put(Elements.ELEMENT_DESCRIPTION, s);
             }

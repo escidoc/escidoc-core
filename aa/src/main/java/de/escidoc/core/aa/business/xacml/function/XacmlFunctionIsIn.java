@@ -92,8 +92,8 @@ public class XacmlFunctionIsIn extends FunctionBase {
             return result;
         }
 
-        final StringAttribute value1 = (StringAttribute) (argValues[0]);
-        final StringAttribute value2 = (StringAttribute) (argValues[1]);
+        final StringAttribute value1 = (StringAttribute) argValues[0];
+        final StringAttribute value2 = (StringAttribute) argValues[1];
         return EvaluationResult.getInstance(value1.equals(value2));
     }
 

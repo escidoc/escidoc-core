@@ -69,19 +69,19 @@ public class ComponentHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private boolean parsingProperties = false;
+    private boolean parsingProperties;
 
-    private boolean parsingMetaData = false;
+    private boolean parsingMetaData;
 
-    private boolean parsingContent = false;
+    private boolean parsingContent;
 
-    private ComponentPropertiesHandler2 propertiesHandler = null;
+    private ComponentPropertiesHandler2 propertiesHandler;
 
-    private MetadataHandler2 metadataHandler = null;
+    private MetadataHandler2 metadataHandler;
 
     private final ComponentCreate component;
 
-    private BinaryContent content = null;
+    private BinaryContent content;
 
     /**
      * ComponentHandler.

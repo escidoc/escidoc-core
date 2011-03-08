@@ -219,7 +219,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
             new HashMap<String, String>();
         final String description =
             (String) properties.remove(Elements.ELEMENT_DESCRIPTION);
-        if (description != null && (description.length() > 0)) {
+        if (description != null && description.length() > 0) {
             dcProperties.put(Elements.ELEMENT_DESCRIPTION, description);
         }
         dcProperties.put(Elements.ELEMENT_DC_TITLE, name);
@@ -241,10 +241,10 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
                 propertiesAsReferences, streams);
         getFedoraUtility().storeObjectInFedora(contextFoxml, true);
 
-        return (contextId);
+        return contextId;
     }
 
-    private ContextFoXmlRendererInterface foxmlRenderer = null;
+    private ContextFoXmlRendererInterface foxmlRenderer;
 
     /**
      * The method builds foxml for fedora object, which will represent a

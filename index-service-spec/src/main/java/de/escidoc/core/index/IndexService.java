@@ -4,8 +4,6 @@ import org.apache.camel.InOnly;
 
 /**
  * Service to index data for later search.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public interface IndexService {
 

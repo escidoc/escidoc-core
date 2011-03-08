@@ -39,15 +39,15 @@ import de.escidoc.core.common.util.service.UserContext;
  */
 public class ComponentProperties {
 
-    private String contentCatagory = null;
+    private String contentCatagory;
 
-    private String createdById = null;
+    private String createdById;
 
-    private String createdByName = null;
+    private String createdByName;
 
-    private String visibility = null;
+    private String visibility;
 
-    private String validStatus = null;
+    private String validStatus;
 
     private String mimeType = "application/octet-stream";
 

@@ -56,7 +56,7 @@ public class RelationHandler2 extends DefaultHandler {
 
     private String relationXPath = "//relation";
 
-    private RelationCreate relation = null;
+    private RelationCreate relation;
 
     private static final AppLogger LOGGER =
         new AppLogger(RelationHandler2.class.getName());

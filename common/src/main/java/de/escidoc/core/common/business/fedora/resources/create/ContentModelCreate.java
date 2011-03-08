@@ -63,13 +63,13 @@ import java.util.Map;
  */
 public class ContentModelCreate extends GenericResourceCreate {
 
-    private ContentModelProperties properties = null;
+    private ContentModelProperties properties;
 
-    private List<MdRecordDefinitionCreate> mdRecordDefinitions = null;
+    private List<MdRecordDefinitionCreate> mdRecordDefinitions;
 
-    private List<ContentStreamCreate> contentStreams = null;
+    private List<ContentStreamCreate> contentStreams;
 
-    private EscidocIdProvider idProvider = null;
+    private EscidocIdProvider idProvider;
 
     private Map<String, ResourceDefinitionCreate> resourceDefinitions;
 

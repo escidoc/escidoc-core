@@ -85,11 +85,11 @@ public class OrganizationalUnit extends GenericResource
 
     private String modifiedByTitle;
 
-    private List<String> parents = null;
+    private List<String> parents;
 
-    private List<Predecessor> predecessors = null;
+    private List<Predecessor> predecessors;
 
-    private List<Predecessor> successors = null;
+    private List<Predecessor> successors;
 
     private boolean hasChildren;
 

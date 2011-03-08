@@ -31,8 +31,6 @@ package de.escidoc.core.common.util.configuration;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Properties;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -341,7 +339,7 @@ public final class EscidocConfiguration {
         boolean result = false;
         final String prop = ((String) properties.get(name)).toLowerCase();
 
-        if ((prop != null) && (TRUE.equals(prop) || ONE.equals(prop))) {
+        if (prop != null && (TRUE.equals(prop) || ONE.equals(prop))) {
             result = true;
         }
         return result;

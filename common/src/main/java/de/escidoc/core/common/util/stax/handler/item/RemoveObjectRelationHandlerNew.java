@@ -55,14 +55,14 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
     private final Map nsuris;
 
-    private int deepLevel = 0;
+    private int deepLevel;
 
     private boolean justRemoved;
 
     /**
      * Counter for removed objects.
      */
-    private int noOfRemoved = 0;
+    private int noOfRemoved;
 
     public RemoveObjectRelationHandlerNew(final String objid)
         throws WebserverSystemException {
@@ -179,7 +179,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
         final String name = element.getLocalName();
         final String uri = element.getNamespace();
         String prefix = element.getPrefix();
-        if ((uri) != null) {
+        if (uri != null) {
             if (nsuris.containsKey(uri)) {
                 final List namespaceTrace = (List) nsuris.get(uri);
                 final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
@@ -218,9 +218,9 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 }
                 final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 final String nameTrace = (String) namespaceTrace.get(1);
-                if (((deepLevelInMAp == deepLevel) && (!elementName
-                        .equals(nameTrace)))
-                        || (deepLevelInMAp > deepLevel)) {
+                if (deepLevelInMAp == deepLevel && !elementName
+                        .equals(nameTrace)
+                        || deepLevelInMAp > deepLevel) {
                     writer.writeNamespace(prefix, uri);
                 }
             } else {

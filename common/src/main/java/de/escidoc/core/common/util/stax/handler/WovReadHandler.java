@@ -55,21 +55,21 @@ import java.util.Map;
  */
 public class WovReadHandler extends DefaultHandler {
 
-    private boolean inside = false;
+    private boolean inside;
 
-    private int insideLevel = 0;
+    private int insideLevel;
 
     private final StaxParser parser;
 
-    private String versionId = null;
+    private String versionId;
 
-    private String versionCreatedDate = null;
+    private String versionCreatedDate;
 
-    private boolean inLatestVersion = false;
+    private boolean inLatestVersion;
 
-    private boolean inCertainVersion = false;
+    private boolean inCertainVersion;
 
-    private boolean isParsed = false;
+    private boolean isParsed;
 
     /**
      * Values of the certain version. If the certain version is the latest
@@ -175,7 +175,7 @@ public class WovReadHandler extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) {
-        if ((!isParsed) && (inside)) {
+        if (!isParsed && inside) {
             insideLevel--;
 
             if (insideLevel == 0) {

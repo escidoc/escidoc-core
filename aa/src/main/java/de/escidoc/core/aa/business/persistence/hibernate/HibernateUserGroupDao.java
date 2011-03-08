@@ -163,7 +163,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         throws SqlDatabaseSystemException {
         RoleGrant result = null;
 
-        if ((userGroup != null) && (role != null)) {
+        if (userGroup != null && role != null) {
             try {
                 DetachedCriteria criteria =
                     DetachedCriteria.forClass(RoleGrant.class).add(
@@ -443,7 +443,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
 
         final List<UserGroup> result;
 
-        if ((criterias != null) && (criterias.length() > 0)) {
+        if (criterias != null && criterias.length() > 0) {
             result =
                 getHibernateTemplate().findByCriteria(
                     new UserGroupFilter(criterias).toSql(), offset, maxResults);

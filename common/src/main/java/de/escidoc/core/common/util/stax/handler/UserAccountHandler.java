@@ -39,9 +39,9 @@ public class UserAccountHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private String accountId = null;
+    private String accountId;
 
-    private String accountName = null;
+    private String accountName;
 
     public String getAccountId() {
         return accountId;

@@ -45,32 +45,32 @@ import java.util.Map;
 
 public class MultipleExtractor2 extends DefaultHandler {
 
-    private boolean inside = false;
+    private boolean inside;
 
-    private Map<String, String> paths = null;
+    private Map<String, String> paths;
 
     private XMLStreamWriter writer;
 
-    private int insideLevel = 0;
+    private int insideLevel;
 
-    private Map<String, OutputStream> metadata = null;
+    private Map<String, OutputStream> metadata;
 
-    private Map<String, Map> components = null;
+    private Map<String, Map> components;
 
     private final Map<String, Object> outputStreams =
         new HashMap<String, Object>();
 
-    private String componentId = null;
+    private String componentId;
 
-    private boolean inComponent = false;
+    private boolean inComponent;
 
     private final StaxParser parser;
 
     private Map<String, String> namespaceMap;
 
-    private int number = 0;
+    private int number;
 
-    private List<String> pids = null;
+    private List<String> pids;
 
     /**
      * @param namespaceMap
@@ -126,7 +126,7 @@ public class MultipleExtractor2 extends DefaultHandler {
                 final int index = element.indexOfAttribute(null, "objid");
                 if (index != -1) {
                     final String value = element.getAttribute(index).getValue();
-                    if ((value != null) && (value.length() > 0)) {
+                    if (value != null && value.length() > 0) {
                         componentId = value;
                     }
                 }
@@ -246,7 +246,7 @@ public class MultipleExtractor2 extends DefaultHandler {
 
         if ("component".equals(theName)) {
             if (componentId == null) {
-                final Map components = (HashMap) outputStreams.get("components");
+                final Map components = (Map) outputStreams.get("components");
                 components.remove(componentId);
             }
             inComponent = false;
@@ -255,8 +255,8 @@ public class MultipleExtractor2 extends DefaultHandler {
         }
         if (inside) {
             insideLevel--;
-            if ((insideLevel > 0)
-                || ((insideLevel == 0) && !"md-record".equals(theName))) {
+            if (insideLevel > 0
+                || insideLevel == 0 && !"md-record".equals(theName)) {
                 writer.writeEndElement();
             }
 

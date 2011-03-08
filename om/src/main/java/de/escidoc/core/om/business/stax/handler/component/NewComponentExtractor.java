@@ -49,17 +49,17 @@ import java.util.Map;
 
 public class NewComponentExtractor extends DefaultHandler {
 
-    private XMLStreamWriter writer = null;
+    private XMLStreamWriter writer;
 
     private final List outputStreams = new ArrayList();
 
     private final StaxParser parser;
 
-    private boolean inside = false;
+    private boolean inside;
 
     private final Map nsuris = new HashMap();
 
-    private int deepLevel = 0;
+    private int deepLevel;
 
     public NewComponentExtractor(final StaxParser parser) {
         // TODO Auto-generated constructor stub
@@ -90,7 +90,7 @@ public class NewComponentExtractor extends DefaultHandler {
                 && (nsTrace.get(2) == null || nsTrace.get(2).equals(
                     element.getPrefix()))
                 && nsTrace.get(1).equals(element.getLocalName())
-                && (Integer) nsTrace.get(0) == (deepLevel + 1)) {
+                && (Integer) nsTrace.get(0) == deepLevel + 1) {
 
                 nsuris.remove(ns);
 
@@ -104,7 +104,7 @@ public class NewComponentExtractor extends DefaultHandler {
             while (it.hasNext()) {
                 final String key = (String) it.next();
                 nsTrace = (List) nsuris.get(key);
-                if ((Integer) nsTrace.get(0) == (deepLevel + 1)) {
+                if ((Integer) nsTrace.get(0) == deepLevel + 1) {
                     toRemove.add(key);
                 }
             }
@@ -143,10 +143,10 @@ public class NewComponentExtractor extends DefaultHandler {
                 final int indexObjid = element.indexOfAttribute(null, "objid");
                 final int indexHref =
                     element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
-                if ((indexObjid > -1 && element
-                    .getAttribute(indexObjid).getValue().length() > 0)
-                    || (indexHref > -1 && Utility.getId(
-                        element.getAttribute(indexHref).getValue()).length() > 0)) {
+                if (indexObjid > -1 && element
+                    .getAttribute(indexObjid).getValue().length() > 0
+                    || indexHref > -1 && Utility.getId(
+                        element.getAttribute(indexHref).getValue()).length() > 0) {
                     // it's not new because there is an ID
                 }
                 else {
@@ -177,7 +177,7 @@ public class NewComponentExtractor extends DefaultHandler {
         final String name = element.getLocalName();
         final String uri = element.getNamespace();
         String prefix = element.getPrefix();
-        if ((uri) != null) {
+        if (uri != null) {
             if (nsuris.containsKey(uri)) {
                 final List namespaceTrace = (List) nsuris.get(uri);
                 final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);

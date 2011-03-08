@@ -6,7 +6,7 @@ package de.escidoc.core.common.business.fedora.mptstore;
  * 
  * @author cwilper@cs.cornell.edu
  */
-public abstract class MPTStringUtil {
+public class MPTStringUtil {
 
     private static final int SHORT_ESCAPE_LENGTH = 5;
 
@@ -87,10 +87,9 @@ public abstract class MPTStringUtil {
      * @return true if it's a low unicode character.
      */
     private static boolean isLowUnicode(final int cNum) {
-        return (cNum >= UC_LOW1 && cNum <= UC_HIGH1)
-            || (cNum == UC_LOW2 || cNum == UC_HIGH2)
-            || (cNum >= UC_LOW3 && cNum <= UC_HIGH3)
-            || (cNum >= UC_LOW4 && cNum <= UC_HIGH4);
+        return cNum >= UC_LOW1 && cNum <= UC_HIGH1
+            || cNum == UC_LOW2 || cNum == UC_HIGH2 || cNum >= UC_LOW3 && cNum <= UC_HIGH3
+            || cNum >= UC_LOW4 && cNum <= UC_HIGH4;
     }
 
     /**

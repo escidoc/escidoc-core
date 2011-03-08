@@ -57,7 +57,7 @@ public class OrganizationalUnitParentsHandler
 
     private String rootElement = XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
-    private boolean rootElementPathChecked = false;
+    private boolean rootElementPathChecked;
 
     /**
      * 

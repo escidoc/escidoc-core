@@ -56,11 +56,11 @@ public class OneComponentContentHandler extends DefaultHandler {
     private final Map<String, String> componentBinary =
         new HashMap<String, String>();
 
-    private String uploadUrl = null;
+    private String uploadUrl;
 
-    private String content = null;
+    private String content;
 
-    private boolean inContent = false;
+    private boolean inContent;
 
     private static final AppLogger LOGGER =
         new AppLogger(OneComponentContentHandler.class.getName());
@@ -133,7 +133,7 @@ public class OneComponentContentHandler extends DefaultHandler {
         if (inContent) {
 
             if (this.content == null) {
-                if ((this.uploadUrl != null) && (this.uploadUrl.length() > 0)) {
+                if (this.uploadUrl != null && this.uploadUrl.length() > 0) {
                     componentBinary.put("uploadUrl", this.uploadUrl);
 
                 }
@@ -151,7 +151,7 @@ public class OneComponentContentHandler extends DefaultHandler {
     @Override
     public String characters(final String s, final StartElement element) {
 
-        if ((inContent) && ((s != null) && (s.length() > 0))) {
+        if (inContent && s != null && s.length() > 0) {
             if (this.content != null) {
                 // we have to concatinate the characters
                 this.content += s;

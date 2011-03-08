@@ -78,7 +78,7 @@ public class SpringStatisticPreprocessorService {
         final long lastExecutionTime =
             StatisticPreprocessorServiceTimer.getInstance().getLastExecutionTime();
         if (lastExecutionTime > 0 
-            && (System.currentTimeMillis() - lastExecutionTime) < 1000) {
+            && System.currentTimeMillis() - lastExecutionTime < 1000) {
             return;
         }
         try {

@@ -46,14 +46,14 @@ import java.util.Map;
  */
 public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
-    private SetDefinitionDaoInterface setDefinitionDao = null;
+    private SetDefinitionDaoInterface setDefinitionDao;
 
-    private SetDefinitionRendererInterface renderer = null;
+    private SetDefinitionRendererInterface renderer;
 
     private static final String MSG_SET_DEFINITION_NOT_FOUND_BY_ID =
         "Set definition with provided id does not exist.";
 
-    private PolicyDecisionPointInterface pdp = null;
+    private PolicyDecisionPointInterface pdp;
 
     /**
      * The logger.
@@ -152,16 +152,16 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             final String newDescription =
                 setProperties.get(Elements.ELEMENT_DESCRIPTION);
             if (newDescription != null
-                && ((setDefinition.getDescription() != null
+                && (setDefinition.getDescription() != null
                     && !newDescription.equals(setDefinition.getDescription()) || setDefinition
-                    .getDescription() == null))) {
+                    .getDescription() == null)) {
                 setDefinition.setDescription(newDescription);
                 changed = true;
             }
             final String newName = setProperties.get(Elements.ELEMENT_NAME);
             if (setDefinition.getName() == null
-                || ((setDefinition.getName() != null) && !newName
-                    .equals(setDefinition.getName()))) {
+                || setDefinition.getName() != null && !newName
+                    .equals(setDefinition.getName())) {
                 setDefinition.setName(setProperties.get(Elements.ELEMENT_NAME));
                 changed = true;
             }

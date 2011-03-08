@@ -60,7 +60,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
     // private static AppLogger log =
     // new AppLogger(VelocityXmlItemFoXmlRenderer.class.getName());
 
-    private String buildNumber = null;
+    private String buildNumber;
 
     /**
      * See Interface for functional description.
@@ -133,7 +133,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         propertiesVersion.put(XmlTemplateProvider.LATEST_VERSION_DATE,
             lastModificationDate);
 
-        if ((properties != null) && (!properties.isEmpty())) {
+        if (properties != null && !properties.isEmpty()) {
             values.put("properties", properties);
             values.put("propertiesAsReferences", propertiesAsReferences);
             values.put("propertiesVersion", propertiesVersion);
@@ -151,11 +151,11 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         // values.put("latestVersionUserTitle",
         // Utility.getInstance().getCurrentUser()[1]);
         // values.put("latestVersionComment", comment);
-        if ((contentRelations != null) && (!contentRelations.isEmpty())) {
+        if (contentRelations != null && !contentRelations.isEmpty()) {
             values.put("contentRelations", contentRelations);
         }
         final Collection<String> componentsVector = new ArrayList<String>();
-        if ((components != null) && (components.length > 0)) {
+        if (components != null && components.length > 0) {
 
             componentsVector.addAll(Arrays.asList(components).subList(1, components.length));
             values.put("components", componentsVector);

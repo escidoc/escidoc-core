@@ -53,9 +53,9 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     private static final String XPATH_COMPONENT_PROPERTIES =
         "/item/components/component/properties";
 
-    private ComponentProperties properties = null;
+    private ComponentProperties properties;
 
-    private boolean inside = false;
+    private boolean inside;
 
     private final StaxParser parser;
 
@@ -129,7 +129,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
             }
             }
             else if (currentPath.equals(Elements.ELEMENT_VALID_STATUS)) {
-                if ((s != null) && (s.length() > 0)) {
+                if (s != null && s.length() > 0) {
                     this.properties.setValidStatus(s);
                 }
             }
@@ -155,7 +155,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     private void handleVisibility(final String s, final String currentPath)
         throws MissingElementValueException {
 
-        if ((s != null) && (s.length() > 0)) {
+        if (s != null && s.length() > 0) {
             this.properties.setVisibility(s);
         }
         else {
@@ -173,7 +173,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     private void handleContentCatagory(final String s, final String currentPath)
         throws MissingElementValueException {
 
-        if ((s != null) && (s.length() > 0)) {
+        if (s != null && s.length() > 0) {
             this.properties.setContentCatagory(s);
         }
         else {

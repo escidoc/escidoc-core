@@ -128,15 +128,15 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
     private UserGroupRendererInterface renderer;
 
-    private EscidocRoleDaoInterface roleDao = null;
+    private EscidocRoleDaoInterface roleDao;
 
-    private TripleStoreUtility tsu = null;
+    private TripleStoreUtility tsu;
 
     private ObjectAttributeResolver objectAttributeResolver;
 
-    private UserAccountDaoInterface userAccountDao = null;
+    private UserAccountDaoInterface userAccountDao;
 
-    private UserGroupDaoInterface userGroupDao = null;
+    private UserGroupDaoInterface userGroupDao;
 
     private PolicyDecisionPointInterface pdp;
 
@@ -981,8 +981,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                             throw new InvalidSearchQueryException(
                                 "Wildcards not allowed in user-filter");
                         }
-                        if ((userFilterMatcher.group(3) != null && userFilterMatcher
-                            .group(3).matches(">|<|<=|>=|<>"))
+                        if (userFilterMatcher.group(3) != null && userFilterMatcher
+                            .group(3).matches(">|<|<=|>=|<>")
                             || userFilterMatcher.group(4) != null
                             || userFilterMatcher.group(5) != null) {
                             throw new InvalidSearchQueryException(
@@ -1179,7 +1179,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         final Map<String, Set<UserGroupMember>> groupMemberMap =
             retrieveGroupMembersWithAttributeSelector();
 
-        if ((attributes != null) && (groupMemberMap != null)) {
+        if (attributes != null && groupMemberMap != null) {
             // iterate attributes of user
             for (final UserAttribute attribute : attributes) {
                 // check for groupMembers with name=user-attribute-name
@@ -1200,8 +1200,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                     }
                     for (final UserGroupMember groupMember : groupMembers) {
                         if ((attribute
-                            .getValue().equals(groupMember.getValue()) || (pathList != null && pathList
-                            .contains(groupMember.getValue())))
+                            .getValue().equals(groupMember.getValue()) || pathList != null && pathList
+                            .contains(groupMember.getValue()))
                             && (!activeOnly || Boolean.TRUE.equals(groupMember
                                 .getUserGroup().getActive()))) {
                             userGroups.add(groupMember.getUserGroup().getId());
@@ -1275,8 +1275,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 for (final UserGroupMember userGroupMember : userGroupMembers) {
                     if ((!activeOnly || Boolean.TRUE.equals(userGroupMember
                         .getUserGroup().getActive()))
-                        && (!userGroupIds.contains(userGroupMember
-                            .getUserGroup().getId()))) {
+                        && !userGroupIds.contains(userGroupMember
+                            .getUserGroup().getId())) {
                         userGroupIds
                             .add(userGroupMember.getUserGroup().getId());
                     }
@@ -1786,11 +1786,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
         else {
             // get ids of grants to revoke
-            grantIds =
-                (HashSet<String>) filters.get(Constants.DC_IDENTIFIER_URI);
+            grantIds = (Collection<String>) filters.get(Constants.DC_IDENTIFIER_URI);
         }
 
-        if ((grantIds == null) || grantIds.isEmpty()) {
+        if (grantIds == null || grantIds.isEmpty()) {
             return;
         }
 
@@ -1951,9 +1950,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             final String description =
                 groupProperties.get(Elements.ELEMENT_DESCRIPTION);
             if (description != null
-                && ((userGroup.getDescription() != null
+                && (userGroup.getDescription() != null
                     && description.equals(userGroup.getDescription()) || userGroup
-                    .getDescription() == null))) {
+                    .getDescription() == null)) {
                 userGroup.setDescription(description);
                 changed = true;
             }
@@ -1974,25 +1973,25 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
             final String name = groupProperties.get(Elements.ELEMENT_NAME);
             if (userGroup.getName() == null
-                || ((userGroup.getName() != null) && !name.equals(userGroup
-                    .getName()))) {
+                || userGroup.getName() != null && !name.equals(userGroup
+                    .getName())) {
                 userGroup.setName(name);
                 changed = true;
             }
 
             final String email = groupProperties.get("email");
             if (email != null
-                && ((userGroup.getEmail() != null
+                && (userGroup.getEmail() != null
                     && email.equals(userGroup.getEmail()) || userGroup
-                    .getEmail() == null))) {
+                    .getEmail() == null)) {
                 userGroup.setEmail(email);
                 changed = true;
             }
 
             final String type = groupProperties.get(Elements.ELEMENT_TYPE);
             if (type != null
-                && ((userGroup.getType() != null
-                    && type.equals(userGroup.getType()) || userGroup.getType() == null))) {
+                && (userGroup.getType() != null
+                    && type.equals(userGroup.getType()) || userGroup.getType() == null)) {
                 userGroup.setType(type);
                 changed = true;
             }

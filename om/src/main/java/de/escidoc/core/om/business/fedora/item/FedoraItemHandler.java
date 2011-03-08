@@ -165,13 +165,13 @@ public class FedoraItemHandler extends ItemHandlerPid
     private static final AppLogger LOGGER = new AppLogger(
         FedoraItemHandler.class.getName());
 
-    private FedoraContentRelationHandler contentRelationHandler = null;
+    private FedoraContentRelationHandler contentRelationHandler;
 
     /** The policy decision point used to check access privileges. */
     private PolicyDecisionPointInterface pdp;
 
     /** SRU request. */
-    private SRURequest sruRequest = null;
+    private SRURequest sruRequest;
 
     /**
      * Gets the {@link PolicyDecisionPointInterface} implementation.
@@ -394,8 +394,8 @@ public class FedoraItemHandler extends ItemHandlerPid
             catch (UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
-            final Map mdRecordsStreams = (HashMap) streams.get("md-records");
-            if ((mdRecordsStreams != null)
+            final Map mdRecordsStreams = (Map) streams.get("md-records");
+            if (mdRecordsStreams != null
                 && !mdRecordsStreams.containsKey("escidoc") && !origin) {
                 throw new MissingMdRecordException(
                     "No escidoc internal metadata found "
@@ -852,7 +852,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(e.getMessage(), e);
         }
 
-        final Map mds = (HashMap) me.getOutputStreams().get("md-records");
+        final Map mds = (Map) me.getOutputStreams().get("md-records");
         // there is only one md-record (root element is md-record)
         final ByteArrayOutputStream mdXml =
             (ByteArrayOutputStream) mds.get(mdRecordId);
@@ -1562,8 +1562,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
-        final Map<String, Object> compsMap =
-            (HashMap<String, Object>) me.getOutputStreams().get("components");
+        final Map<String, Object> compsMap = (Map<String, Object>) me.getOutputStreams().get("components");
         final Map compMap = (Map) compsMap.get(componentId);
 
         setComponent(getItem().getComponent(componentId), compMap, cmuh
@@ -1922,7 +1921,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
         final List<Map<String, String>> relationsData = addHandler.getRelations();
 
-        if ((relationsData != null) && (!relationsData.isEmpty())) {
+        if (relationsData != null && !relationsData.isEmpty()) {
             final List<StartElementWithChildElements> elements =
                 new ArrayList<StartElementWithChildElements>();
             for (final Map<String, String> relation : relationsData) {
@@ -2020,7 +2019,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         }
 
         final List<Map<String, String>> relationsData = removeHandler.getRelations();
-        if ((relationsData != null) && (!relationsData.isEmpty())) {
+        if (relationsData != null && !relationsData.isEmpty()) {
             final Map<String, List<StartElementWithChildElements>> toRemove =
                 new TreeMap<String, List<StartElementWithChildElements>>();
             final Iterator<Map<String, String>> iterator =
@@ -2556,8 +2555,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 final Datastream ds =
                     new Datastream(name, getItem().getId(), xmlBytes,
                         "text/xml", mdProperties);
-                final Map mdRecordAttributes =
-                    (HashMap) mdAttributesMap.get(name);
+                final Map mdRecordAttributes = (Map) mdAttributesMap.get(name);
                 ds.addAlternateId(Datastream.METADATA_ALTERNATE_ID);
                 ds.addAlternateId((String) mdRecordAttributes.get("type"));
                 ds.addAlternateId((String) mdRecordAttributes.get("schema"));
@@ -2738,10 +2736,10 @@ public class FedoraItemHandler extends ItemHandlerPid
         if (publicStatus == StatusType.RELEASED) {
             // check if we need a PID if the release an Item and if the PID is
             // given.
-            if ((!Boolean.valueOf(System
-                .getProperty("cmm.Item.objectPid.releaseWithoutPid")))
+            if (!Boolean.valueOf(System
+                .getProperty("cmm.Item.objectPid.releaseWithoutPid"))
 
-            && (item.getProperties().getObjectProperties().getPid() == null)) {
+            && item.getProperties().getObjectProperties().getPid() == null) {
                 throw new InvalidStatusException("Item with public-status released requires an PID.");
             }
             item.getProperties().getCurrentVersion()
@@ -2925,7 +2923,7 @@ public class FedoraItemHandler extends ItemHandlerPid
 
         // check if md-record with name 'escidoc'
 
-        if ((mdRecords == null) || mdRecords.size() < 1) {
+        if (mdRecords == null || mdRecords.size() < 1) {
             if (item.getProperties().getObjectProperties().getOrigin() == null) {
                 throw new MissingMdRecordException("The Item representation doesn't contain a "
                         + "mandatory md-record. A regular Item must contain a "
@@ -3046,7 +3044,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             throw new WebserverSystemException(e);
         }
 
-        return !((ids == null) || ids.isEmpty());
+        return !(ids == null || ids.isEmpty());
 
     }
 

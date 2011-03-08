@@ -113,9 +113,6 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
     public String getXml(
             final String resource, final String path, final Map values)
             throws WebserverSystemException {
-
-        final long start = System.nanoTime();
-
         // add escaper if none is set
         if (values.get(ESCAPER) == null) {
             values.put(XmlTemplateProvider.ESCAPER, new XmlEscaper());
@@ -127,11 +124,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
             final Writer out = new StringWriter();
             final Context context = new VelocityContext(values);
             template.merge(context, out);
-            final String ret = out.toString();
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Processed template " + templateFileName + " in " + (System.nanoTime() - start) + "ns");
-            }
-            return ret;
+            return out.toString();
         } catch (Exception e) {
             throw new WebserverSystemException(e.getMessage(), e);
         }

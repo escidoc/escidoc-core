@@ -56,11 +56,11 @@ public class RelsExtReadHandler extends DefaultHandler {
 
     private static final String RDF_RESOURCE = "resource";
 
-    private boolean inTripleSection = false;
+    private boolean inTripleSection;
 
     private boolean readCharacter = true;
 
-    private boolean cleanIdentifier = false;
+    private boolean cleanIdentifier;
 
     private final Triples triples = new Triples();
 
@@ -137,7 +137,7 @@ public class RelsExtReadHandler extends DefaultHandler {
     public String characters(final String data, final StartElement element)
         throws IntegritySystemException {
 
-        if ((this.inTripleSection) && (this.readCharacter)) {
+        if (this.inTripleSection && this.readCharacter) {
             this.object += data;
         }
         return data;

@@ -93,44 +93,43 @@ import java.util.regex.Pattern;
  */
 public class MultipleExtractor extends WriteHandler {
 
-    private boolean inside = false;
+    private boolean inside;
 
-    private boolean insideRemoveElement = false;
+    private boolean insideRemoveElement;
 
-    private Map<String, String> pathes = null;
+    private Map<String, String> pathes;
 
-    private int insideLevel = 0;
+    private int insideLevel;
 
-    private Map<String, ByteArrayOutputStream> metadata = null;
+    private Map<String, ByteArrayOutputStream> metadata;
 
-    private Map components = null;
+    private Map components;
 
     private final Map<String, Object> outputStreams =
         new HashMap<String, Object>();
 
-    private String componentId = null;
+    private String componentId;
 
-    private boolean inComponent = false;
+    private boolean inComponent;
 
     private final StaxParser parser;
 
     // private String mdNameValue = null;
 
-    private int number = 0;
+    private int number;
 
-    private List<String> pids = null;
+    private List<String> pids;
 
     private static final Pattern PATTERN_OBJID_IN_HREF =
         Pattern.compile(".*\\/([^\"\\/]*)");
 
-    private Map<String, List<StartElementWithChildElements>> removeElements =
-        null;
+    private Map<String, List<StartElementWithChildElements>> removeElements;
 
-    private boolean isMatchedAttribute = false;
+    private boolean isMatchedAttribute;
 
-    private boolean isMatchedText = false;
+    private boolean isMatchedText;
 
-    private StartElementWithChildElements elementToDelete = null;
+    private StartElementWithChildElements elementToDelete;
 
     private static final AppLogger LOGGER =
         new AppLogger(MultipleExtractor.class.getName());
@@ -233,9 +232,8 @@ public class MultipleExtractor extends WriteHandler {
         if (this.insideRemoveElement) {
             return element;
         }
-        if (((this.removeElements != null)
-            && (!this.removeElements.isEmpty()))
-            && (this.removeElements.containsKey(currentPath))) {
+        if (this.removeElements != null
+            && !this.removeElements.isEmpty() && this.removeElements.containsKey(currentPath)) {
             final List<StartElementWithChildElements> elementsToDelete =
                 removeElements.get(currentPath);
             final Iterator<StartElementWithChildElements> iterator =
@@ -333,7 +331,7 @@ public class MultipleExtractor extends WriteHandler {
                 if (indexOfObjid != -1) {
                     final String value =
                         element.getAttribute(indexOfObjid).getValue();
-                    if ((value != null) && (value.length() > 0)) {
+                    if (value != null && value.length() > 0) {
                         componentId = value;
                     }
                 }
@@ -341,7 +339,7 @@ public class MultipleExtractor extends WriteHandler {
                     element.indexOfAttribute(Constants.XLINK_URI, "href");
                 if (indexOfHref != -1) {
                     final String value = element.getAttribute(indexOfHref).getValue();
-                    if ((value != null) && (value.length() > 0)) {
+                    if (value != null && value.length() > 0) {
 
                         final Matcher m1 = PATTERN_OBJID_IN_HREF.matcher(value);
                         if (m1.find()) {
@@ -372,8 +370,8 @@ public class MultipleExtractor extends WriteHandler {
                 insideLevel++;
             }
             else {
-                if ((pathes.containsKey(currentPath))
-                    && (element.indexOfAttribute(null, "inherited") < 0)) {
+                if (pathes.containsKey(currentPath)
+                    && element.indexOfAttribute(null, "inherited") < 0) {
                     final ByteArrayOutputStream out = new ByteArrayOutputStream();
 
                     this.setWriter(XmlUtility.createXmlStreamWriter(out));
@@ -556,7 +554,7 @@ public class MultipleExtractor extends WriteHandler {
         this.decreaseDeepLevel();
         if (inComponent && "component".equals(theName)) {
             if (componentId == null) {
-                final Map components = (HashMap) outputStreams.get("components");
+                final Map components = (Map) outputStreams.get("components");
                 components.remove(componentId);
             }
             inComponent = false;
@@ -567,8 +565,8 @@ public class MultipleExtractor extends WriteHandler {
         try {
             if (inside) {
                 insideLevel--;
-                if ((insideLevel > 0)
-                    || ((insideLevel == 0) && !"md-record".equals(theName) && !"admin-descriptor".equals(theName))) {
+                if (insideLevel > 0
+                    || insideLevel == 0 && !"md-record".equals(theName) && !"admin-descriptor".equals(theName)) {
                     this.getWriter().writeEndElement();
                 }
 
@@ -580,7 +578,7 @@ public class MultipleExtractor extends WriteHandler {
                     && (nsTrace.get(2) == null || nsTrace.get(2).equals(
                         element.getPrefix()))
                     && nsTrace.get(1).equals(element.getLocalName())
-                    && (Integer) nsTrace.get(0) == (this.getDeepLevel() + 1)) {
+                    && (Integer) nsTrace.get(0) == this.getDeepLevel() + 1) {
 
                     this.getNsuris().remove(ns);
 
@@ -595,7 +593,7 @@ public class MultipleExtractor extends WriteHandler {
                     try {
                         final String key = (String) it.next();
                         nsTrace = this.getNsuris().get(key);
-                        if ((Integer) nsTrace.get(0) == (this.getDeepLevel() + 1)) {
+                        if ((Integer) nsTrace.get(0) == this.getDeepLevel() + 1) {
                             toRemove.add(key);
                         }
                     } catch (Exception e) {
@@ -634,10 +632,10 @@ public class MultipleExtractor extends WriteHandler {
         throws WebserverSystemException {
 
         try {
-            if ((inside)) {
+            if (inside) {
                 if (this.insideRemoveElement) {
                     final String text = this.elementToDelete.getElementText();
-                    if ((text != null) && (text.length() > 0)) {
+                    if (text != null && text.length() > 0) {
                         if (data.equals(text)) {
                             this.isMatchedText = true;
                         } else {

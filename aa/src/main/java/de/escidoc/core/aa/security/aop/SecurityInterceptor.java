@@ -187,8 +187,7 @@ public class SecurityInterceptor implements Ordered {
             LOG.debug(StringUtility.format(
                 "authorize", this));
         }
-        final MethodSignature methodSignature =
-            ((MethodSignature) joinPoint.getSignature());
+        final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         final Method calledMethod = methodSignature.getMethod();
         final String target = methodSignature.getDeclaringTypeName();
         final String methodName = calledMethod.getName();
@@ -288,7 +287,7 @@ public class SecurityInterceptor implements Ordered {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.core.Ordered#getOrder()
+     * @see Ordered#getOrder()
      * @common
      */
     @Override

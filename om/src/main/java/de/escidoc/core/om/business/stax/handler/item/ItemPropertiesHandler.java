@@ -68,7 +68,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private ItemProperties properties = null;
+    private ItemProperties properties;
 
     private static final String XPATH_ITEM = '/' + Elements.ELEMENT_ITEM;
 
@@ -83,9 +83,9 @@ public class ItemPropertiesHandler extends DefaultHandler {
     private static final AppLogger LOGGER =
         new AppLogger(ItemPropertiesHandler.class.getName());
 
-    private boolean parsingContentModelSpecific = false;
+    private boolean parsingContentModelSpecific;
 
-    private MultipleExtractor contentModelHandler = null;
+    private MultipleExtractor contentModelHandler;
 
     /**
      * 

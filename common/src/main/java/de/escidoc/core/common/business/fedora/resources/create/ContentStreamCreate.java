@@ -43,13 +43,13 @@ public class ContentStreamCreate {
     // private static final AppLogger LOG =
     // new AppLogger(ContentStreamCreate.class.getName());
 
-    private BinaryContent content = null;
+    private BinaryContent content;
 
-    private String name = null;
+    private String name;
 
-    private String mimeType = null;
+    private String mimeType;
 
-    private String title = null;
+    private String title;
 
     /**
      * Add content to ContentStream.

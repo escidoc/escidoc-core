@@ -43,7 +43,7 @@ import java.util.List;
  */
 public class ConditionParser {
 
-    private Values values = null;
+    private Values values;
 
     /**
      * Extract the attribute name from a function URI.
@@ -59,7 +59,7 @@ public class ConditionParser {
         if (function != null) {
             final int index = function.lastIndexOf(':');
 
-            if ((index >= 0) && (index < function.length() - 1)) {
+            if (index >= 0 && index < function.length() - 1) {
                 result = function.substring(index + 1);
             }
         }
@@ -139,8 +139,8 @@ public class ConditionParser {
                 }
                 else if (children.size() == 2) {
                     if (operation.equals(Values.FUNCTION_STRING_CONTAINS)) {
-                        if ((children.get(0) instanceof StringAttribute)
-                            && (children.get(1) instanceof Apply)) {
+                        if (children.get(0) instanceof StringAttribute
+                            && children.get(1) instanceof Apply) {
                             final Function nestedFunction =
                                 parseApply((Apply) children.get(1));
 

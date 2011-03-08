@@ -15,21 +15,21 @@ public class VersionProperties {
 
     private String versionNumber = "1";
 
-    private String createdById = null;
+    private String createdById;
 
-    private String createdByName = null;
+    private String createdByName;
 
-    private String modifiedById = null;
+    private String modifiedById;
 
-    private String modifiedByName = null;
+    private String modifiedByName;
 
     private StatusType status = StatusType.PENDING;
 
     private String comment = "Object created.";
 
-    private String pid = null;
+    private String pid;
 
-    private String date = null;
+    private String date;
 
     /**
      * Version properties of Item.

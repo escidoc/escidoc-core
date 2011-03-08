@@ -2,8 +2,6 @@ package de.escidoc.core.statistic;
 
 /**
  * Represents a link.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public interface LinkRequired {
 

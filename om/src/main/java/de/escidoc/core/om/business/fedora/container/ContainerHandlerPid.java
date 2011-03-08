@@ -68,9 +68,9 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
     private static final AppLogger log = new AppLogger(
         ContainerHandlerPid.class.getName());
 
-    private PIDSystemFactory pidGenFactory = null;
+    private PIDSystemFactory pidGenFactory;
 
-    private PIDSystem pidGen = null;
+    private PIDSystem pidGen;
 
     /*
      * See Interface for functional description.
@@ -109,7 +109,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         // recache
         fireContainerModified(getContainer().getId());
 
-        return (prepareResponse(pid));
+        return prepareResponse(pid);
     }
 
     /**
@@ -182,7 +182,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
 
         fireContainerModified(getContainer().getId());
 
-        return (prepareResponse(pid));
+        return prepareResponse(pid);
     }
 
     /**
@@ -213,7 +213,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
             pidGen = pidGenFactory.getPIDGenerator();
         }
 
-        return (pidGen.assignPID(id, param));
+        return pidGen.assignPID(id, param);
     }
 
     /**
@@ -304,12 +304,12 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         WebserverSystemException {
         if (Boolean.valueOf(System
                 .getProperty("cmm.Container.objectPid.releaseWithoutPid"))) {
-            return (true);
+            return true;
         } // objectPid is needed
         if (getContainer().hasObjectPid()) {
-            return (true);
+            return true;
         }
-        return (false);
+        return false;
     }
 
     /**
@@ -323,11 +323,11 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
     protected boolean releasableVersionPid() throws WebserverSystemException {
         if (Boolean.valueOf(System
             .getProperty("cmm.Container.versionPid.releaseWithoutPid"))) {
-            return (true);
+            return true;
         }
 
         // versionPid is needed
-        return (getContainer().hasVersionPid());
+        return getContainer().hasVersionPid();
     }
 
     /**
@@ -348,7 +348,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
                 getContainer().getId(),
                 TripleStoreUtility.PROP_LATEST_RELEASE_PID);
 
-        if ((pid != null) && (pid.length() > 0)) {
+        if (pid != null && pid.length() > 0) {
             throw new InvalidStatusException("The object is already assigned with PID '" + pid
                     + "' and can not be reassigned.");
         }

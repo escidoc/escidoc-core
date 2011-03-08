@@ -39,7 +39,7 @@ public class EscidocServiceRedirect implements EscidocServiceRedirectInterface {
 
     private String content;
 
-    private String redirectUrl = null;
+    private String redirectUrl;
 
     /* (non-Javadoc)
      * @see de.escidoc.core.om.service.result.EscidocServiceRedirectInterface#getRedirectUrl()

@@ -103,7 +103,7 @@ public final class FinderModuleHelper {
      */
     public static boolean isNewResourceId(final String resourceId) {
 
-        return ("".equals(resourceId));
+        return "".equals(resourceId);
     }
 
     /**

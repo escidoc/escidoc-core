@@ -53,15 +53,15 @@ import javax.naming.directory.NoSuchAttributeException;
  */
 public class OptimisticLockingHandler extends DefaultHandler {
 
-    private String objid = null;
+    private String objid;
 
-    private String objectType = null;
+    private String objectType;
 
-    private boolean done = false;
+    private boolean done;
 
     private String requestedModificationDate;
 
-    private String lastModifiedDate = null;
+    private String lastModifiedDate;
 
     private static final String MODIFIED_DATE_ATT_NAME =
         "last-modification-date";

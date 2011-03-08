@@ -501,7 +501,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
         final List<UserAccount> result;
 
-        if ((criterias != null) && (criterias.length() > 0)) {
+        if (criterias != null && criterias.length() > 0) {
             result =
                 getHibernateTemplate().findByCriteria(
                     new UserAccountFilter(criterias).toSql(), offset,
@@ -569,22 +569,22 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
     public void delete(final UserAccount userAccount)
         throws SqlDatabaseSystemException {
         // remove User from Cache
-        if ((userAccount.getEscidocRolesByCreatorId() != null && !userAccount
-            .getEscidocRolesByCreatorId().isEmpty())
-            || (userAccount.getEscidocRolesByModifiedById() != null && !userAccount
-                .getEscidocRolesByModifiedById().isEmpty())
-            || (userAccount.getRoleGrantsByCreatorId() != null && !userAccount
-                .getRoleGrantsByCreatorId().isEmpty())
-            || (userAccount.getRoleGrantsByRevokerId() != null && !userAccount
-                .getRoleGrantsByRevokerId().isEmpty())
-            || (userAccount.getUserAccountsByCreatorId() != null && !userAccount
-                .getUserAccountsByCreatorId().isEmpty())
-            || (userAccount.getUserAccountsByModifiedById() != null && !userAccount
-                .getUserAccountsByModifiedById().isEmpty())
-            || (userAccount.getUserGroupsByCreatorId() != null && !userAccount
-                .getUserGroupsByCreatorId().isEmpty())
-            || (userAccount.getUserGroupsByModifiedById() != null && !userAccount
-                .getUserGroupsByModifiedById().isEmpty())) {
+        if (userAccount.getEscidocRolesByCreatorId() != null && !userAccount
+            .getEscidocRolesByCreatorId().isEmpty()
+            || userAccount.getEscidocRolesByModifiedById() != null && !userAccount
+                .getEscidocRolesByModifiedById().isEmpty()
+            || userAccount.getRoleGrantsByCreatorId() != null && !userAccount
+                .getRoleGrantsByCreatorId().isEmpty()
+            || userAccount.getRoleGrantsByRevokerId() != null && !userAccount
+                .getRoleGrantsByRevokerId().isEmpty()
+            || userAccount.getUserAccountsByCreatorId() != null && !userAccount
+                .getUserAccountsByCreatorId().isEmpty()
+            || userAccount.getUserAccountsByModifiedById() != null && !userAccount
+                .getUserAccountsByModifiedById().isEmpty()
+            || userAccount.getUserGroupsByCreatorId() != null && !userAccount
+                .getUserGroupsByCreatorId().isEmpty()
+            || userAccount.getUserGroupsByModifiedById() != null && !userAccount
+                .getUserGroupsByModifiedById().isEmpty()) {
             throw new SqlDatabaseSystemException(
                 "UserAccount has references to other tables");
         }
@@ -887,14 +887,14 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         throws InvalidSearchQueryException, SystemException {
         final List<RoleGrant> result;
 
-        if ((criterias != null) && (criterias.length() > 0)) {
+        if (criterias != null && criterias.length() > 0) {
             final RoleGrantFilter filter = new RoleGrantFilter(criterias);
             final Set<String> userIds = filter.getUserIds();
             final Set<String> groupIds = filter.getGroupIds();
 
             // check if userId and groupId was provided
-            if ((userIds != null) && (!userIds.isEmpty()) && (groupIds != null)
-                && (!groupIds.isEmpty())) {
+            if (userIds != null && !userIds.isEmpty() && groupIds != null
+                && !groupIds.isEmpty()) {
                 throw new InvalidSearchQueryException(
                     "you may not provide a userId and a groupId at the same "
                         + "time");
@@ -902,7 +902,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
             // if userIds or groupIds are provided,
             // get all groups the given users/groups belong to
-            if ((userIds != null) && (!userIds.isEmpty())) {
+            if (userIds != null && !userIds.isEmpty()) {
                 for (final String userId : userIds) {
                     try {
                         groupIds.addAll(userGroupHandler
@@ -915,7 +915,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 filter.setGroupIds(groupIds);
 
             }
-            else if ((groupIds != null) && (!groupIds.isEmpty())) {
+            else if (groupIds != null && !groupIds.isEmpty()) {
                 for (final String groupId : groupIds) {
                     groupIds.addAll(userGroupHandler
                         .retrieveGroupsForGroup(groupId));
@@ -1403,7 +1403,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         throws SqlDatabaseSystemException {
 
         UserLoginData result = data;
-        if ((result != null) && (isExpired(result))) {
+        if (result != null && isExpired(result)) {
             delete(result);
             PoliciesCache.clearUserDetails(data.getHandle());
             result = null;

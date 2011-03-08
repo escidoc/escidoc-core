@@ -73,23 +73,23 @@ public class ContentRelationCreate extends GenericResourceCreate
 
     private final RepositoryIndicator ri = new RepositoryIndicator();
 
-    private ContentRelationProperties properties = null;
+    private ContentRelationProperties properties;
 
-    private List<MdRecordCreate> mdRecords = null;
+    private List<MdRecordCreate> mdRecords;
 
-    private transient EscidocIdProvider idProvider = null;
+    private transient EscidocIdProvider idProvider;
 
-    private String dcXml = null;
+    private String dcXml;
 
-    private URI type = null;
+    private URI type;
 
-    private String subject = null;
+    private String subject;
 
-    private String object = null;
+    private String object;
 
-    private String subjectVersion = null;
+    private String subjectVersion;
 
-    private String objectVersion = null;
+    private String objectVersion;
 
     /**
      * 
@@ -452,8 +452,8 @@ public class ContentRelationCreate extends GenericResourceCreate
                 changes++;
             }
         }
-        else if ((getMetadataRecords() != null)
-            && (nCr.getMetadataRecords() != null)) {
+        else if (getMetadataRecords() != null
+            && nCr.getMetadataRecords() != null) {
 
             // drop removed MdRecords
             Iterator<MdRecordCreate> it = getMetadataRecords().iterator();

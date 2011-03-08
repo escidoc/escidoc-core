@@ -105,12 +105,12 @@ public class FedoraContentRelationHandler extends HandlerBase
     private final Collection<ResourceListener> contentRelationListeners =
         new ArrayList<ResourceListener>();
 
-    private PIDSystemFactory pidGenFactory = null;
+    private PIDSystemFactory pidGenFactory;
 
-    private PIDSystem pidGen = null;
+    private PIDSystem pidGen;
 
     /** SRU request. */
-    private SRURequest sruRequest = null;
+    private SRURequest sruRequest;
 
     /**
      * Create Content Relation.
@@ -274,7 +274,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         final List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
         if (mdRecords != null) {
             for (final MdRecordCreate mr : mdRecords) {
-                if (mr.getName().equals((name))) {
+                if (mr.getName().equals(name)) {
                     return ContentRelationXmlProvider
                         .getInstance().getContentRelationMdRecord(cr, mr);
                 }
@@ -849,7 +849,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         }
         cr.getProperties().setPid(pid);
         cr.persist();
-        return (prepareResponse(cr, pid));
+        return prepareResponse(cr, pid);
     }
 
     /**
@@ -909,7 +909,7 @@ public class FedoraContentRelationHandler extends HandlerBase
             pidGen = pidGenFactory.getPIDGenerator();
         }
 
-        return (pidGen.assignPID(id, param));
+        return pidGen.assignPID(id, param);
     }
 
     /**
@@ -1202,10 +1202,10 @@ public class FedoraContentRelationHandler extends HandlerBase
         for (final org.fcrepo.server.types.gen.Datastream datastreamInfo : datastreamInfos) {
 
             // add meta data
-            if ((contains(datastreamInfo.getAltIDs(),
-                Datastream.METADATA_ALTERNATE_ID) > -1)
-                && (!datastreamInfo.getState().equals(
-                    FedoraUtility.DATASTREAM_STATUS_DELETED))) {
+            if (contains(datastreamInfo.getAltIDs(),
+                Datastream.METADATA_ALTERNATE_ID) > -1
+                && !datastreamInfo.getState().equals(
+                    FedoraUtility.DATASTREAM_STATUS_DELETED)) {
                 // check if status of stream is not deleted
                 final MdRecordCreate mdRecord = new MdRecordCreate();
 

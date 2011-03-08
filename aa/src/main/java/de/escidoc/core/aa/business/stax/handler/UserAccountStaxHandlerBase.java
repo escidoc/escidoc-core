@@ -52,7 +52,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * 
      * @aa
      */
-    private boolean create = false;
+    private boolean create;
 
     /**
      * The constructor.
@@ -65,7 +65,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * 
      * @aa
      */
-    public UserAccountStaxHandlerBase(final UserAccount userAccount,
+    protected UserAccountStaxHandlerBase(final UserAccount userAccount,
         final boolean create) {
 
         this.userAccount = userAccount;
@@ -83,7 +83,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * 
      * @aa
      */
-    public UserAccountStaxHandlerBase(final RoleGrant grant,
+    protected UserAccountStaxHandlerBase(final RoleGrant grant,
         final boolean create) {
 
         this.grant = grant;

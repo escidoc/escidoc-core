@@ -83,7 +83,7 @@ public class AggregationPreprocessor {
 
     private SmPreprocessingLogsDaoInterface preprocessingLogsDao;
 
-    private XPathFactory xpathFactory = null;
+    private XPathFactory xpathFactory;
 
     /**
      * initialize global Hashes (dataHash, fieldTypeHash, differencesHash).
@@ -155,28 +155,28 @@ public class AggregationPreprocessor {
         }
         for (final AggregationTableField field : fieldList) {
             if (field.getFieldTypeId()
-                    == (Constants.COUNT_CUMULATION_FIELD_ID)) {
+                    == Constants.COUNT_CUMULATION_FIELD_ID) {
                 fieldtypes.put(field.getName(),
                     Constants.COUNT_CUMULATION_FIELD);
                 dbtypes.put(field.getName(),
                     Constants.DATABASE_FIELD_TYPE_NUMERIC);
             }
             else if (field.getFieldTypeId()
-                    == (Constants.DIFFERENCE_CUMULATION_FIELD_ID)) {
+                    == Constants.DIFFERENCE_CUMULATION_FIELD_ID) {
                 fieldtypes.put(field.getName(),
                     Constants.DIFFERENCE_CUMULATION_FIELD);
                 dbtypes.put(field.getName(),
                     Constants.DATABASE_FIELD_TYPE_NUMERIC);
             }
             else if (field.getFieldTypeId()
-                    == (Constants.INFO_FIELD_ID)) {
+                    == Constants.INFO_FIELD_ID) {
                 fieldtypes.put(field.getName(),
                     Constants.INFO_FIELD);
                 dbtypes.put(field.getName(), field
                     .getDataType());
             }
             else if (field.getFieldTypeId()
-                    == (Constants.TIME_REDUCTION_FIELD_ID)) {
+                    == Constants.TIME_REDUCTION_FIELD_ID) {
                 fieldtypes.put(field.getName(),
                     Constants.TIME_REDUCTION_FIELD);
                 dbtypes.put(field.getName(),
@@ -324,20 +324,20 @@ public class AggregationPreprocessor {
         for (final AggregationTableField field
                 : aggregationTable.getAggregationTableFields()) {
             if (field.getFieldTypeId()
-                    == (Constants.COUNT_CUMULATION_FIELD_ID)) {
+                    == Constants.COUNT_CUMULATION_FIELD_ID) {
                 handleCountCumulationField(field, aggregationPreprocessorVo);
             }
             else if (field.getFieldTypeId()
-                    == (Constants.DIFFERENCE_CUMULATION_FIELD_ID)) {
+                    == Constants.DIFFERENCE_CUMULATION_FIELD_ID) {
                 handleDifferenceCumulationField(
                         field, xml, aggregationPreprocessorVo);
             }
             else if (field.getFieldTypeId()
-                    == (Constants.INFO_FIELD_ID)) {
+                    == Constants.INFO_FIELD_ID) {
                 handleInfoField(field, xml, aggregationPreprocessorVo);
             }
             else if (field.getFieldTypeId()
-                    == (Constants.TIME_REDUCTION_FIELD_ID)) {
+                    == Constants.TIME_REDUCTION_FIELD_ID) {
                 handleTimeReductionField(
                         field, xml, timestamp, aggregationPreprocessorVo);
             }
@@ -586,13 +586,9 @@ public class AggregationPreprocessor {
                 .getDataHash().get(tablename)).get(
                         aggregationPreprocessorVo.getUniqueKeyForOneRecord()
                         .toString()) != null) {
-            final Map record =
-                (HashMap) ((Map) aggregationPreprocessorVo
-                        .getDataHash().get(tablename))
-                    .get(aggregationPreprocessorVo
-                            .getUniqueKeyForOneRecord().toString());
-            final Map tablefields = (HashMap) aggregationPreprocessorVo
-                                    .getFieldTypeHash().get(tablename);
+            final Map record = (Map) ((Map) aggregationPreprocessorVo.getDataHash().get(tablename))
+                    .get(aggregationPreprocessorVo.getUniqueKeyForOneRecord().toString());
+            final Map tablefields = (Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename);
             HashMap fieldtypes = new HashMap();
             if (tablefields != null) {
                 fieldtypes = (HashMap) tablefields.get("fieldtype");
@@ -664,15 +660,13 @@ public class AggregationPreprocessor {
                 // Iterate dataHash, for each Aggregation-table
                 final String tablename = (String) o;
 
-                final Map tableRecords =
-                        (HashMap) aggregationPreprocessorVo
-                                .getDataHash().get(tablename);
+                final Map tableRecords = (Map) aggregationPreprocessorVo.getDataHash().get(tablename);
 
                 if (tableRecords != null && !tableRecords.isEmpty()) {
                     for (final Object o1 : tableRecords.values()) {
                         // for each record in dataHash->table,
                         // query database, if record already exists
-                        final Map fields = (HashMap) o1;
+                        final Map fields = (Map) o1;
 
                         // Build databaseSelectVo
                         final Collection<String> tablenames = new ArrayList<String>();
@@ -699,13 +693,10 @@ public class AggregationPreprocessor {
                         for (final Object o2 : fields.keySet()) {
                             final String fieldname = (String) o2;
                             final Map fieldHash =
-                                    (HashMap) ((Map) aggregationPreprocessorVo
-                                            .getFieldTypeHash()
-                                            .get(tablename)).get("fieldtype");
-                            final Map dbHash =
-                                    (HashMap) ((Map) aggregationPreprocessorVo
-                                            .getFieldTypeHash()
-                                            .get(tablename)).get("dbtype");
+                                    (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename))
+                                            .get("fieldtype");
+                            final Map dbHash = (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename))
+                                    .get("dbtype");
                             String fieldtype = null;
                             if (fieldHash != null) {
                                 fieldtype = (String) fieldHash
@@ -885,13 +876,9 @@ public class AggregationPreprocessor {
                 for (final Entry entry : fieldsEntrySet) {
                     final String fieldname = (String) entry.getKey();
                     final Map fieldHash =
-                            (HashMap) ((Map) aggregationPreprocessorVo
-                                    .getFieldTypeHash().get(tablename))
-                                    .get("fieldtype");
+                            (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename)).get("fieldtype");
                     final Map dbHash =
-                            (HashMap) ((Map) aggregationPreprocessorVo
-                                    .getFieldTypeHash().get(tablename))
-                                    .get("dbtype");
+                            (Map) ((Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename)).get("dbtype");
                     String fieldtype = null;
                     if (fieldHash != null) {
                         fieldtype = (String) fieldHash.get(fieldname);
@@ -972,10 +959,9 @@ public class AggregationPreprocessor {
             final String tablename, 
             final String fieldname, 
             final AggregationPreprocessorVo aggregationPreprocessorVo) {
-        final Map tableFieldTypes = (HashMap) aggregationPreprocessorVo
-                                        .getFieldTypeHash().get(tablename);
+        final Map tableFieldTypes = (Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename);
         if (tableFieldTypes != null) {
-            final Map dbFieldTypes = (HashMap) tableFieldTypes.get("dbtype");
+            final Map dbFieldTypes = (Map) tableFieldTypes.get("dbtype");
             if (dbFieldTypes != null) {
                 return (String) dbFieldTypes.get(fieldname);
             }

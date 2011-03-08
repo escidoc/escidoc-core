@@ -91,7 +91,7 @@ public class CustomPdp {
         new AppLogger(CustomPdp.class.getName());
 
     // this is the actual PDP object we'll use for evaluation
-    private PDP pdp = null;
+    private PDP pdp;
 
     private CheckProvidedAttributeFinderModule checkProvidedAttrFinder;
 

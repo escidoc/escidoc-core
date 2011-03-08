@@ -40,7 +40,7 @@ import java.util.List;
  */
 public class Triples {
 
-    private List<Triple> triples = null;
+    private List<Triple> triples;
 
     public Triples() {
         this(new LinkedList<Triple>());

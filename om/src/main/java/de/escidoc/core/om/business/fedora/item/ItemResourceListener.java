@@ -47,7 +47,7 @@ import java.util.Collection;
  */
 public class ItemResourceListener extends ItemHandlerRetrieve {
 
-    private IndexingHandler indexingHandler = null;
+    private IndexingHandler indexingHandler;
 
     private final Collection<ResourceListener> itemListeners =
         new ArrayList<ResourceListener>();

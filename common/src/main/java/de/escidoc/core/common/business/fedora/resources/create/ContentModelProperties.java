@@ -47,7 +47,7 @@ public class ContentModelProperties {
 
     private VersionProperties latestVersion;
 
-    private VersionProperties latestReleasedVersion = null;
+    private VersionProperties latestReleasedVersion;
 
     /**
      * @throws WebserverSystemException

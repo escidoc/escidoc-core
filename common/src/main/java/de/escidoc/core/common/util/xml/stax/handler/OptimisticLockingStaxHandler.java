@@ -51,7 +51,7 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
     
     private final Date expectedLastModificationDate;
 
-    private boolean rootElementFound = false;
+    private boolean rootElementFound;
 
     /**
      * The constructor.

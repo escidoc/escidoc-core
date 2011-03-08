@@ -4,8 +4,6 @@ import java.util.List;
 
 /**
  * Represents a record in statistic.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public interface StatisticRecord {
 

@@ -3,9 +3,6 @@ package de.escidoc.core.http;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 
-/**
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
- */
 public abstract class HttpClientBuilder {
 
     public static HttpClientBuilder createHttpClient() {

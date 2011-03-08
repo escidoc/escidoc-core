@@ -107,7 +107,7 @@ public abstract class AbstractAttributeFinderModule
     /**
      * The constructor.
      */
-    public AbstractAttributeFinderModule() {
+    protected AbstractAttributeFinderModule() {
 
         convertToObjectType = new HashMap<String, String>();
 
@@ -685,8 +685,7 @@ public abstract class AbstractAttributeFinderModule
 
             // check if the provided id is part of the resolved ids.
             // Otherwise, throw a resource not found exception.
-            if (!(bagAttribute).contains(new StringAttribute(
-                providedResourceIdentifier))) {
+            if (! bagAttribute.contains(new StringAttribute(providedResourceIdentifier))) {
 
                 final ResourceNotFoundException resourceNotFoundException =
                     getResourceNotFoundException(resolvedAttributeId,
@@ -949,7 +948,7 @@ public abstract class AbstractAttributeFinderModule
     protected boolean isEmptyResult(final EvaluationResult result) {
 
         final BagAttribute bag = (BagAttribute) result.getAttributeValue();
-        return (bag == null || bag.isEmpty());
+        return bag == null || bag.isEmpty();
     }
 
 }

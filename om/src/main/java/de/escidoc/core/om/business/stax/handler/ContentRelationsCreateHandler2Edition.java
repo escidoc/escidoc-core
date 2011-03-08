@@ -63,15 +63,15 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private boolean inContentRelation = false;
+    private boolean inContentRelation;
 
-    private String currentPath = null;
+    private String currentPath;
 
-    private String contentRelationPath = null;
+    private String contentRelationPath;
 
-    private String targetId = null;
+    private String targetId;
 
-    private String predicate = null;
+    private String predicate;
 
     private final List<Map<String, String>> relationsData =
         new ArrayList<Map<String, String>>();

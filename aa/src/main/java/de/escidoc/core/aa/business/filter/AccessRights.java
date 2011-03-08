@@ -168,7 +168,7 @@ public class AccessRights extends JdbcDaoSupport {
     private final RightsMap[] rightsMap =
         new RightsMap[ResourceType.values().length];
 
-    private Values values = null;
+    private Values values;
 
     /**
      * Delete a specific access right.
@@ -206,7 +206,7 @@ public class AccessRights extends JdbcDaoSupport {
     private String ensureNotEmpty(final String s) {
         String result = s;
 
-        if ((result == null) || (result.length() == 0)) {
+        if (result == null || result.length() == 0) {
             result = values.escape(INVALID_ID);
         }
         return result;
@@ -251,10 +251,10 @@ public class AccessRights extends JdbcDaoSupport {
         final String ouGrants = ensureNotEmpty(getSetAsString(hierarchicalOUs));
 
         synchronized (rightsMap) {
-            if ((roleId != null) && (roleId.length() > 0)) {
-                if (((!groupIds.isEmpty()) && userGroupGrants != null
-                    && userGroupGrants.containsKey(roleId))
-                    || (userGrants.containsKey(roleId))) {
+            if (roleId != null && roleId.length() > 0) {
+                if (!groupIds.isEmpty() && userGroupGrants != null
+                    && userGroupGrants.containsKey(roleId)
+                    || userGrants.containsKey(roleId)) {
                     final Rules rights =
                         rightsMap[type.ordinal()].get(roleId);
 
@@ -299,9 +299,9 @@ public class AccessRights extends JdbcDaoSupport {
                 // concatenate all rules with "OR"
                 for (final Entry<String, Rules> role : rightsMap[type
                     .ordinal()].entrySet()) {
-                    if (((!groupIds.isEmpty()) && userGroupGrants.containsKey(
-                        roleId))
-                        || (userGrants.containsKey(role.getKey()))) {
+                    if (!groupIds.isEmpty() && userGroupGrants.containsKey(
+                        roleId)
+                        || userGrants.containsKey(role.getKey())) {
                         final String groupSQL = getGroupSql(groupIds);
                         final String quotedGroupSQL =
                             groupSQL.replace("'", "''");
@@ -367,7 +367,7 @@ public class AccessRights extends JdbcDaoSupport {
         final StringBuilder result = new StringBuilder();
 
         result.append('(');
-        if ((groupIds != null) && (!groupIds.isEmpty())) {
+        if (groupIds != null && !groupIds.isEmpty()) {
             try {
                 for (final String groupId : groupIds) {
                     if (result.length() > 1) {
@@ -459,9 +459,9 @@ public class AccessRights extends JdbcDaoSupport {
         boolean result = false;
 
         synchronized (rightsMap) {
-            if ((type != null)
-                && (roleId != null)
-                && (roleId.length() > 0)) {
+            if (type != null
+                && roleId != null
+                && roleId.length() > 0) {
                 final Rules rules = rightsMap[type.ordinal()].get(roleId);
 
                 if (rules != null) {

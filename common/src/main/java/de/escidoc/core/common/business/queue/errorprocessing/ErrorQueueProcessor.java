@@ -40,7 +40,7 @@ package de.escidoc.core.common.business.queue.errorprocessing;
 public class ErrorQueueProcessor {
 
     // A setter exists. Consider removing from Spring.
-    private ErrorMessageHandler errorMessageHandler = null;
+    private ErrorMessageHandler errorMessageHandler;
 
     /**
      * core Method.

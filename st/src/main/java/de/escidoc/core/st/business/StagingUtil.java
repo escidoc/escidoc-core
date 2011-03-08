@@ -47,9 +47,9 @@ public final class StagingUtil {
 
     private static final String STAGING_AREA_UPLOAD = "upload";
 
-    private static String downloadStagingArea = null;
+    private static String downloadStagingArea;
 
-    private static String uploadStagingArea = null;
+    private static String uploadStagingArea;
 
     /**
      * The duration during which a token is valid, i.e. uploading/downloading

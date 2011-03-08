@@ -248,21 +248,21 @@ public final class XmlUtility {
 
     private static String containerMembersFilterRestSchemaLocation;
 
-    private static String contextRestSchemaLocation = null;
+    private static String contextRestSchemaLocation;
 
-    private static String contextSoapSchemaLocation = null;
+    private static String contextSoapSchemaLocation;
 
-    private static String contentRelationRestSchemaLocation = null;
+    private static String contentRelationRestSchemaLocation;
 
-    private static String contentRelationSoapSchemaLocation = null;
+    private static String contentRelationSoapSchemaLocation;
 
-    private static String contentModelRestSchemaLocation = null;
+    private static String contentModelRestSchemaLocation;
 
-    private static String contentModelSoapSchemaLocation = null;
+    private static String contentModelSoapSchemaLocation;
 
-    private static String setDefinitionRestSchemaLocation = null;
+    private static String setDefinitionRestSchemaLocation;
 
-    private static String setDefinitionSoapSchemaLocation = null;
+    private static String setDefinitionSoapSchemaLocation;
 
     private static String contextsFilterSchemaLocationRest;
 
@@ -1942,7 +1942,7 @@ public final class XmlUtility {
             }
             result = contextSoapSchemaLocation;
         }
-        return (result);
+        return result;
     }
 
     /**
@@ -2095,7 +2095,7 @@ public final class XmlUtility {
             }
             result = contextSoapSchemaLocation;
         }
-        return (result);
+        return result;
     }
 
     /**
@@ -2152,7 +2152,7 @@ public final class XmlUtility {
             }
             result = setDefinitionSoapSchemaLocation;
         }
-        return (result);
+        return result;
     }
 
     /**
@@ -2181,7 +2181,7 @@ public final class XmlUtility {
             result = contextsFilterSchemaLocationSoap;
         }
 
-        return (result);
+        return result;
     }
 
     /**
@@ -2210,7 +2210,7 @@ public final class XmlUtility {
             result = contextMembersFilterSchemaLocationSoap;
         }
 
-        return (result);
+        return result;
     }
 
     /**
@@ -2839,7 +2839,7 @@ public final class XmlUtility {
     public static String escapeForbiddenXmlCharacters(final String xmlText) {
 
         String result = xmlText;
-        if ((result != null) && (PATTERN_ESCAPE_NEEDED.matcher(result).find())) {
+        if (result != null && PATTERN_ESCAPE_NEEDED.matcher(result).find()) {
             result =
                 PATTERN_AMPERSAND.matcher(result).replaceAll(ESC_AMPERSAND);
             result =

@@ -45,11 +45,11 @@ public class RepositoryIndicator implements Serializable {
      */
     private boolean repositorySynchron = true;
 
-    private boolean resourceIsNew = false;
+    private boolean resourceIsNew;
 
-    private boolean resourceToDeleted = false;
+    private boolean resourceToDeleted;
 
-    private boolean statusDeleted = false;
+    private boolean statusDeleted;
 
     /**
      * Indicate if resource has changed in comparing to repository.

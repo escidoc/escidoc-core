@@ -82,49 +82,49 @@ public class GenericResource implements FedoraResource {
      * Vector as register which data set is out of sync, an only this is called
      * during the persist() method.
      */
-    private boolean needSync = false;
+    private boolean needSync;
 
     // -----------------------
 
-    protected Datastream relsExt = null;
+    protected Datastream relsExt;
 
-    protected Datastream dc = null;
+    protected Datastream dc;
 
-    private String id = null;
+    private String id;
 
-    private String title = null;
+    private String title;
 
     /**
      * The resource Href.
      */
-    private String href = null;
+    private String href;
 
     private Datastream datastream;
 
-    private LockHandler lockHandler = null;
+    private LockHandler lockHandler;
 
-    private FedoraUtility fu = null;
+    private FedoraUtility fu;
 
     private org.fcrepo.server.types.gen.Datastream[] datastreamsInformation;
 
     // for versionated resources (like Item/Container) is the creationDate not
     // the Fedora CreationDate!
-    protected String creationDate = null;
+    protected String creationDate;
 
-    private String createdBy = null;
+    private String createdBy;
 
-    private Collection<String> propertiesNames = null;
+    private Collection<String> propertiesNames;
 
     /**
      * Mapping from the TripleStore or WOV keys to the internal keys.
      */
-    private Map<String, String> propertiesNamesMapping = null;
+    private Map<String, String> propertiesNamesMapping;
 
     /**
      * Properties value map. Should contain all properties values of the
      * resource.
      */
-    private Map<String, String> propertiesMap = null;
+    private Map<String, String> propertiesMap;
 
     // -----------------------
 
@@ -883,7 +883,7 @@ public class GenericResource implements FedoraResource {
 
         // Should lock only be checked in handler? No, it is part of the
         // resource representation.
-        if ((lock) && (lockOwner == null)) {
+        if (lock && lockOwner == null) {
             throw new NullPointerException("Need lockOwner.");
         }
 
@@ -973,7 +973,7 @@ public class GenericResource implements FedoraResource {
      * @return Is true if object out of sync with Repository.
      */
     public boolean isNewVersion() {
-        return (this.needSync);
+        return this.needSync;
     }
 
     /**
@@ -1257,8 +1257,8 @@ public class GenericResource implements FedoraResource {
                 return true;
             }
         }
-        else if ((resourceType == ResourceType.CONTENT_RELATION)
-            && (type.equals(Constants.CONTENT_RELATION2_OBJECT_TYPE))) {
+        else if (resourceType == ResourceType.CONTENT_RELATION
+            && type.equals(Constants.CONTENT_RELATION2_OBJECT_TYPE)) {
             return true;
         }
 

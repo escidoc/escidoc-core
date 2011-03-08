@@ -68,18 +68,18 @@ public class Context extends GenericResource implements ContextInterface {
 
     private static final AppLogger LOGGER = new AppLogger(Context.class.getName());
 
-    private Datastream dc = null;
+    private Datastream dc;
 
-    private Datastream properties = null;
+    private Datastream properties;
 
-    private Datastream resources = null;
+    private Datastream resources;
 
     private final Map<String, Datastream> adminDescriptors =
         new HashMap<String, Datastream>();
 
     private final Datastream organizationalUnits = null;
 
-    private boolean ouUpdated = false;
+    private boolean ouUpdated;
 
     /**
      * Instantiates the Context with the specified id. The datastreams are
@@ -294,7 +294,7 @@ public class Context extends GenericResource implements ContextInterface {
      */
     @Override
     public String getHref() {
-        return (Constants.CONTEXT_URL_BASE + getId());
+        return Constants.CONTEXT_URL_BASE + getId();
     }
 
     /*
@@ -357,9 +357,9 @@ public class Context extends GenericResource implements ContextInterface {
 
         for (final org.fcrepo.server.types.gen.Datastream datastream : datastreams) {
             final String[] altIDs = datastream.getAltIDs();
-            if ((altIDs.length > 0)
-                    && (altIDs[0]
-                    .equals(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID))) {
+            if (altIDs.length > 0
+                    && altIDs[0]
+                    .equals(de.escidoc.core.common.business.fedora.Constants.ADMIN_DESCRIPTOR_ALT_ID)) {
                 names.add(datastream.getID());
             }
         }
@@ -440,7 +440,7 @@ public class Context extends GenericResource implements ContextInterface {
             }
         }
 
-        return (this.adminDescriptors);
+        return this.adminDescriptors;
     }
 
     /**
@@ -495,8 +495,8 @@ public class Context extends GenericResource implements ContextInterface {
      */
     public List<String> getOrganizationalUnitObjids()
         throws TripleStoreSystemException, WebserverSystemException {
-        return (TripleStoreUtility.getInstance().getPropertiesElementsVector(
-            getId(), TripleStoreUtility.PROP_ORGANIZATIONAL_UNIT));
+        return TripleStoreUtility.getInstance().getPropertiesElementsVector(
+            getId(), TripleStoreUtility.PROP_ORGANIZATIONAL_UNIT);
     }
 
     /**
@@ -515,7 +515,7 @@ public class Context extends GenericResource implements ContextInterface {
             ouHrefs.add(path + s);
         }
 
-        return (ouHrefs);
+        return ouHrefs;
     }
 
     /**

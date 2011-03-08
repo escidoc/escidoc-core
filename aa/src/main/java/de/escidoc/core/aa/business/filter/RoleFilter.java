@@ -173,7 +173,7 @@ public class RoleFilter extends CqlFilter {
         if (parts != null && !specialCriteriaNames.contains(node.getIndex())) {
             result =
                 evaluate(node.getRelation(), (String) parts[1], value,
-                    (Integer) (parts[0]) == COMPARE_LIKE);
+                    (Integer) parts[0] == COMPARE_LIKE);
         }
         else {
             final String columnName = node.getIndex();
@@ -198,7 +198,7 @@ public class RoleFilter extends CqlFilter {
                         evaluate(
                             node.getRelation(),
                             "creationDate",
-                            ((value != null) && (value.length() > 0)) ? new Date(
+                            value != null && value.length() > 0 ? new Date(
                                 new DateTime(value).getMillis())
                                 : null, false);
                 }

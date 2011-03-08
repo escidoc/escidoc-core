@@ -53,9 +53,9 @@ public abstract class GenericResourceCreate {
     private static final AppLogger LOG =
         new AppLogger(GenericResourceCreate.class.getName());
 
-    private String objid = null;
+    private String objid;
 
-    private String buildNumber = null;
+    private String buildNumber;
 
     /**
      * Generate FoXML for all MetadataRecords.

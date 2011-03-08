@@ -50,9 +50,9 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
     private final Map<String, List<String>> stringAttributes =
                                 new HashMap<String, List<String>>();
     
-    private String dn = null;
+    private String dn;
     
-    private String username = null;
+    private String username;
 
     /**
      * Adds an attribute to the HashMap of stringAttributes.

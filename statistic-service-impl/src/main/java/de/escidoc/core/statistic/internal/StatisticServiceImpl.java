@@ -7,8 +7,6 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Default implementation of {@link de.escidoc.core.statistic.StatisticService}.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public class StatisticServiceImpl {
 

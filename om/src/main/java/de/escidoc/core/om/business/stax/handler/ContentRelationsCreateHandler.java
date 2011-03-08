@@ -65,23 +65,23 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
     public static final String CONTAINER = "/container";
 
-    private boolean inContentRelation = false;
+    private boolean inContentRelation;
 
-    private String currentPath = null;
+    private String currentPath;
 
-    private String contentRelationsPath = null;
+    private String contentRelationsPath;
 
-    private String contentRelationPath = null;
+    private String contentRelationPath;
 
-    private String targetId = null;
+    private String targetId;
 
-    private String targetIdWithoutVersion = null;
+    private String targetIdWithoutVersion;
 
-    private String targetVersion = null;
+    private String targetVersion;
 
-    private String predicate = null;
+    private String predicate;
 
-    private List<Map<String, String>> relationsData = null;
+    private List<Map<String, String>> relationsData;
 
     private static final AppLogger LOGGER =
         new AppLogger(ContentRelationsCreateHandler.class.getName());
@@ -131,7 +131,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
         if (contentRelationPath.equals(currentPath)) {
             inContentRelation = true;
             final int indexOfObjId = element.indexOfAttribute(null, "objid");
-            if (indexOfObjId != (-1)) {
+            if (indexOfObjId != -1) {
                 throw new ReadonlyAttributeViolationException("Read only attribute \"objid\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create");
@@ -176,14 +176,14 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             final int indexOfTitle =
                 element.indexOfAttribute(Constants.XLINK_URI, "title");
 
-            if (indexOfTitle != (-1)) {
+            if (indexOfTitle != -1) {
                 throw new ReadonlyAttributeViolationException("Read only attribute \"title\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create");
             }
             final int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");
-            if (indexOfHref != (-1)) {
+            if (indexOfHref != -1) {
                 throw new ReadonlyAttributeViolationException("Read only attribute \"href\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create");
@@ -276,7 +276,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
             final int indexOfTitle =
                 element.indexOfAttribute(Constants.XLINK_URI, "title");
-            if (indexOfTitle != (-1)) {
+            if (indexOfTitle != -1) {
                 throw new ReadonlyAttributeViolationException("Read only attribute \"title\" of the " + "element "
                         + element.getLocalName()
                         + " may not exist while create");

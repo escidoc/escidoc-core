@@ -34,6 +34,13 @@ package de.escidoc.core.om.business.fedora.deviation;
  * @author MIH
  */
 public class Constants {
+
+    /**
+     * Private constructor to avoid instantiation.
+     */
+    private Constants() {
+    }
+
     public static final boolean USE_SOAP_REQUEST_PROTOCOL = false;
     public static final boolean USE_REST_REQUEST_PROTOCOL = true;
 

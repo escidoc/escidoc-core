@@ -114,7 +114,7 @@ public class VelocityXmlContainerFoXmlRenderer
         values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility
             .getInstance().getBuildNumber());
 
-        if ((properties != null) && (!properties.isEmpty())) {
+        if (properties != null && !properties.isEmpty()) {
             values.put("properties", properties);
             values.put("propertiesAsReferences", propertiesAsReferences);
             // some values which are more relevant for ingest
@@ -135,10 +135,10 @@ public class VelocityXmlContainerFoXmlRenderer
         values.put("latestVersionUserTitle", Utility
             .getInstance().getCurrentUser()[1]);
         values.put("latestVersionComment", comment);
-        if ((contentRelations != null) && (!contentRelations.isEmpty())) {
+        if (contentRelations != null && !contentRelations.isEmpty()) {
             values.put("contentRelations", contentRelations);
         }
-        if ((members != null) && (!members.isEmpty())) {
+        if (members != null && !members.isEmpty()) {
             values.put("members", members);
         }
     }

@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.common.util.stax;
 
-import com.ctc.wstx.stax.WstxInputFactory;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -91,10 +90,9 @@ import java.util.Stack;
  */
 public class StaxParser implements DefaultHandlerStackInterface {
 
-    private static final AppLogger LOG = new AppLogger(
-        StaxParser.class.getName());
+    private static final AppLogger LOG = new AppLogger(StaxParser.class.getName());
 
-    private boolean started = false;
+    private boolean started;
 
     private List<DefaultHandler> handlerChain = new ArrayList<DefaultHandler>();
 
@@ -102,14 +100,13 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
     private final StringBuffer curPath = new StringBuffer();
 
-    // TODO: Just for tests... Please change to: XMLInputFactory.getInstance();
-    private final XMLInputFactory factory = new WstxInputFactory();
+    private final XMLInputFactory factory = XMLInputFactory.newInstance();
 
-    private String expectedName = null;
+    private String expectedName;
 
-    private boolean checkRootElementName = false;
+    private boolean checkRootElementName;
 
-    private boolean rootChecked = false;
+    private boolean rootChecked;
 
     private String xmlBase;
 
@@ -520,7 +517,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                         init();
                     }
 
-                    (startElements.peek()).setHasChild(true);
+                    startElements.peek().setHasChild(true);
                     final StartElement startElement =
                         new StartElement(parser.getLocalName(),
                             parser.getNamespaceURI(), parser.getPrefix(),
@@ -552,7 +549,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                 case XMLStreamConstants.CHARACTERS:
                     final String data = parser.getText();
                     if (data.length() != 0) {
-                        (startElements.peek()).setHasCharacters(true);
+                        startElements.peek().setHasCharacters(true);
                         handle(data);
                     }
                     break;
@@ -561,13 +558,13 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     final String cdata = "<![CDATA[" + parser.getText() + "]]>";
                     // FIXME cdata length is always != 0
                     if (cdata.length() != 0) {
-                        (startElements.peek()).setHasCharacters(true);
+                        startElements.peek().setHasCharacters(true);
                         handle(cdata);
                     }
                     break;
 
                 case XMLStreamConstants.END_ELEMENT:
-                    if ((startElements.peek()).isEmpty()) {
+                    if (startElements.peek().isEmpty()) {
                         handle("");
                     }
                     final EndElement endElement =
@@ -672,7 +669,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     if (!started) {
                         init();
                     }
-                    (startElements.peek()).setHasChild(true);
+                    startElements.peek().setHasChild(true);
                     final javax.xml.stream.events.StartElement se =
                         event.asStartElement();
                     final StartElement startElement =
@@ -700,7 +697,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                 case XMLStreamConstants.CHARACTERS:
                     final String data = event.asCharacters().getData();
                     if (data.length() != 0) {
-                        (startElements.peek()).setHasCharacters(true);
+                        startElements.peek().setHasCharacters(true);
                         handle(data);
                     }
                     break;
@@ -710,7 +707,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                         "<![CDATA[" + event.asCharacters().getData() + "]]>";
                     // FIXME this length is always != 0
                     if (cdata.length() != 0) {
-                        (startElements.peek()).setHasCharacters(true);
+                        startElements.peek().setHasCharacters(true);
                         handle(cdata);
                     }
                     break;

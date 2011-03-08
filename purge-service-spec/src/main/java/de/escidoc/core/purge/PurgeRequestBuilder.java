@@ -4,8 +4,6 @@ import de.escidoc.core.purge.internal.PurgeRequestBuilderImpl;
 
 /**
  * Builder for {@link PurgeRequest}.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public abstract class PurgeRequestBuilder {
 

@@ -75,15 +75,15 @@ public class Container extends GenericVersionableResourcePid
     private static final AppLogger log = new AppLogger(
         Container.class.getName());
 
-    private Datastream dc = null;
+    private Datastream dc;
 
-    private Map<String, Datastream> mdRecords = null;
+    private Map<String, Datastream> mdRecords;
 
     private Datastream cts;
 
-    private String contextId = null;
+    private String contextId;
 
-    private Datastream escidocRelsExt = null;
+    private Datastream escidocRelsExt;
 
     public static final String DATASTREAM_ESCIDOC_RELS_EXT = "ESCIDOC_RELS_EXT";
 

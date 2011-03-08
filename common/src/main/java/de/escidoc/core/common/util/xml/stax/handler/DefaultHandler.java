@@ -71,7 +71,7 @@ public abstract class DefaultHandler {
     public static final String MSG_MANDATORY_ATTRIBUTE_NOT_FOUND =
         "Mandatory attribute not found.";
 
-    private boolean ready = false;
+    private boolean ready;
 
     /**
      * This method handles a start element.<br>

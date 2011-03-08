@@ -128,8 +128,7 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
     public EndElement endElement(final EndElement element) throws Exception {
 
         super.endElement(element);
-        if ((isNotReady() && !isInMetadata())
-            && (XmlUtility.NAME_MEMBER.equals(element.getLocalName()))) {
+        if (isNotReady() && !isInMetadata() && XmlUtility.NAME_MEMBER.equals(element.getLocalName())) {
             final Collection<StringAttribute> memberIds =
                 new ArrayList<StringAttribute>(containerIds.size()
                     + itemIds.size());

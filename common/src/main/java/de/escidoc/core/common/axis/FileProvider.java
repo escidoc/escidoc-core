@@ -72,11 +72,11 @@ import java.util.List;
 public class FileProvider implements WSDDEngineConfiguration {
     private static final AppLogger log = new AppLogger(FileProvider.class.getName());
 
-    private WSDDDeployment deployment = null;
+    private WSDDDeployment deployment;
 
-    private File configFile = null;
+    private File configFile;
 
-    private InputStream myInputStream = null;
+    private InputStream myInputStream;
 
     private boolean readOnly = true;
 
@@ -84,7 +84,7 @@ public class FileProvider implements WSDDEngineConfiguration {
     // the specified location?
     private boolean searchClasspath = true;
 
-    private static String defaultJNDIUrl = null;
+    private static String defaultJNDIUrl;
 
     /**
      * Constructor which accesses a file in the current directory of the engine

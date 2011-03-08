@@ -54,11 +54,11 @@ public class ResourceDefinitionCreate {
     private static final AppLogger LOG = new AppLogger(
         ResourceDefinitionCreate.class.getName());
 
-    private String name = null;
+    private String name;
 
-    private String xsltHref = null;
+    private String xsltHref;
 
-    private String mdRecordName = null;
+    private String mdRecordName;
 
     /**
      * Set Name of Metadata Record.
@@ -71,7 +71,7 @@ public class ResourceDefinitionCreate {
     public void setName(final String name)
         throws MissingAttributeValueException {
 
-        if ((name == null) || name.length() == 0) {
+        if (name == null || name.length() == 0) {
             throw new MissingAttributeValueException("the value of the"
                     + " \"name\" atribute of the element 'resource-definition' is missing");
         }

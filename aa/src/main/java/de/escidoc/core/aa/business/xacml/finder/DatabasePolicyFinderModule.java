@@ -106,7 +106,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
     private AbstractPolicy defaultPolicies;
 
-    private PoliciesCacheProxy policiesCacheProxy = null;
+    private PoliciesCacheProxy policiesCacheProxy;
 
     private PolicyFinder policyFinder;
 

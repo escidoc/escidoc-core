@@ -4,8 +4,6 @@ import java.util.Date;
 
 /**
  * Represents a request to purge data from repository.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public interface PurgeRequest {
 

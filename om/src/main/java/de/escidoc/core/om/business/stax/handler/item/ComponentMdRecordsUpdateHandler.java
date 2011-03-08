@@ -59,27 +59,27 @@ import java.util.regex.Pattern;
  */
 public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
-    private StaxParser parser = null;
+    private StaxParser parser;
 
-    private String componentPath = null;
+    private String componentPath;
 
-    private String name = null;
+    private String name;
 
-    private String componentId = null;
+    private String componentId;
 
-    private String escidocMdRecordNameSpace = null;
+    private String escidocMdRecordNameSpace;
 
     private final Map<String, String> escidocMdNamespacesMap =
         new HashMap<String, String>();
 
-    private boolean isInside = false;
+    private boolean isInside;
 
-    private boolean isRootMetadataElement = false;
+    private boolean isRootMetadataElement;
 
     private static final Pattern PATTERN_OBJID_IN_HREF =
         Pattern.compile(".*\\/([^\"\\/]*)");
 
-    private Map<String, Map<String, String>> componentMdRecords = null;
+    private Map<String, Map<String, String>> componentMdRecords;
 
     private final Map<String, Map<String, Map<String, String>>> metadataAttributes =
         new HashMap<String, Map<String, Map<String, String>>>();
@@ -117,7 +117,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                 if (indexOfObjid != -1) {
                     final String value =
                         element.getAttribute(indexOfObjid).getValue();
-                    if ((value != null) && (value.length() > 0)) {
+                    if (value != null && value.length() > 0) {
                         componentId = value;
                     }
                 }
@@ -126,7 +126,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                         Elements.ATTRIBUTE_XLINK_HREF);
                 if (indexOfHref != -1) {
                     final String value = element.getAttribute(indexOfHref).getValue();
-                    if ((value != null) && (value.length() > 0)) {
+                    if (value != null && value.length() > 0) {
 
                         final Matcher m1 = PATTERN_OBJID_IN_HREF.matcher(value);
                         if (m1.find()) {

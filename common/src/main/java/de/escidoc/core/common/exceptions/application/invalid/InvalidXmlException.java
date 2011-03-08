@@ -39,7 +39,7 @@ package de.escidoc.core.common.exceptions.application.invalid;
  * @author FRS
  * @common
  */
-public abstract class InvalidXmlException extends ValidationException {
+public class InvalidXmlException extends ValidationException {
 
     /**
      * The serial version uid.
@@ -55,7 +55,7 @@ public abstract class InvalidXmlException extends ValidationException {
      * 
      * @common
      */
-    public InvalidXmlException() {
+    protected InvalidXmlException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -66,7 +66,7 @@ public abstract class InvalidXmlException extends ValidationException {
      *            the detail message.
      * @common
      */
-    public InvalidXmlException(final String message) {
+    protected InvalidXmlException(final String message) {
         super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -76,7 +76,7 @@ public abstract class InvalidXmlException extends ValidationException {
      * @param error
      *            Throwable
      */
-    public InvalidXmlException(final Throwable error) {
+    protected InvalidXmlException(final Throwable error) {
         super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 
@@ -90,7 +90,7 @@ public abstract class InvalidXmlException extends ValidationException {
      *            Throwable
      * @common
      */
-    public InvalidXmlException(final String message, final Throwable error) {
+    protected InvalidXmlException(final String message, final Throwable error) {
         super(message, error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
     }
 }

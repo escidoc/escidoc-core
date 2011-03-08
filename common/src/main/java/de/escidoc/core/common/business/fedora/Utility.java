@@ -119,7 +119,7 @@ public class Utility {
 
     private StagingFileHandlerInterface stagingFileHandler;
 
-    private TripleStoreUtility tripleStoreUtility = null;
+    private TripleStoreUtility tripleStoreUtility;
 
     /**
      * The pattern used to extract the redirect base url and path from the
@@ -274,8 +274,8 @@ public class Utility {
         final String updateLatestVersionDate, final String label)
         throws OptimisticLockingException, WebserverSystemException {
 
-        if ((fedoraLatestVersionDate != null)
-            && (updateLatestVersionDate != null)) {
+        if (fedoraLatestVersionDate != null
+            && updateLatestVersionDate != null) {
 
             final DateTime tFedora = new DateTime(fedoraLatestVersionDate);
             final DateTime tUpdate = new DateTime(updateLatestVersionDate);
@@ -295,8 +295,8 @@ public class Utility {
      */
     public String[] getCurrentUser() throws WebserverSystemException {
 
-        if ((UserContext.getId() == null)
-            || (UserContext.getRealName() == null)) {
+        if (UserContext.getId() == null
+            || UserContext.getRealName() == null) {
             throw new WebserverSystemException(
                 "System fault: Current user not set!");
         }
@@ -1272,7 +1272,7 @@ public class Utility {
                     + resource.getClass().getName() + "'.");
         }
 
-        return (baseData);
+        return baseData;
     }
 
     private void prependVersion(
@@ -1401,8 +1401,8 @@ public class Utility {
         final StaxParser sp = new StaxParser();
         byte[] relsExtNewBytes = null;
         boolean updatedRelsExtProperties = false;
-        if ((addToRelsExt != null) && (!addToRelsExt.isEmpty())) {
-            if ((updateProperties != null) && (!updateProperties.isEmpty())) {
+        if (addToRelsExt != null && !addToRelsExt.isEmpty()) {
+            if (updateProperties != null && !updateProperties.isEmpty()) {
                 updatedRelsExtProperties = true;
                 final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
                     new ItemRelsExtUpdateHandler(updateProperties, sp);
@@ -1441,12 +1441,12 @@ public class Utility {
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
 
-        if ((deleteFromRelsExt != null) && (!deleteFromRelsExt.isEmpty())) {
+        if (deleteFromRelsExt != null && !deleteFromRelsExt.isEmpty()) {
 
             if (relsExtNewBytes != null) {
                 relsExtIs = new ByteArrayInputStream(relsExtNewBytes);
             }
-            if ((updateProperties != null) && (!updateProperties.isEmpty())
+            if (updateProperties != null && !updateProperties.isEmpty()
                 && !updatedRelsExtProperties) {
                 updatedRelsExtProperties = true;
                 final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
@@ -1484,7 +1484,7 @@ public class Utility {
                 (ByteArrayOutputStream) streams.get("RDF");
             relsExtNewBytes = relsExtNewStream.toByteArray();
         }
-        if ((updateProperties != null) && (!updateProperties.isEmpty())
+        if (updateProperties != null && !updateProperties.isEmpty()
             && !updatedRelsExtProperties) {
             final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
                 new ItemRelsExtUpdateHandler(updateProperties, sp);

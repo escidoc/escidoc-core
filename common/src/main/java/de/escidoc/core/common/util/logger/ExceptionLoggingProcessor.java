@@ -4,9 +4,6 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.log4j.Logger;
 
-/**
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
- */
 public class ExceptionLoggingProcessor implements Processor {
 
     private String logCategory = ExceptionLoggingProcessor.class.getName();

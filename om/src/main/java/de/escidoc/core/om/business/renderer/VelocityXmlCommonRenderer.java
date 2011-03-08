@@ -80,7 +80,7 @@ public class VelocityXmlCommonRenderer {
                     + de.escidoc.core.common.business.fedora.Constants.RELATIONS_URL_PART);
 
         List<Map<String, String>> entries = null;
-        if ((relations != null) && (!relations.isEmpty())) {
+        if (relations != null && !relations.isEmpty()) {
             final Iterator<Map<String, String>> relIter = relations.iterator();
             entries = new ArrayList<Map<String, String>>(relations.size());
             while (relIter.hasNext()) {
@@ -106,7 +106,7 @@ public class VelocityXmlCommonRenderer {
                 entries.add(entry);
             }
         }
-        if ((entries != null) && (!entries.isEmpty())) {
+        if (entries != null && !entries.isEmpty()) {
             values.put("contentRelations", entries);
         }
     }

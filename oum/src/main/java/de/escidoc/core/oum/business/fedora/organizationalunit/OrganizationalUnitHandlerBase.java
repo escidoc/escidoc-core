@@ -82,13 +82,13 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
 
     private Stack<List<String>> pathes;
 
-    private Utility utility = null;
+    private Utility utility;
 
-    private OrganizationalUnit organizationalUnit = null;
+    private OrganizationalUnit organizationalUnit;
 
-    private OrganizationalUnitRendererInterface renderer = null;
+    private OrganizationalUnitRendererInterface renderer;
 
-    private OrganizationalUnitFoXmlRendererInterface foxmlRenderer = null;
+    private OrganizationalUnitFoXmlRendererInterface foxmlRenderer;
 
     public static final String DATA_ENCLOSING_TAG_START = "<data-contents>";
 
@@ -160,7 +160,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
         final String id, final String name, final List<String> parents)
         throws MissingElementValueException, SystemException {
 
-        if (("".equals(name)) || (name == null)) {
+        if ("".equals(name) || name == null) {
             throw new MissingElementValueException(
                 "Name of organizational unit must be set!");
         }

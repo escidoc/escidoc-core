@@ -65,11 +65,11 @@ public class HttpRequester {
 
     private static final boolean SSL = false;
 
-    private String domain = null;
+    private String domain;
 
-    private String securityHandle = null;
+    private String securityHandle;
 
-    private String cookie = null;
+    private String cookie;
 
     /**
      * Default-Constructor.
@@ -343,7 +343,7 @@ public class HttpRequester {
                 IOUtils.closeStream(br);
             }
         } finally {
-            IOUtils.closeStream(out);;
+            IOUtils.closeStream(out);
             IOUtils.closeStream(is);
             try {
                 connection.disconnect();

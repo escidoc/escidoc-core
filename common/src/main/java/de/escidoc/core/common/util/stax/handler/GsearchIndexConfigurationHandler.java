@@ -57,13 +57,13 @@ public class GsearchIndexConfigurationHandler extends DefaultHandler {
 
     private static final String VALUE_ELEMENT_NAME = "value";
     
-    private String indexName = null;
+    private String indexName;
     
     private Map<String, String> properties = new HashMap<String, String>();
     
-    private String key = null;
+    private String key;
 
-    private String value = null;
+    private String value;
 
     /**
      * See Interface for functional description.

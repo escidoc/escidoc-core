@@ -69,9 +69,9 @@ public class ItemHandlerPid extends ItemHandlerContent {
     private static final AppLogger LOGGER = new AppLogger(
         ItemHandlerPid.class.getName());
 
-    private PIDSystemFactory pidGenFactory = null;
+    private PIDSystemFactory pidGenFactory;
 
-    private PIDSystem pidGen = null;
+    private PIDSystem pidGen;
 
     /**
      * Assign persistent identifier to Content of Item.
@@ -149,7 +149,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
 
         getItem().persist();
 
-        return (prepareResponse(pid));
+        return prepareResponse(pid);
     }
 
     /**
@@ -215,7 +215,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
             fireItemModified(getItem().getId());
         }
 
-        return (prepareResponse(pid));
+        return prepareResponse(pid);
     }
 
     /**
@@ -293,7 +293,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
             fireItemModified(getItem().getId());
         }
 
-        return (prepareResponse(pid));
+        return prepareResponse(pid);
     }
 
     /**
@@ -325,7 +325,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
             pidGen = pidGenFactory.getPIDGenerator();
         }
 
-        return (pidGen.assignPID(id, param));
+        return pidGen.assignPID(id, param);
     }
 
     /**
@@ -438,7 +438,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         WebserverSystemException {
         if (Boolean.valueOf(System
                 .getProperty("cmm.Item.objectPid.releaseWithoutPid"))) {
-            return (true);
+            return true;
         } // objectPid is needed
         // FIXME an exception is content model TOC, since we have a real
         // content model object here is a workaround
@@ -458,9 +458,9 @@ public class ItemHandlerPid extends ItemHandlerContent {
             return true;
         }
         if (getItem().hasObjectPid()) {
-            return (true);
+            return true;
         }
-        return (false);
+        return false;
     }
 
     /**
@@ -479,7 +479,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         IntegritySystemException, TripleStoreSystemException {
         if (Boolean.valueOf(System
                 .getProperty("cmm.Item.versionPid.releaseWithoutPid"))) {
-            return (true);
+            return true;
         }
         // FIXME an exception is content model TOC, since we have a real
         // content model object here is a workaround
@@ -500,7 +500,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         }
 
         // versionPid is needed
-        return (getItem().hasVersionPid());
+        return getItem().hasVersionPid();
     }
 
     /**
@@ -547,7 +547,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         }
 
         final String pid = getItem().getComponent(componentId).getObjectPid();
-        if ((pid != null) && (pid.length() > 0)) {
+        if (pid != null && pid.length() > 0) {
             throw new InvalidStatusException("This object version (" + getItem().getVersionId()
                     + ") is already assigned with PID '" + pid
                     + "' and can not be reassigned.");
@@ -591,7 +591,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         }
 
         final String pid = getItem().getVersionPid();
-        if ((pid != null) && (pid.length() > 0)) {
+        if (pid != null && pid.length() > 0) {
             throw new InvalidStatusException("This object version (" + getItem().getVersionId()
                     + ") is already assigned with PID '" + pid
                     + "' and can not be reassigned.");

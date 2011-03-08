@@ -42,9 +42,9 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
 
     private String methodName;
 
-    private List<String> memberIds = null;
+    private List<String> memberIds;
 
-    private List<String> memberIdsToRemove = null;
+    private List<String> memberIdsToRemove;
 
     private final String parentId;
 

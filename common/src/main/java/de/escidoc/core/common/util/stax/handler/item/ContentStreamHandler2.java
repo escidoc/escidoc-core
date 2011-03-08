@@ -66,15 +66,15 @@ public class ContentStreamHandler2 extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private boolean parsingContent = false;
+    private boolean parsingContent;
 
     private ContentStreamCreate contentStream = new ContentStreamCreate();
 
-    private BinaryContent content = null;
+    private BinaryContent content;
 
-    private MultipleExtractor contentHandler = null;
+    private MultipleExtractor contentHandler;
 
-    private boolean hasContent = false;
+    private boolean hasContent;
 
     /**
      * ContentStreamHandler.
@@ -232,7 +232,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
         throws InvalidContentException, MissingElementValueException,
         WebserverSystemException {
 
-        if (this.parsingContent && (this.contentHandler != null)) {
+        if (this.parsingContent && this.contentHandler != null) {
             this.contentHandler.characters(s, element);
         }
         return s;

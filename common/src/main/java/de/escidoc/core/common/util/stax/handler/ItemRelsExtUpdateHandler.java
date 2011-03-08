@@ -142,8 +142,8 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
                     }
                 }
 
-                if ((replacementElement.getPosition() == 0)
-                    || (count == replacementElement.getPosition())) {
+                if (replacementElement.getPosition() == 0
+                    || count == replacementElement.getPosition()) {
 
                     if (replacementElement.getAttributeCount() > 0) {
                         final Attribute replacementAttribute =
@@ -167,9 +167,9 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
                             }
 
                         }
-                        if ((attributeMatch)
-                            && (compareNS(curElementNamespace,
-                                replacementElement.getNamespace()))) {
+                        if (attributeMatch
+                            && compareNS(curElementNamespace,
+                                replacementElement.getNamespace())) {
 
                             attributeToReplace
                                 .setValue(replacementAttributeValue);
@@ -218,8 +218,8 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
                                 + replacementElement.getLocalName());
                     }
 
-                    if ((replacementElement.getPosition() == 0)
-                        || (count == replacementElement.getPosition())) {
+                    if (replacementElement.getPosition() == 0
+                        || count == replacementElement.getPosition()) {
                         // element is equal to current element
                         newData = replacementElement.getElementText();
                         props.remove(theKey);
@@ -257,13 +257,13 @@ public class ItemRelsExtUpdateHandler extends DefaultHandler {
         String replacementElementNamespace = ns2;
 
         // namespaces must not be null for testing
-        if ((curElementNamespace == null)
-            && (replacementElementNamespace == null)) {
+        if (curElementNamespace == null
+            && replacementElementNamespace == null) {
             return true;
         }
 
-        if ((curElementNamespace == null)
-            || (replacementElementNamespace == null)) {
+        if (curElementNamespace == null
+            || replacementElementNamespace == null) {
             return false;
         }
 

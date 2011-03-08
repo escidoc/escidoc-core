@@ -71,19 +71,10 @@ public class VelocityXmlAdminRenderer
     public String renderIndexConfiguration(final Map<String, Map<String,
             Map<String, Object>>> indexConfiguration)
         throws WebserverSystemException {
-
-        final long start = System.nanoTime();
         final Map<String, Object> values = new HashMap<String, Object>();
-
         addCommonValues(values);
         addIndexConfigurationValues(indexConfiguration, values);
-
-        final String ret = getAdminXmlProvider().getIndexConfigurationXml(values);
-        if (LOG.isDebugEnabled()) {
-            final long runtime = System.nanoTime() - start;
-            LOG.debug("Built XML in " + Long.valueOf(runtime) + "ns");
-        }
-        return ret;
+        return getAdminXmlProvider().getIndexConfigurationXml(values);
     }
 
     /**

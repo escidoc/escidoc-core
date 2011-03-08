@@ -58,7 +58,7 @@ public class StartElement extends AbstractElement {
      * position of an element.
      */
     // 0 = all, 1 first occurrence, ..
-    private int position = 0;
+    private int position;
 
     public StartElement() {
 

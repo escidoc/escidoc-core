@@ -44,9 +44,9 @@ import java.util.Set;
  * @author SCHE
  */
 public class PoliciesCacheProxy {
-    private UserAccountHandlerInterface userAccountHandler = null;
+    private UserAccountHandlerInterface userAccountHandler;
 
-    private UserGroupHandlerInterface userGroupHandler = null;
+    private UserGroupHandlerInterface userGroupHandler;
 
     /**
      * Gets the the group grants for the provided group ID.<br>

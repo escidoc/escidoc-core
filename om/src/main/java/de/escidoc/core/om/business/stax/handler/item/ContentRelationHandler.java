@@ -80,20 +80,20 @@ public class ContentRelationHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private boolean parsingProperties = false;
+    private boolean parsingProperties;
 
-    private boolean parsingMetaData = false;
+    private boolean parsingMetaData;
 
-    private boolean parsingType = false;
+    private boolean parsingType;
 
-    private ContentRelationPropertiesHandler propertiesHandler = null;
+    private ContentRelationPropertiesHandler propertiesHandler;
 
-    private MetadataHandler2 metadataHandler = null;
+    private MetadataHandler2 metadataHandler;
 
-    private ContentRelationCreate contentRelation = null;
+    private ContentRelationCreate contentRelation;
 
     // helper to collect a characters for type
-    private String tmpType = null;
+    private String tmpType;
 
     /**
      * ContentRelationHandler.

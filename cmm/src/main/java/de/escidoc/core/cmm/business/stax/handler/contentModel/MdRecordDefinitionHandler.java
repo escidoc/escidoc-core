@@ -63,7 +63,7 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
     private String metadataXPath =
         "/content-model/md-record-definitions/md-record-definition";
 
-    private List<MdRecordDefinitionCreate> mdRecordDefinitions = null;
+    private List<MdRecordDefinitionCreate> mdRecordDefinitions;
 
     private MdRecordDefinitionCreate curMdRecordDefinition;
 

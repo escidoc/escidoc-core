@@ -701,9 +701,9 @@ public class UserAccountHandler
                                     permittedRoleGrants.add(roleGrant);
                                 }
                             }
-                            else if ((roleGrant.getGroupId() != null)
-                                && (tmpGroupsPermitted.contains(roleGrant
-                                    .getGroupId()))) {
+                            else if (roleGrant.getGroupId() != null
+                                && tmpGroupsPermitted.contains(roleGrant
+                                    .getGroupId())) {
                                 permittedRoleGrants.add(roleGrant);
                             }
                         }
@@ -721,7 +721,7 @@ public class UserAccountHandler
 
             final List<RoleGrant> offsetRoleGrants;
             final int numberPermitted = permittedRoleGrants.size();
-            if ((offset >= 0) && (offset < numberPermitted)) {
+            if (offset >= 0 && offset < numberPermitted) {
                 offsetRoleGrants = new ArrayList<RoleGrant>(limit);
                 for (int i = offset; i < numberPermitted && i < needed; i++) {
                     offsetRoleGrants.add(permittedRoleGrants.get(i));
@@ -1229,8 +1229,7 @@ public class UserAccountHandler
         }
         else {
             // get ids of grants to revoke
-            grantIds =
-                (HashSet<String>) filters.get(Constants.DC_IDENTIFIER_URI);
+            grantIds = (Collection<String>) filters.get(Constants.DC_IDENTIFIER_URI);
         }
 
         if (grantIds == null || grantIds.isEmpty()) {
@@ -1484,8 +1483,8 @@ public class UserAccountHandler
                             throw new InvalidSearchQueryException(
                                 "Wildcards not allowed in group-filter");
                         }
-                        if ((groupFilterMatcher.group(3) != null && groupFilterMatcher
-                            .group(3).matches(">|<|<=|>=|<>"))
+                        if (groupFilterMatcher.group(3) != null && groupFilterMatcher
+                            .group(3).matches(">|<|<=|>=|<>")
                             || groupFilterMatcher.group(4) != null
                             || groupFilterMatcher.group(5) != null) {
                             throw new InvalidSearchQueryException(
@@ -2858,14 +2857,14 @@ public class UserAccountHandler
                         public String getRoleId() {
                             final String[] parameter = parameters.get("role");
 
-                            return (parameter != null) && (parameter.length > 0) ? parameter[0] : null;
+                            return parameter != null && parameter.length > 0 ? parameter[0] : null;
                         }
 
                         @Override
                         public String getUserId() {
                             final String[] parameter = parameters.get("user");
 
-                            return (parameter != null) && (parameter.length > 0) ? parameter[0] : null;
+                            return parameter != null && parameter.length > 0 ? parameter[0] : null;
                         }
                     }) + "</filter>");
     }

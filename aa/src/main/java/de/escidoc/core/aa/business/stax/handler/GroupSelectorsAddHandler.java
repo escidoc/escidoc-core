@@ -41,11 +41,11 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
 
     private static final String SELECTOR_PATH = "/param/selector";
 
-    private boolean inSelector = false;
+    private boolean inSelector;
 
     private final StaxParser parser;
 
-    private String[] selector = null;
+    private String[] selector;
 
     private final List<String[]> groupSelectors = new ArrayList<String[]>();
 
@@ -98,7 +98,7 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element) throws XmlCorruptedException {
 
         final String theName = element.getLocalName();
-        if ((inSelector) && ("selector".equals(theName)) && ((s != null))) {
+        if (inSelector && "selector".equals(theName) && s != null) {
             if (s.length() == 0) {
                 throw new XmlCorruptedException("the value of element 'selector' is missing");
             }

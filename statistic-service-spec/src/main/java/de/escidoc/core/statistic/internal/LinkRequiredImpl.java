@@ -11,8 +11,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  * Default implementation of {@link LinkRequired}.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "linkRequired", namespace="http://www.escidoc.de/schemas/commontypes/0.3")

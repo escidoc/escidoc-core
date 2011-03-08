@@ -47,20 +47,6 @@ import java.util.Map;
 public interface ContainerInterface extends VersionableResource {
 
     /**
-     * Gets the RELS-EXT datastream of the fedora object.
-     * 
-     * @return The Fedora RELS-EXT datastream.
-     * @throws StreamNotFoundException
-     *             If there is no RELS-EXT datastream of a fedora object with
-     *             <code>id</code>.
-     * @throws FedoraSystemException
-     *             Thrown if Fedora reports an error
-     */
-    @Override
-    Datastream getRelsExt() throws StreamNotFoundException,
-        FedoraSystemException;
-
-    /**
      * Sets the RELS-EXT datastream and saves it in fedora. If the datastream is
      * already set and unchanged, nothing will be done.
      * 

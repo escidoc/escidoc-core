@@ -118,8 +118,7 @@ public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
     public EndElement endElement(final EndElement element) throws Exception {
 
         super.endElement(element);
-        if ((isNotReady() && !isInMetadata())
-            && (XmlUtility.NAME_COMPONENTS.equals(element.getLocalName()))) {
+        if (isNotReady() && !isInMetadata() && XmlUtility.NAME_COMPONENTS.equals(element.getLocalName())) {
             cacheAttribute(AttributeIds.URN_ITEM_COMPONENT_ATTR,
                 componentIds);
             setReady();

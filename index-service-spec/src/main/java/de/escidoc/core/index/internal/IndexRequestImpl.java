@@ -9,8 +9,6 @@ import java.util.UUID;
 
 /**
  * Default implementation of {@link IndexRequest}.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 @XmlRootElement(name="IndexRequest", namespace = "http://www.escidoc.de/schemas/index-service/1.0/")
 @XmlType(name="IndexRequest", namespace = "http://www.escidoc.de/schemas/index-service/1.0/")

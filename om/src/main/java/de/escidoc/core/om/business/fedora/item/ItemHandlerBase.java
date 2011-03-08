@@ -91,13 +91,13 @@ public class ItemHandlerBase extends HandlerBase {
     private static final AppLogger LOGGER = new AppLogger(
         ItemHandlerBase.class.getName());
 
-    private Item item = null;
+    private Item item;
 
-    private Item originItem = null;
+    private Item originItem;
 
-    private String originId = null;
+    private String originId;
 
-    private ItemFoXmlRendererInterface foxmlRenderer = null;
+    private ItemFoXmlRendererInterface foxmlRenderer;
 
     /**
      * Upload the content (a base64 encoded byte stream) to the staging area.

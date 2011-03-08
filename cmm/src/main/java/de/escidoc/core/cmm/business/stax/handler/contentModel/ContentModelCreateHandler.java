@@ -79,23 +79,23 @@ public class ContentModelCreateHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private boolean parsingProperties = false;
+    private boolean parsingProperties;
 
-    private boolean parsingMetaData = false;
+    private boolean parsingMetaData;
 
-    private boolean parsingResourceDefinitions = false;
+    private boolean parsingResourceDefinitions;
 
-    private boolean parsingContentStreams = false;
+    private boolean parsingContentStreams;
 
-    private ContentModelPropertiesHandler propertiesHandler = null;
+    private ContentModelPropertiesHandler propertiesHandler;
 
-    private ContentStreamsHandler contentStreamsHandler = null;
+    private ContentStreamsHandler contentStreamsHandler;
 
-    private ResourceDefinitionHandler resourceDefinitionHandler = null;
+    private ResourceDefinitionHandler resourceDefinitionHandler;
 
-    private MdRecordDefinitionHandler metadataHandler = null;
+    private MdRecordDefinitionHandler metadataHandler;
 
-    private ContentModelCreate contentModel = null;
+    private ContentModelCreate contentModel;
 
     /**
      * ItemHandler.

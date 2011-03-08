@@ -2,8 +2,6 @@ package de.escidoc.core.index;
 
 /**
  * Exception thrown by {@link IndexService} and its components.
- *
- * @author <a href="mailto:mail@eduard-hildebrandt.de">Eduard Hildebrandt</a>
  */
 public class IndexServiceException extends Exception {
 

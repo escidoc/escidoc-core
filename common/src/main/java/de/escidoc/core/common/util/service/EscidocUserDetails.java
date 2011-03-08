@@ -47,7 +47,7 @@ public class EscidocUserDetails implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     /** The id of the user. */
-    private String id = null;
+    private String id;
 
     /** The real name of the user, as stored in the UserAccount. */
     private String realName;

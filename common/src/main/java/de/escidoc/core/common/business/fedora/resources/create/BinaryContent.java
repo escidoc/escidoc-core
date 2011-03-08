@@ -52,11 +52,11 @@ public class BinaryContent {
     /**
      * External Storage URL or External Storage Managed.
      */
-    private StorageType storageType = null;
+    private StorageType storageType;
 
-    private String content = null;
+    private String content;
 
-    private URL dataLocation = null;
+    private URL dataLocation;
 
     /**
      * Set the type of storage.

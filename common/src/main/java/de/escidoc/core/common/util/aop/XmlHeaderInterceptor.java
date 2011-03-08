@@ -126,7 +126,7 @@ public class XmlHeaderInterceptor implements Ordered {
      */
     private Object post(final Object result) throws WebserverSystemException {
 
-        final CharSequence res = (String) result;
+        final CharSequence res = (CharSequence) result;
         if (!XML_DOCUMENT_START_PATTERN.matcher(res).find()) {
 
             final StringBuilder ret = new StringBuilder(XmlUtility.DOCUMENT_START);

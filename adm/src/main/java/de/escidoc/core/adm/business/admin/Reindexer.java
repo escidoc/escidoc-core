@@ -108,15 +108,14 @@ public class Reindexer {
     private static final AppLogger LOG = new AppLogger(
         Reindexer.class.getName());
 
-    private FedoraUtility fedoraUtility = null;
+    private FedoraUtility fedoraUtility;
 
-    private IndexService indexService = null;
+    private IndexService indexService;
 
-    private IndexingHandler indexingHandler = null;
+    private IndexingHandler indexingHandler;
 
     // Indexer configuration
-    private Map<String, Map<String, Map<String, Object>>> objectTypeParameters =
-        null;
+    private Map<String, Map<String, Map<String, Object>>> objectTypeParameters;
 
     /**
      * Check if the given index contains objects with the given resource type.

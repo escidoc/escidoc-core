@@ -167,7 +167,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             for (final ByteArrayOutputStream newComponent : newComponents) {
                 try {
                     final String componentId =
-                            createComponent((newComponent)
+                            createComponent(newComponent
                                     .toString(XmlUtility.CHARACTER_ENCODING));
                     getItem().addComponent(componentId);
                 } catch (UnsupportedEncodingException e) {
@@ -221,13 +221,13 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             throw new EncodingSystemException(e.getMessage(), e);
         }
         String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
-        if ((mimeType == null) || mimeType.length() == 0) {
+        if (mimeType == null || mimeType.length() == 0) {
             mimeType = FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
         }
         String fileName =
             properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
                 + Elements.ELEMENT_DC_TITLE);
-        if ((fileName == null) || fileName.length() == 0) {
+        if (fileName == null || fileName.length() == 0) {
             fileName = "content of component " + c.getId();
         }
         try {

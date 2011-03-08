@@ -213,13 +213,13 @@ public class XMLBase {
     public String appendToXpath(final String xPath, final String path) {
 
         String result = xPath;
-        if ((xPath != null) && (path != null)) {
-            if ((!xPath.endsWith(XPATH_DELIMITER))
-                && (!path.startsWith(XPATH_DELIMITER))) {
+        if (xPath != null && path != null) {
+            if (!xPath.endsWith(XPATH_DELIMITER)
+                && !path.startsWith(XPATH_DELIMITER)) {
                 result += XPATH_DELIMITER + path;
             }
-            else result += (xPath.endsWith(XPATH_DELIMITER))
-                    && (path.startsWith(XPATH_DELIMITER)) ? path.substring(1) : path;
+            else result += xPath.endsWith(XPATH_DELIMITER)
+                    && path.startsWith(XPATH_DELIMITER) ? path.substring(1) : path;
         }
         return result;
     }

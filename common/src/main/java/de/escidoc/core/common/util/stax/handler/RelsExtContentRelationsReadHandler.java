@@ -48,15 +48,15 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
     private final List<Map<String, String>> relations =
         new ArrayList<Map<String, String>>();
 
-    private boolean inRdf = false;
+    private boolean inRdf;
 
-    private boolean inRelation = false;
+    private boolean inRelation;
 
     private static final String PATH = "/RDF/Description";
 
-    private String targetId = null;
+    private String targetId;
 
-    private String predicate = null;
+    private String predicate;
 
     private static final AppLogger LOGGER = new AppLogger(MultipleExtractor.class.getName());
 
@@ -100,9 +100,9 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         if (curPath.equals(PATH)) {
             inRdf = true;
         }
-        if ((inRdf)
-            && (element.getPrefix().equals(
-                Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT))) {
+        if (inRdf
+            && element.getPrefix().equals(
+                Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
             inRelation = true;
 
             final int indexOfResource =
