@@ -50,8 +50,7 @@ import java.io.IOException;
 
 /**
  * Staging File Handler implementation.
- * 
- * @spring.bean id="business.StagingFileHandler"
+ *
  * @author TTE
  * 
  */
@@ -89,7 +88,8 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
             }
             stagingFile = StagingUtil.generateStagingFile(true, dao);
             token = stagingFile.getToken();
-            stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil.UPLOAD_STAGING_AREA, token));
+            stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil
+                .getUploadStagingArea(), token));
             stagingFile.read(binaryContent.getContent());
         } catch (IOException e) {
             throw new MissingMethodParameterException("Binary content must be provided.", e);
@@ -184,11 +184,10 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
     /**
      * Setter for the dao.
-     * 
-     * @spring.property ref="persistence.StagingFileDao"
+     *
      * @param dao
      *            The data access object.
-     * 
+     *
      * @um
      */
     public void setDao(final StagingFileDao dao) {
