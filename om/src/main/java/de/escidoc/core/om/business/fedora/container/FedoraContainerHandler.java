@@ -3107,12 +3107,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 }
 
             }
-            final Set<String> keySet = predicateValuesVectorAssignment.keySet();
-            for (final String predicateValue : keySet) {
-                final List<StartElementWithChildElements> elements =
-                    predicateValuesVectorAssignment.get(predicateValue);
-                toRemove.put("/RDF/Description/" + predicateValue, elements);
+
+           final Set<Map.Entry<String,List<StartElementWithChildElements>>> entrySet   = predicateValuesVectorAssignment.entrySet();
+           for (Iterator it = entrySet.iterator();it.hasNext();) {
+               Map.Entry entry = (Map.Entry) it.next();
+               String predicateValue = (String)entry.getKey();
+               final List<StartElementWithChildElements> elements = (List<StartElementWithChildElements>)entry.getValue();
+               toRemove.put("/RDF/Description/" + predicateValue, elements);
             }
+
             final byte[] relsExtNewBytes = Utility.updateRelsExt(null, toRemove, null, getContainer(), null);
             try {
                 getContainer().setRelsExt(

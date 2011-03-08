@@ -1272,17 +1272,20 @@ public class UserAccountHandler
         final UserAccount authenticateUser =
             UserAccountHandler.getAuthenticatedUser(dao);
         try {
-            for (final String grantId : grantIds) {
+
+             Set<Entry<String, RoleGrant>> entries = grantsHash.entrySet();
+             for (Iterator it = entries.iterator(); it.hasNext();) {
+                Map.Entry entry = (Map.Entry) it.next();
                 // set revoke-date, -user and -remark
-                final RoleGrant roleGrant = grantsHash.get(grantId);
+                final RoleGrant roleGrant = (RoleGrant) entry.getValue();
                 roleGrant.setUserAccountByRevokerId(authenticateUser);
                 roleGrant.setRevocationDate(new Date());
                 roleGrant.setRevocationRemark(tph.getRevokationRemark());
                 // update grant
                 dao.update(roleGrant);
             }
-        }
-        catch (Exception e) {
+
+        } catch (Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
 
