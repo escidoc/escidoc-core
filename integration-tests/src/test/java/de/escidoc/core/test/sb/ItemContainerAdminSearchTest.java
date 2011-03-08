@@ -28,9 +28,15 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.security.client.PWCallback;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.After;
@@ -42,12 +48,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
+import de.escidoc.core.test.sb.stax.handler.AllStaxHandler;
+import de.escidoc.core.test.security.client.PWCallback;
 
 /**
  * Test the implementation of the admin search for items and containers.
@@ -76,6 +82,8 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
     private static String[] adminTestContainerIds = null;
 
     private static String[][] componentIds = null;
+    
+    private static List<String> fieldSearches = null;
 
     private static int methodCounter = 0;
 
@@ -288,6 +296,12 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                                             + ((i * 42) + (j * 6) + k) + "_"
                                             + getTransport(false) + ".xml",
                                     status);
+                    if (i == 0 && j == 0 && k == 0 && 
+                            getTransport() == 
+                                de.escidoc.core.test.common.client
+                                .servlet.Constants.TRANSPORT_REST) {
+                        fillSearchFields(itemHash.get("xml"));
+                    }
                     itemIds[(i * 42) + (j * 6) + k] = itemHash.get("itemId");
                     for (int l = 0;; l++) {
                         if (itemHash.get("componentId" + (l + 1)) == null) {
@@ -460,6 +474,37 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                                             getIndexFieldCount(response));
         assertEquals(Constants.ITEM_CONTAINER_ADMIN_SORT_FIELD_COUNT,
                                             getSortFieldCount(response));
+    }
+
+    /**
+     * Test searching for all fields.
+     * 
+     * @test.name All Fields Search
+     * @test.id SB_AllFieldsSearch
+     * @test.input Systemadministrator user searching all fields
+     * @test.expected All fields found
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test(timeout=240000)
+    public void testSearchForAllFields() throws Exception {
+        if (getTransport() == 
+                de.escidoc.core.test.common.client
+                    .servlet.Constants.TRANSPORT_REST) {
+            PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
+            HashMap<String, String> parameters = new HashMap<String, String>();
+            for (String search : fieldSearches) {
+                search += " and \"/id\"=\"" + itemIds[0] + "\"";
+                parameters.put("query", search);
+                String response = search(parameters, INDEX_NAME);
+                assertXmlValidSearchResult(response);
+                assertEquals("Number of Hits not as expected for query " 
+                                + search, 
+                                "1", getNumberOfHits(response));
+            }
+        }
     }
 
     /**
@@ -4717,7 +4762,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                         xml = item.retrieve(objectId);
                         lastModDate = getLastModificationDate(xml);
                         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
-                        item.revise(objectId,
+                        xml = item.revise(objectId,
                                 "<param last-modification-date=\"" + lastModDate
                                         + "\" />");
                     } else {
@@ -4739,7 +4784,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                         // release item
                         xml = item.retrieve(objectId);
                         lastModDate = getLastModificationDate(xml);
-                        item.release(objectId, "<param last-modification-date=\""
+                        xml = item.release(objectId, "<param last-modification-date=\""
                                 + lastModDate + "\" />");
                     }
                     if (!status.equals(STATUS_RELEASED)
@@ -4747,12 +4792,12 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                             && !status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
                         xml = xml.replaceAll("Meier", "Meier1");
-                        item.update(objectId, xml);
+                        xml = item.update(objectId, xml);
                     } else if (!status.equals(STATUS_RELEASED)
                         && !status.equals(STATUS_IN_REVISION)) {
                         xml = item.retrieve(objectId);
                         lastModDate = getLastModificationDate(xml);
-                        item.withdraw(objectId,
+                        xml = item.withdraw(objectId,
                                 "<param last-modification-date=\""
                                         + lastModDate
                                         + "\"><withdraw-comment>"
@@ -4761,6 +4806,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                     }
                 }
             }
+            returnHash.put("xml", xml);
             if (containerIds != null) {
                 for (int i = 0; i < containerIds.length; i++) {
                     xml = container.retrieve(containerIds[i]);
@@ -5022,6 +5068,25 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
             xpaths.add("properties/version/number=3");
         }
         return xpaths;
+    }
+    
+    /**
+     * fill all elements and values in hashMap for later search.
+     * 
+     * @param xml item-xml
+     */
+    private void fillSearchFields(String xml){
+        StaxParser sp = new StaxParser();
+        AllStaxHandler handler = new AllStaxHandler(sp);
+        sp.addHandler(handler);
+        try {
+            sp.parse(new ByteArrayInputStream(
+                xml.getBytes(XmlUtility.CHARACTER_ENCODING)));
+            fieldSearches = handler.getValues();
+        }
+        catch (Exception e) {
+            
+        }
     }
 
 }
