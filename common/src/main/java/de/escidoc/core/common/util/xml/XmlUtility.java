@@ -3094,9 +3094,11 @@ public final class XmlUtility {
      */
     public static String getHref(final String objectType, final String objectId) {
 
-        final String type;
-        type = PATTERN_RESOURCE_OBJECT_TYPE.matcher(objectType).find() ? objectType : Constants.RESOURCES_NS_URI
+        String type = null;
+        if(objectType != null) {
+            type = PATTERN_RESOURCE_OBJECT_TYPE.matcher(objectType).find() ? objectType : Constants.RESOURCES_NS_URI
                 + StringUtility.convertToUpperCaseLetterFormat(objectType);
+        }
 
         String objectHref = null;
         if (Constants.CONTAINER_OBJECT_TYPE.equals(type)) {
