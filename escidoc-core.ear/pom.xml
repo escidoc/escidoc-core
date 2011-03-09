@@ -426,6 +426,10 @@
 					<groupId>org.fcrepo</groupId>
 					<artifactId>saxon-dom</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>owlapi</groupId>
+					<artifactId>owlapi</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
