@@ -31,12 +31,10 @@ package de.escidoc.core.aa.business.xacml;
 import com.sun.xacml.Indenter;
 import com.sun.xacml.Target;
 import com.sun.xacml.TargetMatch;
-import com.sun.xacml.UnknownIdentifierException;
 import com.sun.xacml.attr.AttributeDesignator;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionFactory;
-import com.sun.xacml.cond.FunctionTypeException;
 import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
 import de.escidoc.core.common.util.IOUtils;
@@ -55,7 +53,7 @@ import java.util.List;
  * In the escidoc framework, the action part of the target is a restricted:
  * <ul>
  * <li>the action match id equals to
- * urn:oasis:names:tc:xacml:1.0:FUNCTION:string-is-in</li>
+ * urn:oasis:names:tc:xacml:1.0:function:string-is-in</li>
  * <li>the action DESIGNATOR type equals to
  * http://www.w3.org/2001/XMLSchema#string, and</li>
  * <li>the action DESIGNATOR id equals to
@@ -64,7 +62,7 @@ import java.util.List;
  * 
  * @author TTE
  * 
- * @aa
+ *
  */
 public class XacmlTarget extends Target {
 
@@ -89,18 +87,7 @@ public class XacmlTarget extends Target {
         }
     }
 
-    private static Function FUNCTION;
-
-    static {
-        final FunctionFactory factory = FunctionFactory.getTargetInstance();
-        try {
-            FUNCTION = factory.createFunction(XacmlFunctionContains.NAME);
-        } catch(UnknownIdentifierException e) {
-            LOG.debug("Error initialising FUNCTION.", e);
-        } catch(FunctionTypeException e) {
-            LOG.debug("Error initialising FUNCTION.", e);
-        }
-    }
+    private static Function function;
 
     /**
      * @param subjects
@@ -110,7 +97,7 @@ public class XacmlTarget extends Target {
      * @param actions
      *            The <code>Action</code>data objects of the actions of the
      *            target.
-     * @aa
+     *
      */
     public XacmlTarget(final List subjects, final List resources,
         final Collection<Action> actions) {
@@ -126,7 +113,7 @@ public class XacmlTarget extends Target {
      *            The <code>Collection</code> of the data objects of the
      *            actions defining this target.
      * @return Returns the built <code>List</code> of action matches.
-     * @aa
+     *
      */
     private static List<List<TargetMatch>> buildActionMatches(final Collection<Action> actions) {
 
@@ -155,12 +142,27 @@ public class XacmlTarget extends Target {
      *            the AttributeValue used in this match
      * 
      * @return the matching element
-     * @aa
+     *
      */
     private static TargetMatch createTargetActionMatch(
         final StringAttribute value) {
-        // create the TargetMatch
-        return new TargetMatch(TargetMatch.ACTION, FUNCTION, DESIGNATOR, value);
+
+        try {
+            // get the factory that handles Target functions and get an
+            // instance of the right function
+            if (function == null) {
+                final FunctionFactory factory = FunctionFactory.getTargetInstance();
+                function = factory.createFunction(XacmlFunctionContains.NAME);
+            }
+
+            // create the TargetMatch
+            return new TargetMatch(TargetMatch.ACTION, function, DESIGNATOR,
+                value);
+        }
+        catch (Exception e) {
+            return null;
+        }
+
     }
 
 
