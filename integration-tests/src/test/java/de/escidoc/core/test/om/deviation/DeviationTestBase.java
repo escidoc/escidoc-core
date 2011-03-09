@@ -77,7 +77,7 @@ public class DeviationTestBase extends OmTestBase {
      *             Thrown if ingest fails.
      */
     public String export(final String id) throws Exception {
-        return handleXmlResult(getDeviationClient().export(id));
+        return getDeviationClient().export(id);
 
     }
 
@@ -88,11 +88,11 @@ public class DeviationTestBase extends OmTestBase {
      *            Objid of Item.
      * @param componentId
      *            the id of the component.
-     * @return binary object
+     * @return binary object as String
      * @throws Exception
      *             Thrown if delete fails.
      */
-    public Object getDatastreamDissimination(
+    public String getDatastreamDissimination(
             final String id, final String componentId) throws Exception {
         return getDeviationClient().getDatastreamDissimination(id, componentId);
     }

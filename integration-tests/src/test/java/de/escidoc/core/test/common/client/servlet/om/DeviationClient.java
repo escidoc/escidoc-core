@@ -65,50 +65,22 @@ public class DeviationClient extends ClientBase {
      * @throws Exception
      *             If the service call fails.
      */
-    public Object export(final String id) throws Exception {
-        String contentString = null;
+    public String export(final String id) throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
-            InputStream inStr = null;
-            ByteArrayOutputStream out = null;
-            try {
-                com.yourmediashelf.fedora.client.FedoraClient restClient = 
-                    getFedoraRestClient();
-                FedoraResponse response = 
-                    com.yourmediashelf.fedora.client.FedoraClient
-                    .export(id).format(Constants.FOXML_FORMAT)
-                                .context("public").execute(restClient);
-                inStr = response.getEntityInputStream();
-                out = new ByteArrayOutputStream();
-                if (inStr != null) {
-                    byte[] bytes = new byte[0xFFFF];
-                    int i = -1;
-                    while ((i = inStr.read(bytes)) > -1) {
-                        out.write(bytes, 0, i);
-                    }
-                    out.flush();
-                    contentString = new String(
-                        out.toByteArray(), HttpHelper.HTTP_DEFAULT_CHARSET);
-                }
-                return contentString;
-            } finally {
-                if (inStr != null) {
-                    try {
-                        inStr.close();
-                    } catch (IOException e) {}
-                }
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e) {}
-                }
-            }
+            com.yourmediashelf.fedora.client.FedoraClient restClient = 
+                getFedoraRestClient();
+            FedoraResponse response = 
+                com.yourmediashelf.fedora.client.FedoraClient
+                .export(id).format(Constants.FOXML_FORMAT)
+                            .context("public").execute(restClient);
+            return toString(response.getEntityInputStream());
         } else {
             return null;
         }
     }
 
     /**
-     * get a binary datastream.
+     * get a binary datastream as String.
      * 
      * @param id
      *            the id of the resource.
@@ -118,45 +90,15 @@ public class DeviationClient extends ClientBase {
      * @throws Exception
      *             If the service call fails.
      */
-    public Object getDatastreamDissimination(
+    public String getDatastreamDissimination(
             final String id, final String componentId) throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
-            InputStream inStr = null;
-            ByteArrayOutputStream out = null;
-            String foxmlRecord = null;
-            try {
-                com.yourmediashelf.fedora.client.FedoraClient restClient = 
-                    getFedoraRestClient();
-                FedoraResponse response = 
-                    com.yourmediashelf.fedora.client.FedoraClient
-                    .getDatastreamDissemination(id, componentId).execute(restClient);
-                inStr = response.getEntityInputStream();
-                out = new ByteArrayOutputStream();
-                if (inStr != null) {
-                    byte[] bytes = new byte[0xFFFF];
-                    int i = -1;
-                    while ((i = inStr.read(bytes)) > -1) {
-                        out.write(bytes, 0, i);
-                    }
-                    out.flush();
-                    foxmlRecord = new String(
-                        out.toByteArray(), HttpHelper.HTTP_DEFAULT_CHARSET);
-                }
-                String mimetype = response.getMimeType();
-                return foxmlRecord;
-
-            } finally {
-                if (inStr != null) {
-                    try {
-                        inStr.close();
-                    } catch (IOException e) {}
-                }
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e) {}
-                }
-            }
+            com.yourmediashelf.fedora.client.FedoraClient restClient = 
+                getFedoraRestClient();
+            FedoraResponse response = 
+                com.yourmediashelf.fedora.client.FedoraClient
+                .getDatastreamDissemination(id, componentId).execute(restClient);
+            return toString(response.getEntityInputStream());
         } else {
             return null;
 
@@ -173,41 +115,12 @@ public class DeviationClient extends ClientBase {
      */
     public String describeFedora() throws Exception {
         if (getTransport() == Constants.TRANSPORT_REST) {
-            InputStream inStr = null;
-            ByteArrayOutputStream out = null;
-            String contentString = null;
-            try {
-                com.yourmediashelf.fedora.client.FedoraClient restClient = 
-                    getFedoraRestClient();
-                FedoraResponse response = 
-                    com.yourmediashelf.fedora.client.FedoraClient
-                    .describeRepository().xml(true).execute(restClient);
-                inStr = response.getEntityInputStream();
-                out = new ByteArrayOutputStream();
-                if (inStr != null) {
-                    byte[] bytes = new byte[0xFFFF];
-                    int i = -1;
-                    while ((i = inStr.read(bytes)) > -1) {
-                        out.write(bytes, 0, i);
-                    }
-                    out.flush();
-                    contentString = new String(
-                        out.toByteArray(), HttpHelper.HTTP_DEFAULT_CHARSET);
-                }
-                return contentString;
-
-            } finally {
-                if (inStr != null) {
-                    try {
-                        inStr.close();
-                    } catch (IOException e) {}
-                }
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e) {}
-                }
-            }
+            com.yourmediashelf.fedora.client.FedoraClient restClient = 
+                getFedoraRestClient();
+            FedoraResponse response = 
+                com.yourmediashelf.fedora.client.FedoraClient
+                .describeRepository().xml(true).execute(restClient);
+            return toString(response.getEntityInputStream());
         } else {
             return null;
         }

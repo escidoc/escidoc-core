@@ -1869,6 +1869,85 @@ public abstract class ClientBase {
     }
 
     /**
+     * Serialize the given InputStream to a String.
+     * 
+     * @param inputStream intutStream
+     * @return The String representation of the InputStream.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public static String toString(
+        final InputStream inputStream) throws Exception {
+
+        ByteArrayOutputStream out = null;
+        String contentString = null;
+        try {
+            out = new ByteArrayOutputStream();
+            if (inputStream != null) {
+                byte[] bytes = new byte[0xFFFF];
+                int i = -1;
+                while ((i = inputStream.read(bytes)) > -1) {
+                    out.write(bytes, 0, i);
+                }
+                out.flush();
+                contentString = new String(
+                    out.toByteArray(), HttpHelper.HTTP_DEFAULT_CHARSET);
+            }
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {}
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {}
+            }
+        }
+        return contentString;
+    }
+
+    /**
+     * Serialize the given InputStream to a byte[].
+     * 
+     * @param inputStream inputStream
+     * @return The byte[] representation of the InputStream.
+     * @throws Exception
+     *             If anything fails.
+     */
+    public static byte[] toByteArray(
+        final InputStream inputStream) throws Exception {
+
+        ByteArrayOutputStream out = null;
+        byte[] returnBytes = null;
+        try {
+            out = new ByteArrayOutputStream();
+            if (inputStream != null) {
+                byte[] bytes = new byte[0xFFFF];
+                int i = -1;
+                while ((i = inputStream.read(bytes)) > -1) {
+                    out.write(bytes, 0, i);
+                }
+                out.flush();
+                returnBytes = out.toByteArray();
+            }
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {}
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {}
+            }
+        }
+        return returnBytes;
+    }
+
+    /**
      * Substitute the element selected by the xPath in the given node with the
      * new value.
      * 
