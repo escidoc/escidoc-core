@@ -10,9 +10,9 @@
     data they consider for query execution.</para>
 
     <para><emphasis role="bold">Searches</emphasis> are configurable via configuration-files
-    and can contain configurable search-fields. Search can be configured for all resources stored in fedora
-    and work independent from their status in object lifecycle and existing access
-    restrictions. If configured, access policies are evaluated for each resource in the
+    and can contain configurable search-fields. 
+    Search can be configured for all resources stored in fedora. 
+    If configured, access policies are evaluated for each resource in the
     answer set. The answer set will only contain those resources the user has
     access to.
     The Search Service implements the SRW/U standard, thus
