@@ -462,6 +462,10 @@
 					<groupId>jaxen</groupId>
 					<artifactId>jaxen</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>owlapi</groupId>
+					<artifactId>owlapi</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>

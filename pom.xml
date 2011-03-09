@@ -497,6 +497,10 @@
                 <groupId>org.fcrepo</groupId>
                 <artifactId>sunxacml</artifactId>
               </exclusion>
+				<exclusion>
+					<groupId>owlapi</groupId>
+					<artifactId>owlapi</artifactId>
+				</exclusion>
             </exclusions>
           </dependency>
         </dependencies>
@@ -1376,6 +1380,10 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
           </exclusion>
+		  <exclusion>
+			<groupId>owlapi</groupId>
+			<artifactId>owlapi</artifactId>
+		  </exclusion>
         </exclusions>
       </dependency>
       <dependency>
