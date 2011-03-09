@@ -430,6 +430,10 @@
 					<groupId>owlapi</groupId>
 					<artifactId>owlapi</artifactId>
 				</exclusion>
+				<exclusion>
+		           <groupId>gnu.getopt</groupId>
+ 		           <artifactId>java-getopt</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 
