@@ -182,6 +182,7 @@ public class XacmlStaxHandler extends DefaultHandler {
                 policyLevel--;
                 if (policyLevel == 0) {
                     insidePolicy = false;
+                    policyWriter.close();
                     IOUtils.closeWriter(writer);
                     policyXml = writer.toString();
 
