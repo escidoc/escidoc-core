@@ -46,7 +46,7 @@ public final class StringUtility {
     /**
      * Private constructor to prevent initialization.
      * 
-     * @common
+     *
      */
     private StringUtility() {
     }
@@ -98,7 +98,7 @@ public final class StringUtility {
      *            The second part of the key.
      * @return Returns the created StringBuffer object with content
      *         "firstPart:secondPart".
-     * @common
+     *
      */
     public static StringBuffer concatenateWithColon(final String firstPart, final Object secondPart) {
         final StringBuffer ret = new StringBuffer(firstPart);
@@ -109,7 +109,7 @@ public final class StringUtility {
 
     /**
      * @see StringUtility#concatenateWithColon(String, Object)
-     * @common
+     *
      */
     public static String concatenateWithColonToString(final String firstPart, final Object secondPart) {
         return concatenateWithColon(firstPart, secondPart).toString();
@@ -124,11 +124,13 @@ public final class StringUtility {
      * @return Returns the converted value.
      */
     public static StringBuffer convertToUpperCaseLetterFormat(final CharSequence objectType) {
-        final String[] splitted = PATTERN_MINUS.split(objectType);
         final StringBuffer ret = new StringBuffer();
-        for (final String split : splitted) {
-            ret.append(split.substring(0, 1).toUpperCase());
-            ret.append(split.substring(1));
+        if(objectType != null) {
+            final String[] splitted = PATTERN_MINUS.split(objectType);
+            for (final String split : splitted) {
+                ret.append(split.substring(0, 1).toUpperCase());
+                ret.append(split.substring(1));
+            }
         }
         return ret;
     }
