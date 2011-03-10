@@ -85,6 +85,8 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     
     private static final String SYSDATE = "'now'";
 
+    private static String DATE_FUNCTION = "'${date_placeholder}'";
+
     private static final String DAY_OF_MONTH_FUNCTION = 
                         "date_trunc('day',${FIELD_NAME})";
 
@@ -127,8 +129,9 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      */
     private String convertDate(final String xmldate)
                     throws SqlDatabaseSystemException {
-        //do nothing
-        return xmldate;
+
+        return DATE_FUNCTION.replaceFirst(
+            "\\$\\{date_placeholder\\}", xmldate);
     }
 
     /**

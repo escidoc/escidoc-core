@@ -92,6 +92,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     
     private static final String SYSDATE = "CURDATE()";
 
+    private static String DATE_FUNCTION = "'${date_placeholder}'";
+
     private static final String DAY_OF_MONTH_FUNCTION = 
         "DATE(${FIELD_NAME})";
 
@@ -141,7 +143,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                     xmldate);
             final Calendar cal = xmlCal.toGregorianCalendar();
             final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return dateFormat.format(cal.getTime());
+            return DATE_FUNCTION.replaceFirst(
+                "\\$\\{date_placeholder\\}", dateFormat.format(cal.getTime()));
         } catch (Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
@@ -246,7 +249,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                 // (is 'now' in postgres)
                 if (field.getFieldType().equalsIgnoreCase(
                     Constants.DATABASE_FIELD_TYPE_DATE)) {
-                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : '\'' + convertDate(value) + '\'';
+                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : convertDate(value);
                 } else if (field.getFieldType().equalsIgnoreCase(
                     Constants.DATABASE_FIELD_TYPE_TEXT)) {
                     value = value.replaceAll("'", "''");
@@ -729,7 +732,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                 whereClause.append(longFieldName).append(operator).append(' ');
             }
             final String value;
-            value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : '\'' + convertDate(fieldValue) + '\'';
+            value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDate(fieldValue);
             whereClause.append(value).append(' ');
         }
         else if (fieldType
