@@ -92,6 +92,12 @@
 		<dependency>
 			<groupId>eSciDocCore</groupId>
 			<artifactId>jms-server</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.geronimo.specs</groupId>
+					<artifactId>geronimo-jta_1.0.1B_spec</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>eSciDocCore</groupId>
@@ -115,11 +121,13 @@
 			<artifactId>axis</artifactId>
 			<type>war</type>
 		</dependency>
+<!-- 		
 		<dependency>
 			<groupId>de.escidoc.admintool</groupId>
 			<artifactId>AdminTool</artifactId>
 			<type>war</type>
 		</dependency>
+ -->		
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>fedoragsearch</artifactId>

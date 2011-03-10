@@ -1487,12 +1487,14 @@
         <type>war</type>
         <version>1.3.27</version>
       </dependency>
+<!--       
       <dependency>
         <groupId>de.escidoc.admintool</groupId>
         <artifactId>AdminTool</artifactId>
         <type>war</type>
         <version>0.2-SNAPSHOT</version>
       </dependency>
+ -->      
       <dependency>
         <groupId>fedora.localservice</groupId>
         <artifactId>saxon</artifactId>

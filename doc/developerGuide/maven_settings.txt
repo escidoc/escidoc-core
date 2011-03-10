@@ -59,7 +59,7 @@ Changes in mavens settings.xml file:
       <password>PASSWORD</password>
     </server>
 
-- build varaibles for eSciDoc Core
+- build variables for eSciDoc Core
     <profile>
       <id>escidoc-build</id>
       <activation>
