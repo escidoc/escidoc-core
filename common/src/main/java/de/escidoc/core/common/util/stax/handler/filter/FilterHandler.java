@@ -169,8 +169,9 @@ public class FilterHandler extends DefaultHandler {
                     }
                     rules.put(filterName, data);
 
-                } else {
-                   // TODO throw exception or ignore filter without name
+                } else if (!element.isEmpty()) {
+                   throw new InvalidContentException(
+                        "Filter has no name.");
                 }
             }
         }

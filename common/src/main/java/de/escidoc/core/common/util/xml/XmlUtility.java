@@ -47,7 +47,6 @@ import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.XMLHashHandler;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
-import de.escidoc.core.common.util.stax.handler.filter.FilterHandler;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.stax.StaxAttributeEscapingWriterFactory;
 import de.escidoc.core.common.util.xml.stax.StaxTextEscapingWriterFactory;
@@ -3245,86 +3244,6 @@ public final class XmlUtility {
             throw new SAXException("IO Exception.", e);
         }
         return xhh.getHash();
-    }
-
-    /**
-     * Parse filter to Map.
-     * 
-     * @param filterXML
-     * @return map of filter parameter
-     * @throws XmlParserSystemException
-     */
-    public static Map<String, Object> getFilterMap(final String filterXML)
-        throws XmlParserSystemException {
-
-        // prevent empty filter
-        if (filterXML == null) {
-            return null;
-        }
-
-        final StaxParser sp = new StaxParser();
-        final FilterHandler fh = new FilterHandler(sp);
-        sp.addHandler(fh);
-        try {
-            sp.parse(new ByteArrayInputStream(filterXML
-                .getBytes(XmlUtility.CHARACTER_ENCODING)));
-        }
-        catch (Exception e) {
-            throw new XmlParserSystemException("While parse param filter.", e);
-        }
-
-        Map<String, Object> filter = fh.getRules();
-
-        if (filter.isEmpty()) {
-            filter = null;
-        }
-
-        return filter;
-    }
-
-    /**
-     * 
-     * @param objectsToFind
-     * @param filterXML
-     * @return
-     * @throws InvalidContentException
-     * @throws XmlParserSystemException
-     */
-    public static Map<String, Object> getFilterMap(
-        final String objectsToFind, final String filterXML)
-        throws InvalidContentException, XmlParserSystemException {
-
-        final Map<String, Object> filter = new HashMap<String, Object>();
-
-        final StaxParser sp = new StaxParser();
-        final FilterHandler fh = new FilterHandler(sp);
-        sp.addHandler(fh);
-        try {
-            sp.parse(filterXML);
-        }
-        catch (final InvalidContentException e) {
-            throw e;
-            // TODO check if XmlParserSystemException is the right one; the test
-            // wants it
-            // throw new XmlParserSystemException(e);
-        }
-        catch (final Exception e) {
-            XmlUtility.handleUnexpectedStaxParserException("", e);
-        }
-
-        // filter = fh.getRules();
-        // we need offset, limit etc. not in the map (ask TTE)
-        filter.put("filter", fh.getRules());
-        filter.put("limit", fh.getLimit());
-        filter.put("offset", fh.getOffset());
-        filter.put("order-by", fh.getOrderBy());
-        filter.put("sorting", fh.getSorting());
-
-        if (((Map) filter.get("filter")).isEmpty()) {
-            filter.put("filter", null);
-        }
-
-        return filter;
     }
 
 }
