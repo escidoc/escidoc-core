@@ -460,7 +460,7 @@ public final class EscidocConfiguration {
         final ResourcePatternResolver applicationContext =
             new ClassPathXmlApplicationContext(new String[] {});
         final Resource[] resource =
-            applicationContext.getResources("classpath*:**/" + filename);
+            applicationContext.getResources("classpath*:" + filename);
         if (resource.length == 0) {
             throw new FileNotFoundException("Unable to find file '" + filename
                 + "' in classpath.");
