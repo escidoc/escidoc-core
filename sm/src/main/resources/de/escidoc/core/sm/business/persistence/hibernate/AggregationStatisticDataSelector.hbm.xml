@@ -15,12 +15,12 @@
 
 <class 
     name="de.escidoc.core.sm.business.persistence.hibernate.AggregationStatisticDataSelector" 
-    table="aggregation_statistic_data_selectors"
+    table="agg_stat_data_selectors"
     lazy="false"
 >
     <meta attribute="class-description" inherit="false">
        @hibernate.class
-        table="aggregation_statistic_data_selectors"
+        table="agg_stat_data_selectors"
        @hibernate.mapping
         schema="sm"
     </meta>

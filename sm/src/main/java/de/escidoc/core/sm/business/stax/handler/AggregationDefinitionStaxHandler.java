@@ -373,7 +373,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * Prefix table or index name with aggregationDefinitionId.
      * 
      * @param aggregationDef the aggregationDefinition
-     * @param orgName the orgiginal Name
+     * @param orgName the original Name
      * @return String prefixed name
      * @throws SystemException e
      */
@@ -386,11 +386,10 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
                     "aggregationDefinition PrimKey may not be null");
         }
         final StringBuilder replaced = new StringBuilder();
-        replaced.append('_')
-            .append(aggregationDef.getId().replaceAll("\\:", ""))
-            .append('_');
+        replaced
+            .append(aggregationDef.getId().replaceAll(".*\\:", ""))
+            .append('_').append(orgName);
         
-        replaced.append(orgName);
         return replaced.toString();
     }
     

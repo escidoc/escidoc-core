@@ -863,17 +863,17 @@
           <void property="foreignKeys"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>id/null/sm/aggregation_statistic_data_selectors/aggregation_definition_id/1/3/0/fk_agg_def/aggregation_definitions_pkey/7</string> 
+             <string>id/null/sm/agg_stat_data_selectors/aggregation_definition_id/1/3/0/fk_agg_def/aggregation_definitions_pkey/7</string> 
             </void> 
            </object> 
           </void> 
           <void property="name"> 
-           <string>aggregation_statistic_data_selectors</string> 
+           <string>agg_stat_data_selectors</string> 
           </void> 
           <void property="primaryKeys"> 
            <object class="java.util.TreeSet"> 
             <void method="add"> 
-             <string>id/1/aggregation_statistic_data_selectors_pkey</string> 
+             <string>id/1/agg_stat_data_selectors_pkey</string> 
             </void> 
            </object> 
           </void> 

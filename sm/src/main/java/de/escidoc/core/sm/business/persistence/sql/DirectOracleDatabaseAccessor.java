@@ -78,7 +78,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     //with Method convertDate()
     //for Method createRecord()
     
-    //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumneric)
+    //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumeric)
 
     private static final AppLogger log =
         new AppLogger(DirectOracleDatabaseAccessor.class.getName());
@@ -104,13 +104,13 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
         FIELD_NAME_PATTERN.matcher("");
 
     private static final String XPATH_BOOLEAN_FUNCTION = 
-        "ExtractValue(${FIELD_NAME},'${XPATH}') is not null ";
+        "${FIELD_NAME}.EXTRACT('${XPATH}').getStringVal() IS NOT NULL";
     
     private static final String XPATH_STRING_FUNCTION = 
-        "ExtractValue(${FIELD_NAME},'${XPATH}')";
+        "${FIELD_NAME}.EXTRACT('${XPATH}').getStringVal()";
     
     private static final String XPATH_NUMBER_FUNCTION = 
-        "ExtractValue(${FIELD_NAME},'${XPATH}')";
+        "${FIELD_NAME}.EXTRACT('${XPATH}').getStringVal()";
     
     private static final Pattern XPATH_PATTERN = 
                     Pattern.compile("\\$\\{FIELD_NAME\\}(.*?)\\$\\{XPATH\\}");
@@ -392,7 +392,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
                     if (i > 0) {
                         sql.append(',');
                     }
-                    sql.append(tablename).append(" AS ");
+                    sql.append(tablename).append(" ");
                     sql
                         .append(tablename.replaceFirst(".*?\\.", "")).append(
                             ' ');
@@ -820,7 +820,8 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
      */
     @Override
     public String getXpathString(final String xpath, final String field) {
-        return XPATH_MATCHER.reset(XPATH_STRING_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
+        return XPATH_MATCHER.reset(XPATH_STRING_FUNCTION).replaceAll(
+            Matcher.quoteReplacement(field) + "$1"
                 + Matcher.quoteReplacement(xpath));
     }
 
@@ -851,8 +852,10 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     public void checkDatabaseTableVo(final DatabaseTableVo databaseTableVo)
         throws SqlDatabaseSystemException {
         if (databaseTableVo.getTableName() == null
-            || databaseTableVo.getTableName().length() == 0) {
-            throw new SqlDatabaseSystemException("tablename may not be empty");
+            || databaseTableVo.getTableName().length() == 0
+            || databaseTableVo.getTableName().length() > 30) {
+            throw new SqlDatabaseSystemException(
+                "tablename may not be empty or have more than 30 characters");
         }
         if (databaseTableVo.getDatabaseFieldVos() == null
             || databaseTableVo.getDatabaseFieldVos().isEmpty()) {
@@ -862,9 +865,10 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
         for (final DatabaseTableFieldVo databaseTableFieldVo
                 : databaseTableVo.getDatabaseFieldVos()) {
             if (databaseTableFieldVo.getFieldName() == null
-                || databaseTableFieldVo.getFieldName().length() == 0) {
+                || databaseTableFieldVo.getFieldName().length() == 0
+                || databaseTableFieldVo.getFieldType().length() > 30) {
                 throw new SqlDatabaseSystemException(
-                    "fieldname may not be empty");
+                    "fieldname may not be empty or have more than 30 characters");
             }
             if (databaseTableFieldVo.getFieldType() == null
                 || databaseTableFieldVo.getFieldType().length() == 0) {
@@ -877,9 +881,10 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
             for (final DatabaseIndexVo databaseIndexVo
                 : databaseTableVo.getDatabaseIndexVos()) {
                 if (databaseIndexVo.getIndexName() == null
-                    || databaseIndexVo.getIndexName().length() == 0) {
+                    || databaseIndexVo.getIndexName().length() == 0
+                    || databaseIndexVo.getIndexName().length() >30) {
                     throw new SqlDatabaseSystemException(
-                        "indexname may not be empty");
+                        "indexname may not be empty or have more than 30 characters");
                 }
                 if (databaseIndexVo.getFields() == null) {
                     throw new SqlDatabaseSystemException(

@@ -73,7 +73,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     //with Method convertDate()
     //for Method createRecord()
     
-    //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumneric)
+    //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumeric)
 
     private static final AppLogger LOG = new AppLogger(DirectPostgresDatabaseAccessor.class.getName());
 

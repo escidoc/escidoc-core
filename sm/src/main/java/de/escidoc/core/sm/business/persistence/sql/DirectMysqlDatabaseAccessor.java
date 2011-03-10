@@ -79,7 +79,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     //with Method convertDate()
     //for Method createRecord()
     
-    //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumneric)
+    //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumeric)
 
     private static final AppLogger log =
         new AppLogger(DirectMysqlDatabaseAccessor.class.getName());
