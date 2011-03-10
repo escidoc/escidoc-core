@@ -170,8 +170,7 @@ public class FilterHandler extends DefaultHandler {
                     rules.put(filterName, data);
 
                 } else {
-                   throw new InvalidContentException(
-                        "Filter has no name.");
+                   // TODO throw exception or ignore filter without name
                 }
             }
         }
