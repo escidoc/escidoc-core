@@ -59,4 +59,24 @@ Changes in mavens settings.xml file:
       <password>PASSWORD</password>
     </server>
 
+- build varaibles for eSciDoc Core
+    <profile>
+      <id>escidoc-build</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <database.server.name>localhost</database.server.name>
+        <database.server.name>5432</database.server.name>
+        <escidoc.database.user>escidoc</escidoc.database.user>
+        <escidoc.database.password>escidoc</escidoc.database.password>
+        <escidoc.database.index.prefix.length>2000</escidoc.database.index.prefix.length>
+        <escidoc.database.name>escidoc-core</escidoc.database.name>
+        <escidoc.server.name>localhost</escidoc.server.name>
+        <escidoc.server.port>8080</escidoc.server.port>
+        <escidoc.xsd.path>/xsd/</escidoc.xsd.path>
+        <escidoc.schemaLocation.base>http://www.escidoc.org/schemas/</escidoc.schemaLocation.base>
+      </properties>
+    </profile>
+
  
