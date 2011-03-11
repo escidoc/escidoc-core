@@ -771,11 +771,11 @@ public class EscidocServlet extends HttpServlet {
         initHttpResponse(httpResponse);
         try {
             httpResponse.setStatus(httpStatusCode);
-            httpResponse.getWriter().println(message);
             httpResponse.setHeader("Location", redirectLocation);
             if (exceptionName != null) {
                 httpResponse.setHeader(HEADER_ESCIDOC_EXCEPTION, exceptionName);
             }
+            httpResponse.getWriter().println(message);
         }
         catch (final UnsupportedEncodingException e) {
             doDeclineHttpRequest(httpResponse, new WebserverSystemException(e));
