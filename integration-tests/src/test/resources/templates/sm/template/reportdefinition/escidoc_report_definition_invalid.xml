@@ -7,6 +7,6 @@
 	<sql>
 		select 
 		date, month 
-		from _escidocaggdef1_else_statistics;
+		from escidocaggdef1_else_statistics;
 	</sql> 
 </report-definition>

@@ -435,7 +435,7 @@ public class ReportDefinitionHandler
             for (final String primKey : primKeys) {
                 if (!allowedPrimKeys.contains(primKey)) {
                     throw new ScopeContextViolationException(
-                        "AggregationTable with prefix=_" + primKey
+                        "AggregationTable with prefix=" + primKey
                             + "_ does not belong to the scope "
                             + "of the reportDefinition");
                 }

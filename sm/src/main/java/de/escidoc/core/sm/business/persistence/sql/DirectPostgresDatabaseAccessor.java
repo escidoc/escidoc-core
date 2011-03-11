@@ -229,7 +229,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 // (is 'now' in postgres)
                 if (field.getFieldType().equalsIgnoreCase(
                     Constants.DATABASE_FIELD_TYPE_DATE)) {
-                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : '\'' + convertDate(value) + '\'';
+                    value = "sysdate".equalsIgnoreCase(value) ? SYSDATE : convertDate(value);
                 } else if (field.getFieldType().equalsIgnoreCase(
                     Constants.DATABASE_FIELD_TYPE_TEXT)) {
                     value = value.replaceAll("'", "''");
@@ -707,7 +707,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 whereClause.append(longFieldName).append(operator).append(' ');
             }
             final String value;
-            value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : '\'' + convertDate(fieldValue) + '\'';
+            value = "sysdate".equalsIgnoreCase(fieldValue) ? SYSDATE : convertDate(fieldValue);
             whereClause.append(value).append(' ');
         }
         else if (fieldType

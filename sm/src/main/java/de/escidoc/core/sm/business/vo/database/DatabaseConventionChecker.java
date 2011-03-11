@@ -11,7 +11,7 @@ public final class DatabaseConventionChecker {
     
     private static final String INCORRECT_NAME_MSG = 
         new StringBuffer(" may not contain whitespaces or quotes, ")
-        .append("has to start with a letter or an underscore, ")
+        .append("has to start with a letter or underscore, ")
         .append("may only contain letters, digits or underscore ")
                 .append("and length may be 63 characters maximum").toString();
     
@@ -28,7 +28,7 @@ public final class DatabaseConventionChecker {
      * name may not contain whitespaces or quotes,
      * has to start with a letter or an underscore,
      * may only contain letters, digits or underscore
-     * and length may be 63 characters maximum
+     * and length may be 30 characters maximum
      * As we use schemas and aliases, name may contain a dot.
      * As we select *, name may be *.
      * 

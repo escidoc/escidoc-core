@@ -387,7 +387,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
         }
         final StringBuilder replaced = new StringBuilder();
         replaced
-            .append(aggregationDef.getId().replaceAll(".*\\:", ""))
+            .append(aggregationDef.getId().replaceAll("\\:", ""))
             .append('_').append(orgName);
         
         return replaced.toString();

@@ -436,7 +436,8 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
         }
         final String fromClause;
         fromClause = condition ? executionSql.replaceFirst(
-                "(?i).*?from(.*?)(where|order by|group by).*", "$1") : executionSql.replaceFirst("(?i).*?from(.*)", "$1");
+                "(?i).*?from(.*?)(where|order by|group by).*", "$1") 
+                    : executionSql.replaceFirst("(?i).*?from(.*)", "$1");
         final String[] tables = fromClause.split(",");
         final StringBuilder replacedFromClause = new StringBuilder(" ");
         for (int i = 0; i < tables.length; i++) {
@@ -855,7 +856,8 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
             || databaseTableVo.getTableName().length() == 0
             || databaseTableVo.getTableName().length() > 30) {
             throw new SqlDatabaseSystemException(
-                "tablename may not be empty or have more than 30 characters");
+                "tablename may not be empty or have more than 30 characters " 
+                + databaseTableVo.getTableName());
         }
         if (databaseTableVo.getDatabaseFieldVos() == null
             || databaseTableVo.getDatabaseFieldVos().isEmpty()) {
@@ -866,9 +868,10 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
                 : databaseTableVo.getDatabaseFieldVos()) {
             if (databaseTableFieldVo.getFieldName() == null
                 || databaseTableFieldVo.getFieldName().length() == 0
-                || databaseTableFieldVo.getFieldType().length() > 30) {
+                || databaseTableFieldVo.getFieldName().length() > 30) {
                 throw new SqlDatabaseSystemException(
-                    "fieldname may not be empty or have more than 30 characters");
+                    "fieldname may not be empty or have more than 30 characters " 
+                    + databaseTableFieldVo.getFieldName());
             }
             if (databaseTableFieldVo.getFieldType() == null
                 || databaseTableFieldVo.getFieldType().length() == 0) {
@@ -882,9 +885,10 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
                 : databaseTableVo.getDatabaseIndexVos()) {
                 if (databaseIndexVo.getIndexName() == null
                     || databaseIndexVo.getIndexName().length() == 0
-                    || databaseIndexVo.getIndexName().length() >30) {
+                    || databaseIndexVo.getIndexName().length() > 30) {
                     throw new SqlDatabaseSystemException(
-                        "indexname may not be empty or have more than 30 characters");
+                        "indexname may not be empty or have more than 30 characters " 
+                        + databaseIndexVo.getIndexName());
                 }
                 if (databaseIndexVo.getFields() == null) {
                     throw new SqlDatabaseSystemException(

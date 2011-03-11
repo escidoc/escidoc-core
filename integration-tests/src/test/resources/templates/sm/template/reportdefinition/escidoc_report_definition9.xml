@@ -8,7 +8,7 @@
 	<sql><![CDATA[
 		select 
 		request,year,sum(requests) as requests 
-		from _escidocaggdef1_request_statistics 
+		from sm.escidocaggdef1_request_statistics 
 		group by request,year;
 	]]></sql> 
 </report-definition>

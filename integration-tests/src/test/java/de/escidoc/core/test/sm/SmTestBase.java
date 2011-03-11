@@ -237,7 +237,7 @@ public class SmTestBase extends EscidocRestSoapTestBase {
                 replacedFromClause.append(",");
             }
             replacedFromClause
-                .append("_").append(idWithoutSpecialSigns).append("_")
+                .append(idWithoutSpecialSigns).append("_")
                 .append(tables[i].trim());
         }
         replacedFromClause.append(" ");
