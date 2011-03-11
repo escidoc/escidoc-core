@@ -28,16 +28,20 @@
  */
 package de.escidoc.core.test.om.container;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.remote.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import static org.junit.Assert.fail;
 
 /**
  * Test the mock implementation of the item resource.
@@ -108,14 +112,13 @@ public class ContainerCreateTest extends ContainerTestBase {
 
     /**
      * Successful creation of a Container with empty content of an md-redord.
-     * SchemaEsception expected.
+     * SchemaException expected.
      * 
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testConCr1() throws Exception {
-        Class<?> ec = XmlSchemaValidationException.class;
 
         Document context =
             EscidocRestSoapTestBase.getTemplateAsDocument(
@@ -125,13 +128,37 @@ public class ContainerCreateTest extends ContainerTestBase {
         substitute(context, "/container/md-records/md-record[1]", "");
         String template = toString(context, false);
 
-        try {
-            create(template);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        create(template);
+    }
+
+    /**
+     * Test if namespaces in meta data records of Container are still part of
+     * the representation after create.
+     * 
+     * Issue INFR-947
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Ignore
+    @Test
+    public void containerMetadataNamespaces() throws Exception {
+
+        String container =
+            getTemplateAsString(TEMPLATE_CONTAINER_PATH + this.path,
+                "container_issue_infr_947.xml");
+
+        String createdContainer = create(container);
+
+        // assert that namespace declarations of metadata are still present
+        // after create
+        assertTrue(
+            "Missing eterms namespace",
+            createdContainer
+                .contains("xmlns:eterms=\"http://purl.org/escidoc/metadata/terms/0.1/\""));
+        assertTrue("Missing PURL",
+            createdContainer
+                .contains("xmlns:dc=\"http://purl.org/dc/elements/1.1\""));
     }
 
     /**
@@ -141,20 +168,14 @@ public class ContainerCreateTest extends ContainerTestBase {
      * @throws Exception
      *             Thrown if behavior is not as expected.
      */
-    @Test
+    @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
 
         /*
          * The infrastructure has thrown an unexpected parser exception during
          * creation if a non XML datastructur is send (e.g. String).
          */
-        try {
-            create("laber-rababer");
-            fail("Missing Invalid XML exception");
-        }
-        catch (InvalidXmlException e) {
-            // that's ok
-        }
+        create("laber-rababer");
     }
 
     /**

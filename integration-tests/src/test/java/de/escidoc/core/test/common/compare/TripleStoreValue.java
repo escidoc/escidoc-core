@@ -86,10 +86,11 @@ public class TripleStoreValue {
          * non representation values
          */
         // check build number
-        // compareValueWithTripleStore(Select.getObjidValueWithoutVersion(xmlItem,
-        // getTransport()), this.properties.getProperty("escidoc-core.build"),
-        // "/RDF/Description/build",
-        // "<http://escidoc.de/core/01/system/build>");
+        compareValueWithTripleStore(
+            Select.getObjidValueWithoutVersion(xmlItem, getTransport()),
+            this.properties.getProperty("escidoc-core.build"),
+            "/RDF/Description/build",
+            "<http://escidoc.de/core/01/system/build>");
 
         // check last-modification-date
         // FIXME this is problematic because the timestamp is not within the
