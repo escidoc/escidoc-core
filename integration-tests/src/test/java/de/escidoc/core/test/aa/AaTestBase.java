@@ -28,9 +28,45 @@
  */
 package de.escidoc.core.test.aa;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.ProtocolException;
+import org.apache.http.client.RedirectHandler;
+import org.apache.http.client.protocol.RequestAddCookies;
+import org.apache.http.client.protocol.ResponseProcessCookies;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
+import org.junit.After;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.ClientBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import de.escidoc.core.test.common.client.servlet.aa.PolicyDecisionPointClient;
 import de.escidoc.core.test.common.client.servlet.aa.RoleClient;
 import de.escidoc.core.test.common.client.servlet.aa.UserAccountClient;
@@ -55,35 +91,6 @@ import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.OmTestBase;
 import de.escidoc.core.test.security.client.PWCallback;
 import de.escidoc.core.test.sm.SmTestBase;
-import de.escidoc.core.test.st.StagingFileTestBase;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import javax.servlet.http.HttpServletResponse;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 
 /**
  * Base class for AA tests.
@@ -4566,6 +4573,25 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
         try {
             logout(userHandle);
+
+            //Check status-code when requesting resource with invalid handle
+            String httpUrl =
+                Constants.PROTOCOL + "://" 
+                + Constants.HOST_PORT 
+                + Constants.ROLE_BASE_URI
+                + "/"
+                + getObjidFromHref(ROLE_HREF_SYSTEM_ADMINISTRATOR);
+
+            int statusCode = getStatusCode(httpUrl);
+            if (statusCode 
+                != HttpServletResponse.SC_FOUND) {
+
+                throw new Exception(
+                    "Retrieving resource with invalid handle "
+                    + "returned wrong status " 
+                    + statusCode);
+            }
+
         }
         catch (Exception e) {
             EscidocRestSoapTestBase.failException(
@@ -4573,6 +4599,37 @@ public class AaTestBase extends EscidocRestSoapTestBase {
         } finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
         }
+    }
+    
+    /**
+     * Returns the status-code after calling the given url.
+     * 
+     * @param url
+     *            The url to call.
+     * @return int status-code.
+     * @throws Exception
+     *             If anything fails.
+     */
+    private int getStatusCode(final String url) throws Exception {
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        httpClient.removeRequestInterceptorByClass(RequestAddCookies.class);
+        httpClient.removeResponseInterceptorByClass(ResponseProcessCookies.class);
+        httpClient.setRedirectHandler(new RedirectHandler() {
+            public URI getLocationURI(HttpResponse response,
+                    HttpContext context) throws ProtocolException {
+                return null;
+            }
+
+            public boolean isRedirectRequested(HttpResponse response,
+                    HttpContext context) {
+                return false;
+            }
+        });
+
+
+        HttpResponse httpRes = HttpHelper.doGet(httpClient, url, null);
+
+        return httpRes.getStatusLine().getStatusCode();
     }
 
     /**
