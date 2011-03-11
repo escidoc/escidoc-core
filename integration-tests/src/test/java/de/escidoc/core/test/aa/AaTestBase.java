@@ -3283,7 +3283,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             reportDefinitionXml = toString(document, false);
             reportDefinitionXml =
                 reportDefinitionXml.replaceFirst("(?s)<sql>.*?</sql>",
-                    "<sql>select month from _" + idWithoutSpecialSigns
+                    "<sql>select month from " + idWithoutSpecialSigns
                         + "_page_statistics;</sql>");
         }
 
@@ -3464,7 +3464,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             reportDefinitionXml = toString(document, false);
             reportDefinitionXml =
                 reportDefinitionXml.replaceFirst("(?s)select.*?;",
-                    "select month from _" + idWithoutSpecialSigns
+                    "select month from " + idWithoutSpecialSigns
                         + "_page_statistics;");
         }
 
