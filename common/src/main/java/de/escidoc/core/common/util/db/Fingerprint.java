@@ -28,8 +28,6 @@
  */
 package de.escidoc.core.common.util.db;
 
-import de.escidoc.core.common.util.IOUtils;
-
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
@@ -47,7 +45,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
+import de.escidoc.core.common.util.IOUtils;
 
 /**
  * This class represents the table structure and the index list of a database.
@@ -69,6 +71,22 @@ public class Fingerprint implements Comparable<Object> {
         IGNORED_SCHEMAS.put("pg_catalog", "");
         IGNORED_SCHEMAS.put("pg_toast_temp_1", "");
         IGNORED_SCHEMAS.put("public", "");
+    }
+
+    private static final Set<String> VALID_SM_TABLES = new HashSet<String>();
+
+    static {
+    	VALID_SM_TABLES.add("agg_stat_data_selectors");
+        VALID_SM_TABLES.add("aggregation_definitions");
+        VALID_SM_TABLES.add("aggregation_table_fields");
+        VALID_SM_TABLES.add("aggregation_table_index_fields");
+        VALID_SM_TABLES.add("aggregation_table_indexes");
+        VALID_SM_TABLES.add("aggregation_tables");
+        VALID_SM_TABLES.add("preprocessing_logs");
+        VALID_SM_TABLES.add("report_definition_roles");
+        VALID_SM_TABLES.add("report_definitions");
+        VALID_SM_TABLES.add("scopes");
+        VALID_SM_TABLES.add("statistic_data");
     }
 
     private Schema[] schemas;
@@ -347,7 +365,8 @@ public class Fingerprint implements Comparable<Object> {
             while (rs.next()) {
                 final String name = rs.getString(3);
                 // ignore dynamically created tables for statistics manager
-                if (!name.startsWith("_")) {
+                if (!schema.equals("sm") 
+                		|| VALID_SM_TABLES.contains(name)) {
                     result.add(name);
                 }
             }
