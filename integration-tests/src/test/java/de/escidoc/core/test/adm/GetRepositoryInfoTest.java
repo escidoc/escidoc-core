@@ -37,6 +37,7 @@ import java.io.ByteArrayInputStream;
 import java.io.StringReader;
 import java.util.Properties;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -85,6 +86,17 @@ public class GetRepositoryInfoTest extends AdminToolTestBase {
 
         repositoryInfo.loadFromXML(new ByteArrayInputStream(output
             .toString().getBytes()));
+        
+        //Check Property escidoc-core.build that comes from 
+        //internal configuration file escidoc-core.constant.properties
+        assertNotNull("Property escidoc-core.build is null", 
+            repositoryInfo.getProperty("escidoc-core.build"));
+        
+        //Check Property escidoc-core.repository-name that comes from 
+        //external configuration file escidoc-core.properties
+        assertNotNull("Property escidoc-core.repository-name is null", 
+            repositoryInfo.getProperty("escidoc-core.repository-name"));
+        
         assertTrue("current database structure differs from the internally stored structure", Boolean
             .valueOf(repositoryInfo
                 .getProperty("escidoc-core.database.consistent")));
