@@ -109,7 +109,7 @@ import de.escidoc.core.common.servlet.invocation.BeanMethod;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.date.Iso8601Util;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -167,7 +167,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * Attention: The spring/beans setter methods has to be defined in this and
      * not in one of the super classes.
      */
-    private static final AppLogger LOG = new AppLogger(
+    private static final Logger LOGGER = LoggerFactory.getLogger(
         FedoraContainerHandler.class.getName());
 
     private static final String MODIFIED_DATE_ATT_NAME =
@@ -624,6 +624,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 final Throwable cause = e.getCause();
                 if(cause instanceof Error) {
                     throw (Error)cause;
+                } else if (cause instanceof AuthorizationException) {
+                    throw (AuthorizationException)cause;
                 } else {
                     throw new SystemException("An error occured removing member entries for container "
                         + getItem().getId() + ". Container can not be deleted.", cause);
@@ -1654,15 +1656,15 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 }
                 catch (final InvalidStatusException e) {
                     // do next member
-                    LOG.warn("Member '" + memberId + "' of container '"
+                    LOGGER.warn("Member '" + memberId + "' of container '"
                         + getContainer().getId() + "' not released.", e);
                 }
                 catch (final LockingException e) {
-                    LOG.warn("Member '" + memberId + "' of container '"
+                    LOGGER.warn("Member '" + memberId + "' of container '"
                             + getContainer().getId() + "' locked.", e);
                 }
                 catch (final OptimisticLockingException e) {
-                    LOG.warn("Member '" + memberId + "' of container '"
+                    LOGGER.warn("Member '" + memberId + "' of container '"
                         + getContainer().getId() + "' not released.", e);
                     throw e;
                     // do next member
@@ -1686,7 +1688,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     setItem(memberId);
                 }
                 catch (final Exception e) {
-                    LOG.debug("Error on setting item.", e);
+                    LOGGER.debug("Error on setting item.", e);
                     // do nothing
                     continue;
                 }
@@ -1697,7 +1699,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 try {
                     itemHandler.release(memberId, param);
                 } catch (final InvalidStatusException e) {
-                    LOG.debug("Error on releasing item.", e);
+                    LOGGER.debug("Error on releasing item.", e);
                     // do next member
                 } catch (final Exception e) {
                     throw new IntegritySystemException(e);
@@ -1989,7 +1991,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     // withdraw(memberId, param);
                 }
                 catch (final InvalidStatusException e) {
-                   LOG.debug("Error on withdraw container.", e);
+                   LOGGER.debug("Error on withdraw container.", e);
                     // do next member
                 }
                 catch (final Exception e) {
@@ -2002,7 +2004,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     setItem(memberId);
                 }
                 catch (final Exception e) {
-                    LOG.debug("Error on setting item.", e);
+                    LOGGER.debug("Error on setting item.", e);
                     // do nothing
                 }
 
@@ -2018,7 +2020,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                     itemHandler.withdraw(memberId, param);
                 }
                 catch (final InvalidStatusException e) {
-                    LOG.debug("Error on withdraw item.", e);
+                    LOGGER.debug("Error on withdraw item.", e);
                     // do next member
                 }
                 catch (final Exception e) {
@@ -2211,13 +2213,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         throws ContainerNotFoundException, SystemException {
         Utility.getInstance().checkIsContainer(id);
         return getRenderer().renderParents(id);
-    }
-
-    /**
-     * @return Returns the logger.
-     */
-    public static AppLogger getLogger() {
-        return LOG;
     }
 
     /**
