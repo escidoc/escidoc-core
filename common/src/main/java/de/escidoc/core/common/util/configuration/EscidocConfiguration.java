@@ -242,14 +242,16 @@ public final class EscidocConfiguration {
      */
     public static final String DIGILIB_CLIENT = "digilib.digimage";
 
-    private static final AppLogger LOG = new AppLogger(EscidocConfiguration.class.getName());
+    private static final AppLogger LOG = new AppLogger(
+        EscidocConfiguration.class.getName());
 
     private static EscidocConfiguration instance;
 
     static {
         try {
             instance = new EscidocConfiguration();
-        } catch (EscidocException e) {
+        }
+        catch (EscidocException e) {
             LOG.debug("Problem while loading properties.", e);
         }
     }
@@ -405,10 +407,10 @@ public final class EscidocConfiguration {
             constant = getProperties(PROPERTIES_CONSTANT_FILENAME);
         }
         catch (IOException e) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Error on loading contant properties. "
-                    + e.getMessage());
-            }
+            String msg = "Missing '"
+                + PROPERTIES_CONSTANT_FILENAME + "' ";
+            LOG.warn(msg);
+            throw new SystemException(msg, e);
         }
         if (LOG.isDebugEnabled()) {
             LOG.debug("Constant properties: " + constant);
