@@ -1271,12 +1271,9 @@ public class UserAccountHandler
         final UserAccount authenticateUser =
             UserAccountHandler.getAuthenticatedUser(dao);
         try {
-
-             Set<Entry<String, RoleGrant>> entries = grantsHash.entrySet();
-             for (Iterator it = entries.iterator(); it.hasNext();) {
-                Map.Entry entry = (Map.Entry) it.next();
+            for (final String grantId : grantIds) {
                 // set revoke-date, -user and -remark
-                final RoleGrant roleGrant = (RoleGrant) entry.getValue();
+                final RoleGrant roleGrant = grantsHash.get(grantId);
                 roleGrant.setUserAccountByRevokerId(authenticateUser);
                 roleGrant.setRevocationDate(new Date());
                 roleGrant.setRevocationRemark(tph.getRevokationRemark());
