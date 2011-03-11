@@ -120,6 +120,8 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                 final Throwable cause = e.getCause();
                 if(cause instanceof Error) {
                     throw (Error)cause;
+                } else if (cause instanceof AuthorizationException) {
+                    throw (AuthorizationException)cause;
                 } else {
                     throw new SystemException("An error occured removing member entries for item "
                                 + getItem().getId() + ". Container can not be deleted.", cause);
