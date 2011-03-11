@@ -219,14 +219,17 @@
             <xs:attribute name="relation-attribute-id">
                 <xs:annotation>
                     <xs:documentation>
-                        <create>optional</create>
+                        <create>optional (see note 1.)</create>
                         <update>optional (see note 2.)</update>
+                        <comment>
+                            1. Either both relation-attribute-id and
+                            relation-attribute-object-type has to be provided 
+                            or none of both.
+                        </comment>
                         <comment>
                             2. If not provided in update, the
                             relation-attribute-id is removed from the
                             scope-def.Either both relation-attribute-id and
-                            relation-attribute-object-type has to be provided 
-                            or none of both. Either both relation-attribute-id and
                             relation-attribute-object-type has to be provided 
                             or none of both.
                         </comment>
@@ -236,8 +239,13 @@
             <xs:attribute name="relation-attribute-object-type" type="role:object-types">
                 <xs:annotation>
                     <xs:documentation>
-                        <create>optional</create>
+                        <create>optional (see note 1.)</create>
                         <update>optional (see note 2.)</update>
+                        <comment>
+                            1. Either both relation-attribute-id and
+                            relation-attribute-object-type has to be provided 
+                            or none of both.
+                        </comment>
                         <comment>
                             2. If not provided in update, the
                             relation-attribute-object-type is removed from the
