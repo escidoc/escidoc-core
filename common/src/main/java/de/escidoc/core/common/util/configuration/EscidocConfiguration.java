@@ -252,7 +252,7 @@ public final class EscidocConfiguration {
             instance = new EscidocConfiguration();
         }
         catch (EscidocException e) {
-            LOG.debug("Problem while loading properties.", e);
+            LOG.info("Problem while loading properties.", e);
         }
     }
 
@@ -407,10 +407,8 @@ public final class EscidocConfiguration {
             constant = getProperties(PROPERTIES_CONSTANT_FILENAME);
         }
         catch (IOException e) {
-            String msg = "Missing '"
-                + PROPERTIES_CONSTANT_FILENAME + "' ";
-            LOG.warn(msg);
-            throw new SystemException(msg, e);
+            throw new SystemException("Missing '"
+                + PROPERTIES_CONSTANT_FILENAME + "' ", e);
         }
         if (LOG.isDebugEnabled()) {
             LOG.debug("Constant properties: " + constant);
