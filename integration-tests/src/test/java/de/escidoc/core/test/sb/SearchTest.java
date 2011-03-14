@@ -579,6 +579,36 @@ public class SearchTest extends SearchTestBase {
     }
 
     /**
+     * Test searching for a single term without Highlighting.
+     * 
+     * @test.name Single Term Search without Highlighting
+     * @test.id SB_SR-1
+     * @test.input mandatory request parameters: - any single term query -
+     *             existing database
+     * @test.inputDescription execute single term query on given database
+     * @test.expected List of search records according to eSciDoc Default Schema
+     *                for search results first record to be returned ist at the
+     *                1st position in the sequence of matched records. only
+     *                released objects are found.
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSBSR1_1() throws Exception {
+
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.metadata=motor");
+        parameters.put(FILTER_PARAMETER_OMIT_HIGHLIGHTING, "true");
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals(false, checkHighlighting(response));
+        assertEquals("1", getNumberOfHits(response));
+        assertEquals("1", getFirstRecord(response));
+    }
+
+    /**
      * Database not existing.
      * 
      * @test.name Database not existing
