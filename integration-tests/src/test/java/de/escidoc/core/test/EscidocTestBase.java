@@ -555,15 +555,12 @@ public abstract class EscidocTestBase {
     public static final String XSI_NS_URI =
         "http://www.w3.org/2001/XMLSchema-instance";
 
-    public static final String DOCUMENT_BASE_URI =
-        "http://escidev6:8082/ir/items";
-
     public static final String DATE_FORMAT_PATTERN =
         "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
     public static final String UNKNOWN_ID = "escidoc:-1";
 
-    public static final String TEMPLATE_BASE_PATH = "templates"; // "/de/escidoc/core/test";
+    public static final String TEMPLATE_BASE_PATH = "templates";
 
     public static final String TEMPLATE_EXAMPLE_PATH = "examples/escidoc";
 
