@@ -564,6 +564,22 @@ extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
       </listitem>
     </itemizedlist>
 
+    <para>The following Extra-data parameters are supported for Search:</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>x-info5-userId: Search as another user (escidoc userId)</para>
+      </listitem>
+
+      <listitem>
+        <para>x-info5-roleId: Search with a specific role (escidoc roleId)</para>
+      </listitem>
+
+      <listitem>
+        <para>x-info5-omitHighlighting=true|false: If true, omit generation Highlight-Snippets</para>
+      </listitem>
+    </itemizedlist>
+
     <para>See documentation at http://www.loc.gov/standards/sru/ for more
     details.</para>
 
