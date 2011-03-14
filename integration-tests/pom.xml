@@ -958,8 +958,7 @@
 									<!-- need another database to drop the targeted one -->
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE "${escidoc.database}"</sqlCommand>
-									<onError>continue</onError>
+									<sqlCommand>DROP DATABASE IF EXISTS "${escidoc.database}"</sqlCommand>
 								</configuration>
 							</execution>
 							<execution>
@@ -974,8 +973,7 @@
 									<!-- need another database to drop the targeted one -->
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP ROLE "${escidoc.database.user}"</sqlCommand>
-									<onError>continue</onError>
+									<sqlCommand>DROP ROLE IF EXISTS "${escidoc.database.user}"</sqlCommand>
 								</configuration>
 							</execution>
 						</executions>
@@ -1024,9 +1022,7 @@
 									<!-- need another database to drop the targeted one -->
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE "${fedora.database}"</sqlCommand>
-									<!-- ignore error when database is not avaiable -->
-									<onError>continue</onError>
+									<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database}"</sqlCommand>
 								</configuration>
 							</execution>
 							<execution>
@@ -1039,9 +1035,7 @@
 									<!-- need another database to drop the targeted one -->
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP DATABASE "${triplestore.database}"</sqlCommand>
-									<!-- ignore error when database is not avaiable -->
-									<onError>continue</onError>
+									<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database}"</sqlCommand>
 								</configuration>
 							</execution>
 							<execution>
@@ -1054,9 +1048,7 @@
 									<!-- need another database to drop the targeted one -->
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
-									<sqlCommand>DROP ROLE "${fedora.database.user}"</sqlCommand>
-									<!-- ignore error when database is not avaiable -->
-									<onError>continue</onError>
+									<sqlCommand>DROP ROLE IF EXISTS "${fedora.database.user}"</sqlCommand>
 								</configuration>
 							</execution>
 
