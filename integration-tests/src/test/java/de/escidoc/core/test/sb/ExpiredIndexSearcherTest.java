@@ -126,9 +126,9 @@ public class ExpiredIndexSearcherTest extends SearchTestBase {
         item.create(xmlData);
         HashMap<String, String> parameters = new HashMap<String, String>();
         HashMap<String, String> scanParameters = new HashMap<String, String>();
-        parameters.put("query", "PID=escidoc*");
-        scanParameters.put("operation", "scan");
-        scanParameters.put("scanClause", "PID=\"\"");
+        parameters.put(FILTER_PARAMETER_QUERY, "PID=escidoc*");
+        scanParameters.put(FILTER_PARAMETER_OPERATION, FILTER_PARAMETER_SCAN);
+        scanParameters.put(FILTER_PARAMETER_SCAN_CLAUSE, "PID=\"\"");
         
         String response = search(parameters, INDEX_NAME);
         String scanResponse = scan(scanParameters, INDEX_NAME);

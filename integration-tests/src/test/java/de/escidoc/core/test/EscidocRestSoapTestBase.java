@@ -242,9 +242,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     public static final String XPATH_RDF_DESCRIPTION = XPATH_RDF
         + "/Description";
 
+    public static final String FILTER_PARAMETER_OPERATION = "operation";
+
     public static final String FILTER_PARAMETER_EXPLAIN = "explain";
 
+    public static final String FILTER_PARAMETER_SEARCH_RETRIEVE = "searchRetrieve";
+
+    public static final String FILTER_PARAMETER_SCAN = "scan";
+
     public static final String FILTER_PARAMETER_QUERY = "query";
+
+    public static final String FILTER_PARAMETER_SCAN_CLAUSE = "scanClause";
 
     public static final String FILTER_PARAMETER_MAXIMUMRECORDS =
         "maximumRecords";
@@ -252,6 +260,23 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     public static final String FILTER_PARAMETER_RECORDPACKING = "recordPacking";
 
     public static final String FILTER_PARAMETER_STARTRECORD = "startRecord";
+
+    public static final String FILTER_PARAMETER_RECORDSCHEMA = "recordSchema";
+
+    public static final String FILTER_PARAMETER_SORTKEYS = "sortKeys";
+
+    public static final String FILTER_PARAMETER_STYLESHEET = "stylesheet";
+
+    public static final String FILTER_PARAMETER_MAXIMUMTERMS = "maximumTerms";
+
+    public static final String FILTER_PARAMETER_RESPONSEPOSITION = "responsePosition";
+
+    public static final String FILTER_PARAMETER_USERID = "x-info5-userId";
+
+    public static final String FILTER_PARAMETER_ROLEID = "x-info5-roleId";
+
+    public static final String FILTER_PARAMETER_OMIT_HIGHLIGHTING = 
+                                                        "x-info5-omitHighlighting";
 
     public static final String FILTER_IDENTIFIER = "/id";
 

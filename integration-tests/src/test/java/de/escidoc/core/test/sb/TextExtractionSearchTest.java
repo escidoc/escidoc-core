@@ -198,7 +198,7 @@ public class TextExtractionSearchTest extends SearchTestBase {
     public void testSBTEERRRSR1() throws Exception {
 
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put("query", "escidoc.objid=e*");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.objid=e*");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("1", getNumberOfHits(response));
@@ -227,7 +227,7 @@ public class TextExtractionSearchTest extends SearchTestBase {
     public void testSBTEERRRSR2() throws Exception {
 
         HashMap<String, String> parameters = new HashMap<String, String>();
-        parameters.put("query", "escidoc.fulltext=textfrompdffilenotextractable");
+        parameters.put(FILTER_PARAMETER_QUERY, "escidoc.fulltext=textfrompdffilenotextractable");
         String response = search(parameters, INDEX_NAME);
         assertXmlValidSearchResult(response);
         assertEquals("1", getNumberOfHits(response));

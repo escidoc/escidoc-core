@@ -111,6 +111,27 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
     public void setUp() throws Exception {
         if (methodCounter == 0) {
             prepare();
+//          int c = 43001;
+//          containerIds = new String[14];
+//          adminTestContainerIds = new String[20];
+//          itemIds = new String[84];
+//          componentIds = new String[84][2];
+//          for (int i = 0; i < 14; i++) {
+//              containerIds[i] = "escidoc:" + c;
+//              c++;
+//          }
+//          c--;
+//          for (int i = 0; i < 84; i++) {
+//              c += 3;
+//              itemIds[i] = "escidoc:" + c;
+//              componentIds[i][0] = "escidoc:" + (c - 2);
+//              componentIds[i][1] = "escidoc:" + (c - 1);
+//          }
+//          c++;
+//          for (int i = 0; i < 20; i++) {
+//              adminTestContainerIds[i] = "escidoc:" + c;
+//              c++;
+//          }
         }
     }
 
@@ -497,7 +518,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
             HashMap<String, String> parameters = new HashMap<String, String>();
             for (String search : fieldSearches) {
                 search += " and \"/id\"=\"" + itemIds[0] + "\"";
-                parameters.put("query", search);
+                parameters.put(FILTER_PARAMETER_QUERY, search);
                 String response = search(parameters, INDEX_NAME);
                 assertXmlValidSearchResult(response);
                 assertEquals("Number of Hits not as expected for query " 
@@ -597,6 +618,72 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                             } else {
                                 put(itemIds[i], getItemXpathList(i, null));
                             }
+                        }
+                    }
+                });
+            }
+        };
+        search(role);
+    }
+
+    /**
+     * Test searching as Systemadministrator user with user-Filter.
+     * User-Filter executes search as another user.
+     * 
+     * @test.name Systemadministrator User Search with user-filter
+     * @test.id SB_SystemadministratorUserSearchWithUserFilter
+     * @test.input Systemadministrator user searching all objects
+     * @test.expected 118 hits.
+     *              Systemadministrator may see all items/containers
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test(timeout=120000)
+    public void testSearchAsSystemadministratorUserWithUserFilter() throws Exception {
+        HashMap<String, Object> role = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 1L;
+            {
+                put("role0",
+                               GrantHelper.ROLE_HREF_SYSTEM_ADMINISTRATOR);
+                put("handle", PWCallback.TEST_HANDLE1);
+                put("user", TEST_USER_ACCOUNT_ID1);
+                put("forUser", TEST_DEPOSITOR_ACCOUNT_ID);
+                put("expectedHits", "86");
+                put("searchresultIds", new HashMap<String, ArrayList<String>>() {
+                    private static final long serialVersionUID = 1L;
+                    {
+                        for (int i = 0; i < 10; i++) {
+                            if (i == 8) {
+                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "pending"));
+                            } else {
+                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, null));
+                            }
+                            
+                        }
+                        for (int i = 13; i < 19; i++) {
+                            if (i == 18) {
+                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "released"));
+                            } else {
+                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, null));
+                            }
+                            
+                        }
+                        for (int i = 0; i < 7; i++) {
+                            put(containerIds[i], null);
+                        }
+                        for (int i = 0; i < 42; i++) {
+                            if (i % 6 == 4) {
+                                put(itemIds[i], getItemXpathList(i, "pending"));
+                            } else {
+                                put(itemIds[i], getItemXpathList(i, null));
+                            }
+                        }
+                        for (int i = 42; i < 84; i += 6) {
+                            put(itemIds[i + 2], getItemXpathList(i + 2, null));
+                            put(itemIds[i + 3], getItemXpathList(i + 3, null));
+                            put(itemIds[i + 4], getItemXpathList(i + 4, "released"));
                         }
                     }
                 });
@@ -4620,8 +4707,21 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
             }
             PWCallback.setHandle((String) role.get("handle"));
             HashMap<String, String> parameters = new HashMap<String, String>();
-            parameters.put("query", "PID=escidoc*");
-            parameters.put("maximumRecords", "150");
+            parameters.put(FILTER_PARAMETER_QUERY, "PID=escidoc*");
+            parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "150");
+            //Extra Data Parameters
+            if (role.get("forUser") != null) {
+                parameters.put(FILTER_PARAMETER_USERID, 
+                                (String)role.get("forUser"));
+            }
+            if (role.get("forRole") != null) {
+                parameters.put(FILTER_PARAMETER_ROLEID, 
+                                (String)role.get("forRole"));
+            }
+            if (role.get("omitHighlighting") != null) {
+                parameters.put(FILTER_PARAMETER_OMIT_HIGHLIGHTING, 
+                                (String)role.get("omitHighlighting"));
+            }
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
             Document searchResultDoc = getDocument(response, true);

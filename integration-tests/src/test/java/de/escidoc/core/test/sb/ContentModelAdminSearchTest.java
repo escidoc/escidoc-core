@@ -332,8 +332,8 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
             }
             PWCallback.setHandle((String) role.get("handle"));
             HashMap<String, String> parameters = new HashMap<String, String>();
-            parameters.put("query", "PID=escidoc*");
-            parameters.put("maximumRecords", "150");
+            parameters.put(FILTER_PARAMETER_QUERY, "PID=escidoc*");
+            parameters.put(FILTER_PARAMETER_MAXIMUMRECORDS, "150");
             String response = search(parameters, INDEX_NAME);
             assertXmlValidSearchResult(response);
             Document searchResultDoc = getDocument(response, true);

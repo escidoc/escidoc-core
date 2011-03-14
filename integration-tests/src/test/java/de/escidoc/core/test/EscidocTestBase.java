@@ -233,6 +233,8 @@ public abstract class EscidocTestBase {
 
     protected static final String TEST_USER_ACCOUNT_ID1 = "escidoc:test1";
 
+    protected static final String TEST_DEPOSITOR_ACCOUNT_ID = "escidoc:testdepositor";
+
     protected static final String TEST_USER_GROUP_ID = "escidoc:testgroup";
 
     /**
