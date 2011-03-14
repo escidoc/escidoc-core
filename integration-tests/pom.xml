@@ -1149,7 +1149,8 @@
 								<configuration>
 									<source>file://${project.build.directory}/fedora/install/</source>
 									<includes>fedora.war</includes>
-									<target>file://${project.build.directory}/installs/jboss-4.2.3.GA.escidoc-core-09/jboss-4.2.3.GA/server/default/deploy/</target>
+									<!-- if you change the name of the JBoss package, change it here too. -->
+									<target>file://${project.build.directory}/installs/jboss-4.2.3.GA.escidoc-core-10/jboss-4.2.3.GA/server/default/deploy/</target>
 								</configuration>
 							</execution>
 							<execution>
@@ -1213,6 +1214,7 @@
 								<containerId>jboss42x</containerId>
 								<timeout>240000</timeout>
 								<zipUrlInstaller>
+									<!-- If you change the name of the JBoss package, change the install path too! -->
 									<url>http://escidev5.fiz-karlsruhe.de:8888/files/jboss-4.2.3.GA.escidoc-core-10.zip</url>
 									<!-- url>http://escidev5:8888/files/jboss-4.2.3.GA-jdk6.zip</url -->
 									<installDir>${project.build.directory}/installs</installDir>
