@@ -568,11 +568,13 @@ extension-element-prefixes="escidoc-core-accessor"&gt;</programlisting></para>
 
     <itemizedlist>
       <listitem>
-        <para>x-info5-userId: Search as another user (escidoc userId)</para>
+        <para>x-info5-userId: Search as another user (escidoc userId).
+        Only supported when permission-filtering is used.</para>
       </listitem>
 
       <listitem>
-        <para>x-info5-roleId: Search with a specific role (escidoc roleId)</para>
+        <para>x-info5-roleId: Search with a specific role (escidoc roleId).
+        Only supported when permission-filtering is used.</para>
       </listitem>
 
       <listitem>
