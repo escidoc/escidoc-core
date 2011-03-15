@@ -165,109 +165,209 @@ public class AaTestBase extends EscidocRestSoapTestBase {
     //ROLE-HREFS
     private static final String ROLE_HREF_PREFIX = "/aa/role/";
 
+    public static final String ROLE_ID_ADMINISTRATOR = 
+        "escidoc:role-administrator";
+
+    public static final String ROLE_ID_AUDIENCE = 
+        "escidoc:role-audience";
+
+    public static final String ROLE_ID_AUTHOR = 
+        "escidoc:role-author";
+
+    public static final String ROLE_ID_COLLABORATOR = 
+        "escidoc:role-collaborator";
+
+    public static final String ROLE_ID_COLLABORATOR_MODIFIER = 
+        "escidoc:role-collaborator-modifier";
+
+    public static final String ROLE_ID_GRANT_TEST_1 = 
+        "escidoc:role-grant-test1";
+
+    public static final String ROLE_ID_GRANT_TEST_2 = 
+        "escidoc:role-grant-test2";
+
+    public static final String ROLE_ID_GRANT_TEST_3 = 
+        "escidoc:role-grant-test3";
+
+    public static final String ROLE_ID_GRANT_TEST_4 = 
+        "escidoc:role-grant-test4";
+
+    public static final String ROLE_ID_GRANT_TEST_5 = 
+        "escidoc:role-grant-test5";
+
+    public static final String 
+        ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS = 
+        "escidoc:role-collaborator-modifier-container-add-remove-members";
+
+    public static final String 
+        ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS = 
+        "escidoc:role-collaborator-modifier-container-update-direct-members";
+
+    public static final String 
+        ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS = 
+        "escidoc:role-collaborator-modifier-container-add-remove-any-members";
+
+    public static final String 
+        ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS = 
+        "escidoc:role-collaborator-modifier-container-update-any-members";
+
+    public static final String ROLE_ID_DEPOSITOR = 
+        "escidoc:role-depositor";
+
+    public static final String ROLE_ID_INGESTER = 
+        "escidoc:role-ingester";
+
+    public static final String ROLE_ID_MD_EDITOR = 
+        "escidoc:role-md-editor";
+
+    public static final String ROLE_ID_MODERATOR = 
+        "escidoc:role-moderator";
+
+    public static final String ROLE_ID_USER_GROUP_ADMIN = 
+        "escidoc:role-user-group-administrator";
+
+    public static final String ROLE_ID_USER_GROUP_INSPECTOR = 
+        "escidoc:role-user-group-inspector";
+
+    public static final String ROLE_ID_USER_ACCOUNT_ADMIN = 
+        "escidoc:role-user-account-administrator";
+
+    public static final String ROLE_ID_USER_ACCOUNT_INSPECTOR = 
+        "escidoc:role-user-account-inspector";
+
+    public static final String ROLE_ID_CONTEXT_ADMIN = 
+        "escidoc:role-context-administrator";
+
+    public static final String ROLE_ID_CONTEXT_MODIFIER = 
+        "escidoc:role-context-modifier";
+
+    public static final String ROLE_ID_PRIVILEGED_VIEWER = 
+        "escidoc:role-privileged-viewer";
+
+    public static final String ROLE_ID_CONTENT_RELATION_MANAGER = 
+        "escidoc:role-content-relation-manager";
+
+    public static final String ROLE_ID_CONTENT_RELATION_MODIFIER = 
+        "escidoc:role-content-relation-modifier";
+
+    public static final String ROLE_ID_STATISTICS_EDITOR = 
+        "escidoc:role-statistics-editor";
+
+    public static final String ROLE_ID_STATISTICS_READER = 
+        "escidoc:role-statistics-reader";
+
+    public static final String ROLE_ID_SYSTEM_ADMINISTRATOR = 
+        "escidoc:role-system-administrator";
+
+    public static final String ROLE_ID_OU_ADMINISTRATOR = 
+        "escidoc:role-ou-administrator";
+
+    public static final String ROLE_ID_SYSTEM_INSPECTOR = 
+        "escidoc:role-system-inspector";
+
     public static final String ROLE_HREF_ADMINISTRATOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-administrator";
+        ROLE_HREF_PREFIX + ROLE_ID_ADMINISTRATOR;
 
     public static final String ROLE_HREF_AUDIENCE = 
-        ROLE_HREF_PREFIX + "escidoc:role-audience";
+        ROLE_HREF_PREFIX + ROLE_ID_AUDIENCE;
 
     public static final String ROLE_HREF_AUTHOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-author";
+        ROLE_HREF_PREFIX + ROLE_ID_AUTHOR;
 
     public static final String ROLE_HREF_COLLABORATOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-collaborator";
+        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR;
 
     public static final String ROLE_HREF_COLLABORATOR_MODIFIER = 
-        ROLE_HREF_PREFIX + "escidoc:role-collaborator-modifier";
+        ROLE_HREF_PREFIX + ROLE_ID_COLLABORATOR_MODIFIER;
 
     public static final String ROLE_HREF_GRANT_TEST_1 = 
-        ROLE_HREF_PREFIX + "escidoc:role-grant-test1";
+        ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_1;
 
     public static final String ROLE_HREF_GRANT_TEST_2 = 
-        ROLE_HREF_PREFIX + "escidoc:role-grant-test2";
+        ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_2;
 
     public static final String ROLE_HREF_GRANT_TEST_3 = 
-        ROLE_HREF_PREFIX + "escidoc:role-grant-test3";
+        ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_3;
 
     public static final String ROLE_HREF_GRANT_TEST_4 = 
-        ROLE_HREF_PREFIX + "escidoc:role-grant-test4";
+        ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_4;
 
     public static final String ROLE_HREF_GRANT_TEST_5 = 
-        ROLE_HREF_PREFIX + "escidoc:role-grant-test5";
+        ROLE_HREF_PREFIX + ROLE_ID_GRANT_TEST_5;
 
     public static final String 
         ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS = 
         ROLE_HREF_PREFIX 
-        + "escidoc:role-collaborator-modifier-container-add-remove-members";
+        + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_MEMBERS;
 
     public static final String 
         ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS = 
         ROLE_HREF_PREFIX 
-        + "escidoc:role-collaborator-modifier-container-update-direct-members";
+        + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_DIRECT_MEMBERS;
 
     public static final String 
         ROLE_HREF_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS = 
         ROLE_HREF_PREFIX 
-        + "escidoc:role-collaborator-modifier-container-add-remove-any-members";
+        + ROLE_ID_COLLABORATOR_MODIFIER_ADD_REMOVE_ANY_MEMBERS;
 
     public static final String 
         ROLE_HREF_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS = 
         ROLE_HREF_PREFIX 
-        + "escidoc:role-collaborator-modifier-container-update-any-members";
+        + ROLE_ID_COLLABORATOR_MODIFIER_UPDATE_ANY_MEMBERS;
 
     public static final String ROLE_HREF_DEPOSITOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-depositor";
+        ROLE_HREF_PREFIX + ROLE_ID_DEPOSITOR;
 
     public static final String ROLE_HREF_INGESTER = 
-        ROLE_HREF_PREFIX + "escidoc:role-ingester";
+        ROLE_HREF_PREFIX + ROLE_ID_INGESTER;
 
     public static final String ROLE_HREF_MD_EDITOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-md-editor";
+        ROLE_HREF_PREFIX + ROLE_ID_MD_EDITOR;
 
     public static final String ROLE_HREF_MODERATOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-moderator";
+        ROLE_HREF_PREFIX + ROLE_ID_MODERATOR;
 
     public static final String ROLE_HREF_USER_GROUP_ADMIN = 
-        ROLE_HREF_PREFIX + "escidoc:role-user-group-administrator";
+        ROLE_HREF_PREFIX + ROLE_ID_USER_GROUP_ADMIN;
 
     public static final String ROLE_HREF_USER_GROUP_INSPECTOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-user-group-inspector";
+        ROLE_HREF_PREFIX + ROLE_ID_USER_GROUP_INSPECTOR;
 
     public static final String ROLE_HREF_USER_ACCOUNT_ADMIN = 
-        ROLE_HREF_PREFIX + "escidoc:role-user-account-administrator";
+        ROLE_HREF_PREFIX + ROLE_ID_USER_ACCOUNT_ADMIN;
 
     public static final String ROLE_HREF_USER_ACCOUNT_INSPECTOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-user-account-inspector";
+        ROLE_HREF_PREFIX + ROLE_ID_USER_ACCOUNT_INSPECTOR;
 
     public static final String ROLE_HREF_CONTEXT_ADMIN = 
-        ROLE_HREF_PREFIX + "escidoc:role-context-administrator";
+        ROLE_HREF_PREFIX + ROLE_ID_CONTEXT_ADMIN;
 
     public static final String ROLE_HREF_CONTEXT_MODIFIER = 
-        ROLE_HREF_PREFIX + "escidoc:role-context-modifier";
+        ROLE_HREF_PREFIX + ROLE_ID_CONTEXT_MODIFIER;
 
     public static final String ROLE_HREF_PRIVILEGED_VIEWER = 
-        ROLE_HREF_PREFIX + "escidoc:role-privileged-viewer";
+        ROLE_HREF_PREFIX + ROLE_ID_PRIVILEGED_VIEWER;
 
     public static final String ROLE_HREF_CONTENT_RELATION_MANAGER = 
-        ROLE_HREF_PREFIX + "escidoc:role-content-relation-manager";
+        ROLE_HREF_PREFIX + ROLE_ID_CONTENT_RELATION_MANAGER;
 
     public static final String ROLE_HREF_CONTENT_RELATION_MODIFIER = 
-        ROLE_HREF_PREFIX + "escidoc:role-content-relation-modifier";
+        ROLE_HREF_PREFIX + ROLE_ID_CONTENT_RELATION_MODIFIER;
 
     public static final String ROLE_HREF_STATISTICS_EDITOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-statistics-editor";
+        ROLE_HREF_PREFIX + ROLE_ID_STATISTICS_EDITOR;
 
     public static final String ROLE_HREF_STATISTICS_READER = 
-        ROLE_HREF_PREFIX + "escidoc:role-statistics-reader";
+        ROLE_HREF_PREFIX + ROLE_ID_STATISTICS_READER;
 
     public static final String ROLE_HREF_SYSTEM_ADMINISTRATOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-system-administrator";
+        ROLE_HREF_PREFIX + ROLE_ID_SYSTEM_ADMINISTRATOR;
 
     public static final String ROLE_HREF_OU_ADMINISTRATOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-ou-administrator";
+        ROLE_HREF_PREFIX + ROLE_ID_OU_ADMINISTRATOR;
 
     public static final String ROLE_HREF_SYSTEM_INSPECTOR = 
-        ROLE_HREF_PREFIX + "escidoc:role-system-inspector";
+        ROLE_HREF_PREFIX + ROLE_ID_SYSTEM_INSPECTOR;
 
     protected final ContainerClient containerClient;
 
