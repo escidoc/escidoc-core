@@ -29,6 +29,7 @@
 package de.escidoc.core.test.common.compare;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
@@ -85,10 +86,14 @@ public class TripleStoreValue {
         /*
          * non representation values
          */
+        // retrieve frameworkj version from running instance
+        EscidocRestSoapTestBase etb = new EscidocRestSoapTestBase(transport);
+        String coreVersion = etb.obtainFrameworkVersion();
+
         // check build number
         compareValueWithTripleStore(
             Select.getObjidValueWithoutVersion(xmlItem, getTransport()),
-            this.properties.getProperty("escidoc-core.build"),
+            coreVersion,
             "/RDF/Description/build",
             "<http://escidoc.de/core/01/system/build>");
 

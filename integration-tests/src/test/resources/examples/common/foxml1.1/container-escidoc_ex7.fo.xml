@@ -87,9 +87,9 @@
       <foxml:xmlContent>
       <rdf:RDF xmlns:prop="http://escidoc.de/core/01/properties/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:release="http://escidoc.de/core/01/properties/release/"
-  xmlns:srel="http://escidoc.de/core/01/structural-relations/" xmlns:system="http://escidoc.de/core/01/system/" xmlns:version="http://escidoc.de/core/01/properties/version/">
+  xmlns:srel="http://escidoc.de/core/01/structural-relations/" xmlns:version="http://escidoc.de/core/01/properties/version/">
   <rdf:Description rdf:about="info:fedora/escidoc:ex7">
-    <system:build>1.2-buildHEAD</system:build>
+    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
     <prop:public-status>pending</prop:public-status>
     <prop:context-title>Test Collection</prop:context-title>
     <prop:public-status-comment>Object escidoc:ex7 created.</prop:public-status-comment>

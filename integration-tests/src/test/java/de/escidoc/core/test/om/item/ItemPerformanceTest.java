@@ -459,29 +459,4 @@ public class ItemPerformanceTest extends ItemTestBase {
         return te;
     }
 
-    /**
-     * Obtain version number of framework.
-     * 
-     * @return version number of framework.
-     * 
-     * @throws Exception
-     *             Thrown if request failed.
-     */
-    private String obtainFrameworkVersion() throws Exception {
-
-        String result = "undef";
-
-        AdminClient admClient = new AdminClient(Constants.TRANSPORT_REST);
-        String info = handleXmlResult(admClient.getRepositoryInfo());
-
-        Pattern p =
-            Pattern
-                .compile(".*<entry key=\"escidoc-core.build\">([^<]*)</entry>.*");
-        Matcher m = p.matcher(info);
-        if (m.find()) {
-            result = m.group(1);
-        }
-
-        return result;
-    }
 }

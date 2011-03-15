@@ -32,6 +32,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
@@ -86,22 +88,24 @@ public class GetRepositoryInfoTest extends AdminToolTestBase {
 
         repositoryInfo.loadFromXML(new ByteArrayInputStream(output
             .toString().getBytes()));
-        
-        //Check Property escidoc-core.build that comes from 
-        //internal configuration file escidoc-core.constant.properties
-        assertNotNull("Property escidoc-core.build is null", 
-            repositoryInfo.getProperty("escidoc-core.build"));
-        
-        //Check Property escidoc-core.repository-name that comes from 
-        //external configuration file escidoc-core.properties
-        assertNotNull("Property escidoc-core.repository-name is null", 
+
+        // Check Property escidoc-core.build that comes from
+        // internal configuration file escidoc-core.constant.properties
+        assertNotNull("Property " + PropertiesProvider.ESCIDOC_VERSION
+            + " is null",
+            repositoryInfo.getProperty(PropertiesProvider.ESCIDOC_VERSION));
+
+        // Check Property escidoc-core.repository-name that comes from
+        // external configuration file escidoc-core.properties
+        assertNotNull("Property escidoc-core.repository-name is null",
             repositoryInfo.getProperty("escidoc-core.repository-name"));
-        
-        assertTrue("current database structure differs from the internally stored structure", Boolean
-            .valueOf(repositoryInfo
+
+        assertTrue(
+            "current database structure differs from the internally stored structure",
+            Boolean.valueOf(repositoryInfo
                 .getProperty("escidoc-core.database.consistent")));
     }
-    
+
     /**
      * Get some information about the repository.
      * 

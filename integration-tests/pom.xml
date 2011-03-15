@@ -24,6 +24,9 @@
 		<fedora.database>fedora3</fedora.database>
 		<fedora.database.user>fedoraAdmin</fedora.database.user>
 		<fedora.database.password>fedoraAdmin</fedora.database.password>
+		<fedora.admin.user>fedoraAdmin</fedora.admin.user>
+		<fedora.admin.password>fedoraAdmin</fedora.admin.password>
+		<fedora.host>localhost:8080</fedora.host>
 		<triplestore.database>riTriples</triplestore.database>
 		<escidoc.database>escidoc-core</escidoc.database>
 		<escidoc.database.user>escidoc</escidoc.database.user>
@@ -682,6 +685,26 @@
 									<resources>
 										<resource>
 											<directory>${basedir}/../common/src/main/resources/sql</directory>
+											<filtering>true</filtering>
+										</resource>
+									</resources>
+								</configuration>
+							</execution>
+							<execution>
+								<id>copy-foxml-resources</id>
+								<phase>process-sources</phase>
+								<goals>
+									<goal>copy-resources</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/target/foxml-resources</outputDirectory>
+									<resources>
+										<resource>
+											<directory>src/test/resources/examples/common/foxml1.1</directory>
+											<filtering>true</filtering>
+										</resource>
+										<resource>
+											<directory>src/test/resources/examples/pubman/foxml1.1</directory>
 											<filtering>true</filtering>
 										</resource>
 									</resources>
@@ -1412,7 +1435,7 @@
 									<skip>${skipITs}</skip>
 									<executable>java</executable>
 									<mainClass>org.fcrepo.client.utility.ingest.Ingest</mainClass>
-									<workingDirectory>src/test/resources/</workingDirectory>
+									<workingDirectory>${basedir}/target</workingDirectory>
 									<arguments>
 										<argument>-Xms64m</argument>
 										<argument>-Xmx96m</argument>
@@ -1428,11 +1451,11 @@
 
 										<argument>org.fcrepo.client.utility.ingest.Ingest</argument>
 										<argument>d</argument>
-										<argument>examples/</argument>
+										<argument>foxml-resources</argument>
 										<argument>info:fedora/fedora-system:FOXML-1.1</argument>
-										<argument>localhost:8080</argument>
-										<argument>fedoraAdmin</argument>
-										<argument>fedoraAdmin</argument>
+										<argument>${fedora.host}</argument>
+										<argument>${fedora.admin.user}</argument>
+										<argument>${fedora.admin.password}</argument>
 										<argument>http</argument>
 
 									</arguments>

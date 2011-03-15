@@ -34,6 +34,7 @@
           xmlns:escidocRelations="http://www.nsdl.org/ontologies/relationships/"
           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xlink="http://www.w3.org/1999/xlink/">
           <rdf:Description rdf:about="info:fedora/escidoc:persistent5">
+		    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
             <prop:creation-date>2007-01-17T11:23:24.359ZZ</prop:creation-date>
             <srel:created-by rdf:resource="info:fedora/escidoc:user42"/>
             <prop:created-by-title>roland</prop:created-by-title>

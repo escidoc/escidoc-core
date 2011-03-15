@@ -34,6 +34,7 @@
         <rdf:RDF xmlns:escidocRelations="http://www.nsdl.org/ontologies/relationships/"
           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xlink="http://www.w3.org/1999/xlink/">
           <rdf:Description rdf:about="info:fedora/escidoc:toc">
+		    <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
             <escidocRelations:title>toc</escidocRelations:title>
             <rdf:type rdf:resource="http://escidoc.de/core/01/resources/ContentModel"/>
           </rdf:Description>

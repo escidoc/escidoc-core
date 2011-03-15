@@ -54,6 +54,8 @@ public class PropertiesProvider {
 
     public static final String ESCIDOC_SERVER_PORT = "server.port";
 
+    public static final String ESCIDOC_VERSION = "escidoc-core.build";
+
     public static final String FEDORA_URL = "fedora.url";
 
     public static final String FEDORA_USER = "fedora.user";

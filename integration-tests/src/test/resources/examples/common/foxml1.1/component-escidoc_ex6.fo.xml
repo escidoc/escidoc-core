@@ -14,8 +14,10 @@
           xmlns:prop="http://escidoc.de/core/01/properties/" 
           xmlns:srel="http://escidoc.de/core/01/structural-relations/"
           xmlns:escidocRelations="http://www.nsdl.org/ontologies/relationships/"
-          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+          xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
           <rdf:Description rdf:about="info:fedora/escidoc:ex6">
+            <system:build xmlns:system="http://escidoc.de/core/01/system/">${project.version}</system:build>
             <prop:content-category>image</prop:content-category>
             <srel:created-by rdf:resource="info:fedora/escidoc:user42"/>
             <prop:visibility>public</prop:visibility>

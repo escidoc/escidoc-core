@@ -29,6 +29,7 @@
 package de.escidoc.core.test;
 
 import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
 import de.escidoc.core.test.common.logger.AppLogger;
@@ -233,7 +234,8 @@ public abstract class EscidocTestBase {
 
     protected static final String TEST_USER_ACCOUNT_ID1 = "escidoc:test1";
 
-    protected static final String TEST_DEPOSITOR_ACCOUNT_ID = "escidoc:testdepositor";
+    protected static final String TEST_DEPOSITOR_ACCOUNT_ID =
+        "escidoc:testdepositor";
 
     protected static final String TEST_USER_GROUP_ID = "escidoc:testgroup";
 
@@ -1353,8 +1355,7 @@ public abstract class EscidocTestBase {
      * @param map
      *            The map to check.
      */
-    public static void assertEmptyMap(
-        final String message, final Map map) {
+    public static void assertEmptyMap(final String message, final Map map) {
         if (map == null) {
             fail(message + " Map is null");
         }
@@ -5166,6 +5167,36 @@ public abstract class EscidocTestBase {
 
             // components
         }
+    }
+
+    /**
+     * Obtain version number of framework by requesting it from Admin Service.
+     * 
+     * @return version number of framework.
+     * 
+     * @throws Exception
+     *             Thrown if request failed.
+     */
+    public String obtainFrameworkVersion() throws Exception {
+
+        String result = null;
+
+        AdminClient admClient = new AdminClient(Constants.TRANSPORT_REST);
+        String info = handleXmlResult(admClient.getRepositoryInfo());
+
+        Pattern p =
+            Pattern
+                .compile(".*<entry key=\"escidoc-core.build\">([^<]*)</entry>.*");
+        Matcher m = p.matcher(info);
+        if (m.find()) {
+            m.group(1);
+        }
+        else {
+            throw new Exception("Cannot obtain framework version "
+                + "from eSciDoc Core installation.");
+        }
+
+        return result;
     }
 
 }
