@@ -45,13 +45,13 @@ extension.x-info-5-restrictorSummary=restrictorSummary
 extension.restrictorSummary.namespace=info:srw/extension/5/restrictorSummary
 
 #Usage: x-info5-userId=<userId> to search as another user
-extension.x-info5-userId=userId
-extension.userId.namespace=info:srw/extension/5/extraData
+extension.x-info5-userId=x-info5-userId
+extension.x-info5-userId.namespace=info:srw/extension/5/extraData
 
 #Usage: x-info5-roleId=<roleId> to search with a specific role
-extension.x-info5-roleId=roleId
-extension.roleId.namespace=info:srw/extension/5/extraData
+extension.x-info5-roleId=x-info5-roleId
+extension.x-info5-roleId.namespace=info:srw/extension/5/extraData
 
 #Usage: x-info5-omitHighlighting=true|false to omit Highlighting for a search
-extension.x-info5-omitHighlighting=omitHighlighting
-extension.omitHighlighting.namespace=info:srw/extension/5/extraData
+extension.x-info5-omitHighlighting=x-info5-omitHighlighting
+extension.x-info5-omitHighlighting.namespace=info:srw/extension/5/extraData
