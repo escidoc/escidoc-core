@@ -111,7 +111,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
     public void setUp() throws Exception {
         if (methodCounter == 0) {
             prepare();
-//          int c = 43001;
+//          int c = 51001;
 //          containerIds = new String[14];
 //          adminTestContainerIds = new String[20];
 //          itemIds = new String[84];
@@ -633,8 +633,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      * @test.name Systemadministrator User Search with user-filter
      * @test.id SB_SystemadministratorUserSearchWithUserFilter
      * @test.input Systemadministrator user searching all objects
-     * @test.expected 118 hits.
-     *              Systemadministrator may see all items/containers
+     * @test.expected 86 hits.
      * @test.status Implemented
      * 
      * @throws Exception
@@ -645,11 +644,80 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
             {
-                put("role0",
-                               GrantHelper.ROLE_HREF_SYSTEM_ADMINISTRATOR);
-                put("handle", PWCallback.TEST_HANDLE1);
-                put("user", TEST_USER_ACCOUNT_ID1);
+                put("handle", PWCallback.DEFAULT_HANDLE);
                 put("forUser", TEST_DEPOSITOR_ACCOUNT_ID);
+                put("expectedHits", "86");
+                put("searchresultIds", new HashMap<String, ArrayList<String>>() {
+                    private static final long serialVersionUID = 1L;
+                    {
+                        for (int i = 0; i < 10; i++) {
+                            if (i == 8) {
+                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "pending"));
+                            } else {
+                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, null));
+                            }
+                            
+                        }
+                        for (int i = 13; i < 19; i++) {
+                            if (i == 18) {
+                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "released"));
+                            } else {
+                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, null));
+                            }
+                            
+                        }
+                        for (int i = 0; i < 7; i++) {
+                            put(containerIds[i], null);
+                        }
+                        for (int i = 0; i < 42; i++) {
+                            if (i % 6 == 4) {
+                                put(itemIds[i], getItemXpathList(i, "pending"));
+                            } else {
+                                put(itemIds[i], getItemXpathList(i, null));
+                            }
+                        }
+                        for (int i = 42; i < 84; i += 6) {
+                            put(itemIds[i + 2], getItemXpathList(i + 2, null));
+                            put(itemIds[i + 3], getItemXpathList(i + 3, null));
+                            put(itemIds[i + 4], getItemXpathList(i + 4, "released"));
+                        }
+                    }
+                });
+            }
+        };
+        search(role);
+    }
+
+    /**
+     * Test searching as user with role-Filter.
+     * Role-Filter executes search as user with only the given role.
+     * 
+     * @test.name User Search with role-filter
+     * @test.id SB_UserSearchWithRoleFilter
+     * @test.input user searching all objects
+     * @test.expected 86 hits.
+     * @test.status Implemented
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test(timeout=120000)
+    public void testSearchAsUserWithRoleFilter() throws Exception {
+        HashMap<String, Object> role = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 1L;
+            {
+                put("role0", GrantHelper.ROLE_HREF_DEPOSITOR);
+                put("scope0", de.escidoc.core.test.common.client
+                        .servlet.Constants.CONTEXT_BASE_URI
+                        + "/" + CONTEXT_ID);
+                put("role1", GrantHelper.ROLE_HREF_ADMINISTRATOR);
+                put("scope1", de.escidoc.core.test.common.client
+                        .servlet.Constants.CONTEXT_BASE_URI
+                        + "/" + CONTEXT_ID3);
+                put("user", TEST_USER_ACCOUNT_ID1);
+                put("handle", PWCallback.DEFAULT_HANDLE);
+                put("forUser", TEST_USER_ACCOUNT_ID1);
+                put("forRole", GrantHelper.ROLE_ID_DEPOSITOR);
                 put("expectedHits", "86");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
