@@ -28,13 +28,6 @@
  */
 package de.escidoc.core.aa.business.filter;
 
-import de.escidoc.core.aa.business.persistence.RoleGrant;
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.business.fedora.resources.Values;
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
-
-import javax.sql.DataSource;
 import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
@@ -43,6 +36,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
+import de.escidoc.core.aa.business.persistence.RoleGrant;
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.business.fedora.resources.Values;
 
 /**
  * This object contains all user access rights used in the resource cache. These
@@ -53,7 +51,7 @@ import java.util.Set;
  * 
  * @author SCHE
  */
-public class AccessRights extends JdbcDaoSupport {
+public class AccessRights {
     /**
      * The id of the default role for anonymous access.
      */
@@ -67,7 +65,7 @@ public class AccessRights extends JdbcDaoSupport {
     /**
      * Container for the scope rules and the policy rules of a role.
      */
-    private static class Rules {
+    private static final class Rules {
         public final String scopeRules;
 
         public final String policyRules;
@@ -90,7 +88,8 @@ public class AccessRights extends JdbcDaoSupport {
      * Mapping from role id to SQL statements.
      */
     public static class RightsMap implements Map<String, Rules> {
-        private final HashMap<String, Rules> hashMap = new HashMap<String, Rules>();
+        private final HashMap<String, Rules> hashMap =
+            new HashMap<String, Rules>();
 
         public boolean equals(final Object o) {
             return hashMap.equals(o);
@@ -240,7 +239,7 @@ public class AccessRights extends JdbcDaoSupport {
      */
     public String getAccessRights(
         final ResourceType type, final String roleId, final String userId,
-        final Set<String> groupIds, 
+        final Set<String> groupIds,
         final Map<String, Map<String, List<RoleGrant>>> userGrants,
         final Map<String, Map<String, List<RoleGrant>>> userGroupGrants,
         final Set<String> hierarchicalContainers,
@@ -255,8 +254,7 @@ public class AccessRights extends JdbcDaoSupport {
                 if (!groupIds.isEmpty() && userGroupGrants != null
                     && userGroupGrants.containsKey(roleId)
                     || userGrants.containsKey(roleId)) {
-                    final Rules rights =
-                        rightsMap[type.ordinal()].get(roleId);
+                    final Rules rights = rightsMap[type.ordinal()].get(roleId);
 
                     if (rights != null) {
                         final String groupSQL = getGroupSql(groupIds);
@@ -265,24 +263,23 @@ public class AccessRights extends JdbcDaoSupport {
                         final String scopeSql =
                             MessageFormat.format(
                                 rights.scopeRules.replace("'", "''"),
-                                    values.escape(userId),
-                                    values.escape(roleId),
-                                    groupSQL,
-                                    quotedGroupSQL,
-                                    ensureNotEmpty(getGrantsAsString(getScopeIds(
-                                        userGrants, userGroupGrants))),
-                                    containerGrants, ouGrants);
+                                values.escape(userId),
+                                values.escape(roleId),
+                                groupSQL,
+                                quotedGroupSQL,
+                                ensureNotEmpty(getGrantsAsString(getScopeIds(
+                                    userGrants, userGroupGrants))),
+                                containerGrants, ouGrants);
                         final String policySql =
-                            MessageFormat.format(
-                                rights.policyRules.replace("'", "''"),
+                            MessageFormat
+                                .format(
+                                    rights.policyRules.replace("'", "''"),
                                     values.escape(userId),
                                     values.escape(roleId),
                                     groupSQL,
                                     quotedGroupSQL,
                                     ensureNotEmpty(getGrantsAsString(getOptimizedScopeIds(
-                                        type,
-                                        userGrants,
-                                        userGroupGrants))),
+                                        type, userGrants, userGroupGrants))),
                                     containerGrants, ouGrants);
 
                         if (scopeSql.length() > 0) {
@@ -297,10 +294,10 @@ public class AccessRights extends JdbcDaoSupport {
             }
             else {
                 // concatenate all rules with "OR"
-                for (final Entry<String, Rules> role : rightsMap[type
-                    .ordinal()].entrySet()) {
-                    if (!groupIds.isEmpty() && userGroupGrants.containsKey(
-                        roleId)
+                for (final Entry<String, Rules> role : rightsMap[type.ordinal()]
+                    .entrySet()) {
+                    if (!groupIds.isEmpty()
+                        && userGroupGrants.containsKey(roleId)
                         || userGrants.containsKey(role.getKey())) {
                         final String groupSQL = getGroupSql(groupIds);
                         final String quotedGroupSQL =
@@ -313,28 +310,24 @@ public class AccessRights extends JdbcDaoSupport {
 
                         final String scopeSql =
                             MessageFormat.format(
-                                role.getValue().scopeRules.replace("'",
-                                    "''"),
-                                    values.escape(userId),
-                                    values.escape(role.getKey()),
-                                    groupSQL,
-                                    quotedGroupSQL,
-                                    getGrantsAsString(getScopeIds(userGrants,
-                                        userGroupGrants)), containerGrants,
-                                    ouGrants);
+                                role.getValue().scopeRules.replace("'", "''"),
+                                values.escape(userId),
+                                values.escape(role.getKey()),
+                                groupSQL,
+                                quotedGroupSQL,
+                                getGrantsAsString(getScopeIds(userGrants,
+                                    userGroupGrants)), containerGrants,
+                                ouGrants);
                         final String policySql =
                             MessageFormat.format(
-                                role.getValue().policyRules.replace("'",
-                                    "''"),
-                                    values.escape(userId),
-                                    values.escape(role.getKey()),
-                                    groupSQL,
-                                    quotedGroupSQL,
-                                    getGrantsAsString(getOptimizedScopeIds(
-                                        type,
-                                        userGrants,
-                                        userGroupGrants)),
-                                    containerGrants, ouGrants);
+                                role.getValue().policyRules.replace("'", "''"),
+                                values.escape(userId),
+                                values.escape(role.getKey()),
+                                groupSQL,
+                                quotedGroupSQL,
+                                getGrantsAsString(getOptimizedScopeIds(type,
+                                    userGrants, userGroupGrants)),
+                                containerGrants, ouGrants);
 
                         if (scopeSql.length() > 0) {
                             accessRights.append(values.getAndCondition(
@@ -409,8 +402,7 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return string containing all given grants separated with space
      */
-    private String getGrantsAsString(
-        final Set<String> scopeIds) {
+    private String getGrantsAsString(final Set<String> scopeIds) {
         return getSetAsString(scopeIds);
     }
 
@@ -455,13 +447,12 @@ public class AccessRights extends JdbcDaoSupport {
      *         resources
      */
     public boolean needsHierarchicalPermissions(
-        final ResourceType type, final CharSequence roleId, final CharSequence placeHolder) {
+        final ResourceType type, final CharSequence roleId,
+        final CharSequence placeHolder) {
         boolean result = false;
 
         synchronized (rightsMap) {
-            if (type != null
-                && roleId != null
-                && roleId.length() > 0) {
+            if (type != null && roleId != null && roleId.length() > 0) {
                 final Rules rules = rightsMap[type.ordinal()].get(roleId);
 
                 if (rules != null) {
@@ -515,12 +506,12 @@ public class AccessRights extends JdbcDaoSupport {
      * @return set of ids of all scopes
      */
     public Set<String> getScopeIds(
-                final Map<String, Map<String, List<RoleGrant>>> userGrants,
-                    final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
+        final Map<String, Map<String, List<RoleGrant>>> userGrants,
+        final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
         final Set<String> result = new HashSet<String>();
         if (userGrants != null) {
-            for (final Entry<String, Map<String, List<RoleGrant>>> entry
-                                            : userGrants.entrySet()) {
+            for (final Entry<String, Map<String, List<RoleGrant>>> entry : userGrants
+                .entrySet()) {
                 for (final String scopeId : entry.getValue().keySet()) {
                     if (scopeId.length() != 0) {
                         result.add(scopeId);
@@ -529,8 +520,8 @@ public class AccessRights extends JdbcDaoSupport {
             }
         }
         if (groupGrants != null) {
-            for (final Entry<String, Map<String, List<RoleGrant>>> entry
-                                        : groupGrants.entrySet()) {
+            for (final Entry<String, Map<String, List<RoleGrant>>> entry : groupGrants
+                .entrySet()) {
                 for (final String scopeId : entry.getValue().keySet()) {
                     if (scopeId.length() != 0) {
                         result.add(scopeId);
@@ -553,21 +544,21 @@ public class AccessRights extends JdbcDaoSupport {
      * 
      * @return set of ids of all scopes
      */
-    public Set<String> getOptimizedScopeIds(final ResourceType resourceType,
-                final Map<String, Map<String, List<RoleGrant>>> userGrants,
-                    final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
+    public Set<String> getOptimizedScopeIds(
+        final ResourceType resourceType,
+        final Map<String, Map<String, List<RoleGrant>>> userGrants,
+        final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
         final Set<String> result = new HashSet<String>();
         if (userGrants != null) {
-            for (final Entry<String, Map<String, List<RoleGrant>>> entry
-                                            : userGrants.entrySet()) {
-                for (final Entry<String, List<RoleGrant>> subentry
-                                : entry.getValue().entrySet()) {
+            for (final Entry<String, Map<String, List<RoleGrant>>> entry : userGrants
+                .entrySet()) {
+                for (final Entry<String, List<RoleGrant>> subentry : entry
+                    .getValue().entrySet()) {
                     if (subentry.getKey().length() != 0) {
                         final List<RoleGrant> grants = subentry.getValue();
                         if (grants != null) {
                             for (final RoleGrant grant : grants) {
-                                final String objectHref =
-                                    grant.getObjectHref();
+                                final String objectHref = grant.getObjectHref();
                                 final ResourceType grantType =
                                     getResourceTypeFromHref(objectHref);
 
@@ -582,15 +573,14 @@ public class AccessRights extends JdbcDaoSupport {
             }
         }
         if (groupGrants != null) {
-            for (final Entry<String, Map<String, List<RoleGrant>>> entry
-                                            : groupGrants.entrySet()) {
-                for (final Entry<String, List<RoleGrant>> subentry
-                                : entry.getValue().entrySet()) {
+            for (final Entry<String, Map<String, List<RoleGrant>>> entry : groupGrants
+                .entrySet()) {
+                for (final Entry<String, List<RoleGrant>> subentry : entry
+                    .getValue().entrySet()) {
                     if (subentry.getKey().length() != 0) {
                         final List<RoleGrant> grants = subentry.getValue();
                         for (final RoleGrant grant : grants) {
-                            final String objectHref =
-                                grant.getObjectHref();
+                            final String objectHref = grant.getObjectHref();
                             final ResourceType grantType =
                                 getResourceTypeFromHref(objectHref);
 
@@ -632,17 +622,6 @@ public class AccessRights extends JdbcDaoSupport {
             }
         }
         return result;
-    }
-
-    /**
-     * Injects the data source.
-     * 
-     * @spring.property ref="escidoc-core.DataSource"
-     * @param myDataSource
-     *            data source from Spring
-     */
-    public void setMyDataSource(final DataSource myDataSource) {
-        setDataSource(myDataSource);
     }
 
     /**
