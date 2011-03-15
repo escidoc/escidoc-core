@@ -89,16 +89,13 @@ public class PermissionsQuery {
      *            SQL statement
      * @param userId
      *            user id
-     * @param groupIds
-     *            list of all group id's the user belongs to
      * 
      * @throws WebserverSystemException
      *             Thrown if a framework internal error occurs.
      */
     private void addAccessRights(
         final ResourceType resourceType, final StringBuffer statement,
-        final String userId)
-        throws WebserverSystemException {
+        final String userId) throws WebserverSystemException {
         final List<String> statements = new LinkedList<String>();
         final Map<String, Map<String, List<RoleGrant>>> userGrants =
             getUserGrants(userId);
@@ -108,16 +105,16 @@ public class PermissionsQuery {
         Set<String> hierarchicalOUs = null;
 
         for (final String roleId : accessRights.getRoleIds(resourceType)) {
-            if (userGrants.keySet().contains(roleId) 
+            if (userGrants.keySet().contains(roleId)
                 || userGroupGrants.keySet().contains(roleId)
                 || roleId.equals(AccessRights.getDefaultRole())) {
                 if (hierarchicalContainers == null
                     && accessRights.needsHierarchicalPermissions(resourceType,
                         roleId, HIERARCHICAL_CONTAINERS_PLACEHOLDER)) {
                     hierarchicalContainers =
-                        getHierarchicalContainers(
-                            accessRights.getOptimizedScopeIds(
-                                ResourceType.CONTAINER, userGrants, userGroupGrants));
+                        getHierarchicalContainers(accessRights
+                            .getOptimizedScopeIds(ResourceType.CONTAINER,
+                                userGrants, userGroupGrants));
                 }
                 if (hierarchicalOUs == null
                     && accessRights.needsHierarchicalPermissions(resourceType,
@@ -129,7 +126,8 @@ public class PermissionsQuery {
 
                 final String rights =
                     accessRights.getAccessRights(resourceType, roleId, userId,
-                        retrieveGroupsForUser(userId), userGrants, userGroupGrants, hierarchicalContainers,
+                        retrieveGroupsForUser(userId), userGrants,
+                        userGroupGrants, hierarchicalContainers,
                         hierarchicalOUs);
 
                 if (rights != null && rights.length() > 0) {
@@ -194,16 +192,15 @@ public class PermissionsQuery {
                 Set<String> hierarchicalContainers = null;
 
                 if (accessRights.needsHierarchicalPermissions(resourceType,
-                    filter.getRoleId(),
-                    HIERARCHICAL_CONTAINERS_PLACEHOLDER)) {
+                    filter.getRoleId(), HIERARCHICAL_CONTAINERS_PLACEHOLDER)) {
                     hierarchicalContainers =
-                        getHierarchicalContainers(accessRights.getOptimizedScopeIds(
-                            ResourceType.CONTAINER, userGrants, userGroupGrants));
+                        getHierarchicalContainers(accessRights
+                            .getOptimizedScopeIds(ResourceType.CONTAINER,
+                                userGrants, userGroupGrants));
                 }
                 Set<String> hierarchicalOUs = null;
                 if (accessRights.needsHierarchicalPermissions(resourceType,
-                    filter.getRoleId(),
-                    HIERARCHICAL_OUS_PLACEHOLDER)) {
+                    filter.getRoleId(), HIERARCHICAL_OUS_PLACEHOLDER)) {
                     hierarchicalOUs =
                         getHierarchicalOUs(accessRights.getOptimizedScopeIds(
                             ResourceType.OU, userGrants, userGroupGrants));
@@ -211,8 +208,9 @@ public class PermissionsQuery {
 
                 final String rights =
                     accessRights.getAccessRights(resourceType,
-                        filter.getRoleId(), filter.getUserId(), retrieveGroupsForUser(filter.getUserId()),
-                        userGrants, userGroupGrants, hierarchicalContainers,
+                        filter.getRoleId(), filter.getUserId(),
+                        retrieveGroupsForUser(filter.getUserId()), userGrants,
+                        userGroupGrants, hierarchicalContainers,
                         hierarchicalOUs);
 
                 if (rights != null && rights.length() > 0) {
@@ -228,17 +226,15 @@ public class PermissionsQuery {
     }
 
     /**
-     * Get the list of all child containers for all containers the user is
-     * granted to.
+     * Get a list of all child containers for the given containers.
      * 
-     * @param userGrants
-     *            user grants of the user
-     * @param userGroupGrants
-     *            user group grants of the user
+     * @param containerIds
+     *            container list
      * 
      * @return list of all child containers
      */
-    private Set<String> getHierarchicalContainers(final Iterable<String> containerIds) {
+    private Set<String> getHierarchicalContainers(
+        final Iterable<String> containerIds) {
         final Set<String> result = new HashSet<String>();
 
         try {
@@ -259,12 +255,10 @@ public class PermissionsQuery {
     }
 
     /**
-     * Get the list of all child OUs for all OUs the user is granted to.
+     * Get a list of all child OUs for the given OUs.
      * 
-     * @param userGrants
-     *            user grants of the user
-     * @param userGroupGrants
-     *            user group grants of the user
+     * @param ouIds
+     *            OU list
      * 
      * @return list of all child OUs
      */
@@ -289,29 +283,25 @@ public class PermissionsQuery {
     }
 
     /**
-     * Get all grants directly assigned to the given user for the given resource
-     * type.
+     * Get all grants directly assigned to the given user.
      * 
-     * @param resourceType
-     *            resource type
      * @param userId
      *            user id
-     * @param optimize
-     *            ignore all grants which are not granted to the same resource
-     *            type as the given resource type
      * 
      * @return all direct grants for the user
      */
-    private Map<String, Map<String, List<RoleGrant>>> getUserGrants(final String userId) {
-        
-        Map<String, Map<String, List<RoleGrant>>> result =  
-                    policiesCacheProxy.getUserGrants(userId);
+    private Map<String, Map<String, List<RoleGrant>>> getUserGrants(
+        final String userId) {
+
+        Map<String, Map<String, List<RoleGrant>>> result =
+            policiesCacheProxy.getUserGrants(userId);
         if (result == null) {
             result = new HashMap<String, Map<String, List<RoleGrant>>>();
         }
-        
-        //Add Default-Role
-        final Map<String, List<RoleGrant>> defaultScope = new HashMap<String, List<RoleGrant>>();
+
+        // Add Default-Role
+        final Map<String, List<RoleGrant>> defaultScope =
+            new HashMap<String, List<RoleGrant>>();
         defaultScope.put("", null);
         result.put(AccessRights.getDefaultRole(), defaultScope);
         return result;
@@ -320,22 +310,19 @@ public class PermissionsQuery {
     /**
      * Get all group grants assigned to the given user.
      * 
-     * @param resourceType
-     *            resource type
      * @param userId
      *            user id
-     * @param optimize
-     *            ignore all grants which are not granted to the same resource
-     *            type as the given resource type
      * 
      * @return all group grants for the user
      */
-    private Map<String, Map<String, List<RoleGrant>>> getUserGroupGrants(final String userId) {
-        final Map<String, Map<String, List<RoleGrant>>> result
-            = new HashMap<String, Map<String, List<RoleGrant>>>();
+    private Map<String, Map<String, List<RoleGrant>>> getUserGroupGrants(
+        final String userId) {
+        final Map<String, Map<String, List<RoleGrant>>> result =
+            new HashMap<String, Map<String, List<RoleGrant>>>();
         if (userId != null && userId.length() > 0) {
             try {
-                final Set<String> groupIds = policiesCacheProxy.getUserGroups(userId);
+                final Set<String> groupIds =
+                    policiesCacheProxy.getUserGroups(userId);
 
                 if (groupIds != null) {
                     for (final String groupId : groupIds) {
@@ -343,17 +330,20 @@ public class PermissionsQuery {
                             policiesCacheProxy.getGroupGrants(groupId);
 
                         if (currentRoleGrantMap != null) {
-                            for (final Entry<String, Map<String, List<RoleGrant>>> entry
-                            		                : currentRoleGrantMap.entrySet()) {
+                            for (final Entry<String, Map<String, List<RoleGrant>>> entry : currentRoleGrantMap
+                                .entrySet()) {
                                 if (!result.containsKey(entry.getKey())) {
-                                    result.put(entry.getKey(), new HashMap<String, List<RoleGrant>>());
+                                    result.put(entry.getKey(),
+                                        new HashMap<String, List<RoleGrant>>());
                                 }
                                 final Map<String, List<RoleGrant>> currentGrantMap =
-                                	entry.getValue();
+                                    entry.getValue();
 
-                                for (final Entry<String, List<RoleGrant>> currEntry
-                                		            : currentGrantMap.entrySet()) {
-                                    result.get(entry.getKey()).put(currEntry.getKey(), currEntry.getValue());
+                                for (final Entry<String, List<RoleGrant>> currEntry : currentGrantMap
+                                    .entrySet()) {
+                                    result.get(entry.getKey()).put(
+                                        currEntry.getKey(),
+                                        currEntry.getValue());
                                 }
                             }
                         }
