@@ -30,7 +30,8 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>target/${project.build.finalName}/xsd</outputDirectory>
+							<outputDirectory>target/${project.build.finalName}/xsd
+							</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${basedir}/../aa/src/main/xsd</directory>
@@ -81,6 +82,21 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+				<configuration>
+					<webResources>
+						<webResource>
+							<directory>${basedir}/src/main/webapp-filtered </directory>
+							<filtering>true</filtering>
+						</webResource>
+					</webResources>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 </project>

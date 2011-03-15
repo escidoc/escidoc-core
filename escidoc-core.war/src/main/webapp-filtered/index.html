@@ -5,8 +5,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <title>eSciDoc-Framework</title>
   <link rel="schema.es" href="http://escidoc.de/core/01/system/" />
-  <meta name="es.version" content="{VERSION}" />
-  <meta name="es.build-date" content="{DATE}" />
+  <meta name="es.version" content="${project.version}" />
+  <meta name="es.build-date" content="${buildtimestamp}" />
   <style type="text/css">
     <!--
   	body {
@@ -39,7 +39,7 @@
         <div align="right">VERSION</div>
       </td>
       <td> 
-        <div align="left">{VERSION}</div>
+        <div align="left">${project.version}</div>
       </td>
     </tr>
     <tr> 
@@ -47,7 +47,7 @@
         <div align="right">DATE</div>
       </td>
       <td> 
-        <div align="left">{DATE}</div>
+        <div align="left">${buildtimestamp}</div>
       </td>
     </tr>
     <tr>
