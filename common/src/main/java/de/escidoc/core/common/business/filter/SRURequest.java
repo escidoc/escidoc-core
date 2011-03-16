@@ -28,20 +28,6 @@
  */
 package de.escidoc.core.common.business.filter;
 
-import de.escidoc.core.common.business.Constants;
-import de.escidoc.core.common.business.fedora.resources.ResourceType;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.servlet.EscidocServlet;
-import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.service.ConnectionUtility;
-import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.xml.XmlUtility;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.cookie.BasicClientCookie;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -52,6 +38,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.cookie.BasicClientCookie;
+
+import de.escidoc.core.common.business.Constants;
+import de.escidoc.core.common.business.fedora.resources.ResourceType;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.servlet.EscidocServlet;
+import de.escidoc.core.common.util.IOUtils;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.ConnectionUtility;
+import de.escidoc.core.common.util.service.UserContext;
+import de.escidoc.core.common.util.xml.XmlUtility;
+
 /**
  * Abstract super class for all types of SRU requests.
  * 
@@ -61,12 +62,14 @@ import java.util.Map.Entry;
  */
 public class SRURequest {
     // map from resource type to the corresponding admin index
-    private static final Map<ResourceType, String> ADMIN_INDEXES = new HashMap<ResourceType, String>();
+    private static final Map<ResourceType, String> ADMIN_INDEXES =
+        new HashMap<ResourceType, String>();
 
     static {
         ADMIN_INDEXES.put(ResourceType.CONTAINER, "item_container_admin");
         ADMIN_INDEXES.put(ResourceType.CONTENT_MODEL, "content_model_admin");
-        ADMIN_INDEXES.put(ResourceType.CONTENT_RELATION, "content_relation_admin");
+        ADMIN_INDEXES.put(ResourceType.CONTENT_RELATION,
+            "content_relation_admin");
         ADMIN_INDEXES.put(ResourceType.CONTEXT, "context_admin");
         ADMIN_INDEXES.put(ResourceType.ITEM, "item_container_admin");
         ADMIN_INDEXES.put(ResourceType.OU, "ou_admin");
@@ -103,14 +106,17 @@ public class SRURequest {
                 final HttpEntity entity = response.getEntity();
                 BufferedReader input = null;
                 try {
-                    input = new BufferedReader(new InputStreamReader(
-                                entity.getContent(), getCharset(entity.getContentType().getValue())));
+                    input =
+                        new BufferedReader(new InputStreamReader(
+                            entity.getContent(), getCharset(entity
+                                .getContentType().getValue())));
                     String line;
                     while ((line = input.readLine()) != null) {
                         output.write(line);
                         output.write('\n');
                     }
-                } finally {
+                }
+                finally {
                     IOUtils.closeStream(input);
                 }
             }
@@ -213,19 +219,28 @@ public class SRURequest {
         final HashMap<String, String> extraData, final RecordPacking recordPacking)
         throws WebserverSystemException {
         try {
+            final StringBuilder resourceTypeQuery = new StringBuilder();
+
+            for (final ResourceType resourceType : resourceTypes) {
+                if (resourceTypeQuery.length() > 0) {
+                    resourceTypeQuery.append(" OR ");
+                }
+                resourceTypeQuery.append("\"type\"=");
+                resourceTypeQuery.append(resourceType.getLabel());
+            }
+
             final StringBuilder internalQuery = new StringBuilder();
 
-            if (query == null) {
-                for (final ResourceType resourceType : resourceTypes) {
-                    if (internalQuery.length() > 0) {
-                        internalQuery.append(" OR ");
-                    }
-                    internalQuery.append("\"type\"=");
-                    internalQuery.append(resourceType.getLabel());
+            if ((query != null) && (query.length() > 0)) {
+                if (resourceTypeQuery.length() > 0) {
+                    internalQuery.append("(");
+                    internalQuery.append(resourceTypeQuery);
+                    internalQuery.append(") AND ");
                 }
+                internalQuery.append("(" + query + ")");
             }
             else {
-                internalQuery.append(query);
+                internalQuery.append(resourceTypeQuery);
             }
 
             String url =
@@ -275,14 +290,17 @@ public class SRURequest {
                 final HttpEntity entity = response.getEntity();
                 BufferedReader input = null;
                 try {
-                    input = new BufferedReader(new InputStreamReader(entity.getContent(), getCharset(entity
+                    input =
+                        new BufferedReader(new InputStreamReader(
+                            entity.getContent(), getCharset(entity
                                 .getContentType().getValue())));
                     String line;
                     while ((line = input.readLine()) != null) {
                         output.write(line);
                         output.write('\n');
                     }
-                } finally {
+                }
+                finally {
                     IOUtils.closeStream(input);
                 }
             }
