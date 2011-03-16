@@ -550,19 +550,26 @@ public class ItemFilterTest extends ItemTestBase {
     public void testIssue1106() throws Exception {
         final Map<String, String[]> filterParams =
             new HashMap<String, String[]>();
+        String itemId = createItem();
+        String containerId = createContainer();
 
-        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
-            + "\"/properties/public-status\"=pending" });
+        filterParams.put(FILTER_PARAMETER_QUERY,
+            new String[] { "\"/properties/public-status\"=pending" });
 
         String result = retrieveItems(filterParams);
 
         assertXmlValidSrwResponse(result);
 
         Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
-        NodeList nl =
-            selectNodeList(resultDoc, XPATH_SRW_CONTAINER_LIST_CONTAINER);
+        NodeList nl = selectNodeList(resultDoc, XPATH_SRW_ITEM_LIST_ITEM);
 
+        assertTrue("No items were retrieved.", nl.getLength() > 0);
+
+        nl = selectNodeList(resultDoc, XPATH_SRW_CONTAINER_LIST_CONTAINER);
         assertEquals("Only items should be retrieved.", nl.getLength(), 0);
+
+        delete(itemId);
+        getContainerClient().delete(containerId);
     }
 
     /**
