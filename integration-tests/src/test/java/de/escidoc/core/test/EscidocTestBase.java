@@ -5189,7 +5189,7 @@ public abstract class EscidocTestBase {
                 .compile(".*<entry key=\"escidoc-core.build\">([^<]*)</entry>.*");
         Matcher m = p.matcher(info);
         if (m.find()) {
-            m.group(1);
+            result = m.group(1);
         }
         else {
             throw new Exception("Cannot obtain framework version "
