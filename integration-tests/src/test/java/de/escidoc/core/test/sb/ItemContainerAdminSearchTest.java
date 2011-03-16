@@ -706,7 +706,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
         HashMap<String, Object> role = new HashMap<String, Object>() {
             private static final long serialVersionUID = 1L;
             {
-                put("role0", GrantHelper.ROLE_HREF_DEPOSITOR);
+                put("role0", GrantHelper.ROLE_HREF_MODERATOR);
                 put("scope0", de.escidoc.core.test.common.client
                         .servlet.Constants.CONTEXT_BASE_URI
                         + "/" + CONTEXT_ID);
