@@ -4799,16 +4799,13 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
             if (n != null) {
                 textContent = n.getTextContent();
             }
-            assertEquals(errorTrace.toString() + "diagnostics: "
-                    + textContent, null, n);
-            assertEquals(true, checkHighlighting(response));
+            assertEquals(errorTrace.toString() + "diagnostics: " + textContent,
+                null, n);
             assertEquals(errorTrace.toString()
-                    + "hits not as expected: expected: "
-                    + role.get("expectedHits")
-                    + ", but was "
-                    + getNumberOfHits(response)
-                    + " for ",
-                    role.get("expectedHits"), getNumberOfHits(response));
+                + "hits not as expected: expected: " + role.get("expectedHits")
+                + ", but was " + getNumberOfHits(response) + " for ",
+                role.get("expectedHits"), getNumberOfHits(response));
+            assertEquals(true, checkHighlighting(response));
             HashSet<String> foundIds = new HashSet<String>();
             // check if all items in result may be there
             for (String xPath : RESULT_XPATHS) {
