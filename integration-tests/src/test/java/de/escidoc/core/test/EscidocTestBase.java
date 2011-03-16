@@ -1111,6 +1111,8 @@ public abstract class EscidocTestBase {
     private static final Pattern PATTERN_GET_ID_FROM_URI_OR_FEDORA_ID = Pattern
         .compile(".*/([^/>]+)>{0,1}");
 
+    private static String REPOSITORY_VERSION = null;
+
     /**
      * @param transport
      *            The transport identifier.
@@ -5179,24 +5181,24 @@ public abstract class EscidocTestBase {
      */
     public String obtainFrameworkVersion() throws Exception {
 
-        String result = null;
+        if (REPOSITORY_VERSION == null) {
 
-        AdminClient admClient = new AdminClient(Constants.TRANSPORT_REST);
-        String info = handleXmlResult(admClient.getRepositoryInfo());
+            AdminClient admClient = new AdminClient(Constants.TRANSPORT_REST);
+            String info = handleXmlResult(admClient.getRepositoryInfo());
 
-        Pattern p =
-            Pattern
-                .compile(".*<entry key=\"escidoc-core.build\">([^<]*)</entry>.*");
-        Matcher m = p.matcher(info);
-        if (m.find()) {
-            result = m.group(1);
+            Pattern p =
+                Pattern
+                    .compile(".*<entry key=\"escidoc-core.build\">([^<]*)</entry>.*");
+            Matcher m = p.matcher(info);
+            if (m.find()) {
+                REPOSITORY_VERSION = m.group(1);
+            }
+            else {
+                throw new Exception("Cannot obtain framework version "
+                    + "from eSciDoc Core installation.");
+            }
         }
-        else {
-            throw new Exception("Cannot obtain framework version "
-                + "from eSciDoc Core installation.");
-        }
-
-        return result;
+        return REPOSITORY_VERSION;
     }
 
 }
