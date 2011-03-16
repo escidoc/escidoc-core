@@ -30,7 +30,6 @@ package de.escidoc.core.test.om.context;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -71,19 +70,6 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
     @Before
     public void setUp() throws Exception {
         this.path += "/" + getTransport(false);
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @After
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
     }
 
     /**

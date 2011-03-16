@@ -36,6 +36,7 @@ import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.GenericResource;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ContextInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
@@ -386,9 +387,17 @@ public class Context extends GenericResource implements ContextInterface {
      */
     @Override
     public Datastream getAdminDescriptor(final String adminDescriptorName)
-        throws FedoraSystemException {
+        throws FedoraSystemException, AdminDescriptorNotFoundException {
 
-        return getAdminDescriptorsMap().get(adminDescriptorName);
+        final Map<String, Datastream> admDescs = getAdminDescriptorsMap();
+
+        if (!admDescs.containsKey(adminDescriptorName)) {
+            throw new AdminDescriptorNotFoundException(
+                "Admin descriptor with name '" + adminDescriptorName
+                    + "' does not exist.");
+        }
+
+        return admDescs.get(adminDescriptorName);
     }
 
     /*

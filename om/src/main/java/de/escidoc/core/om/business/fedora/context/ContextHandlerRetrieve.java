@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.om.business.fedora.context;
 
-import de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
@@ -109,36 +108,5 @@ public class ContextHandlerRetrieve extends ContextHandlerBase {
         values.put(IS_ROOT_RESOURCES, true);
 
         return getRenderer().renderAdminDescriptors(contextHandler, values);
-    }
-
-    /**
-     * Get the XMl representation of one admin-descriptor, selected by name.
-     * 
-     * @param contextHandler
-     *            FedoraContextHandler
-     * @param name
-     *            Name of admin-descriptor.
-     * @param isRoot
-     *            Set true if representation is root element.
-     * @return XML representation of admin-descriptor, selected by name.
-     * @throws ContextNotFoundException
-     *             If context is not found.
-     * @throws SystemException
-     *             If anything fails.
-     */
-    protected String getAdminDescriptorXml(
-        final FedoraContextHandler contextHandler, final String name,
-        final boolean isRoot) throws ContextNotFoundException, SystemException,
-        AdminDescriptorNotFoundException {
-        final String adminDescriptor =
-            getRenderer().renderAdminDescriptor(contextHandler, name,
-                getContext().getAdminDescriptor(name), isRoot);
-        if (adminDescriptor.length() == 0) {
-            throw new AdminDescriptorNotFoundException(
-                "Admin-descriptor with a name " + name
-                    + " does not exist in the context wirh id "
-                    + getContext().getId());
-        }
-        return adminDescriptor;
     }
 }

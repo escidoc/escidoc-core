@@ -192,8 +192,8 @@ public class CreateTest extends ContextTestBase {
 
         // double entries of same ou are to remove
         // it is assumed that only one unit is double
-        assertEquals("double Organizational Units not removed", expectedOus
-            .getLength(), toBeAssertedOus.getLength() + 1);
+        assertEquals("double Organizational Units not removed",
+            expectedOus.getLength(), toBeAssertedOus.getLength() + 1);
 
         // compare admin-descriptor titles
         if (getTransport() == Constants.TRANSPORT_REST) {
@@ -203,8 +203,8 @@ public class CreateTest extends ContextTestBase {
             NodeList toBeAssertedAdminDesc =
                 selectNodeList(createdDoc, XPATH_CONTEXT_ADMIN_DESCRIPTOR);
 
-            assertEquals(expectedAdminDesc.getLength(), toBeAssertedAdminDesc
-                .getLength());
+            assertEquals(expectedAdminDesc.getLength(),
+                toBeAssertedAdminDesc.getLength());
 
             // for (int i = 1; i < expectedAdminDesc.getLength() + 1; i++) {
             // String titleValue =
@@ -249,7 +249,9 @@ public class CreateTest extends ContextTestBase {
      *             description.
      * @test.expected: XML representation of the created context
      * @test.status Implemented
-     * @test.issue http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=357
+     * @test.issue 
+     *             http://www.escidoc-project.de/issueManagement/show_bug.cgi?id=
+     *             357
      * 
      * @throws Exception
      *             If anything fails.
@@ -300,25 +302,17 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = ContextNameNotUniqueException.class)
     public void testOmCrc2() throws Exception {
 
-        Class<?> ec = ContextNameNotUniqueException.class;
-        try {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
-                    "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
-            String template = toString(context, false);
-            create(template);
-            create(template);
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
+                "context_create.xml");
+        substitute(context, "/context/properties/name",
+            getUniqueName("PubMan Context "));
+        String template = toString(context, false);
+        create(template);
+        create(template);
     }
 
     /**
@@ -327,23 +321,15 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingElementValueException.class)
     public void testOmCrc2a() throws Exception {
 
-        Class<?> ec = MissingElementValueException.class;
-        try {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
-                    "context_create.xml");
-            substitute(context, "/context/properties/name", "");
-            String template = toString(context, false);
-            create(template);
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
+                "context_create.xml");
+        substitute(context, "/context/properties/name", "");
+        String template = toString(context, false);
+        create(template);
     }
 
     /**
@@ -352,20 +338,12 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc3a() throws Exception {
 
-        Class<?> ec = XmlSchemaValidationException.class;
-        try {
-            create(toString(deleteElement(EscidocRestSoapTestBase
-                .getTemplateAsDocument(this.path, "context_create.xml"),
-                "/context/properties"), false));
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        create(toString(
+            deleteElement(EscidocRestSoapTestBase.getTemplateAsDocument(
+                this.path, "context_create.xml"), "/context/properties"), false));
     }
 
     /**
@@ -400,8 +378,9 @@ public class CreateTest extends ContextTestBase {
         substitute(context, "/context/properties/name",
             getUniqueName("PubMan Context "));
 
-        create(toString(deleteElement(context,
-            "/context/admin-descriptors/admin-descriptor"), false));
+        create(toString(
+            deleteElement(context,
+                "/context/admin-descriptors/admin-descriptor"), false));
     }
 
     /**
@@ -410,20 +389,13 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc3d() throws Exception {
 
-        Class<?> ec = XmlSchemaValidationException.class;
-        try {
-            create(toString(deleteElement(EscidocRestSoapTestBase
-                .getTemplateAsDocument(this.path, "context_create.xml"),
-                "/context/properties/name"), false));
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        create(toString(
+            deleteElement(EscidocRestSoapTestBase.getTemplateAsDocument(
+                this.path, "context_create.xml"), "/context/properties/name"),
+            false));
     }
 
     /**
@@ -432,29 +404,20 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc4a() throws Exception {
 
-        Class<?> ec = XmlSchemaValidationException.class;
         String contextXml = null;
 
-        try {
-            Map<String, String> elements = new HashMap<String, String>();
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                elements
-                    .put("/context/@" + XLINK_HREF_TEMPLATES, "escidoc:id1");
-            }
-            else {
-                elements.put("/context/@objid", "escidoc:id1");
-            }
-            contextXml = getContextTemplateWithReadOnlyElements(elements);
-            create(contextXml);
-            fail(ec + " expected but no error occurred!");
+        Map<String, String> elements = new HashMap<String, String>();
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            elements.put("/context/@" + XLINK_HREF_TEMPLATES, "escidoc:id1");
         }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+        else {
+            elements.put("/context/@objid", "escidoc:id1");
         }
+        contextXml = getContextTemplateWithReadOnlyElements(elements);
+        create(contextXml);
     }
 
     /**
@@ -463,44 +426,29 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc4b() throws Exception {
 
-        Class<?> ec = XmlSchemaValidationException.class;
-        try {
-            Map<String, String> elements = new HashMap<String, String>();
-            elements.put("/context/@" + XLINK_HREF_TEMPLATES,
-                "/ir/context/escidoc:id1");
-            create(getContextTemplateWithReadOnlyElements(elements));
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Map<String, String> elements = new HashMap<String, String>();
+        elements.put("/context/@" + XLINK_HREF_TEMPLATES,
+            "/ir/context/escidoc:id1");
+        create(getContextTemplateWithReadOnlyElements(elements));
     }
 
-    // /**
-    // * Create a Context with invalid xml (admin-descriptor objid is set).
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    //@Test
-    // public void testOmCrc4c() throws Exception {
-    //
-    // Class<?> ec = XmlSchemaValidationException.class;
-    // try {
-    // Map<String, String> elements = new HashMap<String, String>();
-    // elements.put("/context/admin-descriptors/@objid", "escidoc:id2");
-    // create(getContextTemplateWithReadOnlyElements(elements));
-    // fail(ec + " expected but no error occurred!");
-    // }
-    // catch (Exception e) {
-    // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-    // + " expected.", ec, e);
-    // }
-    // }
+    /**
+     * Create a Context with invalid xml (admin-descriptor objid is set).
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Ignore("I don't know this test was commented out")
+    @Test(expected = XmlSchemaValidationException.class)
+    public void testOmCrc4c() throws Exception {
+
+        Map<String, String> elements = new HashMap<String, String>();
+        elements.put("/context/admin-descriptors/@objid", "escidoc:id2");
+        create(getContextTemplateWithReadOnlyElements(elements));
+    }
 
     /**
      * Create a Context with invalid xml (admin-descriptor href is set).
@@ -508,22 +456,14 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc4d() throws Exception {
 
-        Class<?> ec = XmlSchemaValidationException.class;
-        try {
-            Map<String, String> elements = new HashMap<String, String>();
-            elements.put("/context/admin-descriptors/admin-descriptor/@"
-                + XLINK_HREF_TEMPLATES,
-                "ir/context/escidoc:id2/admin-descriptors/admin-descriptor");
-            create(getContextTemplateWithReadOnlyElements(elements));
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Map<String, String> elements = new HashMap<String, String>();
+        elements.put("/context/admin-descriptors/admin-descriptor/@"
+            + XLINK_HREF_TEMPLATES,
+            "ir/context/escidoc:id2/admin-descriptors/admin-descriptor");
+        create(getContextTemplateWithReadOnlyElements(elements));
     }
 
     /**
@@ -533,20 +473,12 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc4e() throws Exception {
 
-        Class<?> ec = XmlSchemaValidationException.class;
-        try {
-            Map<String, String> elements = new HashMap<String, String>();
-            elements.put("/context/properties/creation-date", "");
-            create(getContextTemplateWithReadOnlyElements(elements));
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Map<String, String> elements = new HashMap<String, String>();
+        elements.put("/context/properties/creation-date", "");
+        create(getContextTemplateWithReadOnlyElements(elements));
     }
 
     /**
@@ -555,20 +487,12 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc4f() throws Exception {
 
-        Class<?> ec = XmlSchemaValidationException.class;
-        try {
-            Map<String, String> elements = new HashMap<String, String>();
-            elements.put("/context/properties/status", "");
-            create(getContextTemplateWithReadOnlyElements(elements));
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Map<String, String> elements = new HashMap<String, String>();
+        elements.put("/context/properties/status", "");
+        create(getContextTemplateWithReadOnlyElements(elements));
     }
 
     /**
@@ -578,20 +502,12 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc4g() throws Exception {
 
-        Class<?> ec = XmlSchemaValidationException.class;
-        try {
-            Map<String, String> elements = new HashMap<String, String>();
-            elements.put("/context/properties/last-modification-date", "");
-            create(getContextTemplateWithReadOnlyElements(elements));
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Map<String, String> elements = new HashMap<String, String>();
+        elements.put("/context/properties/last-modification-date", "");
+        create(getContextTemplateWithReadOnlyElements(elements));
     }
 
     /**
@@ -600,20 +516,12 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc4h() throws Exception {
 
-        Class<?> ec = XmlSchemaValidationException.class;
-        try {
-            Map<String, String> elements = new HashMap<String, String>();
-            elements.put("/context/resources", "");
-            create(getContextTemplateWithReadOnlyElements(elements));
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Map<String, String> elements = new HashMap<String, String>();
+        elements.put("/context/resources", "");
+        create(getContextTemplateWithReadOnlyElements(elements));
     }
 
     /**
@@ -622,20 +530,12 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrc4i() throws Exception {
 
-        Class<?> ec = XmlSchemaValidationException.class;
-        try {
-            Map<String, String> elements = new HashMap<String, String>();
-            elements.put("/context/properties/creator", "");
-            create(getContextTemplateWithReadOnlyElements(elements));
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Map<String, String> elements = new HashMap<String, String>();
+        elements.put("/context/properties/creator", "");
+        create(getContextTemplateWithReadOnlyElements(elements));
     }
 
     /**
@@ -644,18 +544,10 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOmCrc5() throws Exception {
 
-        Class<?> ec = MissingMethodParameterException.class;
-        try {
-            create(null);
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        create(null);
     }
 
     /**
@@ -707,7 +599,7 @@ public class CreateTest extends ContextTestBase {
      */
     @Test
     public void testCreateContextWithWrongOuState() throws Exception {
-        
+
         OrganizationalUnitTestBase organizationalUnitTestBase =
             new OrganizationalUnitTestBase(getTransport());
         String ou = null;
@@ -807,10 +699,8 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCr7() throws Exception {
-
-        Class<?> ec = XmlSchemaValidationException.class;
 
         Document context =
             EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
@@ -821,13 +711,7 @@ public class CreateTest extends ContextTestBase {
             "");
         String template = toString(context, false);
 
-        try {
-            create(template);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        create(template);
     }
 
     /**
@@ -837,10 +721,8 @@ public class CreateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrcAdminDesc() throws Exception {
-
-        Class<?> ec = XmlSchemaValidationException.class;
 
         String nameWS = "Admin Descriptor Name with whitespaces";
 
@@ -851,28 +733,19 @@ public class CreateTest extends ContextTestBase {
             "/context/admin-descriptors/admin-descriptor[1]/@name", nameWS);
         String template = toString(context, false);
 
-        try {
-            create(template);
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        create(template);
     }
 
     /**
      * Create a Context with more than the allowed number of characters in
-     * admin-descriptor attribute name. The length is limited to 64 charachter.
+     * admin-descriptor attribute name. The length is limited to 64 character.
      * This has to be fail with a schema exception.
      * 
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = XmlSchemaValidationException.class)
     public void testOmCrcAdminDesc2() throws Exception {
-
-        Class<?> ec = XmlSchemaValidationException.class;
 
         String nameLong =
             "Admin_Descriptor_Name_without_whitespaces_but_"
@@ -885,14 +758,7 @@ public class CreateTest extends ContextTestBase {
             "/context/admin-descriptors/admin-descriptor[1]/@name", nameLong);
         String template = toString(context, false);
 
-        try {
-            create(template);
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        create(template);
     }
 
 }

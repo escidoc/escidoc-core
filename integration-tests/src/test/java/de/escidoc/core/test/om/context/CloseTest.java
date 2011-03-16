@@ -114,8 +114,11 @@ public class CloseTest extends ContextTestBase {
 
         assertXmlEquals("Context closing error: Wrong status!", closed,
             "/context/properties/public-status", CONTEXT_STATUS_CLOSED);
-        assertNotEquals("Comment not changed", selectSingleNode(createdDoc,
-            "/context/properties/public-status-comment/text()").getNodeValue(),
+        assertNotEquals(
+            "Comment not changed",
+            selectSingleNode(createdDoc,
+                "/context/properties/public-status-comment/text()")
+                .getNodeValue(),
             selectSingleNode(closedDoc,
                 "/context/properties/public-status-comment/text()")
                 .getNodeValue());
@@ -134,7 +137,7 @@ public class CloseTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = InvalidStatusException.class)
     public void testOmContextClose2() throws Exception {
 
         Document context =
@@ -173,14 +176,7 @@ public class CloseTest extends ContextTestBase {
             substitute(itemDoc, "/item/properties/context/@objid", contextId);
         }
 
-        try {
-            handleXmlResult(getItemClient().create(toString(itemDoc, true)));
-        }
-        catch (Exception e) {
-            Class<?> ec = InvalidStatusException.class;
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        handleXmlResult(getItemClient().create(toString(itemDoc, true)));
 
     }
 

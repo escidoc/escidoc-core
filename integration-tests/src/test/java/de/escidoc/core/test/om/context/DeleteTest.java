@@ -74,7 +74,7 @@ public class DeleteTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = ContextNotFoundException.class)
     public void testOmDc1() throws Exception {
         Document context =
             EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
@@ -85,16 +85,8 @@ public class DeleteTest extends ContextTestBase {
         String created = create(template);
         final String objid = getObjidValue(getDocument(created));
 
-        Class<?> ec = ContextNotFoundException.class;
-        try {
-            delete(objid);
-            retrieve(objid);
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        delete(objid);
+        retrieve(objid);
     }
 
     /**
@@ -103,18 +95,10 @@ public class DeleteTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = ContextNotFoundException.class)
     public void testOmDc2() throws Exception {
 
-        Class<?> ec = ContextNotFoundException.class;
-        try {
-            delete("escidoc:UnknownContext");
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        delete("escidoc:UnknownContext");
     }
 
     /**
@@ -123,17 +107,10 @@ public class DeleteTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOmDc3() throws Exception {
 
-        Class<?> ec = MissingMethodParameterException.class;
-        try {
-            delete(null);
-            EscidocRestSoapTestBase.failMissingException(ec);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
-        }
+        delete(null);
     }
 
     /**
@@ -142,28 +119,20 @@ public class DeleteTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = InvalidStatusException.class)
     public void testOmDc4() throws Exception {
-        Class<?> ec = InvalidStatusException.class;
-        try {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
-                    "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
-            String template = toString(context, false);
-            String created = create(template);
-            assertXmlValidContext(created);
-            Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
-            String id = getObjidValue(createdDoc);
-            String lastModification = getLastModificationDateValue(createdDoc);
-            open(id, getTaskParam(lastModification));
-            delete(id);
-            fail(ec + " expected but no error occurred!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(this.path,
+                "context_create.xml");
+        substitute(context, "/context/properties/name",
+            getUniqueName("PubMan Context "));
+        String template = toString(context, false);
+        String created = create(template);
+        assertXmlValidContext(created);
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
+        String id = getObjidValue(createdDoc);
+        String lastModification = getLastModificationDateValue(createdDoc);
+        open(id, getTaskParam(lastModification));
+        delete(id);
     }
 }

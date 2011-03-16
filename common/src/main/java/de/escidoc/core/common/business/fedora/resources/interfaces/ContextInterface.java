@@ -30,6 +30,7 @@ package de.escidoc.core.common.business.fedora.resources.interfaces;
 
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
@@ -131,7 +132,7 @@ public interface ContextInterface extends FedoraResource {
      *             from Fedora.
      */
     Datastream getAdminDescriptor(final String adminDescriptorName)
-        throws FedoraSystemException;
+        throws FedoraSystemException, AdminDescriptorNotFoundException;
 
     /**
      * Add an AdminDescriptor to the Context. The datastream must be framed by a

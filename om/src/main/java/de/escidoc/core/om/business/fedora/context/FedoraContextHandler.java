@@ -343,7 +343,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         AdminDescriptorNotFoundException {
 
         setContext(id);
-        return getAdminDescriptorXml(this, name, true);
+        return getRenderer().renderAdminDescriptor(this, name,
+            getContext().getAdminDescriptor(name), true);
     }
 
     /*

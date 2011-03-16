@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.test.om.context;
 
+import de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
@@ -88,6 +89,12 @@ public class AdminDescriptorsTest extends ContextTestBase {
             this.getContextClient().open(contextId, getTheLastModificationParam(
                                 true, contextId,
                                 "comment", lastModificationDate));
+
+            // open Context
+            Document createdDoc = EscidocRestSoapTestBase.getDocument(contextXml);
+            String lastModified = getLastModificationDateValue(createdDoc);
+            open(contextId, getTaskParam(lastModified));
+
             String item = null;
             String filename = "escidoc_item_198_for_create.xml";
             if (getTransport() == Constants.TRANSPORT_REST) {
@@ -168,6 +175,20 @@ public class AdminDescriptorsTest extends ContextTestBase {
         String admDesc =
             retrieveAdminDescriptor("escidoc:persistent3", "admin-descriptor");
         assertXmlValidContext(admDesc);
+    }
+
+    /**
+     * Test retrieving an non-existing AdminDescriptor of an existing Context.
+     * 
+     * See issue INFR-1105.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test(expected=AdminDescriptorNotFoundException.class)
+    public void retrieveNonExisitingAdmDesc01() throws Exception {
+
+        retrieveAdminDescriptor(contextId, "Test");
     }
 
 }

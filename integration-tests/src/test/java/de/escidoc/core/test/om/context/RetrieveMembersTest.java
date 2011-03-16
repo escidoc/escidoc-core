@@ -789,17 +789,10 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
-    @Test
+    @Test(expected = ContextNotFoundException.class)
     public void testOmRmf2() throws Exception {
-        try {
-            retrieveMembers("escidoc:unknown1", new HashMap<String, String[]>());
-            EscidocRestSoapTestBase
-                .failMissingException(ContextNotFoundException.class);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                ContextNotFoundException.class, e);
-        }
+
+        retrieveMembers("escidoc:unknown1", new HashMap<String, String[]>());
     }
 
     /**
@@ -808,17 +801,10 @@ public class RetrieveMembersTest extends ContextTestBase {
      * @throws Exception
      *             If something unexpected goes wrong.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOmRmf4a() throws Exception {
-        try {
-            retrieveMembers(null, new HashMap<String, String[]>());
-            EscidocRestSoapTestBase
-                .failMissingException(MissingMethodParameterException.class);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(
-                MissingMethodParameterException.class, e);
-        }
+
+        retrieveMembers(null, new HashMap<String, String[]>());
     }
 
     /**

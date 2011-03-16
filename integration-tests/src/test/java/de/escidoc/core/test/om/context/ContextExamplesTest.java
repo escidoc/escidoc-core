@@ -87,7 +87,7 @@ public class ContextExamplesTest extends ContextTestBase {
      *             Thrown if creation of example Context failed.
      */
     @Test
-    public void testCreatingExample01() throws Exception {
+    public void creatingExample01() throws Exception {
 
         String contextXml =
             getExampleTemplate("context-minimal-for-create-01.xml");

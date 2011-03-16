@@ -95,7 +95,7 @@ public class RetrieveTest extends ContextTestBase {
 
             String lastModified = getLastModificationDateValue(created);
             open(contextId, getTaskParam(lastModified));
-            
+
             // String test = null;
             // String test2 = null;
             String item = null;
@@ -105,9 +105,9 @@ public class RetrieveTest extends ContextTestBase {
                     "escidoc_item_198_for_create.xml");
             if (getTransport() == Constants.TRANSPORT_REST) {
                 item =
-                    toString(substitute(itemDoc,
-                        "/item/properties/context/@href", "/ir/context/"
-                            + contextId), true);
+                    toString(
+                        substitute(itemDoc, "/item/properties/context/@href",
+                            "/ir/context/" + contextId), true);
                 item = createItem(item);
             }
             else {
@@ -138,18 +138,6 @@ public class RetrieveTest extends ContextTestBase {
     }
 
     /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @After
-    public void tearDown() throws Exception {
-
-        super.tearDown();
-    }
-
-    /**
      * Test retrieving an existing context.
      * 
      * @throws Exception
@@ -160,10 +148,10 @@ public class RetrieveTest extends ContextTestBase {
 
         String context = retrieve(contextId);
         assertXmlValidContext(context);
-//        assertXmlEquals(
-//            "Context retrieval error: retrieved wrong context xml!",
-//            contextXml, context);
-//        assertCreatedContext(context, contextXml, startTimestamp);
+        // assertXmlEquals(
+        // "Context retrieval error: retrieved wrong context xml!",
+        // contextXml, context);
+        // assertCreatedContext(context, contextXml, startTimestamp);
     }
 
     /**
@@ -172,17 +160,10 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = ContextNotFoundException.class)
     public void testOmReC2() throws Exception {
 
-        Class<?> ec = ContextNotFoundException.class;
-        try {
-            retrieve("escidoc:UnknownContext");
-            EscidocRestSoapTestBase.failMissingException(ec);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
-        }
+        retrieve("escidoc:UnknownContext");
     }
 
     /**
@@ -191,17 +172,10 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingMethodParameterException.class)
     public void testOmReC3() throws Exception {
 
-        Class<?> ec = MissingMethodParameterException.class;
-        try {
-            retrieve(null);
-            EscidocRestSoapTestBase.failMissingException(ec);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
-        }
+        retrieve(null);
     }
 
     /**
@@ -211,16 +185,10 @@ public class RetrieveTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = ContextNotFoundException.class)
     public void testOmReC4() throws Exception {
-        Class<?> ec = ContextNotFoundException.class;
-        try {
-            retrieve(nonContextId);
-            EscidocRestSoapTestBase.failMissingException(ec);
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
-        }
+
+        retrieve(nonContextId);
     }
 
     /**
@@ -340,15 +308,19 @@ public class RetrieveTest extends ContextTestBase {
      */
     @Test
     public void testRetrieveProperties() throws Exception {
-        Document context = EscidocRestSoapTestBase.getDocument(retrieve(contextId));
+        Document context =
+            EscidocRestSoapTestBase.getDocument(retrieve(contextId));
 
         String properties = retrieveProperties(contextId);
         assertXmlValidContext(properties);
 
-        assertContextProperties(properties, toString(selectSingleNode(
-            EscidocRestSoapTestBase.getDocument(contextXml),
-            "/context/properties"), true), "/ir/context/" + contextId
-            + "/properties", getLastModificationDateValue(context),
+        assertContextProperties(
+            properties,
+            toString(
+                selectSingleNode(
+                    EscidocRestSoapTestBase.getDocument(contextXml),
+                    "/context/properties"), true), "/ir/context/" + contextId
+                + "/properties", getLastModificationDateValue(context),
             startTimestamp);
     }
 
@@ -417,7 +389,8 @@ public class RetrieveTest extends ContextTestBase {
                 selectSingleNode(contextResources,
                     "/context/resources/members/@href").getNodeValue();
 
-            String SUB_CONTEXT_MEMBERS = Constants.SUB_RESOURCES + "/" + "members";
+            String SUB_CONTEXT_MEMBERS =
+                Constants.SUB_RESOURCES + "/" + "members";
 
             if (!membersHref.endsWith(SUB_CONTEXT_MEMBERS)) {
                 throw new Exception("resource members href wrong: "

@@ -36,7 +36,6 @@ import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyAtt
 import de.escidoc.core.common.exceptions.remote.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -86,19 +85,6 @@ public class UpdateTest extends ContextTestBase {
     @Before
     public void setUp() throws Exception {
         this.path += "/" + getTransport(false);
-    }
-
-    /**
-     * Clean up after servlet test.
-     * 
-     * @throws Exception
-     *             If anything fails.
-     */
-    @After
-    @Override
-    public void tearDown() throws Exception {
-
-        super.tearDown();
     }
 
     /**
@@ -244,13 +230,17 @@ public class UpdateTest extends ContextTestBase {
                             .getTextContent(), admTitleList.get(admDescrName));
                 }
 
-                assertEquals("created-by updated", selectSingleNode(
-                    resultDocument, "context/properties/created-by/@href")
-                    .getTextContent(), createdBy);
+                assertEquals(
+                    "created-by updated",
+                    selectSingleNode(resultDocument,
+                        "context/properties/created-by/@href").getTextContent(),
+                    createdBy);
 
-                assertEquals("modified-by updated", selectSingleNode(
-                    resultDocument, "context/properties/modified-by/@href")
-                    .getTextContent(), createdBy);
+                assertEquals(
+                    "modified-by updated",
+                    selectSingleNode(resultDocument,
+                        "context/properties/modified-by/@href")
+                        .getTextContent(), createdBy);
             }
 
         }
@@ -332,22 +322,15 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = ContextNotFoundException.class)
     public void testOmUc2() throws Exception {
-        Class<?> ec = ContextNotFoundException.class;
-        try {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
-            update("escidoc:UnknownContext", create(toString(context, false)));
-            fail(ec + " expected but no error occured!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name",
+            getUniqueName("PubMan Context "));
+        update("escidoc:UnknownContext", create(toString(context, false)));
     }
 
     /**
@@ -358,37 +341,30 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     @Ignore("Change the value of read-only attribute objid")
-    @Test
+    @Test(expected = ReadonlyAttributeViolationException.class)
     public void testOmUc3a() throws Exception {
-        Class<?> ec = ReadonlyAttributeViolationException.class;
-        try {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
-            String template = toString(context, false);
-            String created = create(template);
-            assertXmlValidContext(created);
-            Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
-            String id = getObjidValue(createdDoc);
-            Node update = null;
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                // substitute href
-                update =
-                    substitute(createdDoc, "context/@href", "/ir/context/" + id
-                        + "1/admin-descriptor");
-            }
-            else if (getTransport() == Constants.TRANSPORT_SOAP) {
-                update = substitute(createdDoc, "context/@objid", id + "1");
-            }
-            update(id, toString(update, false));
-            fail(ec + " expected but no error occured!");
+
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name",
+            getUniqueName("PubMan Context "));
+        String template = toString(context, false);
+        String created = create(template);
+        assertXmlValidContext(created);
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
+        String id = getObjidValue(createdDoc);
+        Node update = null;
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            // substitute href
+            update =
+                substitute(createdDoc, "context/@href", "/ir/context/" + id
+                    + "1/admin-descriptor");
         }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+        else if (getTransport() == Constants.TRANSPORT_SOAP) {
+            update = substitute(createdDoc, "context/@objid", id + "1");
         }
+        update(id, toString(update, false));
     }
 
     /**
@@ -399,44 +375,35 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     @Ignore("Change the value of read-only attribute xlink:href")
-    @Test
+    @Test(expected = ReadonlyAttributeViolationException.class)
     public void testOmUc3b() throws Exception {
-        Class<?> ec = ReadonlyAttributeViolationException.class;
-        try {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
-            String contextName = getUniqueName("PubMan Context ");
-            substitute(context, "/context/properties/name", contextName);
 
-            String template = toString(context, false);
-            String created = create(template);
-            assertXmlValidContext(created);
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
+        String contextName = getUniqueName("PubMan Context ");
+        substitute(context, "/context/properties/name", contextName);
 
-            Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
-            String id = getObjidValue(createdDoc);
-            String toBeChanged = null;
-            Node update = null;
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                toBeChanged =
-                    getAttributeValue(createdDoc, "/context",
-                        XLINK_HREF_ESCIDOC);
-                update =
-                    substitute(createdDoc, "/context/@href", toBeChanged + "12");
-            }
-            else if (getTransport() == Constants.TRANSPORT_SOAP) {
-                getAttributeValue(createdDoc, "/context", "objid");
-                update =
-                    substitute(createdDoc, "/context/@objid", toBeChanged
-                        + "12");
-            }
-            update(id, toString(update, false));
-            fail(ec + " expected but no error occured!");
+        String template = toString(context, false);
+        String created = create(template);
+        assertXmlValidContext(created);
+
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
+        String id = getObjidValue(createdDoc);
+        String toBeChanged = null;
+        Node update = null;
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            toBeChanged =
+                getAttributeValue(createdDoc, "/context", XLINK_HREF_ESCIDOC);
+            update =
+                substitute(createdDoc, "/context/@href", toBeChanged + "12");
         }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
+        else if (getTransport() == Constants.TRANSPORT_SOAP) {
+            getAttributeValue(createdDoc, "/context", "objid");
+            update =
+                substitute(createdDoc, "/context/@objid", toBeChanged + "12");
         }
+        update(id, toString(update, false));
     }
 
     /**
@@ -447,33 +414,24 @@ public class UpdateTest extends ContextTestBase {
      *             If anything fails.
      */
     @Ignore("Change the value of read-only attribute xlink:title")
-    @Test
-    // Commented out because framework does not test read-only elements
+    @Test(expected = ReadonlyAttributeViolationException.class)
     public void testOmUc3c() throws Exception {
-        Class<?> ec = ReadonlyAttributeViolationException.class;
-        try {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
-            String template = toString(context, false);
-            String created = create(template);
-            assertXmlValidContext(created);
-            Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
-            String id = getObjidValue(createdDoc);
-            String toBeChanged =
-                getAttributeValue(createdDoc, "/context", XLINK_TITLE_ESCIDOC);
-            Node update =
-                substitute(createdDoc, "/context/@title", toBeChanged + "12");
-            String s = toString(update, false);
-            update(id, s);
-            fail(ec + " expected but no error occured!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name",
+            getUniqueName("PubMan Context "));
+        String template = toString(context, false);
+        String created = create(template);
+        assertXmlValidContext(created);
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
+        String id = getObjidValue(createdDoc);
+        String toBeChanged =
+            getAttributeValue(createdDoc, "/context", XLINK_TITLE_ESCIDOC);
+        Node update =
+            substitute(createdDoc, "/context/@title", toBeChanged + "12");
+        String s = toString(update, false);
+        update(id, s);
     }
 
     /**
@@ -486,8 +444,8 @@ public class UpdateTest extends ContextTestBase {
     @Test
     public void testOmUc3l() throws Exception {
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
         String uniqueName = getUniqueName("PubMan Context ");
         substitute(context, "/context/properties/name", uniqueName);
         String xpathDescription = "/context/properties/description";
@@ -541,8 +499,8 @@ public class UpdateTest extends ContextTestBase {
     @Test
     public void testOmUc3d() throws Exception {
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
         String uniqueName = getUniqueName("PubMan Context ");
         substitute(context, "/context/properties/name", uniqueName);
         String template = toString(context, false);
@@ -588,8 +546,8 @@ public class UpdateTest extends ContextTestBase {
     @Test
     public void testOmUc3m() throws Exception {
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
         String uniqueName = getUniqueName("PubMan Context ");
         substitute(context, "/context/properties/name", uniqueName + "&lt");
         String description =
@@ -627,21 +585,20 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = ContextNameNotUniqueException.class)
     public void testOmUc3d1() throws Exception {
-        Class<?> ec = ContextNameNotUniqueException.class;
 
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
         String uniqueName = getUniqueName("PubMan Context ");
         substitute(context, "/context/properties/name", uniqueName);
         String created = create(toString(context, false));
         assertXmlValidContext(created);
 
         Document context2 =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
         String uniqueName2 = getUniqueName("PubMan Context ");
         substitute(context2, "/context/properties/name", uniqueName2);
         String created2 = create(toString(context2, false));
@@ -655,15 +612,7 @@ public class UpdateTest extends ContextTestBase {
         Node update = substitute(createdDoc, xpathName, uniqueName2);
 
         String contextXml = toString(update, false);
-        try {
-            update(id, contextXml);
-            fail(ec + " expected but no error occured!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
-
+        update(id, contextXml);
     }
 
     /**
@@ -672,13 +621,12 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = MissingElementValueException.class)
     public void testOmUc3d2() throws Exception {
-        Class<?> ec = MissingElementValueException.class;
 
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
         String uniqueName = getUniqueName("PubMan Context ");
         substitute(context, "/context/properties/name", uniqueName);
         String template = toString(context, false);
@@ -692,16 +640,7 @@ public class UpdateTest extends ContextTestBase {
         Node update = substitute(createdDoc, xpathName, "");
 
         String contextXml = toString(update, false);
-        try {
-            update(id, contextXml);
-            // empty name is forbidden
-            fail(ec + " expected but no error occured!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
-
+        update(id, contextXml);
     }
 
     /**
@@ -966,7 +905,7 @@ public class UpdateTest extends ContextTestBase {
     // * @throws Exception
     // * If anything fails.
     // */
-//    @Test
+    // @Test
     // public void testOmUc3l() throws Exception {
     // Class<?> ec = ReadonlyAttributeViolationException.class;
     // if (getTransport() == Constants.TRANSPORT_REST) {
@@ -1058,31 +997,23 @@ public class UpdateTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = OptimisticLockingException.class)
     public void testOmUc5() throws Exception {
-        Class<?> ec = OptimisticLockingException.class;
-        try {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
-            String template = toString(context, false);
-            String created = create(template);
-            assertXmlValidContext(created);
-            Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
-            String id = getObjidValue(createdDoc);
-            String date = getNowAsTimestamp();
-            Node update =
-                substitute(createdDoc, "/context/@last-modification-date", date);
-            String s = toString(update, false);
-            update(id, s);
-            fail(ec + " expected but no error occured!");
-        }
-        catch (Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec.getName()
-                + " expected.", ec, e);
-        }
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name",
+            getUniqueName("PubMan Context "));
+        String template = toString(context, false);
+        String created = create(template);
+        assertXmlValidContext(created);
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
+        String id = getObjidValue(createdDoc);
+        String date = getNowAsTimestamp();
+        Node update =
+            substitute(createdDoc, "/context/@last-modification-date", date);
+        String s = toString(update, false);
+        update(id, s);
     }
 
     /**
@@ -1095,8 +1026,8 @@ public class UpdateTest extends ContextTestBase {
     @Test
     public void testAddNewAdminDescriptorWhileUpdate() throws Exception {
         Document context =
-            EscidocRestSoapTestBase.getTemplateAsDocument(
-                TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
         substitute(context, "/context/properties/name",
             getUniqueName("PubMan Context "));
         NodeList adminDescriptors =
@@ -1113,8 +1044,8 @@ public class UpdateTest extends ContextTestBase {
         NodeList adminDescriptorsAfterCreate =
             selectNodeList(createdDocument,
                 "/context/admin-descriptors/admin-descriptor");
-        assertEquals(adminDescriptors.getLength(), adminDescriptorsAfterCreate
-            .getLength());
+        assertEquals(adminDescriptors.getLength(),
+            adminDescriptorsAfterCreate.getLength());
 
         Element adminDescriptor =
             createdDocument.createElementNS(
@@ -1133,8 +1064,7 @@ public class UpdateTest extends ContextTestBase {
         String updated =
             update(createdContextId, contextWithAdditionalAdminDescriptorsXml);
         // System.out.println("updated " + updated);
-        Document updatedDocument =
-            EscidocRestSoapTestBase.getDocument(updated);
+        Document updatedDocument = EscidocRestSoapTestBase.getDocument(updated);
         NodeList adminDescriptorsAfterUpdate =
             selectNodeList(updatedDocument,
                 "/context/admin-descriptors/admin-descriptor");
