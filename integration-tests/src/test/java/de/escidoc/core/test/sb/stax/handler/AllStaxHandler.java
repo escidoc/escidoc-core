@@ -49,7 +49,7 @@ public class AllStaxHandler extends DefaultHandler {
     private List<String> values = new ArrayList<String>();
     
     /**
-     * Cosntructor with StaxParser.
+     * Constructor with StaxParser.
      * 
      * @param parser
      *            StaxParser
