@@ -1081,7 +1081,7 @@ public class FedoraOrganizationalUnitHandler
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, "\"/parents/parent/id\"="
                 + id, LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS,
-            LuceneRequestParameters.DEFAULT_START_RECORD, null, null, null);
+            LuceneRequestParameters.DEFAULT_START_RECORD, null, null);
         return result.toString();
     }
 
@@ -1116,7 +1116,7 @@ public class FedoraOrganizationalUnitHandler
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, filter.toString(),
             LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS,
-            LuceneRequestParameters.DEFAULT_START_RECORD, null, null, null);
+            LuceneRequestParameters.DEFAULT_START_RECORD, null, null);
         return result.toString();
     }
 

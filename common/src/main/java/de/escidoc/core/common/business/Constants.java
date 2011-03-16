@@ -722,6 +722,9 @@ public final class Constants {
 
     public static final String SRU_PARAMETER_USER = "x-info5-userId";
 
+    public static final String SRU_PARAMETER_OMIT_HIGHLIGHTING = 
+                                                    "x-info5-omitHighlighting";
+
     public static final String SRU_PARAMETER_VERSION = "version";
 
     /**

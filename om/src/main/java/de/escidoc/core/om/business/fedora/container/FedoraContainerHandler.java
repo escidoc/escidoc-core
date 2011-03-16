@@ -957,7 +957,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             sruRequest.searchRetrieve(result, new ResourceType[] {
                 ResourceType.CONTAINER, ResourceType.ITEM }, query,
                 parameters.getMaximumRecords(), parameters.getStartRecord(),
-                parameters.getUser(), parameters.getRole(),
+                parameters.getExtraData(),
                 parameters.getRecordPacking());
         }
         return result.toString();
@@ -1004,7 +1004,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 sruRequest.searchRetrieve(result,
                     new ResourceType[] { ResourceType.ITEM }, query,
                     parameters.getMaximumRecords(), parameters.getStartRecord(),
-                    parameters.getUser(), parameters.getRole(),
+                    parameters.getExtraData(),
                     parameters.getRecordPacking());
             }
             catch (IOException e) {

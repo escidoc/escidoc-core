@@ -50,6 +50,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Abstract super class for all types of SRU requests.
@@ -167,7 +168,7 @@ public class SRURequest {
         final SRURequestParameters parameters) throws WebserverSystemException {
         searchRetrieve(output, resourceTypes, parameters.getQuery(),
             parameters.getMaximumRecords(), parameters.getStartRecord(),
-            parameters.getUser(), parameters.getRole(),
+            parameters.getExtraData(),
             parameters.getRecordPacking());
     }
 
@@ -209,7 +210,7 @@ public class SRURequest {
     public final void searchRetrieve(
         final Writer output, final ResourceType[] resourceTypes,
         final String query, final int limit, final int offset,
-        final String user, final String role, final RecordPacking recordPacking)
+        final HashMap<String, String> extraData, final RecordPacking recordPacking)
         throws WebserverSystemException {
         try {
             final StringBuilder internalQuery = new StringBuilder();
@@ -248,11 +249,10 @@ public class SRURequest {
                 url +=
                     '&' + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + '=' + limit;
             }
-            if (user != null) {
-                url += '&' + Constants.SRU_PARAMETER_USER + '=' + user;
-            }
-            if (role != null) {
-                url += '&' + Constants.SRU_PARAMETER_ROLE + '=' + role;
+            if (extraData != null) {
+                for (final Entry<String, String> entry : extraData.entrySet()) {
+                    url += '&' + entry.getKey() + '=' + entry.getValue();
+                }
             }
             if (recordPacking != null) {
                 url +=

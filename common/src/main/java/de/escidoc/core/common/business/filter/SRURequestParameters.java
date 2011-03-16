@@ -28,9 +28,10 @@
  */
 package de.escidoc.core.common.business.filter;
 
-import de.escidoc.core.common.business.Constants;
-
+import java.util.HashMap;
 import java.util.Map;
+
+import de.escidoc.core.common.business.Constants;
 
 /**
  * This class is a value object for all parameters used in an SRU request.
@@ -46,9 +47,7 @@ public abstract class SRURequestParameters {
 
     private final boolean explain;
 
-    private final String user;
-
-    private final String role;
+    private HashMap<String, String> extraData = null;
 
     private RecordPacking recordPacking;
 
@@ -69,8 +68,12 @@ public abstract class SRURequestParameters {
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_START_RECORD), -1);
         startRecord = givenStartRecord > -1 ? givenStartRecord + getDefaultStartRecord() - 1 : getDefaultStartRecord();
-        user = getStringParameter(parameters.get(Constants.SRU_PARAMETER_USER));
-        role = getStringParameter(parameters.get(Constants.SRU_PARAMETER_ROLE));
+        putExtraDataParameter(Constants.SRU_PARAMETER_USER, 
+            parameters.get(Constants.SRU_PARAMETER_USER));
+        putExtraDataParameter(Constants.SRU_PARAMETER_ROLE, 
+            parameters.get(Constants.SRU_PARAMETER_ROLE));
+        putExtraDataParameter(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING, 
+            parameters.get(Constants.SRU_PARAMETER_OMIT_HIGHLIGHTING));
 
         final String operation =
             getStringParameter(parameters
@@ -103,16 +106,12 @@ public abstract class SRURequestParameters {
         return explain;
     }
 
-    public String getUser() {
-        return user;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
     public final RecordPacking getRecordPacking() {
         return recordPacking;
+    }
+
+    public HashMap<String, String> getExtraData() {
+        return extraData;
     }
 
     /**
@@ -181,4 +180,24 @@ public abstract class SRURequestParameters {
     private static String getStringParameter(final Object[] parameter) {
         return getStringParameter(parameter, null);
     }
+
+    /**
+     * Get the key and the first parameter from the given array 
+     * and put it in extraData HashMap.
+     * 
+     * @param key
+     *            the key
+     * @param parameter
+     *            array containing the parameter to be extracted
+     */
+    private void putExtraDataParameter(
+        final String key, final Object[] parameter) {
+        if (key != null && parameter != null && parameter.length > 0) {
+            if (extraData == null) {
+                extraData = new HashMap<String, String>();
+            }
+            extraData.put(key, getStringParameter(parameter));
+        }
+    }
+
 }
