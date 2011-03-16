@@ -110,9 +110,11 @@
                   <configuration>
                      <source>
                      import java.util.Date 
-                     import java.text.MessageFormat 
+                     import java.text.SimpleDateFormat 
+                     import java.util.Locale
                      
-                     def vartimestamp = MessageFormat.format("{0,date} - {0,time}", new Date()) 
+                     SimpleDateFormat sdfmt = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss Z", Locale.US);
+                     def vartimestamp = sdfmt.format(new Date()); 
                      project.properties['buildtimestamp'] = vartimestamp
                      </source>
                   </configuration>
