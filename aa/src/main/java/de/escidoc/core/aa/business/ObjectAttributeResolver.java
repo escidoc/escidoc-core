@@ -13,7 +13,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundExcep
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface;
@@ -27,8 +27,8 @@ import java.util.Map;
  * @author MIH
  */
 public class ObjectAttributeResolver {
-    private static final AppLogger LOG =
-        new AppLogger(ObjectAttributeResolver.class.getName());
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ObjectAttributeResolver.class);
 
     private UserAccountDaoInterface userAccountDao;
 
@@ -210,8 +210,13 @@ public class ObjectAttributeResolver {
                     + " " + objectId);
             }
         }
-        catch (ScopeNotFoundException e) {
-            LOG.debug("Error on getting object.", e);
+        catch (final ScopeNotFoundException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on getting object.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on getting object.", e);
+            }
             return null;
         }
 
@@ -376,11 +381,6 @@ public class ObjectAttributeResolver {
      *            The {@link ScopeHandlerInterface} implementation.
      */
     public void setScopeHandler(final ScopeHandlerInterface scopeHandler) {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("setScopeHandler");
-        }
-
         this.scopeHandler = scopeHandler;
     }
 
@@ -391,11 +391,6 @@ public class ObjectAttributeResolver {
      *            The {@link TripleStoreUtility}.
      */
     public void setTsu(final TripleStoreUtility tsu) {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("setTsu");
-        }
-
         this.tsu = tsu;
     }
 
@@ -406,11 +401,6 @@ public class ObjectAttributeResolver {
      *            The data access object.
      */
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("setDao", userAccountDao));
-        }
-
         this.userAccountDao = userAccountDao;
     }
 
@@ -421,11 +411,6 @@ public class ObjectAttributeResolver {
      *            The data access object.
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("setGroupDao", userGroupDao));
-        }
-
         this.userGroupDao = userGroupDao;
     }
 

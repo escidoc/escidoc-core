@@ -36,7 +36,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundEx
 import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -44,32 +44,23 @@ import java.util.Map;
 /**
  * 
  * Implementation for the service layer for Aa component.
- * 
- * @spring.bean id="service.PolicyDecisionPoint"
- * @interface 
- *            class="de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface"
- * @service
+ *
  * @author ROF
- * @aa
  */
 public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(PolicyDecisionPoint.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(PolicyDecisionPoint.class);
 
     private de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface business;
 
     /**
      * Default constructor.
-     * 
-     * @aa
      */
-
     public PolicyDecisionPoint() {
-
     }
 
 
@@ -88,7 +79,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
      *      #evaluate(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String evaluate(final String requestsXml)
@@ -100,22 +91,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         return business.evaluate(requestsXml);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param requests
-     * @return
-     * @throws ResourceNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
-     *      #evaluate(java.lang.String)
-     * @aa
-     * 
-     * @axis.exclude
-     */
     @Override
     public boolean[] evaluateRequestList(
         final List<Map<String, String>> requests)
@@ -126,23 +101,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         return business.evaluateRequestList(requests);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param resourceName
-     * @param ids
-     * @return
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws ResourceNotFoundException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
-     *      #evaluateRetrieve(java.lang.String, java.util.List)
-     * @aa
-     * 
-     * @axis.exclude
-     */
     @Override
     public List<String> evaluateRetrieve(
         final String resourceName, final List<String> ids)
@@ -153,25 +111,6 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
         return business.evaluateRetrieve(resourceName, ids);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param resourceName
-     * @param methodName
-     * @param argumentList
-     * @return
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws ResourceNotFoundException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
-     *      #evaluateMethodForList(java.lang.String, java.lang.String,
-     *      java.util.List)
-     * @aa
-     * 
-     * @axis.exclude
-     */
     @Override
     public List<Object[]> evaluateMethodForList(
         final String resourceName, final String methodName,
@@ -187,17 +126,11 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 
     /**
      * Setter for the business object.
-     * 
-     * @spring.property ref="business.PolicyDecisionPoint"
-     * @service.exclude
+     *
      * @param business
      *            object
      */
-    public void setBusiness(
-        final de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface business) {
-
-        LOG.debug("setBusiness");
-
+    public void setBusiness(final de.escidoc.core.aa.business.interfaces.PolicyDecisionPointInterface business) {
         this.business = business;
     }
 

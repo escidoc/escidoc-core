@@ -1,35 +1,27 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.documentation;
 
 import de.escidoc.core.common.servlet.invocation.XMLBase;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -56,7 +48,7 @@ public class Resource extends XMLBase {
 
     public static final String INTERFACE_SOAP = "SOAP";
 
-    private static final AppLogger LOG = new AppLogger(Resource.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(Resource.class);
 
     private static final boolean VISIBILTY_DEFAULT = true;
 
@@ -202,7 +194,7 @@ public class Resource extends XMLBase {
      */
     public void toDocbook() {
 
-        LOG.info("[Resource " + name
+        LOGGER.info("[Resource " + name
             + "] Creating documentation for REST and SOAP interface.");
         initResult(INTERFACE_REST, getChapterStart(getTitle(INTERFACE_REST)));
         initResult(INTERFACE_SOAP, getChapterStart(getTitle(INTERFACE_SOAP)));
@@ -245,9 +237,13 @@ public class Resource extends XMLBase {
                         createDescriptorDocumentation(INTERFACE_SOAP,
                             descriptors.item(i), INVOKE_ELEMENT));
                 }
-            }
-            catch (TransformerException e) {
-                getLogger().info("No method mapping descriptors found!");
+            } catch (final TransformerException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("No method mapping descriptors found!");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("No method mapping descriptors found!", e);
+                }
             }
         }
         if (!"".equals(resourceOriented.toString())) {
@@ -391,7 +387,7 @@ public class Resource extends XMLBase {
                 }
             }
         }
-        catch (TransformerException e) {
+        catch (final TransformerException e) {
             result +=
                 "<para>Something went wrong! Caught Exception " + e.getClass()
                     + " with message " + e.getMessage() + "</para>";
@@ -565,11 +561,11 @@ public class Resource extends XMLBase {
                                 + " (caused by "
                                 + exceptionTypes[i].getSimpleName() + ')';
                     }
-                    catch (Exception e) {
+                    catch (final Exception e) {
                         msg =
                             HttpServletResponse.SC_INTERNAL_SERVER_ERROR
                                 + " Internal eSciDoc Error";
-                        LOG.info('[' + name + ']'
+                        LOGGER.info('[' + name + ']'
                             + ": Error generating documentation for "
                             + "[Rest: " + title + "] " + exceptionTypes[i]);
                     }
@@ -597,7 +593,7 @@ public class Resource extends XMLBase {
                 res.append(getMethodTableRow2Cols("Possible errors ", "No errors found."));
             }
         }
-        catch (NoSuchMethodException e) {
+        catch (final NoSuchMethodException e) {
             res.append(getMethodTableRow2Cols(" ", " "));
             res.append(getMethodTableRow2Cols("Possible errors ", "No errors found."));
             res.append(getMethodTableRow2Cols(" ", " "));
@@ -734,7 +730,7 @@ public class Resource extends XMLBase {
                             "No errors found.");
                 }
             }
-            catch (NoSuchMethodException e) {
+            catch (final NoSuchMethodException e) {
                 result += getMethodTableRow2Cols(" ", " ");
                 result +=
                     getMethodTableRow2Cols("Possible errors ",
@@ -783,7 +779,7 @@ public class Resource extends XMLBase {
                 parameterTypes[i] = String.class;
             }
         }
-        final java.lang.reflect.Method invoked =
+        final Method invoked =
             getInstance().getMethod(method, parameterTypes);
         return invoked.getExceptionTypes();
     }
@@ -797,7 +793,7 @@ public class Resource extends XMLBase {
      *            The parameter.
      * @return The docbook representation of a parameter.
      */
-    private String prepareParameter(final String parameter) {
+    private static String prepareParameter(final String parameter) {
 
         String result = parameter.toLowerCase();
         result = result.replaceAll("\\$\\{", "<emphasis>");
@@ -812,7 +808,7 @@ public class Resource extends XMLBase {
      * @param text The text.
      * @return The text with the replaced text fragments.
      */
-    private String prepareUriParameter(final String text) {
+    private static String prepareUriParameter(final String text) {
 
         String result = text.toLowerCase();
         result = result.replaceAll("<emphasis>", "<emphasis>" + LESS_THAN);
@@ -953,14 +949,16 @@ public class Resource extends XMLBase {
      * @return The template.
      */
     private String getTemplate(final String filename) {
-
         String result = null;
         try {
             result = getFileContents(TEMPLATE_PATH + '/' + filename) + CR_LF;
-        }
-        catch (IOException e) {
-            getLogger().error(
-                "Template '" + TEMPLATE_PATH + '/' + filename + "' not found!");
+        } catch (final IOException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Template '" + TEMPLATE_PATH + '/' + filename + "' not found!");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Template '" + TEMPLATE_PATH + '/' + filename + "' not found!", e);
+            }
         }
 
         return result;
@@ -999,8 +997,13 @@ public class Resource extends XMLBase {
             result = Class.forName(className);
 
         }
-        catch (Exception e) {
-            LOG.debug("Error on configured class for the bean '" + springBeanName + "'.");
+        catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on configured class for the bean '" + springBeanName + "'.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on configured class for the bean '" + springBeanName + "'.", e);
+            }
         }
 
         return result;

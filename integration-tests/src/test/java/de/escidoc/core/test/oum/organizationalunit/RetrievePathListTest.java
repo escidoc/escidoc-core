@@ -133,7 +133,7 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
         try {
             pathListXml = retrievePathList(childOuId1);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Retrieving path list of a child OU failed.", e);
         }
         assertXmlValidOrganizationalUnitPathList(pathListXml);
@@ -214,7 +214,7 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
         try {
             pathList = retrievePathList(objid);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(
                 "Retrieving path list of existing to level OU failed.", e);
         }
@@ -272,7 +272,7 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
             failMissingException("Retrieving path list of an OU"
                 + " with unknown id has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Retrieving path list of an OU"
                 + " with unknown id has not been declined, correctly.", ec, e);
         }
@@ -307,7 +307,7 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
                 + " with id of resource of another resource type"
                 + " has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Retrieving path list of an OU"
                 + " with id of resource of another resource type"
                 + " has not been declined, correctly.", ec, e);
@@ -341,7 +341,7 @@ public class RetrievePathListTest extends OrganizationalUnitTestBase {
             failMissingException("Retrieving path list of an OU"
                 + " without id" + " has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Retrieving path list of an OU" + " without id"
                 + " has not been declined, correctly.", ec, e);
         }

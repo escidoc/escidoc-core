@@ -189,7 +189,7 @@ public class ItemExamplesTest extends ItemTestBase {
             "/item/components/component/properties/content-category");
 
         selectSingleNodeAsserted(xmlItem,
-            "/item/components/component/content[@storage = 'internal-managed']");
+            "/item/components/component/content[orage = 'internal-managed']");
 
         TripleStoreValue tsv = new TripleStoreValue(getTransport());
         tsv.itemTripleStoreValues(xmlItem);

@@ -84,7 +84,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
         try {
             delete(objid);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Delete of OU without children failed.", e);
         }
 
@@ -95,7 +95,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
             retrieve(objid);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -126,7 +126,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Deleting OU with unknown id has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Deleting OU with unknown id has not been declined, correctly.",
                 ec, e);
@@ -160,7 +160,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
                 "Deleting OU with id of an existing resource of another type"
                     + " has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Deleting OU with id of an existing resource of another type"
                     + " has not been declined, correctly.", ec, e);
@@ -193,7 +193,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
                 "Deleting OU with id of an existing resource of another type"
                     + " has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Deleting OU with id of an existing resource of another type"
                     + " has not been declined, correctly.", ec, e);
@@ -235,7 +235,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Deleting OU with children has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
 
@@ -243,7 +243,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
         try {
             retrieve(parentId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(
                 "Could not retrieve OU after declined delete request.", e);
         }
@@ -287,7 +287,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Deleting OU with children has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
 
@@ -295,7 +295,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
         try {
             retrieve(parentId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(
                 "Could not retrieve OU after declined delete request.", e);
         }
@@ -336,7 +336,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Deleting OU with children has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
 
@@ -344,7 +344,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
         try {
             retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(
                 "Could not retrieve OU after declined delete request.", e);
         }
@@ -390,7 +390,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Deleting OU with children has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
 
@@ -398,7 +398,7 @@ public class DeleteTest extends OrganizationalUnitTestBase {
         try {
             retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(
                 "Could not retrieve OU after declined delete request.", e);
         }

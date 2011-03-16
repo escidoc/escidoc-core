@@ -93,7 +93,7 @@ public class RoleRestTest extends RoleAbstractTest {
             EscidocRestSoapTestBase.failMissingException(
                 XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -155,7 +155,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             resourcesXml = retrieveResources("escidoc:role-depositor");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException("Retrieval of role failed.", e);
         }
         assertNotNull("No virtual resources of role retrieved.", resourcesXml);
@@ -202,7 +202,7 @@ public class RoleRestTest extends RoleAbstractTest {
             EscidocRestSoapTestBase.failMissingException(
                 RoleNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleNotFoundException.class, e);
         }
@@ -232,7 +232,7 @@ public class RoleRestTest extends RoleAbstractTest {
             EscidocRestSoapTestBase.failMissingException(
                 RoleNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleNotFoundException.class, e);
         }
@@ -261,7 +261,7 @@ public class RoleRestTest extends RoleAbstractTest {
             EscidocRestSoapTestBase.failMissingException(
                 MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -288,7 +288,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             retrieveResources(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "retrieving resources for role default-user fails with exception. ",
                 e);
@@ -325,7 +325,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             update(getObjidValue(toBeUpdatedDocument), toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating without set read only element fails with exception. ",
                 e);
@@ -362,7 +362,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             update(getObjidValue(toBeUpdatedDocument), toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating without set read only element fails with exception. ",
                 e);
@@ -399,7 +399,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             update(getObjidValue(toBeUpdatedDocument), toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating without set read only element fails with exception. ",
                 e);
@@ -437,7 +437,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             update(getObjidValue(toBeUpdatedDocument), toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating without set read only element fails with exception. ",
                 e);
@@ -475,7 +475,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             update(getObjidValue(toBeUpdatedDocument), toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating without set read only element fails with exception. ",
                 e);
@@ -513,7 +513,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             update(getObjidValue(toBeUpdatedDocument), toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating without set read only element fails with exception. ",
                 e);
@@ -595,7 +595,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidRetrievedRole(updatedXml, createdXml, startTimestamp,
@@ -605,7 +605,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             retrievedXml = retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieve of updated role failed. ", e);
         }
@@ -676,7 +676,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidRetrievedRole(updatedXml, toBeUpdatedXml, startTimestamp,
@@ -686,7 +686,7 @@ public class RoleRestTest extends RoleAbstractTest {
         try {
             retrievedXml = retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieve of updated role failed. ", e);
         }

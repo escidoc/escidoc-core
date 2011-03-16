@@ -69,7 +69,7 @@ public class IngestRestTest extends IngestAbstractTest {
             ingest("laber-rababer");
             fail("Missing Invalid XML exception");
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             // that's ok
         }
     }

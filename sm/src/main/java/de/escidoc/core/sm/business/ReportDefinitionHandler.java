@@ -39,7 +39,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundExcep
 import de.escidoc.core.common.exceptions.application.violated.ScopeContextViolationException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.sm.business.filter.ReportDefinitionFilter;
@@ -63,16 +63,14 @@ import java.util.Map;
 
 /**
  * An statistic ReportDefinition resource handler.
- * 
- * @spring.bean id="business.ReportDefinitionHandler" scope="prototype"
+ *
  * @author MIH
- * @sm
  */
 public class ReportDefinitionHandler
     implements ReportDefinitionHandlerInterface {
 
-    private static final AppLogger LOGGER = new AppLogger(
-        ReportDefinitionHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ReportDefinitionHandler.class);
 
     private SmReportDefinitionsDaoInterface dao;
 
@@ -109,15 +107,12 @@ public class ReportDefinitionHandler
      * @throws SystemException
      *             ex
      * 
-     * @sm
+     *
      */
     @Override
     public String create(final String xmlData) throws InvalidSqlException,
         MissingMethodParameterException, ScopeNotFoundException,
         ScopeContextViolationException, SystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ReportDefinitionHandler does create");
-        }
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -128,9 +123,8 @@ public class ReportDefinitionHandler
         try {
             sp.parse(xmlData);
         }
-        catch (Exception e) {
-            LOGGER.error(e);
-            throw new SystemException(e);
+        catch (final Exception e) {
+            throw new SystemException("Error on parsing XML.", e);
         }
 
         final String scopeId = handler.getReportDefinition().getScope().getId();
@@ -171,15 +165,12 @@ public class ReportDefinitionHandler
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public void delete(final String id)
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ReportDefinitionHandler does delete");
-        }
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -205,15 +196,12 @@ public class ReportDefinitionHandler
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public String retrieve(final String id)
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ReportDefinitionHandler does retrieve");
-        }
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -315,16 +303,13 @@ public class ReportDefinitionHandler
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public String update(final String id, final String xmlData)
         throws ReportDefinitionNotFoundException,
         MissingMethodParameterException, ScopeNotFoundException,
         InvalidSqlException, ScopeContextViolationException, SystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ReportDefinitionHandler does update");
-        }
         if (id == null || id.length() == 0) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -340,9 +325,8 @@ public class ReportDefinitionHandler
         try {
             sp.parse(xmlData);
         }
-        catch (Exception e) {
-            LOGGER.error(e);
-            throw new SystemException(e);
+        catch (final Exception e) {
+            throw new SystemException("Error on parsing XML.", e);
         }
 
         final ReportDefinition reportDefinition = handler.getReportDefinition();
@@ -384,7 +368,7 @@ public class ReportDefinitionHandler
      * @throws SystemException
      *             ex
      * 
-     * @sm
+     *
      */
     private void checkSql(final String sql, final String scopeId)
         throws ScopeContextViolationException, InvalidSqlException,
@@ -404,7 +388,7 @@ public class ReportDefinitionHandler
         try {
             dbAccessor.executeReadOnlySql(generateFakeSql(sql));
         }
-        catch (SqlDatabaseSystemException e) {
+        catch (final SqlDatabaseSystemException e) {
             throw new InvalidSqlException(e);
         }
 
@@ -451,20 +435,17 @@ public class ReportDefinitionHandler
      * @param sql
      *            sql-statement of report-definition.
      * @return String replacedSql
-     * @sm
+     *
      */
-    private String generateFakeSql(final String sql) {
+    private static String generateFakeSql(final String sql) {
         return sql.replaceAll("(?s)'?\"?\\{.*?\\}'?\"?", "'1'");
     }
 
     /**
      * Setter for the dao.
-     * 
-     * @spring.property ref="persistence.SmReportDefinitionsDao"
+     *
      * @param dao
      *            The data access object.
-     * 
-     * @sm
      */
     public void setDao(final SmReportDefinitionsDaoInterface dao) {
         this.dao = dao;
@@ -475,7 +456,6 @@ public class ReportDefinitionHandler
      * 
      * @param xmlUtility
      *            The xmlUtility to set.
-     * @spring.property ref="business.sm.XmlUtility"
      */
     public final void setXmlUtility(final SmXmlUtility xmlUtility) {
         this.xmlUtility = xmlUtility;
@@ -484,11 +464,8 @@ public class ReportDefinitionHandler
     /**
      * Setter for the scopesDao.
      * 
-     * @spring.property ref="persistence.SmScopesDao"
      * @param scopesDao
      *            The data access object.
-     * 
-     * @sm
      */
     public void setScopesDao(final SmScopesDaoInterface scopesDao) {
         this.scopesDao = scopesDao;
@@ -497,11 +474,8 @@ public class ReportDefinitionHandler
     /**
      * Setter for the aggregationDefinitions.
      * 
-     * @spring.property ref="persistence.SmAggregationDefinitionsDao"
      * @param aggregationDefinitionsDao
      *            The data access object.
-     * 
-     * @sm
      */
     public void setAggregationDefinitionsDao(
         final SmAggregationDefinitionsDaoInterface aggregationDefinitionsDao) {
@@ -513,7 +487,6 @@ public class ReportDefinitionHandler
      * 
      * @param dbAccessorIn
      *            The directDatabaseAccessor to set.
-     * @spring.property ref="sm.persistence.DirectDatabaseAccessor"
      */
     public final void setDirectDatabaseAccessor(
         final DirectDatabaseAccessorInterface dbAccessorIn) {
@@ -525,7 +498,6 @@ public class ReportDefinitionHandler
      * 
      * @param filterUtility
      *            The filterUtility to set.
-     * @spring.property ref="business.sm.FilterUtility"
      */
     public final void setFilterUtility(final SmFilterUtility filterUtility) {
         this.filterUtility = filterUtility;
@@ -536,10 +508,6 @@ public class ReportDefinitionHandler
      * 
      * @param renderer
      *            The renderer to inject.
-     * 
-     * @spring.property ref=
-     *                  "eSciDoc.core.aa.business.renderer.VelocityXmlReportDefinitionRenderer"
-     * @aa
      */
     public void setRenderer(final ReportDefinitionRendererInterface renderer) {
         this.renderer = renderer;

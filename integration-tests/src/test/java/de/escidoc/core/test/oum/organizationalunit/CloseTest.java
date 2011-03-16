@@ -81,7 +81,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
             close(objid, getTheLastModificationParam(true, objid,
                 "Closed organizational unit '" + objid + "'."));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Close of OU without children failed.", e);
         }
 
@@ -135,7 +135,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
             close(objid, getTheLastModificationParam(true, objid,
                 "Closed organizational unit '" + objid + "'."));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Close of OU with children failed.", e);
         }
 
@@ -183,7 +183,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Closing OU with children has not been declined correctly.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Closing OU with children has not been declined correctly.",
                 ec, e);
@@ -231,7 +231,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Closing OU with children has not been declined correctly.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Closing OU with children in state opened has not been declined correctly.",
                 ec, e);
@@ -263,7 +263,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Closing OU with unknown id has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Closing OU with unknown id has not been declined correctly.",
                 ec, e);
@@ -297,7 +297,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
                 "Closing OU with id of an existing resource of another type"
                     + " has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Closing OU with id of an existing resource of another type"
                     + " has not been declined correctly.", ec, e);
@@ -328,7 +328,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Closing OU without an id has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Closing OU without an id has not been declined correctly.",
                 ec, e);
@@ -360,7 +360,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Closing OU without a task param has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Closing OU without a task param has not been declined correctly.",
                 ec, e);
@@ -393,7 +393,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
                 "Closing OU with an invalid task param has not been declined",
                 ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Closing OU with an invalid task param has not been declined correctly.",
                 ec, e);
@@ -425,7 +425,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
                 "Closing OU with an invalid task param has not been declined",
                 ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Closing OU with an invalid task param has not been declined correctly.",
                 ec, e);
@@ -470,7 +470,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
                 "2. Closed organizational unit '" + objid + "'."));
             failMissingException("Closing OU twice has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -506,7 +506,7 @@ public class CloseTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Closing OU in state created has not been declined", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }

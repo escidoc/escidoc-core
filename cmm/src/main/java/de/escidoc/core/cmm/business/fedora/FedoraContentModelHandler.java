@@ -52,6 +52,7 @@ import de.escidoc.core.cmm.business.stax.handler.contentModel.ResourceDefinition
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
+import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -88,7 +89,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
@@ -103,13 +104,12 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 
 /**
  * @author FRS
- * @spring.bean id="business.FedoraContentModelHandler" scope="prototype"
  */
 public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     implements ContentModelHandlerInterface {
 
-    private static final AppLogger log = new AppLogger(
-        FedoraContentModelHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        FedoraContentModelHandler.class);
 
     private final Collection<ResourceListener> contentModelListeners =
         new ArrayList<ResourceListener>();
@@ -164,7 +164,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         if (getContentModel().isWithdrawn()) {
             final String msg =
                 "The object is in state '"
-                    + de.escidoc.core.common.business.Constants.STATUS_WITHDRAWN
+                    + Constants.STATUS_WITHDRAWN
                     + "'. Content is not accessible.";
             throw new InvalidStatusException(msg);
         }
@@ -280,7 +280,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         try {
             ds = new Datastream("xslt", sDefId, null);
         }
-        catch (StreamNotFoundException e) {
+        catch (final StreamNotFoundException e) {
             throw new ResourceNotFoundException("No XSLT for operation '"
                 + name + "' in content model " + id + '.', e);
         }
@@ -302,10 +302,10 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                     .toStringUTF8()
                     .replaceFirst(
                             '<'
-                            + de.escidoc.core.common.business.Constants.WOV_NAMESPACE_PREFIX
+                            + Constants.WOV_NAMESPACE_PREFIX
                             + ':' + Elements.ELEMENT_WOV_VERSION_HISTORY,
                             '<'
-                            + de.escidoc.core.common.business.Constants.WOV_NAMESPACE_PREFIX
+                            + Constants.WOV_NAMESPACE_PREFIX
                             + ':' + Elements.ELEMENT_WOV_VERSION_HISTORY
                             + " xml:base=\"" + XmlUtility.getEscidocBaseUrl()
                             + "\" " + Elements.ATTRIBUTE_LAST_MODIFICATION_DATE
@@ -313,7 +313,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                             + getContentModel().getLastModificationDate()
                             + "\" ");
         }
-        catch (StreamNotFoundException e) {
+        catch (final StreamNotFoundException e) {
             throw new IntegritySystemException("Version history not found.", e);
         }
 
@@ -356,7 +356,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws InvalidXmlException
      * @throws SystemException
      * @throws SystemException
-     * @see de.escidoc.core.cmm.business.interfaces.ContentModelHandlerInterface#create(java.lang.String)
+     * @see ContentModelHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData) throws InvalidContentException,
@@ -375,7 +375,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         try {
             resultContentModel = retrieve(objid);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             final String msg =
                 "The Content Model with id '" + objid
                     + "', which was just created, "
@@ -474,19 +474,19 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         try {
             sp.parse(xmlData);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw e;
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw e;
         }
-        catch (InvalidContentException e) {
+        catch (final InvalidContentException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
@@ -551,7 +551,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                         dcNew.getBytes(XmlUtility.CHARACTER_ENCODING),
                         "text/xml");
             }
-            catch (UnsupportedEncodingException e) {
+            catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
             getContentModel().setDc(newDs);
@@ -673,7 +673,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                                     + getContentModel().getId()
                                     + "/resource-definitions/resource-definition/"
                                     + resourceDefinition.getName() + "/xslt/content")) {
-                        log.debug("Do not update xslt.");
+                        if(LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Do not update xslt.");
+                        }
                     } else {
                         // update xslt
                         fu.modifyDatastream(sdefId, "xslt",
@@ -812,7 +814,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                                 .getBytes(XmlUtility.CHARACTER_ENCODING),
                             contentStream.getMimeType());
                 }
-                catch (UnsupportedEncodingException e) {
+                catch (final UnsupportedEncodingException e) {
                     throw new WebserverSystemException(e);
                 }
             }
@@ -876,9 +878,9 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             item.getProperties().getObjectProperties().getStatus();
 
         if (publicStatus != StatusType.PENDING) {
-
-            log.debug("New Content Model has to be in public-status '"
-                + StatusType.PENDING + "'.");
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("New Content Model has to be in public-status '" + StatusType.PENDING + "'.");
+            }
             item.getProperties().getObjectProperties()
                 .setStatus(StatusType.PENDING);
         }
@@ -896,7 +898,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws InvalidContentException
      *             Thrown if content is invalid.
      */
-    private void checkMetadataRecords(final ContentModelCreate item)
+    private static void checkMetadataRecords(final ContentModelCreate item)
         throws InvalidContentException {
 
         final List<MdRecordCreate> mdRecords = item.getMetadataRecords();
@@ -933,7 +935,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws XmlCorruptedException
      *             Thrown if the schema validation of the provided data failed.
      */
-    private ContentModelCreate parseContentModel(final String xml)
+    private static ContentModelCreate parseContentModel(final String xml)
         throws WebserverSystemException, InvalidContentException,
         MissingAttributeValueException, XmlParserSystemException,
         XmlCorruptedException {
@@ -947,19 +949,19 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         try {
             sp.parse(xml);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw e;
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (XmlCorruptedException e) {
+        catch (final XmlCorruptedException e) {
             throw e;
         }
-        catch (InvalidContentException e) {
+        catch (final InvalidContentException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
@@ -988,8 +990,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
 
     /**
      * Injects the indexing handler.
-     * 
-     * @spring.property ref="common.business.indexing.IndexingHandler"
+     *
      * @param indexingHandler
      *            The indexing handler.
      */
@@ -1002,8 +1003,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * 
      * @param sruRequest
      *            SRURequest
-     * 
-     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
@@ -1014,7 +1013,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
      * 
      */
     @Override
@@ -1026,10 +1024,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * See Interface for functional description.
      * 
      * @param fedoraUtility
-     * @see de.escidoc.core.common.business.fedora.HandlerBase
+     * @see HandlerBase
      *      #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
-     * 
-     * @spring.property ref="escidoc.core.business.FedoraUtility"
      */
     @Override
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
@@ -1041,10 +1037,8 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * See Interface for functional description.
      * 
      * @param idProvider
-     * @see de.escidoc.core.common.business.fedora.HandlerBase
+     * @see HandlerBase
      *      #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
-     * 
-     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
     @Override
     public void setIdProvider(final EscidocIdProvider idProvider) {
@@ -1149,7 +1143,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             UserContext.setRestAccess(!isRestAccess);
             result = render();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SystemException(e);
         }
         finally {

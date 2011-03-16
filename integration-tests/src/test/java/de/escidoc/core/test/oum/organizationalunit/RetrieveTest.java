@@ -78,7 +78,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
         try {
             retrievedXml = retrieve(objid);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Retrieving existing OU failed.", e);
         }
         assertOrganizationalUnit(retrievedXml, createdXml, startTimestamp,
@@ -110,7 +110,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "Retrieving an OU with unknown id has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Retrieving an OU with unknown id has not been declined,"
                     + " correctly.", ec, e);
@@ -144,7 +144,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
                 "Retrieving an OU with id of resource of another resource type"
                     + " has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Retrieving an OU with id of resource of another resource type"
                     + " has not been declined, correctly", ec, e);
@@ -175,7 +175,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
             failMissingException("Retrieving an OU without id"
                 + " has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Retrieving an OU without id"
                 + " has not been declined, correctly.", ec, e);
         }
@@ -200,7 +200,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
         try {
             retrievedXml = retrieve("escidoc:persistent1");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(e);
         }
         assertNotNull("No org. unit. data retrieved. ", retrievedXml);
@@ -227,7 +227,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
         try {
             retrievedXml = retrieve("escidoc:persistent11");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(e);
         }
         assertNotNull("No org. unit. data retrieved. ", retrievedXml);
@@ -254,7 +254,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
         try {
             retrievedXml = retrieve("escidoc:persistent13");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(e);
         }
         assertNotNull("No org. unit. data retrieved. ", retrievedXml);
@@ -281,7 +281,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
         try {
             retrievedXml = retrieve("escidoc:persistent1");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(e);
         }
         assertNotNull("No org. unit. data retrieved. ", retrievedXml);
@@ -308,7 +308,7 @@ public class RetrieveTest extends OrganizationalUnitTestBase {
         try {
             retrievedXml = retrieve("escidoc:persistent22");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(e);
         }
         assertNotNull("No org. unit. data retrieved. ", retrievedXml);

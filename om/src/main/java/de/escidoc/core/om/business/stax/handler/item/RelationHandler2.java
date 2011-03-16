@@ -33,7 +33,7 @@ import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.create.RelationCreate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
@@ -58,8 +58,8 @@ public class RelationHandler2 extends DefaultHandler {
 
     private RelationCreate relation;
 
-    private static final AppLogger LOGGER =
-        new AppLogger(RelationHandler2.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(RelationHandler2.class);
 
     /**
      * 
@@ -120,9 +120,13 @@ public class RelationHandler2 extends DefaultHandler {
                     predicate = predicateAndTarget[1];
                 }
 
-            }
-            catch (NoSuchAttributeException e) {
-                LOGGER.debug(e);
+            } catch (final NoSuchAttributeException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error accessing attribute.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error accessing attribute.", e);
+                }
             }
 
             String id = null;
@@ -142,8 +146,13 @@ public class RelationHandler2 extends DefaultHandler {
 
                 }
             }
-            catch (NoSuchAttributeException e) {
-                LOGGER.debug(e);
+            catch (final NoSuchAttributeException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error accessing attribute.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error accessing attribute.", e);
+                }
             }
             // handle objid
             if (XmlUtility.getVersionNumberFromObjid(id) != null) {

@@ -229,7 +229,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
             fail("No exception occurred on release with non"
                 + "existing container id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -274,7 +274,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
             release(theContainerId, param);
             fail("No exception occurred on release with wrong time stamp.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -296,7 +296,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
             fail("No exception occurred on release with missing "
                 + "container id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -316,7 +316,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
             fail("No exception occurred on release with missing"
                 + "time stamp.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -336,7 +336,7 @@ public class ContainerReleaseTest extends ContainerTestBase {
             release(theContainerId, param);
             fail("No exception occurred on release before submit.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);

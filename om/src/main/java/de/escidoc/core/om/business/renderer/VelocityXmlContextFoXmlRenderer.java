@@ -50,7 +50,7 @@ public class VelocityXmlContextFoXmlRenderer
      * @param datastreams
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.om.business.renderer.interfaces.ContextFoXmlRendererInterface#render(Map)
+     * @see ContextFoXmlRendererInterface#render(Map)
      */
     @Override
     public String render(final Map<String, Object> values) throws SystemException {
@@ -64,7 +64,7 @@ public class VelocityXmlContextFoXmlRenderer
      * @param values
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.ContextFoXmlRendererInterface#renderRelsExt(java.util.Map)
+     * @see de.escidoc.core.oum.business.renderer.interfaces.ContextFoXmlRendererInterface#renderRelsExt(Map)
      */
     @Override
     public String renderRelsExt(final Map<String, Object> values)
@@ -79,7 +79,7 @@ public class VelocityXmlContextFoXmlRenderer
      * @param values
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.ContextFoXmlRendererInterface#renderRelsExt(java.util.Map)
+     * @see de.escidoc.core.oum.business.renderer.interfaces.ContextFoXmlRendererInterface#renderRelsExt(Map)
      */
     @Override
     public String renderDc(final Map<String, Object> values)

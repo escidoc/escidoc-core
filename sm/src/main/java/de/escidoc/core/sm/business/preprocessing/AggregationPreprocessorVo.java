@@ -39,7 +39,7 @@ import java.util.Map;
  * Holds the data for the preprocessing of one AggrgeationDefinition.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class AggregationPreprocessorVo {
 

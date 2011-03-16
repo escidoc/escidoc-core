@@ -30,7 +30,7 @@ package de.escidoc.core.om.business.stax.handler;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
@@ -59,8 +59,8 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
     private final Map<String, Map<String, String>> metadataAttributes =
         new HashMap<String, Map<String, String>>();
 
-    private static final AppLogger LOGGER =
-        new AppLogger(MetadataHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(MetadataHandler.class);
 
     private boolean isMandatoryName;
     
@@ -114,9 +114,13 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                     if (name.equals(Elements.MANDATORY_MD_RECORD_NAME)) {
                         isMandatoryName = true;
                     }
-                }
-                catch (NoSuchAttributeException e) {
-                    LOGGER.debug("Error on getting attribute.", e);
+                } catch (final NoSuchAttributeException e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on getting attribute.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on getting attribute.", e);
+                    }
                 }
 
                 String typeValue = null;
@@ -163,9 +167,9 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement
+     * @see DefaultHandler#endElement
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
-     * @om
+     *
      */
     @Override
     public EndElement endElement(final EndElement element)

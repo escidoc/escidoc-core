@@ -109,7 +109,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
         try {
             delete(this.containerId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // do nothing
         }
 
@@ -228,7 +228,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             fail("No exception occurred on added an existing relation to "
                 + "the item");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "AlreadyExistException expected.",
                 AlreadyExistsException.class, e);
@@ -257,7 +257,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             fail("No exception occurred on added an relation with non "
                 + "existing target to the item");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = RelationPredicateNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName(), ec, e);
         }
@@ -284,7 +284,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             fail("No exception occurred on added an relation with non "
                 + "existing target to the item");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "ReferencedResourceNotFoundException.",
                 ReferencedResourceNotFoundException.class, e);
@@ -315,7 +315,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             fail("No exception occurred on added an relation with non "
                 + "existing predicate to the item");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "RelationPredicateNotFoundException.",
                 RelationPredicateNotFoundException.class, e);
@@ -342,7 +342,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             addContentRelations(null, taskParam);
             fail("No exception occurred on adding an relation without source id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -362,7 +362,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             fail("No exception occurred on adding an relation without "
                 + "task parameter.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -390,7 +390,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             fail("No exception occurred on added an relation with target "
                 + "contains version number to the container");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "InvalidContentException.", InvalidContentException.class, e);
         }
@@ -462,7 +462,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             removeContentRelations(this.containerId, taskParam);
             fail("No exception occurred on remove a already deleted relation");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "ContentRelationNotFoundException expected.",
                 ContentRelationNotFoundException.class, e);
@@ -494,7 +494,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             fail("No exception occurred on remove an relation with a"
                 + " wrong source");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "ContentRelationNotFoundException.",
                 ContentRelationNotFoundException.class, e);
@@ -643,7 +643,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     // fail("No exception occurred on added an existing relation to the
     // container");
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType("AlreadyExistException expected.",
     // AlreadyExistsException.class, e);
     // }
@@ -663,7 +663,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
     // removeContentRelations(this.containerId, taskParam);
     // fail("No exception occurred on remove of a nonexising relation.");
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType("ContentRelationNotFoundException expected.",
     // ContentRelationNotFoundException.class, e);
     // }
@@ -768,7 +768,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             assertNull(selectSingleNode(relationsElementDoc,
                 "/relations/relation"));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ResourceNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -801,7 +801,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             retrieveRelations(null);
             fail("No exception when retrieveRelations without id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -819,7 +819,7 @@ public class ContainerContentRelationsTest extends ContainerTestBase {
             retrieveRelations("bla");
             fail("No exception when retrieveRelations with wrong id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }

@@ -318,7 +318,7 @@ public class UserGroupTestBase extends AaTestBase {
             try {
                 createdUserGroupXml = create(toBeCreatedXml);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
             }
             return assertActiveUserGroup(createdUserGroupXml, toBeCreatedXml,
@@ -350,7 +350,7 @@ public class UserGroupTestBase extends AaTestBase {
         try {
             createdUserGroupXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         return assertActiveUserGroup(createdUserGroupXml, toBeCreatedXml,
@@ -372,7 +372,7 @@ public class UserGroupTestBase extends AaTestBase {
         try {
             retrievedXml = retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving user group failed. ", e);
         }
@@ -418,7 +418,7 @@ public class UserGroupTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -460,7 +460,7 @@ public class UserGroupTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -510,7 +510,7 @@ public class UserGroupTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -548,7 +548,7 @@ public class UserGroupTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -603,7 +603,7 @@ public class UserGroupTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -641,7 +641,7 @@ public class UserGroupTestBase extends AaTestBase {
                 "<param last-modification-date=\"" 
                     + lastModificationDate + "\" />";
             userGroupClient.deactivate(groupId, taskParamXml);
-        } catch (AlreadyDeactiveException e) {}
+        } catch (final AlreadyDeactiveException e) {}
 
         String userGroupXml = 
             handleResult(userGroupClient.retrieve(groupId));
@@ -660,7 +660,7 @@ public class UserGroupTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -715,7 +715,7 @@ public class UserGroupTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -754,7 +754,7 @@ public class UserGroupTestBase extends AaTestBase {
                 "<param last-modification-date=\"" 
                     + lastModificationDate + "\" />";
             userGroupClient.activate(groupId, taskParamXml);
-        } catch (AlreadyActiveException e) {}
+        } catch (final AlreadyActiveException e) {}
 
         String userGroupXml = 
             handleResult(userGroupClient.retrieve(groupId));
@@ -773,7 +773,7 @@ public class UserGroupTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -818,7 +818,7 @@ public class UserGroupTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -868,7 +868,7 @@ public class UserGroupTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -918,7 +918,7 @@ public class UserGroupTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }

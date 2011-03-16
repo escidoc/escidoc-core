@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * Stax handler implementation that extracts ouIds out of a ouList.
  * 
- * @aa
+ *
  * @author MIH
  * 
  */
@@ -57,7 +57,7 @@ public class OuListOuIdHandler extends DefaultHandler {
      * 
      * @param parser
      *            The StaxParser.
-     * @aa
+     *
      */
     public OuListOuIdHandler(final StaxParser parser) {
         this.parser = parser;
@@ -70,9 +70,9 @@ public class OuListOuIdHandler extends DefaultHandler {
      * @param element element
      * @return StartElement
      * @throws Exception e
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @aa
+     *
      */
     @Override
     public StartElement startElement(final StartElement element) throws Exception {

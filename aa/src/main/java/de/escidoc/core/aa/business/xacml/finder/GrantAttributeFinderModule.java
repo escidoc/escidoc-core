@@ -84,12 +84,8 @@ import java.util.regex.Pattern;
  * 
  * assigned-on:context only resolves if grant is assigned to a component,
  * container or item.
- * 
- * @spring.bean id="eSciDoc.core.aa.GrantAttributeFinderModule"
- * 
+ *
  * @author MIH
- * 
- * @aa
  */
 public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 
@@ -130,10 +126,10 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -162,10 +158,10 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -233,7 +229,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @return Object[] result
      * @throws EscidocException
      *             e
-     * @aa
+     *
      */
     private Object[] resolveAssignedOnAttribute(
         final EvaluationCtx ctx, final String attributeIdValue,
@@ -255,7 +251,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
                     fetchSingleResourceAttribute(ctx, resolvableAttribute
                         + "-new");
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 // not assigned to an object
                 // so mark complete attribute as unresolvable
                 result =
@@ -325,7 +321,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @return Object[] result
      * @throws EscidocException
      *             e
-     * @aa
+     *
      */
     private Object[] resolveCreatedByAttribute(
         final EvaluationCtx ctx, final String attributeIdValue,
@@ -365,7 +361,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * @return Object[] result
      * @throws EscidocException
      *             e
-     * @aa
+     *
      */
     private Object[] resolveRoleAttribute(
         final EvaluationCtx ctx, final String attributeIdValue,
@@ -409,7 +405,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      *             Thrown in case of an internal error.
      * @throws GrantNotFoundException
      *             Thrown if no grant with provided id exists.
-     * @aa
+     *
      */
     private RoleGrant getUserGroupGrant(
         final EvaluationCtx ctx, final String grantId)
@@ -422,7 +418,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             try {
                 grant = userGroupDao.retrieveGrant(grantId);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during retrieval of the grant", e
@@ -450,7 +446,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      *             Thrown in case of an internal error.
      * @throws GrantNotFoundException
      *             Thrown if no grant with provided id exists.
-     * @aa
+     *
      */
     private RoleGrant getUserAccountGrant(
         final EvaluationCtx ctx, final String userId, final String grantId)
@@ -463,7 +459,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
             try {
                 grant = userAccountDao.retrieveGrant(userId, grantId);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during retrieval of the grant", e
@@ -486,9 +482,9 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      *            The role grant to assert.
      * @throws GrantNotFoundException
      *             Thrown if assertion fails.
-     * @aa
+     *
      */
-    private void assertGrant(final String grantId, final RoleGrant roleGrant)
+    private static void assertGrant(final String grantId, final RoleGrant roleGrant)
         throws GrantNotFoundException {
 
         if (roleGrant == null) {
@@ -505,7 +501,6 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * 
      * @param userAccountDao
      *            The user account dao.
-     * @spring.property ref="persistence.UserAccountDao"
      */
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
         this.userAccountDao = userAccountDao;
@@ -516,7 +511,6 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * 
      * @param userGroupDao
      *            The user group dao.
-     * @spring.property ref="persistence.UserGroupDao"
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
         this.userGroupDao = userGroupDao;
@@ -527,8 +521,6 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
-     * @aa
      */
     public void setTsu(final TripleStoreUtility tsu) {
         this.tsu = tsu;

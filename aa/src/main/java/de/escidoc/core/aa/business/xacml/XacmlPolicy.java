@@ -42,7 +42,7 @@ import java.util.List;
  * 
  * @author TTE
  * 
- * @aa
+ *
  */
 public class XacmlPolicy extends Policy {
 
@@ -78,7 +78,7 @@ public class XacmlPolicy extends Policy {
      *            The actions for which this policy is defined.
      * @throws URISyntaxException
      *             Thrown if creation fails due to URI syntax error.
-     * @aa
+     *
      */
     public XacmlPolicy(final URI policyId,
         final RuleCombiningAlgorithm ruleCombiningAlgorithm,
@@ -95,7 +95,7 @@ public class XacmlPolicy extends Policy {
      * Gets the role id.
      * 
      * @return Returns the role id.
-     * @aa
+     *
      */
     public String getRoleId() {
         return roleId;
@@ -107,14 +107,14 @@ public class XacmlPolicy extends Policy {
      * See Interface for functional description.
      * 
      * @return
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     public String toString() {
 
         try {
             return CustomPolicyBuilder.encode(this);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             return super.toString();
         }
     }

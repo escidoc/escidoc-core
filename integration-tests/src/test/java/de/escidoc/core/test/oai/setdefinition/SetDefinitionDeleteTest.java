@@ -44,7 +44,7 @@ public class SetDefinitionDeleteTest extends SetDefinitionTestBase {
           retrieve(objid);
           fail("No exception on retrieve of the deleted set definition.");
       }
-      catch (Exception e) {
+      catch (final Exception e) {
           Class<?> ec = ResourceNotFoundException.class;
           EscidocRestSoapTestBase.assertExceptionType(ec, e);
       }

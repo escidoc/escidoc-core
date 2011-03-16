@@ -124,7 +124,7 @@ public class ItemDeleteTest extends ItemTestBase {
             retrieve(this.theItemId);
             fail("No exception on retrieve item after delete.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ItemNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -258,7 +258,7 @@ public class ItemDeleteTest extends ItemTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Deleting an item in status 'released' was not declined. ", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase
                 .assertExceptionType(
                     "Deleting an item in status 'released' raised wrong exception. ",
@@ -296,7 +296,7 @@ public class ItemDeleteTest extends ItemTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Deleting an item in status 'released' was not declined. ", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Deleting an item in status 'released' raised "
                     + "wrong exception. ", ec, e);
@@ -317,7 +317,7 @@ public class ItemDeleteTest extends ItemTestBase {
         try {
             retrieve("test");
         }
-        catch (ItemNotFoundException e) {
+        catch (final ItemNotFoundException e) {
             return;
         }
         fail("Not expected exception");
@@ -338,7 +338,7 @@ public class ItemDeleteTest extends ItemTestBase {
         try {
             delete(null);
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             return;
         }
         fail("Not expected exception");
@@ -377,7 +377,7 @@ public class ItemDeleteTest extends ItemTestBase {
         try {
             delete(componentId);
         }
-        catch (ItemNotFoundException e) {
+        catch (final ItemNotFoundException e) {
             return;
         }
         fail("Not expected exception");

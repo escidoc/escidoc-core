@@ -154,7 +154,7 @@ public class ReportTest extends ReportTestBase {
                 }
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("Exception occured " + e.toString());
         }
     }
@@ -186,7 +186,7 @@ public class ReportTest extends ReportTestBase {
             aggregationDefinitionIds[aggregationDefinitionNumber] 
                                                  = getPrimKey(result);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("Exception occured " + e.toString());
         }
     }
@@ -228,7 +228,7 @@ public class ReportTest extends ReportTestBase {
                     "String does not match es expected. " + response, 
                     "Operation completed successfully without a return value", 
                     response);
-        } catch (AssertionError e) {
+        } catch (final AssertionError e) {
             if (methodIndex.equals(STATISTIC_PREPROCESSOR_METHOD_INDEX)) {
                 triggerPreprocessing("1");
             } else {
@@ -342,7 +342,7 @@ public class ReportTest extends ReportTestBase {
             results.append("NO EXCEPTION");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             if (exceptionType.equals("MissingMethodParameterException")) {
                 results.append("OK");
@@ -387,7 +387,7 @@ public class ReportTest extends ReportTestBase {
                 "Retrieving report with providing corrupted xml not declined.",
                 ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving report with providing corrupted xml not declined,"
                     + " properly.", ec, e);
@@ -418,7 +418,7 @@ public class ReportTest extends ReportTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Retrieving report without providing xml not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving report without providing corrupted xml not declined,"
                     + " properly.", ec, e);

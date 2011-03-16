@@ -78,7 +78,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(ContainerNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 ContainerNotFoundException.class, e);
         }
@@ -106,7 +106,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(ContainerNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 ContainerNotFoundException.class, e);
         }
@@ -137,7 +137,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
                 "No exception with deleting container with members.",
                 InvalidStatusException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 InvalidStatusException.class, e);
         }
@@ -158,7 +158,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
                 "No exception occurred on delete with non existing id.",
                 ContainerNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 ContainerNotFoundException.class, e);
         }
@@ -179,7 +179,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
                 "No exception occurred on delete with missing id.",
                 MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -204,88 +204,11 @@ public class ContainerDeleteTest extends ContainerTestBase {
                 "No exception occurred on delete submitted container.",
                 InvalidStatusException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 InvalidStatusException.class, e);
         }
     }
-
-    // Test methods are obsolete, because they test the obsolete
-    // interface methods
-    // /**
-    // * Test successfully deleting containers, which are referenced as
-    // relations
-    // * targets in the other container. After deletion of referenced
-    // containers,
-    // * the container has no relations more.
-    // *
-    // *
-    // * @test.status Implemented
-    // *
-    // * @throws Exception
-    // * If anything fails.
-    // */
-    // public void testDeleteWithRelations() throws Exception {
-    // String containerXml1 =
-    // create(getTemplateAsString(TEMPLATE_CONTAINER_PATH,
-    // "create_container_WithoutMembers_v1.1.xml"));
-    // String containerXml2 =
-    // create(getTemplateAsString(TEMPLATE_CONTAINER_PATH,
-    // "create_container_WithoutMembers_v1.1.xml"));
-    //
-    // String createdContainerId1 = null;
-    // String createdContainerId2 = null;
-    // Pattern PATTERN_OBJID_ATTRIBUTE = Pattern.compile("objid=\"([^\"]*)\"");
-    // Matcher m1 = PATTERN_OBJID_ATTRIBUTE.matcher(containerXml1);
-    // if (m1.find()) {
-    // createdContainerId1 = m1.group(1);
-    // }
-    // Matcher m2 = PATTERN_OBJID_ATTRIBUTE.matcher(containerXml2);
-    // if (m2.find()) {
-    // createdContainerId2 = m2.group(1);
-    // }
-    //
-    // String href1 = "/ir/container/" + createdContainerId1;
-    // String href2 = "/ir/container/" + createdContainerId2;
-    // String containerForCreateWithRelationsXml = getTemplateAsString(
-    // TEMPLATE_CONTAINER_PATH,
-    // "create_container_WithoutMembers_v1.1_WithRelations.xml");
-    //
-    // containerForCreateWithRelationsXml = containerForCreateWithRelationsXml
-    // .replaceAll("##CONTAINER_ID1##", createdContainerId1);
-    // containerForCreateWithRelationsXml = containerForCreateWithRelationsXml
-    // .replaceAll("##CONTAINER_ID2##", createdContainerId2);
-    // containerForCreateWithRelationsXml = containerForCreateWithRelationsXml
-    // .replaceAll("##CONTAINER_HREF1##", href1);
-    // containerForCreateWithRelationsXml = containerForCreateWithRelationsXml
-    // .replaceAll("##CONTAINER_HREF2##", href2);
-    // Document containerForCreateWithRelations =
-    // getDocument(containerForCreateWithRelationsXml);
-    //        
-    // String xml = create(containerForCreateWithRelationsXml);
-    // NodeList relations = selectNodeList(containerForCreateWithRelations,
-    // "/container/relations/relation");
-    //
-    //        
-    // assertEquals("container relations number is wrong",
-    // relations.getLength(), 2);
-    //
-    // Node containerObjiId = selectSingleNode(getDocument(xml),
-    // "/container/@objid");
-    //
-    // String containerId = containerObjiId.getTextContent();
-    //
-    // delete(createdContainerId1);
-    // delete(createdContainerId2);
-    // String containerAfterDeleteOfrelations = retrieve(containerId);
-    //        
-    // NodeList relationsOfContainerAfterDeleteOfRelations = selectNodeList(
-    // getDocument(containerAfterDeleteOfrelations),
-    // "/container/relations/relation");
-    // assertEquals("container relations number is wrong",
-    // relationsOfContainerAfterDeleteOfRelations.getLength(), 0);
-    //
-    // }
 
     /**
      * Test successfully delete container which is member.
@@ -359,7 +282,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
             delete(theContainerId);
             fail("Delete of member must fail without update rights to container.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -438,7 +361,7 @@ public class ContainerDeleteTest extends ContainerTestBase {
             getItemClient().delete(theItemId);
             fail("Delete of member must fail without update rights to container.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
         PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);

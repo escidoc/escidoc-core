@@ -32,7 +32,7 @@ package de.escidoc.core.st.business.interfaces;
  * Business interface of an StagingFile handler.
  * 
  * @author TTE
- * @st
+ *
  * 
  */
 public interface StagingFileHandlerInterface

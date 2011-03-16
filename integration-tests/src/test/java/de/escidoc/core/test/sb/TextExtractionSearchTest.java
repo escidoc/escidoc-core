@@ -36,6 +36,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 import java.util.HashMap;
@@ -51,6 +53,8 @@ import static org.junit.Assert.assertEquals;
 @Ignore("Test the implementation of the search resource")
 @RunWith(value = Parameterized.class)
 public class TextExtractionSearchTest extends SearchTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(TextExtractionSearchTest.class);
 
     private static String itemId = null;
 
@@ -170,8 +174,8 @@ public class TextExtractionSearchTest extends SearchTestBase {
             
             // ////////////////////////////////////////////////////////////
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
         }
         waitForIndexerToAppear(itemId, INDEX_NAME);
     }

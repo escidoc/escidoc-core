@@ -38,6 +38,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 import java.util.HashMap;
@@ -56,6 +58,8 @@ import static org.junit.Assert.fail;
  */
 @RunWith(value = Parameterized.class)
 public class OuSearchTest extends SearchTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(OuSearchTest.class);
 
     private static String[] orgUnitIds = null;
 
@@ -120,7 +124,7 @@ public class OuSearchTest extends SearchTestBase {
      *             If anything fails.
      */
     private void prepare() throws Exception {
-        log.info("starting OUSearchTest at " 
+        LOGGER.info("starting OUSearchTest at "
             + new DateTime(System.currentTimeMillis() 
             + (60 * 60 * 1000), DateTimeZone.UTC).toString());
         // create empty index/////////////////////////////////////////////////
@@ -200,8 +204,8 @@ public class OuSearchTest extends SearchTestBase {
             Thread.sleep(SLEEP_TIME);
 
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
         }
         // /////////////////////////////////////////////////////////////////////
     }
@@ -337,7 +341,7 @@ public class OuSearchTest extends SearchTestBase {
             search(parameters, "escidoc_fault");
             fail("No exception occured on search in non-existing database.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME: assert exception
         }
     }
@@ -400,7 +404,7 @@ public class OuSearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(FILTER_PARAMETER_STARTRECORD, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -466,7 +470,7 @@ public class OuSearchTest extends SearchTestBase {
             assertEquals(Integer.toString(Constants.NUM_ORG_UNITS),
                 getNumberOfHits(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -495,7 +499,7 @@ public class OuSearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(FILTER_PARAMETER_MAXIMUMRECORDS, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -1461,7 +1465,7 @@ public class OuSearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(null, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -1518,7 +1522,7 @@ public class OuSearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(FILTER_PARAMETER_RESPONSEPOSITION, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -1575,7 +1579,7 @@ public class OuSearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(FILTER_PARAMETER_MAXIMUMTERMS, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 

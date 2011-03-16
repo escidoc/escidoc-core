@@ -389,7 +389,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             try {
                 result = retrieveGrants(filterParams);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
@@ -442,7 +442,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -488,7 +488,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             try {
                 result = retrieveGrants(filterParams);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
@@ -545,7 +545,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -591,7 +591,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             try {
                 result = retrieveGrants(filterParams);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
@@ -642,7 +642,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -688,7 +688,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
             try {
                 result = retrieveGrants(filterParams);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
@@ -739,7 +739,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -781,7 +781,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -821,7 +821,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -859,7 +859,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -901,7 +901,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -940,7 +940,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -978,7 +978,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1016,7 +1016,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1058,7 +1058,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1102,7 +1102,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1153,7 +1153,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1198,7 +1198,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1249,7 +1249,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1300,7 +1300,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1361,7 +1361,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1419,7 +1419,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1487,7 +1487,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1539,7 +1539,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1597,7 +1597,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1647,7 +1647,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1705,7 +1705,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1756,7 +1756,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1813,7 +1813,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1869,7 +1869,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1935,7 +1935,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1995,7 +1995,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2061,7 +2061,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2125,7 +2125,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2199,7 +2199,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2252,7 +2252,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2289,7 +2289,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2327,7 +2327,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2365,7 +2365,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2403,7 +2403,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2441,7 +2441,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2478,7 +2478,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2515,7 +2515,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2552,7 +2552,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2589,7 +2589,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2626,7 +2626,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2663,7 +2663,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2700,7 +2700,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2738,7 +2738,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2776,7 +2776,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2814,7 +2814,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2852,7 +2852,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2889,7 +2889,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2927,7 +2927,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -2971,7 +2971,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
                     new String[] { String.valueOf(i * USER_GRANT_COUNT + 1) });
                 result = retrieveGrants(filterParams);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertXmlValidSrwResponse(result);
@@ -3011,7 +3011,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -3054,7 +3054,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -3091,7 +3091,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -3134,7 +3134,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -3171,7 +3171,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -3211,7 +3211,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -3246,7 +3246,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -3287,7 +3287,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -3393,7 +3393,7 @@ public class GrantFilterAbstractTest extends GrantTestBase {
         try {
             result = retrieveGrants(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);

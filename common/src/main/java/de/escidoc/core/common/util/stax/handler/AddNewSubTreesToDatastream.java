@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.stax.handler;
 
 import de.escidoc.core.common.business.Constants;
@@ -170,7 +162,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
             writeElement(nsuri, theName, prefix, deepLevel, isRelsExt, isNew,
                 false);
             final List<Attribute> attributes = element.getAttributes();
-            for (Attribute curAtt : attributes) {
+            for (final Attribute curAtt : attributes) {
                 handleAttribute(curAtt, theName, deepLevel, isRelsExt, isNew, false);
             }
             insideLevel++;
@@ -184,7 +176,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 nsuris = new HashMap();
                 writeElement(nsuri, theName, prefix, deepLevel, isRelsExt, isNew, false);
                 final List<Attribute> attributes = element.getAttributes();
-                for (Attribute curAtt : attributes) {
+                for (final Attribute curAtt : attributes) {
                     handleAttribute(curAtt, theName, deepLevel, isRelsExt, isNew, false);
                 }
                 insideLevel++;
@@ -297,7 +289,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
             // attribute namespaces
             // TODO iteration is a hack, use
             // javax.xml.namespace.NamespaceContext
-            Iterator it = nsuris.keySet().iterator();
+            final Iterator it = nsuris.keySet().iterator();
             final Collection<String> toRemove = new ArrayList<String>();
             while (it.hasNext()) {
                 try {
@@ -307,11 +299,11 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                         toRemove.add(key);
                     }
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     throw new XMLStreamException(e.getMessage(), e);
                 }
             }
-            for(String key : toRemove) {
+            for(final String key : toRemove) {
                 nsuris.remove(key);
             }
             if (insideLevel == 0) {
@@ -334,44 +326,44 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
         return null;
     }
 
-    private void writeElement(
-        final String uri, final String name, String prefix, final int deep, final boolean isRelsExt,
-        final boolean isNew, final boolean isContentRelation) throws XMLStreamException {
-        if (uri != null) {
-            if (nsuris.containsKey(uri)) {
+    private void writeElement(final String uri, final String name, final String prefix, final int deep,
+                              final boolean isRelsExt, final boolean isNew, final boolean isContentRelation)
+            throws XMLStreamException {
+        String myPrefix = prefix;
+        if(uri != null) {
+            if(nsuris.containsKey(uri)) {
                 final List namespaceTrace = (List) nsuris.get(uri);
                 final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 final String prefixTrace = (String) namespaceTrace.get(2);
-                if (!prefixTrace.equals(prefix)) {
-                    prefix = prefixTrace;
+                if(! prefixTrace.equals(myPrefix)) {
+                    myPrefix = prefixTrace;
                 }
-                if (deepLevelInMAp >= deep) {
-                    writer.writeStartElement(prefix, name, uri);
+                if(deepLevelInMAp >= deep) {
+                    writer.writeStartElement(myPrefix, name, uri);
                     // if (isRelsExt && isNew && !isContentRelation) {
                     // writer.writeNamespace(prefix, uri + "/");
                     // }
                     // else {
-                    writer.writeNamespace(prefix, uri);
+                    writer.writeNamespace(myPrefix, uri);
                     // }
                 } else {
-                    writer.writeStartElement(prefix, name, uri);
+                    writer.writeStartElement(myPrefix, name, uri);
                 }
             } else {
                 final List namespaceTrace = new ArrayList();
                 namespaceTrace.add(deep);
                 namespaceTrace.add(name);
-                namespaceTrace.add(prefix);
+                namespaceTrace.add(myPrefix);
                 nsuris.put(uri, namespaceTrace);
-                writer.writeStartElement(prefix, name, uri);
+                writer.writeStartElement(myPrefix, name, uri);
                 // if (isRelsExt && isNew && !isContentRelation) {
                 // writer.writeNamespace(prefix, uri + "/");
                 // }
                 // else {
-                writer.writeNamespace(prefix, uri);
+                writer.writeNamespace(myPrefix, uri);
                 // }
             }
-        }
-        else {
+        } else {
             writer.writeStartElement(name);
         }
 
@@ -444,8 +436,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
      *         there values are equal. Other attibutes (of element) are not
      *         compared. false - otherwise
      */
-    private boolean equalAttr(
-        final StartElement pointerElement, final StartElement element) {
+    private static boolean equalAttr(final StartElement pointerElement, final StartElement element) {
         try {
             final int pointerAttsNo = pointerElement.getAttributeCount();
             for (int i = 0; i < pointerAttsNo; i++) {
@@ -458,10 +449,10 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 }
             }
         }
-        catch (IndexOutOfBoundsException e) {
+        catch (final IndexOutOfBoundsException e) {   // TODO: Refactor this. Don't use exception for controll flow!
             return false;
         }
-        catch (NoSuchAttributeException e) {
+        catch (final NoSuchAttributeException e) { // TODO: Refactor this. Don't use exception for controll flow!
             return false;
         }
 

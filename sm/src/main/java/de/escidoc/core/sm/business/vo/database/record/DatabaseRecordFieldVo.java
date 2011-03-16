@@ -36,7 +36,7 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
  * Holds all values needed to represent one Field out of one database-record.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class DatabaseRecordFieldVo {
     private String fieldName;

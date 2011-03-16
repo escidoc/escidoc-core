@@ -28,7 +28,7 @@ package de.escidoc.core.om.performance;
  * All rights reserved.  Use is subject to license terms.
  */
 
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -46,14 +46,14 @@ import org.aopalliance.intercept.MethodInvocation;
  * <priority value="TRACE"/>
  *</category>
  * @author KST
- * @om
+ *
  */
 public class PerformanceStatisticsInterceptor implements MethodInterceptor {
        /**
        * Logger for execution times.
        */
-      private static final AppLogger logger =
-          new AppLogger(PerformanceStatisticsInterceptor.class.getName());
+       private static final Logger LOGGER =
+          LoggerFactory.getLogger(PerformanceStatisticsInterceptor.class);
 
       /**
        * The statistics.
@@ -65,7 +65,7 @@ public class PerformanceStatisticsInterceptor implements MethodInterceptor {
       private static final long divisor = 1000000;
       /**
        * Set statistics bean.
-       * @param stats the statistics bean
+       * @param statistics the statistics bean
        */
       public final void setStatistics(final Statistics statistics) {
           this.statistics = statistics;
@@ -91,7 +91,7 @@ public class PerformanceStatisticsInterceptor implements MethodInterceptor {
           final Object rval = invocation.proceed();
           final long t2 = System.nanoTime();
           final long executionTime = (t2 - t1) / divisor;
-          logger.trace(name + ' ' + executionTime);
+          LOGGER.trace(name + ' ' + executionTime);
           statistics.addValueToStatistics(name, executionTime);
           return rval;
      }

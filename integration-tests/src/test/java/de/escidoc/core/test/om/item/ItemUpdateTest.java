@@ -47,6 +47,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -72,6 +74,8 @@ import static org.junit.Assert.fail;
  */
 @RunWith(value = Parameterized.class)
 public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ItemUpdateTest.class);
 
     private String theItemId;
 
@@ -324,7 +328,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             update(null, this.theItemXml);
             fail("Not expected exception");
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             // Well done
         }
     }
@@ -352,7 +356,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
                     updatedDocument, "/item/@title", newTitle);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(e);
         }
     }
@@ -366,26 +370,9 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         if (getTransport() == Constants.TRANSPORT_REST) {
             substitute(newItem, "/item/@title", "");
         }
-        // deleteElement(newItem,
-        // "/item/components/component[1]/properties/description");
-        // deleteElement(newItem,
-        // "/item/components/component[1]/properties/mime-type");
-        // deleteElement(newItem,
-        // "/item/components/component[1]/properties/creator");
-        // deleteElement(newItem,
-        // "/item/components/component[1]/properties/last-modification-date");
-        // deleteElement(newItem,
-        // "/item/components/component[1]/properties/creation-date");
-        // deleteElement(newItem,
-        // "/item/components/component[1]/properties/created-by/@type");
-        // deleteElement(newItem,
-        // "/item/components/component[1]/properties/created-by/@href");
-        // deleteElement(newItem,
-        // "/item/components/component[1]/properties/public-status");
         String newItemXml = toString(newItem, false);
-        // System.out.println("zum update" + newItemXml);
-        if (log.isDebugEnabled()) {
-            log.debug("item " + toString(newItem, false));
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("item " + toString(newItem, false));
         }
         String xml = update(theItemId, newItemXml);
 
@@ -658,7 +645,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             update(theItemId, newItemXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception expected on update with public-status set to 'withdrawn'. "
                 + e);
         }
@@ -735,7 +722,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         // try {
         // retrieveComponent(theItemId, null);
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // Class ec = ComponentNotFoundException.class;
         // assertExceptionType(ec.getName() + " expected.", ec, e);
         // }
@@ -829,7 +816,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
                 "No exception on retrieve deleted component.",
                 ComponentNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 ComponentNotFoundException.class, e);
         }
@@ -1152,7 +1139,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             update(theItemId, newItemXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMdRecordException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -1346,7 +1333,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             update(theItemId, toString(item, false));
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -1373,7 +1360,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             update("test", theItemXml);
         }
-        catch (ItemNotFoundException e) {
+        catch (final ItemNotFoundException e) {
             return;
         }
         fail("Not expected exception");
@@ -1426,7 +1413,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             update(theItemId, newItemXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class ec = InvalidContentException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -1454,7 +1441,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
     // try {
     // update(null, theItemXml);
     // }
-    // catch (MissingMethodParameterException e) {
+    // catch (final MissingMethodParameterException e) {
     //
     // return;
     // }
@@ -1506,7 +1493,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             update(theItemId, xmlItemWithWrongContentHref);
             fail("No exception on update with wrong content href.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = FileNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -1566,7 +1553,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             String xml = update(theItemId, xmlItemWithWrongCreationdate);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("Not expected exception " + e);
         }
 
@@ -1691,7 +1678,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             update(theItemId, updateItemXml);
             fail("Exception expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class ec = InvalidContentException.class;
             assertExceptionType(ec, e);
         }
@@ -1786,7 +1773,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             this.theItemXml = update(theItemId, updateItemXml);
             fail("Exception expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class ec = InvalidContentException.class;
             assertExceptionType(ec, e);
         }
@@ -1907,7 +1894,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update creation-date expected.");
         }
         assertNull(selectSingleNode(EscidocRestSoapTestBase.getDocument(xml),
@@ -1919,7 +1906,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         // try {
         // xml = update(theItemId, toString(testItem, true));
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // fail("No exception after update valid-status expected.");
         // // assertExceptionType(ee.getName() + " expected.", ee, e);
         // }
@@ -1931,7 +1918,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             try {
                 xml = update(theItemId, toString(testItem, true));
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 fail("No exception after update pid expected.");
             }
         }
@@ -1946,7 +1933,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update content-category expected.");
             // assertExceptionType(ee.getName() + " expected.", ee, e);
         }
@@ -1956,7 +1943,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update file-name expected.");
             // assertExceptionType(ee.getName() + " expected.", ee, e);
         }
@@ -1968,7 +1955,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update mime-type expected.");
             // assertExceptionType(ee.getName() + " expected.", ee, e);
         }
@@ -1980,7 +1967,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         // try {
         // xml = update(theItemId, toString(testItem, true));
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // fail("No exception after update file-size expected.");
         // // assertExceptionType(ee.getName() + " expected.", ee, e);
         // }
@@ -2043,7 +2030,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update creation-date expected.");
         }
 
@@ -2053,7 +2040,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update lock-status expected.");
         }
 
@@ -2066,7 +2053,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update public-status expected.");
         }
 
@@ -2082,7 +2069,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update version number expected.");
         }
 
@@ -2092,7 +2079,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update date expected.");
         }
 
@@ -2102,7 +2089,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update version status expected.");
         }
 
@@ -2113,7 +2100,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         // try {
         // xml = update(theItemId, toString(testItem, true));
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // fail("No exception after update valid-status expected.");
         // }
 
@@ -2126,7 +2113,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update number expected.");
         }
 
@@ -2136,7 +2123,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         try {
             xml = update(theItemId, toString(testItem, true));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("No exception after update date expected.");
         }
 
@@ -2479,7 +2466,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             fail("No exception occured on added an relation with non "
                 + "existing predicate to the item");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "RelationPredicateNotFoundException.",
                 RelationPredicateNotFoundException.class, e);
@@ -2550,7 +2537,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             fail("No exception occured on added an relation with non existing target "
                 + "to the item");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "ReferencedResourceNotFoundException.",
                 ReferencedResourceNotFoundException.class, e);
@@ -2622,7 +2609,7 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
             fail("No exception expected on added an relation with unequal ids "
                 + "attributes to the item");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "ReferencedResourceNotFoundException.",
                 ReferencedResourceNotFoundException.class, e);

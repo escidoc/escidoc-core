@@ -2318,7 +2318,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             failMissingException(
                 "Retrieving with unknown filter criteria not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Retrieving with unknown filter criteria not declined,"
                     + " properly.", ec, e);
@@ -2690,7 +2690,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             retrieve(id);
             fail("No exception on retrieve user group after delete.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class< ? > ec = UserGroupNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -2725,7 +2725,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             retrieve(id);
             fail("No exception on retrieve user group after delete.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class< ? > ec = UserGroupNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -2903,7 +2903,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             addSelectors(memberLevel2Id, taskParam);
             fail("No exception on addSelectors with cyclen");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class< ? > ec = UserGroupHierarchyViolationException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -2942,7 +2942,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             addSelectors(id, taskParam);
             fail("No exception on addSelectors with cyclen");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class< ? > ec = XmlCorruptedException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -2979,7 +2979,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
             addSelectors(id, taskParam);
             fail("No exception on addSelectors with cyclen");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class< ? > ec = XmlSchemaValidationException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -3052,7 +3052,7 @@ public abstract class UserGroupTest extends UserGroupTestBase {
         try {
             result = retrieveUserGroups(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);        

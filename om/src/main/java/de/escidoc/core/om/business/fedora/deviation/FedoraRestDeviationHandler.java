@@ -30,7 +30,7 @@ package de.escidoc.core.om.business.fedora.deviation;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.MIMETypedStream;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.om.business.indexer.IndexerResourceCache;
 import de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface;
@@ -39,16 +39,14 @@ import java.io.ByteArrayInputStream;
 import java.util.Map;
 
 
-/*******************************************************************************
+/**
  * @author MIH
- * 
- * @spring.bean id = "business.FedoraRestDeviationHandler"
  */
 public class FedoraRestDeviationHandler
     implements FedoraRestDeviationHandlerInterface {
 
-    private static final AppLogger log =
-        new AppLogger(FedoraRestDeviationHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(FedoraRestDeviationHandler.class);
 
     /**
      * @see de.escidoc.core.om.business.interfaces
@@ -71,8 +69,8 @@ public class FedoraRestDeviationHandler
         final Map<String, String[]> parameters)
         throws Exception {
 
-        if (log.isDebugEnabled()) {
-            log.debug("PID:" + pid + ", DSID:" + dsID);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("PID:" + pid + ", DSID:" + dsID);
         }
         // Try to get EscidocBinaryContent from IndexerResourceCache/////////////////
         EscidocBinaryContent escidocBinaryContent = null;
@@ -86,15 +84,19 @@ public class FedoraRestDeviationHandler
                 escidocBinaryContent.setContent(
                 		new ByteArrayInputStream(mimeTypedStream.getStream()));
             }
-        }
-        catch (Exception e) {
-            log.error(e.toString());
+        } catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on getting datastream dissemination.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on getting datastream dissemination.", e);
+            }
             throw e;
         }
         if (escidocBinaryContent != null) {
             return escidocBinaryContent;
         }
-        log.error(StringUtility.format(
+        LOGGER.error(StringUtility.format(
             "could not get resource for cache", dsID));
         // /////////////////////////////////////////////////////////////////////
 
@@ -118,8 +120,8 @@ public class FedoraRestDeviationHandler
     public String export(
         final String pid, final Map<String, String[]> parameters)
         throws Exception {
-        if (log.isDebugEnabled()) {
-            log.debug("PID:" + pid);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("PID:" + pid);
         }
         final String xml;
 
@@ -127,14 +129,14 @@ public class FedoraRestDeviationHandler
         try {
             xml = (String) IndexerResourceCache.getInstance().getResource(pid);
         }
-        catch (Exception e) {
-            log.error(e.toString());
+        catch (final Exception e) {
+            LOGGER.error(e.toString());
             throw e;
         }
         if (xml != null) {
             return xml;
         }
-        log.error("couldnt get resource " + pid + " for cache");
+        LOGGER.info("Could not get resource " + pid + " for cache.");
         return null;
     }
 
@@ -149,7 +151,7 @@ public class FedoraRestDeviationHandler
      * @throws Exception
      *             ex
      * 
-     * @om
+     *
      */
     @Override
     public void cache(final String pid, final String xml) throws Exception {
@@ -164,7 +166,7 @@ public class FedoraRestDeviationHandler
      * @throws Exception
      *             ex
      * 
-     * @om
+     *
      */
     @Override
     public void removeFromCache(final String pid) throws Exception {
@@ -182,7 +184,7 @@ public class FedoraRestDeviationHandler
      * @throws Exception
      *             ex
      * 
-     * @om
+     *
      */
     @Override
     public void replaceInCache(final String pid, final String xml) throws Exception {

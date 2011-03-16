@@ -1,38 +1,30 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.http.HttpEntity;
@@ -51,8 +43,7 @@ import java.util.regex.Pattern;
 
 /**
  * An utility class for Kowary request.
- * 
- * @spring.bean id="business.TripleStoreConnector"
+ *
  * @author ROF
  * 
  *         TODO move to TriplestoreUtility implementation
@@ -85,8 +76,8 @@ public class TripleStoreConnector {
 
     public static final String FORMAT_ERROR = "Unrecognized format:";
 
-    private static final AppLogger log = new AppLogger(
-        TripleStoreConnector.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        TripleStoreConnector.class);
 
     private ConnectionUtility connectionUtility;
 
@@ -148,7 +139,7 @@ public class TripleStoreConnector {
                 final Pattern p2 = Pattern.compile(FORMAT_ERROR);
                 final Matcher m2 = p2.matcher(responseContent);
                 if (m.find()) {
-                    log.error(responseContent);
+                    LOGGER.error(responseContent);
                     responseContent =
                         XmlUtility.CDATA_START + responseContent
                             + XmlUtility.CDATA_END;
@@ -171,10 +162,10 @@ public class TripleStoreConnector {
             }
             return responseContent;
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new TripleStoreSystemException(e.toString(), e);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new TripleStoreSystemException(e.toString(), e);
         }
     }
@@ -184,8 +175,6 @@ public class TripleStoreConnector {
      * 
      * @param connectionUtility
      *            ConnectionUtility.
-     * 
-     * @spring.property ref="escidoc.core.common.util.service.ConnectionUtility"
      */
     public void setConnectionUtility(final ConnectionUtility connectionUtility) {
         this.connectionUtility = connectionUtility;
@@ -194,7 +183,6 @@ public class TripleStoreConnector {
     /**
      * @param fedoraUrl
      *            the fedoraUrl to inject
-     * @spring.property value="${fedora.url}"
      */
     public void setFedoraUrl(final String fedoraUrl) {
         this.fedoraUrl = fedoraUrl;
@@ -203,7 +191,6 @@ public class TripleStoreConnector {
     /**
      * @param fedoraUser
      *            the fedoraUser to inject
-     * @spring.property value="${fedora.user}"
      */
     public void setFedoraUser(final String fedoraUser) {
         this.fedoraUser = fedoraUser;
@@ -212,7 +199,6 @@ public class TripleStoreConnector {
     /**
      * @param fedoraPassword
      *            the fedoraPassword to inject
-     * @spring.property value="${fedora.password}"
      */
     public void setFedoraPassword(final String fedoraPassword) {
         this.fedoraPassword = fedoraPassword;

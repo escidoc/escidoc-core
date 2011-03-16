@@ -34,6 +34,7 @@ import com.sun.xacml.attr.BagAttribute;
 import com.sun.xacml.attr.BooleanAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
+import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionBase;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 
@@ -50,7 +51,7 @@ import java.util.List;
  * the value of the first parameter.
  * 
  * @author MIH
- * @aa
+ *
  * 
  */
 public class XacmlFunctionOneAttributeInBothLists extends FunctionBase {
@@ -82,8 +83,8 @@ public class XacmlFunctionOneAttributeInBothLists extends FunctionBase {
      * @param inputs
      * @param context
      * @return
-     * @see com.sun.xacml.cond.Function#evaluate(java.util.List,
-     *      com.sun.xacml.EvaluationCtx)
+     * @see Function#evaluate(List,
+     *      EvaluationCtx)
      */
     @Override
     public EvaluationResult evaluate(

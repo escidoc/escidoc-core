@@ -33,7 +33,7 @@ import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 
 import java.util.regex.Matcher;
@@ -50,16 +50,13 @@ import java.util.regex.Pattern;
  * eSciDoc specific finder module in the chain, but must be placed after the
  * 'standard' finder modules.
  * 
- * @spring.bean id="eSciDoc.core.aa.ResourceNotFoundAttributeFinderModule"
- * 
  * @author TTE
- * @aa
  */
 public class ResourceNotFoundAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
-    private final AppLogger log =
-        new AppLogger(ResourceNotFoundAttributeFinderModule.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ResourceNotFoundAttributeFinderModule.class);
 
     /**
      * Pattern matching object-type attribute ids or resource identifiers
@@ -85,10 +82,10 @@ public class ResourceNotFoundAttributeFinderModule
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -118,10 +115,10 @@ public class ResourceNotFoundAttributeFinderModule
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(

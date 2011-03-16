@@ -1,7 +1,8 @@
 package de.escidoc.core.test.migration;
 
-import de.escidoc.core.test.common.logger.AppLogger;
 import de.escidoc.core.test.common.resources.ResourceProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +17,7 @@ import java.util.Vector;
 
 public class DbAccess {
 
-    private static AppLogger log = new AppLogger(DbAccess.class.getName());
+    private final static Logger LOGGER = LoggerFactory.getLogger(DbAccess.class);
 
     public static final String ESCIDOC_DATABASE_URL = "escidoc.database.url";
 
@@ -66,7 +67,7 @@ public class DbAccess {
                 result.add(resultSet.getString(1));
             }
         }
-        catch (SQLException e) {
+        catch (final SQLException e) {
             e.printStackTrace();
             throw e;
         }
@@ -130,7 +131,7 @@ public class DbAccess {
                     ResourceProvider.getFileInputStreamFromFile("./etc",
                         propertiesFile);
             }
-            catch (IOException e) {
+            catch (final IOException e) {
                 e.printStackTrace();
                 if (fis == null) {
                     fis =
@@ -143,8 +144,8 @@ public class DbAccess {
                 fis.close();
             }
         }
-        catch (IOException e) {
-            log.warn(e);
+        catch (final IOException e) {
+            LOGGER.warn("", e);
             throw new RuntimeException(e);
         }
 

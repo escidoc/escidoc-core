@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.servlet;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
@@ -39,7 +31,7 @@ import de.escidoc.core.common.servlet.invocation.MapperInterface;
 import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.servlet.invocation.XMLBase;
 import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
@@ -78,7 +70,7 @@ import java.util.regex.Pattern;
  * <code>initHttpResponse</code> methods.
  * 
  * @author MSC
- * @common
+ *
  */
 public class EscidocServlet extends HttpServlet {
 
@@ -124,9 +116,9 @@ public class EscidocServlet extends HttpServlet {
      */
     private static final int BUFFER_SIZE = 0xFFFF;
 
-    /** The LOG. */
-    private static final AppLogger LOG = new AppLogger(
-        EscidocServlet.class.getName());
+    /** The LOGGER. */
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        EscidocServlet.class);
 
     /**
      * HTTP header Cache-Control (since HTTP 1.1).
@@ -184,7 +176,7 @@ public class EscidocServlet extends HttpServlet {
     /**
      * The http content type header.
      * 
-     * @st
+     *
      */
     public static final String HTTP_HEADER_CONTENT_TYPE = "Content-type";
 
@@ -204,7 +196,7 @@ public class EscidocServlet extends HttpServlet {
      *             If anything fails.
      * @throws IOException
      *             If anything fails.
-     * @common
+     *
      */
     @Override
     public void service(
@@ -297,7 +289,9 @@ public class EscidocServlet extends HttpServlet {
                         }
 
                         if (!httpResponse.isCommitted()) {
-                            LOG.debug("Request not commited.");
+                            if(LOGGER.isDebugEnabled()) {
+                                LOGGER.debug("Request not commited.");
+                            }
                         }
                     }
                     catch (final Exception e) {
@@ -320,7 +314,7 @@ public class EscidocServlet extends HttpServlet {
      *            The http response.
      * @throws IOException
      *             In case of an I/O error.
-     * @common
+     *
      */
     private void handleDescriptorRequest(final HttpServletResponse httpResponse)
         throws IOException {
@@ -355,7 +349,7 @@ public class EscidocServlet extends HttpServlet {
      * @return Returns <code>true</code> if the exception has been handled.
      * @throws IOException
      *             In case of any failure.
-     * @common
+     *
      */
     private boolean handleException(
         final HttpServletRequest httpRequest,
@@ -423,7 +417,7 @@ public class EscidocServlet extends HttpServlet {
         }
 
         if (!ret) {
-            getLOG()
+            LOGGER
                 .error(
                     StringUtility.format(
                         "Caught exception cannot be handled, returning "
@@ -459,9 +453,9 @@ public class EscidocServlet extends HttpServlet {
      *             If anything fails.
      * @throws SAXException
      *             If anything fails.
-     * @common
+     *
      */
-    private MapperInterface getMethodMapper(final String filename)
+    private static MapperInterface getMethodMapper(final String filename)
         throws IOException, TransformerException, ParserConfigurationException,
         SAXException {
         MapperInterface result = MAPPINGS.get(filename);
@@ -514,9 +508,8 @@ public class EscidocServlet extends HttpServlet {
      * @throws IOException
      *             If anything fails.
      */
-    private void doRedirectResponse(
-        final HttpServletResponse httpResponse, final String httpMethod,
-        final EscidocServiceRedirectInterface result) throws IOException {
+    private static void doRedirectResponse(final HttpServletResponse httpResponse, final String httpMethod,
+                                           final EscidocServiceRedirectInterface result) throws IOException {
 
         if (HTTP_GET.equals(httpMethod) || HTTP_PUT.equals(httpMethod)
             || HTTP_POST.equals(httpMethod)) {
@@ -582,11 +575,10 @@ public class EscidocServlet extends HttpServlet {
      *            shall be sent in the response.
      * @throws IOException
      *             If anything fails.
-     * @common
+     *
      */
-    private void doSendBinaryContentResponse(
-        final HttpServletResponse httpResponse, final String httpMethod,
-        final EscidocBinaryContent binaryContent) throws IOException {
+    private static void doSendBinaryContentResponse(final HttpServletResponse httpResponse, final String httpMethod,
+                                                    final EscidocBinaryContent binaryContent) throws IOException {
 
         if (HTTP_GET.equals(httpMethod)) {
             final String externalContentRedirectUrl =
@@ -640,11 +632,10 @@ public class EscidocServlet extends HttpServlet {
      *            The http response status.
      * @throws IOException
      *             If anything fails.
-     * @common
+     *
      */
-    private void doSendStringResponse(
-        final HttpServletResponse httpResponse, final String text,
-        final int status) throws IOException {
+    private static void doSendStringResponse(final HttpServletResponse httpResponse, final String text,
+                                             final int status) throws IOException {
 
         initHttpResponse(httpResponse);
         if (text != null) {
@@ -666,7 +657,7 @@ public class EscidocServlet extends HttpServlet {
      *            The exception.
      * @throws IOException
      *             If anything fails.
-     * @common
+     *
      */
     private static void doDeclineHttpRequest(
         final HttpServletResponse httpResponse, final EscidocException exception)
@@ -688,7 +679,7 @@ public class EscidocServlet extends HttpServlet {
                     + XmlUtility.getStylesheetDefinition()
                     + exception.toXmlString();
         } catch (final WebserverSystemException e) {
-            LOG.error(e);
+            LOGGER.error("Error on serialising exception to XML string.", e);
             body = XmlUtility.DOCUMENT_START + exception.toXmlString();
         }
         httpResponse.getWriter().println(body);
@@ -711,12 +702,10 @@ public class EscidocServlet extends HttpServlet {
      *            The exception that causes the redirect.
      * @throws IOException
      *             If anything fails.
-     * @common
+     *
      */
-    private void doRedirect(
-        final HttpServletRequest httpRequest,
-        final HttpServletResponse httpResponse,
-        final SecurityException exception) throws IOException {
+    private static void doRedirect(final HttpServletRequest httpRequest, final HttpServletResponse httpResponse,
+                                   final SecurityException exception) throws IOException {
 
         final String message = exception.toXmlString();
         final String redirectLocation =
@@ -792,7 +781,7 @@ public class EscidocServlet extends HttpServlet {
      * @param param
      *            The name of the param.
      * @return The value of the param.
-     * @common
+     *
      */
     protected String getQueryParamValue(
         final HttpServletRequest request, final String param) {
@@ -860,7 +849,7 @@ public class EscidocServlet extends HttpServlet {
      * @param request
      *            the request.
      * @return The cookie.
-     * @um
+     *
      */
     public static Cookie getCookie(
         final String name, final HttpServletRequest request) {
@@ -875,14 +864,6 @@ public class EscidocServlet extends HttpServlet {
             }
         }
         return result;
-    }
-
-    /**
-     * @return Returns the LOG.
-     * @common
-     */
-    public static AppLogger getLOG() {
-        return LOG;
     }
 
     /**
@@ -920,8 +901,8 @@ public class EscidocServlet extends HttpServlet {
         final Cookie cookie = EscidocServlet.getCookie(COOKIE_LOGIN, request);
         if (cookie != null) {
             final String handle = cookie.getValue();
-            if (getLOG().isDebugEnabled()) {
-                getLOG().debug("Received handle in cookie: " + handle);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Received handle in cookie: " + handle);
             }
             return new String[] { "ShibbolethUser", handle };
         }
@@ -937,12 +918,12 @@ public class EscidocServlet extends HttpServlet {
                 return new String[] { "ShibbolethUser",
                     decoded.substring(i + 1) };
             }
-            catch (WebserverSystemException e) {
+            catch (final WebserverSystemException e) {
                 throw new IOException("cannot decode user handle", e);
             }
         }
         else {
-            getLOG().info(
+            LOGGER.info(
                 "No handle in cookie received, assuming  anonymous access.");
             return new String[] { "", "" };
         }
@@ -985,7 +966,7 @@ public class EscidocServlet extends HttpServlet {
                         .createAuthCookie(UserHandleCookieUtil
                             .createDecodedUserHandle(handle)));
                 }
-                catch (WebserverSystemException e) {
+                catch (final WebserverSystemException e) {
                     throw new ServletException(e);
                 }
                 if (queryString.startsWith("&")) {

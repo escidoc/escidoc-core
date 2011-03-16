@@ -48,7 +48,7 @@ public interface SmScopesDaoInterface {
      * @param scope
      *            The Scope Hibernate Object.
      * 
-     * @sm
+     *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
@@ -60,7 +60,7 @@ public interface SmScopesDaoInterface {
      * @param scope
      *            The Scope Hibernate Object.
      * 
-     * @sm
+     *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
@@ -73,7 +73,7 @@ public interface SmScopesDaoInterface {
      * @param scope
      *            The Scope Hibernate Object.
      * 
-     * @sm
+     *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
@@ -86,7 +86,7 @@ public interface SmScopesDaoInterface {
      *            The id of the Scope.
      * @return Scope scope object
      * 
-     * @sm
+     *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * @throws ScopeNotFoundException
@@ -102,7 +102,7 @@ public interface SmScopesDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<Scope> retrieveScopes() throws SqlDatabaseSystemException;
 
@@ -115,7 +115,7 @@ public interface SmScopesDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<Scope> retrieveScopes(Collection<String> scopeIds)
         throws SqlDatabaseSystemException;
@@ -153,7 +153,7 @@ public interface SmScopesDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<String> retrieveScopeIds() throws SqlDatabaseSystemException;
 }

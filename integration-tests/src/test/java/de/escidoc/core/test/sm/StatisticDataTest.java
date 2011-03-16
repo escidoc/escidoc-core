@@ -100,7 +100,7 @@ public class StatisticDataTest extends StatisticDataTestBase {
             String result = scope.create(xml);
             scopeId = getPrimKey(result);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("Exception occured " + e.toString());
         }
     }
@@ -135,7 +135,7 @@ public class StatisticDataTest extends StatisticDataTestBase {
         try {
             create(xml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("Exception occured " + e.toString());
         }
     }

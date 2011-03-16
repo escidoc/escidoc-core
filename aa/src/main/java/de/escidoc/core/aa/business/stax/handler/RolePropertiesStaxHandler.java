@@ -44,7 +44,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  * Stax handler that manages the properties section of a role.
  * 
  * @author TTE
- * @aa
+ *
  */
 public class RolePropertiesStaxHandler extends DefaultHandler {
 
@@ -68,7 +68,7 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
      *            The role to handle.
      * @param roleDao
      *            The data access object to access roles.
-     * @aa
+     *
      */
     public RolePropertiesStaxHandler(final EscidocRole role,
         final EscidocRoleDaoInterface roleDao) {
@@ -89,10 +89,10 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
      *             Thrown if an invalid role name is used.
      * @throws UniqueConstraintViolationException
      * @throws SystemException
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #characters(java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @aa
+     *
      */
     @Override
     public String characters(final String s, final StartElement element)
@@ -133,7 +133,7 @@ public class RolePropertiesStaxHandler extends DefaultHandler {
      *             role with the same name but a different id.
      * @throws XmlCorruptedException
      *             Thrown if an invalid role name is used.
-     * @aa
+     *
      */
     private void assertValidAndUniqueLoginName(
         final String name, final String id) throws SqlDatabaseSystemException,

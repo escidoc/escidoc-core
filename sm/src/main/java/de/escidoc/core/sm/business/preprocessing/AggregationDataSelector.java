@@ -32,7 +32,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundExcep
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.StatisticPreprocessingSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
 import de.escidoc.core.sm.business.persistence.SmScopesDaoInterface;
@@ -53,15 +53,13 @@ import java.util.List;
 
 /**
  * Extracts data for Aggregation Definition out of raw-statistic-data-table.
- * 
- * @spring.bean id="business.AggregationDataSelector" scope="prototype"
- * @tx
+ *
  * @author MIH
  */
 public class AggregationDataSelector {
 
-    private static final AppLogger log =
-        new AppLogger(AggregationDataSelector.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(AggregationDataSelector.class);
     
     private DirectDatabaseAccessorInterface dbAccessor;
 
@@ -271,7 +269,7 @@ public class AggregationDataSelector {
             dbXpathQuery.append(") ");
             return dbXpathQuery.toString();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new StatisticPreprocessingSystemException(
                 "Cannot handle xpath-query for statistic-table", e);
         }
@@ -280,7 +278,6 @@ public class AggregationDataSelector {
     /**
      * Setter for the scopesDao.
      * 
-     * @spring.property ref="persistence.SmScopesDao"
      * @param scopesDao
      *            The data access object.
      * 
@@ -294,7 +291,6 @@ public class AggregationDataSelector {
      * 
      * @param dbAccessorIn
      *            The directDatabaseAccessor to set.
-     * @spring.property ref="sm.persistence.DirectDatabaseAccessor"
      */
     public final void setDirectDatabaseAccessor(
         final DirectDatabaseAccessorInterface dbAccessorIn) {

@@ -38,9 +38,7 @@ import java.util.List;
 /**
  * An utility class for filtering objectids by AA-Component.
  * 
- * @spring.bean id="business.sm.FilterUtility"
  * @author MIH
- * @sm
  * 
  */
 public class SmFilterUtility {
@@ -60,7 +58,7 @@ public class SmFilterUtility {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error that prevents the
      *             filtering.
-     * @sm
+     *
      */
     public Collection<String> filterRetrievePrivilege(
         final String objectType, final Collection<String> objectIds)
@@ -74,7 +72,7 @@ public class SmFilterUtility {
             resultIds = pdp.evaluateRetrieve(
                     objectType, (List<String>) objectIds);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
         return resultIds;
@@ -88,7 +86,7 @@ public class SmFilterUtility {
      * @throws WebserverSystemException
      *             Thrown if the policy decision point bean cannot be retrieved
      *             due to an internal error.
-     * @sm
+     *
      */
     private static PolicyDecisionPointInterface locateAa()
         throws WebserverSystemException {

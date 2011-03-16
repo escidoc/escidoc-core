@@ -595,7 +595,7 @@ public class ItemFilterTest extends ItemTestBase {
         try {
             result = retrieveItems(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -661,7 +661,7 @@ public class ItemFilterTest extends ItemTestBase {
                         filterResultXPath).getNodeValue();
                 assertEquals(reqStatus, itemStatus);
             }
-            catch (ItemNotFoundException e) {
+            catch (final ItemNotFoundException e) {
                 if (reqStatus.equals(STATUS_WITHDRAWN)) {
                     EscidocRestSoapTestBase.assertExceptionType(
                         ItemNotFoundException.class, e);
@@ -732,7 +732,7 @@ public class ItemFilterTest extends ItemTestBase {
                     assertEquals(reqCT, itemCT);
                 }
             }
-            catch (ItemNotFoundException e) {
+            catch (final ItemNotFoundException e) {
             }
         }
     }
@@ -784,7 +784,7 @@ public class ItemFilterTest extends ItemTestBase {
                 // "/item/properties/content-type/@href").getNodeValue();
                 // assertEquals("/ccm/content-model/" + reqCT, itemCT);
             }
-            catch (ItemNotFoundException e) {
+            catch (final ItemNotFoundException e) {
             }
 
         }

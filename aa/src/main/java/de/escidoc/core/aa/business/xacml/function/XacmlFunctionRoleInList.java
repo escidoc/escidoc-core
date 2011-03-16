@@ -35,6 +35,7 @@ import com.sun.xacml.attr.AttributeValue;
 import com.sun.xacml.attr.BooleanAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
+import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionBase;
 import com.sun.xacml.finder.PolicyFinderResult;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
@@ -62,10 +63,7 @@ import java.util.List;
  * identified by the resource-id of the context to the current user (subject).</li>
  * </ul>
  * 
- * @spring.bean id="eSciDoc.core.aa.XacmlFunctionRoleInList"
- * 
  * @author MIH
- * 
  */
 public class XacmlFunctionRoleInList extends FunctionBase {
 
@@ -90,9 +88,9 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      * @param inputs
      * @param ctx
      * @return
-     * @see com.sun.xacml.cond.Function#evaluate(java.util.List,
-     *      com.sun.xacml.EvaluationCtx)
-     * @aa
+     * @see Function#evaluate(List,
+     *      EvaluationCtx)
+     *
      */
     @Override
     public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
@@ -139,17 +137,16 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      * @param roleNames
      *            Collection with name of roles
      * @return Collection roleNames
-     * @aa
+     *
      */
-    private Collection<String> getRoleNames(
-        final PolicyTreeElement policy, final Collection<String> roleNames) {
+    private static Collection<String> getRoleNames(final PolicyTreeElement policy, final Collection<String> roleNames) {
         if (policy != null) {
             try {
                 final PolicyTreeElement policyReference =
                     (XacmlPolicyReference) policy;
                 roleNames.add(policyReference.getId().getPath().toLowerCase());
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 if (policy.getChildren() != null) {
                     AbstractPolicy abstractPolicy = null;
                     for (final Object o : policy.getChildren()) {
@@ -159,7 +156,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
                                     (XacmlPolicyReference) abstractPolicy;
                             roleNames.add(policyReference
                                     .getId().getPath().toLowerCase());
-                        } catch (Exception e1) {
+                        } catch (final Exception e1) {
                             getRoleNames(abstractPolicy, roleNames);
                         }
                     }
@@ -178,7 +175,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      * @return String userId
      * @wm
      */
-    private String getUserId() throws WebserverSystemException {
+    private static String getUserId() throws WebserverSystemException {
         return UserContext.getId();
     }
 

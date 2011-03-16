@@ -36,12 +36,7 @@ import de.escidoc.core.om.business.interfaces.IngestHandlerInterface;
  * Fedora Ingest Handler. Takes any resource, automatically determines its type
  * and tries to ingest.
  * 
- * @spring.bean id="business.FedoraIngestHandler" scope="prototype"
- * @spring.property name="ingestFacade" ref="business.IngestFacade"
- * 
  * @author SWA,KST
- * 
- * @om
  */
 
 public class FedoraIngestHandler implements IngestHandlerInterface {
@@ -76,7 +71,7 @@ public class FedoraIngestHandler implements IngestHandlerInterface {
      * @throws EscidocException
      *             Thrown if XML representation fulfills not all requirements or
      *             internal errors occur.
-     * @see de.escidoc.core.om.business.interfaces.IngestHandlerInterface#ingest(java.lang.String)
+     * @see IngestHandlerInterface#ingest(String)
      */
     @Override
     public String ingest(final String xmlData) throws EscidocException {

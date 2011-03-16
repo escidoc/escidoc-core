@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.servlet.invocation;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
@@ -33,6 +25,8 @@ import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -53,9 +47,11 @@ import java.util.StringTokenizer;
  * The resource class to map HTTP requests to a configured resource method.
  * 
  * @author MSC
- * @common
+ *
  */
 public class Resource extends XMLBase {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Resource.class);
 
     private static final String LIST_DELIMITER = ",";
 
@@ -87,7 +83,7 @@ public class Resource extends XMLBase {
      *            The definitions.
      * @throws TransformerException
      *             Thrown if an xml transformation fails.
-     * @common
+     *
      */
     public Resource(final Node resource, final Map definitions)
         throws TransformerException {
@@ -116,7 +112,7 @@ public class Resource extends XMLBase {
      * @return The resource method.
      * @throws MethodNotFoundException
      *             If no matching method is found.
-     * @common
+     *
      */
     public BeanMethod getMethod(
         final String uri, final String query,
@@ -132,7 +128,13 @@ public class Resource extends XMLBase {
                 try {
                     invokeNode =
                             getInvocationDescription(descriptor, httpMethod);
-                } catch (TransformerException e) {
+                } catch (final TransformerException e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on getting invocation descriptor.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on getting invocation descriptor.", e);
+                    }
                     result = null;
                     break;
                 }
@@ -165,7 +167,7 @@ public class Resource extends XMLBase {
      * 
      * @throws TransformerException
      *             Thrown if an xml transformation fails.
-     * @common
+     *
      */
     private void init() throws TransformerException {
 
@@ -209,7 +211,7 @@ public class Resource extends XMLBase {
      * @return The invocation definition.
      * @throws TransformerException
      *             Thrown if an xml transformation fails.
-     * @common
+     *
      */
     private Node getInvocationDescription(
         final Node descriptor, final String method) throws TransformerException {
@@ -240,7 +242,7 @@ public class Resource extends XMLBase {
      *            The invocation definition.
      * 
      * @return An array containing the parameter values.
-     * @common
+     *
      */
     private Object[] getMethodParameters(
         final String uri, final String query,
@@ -278,7 +280,7 @@ public class Resource extends XMLBase {
                             value = null;
                         }
                     }
-                    catch (IndexOutOfBoundsException e) {
+                    catch (final IndexOutOfBoundsException e) { // TODO: Refactor this! Don't use exceptions for control flow!
                         value = null;
                     }
                 }
@@ -294,7 +296,7 @@ public class Resource extends XMLBase {
      * @param invoke
      *            The invocation definition.
      * @return A collection containing the names of the method parameters.
-     * @common
+     *
      */
     private Collection getMethodParameterNames(final Node invoke) {
 
@@ -319,7 +321,7 @@ public class Resource extends XMLBase {
      *            All definitions of variables or constants including the
      *            regular expressions.
      * @return The resulting xPath.
-     * @common
+     *
      */
     private String replaceIdentifierToRegexp(
         final String xPath, final Iterable<Node> varDefinitions) {
@@ -347,7 +349,7 @@ public class Resource extends XMLBase {
      *            The key.
      * @return The value or null.
      */
-    private String getValueFromRequestBody(final String body, final String key) {
+    private static String getValueFromRequestBody(final String body, final String key) {
 
         if (body == null) {
             return null;
@@ -372,7 +374,7 @@ public class Resource extends XMLBase {
      * @param request
      *            The request.
      * @return The request body.
-     * @common
+     *
      */
     public static Object getRequestBody(final HttpServletRequest request) {
 
@@ -408,16 +410,20 @@ public class Resource extends XMLBase {
                     IOUtils.closeStream(out);
                 }
             }
-        }
-        catch (IOException e) {
-            getLogger().debug("No request body found!", e);
+        } catch (final IOException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("No request body found.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("No request body found.", e);
+            }
         }
         return result;
     }
 
     /**
      * @return Returns the descriptors.
-     * @common
+     *
      */
     public Map<String, Node> getDescriptors() {
         return descriptors;
@@ -426,7 +432,7 @@ public class Resource extends XMLBase {
     /**
      * @param descriptors
      *            The descriptors to set.
-     * @common
+     *
      */
     public void setDescriptors(final Map<String, Node> descriptors) {
         this.descriptors = descriptors;
@@ -434,7 +440,7 @@ public class Resource extends XMLBase {
 
     /**
      * @return Returns the resource.
-     * @common
+     *
      */
     public Node getResource() {
         return resource;
@@ -443,7 +449,7 @@ public class Resource extends XMLBase {
     /**
      * @param resource
      *            The resource to set.
-     * @common
+     *
      */
     public void setResource(final Node resource) {
         this.resource = resource;
@@ -451,7 +457,7 @@ public class Resource extends XMLBase {
 
     /**
      * @return Returns the baseUri.
-     * @common
+     *
      */
     public String getBaseUri() {
         return baseUri;
@@ -460,7 +466,7 @@ public class Resource extends XMLBase {
     /**
      * @param baseUri
      *            The baseUri to set.
-     * @common
+     *
      */
     public void setBaseUri(final String baseUri) {
         this.baseUri = baseUri;
@@ -468,7 +474,7 @@ public class Resource extends XMLBase {
 
     /**
      * @return Returns the name.
-     * @common
+     *
      */
     public String getName() {
         return name;
@@ -477,7 +483,7 @@ public class Resource extends XMLBase {
     /**
      * @param name
      *            The name to set.
-     * @common
+     *
      */
     public void setName(final String name) {
         this.name = name;
@@ -485,7 +491,7 @@ public class Resource extends XMLBase {
 
     /**
      * @return Returns the definitions.
-     * @common
+     *
      */
     public Map getDefinitions() {
         return definitions;
@@ -494,7 +500,7 @@ public class Resource extends XMLBase {
     /**
      * @param definitions
      *            The definitions to set.
-     * @common
+     *
      */
     public void setDefinitions(final Map definitions) {
         this.definitions = definitions;
@@ -504,7 +510,7 @@ public class Resource extends XMLBase {
      * For debugging purposes.
      * 
      * @return Message
-     * @common
+     *
      */
     @Override
     public String toString() {

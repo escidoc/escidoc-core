@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 /**
  * 
  */
@@ -52,7 +44,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
 import de.escidoc.core.common.util.stax.handler.DcReadHandler;
@@ -87,7 +79,7 @@ import java.util.Set;
 public class Item extends GenericVersionableResourcePid
     implements ItemInterface {
 
-    private static final AppLogger log = new AppLogger(Item.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(Item.class);
 
     private Datastream cts;
 
@@ -147,7 +139,7 @@ public class Item extends GenericVersionableResourcePid
         try {
             initComponents();
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -439,7 +431,7 @@ public class Item extends GenericVersionableResourcePid
             try {
                 ds = new Datastream("DC", getId(), getVersionDate());
             }
-            catch (StreamNotFoundException e) {
+            catch (final StreamNotFoundException e) {
                 throw new WebserverSystemException(e);
             }
             // ,
@@ -503,7 +495,12 @@ public class Item extends GenericVersionableResourcePid
                 this.cts = ds;
             }
             catch (final FedoraSystemException e) {
-                log.debug("Error on merging datastream.", e);
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on merging datastream.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on merging datastream.", e);
+                }
                 // this is not an update; its a create
                 ds.persist(false);
                 this.cts = ds;
@@ -517,7 +514,7 @@ public class Item extends GenericVersionableResourcePid
      * @return
      * @throws IntegritySystemException
      * @throws FedoraSystemException
-     * @see de.escidoc.core.common.business.fedora.resources.interfaces.ItemInterface#getMdRecords()
+     * @see ItemInterface#getMdRecords()
      */
     @Override
     public Map<String, Datastream> getMdRecords() {
@@ -549,7 +546,7 @@ public class Item extends GenericVersionableResourcePid
                 final Datastream fedoraDs;
                 try {
                     fedoraDs = getMdRecord(nameInFedora);
-                } catch (MdRecordNotFoundException e) {
+                } catch (final MdRecordNotFoundException e) {
                     throw new IntegritySystemException(
                             "Can not find md-record previously found in item "
                                     + getId() + '.', e);
@@ -624,9 +621,13 @@ public class Item extends GenericVersionableResourcePid
             Datastream curDs = null;
             try {
                 curDs = getMdRecord(name);
-            }
-            catch (MdRecordNotFoundException e1) {
-                log.debug("Error on getting MD-records.", e1);
+            } catch (final MdRecordNotFoundException e1) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on getting MD-records.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on getting MD-records.", e1);
+                }
                 isNew = true; // curDs is null
             }
             boolean contentChanged = false;
@@ -699,9 +700,13 @@ public class Item extends GenericVersionableResourcePid
                 ds.merge();
 
             }
-        }
-        catch (final FedoraSystemException e) {
-            log.debug("Error on setting MD-records.", e);
+        } catch (final FedoraSystemException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on getting MD-records.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on getting MD-records.", e);
+            }
             // this is not an update; its a create
             ds.addAlternateId(type);
             ds.addAlternateId(schema);
@@ -750,9 +755,13 @@ public class Item extends GenericVersionableResourcePid
                 this.contentStreams.put(name, ds);
                 ds.merge();
             }
-        }
-        catch (final FedoraSystemException e) {
-            log.debug("Error on setting content stream.", e);
+        } catch (final FedoraSystemException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on setting content stream.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on setting content stream.", e);
+            }
             // this is not an update; its a create
             this.contentStreams.put(name, ds);
             ds.persist(false);
@@ -799,8 +808,7 @@ public class Item extends GenericVersionableResourcePid
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private Collection<String> expandPropertiesNames(
-        final Collection<String> propertiesNames) {
+    private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
         newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
@@ -822,8 +830,7 @@ public class Item extends GenericVersionableResourcePid
      *            key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
-    private Map<String, String> expandPropertiesNamesMapping(
-        final Map<String, String> propertiesMapping) {
+    private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
 
         final Map<String, String> newPropertiesNames;
         newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
@@ -849,7 +856,7 @@ public class Item extends GenericVersionableResourcePid
      *             Thrown if TripleStore request failed.
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
-     * @see de.escidoc.core.common.business.fedora.resources.GenericResource#getResourceProperties()
+     * @see GenericResource#getResourceProperties()
      */
     @Override
     public Map<String, String> getResourceProperties()
@@ -862,7 +869,7 @@ public class Item extends GenericVersionableResourcePid
             try {
                 addResourceProperties(getDublinCorePropertiesMap());
             }
-            catch (XmlParserSystemException e) {
+            catch (final XmlParserSystemException e) {
                 throw new WebserverSystemException(e);
             }
             this.resourceInit = true;
@@ -931,10 +938,10 @@ public class Item extends GenericVersionableResourcePid
                 this.setNeedSync(true);
             }
         }
-        catch (ComponentNotFoundException e) {
+        catch (final ComponentNotFoundException e) {
             throw new WebserverSystemException(e);
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw new WebserverSystemException(e);
         }
         if (!this.alteredComponent.isEmpty()) {
@@ -997,8 +1004,9 @@ public class Item extends GenericVersionableResourcePid
                 ds.setLabel(label);
                 this.cts = ds;
             } else {
-                log.debug("Datastream " + getId() + '/' + name
-                        + " not instanziated in Item.<init>.");
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Datastream " + getId() + '/' + name + " not instanziated in Item.<init>.");
+                }
             }
         }
     }

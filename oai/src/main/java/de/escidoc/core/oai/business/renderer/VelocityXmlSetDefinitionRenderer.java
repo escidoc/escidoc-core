@@ -52,8 +52,6 @@ import de.escidoc.core.oai.business.renderer.interfaces.SetDefinitionRendererInt
  * Set definition renderer implementation using the velocity template engine.
  * 
  * @author rof
- * @spring.bean 
- *              id="eSciDoc.core.om.business.renderer.VelocityXmlSetDefinitionRenderer"
  */
 public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
     implements SetDefinitionRendererInterface {
@@ -67,8 +65,8 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * 
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.oai.business.renderer.interfaces.SetDefinitionRendererInterface#render(Map)
-     * @aa
+     * @see SetDefinitionRendererInterface#render(Map)
+     *
      */
     @Override
     public String render(final SetDefinition setDefinition)
@@ -165,7 +163,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * 
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private void addCommonValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -181,7 +179,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * 
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
     @Override
     protected void addStructuralRelationNamespaceValues(
@@ -198,7 +196,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * 
      * @param values
      *            The {@link Map} to that the values shall be added.
-     * @aa
+     *
      */
     private static void addSetDefinitionNamespaceValues(
         final Map<String, Object> values) {
@@ -212,9 +210,9 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * 
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
-    private void addSetDefinitionListValues(final Map<String, Object> values) {
+    private static void addSetDefinitionListValues(final Map<String, Object> values) {
 
         addSetDefinitionsNamespaceValues(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
@@ -227,7 +225,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * 
      * @param values
      *            The MAP to add the values to.
-     * @aa
+     *
      */
     private static void addSetDefinitionsNamespaceValues(
         final Map<String, Object> values) {
@@ -245,7 +243,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -260,7 +258,7 @@ public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
      * @return Returns the <code>SetDefinitionXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private static SetDefinitionXmlProvider getSetDefinitionXmlProvider()
         throws WebserverSystemException {

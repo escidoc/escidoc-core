@@ -106,13 +106,13 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
                         .getAttribute(Constants.XLINK_URI,
                             Elements.ATTRIBUTE_XLINK_HREF).getValue());
             }
-            catch (NoSuchAttributeException e) {
+            catch (final NoSuchAttributeException e) {
                 try {
                     objid =
                         element.getAttribute(null,
                             Elements.ATTRIBUTE_XLINK_OBJID).getValue();
                 }
-                catch (NoSuchAttributeException e1) {
+                catch (final NoSuchAttributeException e1) {
                     throw new MissingAttributeValueException(
                         "Predecessor attribute '"
                             + Elements.ATTRIBUTE_XLINK_HREF + "' or '"
@@ -127,7 +127,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
                     XmlUtility.getIdFromURI(element.getAttribute(null,
                         Elements.PREDECESSOR_ATTRIBUTE_FORM).getValue());
             }
-            catch (NoSuchAttributeException e) {
+            catch (final NoSuchAttributeException e) {
                 throw new MissingAttributeValueException(
                     "Predecessor attribute '"
                         + Elements.PREDECESSOR_ATTRIBUTE_FORM
@@ -161,7 +161,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
      * @throws InvalidContentException
      *             Thrown if PredecessorType is not supported.
      */
-    private PredecessorForm getPredecessorForm(final String predecessorForm)
+    private static PredecessorForm getPredecessorForm(final String predecessorForm)
         throws InvalidContentException {
 
         if (predecessorForm.equals(PredecessorForm.SPLITTING.getLabel())) {

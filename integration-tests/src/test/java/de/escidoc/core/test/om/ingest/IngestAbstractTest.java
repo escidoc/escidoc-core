@@ -146,7 +146,7 @@ public class IngestAbstractTest extends IngestTestBase {
             ingest(toBeCreatedXml);
             fail("Exception for missing object PID wasn't thrown.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class< ? > ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -253,7 +253,7 @@ public class IngestAbstractTest extends IngestTestBase {
         try {
             ingest(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 InvalidResourceException.class.getName() + " expected.",
                 InvalidResourceException.class, e);
@@ -279,7 +279,7 @@ public class IngestAbstractTest extends IngestTestBase {
         try {
             ingest(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 InvalidResourceException.class.getName() + " expected.",
                 InvalidResourceException.class, e);
@@ -424,7 +424,7 @@ public class IngestAbstractTest extends IngestTestBase {
             ingest(toBeCreatedXml);
             fail("Exception for missing object PID wasn't thrown.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class< ? > ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }

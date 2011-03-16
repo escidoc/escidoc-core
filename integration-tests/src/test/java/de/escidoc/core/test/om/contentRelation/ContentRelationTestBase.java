@@ -748,7 +748,7 @@ public class ContentRelationTestBase extends OmTestBase {
         try {
             handleXmlResult(uac.createGrant(userId, grantXml));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
     }
@@ -781,7 +781,7 @@ public class ContentRelationTestBase extends OmTestBase {
         try {
             handleXmlResult(uac.createGrant(userId, grantXml));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
     }
@@ -810,7 +810,7 @@ public class ContentRelationTestBase extends OmTestBase {
         try {
             createdUserAccountXml = handleXmlResult(uac.create(toBeCreatedXml));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
 

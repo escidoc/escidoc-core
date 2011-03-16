@@ -57,7 +57,7 @@ public final class CustomStatusBuilder {
     /**
      * Private constructor to prevent instantiation.
      * 
-     * @aa
+     *
      */
     private CustomStatusBuilder() {
     }
@@ -74,7 +74,7 @@ public final class CustomStatusBuilder {
      * @param e
      *            The <code>Exception</code> that caused this error result.
      * @return Returns the created <code>EvaluationResult</code> object.
-     * @aa
+     *
      */
     public static Status createErrorStatus(final Exception e) {
 
@@ -96,7 +96,7 @@ public final class CustomStatusBuilder {
      * @param e
      *            The <code>Exception</code> that caused this error result.
      * @return Returns the created <code>EvaluationResult</code> object.
-     * @aa
+     *
      */
     public static Status createErrorStatus(
         final String status, final Exception e) {
@@ -117,7 +117,7 @@ public final class CustomStatusBuilder {
                 errorMsg.append(XmlUtility.CDATA_END);
                 return new Status(codeList, errorMsg.toString());
             }
-            catch (Exception e1) {
+            catch (final Exception e1) {
                 final StringBuilder errorMsg = new StringBuilder(message);
                 errorMsg
                     .append(quoteCdata(((EscidocException) e).toXmlString()));
@@ -135,7 +135,7 @@ public final class CustomStatusBuilder {
                 errorMsg.append("</exception>");
                 return new Status(codeList, errorMsg.toString());
             }
-            catch (Exception e1) {
+            catch (final Exception e1) {
                 final StringBuilder errorMsg = new StringBuilder(message);
                 errorMsg.append('\n');
                 final StringWriter sw = new StringWriter();
@@ -159,7 +159,7 @@ public final class CustomStatusBuilder {
      * @param str
      *            The string to quote
      * @return Returns the provided string with "]]>" replaced by "]]&gt;"
-     * @aa
+     *
      */
     private static String quoteCdata(final CharSequence str) {
 

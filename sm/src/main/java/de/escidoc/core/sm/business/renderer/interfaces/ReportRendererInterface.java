@@ -37,7 +37,7 @@ import java.util.List;
  * Interface of an report renderer.
  * 
  * @author MIH
- * @sm
+ *
  */
 public interface ReportRendererInterface {
 
@@ -51,7 +51,7 @@ public interface ReportRendererInterface {
      * @return Returns the XML representation of the Report.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String render(
             final List dbResult, 

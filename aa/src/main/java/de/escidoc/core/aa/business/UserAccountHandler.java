@@ -46,7 +46,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.InitializingBean;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.springframework.security.userdetails.UserDetails;
 
 import de.escidoc.core.aa.business.cache.PoliciesCache;
@@ -110,7 +110,6 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
@@ -129,13 +128,12 @@ import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler
  * @author MSC
  */
 public class UserAccountHandler
-    implements UserAccountHandlerInterface, InitializingBean {
+    implements UserAccountHandlerInterface {
 
     /**
      * The logger.
      */
-    private static final AppLogger LOG = new AppLogger(
-        UserAccountHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountHandler.class);
 
     private static final String XPATH_GRANT_ASSIGNED_ON = '/'
         + XmlUtility.NAME_GRANT + '/' + XmlUtility.NAME_PROPERTIES + '/'
@@ -283,16 +281,16 @@ public class UserAccountHandler
         try {
             sp.parse(in);
         }
-        catch (UniqueConstraintViolationException e) {
+        catch (final UniqueConstraintViolationException e) {
             throw e;
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".create: "
                     + e.getClass().getName();
@@ -392,25 +390,25 @@ public class UserAccountHandler
         try {
             sp.parse(in);
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (UniqueConstraintViolationException e) {
+        catch (final UniqueConstraintViolationException e) {
             throw e;
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: "
                     + e.getClass().getName();
@@ -447,8 +445,8 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface#updatePassword(java.lang.String,
-     *      java.lang.String)
+     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface#updatePassword(String,
+     *      String)
      */
     @Override
     public void updatePassword(final String userId, final String taskParam)
@@ -482,16 +480,16 @@ public class UserAccountHandler
         try {
             sp.parse(in);
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         setModificationValues(userAccount);
@@ -529,7 +527,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieveCurrentGrantsAsMap(java.lang.String)
      */
     @Override
@@ -609,10 +607,10 @@ public class UserAccountHandler
                 filteredCurrentGrants.add(grantsMap.get(obj[1]));
             }
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
 
@@ -708,11 +706,11 @@ public class UserAccountHandler
                         }
                     }
                 }
-                catch (MissingMethodParameterException e) {
+                catch (final MissingMethodParameterException e) {
                     throw new SystemException(
                         MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                 }
-                catch (ResourceNotFoundException e) {
+                catch (final ResourceNotFoundException e) {
                     throw new SystemException(
                         MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                 }
@@ -805,19 +803,19 @@ public class UserAccountHandler
         try {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".activate: "
                     + e.getClass().getName();
@@ -879,19 +877,19 @@ public class UserAccountHandler
         try {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".deactivate: " + e.getClass().getName();
@@ -961,16 +959,16 @@ public class UserAccountHandler
         try {
             sp.parse(in);
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (RoleNotFoundException e) {
+        catch (final RoleNotFoundException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createGrant: " + e.getClass().getName();
@@ -1004,7 +1002,7 @@ public class UserAccountHandler
                 objectAttributes =
                     objectAttributeResolver.resolveObjectAttributes(objectId);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new SystemException(e);
             }
 
@@ -1129,19 +1127,19 @@ public class UserAccountHandler
         try {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
         }
-        catch (AlreadyRevokedException e) {
+        catch (final AlreadyRevokedException e) {
             throw e;
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: "
                     + e.getClass().getName();
@@ -1209,10 +1207,10 @@ public class UserAccountHandler
             fp.parse(new ByteArrayInputStream(taskParam
                 .getBytes(XmlUtility.CHARACTER_ENCODING)));
         }
-        catch (InvalidContentException e) {
+        catch (final InvalidContentException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -1261,10 +1259,10 @@ public class UserAccountHandler
                         + "one of the specified grants");
             }
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new SystemException(MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
         }
 
@@ -1281,7 +1279,7 @@ public class UserAccountHandler
                 dao.update(roleGrant);
             }
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
 
@@ -1299,7 +1297,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieveUserHandles(java.lang.String)
      */
     @Override
@@ -1414,11 +1412,11 @@ public class UserAccountHandler
                         }
                     }
                 }
-                catch (MissingMethodParameterException e) {
+                catch (final MissingMethodParameterException e) {
                     throw new SystemException(
                         MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                 }
-                catch (ResourceNotFoundException e) {
+                catch (final ResourceNotFoundException e) {
                     throw new SystemException(
                         MSG_UNEXPECTED_EXCEPTION_ACCESS_RIGHTS, e);
                 }
@@ -1515,8 +1513,13 @@ public class UserAccountHandler
                                 throw new UserGroupNotFoundException("");
                             }
                         }
-                        catch (UserGroupNotFoundException e) {
-                            LOG.debug("Error on getting users for group.", e);
+                        catch (final UserGroupNotFoundException e) {
+                            if(LOGGER.isWarnEnabled()) {
+                                LOGGER.warn("Error on getting users for group.");
+                            }
+                            if(LOGGER.isDebugEnabled()) {
+                                LOGGER.debug("Error on getting users for group.", e);
+                            }
                             // if group has no users or group not found,
                             // write nonexisting user in query
                             replacement.append('\"');
@@ -1605,7 +1608,7 @@ public class UserAccountHandler
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException(e);
         }
 
@@ -1708,8 +1711,6 @@ public class UserAccountHandler
     public UserDetails retrieveUserDetails(final String handle)
         throws MissingMethodParameterException, AuthenticationException,
         AuthorizationException, UserAccountNotFoundException, SystemException {
-
-        LOG.debug("business: retrieveUserDetails");
         final UserDetails ret = dao.retrieveUserDetails(handle);
         // FIXME: use this as the authentication service?
         // In this case, additional values have to be set in the user details
@@ -1720,7 +1721,6 @@ public class UserAccountHandler
             throw new UserAccountNotFoundException(StringUtility.format(
                 "User not authenticated by provided handle", handle));
         }
-        LOG.debug("business: Returning user details");
         return ret;
     }
 
@@ -1810,7 +1810,7 @@ public class UserAccountHandler
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private void sendUserAccountUpdateEvent(final String userId)
+    private static void sendUserAccountUpdateEvent(final String userId)
         throws SqlDatabaseSystemException, UserAccountNotFoundException,
         WebserverSystemException {
 
@@ -1877,7 +1877,7 @@ public class UserAccountHandler
      * @throws UserAccountNotFoundException
      *             Thrown if assertion fails.
      */
-    private void assertUserAccount(final String userId, final UserAccount user)
+    private static void assertUserAccount(final String userId, final UserAccount user)
         throws UserAccountNotFoundException {
 
         if (user == null) {
@@ -1921,11 +1921,6 @@ public class UserAccountHandler
      *            The data access object.
      */
     public void setDao(final UserAccountDaoInterface dao) {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("setDao", dao));
-        }
-
         this.dao = dao;
     }
 
@@ -1936,9 +1931,6 @@ public class UserAccountHandler
      *            The data access object.
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("setUserGroupDao", userGroupDao));
-        }
         this.userGroupDao = userGroupDao;
     }
 
@@ -1950,12 +1942,6 @@ public class UserAccountHandler
      */
     public void setObjectAttributeResolver(
         final ObjectAttributeResolver objectAttributeResolver) {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("setObjectAttributeResolver",
-                objectAttributeResolver));
-        }
-
         this.objectAttributeResolver = objectAttributeResolver;
     }
 
@@ -1966,9 +1952,6 @@ public class UserAccountHandler
      *            The role data access object.
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
-
-        LOG.debug("setRoleDao");
-
         this.roleDao = roleDao;
     }
 
@@ -1990,9 +1973,6 @@ public class UserAccountHandler
      *            The renderer to inject.
      */
     public void setRenderer(final UserAccountRendererInterface renderer) {
-
-        LOG.debug("setRenderer");
-
         this.renderer = renderer;
     }
 
@@ -2003,7 +1983,6 @@ public class UserAccountHandler
      *            The permissions query generator to inject.
      */
     public void setPermissionsQuery(final PermissionsQuery permissionsQuery) {
-        LOG.debug("setPermissionsQuery");
         this.permissionsQuery = permissionsQuery;
     }
 
@@ -2020,7 +1999,7 @@ public class UserAccountHandler
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void setCreationValues(final UserAccount userAccount)
+    private static void setCreationValues(final UserAccount userAccount)
         throws SystemException {
 
         // initialize creation-date value
@@ -2084,9 +2063,6 @@ public class UserAccountHandler
      *            The {@link PolicyDecisionPoint}.
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
-
-        LOG.debug("setPdp");
-
         this.pdp = pdp;
     }
 
@@ -2098,22 +2074,7 @@ public class UserAccountHandler
      */
     public void setUserGroupHandler(
         final UserGroupHandlerInterface userGroupHandler) {
-
-        LOG.debug("setUserGroupHandler");
-
         this.userGroupHandler = userGroupHandler;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @throws Exception
-     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-     */
-    @Override
-    public void afterPropertiesSet() throws Exception {
-
-        LOG.debug("Properties set");
     }
 
     /**
@@ -2218,7 +2179,7 @@ public class UserAccountHandler
         try {
             sp.parse(in);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createPreference: " + e.getClass().getName();
@@ -2316,13 +2277,13 @@ public class UserAccountHandler
         try {
             sp.parse(in);
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createPreference: " + e.getClass().getName();
@@ -2456,13 +2417,13 @@ public class UserAccountHandler
         try {
             sp.parse(in);
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".updatePreference: " + e.getClass().getName();
@@ -2540,7 +2501,7 @@ public class UserAccountHandler
         try {
             sp.parse(in);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createAttribute: " + e.getClass().getName();
@@ -2670,7 +2631,7 @@ public class UserAccountHandler
         try {
             attribute = retrieveAttributeById(userId, attributeId, true);
         }
-        catch (ReadonlyElementViolationException e) {
+        catch (final ReadonlyElementViolationException e) {
             throw new SystemException(e);
         }
         return renderer.renderAttribute(attribute);
@@ -2724,10 +2685,10 @@ public class UserAccountHandler
         try {
             sp.parse(in);
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".updateAttribute: " + e.getClass().getName();

@@ -136,11 +136,11 @@ public class VelocityXmlCommonRenderer {
         values
             .put(
                 XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
-                de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+                Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values
             .put(
                 XmlTemplateProvider.ESCIDOC_SREL_NS,
-                de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
+                Constants.STRUCTURAL_RELATIONS_NS_URI);
     }
 
     protected void addParentsNamespaceValues(final Map values)
@@ -170,7 +170,7 @@ public class VelocityXmlCommonRenderer {
             lmd = resource.getLastModificationDate();
         }
 
-        catch (FedoraSystemException e1) {
+        catch (final FedoraSystemException e1) {
             throw new WebserverSystemException(e1);
         }
 
@@ -179,7 +179,7 @@ public class VelocityXmlCommonRenderer {
             final String n = Iso8601Util.getIso8601(Iso8601Util.parseIso8601(lmd));
             values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE, n);
         }
-        catch (ParseException e) {
+        catch (final ParseException e) {
             throw new WebserverSystemException(
                 "Unable to parse last-modification-date '" + lmd
                     + "' of resource '" + resource.getId() + "'!", e);

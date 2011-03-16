@@ -124,7 +124,7 @@ public class RoleSoapTest extends RoleAbstractTest {
             create(toString(toBeCreatedDocument, false));
             EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
@@ -155,7 +155,7 @@ public class RoleSoapTest extends RoleAbstractTest {
             create(toString(toBeCreatedDocument, false));
             EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
@@ -186,7 +186,7 @@ public class RoleSoapTest extends RoleAbstractTest {
             create(toString(toBeCreatedDocument, false));
             EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
@@ -227,7 +227,7 @@ public class RoleSoapTest extends RoleAbstractTest {
             updatedXml =
                 update(getObjidValue(toBeUpdatedDocument), toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating without set read only element fails with exception. ",
                 e);
@@ -272,7 +272,7 @@ public class RoleSoapTest extends RoleAbstractTest {
             updatedXml =
                 update(getObjidValue(toBeUpdatedDocument), toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating without set read only element fails with exception. ",
                 e);
@@ -345,7 +345,7 @@ public class RoleSoapTest extends RoleAbstractTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         // do not compare creation date in assertion because creation date has
@@ -357,7 +357,7 @@ public class RoleSoapTest extends RoleAbstractTest {
         try {
             retrievedXml = retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException("Retrieve of updated role failed. ", e);
         }
 
@@ -423,7 +423,7 @@ public class RoleSoapTest extends RoleAbstractTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidRetrievedRole(updatedXml, toBeUpdatedXml, startTimestamp,
@@ -433,7 +433,7 @@ public class RoleSoapTest extends RoleAbstractTest {
         try {
             retrievedXml = retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException("Retrieve of updated role failed. ", e);
         }
 

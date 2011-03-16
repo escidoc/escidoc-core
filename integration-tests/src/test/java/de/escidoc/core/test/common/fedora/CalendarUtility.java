@@ -28,7 +28,8 @@
  */
 package de.escidoc.core.test.common.fedora;
 
-import de.escidoc.core.test.common.logger.AppLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,8 +39,7 @@ import java.util.GregorianCalendar;
 
 public final class CalendarUtility {
 
-    protected static AppLogger log =
-        new AppLogger(CalendarUtility.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CalendarUtility.class);
 
     public static Calendar TransformStringToCalendar(
         final String date, final SimpleDateFormat sdfInput) {
@@ -48,9 +48,9 @@ public final class CalendarUtility {
         try {
             transformedDate = sdfInput.parse(date);
         }
-        catch (ParseException e) {
+        catch (final ParseException e) {
             // TODO Auto-generated catch block
-            log.error(e);
+            LOGGER.error("", e);
         }
 
         Calendar calendar = new GregorianCalendar();

@@ -42,7 +42,8 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.om.business.fedora.container.FedoraContainerHandler;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -69,8 +70,8 @@ import java.util.Map;
  */
 public class VelocityXmlContainerRenderer implements ContainerRendererInterface {
 
-    private static final AppLogger log = new AppLogger(
-        VelocityXmlContainerRenderer.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        VelocityXmlContainerRenderer.class);
 
     private static final int THREE = 3;
 
@@ -84,8 +85,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
-     * @aa
      */
     public void setTsu(final TripleStoreUtility tsu) {
         this.tsu = tsu;
@@ -109,7 +108,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException
      *             If an error occurs.
      * 
-     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerRendererInterface#render(de.escidoc.core.om.business.fedora.container.FedoraContainerHandler)
+     * @see ContainerRendererInterface#render(FedoraContainerHandler)
      */
     @Override
     public String render(final Container container) throws SystemException {
@@ -258,9 +257,13 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             List<String> ids = new ArrayList<String>();
             try {
                 ids = tsu.retrieve(query.toString());
-            }
-            catch (TripleStoreSystemException e) {
-                log.debug("Error on quering triple strore.", e);
+            } catch (final TripleStoreSystemException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on quering triple store.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on quering triple store.", e);
+                }
             }
 
             final Iterator<String> idIter = ids.iterator();
@@ -290,7 +293,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws WebserverSystemException
      *             If an error occurs.
      */
-    private void addNamespaceValues(final Map<String, Object> values)
+    private static void addNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("containerNamespacePrefix",
@@ -323,8 +326,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addPropertiesValus(
-        final Map<String, Object> values, final Container container)
+    private static void addPropertiesValus(final Map<String, Object> values, final Container container)
         throws SystemException {
 
         final Map<String, String> properties = container.getResourceProperties();
@@ -512,12 +514,15 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         try {
             final Datastream cmsDs = container.getCts();
             final String xml = cmsDs.toStringUTF8();
-            values.put(XmlTemplateProvider.CONTAINER_CONTENT_MODEL_SPECIFIC,
-                xml);
-        }
-        catch (StreamNotFoundException e) {
+            values.put(XmlTemplateProvider.CONTAINER_CONTENT_MODEL_SPECIFIC, xml);
+        } catch (final StreamNotFoundException e) {
             // This element is now optional.
-            log.debug("Error on getting container content model.", e);
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on getting container content model.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on getting container content model.", e);
+            }
         }
     }
 
@@ -542,7 +547,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
         try {
             addMemberRefs(container, values);
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -554,8 +559,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      * @throws SystemException
      * @throws MissingMethodParameterException
      */
-    private void addMemberRefs(
-        final Container container, final Map<String, Object> values)
+    private static void addMemberRefs(final Container container, final Map<String, Object> values)
         throws SystemException, MissingMethodParameterException {
 
         final UserFilter ufilter = new UserFilter();
@@ -596,7 +600,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
                     "FedoraContainerHandler.getMemberRefs: can not "
                         + "write member entry to struct-map for "
                         + "object with unknown type: " + id + '.';
-                log.error(msg);
+                LOGGER.error(msg);
             }
 
         }
@@ -619,8 +623,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *             If an error occurs.
      * @oum
      */
-    private void addResourcesValues(
-        final FedoraResource container, final Map<String, Object> values)
+    private static void addResourcesValues(final FedoraResource container, final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
@@ -639,7 +642,7 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
             values.put("resourceOperationNames", TripleStoreUtility
                 .getInstance().getMethodNames(container.getId()));
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
 

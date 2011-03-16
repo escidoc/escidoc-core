@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.stax;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -55,7 +47,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -83,14 +75,14 @@ import java.util.Stack;
 /**
  * Parser with Handler Chain.
  * 
- * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+ * @see DefaultHandler
  * 
  * @author FRS
  * 
  */
 public class StaxParser implements DefaultHandlerStackInterface {
 
-    private static final AppLogger LOG = new AppLogger(StaxParser.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(StaxParser.class);
 
     private boolean started;
 
@@ -161,7 +153,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * Sets the list of handlers.
      * 
      * @param hc
-     *            A {@link java.util.List List} of DefaultHandler
+     *            A {@link List List} of DefaultHandler
      *            implementations. Same as call <code>clearHandlerChain()</code>
      *            and add every single Handler in list order.
      */
@@ -413,7 +405,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                 new ByteArrayInputStream(
                     xml.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
 
@@ -421,7 +413,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     }
 
     /**
-     * Parse with {@link javax.xml.stream.XMLStreamReader XMLStreamReader}.
+     * Parse with {@link XMLStreamReader XMLStreamReader}.
      * 
      * @param in
      *            XML
@@ -582,7 +574,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     }
 
     /**
-     * Parse with {@link javax.xml.stream.XMLEventReader XMLEventReader}.
+     * Parse with {@link XMLEventReader XMLEventReader}.
      * 
      * @param in
      *            XML
@@ -857,49 +849,49 @@ public class StaxParser implements DefaultHandlerStackInterface {
             if (handler != null) {
                 try {
                     element = handler.startElement(element);
-                } catch (NoSuchAttributeException ex) {
+                } catch (final NoSuchAttributeException ex) {
                     throw new ReadonlyAttributeViolationException(ex);
-                } catch (ContentModelNotFoundException ctnf) {
+                } catch (final ContentModelNotFoundException ctnf) {
                     throw ctnf;
-                } catch (ContextNotFoundException cnf) {
+                } catch (final ContextNotFoundException cnf) {
                     throw cnf;
-                } catch (IntegritySystemException e) {
+                } catch (final IntegritySystemException e) {
                     throw e;
-                } catch (XMLStreamException xse) {
+                } catch (final XMLStreamException xse) {
                     throw xse;
-                } catch (InvalidContentException ice) {
+                } catch (final InvalidContentException ice) {
                     throw ice;
-                } catch (LockingException le) {
+                } catch (final LockingException le) {
                     throw le;
-                } catch (OptimisticLockingException ole) {
+                } catch (final OptimisticLockingException ole) {
                     throw ole;
-                } catch (ReadonlyAttributeViolationException rae) {
+                } catch (final ReadonlyAttributeViolationException rae) {
                     throw rae;
-                } catch (MissingAttributeValueException mae) {
+                } catch (final MissingAttributeValueException mae) {
                     throw mae;
-                } catch (ReadonlyElementViolationException rae) {
+                } catch (final ReadonlyElementViolationException rae) {
                     throw rae;
-                } catch (TripleStoreSystemException ex) {
+                } catch (final TripleStoreSystemException ex) {
                     throw ex;
-                } catch (MissingContentException ex) {
+                } catch (final MissingContentException ex) {
                     throw ex;
-                } catch (XmlCorruptedException ex) {
+                } catch (final XmlCorruptedException ex) {
                     throw ex;
-                } catch (WebserverSystemException ex) {
+                } catch (final WebserverSystemException ex) {
                     throw ex;
-                } catch (XmlParserSystemException ex) {
+                } catch (final XmlParserSystemException ex) {
                     throw ex;
-                } catch (EncodingSystemException ex) {
+                } catch (final EncodingSystemException ex) {
                     throw ex;
-                } catch (ReferencedResourceNotFoundException ex) {
+                } catch (final ReferencedResourceNotFoundException ex) {
                     throw ex;
-                } catch (RelationPredicateNotFoundException ex) {
+                } catch (final RelationPredicateNotFoundException ex) {
                     throw ex;
-                } catch (OrganizationalUnitNotFoundException ex) {
+                } catch (final OrganizationalUnitNotFoundException ex) {
                     throw ex;
-                } catch (TmeException ex) {
+                } catch (final TmeException ex) {
                     throw ex;
-                } catch (Exception ex) {
+                } catch (final Exception ex) {
                     throw new WebserverSystemException(
                             "Should not be reached. StaxParser.handle(StartElement)",
                             ex);
@@ -959,36 +951,36 @@ public class StaxParser implements DefaultHandlerStackInterface {
             if (handler != null) {
                 try {
                     element = handler.endElement(element);
-                } catch (MissingContentException mce) {
+                } catch (final MissingContentException mce) {
                     throw mce;
 
-                } catch (MissingAttributeValueException mave) {
+                } catch (final MissingAttributeValueException mave) {
                     throw mave;
-                } catch (ReadonlyElementViolationException ex) {
+                } catch (final ReadonlyElementViolationException ex) {
                     throw ex;
-                } catch (AlreadyExistsException ex) {
+                } catch (final AlreadyExistsException ex) {
                     throw ex;
-                } catch (ReferencedResourceNotFoundException ex) {
+                } catch (final ReferencedResourceNotFoundException ex) {
                     throw ex;
-                } catch (RelationPredicateNotFoundException ex) {
+                } catch (final RelationPredicateNotFoundException ex) {
                     throw ex;
-                } catch (ContentRelationNotFoundException ex) {
+                } catch (final ContentRelationNotFoundException ex) {
                     throw ex;
-                } catch (XmlCorruptedException ex) {
+                } catch (final XmlCorruptedException ex) {
                     throw ex;
-                } catch (TripleStoreSystemException ex) {
+                } catch (final TripleStoreSystemException ex) {
                     throw ex;
-                } catch (ContextNotFoundException ex) {
+                } catch (final ContextNotFoundException ex) {
                     throw ex;
-                } catch (ContentModelNotFoundException ex) {
+                } catch (final ContentModelNotFoundException ex) {
                     throw ex;
-                } catch (MissingMdRecordException ex) {
+                } catch (final MissingMdRecordException ex) {
                     throw ex;
-                } catch (TmeException ex) {
+                } catch (final TmeException ex) {
                     throw ex;
-                } catch (InvalidContentException ex) {
+                } catch (final InvalidContentException ex) {
                     throw ex;
-                } catch (Exception ex) {
+                } catch (final Exception ex) {
                     throw new WebserverSystemException("Unexpected exception in handle().", ex);
                 }
             }
@@ -1046,31 +1038,31 @@ public class StaxParser implements DefaultHandlerStackInterface {
                 final StartElement e = startElements.peek();
                 try {
                     chars = handler.characters(chars, e);
-                } catch (ReadonlyAttributeViolationException ex) {
+                } catch (final ReadonlyAttributeViolationException ex) {
                     throw ex;
-                } catch (ReadonlyElementViolationException ex) {
+                } catch (final ReadonlyElementViolationException ex) {
                     throw ex;
-                } catch (TripleStoreSystemException ex) {
+                } catch (final TripleStoreSystemException ex) {
                     throw ex;
-                } catch (MissingElementValueException ex) {
+                } catch (final MissingElementValueException ex) {
                     throw ex;
-                } catch (ReferencedResourceNotFoundException ex) {
+                } catch (final ReferencedResourceNotFoundException ex) {
                     throw ex;
-                } catch (RelationPredicateNotFoundException ex) {
+                } catch (final RelationPredicateNotFoundException ex) {
                     throw ex;
-                } catch (InvalidContentException ex) {
+                } catch (final InvalidContentException ex) {
                     throw ex;
-                } catch (InvalidStatusException ex) {
+                } catch (final InvalidStatusException ex) {
                     throw ex;
-                } catch (OrganizationalUnitNotFoundException ex) {
+                } catch (final OrganizationalUnitNotFoundException ex) {
                     throw ex;
-                } catch (IntegritySystemException ex) {
+                } catch (final IntegritySystemException ex) {
                     throw ex;
-                } catch (PidAlreadyAssignedException ex) {
+                } catch (final PidAlreadyAssignedException ex) {
                     throw ex;
-                } catch (TmeException ex) {
+                } catch (final TmeException ex) {
                     throw ex;
-                } catch (Exception ex) {
+                } catch (final Exception ex) {
                     XmlUtility.handleUnexpectedStaxParserException("", ex);
                 }
             }

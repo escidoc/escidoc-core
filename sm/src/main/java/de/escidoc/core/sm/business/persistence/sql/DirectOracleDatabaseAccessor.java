@@ -42,10 +42,11 @@ import javax.sql.DataSource;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
 import de.escidoc.core.sm.business.vo.database.record.DatabaseRecordFieldVo;
@@ -67,21 +68,8 @@ import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
  */
 public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     implements DirectDatabaseAccessorInterface {
-    
-    //Check CREATE INDEX and DROP INDEX Statement
-    //Method getCreateStatements + getDropStatements
-    
-    //Check Where-Clause <tablename>.<fieldname> allowed?
-    //Method handleFieldTypeWhere
-    
-    //Eventually convert xml:date-format to database-specific format
-    //with Method convertDate()
-    //for Method createRecord()
-    
-    //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumeric)
 
-    private static final AppLogger log =
-        new AppLogger(DirectOracleDatabaseAccessor.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(DirectOracleDatabaseAccessor.class);
 
     private static final String TIMESTAMP_FIELD_TYPE = "DATE";
 
@@ -90,11 +78,11 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     private static final String NUMERIC_FIELD_TYPE = "NUMBER";
     
     private static final String SYSDATE = "SYSDATE";
-    
-    private static String DATE_FUNCTION = 
+
+    private static String DATE_FUNCTION =
             "to_date('${date_placeholder}', 'yyyy-mm-dd hh24:mi:ss')";
 
-    private static final String DAY_OF_MONTH_FUNCTION = 
+    private static final String DAY_OF_MONTH_FUNCTION =
         "to_char(${FIELD_NAME}, 'yyyy-mm-dd')";
 
     private static final Pattern FIELD_NAME_PATTERN = 
@@ -134,7 +122,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
      * @return String date in database-specific format
      * 
      */
-    private String convertDate(final String xmldate)
+    private static String convertDate(final String xmldate)
                     throws SqlDatabaseSystemException {
         try {
             final XMLGregorianCalendar xmlCal =
@@ -144,7 +132,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
             final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             return DATE_FUNCTION.replaceFirst(
                 "\\$\\{date_placeholder\\}", dateFormat.format(cal.getTime()));
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -152,7 +140,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #createTable(DatabaseTableVo)
      * 
      * @param databaseTableVo
@@ -173,7 +161,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
                 getJdbcTemplate().execute(sql);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -181,7 +169,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #dropTable(DatabaseTableVo)
      * 
      * @param databaseTableVo
@@ -200,8 +188,8 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
                 getJdbcTemplate().execute(sql);
             }
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -209,7 +197,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #createRecord(DatabaseRecordVo)
      * 
      * @param databaseRecordVo
@@ -260,7 +248,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
             sql.append(fieldsSql).append(valuesSql);
             getJdbcTemplate().execute(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
 
@@ -269,7 +257,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #deleteRecord(DatabaseRecordVo)
      * 
      * @param databaseSelectVo
@@ -296,7 +284,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
             getJdbcTemplate().execute(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -304,7 +292,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #updateRecord(DatabaseSelectVo)
      * 
      * @param databaseSelectVo
@@ -342,7 +330,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
             getJdbcTemplate().execute(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -350,7 +338,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #executeSql(DatabaseSelectVo)
      * 
      * @param databaseSelectVo
@@ -392,7 +380,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
                     if (i > 0) {
                         sql.append(',');
                     }
-                    sql.append(tablename).append(" ");
+                    sql.append(tablename).append(' ');
                     sql
                         .append(tablename.replaceFirst(".*?\\.", "")).append(
                             ' ');
@@ -408,7 +396,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
 
             return getJdbcTemplate().queryForList(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -416,7 +404,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #executeSql(java.lang.String)
      * 
      * @param sql
@@ -457,7 +445,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
        try {
              return getJdbcTemplate().queryForList(executionSql);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -1085,9 +1073,9 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
      *             SqlDatabaseSystemException
      * 
      */
-    private void checkWhereFieldVo(
-        final CharSequence type, final CharSequence fieldName, final String fieldType,
-        final String fieldValue, final CharSequence operator, final CharSequence xpath)
+    private static void checkWhereFieldVo(final CharSequence type, final CharSequence fieldName, final String fieldType,
+                                          final String fieldValue, final CharSequence operator,
+                                          final CharSequence xpath)
         throws SqlDatabaseSystemException {
         if (type == null || type.length() == 0
             || !"root".equals(type) && !"additional".equals(type)) {
@@ -1129,7 +1117,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
      */
     public String handleTableName(final String tablename) {
         return tablename.matches(".*\\..*") ? 
-            tablename.substring(tablename.indexOf(".")) : tablename;
+            tablename.substring(tablename.indexOf('.')) : tablename;
 
     }
 

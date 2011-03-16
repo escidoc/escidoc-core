@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedExcepti
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.stax.handler.ContentRelationsOntologyHandler;
@@ -55,8 +55,8 @@ import java.util.List;
  * 
  */
 public final class ContentRelationsUtility {
-    private static final AppLogger log =
-        new AppLogger(ContentRelationsUtility.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContentRelationsUtility.class);
 
     private static List<String> predicates = new ArrayList<String>();
 
@@ -64,7 +64,7 @@ public final class ContentRelationsUtility {
         try {
             loadOntology();
         } catch(Exception e) {
-            log.error("Error on loading ontology: " + e.getMessage());
+            LOGGER.error("Error on loading ontology: " + e.getMessage());
         }
     }
 
@@ -138,7 +138,7 @@ public final class ContentRelationsUtility {
                     EscidocConfiguration.getInstance().appendToSelfURL(
                         "/ontologies/mpdl-ontologies/content-relations.xml");
             }
-        } catch (IOException ioe) {
+        } catch (final IOException ioe) {
             throw new WebserverSystemException(ioe);
         }
         return location;
@@ -160,17 +160,17 @@ public final class ContentRelationsUtility {
         try {
             conn = new URL(location).openConnection();
         }
-        catch (MalformedURLException e) {
+        catch (final MalformedURLException e) {
             throw new WebserverSystemException(e);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         final InputStream in;
         try {
             in = conn.getInputStream();
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         return in;
@@ -200,16 +200,16 @@ public final class ContentRelationsUtility {
         try {
             sp.parse(in);
         }
-        catch (XmlCorruptedException e) {
+        catch (final XmlCorruptedException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (InvalidContentException e) {
+        catch (final InvalidContentException e) {
             throw new InvalidContentException(e);
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             throw new XmlParserSystemException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 

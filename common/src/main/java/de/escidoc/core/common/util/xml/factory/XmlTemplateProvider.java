@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.xml.factory;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
@@ -915,7 +907,7 @@ public abstract class XmlTemplateProvider {
                 result = getFileContents(filename);
                 TEMPLATES.put(resource, result);
             }
-            catch (IOException e) {
+            catch (final IOException e) {
                 throw new WebserverSystemException("Template for " + resource
                     + " not available! File not found " + filename, e);
             }
@@ -930,11 +922,8 @@ public abstract class XmlTemplateProvider {
      *            The path to the parent of resource.
      * @return The path to resource.
      */
-    private String getTemplatePath(final String path) {
-        final String result;
-
-        result = path.startsWith("/") ? XmlTemplateProvider.BASE_TEMPLATE_PATH + path : XmlTemplateProvider.BASE_TEMPLATE_PATH + '/' + path;
-        return result;
+    private static String getTemplatePath(final String path) {
+        return path.startsWith("/") ? XmlTemplateProvider.BASE_TEMPLATE_PATH + path : XmlTemplateProvider.BASE_TEMPLATE_PATH + '/' + path;
     }
 
     /**

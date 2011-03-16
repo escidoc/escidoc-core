@@ -44,6 +44,7 @@ import java.util.Map;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
+import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.Predecessor;
@@ -73,7 +74,7 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -91,14 +92,13 @@ import de.escidoc.core.oum.business.utility.OumUtility;
 
 /**
  * @author FRS
- * @spring.bean id="business.FedoraOrganizationalUnitHandler" scope="prototype"
  */
 public class FedoraOrganizationalUnitHandler
     extends OrganizationalUnitHandlerUpdate
     implements OrganizationalUnitHandlerInterface {
 
-    private static final AppLogger LOG = new AppLogger(
-        FedoraOrganizationalUnitHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        FedoraOrganizationalUnitHandler.class);
 
     /** SRU request. */
     private SRURequest sruRequest;
@@ -166,10 +166,10 @@ public class FedoraOrganizationalUnitHandler
                 result = getRenderer().render(getOrganizationalUnit());
             }
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new SystemException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // should not happen here
             throw new SystemException(e);
         }
@@ -302,7 +302,7 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws MissingMdRecordException
      *             If the required md-record is missing
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#create(java.lang.String)
+     * @see OrganizationalUnitHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData) throws InvalidStatusException,
@@ -397,7 +397,7 @@ public class FedoraOrganizationalUnitHandler
                     .get(XmlUtility.NAME_MDRECORDS)).get("escidoc").toString(
                     XmlUtility.CHARACTER_ENCODING);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
         String dcStream = "";
@@ -707,8 +707,8 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws InvalidStatusException
      *             e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#updateMdRecords(java.lang.String,
-     *      java.lang.String)
+     * @see OrganizationalUnitHandlerInterface#updateMdRecords(String,
+     *      String)
      */
     @Override
     public String updateMdRecords(final String id, final String xml)
@@ -807,8 +807,8 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#updateParents(java.lang.String,
-     *      java.lang.String)
+     * @see OrganizationalUnitHandlerInterface#updateParents(String,
+     *      String)
      */
     @Override
     public String updateParents(final String id, final String xml)
@@ -962,7 +962,7 @@ public class FedoraOrganizationalUnitHandler
                         + "' defined");
             }
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -1023,8 +1023,8 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#retrieveMdRecord(java.lang.String,
-     *      java.lang.String)
+     * @see OrganizationalUnitHandlerInterface#retrieveMdRecord(String,
+     *      String)
      */
     @Override
     public String retrieveMdRecord(final String id, final String name)
@@ -1183,8 +1183,8 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#close(java.lang.String,
-     *      java.lang.String)
+     * @see OrganizationalUnitHandlerInterface#close(String,
+     *      String)
      * @oum
      */
     @Override
@@ -1223,8 +1223,8 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterface#open(java.lang.String,
-     *      java.lang.String)
+     * @see OrganizationalUnitHandlerInterface#open(String,
+     *      String)
      * @oum
      */
     @Override
@@ -1278,7 +1278,7 @@ public class FedoraOrganizationalUnitHandler
                 contentRelationHandler.retrieveContentRelations(filterParams);
             result = transformSearchResponse2relations(searchResponse);
         }
-        catch (InvalidSearchQueryException e) {
+        catch (final InvalidSearchQueryException e) {
             throw new SystemException(e);
         }
 
@@ -1291,8 +1291,6 @@ public class FedoraOrganizationalUnitHandler
      * 
      * @param sruRequest
      *            SRURequest
-     * 
-     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
@@ -1303,7 +1301,6 @@ public class FedoraOrganizationalUnitHandler
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
      * 
      */
     @Override
@@ -1316,10 +1313,8 @@ public class FedoraOrganizationalUnitHandler
      * 
      * @param fedoraUtility
      *            FedoraUtility
-     * @see de.escidoc.core.common.business.fedora.HandlerBase
+     * @see HandlerBase
      *      #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
-     * 
-     * @spring.property ref="escidoc.core.business.FedoraUtility"
      */
     @Override
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
@@ -1332,10 +1327,8 @@ public class FedoraOrganizationalUnitHandler
      * 
      * @param idProvider
      *            ID Provider.
-     * @see de.escidoc.core.common.business.fedora.HandlerBase
+     * @see HandlerBase
      *      #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
-     * 
-     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
     @Override
     public void setIdProvider(final EscidocIdProvider idProvider) {
@@ -1345,8 +1338,6 @@ public class FedoraOrganizationalUnitHandler
 
     /**
      * Injects the indexing handler.
-     * 
-     * @spring.property ref="common.business.indexing.IndexingHandler"
      * @param indexingHandler
      *            The indexing handler.
      */
@@ -1438,8 +1429,7 @@ public class FedoraOrganizationalUnitHandler
      * @throws InvalidStatusException
      *             Thrown if predecessor form not follows rules.
      */
-    private void checkPredecessorRules(
-        final List<Predecessor> predecessors, final String oUobjid)
+    private static void checkPredecessorRules(final List<Predecessor> predecessors, final String oUobjid)
         throws InvalidStatusException {
 
         if (predecessors.size() > 1) {

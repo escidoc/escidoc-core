@@ -63,9 +63,6 @@ import de.escidoc.core.sm.business.util.comparator.AggregationTableIndexFieldCom
  * engine.
  * 
  * @author MIH
- * @spring.bean id=
- *              "eSciDoc.core.aa.business.renderer.VelocityXmlAggregationDefinitionRenderer"
- * @aa
  */
 public final class VelocityXmlAggregationDefinitionRenderer
     implements AggregationDefinitionRendererInterface {
@@ -86,7 +83,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
      * @throws SystemException
      * @see de.escidoc.core.sm.business.renderer.interfaces.
      *      AggregationDefinitionRendererInterface#render(Map)
-     * @sm
+     *
      */
     @Override
     public String render(final AggregationDefinition aggregationDefinition)
@@ -109,9 +106,8 @@ public final class VelocityXmlAggregationDefinitionRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addAggregationDefinitionValues(
-        final AggregationDefinition aggregationDefinition,
-        final Map<String, Object> values) throws SystemException {
+    private static void addAggregationDefinitionValues(final AggregationDefinition aggregationDefinition,
+                                                       final Map<String, Object> values) throws SystemException {
         DateTime createDateTime =
             new DateTime(aggregationDefinition.getCreationDate());
         createDateTime = createDateTime.withZone(DateTimeZone.UTC);
@@ -288,7 +284,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
      * @see de.escidoc.core.aa.business.renderer.interfaces.
      *      AggregationDefinitionRendererInterface
      *      #renderAggregationDefinitions(de.escidoc.core.sm.business.aggregationDefinition)
-     * @sm
+     *
      */
     @Override
     public String renderAggregationDefinitions(
@@ -331,10 +327,9 @@ public final class VelocityXmlAggregationDefinitionRenderer
      *            The {@link Map} to that the values shall be added.
      * @throws SystemException
      *             e
-     * @sm
+     *
      */
-    private void addAggregationDefinitionNamespaceValues(
-        final Map<String, Object> values) throws SystemException {
+    private static void addAggregationDefinitionNamespaceValues(final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
         values.put("aggregationDefinitionNamespacePrefix",
             Constants.AGGREGATION_DEFINITION_NS_PREFIX);
@@ -357,10 +352,9 @@ public final class VelocityXmlAggregationDefinitionRenderer
      *            The {@link Map} to that the values shall be added.
      * @throws SystemException
      *             e
-     * @sm
+     *
      */
-    private void addAggregationDefinitionListNamespaceValues(
-        final Map<String, Object> values) throws SystemException {
+    private static void addAggregationDefinitionListNamespaceValues(final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("aggregationDefinitionListNamespacePrefix",
@@ -376,7 +370,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @sm
+     *
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -391,7 +385,7 @@ public final class VelocityXmlAggregationDefinitionRenderer
      * @return Returns the <code>AggregationDefinitionXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @sm
+     *
      */
     private static AggregationDefinitionXmlProvider getAggregationDefinitionXmlProvider()
         throws WebserverSystemException {

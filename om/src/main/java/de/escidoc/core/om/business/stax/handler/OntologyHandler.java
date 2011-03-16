@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.stax.handler;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
@@ -88,7 +89,7 @@ public class OntologyHandler extends DefaultHandler {
 
             final int indexOfId =
                 element.indexOfAttribute(
-                    de.escidoc.core.common.business.Constants.RDF_NAMESPACE_URI,
+                    Constants.RDF_NAMESPACE_URI,
                     "ID");
 
             if (indexOfId != -1) {

@@ -31,7 +31,7 @@ package de.escidoc.core.adm.business.renderer;
 import de.escidoc.core.adm.business.renderer.interfaces.AdminRendererInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.AdminXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -47,14 +47,13 @@ import java.util.Set;
  * Admin renderer implementation using the velocity template engine.
  * 
  * @author MIH
- * @spring.bean id="eSciDoc.core.adm.business.renderer.VelocityXmlAdminRenderer"
  */
 public class VelocityXmlAdminRenderer 
     implements AdminRendererInterface {
 
     /** The logger. */
-    private static final AppLogger LOG =
-        new AppLogger(VelocityXmlAdminRenderer.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(VelocityXmlAdminRenderer.class);
 
 
 
@@ -63,7 +62,7 @@ public class VelocityXmlAdminRenderer
      *
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.adm.business.renderer.interfaces.AdminRendererInterface
+     * @see AdminRendererInterface
      *      #renderIndexConfiguration(HashMap<String, HashMap<String, 
             HashMap<String, Object>>>)
      */
@@ -86,7 +85,7 @@ public class VelocityXmlAdminRenderer
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private void addCommonValues(final Map<String, Object> values)
+    private static void addCommonValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("indexConfigurationNamespacePrefix", 
@@ -107,10 +106,8 @@ public class VelocityXmlAdminRenderer
      * @throws WebserverSystemException
      */
     @SuppressWarnings("unchecked")
-    private void addIndexConfigurationValues(
-        final Map<String, Map<String, 
-        Map<String, Object>>> indexConfiguration, 
-                        final Map<String, Object> values)
+    private static void addIndexConfigurationValues(
+            final Map<String, Map<String, Map<String, Object>>> indexConfiguration, final Map<String, Object> values)
         throws WebserverSystemException {
         final Collection<HashMap<String, Object>> resourcesVm =
             new ArrayList<HashMap<String, Object>>();
@@ -169,7 +166,7 @@ public class VelocityXmlAdminRenderer
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private AdminXmlProvider getAdminXmlProvider()
+    private static AdminXmlProvider getAdminXmlProvider()
         throws WebserverSystemException {
 
         return AdminXmlProvider.getInstance();

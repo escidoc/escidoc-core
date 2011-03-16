@@ -18,10 +18,10 @@ public class TmeHandlerBase {
         try {
             sp.parse(XmlUtility.convertToByteArrayInputStream(requests));
         }
-        catch (TmeException e) {
+        catch (final TmeException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         return requestsStaxHandler.getFiles();

@@ -43,7 +43,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
@@ -80,8 +80,8 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     private final Collection<String> expectedElements = new ArrayList<String>();
 
-    private static final AppLogger LOGGER =
-        new AppLogger(ItemPropertiesHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ItemPropertiesHandler.class);
 
     private boolean parsingContentModelSpecific;
 
@@ -190,10 +190,10 @@ public class ItemPropertiesHandler extends DefaultHandler {
             utility.checkIsContext(id);
             id = this.properties.getObjectProperties().getContentModelId();
             utility.checkIsContentModel(id);
-        }
-        else if (currentPath.equals(XPATH_ITEM_CONTENT_MODEL_SPECIFIC)) {
-            LOGGER.debug("Parser reached end of "
-                + XPATH_ITEM_CONTENT_MODEL_SPECIFIC);
+        } else if (currentPath.equals(XPATH_ITEM_CONTENT_MODEL_SPECIFIC)) {
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_ITEM_CONTENT_MODEL_SPECIFIC);
+            }
             this.parsingContentModelSpecific = false;
             this.contentModelHandler.endElement(element);
 
@@ -265,14 +265,14 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 throw new MissingAttributeValueException("No context id found.");
             }
         }
-        catch (NoSuchAttributeException e) {
+        catch (final NoSuchAttributeException e) {
             final String href;
             try {
                 href =
                     element.getAttributeValue(Constants.XLINK_NS_URI,
                         Elements.ATTRIBUTE_XLINK_HREF);
             }
-            catch (NoSuchAttributeException e1) {
+            catch (final NoSuchAttributeException e1) {
                 String att = Elements.ATTRIBUTE_XLINK_OBJID;
                 if (UserContext.isRestAccess()) {
                     att = Elements.ATTRIBUTE_XLINK_HREF;
@@ -320,14 +320,14 @@ public class ItemPropertiesHandler extends DefaultHandler {
                     "No content-model id found.");
             }
         }
-        catch (NoSuchAttributeException e) {
+        catch (final NoSuchAttributeException e) {
             final String href;
             try {
                 href =
                     element.getAttributeValue(Constants.XLINK_NS_URI,
                         Elements.ATTRIBUTE_XLINK_HREF);
             }
-            catch (NoSuchAttributeException e1) {
+            catch (final NoSuchAttributeException e1) {
                 String att = Elements.ATTRIBUTE_XLINK_OBJID;
                 if (UserContext.isRestAccess()) {
                     att = Elements.ATTRIBUTE_XLINK_HREF;
@@ -376,14 +376,14 @@ public class ItemPropertiesHandler extends DefaultHandler {
                 throw new MissingAttributeValueException("No origin id found.");
             }
         }
-        catch (NoSuchAttributeException e) {
+        catch (final NoSuchAttributeException e) {
             final String href;
             try {
                 href =
                     element.getAttributeValue(Constants.XLINK_NS_URI,
                         Elements.ATTRIBUTE_XLINK_HREF);
             }
-            catch (NoSuchAttributeException e1) {
+            catch (final NoSuchAttributeException e1) {
                 String att = Elements.ATTRIBUTE_XLINK_OBJID;
                 if (UserContext.isRestAccess()) {
                     att = Elements.ATTRIBUTE_XLINK_HREF;
@@ -420,7 +420,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * @throws InvalidStatusException
      *             Thrown if unknown or invalid status type was set.
      */
-    private StatusType getStatusType(final String type)
+    private static StatusType getStatusType(final String type)
         throws InvalidStatusException {
 
         if (type != null) {

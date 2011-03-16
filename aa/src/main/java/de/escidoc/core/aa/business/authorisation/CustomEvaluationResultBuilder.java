@@ -49,7 +49,7 @@ public final class CustomEvaluationResultBuilder {
     /**
      * Private constructor to prevent instantiation.
      * 
-     * @aa
+     *
      */
     private CustomEvaluationResultBuilder() {
     }
@@ -67,7 +67,7 @@ public final class CustomEvaluationResultBuilder {
      * @param e
      *            The <code>Exception</code> that caused this error result.
      * @return Returns the created <code>EvaluationResult</code> object.
-     * @aa
+     *
      */
     private static EvaluationResult createErrorResult(
         final String status, final Exception e) {
@@ -84,7 +84,7 @@ public final class CustomEvaluationResultBuilder {
      * @param e
      *            The <code>Exception</code> that caused this error result.
      * @return Returns the created <code>EvaluationResult</code> object.
-     * @aa
+     *
      */
     public static EvaluationResult createSyntaxErrorResult(final Exception e) {
 
@@ -96,7 +96,7 @@ public final class CustomEvaluationResultBuilder {
      * http://www.w3.org/2001/XMLSchema#string.
      * 
      * @return Returns an empty evaluation result.
-     * @aa
+     *
      */
     public static EvaluationResult createEmptyEvaluationResult() {
 
@@ -109,7 +109,7 @@ public final class CustomEvaluationResultBuilder {
      * @param attributeType
      *            The URI specifying the attribute type.
      * @return Returns an empty evaluation result.
-     * @aa
+     *
      */
     public static EvaluationResult createEmptyEvaluationResult(
         final URI attributeType) {
@@ -124,7 +124,7 @@ public final class CustomEvaluationResultBuilder {
      * @param e
      *            The <code>Exception</code> that caused this error result.
      * @return Returns the created <code>EvaluationResult</code> object.
-     * @aa
+     *
      */
     public static EvaluationResult createMissingAttributeErrorResult(
         final Exception e) {
@@ -139,7 +139,7 @@ public final class CustomEvaluationResultBuilder {
      * @param e
      *            The <code>Exception</code> that caused this error result.
      * @return Returns the created <code>EvaluationResult</code> object.
-     * @aa
+     *
      */
     public static EvaluationResult createProcessingErrorResult(final Exception e) {
 
@@ -151,7 +151,7 @@ public final class CustomEvaluationResultBuilder {
      * 
      * @param value
      *            The single value of the evaluation result.
-     * @return Returns the created {@link com.sun.xacml.cond.EvaluationResult}
+     * @return Returns the created {@link EvaluationResult}
      *         object.
      */
     public static EvaluationResult createSingleStringValueResult(

@@ -9,9 +9,6 @@ import java.util.Map;
  * Provide a formatter for the return value of the ingest.
  *
  * @author KST
- *
- * @spring.bean id="business.ingestReturnValueFormatter"
- *
  */
 public class IngestReturnValueFormatter implements ValueFormatter {
 

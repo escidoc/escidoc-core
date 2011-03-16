@@ -30,7 +30,6 @@ package de.escidoc.core.test.common.fedora;
 
 import de.escidoc.core.common.exceptions.remote.system.FedoraSystemException;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.common.logger.AppLogger;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.apache.axis.types.NonNegativeInteger;
 import org.fcrepo.client.FedoraClient;
@@ -39,6 +38,8 @@ import org.fcrepo.server.management.FedoraAPIM;
 import org.fcrepo.server.types.gen.Datastream;
 import org.fcrepo.server.types.gen.MIMETypedStream;
 import org.fcrepo.server.types.gen.ObjectProfile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
@@ -48,15 +49,12 @@ import java.util.HashMap;
 
 /**
  * An utility class for Fedora requests.
- * 
- * @spring.bean id="business.FedoraUtility"
+ *
  * @author ROF
- * @om
- * 
  */
 public class Client {
 
-    private static AppLogger log = new AppLogger(Client.class.getName());
+    private final static Logger LOGGER = LoggerFactory.getLogger(Client.class);
 
     private FedoraAPIM apim;
 
@@ -83,7 +81,7 @@ public class Client {
             apim = fc.getAPIM();
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FedoraSystemException();
         }
     }
@@ -109,7 +107,7 @@ public class Client {
             apim = fc.getAPIM();
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FedoraSystemException();
         }
     }
@@ -147,7 +145,7 @@ public class Client {
                 new String(streamContent, HttpHelper.HTTP_DEFAULT_CHARSET);
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
         }
@@ -169,7 +167,7 @@ public class Client {
         try {
             apim.purgeObject(pid, logMessage, false);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
         }
@@ -195,7 +193,7 @@ public class Client {
             datastream =
                 apia.getDatastreamDissemination(pid, dataStreamId, null);
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
 
             throw new FedoraSystemException();
         }
@@ -223,7 +221,7 @@ public class Client {
             datastream.put("mimeType", stream.getMIMEType());
 
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
 
             throw new FedoraSystemException();
         }
@@ -254,7 +252,7 @@ public class Client {
                 datastreamLabel, "text/xml", null, datastream, "A", null,
                 "eSciDoc test environment", true);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
         }
@@ -286,7 +284,7 @@ public class Client {
                 datastreamLabel, mimeType, null, datastream, "A", null,
                 "eSciDoc test environment", true);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
         }
@@ -318,7 +316,7 @@ public class Client {
                 new String[0], datastreamLabel, mimeType, null, url, "A", null,
                 "eSciDoc test environment", true);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
         }
@@ -350,7 +348,7 @@ public class Client {
                 datastreamLabel, "text/xml", null, datastream, "A", null,
                 "eSciDoc test environment", true);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
         }
@@ -370,7 +368,7 @@ public class Client {
         try {
             return apim.getDatastreams(pid, null, "A");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
         }
@@ -393,7 +391,7 @@ public class Client {
         try {
             objecrprof = apia.getObjectProfile(pid, null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
 
@@ -431,7 +429,7 @@ public class Client {
         try {
             objecrprof = apia.getObjectProfile(pid, null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
         }
@@ -469,11 +467,11 @@ public class Client {
             contentString =
                 new String(contentStream, HttpHelper.HTTP_DEFAULT_CHARSET);
         }
-        catch (UnsupportedEncodingException e) {
-            log.error(e);
+        catch (final UnsupportedEncodingException e) {
+            LOGGER.error("", e);
         }
-        catch (RemoteException e) {
-            log.error(e);
+        catch (final RemoteException e) {
+            LOGGER.error("", e);
         }
         return contentString;
     }
@@ -492,9 +490,9 @@ public class Client {
             // convert to String
 
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
             // TODO Auto-generated catch block
-            log.error(e);
+            LOGGER.error("", e);
         }
         return contentStream;
     }
@@ -515,7 +513,7 @@ public class Client {
                 apim.ingest(foxml.getBytes(HttpHelper.HTTP_DEFAULT_CHARSET),
                     "foxml1.0", "test");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
         }
@@ -531,7 +529,7 @@ public class Client {
         try {
             pids = apim.getNextPID(number, "escidoc");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FedoraSystemException();
         }
         return pids;
@@ -555,7 +553,7 @@ public class Client {
         try {
             datastreamInfos = apim.getDatastream(pid, dsId, null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FedoraSystemException();
         }
         return datastreamInfos;
@@ -578,7 +576,7 @@ public class Client {
         try {
             datastreamInfos = apim.getDatastreams(pid, null, "A");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
         }
@@ -663,15 +661,15 @@ public class Client {
                 "http://localhost:8082/fop/images/dummy.xml", "X", "A",
                 "created");
         long end = System.currentTimeMillis();
-        if (log.isDebugEnabled()) {
-            log.debug("addDatastream: addDatastream(dummy): " + (end - start)
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("addDatastream: addDatastream(dummy): " + (end - start)
                 + "ms.");
         }
         start = System.currentTimeMillis();
         modifyDatastream(pid, name, label, altIDs, stream);
         end = System.currentTimeMillis();
-        if (log.isDebugEnabled()) {
-            log.debug("addDatastream: modifyDatastream: " + (end - start)
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("addDatastream: modifyDatastream: " + (end - start)
                 + "ms.");
         }
         return result;
@@ -742,7 +740,7 @@ public class Client {
                     MIMEType, formatURI, dsLocation, controlGroup, dsState,
                     checksumType, checksum, logMessage);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             throw new FedoraSystemException();
         }
@@ -762,7 +760,7 @@ public class Client {
         try {
             apim.modifyObject(pid, null, null, null, "touched");
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
 
             throw new FedoraSystemException();
         }
@@ -781,7 +779,7 @@ public class Client {
         try {
             apim.purgeObject(objid, msg, false);
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
             throw new FedoraSystemException();
         }
     }

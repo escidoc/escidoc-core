@@ -41,8 +41,6 @@ import java.util.List;
  * Database-Backend for the Statistic-Data database-table.
  * 
  * @author MIH
- * @spring.bean id="persistence.SmStatisticDataDao"
- * @sm
  */
 public class SmStatisticDataHibernateDao extends AbstractHibernateDao
     implements SmStatisticDataDaoInterface {
@@ -54,7 +52,7 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmStatisticDataDaoInterface
+     * @see SmStatisticDataDaoInterface
      *      #saveStatisticData(java.lang.String, java.lang.String)
      * 
      * @param xmlData
@@ -64,7 +62,7 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao
      * @throws SqlDatabaseSystemException
      *             e
      * 
-     * @sm
+     *
      */
     @Override
     public void saveStatisticData(final String xmlData, final String scopeId)
@@ -90,7 +88,7 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Date retrieveMinTimestamp(final String scopeId)
@@ -108,8 +106,6 @@ public class SmStatisticDataHibernateDao extends AbstractHibernateDao
      * 
      * @param mySessionFactory
      *            The sessionFactory to set.
-     * @spring.property ref="sm.SessionFactory"
-     * @sm
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 

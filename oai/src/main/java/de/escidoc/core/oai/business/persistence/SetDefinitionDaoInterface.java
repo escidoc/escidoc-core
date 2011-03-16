@@ -69,7 +69,7 @@ public interface SetDefinitionDaoInterface {
         throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link de.escidoc.core.oai.business.persistence.SetDefinition}
+     * Retrieves {@link SetDefinition}
      * objects using the provided values for filtering.
      * 
      * @param criteria
@@ -85,7 +85,7 @@ public interface SetDefinitionDaoInterface {
      *            The kind of ordering, i.e. ascending or descending.
      * 
      * @return Returns <code>List</code> of
-     *         {@link de.escidoc.core.oai.business.persistence.SetDefinition}
+     *         {@link SetDefinition}
      *         objects selected by the provided parameters. If no parameter is
      *         provided, all user account objects are returned.
      * @throws SqlDatabaseSystemException
@@ -97,7 +97,7 @@ public interface SetDefinitionDaoInterface {
         throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link de.escidoc.core.oai.business.persistence.SetDefinition}
+     * Retrieves {@link SetDefinition}
      * objects using the provided values for filtering.
      * 
      * @param criteria
@@ -109,7 +109,7 @@ public interface SetDefinitionDaoInterface {
      *            The maximal number of results to be returned.
      * 
      * @return Returns <code>List</code> of
-     *         {@link de.escidoc.core.oai.business.persistence.SetDefinition}
+     *         {@link SetDefinition}
      *         objects selected by the provided parameters. If no parameter is
      *         provided, all user account objects are returned.
      * @throws InvalidSearchQueryException

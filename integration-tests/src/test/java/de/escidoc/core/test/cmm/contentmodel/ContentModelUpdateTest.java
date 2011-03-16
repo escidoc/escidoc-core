@@ -142,7 +142,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
             update(UNKNOWN_ID, cmXml);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -176,7 +176,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
             update(CONTEXT_ID, cmXml);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -199,7 +199,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
             update(null, cmXml);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -224,7 +224,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
             update(contentModelId, null);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -249,7 +249,7 @@ public class ContentModelUpdateTest extends ContentModelTestBase {
             update(contentModelId, "<content-model/>");
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }

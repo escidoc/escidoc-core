@@ -47,7 +47,7 @@ public class Suite {
      */
     public static Test suite() {
 
-        TestSuite testSuite = new TestSuite(Suite.class.getName());
+        TestSuite testSuite = new TestSuite(Suite.class);
         testSuite.addTest(new JUnit4TestAdapter(IngestSoapTest.class));
 
         return testSuite;

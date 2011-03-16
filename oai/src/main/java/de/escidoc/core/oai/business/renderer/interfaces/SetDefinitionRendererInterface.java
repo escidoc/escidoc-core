@@ -38,7 +38,7 @@ import de.escidoc.core.oai.business.persistence.SetDefinition;
  * Interface of an user group renderer.
  * 
  * @author rof
- * @om
+ *
  */
 public interface SetDefinitionRendererInterface {
 
@@ -51,7 +51,7 @@ public interface SetDefinitionRendererInterface {
      * @return Returns the XML representation of the set definition.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String render(final SetDefinition setDefinition) throws SystemException;
 
@@ -60,7 +60,7 @@ public interface SetDefinitionRendererInterface {
      * 
      * @param setDefinitions
      *            The <code>List</code> of
-     *            {@link de.escidoc.core.oai.business.persistence.SetDefinition}
+     *            {@link SetDefinition}
      *            objects to render.
      * @param recordPacking
      *            A string to determine how the record should be escaped in the

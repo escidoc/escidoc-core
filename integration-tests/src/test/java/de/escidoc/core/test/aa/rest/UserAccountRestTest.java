@@ -96,7 +96,7 @@ public class UserAccountRestTest extends UserAccountTest {
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -211,7 +211,7 @@ public class UserAccountRestTest extends UserAccountTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
@@ -277,7 +277,7 @@ public class UserAccountRestTest extends UserAccountTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
@@ -326,7 +326,7 @@ public class UserAccountRestTest extends UserAccountTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
@@ -376,7 +376,7 @@ public class UserAccountRestTest extends UserAccountTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
@@ -426,7 +426,7 @@ public class UserAccountRestTest extends UserAccountTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
@@ -467,7 +467,7 @@ public class UserAccountRestTest extends UserAccountTest {
         try {
             resourcesXml = retrieveResources(objid);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No data from retrieveResources. ", resourcesXml);
@@ -524,7 +524,7 @@ public class UserAccountRestTest extends UserAccountTest {
             EscidocRestSoapTestBase
                 .failMissingException(UserAccountNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ",
                 UserAccountNotFoundException.class, e);
         }
@@ -551,7 +551,7 @@ public class UserAccountRestTest extends UserAccountTest {
             EscidocRestSoapTestBase
                 .failMissingException(UserAccountNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ",
                 UserAccountNotFoundException.class, e);
         }
@@ -578,7 +578,7 @@ public class UserAccountRestTest extends UserAccountTest {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType("Wrong exception. ",
                 MissingMethodParameterException.class, e);
         }

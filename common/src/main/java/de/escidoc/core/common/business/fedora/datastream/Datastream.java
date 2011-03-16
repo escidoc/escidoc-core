@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 /**
  * 
  */
@@ -40,7 +32,7 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.FileSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.fcrepo.server.types.gen.DatastreamControlGroup;
@@ -53,14 +45,17 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * Representation of a datastream managed in Fedora Digital Repository System.
  * 
  * Note: The Set <code>alternateIDs</code> is a not synchronized
- * {@link java.util.HashSet HashSet}.
+ * {@link HashSet HashSet}.
  * 
  * @author FRS
  * 
@@ -68,8 +63,7 @@ import java.util.Map;
 public class Datastream {
 
     /** The logger. */
-    private static final AppLogger LOG =
-        new AppLogger(Datastream.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(Datastream.class);
 
     public static final String DC_DATASTREAM = "DC";
 
@@ -177,16 +171,9 @@ public class Datastream {
     public Datastream(final String name, final String parentId,
         final String timestamp) throws FedoraSystemException,
         StreamNotFoundException {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
-                "Datastream()", name, parentId, timestamp));
-        }
-
         this.name = name;
         this.parentId = parentId;
         this.timestamp = timestamp;
-
         init();
     }
 
@@ -217,8 +204,8 @@ public class Datastream {
                 de.escidoc.core.common.business.Constants.TIMESTAMP_FORMAT;
             timestamp.toString(tsFormat);
         }
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(StringUtility.format(
                 "Datastream()", name, parentId, mimeType, location, controlGroupValue));
         }
         this.name = name;
@@ -252,8 +239,8 @@ public class Datastream {
         final String timestamp, final String mimeType, final String location,
         final String controlGroupValue) {
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(StringUtility.format(
                 "Datastream()", name, parentId, timestamp, mimeType, location,
                 controlGroupValue));
         }
@@ -295,8 +282,8 @@ public class Datastream {
         final String controlGroupValue, final String checksumMethod,
         final String checksum) {
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(StringUtility.format(
                 "Datastream()", name, parentId, timestamp, mimeType, location,
                 controlGroupValue));
         }
@@ -336,7 +323,7 @@ public class Datastream {
         // FIXME theStream must not be null
         this.theStream = theStream;
         if (theStream == null) {
-            LOG.warn("Empty datastream initialized. "
+            LOGGER.warn("Empty datastream initialized. "
                 + StringUtility.format("Datastream()", name, parentId, mimeType));
             this.theStream = new byte[0];
         }
@@ -367,7 +354,7 @@ public class Datastream {
         // FIXME location must not be null
         this.location = url;
         if (url == null) {
-            LOG.warn("Empty datastream initialized. url = null "
+            LOGGER.warn("Empty datastream initialized. url = null "
                 + StringUtility.format("Datastream()", name, parentId, storage));
         }
         this.theStream = null;
@@ -501,9 +488,13 @@ public class Datastream {
                 getFedoraUtility().modifyDatastream(this.parentId, this.name,
                     this.label, this.mimeType,
                     this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false);
-            }
-            catch (FedoraSystemException e) {
-                LOG.debug("Error on modifing datastream.", e);
+            } catch (final FedoraSystemException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on modifing datastream.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on modifing datastream.", e);
+                }
                 getFedoraUtility().setDatastreamState(this.parentId, this.name,
                     "A");
                 timestamp =
@@ -521,8 +512,8 @@ public class Datastream {
                             this.alternateIDs.toArray(new String[alternateIDs.size()]),
                             this.getStream(), false);
                 }
-                catch (FedoraSystemException e) {
-                    LOG.debug("Error on modifing datastream.", e);
+                catch (final FedoraSystemException e) {
+                    LOGGER.debug("Error on modifing datastream.", e);
                     getFedoraUtility().setDatastreamState(this.parentId,
                         this.name, "A");
                     timestamp =
@@ -552,8 +543,8 @@ public class Datastream {
                             this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI,
                             false);
                 }
-                catch (FedoraSystemException e) {
-                    LOG.debug("Error on modifing datastream.", e);
+                catch (final FedoraSystemException e) {
+                    LOGGER.debug("Error on modifing datastream.", e);
                     getFedoraUtility().setDatastreamState(this.parentId,
                         this.name, "A");
                     timestamp =
@@ -657,7 +648,7 @@ public class Datastream {
      */
 
     /**
-     * Returns a {@link java.util.Set Set} of the alternate IDs of this
+     * Returns a {@link Set Set} of the alternate IDs of this
      * datastream. Metadata datastreams have the alternate ID "metadata".
      * 
      * @return The alternate IDs of this datastream.
@@ -667,7 +658,7 @@ public class Datastream {
     }
 
     /**
-     * Adds an alternate ID to the {@link java.util.Vector Vector} of the
+     * Adds an alternate ID to the {@link Vector Vector} of the
      * alternate IDs of this datastream. A subsequent call with the same string
      * have no effect. A value off <code>null</code> may be forbidden.
      * 
@@ -679,7 +670,7 @@ public class Datastream {
     }
 
     /**
-     * Replaces an alternate ID in the {@link java.util.Vector Vector} of the
+     * Replaces an alternate ID in the {@link Vector Vector} of the
      * alternate IDs of this datastream. A subsequent call with the same string
      * have no effect. A value off <code>null</code> may be forbidden.
      * 
@@ -698,7 +689,7 @@ public class Datastream {
      * alternate IDs.
      * 
      * @param alternateIDs
-     *            A {@link java.util.Set Set} of strings with alternate IDs.
+     *            A {@link Set Set} of strings with alternate IDs.
      */
     public void setAlternateIDs(final List<String> alternateIDs) {
         this.alternateIDs = alternateIDs;
@@ -783,7 +774,7 @@ public class Datastream {
      * 
      * @return The String representation of the Datastream.
      * @throws StreamNotFoundException
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString() {
@@ -791,11 +782,11 @@ public class Datastream {
             return toStringUTF8();
         }
         catch (final EncodingSystemException e) {
-            LOG.debug("Can not convert Datastream to string.", e);
+            LOGGER.debug("Can not convert Datastream to string.", e);
             return super.toString();
         }
         catch (final WebserverSystemException e) {
-            LOG.debug("Can not convert Datastream to string.", e);
+            LOGGER.debug("Can not convert Datastream to string.", e);
             return super.toString();
         }
     }
@@ -869,7 +860,7 @@ public class Datastream {
      * @return true if the datastreams are equal.
      * @throws StreamNotFoundException
      * 
-     * @see java.lang.Object#equals(java.lang.Object)
+     * @see Object#equals(Object)
      */
     @Override
     public boolean equals(final Object obj) {
@@ -898,15 +889,15 @@ public class Datastream {
                 }
             }
             catch (final ParserConfigurationException e) {
-                LOG.debug("Can not compare datastreams.", e);
+                LOGGER.debug("Can not compare datastreams.", e);
                 return false;
             }
             catch (final SAXException e) {
-                LOG.debug("Can not compare datastreams.", e);
+                LOGGER.debug("Can not compare datastreams.", e);
                 return false;
             }
             catch (final WebserverSystemException e) {
-                LOG.debug("Can not compare datastreams.", e);
+                LOGGER.debug("Can not compare datastreams.", e);
                 return false;
             }
             return true;
@@ -957,8 +948,8 @@ public class Datastream {
                 this.md5Hash = XmlUtility.getMd5Hash(this.getStream());
             }
             else {
-                if (LOG.isDebugEnabled()) {
-                    LOG.debug("MD5 Hash of datastream " + getParentId() + '/'
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("MD5 Hash of datastream " + getParentId() + '/'
                         + getName() + " reused.");
                 }
             }
@@ -986,7 +977,7 @@ public class Datastream {
                     .hashCode()) / 3;
         }
         catch (final Exception e) {
-            LOG.warn(e);
+            LOGGER.debug("Error on generating hash code.", e);
         }
 
         return hash;

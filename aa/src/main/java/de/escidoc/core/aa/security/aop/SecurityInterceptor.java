@@ -40,7 +40,7 @@ import de.escidoc.core.common.exceptions.application.security.AuthorizationExcep
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.aop.AopUtil;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.security.helper.InvocationParser;
 import de.escidoc.core.common.util.security.persistence.MethodMapping;
 import de.escidoc.core.common.util.security.persistence.MethodMappingList;
@@ -80,11 +80,7 @@ import java.util.regex.Pattern;
  * Together with the AA component, this class implements a Policy enforcement
  * point (PEP).
  * 
- * @spring.bean id="security.SecurityInterceptor" factory-method="aspectOf"
- *              lazy-init="false"
- * 
  * @author Roland Werner (Accenture)
- * @aa
  */
 @Aspect
 @DeclarePrecedence("de.escidoc.core.common.util.aop.StatisticInterceptor, de.escidoc.core.aa.security.aop.AuthenticationInterceptor, de.escidoc.core.common.util.aop.ParameterCheckInterceptor, de.escidoc.core.common.util.aop.XmlValidationInterceptor,*")
@@ -93,14 +89,13 @@ public class SecurityInterceptor implements Ordered {
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(SecurityInterceptor.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityInterceptor.class);
 
     /**
      * Pattern used to check that a resource id does not contain the optional
      * version number.
      * 
-     * @aa
+     *
      */
     public static final Pattern PATTERN_CHECK_MISSING_VERSION_NUMBER =
         Pattern.compile("^[^:]*:[^:]*$");
@@ -176,17 +171,13 @@ public class SecurityInterceptor implements Ordered {
      *            The current {@link JoinPoint}.
      * @throws Throwable
      *             Thrown in case of an error.
-     * @common
+     *
      */
 //    @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
 //        + " && within(de.escidoc.core.*.ejb.*Bean)")
     @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
     public Object authorize(final ProceedingJoinPoint joinPoint)
         throws Throwable {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
-                "authorize", this));
-        }
         final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         final Method calledMethod = methodSignature.getMethod();
         final String target = methodSignature.getDeclaringTypeName();
@@ -197,23 +188,21 @@ public class SecurityInterceptor implements Ordered {
         // --- Preparation ---
         // -------------------
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.concatenateWithColonToString("The callee",
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(StringUtility.concatenateWithColonToString("The callee",
                 target));
-            LOG.debug(StringUtility.concatenateWithColonToString("Method name",
+            LOGGER.debug(StringUtility.concatenateWithColonToString("Method name",
                 methodName));
-            LOG.debug(StringUtility.concatenateWithColonToString(
+            LOGGER.debug(StringUtility.concatenateWithColonToString(
                 "The handle/password", handle));
         }
 
         final Object[] arguments = joinPoint.getArgs();
-        if (LOG.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             if (arguments.length > 0) {
-                LOG.debug(StringUtility.concatenateWithColon("First Argument",
-                        arguments[0]).toString());
-            }
-            else {
-                LOG.debug("Method called without arguments.");
+                LOGGER.debug(StringUtility.concatenateWithColon("First Argument", arguments[0]).toString());
+            } else {
+                LOGGER.debug("Method called without arguments.");
             }
         }
 
@@ -245,7 +234,7 @@ public class SecurityInterceptor implements Ordered {
         try {
             return proceed(joinPoint);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             // see issue 475, 500
             // this exception may be thrown if the user tries to access
             // a versionized resource without providing the version number.
@@ -275,7 +264,7 @@ public class SecurityInterceptor implements Ordered {
      * @throws Throwable
      *             Thrown in case of an error during proceeding the method call.
      */
-    private Object proceed(final ProceedingJoinPoint joinPoint)
+    private static Object proceed(final ProceedingJoinPoint joinPoint)
         throws Throwable {
 
         return joinPoint.proceed();
@@ -288,7 +277,7 @@ public class SecurityInterceptor implements Ordered {
      * 
      * @return
      * @see Ordered#getOrder()
-     * @common
+     *
      */
     @Override
     public int getOrder() {
@@ -351,7 +340,7 @@ public class SecurityInterceptor implements Ordered {
      *             cannot be parsed.
      * @see InvocationParser
      * @see MethodMapping
-     * @aa
+     *
      */
     private MethodMappingList doAuthorisation(
         final String className, final String methodName,
@@ -399,7 +388,7 @@ public class SecurityInterceptor implements Ordered {
 
             return methodMappings;
         }
-        catch (AuthorizationException e) {
+        catch (final AuthorizationException e) {
             // in case of a retrieve request for a versionized object (currently
             // container and item), the failed check says it is not allowed for
             // the user to retrieve the specified version if it has been
@@ -434,8 +423,13 @@ public class SecurityInterceptor implements Ordered {
                             + latestReleaseVersionNumber;
                     doAuthorisation(className, methodName, arguments);
                 }
-                catch (TripleStoreSystemException ex) {
-                    LOG.debug(ex);
+                catch (final TripleStoreSystemException ex) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on accesing triple store.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on accesing triple store.", e);
+                    }
                     throw e;
                 }
 
@@ -447,25 +441,25 @@ public class SecurityInterceptor implements Ordered {
                 throw e;
             }
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             throw e;
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (MissingElementValueException e) {
+        catch (final MissingElementValueException e) {
             throw e;
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw e;
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw determineResourceNotFoundException(methodMapping, e);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(
                 INTERNAL_UNEXPECTED_ERROR_DURING_AUTHORIZATION, e);
         }
@@ -482,8 +476,7 @@ public class SecurityInterceptor implements Ordered {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    private AuthorizationException createAuthorizationException(
-        final String className, final String methodName)
+    private static AuthorizationException createAuthorizationException(final String className, final String methodName)
         throws WebserverSystemException {
 
         return new AuthorizationException(StringUtility
@@ -503,10 +496,10 @@ public class SecurityInterceptor implements Ordered {
      *         exception if no sub class could be determined.
      * @throws WebserverSystemException
      *             Thrown in case of an identified error with a method mapping.
-     * @common
+     *
      */
-    private ResourceNotFoundException determineResourceNotFoundException(
-        final MethodMapping methodMapping, final ResourceNotFoundException e)
+    private static ResourceNotFoundException determineResourceNotFoundException(final MethodMapping methodMapping,
+                                                                                final ResourceNotFoundException e)
         throws WebserverSystemException {
 
         if (methodMapping == null) {
@@ -531,7 +524,7 @@ public class SecurityInterceptor implements Ordered {
             final String msg = e.getMessage();
             return constructor.newInstance(msg);
         }
-        catch (Exception e1) {
+        catch (final Exception e1) {
             final StringBuilder errorMsg =
                     new StringBuilder("Error in method mapping. Specified");
             errorMsg.append(" ResourceNotFoundException is unknown or cannot ");
@@ -553,7 +546,7 @@ public class SecurityInterceptor implements Ordered {
      * Gets the invocation parser.
      * 
      * @return Returns the invocation parser.
-     * @common
+     *
      */
     private InvocationParser getInvocationParser() {
 
@@ -565,13 +558,8 @@ public class SecurityInterceptor implements Ordered {
      * 
      * @param invocationParser
      *            The {@link InvocationParser} to be injected.
-     * @spring.property ref="eSciDoc.core.common.helper.InvocationParser"
-     * @common
      */
     public void setInvocationParser(final InvocationParser invocationParser) {
-
-        LOG.debug("setInvocationParser");
-
         this.invocationParser = invocationParser;
     }
 
@@ -579,7 +567,6 @@ public class SecurityInterceptor implements Ordered {
      * Gets the policy decision point (PDP).
      * 
      * @return Returns the PDP.
-     * @common
      */
     private PolicyDecisionPointInterface getPdp() {
 
@@ -592,13 +579,8 @@ public class SecurityInterceptor implements Ordered {
      * @param pdp
      *            The {@link PolicyDecisionPointInterface} implementation to be
      *            injected.
-     * @spring.property ref="service.PolicyDecisionPoint"
-     * @common
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
-
-        LOG.debug("setPdp");
-
         this.pdp = pdp;
     }
 
@@ -607,13 +589,8 @@ public class SecurityInterceptor implements Ordered {
      * 
      * @param cache
      *            The {@link SecurityInterceptorCache} to be injected.
-     * @spring.property ref="eSciDoc.core.common.SecurityInterceptorCache"
-     * @common
      */
     public void setCache(final SecurityInterceptorCache cache) {
-
-        LOG.debug("setCache");
-
         this.cache = cache;
     }
 
@@ -621,10 +598,9 @@ public class SecurityInterceptor implements Ordered {
      * Gets the triple store utility bean.
      * 
      * @return Returns the tsu.
-     * @common
+     *
      */
     private TripleStoreUtility getTsu() {
-
         return tsu;
     }
 
@@ -633,13 +609,8 @@ public class SecurityInterceptor implements Ordered {
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
-     * @aa
      */
     public void setTsu(final TripleStoreUtility tsu) {
-
-        LOG.debug("setTsu");
-
         this.tsu = tsu;
     }
 

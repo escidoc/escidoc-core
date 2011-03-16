@@ -107,7 +107,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             httpRes =
                 create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
@@ -145,7 +145,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType("",
                 MissingMethodParameterException.class, e);
         }
@@ -179,7 +179,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             httpRes =
                 create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
@@ -194,7 +194,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             PWCallback.setHandle("");
             httpRes = retrieveStagingFile(objidValue);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         finally {
@@ -235,7 +235,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Unexpected exception, ",
                 MissingMethodParameterException.class, e);
@@ -263,7 +263,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(StagingFileNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase
                 .assertExceptionType("Unexpected exception, ",
                     StagingFileNotFoundException.class, e);
@@ -291,7 +291,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(StagingFileNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase
                 .assertExceptionType("Unexpected exception, ",
                     StagingFileNotFoundException.class, e);
@@ -321,7 +321,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             httpRes =
                 create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
@@ -338,7 +338,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(StagingFileNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 StagingFileNotFoundException.class, e);
         }
@@ -371,7 +371,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             httpRes =
                 create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
@@ -392,7 +392,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
                         + " has been manually removed, ",
                     StagingFileNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase
                 .assertExceptionType(
                     "Upload Servlet's get method did not decline"
@@ -431,7 +431,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
             httpRes =
                 create(fileInputStream, testUploadFileMimeType, testUploadFile);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
@@ -445,7 +445,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
         try {
             httpRes = retrieveStagingFile(objidValue);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
 
@@ -456,7 +456,7 @@ public abstract class StagingFileTest extends StagingFileTestBase {
                     + " repeated retrieval of a staging file, ",
                 StagingFileNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Upload Servlet's get method did not decline"
                     + " repeated retrieval of a staging file, correctly, ",

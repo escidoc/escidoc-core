@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.configuration;
 
 import java.io.FileNotFoundException;
@@ -39,13 +31,12 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 /**
  * Handles properties.
  * 
  * @author Michael Hoppe
- * @common
  * 
  */
 public final class EscidocConfiguration {
@@ -244,17 +235,20 @@ public final class EscidocConfiguration {
      */
     public static final String DIGILIB_CLIENT = "digilib.digimage";
 
-    private static final AppLogger LOG = new AppLogger(
-        EscidocConfiguration.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(EscidocConfiguration.class);
 
     private static EscidocConfiguration instance;
 
     static {
         try {
             instance = new EscidocConfiguration();
-        }
-        catch (EscidocException e) {
-            LOG.info("Problem while loading properties.", e);
+        } catch (final EscidocException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Problem while loading properties.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem while loading properties.", e);
+            }
         }
     }
 
@@ -272,11 +266,6 @@ public final class EscidocConfiguration {
     /**
      * Private Constructor, in order to prevent instantiation of this utility
      * class. read the Properties and fill it in properties attribute.
-     * 
-     * @throws EscidocException
-     *             e
-     * 
-     * @common
      */
     private EscidocConfiguration() throws EscidocException {
         System.setProperty("java.awt.headless", "true");
@@ -289,8 +278,6 @@ public final class EscidocConfiguration {
      * @return EscidocConfiguration self
      * @throws IOException
      *             Thrown if properties loading fails.
-     * 
-     * @common
      */
     public static EscidocConfiguration getInstance() throws IOException {
         return instance;
@@ -303,7 +290,6 @@ public final class EscidocConfiguration {
      * @param name
      *            The name of the Property.
      * @return Value of the given Property as String.
-     * @common
      */
     public String get(final String name) {
         return (String) properties.get(name);
@@ -318,7 +304,6 @@ public final class EscidocConfiguration {
      * @param defaultValue
      *            The default vaule if property isn't given.
      * @return Value of the given Property as String.
-     * @common
      */
     public String get(final String name, final String defaultValue) {
         String prop = (String) properties.get(name);
@@ -337,7 +322,6 @@ public final class EscidocConfiguration {
      * @param name
      *            The name of the Property.
      * @return Value of the given Property as boolean.
-     * @common
      */
     public boolean getAsBoolean(final String name) {
         boolean result = false;
@@ -355,7 +339,6 @@ public final class EscidocConfiguration {
      * @param name
      *            The name of the Property.
      * @return Value of the given Property as long value.
-     * @common
      */
     public long getAsLong(final String name) {
 
@@ -374,32 +357,30 @@ public final class EscidocConfiguration {
      * @throws SystemException
      *             If the loading of the default properties (file
      *             escidoc-core.properties) fails.
-     * 
-     * @common
      */
     private static Properties loadProperties() throws SystemException {
         final Properties result;
         try {
             result = getProperties(PROPERTIES_DEFAULT_FILENAME);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException("properties not found.", e);
         }
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Default properties: " + result);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Default properties: " + result);
         }
         Properties specific;
         try {
             specific = getProperties(PROPERTIES_FILENAME);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             specific = new Properties();
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("Error on loading specific properties.", e);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on loading specific properties.", e);
             }
         }
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Specific properties: " + specific);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Specific properties: " + specific);
         }
         result.putAll(specific);
 
@@ -407,18 +388,21 @@ public final class EscidocConfiguration {
         Properties constant = new Properties();
         try {
             constant = getProperties(PROPERTIES_CONSTANT_FILENAME);
+        } catch (final IOException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on loading contant properties.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on loading contant properties.", e);
+            }
         }
-        catch (IOException e) {
-            throw new SystemException("Missing '"
-                + PROPERTIES_CONSTANT_FILENAME + "' ", e);
-        }
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Constant properties: " + constant);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Constant properties: " + constant);
         }
         result.putAll(constant);
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Merged properties: " + result);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Merged properties: " + result);
         }
         // set Properties as System-Variables
         for (final Object o : result.keySet()) {
@@ -476,8 +460,6 @@ public final class EscidocConfiguration {
      * @param property
      *            value of property with env-variable-syntax (e.g. ${java.home})
      * @return String replaced env-variables
-     * 
-     * @common
      */
     private static String replaceEnvVariables(final String property) {
         String replacedProperty = property;

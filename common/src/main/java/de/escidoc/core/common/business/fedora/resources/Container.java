@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora.resources;
 
 import de.escidoc.core.common.business.Constants;
@@ -34,6 +26,7 @@ import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
 import de.escidoc.core.common.business.fedora.resources.interfaces.ContainerInterface;
+import de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
@@ -43,7 +36,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.DcReadHandler;
 import de.escidoc.core.common.util.stax.handler.RelsExtContentRelationsReadHandler;
@@ -72,8 +65,8 @@ import java.util.Set;
 public class Container extends GenericVersionableResourcePid
     implements ContainerInterface {
 
-    private static final AppLogger log = new AppLogger(
-        Container.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        Container.class);
 
     private Datastream dc;
 
@@ -158,7 +151,7 @@ public class Container extends GenericVersionableResourcePid
                 this.creationDate =
                     datastreams[datastreams.length - 1].getCreateDate();
             }
-            catch (FedoraSystemException e) {
+            catch (final FedoraSystemException e) {
                 throw new WebserverSystemException(e);
             }
 
@@ -184,7 +177,7 @@ public class Container extends GenericVersionableResourcePid
         try {
             sp.parse(this.getDc().getStream());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new XmlParserSystemException("Unexpected exception.", e);
         }
         setTitle(dch.getPropertiesMap().get(Elements.ELEMENT_DC_TITLE));
@@ -208,7 +201,7 @@ public class Container extends GenericVersionableResourcePid
                     new Datastream(Elements.ELEMENT_CONTENT_MODEL_SPECIFIC,
                         getId(), getVersionDate());
             }
-            catch (WebserverSystemException e) {
+            catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
             }
         }
@@ -232,9 +225,13 @@ public class Container extends GenericVersionableResourcePid
                 ds.merge();
                 this.cts = ds;
             }
-        }
-        catch (StreamNotFoundException e) {
-            log.debug("Error on setting datastream.", e);
+        } catch (final StreamNotFoundException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on setting datastream.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on setting datastream.", e);
+            }
             // this is not an update; its a create
             ds.persist(false);
             this.cts = ds;
@@ -242,7 +239,12 @@ public class Container extends GenericVersionableResourcePid
         // FedoraException when datastreams are preinitialized (see Item) and
         // getCts does not throw an exception on non-existing datastream.
         catch (final FedoraSystemException e) {
-            log.debug("Error on setting datastream.", e);
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on setting datastream.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on setting datastream.", e);
+            }
             // this is not an update; its a create
             ds.persist(false);
             this.cts = ds;
@@ -256,7 +258,7 @@ public class Container extends GenericVersionableResourcePid
      * 
      * @throws IntegritySystemException
      * @throws FedoraSystemException
-     * @see de.escidoc.core.common.business.fedora.resources.interfaces.ContainerInterface#getMdRecords()
+     * @see ContainerInterface#getMdRecords()
      */
     @Override
     public Map<String, Datastream> getMdRecords()
@@ -282,14 +284,14 @@ public class Container extends GenericVersionableResourcePid
                     new Datastream(name, getId(), getVersionDate());
                 result.put(name, newDs);
             }
-            catch (StreamNotFoundException e) {
+            catch (final StreamNotFoundException e) {
                 final String message =
                     "Metadata record \"" + name + "\" not found for container "
                         + getId() + '.';
-                log.error(message, e);
+                LOGGER.error(message, e);
                 throw new IntegritySystemException(message, e);
             }
-            catch (WebserverSystemException e) {
+            catch (final WebserverSystemException e) {
                 // FIXME getVersionDate throws an WebserverSystemException in
                 // case of IntegritySystemException
                 throw new FedoraSystemException(e);
@@ -303,7 +305,7 @@ public class Container extends GenericVersionableResourcePid
      * 
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setMdRecords(java.util.HashMap)
+     * @see FedoraResource#setMdRecords(HashMap)
      */
     @Override
     public void setMdRecords(final Map<String, Datastream> mdRecords)
@@ -326,9 +328,13 @@ public class Container extends GenericVersionableResourcePid
                         // FIXME remove the entire datastream
                         fedoraDs.delete();
                     }
-                }
-                catch (StreamNotFoundException e) {
-                    log.debug("Failed to set MdRecords.", e);
+                } catch (final StreamNotFoundException e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Failed to set MdRecords.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Failed to set MdRecords.", e);
+                    }
                 }
             }
         }
@@ -363,7 +369,7 @@ public class Container extends GenericVersionableResourcePid
 
     /**
      * 
-     * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#getMdRecord(java.lang.String)
+     * @see FedoraResource#getMdRecord(String)
      */
     @Override
     public Datastream getMdRecord(final String name)
@@ -375,7 +381,7 @@ public class Container extends GenericVersionableResourcePid
             try {
                 ds = new Datastream(name, getId(), getVersionDate());
             }
-            catch (WebserverSystemException e) {
+            catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
             }
             this.mdRecords.put(name, ds);
@@ -387,8 +393,8 @@ public class Container extends GenericVersionableResourcePid
      * 
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setMdRecord(java.lang.String,
-     *      de.escidoc.core.common.business.fedora.datastream.Datastream)
+     * @see FedoraResource#setMdRecord(String,
+     *      Datastream)
      */
     @Override
     public void setMdRecord(final String name, final Datastream ds)
@@ -446,7 +452,7 @@ public class Container extends GenericVersionableResourcePid
                                                 .getBytes(XmlUtility.CHARACTER_ENCODING),
                                             "text/xml");
                                 }
-                                catch (UnsupportedEncodingException e) {
+                                catch (final UnsupportedEncodingException e) {
                                     throw new EncodingSystemException(e);
                                 }
                                 setDc(dcNew);
@@ -468,8 +474,13 @@ public class Container extends GenericVersionableResourcePid
 
             }
         }
-        catch (StreamNotFoundException e) {
-            log.debug("Failed to set MdRecords.", e);
+        catch (final StreamNotFoundException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Failed to set MdRecords.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Failed to set MdRecords.", e);
+            }
             // this is not an update; its a create
             ds.addAlternateId(type);
             ds.addAlternateId(schema);
@@ -511,7 +522,7 @@ public class Container extends GenericVersionableResourcePid
                         DATASTREAM_ESCIDOC_RELS_EXT, getId(), getVersionDate()));
                 }
             }
-            catch (WebserverSystemException e) {
+            catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
             }
         }
@@ -530,7 +541,7 @@ public class Container extends GenericVersionableResourcePid
      *             Thrown if Fedora request failed.
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
-     * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
+     * @see FedoraResource#setRelsExt(Datastream)
      */
     public void setEscidocRelsExt(final Datastream ds)
         throws StreamNotFoundException, FedoraSystemException,
@@ -638,7 +649,7 @@ public class Container extends GenericVersionableResourcePid
         try {
             datastreamWithRelations = getVersionNumber() == null ? getRelsExt() : getEscidocRelsExt();
         }
-        catch (StreamNotFoundException e1) {
+        catch (final StreamNotFoundException e1) {
             throw new IntegritySystemException("Datastream not found.", e1);
         }
         final byte[] datastreamWithRelationsContent =
@@ -654,10 +665,10 @@ public class Container extends GenericVersionableResourcePid
         try {
             sp.parse(relsExtInputStream);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         return reHandler.getRelations();
@@ -690,7 +701,7 @@ public class Container extends GenericVersionableResourcePid
 
             }
         }
-        catch (StreamNotFoundException e) {
+        catch (final StreamNotFoundException e) {
             throw new WebserverSystemException("RELS-EXT datastream not found in" + " container with id "
                     + getId(), e);
         }
@@ -722,7 +733,7 @@ public class Container extends GenericVersionableResourcePid
                 ds.merge();
             }
         }
-        catch (StreamNotFoundException e) {
+        catch (final StreamNotFoundException e) {
             // An item have to have a RELS-EXT datastream
             throw new StreamNotFoundException(
                 "No DC for item " + getId() + '.', e);
@@ -745,7 +756,7 @@ public class Container extends GenericVersionableResourcePid
                     new Datastream(Datastream.DC_DATASTREAM, getId(),
                         getVersionDate());
             }
-            catch (WebserverSystemException e) {
+            catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
             }
         }
@@ -822,8 +833,7 @@ public class Container extends GenericVersionableResourcePid
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private Collection<String> expandPropertiesNames(
-        final Collection<String> propertiesNames) {
+    private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
         newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
@@ -845,8 +855,7 @@ public class Container extends GenericVersionableResourcePid
      *            key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
-    private Map<String, String> expandPropertiesNamesMapping(
-        final Map<String, String> propertiesMapping) {
+    private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
 
         final Map<String, String> newPropertiesNames;
         newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();

@@ -47,7 +47,7 @@ public class UserAccount extends UserAccountBase {
 
     /**
      * @return Returns the href to this
-     *         {@link de.escidoc.core.aa.business.persistence.UserAccount}
+     *         {@link UserAccount}
      *         object.
      */
     public String getHref() {

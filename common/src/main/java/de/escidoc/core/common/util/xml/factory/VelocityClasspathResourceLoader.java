@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.xml.factory;
 
 import org.apache.commons.collections.ExtendedProperties;
@@ -42,7 +34,7 @@ import java.io.InputStream;
  * adding <code>TEMPLATES_BASE</code> as prefix.
  * 
  * @author TTE
- * @common
+ *
  */
 public class VelocityClasspathResourceLoader extends ResourceLoader {
 
@@ -53,7 +45,7 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
     /**
      * The constructor.
      * 
-     * @common
+     *
      */
     public VelocityClasspathResourceLoader() {
         loader = new ClasspathResourceLoader();
@@ -66,9 +58,9 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
      * 
      * @param resource
      * @return
-     * @see org.apache.velocity.runtime.resource.loader.ResourceLoader
+     * @see ResourceLoader
      *      #getLastModified(org.apache.velocity.runtime.resource.Resource)
-     * @common
+     *
      */
     @Override
     public long getLastModified(final Resource resource) {
@@ -82,7 +74,7 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
      * 
      * @param s
      * @return
-     * @common
+     *
      */
     @Override
     public InputStream getResourceStream(final String s)
@@ -96,9 +88,9 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
      * See Interface for functional description.
      * 
      * @param extendedproperties
-     * @see org.apache.velocity.runtime.resource.loader.ResourceLoader
+     * @see ResourceLoader
      *      #init(org.apache.commons.collections.ExtendedProperties)
-     * @common
+     *
      */
     @Override
     public void init(final ExtendedProperties extendedproperties) {
@@ -111,9 +103,9 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
      * 
      * @param resource
      * @return
-     * @see org.apache.velocity.runtime.resource.loader.ResourceLoader
+     * @see ResourceLoader
      *      #isSourceModified(org.apache.velocity.runtime.resource.Resource)
-     * @common
+     *
      */
     @Override
     public boolean isSourceModified(final Resource resource) {

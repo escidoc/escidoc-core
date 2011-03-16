@@ -149,7 +149,7 @@ public class UserGroupFilter extends CqlFilter {
                     detachedCriteria.add(criterion);
                 }
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new InvalidSearchQueryException(e);
             }
         }

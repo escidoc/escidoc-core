@@ -38,6 +38,7 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,7 @@ public class OrganizationalUnitParentsHandler
      * @throws SystemException
      * @throws InvalidXmlException
      * @throws MissingAttributeValueException
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#
+     * @see DefaultHandler#
      *      startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
@@ -113,7 +114,7 @@ public class OrganizationalUnitParentsHandler
      * @param element
      * @return
      * @throws InvalidXmlException
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#
+     * @see DefaultHandler#
      *      endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override

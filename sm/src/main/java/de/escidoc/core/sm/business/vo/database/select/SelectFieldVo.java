@@ -38,7 +38,7 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
  * update/delete.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class SelectFieldVo {
     private String tableName;

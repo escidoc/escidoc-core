@@ -30,7 +30,7 @@ package de.escidoc.core.om.business.stax.handler.item;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
@@ -84,8 +84,8 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
     private final Map<String, Map<String, Map<String, String>>> metadataAttributes =
         new HashMap<String, Map<String, Map<String, String>>>();
 
-    private static final AppLogger LOG =
-        new AppLogger(ComponentMetadataHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ComponentMetadataHandler.class);
 
     /**
      * ComponentMdRecordsUpdateHandler.
@@ -158,8 +158,13 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
                     }
                 }
-                catch (NoSuchAttributeException e) {
-                    LOG.debug(e);
+                catch (final NoSuchAttributeException e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error accessing attribute.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error accessing attribute.", e);
+                    }
                 }
                 isInside = true;
 
@@ -210,7 +215,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement
+     * @see DefaultHandler#endElement
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override

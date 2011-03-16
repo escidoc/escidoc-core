@@ -108,7 +108,7 @@ public class CollaboratorRestTest extends CollaboratorAbstractTest {
             PWCallback.setHandle(HANDLE);
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
                     itemId, privateComponentId);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                     "retrieving content failed. ", e);
         } finally {
@@ -141,7 +141,7 @@ public class CollaboratorRestTest extends CollaboratorAbstractTest {
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
                     itemId, privateComponentId);
         } 
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                     "retrieving content failed. ", e);
         }
@@ -155,7 +155,7 @@ public class CollaboratorRestTest extends CollaboratorAbstractTest {
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
                     itemId + ":1", privateComponentId);
         } 
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                     "retrieving content failed. ", e);
         }
@@ -170,7 +170,7 @@ public class CollaboratorRestTest extends CollaboratorAbstractTest {
                     itemId, publicComponentId);
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     AuthorizationException.class, e);
         } finally {
@@ -204,7 +204,7 @@ public class CollaboratorRestTest extends CollaboratorAbstractTest {
                     itemId, privateComponentId);
             EscidocRestSoapTestBase
             .failMissingException(AuthorizationException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         } finally {
@@ -239,7 +239,7 @@ public class CollaboratorRestTest extends CollaboratorAbstractTest {
                     itemId, privateComponentId);
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     AuthorizationException.class, e);
         } finally {
@@ -271,7 +271,7 @@ public class CollaboratorRestTest extends CollaboratorAbstractTest {
             PWCallback.setHandle(HANDLE);
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
                     itemId, privateComponentId);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                     "retrieving content failed. ", e);
         } finally {
@@ -305,7 +305,7 @@ public class CollaboratorRestTest extends CollaboratorAbstractTest {
                     itemId, privateComponentId);
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     AuthorizationException.class, e);
         } finally {

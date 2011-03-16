@@ -38,7 +38,7 @@ import com.sun.xacml.cond.FunctionFactory;
 import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
 import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
@@ -66,7 +66,7 @@ import java.util.List;
  */
 public class XacmlTarget extends Target {
 
-    private static final AppLogger LOG = new AppLogger(XacmlTarget.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(XacmlTarget.class);
 
     private static final String URN_ACTION_DESIGNATOR_ID =
         "urn:oasis:names:tc:xacml:1.0:action:action-id";
@@ -82,8 +82,14 @@ public class XacmlTarget extends Target {
             DESIGNATOR = new AttributeDesignator(AttributeDesignator.ACTION_TARGET,
                     new URI(URN_ACTION_DESIGNATOR_TYPE), new URI(
                                 URN_ACTION_DESIGNATOR_ID), false);
-        } catch (URISyntaxException e) {
-            LOG.debug("Error on initialising designator.", e);
+        } catch (final URISyntaxException e) {
+            // Dont do anything because null-query is given.
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on initialising designator.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on initialising designator.", e);
+            }
         }
     }
 
@@ -158,8 +164,13 @@ public class XacmlTarget extends Target {
             // create the TargetMatch
             return new TargetMatch(TargetMatch.ACTION, function, DESIGNATOR,
                 value);
-        }
-        catch (Exception e) {
+        } catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on creating target action.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on creating target action.", e);
+            }
             return null;
         }
 
@@ -171,7 +182,7 @@ public class XacmlTarget extends Target {
      * See Interface for functional description.
      * 
      * @return
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     public String toString() {
         final ByteArrayOutputStream writer = new ByteArrayOutputStream();

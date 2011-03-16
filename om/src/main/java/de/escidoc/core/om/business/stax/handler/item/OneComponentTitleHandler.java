@@ -31,14 +31,14 @@ package de.escidoc.core.om.business.stax.handler.item;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 public class OneComponentTitleHandler extends DefaultHandler {
 
-    private static final AppLogger LOG = new AppLogger(OneComponentTitleHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(OneComponentTitleHandler.class);
 
     private final StaxParser parser;
 

@@ -77,7 +77,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.persistence.PIDSystem;
 import de.escidoc.core.common.persistence.PIDSystemFactory;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.RelsExtReadHandler;
@@ -91,16 +91,13 @@ import de.escidoc.core.om.business.stax.handler.item.ContentRelationHandler;
 /**
  * ContentRelation handler.
  * 
- * @spring.bean id="business.FedoraContentRelationHandler" scope="prototype"
- * 
  * @author SWA
- * 
  */
 public class FedoraContentRelationHandler extends HandlerBase
     implements ContentRelationHandlerInterface {
 
-    private static final AppLogger log = new AppLogger(
-        FedoraContentRelationHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        FedoraContentRelationHandler.class);
 
     private final Collection<ResourceListener> contentRelationListeners =
         new ArrayList<ResourceListener>();
@@ -403,7 +400,6 @@ public class FedoraContentRelationHandler extends HandlerBase
     /**
      * Injects the indexing handler.
      * 
-     * @spring.property ref="common.business.indexing.IndexingHandler"
      * @param indexingHandler
      *            The indexing handler.
      */
@@ -416,8 +412,6 @@ public class FedoraContentRelationHandler extends HandlerBase
      * 
      * @param sruRequest
      *            SRURequest
-     * 
-     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
@@ -428,7 +422,6 @@ public class FedoraContentRelationHandler extends HandlerBase
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
      * 
      */
     @Override
@@ -441,10 +434,8 @@ public class FedoraContentRelationHandler extends HandlerBase
      * 
      * @param fedoraUtility
      *            Fedora utility
-     * @see de.escidoc.core.common.business.fedora.HandlerBase
+     * @see HandlerBase
      *      #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
-     * 
-     * @spring.property ref="escidoc.core.business.FedoraUtility"
      */
     @Override
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
@@ -457,10 +448,8 @@ public class FedoraContentRelationHandler extends HandlerBase
      * 
      * @param idProvider
      *            id provider
-     * @see de.escidoc.core.common.business.fedora.HandlerBase
+     * @see HandlerBase
      *      #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
-     * 
-     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
     @Override
     public void setIdProvider(final EscidocIdProvider idProvider) {
@@ -960,7 +949,7 @@ public class FedoraContentRelationHandler extends HandlerBase
             try {
                 cr.getProperties().setLockStatus(LockStatus.LOCKED);
             }
-            catch (InvalidStatusException e) {
+            catch (final InvalidStatusException e) {
                 // shouldn't happen
                 throw new SystemException(e);
             }
@@ -1010,7 +999,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws InvalidStatusException
      *             Thrown if object is not in status released.
      */
-    private void checkReleased(final ContentRelationCreate cr)
+    private static void checkReleased(final ContentRelationCreate cr)
         throws InvalidStatusException {
 
         final StatusType status = cr.getProperties().getStatus();
@@ -1032,7 +1021,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      *             Thrown if resource with provided id could not be found in
      *             Fedora repository.
      */
-    private void setRelsExtValues(final ContentRelationCreate cr)
+    private static void setRelsExtValues(final ContentRelationCreate cr)
         throws SystemException, ContentRelationNotFoundException {
 
         // retrieve resource with id from Fedora
@@ -1042,7 +1031,7 @@ public class FedoraContentRelationHandler extends HandlerBase
                 new Datastream(Datastream.RELS_EXT_DATASTREAM, cr.getObjid(),
                     null);
         }
-        catch (StreamNotFoundException e) {
+        catch (final StreamNotFoundException e) {
             throw new ContentRelationNotFoundException(
                 "Content Relation with id '" + cr.getObjid()
                     + "' could not be found.", e);
@@ -1095,7 +1084,7 @@ public class FedoraContentRelationHandler extends HandlerBase
                 try {
                     st = StatusType.getStatusType(triple.getObject());
                 }
-                catch (InvalidStatusException e) {
+                catch (final InvalidStatusException e) {
                     // shouldn't happen
                     throw new SystemException(e);
                 }
@@ -1132,7 +1121,7 @@ public class FedoraContentRelationHandler extends HandlerBase
                 try {
                     cr.setType(new URI(triple.getObject()));
                 }
-                catch (URISyntaxException e) {
+                catch (final URISyntaxException e) {
                     // shouldn't happen
                     throw new SystemException("Stored value for URI in invalid.", e);
                 }
@@ -1142,7 +1131,7 @@ public class FedoraContentRelationHandler extends HandlerBase
                 cr.setObjectVersion(triple.getObject());
             } else {
                 // add values for mapping
-                log.warn("Predicate not mapped " + triple.getPredicate() + " = "
+                LOGGER.warn("Predicate not mapped " + triple.getPredicate() + " = "
                     + triple.getObject());
             }
         }
@@ -1170,7 +1159,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         try {
             date = getTripleStoreUtility().getCreationDate(objid);
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
 
             if (e.getMessage().contains("Creation date not found")) {
                 throw new ContentRelationNotFoundException(
@@ -1213,7 +1202,7 @@ public class FedoraContentRelationHandler extends HandlerBase
                     mdRecord.setName(datastreamInfo.getID());
                     cr.addMdRecord(mdRecord);
                 }
-                catch (InvalidContentException e) {
+                catch (final InvalidContentException e) {
                     throw new IntegritySystemException(e);
                 }
 
@@ -1243,7 +1232,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @return the int value of the position in the array and -1 if the values
      *         is not in the array
      */
-    private int contains(final String[] array, final String value) {
+    private static int contains(final String[] array, final String value) {
 
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(value)) {
@@ -1265,7 +1254,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws RelationPredicateNotFoundException
      *             Thrown if the predicate is not registered.
      */
-    private void checkRelationType(final URI predicate)
+    private static void checkRelationType(final URI predicate)
         throws InvalidContentException, WebserverSystemException,
         RelationPredicateNotFoundException {
         if (!ContentRelationsUtility.validPredicate(predicate)) {
@@ -1291,7 +1280,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             Thrown if internal error occur
      */
-    private ContentRelationCreate parseContentRelation(final String xml)
+    private static ContentRelationCreate parseContentRelation(final String xml)
         throws MissingAttributeValueException, InvalidXmlException,
         InvalidContentException, SystemException {
 
@@ -1304,27 +1293,27 @@ public class FedoraContentRelationHandler extends HandlerBase
         try {
             sp.parse(xml);
         }
-        catch (InvalidContentException e) {
+        catch (final InvalidContentException e) {
             throw new InvalidContentException(e.getMessage(), e);
         }
-        catch (RelationPredicateNotFoundException e) {
+        catch (final RelationPredicateNotFoundException e) {
             // shouldn't happen
             throw new SystemException(e);
         }
-        catch (XmlCorruptedException e) {
+        catch (final XmlCorruptedException e) {
             throw new XmlCorruptedException(e.getMessage(), e);
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw new MissingAttributeValueException(e.getMessage(), e);
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // shouldn't happen
             throw new SystemException(e);
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw new SystemException(null, e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
         return contentRelationHandler.getContentRelation();
@@ -1338,7 +1327,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws WebserverSystemException
      *             Thrown if access to repository (Feodra) failed.
      */
-    private void enrichWithMetadataContent(final ContentRelationCreate cr)
+    private static void enrichWithMetadataContent(final ContentRelationCreate cr)
         throws WebserverSystemException {
         final List<MdRecordCreate> mdRecords = cr.getMetadataRecords();
         if (mdRecords != null) {
@@ -1418,7 +1407,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      *             Thrown if the current status of the ContentRelation is
      *             invalid to change to submitted.
      */
-    private void validateToSubmitStatus(final ContentRelationCreate cr)
+    private static void validateToSubmitStatus(final ContentRelationCreate cr)
         throws InvalidStatusException {
 
         /*
@@ -1538,7 +1527,7 @@ public class FedoraContentRelationHandler extends HandlerBase
                     cr.getProperties().getLastModificationDate(),
                     "<pid>" + pid + "</pid>\n");
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw new WebserverSystemException(e);
         }
         return result;
@@ -1556,7 +1545,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      * @throws SystemException
      *             An internal error occurred.
      */
-    private String getAlternateForm(final ContentRelationCreate cr)
+    private static String getAlternateForm(final ContentRelationCreate cr)
         throws SystemException {
         String result = null;
         final boolean isRestAccess = UserContext.isRestAccess();
@@ -1575,10 +1564,10 @@ public class FedoraContentRelationHandler extends HandlerBase
                         .getInstance().getContentRelationXml(cr);
             }
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new SystemException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // should not happen here
             throw new SystemException(e);
         }

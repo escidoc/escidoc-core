@@ -166,7 +166,7 @@ public class UserAccountFilter extends CqlFilter {
                     detachedCriteria.add(criterion);
                 }
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new InvalidSearchQueryException(e);
             }
         }
@@ -224,7 +224,7 @@ public class UserAccountFilter extends CqlFilter {
                                 .get(
                                     EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
                     }
-                    catch (IOException e) {
+                    catch (final IOException e) {
                         throw new InvalidSearchQueryException(e);
                     }
                     if (ouAttributeName == null || ouAttributeName.length() == 0) {

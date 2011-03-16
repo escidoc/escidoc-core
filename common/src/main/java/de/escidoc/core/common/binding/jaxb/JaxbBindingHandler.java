@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.binding.jaxb;
 
 import de.escidoc.core.common.binding.BindingHandlerInterface;
@@ -42,8 +34,6 @@ import java.util.Map;
 
 /**
  * @author MIH
- * @spring.bean id = "common.binding.JaxbBindingHandler"
- * @common
  */
 public class JaxbBindingHandler implements BindingHandlerInterface {
 
@@ -63,7 +53,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
      * @throws XmlParserSystemException
      *             ex
      * 
-     * @common
+     *
      */
     @Override
     public Object unmarshal(final String xml, final String contextPath)
@@ -81,7 +71,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
             final Unmarshaller u = jc.createUnmarshaller();
             return u.unmarshal(new ByteArrayInputStream(xml.getBytes(XmlUtility.CHARACTER_ENCODING)));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new XmlParserSystemException(e);
         }
     }
@@ -96,7 +86,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
      * @throws XmlParserSystemException
      *             ex
      * 
-     * @common
+     *
      */
     @Override
     public String marshal(final Object bindingObject)
@@ -129,7 +119,7 @@ public class JaxbBindingHandler implements BindingHandlerInterface {
             xml = xml.replaceAll("(?s)(<[^\\/]*?)>\\s*?<\\/.*?>", "$1/>");
             return xml;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new XmlParserSystemException(e);
         }
     }

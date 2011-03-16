@@ -34,6 +34,7 @@ import com.sun.xacml.attr.AttributeValue;
 import com.sun.xacml.attr.BagAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
+import com.sun.xacml.finder.AttributeFinderModule;
 import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.authorisation.FinderModuleHelper;
@@ -52,7 +53,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.list.ListSorting;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -118,11 +119,7 @@ import java.util.regex.Pattern;
  * the id of the object the grant is assigned on (scope of the grant), multi
  * value attribute
  * 
- * @spring.bean id="eSciDoc.core.aa.UserAccountAttributeFinderModule"
- * 
  * @author TTE
- * 
- * @aa
  */
 public class UserAccountAttributeFinderModule
     extends AbstractAttributeFinderModule {
@@ -158,8 +155,8 @@ public class UserAccountAttributeFinderModule
         .compile(AttributeIds.SUBJECT_ATTR_PREFIX + ".*");
 
     /** The logger. */
-    private static final AppLogger log = new AppLogger(
-        UserAccountAttributeFinderModule.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        UserAccountAttributeFinderModule.class);
 
     /**
      * Attributes can have USER_ACCOUNT_ATTR_PREFIX
@@ -178,7 +175,7 @@ public class UserAccountAttributeFinderModule
      * This attribute matches the current eSciDoc user handles of the user
      * (identified by the resource-id).
      * 
-     * @aa
+     *
      */
     public static final String ATTR_USER_HANDLE =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "handle";
@@ -187,7 +184,7 @@ public class UserAccountAttributeFinderModule
      * This attribute matches the internal id of the user (identified by the
      * resource-id).
      * 
-     * @aa
+     *
      */
     public static final String ATTR_USER_ID =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "id";
@@ -196,7 +193,7 @@ public class UserAccountAttributeFinderModule
      * This attribute matches the login name of the user (identified by the
      * resource-id).
      * 
-     * @aa
+     *
      */
     public static final String ATTR_USER_LOGIN_NAME =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "login-name";
@@ -205,7 +202,7 @@ public class UserAccountAttributeFinderModule
      * This attribute matches the name of the user (identified by the
      * resource-id).
      * 
-     * @aa
+     *
      */
     public static final String ATTR_USER_NAME =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "name";
@@ -214,7 +211,7 @@ public class UserAccountAttributeFinderModule
      * This attribute matches the creator of the user (identified by the
      * resource-id).
      * 
-     * @aa
+     *
      */
     public static final String ATTR_CREATED_BY =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "created-by";
@@ -223,7 +220,7 @@ public class UserAccountAttributeFinderModule
      * This attribute matches the last modifier of the user (identified by the
      * resource-id).
      * 
-     * @aa
+     *
      */
     public static final String ATTR_MODIFIED_BY =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "modified-by";
@@ -232,7 +229,7 @@ public class UserAccountAttributeFinderModule
      * This attribute matches the group-membership of the user (identified by
      * the resource-id).
      * 
-     * @aa
+     *
      */
     public static final String ATTR_USER_GROUP_MEMBERSHIP =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX + "group-membership";
@@ -241,7 +238,7 @@ public class UserAccountAttributeFinderModule
      * This attribute matches the organizational unit of the user (identified by
      * the resource-id).
      * 
-     * @aa
+     *
      */
     public static final String ATTR_USER_ORGANIZATIONAL_UNIT =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX
@@ -251,7 +248,7 @@ public class UserAccountAttributeFinderModule
      * This attribute matches the organizational unit of the user (identified by
      * the resource-id) (also children are resolved).
      * 
-     * @aa
+     *
      */
     public static final String ATTR_USER_ORGANIZATIONAL_UNIT_WITH_CHILDREN =
         AttributeIds.USER_ACCOUNT_ATTR_PREFIX
@@ -260,7 +257,7 @@ public class UserAccountAttributeFinderModule
     /**
      * This attribute matches the scope of a role of the user.
      * 
-     * @aa
+     *
      */
     public static final Pattern ATTR_USER_ROLE_SCOPE = Pattern
         .compile(AttributeIds.USER_ACCOUNT_ATTR_PREFIX
@@ -278,9 +275,9 @@ public class UserAccountAttributeFinderModule
      * that it supports Designators of type SUBJECT_TARGET and RESOURCE_TARGET.
      * 
      * @return Set only containing the value SUBJECT_TARGET and RESOURCE_TARGET.
-     * @see com.sun.xacml.finder.AttributeFinderModule
+     * @see AttributeFinderModule
      *      #getSupportedDesignatorTypes()
-     * @aa
+     *
      */
     @Override
     public Set getSupportedDesignatorTypes() {
@@ -303,10 +300,10 @@ public class UserAccountAttributeFinderModule
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -342,10 +339,10 @@ public class UserAccountAttributeFinderModule
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -429,7 +426,7 @@ public class UserAccountAttributeFinderModule
                     try {
                         userAccount = retrieveUserAccount(ctx, userAccountId);
                     }
-                    catch (UserAccountNotFoundException e) {
+                    catch (final UserAccountNotFoundException e) {
                         if (isSubjectAttribute) {
                             throw new UserAccountNotFoundException(
                                 StringUtility.format(
@@ -535,7 +532,7 @@ public class UserAccountAttributeFinderModule
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException(e);
         }
         if (ouAttributeName == null || ouAttributeName.length() == 0) {
@@ -694,7 +691,7 @@ public class UserAccountAttributeFinderModule
      *             Thrown in case of an internal error.
      * @throws UserAccountNotFoundException
      *             Thrown if no user account with provided id is found.
-     * @aa
+     *
      */
     private Set retrieveUserHandle(
         final EvaluationCtx ctx, final String userAccountId,
@@ -718,13 +715,13 @@ public class UserAccountAttributeFinderModule
                         .retrieveUserAccountById(userAccountId));
                 }
             }
-            catch (UserAccountNotFoundException e) {
+            catch (final UserAccountNotFoundException e) {
                 throw e;
             }
-            catch (WebserverSystemException e) {
+            catch (final WebserverSystemException e) {
                 throw e;
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 final String errorMsg =
                     StringUtility.format(
                             "Retrieving of attribute failed", attributeIdValue);
@@ -756,7 +753,7 @@ public class UserAccountAttributeFinderModule
      *             Thrown in case of an internal error.
      * @throws UserAccountNotFoundException
      *             Thrown if no user account with provided id exists.
-     * @aa
+     *
      */
     private UserAccount retrieveUserAccount(
         final EvaluationCtx ctx, final String userAccountId)
@@ -772,7 +769,7 @@ public class UserAccountAttributeFinderModule
                 userAccount =
                     getUserAccountDao().retrieveUserAccount(userAccountId);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(
                     StringUtility.format(
                         "Exception during retrieval of the user account",
@@ -797,10 +794,9 @@ public class UserAccountAttributeFinderModule
      *            The user account to assert.
      * @throws UserAccountNotFoundException
      *             Thrown if assertion fails.
-     * @aa
+     *
      */
-    private void assertUserAccount(
-        final String userId, final UserAccount userAccount)
+    private static void assertUserAccount(final String userId, final UserAccount userAccount)
         throws UserAccountNotFoundException {
 
         if (userAccount == null) {
@@ -827,7 +823,6 @@ public class UserAccountAttributeFinderModule
     /**
      * Injects the policies cache proxy.
      * 
-     * @spring.property ref="resource.PoliciesCacheProxy"
      * @param policiesCacheProxy
      *            the {@link PoliciesCacheProxy} to inject.
      */
@@ -838,8 +833,7 @@ public class UserAccountAttributeFinderModule
 
     /**
      * Injects the TripleStore utility.
-     * 
-     * @spring.property ref="business.TripleStoreUtility"
+     *
      * @param tripleStoreUtility
      *            TripleStoreUtility from Spring
      */
@@ -853,7 +847,6 @@ public class UserAccountAttributeFinderModule
      * 
      * @param userAccountDao
      *            The user account dao.
-     * @spring.property ref="persistence.UserAccountDao"
      */
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
         this.userAccountDao = userAccountDao;

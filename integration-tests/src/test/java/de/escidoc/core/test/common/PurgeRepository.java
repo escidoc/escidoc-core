@@ -31,8 +31,9 @@ package de.escidoc.core.test.common;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.fedora.Client;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
-import de.escidoc.core.test.common.logger.AppLogger;
 import org.apache.xpath.XPathAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -50,8 +51,7 @@ import java.util.Vector;
  */
 public class PurgeRepository {
 
-    private static AppLogger log =
-        new AppLogger(PurgeRepository.class.getName());
+    private final static Logger LOGGER = LoggerFactory.getLogger(PurgeRepository.class);
 
     /**
      * @param args
@@ -61,9 +61,9 @@ public class PurgeRepository {
 
         try {
             int numPurged = purgeAllEscidoc();
-            log.info(numPurged + " Objects purged from repository.");
+            LOGGER.info(numPurged + " Objects purged from repository.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             e.printStackTrace();
         }
     }
@@ -93,7 +93,7 @@ public class PurgeRepository {
             // prevent purging of persistent objects and examples
             fedoraClient.purgeObject(objid, "purged through Test Project");
 
-            log.debug(objid + " purged (" + --toRemove + " left)");
+            LOGGER.debug(objid + " purged (" + --toRemove + " left)");
         }
         return purgedObjects;
     }

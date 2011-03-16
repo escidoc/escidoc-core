@@ -38,9 +38,6 @@ import org.springframework.jmx.export.annotation.ManagedResource;
  * StatisticError Logfile and sends them via email to the sm.administrator.email
  * 
  * @author MIH, TTE
- * 
- * @spring.bean id="mbean.StatisticErrorProcessorService"
- * @sm
  */
 @ManagedResource(objectName = "eSciDocCore:name=StatisticErrorProcessorService", description = "Reads the messages that were written into the StatisticError Logfile and sends them via email to the sm.administrator.email.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class SpringStatisticErrorProcessorService {
@@ -60,8 +57,6 @@ public class SpringStatisticErrorProcessorService {
      * 
      * @param processor
      *            The {@link ErrorQueueProcessor}.
-     * @spring.property ref="business.ErrorQueueProcessor"
-     * @sm
      */
     public void setProcessor(final ErrorQueueProcessor processor) {
         this.processor = processor;

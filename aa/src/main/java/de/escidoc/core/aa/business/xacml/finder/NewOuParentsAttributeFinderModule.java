@@ -57,10 +57,7 @@ import java.util.regex.Pattern;
  * the parents of the new organizational-unit (hierarchical), multi value
  * attribute
  * 
- * @spring.bean id="eSciDoc.core.aa.NewOuParentsAttributeFinderModule"
- * 
  * @author MIH
- * @aa
  */
 public class NewOuParentsAttributeFinderModule
     extends AbstractAttributeFinderModule {
@@ -98,10 +95,10 @@ public class NewOuParentsAttributeFinderModule
      * @return boolean
      * @throws EscidocException
      *             e
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -136,10 +133,10 @@ public class NewOuParentsAttributeFinderModule
      * @return Object[]
      * @throws EscidocException
      *             e
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -202,8 +199,6 @@ public class NewOuParentsAttributeFinderModule
      * 
      * @param tripleStoreAttributeFinderModule
      *            The {@link TripleStoreAttributeFinderModule}.
-     * @spring.property ref="eSciDoc.core.aa.TripleStoreAttributeFinderModule"
-     * @aa
      */
     public void setTripleStoreAttributeFinderModule(
         final TripleStoreAttributeFinderModule tripleStoreAttributeFinderModule) {

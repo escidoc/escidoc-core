@@ -86,7 +86,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
         try {
             xml = new String(cts.getStream(), XmlUtility.CHARACTER_ENCODING);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
         return xml.trim();
@@ -135,7 +135,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
             return metadataRecord;
 
         }
-        catch (StreamNotFoundException e) {
+        catch (final StreamNotFoundException e) {
             throw new MdRecordNotFoundException("Md-record with a name  "
                 + mdRecordId + " does not exist in the Container with Id "
                 + getContainer().getId(), e);
@@ -164,7 +164,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
         try {
             return getContainer().getMdRecord(name).toString();
         }
-        catch (StreamNotFoundException e) {
+        catch (final StreamNotFoundException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -174,7 +174,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
         try {
             return getContainer().getDc().toString();
         }
-        catch (StreamNotFoundException e) {
+        catch (final StreamNotFoundException e) {
             throw new WebserverSystemException(e);
         }
     }

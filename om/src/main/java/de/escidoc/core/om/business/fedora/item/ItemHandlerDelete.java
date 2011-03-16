@@ -115,7 +115,7 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                         .invokeWithProtocol(
                                 UserContext.getHandle(),
                                 de.escidoc.core.om.business.fedora.deviation.Constants.USE_SOAP_REQUEST_PROTOCOL);
-            } catch (InvocationTargetException e) {
+            } catch (final InvocationTargetException e) {
                 // unpack Exception from reflection API
                 final Throwable cause = e.getCause();
                 if(cause instanceof Error) {
@@ -126,7 +126,7 @@ public class ItemHandlerDelete extends ItemHandlerCreate {
                     throw new SystemException("An error occured removing member entries for item "
                                 + getItem().getId() + ". Container can not be deleted.", cause);
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 throw new SystemException("An error occured removing member entries for item "
                                 + getItem().getId() + ". Container can not be deleted.", e);
             }

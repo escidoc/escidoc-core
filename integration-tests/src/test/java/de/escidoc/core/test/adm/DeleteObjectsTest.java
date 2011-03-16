@@ -96,7 +96,7 @@ public class DeleteObjectsTest extends AdminToolTestBase {
             retrieveItem(itemId);
             fail("item with id " + itemId + " still exists");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 ItemNotFoundException.class, e);
         }

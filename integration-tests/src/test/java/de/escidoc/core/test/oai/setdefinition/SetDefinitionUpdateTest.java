@@ -159,7 +159,7 @@ public class SetDefinitionUpdateTest extends SetDefinitionTestBase {
             update(null, "");
             fail("No exception on update without id..");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);

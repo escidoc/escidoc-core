@@ -34,7 +34,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingElementValue
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -61,8 +61,8 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
     private final Map<String, String> properties =
         new HashMap<String, String>();
 
-    private static final AppLogger LOGGER =
-        new AppLogger(OneComponentPropertiesHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(OneComponentPropertiesHandler.class);
 
     /**
      * OneComponentPropertiesHandler.

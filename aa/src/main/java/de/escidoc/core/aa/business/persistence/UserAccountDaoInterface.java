@@ -83,7 +83,7 @@ public interface UserAccountDaoInterface {
      * @return Returns the user data.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     UserAccount retrieveUserAccount(final String identityInfo)
         throws SqlDatabaseSystemException;
@@ -97,7 +97,7 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     UserAccount retrieveUserAccountById(final String id)
         throws SqlDatabaseSystemException;
@@ -111,7 +111,7 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     UserAccount retrieveUserAccountByLoginName(final String loginName)
         throws SqlDatabaseSystemException;
@@ -125,13 +125,13 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     UserAccount retrieveUserAccountByHandle(final String handle)
         throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link de.escidoc.core.aa.business.persistence.UserAccount}
+     * Retrieves {@link UserAccount}
      * objects using the provided values for filtering.
      * 
      * @param criteria
@@ -147,19 +147,19 @@ public interface UserAccountDaoInterface {
      *            The kind of ordering, i.e. ascending or descending.
      * 
      * @return Returns <code>List</code> of
-     *         {@link de.escidoc.core.aa.business.persistence.UserAccount}
+     *         {@link UserAccount}
      *         objects selected by the provided parameters. If no parameter is
      *         provided, all user account objects are returned.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<UserAccount> retrieveUserAccounts(
         Map<String, Object> criteria, int offset, int maxResults,
         String orderBy, ListSorting sorting) throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link de.escidoc.core.aa.business.persistence.UserAccount}
+     * Retrieves {@link UserAccount}
      * objects using the provided values for filtering.
      * 
      * @param criteria
@@ -170,14 +170,14 @@ public interface UserAccountDaoInterface {
      *            The maximal number of results to be returned.
      * 
      * @return Returns <code>List</code> of
-     *         {@link de.escidoc.core.aa.business.persistence.UserAccount}
+     *         {@link UserAccount}
      *         objects selected by the provided parameters. If no parameter is
      *         provided, all user account objects are returned.
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<UserAccount> retrieveUserAccounts(
         String criteria, int offset, int maxResults)
@@ -191,7 +191,7 @@ public interface UserAccountDaoInterface {
      * 
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void save(final UserAccount userAccount) throws SqlDatabaseSystemException;
 
@@ -203,7 +203,7 @@ public interface UserAccountDaoInterface {
      * 
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void update(final UserAccount userAccount)
         throws SqlDatabaseSystemException;
@@ -216,7 +216,7 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     void delete(final UserAccount userAccount)
         throws SqlDatabaseSystemException;
@@ -231,7 +231,7 @@ public interface UserAccountDaoInterface {
      * @return Returns sorted List of <code>Grant</code> objects.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<RoleGrant> retrieveGrantsByRole(final EscidocRole role)
         throws SqlDatabaseSystemException;
@@ -245,7 +245,7 @@ public interface UserAccountDaoInterface {
      * @return Returns sorted List of <code>Grant</code> objects.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<RoleGrant> retrieveGrantsByUserId(final String userId)
         throws SqlDatabaseSystemException;
@@ -266,7 +266,7 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     RoleGrant retrieveCurrentGrant(
         final UserAccount userAccount, final EscidocRole role,
@@ -285,13 +285,13 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     RoleGrant retrieveGrant(final String userId, final String grantId)
         throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link de.escidoc.core.aa.business.persistence.RoleGrant}
+     * Retrieves {@link RoleGrant}
      * objects using the provided values for filtering.
      * 
      * @param criteria
@@ -303,19 +303,19 @@ public interface UserAccountDaoInterface {
      *            The kind of ordering, i.e. ascending or descending.
      * 
      * @return Returns <code>List</code> of
-     *         {@link de.escidoc.core.aa.business.persistence.RoleGrant}
+     *         {@link RoleGrant}
      *         objects selected by the provided parameters. If no parameter is
      *         provided, all roleGrant objects are returned.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<RoleGrant> retrieveGrants(
         Map<String, HashSet<String>> criteria,
         String orderBy, ListSorting sorting) throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link de.escidoc.core.aa.business.persistence.RoleGrant}
+     * Retrieves {@link RoleGrant}
      * objects using the provided values for filtering.
      * 
      * @param criteria
@@ -328,7 +328,7 @@ public interface UserAccountDaoInterface {
      *            business object to access methods for user groups
      * 
      * @return Returns <code>List</code> of
-     *         {@link de.escidoc.core.aa.business.persistence.RoleGrant}
+     *         {@link RoleGrant}
      *         objects selected by the provided parameters. If no parameter is
      *         provided, all roleGrant objects are returned.
      * @throws InvalidSearchQueryException thrown if the given search query could
@@ -348,7 +348,7 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     void save(final RoleGrant grant) throws SqlDatabaseSystemException;
 
@@ -360,7 +360,7 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     void update(final RoleGrant grant) throws SqlDatabaseSystemException;
 
@@ -377,7 +377,7 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     UserAttribute retrieveAttribute(final String userId, final String attributeId)
         throws SqlDatabaseSystemException;
@@ -434,7 +434,7 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     void save(final UserAttribute attribute) 
                         throws SqlDatabaseSystemException;
@@ -447,7 +447,7 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     void update(final UserAttribute attribute) 
                         throws SqlDatabaseSystemException;
@@ -460,7 +460,7 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     void delete(final UserAttribute attribute) 
                         throws SqlDatabaseSystemException;
@@ -473,7 +473,7 @@ public interface UserAccountDaoInterface {
      * @return The user data.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     UserLoginData retrieveUserLoginDataByHandle(final String handle)
         throws SqlDatabaseSystemException;
@@ -486,7 +486,7 @@ public interface UserAccountDaoInterface {
      * @return The login datas of the user in a <code>List</code>.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<UserLoginData> retrieveUserLoginDataByUserId(final String id)
         throws SqlDatabaseSystemException;
@@ -498,7 +498,7 @@ public interface UserAccountDaoInterface {
      *            The user login data.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void saveOrUpdate(UserLoginData data) throws SqlDatabaseSystemException;
 
@@ -509,7 +509,7 @@ public interface UserAccountDaoInterface {
      *            The user login data.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void delete(UserLoginData data) throws SqlDatabaseSystemException;
 
@@ -520,7 +520,7 @@ public interface UserAccountDaoInterface {
      *            The handle identifying user login data.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void deleteUserLoginData(String handle) throws SqlDatabaseSystemException;
 
@@ -534,7 +534,7 @@ public interface UserAccountDaoInterface {
      *             Thrown in case of an internal database access error.
      * @return Returns the {@link UserDetails} of the addressed
      *         {@link UserAccount}.
-     * @aa
+     *
      */
     UserDetails retrieveUserDetails(String handle)
         throws SqlDatabaseSystemException;
@@ -551,7 +551,7 @@ public interface UserAccountDaoInterface {
      *         login data exists.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<UserLoginData> retrieveExpiredUserLoginData(final long timestamp)
         throws SqlDatabaseSystemException;
@@ -564,7 +564,7 @@ public interface UserAccountDaoInterface {
      * @return Returns List of <code>UserPreference</code> objects.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<UserPreference> retrievePreferencesByUserId(final String userId)
         throws SqlDatabaseSystemException;
@@ -577,7 +577,7 @@ public interface UserAccountDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @aa
+     *
      */
     void save(final UserPreference preference)
         throws SqlDatabaseSystemException;
@@ -589,7 +589,7 @@ public interface UserAccountDaoInterface {
      *            The user login data.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void delete(UserPreference data) throws SqlDatabaseSystemException;
 }

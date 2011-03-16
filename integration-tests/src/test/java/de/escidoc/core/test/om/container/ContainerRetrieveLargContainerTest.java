@@ -106,7 +106,7 @@ public class ContainerRetrieveLargContainerTest extends ContainerTestBase {
                 addMembers(theContainerId, taskParam);
                 System.out.println("added of a member nr " + i + ".");
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 System.out.println("adding of a member nr " + i + " failed.");
                 throw new Exception(e);
             }

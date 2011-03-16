@@ -40,11 +40,7 @@ import de.escidoc.core.om.service.interfaces.SemanticStoreHandlerInterface;
 /**
  * A semantic store handler.
  * 
- * @spring.bean id="service.SemanticStoreHandler"
- * @interface class="de.escidoc.core.om.service.interfaces.SemanticStoreHandlerInterface"
  * @author ROF
- * @service
- * @om
  */
 public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
 
@@ -55,10 +51,6 @@ public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
      * 
      * @param semanticStoreHandler
      *            The semantic store handler bean to inject.
-     * 
-     * @spring.property ref="business.FedoraSemanticStoreHandler"
-     * @service.exclude
-     * @om
      */
     public void setSemanticStoreHandler(
         final de.escidoc.core.om.business.interfaces.SemanticStoreHandlerInterface semanticStoreHandler) {
@@ -73,7 +65,6 @@ public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
      * format.
      * 
      * @return Returns XML representation of the query result.
-     * @om
      * @throws SystemException
      *             TODO
      * @throws InvalidTripleStoreQueryException

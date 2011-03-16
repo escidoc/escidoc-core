@@ -33,7 +33,7 @@ import de.escidoc.core.common.business.fedora.resources.create.MdRecordDefinitio
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -51,12 +51,12 @@ import java.util.List;
  * 
  * @author FRS
  * 
- * @om
+ *
  */
 public class MdRecordDefinitionHandler extends DefaultHandler {
 
-    private static final AppLogger LOG =
-        new AppLogger(MdRecordDefinitionHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(MdRecordDefinitionHandler.class);
 
     private final StaxParser parser;
 
@@ -103,7 +103,7 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
      * @throws InvalidContentException
      * @throws WebserverSystemException
      * 
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement
+     * @see DefaultHandler#startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      * 
      * 
@@ -115,16 +115,16 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
 
         final String currentPath = parser.getCurPath();
         if (currentPath.equals(this.metadataXPath)) {
-
-            LOG.debug("Parser reached " + this.metadataXPath);
-
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached " + this.metadataXPath);
+            }
             curMdRecordDefinition = new MdRecordDefinitionCreate();
 
             try {
                 curMdRecordDefinition.setName(element.getAttributeValue(null,
                     "name"));
             }
-            catch (NoSuchAttributeException e) {
+            catch (final NoSuchAttributeException e) {
                 throw new InvalidContentException(
                     "Attribute name required for md-record-definition.", e);
             }
@@ -135,14 +135,14 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
                 curMdRecordDefinition.setSchemaHref(element.getAttributeValue(
                     Constants.XLINK_NS_URI, "href"));
             }
-            catch (MalformedURLException e) {
+            catch (final MalformedURLException e) {
                 throw new InvalidContentException(e);
             }
-            catch (IOException e) {
+            catch (final IOException e) {
                 throw new WebserverSystemException(
                     "Configuration could not be read.", e);
             }
-            catch (NoSuchAttributeException e) {
+            catch (final NoSuchAttributeException e) {
                 throw new InvalidContentException("No href for schema element.", e);
             }
         }

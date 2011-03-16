@@ -33,7 +33,7 @@ import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitio
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -50,12 +50,12 @@ import java.util.Map;
  * 
  * @author FRS
  * 
- * @om
+ *
  */
 public class ResourceDefinitionHandler extends DefaultHandler {
 
-    private static final AppLogger LOG = new AppLogger(
-        ResourceDefinitionHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ResourceDefinitionHandler.class);
 
     private final StaxParser parser;
 
@@ -104,7 +104,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
      *             If invalid content is found.
      * @throws WebserverSystemException
      *             If an error occurs.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement
+     * @see DefaultHandler#startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
@@ -114,15 +114,15 @@ public class ResourceDefinitionHandler extends DefaultHandler {
 
         final String currentPath = parser.getCurPath();
         if (currentPath.equals(this.resourceDefinitionPath)) {
-
-            LOG.debug("Parser reached " + this.resourceDefinitionPath);
-
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached " + this.resourceDefinitionPath);
+            }
             this.resourceDefinition = new ResourceDefinitionCreate();
             try {
                 this.resourceDefinition.setName(element.getAttributeValue(null,
                     "name"));
             }
-            catch (NoSuchAttributeException e) {
+            catch (final NoSuchAttributeException e) {
                 throw new InvalidContentException(
                     "Name required in resource definition.", e);
             }
@@ -132,15 +132,15 @@ public class ResourceDefinitionHandler extends DefaultHandler {
                 this.resourceDefinition.setXsltHref(element.getAttributeValue(
                     Constants.XLINK_NS_URI, "href"));
             }
-            catch (NoSuchAttributeException e) {
+            catch (final NoSuchAttributeException e) {
                 // TODO allow inline XSLT?
                 throw new InvalidContentException(
                     "The element 'xslt' must have the attribute 'href'.", e);
             }
-            catch (MalformedURLException e) {
+            catch (final MalformedURLException e) {
                 throw new InvalidContentException(e);
             }
-            catch (IOException e) {
+            catch (final IOException e) {
                 throw new WebserverSystemException(
                     "Configuration could not be read.", e);
             }

@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.servlet.invocation;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
@@ -33,12 +25,13 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,11 +40,11 @@ import java.util.Map;
  * A bean method.
  * 
  * @author MSC
- * @common
+ *
  */
 public class BeanMethod {
 
-    private static final AppLogger LOGGER = new AppLogger(BeanMethod.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(BeanMethod.class);
 
     private static final Map<String, Object> RESOURCE_POOL =
         Collections.synchronizedMap(new HashMap<String, Object>());
@@ -71,7 +64,7 @@ public class BeanMethod {
      *            The name of the bean method.
      * @param parameters
      *            The array containing the parameters.
-     * @common
+     *
      */
     public BeanMethod(final String beanId, final String method,
         final Object[] parameters) {
@@ -95,7 +88,7 @@ public class BeanMethod {
      *             If the invoked method does not exist.
      * @throws WebserverSystemException
      *             If the invocation of the method causes an error.
-     * @common
+     *
      */
     public Object invoke(final String username, final String password)
         throws InvocationTargetException, MethodNotFoundException,
@@ -120,7 +113,7 @@ public class BeanMethod {
      *             If the invoked method does not exist.
      * @throws WebserverSystemException
      *             If the invocation of the method causes an error.
-     * @common
+     *
      */
     public Object invokeWithProtocol(
         final String eSciDocUserHandle, final boolean restAccess)
@@ -159,27 +152,27 @@ public class BeanMethod {
                     }
                 }
             }
-            final java.lang.reflect.Method execute =
+            final Method execute =
                 getBean().getClass().getMethod(getMethod(), parameterTypes);
             result = execute.invoke(getBean(), getParameters());
         }
-        catch (SecurityException e) {
+        catch (final SecurityException e) {
             throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
                     + getBeanId(), e);
         }
-        catch (IllegalArgumentException e) {
+        catch (final IllegalArgumentException e) {
             throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
                     + getBeanId(), e);
         }
-        catch (NoSuchMethodException e) {
+        catch (final NoSuchMethodException e) {
             throw new MethodNotFoundException("Cannot execute method '" + method + "' on resource "
                     + getBeanId(), e);
         }
-        catch (IllegalAccessException e) {
+        catch (final IllegalAccessException e) {
             throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
                     + getBeanId(), e);
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
                     + getBeanId(), e);
         }
@@ -203,16 +196,14 @@ public class BeanMethod {
      * @return The bean instance.
      * @throws WebserverSystemException
      *             If the bean cannot be instantiated.
-     * @common
+     *
      */
     private Object getBean() throws WebserverSystemException {
 
         Object result = RESOURCE_POOL.get(getBeanId());
         if (result == null && getBeanId() != null) {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug(
-                    StringUtility.format(
-                        "Create Bean", getBeanId()));
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(StringUtility.format("Create Bean", getBeanId()));
             }
 
             result = "service.StagingFileHandlerBean".equals(getBeanId()) ? BeanLocator.getBean(BeanLocator.ST_FACTORY_ID, getBeanId()) : BeanLocator.getBean(BeanLocator.COMMON_FACTORY_ID, getBeanId());
@@ -223,7 +214,7 @@ public class BeanMethod {
 
     /**
      * @return Returns the method name.
-     * @common
+     *
      */
     public String getMethod() {
         return method;
@@ -232,7 +223,7 @@ public class BeanMethod {
     /**
      * @param method
      *            The method name to set.
-     * @common
+     *
      */
     public void setMethod(final String method) {
         this.method = method;
@@ -240,7 +231,7 @@ public class BeanMethod {
 
     /**
      * @return Returns the parameters.
-     * @common
+     *
      */
     public Object[] getParameters() {
         return parameters;
@@ -249,23 +240,15 @@ public class BeanMethod {
     /**
      * @param parameters
      *            The parameters to set.
-     * @common
+     *
      */
     public void setParameters(final Object[] parameters) {
         this.parameters = parameters;
     }
 
     /**
-     * @return Returns the logger.
-     * @common
-     */
-    private static AppLogger getLogger() {
-        return LOGGER;
-    }
-
-    /**
      * @return Returns the bean id.
-     * @common
+     *
      */
     public String getBeanId() {
         return beanId;

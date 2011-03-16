@@ -1,9 +1,0 @@
-<requestFlow>
-	<handler type="java:org.apache.ws.axis.security.WSDoAllReceiver">
-		<parameter name="action" value="UsernameToken"/>
-		<parameter name="passwordCallbackClass" 
-		value="de.escidoc.core.aa.security.server.PWCallback"/>
-		<parameter name="passwordType" value="PasswordText" />
-		<parameter name="addUTElement" value="Nonce Created" />		
-	</handler>
-</requestFlow>

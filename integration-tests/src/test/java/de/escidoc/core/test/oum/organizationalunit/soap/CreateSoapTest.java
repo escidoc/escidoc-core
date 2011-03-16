@@ -88,7 +88,7 @@ public class CreateSoapTest extends OrganizationalUnitTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Creating OU with set read only values failed. ", e);
         }
         assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
@@ -128,7 +128,7 @@ public class CreateSoapTest extends OrganizationalUnitTestBase {
             create(toString(toBeCreatedDocument, false));
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -162,7 +162,7 @@ public class CreateSoapTest extends OrganizationalUnitTestBase {
             create(toBeCreatedXml);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -197,7 +197,7 @@ public class CreateSoapTest extends OrganizationalUnitTestBase {
             create(toBeCreatedXml);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -230,7 +230,7 @@ public class CreateSoapTest extends OrganizationalUnitTestBase {
             create(toBeCreatedXml);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }

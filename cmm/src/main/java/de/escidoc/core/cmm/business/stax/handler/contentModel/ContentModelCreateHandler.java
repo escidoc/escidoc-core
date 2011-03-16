@@ -42,7 +42,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -60,8 +60,8 @@ import java.io.UnsupportedEncodingException;
  */
 public class ContentModelCreateHandler extends DefaultHandler {
 
-    private static final AppLogger LOG =
-        new AppLogger(ContentModelCreateHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContentModelCreateHandler.class);
 
     private static final String XPATH_CONTENT_MODEL = "/content-model";
 
@@ -125,8 +125,6 @@ public class ContentModelCreateHandler extends DefaultHandler {
      * @throws ContentModelNotFoundException
      * @throws ReadonlyElementViolationException
      * @throws ReadonlyAttributeViolationException
-     * @throws IOException
-     * @throws InvalidAttributeException
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -151,8 +149,9 @@ public class ContentModelCreateHandler extends DefaultHandler {
             final String currentPath = parser.getCurPath();
 
             if (XPATH_CONTENT_MODEL_PROPERTIES.equals(currentPath)) {
-                LOG.debug("Parser reached " + XPATH_CONTENT_MODEL_PROPERTIES);
-
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Parser reached " + XPATH_CONTENT_MODEL_PROPERTIES);
+                }
                 this.parsingProperties = true;
                 this.propertiesHandler =
                     new ContentModelPropertiesHandler(parser);
@@ -211,9 +210,9 @@ public class ContentModelCreateHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
 
         if (XPATH_CONTENT_MODEL_PROPERTIES.equals(currentPath)) {
-            LOG
-                .debug("Parser reached end of "
-                    + XPATH_CONTENT_MODEL_PROPERTIES);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_PROPERTIES);
+            }
             // parser leaves the XML component element
             this.parsingProperties = false;
             this.propertiesHandler.endElement(element);
@@ -222,7 +221,9 @@ public class ContentModelCreateHandler extends DefaultHandler {
             this.propertiesHandler = null;
         }
         else if (XPATH_CONTENT_MODEL_METADATA.equals(currentPath)) {
-            LOG.debug("Parser reached end of " + XPATH_CONTENT_MODEL_METADATA);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_METADATA);
+            }
             // parser leaves the XML md-records element
             this.parsingMetaData = false;
             this.contentModel.setMdRecordDefinitions(this.metadataHandler
@@ -230,16 +231,18 @@ public class ContentModelCreateHandler extends DefaultHandler {
             this.metadataHandler = null;
         }
         else if (XPATH_CONTENT_MODEL_CONTENT_STREAMS.equals(currentPath)) {
-            LOG.debug("Parser reached end of "
-                + XPATH_CONTENT_MODEL_CONTENT_STREAMS);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_CONTENT_STREAMS);
+            }
             this.parsingContentStreams = false;
             this.contentModel.setContentStreams(this.contentStreamsHandler
                 .getContentStreams());
             this.contentStreamsHandler = null;
         }
         else if (XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS.equals(currentPath)) {
-            LOG.debug("Parser reached end of "
-                + XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS);
+            }
             this.parsingResourceDefinitions = false;
             this.contentModel
                 .setResourceDefinitions(this.resourceDefinitionHandler

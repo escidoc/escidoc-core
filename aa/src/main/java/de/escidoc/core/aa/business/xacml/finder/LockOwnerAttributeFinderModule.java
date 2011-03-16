@@ -34,7 +34,7 @@ import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.common.business.LockHandler;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 import java.util.regex.Pattern;
 
@@ -47,12 +47,8 @@ import java.util.regex.Pattern;
  * the id of the user who locked the container, single value attribute
  * -info:escidoc/names:aa:1.0:resource:item:lock-owner<br>
  * the id of the user who locked the item, single value attribute
- * 
- * @spring.bean id="eSciDoc.core.aa.LockOwnerAttributeFinderModule"
- * 
+ *
  * @author MIH
- * 
- * @aa
  */
 public class LockOwnerAttributeFinderModule
     extends AbstractAttributeFinderModule {
@@ -60,8 +56,8 @@ public class LockOwnerAttributeFinderModule
     /**
      * The logger.
      */
-    private static final AppLogger LOG = new AppLogger(
-        LockOwnerAttributeFinderModule.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        LockOwnerAttributeFinderModule.class);
 
     private static final Pattern PATTERN_VALID_ATTRIBUTE_ID = Pattern
         .compile(AttributeIds.CONTAINER_ATTR_PREFIX + "lock-owner|"
@@ -82,10 +78,10 @@ public class LockOwnerAttributeFinderModule
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -115,10 +111,10 @@ public class LockOwnerAttributeFinderModule
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -138,11 +134,8 @@ public class LockOwnerAttributeFinderModule
      * 
      * @param lockHandler
      *            The lock handler.
-     * @spring.property ref="business.LockHandler"
      */
     public void setLockHandler(final LockHandler lockHandler) {
-
-        LOG.debug("setLockHandler");
         this.lockHandler = lockHandler;
     }
 

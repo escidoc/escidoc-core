@@ -41,7 +41,6 @@ import de.escidoc.core.om.business.interfaces.IngestValidator;
  * resource agains XML Schemas.
  * 
  * @author KST
- * @spring.bean id="business.ingestValidator"
  */
 public class XmlIngestValidator implements IngestValidator {
 
@@ -66,7 +65,7 @@ public class XmlIngestValidator implements IngestValidator {
         try {
             XmlUtility.validate(xmlData, type);
         }
-        catch (XmlSchemaValidationException e) {
+        catch (final XmlSchemaValidationException e) {
             throw new InvalidResourceException(e);
         }
         return true;

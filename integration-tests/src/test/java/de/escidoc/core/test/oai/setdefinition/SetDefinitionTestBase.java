@@ -76,7 +76,7 @@ public class SetDefinitionTestBase extends OaiTestBase {
         try {
             createdSetDefinitionXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSetDefinition(createdSetDefinitionXml);

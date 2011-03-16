@@ -38,13 +38,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Administration tool that rebuilds the search index, rebuilds the resource
  * cache and deletes objects physically from the repository.
- * 
- * @spring.bean id="service.AdminHandler"
- * @interface 
- *            class="de.escidoc.core.adm.service.interfaces.AdminHandlerInterface"
- * 
+ *
  * @author sche
- * @service
  */
 public class AdminHandler implements AdminHandlerInterface {
 
@@ -173,9 +168,6 @@ public class AdminHandler implements AdminHandlerInterface {
      * 
      * @param business
      *            AdminHandler business object to be ingested
-     * 
-     * @spring.property ref="business.AdminHandler"
-     * @service.exclude
      */
     public void setBusiness(
         final de.escidoc.core.adm.business.admin.AdminHandler business) {

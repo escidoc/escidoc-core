@@ -43,12 +43,7 @@ import java.util.Map;
 /**
  * An statistic Scope resource handler.
  * 
- * @spring.bean id="service.ScopeHandler" scope="prototype"
- * @interface 
- *            class="de.escidoc.core.sm.service.interfaces.ScopeHandlerInterface"
  * @author MIH
- * @service
- * @sm
  */
 public class ScopeHandler implements ScopeHandlerInterface {
 
@@ -59,10 +54,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * 
      * @param scopeHandler
      *            The Scope handler bean to inject.
-     * 
-     * @spring.property ref="business.ScopeHandler"
-     * @service.exclude
-     * @sm
      */
     public void setScopeHandler(
         final de.escidoc.core.sm.business.interfaces.ScopeHandlerInterface scopeHandler) {
@@ -93,7 +84,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @throws SystemException
      *             ex
      * 
-     * @sm
+     *
      */
     @Override
     public String create(final String xmlData) throws AuthenticationException,
@@ -122,7 +113,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public void delete(final String id) throws AuthenticationException,
@@ -152,7 +143,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public String retrieve(final String id) throws AuthenticationException,
@@ -217,7 +208,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public String update(final String id, final String xmlData)

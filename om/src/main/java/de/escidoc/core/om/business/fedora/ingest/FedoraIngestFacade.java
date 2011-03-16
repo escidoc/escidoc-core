@@ -42,12 +42,6 @@ import java.util.Map;
  * Handler from the individual classes used for the ingest and the determination
  * process of the resource type.
  *
- *
- *
- * @spring.bean id="business.IngestFacade" scope="singleton"
- * @spring.property name="resourceMapperDao" ref="business.resourceMapperDao"
- * @spring.property name="formatter" ref="business.ingestReturnValueFormatter"
- *
  * @author KST
  *
  */

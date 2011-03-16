@@ -32,7 +32,7 @@ import de.escidoc.core.common.business.fedora.resources.create.MdRecordCreate;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.xml.Elements;
@@ -42,7 +42,6 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -50,12 +49,12 @@ import java.util.Map;
  * 
  * @author SWA
  * 
- * @om
+ *
  */
 public class MetadataHandler2 extends DefaultHandler {
 
-    private static final AppLogger LOG =
-        new AppLogger(MetadataHandler2.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(MetadataHandler2.class);
 
     private final StaxParser parser;
 
@@ -106,7 +105,7 @@ public class MetadataHandler2 extends DefaultHandler {
      *             Thrown if md-record name is invalid (not unique)
      *@throws WebserverSystemException
      *             Thrown by MultipleExtractor
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement
+     * @see DefaultHandler#startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
@@ -127,15 +126,12 @@ public class MetadataHandler2 extends DefaultHandler {
             final String currentPath = parser.getCurPath();
             if (currentPath.equals(this.metadataXPath)
                 && element.indexOfAttribute(null, "inherited") < 0) {
-
-                LOG.debug("Parser reached " + this.metadataXPath);
-
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Parser reached " + this.metadataXPath);
+                }
                 this.parsingMetadata = true;
-
                 this.metadataRecord = new MdRecordCreate();
-
-                this.metadataRecord.setName(getAttributeValue(element, null,
-                    "name"));
+                this.metadataRecord.setName(getAttributeValue(element, null,"name"));
                 String schema = getAttributeValue(element, null, "schema");
                 if (schema == null) {
                     schema = "unknown";
@@ -163,9 +159,9 @@ public class MetadataHandler2 extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement
+     * @see DefaultHandler#endElement
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
-     * @om
+     *
      */
     @Override
     public EndElement endElement(final EndElement element)
@@ -173,8 +169,9 @@ public class MetadataHandler2 extends DefaultHandler {
 
         if (this.metadataXPath.equals(parser.getCurPath())
             && this.parsingMetadata) {
-            LOG.debug("End of " + this.metadataXPath);
-
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("End of " + this.metadataXPath);
+            }
             this.parsingMetadata = false;
 
             this.me.endElement(element);
@@ -183,7 +180,7 @@ public class MetadataHandler2 extends DefaultHandler {
                 this.metadataRecord.setContent((ByteArrayOutputStream) tmp
                     .get(this.metadataRecord.getName()));
             }
-            catch (UnsupportedEncodingException e) {
+            catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
             this.me = null;
@@ -203,10 +200,10 @@ public class MetadataHandler2 extends DefaultHandler {
      * @param element
      *            The element.
      * @return The character section.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
+     * @see DefaultHandler#characters
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @om
+     *
      */
     @Override
     public String characters(final String s, final StartElement element)

@@ -59,12 +59,7 @@ import java.util.Map;
 /**
  * User group handler implementation for the service layer of the AA component.
  * 
- * @spring.bean id="service.UserGroupHandler"
- * @interface 
- *            class="de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface"
  * @author MIH
- * @aa
- * @service
  */
 public class UserGroupHandler implements UserGroupHandlerInterface {
     private de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface business =
@@ -101,7 +96,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             return business.create(xmlData);
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
     }
@@ -131,7 +126,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             business.delete(groupId);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new UserGroupNotFoundException(e);
         }
     }
@@ -162,7 +157,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             return business.retrieve(groupId);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new UserGroupNotFoundException(e);
         }
     }
@@ -209,10 +204,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             return business.update(groupId, xmlData);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new UserGroupNotFoundException(e);
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
     }
@@ -255,7 +250,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             business.activate(groupId, taskParam);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new UserGroupNotFoundException(e);
         }
     }
@@ -298,7 +293,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             business.deactivate(groupId, taskParam);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new UserGroupNotFoundException(e);
         }
     }
@@ -321,7 +316,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
      *      #retrieveCurrentGrants(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieveCurrentGrants(final String userGroupId)
@@ -330,7 +325,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             return business.retrieveCurrentGrants(userGroupId);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
 
             throw new UserGroupNotFoundException(e);
 
@@ -378,7 +373,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             return business.createGrant(groupId, grantXML);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             if (e instanceof RoleNotFoundException) {
                 throw new RoleNotFoundException(e);
             } else {
@@ -428,7 +423,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             business.revokeGrant(groupId, grantId, taskParam);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             if (e instanceof GrantNotFoundException) {
                 throw new GrantNotFoundException(e);
             }
@@ -460,7 +455,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveGrant(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieveGrant(final String groupId, final String grantId)
@@ -470,7 +465,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             return business.retrieveGrant(groupId, grantId);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             if (e instanceof UserGroupNotFoundException) {
                 throw new UserGroupNotFoundException(e);
             }
@@ -519,7 +514,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             business.revokeGrants(groupId, taskParam);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
 
             if (e instanceof GrantNotFoundException) {
                 throw new GrantNotFoundException(e);
@@ -667,12 +662,9 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
     /**
      * Setter for the business object.
-     * 
-     * @spring.property ref="business.UserGroupHandler"
+     *
      * @param business
      *            business object.
-     * @service.exclude
-     * @aa
      */
     public void setBusiness(
         final de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface business) {

@@ -68,7 +68,7 @@ public class ItemCreateTest extends ItemTestBase {
         try {
             create("");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -184,7 +184,7 @@ public class ItemCreateTest extends ItemTestBase {
             create("laber-rababer");
             fail("Missing Invalid XML exception");
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             // that's ok
         }
     }

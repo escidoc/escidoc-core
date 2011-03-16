@@ -36,7 +36,7 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface;
@@ -57,7 +57,7 @@ import java.io.IOException;
 public class StagingFileHandler implements StagingFileHandlerInterface {
 
 
-    private static final AppLogger LOG = new AppLogger(StagingFileHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(StagingFileHandler.class);
     private StagingFileDao dao;
 
 
@@ -72,7 +72,6 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      * @throws AuthorizationException
      * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface
      *      #create(de.escidoc.core.om.service.result.EscidocBinaryContent)
-     * @st
      */
     @Override
     public String create(final EscidocBinaryContent binaryContent)
@@ -91,7 +90,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
             stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil
                 .getUploadStagingArea(), token));
             stagingFile.read(binaryContent.getContent());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new MissingMethodParameterException("Binary content must be provided.", e);
         }
         if (stagingFile == null) {
@@ -124,10 +123,10 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
             return out.toString(XmlUtility.CHARACTER_ENCODING);
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             throw new WebserverSystemException(e.getMessage(), e);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e.getMessage(), e);
         }finally {
             try {
@@ -135,8 +134,8 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
                     binaryContent.getContent().close();
                 }
             }
-            catch (IOException e) {
-                LOG.error("error on closing stream", e);
+            catch (final IOException e) {
+                LOGGER.error("error on closing stream", e);
             }
         }
     }
@@ -152,7 +151,6 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      * @throws MissingMethodParameterException
      * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface
      *      #retrieve(java.lang.String)
-     * @st
      */
     @Override
     public EscidocBinaryContent retrieve(final String stagingFileId)
@@ -167,7 +165,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         try {
             binaryContent.setContent(stagingFile.getFileInputStream());
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new StagingFileNotFoundException(
                 "Binary content of addressed staging file cannot be found.", e);
         }
@@ -206,7 +204,6 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      *             Thrown if no staging file with provided id exists.
      * @throws SystemException
      *             Thrown in case of an internal database error.
-     * @st
      */
     private StagingFile getStagingFile(final String stagingFileId)
         throws MissingMethodParameterException, StagingFileNotFoundException,

@@ -32,7 +32,6 @@ import de.escidoc.core.common.exceptions.remote.EscidocException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.invocation.exceptions.MethodNotFoundException;
-import de.escidoc.core.test.common.logger.AppLogger;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 import de.escidoc.core.test.common.service.BeanMapping;
@@ -61,6 +60,8 @@ import org.apache.xerces.dom.AttrImpl;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.w3c.dom.Document;
@@ -101,6 +102,9 @@ import static junit.framework.Assert.assertTrue;
  * 
  */
 public abstract class ClientBase {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientBase.class);
+
     public static final String METHOD_ADD_CONTENT_RELATIONS =
         "addContentRelations";
 
@@ -496,9 +500,6 @@ public abstract class ClientBase {
     private static final Pattern PATTERN_OBJID_ATTRIBUTE = Pattern
         .compile(".*\\/([^\"\\/]*)");
 
-    /** The logger. */
-    private static AppLogger logger = null;
-
     private int transport;
 
     private static PropertiesProvider properties = null;
@@ -513,12 +514,7 @@ public abstract class ClientBase {
      * @throws Exception
      */
     public ClientBase(final int transport) {
-
         this.transport = transport;
-        logger = new AppLogger(this.getClass().getName());
-        // HostConfiguration config = this.httpClient.getHostConfiguration();
-        // config.setProxy(proxyHost, proxyPort)
-
         initHttpClient();
     }
 
@@ -572,7 +568,7 @@ public abstract class ClientBase {
 
                 }
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new RuntimeException(
                     "[ClientBase] Error occured loading properties! "
                         + e.getMessage(), e);
@@ -642,7 +638,7 @@ public abstract class ClientBase {
         try {
             return method.invoke(soapClient, params);
         }
-        catch (InvocationTargetException e) {
+        catch (final InvocationTargetException e) {
             Throwable targetException = e.getTargetException();
             if (targetException instanceof Exception) {
                 throw (Exception) targetException;
@@ -1005,7 +1001,7 @@ public abstract class ClientBase {
             exceptionDocument =
                 EscidocRestSoapTestBase.getDocument(exceptionXML, false);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // parsing failed, does not seem to be an eScidocException
             // body is wrapped into a generic Axis-Fault
             throw new AxisFault("Unknown (unparseable) error response"
@@ -1049,7 +1045,7 @@ public abstract class ClientBase {
             try {
                 exceptionClass = Class.forName(exceptionName);
             }
-            catch (ClassNotFoundException e) {
+            catch (final ClassNotFoundException e) {
                 throw new Exception("No class found for identified exception"
                     + " received from eSciDoc [" + exceptionName + ", "
                     + (result).getStatusLine().getReasonPhrase()
@@ -1155,7 +1151,7 @@ public abstract class ClientBase {
         // || (Constants.HTTP_METHOD_PUT.equals(HttpResponse.toUpperCase()))) {
         // message += " body='" + body + "'";
         // }
-        log(message);
+        LOGGER.debug(message);
     }
 
     /**
@@ -1174,7 +1170,7 @@ public abstract class ClientBase {
         String message =
             "[SOAP] [" + method + " ( " + params
                 + " )] Calling eSciDoc service method.";
-        log(message);
+        LOGGER.debug(message);
     }
 
     /**
@@ -1190,17 +1186,7 @@ public abstract class ClientBase {
         String message =
             "[SOAP] [" + method + " ( " + params
                 + " )] Calling eSciDoc service method.";
-        log(message);
-    }
-
-    /**
-     * Log the given message.
-     * 
-     * @param logMessage
-     *            The message to log.
-     */
-    protected void log(final String logMessage) {
-        getLogger().debug(logMessage);
+        LOGGER.debug(message);
     }
 
     /**
@@ -1215,13 +1201,6 @@ public abstract class ClientBase {
      */
     public DefaultHttpClient getHttpClient() {
         return this.httpClient;
-    }
-
-    /**
-     * @return Returns the logger.
-     */
-    protected AppLogger getLogger() {
-        return logger;
     }
 
     /**
@@ -1359,8 +1338,13 @@ public abstract class ClientBase {
                 pathMatchingResourcePatternResolver.getResources("classpath*:**/" + filename);
             engineConfig = new FileProvider(resource[0].getInputStream());
         }
-        catch (IOException e) {
-            logger.warn(e);
+        catch (final IOException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on loading configuration.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on loading configuration.", e);
+            }
         }
         return engineConfig;
     }
@@ -1571,7 +1555,7 @@ public abstract class ClientBase {
      * @param objid
      *            The objid.
      * @return The objid without version information.
-     * @common
+     *
      */
     public static String getObjidWithoutVersion(final String objid) {
 
@@ -1897,12 +1881,12 @@ public abstract class ClientBase {
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                } catch (IOException e) {}
+                } catch (final IOException e) {}
             }
             if (out != null) {
                 try {
                     out.close();
-                } catch (IOException e) {}
+                } catch (final IOException e) {}
             }
         }
         return contentString;
@@ -1936,12 +1920,12 @@ public abstract class ClientBase {
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                } catch (IOException e) {}
+                } catch (final IOException e) {}
             }
             if (out != null) {
                 try {
                     out.close();
-                } catch (IOException e) {}
+                } catch (final IOException e) {}
             }
         }
         return returnBytes;

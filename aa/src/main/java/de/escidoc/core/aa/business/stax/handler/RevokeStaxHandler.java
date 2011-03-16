@@ -35,6 +35,7 @@ import de.escidoc.core.aa.business.persistence.UserAccountDaoInterface;
 import de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.Date;
 
@@ -43,7 +44,7 @@ import java.util.Date;
  * revokes the grant and extracts the revocation remark from the parsed xml data
  * and sets it in the grant.
  * 
- * @aa
+ *
  * @author TTE
  * 
  */
@@ -63,7 +64,7 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
      * @throws AlreadyRevokedException
      *             Thrown if the provided garnt is already revoked.
      * @throws SystemException Thrown in case of an internal error.
-     * @aa
+     *
      */
     public RevokeStaxHandler(final RoleGrant grant,
         final UserAccountDaoInterface dao) throws AlreadyRevokedException,
@@ -83,9 +84,9 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
      * 
      * @param element
      * @return
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #startElement(de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @aa
+     *
      */
     @Override
     public StartElement startElement(final StartElement element) {
@@ -103,10 +104,10 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
      * @param s
      * @param element
      * @return
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #characters(java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @aa
+     *
      */
     @Override
     public String characters(final String s, final StartElement element) {

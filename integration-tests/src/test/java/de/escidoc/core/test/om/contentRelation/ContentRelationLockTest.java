@@ -108,7 +108,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         try {
             delete(theContentRelationId);
         }
-        catch (LockingException e) {
+        catch (final LockingException e) {
         }
     }
 
@@ -152,7 +152,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             update(theContentRelationId, contentRelationXml);
             fail("No exception on update after lock.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = LockingException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -227,7 +227,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         try {
             lock(theContentRelationId, param);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Unlocking content relation can not be tested, locking failed"
                     + " with exception.", e);
@@ -236,7 +236,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         try {
             unlock(theContentRelationId, param);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Unlocking item failed with exception. ", e);
         }
@@ -263,7 +263,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         try {
             update(theContentRelationId, contentRelationXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase
                 .failException(
                     "Updating unlocked content relation failed with exception. ",
@@ -300,7 +300,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         try {
             lock(theContentRelationId, param);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Unlocking item can not be tested, locking failed"
                     + " with exception.", e);
@@ -311,7 +311,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         try {
             unlock(theContentRelationId, param);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Unlocking item failed with exception. ", e);
         }
@@ -337,7 +337,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         try {
             update(theContentRelationId, contentRelationXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase
                 .failException(
                     "Updating unlocked content relation failed with exception. ",
@@ -372,7 +372,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
         try {
             lock(theContentRelationId, param);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Unlocking content relation can not be tested, locking failed"
                     + " with exception.", e);
@@ -387,7 +387,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         }
@@ -411,7 +411,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "No exception after lock with non existing id.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -429,7 +429,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             lock(theContentRelationId, param);
             fail("No exception after lock with wrong last-modification-date.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -448,7 +448,7 @@ public class ContentRelationLockTest extends ContentRelationTestBase {
             lock(null, param);
             fail("No exception after lock without id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);

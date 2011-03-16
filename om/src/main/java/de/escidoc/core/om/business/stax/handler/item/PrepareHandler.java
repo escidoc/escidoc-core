@@ -31,7 +31,7 @@ package de.escidoc.core.om.business.stax.handler.item;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -61,8 +61,8 @@ public class PrepareHandler extends DefaultHandler {
 
     private int componentNumber;
 
-    private static final AppLogger LOGGER =
-        new AppLogger(PrepareHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(PrepareHandler.class);
 
     public PrepareHandler(final StaxParser parser) {
         this.parser = parser;
@@ -159,7 +159,7 @@ public class PrepareHandler extends DefaultHandler {
      * @throws InvalidContentException
      *             Thrown if attribute Storage not exists.
      */
-    private String getStorageAttribute(final StartElement element)
+    private static String getStorageAttribute(final StartElement element)
         throws InvalidContentException {
 
         final int indexOfStorage = element.indexOfAttribute(null, "storage");

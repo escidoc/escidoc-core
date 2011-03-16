@@ -46,7 +46,7 @@ public class SetDefinition extends SetDefinitionBase implements Serializable {
 
     /**
      * @return Returns the href to this
-     *         {@link de.escidoc.core.oai.business.persistence.SetDefinition}
+     *         {@link SetDefinition}
      *         object.
      */
     public String getHref() {

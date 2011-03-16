@@ -38,7 +38,6 @@ import java.util.List;
 /**
  * This is a helper class to convert a XACML condition into an SQL fragment.
  * 
- * @spring.bean id="convert.ConditionParser"
  * @author SCHE
  */
 public class ConditionParser {
@@ -322,7 +321,6 @@ public class ConditionParser {
     /**
      * Injects the filter values object.
      * 
-     * @spring.property ref="filter.Values"
      * @param values
      *            filter values object from Spring
      */

@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora;
 
 import de.escidoc.core.common.business.Constants;
@@ -60,7 +52,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -111,11 +103,10 @@ import java.util.regex.Pattern;
  * Some utilities.
  * 
  * @author MSC
- * @spring.bean id="business.Utility"
  */
 public class Utility {
 
-    private static final AppLogger LOGGER = new AppLogger(Utility.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(Utility.class);
 
     private StagingFileHandlerInterface stagingFileHandler;
 
@@ -135,7 +126,7 @@ public class Utility {
      *            Predicate.
      * @return split predicate
      */
-    public String[] splitPredicate(final String predicate) {
+    public static String[] splitPredicate(final String predicate) {
         final String[] result = new String[2];
         final int index = predicate.lastIndexOf('/');
         if (index != -1) {
@@ -155,7 +146,7 @@ public class Utility {
      * @param appendix
      *            The path to append.
      * @return The concatenated path.
-     * @st
+     *
      */
     public static String concatenatePath(
         final String path, final String appendix) {
@@ -204,9 +195,8 @@ public class Utility {
      * @throws LockingException
      *             Thrown if the object is locked.
      */
-    public boolean checkUnlocked(
-        final boolean locked, final String method, final String label,
-        final String lockOwner) throws LockingException {
+    public static boolean checkUnlocked(final boolean locked, final String method, final String label,
+                                        final String lockOwner) throws LockingException {
 
         if (locked) {
             throw new LockingException(method + " failed!" + label
@@ -231,9 +221,8 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      */
-    public void checkOptimisticLockingCriteria(
-        final DateTime fedoraLatestVersionDate,
-        final DateTime updateLatestVersionDate, final String label)
+    public static void checkOptimisticLockingCriteria(final DateTime fedoraLatestVersionDate,
+                                                      final DateTime updateLatestVersionDate, final String label)
         throws OptimisticLockingException, WebserverSystemException {
 
         if (!fedoraLatestVersionDate.equals(updateLatestVersionDate)) {
@@ -293,7 +282,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             If the current user could not be retrieved.
      */
-    public String[] getCurrentUser() throws WebserverSystemException {
+    public static String[] getCurrentUser() throws WebserverSystemException {
 
         if (UserContext.getId() == null
             || UserContext.getRealName() == null) {
@@ -350,7 +339,7 @@ public class Utility {
      * @throws MissingMethodParameterException
      *             If the param is null.
      */
-    public void checkNotNull(final Object param, final String label)
+    public static void checkNotNull(final Object param, final String label)
         throws MissingMethodParameterException {
         if (param == null) {
             throw new MissingMethodParameterException(label
@@ -376,7 +365,7 @@ public class Utility {
         try {
             checkIsOfObjectType(id, Constants.COMPONENT_OBJECT_TYPE);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new ComponentNotFoundException(e.getMessage(), e);
         }
     }
@@ -398,7 +387,7 @@ public class Utility {
         try {
             checkIsOfObjectType(id, Constants.CONTAINER_OBJECT_TYPE);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new ContainerNotFoundException(e.getMessage(), e);
         }
     }
@@ -419,7 +408,7 @@ public class Utility {
         try {
             checkIsOfObjectType(id, Constants.CONTEXT_OBJECT_TYPE);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new ContextNotFoundException(e.getMessage(), e);
         }
     }
@@ -440,7 +429,7 @@ public class Utility {
         try {
             checkIsOfObjectType(id, Constants.CONTENT_RELATION2_OBJECT_TYPE);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new ContentRelationNotFoundException(e.getMessage(), e);
         }
     }
@@ -466,7 +455,7 @@ public class Utility {
         try {
             checkIsOfObjectType(id, Constants.CONTENT_MODEL_OBJECT_TYPE);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new ContentModelNotFoundException(e.getMessage(), e);
         }
     }
@@ -493,7 +482,7 @@ public class Utility {
         try {
             checkIsOfObjectType(id, Constants.ITEM_OBJECT_TYPE);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new ItemNotFoundException(e.getMessage(), e);
         }
     }
@@ -521,7 +510,7 @@ public class Utility {
         try {
             checkIsOfObjectType(id, Constants.RELATION_OBJECT_TYPE);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new ContentRelationNotFoundException(e.getMessage(), e);
         }
     }
@@ -543,7 +532,7 @@ public class Utility {
         try {
             checkIsOfObjectType(id, Constants.ORGANIZATIONAL_UNIT_OBJECT_TYPE);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new OrganizationalUnitNotFoundException(e.getMessage(), e);
         }
     }
@@ -640,16 +629,16 @@ public class Utility {
             }
 
         }
-        catch (ParserConfigurationException e) {
+        catch (final ParserConfigurationException e) {
             throw new SystemException(e);
         }
-        catch (SAXException e) {
+        catch (final SAXException e) {
             throw new SystemException(e);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException(e);
         }
-        catch (TransformerException e) {
+        catch (final TransformerException e) {
             throw new SystemException(e);
         }
 
@@ -973,11 +962,10 @@ public class Utility {
      * @throws SystemException
      *             Thrown in case of internal failure.
      */
-    private void updateElementsInRelsExt(
-        final Map<String, StartElementWithChildElements> updateElementsRelsExt,
-        final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt,
-        final FedoraResource resource, final String currentPublicStatus,
-        final boolean release) throws SystemException {
+    private static void updateElementsInRelsExt(final Map<String, StartElementWithChildElements> updateElementsRelsExt,
+                                                final Map<String, List<StartElementWithChildElements>> removeElementsRelsExt,
+                                                final FedoraResource resource, final String currentPublicStatus,
+                                                final boolean release) throws SystemException {
 
         final StaxParser sp = new StaxParser();
         final ItemRelsExtUpdateHandler itemRelsExtUpdateHandler =
@@ -1026,19 +1014,19 @@ public class Utility {
             resource
                 .setRelsExt(relsExt.toString(XmlUtility.CHARACTER_ENCODING));
         }
-        catch (NullPointerException e) {
+        catch (final NullPointerException e) { // TODO: Refactor this! Don't use exceptions for controll flow!
             throw new XmlParserSystemException(e);
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             throw new XmlParserSystemException(e);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
-        catch (LockingException e) {
+        catch (final LockingException e) {
             throw new IntegritySystemException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SystemException("Unexpected Exception.", e);
         }
 
@@ -1146,11 +1134,10 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown in case of internal error.
      */
-    private String createEventXml(
-        final String resourceId, final String resourceBaseUrl,
-        final String currentUserName, final String currentUserId,
-        final String latestModificationTimestamp, final String newStatus,
-        final String comment, final Map<String, String> currentVersionProperties)
+    private static String createEventXml(final String resourceId, final String resourceBaseUrl,
+                                         final String currentUserName, final String currentUserId,
+                                         final String latestModificationTimestamp, final String newStatus,
+                                         final String comment, final Map<String, String> currentVersionProperties)
         throws WebserverSystemException {
 
         final HashMap<String, String> eventValues = new HashMap<String, String>();
@@ -1194,9 +1181,8 @@ public class Utility {
      *            Comment for version.
      * @return Comment
      */
-    private String createComment(
-        final FedoraResource resource, final String newStatus,
-        final String versionComment) {
+    private static String createComment(final FedoraResource resource, final String newStatus,
+                                        final String versionComment) {
         String comment = versionComment;
         if (versionComment == null) {
             comment = newStatus != null ? "Status changed to " + newStatus : "New version created";
@@ -1234,8 +1220,7 @@ public class Utility {
      * @throws SystemException
      *             Thrown if anything fails.
      */
-    private Map<String, String> getResourceBaseData(
-        final VersionableResource resource) throws SystemException {
+    private static Map<String, String> getResourceBaseData(final VersionableResource resource) throws SystemException {
 
         final Map<String, String> baseData = new HashMap<String, String>();
         if (resource instanceof Item) {
@@ -1275,8 +1260,7 @@ public class Utility {
         return baseData;
     }
 
-    private void prependVersion(
-        final VersionableResource resource, final String versionEntry)
+    private static void prependVersion(final VersionableResource resource, final String versionEntry)
         throws EncodingSystemException, FedoraSystemException,
         IntegritySystemException {
 
@@ -1292,26 +1276,25 @@ public class Utility {
                     newWov.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
             resource.setWov(ds);
         }
-        catch (StreamNotFoundException e) {
+        catch (final StreamNotFoundException e) {
             throw new IntegritySystemException(e);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
-        catch (LockingException e) {
+        catch (final LockingException e) {
             // we just updated the item!
             throw new IntegritySystemException(e);
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             // FIXME remove SystemException from resource.setWov(ds)
             throw new IntegritySystemException(e);
         }
     }
 
-    private void writeEvent(
-        final VersionableResource resource, final String newEventEntry,
-        final Map<String, StartElementWithChildElements> updateElementsWOV,
-        final List<StartElementWithChildElements> elementsToAdd)
+    private static void writeEvent(final VersionableResource resource, final String newEventEntry,
+                                   final Map<String, StartElementWithChildElements> updateElementsWOV,
+                                   final List<StartElementWithChildElements> elementsToAdd)
         throws WebserverSystemException {
 
         final StaxParser sp = new StaxParser();
@@ -1344,7 +1327,7 @@ public class Utility {
                 newWovString.getBytes(XmlUtility.CHARACTER_ENCODING),
                 "text/xml"));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
 
@@ -1388,7 +1371,7 @@ public class Utility {
             try {
                 relsExtContent = resource.getRelsExt().getStream();
             }
-            catch (StreamNotFoundException e1) {
+            catch (final StreamNotFoundException e1) {
                 throw new IntegritySystemException("Datastream not found.", e1);
             }
         }
@@ -1426,13 +1409,13 @@ public class Utility {
             try {
                 sp.parse(relsExtIs);
             }
-            catch (XMLStreamException e) {
+            catch (final XMLStreamException e) {
                 throw new XmlParserSystemException(e.getMessage(), e);
             }
-            catch (NullPointerException e) {
+            catch (final NullPointerException e) {
                 throw new XmlParserSystemException(e);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(e);
             }
             sp.clearHandlerChain();
@@ -1468,13 +1451,13 @@ public class Utility {
             try {
                 sp.parse(relsExtIs);
             }
-            catch (XMLStreamException e) {
+            catch (final XMLStreamException e) {
                 throw new XmlParserSystemException(e.getMessage(), e);
             }
-            catch (NullPointerException e) {
+            catch (final NullPointerException e) {
                 throw new XmlParserSystemException(e);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(e);
             }
             sp.clearHandlerChain();
@@ -1497,17 +1480,17 @@ public class Utility {
             try {
                 sp.parse(relsExtIs);
             }
-            catch (NullPointerException e) {
+            catch (final NullPointerException e) {
                 throw new XmlParserSystemException(e);
             }
-            catch (XMLStreamException e) {
+            catch (final XMLStreamException e) {
                 throw new XmlParserSystemException(e);
             }
 
-            catch (LockingException e) {
+            catch (final LockingException e) {
                 throw new IntegritySystemException(e);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException("Unexpected Exception.", e);
             }
             sp.clearHandlerChain();
@@ -1536,7 +1519,7 @@ public class Utility {
      * @return redirectUrl url
      * @throws FileSystemException
      *             In case of an internal error during storing the content.
-     * @om
+     *
      */
     public String upload(
         final byte[] streamContent, final String fileName, final String mimeType)
@@ -1551,10 +1534,10 @@ public class Utility {
         try {
             stagingFileXml = stagingFileHandler.create(content);
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw new FileSystemException(e.getMessage(), e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FileSystemException(
                 "Unexpected exception from StagingFileHandler.create", e);
         }
@@ -1575,7 +1558,6 @@ public class Utility {
      * 
      * @param stagingFileHandler
      *            The stanging file handler bean to inject.
-     * @spring.property ref="service.StagingFileHandlerBean"
      */
     public void setStagingFileHandler(
         final StagingFileHandlerInterface stagingFileHandler) {
@@ -1585,8 +1567,7 @@ public class Utility {
 
     /**
      * Injects the TripleStore utility.
-     * 
-     * @spring.property ref="business.TripleStoreUtility"
+     *
      * @param tripleStoreUtility
      *            TripleStoreUtility from Spring
      */
@@ -1641,7 +1622,7 @@ public class Utility {
      *             Thrown if parsing last modification or retrieving xml:base
      *             failed.
      */
-    public String prepareReturnXml(final DateTime lastModificationDate, final String content)
+    public static String prepareReturnXml(final DateTime lastModificationDate, final String content)
         throws SystemException {
 
         DateTime t = lastModificationDate;
@@ -1735,7 +1716,7 @@ public class Utility {
             }
             return fq.toString();
         }
-        catch (URISyntaxException e) {
+        catch (final URISyntaxException e) {
             throw new InvalidContentException("No valid URL.", e);
         }
 
@@ -1748,7 +1729,7 @@ public class Utility {
      * @throws WebserverSystemException
      *             Thrown if obtaining from properties failed.
      */
-    public String getBuildNumber() throws WebserverSystemException {
+    public static String getBuildNumber() throws WebserverSystemException {
         final String buildNumber;
         try {
             buildNumber =
@@ -1773,11 +1754,8 @@ public class Utility {
     private static void checkESciDocLocalURL(final String url)
         throws InvalidContentException {
         if (!(url.startsWith("/ir/") || url.startsWith("/st/"))) {
-            final String msg =
-                "The local URL '" + url
-                    + "' does not point into an eSciDoc Core component.";
-            LOGGER.debug(msg);
-            throw new InvalidContentException(msg);
+            throw new InvalidContentException("The local URL '" + url
+                    + "' does not point into an eSciDoc Core component.");
         }
 
     }

@@ -1,37 +1,29 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.service;
 
 import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
 import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -44,6 +36,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 
 /*
  * Created on 05.10.2006
@@ -59,7 +53,7 @@ import java.net.URL;
  */
 public class HttpRequester {
 
-    private static final AppLogger LOG = new AppLogger(HttpRequester.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpRequester.class);
 
     private int timeout = 180000;
 
@@ -224,7 +218,7 @@ public class HttpRequester {
         final URL url = new URL(domain + resource);
         final TrustManager[] tm = { new RelaxedX509TrustManager() };
         final SSLContext sslContext = SSLContext.getInstance("SSL");
-        sslContext.init(null, tm, new java.security.SecureRandom());
+        sslContext.init(null, tm, new SecureRandom());
         final SSLSocketFactory sslSF = sslContext.getSocketFactory();
         final HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
         con.setSSLSocketFactory(sslSF);
@@ -264,7 +258,7 @@ public class HttpRequester {
         setCookie(con.getHeaderField("Set-cookie"));
 
         // Read response
-        BufferedReader br = null;
+        final BufferedReader br = null;
         try {
             response = IOUtils.readStringFromStream(is);
         } finally {
@@ -336,7 +330,7 @@ public class HttpRequester {
             setCookie(connection.getHeaderField("Set-cookie"));
 
             // Read response
-            BufferedReader br = null;
+            final BufferedReader br = null;
             try {
                 response = IOUtils.readStringFromStream(is);
             } finally {
@@ -347,11 +341,16 @@ public class HttpRequester {
             IOUtils.closeStream(is);
             try {
                 connection.disconnect();
-            } catch (Exception e) {
-                LOG.debug("Error on disconnecting connection.", e);
+            } catch (final Exception e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on disconnecting connection.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on disconnecting connection.", e);
+                }
             }
         }
-        return response.toString();
+        return response;
     }
 
     /**
@@ -369,7 +368,7 @@ public class HttpRequester {
          * 
          */
         @Override
-        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+        public X509Certificate[] getAcceptedIssuers() {
             return null;
         }
 
@@ -384,7 +383,7 @@ public class HttpRequester {
          */
         @Override
         public void checkClientTrusted(
-            final java.security.cert.X509Certificate[] chain,
+            final X509Certificate[] chain,
             final String authType) {
         }
 
@@ -399,7 +398,7 @@ public class HttpRequester {
          */
         @Override
         public void checkServerTrusted(
-            final java.security.cert.X509Certificate[] chain,
+            final X509Certificate[] chain,
             final String authType) {
         }
     }

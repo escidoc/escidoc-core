@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.indexing;
 
 import java.io.ByteArrayInputStream;
@@ -72,7 +64,7 @@ import de.escidoc.core.common.business.fedora.resources.listener.ResourceListene
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.SrwScanResponseHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -83,15 +75,12 @@ import de.escidoc.core.index.IndexService;
 /**
  * Handler for synchronous indexing via gsearch.
  * 
- * @spring.bean id="common.business.indexing.IndexingHandler" lazy-init="true"
- * 
  * @author MIH
- * 
  */
 public class IndexingHandler implements ResourceListener {
 
-    private static final AppLogger log = new AppLogger(
-        IndexingHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        IndexingHandler.class);
 
     private GsearchHandler gsearchHandler;
 
@@ -121,7 +110,7 @@ public class IndexingHandler implements ResourceListener {
         try {
             docBuilder = docBuilderFactory.newDocumentBuilder();
         }
-        catch (ParserConfigurationException e) {
+        catch (final ParserConfigurationException e) {
             throw new SystemException(e.getMessage(), e);
         }
         try {
@@ -129,7 +118,7 @@ public class IndexingHandler implements ResourceListener {
                 EscidocConfiguration.getInstance().getAsBoolean(
                     EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException(e.getMessage(), e);
         }
     }
@@ -156,23 +145,23 @@ public class IndexingHandler implements ResourceListener {
         if (!notifyIndexerEnabled) {
             return;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("gsearchindexing STARTING, xml is " + restXml);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("gsearchindexing STARTING, xml is " + restXml);
         }
         if (restXml != null && restXml.length() > 0) {
-            if (log.isDebugEnabled()) {
-                log.debug("writing xml in cache");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("writing xml in cache");
             }
             indexingCacheHandler.writeObjectInCache(id, restXml);
-            if (log.isDebugEnabled()) {
-                log.debug("gsearchindexing caching xml via deviation handler "
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("gsearchindexing caching xml via deviation handler "
                     + " finished.");
             }
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
         addResource(id, objectType, restXml);
-        if (log.isDebugEnabled()) {
-            log.debug("gsearchindexing whole indexing of resource " + id
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("gsearchindexing whole indexing of resource " + id
                 + " of type " + objectType + " finished");
         }
     }
@@ -191,12 +180,12 @@ public class IndexingHandler implements ResourceListener {
         if (!notifyIndexerEnabled) {
             return;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("gsearchindexing STARTING deletion");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("gsearchindexing STARTING deletion");
         }
         deleteResource(id);
-        if (log.isDebugEnabled()) {
-            log.debug("gsearchindexing whole deletion of resource " + id
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("gsearchindexing whole deletion of resource " + id
                 + " finished");
         }
     }
@@ -221,23 +210,23 @@ public class IndexingHandler implements ResourceListener {
         if (!notifyIndexerEnabled) {
             return;
         }
-        if (log.isDebugEnabled()) {
-            log.debug("gsearchindexing STARTING, xml is " + restXml);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("gsearchindexing STARTING, xml is " + restXml);
         }
         if (restXml != null && restXml.length() > 0) {
-            if (log.isDebugEnabled()) {
-                log.debug("replacing xml in cache");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("replacing xml in cache");
             }
             indexingCacheHandler.replaceObjectInCache(id, restXml);
-            if (log.isDebugEnabled()) {
-                log.debug("gsearchindexing caching xml via deviation handler "
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("gsearchindexing caching xml via deviation handler "
                     + " finished");
             }
         }
         final String objectType = tripleStoreUtility.getObjectType(id);
         addResource(id, objectType, restXml);
-        if (log.isDebugEnabled()) {
-            log.debug("gsearchindexing whole indexing of resource " + id
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("gsearchindexing whole indexing of resource " + id
                 + " of type " + objectType + " finished");
         }
     }
@@ -303,8 +292,8 @@ public class IndexingHandler implements ResourceListener {
         final String resource, final String objectType, final String action,
         final String xml) throws SystemException {
 
-        if (log.isDebugEnabled()) {
-            log.debug("Do indexing for resource " + resource + ", objectType: "
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Do indexing for resource " + resource + ", objectType: "
                 + objectType);
         }
 
@@ -325,14 +314,14 @@ public class IndexingHandler implements ResourceListener {
                 }
             }
             if (indexSynch) {
-                if (log.isDebugEnabled()) {
-                    log.debug("indexing synchronously");
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("indexing synchronously");
                 }
                 doIndexing(resource, objectType, action, false, xml);
             }
             if (indexAsynch) {
-                if (log.isDebugEnabled()) {
-                    log.debug("indexing asynchronously");
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("indexing asynchronously");
                 }
                 final IndexRequest indexRequest =
                     IndexRequestBuilder
@@ -342,8 +331,8 @@ public class IndexingHandler implements ResourceListener {
                 this.indexService.index(indexRequest);
             }
         }
-        if (log.isDebugEnabled()) {
-            log.debug("gsearchindexing resource " + resource + " of type "
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("gsearchindexing resource " + resource + " of type "
                 + objectType + ", action=" + action + " finished");
         }
     }
@@ -369,8 +358,8 @@ public class IndexingHandler implements ResourceListener {
     public void doIndexing(
         final String resource, final String objectType, final String action,
         final boolean isAsynch, final String xml) throws SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("calling do Indexing with resource: " + resource
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("calling do Indexing with resource: " + resource
                 + ", objectType: " + objectType + ", action: " + action
                 + ", isAsynch: " + isAsynch + ", xml: " + xml);
         }
@@ -385,8 +374,8 @@ public class IndexingHandler implements ResourceListener {
                 return;
             }
             for (final String indexName : resourceParameters.keySet()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("indexing for index " + indexName);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("indexing for index " + indexName);
                 }
                 doIndexing(resource, objectType, indexName, action, isAsynch,
                     xml);
@@ -432,8 +421,8 @@ public class IndexingHandler implements ResourceListener {
         final String action, final boolean isAsynch, final String xml)
         throws SystemException {
 
-        if (log.isDebugEnabled()) {
-            log.debug("indexing " + resource + ", objectType: " + objectType
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("indexing " + resource + ", objectType: " + objectType
                 + ", indexName: " + indexName + ", action: " + action
                 + ", isAsynch: " + isAsynch + ", xml: " + xml);
         }
@@ -458,8 +447,8 @@ public class IndexingHandler implements ResourceListener {
             && (Boolean.valueOf((String) parameters.get("indexReleasedVersion")) || "both".equals(parameters
                 .get("indexReleasedVersion")))) {
             // get latest released version
-            if (log.isDebugEnabled()) {
-                log.debug("index released version, so do checks");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("index released version, so do checks");
             }
             latestReleasedVersion =
                 tripleStoreUtility.getPropertiesElements(
@@ -470,14 +459,14 @@ public class IndexingHandler implements ResourceListener {
                     XmlUtility.getIdFromURI(resource),
                     TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
 
-            if (log.isDebugEnabled()) {
-                log.debug("latest released version: " + latestReleasedVersion
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("latest released version: " + latestReleasedVersion
                     + ", thisVersion: " + thisVersion);
             }
             if (Boolean.valueOf((String) parameters.get("indexReleasedVersion"))) {
                 if (latestReleasedVersion == null || thisVersion == null) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("returning");
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("returning");
                     }
                     return;
                 }
@@ -504,8 +493,8 @@ public class IndexingHandler implements ResourceListener {
                 if (parameters.get("indexAsynchronous") == null
                     || !Boolean.valueOf((String) parameters.get("indexAsynchronous"))
                         .equals(isAsynch)) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("is Asynch: " + isAsynch
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("is Asynch: " + isAsynch
                             + " and indexAsynchronous-param is "
                             + parameters.get("indexAsynchronous")
                             + ", so returning");
@@ -518,31 +507,31 @@ public class IndexingHandler implements ResourceListener {
                 // (prerequisite is an xpath-Expression)
                 final int prerequisite =
                     checkPrerequisites(xml, parameters, resource, null);
-                if (log.isDebugEnabled()) {
-                    log.debug("prerequisites found " + prerequisite);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("prerequisites found " + prerequisite);
                 }
                 if (prerequisite == Constants.DO_NOTHING) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("returning");
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("returning");
                     }
                     return;
                 }
 
-                if (log.isDebugEnabled()) {
-                    log.debug("Updating index " + indexName + " with "
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Updating index " + indexName + " with "
                         + versionedResource);
                 }
                 if (prerequisite == Constants.DO_DELETE) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("request deletion " + indexName + " with "
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("request deletion " + indexName + " with "
                             + resource);
                     }
                     gsearchHandler.requestDeletion(resource, indexName,
                         pidSuffix);
                 }
                 else {
-                    if (log.isDebugEnabled()) {
-                        log.debug("request indexing " + indexName + " with "
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("request indexing " + indexName + " with "
                             + versionedResource);
                     }
                     if (pidSuffix != null
@@ -566,22 +555,22 @@ public class IndexingHandler implements ResourceListener {
                         indexName, pidSuffix,
                         (String) parameters.get("indexFulltextVisibilities"));
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 throw new SystemException(e);
             }
         }
         else if (action
             .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_DELETE_VALUE)) {
-            if (log.isDebugEnabled()) {
-                log.debug("request deletion " + indexName + ", resource "
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("request deletion " + indexName + ", resource "
                     + resource);
             }
             gsearchHandler.requestDeletion(resource, indexName, pidSuffix);
         }
         else if (action
             .equalsIgnoreCase(de.escidoc.core.common.business.Constants.INDEXER_QUEUE_ACTION_PARAMETER_CREATE_EMPTY_VALUE)) {
-            if (log.isDebugEnabled()) {
-                log.debug("request createEmpty " + indexName);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("request createEmpty " + indexName);
             }
             gsearchHandler.requestCreateEmpty(indexName);
         }
@@ -613,8 +602,8 @@ public class IndexingHandler implements ResourceListener {
     private int checkPrerequisites(
         String xml, final Map<String, Object> parameters,
         final String resource, Document domObject) throws SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("prerequisites is " + parameters.get("prerequisites"));
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("prerequisites is " + parameters.get("prerequisites"));
         }
         if (parameters.get("prerequisites") == null) {
             return Constants.DO_UPDATE;
@@ -628,15 +617,15 @@ public class IndexingHandler implements ResourceListener {
             }
             else {
                 if (xml == null) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("xml is null, requesting it from cache");
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("xml is null, requesting it from cache");
                     }
                     xml =
                         indexingCacheHandler
                             .retrieveObjectFromCache(resource);
                 }
-                if (log.isDebugEnabled()) {
-                    log.debug("xml is: " + xml);
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("xml is: " + xml);
                 }
                 if (domObject == null) {
                     domObject = getXmlAsDocument(xml);
@@ -645,8 +634,8 @@ public class IndexingHandler implements ResourceListener {
                     final Node updateNode =
                         XPathAPI.selectSingleNode(domObject,
                             prerequisites.get("indexingPrerequisiteXpath"));
-                    if (log.isDebugEnabled()) {
-                        log
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER
                             .debug("gsearchindexing xpath-exec on DOM-Object "
                                     + " finished");
                     }
@@ -658,8 +647,8 @@ public class IndexingHandler implements ResourceListener {
                     final Node deleteNode =
                         XPathAPI.selectSingleNode(domObject,
                             prerequisites.get("deletePrerequisiteXpath"));
-                    if (log.isDebugEnabled()) {
-                        log
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER
                             .debug("gsearchindexing xpath-exec on DOM-Object "
                                     + " finished");
                     }
@@ -669,7 +658,7 @@ public class IndexingHandler implements ResourceListener {
                 }
             }
         }
-        catch (TransformerException e) {
+        catch (final TransformerException e) {
             throw new SystemException(e.getMessage(), e);
         }
         return Constants.DO_NOTHING;
@@ -726,7 +715,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    private boolean exists(final String id, final String indexName)
+    private static boolean exists(final String id, final String indexName)
         throws SystemException {
         boolean result = false;
 
@@ -773,7 +762,7 @@ public class IndexingHandler implements ResourceListener {
                 }
             }
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException(e.getMessage(), e);
         }
         return result;
@@ -820,7 +809,7 @@ public class IndexingHandler implements ResourceListener {
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
      */
-    private Set<String> getPids(final String indexName)
+    private static Set<String> getPids(final String indexName)
         throws SystemException {
         Set<String> result = new HashSet<String>();
 
@@ -877,10 +866,10 @@ public class IndexingHandler implements ResourceListener {
             }
             result = handler.getTerms();
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException(e.getMessage(), e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SystemException(e.getMessage(), e);
         }
         return result;
@@ -904,8 +893,8 @@ public class IndexingHandler implements ResourceListener {
                 gsearchHandler.getIndexConfigurations();
             indexNames = new ArrayList<String>();
             indexNames.addAll(indexConfig.keySet());
-            if (log.isDebugEnabled()) {
-                log.debug("configured indexNames: " + indexConfig.keySet());
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("configured indexNames: " + indexConfig.keySet());
             }
         }
         return indexNames;
@@ -928,8 +917,8 @@ public class IndexingHandler implements ResourceListener {
             EscidocConfiguration.getInstance().get(
                 EscidocConfiguration.SEARCH_PROPERTIES_DIRECTORY);
         for (final String indexName : getIndexNames()) {
-            if (log.isDebugEnabled()) {
-                log.debug("getting configuration for index " + indexName);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("getting configuration for index " + indexName);
             }
             final Properties indexProps = new Properties();
             InputStream propStream = null;
@@ -953,8 +942,8 @@ public class IndexingHandler implements ResourceListener {
                 final String key = (String) o;
                 if (key.startsWith("Resource")) {
                     final String propVal = indexProps.getProperty(key);
-                    if (log.isDebugEnabled()) {
-                        log.debug("found property " + key + ':' + propVal);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("found property " + key + ':' + propVal);
                     }
                     objectTypeMatcher.reset(key);
                     if (!objectTypeMatcher.matches()) {
@@ -965,8 +954,8 @@ public class IndexingHandler implements ResourceListener {
                             de.escidoc.core.common.business.Constants.RESOURCES_NS_URI
                                     + objectTypeMatcher.group(1);
                     if (objectTypeParameters.get(objectType) == null) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("initializing HashMap for objectType "
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("initializing HashMap for objectType "
                                     + objectType);
                         }
                         objectTypeParameters.put(objectType,
@@ -975,8 +964,8 @@ public class IndexingHandler implements ResourceListener {
                     if (objectTypeParameters.get(objectType).get(indexName) == null) {
                         objectTypeParameters.get(objectType).put(indexName,
                                 new HashMap<String, Object>());
-                        if (log.isDebugEnabled()) {
-                            log.debug("adding " + indexName + " to "
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("adding " + indexName + " to "
                                     + objectType);
                         }
                         objectTypes.add(objectType);
@@ -995,16 +984,16 @@ public class IndexingHandler implements ResourceListener {
                                 .get(objectType).get(indexName)
                                 .get("prerequisites")).put(
                                 key.replaceFirst(".*\\.", ""), propVal);
-                        if (log.isDebugEnabled()) {
-                            log.debug("adding prerequisite " + key + ':'
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("adding prerequisite " + key + ':'
                                     + propVal);
                         }
                     } else {
                         objectTypeParameters
                                 .get(objectType).get(indexName)
                                 .put(key.replaceFirst(".*\\.", ""), propVal);
-                        if (log.isDebugEnabled()) {
-                            log
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER
                                     .debug("adding parameter " + key + ':'
                                             + propVal);
                         }
@@ -1044,7 +1033,7 @@ public class IndexingHandler implements ResourceListener {
                     xml.getBytes(XmlUtility.CHARACTER_ENCODING));
             return docBuilder.parse(new InputSource(in));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SystemException(e.getMessage(), e);
         }
     }
@@ -1060,7 +1049,7 @@ public class IndexingHandler implements ResourceListener {
             try {
                 getIndexConfigs();
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(e.getMessage(), e);
             }
         }
@@ -1072,7 +1061,6 @@ public class IndexingHandler implements ResourceListener {
      * 
      * @param gsearchHandler
      *            The gsearchHandler to set.
-     * @spring.property ref="common.business.indexing.GsearchHandler"
      */
     public final void setGsearchHandler(final GsearchHandler gsearchHandler) {
         this.gsearchHandler = gsearchHandler;
@@ -1083,7 +1071,6 @@ public class IndexingHandler implements ResourceListener {
      * 
      * @param indexingCacheHandler
      *            The indexingCacheHandler to set.
-     * @spring.property ref="common.business.indexing.IndexingCacheHandler"
      */
     public final void setIndexingCacheHandler(
         final IndexingCacheHandler indexingCacheHandler) {
@@ -1096,8 +1083,7 @@ public class IndexingHandler implements ResourceListener {
 
     /**
      * Injects the TripleStore utility.
-     * 
-     * @spring.property ref="business.TripleStoreUtility"
+     *
      * @param tripleStoreUtility
      *            TripleStoreUtility from Spring
      */

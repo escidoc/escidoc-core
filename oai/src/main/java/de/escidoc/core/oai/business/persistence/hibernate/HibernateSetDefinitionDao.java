@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.oai.business.persistence.hibernate;
 
+import de.escidoc.core.aa.business.persistence.UserGroupDaoInterface;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
@@ -41,6 +42,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 
 import java.util.ArrayList;
@@ -51,10 +54,11 @@ import java.util.Set;
 
 /**
  * @author rof
- * @spring.bean id="persistence.SetDefinitionDao"
  */
 public class HibernateSetDefinitionDao extends AbstractHibernateDao
     implements SetDefinitionDaoInterface {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(HibernateSetDefinitionDao.class);
 
     private final Map<String, Object[]> criteriaMap;
 
@@ -70,10 +74,14 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
     public HibernateSetDefinitionDao() {
         try {
             setDefinitionFilter = new SetDefinitionFilter(null);
-        }
-        catch (InvalidSearchQueryException e) {
-            logger.debug("Expected exception for null-query", e);
+        } catch (final InvalidSearchQueryException e) {
             // Dont do anything because null-query is given
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Expected exception for null-query");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Expected exception for null-query", e);
+            }
         }
         criteriaMap = setDefinitionFilter.getCriteriaMap();
         propertiesNamesMap = setDefinitionFilter.getPropertyMap();
@@ -84,9 +92,9 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      * 
      * @param userGroup
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #delete(de.escidoc.core.aa.business.persistence.UserGroup)
-     * @aa
+     *
      */
     @Override
     public void delete(final SetDefinition setDefinition)
@@ -105,15 +113,15 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
                         DetachedCriteria.forClass(SetDefinition.class).add(
                             Restrictions.eq("specification", specification))));
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
-        catch (HibernateException e) {
+        catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(
                 convertHibernateAccessException(e));
         }
-        catch (IllegalStateException e) {
+        catch (final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);
         }
         return result;
@@ -124,9 +132,9 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      * 
      * @param groupId
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveUserGroup(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public SetDefinition retrieveSetDefinition(final String id)
@@ -139,13 +147,13 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
                         getHibernateTemplate().get(
                             SetDefinition.class, id);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -165,9 +173,9 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      * 
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveSetDefinitions(java.util.Map, int, int, String, ListSorting)
-     * @aa
+     *
      */
     @Override
     public List<SetDefinition> retrieveSetDefinitions(
@@ -218,7 +226,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
                     getHibernateTemplate().findByCriteria(detachedCriteria,
                         offset, maxResults);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -241,7 +249,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      * 
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveSetDefinitions(java.util.Map, int, int, String, ListSorting)
      */
     @Override
@@ -266,7 +274,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
                     getHibernateTemplate().findByCriteria(detachedCriteria,
                         offset, maxResults);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -278,9 +286,9 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      * 
      * @param userGroup
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #save(de.escidoc.core.aa.business.persistence.UserGroup)
-     * @aa
+     *
      */
     @Override
     public void save(final SetDefinition setDefinition)
@@ -293,9 +301,9 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      * 
      * @param userGroup
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #update(de.escidoc.core.aa.business.persistence.UserGroup)
-     * @aa
+     *
      */
     @Override
     public void update(final SetDefinition setDefinition)
@@ -313,7 +321,6 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      * 
      * @param mySessionFactory
      *            The mySessionFactory to set.
-     * @spring.property ref="eSciDoc.core.om.SessionFactory"
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
         setSessionFactory(mySessionFactory);

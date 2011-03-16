@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora.mptstore;
 
 import de.escidoc.core.common.business.Constants;
@@ -37,7 +29,7 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -69,21 +61,17 @@ import java.util.Set;
  * To use is as implementation of the abstract class TripleStoreUtility register
  * this as spring.bean id="business.TripleStoreUtility".
  * 
- * @spring.bean id="business.TripleStoreUtility"
- * 
  * @author FRS
  */
 public class MPTTripleStoreUtility extends TripleStoreUtility {
 
-    private static final AppLogger log = new AppLogger(
-        MPTTripleStoreUtility.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        MPTTripleStoreUtility.class);
 
     private TableManager tableManager;
 
     /**
      * Injects the data source.
-     * 
-     * @spring.property ref="fedora.triplestore.DataSource"
      * 
      * @param myDataSource
      */
@@ -113,7 +101,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     // try {
     // filter = getFilterMap(filterParam);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // throw new XmlParserSystemException("While parse param filter.",
     // e);
     // }
@@ -549,7 +537,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         String result = null;
         final String tableName = getTableName(PROP_CREATION_DATE);
         if (tableName != null) {
-
+            // TODO: Possible SQL injection? Fix this!
             final String select = "SELECT min(o) FROM " + tableName;
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Executing sql query '" + select + "'.");
@@ -629,7 +617,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                                 new URIReference("info:fedora/" + idOrLiteral)
                                     .toString()).append("')");
                 }
-                catch (URISyntaxException e) {
+                catch (final URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
                 }
             }
@@ -695,7 +683,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                                 new URIReference("info:fedora/" + id)
                                     .toString()).append('\'');
                 }
-                catch (URISyntaxException e) {
+                catch (final URISyntaxException e) {
                     throw new TripleStoreSystemException(e.getMessage(), e);
                 }
 
@@ -752,13 +740,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             if (resultSet.next()) {
                 result = getValue(resultSet.getString(1));
             }
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             throw new TripleStoreSystemException(e.getMessage(), e);
-        } catch (CannotGetJdbcConnectionException e) {
+        } catch (final CannotGetJdbcConnectionException e) {
             throw new TripleStoreSystemException(e.getMessage(), e);
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             throw new TripleStoreSystemException("Failed to execute query " + query, e);
-        } catch (SystemException e) {
+        } catch (final SystemException e) {
             throw new TripleStoreSystemException("Failed to escape forbidden xml characters ", e);
         } finally {
             if (connection != null) {
@@ -925,7 +913,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     queryResultBuf.append(".s");
                 }
                 // }
-                // catch (SystemException e) {
+                // catch (final SystemException e) {
                 // // FIXME: throw SystemException?
                 // throw new TripleStoreSystemException(
                 // "Failed to retrieve clause for user and role criteria",
@@ -1587,7 +1575,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                     result = getTableManager().getTableFor(predicateNode);
                 }
             }
-            catch (URISyntaxException e) {
+            catch (final URISyntaxException e) {
                 throw new TripleStoreSystemException(e);
             }
         }
@@ -1653,7 +1641,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 new BasicTableManager(getDataSource(),
                     new PostgresDDLGenerator(), "tMap", "t");
         }
-        catch (SQLException e1) {
+        catch (final SQLException e1) {
             throw new TripleStoreSystemException(e1.getMessage(), e1);
         }
         setTableManager(result);
@@ -1690,7 +1678,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 result = XmlUtility.escapeForbiddenXmlCharacters(result);
             }
         }
-        catch (ParseException e) {
+        catch (final ParseException e) {
             throw new TripleStoreSystemException(e.getMessage(), e);
         }
         return result;
@@ -1718,9 +1706,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 final String entry = getValue(rs.getString(1));
                 result.add(entry);
             }
-        } catch (CannotGetJdbcConnectionException e) {
+        } catch (final CannotGetJdbcConnectionException e) {
             throw new TripleStoreSystemException("Failed to get JDBC connection.", e);
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             throw new TripleStoreSystemException("Failed to execute query " + query, e);
         } finally {
             if (con != null) {
@@ -1831,13 +1819,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             connection = getConnection();
             resultSet = connection.prepareStatement(query).executeQuery();
             return resultSet.next();
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             throw new TripleStoreSystemException(e.getMessage(), e);
-        } catch (CannotGetJdbcConnectionException e) {
+        } catch (final CannotGetJdbcConnectionException e) {
             throw new TripleStoreSystemException(e.getMessage(), e);
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             throw new TripleStoreSystemException("Failed to execute query " + query, e);
-        } catch (SystemException e) {
+        } catch (final SystemException e) {
             throw new TripleStoreSystemException("Failed to escape forbidden xml characters ", e);
         } finally {
             if (connection != null) {
@@ -2070,7 +2058,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @param query
      * @return
      * @throws TripleStoreSystemException
-     * @see de.escidoc.core.common.business.fedora.TripleStoreUtility
+     * @see TripleStoreUtility
      *      #retrieve(java.lang.String)
      */
     @Override

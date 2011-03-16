@@ -37,7 +37,7 @@ import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.MetadataRecordsXmlProvider;
 import de.escidoc.core.common.util.xml.factory.OrganizationalUnitXmlProvider;
@@ -64,8 +64,8 @@ import java.util.Map;
 public class VelocityXmlOrganizationalUnitRenderer
     implements OrganizationalUnitRendererInterface {
 
-    private static final AppLogger log = new AppLogger(
-        VelocityXmlOrganizationalUnitRenderer.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        VelocityXmlOrganizationalUnitRenderer.class);
 
     private static final int THREE = 3;
 
@@ -110,7 +110,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param organizationalUnit
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
+     * @see OrganizationalUnitRendererInterface#
      *      renderProperties(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     @Override
@@ -130,7 +130,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param organizationalUnit
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
+     * @see OrganizationalUnitRendererInterface#
      *      renderResources(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     @Override
@@ -149,7 +149,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param organizationalUnit
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#renderMdRecords(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
+     * @see OrganizationalUnitRendererInterface#renderMdRecords(OrganizationalUnit)
      */
     @Override
     public String renderMdRecords(final OrganizationalUnit organizationalUnit)
@@ -171,7 +171,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The Name of the to render MdRecord
      * @return XML representation of MdRecord.
      * @throws WebserverSystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
+     * @see OrganizationalUnitRendererInterface#
      *      renderMdRecord(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.lang.String)
      */
@@ -198,7 +198,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param organizationalUnit
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
+     * @see OrganizationalUnitRendererInterface#
      *      renderParents(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit)
      */
     @Override
@@ -219,7 +219,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param children
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
+     * @see OrganizationalUnitRendererInterface#
      *      renderChildObjects(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
@@ -248,7 +248,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param parents
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
+     * @see OrganizationalUnitRendererInterface#
      *      renderParents(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
@@ -278,7 +278,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param pathes
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface#
+     * @see OrganizationalUnitRendererInterface#
      *      renderPathList(de.escidoc.core.oum.business.fedora.resources.OrganizationalUnit,
      *      java.util.List)
      */
@@ -346,7 +346,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
+    private static List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
         throws SystemException {
         final List<Map<String, String>> entries =
             new ArrayList<Map<String, String>>(ids.size());
@@ -382,7 +382,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
                 t.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(
                 "Unable to parse last-modification-date '" + lmd
                     + "' of organizational-unit '" + organizationalUnit.getId()
@@ -401,7 +401,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addXlinkValues(final Map<String, Object> values)
+    private static void addXlinkValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL,
@@ -421,7 +421,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addNamespaceValues(final Map<String, Object> values)
+    private static void addNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitNamespacePrefix",
@@ -447,7 +447,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addListNamespaceValues(final Map<String, Object> values)
+    private static void addListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitsNamespacePrefix",
@@ -465,7 +465,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addPathListNamespaceValues(final Map<String, Object> values)
+    private static void addPathListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitPathListNamespacePrefix",
@@ -489,7 +489,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addSuccessorsNamespaceValues(final Map<String, Object> values)
+    private static void addSuccessorsNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put("organizationalUnitNamespacePrefix",
@@ -512,9 +512,8 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @oum
      */
-    private void addPropertiesValues(
-        final OrganizationalUnit organizationalUnit,
-        final Map<String, Object> values) {
+    private static void addPropertiesValues(final OrganizationalUnit organizationalUnit,
+                                            final Map<String, Object> values) {
 
         try {
             values.put(XmlTemplateProvider.VAR_PROPERTIES_TITLE, "Properties");
@@ -547,14 +546,22 @@ public class VelocityXmlOrganizationalUnitRenderer
             values.put(XmlTemplateProvider.VAR_DESCRIPTION,
                 organizationalUnit.getDescription());
 
-        }
-        catch (TripleStoreSystemException e) {
+        } catch (final TripleStoreSystemException e) {
             // actually shouldn't this happen
-            log.error(e);
-        }
-        catch (WebserverSystemException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on syncing with TripleStore.");
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on syncing with TripleStore.", e);
+            }
+        } catch (final WebserverSystemException e) {
             // actually shouldn't this happen
-            log.error(e);
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on syncing with TripleStore.");
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on syncing with TripleStore.", e);
+            }
         }
 
         if (organizationalUnit.hasChildren()) {
@@ -593,14 +600,14 @@ public class VelocityXmlOrganizationalUnitRenderer
         try {
             final Map<String, Datastream> mdRecords = (HashMap<String, Datastream>) organizationalUnit.getMdRecords();
             final Iterator<Datastream> mdRecordsIter = mdRecords.values().iterator();
-            StringBuffer mdRecordsContent = new StringBuffer();
+            final StringBuilder mdRecordsContent = new StringBuilder();
             while (mdRecordsIter.hasNext()) {
                 final String mdRecordName = mdRecordsIter.next().getName();
                 final Datastream mdRecord;
                 try {
                     mdRecord = organizationalUnit.getMdRecord(mdRecordName);
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     throw new WebserverSystemException(
                         "Rendering of md-record failed. ", e);
                 }
@@ -619,7 +626,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             }
             values.put(XmlTemplateProvider.VAR_MD_RECORDS_CONTENT, mdRecordsContent.toString());
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw new WebserverSystemException(
                 "Rendering of md-records failed. ", e);
         }
@@ -647,7 +654,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         try {
             mdRecord = organizationalUnit.getMdRecord(name);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(
                 "Rendering of md-record failed. ", e);
         }
@@ -669,7 +676,7 @@ public class VelocityXmlOrganizationalUnitRenderer
             values.put(XmlTemplateProvider.MD_RECORD_CONTENT,
                 mdRecord.toStringUTF8());
         }
-        catch (EncodingSystemException e) {
+        catch (final EncodingSystemException e) {
             throw new WebserverSystemException(
                 "Rendering of md-record failed. ", e);
         }
@@ -692,9 +699,7 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @oum
      */
-    private void addResourcesValues(
-        final FedoraResource organizationalUnit,
-        final Map<String, Object> values) {
+    private static void addResourcesValues(final FedoraResource organizationalUnit, final Map<String, Object> values) {
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", XmlUtility
             .getOrganizationalUnitResourcesHref(organizationalUnit.getId()));
@@ -724,9 +729,8 @@ public class VelocityXmlOrganizationalUnitRenderer
      *             Thrown in case of an internal error.
      * @oum
      */
-    private void addParentsValues(
-        final OrganizationalUnit organizationalUnit,
-        final Map<String, Object> values) throws SystemException {
+    private static void addParentsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
+            throws SystemException {
         values.put("parentsHref", XmlUtility
             .getOrganizationalUnitParentsHref(organizationalUnit.getId()));
         values.put("parentsTitle", "Parents");
@@ -758,9 +762,8 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addPredecessorsValues(
-        final OrganizationalUnit organizationalUnit,
-        final Map<String, Object> values) throws SystemException {
+    private static void addPredecessorsValues(final OrganizationalUnit organizationalUnit,
+                                              final Map<String, Object> values) throws SystemException {
 
         values.put(XmlTemplateProvider.PREDECESSORS_HREF, XmlUtility
             .getOrganizationalUnitPredecessorsHref(organizationalUnit.getId()));
@@ -802,9 +805,8 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addSuccessorsValues(
-        final OrganizationalUnit organizationalUnit,
-        final Map<String, Object> values) throws SystemException {
+    private static void addSuccessorsValues(final OrganizationalUnit organizationalUnit,
+                                            final Map<String, Object> values) throws SystemException {
 
         values.put(XmlTemplateProvider.SUCCESSORS_HREF, XmlUtility
             .getOrganizationalUnitSuccessorsHref(organizationalUnit.getId()));

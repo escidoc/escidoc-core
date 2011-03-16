@@ -28,7 +28,8 @@
  */
 package de.escidoc.core.test.common.resources;
 
-import de.escidoc.core.test.common.logger.AppLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
@@ -47,8 +48,7 @@ import java.util.Properties;
  */
 public class PropertiesProvider {
 
-    private static final AppLogger LOG = new AppLogger(
-        PropertiesProvider.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesProvider.class);
 
     public static final String ESCIDOC_SERVER_NAME = "server.name";
 
@@ -142,8 +142,13 @@ public class PropertiesProvider {
                 Properties prop = loadProperties(next);
                 result.putAll(prop);
             }
-            catch (Exception e) {
-                LOG.debug(e);
+            catch (final Exception e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on loading properties.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on loading properties.", e);
+                }
             }
         }
         this.properties = result;

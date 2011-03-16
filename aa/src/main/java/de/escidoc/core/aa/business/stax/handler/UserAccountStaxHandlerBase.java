@@ -36,7 +36,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  * Base class of stax handlers that work with user accounts or grants.
  * 
  * @author TTE
- * @aa
+ *
  */
 public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
 
@@ -50,7 +50,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * Flag indicating if new user data may be created (<code>true</code>)
      * or data from database shall be updated (<code>false</code>).
      * 
-     * @aa
+     *
      */
     private boolean create;
 
@@ -63,7 +63,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      *            The flag indicating if new object shall be created (
      *            <code>true</code> ), or a object shall be updated.
      * 
-     * @aa
+     *
      */
     protected UserAccountStaxHandlerBase(final UserAccount userAccount,
         final boolean create) {
@@ -81,7 +81,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      *            The flag indicating if new object shall be created (
      *            <code>true</code> ), or a object shall be updated.
      * 
-     * @aa
+     *
      */
     protected UserAccountStaxHandlerBase(final RoleGrant grant,
         final boolean create) {
@@ -92,7 +92,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
 
     /**
      * @return Returns the create.
-     * @aa
+     *
      */
     protected boolean isCreate() {
         return create;

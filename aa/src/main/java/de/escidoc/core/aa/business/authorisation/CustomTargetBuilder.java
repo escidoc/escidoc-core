@@ -45,7 +45,7 @@ import java.net.URISyntaxException;
  * 
  * @author Roland Werner (Accenture)
  * @author TTE
- * @aa
+ *
  */
 public final class CustomTargetBuilder {
 
@@ -53,7 +53,7 @@ public final class CustomTargetBuilder {
      * Standard Constructor.<br>
      * Prevents instance creation.
      * 
-     * @aa
+     *
      */
     private CustomTargetBuilder() {
     }
@@ -148,7 +148,7 @@ public final class CustomTargetBuilder {
      *             Thrown if there is a problem with the provided functionId.
      * @throws UnknownIdentifierException
      *             Thrown if there is a problem with the provided functionId.
-     * @aa
+     *
      */
     public static TargetMatch createTargetMatch(
         final int type, final String functionId,

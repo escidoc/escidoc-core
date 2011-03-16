@@ -80,7 +80,7 @@ public final class OntologyUtility {
             final URLConnection conn = new URL(ontologyLocation).openConnection();
             in = conn.getInputStream();
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -92,16 +92,16 @@ public final class OntologyUtility {
         try {
             sp.parse(in);
         }
-        catch (ApplicationException e) {
+        catch (final ApplicationException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (IntegritySystemException e) {
+        catch (final IntegritySystemException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 

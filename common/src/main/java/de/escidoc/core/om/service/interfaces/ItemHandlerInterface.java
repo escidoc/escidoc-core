@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.om.service.interfaces;
 
 import de.escidoc.core.common.annotation.Validate;
@@ -1599,7 +1591,6 @@ public interface ItemHandlerInterface {
      *             If no data is provided.
      * @throws SystemException
      *             If an error occurs.
-     * @axis.exclude
      * 
      * @escidoc_core.available REST
      */
@@ -1640,7 +1631,6 @@ public interface ItemHandlerInterface {
      *             If an error occurs.
      * @throws OperationNotFoundException
      *             If there is no operation for the given name.
-     * @axis.exclude
      * 
      * @escidoc_core.available REST
      */
@@ -2018,7 +2008,7 @@ public interface ItemHandlerInterface {
      *             If the Item is not in its latest version specified.
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
-     * @om
+     *
      */
     String release(final String id, final String taskParam)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -2100,7 +2090,7 @@ public interface ItemHandlerInterface {
      *             If the Item is not in its latest version specified.
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
-     * @om
+     *
      */
     String submit(final String id, final String taskParam)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -2185,7 +2175,7 @@ public interface ItemHandlerInterface {
      * @throws XmlCorruptedException
      *             Thrown if the taskParam has invalid structure.
      * 
-     * @om
+     *
      */
     String revise(final String id, final String taskParam)
         throws AuthenticationException, AuthorizationException,
@@ -2271,7 +2261,7 @@ public interface ItemHandlerInterface {
      *             If the Item is not in its latest version specified.
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
-     * @om
+     *
      */
     String withdraw(final String id, final String taskParam)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -2352,7 +2342,7 @@ public interface ItemHandlerInterface {
      *             Thrown if the taskParam has invalid structure.
      * @throws InvalidStatusException
      *             Thrown if Item is in status withdrawn.
-     * @om
+     *
      */
     String lock(final String id, final String taskParam)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -2422,7 +2412,7 @@ public interface ItemHandlerInterface {
      *             If the provided latest-modification-date does not match.
      * @throws InvalidXmlException
      *             Thrown if the taskParam has invalid structure.
-     * @om
+     *
      */
     String unlock(final String id, final String taskParam)
         throws ItemNotFoundException, ComponentNotFoundException,

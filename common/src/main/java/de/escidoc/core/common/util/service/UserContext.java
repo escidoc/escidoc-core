@@ -1,36 +1,28 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.service;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
@@ -43,12 +35,12 @@ import org.springframework.security.providers.UsernamePasswordAuthenticationToke
  * local environment per request.
  * 
  * @author Bernhard Kraus, Roland Werner (Accenture), TTE
- * @aa
+ *
  */
 public final class UserContext {
 
-    private static final AppLogger LOG =
-        new AppLogger(UserContext.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(UserContext.class);
 
     private static final String MISSING_REQUEST_DETAIL =
         "Missing request detail.";
@@ -66,7 +58,7 @@ public final class UserContext {
     /**
      * Private constructor to prevent initialization.
      * 
-     * @aa
+     *
      */
     private UserContext() {
     }
@@ -92,7 +84,7 @@ public final class UserContext {
      *             Thrown if a mandatory parameter is not provided.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static void setUserContext(final String handle)
         throws MissingMethodParameterException, WebserverSystemException {
@@ -130,7 +122,7 @@ public final class UserContext {
      *             Thrown if a mandatorz parameter is not provided.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static void setUserContext(final SecurityContext context)
         throws MissingMethodParameterException, WebserverSystemException {
@@ -143,8 +135,8 @@ public final class UserContext {
         SecurityContextHolder.clearContext();
         SecurityContextHolder.setContext(context);
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(StringUtility.format(
                 "Stored provided security context", UserContext
                     .getSecurityContext()));
         }
@@ -160,7 +152,7 @@ public final class UserContext {
      *         been changed, <code>false</code> else.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static boolean runAsInternalUser() throws WebserverSystemException {
 
@@ -183,7 +175,7 @@ public final class UserContext {
      *         been changed, <code>false</code> else.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static boolean runAsExternalUser() throws WebserverSystemException {
 
@@ -215,7 +207,7 @@ public final class UserContext {
      *            empty string. e.g. in case of an anonymous user.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static void setId(final String id) throws WebserverSystemException {
 
@@ -237,7 +229,7 @@ public final class UserContext {
      *            The real name of the user. This must not be <code>null</code>.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static void setRealName(final String realName)
         throws WebserverSystemException {
@@ -261,7 +253,7 @@ public final class UserContext {
      *            or a SOAP/EJB user (<code>false</code>).
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static void setRestAccess(final boolean restUser)
         throws WebserverSystemException {
@@ -294,7 +286,7 @@ public final class UserContext {
      * setContext method. Otherwise, an exception is thrown here.
      * 
      * @return Returns the authentication token.
-     * @aa
+     *
      * @throws WebserverSystemException
      *             Thrown in case of an uninitialized user context.
      */
@@ -318,7 +310,7 @@ public final class UserContext {
      *         information stored about the user.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private static EscidocUserDetails getPrincipal()
         throws WebserverSystemException {
@@ -337,7 +329,7 @@ public final class UserContext {
      *            The principal to set.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static void setPrincipal(final EscidocUserDetails principal)
         throws WebserverSystemException {
@@ -367,7 +359,7 @@ public final class UserContext {
      * @return Returns the user id.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static String getId() throws WebserverSystemException {
 
@@ -386,7 +378,7 @@ public final class UserContext {
      *         has not been set in the UserContext.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static String getRealName() throws WebserverSystemException {
 
@@ -403,7 +395,7 @@ public final class UserContext {
      * @return Returns the handle of the user.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static String getHandle() throws WebserverSystemException {
 
@@ -420,7 +412,7 @@ public final class UserContext {
      *         user.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static boolean isExternalUser() throws WebserverSystemException {
 
@@ -436,7 +428,7 @@ public final class UserContext {
      *         and the technical user name is the name of the internal user.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static boolean isInternalUser() throws WebserverSystemException {
 
@@ -451,7 +443,7 @@ public final class UserContext {
      *         identifies the anonymous user.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static boolean isAnonymousUser() throws WebserverSystemException {
 
@@ -465,7 +457,7 @@ public final class UserContext {
      *            The user id to check.
      * @return Returns <code>true</code> if the provided user id identifies an
      *         anonymous User. This is the case, if it is an empty string.
-     * @aa
+     *
      */
     public static boolean isIdOfAnonymousUser(final String userId) {
 
@@ -481,7 +473,7 @@ public final class UserContext {
      *         <code>false</code>.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static boolean isRestAccess() throws WebserverSystemException {
 
@@ -495,7 +487,7 @@ public final class UserContext {
      *            The code identifying the restricted permissions.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static void setRestrictedPermissions(
         final int restrictedPermissionCode) throws WebserverSystemException {
@@ -509,7 +501,7 @@ public final class UserContext {
      * @return Returns the code identifying the restricted permissions.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static int getRestrictedPermissions()
         throws WebserverSystemException {
@@ -527,7 +519,7 @@ public final class UserContext {
      *         restricted to released versions.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static boolean isRetrieveRestrictedToReleased()
         throws WebserverSystemException {

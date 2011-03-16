@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora.resources;
 
 import de.escidoc.core.common.business.Constants;
@@ -45,7 +37,7 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.ItemRelsExtUpdateHandler;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
@@ -73,7 +65,7 @@ import java.util.Map;
  */
 public class GenericResource implements FedoraResource {
 
-    private final AppLogger log = new AppLogger(GenericResource.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenericResource.class);
 
     public static final String DATASTREAM_DEFAULT = "datastream";
 
@@ -268,7 +260,7 @@ public class GenericResource implements FedoraResource {
                 setLastModificationDate(lastModificationDate);
             }
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -290,7 +282,7 @@ public class GenericResource implements FedoraResource {
             getResourceProperties().put(PropertyMapKeys.LAST_MODIFICATION_DATE,
                 timestamp);
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -478,7 +470,7 @@ public class GenericResource implements FedoraResource {
      *             Thrown if Fedora request failed.
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
-     * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setRelsExt(de.escidoc.core.common.business.fedora.datastream.Datastream)
+     * @see FedoraResource#setRelsExt(Datastream)
      */
     @Override
     public void setRelsExt(final Datastream ds) throws FedoraSystemException,
@@ -503,7 +495,7 @@ public class GenericResource implements FedoraResource {
      *             Thrown if Fedora request failed.
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
-     * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setRelsExt(byte[])
+     * @see FedoraResource#setRelsExt(byte[])
      */
     @Override
     public void setRelsExt(final byte[] relsExt) throws FedoraSystemException,
@@ -529,7 +521,7 @@ public class GenericResource implements FedoraResource {
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
      */
-    public void setRelsExt(final java.io.ByteArrayOutputStream relsExt)
+    public void setRelsExt(final ByteArrayOutputStream relsExt)
         throws FedoraSystemException, WebserverSystemException,
         StreamNotFoundException, EncodingSystemException {
 
@@ -556,7 +548,7 @@ public class GenericResource implements FedoraResource {
      *             Thrown if Fedora request failed.
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
-     * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#setRelsExt(java.lang.String)
+     * @see FedoraResource#setRelsExt(String)
      */
     @Override
     public void setRelsExt(final String relsExt)
@@ -725,7 +717,7 @@ public class GenericResource implements FedoraResource {
         try {
             getResourceProperties().put(key, value);
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -1080,7 +1072,7 @@ public class GenericResource implements FedoraResource {
      * @return Array with information for all data streams.
      * 
      * @throws FedoraSystemException
-     * @see de.escidoc.core.common.business.fedora.resources.interfaces.FedoraResource#getDatastreamsInformation()
+     * @see FedoraResource#getDatastreamsInformation()
      */
     @Override
     public org.fcrepo.server.types.gen.Datastream[] getDatastreamsInformation()
@@ -1108,8 +1100,7 @@ public class GenericResource implements FedoraResource {
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private Collection<String> expandPropertiesNames(
-        final Collection<String> propertiesNames) {
+    private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
         newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
@@ -1149,8 +1140,7 @@ public class GenericResource implements FedoraResource {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private Map<String, String> expandPropertiesNamesMapping(
-        final Map<String, String> propertiesNamesMap) {
+    private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
 
         final Map<String, String> newPropertiesNamesMap;
         newPropertiesNamesMap = propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
@@ -1301,10 +1291,10 @@ public class GenericResource implements FedoraResource {
             tmpRelsExt =
                 new Datastream(Datastream.RELS_EXT_DATASTREAM, getId(), null);
         }
-        catch (FedoraSystemException e1) {
+        catch (final FedoraSystemException e1) {
             throw new WebserverSystemException(e1);
         }
-        catch (StreamNotFoundException e1) {
+        catch (final StreamNotFoundException e1) {
             throw new WebserverSystemException(e1);
         }
 
@@ -1370,8 +1360,10 @@ public class GenericResource implements FedoraResource {
                     this.dc = ds;
                 }
             } else {
-                log.debug("Datastream " + getId() + '/' + name
-                        + " not instanziated in GenericResource.<init>.");
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Datastream " + getId() + '/' + name
+                            + " not instanziated in GenericResource.<init>" + '.');
+                }
             }
         }
 

@@ -30,7 +30,7 @@ package de.escidoc.core.aa.business.cache;
 
 import com.sun.xacml.EvaluationCtx;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.apache.commons.collections.map.LRUMap;
 
@@ -43,7 +43,7 @@ import java.util.Map;
  * {@link Collections}.synchronizedMap({@link Map}).
  * 
  * @author Roland Werner (Accenture)
- * @aa
+ *
  * 
  */
 public final class RequestAttributesCache {
@@ -51,14 +51,13 @@ public final class RequestAttributesCache {
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(RequestAttributesCache.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestAttributesCache.class);
 
     /**
      * Fall back value if reading property
      * {@link <code>EscidocConfiguration.AA_CACHE_USERS_SIZE</code>} fails.
      * 
-     * @aa
+     *
      */
     private static final int USERS_CACHE_SIZE_FALL_BACK = 50;
 
@@ -66,7 +65,7 @@ public final class RequestAttributesCache {
      * Fall back value if reading property
      * {@link <code>EscidocConfiguration.AA_CACHE_ATTRIBUTES_SIZE</code>} fails.
      * 
-     * @aa
+     *
      */
     private static final int INTERNAL_CACHE_SIZE_FALL_BACK = 50;
 
@@ -74,7 +73,7 @@ public final class RequestAttributesCache {
      * The cache is implemented as a synchronized LRUMap (least-recently-used
      * map), so it can only grow to a certain size.
      * 
-     * @aa
+     *
      */
     private static Map<EvaluationCtx, Map<Object, Object>> attributesCache;
 
@@ -99,7 +98,7 @@ public final class RequestAttributesCache {
     /**
      * Private constructor to prevent class from being instantiated.
      * 
-     * @aa
+     *
      */
     private RequestAttributesCache() {
     }
@@ -115,9 +114,13 @@ public final class RequestAttributesCache {
             usersCacheSize =
                 Integer.parseInt(EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_USERS_SIZE));
-        }
-        catch (Exception e) {
-            LOG.debug("Error on parsing user cache size.", e);
+        } catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on parsing user cache size.");
+                }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on parsing user cache size.", e);
+            }
             usersCacheSize = USERS_CACHE_SIZE_FALL_BACK;
         }
         try {
@@ -128,8 +131,13 @@ public final class RequestAttributesCache {
                         .get(
                             EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_ATTRIBUTES_SIZE));
         }
-        catch (Exception e) {
-            LOG.debug("Error on parsing internal cache size.", e);
+        catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on parsing internal cache size.");
+                }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on parsing internal cache size.", e);
+            }
             internalCacheSize = INTERNAL_CACHE_SIZE_FALL_BACK;
         }
 
@@ -178,7 +186,7 @@ public final class RequestAttributesCache {
      *            The key to use as key for the inner HashMap.
      * @param object
      *            The value for the inner HashMap.
-     * @aa
+     *
      */
     public static void put(
         final EvaluationCtx context, final Object key, final Object object) {
@@ -194,8 +202,8 @@ public final class RequestAttributesCache {
             }
             internalMap.put(key, object);
         }
-        catch (RuntimeException e) {
-            LOG.error(StringUtility.format(
+        catch (final RuntimeException e) {
+            LOGGER.error(StringUtility.format(
                 "Runtime exception during put.", context, key, object), e);
             createAttributeCache();
         }
@@ -212,7 +220,7 @@ public final class RequestAttributesCache {
      * @param key
      *            The key to use as key for the inner HashMap.
      * @return The value of the inner HashMap.
-     * @aa
+     *
      */
     public static Object get(final EvaluationCtx context, final Object key) {
 
@@ -226,8 +234,8 @@ public final class RequestAttributesCache {
             }
             return internalMap.get(key);
         }
-        catch (RuntimeException e) {
-            LOG.error(StringUtility.format(
+        catch (final RuntimeException e) {
+            LOGGER.error(StringUtility.format(
                 "Runtime exception during get.", context, key), e);
             createAttributeCache();
             return null;

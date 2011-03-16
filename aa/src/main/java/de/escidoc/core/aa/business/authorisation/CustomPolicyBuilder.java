@@ -44,7 +44,7 @@ import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.w3c.dom.Document;
@@ -70,14 +70,11 @@ import java.util.regex.Pattern;
  * Class used to build a policy object using the XACML API.
  * 
  * @author Roland Werner (Accenture)
- * @spring.bean id="authorisation.CustomPolicyBuilder" lazy-init = "true"
- * @aa
- * 
  */
 public final class CustomPolicyBuilder {
 
     /** The logger. */
-    private static final AppLogger LOG = new AppLogger(CustomPolicyBuilder.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomPolicyBuilder.class);
 
     /**
      * The property which is used to specify the schema file to validate against
@@ -150,7 +147,7 @@ public final class CustomPolicyBuilder {
     /**
      * Private constructor to prevent initialization.
      * 
-     * @aa
+     *
      */
     private CustomPolicyBuilder() {
     }
@@ -167,7 +164,7 @@ public final class CustomPolicyBuilder {
      *             Thrown if parsing fails.
      * @throws IOException
      *             Thrown in case of an i/o error.
-     * @aa
+     *
      */
     private static Document parseXml(final String xmlData)
         throws ParserConfigurationException, SAXException, IOException {
@@ -284,7 +281,7 @@ public final class CustomPolicyBuilder {
      *             Thrown in case of an unknown identifier.
      * @throws FunctionTypeException
      *             Thrown in case of an error with a function type.
-     * @aa
+     *
      */
     public static PolicySet buildXacmlRolePolicySet(
         final EscidocRole escidocRole) throws WebserverSystemException,
@@ -307,11 +304,11 @@ public final class CustomPolicyBuilder {
                     // handle the policy, if it's a known type
                     root = doc.getDocumentElement();
                     name = root.getLocalName();
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     final String msg =
                             StringUtility.format(
                                     "Error during parsing policy data.", xmlData);
-                    LOG.error(msg, e);
+                    LOGGER.error(msg, e);
                     throw new WebserverSystemException(msg, e);
                 }
             } else {
@@ -322,21 +319,21 @@ public final class CustomPolicyBuilder {
             if ("PolicySet".equals(name)) {
                 try {
                     xacmlPolicies.add(PolicySet.getInstance(root));
-                } catch (ParsingException e) {
+                } catch (final ParsingException e) {
                     final String msg =
                             StringUtility.format(
                                     "Exception while parsing policy", xmlData);
-                    LOG.error(msg, e);
+                    LOGGER.error(msg, e);
                     throw new WebserverSystemException(msg, e);
                 }
             } else if ("Policy".equals(name)) {
                 try {
                     xacmlPolicies.add(Policy.getInstance(root));
-                } catch (ParsingException e) {
+                } catch (final ParsingException e) {
                     final String msg =
                             StringUtility.format(
                                     "Exception while parsing policy", xmlData);
-                    LOG.error(msg, e);
+                    LOGGER.error(msg, e);
                     throw new WebserverSystemException(msg, e);
                 }
             } else {
@@ -352,8 +349,8 @@ public final class CustomPolicyBuilder {
                 null, CustomPolicyBuilder.generateTargetResources(escidocRole),
                 xacmlPolicies);
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(xacmlRolePolicySet.toString());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(xacmlRolePolicySet.toString());
         }
 
         return xacmlRolePolicySet;
@@ -378,7 +375,7 @@ public final class CustomPolicyBuilder {
      * @throws UnknownIdentifierException
      *             Thrown if the provided combining algorithm id is unknown.
      * @see XacmlFunctionRoleIsGranted
-     * @aa
+     *
      */
     static List<Collection<TargetMatch>> generateTargetResources(
         final EscidocRole role) throws URISyntaxException,
@@ -420,7 +417,7 @@ public final class CustomPolicyBuilder {
      * @throws UnknownIdentifierException
      *             Thrown if the provided combining algorithm id is unknown.
      * @see XacmlFunctionRoleIsGranted
-     * @aa
+     *
      */
     static List<Collection<TargetMatch>> generateTargetResources(
         final String policyId) throws URISyntaxException,
@@ -449,7 +446,7 @@ public final class CustomPolicyBuilder {
      *             Thrown if the provided combining algorithm id is unknown.
      * @throws FunctionTypeException
      *             Thrown in case of an problem with a function type.
-     * @aa
+     *
      */
     public static XacmlPolicySet regeneratePolicySet(
         final XacmlPolicySet xacmlPolicySet, final String policyId)
@@ -474,7 +471,7 @@ public final class CustomPolicyBuilder {
      * @return Returns the xml representation.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static String encode(final PolicyTreeElement policy)
         throws WebserverSystemException {
@@ -486,15 +483,15 @@ public final class CustomPolicyBuilder {
             ret = writer.toString(XmlUtility.CHARACTER_ENCODING);
             writer.close();
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e.getMessage(), e);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             // Ignore exceptions
         }
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Encoded AbstractPolicy");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Encoded AbstractPolicy");
         }
 
         ret = insertXacmlPrefix(ret);
@@ -523,7 +520,7 @@ public final class CustomPolicyBuilder {
      * @return Returns the xml representation.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static String encode(final ResponseCtx ctx)
         throws WebserverSystemException {
@@ -535,10 +532,10 @@ public final class CustomPolicyBuilder {
             ret = writer.toString(XmlUtility.CHARACTER_ENCODING);
             writer.close();
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e.getMessage(), e);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             // Ignore exception
         }
         // There is an error in ResponseCtx.encode(): The attribute

@@ -1,35 +1,27 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.aop;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -45,11 +37,7 @@ import java.lang.reflect.Method;
  * This Interceptor is invoked every time an EJB calls one of its service
  * classes.<br>
  * 
- * @spring.bean id="common.ParameterCheckInterceptor" factory-method="aspectOf"
- *              lazy-init="false"
- * 
  * @author Michael Schneider
- * @common
  */
 @Aspect
 public class ParameterCheckInterceptor implements Ordered {
@@ -57,8 +45,8 @@ public class ParameterCheckInterceptor implements Ordered {
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(ParameterCheckInterceptor.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ParameterCheckInterceptor.class);
 
 
 
@@ -66,8 +54,8 @@ public class ParameterCheckInterceptor implements Ordered {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.core.Ordered#getOrder()
-     * @common
+     * @see Ordered#getOrder()
+     *
      */
     @Override
     public int getOrder() {
@@ -85,12 +73,6 @@ public class ParameterCheckInterceptor implements Ordered {
         + " || call(* de.escidoc.core.aa..*.*HandlerInterface.retrieve*List(String)))"
         + " && !call(* de.escidoc.core..*.Fedora*Handler*.*(..))")
     public void checkParameters(final JoinPoint joinPoint) throws Throwable {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
-                "checkParameters", this));
-        }
-
         final Object[] arguments = joinPoint.getArgs();
         final int length = arguments.length;
         for (int i = 0; i < length; ++i) {
@@ -103,11 +85,6 @@ public class ParameterCheckInterceptor implements Ordered {
                             (i + 1) + " must be provided", target+ '.' + calledMethod
                             .getName()));
             }
-        }
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
-                "continuation", this));
         }
     }
 

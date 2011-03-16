@@ -323,7 +323,7 @@ public class UserGroupAuthorizationTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     AuthorizationException.class, e);
         }

@@ -32,7 +32,6 @@ import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
 import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
 import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
-import de.escidoc.core.test.common.logger.AppLogger;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 import de.escidoc.core.test.common.util.xml.SchemaBaseResourceResolver;
@@ -52,6 +51,8 @@ import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
 import org.junit.After;
 import org.junit.Before;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -149,8 +150,7 @@ public abstract class EscidocTestBase {
     private static final Pattern PATTERN_ID_WITHOUT_VERSION = Pattern
         .compile("([a-zA-Z]+:[0-9]+):[0-9]+");
 
-    protected static AppLogger log = new AppLogger(
-        EscidocTestBase.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(EscidocTestBase.class);
 
     protected static final EtmMonitor ETM_MONITOR = EtmManager.getEtmMonitor();
 
@@ -1126,8 +1126,8 @@ public abstract class EscidocTestBase {
         try {
             this.properties = new PropertiesProvider();
         }
-        catch (Exception e) {
-            log.warn("Unable to load properties: " + e);
+        catch (final Exception e) {
+            LOGGER.warn("Unable to load properties: " + e);
         }
     }
 
@@ -1192,7 +1192,7 @@ public abstract class EscidocTestBase {
         try {
             throw new Exception();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new UnsupportedOperationException(
                 "getClient() not implemented by this test class.", e);
         }
@@ -1399,18 +1399,6 @@ public abstract class EscidocTestBase {
         assertContentType(message, "text/xml", "utf-8", httpRes);
     }
 
-    /**
-     * TODO .
-     * 
-     * @param message
-     *            TODO
-     * @param expectedContentType
-     *            TODO
-     * @param expectedCharset
-     *            TODO
-     * @param method
-     *            TODO
-     */
     public static void assertContentType(
         final String message, final String expectedContentType,
         final String expectedCharset, final HttpResponse httpRes) {
@@ -2651,17 +2639,6 @@ public abstract class EscidocTestBase {
         return result;
     }
 
-    /**
-     * TODO .
-     * 
-     * @param node
-     *            TODO
-     * @param xPath
-     *            TODO
-     * @return The number of matches.
-     * @throws TransformerException
-     *             If an error ocurres computing the XPath.
-     */
     public static int getNoOfSelections(final Node node, final String xPath)
         throws TransformerException {
         int result = 0;
@@ -2894,7 +2871,7 @@ public abstract class EscidocTestBase {
                             "/param/filter[@name=\"members\"]/id[" + (i + 1)
                                 + "]");
                 }
-                catch (RuntimeException e) {
+                catch (final RuntimeException e) {
                     filter =
                         (Document) replaceInFilter(
                             filter,
@@ -3655,10 +3632,10 @@ public abstract class EscidocTestBase {
                 new ByteArrayInputStream(xmlData.getBytes(DEFAULT_CHARSET));
             validator.validate(new SAXSource(new InputSource(in)));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final StringBuffer errorMsg = new StringBuffer("XML invalid. ");
             errorMsg.append(e.getMessage());
-            if (log.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 errorMsg.append(xmlData);
                 errorMsg
                     .append("============ End of invalid xml ============\n");
@@ -4022,7 +3999,7 @@ public abstract class EscidocTestBase {
      * @param objid
      *            The objid.
      * @return The objid without version information.
-     * @common
+     *
      */
     public static String getObjidWithoutVersion(final String objid) {
 
@@ -4738,8 +4715,6 @@ public abstract class EscidocTestBase {
      * @param document
      *            The node from that the xlink:type attribute shall be selected
      *            and asserted.
-     * @param xPath
-     *            TODO
      * @throws Exception
      *             If an error ocurres.
      */
@@ -4889,7 +4864,7 @@ public abstract class EscidocTestBase {
     public static void assertOrderNotAfter(
         final String lower, final String higher) throws Exception {
         if (lower.compareTo(higher) > 0) {
-            log.debug("Incorrect order: " + lower + " < " + higher + ".");
+            LOGGER.debug("Incorrect order: " + lower + " < " + higher + ".");
         }
     }
 
@@ -4922,34 +4897,34 @@ public abstract class EscidocTestBase {
             "//content-streams/content-stream[4]"));
         // one of each storage type
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[@storage='external-managed']");
+            "//content-streams/content-stream[orage='external-managed']");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[@storage='internal-managed']");
+            "//content-streams/content-stream[orage='internal-managed']");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[@storage='external-url']");
+            "//content-streams/content-stream[orage='external-url']");
         // check content URLs
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[@storage='external-managed'"
+            "//content-streams/content-stream[orage='external-managed'"
                 + " and starts-with(@href,'/ir/item/')]");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[@storage='internal-managed'"
+            "//content-streams/content-stream[orage='internal-managed'"
                 + " and starts-with(@href,'/ir/item/')]");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[@storage='external-url'"
+            "//content-streams/content-stream[orage='external-url'"
                 + " and starts-with(@href,'http://')]");
 
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[@storage='external-managed'"
+            "//content-streams/content-stream[orage='external-managed'"
                 + " and @name='external_image' and @mime-type='image/jpeg'"
                 + " and @href = '/ir/item/" + itemId
                 + "/content-streams/content-stream/external_image/content']");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[@storage='internal-managed'"
+            "//content-streams/content-stream[orage='internal-managed'"
                 + " and @name='internal_xml' and @mime-type='text/xml'"
                 + " and @href = '/ir/item/" + itemId
                 + "/content-streams/content-stream/internal_xml/content']");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[@storage='external-url'"
+            "//content-streams/content-stream[orage='external-url'"
                 + " and @name='redirect_image' and @mime-type='image/jpeg']");
 
     }

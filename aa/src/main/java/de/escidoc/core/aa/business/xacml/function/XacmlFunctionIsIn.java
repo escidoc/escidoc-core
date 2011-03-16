@@ -33,6 +33,7 @@ import com.sun.xacml.attr.AttributeValue;
 import com.sun.xacml.attr.BooleanAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
+import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionBase;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 
@@ -47,7 +48,7 @@ import java.util.List;
  * value of the second parameter.
  * 
  * @author TTE
- * @aa
+ *
  * 
  */
 public class XacmlFunctionIsIn extends FunctionBase {
@@ -79,8 +80,8 @@ public class XacmlFunctionIsIn extends FunctionBase {
      * @param inputs
      * @param context
      * @return
-     * @see com.sun.xacml.cond.Function#evaluate(java.util.List,
-     *      com.sun.xacml.EvaluationCtx)
+     * @see Function#evaluate(List,
+     *      EvaluationCtx)
      */
     @Override
     public EvaluationResult evaluate(

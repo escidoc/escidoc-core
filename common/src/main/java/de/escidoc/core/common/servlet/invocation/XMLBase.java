@@ -1,35 +1,27 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.servlet.invocation;
 
 import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
@@ -54,7 +46,7 @@ import java.io.StringWriter;
  * Base methods for XML handling.
  * 
  * @author MSC
- * @common
+ *
  */
 public class XMLBase {
     public static final String ROOT_ELEMENT = "mapping";
@@ -130,7 +122,7 @@ public class XMLBase {
     public static final String VAR_BODY_LAST_MODIFICATION_DATE =
         "BODY.LAST-MODIFICATION-DATE";
 
-    private static final AppLogger logger = new AppLogger(XMLBase.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(XMLBase.class);
 
     private static final int BUFFER_SIZE = 0xFFFF;
 
@@ -145,7 +137,7 @@ public class XMLBase {
      * @return The resulting list of nodes.
      * @throws TransformerException
      *             If anything fails.
-     * @common
+     *
      */
     public NodeList parse(final String xPath, final Node node)
         throws TransformerException {
@@ -160,7 +152,7 @@ public class XMLBase {
      * @param attribute
      *            The attribute name.
      * @return The value of teh attribute.
-     * @common
+     *
      */
     public String getAttributeValue(final Node node, final String attribute) {
 
@@ -191,11 +183,14 @@ public class XMLBase {
         Node result = null;
         try {
             result = XPathAPI.selectSingleNode(node, childName);
+        } catch (final TransformerException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Child node not found.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Child node not found.", e);
+            }
         }
-        catch (TransformerException e) {
-            getLogger().error("Child node not found!" + e);
-        }
-
         return result;
 
     }
@@ -208,7 +203,7 @@ public class XMLBase {
      * @param path
      *            The path.
      * @return The resulting xPath.
-     * @common
+     *
      */
     public String appendToXpath(final String xPath, final String path) {
 
@@ -218,8 +213,10 @@ public class XMLBase {
                 && !path.startsWith(XPATH_DELIMITER)) {
                 result += XPATH_DELIMITER + path;
             }
-            else result += xPath.endsWith(XPATH_DELIMITER)
-                    && path.startsWith(XPATH_DELIMITER) ? path.substring(1) : path;
+            else {
+                result +=
+                        xPath.endsWith(XPATH_DELIMITER) && path.startsWith(XPATH_DELIMITER) ? path.substring(1) : path;
+            }
         }
         return result;
     }
@@ -236,7 +233,7 @@ public class XMLBase {
      *             If anything fails.
      * @throws IOException
      *             If anything fails.
-     * @common
+     *
      */
     public Document getDocument(final String filename)
         throws ParserConfigurationException, SAXException, IOException {
@@ -292,10 +289,9 @@ public class XMLBase {
      * @param filename
      *            The file name.
      * @return The file input stream.
-     * @common
+     *
      */
     public InputStream getFileInputStream(final String filename) {
-        getLogger().debug("getFileInputStream: Looking for file: " + filename);
         return this.getClass().getResourceAsStream(filename);
     }
 
@@ -307,11 +303,11 @@ public class XMLBase {
      * @return The contents of the file.
      * @throws IOException
      *             If anything fails.
-     * @common
+     *
      */
     public String getFileContents(final String filename) throws IOException {
 
-        getLogger().info("looking for file " + filename);
+        LOGGER.info("looking for file " + filename);
 
         final InputStream inputStream = getFileInputStream(filename);
 
@@ -350,11 +346,4 @@ public class XMLBase {
         }
     }
 
-    /**
-     * @return Returns the logger.
-     * @common
-     */
-    public static AppLogger getLogger() {
-        return logger;
-    }
 }

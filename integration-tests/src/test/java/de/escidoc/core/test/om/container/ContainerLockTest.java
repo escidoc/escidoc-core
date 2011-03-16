@@ -103,7 +103,7 @@ public class ContainerLockTest extends ContainerTestBase {
         try {
             update(theContainerId, containerXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Update container failed with exception. ", e);
         }
@@ -140,7 +140,7 @@ public class ContainerLockTest extends ContainerTestBase {
         try {
             lock(theContainerId, param);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Unlocking container can not be tested, locking"
                     + " failed with exception.", e);
@@ -149,7 +149,7 @@ public class ContainerLockTest extends ContainerTestBase {
         try {
             unlock(theContainerId, param);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Unlocking container failed with exception. ", e);
         }
@@ -174,7 +174,7 @@ public class ContainerLockTest extends ContainerTestBase {
         try {
             update(theContainerId, containerXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating unlocked container failed with exception. ", e);
         }
@@ -212,7 +212,7 @@ public class ContainerLockTest extends ContainerTestBase {
         try {
             lock(theContainerId, param);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Unlocking container can not be tested, locking"
                     + " failed with exception.", e);
@@ -223,7 +223,7 @@ public class ContainerLockTest extends ContainerTestBase {
         try {
             unlock(theContainerId, param);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Unlocking container failed with exception. ", e);
         }
@@ -247,7 +247,7 @@ public class ContainerLockTest extends ContainerTestBase {
         try {
             update(theContainerId, containerXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating unlocked container failed with exception. ", e);
         }
@@ -282,7 +282,7 @@ public class ContainerLockTest extends ContainerTestBase {
         try {
             lock(theContainerId, param);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Unlocking container can not be tested, locking"
                     + " failed with exception.", e);
@@ -295,7 +295,7 @@ public class ContainerLockTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         }
@@ -313,7 +313,7 @@ public class ContainerLockTest extends ContainerTestBase {
             lock("escidoc:noExist", param);
             fail("No exception after lock with non existing id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -333,7 +333,7 @@ public class ContainerLockTest extends ContainerTestBase {
             lock(theContainerId, param);
             fail("No exception after lock with wrong last-modification-date.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -352,7 +352,7 @@ public class ContainerLockTest extends ContainerTestBase {
             lock(null, param);
             fail("No exception after lock without id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);

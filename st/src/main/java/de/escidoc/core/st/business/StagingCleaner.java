@@ -29,7 +29,7 @@
 package de.escidoc.core.st.business;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.st.business.persistence.StagingFileDao;
 
@@ -40,13 +40,11 @@ import java.util.List;
  * Implementation of staging area clean up.
  * 
  * @author TTE
- * @spring.bean id="st.StagingCleaner"
- * @st
  */
 public class StagingCleaner {
 
-    private static final AppLogger LOG =
-        new AppLogger(StagingCleaner.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(StagingCleaner.class);
 
     /**
      * Offset added to staging files' expire time stamp before removing them to
@@ -62,8 +60,6 @@ public class StagingCleaner {
      * 
      * @param stagingSessionFileDao
      *            The stagingFileDao to set.
-     * @spring.property ref="persistence.StagingFileDao"
-     * @st
      */
     public final void setStagingSessionFactory(
         final StagingFileDao stagingSessionFileDao) {
@@ -76,18 +72,18 @@ public class StagingCleaner {
      * associated to an expired staging file object and each expired staging
      * file whose associated file does not exist or could be removed.
      * 
-     * @st
+     *
      */
     public void cleanUp() {
-
-        LOG.debug("Cleaning up the staging file area");
-
+        if(LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Cleaning up the staging file area.");
+        }
         final List<StagingFile> expiredStagingFiles;
         try {
             expiredStagingFiles = stagingFileDao.findExpiredStagingFiles();
         }
-        catch (SqlDatabaseSystemException e) {
-            LOG.error(e);
+        catch (final SqlDatabaseSystemException e) {
+            LOGGER.error("Error on finding expired staging files.", e);
             return;
         }
 
@@ -102,17 +98,22 @@ public class StagingCleaner {
                     if (stagingFile.hasFile()) {
                         stagingFile.clear();
                     }
-                } catch (IOException e) {
-                    LOG.error(StringUtility.format(
-                            "Removing file failed", stagingFile.getReference(),
+                } catch (final IOException e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn(StringUtility.format("Removing file failed", stagingFile.getReference(),
+                            e.getClass().getName()));
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug(StringUtility.format("Removing file failed", stagingFile.getReference(),
                             e.getClass().getName()), e);
+                    }
                 }
                 try {
                     if (!stagingFile.hasFile()) {
                         stagingFileDao.delete(stagingFile);
                     }
-                } catch (SqlDatabaseSystemException e) {
-                    LOG.error(e);
+                } catch (final SqlDatabaseSystemException e) {
+                    LOGGER.error("Error on deleting staging file.", e);
                 }
             }
         }

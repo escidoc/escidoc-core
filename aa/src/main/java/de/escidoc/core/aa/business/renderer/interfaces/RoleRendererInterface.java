@@ -38,7 +38,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
  * Interface of a role renderer.
  * 
  * @author TTE
- * @aa
+ *
  */
 public interface RoleRendererInterface {
 
@@ -54,7 +54,7 @@ public interface RoleRendererInterface {
      * @return Returns the XML representation of the role.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String render(final EscidocRole role) throws WebserverSystemException;
 
@@ -67,7 +67,7 @@ public interface RoleRendererInterface {
      *         a role.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderResources(final EscidocRole role)
         throws WebserverSystemException;
@@ -85,7 +85,7 @@ public interface RoleRendererInterface {
      * @return Returns the XML representation of the list of roles.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderRoles(
         final List<EscidocRole> roles, final RecordPacking recordPacking)

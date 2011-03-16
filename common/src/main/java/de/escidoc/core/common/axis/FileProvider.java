@@ -1,36 +1,28 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.axis;
 
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.axis.AxisEngine;
 import org.apache.axis.ConfigurationException;
@@ -70,7 +62,8 @@ import java.util.List;
  * @author Michael Hoppe
  */
 public class FileProvider implements WSDDEngineConfiguration {
-    private static final AppLogger log = new AppLogger(FileProvider.class.getName());
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileProvider.class);
 
     private WSDDDeployment deployment;
 
@@ -101,7 +94,7 @@ public class FileProvider implements WSDDEngineConfiguration {
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL);
             }
-            catch (IOException e) {
+            catch (final IOException e) {
                 throw new RuntimeException(
                     "Default jndi url not found in properties! No value for key '"
                         + EscidocConfiguration.ESCIDOC_CORE_DEFAULT_JNDI_URL
@@ -147,8 +140,13 @@ public class FileProvider implements WSDDEngineConfiguration {
         try {
             readOnly = !configFile.canWrite();
         }
-        catch (SecurityException se) {
-            log.debug("Error on checking the configuration file.", se);
+        catch (final SecurityException se) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on checking the configuration file.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on checking the configuration file.", se);
+            }
             readOnly = true;
         }
 
@@ -157,7 +155,7 @@ public class FileProvider implements WSDDEngineConfiguration {
          * changes will not persist.
          */
         if (readOnly) {
-            log.info(Messages.getMessage("readOnlyConfigFile"));
+            LOGGER.info(Messages.getMessage("readOnlyConfigFile"));
         }
     }
 
@@ -238,8 +236,8 @@ public class FileProvider implements WSDDEngineConfiguration {
         try {
             xmlString = IOUtils.readStringFromStream(in);
             xmlString = insertSystemProperties(xmlString);
-        } catch (IOException e) {
-            log.error(e);
+        } catch (final IOException e) {
+            LOGGER.error("Error on inserting system properties.", e);
         }
         finally {
             IOUtils.closeStream(in);
@@ -257,12 +255,12 @@ public class FileProvider implements WSDDEngineConfiguration {
     private String insertSystemProperties(final String propertyValue) {
         String result = propertyValue;
         while (result.contains("${")) {
-            if (log.isDebugEnabled()) {
-                log.debug("propertyValue=" + result);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("propertyValue=" + result);
             }
             result = insertSystemProperty(result);
-            if (log.isDebugEnabled()) {
-                log.debug("propertyValue=" + result);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("propertyValue=" + result);
             }
         }
         return result;
@@ -276,7 +274,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *            propertyValue
      * @return String replaced String
      */
-    private String insertSystemProperty(final String propertyValue) {
+    private static String insertSystemProperty(final String propertyValue) {
         String result = propertyValue;
         final int i = result.indexOf("${");
         if (i > -1) {
@@ -287,9 +285,13 @@ public class FileProvider implements WSDDEngineConfiguration {
                 try {
                     confPropertyValue =
                         EscidocConfiguration.getInstance().get(confProperty);
-                }
-                catch (IOException e) {
-                    log.error(e);
+                } catch (final IOException e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on getting configuration property.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on getting configuration property.", e);
+                    }
                 }
                 if (confPropertyValue == null) {
                     confPropertyValue = defaultJNDIUrl;
@@ -317,9 +319,13 @@ public class FileProvider implements WSDDEngineConfiguration {
             if (getInputStream() == null) {
                 try {
                     setInputStream(new FileInputStream(configFile));
-                }
-                catch (Exception e) {
-                    log.debug("Error on creating input stream.", e);
+                } catch (final Exception e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on creating input stream.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on creating input stream.", e);
+                    }
                     if (searchClasspath) {
                         setInputStream(ClassUtils.getResourceAsStream(engine
                             .getClass(), configFile.getName(), true));
@@ -341,7 +347,7 @@ public class FileProvider implements WSDDEngineConfiguration {
 
             setInputStream(null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new ConfigurationException(e);
         }
     }
@@ -368,7 +374,7 @@ public class FileProvider implements WSDDEngineConfiguration {
                 writer = new PrintWriter(new BufferedWriter(osWriter));
                 XMLUtils.DocumentToWriter(doc, writer);
                 writer.println();
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 throw new ConfigurationException(e);
             } finally {
                 IOUtils.closeWriter(writer);

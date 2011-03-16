@@ -1,39 +1,33 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.service;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.jboss.security.SecurityAssociation;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.aopalliance.intercept.MethodInvocation;
 import org.jboss.security.RunAsIdentity;
+import org.springframework.ejb.access.AbstractRemoteSlsbInvokerInterceptor;
 import org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean;
 import org.springframework.security.Authentication;
 import org.springframework.security.context.SecurityContext;
@@ -60,6 +54,8 @@ import java.util.regex.Pattern;
 public class RemoteStatelessEjbProxyFactoryBean
     extends SimpleRemoteStatelessSessionProxyFactoryBean {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RemoteStatelessEjbProxyFactoryBean.class);
+
     /**
      * Pattern used to replace Interface with Remote in class name to get the
      * name of the extended interface.
@@ -74,14 +70,6 @@ public class RemoteStatelessEjbProxyFactoryBean
     private static final Pattern PATTERN_SERVIVE_INTERFACE =
         Pattern.compile("service.interfaces");
 
-    /**
-     * Logging goes there.
-     */
-    private static final AppLogger logger =
-        new AppLogger(RemoteStatelessEjbProxyFactoryBean.class.getName());
-
-
-
     private String packageName;
 
     /**
@@ -95,9 +83,8 @@ public class RemoteStatelessEjbProxyFactoryBean
      * See Interface for functional description.
      * 
      * @throws NamingException
-     * @see org.springframework.ejb.access.
-     *      SimpleRemoteStatelessSessionProxyFactoryBean#afterPropertiesSet()
-     * @common
+     * @see SimpleRemoteStatelessSessionProxyFactoryBean#afterPropertiesSet()
+     *
      */
     @Override
     public void afterPropertiesSet() throws NamingException {
@@ -106,7 +93,7 @@ public class RemoteStatelessEjbProxyFactoryBean
             this.setJndiEnvironment(EjbFactoryBeanHelper
                 .getInitialContextJndiProperties(packageName));
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             final NamingException ex = new NamingException(); // Ignore FindBugs
             ex.setRootCause(e);
             throw ex;
@@ -119,7 +106,7 @@ public class RemoteStatelessEjbProxyFactoryBean
         try {
             extendedInterface = Class.forName(className);
         }
-        catch (ClassNotFoundException e) {
+        catch (final ClassNotFoundException e) {
             final NamingException ex = new NamingException(); // Ignore FindBugs
             ex.setRootCause(e);
             throw ex;
@@ -134,16 +121,12 @@ public class RemoteStatelessEjbProxyFactoryBean
      * @param arg0
      * @return
      * @throws Throwable
-     * @see org.springframework.ejb.access.AbstractRemoteSlsbInvokerInterceptor
+     * @see AbstractRemoteSlsbInvokerInterceptor
      *      #invoke(org.aopalliance.intercept.MethodInvocation) // *
-     * @common
+     *
      */
     @Override
     public Object invoke(final MethodInvocation arg0) throws Throwable {
-
-        if (logger.isDebugEnabled()) {
-            logger.debug("invoke started");
-        }
         final Method method = arg0.getMethod();
         final Object[] args = arg0.getArguments();
         final Class[] argTypes = method.getParameterTypes();
@@ -170,7 +153,7 @@ public class RemoteStatelessEjbProxyFactoryBean
 
                 extendedArgs[argsLength] = securityContext;
                 extendedArgsTypes[argsLength] = SecurityContext.class;
-                org.jboss.security.SecurityAssociation.pushRunAsIdentity(
+                SecurityAssociation.pushRunAsIdentity(
                         new RunAsIdentity("Administrator", ""));
             } else {
                 // user currently not authenticated. Just user name and
@@ -186,7 +169,7 @@ public class RemoteStatelessEjbProxyFactoryBean
                 extendedArgsTypes[i] = Boolean.class;
             }
         }
-        catch (SystemException e1) {
+        catch (final SystemException e1) {
             throw new InvocationTargetException(e1);
         }
 
@@ -207,10 +190,8 @@ public class RemoteStatelessEjbProxyFactoryBean
                             "Remote Invocation failed, could not find extended target method.",
                             extendedInterface, methodName, extendedArgs)));
         }
-
-        if (logger.isDebugEnabled()) {
-            logger.debug(StringUtility.format(
-                "Calling super.invoke", methodName, extendedArgs));
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(StringUtility.format("Calling super.invoke", methodName, extendedArgs));
         }
         return super.invoke(extendedMethodInvocation);
     }
@@ -220,7 +201,7 @@ public class RemoteStatelessEjbProxyFactoryBean
      * 
      * @param packageName
      *            the packageName to set
-     * @common
+     *
      */
     public void setPackageName(final String packageName) {
         this.packageName = packageName;

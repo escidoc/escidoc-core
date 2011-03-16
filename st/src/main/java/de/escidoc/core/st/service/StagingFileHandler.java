@@ -39,13 +39,7 @@ import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
 /**
  * A StagingFile handler.
  * 
- * @spring.bean id="service.StagingFileHandler"
- * @interface class="de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface"
  * @author TTE
- * @service
- * @axis.exclude
- * @st
- * 
  */
 public class StagingFileHandler implements StagingFileHandlerInterface {
 
@@ -56,10 +50,6 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
      * 
      * @param stagingFileHandler
      *            The item handler bean to inject.
-     * 
-     * @spring.property ref="business.StagingFileHandler"
-     * @service.exclude
-     * @om
      */
     public void setStagingFileHandler(
         final de.escidoc.core.st.business.interfaces.StagingFileHandlerInterface stagingFileHandler) {
@@ -69,18 +59,6 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
 
 
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param binaryContent
-     * @return
-     * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface
-     *      #create(de.escidoc.core.om.service.result.EscidocBinaryContent)
-     * 
-     * @ejb.transaction type="RequiresNew"
-     * @axis.exclude
-     * @st
-     */
     @Override
     public String create(final EscidocBinaryContent binaryContent)
         throws MissingMethodParameterException, AuthenticationException,
@@ -89,17 +67,6 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         return handler.create(binaryContent);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param stagingFileId
-     * @return
-     * @see de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface
-     *      #retrieve(java.lang.String)
-     * 
-     * @axis.exclude
-     * @st
-     */
     @Override
     public EscidocBinaryContent retrieve(final String stagingFileId)
         throws StagingFileNotFoundException, AuthenticationException,

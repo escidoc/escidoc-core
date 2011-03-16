@@ -38,7 +38,7 @@ import java.util.Comparator;
  * Sorts AggregationTableIndex-Objects according to their listIndex.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class AggregationTableIndexComparator 
         implements Comparator<AggregationTableIndexe>,Serializable {
@@ -50,7 +50,7 @@ public class AggregationTableIndexComparator
      * @param a2 AggregationTableIndexe2
      * @return Returns compare result.
      * 
-     * @sm
+     *
      */
     @Override
     public int compare(

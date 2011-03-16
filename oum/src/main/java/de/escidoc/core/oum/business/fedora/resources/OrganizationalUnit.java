@@ -67,7 +67,7 @@ import java.util.Set;
 public class OrganizationalUnit extends GenericResource
     implements OrganizationalUnitInterface {
 
-    private static final Logger LOG = LoggerFactory.getLogger(OrganizationalUnit.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationalUnit.class);
 
     public static final String ESCIDOC = "escidoc";
 
@@ -236,7 +236,7 @@ public class OrganizationalUnit extends GenericResource
             }
 
         }
-        catch (WebserverSystemException wse) {
+        catch (final WebserverSystemException wse) {
             throw new TripleStoreSystemException(wse);
         }
         return predecessors;
@@ -310,7 +310,7 @@ public class OrganizationalUnit extends GenericResource
             }
 
         }
-        catch (WebserverSystemException wse) {
+        catch (final WebserverSystemException wse) {
             throw new TripleStoreSystemException(wse);
         }
         return successors;
@@ -480,8 +480,8 @@ public class OrganizationalUnit extends GenericResource
      * @param name
      * @param ds
      * @throws SystemException
-     * @see de.escidoc.core.oum.business.fedora.resources.interfaces.OrganizationalUnitInterface#setMdRecord(java.lang.String,
-     *      de.escidoc.core.common.business.fedora.datastream.Datastream)
+     * @see OrganizationalUnitInterface#setMdRecord(String,
+     *      Datastream)
      */
     @Override
     public void setMdRecord(final String name, final Datastream ds)
@@ -546,9 +546,13 @@ public class OrganizationalUnit extends GenericResource
                 }
                 ds.merge();
             }
-        }
-        catch (final StreamNotFoundException e) {
-            LOG.debug("Error on setting MD-records.", e);
+        } catch (final StreamNotFoundException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on setting MD-records.");
+            }
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on setting MD-records.", e);
+            }
             // this is not an update; its a create
             ds.addAlternateId(type);
             ds.addAlternateId(schema);
@@ -582,9 +586,11 @@ public class OrganizationalUnit extends GenericResource
                     }
                 } catch (final StreamNotFoundException e) {
                     // Do nothing, datastream is already deleted.
-                    if (LOG.isDebugEnabled()) {
-                        LOG.debug("Unable to find datastream '" + nameInFedora
-                                + "'.", e);
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Unable to find datastream '" + nameInFedora + "'.");
+                    }
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Unable to find datastream '" + nameInFedora + "'.", e);
                     }
                 }
             }

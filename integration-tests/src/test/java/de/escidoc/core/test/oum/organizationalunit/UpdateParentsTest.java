@@ -202,7 +202,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
                 "No exception occured on update of parents with non existing id.",
                 ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -242,7 +242,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
                 "No exception occured on update of parents of an OU "
                     + "in status opened.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -277,7 +277,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
                 "No exception occured on update with id of resoure of"
                     + " another type.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -316,7 +316,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with wrong time stamp.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -356,7 +356,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with wrong time stamp.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -392,7 +392,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with missing id.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -430,7 +430,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
             failMissingException("No exception occured on update with missing "
                 + "organization-details xml.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -461,7 +461,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with corrupted xml.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -492,7 +492,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with corrupted xml.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -523,7 +523,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with corrupted xml.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -578,7 +578,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     // try {
     // updatedXml = updateParentOus(id, toBeUpdatedXml);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // failException("Updating OU with set but unchanged external id"
     // + " failed. ", e);
     // }
@@ -616,7 +616,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     // // updateParentOus(id, toBeUpdatedXml);
     // // failMissingException(ec);
     // // }
-    // // catch (Exception e) {
+    // // catch (final Exception e) {
     // // assertExceptionType(ec, e);
     // // }
     // // }
@@ -653,7 +653,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     // // try {
     // // updatedXml = updateParentOus(id, toBeUpdatedXml);
     // // }
-    // // catch (Exception e) {
+    // // catch (final Exception e) {
     // // failException("Updating ou with setting external-id failed.", e);
     // // }
     // //
@@ -669,7 +669,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     // // updateParentOus(id, toBeUpdatedXml2);
     // // failMissingException(ec);
     // // }
-    // // catch (Exception e) {
+    // // catch (final Exception e) {
     // // assertExceptionType(ec, e);
     // // }
     // // }
@@ -714,7 +714,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     // updateParentOus(ou2Id, toBeUpdatedXml);
     // failMissingException(ec);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType(ec, e);
     // }
     //
@@ -743,7 +743,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     // updateParentOus(ou1Id, toBeUpdatedXml);
     // failMissingException(ec);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType(ec, e);
     // }
     // }
@@ -855,7 +855,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     // updateParentOus(child2Id, toBeUpdatedXml);
     // failMissingException(ec);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType(ec, e);
     // }
     // }
@@ -915,7 +915,7 @@ public class UpdateParentsTest extends OrganizationalUnitTestBase {
     // try {
     // updatedXml = updateParentOus(child2Id, toBeUpdatedXml);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // failException(
     // "Updating OU with name of ou in another scope failed.", e);
     // }

@@ -33,7 +33,7 @@ package de.escidoc.core.aa.business.persistence;
  * 
  * @author MIH
  *
- * @aa
+ *
  */
 public class UserAttribute extends UserAttributeBase {
 
@@ -45,7 +45,7 @@ public class UserAttribute extends UserAttributeBase {
     /**
      * The default constructor.
      * 
-     * @aa
+     *
      */
     public UserAttribute() {
     }

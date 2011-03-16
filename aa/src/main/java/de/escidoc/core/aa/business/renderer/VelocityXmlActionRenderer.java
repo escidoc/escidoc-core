@@ -30,6 +30,7 @@ package de.escidoc.core.aa.business.renderer;
 
 import de.escidoc.core.aa.business.persistence.UnsecuredActionList;
 import de.escidoc.core.aa.business.renderer.interfaces.ActionRendererInterface;
+import de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.xml.factory.ActionXmlProvider;
 
@@ -44,8 +45,6 @@ import java.util.regex.Pattern;
  * Action renderer implementation using the velocity template engine.
  * 
  * @author TTE
- * @spring.bean id="eSciDoc.core.aa.business.renderer.VelocityXmlActionRenderer"
- * @aa
  */
 public class VelocityXmlActionRenderer extends AbstractRenderer
     implements ActionRendererInterface {
@@ -63,9 +62,9 @@ public class VelocityXmlActionRenderer extends AbstractRenderer
      * @param actions
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface
+     * @see RoleRendererInterface
      *      #renderUnsecuredActionList(de.escidoc.core.aa.business.persistence.UnsecuredActionList)
-     * @aa
+     *
      */
     @Override
     public String renderUnsecuredActionList(final UnsecuredActionList actions)
@@ -98,9 +97,9 @@ public class VelocityXmlActionRenderer extends AbstractRenderer
      * @return Returns the {@link ActionXmlProvider} object.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
-    private ActionXmlProvider getActionXmlProvider()
+    private static ActionXmlProvider getActionXmlProvider()
         throws WebserverSystemException {
 
         return ActionXmlProvider.getInstance();

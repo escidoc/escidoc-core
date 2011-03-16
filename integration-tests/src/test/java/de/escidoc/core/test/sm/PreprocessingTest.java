@@ -92,7 +92,7 @@ public class PreprocessingTest extends PreprocessingTestBase {
         try {
             preprocess("escidoc:aggdef2", xml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("Exception occured " + e.toString());
         }
     }

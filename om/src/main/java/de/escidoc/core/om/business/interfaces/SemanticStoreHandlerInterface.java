@@ -39,7 +39,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * 
  * @author ROF
  * 
- * @om
+ *
  */
 public interface SemanticStoreHandlerInterface {
 
@@ -48,7 +48,7 @@ public interface SemanticStoreHandlerInterface {
      * format.
      * 
      * @return Returns XML representation of the query result.
-     * @om
+     *
      * @throws InvalidTripleStoreQueryException
      *             TODO
      * @throws SystemException

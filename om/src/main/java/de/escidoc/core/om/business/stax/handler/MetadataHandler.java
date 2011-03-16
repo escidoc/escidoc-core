@@ -30,7 +30,7 @@ package de.escidoc.core.om.business.stax.handler;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -45,7 +45,7 @@ import java.util.Map;
  * 
  * @author MSC
  * 
- * @om
+ *
  */
 public class MetadataHandler extends DefaultHandler {
 
@@ -67,8 +67,8 @@ public class MetadataHandler extends DefaultHandler {
 
     private String mdRecordsPath;
 
-    private static final AppLogger LOGGER =
-        new AppLogger(MetadataHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(MetadataHandler.class);
 
     private final Map<String, Map<String, String>> metadataAttributes =
         new HashMap<String, Map<String, String>>();
@@ -84,7 +84,7 @@ public class MetadataHandler extends DefaultHandler {
      * 
      * @param parser
      *            The parser.
-     * @om
+     *
      */
     public MetadataHandler(final StaxParser parser) {
         this.parser = parser;
@@ -99,9 +99,9 @@ public class MetadataHandler extends DefaultHandler {
      * @throws MissingAttributeValueException
      * @throws MissingAttributeValueException
      *             If a required attribute is missing.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement
+     * @see DefaultHandler#startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @om
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -179,9 +179,9 @@ public class MetadataHandler extends DefaultHandler {
      *             Thrown if a mentatory meta data datastream is missing
      *             (refernced by name).
      * @return The element.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement
+     * @see DefaultHandler#endElement
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
-     * @om
+     *
      */
     @Override
     public EndElement endElement(final EndElement element)
@@ -208,10 +208,10 @@ public class MetadataHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The character section.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
+     * @see DefaultHandler#characters
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @om
+     *
      */
     @Override
     public String characters(final String s, final StartElement element) {

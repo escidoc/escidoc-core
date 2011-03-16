@@ -1,33 +1,26 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora.resources.create;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -37,7 +30,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.factory.ItemFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 import org.apache.commons.codec.binary.Base64;
@@ -62,7 +55,7 @@ import java.util.concurrent.Callable;
 public class ComponentCreate extends GenericResourceCreate
     implements Callable<String> {
 
-    private static final AppLogger LOG = new AppLogger(ComponentCreate.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComponentCreate.class);
 
     private List<MdRecordCreate> mdRecords;
 
@@ -146,8 +139,6 @@ public class ComponentCreate extends GenericResourceCreate
      * 
      * @param idProvider
      *            The {@link EscidocIdProvider} to set.
-     * 
-     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
 
@@ -214,8 +205,8 @@ public class ComponentCreate extends GenericResourceCreate
                     // should be applied
                     this.dcXml = getDC(mdRecord, null);
                 }
-                catch (Exception e) {
-                    LOG.info("DC mapping of to create resource failed. " + e);
+                catch (final Exception e) {
+                    LOGGER.info("DC mapping of to create resource failed. " + e);
                 }
             }
         }
@@ -331,41 +322,41 @@ public class ComponentCreate extends GenericResourceCreate
     /**
      * @return HashMap where name space values are to add.
      */
-    private Map<String, String> getRelsExtNamespaceValues() {
+    private static Map<String, String> getRelsExtNamespaceValues() {
 
         final Map<String, String> values = new HashMap<String, String>();
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
-            de.escidoc.core.common.business.Constants.PROPERTIES_NS_PREFIX);
+            Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS,
-            de.escidoc.core.common.business.Constants.PROPERTIES_NS_URI);
+            Constants.PROPERTIES_NS_URI);
 
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS_PREFIX,
-            de.escidoc.core.common.business.Constants.VERSION_NS_PREFIX);
+            Constants.VERSION_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_VERSION_NS,
-            de.escidoc.core.common.business.Constants.VERSION_NS_URI);
+            Constants.VERSION_NS_URI);
 
         values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS_PREFIX,
-            de.escidoc.core.common.business.Constants.RELEASE_NS_PREFIX);
+            Constants.RELEASE_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_RELEASE_NS,
-            de.escidoc.core.common.business.Constants.RELEASE_NS_URI);
+            Constants.RELEASE_NS_URI);
 
         values
             .put(
                 XmlTemplateProvider.ESCIDOC_RESOURCE_NS_PREFIX,
-                de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
+                Constants.STRUCTURAL_RELATIONS_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_RESOURCE_NS,
-            de.escidoc.core.common.business.Constants.RESOURCES_NS_URI);
+            Constants.RESOURCES_NS_URI);
 
         values
             .put(
                 XmlTemplateProvider.ESCIDOC_RELATION_NS,
-                de.escidoc.core.common.business.Constants.STRUCTURAL_RELATIONS_NS_URI);
+                Constants.STRUCTURAL_RELATIONS_NS_URI);
 
         values
             .put(
                 XmlTemplateProvider.ESCIDOC_RELATION_NS_PREFIX,
-                de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
+                Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
 
         return values;
     }
@@ -388,8 +379,13 @@ public class ComponentCreate extends GenericResourceCreate
                         .get(
                             EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM,
                             "DISABLED"));
-        } catch (IOException e) {
-            LOG.debug("Error: No configuration can be found.", e);
+        } catch (final IOException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("No configuration can be found.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("No configuration can be found.", e);
+            }
         }
         values.put(XmlTemplateProvider.REF, this.content
             .getDataLocation().toString());
@@ -413,9 +409,8 @@ public class ComponentCreate extends GenericResourceCreate
      *             In case of an internal error during decoding or storing the
      *             content.
      */
-    private String uploadBase64EncodedContent(
-        final String contentAsString, final String fileName,
-        final String mimeType) throws WebserverSystemException {
+    private static String uploadBase64EncodedContent(final String contentAsString, final String fileName,
+                                                     final String mimeType) throws WebserverSystemException {
         final String uploadUrl;
         try {
             final byte[] streamContent = Base64.decodeBase64(contentAsString.getBytes());

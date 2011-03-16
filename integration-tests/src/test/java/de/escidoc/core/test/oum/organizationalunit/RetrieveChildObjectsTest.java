@@ -98,7 +98,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
         try {
             childrenXml = retrieveChildObjects(parentId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Retrieving children of existing parent ou failed.",
                 e);
         }
@@ -142,7 +142,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
         try {
             childrenXml = retrieveChildObjects(childId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Retrieving children of existing leave ou failed.", e);
         }
         assertOrganizationalUnitList(
@@ -177,7 +177,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
                 "Retrieving of children of organizational unit"
                     + " with unknown id has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Retrieving of children of organizational unit"
                 + " with unknown id has not been declined, correctly.", ec, e);
         }
@@ -210,7 +210,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
                     + " with id of resource of another resource type"
                     + " has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Retrieving of children of organizational unit"
                 + " with id of resource of another resource type"
                 + " has not been declined, correctly.", ec, e);
@@ -242,7 +242,7 @@ public class RetrieveChildObjectsTest extends OrganizationalUnitTestBase {
                 "Retrieving of children of organizational unit" + " without id"
                     + " has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Retrieving of children of organizational unit"
                 + " without id" + " has not been declined, correctly.", ec, e);
         }

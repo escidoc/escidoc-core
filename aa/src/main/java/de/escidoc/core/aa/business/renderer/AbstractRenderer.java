@@ -48,7 +48,7 @@ public class AbstractRenderer {
      * 
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
     protected void addXlinkNamespaceValues(final Map<String, Object> values) {
 
@@ -63,7 +63,7 @@ public class AbstractRenderer {
      * 
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
     protected void addStructuralRelationNamespaceValues(
         final Map<String, Object> values) {
@@ -79,7 +79,7 @@ public class AbstractRenderer {
      * 
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
     protected void addPropertiesNamespaceValues(final Map<String, Object> values) {
 
@@ -94,7 +94,7 @@ public class AbstractRenderer {
      * 
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
     protected void addRdfValues(final Map<String, Object> values) {
 

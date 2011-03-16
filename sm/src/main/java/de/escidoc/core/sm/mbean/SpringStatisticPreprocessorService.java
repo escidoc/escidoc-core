@@ -28,8 +28,9 @@
  */
 package de.escidoc.core.sm.mbean;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedOperationParameter;
@@ -44,14 +45,13 @@ import java.util.Map;
  * aggregation-tables. Gets externally triggered, e.g. by a quartz job.
  * 
  * @author MIH, TTE
- * @spring.bean id="mbean.StatisticPreprocessorService"
  * 
  */
 @ManagedResource(objectName = "eSciDocCore:name=StatisticPreprocessorService", description = "Preprocesses the raw statistic data into aggregation-tables.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class SpringStatisticPreprocessorService {
 
-    private static final AppLogger log =
-        new AppLogger(SpringStatisticPreprocessorService.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(SpringStatisticPreprocessorService.class);
     private StatisticPreprocessor preprocessor;
 
     private static final int HOURS_PER_DAY = 24;
@@ -82,16 +82,16 @@ public class SpringStatisticPreprocessorService {
             return;
         }
         try {
-            log.info("preprocessing statistic-data");
+            LOGGER.info("preprocessing statistic-data");
             // call with date of yesterday
             final long time = System.currentTimeMillis() - MILLISECONDS_PER_DAY;
             final Date date = new Date(time);
             preprocessor.execute(date);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             final Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("message", "preprocessing of statistic-data failed");
             errorMessageHandler.putErrorMessage(parameters, e,
-                        de.escidoc.core.common.business.Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
+                        Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
             throw e;
         }
     }
@@ -110,11 +110,11 @@ public class SpringStatisticPreprocessorService {
         try {
             final Date date = new Date(millies);
             preprocessor.execute(date);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             final Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("message", "preprocessing of statistic-data failed");
             errorMessageHandler.putErrorMessage(parameters, e,
-                        de.escidoc.core.common.business.Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
+                        Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
             throw e;
         }
     }
@@ -124,7 +124,6 @@ public class SpringStatisticPreprocessorService {
      * 
      * @param preprocessor
      *            The {@link StatisticPreprocessor}.
-     * @spring.property ref="business.StatisticPreprocessor"
      */
     public void setPreprocessor(final StatisticPreprocessor preprocessor) {
         this.preprocessor = preprocessor;
@@ -135,7 +134,6 @@ public class SpringStatisticPreprocessorService {
      * 
      * @param errorMessageHandler
      *            The ErrorMessageHandler to set.
-     * @spring.property ref="common.ErrorMessageHandler"
      */
     public final void setErrorMessageHandler(
         final ErrorMessageHandler errorMessageHandler) {

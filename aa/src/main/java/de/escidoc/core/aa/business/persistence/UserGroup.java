@@ -34,7 +34,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * Class holding the user group data.
  * 
  * @author sche
- * @aa
+ *
  * 
  */
 public class UserGroup extends UserGroupBase {
@@ -46,7 +46,7 @@ public class UserGroup extends UserGroupBase {
 
     /**
      * @return Returns the href to this
-     *         {@link de.escidoc.core.aa.business.persistence.UserGroup}
+     *         {@link UserGroup}
      *         object.
      */
     public String getHref() {

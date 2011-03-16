@@ -42,7 +42,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeV
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -61,8 +61,8 @@ import java.io.UnsupportedEncodingException;
  */
 public class ItemHandler extends DefaultHandler {
 
-    private static final AppLogger LOG =
-        new AppLogger(ItemHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ItemHandler.class);
 
     private boolean surrogate;
 
@@ -162,8 +162,9 @@ public class ItemHandler extends DefaultHandler {
             final String currentPath = parser.getCurPath();
 
             if (XPATH_ITEM_PROPERTIES.equals(currentPath)) {
-                LOG.debug("Parser reached " + XPATH_ITEM_PROPERTIES);
-
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Parser reached " + XPATH_ITEM_PROPERTIES);
+                }
                 this.parsingProperties = true;
                 this.propertiesHandler = new ItemPropertiesHandler(parser);
                 this.propertiesHandler.startElement(element);
@@ -223,7 +224,9 @@ public class ItemHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
 
         if (XPATH_ITEM_PROPERTIES.equals(currentPath)) {
-            LOG.debug("Parser reached end of " + XPATH_ITEM_PROPERTIES);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_ITEM_PROPERTIES);
+            }
             // parser leaves the XML component element
             this.parsingProperties = false;
             this.propertiesHandler.endElement(element);
@@ -235,7 +238,9 @@ public class ItemHandler extends DefaultHandler {
             this.propertiesHandler = null;
         }
         else if (XPATH_ITEM_METADATA.equals(currentPath)) {
-            LOG.debug("Parser reached end of " + XPATH_ITEM_METADATA);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_ITEM_METADATA);
+            }
             // parser leaves the XML md-records element
             this.parsingMetaData = false;
             this.metadataHandler.endElement(element);
@@ -243,14 +248,18 @@ public class ItemHandler extends DefaultHandler {
             this.metadataHandler = null;
         }
         else if (!surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
-            LOG.debug("Parser reached end of " + XPATH_ITEM_COMPONENTS);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_ITEM_COMPONENTS);
+            }
             this.parsingComponents = false;
             this.componentsHandler.endElement(element);
             this.item.setComponents(this.componentsHandler.getComponents());
             this.componentsHandler = null;
         }
         else if (XPATH_ITEM_RELATION.equals(currentPath)) {
-            LOG.debug("Parser reached end of " + XPATH_ITEM_RELATION);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_ITEM_RELATION);
+            }
             this.parsingRelations = false;
             this.relationHandler.endElement(element);
             // if (this.relationHandler.getRelation() != null) {
@@ -259,7 +268,9 @@ public class ItemHandler extends DefaultHandler {
             this.relationHandler = null;
         }
         else if (!surrogate && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
-            LOG.debug("Parser reached end of " + XPATH_ITEM_CONTENT_STREAMS);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_ITEM_CONTENT_STREAMS);
+            }
             this.parsingContentStreams = false;
             this.contentStreamsHandler.endElement(element);
             this.item.setContentStreams(this.contentStreamsHandler

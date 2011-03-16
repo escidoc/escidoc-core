@@ -1,37 +1,28 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.aop;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -44,12 +35,7 @@ import java.util.regex.Pattern;
  * Interceptor to insert the xml header and an optional (in case access via
  * REST) a style sheet definition into an XML document.
  * 
- * @spring.bean id="common.XmlHeaderInterceptor" factory-method="aspectOf"
- *              lazy-init="false"
- * 
  * @author TTE
- * 
- * @common
  */
 @Aspect
 public class XmlHeaderInterceptor implements Ordered {
@@ -57,8 +43,8 @@ public class XmlHeaderInterceptor implements Ordered {
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(XmlHeaderInterceptor.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(XmlHeaderInterceptor.class);
 
     private static final Pattern PATTERN_XML_HEADER =
         Pattern.compile("<\\?xml version=[^>]+\\?>");
@@ -75,8 +61,8 @@ public class XmlHeaderInterceptor implements Ordered {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.core.Ordered#getOrder()
-     * @common
+     * @see Ordered#getOrder()
+     *
      */
     @Override
     public int getOrder() {
@@ -97,20 +83,13 @@ public class XmlHeaderInterceptor implements Ordered {
      * @return Returns the changed result.
      * @throws Throwable
      *             Thrown in case of an error.
-     * @common
+     *
      */
     @Around("call(public !static java.lang.String de.escidoc.core.*.service.interfaces.*.*(..))"
         + " && within(de.escidoc.core.*.ejb.*Bean)"
         + " && !call(* de.escidoc.core..*.SemanticStoreHandler*.*(..))"
         + " && !call(* de.escidoc.core.common..*.*(..))")
-    public Object processResult(final ProceedingJoinPoint joinPoint)
-        throws Throwable {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
-                "processResult", this));
-        }
-
+    public Object processResult(final ProceedingJoinPoint joinPoint) throws Throwable {
         return post(joinPoint.proceed());
     }
 
@@ -124,7 +103,7 @@ public class XmlHeaderInterceptor implements Ordered {
      * @throws WebserverSystemException
      *             Thrown in case of an internal system error.
      */
-    private Object post(final Object result) throws WebserverSystemException {
+    private static Object post(final Object result) throws WebserverSystemException {
 
         final CharSequence res = (CharSequence) result;
         if (!XML_DOCUMENT_START_PATTERN.matcher(res).find()) {

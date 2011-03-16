@@ -229,7 +229,7 @@ public class ItemTestBase extends OmTestBase {
 
             result = retrieveContent(id, componentId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw e;
         }
         finally {
@@ -1146,7 +1146,7 @@ public class ItemTestBase extends OmTestBase {
                 "/item/components/component[2]/content/@href").getNodeValue();
         Document newItem =
             (Document) substitute(item,
-                "/item/components/component[2]/content/@storage",
+                "/item/components/component[2]/content/orage",
                 storageBeforeCreate);
         Node itemWithoutSecondComponent =
             deleteElement(newItem, "/item/components/component[1]");
@@ -1174,7 +1174,7 @@ public class ItemTestBase extends OmTestBase {
                 "/item/components/component/content/@href").getNodeValue();
         String storageAfterCtreate =
             selectSingleNode(createdItem,
-                "/item/components/component/content/@storage").getNodeValue();
+                "/item/components/component/content/orage").getNodeValue();
         assertEquals("The attribute 'storage' has a wrong valuue",
             storageBeforeCreate, storageAfterCtreate);
         // String retrievedItem = retrieve(theItemId);

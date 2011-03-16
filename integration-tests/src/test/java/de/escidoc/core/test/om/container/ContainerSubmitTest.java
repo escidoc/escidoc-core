@@ -106,7 +106,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
         try {
             submit(theContainerId, paramXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Submitting the pending item failed. ", e);
         }
@@ -115,7 +115,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
         try {
             submittedXml = retrieve(theContainerId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving the revised, submitted item failed. ", e);
         }
@@ -162,7 +162,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
         try {
             submit(theContainerId, paramXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Submitting the revised item failed. ", e);
         }
@@ -171,7 +171,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
         try {
             submittedXml = retrieve(theContainerId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving the revised, submitted item failed. ", e);
         }
@@ -199,7 +199,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
             submit("bla", param);
             fail("No exception occured on submit with non existing id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -224,7 +224,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
             submit(theContainerId, param);
             fail("No exception occured on submit with wrong time stamp.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -245,7 +245,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
             submit(null, param);
             fail("No exception occured on submit with missing id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -264,7 +264,7 @@ public class ContainerSubmitTest extends ContainerTestBase {
             submit(theContainerId, null);
             fail("No exception occured on submit with missing time stamp.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);

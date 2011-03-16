@@ -53,9 +53,9 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
      * @param filterChain
      * @throws IOException
      * @throws ServletException
-     * @see org.springframework.security.ui.SpringSecurityFilter#doFilterHttp(javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse, javax.servlet.FilterChain)
-     * @aa
+     * @see SpringSecurityFilter#doFilterHttp(HttpServletRequest,
+     *      HttpServletResponse, FilterChain)
+     *
      */
     @Override
     protected void doFilterHttp(
@@ -147,8 +147,8 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.security.ui.SpringSecurityFilter#getOrder()
-     * @aa
+     * @see SpringSecurityFilter#getOrder()
+     *
      */
     @Override
     public int getOrder() {

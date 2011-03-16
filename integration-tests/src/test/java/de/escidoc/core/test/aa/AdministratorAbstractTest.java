@@ -259,7 +259,7 @@ public class AdministratorAbstractTest extends GrantTestBase {
         try {
             createdXml = create(CONTEXT_HANDLER_CODE, toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Test init: Context creation failed.", e);
         }
         final String id = getObjidValue(createdXml);
@@ -279,7 +279,7 @@ public class AdministratorAbstractTest extends GrantTestBase {
         try {
             createGrant(grantCreationUserOrGroupId, toBeCreatedGrantXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Test init: Grant creation failed.", e);
         }
 
@@ -288,7 +288,7 @@ public class AdministratorAbstractTest extends GrantTestBase {
         try {
             retrieve(CONTEXT_HANDLER_CODE, id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(
                 "Retrieving created context by context's administrator failed",
                 e);

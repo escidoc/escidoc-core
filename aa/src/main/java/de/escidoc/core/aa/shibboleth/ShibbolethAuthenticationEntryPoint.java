@@ -77,7 +77,7 @@ public class ShibbolethAuthenticationEntryPoint
      * 
      * @param serviceProviderBaseUrl
      *            The serviceProviderBaseUrl to inject.
-     * @aa
+     *
      */
     public void setServiceProviderBaseUrl(final String serviceProviderBaseUrl) {
 
@@ -90,7 +90,7 @@ public class ShibbolethAuthenticationEntryPoint
      * 
      * @param sessionInitiatorPath
      *            The sessionInitiatorPath to inject.
-     * @aa
+     *
      */
     public void setSessionInitiatorPath(final String sessionInitiatorPath) {
 

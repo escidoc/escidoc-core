@@ -118,7 +118,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
             retrieveProperties("unknown");
             fail(ec + " expected but no error occurred!");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -140,7 +140,7 @@ public class ItemRetrievePropertiesTest extends ItemTestBase {
             retrieveProperties(null);
             fail(ec + " expected but no error occurred!");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }

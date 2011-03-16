@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.aop.AopUtil;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.EscidocUserDetails;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
@@ -53,11 +53,7 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
  * It must be the first Interceptor after the StatisticInterceptor, i.e. it has
  * to be the second interceptor in the chain.
  * 
- * @spring.bean id="eSciDoc.core.common.security.AuthenticationInterceptor"
- *              factory-method="aspectOf" lazy-init="false"
- * 
  * @author TTE
- * @common
  */
 @Aspect
 public class AuthenticationInterceptor implements Ordered {
@@ -65,8 +61,8 @@ public class AuthenticationInterceptor implements Ordered {
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(AuthenticationInterceptor.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(AuthenticationInterceptor.class);
 
     private static final String HANDLE_MUST_NOT_BE_NULL =
         "eSciDoc user handle must not be null";
@@ -92,8 +88,8 @@ public class AuthenticationInterceptor implements Ordered {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.core.Ordered#getOrder()
-     * @common
+     * @see Ordered#getOrder()
+     *
      */
     @Override
     public int getOrder() {
@@ -111,21 +107,20 @@ public class AuthenticationInterceptor implements Ordered {
      *            The current {@link JoinPoint}.
      * @throws Throwable
      *             Thrown in case of an error.
-     * @common
+     *
      */
     @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))")
-//        + " && within(de.escidoc.core.*.ejb.*Bean)")
     public void authenticate(final JoinPoint joinPoint) throws Throwable {
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(StringUtility.format(
                     "authenticate", this, UserContext.getSecurityContext()));
         }
 
         doAuthentication();
 
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(StringUtility.format(
                     "continuation", this, UserContext.getSecurityContext()));
         }
     }
@@ -149,7 +144,7 @@ public class AuthenticationInterceptor implements Ordered {
      *             Thrown if no user is found for the handle
      * @throws WebserverSystemException
      *             Thrown in case of an internal error
-     * @common
+     *
      */
     private void doAuthentication() throws AuthenticationException,
         WebserverSystemException {
@@ -165,7 +160,7 @@ public class AuthenticationInterceptor implements Ordered {
         // if the user is the internal user, we don't
         // need to authorize since this has already been done.
         if (authenticateInternalUser()) {
-            LOG.debug(INTERNAL_INTERCEPTION_IS_DISABLED);
+            LOGGER.debug(INTERNAL_INTERCEPTION_IS_DISABLED);
             return;
         }
 
@@ -188,12 +183,12 @@ public class AuthenticationInterceptor implements Ordered {
                 .setPrincipal((EscidocUserDetails) userDetailsService
                     .loadUserByUsername(handle));
         }
-        catch (UsernameNotFoundException e) {
+        catch (final UsernameNotFoundException e) {
             throw new AuthenticationException(StringUtility
                     .format(
                             FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, handle), e);
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new WebserverSystemException(e.getMessage(), e);
         }
         boolean wasExternalBefore = false;
@@ -205,14 +200,19 @@ public class AuthenticationInterceptor implements Ordered {
             wasExternalBefore = UserContext.runAsInternalUser();
 
             userManagementWrapper.initHandleExpiryTimestamp(handle);
-        } catch (SystemException e) {
+        } catch (final SystemException e) {
             throw new WebserverSystemException(e);
         } finally {
             if (wasExternalBefore) {
                 try {
                     UserContext.runAsExternalUser();
-                } catch (WebserverSystemException e) {
-                    LOG.debug("Error on changing user context.", e);
+                } catch (final WebserverSystemException e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on changing user context.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on changing user context.", e);
+                    }
                 }
             }
         }
@@ -226,10 +226,9 @@ public class AuthenticationInterceptor implements Ordered {
      * @return Returns <code>true</code> in case of successfully authentication.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error
-     * @common
+     *
      */
-    private boolean authenticateInternalUser() throws WebserverSystemException {
-
+    private static boolean authenticateInternalUser() throws WebserverSystemException {
         return UserContext.isInternalUser();
     }
 
@@ -238,10 +237,6 @@ public class AuthenticationInterceptor implements Ordered {
      * 
      * @param userDetailsService
      *            the {@link UserDetailsService} to inject.
-     * 
-     * @spring.property 
-     *                  ref="eSciDoc.core.common.security.EscidocUserDetailsService"
-     * @common
      */
     public void setUserDetailsService(
         final UserDetailsService userDetailsService) {
@@ -254,9 +249,6 @@ public class AuthenticationInterceptor implements Ordered {
      * 
      * @param userManagementWrapper
      *            the {@link UserManagementWrapper} to inject.
-     * 
-     * @spring.property ref="business.UserManagementWrapper"
-     * @common
      */
     public void setUserManagementWrapper(
         final UserManagementWrapperInterface userManagementWrapper) {

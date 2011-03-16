@@ -97,7 +97,7 @@ public class ItemContentURLTest extends ItemTestBase {
         try {
             delete(this.theItemId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // do nothing
         }
     }
@@ -338,7 +338,7 @@ public class ItemContentURLTest extends ItemTestBase {
                 (HttpResponse) sfc.create(fileInputStream,
                     testUploadFileMimeType, testUploadFile);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No HTTPMethod. ", httpRes);
@@ -389,7 +389,7 @@ public class ItemContentURLTest extends ItemTestBase {
             this.theItemId = getObjidValue(this.theItemXml);
             fail("No exception: Create with Fedora URL.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // Class ec = InvalidContentException.class;
             Class ec = FileNotFoundException.class;
             assertExceptionType(ec, e);
@@ -429,7 +429,7 @@ public class ItemContentURLTest extends ItemTestBase {
             this.theItemXml = update(this.theItemId, this.theItemXml);
             fail("No exception: Update with Fedora URL.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // Class ec = InvalidContentException.class;
             Class ec = FileNotFoundException.class;
             assertExceptionType(ec, e);

@@ -48,7 +48,7 @@ public interface SmReportDefinitionsDaoInterface {
      * @param reportDefinition
      *            The ReportDefinition as Hibernate Object.
      * 
-     * @sm
+     *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
@@ -63,7 +63,7 @@ public interface SmReportDefinitionsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     void update(final ReportDefinition reportDefinition)
         throws SqlDatabaseSystemException;
@@ -76,7 +76,7 @@ public interface SmReportDefinitionsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     void delete(final ReportDefinition reportDefinition)
         throws SqlDatabaseSystemException;
@@ -92,7 +92,7 @@ public interface SmReportDefinitionsDaoInterface {
      * @throws ReportDefinitionNotFoundException
      *             Thrown if report-definition with given id was not found.
      * 
-     * @sm
+     *
      */
     ReportDefinition retrieve(final String id)
         throws SqlDatabaseSystemException, ReportDefinitionNotFoundException;
@@ -104,7 +104,7 @@ public interface SmReportDefinitionsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<ReportDefinition> retrieveReportDefinitions()
         throws SqlDatabaseSystemException;

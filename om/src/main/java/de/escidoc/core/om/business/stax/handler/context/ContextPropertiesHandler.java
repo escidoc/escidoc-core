@@ -31,6 +31,7 @@
  */
 package de.escidoc.core.om.business.stax.handler.context;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -38,7 +39,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingElementValue
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
@@ -61,7 +62,7 @@ import java.util.Map;
  * <code>xlink:href</code> attribute in the REST case and <code>objid</code>
  * attribute in the SOAP case.
  * 
- * @om
+ *
  */
 public class ContextPropertiesHandler extends DefaultHandler {
 
@@ -74,8 +75,8 @@ public class ContextPropertiesHandler extends DefaultHandler {
 
     private final List<String> orgunits = new ArrayList<String>();
 
-    private static final AppLogger logger =
-        new AppLogger(ContextPropertiesHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContextPropertiesHandler.class);
 
     /**
      * 
@@ -131,7 +132,7 @@ public class ContextPropertiesHandler extends DefaultHandler {
                         final String xlinkHref =
                             element
                                 .getAttribute(
-                                    de.escidoc.core.common.business.Constants.XLINK_URI,
+                                    Constants.XLINK_URI,
                                     "href").getValue();
                         id = XmlUtility.getIdFromURI(xlinkHref);
 
@@ -154,18 +155,18 @@ public class ContextPropertiesHandler extends DefaultHandler {
                             id, TripleStoreUtility.PROP_PUBLIC_STATUS);
 
                     if (!orgUnitStatus
-                        .equals(de.escidoc.core.common.business.Constants.STATUS_OU_OPENED)) {
+                        .equals(Constants.STATUS_OU_OPENED)) {
                         throw new InvalidStatusException("organizational-unit with id "
                                 + id
                                 + " should be in status "
-                                + de.escidoc.core.common.business.Constants.STATUS_OU_OPENED
+                                + Constants.STATUS_OU_OPENED
                                 + " but is in status " + orgUnitStatus);
                     }
                     this.orgunits.add(id);
                     this.propertiesMap.put(
                         Elements.ELEMENT_ORGANIZATIONAL_UNITS, this.orgunits);
                 }
-                catch (NoSuchAttributeException e) {
+                catch (final NoSuchAttributeException e) {
                     throw new ReadonlyAttributeViolationException(e);
                 }
             }

@@ -104,7 +104,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
         try {
             ouListXml = retrieveOrganizationalUnits(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(msg, e);
         }
         assertXmlValidSrwResponse(ouListXml);
@@ -145,7 +145,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
             ouListXml =
                 retrieveOrganizationalUnits(new HashMap<String, String[]>());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(msg, e);
         }
         assertXmlValidSrwResponse(ouListXml);
@@ -218,7 +218,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
         try {
             ouListXml = retrieveOrganizationalUnits(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(msg, e);
         }
         assertOrganizationalUnitSrwList(msg, null, expectedOus, ouListXml);
@@ -287,7 +287,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
         try {
             ouListXml = retrieveOrganizationalUnits(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(msg, e);
         }
         assertOrganizationalUnitSrwList(msg, null, expectedOus, ouListXml);
@@ -328,7 +328,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
         try {
             ouListXml = retrieveOrganizationalUnits(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(msg, e);
         }
         assertOrganizationalUnitSrwList(msg, null,
@@ -380,7 +380,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
         try {
             ouListXml = retrieveOrganizationalUnits(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(msg, e);
         }
         assertOrganizationalUnitSrwList(msg, null,
@@ -434,7 +434,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
         try {
             ouListXml = retrieveOrganizationalUnits(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(msg, e);
         }
 
@@ -501,7 +501,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
         try {
             ouListXml = retrieveOrganizationalUnits(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(msg, e);
         }
 
@@ -534,7 +534,7 @@ public class RetrieveOrganizationalUnitsTest extends OrganizationalUnitTestBase 
         try {
             result = retrieveOrganizationalUnits(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);

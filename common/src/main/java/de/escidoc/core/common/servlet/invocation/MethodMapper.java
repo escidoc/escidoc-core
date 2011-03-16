@@ -1,36 +1,30 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.servlet.invocation;
 
 import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
 import de.escidoc.core.common.util.xml.XmlUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -59,9 +53,11 @@ import java.util.Map;
  * paths.
  * 
  * @author MSC
- * @common
+ *
  */
 public class MethodMapper extends XMLBase implements MapperInterface {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodMapper.class);
 
     private List<Document> methodMappings;
 
@@ -77,7 +73,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     /**
      * Default constructor.
      * 
-     * @common
+     *
      */
     public MethodMapper() {
     }
@@ -95,7 +91,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             If anything fails.
      * @throws TransformerException
      *             Thrown if an xml transformation fails.
-     * @common
+     *
      */
     public MethodMapper(final String descriptor)
         throws ParserConfigurationException, SAXException, IOException,
@@ -119,7 +115,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             If anything fails.
      * @throws TransformerException
      *             Thrown if an xml transformation fails.
-     * @common
+     *
      */
     public MethodMapper(final Collection<String> descriptors)
         throws ParserConfigurationException, SAXException, IOException,
@@ -143,7 +139,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             If anything fails.
      * @throws TransformerException
      *             Thrown if an xml transformation fails.
-     * @common
+     *
      */
     public final void setDescriptorFilenames(
             final Iterable<String> descriptorFilenames)
@@ -173,7 +169,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             If anything fails.
      * @throws TransformerException
      *             Thrown if an xml transformation fails.
-     * @common
+     *
      */
     private void init() throws ParserConfigurationException, SAXException,
         IOException, TransformerException {
@@ -192,26 +188,27 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         setResources(initResources());
 
         // Debug output
-        final Iterator<Node> defIter =
-            getDefinitions(DEFINITION_VAR_ELEMENT).iterator();
-        getLogger().debug("Definitions (Variables):");
-        while (defIter.hasNext()) {
-            final Node next = defIter.next();
-            getLogger()
-                .debug(
-                    "Node: " + next.getNodeName() + " name='"
+        final Iterator<Node> defIter = getDefinitions(DEFINITION_VAR_ELEMENT).iterator();
+        if(LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Definitions (Variables):");
+        }
+        if(LOGGER.isDebugEnabled()) {
+            while (defIter.hasNext()) {
+                final Node next = defIter.next();
+                LOGGER.debug("Node: " + next.getNodeName() + " name='"
                         + getAttributeValue(next, DEFINITION_VAR_NAME_ATTR)
                         + "', regexp='"
                         + getAttributeValue(next, DEFINITION_VAR_REGEXP_ATTR)
                         + '\'');
+            }
         }
         final Iterator<String> resIter = getResources().keySet().iterator();
-        getLogger().debug("Resources:");
-        while (resIter.hasNext()) {
-            getLogger().debug(
-                getResources().get(resIter.next()).toString());
+        if(LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Resources:");
+            while (resIter.hasNext()) {
+                LOGGER.debug(getResources().get(resIter.next()).toString());
+            }
         }
-        getLogger().debug("Finished.");
     }
 
     /**
@@ -222,7 +219,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return The collection of definitions.
      * @throws TransformerException
      *             Thrown if an xml transformation fails.
-     * @common
+     *
      */
     private Collection<Node> initDefinitions(final String type)
         throws TransformerException {
@@ -247,7 +244,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @return The map of resources.
      * @throws TransformerException
      *             Thrown if an xml transformation fails.
-     * @common
+     *
      */
     private Map<String, Resource> initResources() throws TransformerException {
         final Map<String, Resource> result = new HashMap<String, Resource>();
@@ -278,7 +275,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             If no matching method is found.
      * @throws EncodingSystemException
      *             e
-     * @common
+     *
      */
     @Override
     public BeanMethod getMethod(final HttpServletRequest request)
@@ -308,7 +305,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *             If no matching method is found.
      * @throws EncodingSystemException
      *             e
-     * @common
+     *
      */
     @Override
     public BeanMethod getMethod(
@@ -320,7 +317,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         try {
             decodedUri = URLDecoder.decode(uri, XmlUtility.CHARACTER_ENCODING);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
         final Resource resource = getResource(decodedUri);
@@ -341,7 +338,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @param requestUri
      *            The request uri.
      * @return The resource name.
-     * @common
+     *
      */
     public Resource getResource(final String requestUri) {
 
@@ -362,7 +359,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * @return Returns the descriptors.
-     * @common
+     *
      */
     public Map getDescriptors() {
 
@@ -372,7 +369,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     /**
      * @param descriptors
      *            The descriptors to set.
-     * @common
+     *
      */
     public void setDescriptors(final Map descriptors) {
 
@@ -385,7 +382,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      * @param type
      *            The type.
      * @return The definitions.
-     * @common
+     *
      */
     public Collection getDefinitions(final String type) {
 
@@ -399,7 +396,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *            The type.
      * @param newDefinitions
      *            The collection of definitions.
-     * @common
+     *
      */
     public void putDefinitions(
         final String type, final Collection<Node> newDefinitions) {
@@ -412,7 +409,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * @return Returns the definitions.
-     * @common
+     *
      */
     public Map<String, Collection> getDefinitions() {
         return definitions;
@@ -421,7 +418,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     /**
      * @param definitions
      *            The definitions to set.
-     * @common
+     *
      */
     public void setDefinitions(final Map<String, Collection> definitions) {
 
@@ -430,7 +427,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
     /**
      * @return Returns the resources.
-     * @common
+     *
      */
     public Map<String, Resource> getResources() {
         return resources;
@@ -439,7 +436,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
     /**
      * @param resources
      *            The resources to set.
-     * @common
+     *
      */
     public void setResources(final Map<String, Resource> resources) {
         this.resources = resources;

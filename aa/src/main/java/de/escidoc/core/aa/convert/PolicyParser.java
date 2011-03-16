@@ -59,7 +59,6 @@ import java.util.regex.Pattern;
  * This is a helper class to convert an XACML policy into an SQL / Lucene
  * fragment.
  * 
- * @spring.bean id="convert.PolicyParser"
  * @author SCHE
  */
 public class PolicyParser {
@@ -129,7 +128,7 @@ public class PolicyParser {
      * 
      * @return true if the given expression is an action id
      */
-    private boolean isActionId(final Evaluatable evaluatable) {
+    private static boolean isActionId(final Evaluatable evaluatable) {
         return evaluatable != null
             && evaluatable instanceof AttributeDesignator
             && ((AttributeDesignator) evaluatable)
@@ -174,7 +173,7 @@ public class PolicyParser {
      * @return true if the given value list contains a value which matches the
      *         given action
      */
-    private boolean matches(final Object valueList, final String action) {
+    private static boolean matches(final Object valueList, final String action) {
 
         if (!(valueList instanceof StringAttribute)) {
             throw new IllegalArgumentException(
@@ -356,7 +355,6 @@ public class PolicyParser {
     /**
      * Injects the condition parser object.
      * 
-     * @spring.property ref="convert.ConditionParser"
      * @param con
      *            condition parser from Spring
      */
@@ -367,7 +365,6 @@ public class PolicyParser {
     /**
      * Injects the filter values object.
      * 
-     * @spring.property ref="filter.Values"
      * @param values
      *            filter values object from Spring
      */

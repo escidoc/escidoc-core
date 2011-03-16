@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyExce
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 
 /**
@@ -43,8 +43,8 @@ import de.escidoc.core.common.util.string.StringUtility;
  */
 public class ContextHandlerDelete extends ContextHandlerCreate {
 
-    private static final AppLogger LOGGER = new AppLogger(
-        ContextHandlerDelete.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ContextHandlerDelete.class);
 
     /**
      * Removes an context from repository.

@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2007-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora;
 
 import de.escidoc.core.common.business.Constants;
@@ -40,9 +32,8 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import de.escidoc.core.common.util.list.ListSorting;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.nsdl.mptstore.util.NTriplesUtil;
@@ -75,7 +66,7 @@ import java.util.regex.Pattern;
  * 
  * @author FRS
  * 
- * @common
+ *
  * 
  */
 public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
@@ -120,8 +111,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
     /**
      * Injects the data source.
-     * 
-     * @spring.property ref="fedora.triplestore.DataSource"
+     *
      * @param driverManagerDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
@@ -148,8 +138,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             + "format=CSV&" + "limit=0&" + "distinct=on&" + "stream=off&"
             + "query=";
 
-    private static final AppLogger LOGGER =
-        new AppLogger(SpoItqlTripleStoreUtility.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(SpoItqlTripleStoreUtility.class);
 
     private final String fedoraRdfXmlUrl;
 
@@ -195,8 +185,10 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             else if (format == Format.N_TRIPLES) {
                 queryAddress = new StringBuffer(fedoraItqlNtriplesUrl);
             }
-            else
-                queryAddress = format == Format.CSV ? new StringBuffer(fedoraItqlCsvUrl) : new StringBuffer(fedoraItqlNtriplesUrl);
+            else {
+                queryAddress = format == Format.CSV ? new StringBuffer(fedoraItqlCsvUrl) :
+                        new StringBuffer(fedoraItqlNtriplesUrl);
+            }
 
             queryAddress.append(URLEncoder.encode(itqlQuery,
                 XmlUtility.CHARACTER_ENCODING));
@@ -236,10 +228,6 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     private static String doRequest(final String address)
         throws TripleStoreSystemException, InvalidTripleStoreQueryException,
         InvalidTripleStoreOutputFormatException {
-
-        LOGGER.debug(StringUtility.format("doRequest",
-            address));
-
         String result;
         try {
             final URL url = new URL(address);
@@ -304,9 +292,9 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @param predicate
      * @return
      * @throws TripleStoreSystemException
-     * @see de.escidoc.core.common.business.fedora.TripleStoreUtility
+     * @see TripleStoreUtility
      *      #executeQueryId(java.lang.String, boolean, java.lang.String)
-     * @common
+     *
      */
     @Override
     public List<String> executeQueryId(
@@ -392,9 +380,9 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @param predicate
      * @return
      * @throws TripleStoreSystemException
-     * @see de.escidoc.core.common.business.fedora.TripleStoreUtility
+     * @see TripleStoreUtility
      *      #executeQueryLiteral(java.lang.String, boolean, java.lang.String)
-     * @common
+     *
      */
     @Override
     protected List<String> executeQueryLiteral(
@@ -411,9 +399,9 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @param namespaceUri
      * @return
      * @throws TripleStoreSystemException
-     * @see de.escidoc.core.common.business.fedora.TripleStoreUtility
+     * @see TripleStoreUtility
      *      #getRelation(java.lang.String, java.lang.String, java.lang.String)
-     * @common
+     *
      */
     @Override
     public String getRelation(
@@ -435,10 +423,10 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @param namespaceUri
      * @return
      * @throws TripleStoreSystemException
-     * @see de.escidoc.core.common.business.fedora.TripleStoreUtility
+     * @see TripleStoreUtility
      *      #getProperties(java.lang.String, java.util.Collection,
      *      java.lang.String)
-     * @common
+     *
      */
     @Override
     public Map<String, String> getProperties(
@@ -528,7 +516,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @return Returns the result list of the query.
      * @throws TripleStoreSystemException
      *             Thrown in case of an internal triple store error.
-     * @common
+     *
      */
     @Override
     public List<String> retrieve(final String query)
@@ -598,7 +586,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * 
      * 
      * @return Returns the where clause searching for the specified subjects.
-     * @common
+     *
      */
     @Override
     public StringBuffer getRetrieveWhereClause(
@@ -696,7 +684,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      *            targetIsSubject
      * @return Returns the starting clause "select $s from <#ri> where " in a
      *         {@link StringBuffer}
-     * @common
+     *
      */
     @Override
     public StringBuffer getRetrieveSelectClause(
@@ -707,7 +695,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
 
 
-    private String getQueryPartProperties(final Map<String, String> filters) {
+    private static String getQueryPartProperties(final Map<String, String> filters) {
         if (filters.isEmpty()) {
             // just provide NO query part if there are no predicates properties
             return "";
@@ -745,8 +733,8 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @return
      * @throws InvalidContentException
      * @throws TripleStoreSystemException
-     * @see de.escidoc.core.common.business.fedora.TripleStoreUtility#getObjectList(java.lang.String,
-     *      java.lang.String)
+     * @see TripleStoreUtility#getObjectList(String,
+     *      String)
      */
     @Override
     public String getObjectList(
@@ -850,7 +838,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
 
 
-    private String getQueryPartId(final Set<String> ids) {
+    private static String getQueryPartId(final Set<String> ids) {
         if (ids == null || ids.isEmpty()) {
             return "";
         }
@@ -913,7 +901,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
      * @return
      */
     @Deprecated
-    private String getObjectsToFind(final CharSequence objectType) {
+    private static String getObjectsToFind(final CharSequence objectType) {
         final Matcher matcher =
             PATTERN_CONVERT_TRIPLESTORE_OBJECT_TYPE.matcher(objectType);
         final StringBuilder result = new StringBuilder();

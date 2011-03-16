@@ -49,7 +49,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.date.Iso8601Util;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.WovContentRelationsRetrieveHandler;
 import de.escidoc.core.common.util.xml.Elements;
@@ -81,8 +81,8 @@ import java.util.Set;
 public class ItemHandlerRetrieve extends ItemHandlerBase
     implements ItemRendererInterface {
 
-    private static final AppLogger LOGGER = new AppLogger(
-        ItemHandlerRetrieve.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ItemHandlerRetrieve.class);
 
     /*
      * (non-Javadoc)
@@ -180,7 +180,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                     renderedComponents.append(renderComponent(componentId,
                         commonValues, false));
                 }
-                catch (ComponentNotFoundException e) {
+                catch (final ComponentNotFoundException e) {
                     throw new IntegritySystemException(e);
                 }
             }
@@ -362,7 +362,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                     content.append(mdRecordContent);
                 }
             }
-            catch (MdRecordNotFoundException e) {
+            catch (final MdRecordNotFoundException e) {
                 throw new WebserverSystemException(
                     "Metadata record previously found in list not found.", e);
             }
@@ -378,7 +378,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                         content.append(renderMdRecord(mdRecordName,
                             commonValues, true, false));
                     }
-                    catch (MdRecordNotFoundException e) {
+                    catch (final MdRecordNotFoundException e) {
                         throw new WebserverSystemException(
                             "Metadata record previously found in list not found.",
                             e);
@@ -472,7 +472,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.put(XmlTemplateProvider.MD_RECORD_CONTENT,
                 ds.toString(XmlUtility.CHARACTER_ENCODING));
         }
-        catch (EncodingSystemException e) {
+        catch (final EncodingSystemException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
@@ -628,7 +628,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                     values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_CONTENT,
                         ds.toStringUTF8());
                 }
-                catch (EncodingSystemException e) {
+                catch (final EncodingSystemException e) {
                     throw new WebserverSystemException(e);
                 }
             }
@@ -700,7 +700,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 content.append(renderComponentMdRecord(componentId,
                     mdRecordName, commonValues, false));
             }
-            catch (MdRecordNotFoundException e) {
+            catch (final MdRecordNotFoundException e) {
                 throw new IntegritySystemException(e.getMessage(), e);
             }
         }
@@ -780,7 +780,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.put(XmlTemplateProvider.MD_RECORD_CONTENT,
                 ds.toString(XmlUtility.CHARACTER_ENCODING));
         }
-        catch (EncodingSystemException e) {
+        catch (final EncodingSystemException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
@@ -913,8 +913,13 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             List<String> ids = new ArrayList<String>();
             try {
                 ids = getTripleStoreUtility().retrieve(query.toString());
-            } catch (TripleStoreSystemException e) {
-                LOGGER.debug("Error on retrieving data from triple store.", e);
+            } catch (final TripleStoreSystemException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on retrieving data from triple store.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on retrieving data from triple store.", e);
+                }
             }
             final Iterator<String> idIter = ids.iterator();
             final Collection<Map<String, String>> entries =
@@ -953,7 +958,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 setItem(itemId);
                 renderedEntries.add(render());
             }
-            catch (ResourceNotFoundException e) {
+            catch (final ResourceNotFoundException e) {
                 throw new WebserverSystemException("FedoraItemHandler.retrieveItems: can not retrieve object "
                         + itemId + ". ResourceNotFoundException: "
                         + e.getCause() + '.', e);
@@ -1027,7 +1032,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values
                 .put(XmlTemplateProvider.VAR_ITEM_CREATION_DATE, creationDate);
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             throw new ItemNotFoundException(e);
         }
 
@@ -1218,14 +1223,14 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             try {
                 relation = new Relation(id);
             }
-            catch (ResourceNotFoundException e) {
+            catch (final ResourceNotFoundException e) {
                 throw new WebserverSystemException("unreachable", e);
             }
             final byte[] wov;
             try {
                 wov = relation.getWov().getStream();
             }
-            catch (StreamNotFoundException e) {
+            catch (final StreamNotFoundException e) {
                 throw new IntegritySystemException("unreachable", e);
             }
             final StaxParser sp = new StaxParser();
@@ -1237,7 +1242,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 sp.parse(wov);
                 sp.clearHandlerChain();
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException("unreachable", e);
             }
             final String status = wovHandler.getStatus();
@@ -1278,18 +1283,18 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                 Iso8601Util.getIso8601(Iso8601Util.parseIso8601(item
                     .getLastModificationDate())));
         }
-        catch (ParseException e) {
+        catch (final ParseException e) {
             try {
                 throw new WebserverSystemException(
                     "Unable to parse last-modification-date '"
                         + item.getLastModificationDate() + "' of item '"
                         + item.getId() + "'!", e);
             }
-            catch (FedoraSystemException e1) {
+            catch (final FedoraSystemException e1) {
                 throw new WebserverSystemException(e1);
             }
         }
-        catch (FedoraSystemException e) {
+        catch (final FedoraSystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -1352,7 +1357,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         return values;
     }
 
-    private Map<String, Object> getRelationValues(final Item item)
+    private static Map<String, Object> getRelationValues(final Item item)
         throws FedoraSystemException, IntegritySystemException,
         XmlParserSystemException, WebserverSystemException,
         TripleStoreSystemException {
@@ -1420,7 +1425,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
             values.put("resourceOperationNames", getTripleStoreUtility()
                 .getMethodNames(item.getId()));
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
 

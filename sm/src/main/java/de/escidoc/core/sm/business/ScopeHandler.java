@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryE
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.sm.business.filter.ScopeFilter;
@@ -54,13 +54,12 @@ import java.util.Map;
 /**
  * An statistic Scope resource handler.
  * 
- * @spring.bean id="business.ScopeHandler" scope="prototype"
  * @author MIH
  */
 public class ScopeHandler implements ScopeHandlerInterface {
 
-    private static final AppLogger LOGGER = new AppLogger(
-        ScopeHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ScopeHandler.class);
 
     private SmScopesDaoInterface dao;
 
@@ -87,21 +86,16 @@ public class ScopeHandler implements ScopeHandlerInterface {
     @Override
     public String create(final String xmlData)
         throws MissingMethodParameterException, SystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ScopeHandler does create");
-        }
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
-
         // parse
         final StaxParser sp = new StaxParser();
         final ScopeStaxHandler handler = new ScopeStaxHandler();
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
-        }
-        catch (Exception e) {
+        } catch (final Exception e) {
             throw new SystemException(e);
         }
 
@@ -138,9 +132,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
     @Override
     public void delete(final String id) throws ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ScopeHandler does delete");
-        }
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -169,9 +160,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
     @Override
     public String retrieve(final String id) throws ScopeNotFoundException,
         MissingMethodParameterException, SystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ScopeHandler does retrieve");
-        }
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -264,9 +252,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
     public String update(final String id, final String xmlData)
         throws ScopeNotFoundException, MissingMethodParameterException,
         SystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ScopeHandler does update");
-        }
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -282,7 +267,7 @@ public class ScopeHandler implements ScopeHandlerInterface {
         try {
             sp.parse(xmlData);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SystemException(e);
         }
 
@@ -300,7 +285,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
     /**
      * Setter for the dao.
      * 
-     * @spring.property ref="persistence.SmScopesDao"
      * @param dao
      *            The data access object.
      * 
@@ -314,7 +298,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * 
      * @param filterUtility
      *            The filterUtility to set.
-     * @spring.property ref="business.sm.FilterUtility"
      */
     public final void setFilterUtility(final SmFilterUtility filterUtility) {
         this.filterUtility = filterUtility;
@@ -325,9 +308,6 @@ public class ScopeHandler implements ScopeHandlerInterface {
      * 
      * @param renderer
      *            The renderer to inject.
-     * 
-     * @spring.property 
-     *                  ref="eSciDoc.core.aa.business.renderer.VelocityXmlScopeRenderer"
      */
     public void setRenderer(final ScopeRendererInterface renderer) {
         this.renderer = renderer;

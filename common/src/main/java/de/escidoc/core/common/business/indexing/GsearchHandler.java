@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.indexing;
 
 import java.io.ByteArrayInputStream;
@@ -43,7 +35,7 @@ import org.apache.commons.lang.StringUtils;
 import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.GsearchIndexConfigurationHandler;
@@ -53,13 +45,10 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 /**
  * Execute http-request to fedoragsearch. Update with requestIndexing, delete
  * with requestDeletion.
- * 
- * @spring.bean id = "common.business.indexing.GsearchHandler"
  */
 public class GsearchHandler {
 
-    private static final AppLogger log =
-        new AppLogger(GsearchHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(GsearchHandler.class);
 
     private Map<String, Map<String, String>> 
                                 indexConfigurations;
@@ -137,15 +126,14 @@ public class GsearchHandler {
             updateIndexParams += stylesheetParameters;
 
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
-            if (log.isDebugEnabled()) {
-                log.debug("requesting " + updateIndexParams 
-                                + " from " + gsearchUrl);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("requesting " + updateIndexParams + " from " + gsearchUrl);
             }
             
             final String response = connectionUtility.getRequestURLAsString(
                                     new URL(gsearchUrl + updateIndexParams));
-            if (log.isDebugEnabled()) {
-                log.debug("response: " + response);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("response: " + response);
             }
 
             // Catch Exceptions
@@ -154,10 +142,10 @@ public class GsearchHandler {
             
             return response;
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new ApplicationServerSystemException("Error while indexing resource.", e);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new ApplicationServerSystemException("Error while indexing resource.", e);
         }
     }
@@ -206,14 +194,13 @@ public class GsearchHandler {
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
-            if (log.isDebugEnabled()) {
-                log.debug("requesting " + deleteIndexParams 
-                                + " from " + gsearchUrl);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("requesting " + deleteIndexParams + " from " + gsearchUrl);
             }
             final String response = connectionUtility.getRequestURLAsString(
                                     new URL(gsearchUrl + deleteIndexParams));
-            if (log.isDebugEnabled()) {
-                log.debug("response: " + response);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("response: " + response);
             }
 
             // Catch Exceptions
@@ -222,7 +209,7 @@ public class GsearchHandler {
 
             return response;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -269,14 +256,13 @@ public class GsearchHandler {
                     if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                         deleteIndexDirs();
                     }
-                    if (log.isDebugEnabled()) {
-                        log.debug("requesting " + createEmptyParams 
-                                        + " from " + gsearchUrl);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("requesting " + createEmptyParams + " from " + gsearchUrl);
                     }
                     response = connectionUtility.getRequestURLAsString(
                             new URL(gsearchUrl + createEmptyParams));
-                    if (log.isDebugEnabled()) {
-                        log.debug("response: " + response);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("response: " + response);
                     }
                     if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                         throw new Exception(response);
@@ -288,7 +274,7 @@ public class GsearchHandler {
             }
             return response;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -324,14 +310,13 @@ public class GsearchHandler {
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.GSEARCH_URL);
             connectionUtility.setTimeout(Constants.REQUEST_TIMEOUT);
-            if (log.isDebugEnabled()) {
-                log.debug("requesting " + optimizeIndexParams 
-                                + " from " + gsearchUrl);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("requesting " + optimizeIndexParams + " from " + gsearchUrl);
             }
             final String response = connectionUtility.getRequestURLAsString(
                             new URL(gsearchUrl + optimizeIndexParams));
-            if (log.isDebugEnabled()) {
-                log.debug("response: " + response);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("response: " + response);
             }
             // Catch Exceptions
             if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
@@ -339,7 +324,7 @@ public class GsearchHandler {
             }
             return response;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -379,7 +364,7 @@ public class GsearchHandler {
                 .getBytes(XmlUtility.CHARACTER_ENCODING)));
             return handler.getGsearchIndexConfiguration();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -419,7 +404,7 @@ public class GsearchHandler {
                 .getBytes(XmlUtility.CHARACTER_ENCODING)));
             return handler.getGsearchRepositoryInfo();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -515,16 +500,16 @@ public class GsearchHandler {
                         Constants.INDEX_NAME_MATCHER.reset(
                                 Constants.GSEARCH_CREATE_EMPTY_INDEX_PARAMS)
                                                         .replaceFirst(myIndex);
-                    if (log.isDebugEnabled()) {
-                        log.debug("creating empty index");
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("creating empty index");
                     }
                     response = connectionUtility.getRequestURLAsString(
                             new URL(gsearchUrl + createEmptyParams));
                     if (Constants.EXCEPTION_MATCHER.reset(response).matches()) {
                         throw new ApplicationServerSystemException(response);
                     }
-                    if (log.isDebugEnabled()) {
-                        log.debug("retrying request " + request);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("retrying request " + request);
                     }
                     response = connectionUtility.getRequestURLAsString(
                             new URL(gsearchUrl + request));
@@ -542,9 +527,9 @@ public class GsearchHandler {
                     throw new ApplicationServerSystemException(response);
                 }
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
-        } catch (WebserverSystemException e) {
+        } catch (final WebserverSystemException e) {
             throw new ApplicationServerSystemException(e.getMessage(), e);
         }
     }
@@ -557,16 +542,20 @@ public class GsearchHandler {
      * 
      * @sb
      */
-    private void deleteLock(final String response) {
+    private static void deleteLock(final String response) {
         try {
             String lockfilePath =
                 response.replaceFirst("(?s).*Lock@", "");
             lockfilePath = lockfilePath.replaceFirst("(?s)<.*", "");
             final File file = new File(lockfilePath);
             file.delete();
-        }
-        catch (Exception e) {
-            log.error(e);
+        } catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on deleting lock.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on deleting lock.", e);
+            }
         }
     }
     
@@ -586,8 +575,13 @@ public class GsearchHandler {
                 final File indexDir = new File(indexRootDir, indexe);
                 deleteDir(indexDir);
             }
-        } catch (Exception e) {
-            log.error(e);
+        } catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on deleting index directories.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on deleting index directories.", e);
+            }
         }
     }
 
@@ -618,8 +612,6 @@ public class GsearchHandler {
      * 
      * @param connectionUtility
      *            The HTTP connection utility.
-     * 
-     * @spring.property ref="escidoc.core.common.util.service.ConnectionUtility"
      */
     public void setConnectionUtility(final ConnectionUtility connectionUtility) {
 

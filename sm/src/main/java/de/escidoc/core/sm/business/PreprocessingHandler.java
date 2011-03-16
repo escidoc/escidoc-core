@@ -30,7 +30,7 @@ package de.escidoc.core.sm.business;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface;
 import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;
@@ -38,15 +38,13 @@ import de.escidoc.core.sm.business.stax.handler.PreprocessingInformationStaxHand
 
 /**
  * An Preprocessing resource handler.
- * 
- * @spring.bean id="business.PreprocessingHandler" scope="prototype"
+ *
  * @author MIH
- * @sm
  */
 public class PreprocessingHandler implements PreprocessingHandlerInterface {
 
-    private static final AppLogger LOGGER =
-        new AppLogger(PreprocessingHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(PreprocessingHandler.class);
 
     private StatisticPreprocessor preprocessor;
 
@@ -66,7 +64,7 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
      * @throws SystemException
      *             ex
      * 
-     * @sm
+     *
      */
     @Override
     public void preprocess(
@@ -81,7 +79,7 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
         sp.addHandler(handler);
         try {
             sp.parse(xmlData);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new SystemException(e);
         }
         
@@ -97,8 +95,6 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
      * 
      * @param preprocessor
      *            The {@link StatisticPreprocessor}.
-     * @spring.property ref="business.StatisticPreprocessor"
-     * @sm
      */
     public void setPreprocessor(final StatisticPreprocessor preprocessor) {
         this.preprocessor = preprocessor;

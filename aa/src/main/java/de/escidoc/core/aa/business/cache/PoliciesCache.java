@@ -39,6 +39,8 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
 import org.apache.commons.collections.map.LRUMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.userdetails.UserDetails;
 
 import java.net.URI;
@@ -68,32 +70,27 @@ import java.util.Set;
  * </ul>
  * 
  * @author Roland Werner (Accenture)
- * @aa
  * 
  */
 public final class PoliciesCache {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PoliciesCacheProxy.class);
+
     /**
      * Fall back value if reading property
      * {@link <code>EscidocConfiguration.AA_CACHE_ROLES_SIZE</code>} fails.
-     * 
-     * @aa
      */
     private static final int ROLES_CACHE_SIZE_FALL_BACK = 20;
 
     /**
      * Fall back value if reading property
      * {@link <code>EscidocConfiguration.AA_CACHE_USERS_SIZE</code>} fails.
-     * 
-     * @aa
      */
     private static final int USERS_CACHE_SIZE_FALL_BACK = 50;
 
     /**
      * Fall back value if reading property
      * {@link <code>EscidocConfiguration.AA_CACHE_GROUPS_SIZE</code>} fails.
-     * 
-     * @aa
      */
     private static final int GROUPS_CACHE_SIZE_FALL_BACK = 200;
 
@@ -101,8 +98,6 @@ public final class PoliciesCache {
      * Fall back value if reading property
      * {@link <code>EscidocConfiguration.AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE</code>}
      * fails.
-     * 
-     * @aa
      */
     private static final int AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE_FALL_BACK =
         20;
@@ -110,64 +105,48 @@ public final class PoliciesCache {
     /**
      * The user policies cache is implemented as an <code>LRUMap</code>
      * (least-recently-used map), so it can only grow to a certain size.
-     * 
-     * @aa
      */
     private static Cache userPoliciesCache;
 
     /**
      * The user grants cache is implemented as an <code>LRUMap</code>
      * (least-recently-used map), so it can only grow to a certain size.
-     * 
-     * @aa
      */
     private static Cache userGrantsCache;
 
     /**
      * The user details cache is implemented as an <code>LRUMap</code>
      * (least-recently-used map), so it can only grow to a certain size.
-     * 
-     * @aa
      */
     private static Cache userDetailsCache;
 
     /**
      * The group grants cache is implemented as an <code>LRUMap</code>
      * (least-recently-used map), so it can only grow to a certain size.
-     * 
-     * @aa
      */
     private static Cache groupPoliciesCache;
 
     /**
      * The group grants cache is implemented as an <code>LRUMap</code>
      * (least-recently-used map), so it can only grow to a certain size.
-     * 
-     * @aa
      */
     private static Cache groupGrantsCache;
 
     /**
      * The group grants cache is implemented as an <code>LRUMap</code>
      * (least-recently-used map), so it can only grow to a certain size.
-     * 
-     * @aa
      */
     private static Cache userGroupsCache;
 
     /**
      * The role policies cache is implemented as a <code>LRUMap</code>
      * (least-recently-used map), so it can only grow to a certain size.
-     * 
-     * @aa
      */
     private static Cache rolePoliciesCache;
 
     /**
      * The roles cache is implemented as a <code>LRUMap</code>
      * (least-recently-used map), so it can only grow to a certain size.
-     * 
-     * @aa
      */
     private static Cache rolesCache;
 
@@ -177,8 +156,6 @@ public final class PoliciesCache {
      * (addressed by role-name) of a <code>LRUMap</code> (addressed by
      * resource-id or <code>null</code>) , so it can only grow to a certain
      * size.
-     * 
-     * @aa
      */
     private static Cache roleIsGrantedCache;
 
@@ -196,8 +173,6 @@ public final class PoliciesCache {
 
     /**
      * Private constructor to prevent class from being instantiated.
-     * 
-     * @aa
      */
     private PoliciesCache() {
     }
@@ -212,8 +187,13 @@ public final class PoliciesCache {
             rolesCacheSize =
                 Integer.parseInt(EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_ROLES_SIZE));
-        }
-        catch (Exception e) {
+        } catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on parsing roles cache size.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on parsing roles cache size.", e);
+            }
             rolesCacheSize = ROLES_CACHE_SIZE_FALL_BACK;
         }
         try {
@@ -221,7 +201,13 @@ public final class PoliciesCache {
                 Integer.parseInt(EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_USERS_SIZE));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on parsing users cache size.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on parsing users cache size.", e);
+            }
             usersCacheSize = USERS_CACHE_SIZE_FALL_BACK;
         }
         try {
@@ -229,7 +215,13 @@ public final class PoliciesCache {
                 Integer.parseInt(EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_GROUPS_SIZE));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on parsing groups cache size.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on parsing groups cache size.", e);
+            }
             groupsCacheSize = GROUPS_CACHE_SIZE_FALL_BACK;
         }
         try {
@@ -240,7 +232,13 @@ public final class PoliciesCache {
                         .get(
                             EscidocConfiguration.ESCIDOC_CORE_AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on parsing resources cache size.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on parsing resources cache size.", e);
+            }
             resourcesInXacmlFunctionRoleIsGrantedCacheSize =
                 AA_CACHE_RESOURCES_IN_ROLE_IS_GRANTED_SIZE_FALL_BACK;
         }
@@ -289,8 +287,6 @@ public final class PoliciesCache {
      * @param roleIsGranted
      *            The {@link EvaluationResult} holding the result of the
      *            {@link XacmlFunctionRoleIsGranted} for the provided values.
-     * 
-     * @aa
      */
     public static void putRoleIsGrantedEvaluationResult(
         final String userOrGroupId, final String roleId, final String resourceId,
@@ -331,7 +327,6 @@ public final class PoliciesCache {
      * @param userPolicies
      *            The user policy set contained in a
      *            <code>XacmlPolicySet</code>.
-     * @aa
      */
     public static void putUserPolicies(final String userId, final XacmlPolicySet userPolicies) {
         if (userId == null) {
@@ -356,7 +351,6 @@ public final class PoliciesCache {
      * @param groupPolicies
      *            The group policy set contained in a
      *            <code>XacmlPolicySet</code>.
-     * @aa
      */
     public static void putGroupPolicies(
         final String groupId, final XacmlPolicySet groupPolicies) {
@@ -375,7 +369,6 @@ public final class PoliciesCache {
      *            nothing is done.
      * @param userGrants
      *            The grants of the user contained in a <code>Map</code>.
-     * @aa
      */
     public static void putUserGrants(final String userId, final Map userGrants) {
         if (userId == null) {
@@ -393,7 +386,6 @@ public final class PoliciesCache {
      *            nothing is done.
      * @param groupGrants
      *            The grants of the group contained in a <code>Map</code>.
-     * @aa
      */
     public static void putGroupGrants(final String groupId, final Map groupGrants) {
         if (groupId == null) {
@@ -411,7 +403,6 @@ public final class PoliciesCache {
      *            nothing is done.
      * @param userDetails
      *            The details of the user contained in a <code>Map</code>.
-     * @aa
      */
     public static void putUserDetails(
         final String handle, final UserDetails userDetails) {
@@ -430,7 +421,6 @@ public final class PoliciesCache {
      *            nothing is done.
      * @param userGroups
      *            The groups of the user contained in a <code>Set</code>.
-     * @aa
      */
     public static void putUserGroups(final String userId, final Set<String> userGroups) {
         if (userId == null) {
@@ -449,7 +439,6 @@ public final class PoliciesCache {
      * @param rolePolicies
      *            The policy set of the role referenced by the provided id in a
      *            <code>PolicyFinderResult</code>
-     * @aa
      */
     public static void putRolePolicySet(
         final URI idReference, final XacmlPolicySet rolePolicies) {
@@ -463,7 +452,6 @@ public final class PoliciesCache {
      *            Identifier of the role.
      * @param role
      *            The role to cache.
-     * @aa
      */
     public static void putRole(
         final String roleId, final EscidocRole role) {
@@ -493,8 +481,6 @@ public final class PoliciesCache {
      *            <code>null</code>.
      * @returns roleIsGranted The {@link EvaluationResult} holding the result of
      *          the {@link XacmlFunctionRoleIsGranted} for the provided values.
-     * 
-     * @aa
      */
     public static EvaluationResult getRoleIsGrantedEvaluationResult(
         final String userOrGroupId, final String roleId, final String resourceId) {
@@ -524,7 +510,6 @@ public final class PoliciesCache {
      *            The user ID to use as key for HashMap.
      * @return The <code>XacmlPolicySet</code> containing the policy set
      *         that consists of the user's polices, or <code>null</code>.
-     * @aa
      */
     public static XacmlPolicySet getUserPolicies(final String userId) {
         final Element element = getUserPoliciesCache().get(userId);
@@ -540,7 +525,6 @@ public final class PoliciesCache {
      *            The group ID to use as key for HashMap.
      * @return The <code>XacmlPolicySet</code> containing the policy set
      *         that consists of the group's polices, or <code>null</code>.
-     * @aa
      */
     public static XacmlPolicySet getGroupPolicies(final String groupId) {
         final Element element = getGroupPoliciesCache().get(groupId);
@@ -554,7 +538,6 @@ public final class PoliciesCache {
      *            The user ID to use as key for HashMap.
      * @return The grants of the user in a <code>Map</code>, or
      *         <code>null</code>.
-     * @aa
      */
     public static Map getUserGrants(final String userId) {
         final Element element = getUserGrantsCache().get(userId);
@@ -568,7 +551,6 @@ public final class PoliciesCache {
      *            The group ID to use as key for HashMap.
      * @return The grants of the group in a <code>Map</code>, or
      *         <code>null</code>.
-     * @aa
      */
     public static Map getGroupGrants(final String groupId) {
         final Element element = getGroupGrantsCache().get(groupId);
@@ -582,7 +564,6 @@ public final class PoliciesCache {
      *            The handle to use as key for HashMap.
      * @return The details of the user as <code>UserDetails</code>, or
      *         <code>null</code>.
-     * @aa
      */
     public static UserDetails getUserDetails(final String handle) {
         final Element element = getUserDetailsCache().get(handle);
@@ -596,7 +577,6 @@ public final class PoliciesCache {
      *            The userId to use as key for HashMap.
      * @return The groups of the user as <code>Set</code>, or
      *         <code>null</code>.
-     * @aa
      */
     public static Set<String> getUserGroups(final String userId) {
         final Element element = getUserGroupsCache().get(userId);
@@ -610,7 +590,6 @@ public final class PoliciesCache {
      *            The reference of the role's policies set.
      * @return Returns the <code>PolicyFinderResult</code> containing the
      *         policy set of the addressed role.
-     * @aa
      */
     public static XacmlPolicySet getRolePolicySet(
         final URI idReference) {
@@ -624,7 +603,6 @@ public final class PoliciesCache {
      * @param roleId
      *            The role identifier.
      * @return Returns the <code>EscidocRole</code> for the provided key.
-     * @aa
      */
     public static EscidocRole getRole(final String roleId) {
         final Element element = getRolesCache().get(roleId);
@@ -638,7 +616,6 @@ public final class PoliciesCache {
      * 
      * @param userId
      *            The user ID to remove policies from the cache for
-     * @aa
      */
     public static void clearUserPolicies(final String userId) {
         getUserPoliciesCache().remove(userId);
@@ -653,7 +630,6 @@ public final class PoliciesCache {
      * 
      * @param groupId
      *            The group ID to remove policies from the cache for
-     * @aa
      */
     public static void clearGroupPolicies(final String groupId) {
         getGroupPoliciesCache().remove(groupId);
@@ -668,7 +644,6 @@ public final class PoliciesCache {
      * 
      * @param handle
      *            The handle to remove from the cache for
-     * @aa
      */
     public static void clearUserDetails(final String handle) {
         getUserDetailsCache().remove(handle);
@@ -676,8 +651,6 @@ public final class PoliciesCache {
 
     /**
      * Removes everything from the userGroupsCache.
-     * 
-     * @aa
      */
     public static void clearUserGroups() {
         getUserGroupsCache().removeAll();
@@ -686,8 +659,6 @@ public final class PoliciesCache {
     /**
      * Removes groups of specified user from the userGroupsCache.
      * @param userId id of the user
-     * 
-     * @aa
      */
     public static void clearUserGroups(final String userId) {
         getUserGroupsCache().remove(userId);
@@ -705,7 +676,7 @@ public final class PoliciesCache {
     public static void clearRole(final String roleId)  throws SystemException {
         try {
             getRolePoliciesCache().remove(new URI(roleId));
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             throw new SystemException(e);
         }
 
@@ -735,8 +706,6 @@ public final class PoliciesCache {
 
     /**
      * Removes all stored policies from the cache.
-     * 
-     * @aa
      */
     public static void clear() {
         getRolePoliciesCache().removeAll();

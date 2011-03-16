@@ -38,6 +38,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -57,6 +59,8 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(value = Parameterized.class)
 public class ContentRelationAdminSearchTest extends SearchTestBase {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationAdminSearchTest.class);
 
     private static final String INDEX_NAME = "content_relation_admin";
 
@@ -144,7 +148,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
      *             If anything fails.
      */
     private void prepare() throws Exception {
-        log.info("starting SearchTest at "
+        LOGGER.info("starting SearchTest at "
                 + new DateTime(System.currentTimeMillis()
                         + (60 * 60 * 1000), DateTimeZone.UTC).toString());
         // create empty indices/////////////////////////////////////////////////
@@ -570,7 +574,7 @@ public class ContentRelationAdminSearchTest extends SearchTestBase {
                         break;
                     }
                     returnHash.put("componentId" + i, componentId);
-                } catch (NullPointerException e) {
+                } catch (final NullPointerException e) {
                     break;
                 }
             }

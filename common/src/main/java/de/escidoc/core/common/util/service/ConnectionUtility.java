@@ -1,37 +1,29 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.service;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
@@ -93,8 +85,8 @@ import java.util.regex.Pattern;
  */
 public class ConnectionUtility {
 
-    private static final AppLogger LOG = new AppLogger(
-        ConnectionUtility.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ConnectionUtility.class);
 
     private static final int HTTP_MAX_CONNECTIONS_PER_HOST = 30;
 
@@ -109,8 +101,6 @@ public class ConnectionUtility {
     private HttpHost proxyHost;
 
     private boolean proxyConfigured;
-
-    private ClientConnectionManager cm;
 
     /**
      * Get a response-string for the URL. If the URL contains an Authentication
@@ -589,7 +579,7 @@ public class ConnectionUtility {
             return this.proxyHost;
 
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -632,7 +622,7 @@ public class ConnectionUtility {
                 }
             }
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -672,9 +662,9 @@ public class ConnectionUtility {
             sr.register(http);
             // sr.register(https);
 
-            cm = new ThreadSafeClientConnManager(params, sr);
+            final ClientConnectionManager cm = new ThreadSafeClientConnManager(params, sr);
 
-            this.httpClient = new DefaultHttpClient(this.cm, params);
+            this.httpClient = new DefaultHttpClient(cm, params);
 
             if (timeout != -1) {
                 // TODO timeout testen
@@ -717,7 +707,7 @@ public class ConnectionUtility {
 
         HttpResponse httpResponse = null;
         try {
-            HttpGet httpGet = new HttpGet(new URI(url));
+            final HttpGet httpGet = new HttpGet(new URI(url));
             if (cookie != null) {
                 HttpClientParams.setCookiePolicy(httpGet.getParams(),
                     CookiePolicy.BEST_MATCH);
@@ -732,14 +722,14 @@ public class ConnectionUtility {
                 final String errorPage = readResponse(httpResponse);
 
                 // TODO logging, Url abgelöst?
-                // URLEncodedUtils.LOG.debug("Connection to '" + url
+                // URLEncodedUtils.LOGGER.debug("Connection to '" + url
                 // + "' failed with response code " + responseCode);
                 throw new WebserverSystemException("HTTP connection to \""
                     + url + "\" failed: " + errorPage);
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new WebserverSystemException(e);
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             throw new WebserverSystemException("Illegal URL '" + url + "'.", e);
         }
         return httpResponse;
@@ -785,11 +775,11 @@ public class ConnectionUtility {
                 throw new WebserverSystemException("HTTP connection to \""
                     + url + "\" failed: " + errorPage);
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new WebserverSystemException(e);
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             throw new WebserverSystemException(e);
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             throw new WebserverSystemException(e);
         }
         return delete;
@@ -841,9 +831,9 @@ public class ConnectionUtility {
                 throw new WebserverSystemException("HTTP connection to \""
                     + url + "\" failed: " + errorPage);
             }
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         return httpResponse;
@@ -898,7 +888,7 @@ public class ConnectionUtility {
 
             httpResponse = getHttpClient(url).execute(httpPost);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -919,7 +909,7 @@ public class ConnectionUtility {
         try {
             return EntityUtils.toString(httpResponse.getEntity(), HTTP.UTF_8);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
     }

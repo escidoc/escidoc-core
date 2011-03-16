@@ -44,6 +44,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -60,6 +62,8 @@ import java.util.regex.Pattern;
  */
 @RunWith(value = Parameterized.class)
 public class ItemPerformanceTest extends ItemTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ItemPerformanceTest.class);
 
     private static EtmMonitor monitor;
 
@@ -103,11 +107,11 @@ public class ItemPerformanceTest extends ItemTestBase {
                         .getProperty("performance.database.password"),
                     this.testEv);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             this.renderer = new SimpleTextRenderer();
         }
 
-        log.info("\n====================================\n"
+        LOGGER.info("\n====================================\n"
             + CountRepository.countResources() + " objects in repository\n"
             + "====================================");
     }
@@ -312,7 +316,7 @@ public class ItemPerformanceTest extends ItemTestBase {
             retrieve(objid);
             monitor.stop();
         }
-        log.info("Item retrieve (" + objid + "):");
+        LOGGER.info("Item retrieve (" + objid + "):");
         this.testEv.setMethodParameter("random");
         monitor.render(this.renderer);
         monitor.render(new SimpleTextRenderer());
@@ -359,7 +363,7 @@ public class ItemPerformanceTest extends ItemTestBase {
             }
 
         }
-        log.info("Item retrieve (" + objid + "):");
+        LOGGER.info("Item retrieve (" + objid + "):");
         this.testEv.setMethodParameter("random2");
         monitor.render(this.renderer);
         monitor.render(new SimpleTextRenderer());
@@ -397,7 +401,7 @@ public class ItemPerformanceTest extends ItemTestBase {
             create(itemXml);
             monitor.stop();
         }
-        log.info("Item create (" + templateName + "):");
+        LOGGER.info("Item create (" + templateName + "):");
         this.testEv.setMethodParameter(templateName);
         monitor.render(this.renderer);
         monitor.render(new SimpleTextRenderer());
@@ -422,7 +426,7 @@ public class ItemPerformanceTest extends ItemTestBase {
             retrieve(objid);
             monitor.stop();
         }
-        log.info("Item retrieve (" + objid + "):");
+        LOGGER.info("Item retrieve (" + objid + "):");
         this.testEv.setMethodParameter(templateName);
         monitor.render(this.renderer);
         monitor.render(new SimpleTextRenderer());
@@ -445,7 +449,7 @@ public class ItemPerformanceTest extends ItemTestBase {
                 java.net.InetAddress.getLocalHost();
             te.setHostname(localMachine.getHostName());
         }
-        catch (java.net.UnknownHostException uhe) {
+        catch (final java.net.UnknownHostException uhe) {
             throw new Exception(uhe);
         }
 

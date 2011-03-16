@@ -250,7 +250,7 @@ public class StatisticReaderAbstractTest extends GrantTestBase {
                     response);
             
     
-        } catch (AssertionError e) {
+        } catch (final AssertionError e) {
             if (methodIndex.equals(STATISTIC_PREPROCESSR_METHOD_INDEX)) {
                 triggerPreprocessing("1");
             } else {

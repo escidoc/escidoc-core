@@ -93,7 +93,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
         try {
             update(this.relationId, "");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -243,7 +243,7 @@ public class ContentRelationUpdateTest extends ContentRelationTestBase {
             fail("No exception on update content relation with"
                 + " two md-records with the same name.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidContentException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);

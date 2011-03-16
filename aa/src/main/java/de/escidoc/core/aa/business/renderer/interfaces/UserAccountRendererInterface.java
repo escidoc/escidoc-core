@@ -42,7 +42,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * Interface of an user account renderer.
  * 
  * @author TTE
- * @aa
+ *
  */
 public interface UserAccountRendererInterface {
 
@@ -54,7 +54,7 @@ public interface UserAccountRendererInterface {
      * @return Returns the XML representation of the user account.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String render(final UserAccount userAccount) throws SystemException;
 
@@ -90,7 +90,7 @@ public interface UserAccountRendererInterface {
      *         "currentGrants" of an user account.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderCurrentGrants(
         final UserAccount userAccount, final List<RoleGrant> currentGrants)
@@ -105,7 +105,7 @@ public interface UserAccountRendererInterface {
      *         <code>RoleGrant</code> object.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderGrant(final RoleGrant grant) throws SystemException;
 
@@ -120,7 +120,7 @@ public interface UserAccountRendererInterface {
      * @return Returns the XML representation of the preferences.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderPreferences(
         final UserAccount userAccount, final Set<UserPreference> preferences)
@@ -136,7 +136,7 @@ public interface UserAccountRendererInterface {
      *         <code>RoleGrant</code> object.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderPreference(
         final UserAccount userAccount, final UserPreference preference)
@@ -153,7 +153,7 @@ public interface UserAccountRendererInterface {
      * @return Returns the XML representation of the attributes.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderAttributes(
         final UserAccount userAccount, final Set<UserAttribute> attributes)
@@ -169,7 +169,7 @@ public interface UserAccountRendererInterface {
      *         <code>UserAttribute</code> object.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderAttribute(final UserAttribute attribute)
         throws SystemException;
@@ -184,7 +184,7 @@ public interface UserAccountRendererInterface {
      *         the user account.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderResources(final UserAccount userAccount)
         throws SystemException;
@@ -194,7 +194,7 @@ public interface UserAccountRendererInterface {
      * 
      * @param userAccounts
      *            The <code>List</code> of
-     *            {@link de.escidoc.core.aa.business.persistence.UserAccount}
+     *            {@link UserAccount}
      *            objects to render.
      * @param recordPacking
      *            A string to determine how the record should be escaped in the
@@ -204,7 +204,7 @@ public interface UserAccountRendererInterface {
      * @return Returns the XML representation of the list of user accounts.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderUserAccounts(
         final List<UserAccount> userAccounts, final RecordPacking recordPacking)

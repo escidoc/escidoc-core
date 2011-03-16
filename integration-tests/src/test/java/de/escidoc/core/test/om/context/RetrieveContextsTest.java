@@ -477,7 +477,7 @@ public class RetrieveContextsTest extends ContextTestBase {
         try {
             result = retrieveContexts(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);

@@ -186,7 +186,7 @@ public class UpdateRestTest extends OrganizationalUnitTestBase {
         // try {
         // updatedXml = update(objid, toBeUpdatedXml);
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // failException("Creating OU with set read only values failed. ", e);
         // }
         // assertOrganizationalUnit(updatedXml, createdXml, startTimestamp,
@@ -261,7 +261,7 @@ public class UpdateRestTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = update(objid, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Creating OU with set read only values failed. ", e);
         }
         assertOrganizationalUnit(updatedXml, createdXml, startTimestamp,

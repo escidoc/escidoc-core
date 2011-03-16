@@ -174,7 +174,7 @@ public class SpoTest extends SpoTestBase {
             String result = spo(param);
             fail("No exception on query with forbidden predicate.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class ec = InvalidTripleStoreQueryException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -203,7 +203,7 @@ public class SpoTest extends SpoTestBase {
             String result = spo(param);
             fail("No exception on query with forbidden predicate.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class ec = InvalidTripleStoreQueryException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -253,7 +253,7 @@ public class SpoTest extends SpoTestBase {
             spo(param);
             fail("No exception occured on a triple store request with a wrong query");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "InvalidTripleStoreQueryException excpected.",
                 InvalidTripleStoreQueryException.class, e);
@@ -276,7 +276,7 @@ public class SpoTest extends SpoTestBase {
             fail("No exception occured on a triple store "
                 + "request with a wrong output format");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "InvalidTripleStoreOutputFormatException excpected.",
                 InvalidTripleStoreOutputFormatException.class, e);
@@ -331,7 +331,7 @@ public class SpoTest extends SpoTestBase {
         try {
             result = spo(param);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException("SPO query failed.", e);
         }
 

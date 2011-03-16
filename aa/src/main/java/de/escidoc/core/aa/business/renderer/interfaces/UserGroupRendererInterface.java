@@ -39,7 +39,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * Interface of an user group renderer.
  * 
  * @author sche
- * @aa
+ *
  */
 public interface UserGroupRendererInterface {
 
@@ -52,7 +52,7 @@ public interface UserGroupRendererInterface {
      * @return Returns the XML representation of the user group.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String render(final UserGroup userGroup) throws SystemException;
 
@@ -70,7 +70,7 @@ public interface UserGroupRendererInterface {
      *         "currentGrants" of a user group.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderCurrentGrants(
         final UserGroup userGroup, final List<RoleGrant> currentGrants)
@@ -86,7 +86,7 @@ public interface UserGroupRendererInterface {
      *         <code>RoleGrant</code> object.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderGrant(final RoleGrant grant) throws SystemException;
 
@@ -100,7 +100,7 @@ public interface UserGroupRendererInterface {
      *         the user group.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderResources(final UserGroup userGroup) throws SystemException;
 
@@ -109,7 +109,7 @@ public interface UserGroupRendererInterface {
      * 
      * @param userGroups
      *            The <code>List</code> of
-     *            {@link de.escidoc.core.aa.business.persistence.UserGroup}
+     *            {@link UserGroup}
      *            objects to render.
      * @param recordPacking
      *            A string to determine how the record should be escaped in the

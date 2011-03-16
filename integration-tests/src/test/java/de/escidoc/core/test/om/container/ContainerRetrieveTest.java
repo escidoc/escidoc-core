@@ -111,7 +111,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         try {
             delete(this.theContainerId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // do nothing
         }
     }
@@ -167,7 +167,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
                 new HashMap<String, String[]>());
             fail("No exception on retrieve members of nonexisting container.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected on retrieve members.", ec, e);
@@ -194,7 +194,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             retrieveMembers(null, new HashMap<String, String[]>());
             fail("No exception on retrieve members with container id = null.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected on retrieve members.", ec, e);
@@ -258,7 +258,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             retrieve("bla");
             fail("No exception occurred on retrieve with non existing id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -277,7 +277,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             retrieve(null);
             fail("No exception occurred on retrieve with missing id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // Class<?> ec = ContainerNotFoundException.class;
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
@@ -578,7 +578,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             create(template);
             fail(ec + " expected but no error occurred!");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -613,7 +613,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             create(template);
             fail(ec + " expected but no error occurred!");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -773,7 +773,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
                         filterResultXPath).getNodeValue();
                 assertEquals(reqStatus, containerStatus);
             }
-            catch (ContainerNotFoundException e) {
+            catch (final ContainerNotFoundException e) {
                 if (reqStatus.equals(STATUS_WITHDRAWN)) {
                     EscidocRestSoapTestBase.assertExceptionType(
                         ItemNotFoundException.class, e);
@@ -803,10 +803,10 @@ public class ContainerRetrieveTest extends ContainerTestBase {
                 String container = retrieve(nodeValue);
                 assertXmlValidContainer(container);
             }
-            catch (de.escidoc.core.common.exceptions.remote.system.FedoraSystemException e) {
+            catch (final de.escidoc.core.common.exceptions.remote.system.FedoraSystemException e) {
                 throw e;
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw e;
             }
         }
@@ -878,7 +878,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
             try {
                 retrieve(nodeValue);
             }
-            catch (ContainerNotFoundException e) {
+            catch (final ContainerNotFoundException e) {
                 throw e;
             }
 
@@ -893,7 +893,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
                 handleXmlResult(getItemClient().retrieve(nodeValue));
 
             }
-            catch (ItemNotFoundException e) {
+            catch (final ItemNotFoundException e) {
                 throw e;
             }
 
@@ -957,7 +957,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         try {
             retrieveMdRecord(false, "escidoc");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(msg, ec, e);
         }
     }
@@ -978,7 +978,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         try {
             retrieveMdRecord(true, null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(msg, ec, e);
         }
     }
@@ -999,7 +999,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         try {
             retrieveMdRecord(true, "");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(msg, ec, e);
         }
     }
@@ -1020,7 +1020,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         try {
             retrieveMdRecord(true, "blablub");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(msg, ec, e);
         }
     }
@@ -1048,7 +1048,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         try {
             result = retrieveContainers(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1077,7 +1077,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         try {
             result = retrieveMembers(theContainerId, filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1106,7 +1106,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         try {
             result = retrieveTocs(theContainerId, filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);
@@ -1144,7 +1144,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         try {
             retrieve(itemId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Wrong exception",
                 ContainerNotFoundException.class, e);
         }
@@ -1152,7 +1152,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         try {
             retrieve(itemId + ":1");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Wrong exception",
                 ContainerNotFoundException.class, e);
         }
@@ -1160,7 +1160,7 @@ public class ContainerRetrieveTest extends ContainerTestBase {
         try {
             retrieve(itemId + ":a");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Wrong exception",
                 ContainerNotFoundException.class, e);
         }

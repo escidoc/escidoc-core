@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.xml.transformer;
 
 import de.escidoc.core.common.business.fedora.FedoraUtility;
@@ -33,7 +25,7 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
 
 import javax.xml.transform.Transformer;
@@ -52,12 +44,12 @@ import java.net.URL;
  * mapping fails, the specified default style sheet is used.
  * 
  * @author tte
- * @common
+ *
  */
 public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
 
-    private static final AppLogger LOG = new AppLogger(
-        PoolableTransformerFactory.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        PoolableTransformerFactory.class);
 
     private static final String ERR_MSG_UNSUPPORTED_ARG_TYPE =
         "Only keys of type " + String.class.getName()
@@ -85,7 +77,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * The default style sheet uri is set to the value of the constant
      * <code>XSL_MAPPING_UNKNOWN_TO_DC</code>.
      * 
-     * @common
+     *
      */
     public PoolableTransformerFactory() {
 
@@ -93,8 +85,8 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
             setDefaultXsltUrl(EscidocConfiguration
                 .getInstance().appendToSelfURL(XSL_MAPPING_UNKNOWN_TO_DC));
         }
-        catch (IOException e) {
-            LOG.warn("Unable to set URL of DC mapping XSLTs "
+        catch (final IOException e) {
+            LOGGER.warn("Unable to set URL of DC mapping XSLTs "
                 + "from configuration. " + e);
         }
     }
@@ -104,7 +96,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * 
      * @param defaultXsltUrl
      *            The default style sheet url.
-     * @common
+     *
      */
     public final void setDefaultXsltUrl(final String defaultXsltUrl) {
 
@@ -121,7 +113,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * @throws WebserverSystemException
      * @throws FedoraSystemException
      * @throws Exception
-     * @see org.apache.commons.pool.BaseKeyedPoolableObjectFactory#makeObject(java.lang.Object)
+     * @see BaseKeyedPoolableObjectFactory#makeObject(Object)
      */
     @Override
     public Object makeObject(final Object key)
@@ -136,9 +128,9 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
             xslt = mapKeyToXslt((String) key);
             final StreamSource streamSrc = new StreamSource(xslt);
             result = transformerFactory.newTransformer(streamSrc);
-        } catch (IOException e) {
+        } catch (final IOException e) {
                 throw new WebserverSystemException("XSLT for DC-mapping not retrievable.", e);
-        } catch (TransformerConfigurationException e) {
+        } catch (final TransformerConfigurationException e) {
             throw new WebserverSystemException("Transformer for DC-mapping can not be created.", e);
         } finally {
             IOUtils.closeStream(xslt);
@@ -185,9 +177,14 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
                         dcMappingXsltFedoraUrl);
 
             }
-            catch (WebserverSystemException e) {
-                LOG.debug("Error on requesting URL '" + dcMappingXsltFedoraUrl + "'", e);
+            catch (final WebserverSystemException e) {
                 // xslt is still the stream set above
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'');
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on requesting URL '" + dcMappingXsltFedoraUrl + '\'', e);
+                }
             }
         }
 

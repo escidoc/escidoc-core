@@ -28,9 +28,10 @@
  */
 package de.escidoc.sb.gsearch.mbean;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.indexing.GsearchHandler;
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
 
@@ -42,13 +43,11 @@ import java.util.Map;
  * gsearch then optimizes all lucene-indexes
  * 
  * @author MIH
- * 
- * @spring.bean id="mbean.IndexOptimizerService"
  */
 @ManagedResource(objectName = "eSciDocCore:name=IndexOptimizerService", description = "sends index-optimize request to gsearch", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class IndexOptimizerService {
-    private static final AppLogger log =
-        new AppLogger(IndexOptimizerService.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(IndexOptimizerService.class);
     
     private GsearchHandler gsearchHandler;
 
@@ -67,14 +66,14 @@ public class IndexOptimizerService {
             return;
         }
         try {
-            log.info("optimizing search-indices");
+            LOGGER.info("optimizing search-indices");
             gsearchHandler.requestOptimize(null);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             final Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("message", "optimizing search-indices failed");
             errorMessageHandler.putErrorMessage(parameters, e,
-                    de.escidoc.core.common.business.Constants.INDEXING_ERROR_LOGFILE);
-            log.error("Optimizing search-indices failed.", e);
+                    Constants.INDEXING_ERROR_LOGFILE);
+            LOGGER.error("Optimizing search-indices failed.", e);
         }
     }
 
@@ -83,7 +82,6 @@ public class IndexOptimizerService {
      * 
      * @param gsearchHandler
      *            The {@link GsearchHandler}.
-     * @spring.property ref="common.business.indexing.GsearchHandler"
      */
     public void setGsearchHandler(final GsearchHandler gsearchHandler) {
         this.gsearchHandler = gsearchHandler;
@@ -94,7 +92,6 @@ public class IndexOptimizerService {
      * 
      * @param errorMessageHandler
      *            The ErrorMessageHandler to set.
-     * @spring.property ref="common.ErrorMessageHandler"
      */
     public final void setErrorMessageHandler(
         final ErrorMessageHandler errorMessageHandler) {

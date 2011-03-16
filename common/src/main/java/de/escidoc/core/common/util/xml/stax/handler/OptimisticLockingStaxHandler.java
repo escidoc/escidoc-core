@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.xml.stax.handler;
 
 import de.escidoc.core.common.exceptions.EscidocException;
@@ -35,6 +27,8 @@ import de.escidoc.core.common.util.date.Iso8601Util;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.naming.directory.NoSuchAttributeException;
 import java.text.ParseException;
@@ -45,9 +39,11 @@ import java.util.Date;
  * optimistic locking criteria.
  * 
  * @author TTE
- * @common
+ *
  */
 public class OptimisticLockingStaxHandler extends DefaultHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(OptimisticLockingStaxHandler.class);
     
     private final Date expectedLastModificationDate;
 
@@ -76,10 +72,10 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
      * @return
      * @throws OptimisticLockingException
      * @throws MissingAttributeValueException
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @um
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -108,13 +104,18 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
                                     .getIso8601(expectedLastModificationDate),
                                     lastModificationDateValue));
                     }
-                }
-                catch (ParseException e) {
+                } catch (final ParseException e) {
                     // this should not happen as the date format has been
                     // validated during schema validation.
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on parsing last modification date.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on parsing last modification date.", e);
+                    }
                 }
             }
-            catch (NoSuchAttributeException e) {
+            catch (final NoSuchAttributeException e) {
                 XmlUtility.throwMissingAttributeValueException(element,
                     XmlUtility.NAME_LAST_MODIFICATION_DATE);
             }

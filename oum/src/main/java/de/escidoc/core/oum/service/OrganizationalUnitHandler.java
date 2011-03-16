@@ -56,11 +56,7 @@ import java.util.Map;
 /**
  * Implementation for the Service layer of the OUM component.
  * 
- * @spring.bean id="service.OrganizationalUnitHandler" scope="prototype"
- * @interface class=
- *            "de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface"
  * @author MSC
- * @service
  */
 public class OrganizationalUnitHandler
     implements
@@ -71,32 +67,14 @@ public class OrganizationalUnitHandler
     /**
      * Setter for the business object.
      * 
-     * @spring.property ref="business.FedoraOrganizationalUnitHandler"
      * @param business
      *            business object.
-     * @service.exclude
      */
     public void setBusiness(final OrganizationalUnitHandlerInterface business) {
 
         this.business = business;
     }
 
-    /**
-     * Ingest a resource.
-     * 
-     * @param user
-     * @return
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws InvalidXmlException
-     * @throws MissingAttributeValueException
-     * @throws MissingElementValueException
-     * @throws MissingMethodParameterException
-     * @throws OrganizationalUnitNotFoundException
-     * @throws SystemException
-     * @see {@link de.escidoc.core.common.business.interfaces.IngestableResource#ingest(String)}
-     * @axis.exclude
-     */
     @Override
     public String ingest(final String xmlData) throws AuthenticationException,
         AuthorizationException, MissingMethodParameterException,
@@ -216,8 +194,8 @@ public class OrganizationalUnitHandler
      * @throws OrganizationalUnitNotFoundException
      * @throws MissingElementValueException
      * @throws SystemException
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#updateMdRecords(java.lang.String,
-     *      java.lang.String)
+     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#updateMdRecords(String,
+     *      String)
      */
     @Override
     public String updateMdRecords(final String id, final String xml)
@@ -245,8 +223,8 @@ public class OrganizationalUnitHandler
      * @throws OrganizationalUnitNotFoundException
      * @throws MissingElementValueException
      * @throws SystemException
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#updateParents(java.lang.String,
-     *      java.lang.String)
+     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#updateParents(String,
+     *      String)
      */
     @Override
     public String updateParents(final String id, final String xml)
@@ -302,16 +280,6 @@ public class OrganizationalUnitHandler
         return business.retrieveProperties(id);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @param resourceName
-     * @return
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface
-     *      #retrieveResource(java.lang.String, java.lang.String)
-     * @axis.exclude
-     */
     @Override
     public EscidocBinaryContent retrieveResource(
         final String id, final String resourceName)
@@ -322,20 +290,6 @@ public class OrganizationalUnitHandler
         return business.retrieveResource(id, resourceName);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param ouId
-     * @return
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws OrganizationalUnitNotFoundException
-     * @throws SystemException
-     * @see de.escidoc.core.oum.service.interfaces.
-     *      OrganizationalUnitHandlerInterface#retrieveResources(java.lang.String)
-     * @axis.exclude
-     */
     @Override
     public String retrieveResources(final String ouId)
         throws AuthenticationException, AuthorizationException,
@@ -379,8 +333,8 @@ public class OrganizationalUnitHandler
      * @throws MissingMethodParameterException
      * @throws OrganizationalUnitNotFoundException
      * @throws SystemException
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveMdRecord(java.lang.String,
-     *      java.lang.String)
+     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveMdRecord(String,
+     *      String)
      */
     @Override
     public String retrieveMdRecord(final String id, final String name)
@@ -522,7 +476,7 @@ public class OrganizationalUnitHandler
      * @throws MissingMethodParameterException
      * @throws OrganizationalUnitNotFoundException
      * @throws SystemException
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#close(java.lang.String,
+     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#close(String,
      *      String)
      */
     @Override
@@ -545,7 +499,7 @@ public class OrganizationalUnitHandler
      * @throws MissingMethodParameterException
      * @throws OrganizationalUnitNotFoundException
      * @throws SystemException
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#open(java.lang.String,
+     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#open(String,
      *      String)
      */
     @Override

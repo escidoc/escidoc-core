@@ -30,7 +30,6 @@ package de.escidoc.core.om.business.interfaces;
 
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
-import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;

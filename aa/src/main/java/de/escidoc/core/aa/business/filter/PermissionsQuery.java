@@ -45,13 +45,12 @@ import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterfa
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 /**
  * Encapsulate the work which has to be done to get the permission filter
  * queries for Lucene filtering.
- * 
- * @spring.bean id="filter.PermissionsQuery"
+ *
  * @author Andr&eacute; Schenk
  */
 public class PermissionsQuery {
@@ -62,8 +61,8 @@ public class PermissionsQuery {
     /**
      * Logging goes there.
      */
-    private static final AppLogger LOG = new AppLogger(
-        PermissionsQuery.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        PermissionsQuery.class);
 
     private AccessRights accessRights;
 
@@ -131,7 +130,7 @@ public class PermissionsQuery {
                         hierarchicalOUs);
 
                 if (rights != null && rights.length() > 0) {
-                    LOG.info("OR access rights for (" + userId + ',' + roleId
+                    LOGGER.info("OR access rights for (" + userId + ',' + roleId
                         + "): " + rights);
                     statements.add(rights);
                 }
@@ -181,7 +180,7 @@ public class PermissionsQuery {
             result.append('(');
             // add AA filters
             addAccessRights(resourceType, result, userId);
-            LOG.info("AA filters: " + result);
+            LOGGER.info("AA filters: " + result);
 
             // all restricting access rights from another user are ANDed
             if (filter.getUserId() != null) {
@@ -214,7 +213,7 @@ public class PermissionsQuery {
                         hierarchicalOUs);
 
                 if (rights != null && rights.length() > 0) {
-                    LOG.info("AND restricting access rights from "
+                    LOGGER.info("AND restricting access rights from "
                         + "another user (1): " + rights);
                     result.append(" AND ");
                     result.append(rights);
@@ -248,8 +247,8 @@ public class PermissionsQuery {
                 }
             }
         }
-        catch (TripleStoreSystemException e) {
-            LOG.error("getting child containers from database failed", e);
+        catch (final TripleStoreSystemException e) {
+            LOGGER.error("getting child containers from database failed", e);
         }
         return result;
     }
@@ -276,8 +275,8 @@ public class PermissionsQuery {
                 }
             }
         }
-        catch (TripleStoreSystemException e) {
-            LOG.error("getting child OUs from database failed", e);
+        catch (final TripleStoreSystemException e) {
+            LOGGER.error("getting child OUs from database failed", e);
         }
         return result;
     }
@@ -350,8 +349,8 @@ public class PermissionsQuery {
                     }
                 }
             }
-            catch (Exception e) {
-                LOG.error("getting the user group grants from AA failed", e);
+            catch (final Exception e) {
+                LOGGER.error("getting the user group grants from AA failed", e);
             }
         }
         return result;
@@ -372,8 +371,8 @@ public class PermissionsQuery {
             try {
                 result = policiesCacheProxy.getUserGroups(userId);
             }
-            catch (Exception e) {
-                LOG.error("", e);
+            catch (final Exception e) {
+                LOGGER.error("", e);
             }
         }
         return result;
@@ -381,8 +380,7 @@ public class PermissionsQuery {
 
     /**
      * Injects the AccessRights object.
-     * 
-     * @spring.property ref="resource.AccessRights"
+     *
      * @param accessRights
      *            AccessRights from Spring
      */
@@ -392,8 +390,7 @@ public class PermissionsQuery {
 
     /**
      * Injects the policies cache proxy.
-     * 
-     * @spring.property ref="resource.PoliciesCacheProxy"
+     *
      * @param policiesCacheProxy
      *            the {@link PoliciesCacheProxy} to inject.
      */
@@ -405,7 +402,6 @@ public class PermissionsQuery {
     /**
      * Injects the TripleStore utility.
      * 
-     * @spring.property ref="business.TripleStoreUtility"
      * @param tripleStoreUtility
      *            TripleStoreUtility from Spring
      */

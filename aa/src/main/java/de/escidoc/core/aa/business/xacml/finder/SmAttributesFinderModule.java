@@ -41,7 +41,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundExcep
 import de.escidoc.core.common.exceptions.application.security.SecurityException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterface;
@@ -72,19 +72,15 @@ import java.util.regex.Pattern;
  * -info:escidoc/names:aa:1.0:resource:scope-id<br>
  * the id of the scope, single value attribute
  * 
- * @spring.bean id="eSciDoc.core.aa.SmAttributesFinderModule"
- * 
  * @author TTE
- * 
- * @aa
  */
 public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
 
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(SmAttributesFinderModule.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(SmAttributesFinderModule.class);
 
     private static final String ATTR_SCOPE = "scope";
 
@@ -154,10 +150,10 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -188,10 +184,10 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -264,9 +260,8 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      *            The id of the attribute.
      * @return EvaluationResult result.
      */
-    private EvaluationResult evaluateResult(
-        final CharSequence resourceXml, final String resolvableAttribute,
-        final String attributeId) {
+    private static EvaluationResult evaluateResult(final CharSequence resourceXml, final String resolvableAttribute,
+                                                   final String attributeId) {
         EvaluationResult result = null;
 
         if (ATTR_SCOPE.equals(attributeId)) {
@@ -364,17 +359,17 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                 RequestAttributesCache.put(ctx, key.toString(),
                     aggregationDefinitionXml);
             }
-            catch (MissingMethodParameterException e) {
+            catch (final MissingMethodParameterException e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during aggregation definition retrieval", e
                             .getMessage()), e);
             }
-            catch (SecurityException e) {
+            catch (final SecurityException e) {
                 throw new WebserverSystemException("Security exception during "
                     + "AggregationDefinitionHandler.retrieve call.", e);
             }
-            catch (SystemException e) {
+            catch (final SystemException e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during aggregation definition retrieval", e
@@ -399,7 +394,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      *             Thrown in case of an internal error.
      * @throws ReportDefinitionNotFoundException
      *             Thrown if no report definition with provided id exists.
-     * @aa
+     *
      */
     private String retrieveReportDefinition(
         final EvaluationCtx ctx, final String reportDefinitionId)
@@ -423,17 +418,17 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                 RequestAttributesCache.put(ctx, key.toString(),
                     reportDefinitionXml);
             }
-            catch (MissingMethodParameterException e) {
+            catch (final MissingMethodParameterException e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during report definition retrieval", e
                             .getMessage()), e);
             }
-            catch (SecurityException e) {
+            catch (final SecurityException e) {
                 throw new WebserverSystemException("Security exception during "
                     + "ReportDefinitionHandler.retrieve call.", e);
             }
-            catch (SystemException e) {
+            catch (final SystemException e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during report definition retrieval", e
@@ -458,7 +453,7 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      *             Thrown in case of an internal error.
      * @throws ScopeNotFoundException
      *             Thrown if no scope with provided id exists.
-     * @aa
+     *
      */
     private String retrieveScope(final EvaluationCtx ctx, final String scopeId)
         throws WebserverSystemException, ScopeNotFoundException {
@@ -477,17 +472,17 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
                 }
                 RequestAttributesCache.put(ctx, key.toString(), scopeXml);
             }
-            catch (MissingMethodParameterException e) {
+            catch (final MissingMethodParameterException e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during retrieval of the scope", e
                             .getMessage()), e);
             }
-            catch (SecurityException e) {
+            catch (final SecurityException e) {
                 throw new WebserverSystemException(
                     "Security exception during ScopeHandler.retrieve call.", e);
             }
-            catch (SystemException e) {
+            catch (final SystemException e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during retrieval of the scope", e
@@ -503,12 +498,9 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * 
      * @param aggregationDefinitionHandler
      *            The aggregateion definition handler.
-     * @spring.property ref="service.AggregationDefinitionHandlerBean"
      */
     public void setAggregationDefinitionHandler(
         final AggregationDefinitionHandlerInterface aggregationDefinitionHandler) {
-
-        LOG.debug("setAggregationDefinitionHandler");
         this.aggregationDefinitionHandler = aggregationDefinitionHandler;
     }
 
@@ -517,12 +509,9 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * 
      * @param reportDefinitionHandler
      *            The report definition handler.
-     * @spring.property ref="service.ReportDefinitionHandlerBean"
      */
     public void setReportDefinitionHandler(
         final ReportDefinitionHandlerInterface reportDefinitionHandler) {
-
-        LOG.debug("setReportDefinitionHandler");
         this.reportDefinitionHandler = reportDefinitionHandler;
     }
 
@@ -531,7 +520,6 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * 
      * @param scopeHandler
      *            The scope handler.
-     * @spring.property ref="service.ScopeHandlerBean"
      */
     public void setScopeHandler(final ScopeHandlerInterface scopeHandler) {
 

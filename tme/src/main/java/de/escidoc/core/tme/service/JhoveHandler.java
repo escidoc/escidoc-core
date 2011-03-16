@@ -12,12 +12,7 @@ import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
 /**
  * Implementation for the Jhove Service layer of the TME component.
  * 
- * @spring.bean id="service.JhoveHandler"
- * @interface 
- *            class="de.escidoc.core.tme.service.interfaces.JhoveHandlerInterface"
  * @author MSC
- * 
- * @service
  */
 public class JhoveHandler
     implements de.escidoc.core.tme.service.interfaces.JhoveHandlerInterface {
@@ -44,7 +39,7 @@ public class JhoveHandler
      *             e
      * @throws TmeException
      *             e
-     * @see de.escidoc.core.tme.service.interfaces.JhoveHandlerInterface#extract(java.lang.String)
+     * @see de.escidoc.core.tme.service.interfaces.JhoveHandlerInterface#extract(String)
      */
     @Override
     public String extract(final String requests)
@@ -56,11 +51,9 @@ public class JhoveHandler
 
     /**
      * Setter for the business object.
-     * 
-     * @spring.property ref="business.JhoveHandler"
+     *
      * @param business
      *            business object.
-     * @service.exclude
      */
     public void setBusiness(final JhoveHandlerInterface business) {
         this.business = business;

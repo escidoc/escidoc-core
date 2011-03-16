@@ -40,8 +40,7 @@ import java.util.List;
 
 /**
  * Escidoc action data access object using hibernate.
- * 
- * @spring.bean id="persistence.ActionDao"
+ *
  * @author TTE
  * 
  */
@@ -56,7 +55,7 @@ public class HibernateActionDao extends AbstractHibernateDao
      * @param contextId
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.ActionDaoInterface#retrieveUnsecuredActionList(java.lang.String)
+     * @see ActionDaoInterface#retrieveUnsecuredActionList(String)
      */
     @Override
     public UnsecuredActionList retrieveUnsecuredActionList(
@@ -80,7 +79,7 @@ public class HibernateActionDao extends AbstractHibernateDao
      * 
      * @param unsecuredActionList
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.ActionDaoInterface#saveOrUpdate(de.escidoc.core.aa.business.persistence.UnsecuredActionList)
+     * @see ActionDaoInterface#saveOrUpdate(UnsecuredActionList)
      */
     @Override
     public void saveOrUpdate(final UnsecuredActionList unsecuredActionList)
@@ -94,9 +93,9 @@ public class HibernateActionDao extends AbstractHibernateDao
      * 
      * @param unsecuredActionList
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.ActionDaoInterface
+     * @see ActionDaoInterface
      *      #delete(de.escidoc.core.aa.business.persistence.UnsecuredActionList)
-     * @aa
+     *
      */
     @Override
     public void delete(final UnsecuredActionList unsecuredActionList)
@@ -113,8 +112,6 @@ public class HibernateActionDao extends AbstractHibernateDao
      * 
      * @param mySessionFactory
      *            The sessionFactory to set.
-     * @spring.property ref="eSciDoc.core.aa.SessionFactory"
-     * @aa
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 

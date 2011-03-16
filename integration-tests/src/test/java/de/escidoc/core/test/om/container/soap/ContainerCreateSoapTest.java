@@ -40,6 +40,8 @@ import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.om.container.ContainerTestBase;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -59,6 +61,8 @@ import static org.junit.Assert.fail;
  * 
  */
 public class ContainerCreateSoapTest extends ContainerTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ContainerCreateSoapTest.class);
 
     /**
      * Constructor.
@@ -134,11 +138,11 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
         try {
             theContainerXml = create(container);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(e);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("the container " + theContainerXml);
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("the container " + theContainerXml);
         }
         assertXmlValidContainer(theContainerXml);
 
@@ -303,7 +307,7 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
             fail("No exception occured on create with missing context href.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class ec = XmlCorruptedException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -328,7 +332,7 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
 
             create(null);
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
 
             return;
         }
@@ -362,7 +366,7 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
         try {
             String xml = create(containerWithWrongContextIdXml);
         }
-        catch (ContextNotFoundException e) {
+        catch (final ContextNotFoundException e) {
             return;
         }
         fail("Not expected exception");
@@ -398,7 +402,7 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
         try {
             String xml = create(containerWithWrongContextObjectTypeXml);
         }
-        catch (ContextNotFoundException e) {
+        catch (final ContextNotFoundException e) {
             return;
         }
         fail("Not expected exception");
@@ -442,7 +446,7 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
         try {
             String xml = create(containerWithoutEscidocMetadataXml);
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             return;
         }
         fail("Not expected exception");
@@ -487,7 +491,7 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
             String xml = create(xmlContainerWithoutInternalMetadataXml);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -561,7 +565,7 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
             fail("No exception occured on container create with relations, which "
                 + " references non existing targets.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "ReferencedResourceNotFoundException expected.",
                 ReferencedResourceNotFoundException.class, e);
@@ -596,7 +600,7 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
             fail("No exception occured on container crate with relations, which "
                 + " target ids containing a version number.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "InvalidContentException expected.",
                 InvalidContentException.class, e);
@@ -642,7 +646,7 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
             fail("No exception occured on container create with relations, which "
                 + " references non existing predicate.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "RelationPredicateNotFoundException expected.",
                 RelationPredicateNotFoundException.class, e);
@@ -690,7 +694,7 @@ public class ContainerCreateSoapTest extends ContainerTestBase {
                     "Creating container with empty content-model element not declined.",
                     ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating container with empty content-model element not declined"
                     + ", properly", ec, e);

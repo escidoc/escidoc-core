@@ -35,11 +35,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * The User management wrapper in service layer.
  * 
- * @spring.bean id="service.UserManagementWrapper"
- * @interface class="de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface"
  * @author TTE
- * @service
- * @aa
  */
 public class UserManagementWrapper implements UserManagementWrapperInterface {
 
@@ -54,7 +50,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface
      *      #logout()
-     * @aa
+     *
      */
     @Override
     public void logout() throws AuthenticationException, SystemException {
@@ -72,7 +68,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      * 
-     * @aa
+     *
      */
     @Override
     public void initHandleExpiryTimestamp(final String handle)
@@ -84,11 +80,8 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
     /**
      * Setter for the business object.
      * 
-     * @spring.property ref="business.UserManagementWrapper"
      * @param business
      *            business object.
-     * @service.exclude
-     * @aa
      */
     public void setBusiness(
         final de.escidoc.core.aa.business.interfaces.UserManagementWrapperInterface business) {

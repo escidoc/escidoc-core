@@ -57,7 +57,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
     /**
      * @return Returns <code>null</code> as the user credentials are unknown
      *         to the shibboleth service provider.
-     * @aa
+     *
      */
     @Override
     public Object getCredentials() {
@@ -69,8 +69,8 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.security.providers.AbstractAuthenticationToken#getPrincipal()
-     * @aa
+     * @see AbstractAuthenticationToken#getPrincipal()
+     *
      */
     @Override
     public Object getPrincipal() {
@@ -82,8 +82,8 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.security.providers.AbstractAuthenticationToken#getName()
-     * @aa
+     * @see AbstractAuthenticationToken#getName()
+     *
      */
     @Override
     public String getName() {

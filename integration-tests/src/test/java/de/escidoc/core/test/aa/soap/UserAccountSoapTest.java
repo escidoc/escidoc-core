@@ -139,7 +139,7 @@ public class UserAccountSoapTest extends UserAccountTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
@@ -199,7 +199,7 @@ public class UserAccountSoapTest extends UserAccountTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }
@@ -248,7 +248,7 @@ public class UserAccountSoapTest extends UserAccountTest {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating with changed read only values failed. ", e);
         }

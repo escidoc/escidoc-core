@@ -124,7 +124,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *             Thrown if a framework internal error occurs.
      * @throws AuthorizationException
      *             If further calls fail because of insufficient access rights.
-     * @om
+     *
      */
     void delete(final String id) throws ContainerNotFoundException,
         LockingException, InvalidStatusException, SystemException,
@@ -142,7 +142,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *             Thrown if a method parameter is missing
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
-     * @om
+     *
      */
     String retrieve(final String id) throws ContainerNotFoundException,
         MissingMethodParameterException, SystemException;
@@ -171,7 +171,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *             Thrown if a framework internal error occurs.
      * @throws ReadonlyVersionException
      *             TODO
-     * @om
+     *
      */
     String update(final String id, final String xmlData)
         throws ContainerNotFoundException, LockingException,
@@ -365,7 +365,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *             record.
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
-     * @om
+     *
      */
     String retrieveMdRecord(final String id, final String mdRecordId)
         throws ContainerNotFoundException, MdRecordNotFoundException,
@@ -430,7 +430,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws InvalidStatusException
      * @throws ReadonlyVersionException
      *             TODO
-     * @om
+     *
      */
     String updateMetadataRecord(
         final String id, final String mdRecordId, final String xmlData)
@@ -454,7 +454,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *             Thrown if a container with the provided id cannot be found.
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
-     * @om
+     *
      */
     String retrieveMdRecords(final String id)
         throws ContainerNotFoundException, SystemException;
@@ -475,7 +475,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *             Thrown if a method parameter is missing
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
-     * @om
+     *
      */
     String retrieveProperties(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
@@ -497,7 +497,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *             Thrown if a method parameter is missing
      * @throws SystemException
      *             Thrown if a framework internal error occurs.
-     * @om
+     *
      */
     String retrieveResources(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
@@ -535,8 +535,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws SystemException
      *             If an error occurs.
      * @throws OperationNotFoundException
-     * @axis.exclude
-     * @om
+     *
      */
     EscidocBinaryContent retrieveResource(
         final String id, final String resourceName,
@@ -595,7 +594,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
     // * @return Returns the value of the subresource.
     // * @throws ContainerNotFoundException
     // * Thrown if a container with the provided id cannot be found.
-    // * @om
+    // *
     // */
     // String retrieveStructuralMap(final String id)
     // throws ContainerNotFoundException;
@@ -614,7 +613,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
     // * Thrown in case of an optimistic locking error.
     // * @throws XmlSchemaValidationException
     // * Thrown if the schema validation of the provided data fails.
-    // * @om
+    // *
     // */
     // String updateStructuralMap(final String id, final String xmlData)
     // throws ContainerNotFoundException, LockingException,
@@ -665,7 +664,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
     // * Thrown if the structural map entry with the provided id
     // * cannot be found.
     // *
-    // * @om
+    // *
     // */
     // void deleteStructuralMapEntry(final String id, final String entryId)
     // throws ContainerNotFoundException, LockingException,
@@ -689,7 +688,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
     // * @throws StructuralMapEntryNotFoundException
     // * Thrown if an structural map entry cannot be found.
     // *
-    // * @om
+    // *
     // */
     // void deleteStructuralMapEntries(final String id, final String xmlData)
     // throws ContainerNotFoundException, LockingException,
@@ -717,7 +716,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
     // * Thrown if an item meber shall be removed that is not part of
     // * container.
     // *
-    // * @om
+    // *
     // */
     // String insertStructuralMapEntries(final String id,
     // final String xmlData,
@@ -867,7 +866,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws InvalidStatusException
      * @throws InvalidXmlException
      *             TODO
-     * @om
+     *
      */
     String lock(final String id, final String taskParam)
         throws ContainerNotFoundException, LockingException,
@@ -896,7 +895,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws InvalidStatusException
      * @throws InvalidXmlException
      *             TODO
-     * @om
+     *
      */
     String unlock(final String id, final String taskParam)
         throws ContainerNotFoundException, LockingException,

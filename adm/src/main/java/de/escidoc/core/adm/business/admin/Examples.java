@@ -55,8 +55,6 @@ import java.util.Date;
  * Load some example objects as resource XMLs into the eSciDoc repository.
  * 
  * @author sche
- * 
- * @spring.bean id="admin.Examples"
  */
 public class Examples {
     private static final String EXAMPLE_CONTAINER = "container.xml";
@@ -247,8 +245,7 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private String loadContainer(
-        final String xml, final String contextId, final String contentModelId)
+    private static String loadContainer(final String xml, final String contextId, final String contentModelId)
         throws Exception {
         String result = null;
         final ContainerHandlerInterface handler =
@@ -272,7 +269,7 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private String loadContentModel(final String xml) throws Exception {
+    private static String loadContentModel(final String xml) throws Exception {
         String result = null;
         final ContentModelHandlerInterface handler =
             BeanLocator.locateContentModelHandler();
@@ -296,7 +293,7 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private String loadContext(final String xml, final String ouId)
+    private static String loadContext(final String xml, final String ouId)
         throws Exception {
         String result = null;
         final ContextHandlerInterface handler = BeanLocator.locateContextHandler();
@@ -345,9 +342,8 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private String loadItem(
-        final String xml, final String contextId, final String contentModelId,
-        final String containerId) throws Exception {
+    private static String loadItem(final String xml, final String contextId, final String contentModelId,
+                                   final String containerId) throws Exception {
         String result = null;
         final ContainerHandlerInterface containerHandler =
             BeanLocator.locateContainerHandler();
@@ -389,7 +385,7 @@ public class Examples {
      * @throws Exception
      *             thrown in case of an internal error
      */
-    private String loadOrganizationalUnit(final String xml) throws Exception {
+    private static String loadOrganizationalUnit(final String xml) throws Exception {
         String result = null;
         final OrganizationalUnitHandlerInterface handler =
             BeanLocator.locateOrganizationalUnitHandler();
@@ -411,8 +407,6 @@ public class Examples {
      * 
      * @param connectionUtility
      *            ConnectionUtility object to be ingested
-     * 
-     * @spring.property ref="escidoc.core.common.util.service.ConnectionUtility"
      */
     public void setConnectionUtility(final ConnectionUtility connectionUtility) {
         this.connectionUtility = connectionUtility;

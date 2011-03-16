@@ -37,11 +37,7 @@ import de.escidoc.core.sm.service.interfaces.StatisticDataHandlerInterface;
 /**
  * A statistic data resource handler.
  * 
- * @spring.bean id="service.StatisticDataHandler" scope="prototype"
- * @interface class="de.escidoc.core.sm.service.interfaces.StatisticDataHandlerInterface"
  * @author MIH
- * @service
- * @sm
  */
 public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
@@ -52,10 +48,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      * 
      * @param statisticDataHandler
      *            The StatisticData handler bean to inject.
-     * 
-     * @spring.property ref="business.StatisticDataHandler"
-     * @service.exclude
-     * @sm
      */
     public void setStatisticDataHandler(
         final de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface statisticDataHandler) {
@@ -81,7 +73,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      * @throws SystemException
      *             ex
      * 
-     * @sm
+     *
      */
     @Override
     public void create(final String xmlData) throws AuthenticationException,

@@ -183,7 +183,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertGrant(createdXml, toBeCreatedXml, defaultUserAccountOrGroupId,
@@ -234,7 +234,7 @@ public class GrantAbstractTest extends GrantTestBase {
             createdContextXml =
                 create(CONTEXT_HANDLER_CODE, toBeCreatedContextXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Creating context to be referenced in grant failed. ", e);
         }
@@ -256,7 +256,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertGrant(createdXml, toBeCreatedXml, defaultUserAccountOrGroupId,
@@ -318,7 +318,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertGrant(createdXml, toBeCreatedXml, defaultUserAccountOrGroupId,
@@ -385,7 +385,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId,
                     toBeCreatedXml);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertGrant(createdXml, toBeCreatedXml, defaultUserAccountOrGroupId,
@@ -414,7 +414,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId,
                     toBeCreatedXml);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertGrant(createdXml, toBeCreatedXml, defaultUserAccountOrGroupId,
@@ -466,7 +466,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertGrant(createdXml, toBeCreatedXml, defaultUserAccountOrGroupId,
@@ -518,7 +518,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertGrant(createdXml, toBeCreatedXml, defaultUserAccountOrGroupId,
@@ -574,7 +574,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertGrant(createdXml, toBeCreatedXml, defaultUserAccountOrGroupId,
@@ -610,7 +610,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(notFoundException.getClass());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     notFoundException.getClass(), e);
         }
@@ -646,7 +646,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(notFoundException.getClass());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 notFoundException.getClass(), e);
         }
@@ -692,7 +692,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(InvalidScopeException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     InvalidScopeException.class, e);
             String testString = "has objectType organizational-unit";
@@ -742,7 +742,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(InvalidScopeException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     InvalidScopeException.class, e);
             String testString = "has objectType user-account";
@@ -791,7 +791,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(InvalidScopeException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     InvalidScopeException.class, e);
             String testString = "has objectType role";
@@ -846,7 +846,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(InvalidScopeException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     InvalidScopeException.class, e);
             String testString = "has objectType grant";
@@ -896,7 +896,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(InvalidScopeException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     InvalidScopeException.class, e);
             String testString = "has objectType content-model";
@@ -935,7 +935,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -966,7 +966,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME: temporarily, the authorization throws wrong exception.
             // therefore both are checked here. This is the correct assertion.
             // assertExceptionType(XmlCorruptedException.class, e);
@@ -1008,7 +1008,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -1046,7 +1046,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -1091,7 +1091,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Creating grant with unknown role not declined. ", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating grant with unknown role not declined, properly. ",
                 ec, e);
@@ -1138,7 +1138,7 @@ public class GrantAbstractTest extends GrantTestBase {
                 "Creating grant with role-reference to context not declined. ",
                 ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase
                 .assertExceptionType(
                     "Creating grant with role-reference to context not declined, properly. ",
@@ -1181,7 +1181,7 @@ public class GrantAbstractTest extends GrantTestBase {
                 "Creating duplicate grant not declined.",
                 AlreadyExistsException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating duplicate grant not declined, properly.",
                 AlreadyExistsException.class, e);
@@ -1228,7 +1228,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Revoking grant failed (test initialization).", e);
         }
@@ -1242,7 +1242,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Recreating revoked grant failed.", e);
         }
@@ -1291,7 +1291,7 @@ public class GrantAbstractTest extends GrantTestBase {
                     "Creating grant with reference to unknown object not declined. ",
                     ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating grant with reference to unknown object not declined,"
                     + " properly. ", ec, e);
@@ -1340,7 +1340,7 @@ public class GrantAbstractTest extends GrantTestBase {
                 "Creating grant with reference to unsupported object"
                     + " not declined. ", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating grant with reference to unsupported object"
                     + " not declined, properly. ", ec, e);
@@ -1406,7 +1406,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(notFoundException.getClass());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 notFoundException.getClass(), e);
         }
@@ -1441,7 +1441,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(notFoundException.getClass());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 notFoundException.getClass(), e);
         }
@@ -1476,7 +1476,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -1507,7 +1507,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(GrantNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 GrantNotFoundException.class, e);
         }
@@ -1547,7 +1547,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(GrantNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 GrantNotFoundException.class, e);
         }
@@ -1584,7 +1584,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(GrantNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 GrantNotFoundException.class, e);
         }
@@ -1615,7 +1615,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -1657,7 +1657,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
 
@@ -1708,7 +1708,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(notFoundException.getClass());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 notFoundException.getClass(), e);
         }
@@ -1748,7 +1748,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(notFoundException.getClass());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 notFoundException.getClass(), e);
         }
@@ -1784,7 +1784,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(GrantNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 GrantNotFoundException.class, e);
         }
@@ -1821,7 +1821,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(GrantNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 GrantNotFoundException.class, e);
         }
@@ -1857,7 +1857,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -1897,7 +1897,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -1931,7 +1931,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
 
@@ -1939,7 +1939,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             retrievedGrantXml = retrieveGrant(defaultUserAccountOrGroupId, grantId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull("No data from retrieve. ", retrievedGrantXml);
@@ -1954,7 +1954,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(AlreadyRevokedException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 AlreadyRevokedException.class, e);
         }
@@ -1985,7 +1985,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -2016,7 +2016,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
     }
@@ -2046,7 +2046,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             revokeGrant(defaultUserAccountOrGroupId, grantId, taskParamXML, null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
     }
@@ -2088,7 +2088,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(GrantNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 GrantNotFoundException.class, e);
         }
@@ -2137,7 +2137,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             revokeGrants(defaultUserAccountOrGroupId, taskParamXML.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                     "Revoking grants failed. ", e);
         }
@@ -2180,7 +2180,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             revokeGrants(defaultUserAccountOrGroupId, taskParamXML.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                     "Revoking grants failed. ", e);
         }
@@ -2221,7 +2221,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             revokeGrants(defaultUserAccountOrGroupId, taskParamXML.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                     "Revoking grants failed. ", e);
         }
@@ -2260,7 +2260,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             revokeGrants(defaultUserAccountOrGroupId, taskParamXML.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                     "Revoking grants failed. ", e);
         }
@@ -2304,7 +2304,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             revokeGrants(defaultUserAccountOrGroupId, taskParamXML.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                     "Revoking grants failed. ", e);
         }
@@ -2361,7 +2361,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(GrantNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     GrantNotFoundException.class, e);
         }
@@ -2416,7 +2416,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(notFoundException.getClass());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     notFoundException.getClass(), e);
         }
@@ -2468,7 +2468,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             currentGrantsXml = retrieveCurrentGrants(defaultUserAccountOrGroupId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrants(currentGrantsXml);
@@ -2558,7 +2558,7 @@ public class GrantAbstractTest extends GrantTestBase {
                 try {
                     revokeGrant(defaultUserAccountOrGroupId, objid, taskParam1Xml, null);
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     EscidocRestSoapTestBase.failException(
                         "Revoking grant failed. ", e);
                 }
@@ -2572,7 +2572,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             currentGrantsXml = retrieveCurrentGrants(defaultUserAccountOrGroupId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrants(currentGrantsXml);
@@ -2657,7 +2657,7 @@ public class GrantAbstractTest extends GrantTestBase {
         try {
             currentGrantsXml = retrieveCurrentGrants(defaultUserAccountOrGroupId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidGrants(currentGrantsXml);
@@ -2746,7 +2746,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(notFoundException.getClass());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 notFoundException.getClass(), e);
         }
@@ -2776,7 +2776,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(notFoundException.getClass());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 notFoundException.getClass(), e);
         }
@@ -2806,7 +2806,7 @@ public class GrantAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }

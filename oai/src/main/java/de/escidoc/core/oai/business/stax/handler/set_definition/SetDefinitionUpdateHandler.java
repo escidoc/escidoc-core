@@ -30,7 +30,7 @@ package de.escidoc.core.oai.business.stax.handler.set_definition;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -51,8 +51,8 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
     private final Map<String, String> setDefinitionProperties =
         new HashMap<String, String>();
 
-    private static final AppLogger log =
-        new AppLogger(SetDefinitionUpdateHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(SetDefinitionUpdateHandler.class);
 
     /*
      * 

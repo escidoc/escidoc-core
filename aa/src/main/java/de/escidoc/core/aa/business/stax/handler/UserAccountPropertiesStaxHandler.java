@@ -35,12 +35,13 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 /**
  * Stax Handler managing the properties of an UserAccount.
  * 
  * @author TTE
- * @aa
+ *
  */
 public class UserAccountPropertiesStaxHandler
     extends UserAccountStaxHandlerBase {
@@ -62,7 +63,7 @@ public class UserAccountPropertiesStaxHandler
      *            <code>true</code> ) or data from database shall be updated (
      *            <code>false</code> ).
      * 
-     * @aa
+     *
      */
     public UserAccountPropertiesStaxHandler(final UserAccount userAccount,
         final UserAccountDaoInterface dao, final boolean create) {
@@ -78,10 +79,10 @@ public class UserAccountPropertiesStaxHandler
      * 
      * @param element
      * @return
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @aa
+     *
      */
     @Override
     public StartElement startElement(final StartElement element) {
@@ -103,7 +104,7 @@ public class UserAccountPropertiesStaxHandler
      * @return
      * @throws SqlDatabaseSystemException
      * @throws UniqueConstraintViolationException
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #characters(java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.Star tElement)
      */
@@ -144,7 +145,7 @@ public class UserAccountPropertiesStaxHandler
      *             <code>UserAccount</code> object is not unique, i.e. it
      *             exists another account with the same loginname but a
      *             different user id.
-     * @aa
+     *
      */
     private void assertUniqueLoginName(final String toBeAsserted)
         throws SqlDatabaseSystemException, UniqueConstraintViolationException {

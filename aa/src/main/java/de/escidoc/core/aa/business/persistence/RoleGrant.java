@@ -38,7 +38,7 @@ import java.util.Date;
  * 
  * @author TTE
  * 
- * @aa
+ *
  */
 public class RoleGrant extends RoleGrantBase {
 
@@ -50,7 +50,7 @@ public class RoleGrant extends RoleGrantBase {
     /**
      * The default constructor.
      * 
-     * @aa
+     *
      */
     public RoleGrant() {
 
@@ -60,7 +60,7 @@ public class RoleGrant extends RoleGrantBase {
      * Gets the title of this role grant.
      * 
      * @return Returns the title.
-     * @aa
+     *
      */
     public String getTitle() {
 
@@ -72,7 +72,7 @@ public class RoleGrant extends RoleGrantBase {
      * Gets the Href of this role grant.
      * 
      * @return Returns the Href
-     * @aa
+     *
      */
     public String getHref() {
         return this.getUserAccountByUserId() != null ? XmlUtility.getUserAccountGrantHref(this
@@ -84,7 +84,7 @@ public class RoleGrant extends RoleGrantBase {
      * Gets the creation date in ISO8601 format.
      * 
      * @return Returns the creation date in ISO8601 format.
-     * @aa
+     *
      */
     public String getIso8601CreationDate() {
 
@@ -98,7 +98,7 @@ public class RoleGrant extends RoleGrantBase {
      * Gets the revocation date in ISO8601 format.
      * 
      * @return Returns the creation date in ISO8601 format.
-     * @aa
+     *
      */
     public String getIso8601RevocationDate() {
 
@@ -113,7 +113,7 @@ public class RoleGrant extends RoleGrantBase {
      * The maximum of creation date and revocation date is returned for this.
      * 
      * @return Returns the creation date in ISO8601 format.
-     * @aa
+     *
      */
     public String getIso8601LastModificationDate() {
 
@@ -130,7 +130,7 @@ public class RoleGrant extends RoleGrantBase {
      * 
      * @return Returns the date of last modification.
      * 
-     * @aa
+     *
      */
     public Date getLastModificationDate() {
 

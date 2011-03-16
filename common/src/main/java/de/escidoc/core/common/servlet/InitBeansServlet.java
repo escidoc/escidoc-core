@@ -1,8 +1,29 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
+ */
+
 package de.escidoc.core.common.servlet;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.BeanLocator;
 
+import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import java.util.regex.Pattern;
@@ -21,8 +42,6 @@ public class InitBeansServlet extends HttpServlet {
     private static final Pattern PATTERN_SPLIT_IDS = Pattern.compile(",\\s*");
     private static final long serialVersionUID = -1471080999315442967L;
 
-    private String beanIds;
-
     private String factoryId;
 
     /**
@@ -31,7 +50,7 @@ public class InitBeansServlet extends HttpServlet {
      * @throws ServletException
      *             Thrown in case of an error.
      * 
-     * @see javax.servlet.GenericServlet#init()
+     * @see GenericServlet#init()
      */
     @Override
     public void init() throws ServletException {
@@ -39,7 +58,7 @@ public class InitBeansServlet extends HttpServlet {
         super.init();
 
         factoryId = getServletConfig().getInitParameter("factoryId");
-        beanIds = getServletConfig().getInitParameter("beanIds");
+        final String beanIds = getServletConfig().getInitParameter("beanIds");
 
         if (factoryId == null || beanIds == null) {
             throw new ServletException(
@@ -52,7 +71,7 @@ public class InitBeansServlet extends HttpServlet {
                 BeanLocator.getBean(factoryId, beanId);
             }
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new ServletException(e.getMessage(), e);
         }
     }
@@ -60,7 +79,7 @@ public class InitBeansServlet extends HttpServlet {
     /**
      * See Interface for functional description.
      * 
-     * @see javax.servlet.GenericServlet#destroy()
+     * @see GenericServlet#destroy()
      */
     @Override
     public void destroy() {

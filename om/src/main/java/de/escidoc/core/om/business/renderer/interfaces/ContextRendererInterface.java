@@ -42,7 +42,7 @@ import java.util.Map;
  * Interface of a Context renderer.
  * 
  * @author SWA
- * @om
+ *
  */
 public interface ContextRendererInterface {
 

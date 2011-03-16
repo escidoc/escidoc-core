@@ -50,7 +50,7 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.factory.ItemXmlProvider;
 import de.escidoc.core.common.util.xml.factory.RelationsXmlProvider;
@@ -88,8 +88,8 @@ public class ItemHandlerBase extends HandlerBase {
         .compile("fedora.server.errors.ObjectIntegrityException: "
             + "FOXML IO stream was bad : Malformed URL");
 
-    private static final AppLogger LOGGER = new AppLogger(
-        ItemHandlerBase.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ItemHandlerBase.class);
 
     private Item item;
 
@@ -261,7 +261,7 @@ public class ItemHandlerBase extends HandlerBase {
         try {
             c = getOriginItem() != null ? getOriginItem().getComponent(id) : getItem().getComponent(id);
         }
-        catch (ComponentNotFoundException e) {
+        catch (final ComponentNotFoundException e) {
             c = getOriginItem() != null ? getOriginItem().getComponentByLocalName(id) : getItem().getComponentByLocalName(id);
         }
         return c;

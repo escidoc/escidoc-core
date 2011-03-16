@@ -33,6 +33,7 @@ import com.sun.xacml.attr.AttributeValue;
 import com.sun.xacml.attr.BooleanAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
+import com.sun.xacml.cond.Function;
 import com.sun.xacml.cond.FunctionBase;
 import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
@@ -67,10 +68,7 @@ import java.util.regex.Pattern;
  * identified by the resource-id of the context to the current user (subject).</li>
  * </ul>
  * 
- * @spring.bean id="eSciDoc.core.aa.XacmlFunctionRoleIsGranted"
- * 
  * @author TTE
- * 
  */
 public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
@@ -125,8 +123,8 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @param inputs
      * @param ctx
      * @return
-     * @see com.sun.xacml.cond.Function#evaluate(java.util.List,
-     *      com.sun.xacml.EvaluationCtx)
+     * @see Function#evaluate(List,
+     *      EvaluationCtx)
      */
     @Override
     public EvaluationResult evaluate(final List inputs, final EvaluationCtx ctx) {
@@ -368,8 +366,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @return Returns the {@link EvaluationResult} found in the cache or
      *         <code>null</code>.
      */
-    private EvaluationResult fetchFromCache(
-        final String userId, final String roleId, final String resourceId) {
+    private static EvaluationResult fetchFromCache(final String userId, final String roleId, final String resourceId) {
 
         // try to get a result for unlimited role or role not granted to the
         // user (resource-id = null)
@@ -404,9 +401,8 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      *            Flag indicating if the role has been granted to the user
      *            (optional: for the provided resource).
      */
-    private EvaluationResult createCachedResult(
-        final String userId, final String roleId, final String resourceId,
-        final boolean roleIsGranted) {
+    private static EvaluationResult createCachedResult(final String userId, final String roleId,
+                                                       final String resourceId, final boolean roleIsGranted) {
 
         final EvaluationResult result =
             EvaluationResult.getInstance(roleIsGranted);
@@ -431,8 +427,6 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * 
      * @param roleDao
      *            the {@link EscidocRoleDaoInterface} implementation to inject.
-     * 
-     * @spring.property ref="persistence.EscidocRoleDao"
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
         this.roleDao = roleDao;
@@ -443,8 +437,6 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * 
      * @param policiesCacheProxy
      *            the {@link PoliciesCacheProxy} to inject.
-     * 
-     * @spring.property ref="resource.PoliciesCacheProxy"
      */
     public void setPoliciesCacheProxy(
         final PoliciesCacheProxy policiesCacheProxy) {

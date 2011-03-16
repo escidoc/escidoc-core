@@ -41,11 +41,7 @@ import de.escidoc.core.sm.service.interfaces.ReportHandlerInterface;
 /**
  * An statistic Report resource handler.
  * 
- * @spring.bean id="service.ReportHandler" scope="prototype"
- * @interface class="de.escidoc.core.sm.service.interfaces.ReportHandlerInterface"
  * @author MIH
- * @service
- * @sm
  */
 public class ReportHandler implements ReportHandlerInterface {
 
@@ -56,10 +52,6 @@ public class ReportHandler implements ReportHandlerInterface {
      * 
      * @param reportHandler
      *            The Report handler bean to inject.
-     * 
-     * @spring.property ref="business.ReportHandler"
-     * @service.exclude
-     * @sm
      */
     public void setReportHandler(
         final de.escidoc.core.sm.business.interfaces.ReportHandlerInterface reportHandler) {
@@ -94,7 +86,7 @@ public class ReportHandler implements ReportHandlerInterface {
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public String retrieve(final String xml) throws AuthenticationException,

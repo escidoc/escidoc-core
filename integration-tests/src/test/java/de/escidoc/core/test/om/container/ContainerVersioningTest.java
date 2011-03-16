@@ -114,7 +114,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
             retrieveVersionHistory("escidoc:foo");
             fail("Missing Exception");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -126,7 +126,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
             retrieveVersionHistory(null);
             fail("Missing Exception");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -914,7 +914,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
             assertXmlValidContainer(xml);
             fail("Succesful update after withdraw.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -1037,7 +1037,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         // "/container/properties/current-version/number[text() = '4']");
         // assertXMLValidContainer(xml);
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // Class<?> ec = InvalidStatusException.class;
         // assertExceptionType(ec, e);
         // }
@@ -1047,7 +1047,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
         xml = retrieve(theContainerId);
         // fail("No exception on retrieve after withdraw.");
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // Class<?> ec = containerNotFoundException.class;
         // assertExceptionType(ec, e);
         // }
@@ -1097,7 +1097,7 @@ public class ContainerVersioningTest extends ContainerTestBase {
             assertXmlValidContainer(xml);
             fail("Succesful update after withdraw.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }

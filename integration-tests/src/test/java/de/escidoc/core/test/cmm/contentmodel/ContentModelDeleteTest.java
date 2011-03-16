@@ -84,7 +84,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "No exception retrieving deleted content model.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -126,7 +126,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
             delete(contentModelId);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -150,7 +150,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
             delete(UNKNOWN_ID);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -176,7 +176,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
             delete(CONTEXT_ID);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -195,7 +195,7 @@ public class ContentModelDeleteTest extends ContentModelTestBase {
             delete(null);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }

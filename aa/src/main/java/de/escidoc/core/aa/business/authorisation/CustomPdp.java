@@ -63,7 +63,7 @@ import de.escidoc.core.aa.business.xacml.function.XacmlFunctionOneAttributeInBot
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleInList;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -79,16 +79,14 @@ import java.util.Set;
  * For setup see constructor definition.
  * 
  * @author Roland Werner (Accenture)
- * @spring.bean id="authorisation.CustomPdp" lazy-init = "true"
- * @aa
+ *
  */
 public class CustomPdp {
 
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(CustomPdp.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomPdp.class);
 
     // this is the actual PDP object we'll use for evaluation
     private PDP pdp;
@@ -149,7 +147,7 @@ public class CustomPdp {
      * @see UserAccountAttributeFinderModule
      * @see ResourceAttributeFinderModule
      * @see DatabasePolicyFinderModule
-     * @aa
+     *
      */
     public CustomPdp() throws Exception {
 
@@ -162,7 +160,7 @@ public class CustomPdp {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      * 
-     * @aa
+     *
      */
     private void init() throws WebserverSystemException {
 
@@ -239,7 +237,7 @@ public class CustomPdp {
      *             if the Request is invalid
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public ResponseCtx evaluate(final String requestFile) throws IOException,
         ParsingException, WebserverSystemException {
@@ -268,7 +266,7 @@ public class CustomPdp {
      * @return the result of the evaluation
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      * 
      */
     public ResponseCtx evaluate(final RequestCtx request)
@@ -288,13 +286,10 @@ public class CustomPdp {
      * 
      * @param databasePolicyFinder
      *            <code>DatabasePolicyFinderModule</code> object to inject.
-     * @spring.property ref="eSciDoc.core.aa.DatabasePolicyFinderModule"
-     * @aa
+     *
      */
     public void setDatabasePolicyFinder(
         final DatabasePolicyFinderModule databasePolicyFinder) {
-
-        LOG.debug("setDatabasePolicyFinder");
         this.databasePolicyFinder = databasePolicyFinder;
     }
 
@@ -305,13 +300,10 @@ public class CustomPdp {
      * @param checkProvidedAttrFinder
      *            <code>CheckProvidedAttributeFinderModule</code> object to
      *            inject.
-     * @spring.property ref="eSciDoc.core.aa.CheckProvidedAttributeFinderModule"
-     * @aa
+     *
      */
     public void setCheckProvidedAttrFinder(
         final CheckProvidedAttributeFinderModule checkProvidedAttrFinder) {
-
-        LOG.debug("setCheckProvidedAttrFinder");
         this.checkProvidedAttrFinder = checkProvidedAttrFinder;
     }
 
@@ -322,13 +314,10 @@ public class CustomPdp {
      * @param resourceNotFoundAttrFinder
      *            <code>ResourceNotFoundAttributeFinderModule</code> object to
      *            inject.
-     * @spring.property ref="eSciDoc.core.aa.ResourceNotFoundAttributeFinderModule"
-     * @aa
+     *
      */
     public void setResourceNotFoundAttrFinder(
         final ResourceNotFoundAttributeFinderModule resourceNotFoundAttrFinder) {
-
-        LOG.debug("setResourceNotFoundAttrFinder");
         this.resourceNotFoundAttrFinder = resourceNotFoundAttrFinder;
     }
 
@@ -339,13 +328,10 @@ public class CustomPdp {
      * @param partlyResolveableAttrFinder
      *            <code>PartlyResolveableAttributeFinderModule</code> object
      *            to inject.
-     * @spring.property ref="eSciDoc.core.aa.PartlyResolveableAttributeFinderModule"
-     * @aa
+     *
      */
     public void setPartlyResolveableAttrFinder(
         final PartlyResolveableAttributeFinderModule partlyResolveableAttrFinder) {
-
-        LOG.debug("setPartlyResolveableAttrFinder");
         this.partlyResolveableAttrFinder = partlyResolveableAttrFinder;
     }
 
@@ -356,13 +342,10 @@ public class CustomPdp {
      * @param objectTypeAttrFinder
      *            <code>ObjectTypeAttributeFinderModule</code> object to
      *            inject.
-     * @spring.property ref="eSciDoc.core.aa.ObjectTypeAttributeFinderModule"
-     * @aa
+     *
      */
     public void setObjectTypeAttrFinder(
         final ObjectTypeAttributeFinderModule objectTypeAttrFinder) {
-
-        LOG.debug("setObjectTypeAttrFinder");
         this.objectTypeAttrFinder = objectTypeAttrFinder;
     }
 
@@ -372,13 +355,10 @@ public class CustomPdp {
      * 
      * @param resourceAttrFinder
      *            <code>ResourceAttributeFinderModule</code> object to inject.
-     * @spring.property ref="eSciDoc.core.aa.ResourceAttributeFinderModule"
-     * @aa
+     *
      */
     public void setResourceAttrFinder(
         final ResourceAttributeFinderModule resourceAttrFinder) {
-
-        LOG.debug("setResourceAttrFinder");
         this.resourceAttrFinder = resourceAttrFinder;
     }
 
@@ -389,13 +369,10 @@ public class CustomPdp {
      * @param resourceIdAttrFinder
      *            <code>ResourceIdentifierAttributeFinderModule</code> object
      *            to inject.
-     * @spring.property ref="eSciDoc.core.aa.ResourceIdentifierAttributeFinderModule"
-     * @aa
+     *
      */
     public void setResourceIdAttrFinderModule(
         final ResourceIdentifierAttributeFinderModule resourceIdAttrFinder) {
-
-        LOG.debug("setResourceIdAttrFinderModule");
         this.resourceIdAttrFinderModule = resourceIdAttrFinder;
     }
 
@@ -405,12 +382,9 @@ public class CustomPdp {
      * 
      * @param roleAttrFinder
      *            <code>RoleAttributeFinderModule</code> object to inject.
-     * @spring.property ref="eSciDoc.core.aa.RoleAttributeFinderModule"
-     * @aa
+     *
      */
     public void setRoleAttrFinder(final RoleAttributeFinderModule roleAttrFinder) {
-
-        LOG.debug("setRoleAttrFinder");
         this.roleAttrFinder = roleAttrFinder;
     }
 
@@ -421,13 +395,10 @@ public class CustomPdp {
      * @param tripleStoreAttrFinder
      *            <code>tripleStoreAttributeFinderModule</code> object to
      *            inject.
-     * @spring.property ref="eSciDoc.core.aa.TripleStoreAttributeFinderModule"
-     * @aa
+     *
      */
     public void setTripleStoreAttrFinder(
         final TripleStoreAttributeFinderModule tripleStoreAttrFinder) {
-
-        LOG.debug("setTripleStoreAttrFinder");
         this.tripleStoreAttrFinder = tripleStoreAttrFinder;
     }
 
@@ -438,13 +409,10 @@ public class CustomPdp {
      * @param userAccountAttrFinder
      *            <code>UserAccountAttributeFinderModule</code> object to
      *            inject.
-     * @spring.property ref="eSciDoc.core.aa.UserAccountAttributeFinderModule"
-     * @aa
+     *
      */
     public void setUserAccountAttrFinder(
         final UserAccountAttributeFinderModule userAccountAttrFinder) {
-
-        LOG.debug("setUserAccountAttrFinder");
         this.userAccountAttrFinder = userAccountAttrFinder;
     }
 
@@ -455,13 +423,10 @@ public class CustomPdp {
      * @param userGroupAttrFinder
      *            <code>UserGroupAttributeFinderModule</code> object to
      *            inject.
-     * @spring.property ref="eSciDoc.core.aa.UserGroupAttributeFinderModule"
-     * @aa
+     *
      */
     public void setUserGroupAttrFinder(
         final UserGroupAttributeFinderModule userGroupAttrFinder) {
-
-        LOG.debug("setUserGroupAttrFinder");
         this.userGroupAttrFinder = userGroupAttrFinder;
     }
 
@@ -472,13 +437,10 @@ public class CustomPdp {
      * @param grantAttrFinder
      *            <code>GrantAttributeFinderModule</code> object to
      *            inject.
-     * @spring.property ref="eSciDoc.core.aa.GrantAttributeFinderModule"
-     * @aa
+     *
      */
     public void setGrantAttrFinder(
         final GrantAttributeFinderModule grantAttrFinder) {
-
-        LOG.debug("setGrantAttrFinder");
         this.grantAttrFinder = grantAttrFinder;
     }
 
@@ -488,7 +450,7 @@ public class CustomPdp {
      * @return Returns the <code>PDPConfig</code> of this PDP.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public PDPConfig getPdpConfig() throws WebserverSystemException {
 
@@ -503,13 +465,9 @@ public class CustomPdp {
      * 
      * @param xacmlFunctionRoleIsGranted
      *            the {@link XacmlFunctionRoleIsGranted} to inject.
-     * 
-     * @spring.property ref="eSciDoc.core.aa.XacmlFunctionRoleIsGranted"
      */
     public void setXacmlFunctionRoleIsGranted(
         final XacmlFunctionRoleIsGranted xacmlFunctionRoleIsGranted) {
-
-        LOG.debug("setXacmlFunctionRoleIsGranted");
         this.xacmlFunctionRoleIsGranted = xacmlFunctionRoleIsGranted;
     }
 
@@ -518,13 +476,9 @@ public class CustomPdp {
      * 
      * @param smAttributesFinderModule
      *            the {@link SmAttributesFinderModule} to inject.
-     * 
-     * @spring.property ref="eSciDoc.core.aa.SmAttributesFinderModule"
      */
     public void setSmAttributesFinderModule(
         final SmAttributesFinderModule smAttributesFinderModule) {
-
-        LOG.debug("setSmAttributesFinderModule");
         this.smAttributesFinderModule = smAttributesFinderModule;
     }
 
@@ -533,13 +487,9 @@ public class CustomPdp {
      * 
      * @param lockOwnerAttributeFinderModule
      *            the {@link LockOwnerAttributeFinderModule} to inject.
-     * 
-     * @spring.property ref="eSciDoc.core.aa.LockOwnerAttributeFinderModule"
      */
     public void setLockOwnerAttributeFinderModule(
         final LockOwnerAttributeFinderModule lockOwnerAttributeFinderModule) {
-
-        LOG.debug("setLockOwnerAttributeFinderModule");
         this.lockOwnerAttributeFinderModule = lockOwnerAttributeFinderModule;
     }
 
@@ -548,13 +498,9 @@ public class CustomPdp {
      * 
      * @param newOuParentsAttributeFinderModule
      *            the {@link NewOuParentsAttributeFinderModule} to inject.
-     * 
-     * @spring.property ref="eSciDoc.core.aa.NewOuParentsAttributeFinderModule"
      */
     public void setNewOuParentsAttributeFinderModule(
         final NewOuParentsAttributeFinderModule newOuParentsAttributeFinderModule) {
-
-        LOG.debug("setNewOuParentsAttributeFinderModule");
         this.newOuParentsAttributeFinderModule = newOuParentsAttributeFinderModule;
     }
 

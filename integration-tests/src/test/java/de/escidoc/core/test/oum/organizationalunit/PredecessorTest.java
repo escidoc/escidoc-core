@@ -369,7 +369,7 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
             fail("It is possible to define a 'replacement' with multiple OUs"
                 + " as predecessors.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
         }
     }
@@ -520,7 +520,7 @@ public class PredecessorTest extends OrganizationalUnitTestBase {
             update(ou1Id, tmp);
             fail("Missing exception. Predecessor can point to OU itself (loop).");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<? extends Exception> ec = InvalidStatusException.class;
             assertExceptionType(ec, e);
         }

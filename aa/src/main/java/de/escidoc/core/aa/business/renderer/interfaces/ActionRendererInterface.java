@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
  * Interface of an action renderer.
  * 
  * @author TTE
- * @aa
+ *
  */
 public interface ActionRendererInterface {
 
@@ -47,7 +47,7 @@ public interface ActionRendererInterface {
      * @return Returns the XML representation of the list of unsecured actions.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderUnsecuredActionList(final UnsecuredActionList actions)
         throws WebserverSystemException;

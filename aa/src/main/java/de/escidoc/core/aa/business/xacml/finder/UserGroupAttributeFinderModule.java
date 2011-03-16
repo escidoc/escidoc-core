@@ -63,11 +63,7 @@ import java.util.regex.Pattern;
  * -info:escidoc/names:aa:1.0:resource:user-group:name<br>
  * the name of the user-group, single value attribute
  * 
- * @spring.bean id="eSciDoc.core.aa.UserGroupAttributeFinderModule"
- * 
  * @author MIH
- * 
- * @aa
  */
 public class UserGroupAttributeFinderModule
     extends AbstractAttributeFinderModule {
@@ -106,10 +102,10 @@ public class UserGroupAttributeFinderModule
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -139,10 +135,10 @@ public class UserGroupAttributeFinderModule
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -223,10 +219,9 @@ public class UserGroupAttributeFinderModule
      *            The user group to assert.
      * @throws UserGroupNotFoundException
      *             Thrown if assertion fails.
-     * @aa
+     *
      */
-    private void assertUserGroup(
-        final String userGroupId, final UserGroup userGroup)
+    private static void assertUserGroup(final String userGroupId, final UserGroup userGroup)
         throws UserGroupNotFoundException {
 
         if (userGroup == null) {
@@ -249,7 +244,7 @@ public class UserGroupAttributeFinderModule
      *             Thrown in case of an internal error.
      * @throws UserGroupNotFoundException
      *             Thrown if no user account with provided id exists.
-     * @aa
+     *
      */
     private UserGroup retrieveUserGroup(
         final EvaluationCtx ctx, final String userGroupId)
@@ -263,7 +258,7 @@ public class UserGroupAttributeFinderModule
             try {
                 userGroup = userGroupDao.retrieveUserGroup(userGroupId);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during retrieval of the user group", e
@@ -284,7 +279,6 @@ public class UserGroupAttributeFinderModule
      * 
      * @param userGroupDao
      *            The user group dao.
-     * @spring.property ref="persistence.UserGroupDao"
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
         this.userGroupDao = userGroupDao;

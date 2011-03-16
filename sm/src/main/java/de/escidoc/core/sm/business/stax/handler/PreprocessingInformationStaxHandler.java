@@ -39,7 +39,7 @@ import java.util.Date;
  * Extracts dates out of processing-information.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class PreprocessingInformationStaxHandler extends DefaultHandler {
 
@@ -64,7 +64,7 @@ public class PreprocessingInformationStaxHandler extends DefaultHandler {
      * @param parser
      *            StaxParser
      * 
-     * @sm
+     *
      */
     public PreprocessingInformationStaxHandler(final StaxParser parser) {
         this.parser = parser;
@@ -79,10 +79,10 @@ public class PreprocessingInformationStaxHandler extends DefaultHandler {
      *            The element.
      * @return The character section.
      * @throws Exception e
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
+     * @see DefaultHandler#characters
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @om
+     *
      */
     @Override
     public String characters(

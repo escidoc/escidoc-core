@@ -40,7 +40,7 @@ import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -71,8 +71,8 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
 
     private final Collection<String> relationsDataCheck = new ArrayList<String>();
 
-    private static final AppLogger log =
-        new AppLogger(ContentRelationsAddHandler2Edition.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContentRelationsAddHandler2Edition.class);
 
     public ContentRelationsAddHandler2Edition(final StaxParser parser, final String id) {
         this.parser = parser;
@@ -191,7 +191,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
         return relationsData;
     }
 
-    private String[] splitPredicate(final String predicate) {
+    private static String[] splitPredicate(final String predicate) {
         int index = predicate.lastIndexOf('#');
         if (index < 0) {
             index = predicate.lastIndexOf('/');

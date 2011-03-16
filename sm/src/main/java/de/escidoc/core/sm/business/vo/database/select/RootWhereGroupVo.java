@@ -35,7 +35,7 @@ import java.util.Collection;
  * by brackets in the resulting sql-statement).
  * 
  * @author MIH
- * @sm
+ *
  */
 public class RootWhereGroupVo {
     private RootWhereFieldVo rootWhereFieldVo;

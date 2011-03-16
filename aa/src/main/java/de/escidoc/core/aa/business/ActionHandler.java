@@ -34,6 +34,7 @@ import de.escidoc.core.aa.business.persistence.UnsecuredActionList;
 import de.escidoc.core.aa.business.renderer.interfaces.ActionRendererInterface;
 import de.escidoc.core.aa.business.stax.handler.UnsecuredActionStaxHandler;
 import de.escidoc.core.aa.service.interfaces.ActionHandlerInterface;
+import de.escidoc.core.aa.service.interfaces.RoleHandlerInterface;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
@@ -41,7 +42,7 @@ import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidation
 import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.StaxParser;
 
@@ -58,7 +59,7 @@ public class ActionHandler implements ActionHandlerInterface {
     /**
      * The logger.
      */
-    private static final AppLogger log = new AppLogger(ActionHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ActionHandler.class);
 
     /**
      * The data access object to access action data.
@@ -84,9 +85,9 @@ public class ActionHandler implements ActionHandlerInterface {
      * @throws XmlCorruptedException
      * @throws XmlSchemaValidationException
      * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface#createUnsecuredActions(java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see RoleHandlerInterface#createUnsecuredActions(String,
+     * String)
+     *
      */
     @Override
     public String createUnsecuredActions(
@@ -106,10 +107,10 @@ public class ActionHandler implements ActionHandlerInterface {
         try {
             sp.parse(in);
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 "Unexpected exception in " + getClass().getName()
                     + ".createUnsecuredActions: " + e.getClass().getName();
@@ -137,9 +138,9 @@ public class ActionHandler implements ActionHandlerInterface {
      * @param contextId
      * @throws ContextNotFoundException
      * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
+     * @see RoleHandlerInterface
      *      #deleteUnsecuredActions(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void deleteUnsecuredActions(final String contextId)
@@ -163,9 +164,9 @@ public class ActionHandler implements ActionHandlerInterface {
      * @return
      * @throws ContextNotFoundException
      * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
+     * @see RoleHandlerInterface
      *      #retrieveUnsecuredActions(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieveUnsecuredActions(final String contextId)
@@ -195,9 +196,9 @@ public class ActionHandler implements ActionHandlerInterface {
      *             Thrown if the XML data cannot be parsed.
      * @throws WebserverSystemException
      *             Thrown in case of any other failure.
-     * @aa
+     *
      */
-    private ByteArrayInputStream validateUnsecuredActions(final String xmlData)
+    private static ByteArrayInputStream validateUnsecuredActions(final String xmlData)
         throws XmlCorruptedException, WebserverSystemException,
         XmlSchemaValidationException {
 
@@ -211,7 +212,7 @@ public class ActionHandler implements ActionHandlerInterface {
      * 
      * @param actionDao
      *            The dao to set.
-     * @aa
+     *
      */
     public void setActionDao(final ActionDaoInterface actionDao) {
 
@@ -223,7 +224,7 @@ public class ActionHandler implements ActionHandlerInterface {
      *
      * @param renderer
      *            The renderer to inject.
-     * @aa
+     *
      */
     public void setRenderer(final ActionRendererInterface renderer) {
 
@@ -235,7 +236,7 @@ public class ActionHandler implements ActionHandlerInterface {
 
      * @param utility
      *            the {@link Utility} to be injected.
-     * @aa
+     *
      */
     public void setUtility(final Utility utility) {
 

@@ -1,3 +1,23 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
+ */
+
 package de.escidoc.core.common.util;
 
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -18,7 +38,7 @@ import java.sql.SQLException;
 
 public final class IOUtils {
 
-    private final static Logger LOG = LoggerFactory.getLogger(IOUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(IOUtils.class);
 
     public static final Charset UTF8_CHARSET = Charset.forName("UTF-8");
     private static final int DEFAULT_BUFFER_SIZE = 1024 * 4;
@@ -78,7 +98,7 @@ public final class IOUtils {
         if (i < DEFAULT_BUFFER_SIZE) {
             i = DEFAULT_BUFFER_SIZE;
         }
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
         copy(input, bos);
         closeStream(input);
         return bos.toByteArray();
@@ -89,7 +109,7 @@ public final class IOUtils {
         if (i < DEFAULT_BUFFER_SIZE) {
             i = DEFAULT_BUFFER_SIZE;
         }
-        ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream(i);
         copy(input, bos);
         closeStream(input);
         return bos.toString(XmlUtility.CHARACTER_ENCODING);
@@ -98,7 +118,7 @@ public final class IOUtils {
     public static String newStringFromBytes(final byte[] bytes, final String charsetName) {
         try {
             return new String(bytes, charsetName);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw
                     new RuntimeException("Unexpected failure: Charset.forName(\""
                             + charsetName + "\") returns invalid name.", e);
@@ -106,7 +126,7 @@ public final class IOUtils {
         }
     }
 
-    public static String newStringFromBytes(byte[] bytes) {
+    public static String newStringFromBytes(final byte[] bytes) {
         return newStringFromBytes(bytes, UTF8_CHARSET.name());
     }
 
@@ -116,7 +136,7 @@ public final class IOUtils {
                                             final int length) {
         try {
             return new String(bytes, start, length, charsetName);
-        } catch (UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
             throw
                     new RuntimeException("Unexpected failure: Charset.forName(\""
                             + charsetName + "\") returns invalid name.", e);
@@ -128,47 +148,67 @@ public final class IOUtils {
         return newStringFromBytes(bytes, UTF8_CHARSET.name(), start, length);
     }
 
-    public static void closeStream(Closeable stream) {
+    public static void closeStream(final Closeable stream) {
         if (stream == null) {
             return;
         }
         try {
             stream.close();
         } catch (final IOException e) {
-            LOG.debug("Error on closing stream.", e);
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on closing stream.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on closing stream.", e);
+            }
         }
     }
 
-    public static void closeWriter(Writer writer) {
+    public static void closeWriter(final Writer writer) {
         if (writer == null) {
             return;
         }
         try {
             writer.close();
         } catch (final IOException e) {
-            LOG.debug("Error on closing writer.", e);
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on closing writer.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on closing writer.", e);
+            }
         }
     }
 
-    public static void closeConnection(Connection connection) {
+    public static void closeConnection(final Connection connection) {
         if (connection == null) {
             return;
         }
         try {
             connection.close();
         } catch (final SQLException e) {
-            LOG.debug("Error on closing connection.", e);
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on closing connection.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on closing connection.", e);
+            }
         }
     }
 
-    public static void closeResultSet(ResultSet resultSet) {
+    public static void closeResultSet(final ResultSet resultSet) {
         if (resultSet == null) {
             return;
         }
         try {
             resultSet.close();
         } catch (final SQLException e) {
-            LOG.debug("Error on closing result set.", e);
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on closing result set.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on closing result set.", e);
+            }
         }
     }
 

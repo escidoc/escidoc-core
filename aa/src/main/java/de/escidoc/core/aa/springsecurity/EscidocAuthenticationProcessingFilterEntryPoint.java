@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.aa.springsecurity;
 
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.springframework.security.AuthenticationException;
 import org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint;
 import org.springframework.security.util.RedirectUrlBuilder;
@@ -41,12 +41,12 @@ import javax.servlet.http.HttpServletResponse;
  * to enable to use absolute urls for the login-form.
  * 
  * @author MIH
- * @aa
+ *
  */
 public class EscidocAuthenticationProcessingFilterEntryPoint extends
         AuthenticationProcessingFilterEntryPoint {
-    private static final AppLogger logger = new AppLogger(
-            AuthenticationProcessingFilterEntryPoint.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+            AuthenticationProcessingFilterEntryPoint.class);
 
     /**
      * Get url to login-page from configuration.
@@ -55,7 +55,7 @@ public class EscidocAuthenticationProcessingFilterEntryPoint extends
      * @param response servlet-response
      * @param authException exception
      * @return String url to login-form
-     * @aa
+     *
      */
     @Override
     protected String buildRedirectUrlToLoginPage(final HttpServletRequest request,
@@ -81,7 +81,7 @@ public class EscidocAuthenticationProcessingFilterEntryPoint extends
                 urlBuilder.setScheme("https");
                 urlBuilder.setPort(httpsPort);
             } else {
-                logger.warn(
+                LOGGER.warn(
                         "Unable to redirect to HTTPS as "
                         + "no port mapping found for HTTP port " 
                         + serverPort);

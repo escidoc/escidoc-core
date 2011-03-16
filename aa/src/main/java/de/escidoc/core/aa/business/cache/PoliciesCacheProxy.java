@@ -31,6 +31,8 @@ package de.escidoc.core.aa.business.cache;
 import de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.aa.business.persistence.RoleGrant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -39,11 +41,13 @@ import java.util.Set;
 /**
  * This class encapsulates access to the policies cache and ensures that the
  * cache is filled when reading from it.
- * 
- * @spring.bean id="resource.PoliciesCacheProxy"
+ *
  * @author SCHE
  */
 public class PoliciesCacheProxy {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PoliciesCacheProxy.class);
+
     private UserAccountHandlerInterface userAccountHandler;
 
     private UserGroupHandlerInterface userGroupHandler;
@@ -65,10 +69,15 @@ public class PoliciesCacheProxy {
             try {
                 result = userGroupHandler.retrieveCurrentGrantsAsMap(groupId);
                 PoliciesCache.putGroupGrants(groupId, result);
-            }
-            catch (Exception e) {
+            } catch (final Exception e) {
                 // The caller doesn't expect to get an exception from here if
                 // the group doesn't exist.
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on retrieving grants.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on retrieving grants.", e);
+                }
             }
         }
         return result;
@@ -89,7 +98,7 @@ public class PoliciesCacheProxy {
                 result = userGroupHandler.retrieveGroupsForUser(userId, true);
                 PoliciesCache.putUserGroups(userId, result);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 // The caller doesn't expect to get an exception from here if
                 // the user doesn't exist.
             }
@@ -115,7 +124,7 @@ public class PoliciesCacheProxy {
                 result = userAccountHandler.retrieveCurrentGrantsAsMap(userId);
                 PoliciesCache.putUserGrants(userId, result);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 // The caller doesn't expect to get an exception from here if
                 // the user doesn't exist.
             }
@@ -128,8 +137,6 @@ public class PoliciesCacheProxy {
      * 
      * @param userAccountHandler
      *            user account handler from Spring
-     * 
-     * @spring.property ref="business.UserAccountHandler"
      */
     public void setUserAccountHandler(
         final UserAccountHandlerInterface userAccountHandler) {
@@ -141,8 +148,6 @@ public class PoliciesCacheProxy {
      * 
      * @param userGroupHandler
      *            user group handler from Spring
-     * 
-     * @spring.property ref="business.UserGroupHandler"
      */
     public void setUserGroupHandler(
         final UserGroupHandlerInterface userGroupHandler) {

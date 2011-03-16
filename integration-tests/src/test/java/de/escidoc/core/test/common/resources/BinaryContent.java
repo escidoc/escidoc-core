@@ -35,7 +35,7 @@ import java.io.InputStream;
 /**
  * Class encapsulating binary content.
  * 
- * @common
+ *
  */
 public class BinaryContent {
 

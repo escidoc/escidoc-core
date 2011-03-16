@@ -47,7 +47,7 @@ public interface ContextFoXmlRendererInterface {
      *
      * @return Returns the foxml representation of the context.
      * @throws SystemException Thrown in case of an internal error.
-     * @om
+     *
      */
     String render(final Map<String, Object> values) throws SystemException;
 
@@ -60,7 +60,7 @@ public interface ContextFoXmlRendererInterface {
      * @return Returns the foxml representation of the <code>RELS-EXT</code>
      *         datastream of a context.
      * @throws WebserverSystemException Thrown in case of an internal error.
-     * @om
+     *
      */
     String renderRelsExt(final Map<String, Object> values)
         throws WebserverSystemException;
@@ -74,7 +74,7 @@ public interface ContextFoXmlRendererInterface {
      * @return Returns the foxml representation of the <code>DC</code>
      *         datastream of a context.
      * @throws WebserverSystemException Thrown in case of an internal error.
-     * @om
+     *
      */
     String renderDc(final Map<String, Object> values)
         throws WebserverSystemException;

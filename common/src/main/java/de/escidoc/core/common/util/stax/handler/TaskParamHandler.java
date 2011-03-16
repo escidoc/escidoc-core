@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.stax.handler;
 
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
@@ -37,6 +29,8 @@ import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.naming.directory.NoSuchAttributeException;
 import java.util.Collection;
@@ -50,6 +44,8 @@ import java.util.List;
  * 
  */
 public class TaskParamHandler extends DefaultHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskParamHandler.class);
 
     private final StaxParser parser;
 
@@ -112,7 +108,7 @@ public class TaskParamHandler extends DefaultHandler {
      * @return The element.
      * @throws InvalidXmlException
      *             Thrown if the XML has an invalid structure.
-     * @om
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -124,9 +120,13 @@ public class TaskParamHandler extends DefaultHandler {
             try {
                 final Attribute date = element.getAttribute(null, LAST_MODIFICATION_DATE_ATT);
                 lastModificationDate = date.getValue();
-            }
-            catch (NoSuchAttributeException e1) {
-                // date is still 'null'
+            } catch (final NoSuchAttributeException e1) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on parsing last modification attribute.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on parsing last modification attribute.", e1);
+                }
             }
             // If we would have a schema for taskParam, then is the
             // last-modifiaction-date timestamp already checked by schema
@@ -139,7 +139,7 @@ public class TaskParamHandler extends DefaultHandler {
                     new DateTime(lastModificationDate);
                 }
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new XmlCorruptedException(
                     "Task param: last-modification-date '"
                         + lastModificationDate + "' is no valid timestamp!", e);
@@ -157,9 +157,9 @@ public class TaskParamHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement
+     * @see DefaultHandler#endElement
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
-     * @om
+     *
      */
     @Override
     public EndElement endElement(final EndElement element) {
@@ -175,8 +175,8 @@ public class TaskParamHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The character set of the element.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters(java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
+     * @see DefaultHandler#characters(String,
+     *      StartElement)
      */
     @Override
     public String characters(final String data, final StartElement element) {

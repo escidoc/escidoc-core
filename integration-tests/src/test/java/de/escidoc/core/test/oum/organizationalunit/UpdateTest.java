@@ -219,7 +219,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Updating OU failed with exception. ", e);
         }
         assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
@@ -279,7 +279,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = update(ouChild2ParentsId, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Updating parent ous failed.", e);
         }
         assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
@@ -340,7 +340,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = update(ouChild2ParentsId, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Updating parent ous failed.", e);
         }
         assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
@@ -395,7 +395,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = update(ouChild2ParentsId, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Updating parent ous failed.", e);
         }
         assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
@@ -419,7 +419,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = update(ouChild2ParentsId, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Updating parent ous failed.", e);
         }
         assertOrganizationalUnit(updatedXml, toBeUpdatedXml, startTimestamp,
@@ -555,7 +555,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
                 "No exception occured on update with references to parents, which"
                     + "causes cycles in organizational units hierarchy.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec.getName() + " expected.", ec, e);
             return;
         }
@@ -609,7 +609,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
             update(ouChild2ParentsId, toBeUpdatedXml);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -661,7 +661,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     // update(ouChild2ParentsId, toBeUpdatedXml);
     // failMissingException(ec);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType(ec, e);
     // }
     // }
@@ -716,7 +716,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
     // update(ouChild2ParentsId, toBeUpdatedXml);
     // failMissingException(ec);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType(ec, e);
     // }
     // }
@@ -751,7 +751,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with non existing id.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -788,7 +788,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
                 "No exception occured on update with id of resoure of"
                     + " another type.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -823,7 +823,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with missing id.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -860,7 +860,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with missing ou xml.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -903,7 +903,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with wrong time stamp.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -946,7 +946,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with wrong time stamp.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -978,7 +978,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with corrupted xml.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -1015,7 +1015,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
             update(ou1Id, toBeUpdatedXml);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -1073,7 +1073,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = update(child2Id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(
                 "Updating OU with name of ou in another scope failed.", e);
         }
@@ -1139,7 +1139,7 @@ public class UpdateTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = update(child2Id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(
                 "Updating OU with removed parents and set name of ou in"
                     + " previous scope failed.", e);

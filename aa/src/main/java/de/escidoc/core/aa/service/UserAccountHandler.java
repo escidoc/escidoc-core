@@ -53,8 +53,7 @@ import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingE
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
-import org.springframework.beans.factory.InitializingBean;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.springframework.security.userdetails.UserDetails;
 
 import java.util.Map;
@@ -63,21 +62,16 @@ import java.util.Map;
  * User account handler implementation for the service layer of the AA
  * component.
  * 
- * @spring.bean id="service.UserAccountHandler"
- * @interface 
- *            class="de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface"
  * @author MSC
- * @aa
- * @service
  */
 public class UserAccountHandler
-    implements UserAccountHandlerInterface, InitializingBean {
+    implements UserAccountHandlerInterface {
 
     /**
      * The logger.
      */
-    private static final AppLogger LOG = new AppLogger(
-        UserAccountHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        UserAccountHandler.class);
 
     private de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface business;
 
@@ -105,7 +99,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #create(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String create(final String user)
@@ -134,7 +128,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #delete(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void delete(final String userId)
@@ -178,7 +172,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #update(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String update(final String userId, final String user)
@@ -218,7 +212,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface#updatePassword(java.lang.String,
      *      java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void updatePassword(final String userId, final String taskParam)
@@ -248,7 +242,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieve(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieve(final String userId)
@@ -280,27 +274,6 @@ public class UserAccountHandler
         return business.retrieveCurrentUser();
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @return resources as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveResources(java.lang.String)
-     * @aa
-     * @axis.exclude
-     */
     @Override
     public String retrieveResources(final String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
@@ -309,26 +282,6 @@ public class UserAccountHandler
         return business.retrieveResources(userId);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param userId
-     *            userId
-     * @return currentGrants as xml
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveCurrentGrants(java.lang.String)
-     * @aa
-     */
     @Override
     public String retrieveCurrentGrants(final String userId)
         throws UserAccountNotFoundException, MissingMethodParameterException,
@@ -359,7 +312,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveGrant(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieveGrant(final String userId, final String grantId)
@@ -424,7 +377,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #activate(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void activate(final String userId, final String taskParam)
@@ -463,7 +416,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #deactivate(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void deactivate(final String userId, final String taskParam)
@@ -505,7 +458,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #createGrant(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String createGrant(final String userId, final String grantXML)
@@ -546,7 +499,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #revokeGrant(java.lang.String, java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void revokeGrant(
@@ -586,7 +539,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #revokeGrants(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void revokeGrants(final String userId, final String taskParam)
@@ -625,70 +578,22 @@ public class UserAccountHandler
         return business.retrieveUserAccounts(filter);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param handle
-     *            handle
-     * @return UserDetails Object
-     * @throws MissingMethodParameterException
-     *             e
-     * @throws AuthenticationException
-     *             e
-     * @throws AuthorizationException
-     *             e
-     * @throws UserAccountNotFoundException
-     *             e
-     * @throws SystemException
-     *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
-     *      #retrieveUserDetails(java.lang.String)
-     * @aa
-     * 
-     * @axis.exclude
-     */
     @Override
     public UserDetails retrieveUserDetails(final String handle)
         throws MissingMethodParameterException, AuthenticationException,
         AuthorizationException, UserAccountNotFoundException, SystemException {
-
-        LOG.debug("service: retrieveUserDetails");
-        final UserDetails retrievedUserDetails =
-            business.retrieveUserDetails(handle);
-        LOG.debug("business: Returning user details");
-        return retrievedUserDetails;
+        return business.retrieveUserDetails(handle);
     }
 
     /**
      * Setter for the business object.
      * 
-     * @spring.property ref="business.UserAccountHandler"
      * @param business
      *            business object.
-     * @service.exclude
-     * @aa
      */
     public void setBusiness(
         final de.escidoc.core.aa.business.interfaces.UserAccountHandlerInterface business) {
-
-        LOG.debug("setBusiness");
-
         this.business = business;
-    }
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @throws Exception
-     *             e
-     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-     * @aa
-     * @service.exclude
-     */
-    @Override
-    public void afterPropertiesSet() throws Exception {
-
-        LOG.debug("Properties set");
     }
 
     /**
@@ -709,7 +614,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveCurrentGrants(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrievePreferences(final String userId)
@@ -748,7 +653,7 @@ public class UserAccountHandler
      *             Thrown if the authorization fails.
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #createPreference(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String createPreference(
@@ -790,7 +695,7 @@ public class UserAccountHandler
      * @throws MissingAttributeValueException
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #updatePreferences(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String updatePreferences(
@@ -843,7 +748,7 @@ public class UserAccountHandler
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #updatePreference(java.lang.String, java.lang.String,
      *      java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String updatePreference(
@@ -883,7 +788,7 @@ public class UserAccountHandler
      * @throws MissingAttributeValueException
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrievePreference(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrievePreference(
@@ -919,7 +824,7 @@ public class UserAccountHandler
      * @throws MissingAttributeValueException
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #deletePreference(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void deletePreference(
@@ -957,7 +862,7 @@ public class UserAccountHandler
      *             Thrown if the authorization fails.
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #createAttribute(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String createAttribute(final String userId, final String attributeXml)
@@ -987,7 +892,7 @@ public class UserAccountHandler
      *             Thrown if the authorization fails.
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveAttributes(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieveAttributes(final String userId)
@@ -1021,7 +926,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveAttribute(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieveNamedAttributes(final String userId, final String name)
@@ -1054,7 +959,7 @@ public class UserAccountHandler
      *             e
      * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
      *      #retrieveAttribute(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieveAttribute(

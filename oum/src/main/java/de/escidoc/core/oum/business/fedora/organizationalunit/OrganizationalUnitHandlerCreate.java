@@ -107,7 +107,7 @@ public class OrganizationalUnitHandlerCreate
                                     XmlUtility.CHARACTER_ENCODING);
                     mdRecord.put(XmlTemplateProvider.MD_RECORD_CONTENT,
                             metadata);
-                } catch (UnsupportedEncodingException e) {
+                } catch (final UnsupportedEncodingException e) {
                     throw new EncodingSystemException("Metadata record '"
                             + stringByteArrayOutputStreamEntry.getKey() + "' has wrong encoding!", e);
                 }

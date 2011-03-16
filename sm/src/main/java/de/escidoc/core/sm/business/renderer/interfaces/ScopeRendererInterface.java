@@ -38,7 +38,7 @@ import de.escidoc.core.sm.business.persistence.hibernate.Scope;
  * Interface of an scope renderer.
  * 
  * @author MIH
- * @aa
+ *
  */
 public interface ScopeRendererInterface {
 
@@ -50,7 +50,7 @@ public interface ScopeRendererInterface {
      * @return Returns the XML representation of the Scope.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String render(final Scope scope) throws SystemException;
 
@@ -69,7 +69,7 @@ public interface ScopeRendererInterface {
      * @return Returns the XML representation of the list of scopes.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderScopes(
         final Collection<Scope> scopes, final RecordPacking recordPacking)

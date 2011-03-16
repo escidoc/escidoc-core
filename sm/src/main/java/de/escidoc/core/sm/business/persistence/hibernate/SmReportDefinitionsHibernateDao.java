@@ -46,8 +46,6 @@ import java.util.Collection;
  * Database-Backend for the Report-Definitions database-table.
  * 
  * @author MIH
- * @spring.bean id="persistence.SmReportDefinitionsDao"
- * @sm
  */
 public class SmReportDefinitionsHibernateDao
     extends AbstractHibernateDao
@@ -65,7 +63,7 @@ public class SmReportDefinitionsHibernateDao
      * @throws SqlDatabaseSystemException
      *             e
      * 
-     * @sm
+     *
      */
     @Override
     public void save(final ReportDefinition reportDefinition)
@@ -85,7 +83,7 @@ public class SmReportDefinitionsHibernateDao
      * @throws SqlDatabaseSystemException
      *             e
      * 
-     * @sm
+     *
      */
     @Override
     public void update(final ReportDefinition reportDefinition)
@@ -105,7 +103,7 @@ public class SmReportDefinitionsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public void delete(final ReportDefinition reportDefinition)
@@ -128,7 +126,7 @@ public class SmReportDefinitionsHibernateDao
      * @throws ReportDefinitionNotFoundException
      *             Thrown if report-definition with given id was not found.
      * 
-     * @sm
+     *
      */
     @Override
     public ReportDefinition retrieve(final String id)
@@ -140,13 +138,13 @@ public class SmReportDefinitionsHibernateDao
                         getHibernateTemplate().get(ReportDefinition.class,
                             id);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -170,7 +168,7 @@ public class SmReportDefinitionsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<ReportDefinition> retrieveReportDefinitions()
@@ -225,8 +223,6 @@ public class SmReportDefinitionsHibernateDao
      * 
      * @param mySessionFactory
      *            The sessionFactory to set.
-     * @spring.property ref="sm.SessionFactory"
-     * @sm
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 

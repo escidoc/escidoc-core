@@ -52,7 +52,7 @@ public interface SmAggregationDefinitionsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     void save(final AggregationDefinition aggregationDefinition)
         throws SqlDatabaseSystemException;
@@ -65,7 +65,7 @@ public interface SmAggregationDefinitionsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     void save(final AggregationTable aggregationTable)
         throws SqlDatabaseSystemException;
@@ -78,7 +78,7 @@ public interface SmAggregationDefinitionsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     void save(final AggregationStatisticDataSelector 
                     aggregationStatisticDataSelector)
@@ -93,7 +93,7 @@ public interface SmAggregationDefinitionsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     void delete(final AggregationDefinition aggregationDefinition)
         throws SqlDatabaseSystemException;
@@ -110,7 +110,7 @@ public interface SmAggregationDefinitionsDaoInterface {
      * @throws AggregationDefinitionNotFoundException
      *             Thrown if aggregation-definition with given id was not found.
      * 
-     * @sm
+     *
      */
     AggregationDefinition retrieve(final String id)
         throws SqlDatabaseSystemException, AggregationDefinitionNotFoundException;
@@ -123,7 +123,7 @@ public interface SmAggregationDefinitionsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<AggregationDefinition> retrieveAggregationDefinitions()
         throws SqlDatabaseSystemException;
@@ -164,7 +164,7 @@ public interface SmAggregationDefinitionsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<AggregationDefinition> 
         retrieveAggregationDefinitions(Collection<String> scopeIds)

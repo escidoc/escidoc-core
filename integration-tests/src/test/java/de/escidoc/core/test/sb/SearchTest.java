@@ -38,6 +38,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 import java.io.FileInputStream;
@@ -59,6 +61,8 @@ import static org.junit.Assert.fail;
  */
 @RunWith(value = Parameterized.class)
 public class SearchTest extends SearchTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(SearchTest.class);
 
     private static final String INDEX_NAME = "escidoc_all";
 
@@ -127,7 +131,7 @@ public class SearchTest extends SearchTestBase {
      *             If anything fails.
      */
     private void prepare() throws Exception {
-        log.info("starting SearchTest at " 
+        LOGGER.info("starting SearchTest at "
                 + new DateTime(System.currentTimeMillis() 
                 + (60 * 60 * 1000), DateTimeZone.UTC).toString());
         // create empty indices/////////////////////////////////////////////////
@@ -198,8 +202,8 @@ public class SearchTest extends SearchTestBase {
                     });
             }
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
         }
         // /////////////////////////////////////////////////////////////////////
 
@@ -281,8 +285,8 @@ public class SearchTest extends SearchTestBase {
                 // ////////////////////////////////////////////////////////////
             }
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
         }
         try {
             // release container with items as new members
@@ -307,8 +311,8 @@ public class SearchTest extends SearchTestBase {
             container.release(containerIds[0],
                 "<param last-modification-date=\"" + lastModDate + "\" />");
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
         }
         waitForIndexerToAppear(itemIds[Constants.NUM_ITEMS - 1], INDEX_NAME);
         Thread.sleep(60000);
@@ -376,8 +380,8 @@ public class SearchTest extends SearchTestBase {
 
             }
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
         }
         // /////////////////////////////////////////////////////////////////////
 
@@ -443,8 +447,8 @@ public class SearchTest extends SearchTestBase {
                 zipinputstream.closeEntry();
             }
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
         }
         try {
             // release container with items as new members
@@ -466,8 +470,8 @@ public class SearchTest extends SearchTestBase {
             container.release(containerIds[0],
                 "<param last-modification-date=\"" + lastModDate + "\" />");
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
         }
         waitForIndexerToAppear(containerIds[0], INDEX_NAME);
     }
@@ -544,7 +548,7 @@ public class SearchTest extends SearchTestBase {
             fail("No exception occurred on explain in non-existing database.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME: Assert exception
         }
     }
@@ -630,7 +634,7 @@ public class SearchTest extends SearchTestBase {
             search(parameters, "escidoc_fault");
             fail("No exception occured on search in non-existing database.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME: assert exception
         }
     }
@@ -693,7 +697,7 @@ public class SearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(FILTER_PARAMETER_STARTRECORD, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -758,7 +762,7 @@ public class SearchTest extends SearchTestBase {
                     "1/java.lang.IllegalArgumentException: nDocs must be &gt; 0", 
                     getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -787,7 +791,7 @@ public class SearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(FILTER_PARAMETER_MAXIMUMRECORDS, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -2378,7 +2382,7 @@ public class SearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(null, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -2435,7 +2439,7 @@ public class SearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(FILTER_PARAMETER_RESPONSEPOSITION, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -2492,7 +2496,7 @@ public class SearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(FILTER_PARAMETER_MAXIMUMTERMS, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 

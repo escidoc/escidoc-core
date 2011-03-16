@@ -83,7 +83,7 @@ public class ItemSoapTest extends ItemTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase
                 .failException(
                     "Creating item with unicode character U201e failed (see issue 288)",

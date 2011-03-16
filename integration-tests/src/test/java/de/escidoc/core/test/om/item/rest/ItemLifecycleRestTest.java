@@ -126,7 +126,7 @@ public class ItemLifecycleRestTest extends ItemTestBase {
             fail("No AuthorizationException retrieving "
                 + "item with component visibility 'private'.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         }

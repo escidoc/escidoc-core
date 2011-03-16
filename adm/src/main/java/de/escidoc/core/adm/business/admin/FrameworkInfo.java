@@ -32,6 +32,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.Version;
 import de.escidoc.core.common.util.db.Fingerprint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
@@ -46,10 +48,11 @@ import java.sql.SQLException;
  * 
  * @author Andr&eacute; Schenk
  * 
- * @spring.bean id="admin.FrameworkInfo"
- * 
  */
 public class FrameworkInfo extends JdbcDaoSupport {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FrameworkInfo.class);
+
     /**
      * Version of the eSciDocCore database which is currently needed to run the
      * framework.
@@ -140,9 +143,13 @@ public class FrameworkInfo extends JdbcDaoSupport {
                 // version table is empty
                 result = new Version(1, 0, 0);
             }
-        }
-        catch (DataAccessException e) {
-            logger.debug("Error on getting database version.", e);
+        } catch (final DataAccessException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.debug("Error on getting database version.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on getting database version.", e);
+            }
             // version table doesn't exist
             result = new Version(1, 0, 0);
         }

@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora.resources.create;
 
 import de.escidoc.core.common.business.Constants;
@@ -131,7 +123,6 @@ public class ContentModelCreate extends GenericResourceCreate {
      *            The {@link EscidocIdProvider} to set.
      * 
      *            FIXME This Spring construct seams not to work.
-     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
 
@@ -180,7 +171,7 @@ public class ContentModelCreate extends GenericResourceCreate {
                 try {
                     setObjid(this.idProvider.getNextPid());
                 }
-                catch (SystemException e) {
+                catch (final SystemException e) {
                     // FIXME should be catched earlier (FRS)
                     throw new WebserverSystemException(e);
                 }
@@ -188,15 +179,12 @@ public class ContentModelCreate extends GenericResourceCreate {
 
             // create service definitions and deployments
             if (resourceDefinitions != null) {
-                final Iterator<ResourceDefinitionCreate> it = this.resourceDefinitions.values().iterator();
-                while (it.hasNext()) {
-                    final ResourceDefinitionCreate rdc = it.next();
+                for(final ResourceDefinitionCreate resourceDefinitionCreate : this.resourceDefinitions.values()) {
+                    final ResourceDefinitionCreate rdc = resourceDefinitionCreate;
                     final String sdefFoxml = getSDefFoXML(rdc);
-                    FedoraUtility.getInstance().storeObjectInFedora(sdefFoxml,
-                        false);
+                    FedoraUtility.getInstance().storeObjectInFedora(sdefFoxml, false);
                     final String sdepFoxml = getSDepFoXML(rdc);
-                    FedoraUtility.getInstance().storeObjectInFedora(sdepFoxml,
-                        false);
+                    FedoraUtility.getInstance().storeObjectInFedora(sdepFoxml, false);
                 }
             }
 
@@ -229,7 +217,7 @@ public class ContentModelCreate extends GenericResourceCreate {
             }
 
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             // TODO rollback
             throw new WebserverSystemException(e);
         }
@@ -570,7 +558,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * 
      * @return HashMap with namespace values for XML representation.
      */
-    private Map<String, String> getRelsExtNamespaceValues() {
+    private static Map<String, String> getRelsExtNamespaceValues() {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -602,10 +590,10 @@ public class ContentModelCreate extends GenericResourceCreate {
             Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
 
         values.put(XmlTemplateProvider.ESCIDOC_ORIGIN_NS,
-            de.escidoc.core.common.business.Constants.ORIGIN_NS_URI);
+            Constants.ORIGIN_NS_URI);
 
         values.put(XmlTemplateProvider.ESCIDOC_ORIGIN_NS_PREFIX,
-            de.escidoc.core.common.business.Constants.ORIGIN_NS_PREFIX);
+            Constants.ORIGIN_NS_PREFIX);
 
         return values;
     }
@@ -623,7 +611,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
-    private String getLastModificationDateByWorkaround(final String objid)
+    private static String getLastModificationDateByWorkaround(final String objid)
         throws FedoraSystemException {
 
         // Work around for Fedora30 bug APIM.getDatastreams()

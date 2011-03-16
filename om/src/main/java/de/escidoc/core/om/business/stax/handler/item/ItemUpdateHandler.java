@@ -34,6 +34,8 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.naming.directory.NoSuchAttributeException;
 
@@ -43,6 +45,8 @@ import javax.naming.directory.NoSuchAttributeException;
  * @author FRS
  */
 public class ItemUpdateHandler extends DefaultHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemUpdateHandler.class);
 
     private StaxParser parser;
 
@@ -96,8 +100,13 @@ public class ItemUpdateHandler extends DefaultHandler {
                                 "Attribute xlink:href has invalid value.", href,
                                 expectedHref));
                 }
-            }
-            catch (NoSuchAttributeException e) {
+            } catch (final NoSuchAttributeException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on parsing item.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on parsing item.", e);
+                }
                 // LAX
             }
 
@@ -114,13 +123,14 @@ public class ItemUpdateHandler extends DefaultHandler {
                                     itemId));
                 }
 
+            } catch (final NoSuchAttributeException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on parsing item.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on parsing item.", e);
+                }
             }
-            catch (NoSuchAttributeException e) {
-                // LAX
-                // throw new InvalidContentException(
-                // "Required attribute missed in item element.", e);
-            }
-
             done = true;
         }
         return element;

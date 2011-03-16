@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.service;
 
 import java.lang.reflect.Array;
@@ -110,11 +102,11 @@ public final class CollectionsConverter {
         try {
             map = (Map) objectClass.newInstance();
         }
-        catch (IllegalAccessException e) {
+        catch (final IllegalAccessException e) {
             throw new RuntimeException("Cannot access constructor of class "
                 + objectClass.getName(), e);
         }
-        catch (InstantiationException e) {
+        catch (final InstantiationException e) {
             throw new RuntimeException("Cannot instantiate class "
                 + objectClass.getName(), e);
         }
@@ -209,20 +201,20 @@ public final class CollectionsConverter {
             // generates a new List object using the found constructor
             collection = (Collection) constructor.newInstance(params);
         }
-        catch (NoSuchMethodException e) {
+        catch (final NoSuchMethodException e) {
             throw new RuntimeException("Cannot find constructor of class "
                 + objectClass.getName()
                 + " which accepts a Collection as argument.", e);
         }
-        catch (InvocationTargetException e) {
+        catch (final InvocationTargetException e) {
             throw new RuntimeException("Cannot execute constructor of class "
                 + objectClass.getName() + " because it throws an Exception.", e);
         }
-        catch (IllegalAccessException e) {
+        catch (final IllegalAccessException e) {
             throw new RuntimeException("Cannot access constructor of class "
                 + objectClass.getName(), e);
         }
-        catch (InstantiationException e) {
+        catch (final InstantiationException e) {
             throw new RuntimeException("Cannot instantiate class "
                 + objectClass.getName(), e);
         }

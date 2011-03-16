@@ -38,7 +38,7 @@ import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
  * Interface of an aggregation definition renderer.
  * 
  * @author MIH
- * @aa
+ *
  */
 public interface AggregationDefinitionRendererInterface {
 
@@ -50,7 +50,7 @@ public interface AggregationDefinitionRendererInterface {
      * @return Returns the XML representation of the aggregation definition.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String render(final AggregationDefinition aggregationDefinition)
         throws SystemException;
@@ -71,7 +71,7 @@ public interface AggregationDefinitionRendererInterface {
      *         aggregationDefinitions.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderAggregationDefinitions(
         final Collection<AggregationDefinition> aggregationDefinitions,

@@ -103,7 +103,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Create of OU failed. ", e);
         }
         return createdXml;
@@ -197,7 +197,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -418,7 +418,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -506,7 +506,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -563,7 +563,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -621,7 +621,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -678,7 +678,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -748,7 +748,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -810,7 +810,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -873,7 +873,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -936,7 +936,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -1001,7 +1001,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -1116,7 +1116,7 @@ public class OrganizationalUnitTestBase extends OumTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }

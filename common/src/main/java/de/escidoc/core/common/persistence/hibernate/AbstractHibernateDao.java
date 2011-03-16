@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2007-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.persistence.hibernate;
 
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
@@ -64,7 +56,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *            The object to delete.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     public void delete(final Object object) throws SqlDatabaseSystemException {
 
@@ -72,7 +64,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
             try {
                 getHibernateTemplate().delete(object);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
                 throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
             }
@@ -100,7 +92,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      * @return The saved object.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     protected Object save(final Object object)
         throws SqlDatabaseSystemException {
@@ -110,7 +102,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
             try {
                 result = getHibernateTemplate().save(object);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
                 handleFedoraSystemException(e);
                 throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
@@ -127,7 +119,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *            The object to save or update.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     protected String saveOrUpdate(final Object object)
         throws SqlDatabaseSystemException {
@@ -136,7 +128,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
             try {
                 getHibernateTemplate().saveOrUpdate(object);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
                 handleFedoraSystemException(e);
                 throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
@@ -160,7 +152,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
             try {
                 getHibernateTemplate().update(object);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 handleBatchUpdateException((HibernateException) e.getCause());
                 throw new SqlDatabaseSystemException(e.getMostSpecificCause()); // Ignore FindBugs
             }
@@ -178,7 +170,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown if the provided exception contains an
      *             <code>BatchUpdateException</code>.
      */
-    private void handleBatchUpdateException(final HibernateException e)
+    private static void handleBatchUpdateException(final HibernateException e)
         throws SqlDatabaseSystemException {
         if (e.getCause() instanceof BatchUpdateException) {
             final Exception e1 =
@@ -200,7 +192,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *             Thrown if the provided exception contains an
      *             <code>FedoraSystemException</code>.
      */
-    private void handleFedoraSystemException(final Throwable e)
+    private static void handleFedoraSystemException(final Throwable e)
         throws SqlDatabaseSystemException {
         if (e.getCause() != null 
                 && e.getCause().getCause() != null) {
@@ -226,7 +218,7 @@ public abstract class AbstractHibernateDao extends HibernateDaoSupport {
      *            The {@link List} to be asserted.
      * @return Returns the single Object contained in the list or
      *         <code>null</code>.
-     * @aa
+     *
      */
     protected Object getUniqueResult(final List<Object> results) {
 

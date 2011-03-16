@@ -44,6 +44,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -63,6 +65,8 @@ import de.escidoc.core.test.security.client.PWCallback;
  */
 @RunWith(value = Parameterized.class)
 public class ItemContainerAdminSearchTest extends SearchTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ItemContainerAdminSearchTest.class);
 
     private static final String INDEX_NAME = "item_container_admin";
     
@@ -164,7 +168,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
      *             If anything fails.
      */
     private void prepare() throws Exception {
-        log.info("starting SearchTest at "
+        LOGGER.info("starting SearchTest at "
                 + new DateTime(System.currentTimeMillis()
                         + (60 * 60 * 1000), DateTimeZone.UTC).toString());
         // create empty indices/////////////////////////////////////////////////
@@ -4909,7 +4913,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                         break;
                     }
                     returnHash.put("componentId" + i, componentId);
-                } catch (NullPointerException e) {
+                } catch (final NullPointerException e) {
                     break;
                 }
             }
@@ -5249,7 +5253,7 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 xml.getBytes(XmlUtility.CHARACTER_ENCODING)));
             fieldSearches = handler.getValues();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             
         }
     }

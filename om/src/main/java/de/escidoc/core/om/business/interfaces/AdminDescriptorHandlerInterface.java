@@ -37,7 +37,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * 
  * @author TTE
  * 
- * @om
+ *
  */
 public interface AdminDescriptorHandlerInterface {
 
@@ -49,7 +49,7 @@ public interface AdminDescriptorHandlerInterface {
      * @return Returns the XML representation of the created resource, now
      *         containing the id by which the resource can be identified in the
      *         system.
-     * @om
+     *
      * @throws SystemException
      *             TODO
      * @throws AdminDescriptorNotFoundException
@@ -62,7 +62,7 @@ public interface AdminDescriptorHandlerInterface {
      * 
      * @param id
      *            The id of the resource.
-     * @om
+     *
      * @throws SystemException
      *             TODO
      * @throws AdminDescriptorNotFoundException
@@ -76,7 +76,7 @@ public interface AdminDescriptorHandlerInterface {
      * @param id
      *            The id of the resource.
      * @return Returns the XML representation of the resource.
-     * @om
+     *
      * @throws SystemException
      *             TODO
      * @throws ResourceNotFoundException
@@ -95,7 +95,7 @@ public interface AdminDescriptorHandlerInterface {
      * @param xmlData
      *            The new data of the resource.
      * @return Returns the XML representation of the updated resource.
-     * @om
+     *
      * @throws SystemException
      *             TODO
      * @throws ResourceNotFoundException

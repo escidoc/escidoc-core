@@ -46,7 +46,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements;
@@ -67,7 +67,7 @@ import java.util.TreeMap;
  */
 public class Context extends GenericResource implements ContextInterface {
 
-    private static final AppLogger LOGGER = new AppLogger(Context.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(Context.class);
 
     private Datastream dc;
 
@@ -556,8 +556,7 @@ public class Context extends GenericResource implements ContextInterface {
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private Collection<String> expandPropertiesNames(
-        final Collection<String> propertiesNames) {
+    private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
         newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
@@ -579,17 +578,13 @@ public class Context extends GenericResource implements ContextInterface {
      *            internal key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
-    private Map<String, String> expandPropertiesNamesMapping(
-        final Map<String, String> propertiesMapping) {
-
+    private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
         final Map<String, String> newPropertiesNames;
         newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
-
         newPropertiesNames.put(Constants.DC_NS_URI + "description",
             PropertyMapKeys.LATEST_VERSION_DESCRIPTION);
         newPropertiesNames.put(TripleStoreUtility.PROP_CONTEXT_TYPE,
             PropertyMapKeys.CONTEXT_TYPE);
-
         return newPropertiesNames;
     }
 

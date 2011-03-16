@@ -39,7 +39,7 @@ import java.util.Collection;
  * records in a database-table.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class DatabaseSelectVo {
     // selectType also can be 'UPDATE' or 'DELETE'

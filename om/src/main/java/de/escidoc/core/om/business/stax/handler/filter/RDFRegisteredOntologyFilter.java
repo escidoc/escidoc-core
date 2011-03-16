@@ -30,7 +30,7 @@ package de.escidoc.core.om.business.stax.handler.filter;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.om.business.fedora.OntologyUtility;
 
 import javax.xml.namespace.QName;
@@ -41,8 +41,8 @@ import javax.xml.stream.events.XMLEvent;
 
 public class RDFRegisteredOntologyFilter implements EventFilter {
 
-    private static final AppLogger log =
-        new AppLogger(RDFRegisteredOntologyFilter.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(RDFRegisteredOntologyFilter.class);
 
     private boolean inFilteredEvent;
 
@@ -101,8 +101,8 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
                 }
             }
         }
-        catch (SystemException e) {
-            log.error("Unhandled exception", e);
+        catch (final SystemException e) {
+            LOGGER.error("Unhandled exception", e);
         }
         return false;
     }

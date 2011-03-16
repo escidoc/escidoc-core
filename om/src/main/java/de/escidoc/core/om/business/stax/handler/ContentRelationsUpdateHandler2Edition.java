@@ -39,7 +39,7 @@ import de.escidoc.core.common.exceptions.system.EncodingSystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -55,7 +55,7 @@ import java.util.List;
  * 
  * @author ROF
  * 
- * @om
+ *
  */
 public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
@@ -75,15 +75,15 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     private final List<String> relationsData = new ArrayList<String>();
 
-    private static final AppLogger LOGGER =
-        new AppLogger(ContentRelationsUpdateHandler2Edition.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContentRelationsUpdateHandler2Edition.class);
 
     /**
      * Instantiate a ContentRelationsCreateHandler.
      * 
      * @param parser
      *            The parser.
-     * @om
+     *
      */
     public ContentRelationsUpdateHandler2Edition(final StaxParser parser) {
         this.parser = parser;
@@ -95,7 +95,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @om
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -151,7 +151,7 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @om
+     *
      */
     @Override
     public EndElement endElement(final EndElement element) {

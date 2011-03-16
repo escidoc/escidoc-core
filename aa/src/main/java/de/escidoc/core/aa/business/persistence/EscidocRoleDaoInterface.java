@@ -53,7 +53,7 @@ public interface EscidocRoleDaoInterface {
      *         exists, else <code>false</code>.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     boolean roleExists(final String identifier)
         throws SqlDatabaseSystemException;
@@ -65,7 +65,7 @@ public interface EscidocRoleDaoInterface {
      *            The {@link EscidocRole} object to delete.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database error.
-     * @aa
+     *
      */
     void deleteRole(final EscidocRole role) throws SqlDatabaseSystemException;
 
@@ -91,7 +91,7 @@ public interface EscidocRoleDaoInterface {
      *         <code>null</code>.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database error.
-     * @aa
+     *
      */
     EscidocRole retrieveRole(final String identifier)
         throws SqlDatabaseSystemException;
@@ -115,7 +115,7 @@ public interface EscidocRoleDaoInterface {
      *         selected.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database error.
-     * @aa
+     *
      */
     List<EscidocRole> retrieveRoles(
         Map<String, Object> criteria, int offset, int maxResults,
@@ -150,7 +150,7 @@ public interface EscidocRoleDaoInterface {
      *            The {@link EscidocRole} object to save or update.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database error.
-     * @aa
+     *
      */
     void saveOrUpdate(final EscidocRole role) throws SqlDatabaseSystemException;
 
@@ -161,7 +161,7 @@ public interface EscidocRoleDaoInterface {
      *            The {@link ScopeDef} object to delete.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database error.
-     * @aa
+     *
      */
     void deleteScopeDef(final ScopeDef scopeDef)
         throws SqlDatabaseSystemException;

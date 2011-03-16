@@ -41,15 +41,19 @@ import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Stax handler that handles the last modification attribute and checks the
  * optimistic locking criteria.
  * 
  * @author TTE
- * @common
+ *
  */
 public class TmeRequestsStaxHandler extends DefaultHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TmeRequestsStaxHandler.class);
 
     private final Collection<String> files;
 
@@ -82,14 +86,19 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
                 try {
                     new URI(uriString);
                 }
-                catch (URISyntaxException e) {
+                catch (final URISyntaxException e) {
                     throw new TmeException("Link '" + uriString
                         + "' to file is no Uri!", e);
                 }
                 files.add(uriString);
-            }
-            catch (NoSuchAttributeException e) {
+            } catch (final NoSuchAttributeException e) {
                 // TODO what happens here?
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on parsing last modification attribute.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on parsing last modification attribute.", e);
+                }
             }
         }
         return element;
@@ -113,7 +122,7 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
         if (iter.hasNext()) {
             result = result.append(iter.next());
             while (iter.hasNext()) {
-                result.append(",");
+                result.append(',');
                 result.append(iter.next());
             }
         }

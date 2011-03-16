@@ -31,14 +31,12 @@ package de.escidoc.core.aa.business.renderer;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 /**
  * DAO implementation used by the renderer to get needed data.
  * 
  * @author TTE
- * @spring.bean id="eSciDoc.core.aa.business.renderer.RendererDao"
- * @aa
  * 
  */
 public class RendererDao {
@@ -46,8 +44,8 @@ public class RendererDao {
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(RendererDao.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(RendererDao.class);
 
     private TripleStoreUtility tsu;
 
@@ -66,7 +64,7 @@ public class RendererDao {
      *             Thrown if no organizational unit with the provided id exists.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public String getOrganizationalUnitTitle(final String ouId)
         throws OrganizationalUnitNotFoundException, SystemException {
@@ -74,8 +72,9 @@ public class RendererDao {
         String title = tsu.getTitle(ouId);
 
         if (title == null) {
-            LOG
-                .debug("OU title not found in triple store, returning 'Non existing Organizational Unit'");
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("OU title not found in triple store, returning 'Non existing Organizational Unit'");
+            }
             // no title indicates the OU does not exist. Report unknown title or
             // throw an exception. In case of exception retrieving a user
             // account with non existing OU will fail.
@@ -91,8 +90,6 @@ public class RendererDao {
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
-     * @aa
      */
     public void setTsu(final TripleStoreUtility tsu) {
         this.tsu = tsu;

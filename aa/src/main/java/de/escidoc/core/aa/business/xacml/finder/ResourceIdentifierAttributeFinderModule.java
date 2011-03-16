@@ -66,10 +66,7 @@ import java.util.regex.Pattern;
  * -info:escidoc/names:aa:1.0:resource:user-group-id<br>
  *  the id of the user-group, single value attribute
  * 
- * @spring.bean id="eSciDoc.core.aa.ResourceIdentifierAttributeFinderModule"
- * 
  * @author TTE
- * @aa
  */
 public class ResourceIdentifierAttributeFinderModule
     extends AbstractAttributeFinderModule {
@@ -96,10 +93,10 @@ public class ResourceIdentifierAttributeFinderModule
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -130,10 +127,10 @@ public class ResourceIdentifierAttributeFinderModule
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(

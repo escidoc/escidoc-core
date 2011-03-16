@@ -1,37 +1,30 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.stax.handler;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
@@ -131,8 +124,7 @@ public class MultipleExtractor extends WriteHandler {
 
     private StartElementWithChildElements elementToDelete;
 
-    private static final AppLogger LOGGER =
-        new AppLogger(MultipleExtractor.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(MultipleExtractor.class);
 
     /**
      * Creates a instance of MultipleExtractor.
@@ -219,7 +211,7 @@ public class MultipleExtractor extends WriteHandler {
      * @throws WebserverSystemException
      *             If an error occured writing XML data.
      * 
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement
+     * @see DefaultHandler#startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
@@ -520,7 +512,7 @@ public class MultipleExtractor extends WriteHandler {
                     }
                 }
             }
-        } catch (XMLStreamException e) {
+        } catch (final XMLStreamException e) {
             throw new WebserverSystemException("Error occured writing XML data.", e);
         }
         // this have to be the last handler
@@ -533,7 +525,7 @@ public class MultipleExtractor extends WriteHandler {
      * @throws WebserverSystemException
      *             If an error occured writing XML data.
      * 
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
+     * @see DefaultHandler#endElement(EndElement)
      */
     @Override
     public EndElement endElement(final EndElement element)
@@ -596,7 +588,7 @@ public class MultipleExtractor extends WriteHandler {
                         if ((Integer) nsTrace.get(0) == this.getDeepLevel() + 1) {
                             toRemove.add(key);
                         }
-                    } catch (Exception e) {
+                    } catch (final Exception e) {
                         throw new XMLStreamException(e.getMessage(), e);
                     }
                 }
@@ -612,7 +604,7 @@ public class MultipleExtractor extends WriteHandler {
                     this.getWriter().close();
                 }
             }
-        } catch (XMLStreamException e) {
+        } catch (final XMLStreamException e) {
             throw new WebserverSystemException("Error occured writing XML data.", e);
         }
         return element;
@@ -624,8 +616,8 @@ public class MultipleExtractor extends WriteHandler {
      * @throws WebserverSystemException
      *             If an error occured writing XML data.
      * 
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters(java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
+     * @see DefaultHandler#characters(String,
+     *      StartElement)
      */
     @Override
     public String characters(final String data, final StartElement element)
@@ -654,7 +646,7 @@ public class MultipleExtractor extends WriteHandler {
                 }
             }
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             throw new WebserverSystemException("Error occured writing XML data.", e);
         }
         return data;

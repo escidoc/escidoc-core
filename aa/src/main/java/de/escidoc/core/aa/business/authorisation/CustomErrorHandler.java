@@ -28,12 +28,11 @@
  */
 package de.escidoc.core.aa.business.authorisation;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This is a error handler class used when parsing a policy using SAX.
@@ -49,8 +48,7 @@ import java.util.logging.Logger;
 public class CustomErrorHandler implements ErrorHandler {
 
     // the logger we'll use for all messages
-    private static final Logger LOGGER =
-        Logger.getLogger(CustomErrorHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomErrorHandler.class);
 
     /**
      * Standard handler routine for the XML parsing.
@@ -62,8 +60,8 @@ public class CustomErrorHandler implements ErrorHandler {
      */
     @Override
     public void warning(final SAXParseException exception) throws SAXException {
-        if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.warning("Warning on line " + exception.getLineNumber()
+        if (LOGGER.isWarnEnabled()) {
+            LOGGER.warn("Warning on line " + exception.getLineNumber()
                 + ": " + exception.getMessage());
         }
     }
@@ -79,8 +77,8 @@ public class CustomErrorHandler implements ErrorHandler {
      */
     @Override
     public void error(final SAXParseException exception) throws SAXException {
-        if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.warning("Error on line " + exception.getLineNumber() + ": "
+        if (LOGGER.isErrorEnabled()) {
+            LOGGER.error("Error on line " + exception.getLineNumber() + ": "
                 + exception.getMessage() + " ... "
                 + "Policy will not be available");
         }
@@ -100,8 +98,8 @@ public class CustomErrorHandler implements ErrorHandler {
     @Override
     public void fatalError(final SAXParseException exception)
         throws SAXException {
-        if (LOGGER.isLoggable(Level.WARNING)) {
-            LOGGER.warning("Fatal error on line " + exception.getLineNumber()
+        if (LOGGER.isErrorEnabled()) {
+            LOGGER.error("Fatal error on line " + exception.getLineNumber()
                 + ": " + exception.getMessage() + " ... "
                 + "Policy will not be available");
         }

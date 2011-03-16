@@ -109,7 +109,7 @@ public class CollaboratorModifierUpdateAnyMembersRestTest
             PWCallback.setHandle(HANDLE);
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
                     itemId, privateComponentId);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "retrieving content of object failed. ", e);
         } finally {
@@ -142,7 +142,7 @@ public class CollaboratorModifierUpdateAnyMembersRestTest
             PWCallback.setHandle(HANDLE);
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
                     itemId, privateComponentId);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "retrieving content of object failed. ", e);
         } finally {
@@ -176,7 +176,7 @@ public class CollaboratorModifierUpdateAnyMembersRestTest
                     itemId, privateComponentId);
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     AuthorizationException.class, e);
         } finally {

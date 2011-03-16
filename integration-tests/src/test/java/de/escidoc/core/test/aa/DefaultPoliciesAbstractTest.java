@@ -639,7 +639,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(ContainerNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 ContainerNotFoundException.class, e);
         }
@@ -666,7 +666,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(ContentModelNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 ContentModelNotFoundException.class, e);
         }
@@ -693,7 +693,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(ContextNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 ContextNotFoundException.class, e);
         }
@@ -720,7 +720,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(ItemNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 ItemNotFoundException.class, e);
         }
@@ -747,7 +747,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(OrganizationalUnitNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 OrganizationalUnitNotFoundException.class, e);
         }
@@ -773,7 +773,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
     // retrieve(ROLE_HANDLER_CODE, CONTEXT_ID);
     // failMissingException(RoleNotFoundException.class);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType(RoleNotFoundException.class, e);
     // }
     // }
@@ -798,7 +798,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(StagingFileNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 StagingFileNotFoundException.class, e);
         }
@@ -845,7 +845,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         }
@@ -891,7 +891,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         try {
             createdXml = create(CONTEXT_HANDLER_CODE, toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Test init: Context creation failed.", e);
         }
@@ -907,7 +907,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Retrieving created context not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving created context not declined, properly.", ec, e);
         }
@@ -939,7 +939,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Retrieving aggregation definition not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving aggregation definition not declined, properly.",
                 ec, e);
@@ -971,7 +971,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Retrieving report definition not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving report definition not declined, properly.", ec, e);
         }
@@ -1007,7 +1007,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
         try {
             retrieve(REPORT_HANDLER_CODE, parameterXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
     }
@@ -1037,7 +1037,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Retrieving scope not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving scope not declined, properly.", ec, e);
         }
@@ -1069,7 +1069,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Deleting aggregation definition not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Deleting aggregation definition not declined, properly.", ec,
                 e);
@@ -1102,7 +1102,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Deleting report definition not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Deleting report definition not declined, properly.", ec, e);
         }
@@ -1133,7 +1133,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Deleting scope not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Deleting scope not declined, properly.", ec, e);
         }
@@ -1172,7 +1172,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Creating aggregation definition not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating aggregation definition not declined, properly.", ec,
                 e);
@@ -1212,7 +1212,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Creating report definition not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating report definition not declined, properly.", ec, e);
         }
@@ -1248,7 +1248,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
             EscidocRestSoapTestBase.failMissingException(
                 "Creating scope not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating scope not declined, properly.", ec, e);
         }
@@ -2487,7 +2487,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
                 requestsXml));
             EscidocRestSoapTestBase
             .failMissingException(AuthorizationException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         } finally {
@@ -2567,7 +2567,7 @@ public class DefaultPoliciesAbstractTest extends GrantTestBase {
                 requestsXml));
             EscidocRestSoapTestBase
             .failMissingException(AuthorizationException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         } finally {

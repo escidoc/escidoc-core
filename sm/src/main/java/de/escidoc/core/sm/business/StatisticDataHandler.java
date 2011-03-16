@@ -34,7 +34,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface;
 import de.escidoc.core.sm.business.persistence.SmStatisticDataDaoInterface;
@@ -43,15 +43,13 @@ import org.apache.camel.ProducerTemplate;
 
 /**
  * An statistic data resource handler.
- * 
- * @spring.bean id="business.StatisticDataHandler" scope="prototype"
+ *
  * @author MIH
- * @sm
  */
 public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
-    private static final AppLogger LOGGER =
-        new AppLogger(StatisticDataHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(StatisticDataHandler.class);
 
     private SmStatisticDataDaoInterface dao;
 
@@ -73,14 +71,11 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      * @throws SystemException
      *             ex
      * 
-     * @sm
+     *
      */
     @Override
     public void create(final String xmlData)
         throws MissingMethodParameterException, SystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("StatisticDataHandler does create");
-        }
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -126,7 +121,7 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
         try {
             dao.saveStatisticData(xmlData, scopeId);
         }
-        catch (SqlDatabaseSystemException e) {
+        catch (final SqlDatabaseSystemException e) {
             if (e.getCause() != null
                 && e.getCause().getClass() != null
                 && "ConstraintViolationException".equals(e.getCause().getClass().getSimpleName())) {
@@ -134,7 +129,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
                     + " not found in database");
             }
             else {
-                LOGGER.error(e);
                 throw e;
             }
         }
@@ -144,11 +138,8 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
     /**
      * Setter for the dao.
      * 
-     * @spring.property ref="persistence.SmStatisticDataDao"
      * @param dao
      *            The data access object.
-     * 
-     * @sm
      */
     public void setDao(final SmStatisticDataDaoInterface dao) {
         this.dao = dao;
@@ -159,7 +150,6 @@ public class StatisticDataHandler implements StatisticDataHandlerInterface {
      * 
      * @param xmlUtility
      *            The xmlUtility to set.
-     * @spring.property ref="business.sm.XmlUtility"
      */
     public final void setXmlUtility(final SmXmlUtility xmlUtility) {
         this.xmlUtility = xmlUtility;

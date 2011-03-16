@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business;
 
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -59,7 +51,7 @@ public final class Constants {
     /**
      * Namespace-Prefixes.
      * 
-     * @common
+     *
      */
     public static final String GRANTS_NS_PREFIX = "grants";
 
@@ -175,7 +167,7 @@ public final class Constants {
     /**
      * Namespace-URIs.
      * 
-     * @common
+     *
      */
     public static final String NS_URI_PREFIX = "http://www.escidoc.de/schemas/";
 
@@ -489,7 +481,7 @@ public final class Constants {
     /**
      * Prefixes.
      * 
-     * @common
+     *
      */
     public static final String CONTEXT_LIST_PREFIX = "context-list";
 
@@ -514,7 +506,7 @@ public final class Constants {
     /**
      * Types.
      * 
-     * @common
+     *
      */
     public static final String XLINK_TYPE_SIMPLE = "simple";
 
@@ -565,7 +557,7 @@ public final class Constants {
     /**
      * Base-URLs.
      * 
-     * @common
+     *
      */
     public static final String ITEM_URL_BASE = "/ir/item/";
 
@@ -596,7 +588,7 @@ public final class Constants {
     /**
      * Object-types.
      * 
-     * @common
+     *
      */
     public static final String CONTAINER_OBJECT_TYPE = RESOURCES_NS_URI
         + "Container";
@@ -638,7 +630,7 @@ public final class Constants {
     /**
      * Stati.
      * 
-     * @common
+     *
      */
     public static final String STATUS_PENDING = "pending";
 
@@ -681,7 +673,7 @@ public final class Constants {
     /**
      * user-group member types.
      * 
-     * @common
+     *
      */
     public static final String TYPE_USER_GROUP_MEMBER_INTERNAL = "internal";
 
@@ -691,7 +683,7 @@ public final class Constants {
     /**
      * user-group member names.
      * 
-     * @common
+     *
      */
     public static final String NAME_USER_GROUP_MEMBER_USER_ACCOUNT =
         "user-account";
@@ -861,7 +853,7 @@ public final class Constants {
     /**
      * Message Queue Parameters.
      * 
-     * @common
+     *
      */
     public static final String INDEXER_QUEUE_ACTION_PARAMETER = "action";
 
@@ -894,14 +886,14 @@ public final class Constants {
     /**
      * Global AA Parameters.
      * 
-     * @common
+     *
      */
     public static final String UNRESOLVED_ATTRIBUTE_VALUE = "unresolved";
 
     /**
      * Logfiles.
      * 
-     * @common
+     *
      */
     public static final String INDEXING_ERROR_LOGFILE =
         "de.escidoc.core.index.IndexService.error";

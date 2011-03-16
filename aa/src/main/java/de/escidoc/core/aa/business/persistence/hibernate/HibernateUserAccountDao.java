@@ -45,6 +45,8 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.userdetails.UserDetails;
 
@@ -71,11 +73,14 @@ import de.escidoc.core.common.util.service.EscidocUserDetails;
 
 /**
  * @author MSC
- * @spring.bean id="persistence.UserAccountDao"
- * @aa
  */
 public class HibernateUserAccountDao extends AbstractHibernateDao
     implements UserAccountDaoInterface {
+
+    /**
+     * The logger.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(HibernateUserAccountDao.class);
 
     private static final String QUERY_RETRIEVE_LOGINDATA_BY_USER_ID =
         "from UserLoginData u where u.userAccount.id = ?";
@@ -122,9 +127,14 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             userAccountFilter = new UserAccountFilter(null);
             roleGrantFilter = new RoleGrantFilter(null);
         }
-        catch (InvalidSearchQueryException e) {
-            logger.debug("Expected exception for null-query", e);
+        catch (final InvalidSearchQueryException e) {
             // Dont do anything because null-query is given
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Expected exception for null-query");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Expected exception for null-query", e);
+            }
         }
         criteriaMap = userAccountFilter.getCriteriaMap();
         propertiesNamesMap = userAccountFilter.getPropertyMap();
@@ -136,9 +146,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param identityInfo
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #userAccountExists(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public boolean userAccountExists(final String identityInfo)
@@ -163,13 +173,13 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                                 System.currentTimeMillis()).isEmpty();
                 }
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -183,9 +193,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param grantId
      * @return boolean true or false
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #grantExists(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public boolean grantExists(final String grantId)
@@ -201,13 +211,13 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     result = true;
                 }
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -221,9 +231,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param identityInfo
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveUserAccount(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public UserAccount retrieveUserAccount(final String identityInfo)
@@ -241,13 +251,13 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     }
                 }
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -261,8 +271,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param id
      * @return
-     * @see UserAccountDaoInterface#retrieveUserAccountById(java.lang.String)
-     * @aa
+     * @see UserAccountDaoInterface#retrieveUserAccountById(String)
+     *
      */
     @Override
     public UserAccount retrieveUserAccountById(final String id)
@@ -275,13 +285,13 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                         getHibernateTemplate().get(UserAccount.class,
                             id);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -295,8 +305,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param loginName
      * @return
-     * @see UserAccountDaoInterface#retrieveUserAccountByLoginName(java.lang.String)
-     * @aa
+     * @see UserAccountDaoInterface#retrieveUserAccountByLoginName(String)
+     *
      */
     @Override
     public UserAccount retrieveUserAccountByLoginName(final String loginName)
@@ -306,13 +316,13 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             return (UserAccount) getUniqueResult(getHibernateTemplate().find(
                 QUERY_RETRIEVE_USER_ACCOUNT_BY_LOGINNAME, loginName));
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
-        catch (IllegalStateException e) {
+        catch (final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);
         }
-        catch (HibernateException e) {
+        catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(
                 convertHibernateAccessException(e));
@@ -324,8 +334,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param handle
      * @return
-     * @see UserAccountDaoInterface#retrieveUserAccountByHandle(java.lang.String)
-     * @aa
+     * @see UserAccountDaoInterface#retrieveUserAccountByHandle(String)
+     *
      */
     @Override
     public UserAccount retrieveUserAccountByHandle(final String handle)
@@ -336,13 +346,13 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 QUERY_RETRIEVE_USER_ACCOUNT_BY_HANDLE,
                     handle, System.currentTimeMillis()));
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
-        catch (IllegalStateException e) {
+        catch (final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);
         }
-        catch (HibernateException e) {
+        catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(
                 convertHibernateAccessException(e));
@@ -358,9 +368,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveUserAccounts(java.util.Map, int, int, String, ListSorting)
-     * @aa
+     *
      */
     @Override
     public List<UserAccount> retrieveUserAccounts(
@@ -431,7 +441,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
             }
-            catch (IOException e) {
+            catch (final IOException e) {
                 throw new SqlDatabaseSystemException(e);
             }
             if (ouAttributeName == null || ouAttributeName.length() == 0) {
@@ -468,7 +478,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     getHibernateTemplate().findByCriteria(detachedCriteria,
                         offset, maxResults);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
             return result;
@@ -491,7 +501,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @return
      * @throws InvalidSearchQueryException
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveUserAccounts(java.lang.String, int, int)
      */
     @Override
@@ -516,7 +526,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     getHibernateTemplate().findByCriteria(detachedCriteria,
                         offset, maxResults);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -528,9 +538,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param userAccount
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #save(de.escidoc.core.aa.business.persistence.UserAccount)
-     * @aa
+     *
      */
     @Override
     public void save(final UserAccount userAccount)
@@ -544,9 +554,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param userAccount
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #update(de.escidoc.core.aa.business.persistence.UserAccount)
-     * @aa
+     *
      */
     @Override
     public void update(final UserAccount userAccount)
@@ -561,9 +571,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param userAccount
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #delete(de.escidoc.core.aa.business.persistence.UserAccount)
-     * @aa
+     *
      */
     @Override
     public void delete(final UserAccount userAccount)
@@ -598,9 +608,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @param role
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveGrantsByRole(EscidocRole)
-     * @aa
+     *
      */
     @Override
     public List<RoleGrant> retrieveGrantsByRole(final EscidocRole role)
@@ -613,7 +623,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     getHibernateTemplate().find(QUERY_RETRIEVE_GRANTS_BY_ROLE,
                         role);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -624,9 +634,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * See Interface for functional description.
      * 
      * @param userId
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveGrantsByUserId(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public List<RoleGrant> retrieveGrantsByUserId(final String userId)
@@ -639,7 +649,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     getHibernateTemplate().find(
                         QUERY_RETRIEVE_GRANTS_BY_USER_ID, userId);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -654,10 +664,10 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @param objId
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveCurrentGrant(java.lang.String, EscidocRole,
      *      java.lang.String)
-     * @aa
+     *
      */
     @Override
     public RoleGrant retrieveCurrentGrant(
@@ -682,13 +692,13 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     (RoleGrant) getUniqueResult(getHibernateTemplate()
                         .findByCriteria(criteria));
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -703,9 +713,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @param userId
      * @param grantId
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveGrant(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public RoleGrant retrieveGrant(final String userId, final String grantId)
@@ -722,13 +732,13 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     result = null;
                 }
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -740,9 +750,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveGrants(java.util.Map, int, int, String, ListSorting)
-     * @aa
+     *
      */
     @Override
     public List<RoleGrant> retrieveGrants(
@@ -852,7 +862,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 result =
                     getHibernateTemplate().findByCriteria(detachedCriteria);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
             return result;
@@ -876,7 +886,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @return
      * @throws InvalidSearchQueryException
      * @throws SystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveGrants(java.lang.String, int, int,
      *      UserGroupHandlerInterface)
      */
@@ -907,9 +917,14 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     try {
                         groupIds.addAll(userGroupHandler
                             .retrieveGroupsForUser(userId));
-                    }
-                    catch (UserAccountNotFoundException e) {
-                        logger.debug("Error on retrieving groups for user.", e);
+                    } catch (final UserAccountNotFoundException e) {
+                        // Dont do anything because null-query is given
+                        if(LOGGER.isWarnEnabled()) {
+                            LOGGER.warn("Error on retrieving groups for user.");
+                        }
+                        if(LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Error on retrieving groups for user.", e);
+                        }
                     }
                 }
                 filter.setGroupIds(groupIds);
@@ -935,7 +950,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     getHibernateTemplate().findByCriteria(detachedCriteria,
                         offset, maxResults);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -947,9 +962,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param grant
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #save(de.escidoc.core.aa.business.persistence.RoleGrant)
-     * @aa
+     *
      */
     @Override
     public void save(final RoleGrant grant) throws SqlDatabaseSystemException {
@@ -962,9 +977,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param grant
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #update(de.escidoc.core.aa.business.persistence.RoleGrant)
-     * @aa
+     *
      */
     @Override
     public void update(final RoleGrant grant) throws SqlDatabaseSystemException {
@@ -978,9 +993,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @param userId
      * @param attributeId
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveAttribute(java.lang.String, java.lang.String)
-     * @aa
+     *
      */
     @Override
     public UserAttribute retrieveAttribute(
@@ -998,13 +1013,13 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     result = null;
                 }
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -1019,7 +1034,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @param userAccount
      * 
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveAttributes(de.escidoc.core.aa.business.persistence.UserAccount)
      */
     @Override
@@ -1035,7 +1050,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         try {
             result = getHibernateTemplate().findByCriteria(detachedCriteria);
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
         return result;
@@ -1048,7 +1063,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @param attributeName
      * 
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveAttributes(de.escidoc.core.aa.business.persistence.UserAccount,
      *      java.lang.String)
      */
@@ -1069,7 +1084,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         try {
             result = getHibernateTemplate().findByCriteria(detachedCriteria);
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
         return result;
@@ -1082,7 +1097,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *            set of key/value pairs
      * 
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveAttributes(java.lang.String)
      */
     @Override
@@ -1119,7 +1134,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         try {
             result = getHibernateTemplate().findByCriteria(detachedCriteria);
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
         return result;
@@ -1130,9 +1145,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param attribute
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #save(de.escidoc.core.aa.business.persistence.UserAttribute)
-     * @aa
+     *
      */
     @Override
     public void save(final UserAttribute attribute)
@@ -1146,9 +1161,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param attribute
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #update(de.escidoc.core.aa.business.persistence.UserAttribute)
-     * @aa
+     *
      */
     @Override
     public void update(final UserAttribute attribute)
@@ -1162,9 +1177,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param attribute
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #delete(de.escidoc.core.aa.business.persistence.UserAttribute)
-     * @aa
+     *
      */
     @Override
     public void delete(final UserAttribute attribute)
@@ -1179,9 +1194,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @param handle
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveUserLoginDataByHandle(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public UserLoginData retrieveUserLoginDataByHandle(final String handle)
@@ -1193,13 +1208,13 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 checkUserLoginData((UserLoginData) getUniqueResult(getHibernateTemplate()
                     .find(QUERY_RETRIEVE_LOGINDATA_BY_HANDLE, handle)));
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
-        catch (IllegalStateException e) {
+        catch (final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);
         }
-        catch (HibernateException e) {
+        catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(
                 convertHibernateAccessException(e));
@@ -1209,7 +1224,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
     /**
      * See Interface for functional description.
-     * @aa
+     *
      */
     @Override
     public List<UserLoginData> retrieveUserLoginDataByUserId(final String id)
@@ -1219,7 +1234,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
             return checkUserLoginData(getHibernateTemplate().find(
                 QUERY_RETRIEVE_LOGINDATA_BY_USER_ID, new Object[] { id }));
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -1230,7 +1245,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @param handle
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveUserDetails(java.lang.String)
      */
     @Override
@@ -1256,13 +1271,13 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     PoliciesCache.putUserDetails(handle, result);
                 }
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -1277,9 +1292,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param data
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #saveOrUpdate(de.escidoc.core.aa.business.persistence.UserLoginData)
-     * @aa
+     *
      */
     @Override
     public void saveOrUpdate(final UserLoginData data)
@@ -1294,9 +1309,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param data
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #delete(de.escidoc.core.aa.business.persistence.UserLoginData)
-     * @aa
+     *
      */
     @Override
     public void delete(final UserLoginData data)
@@ -1311,7 +1326,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param handle
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface#deleteUserLoginData(java.lang.String)
+     * @see UserAccountDaoInterface#deleteUserLoginData(String)
      */
     @Override
     public void deleteUserLoginData(final String handle)
@@ -1327,9 +1342,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @param timestamp
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrieveExpiredUserLoginData(long)
-     * @aa
+     *
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -1342,7 +1357,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
         try {
             return getHibernateTemplate().findByCriteria(criteria);
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -1351,15 +1366,15 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
     /**
      * Checks if the provided
-     * {@link de.escidoc.core.aa.business.persistence.UserLoginData} objects are
+     * {@link UserLoginData} objects are
      * expired. The expired objects are removed from the storage.
      * 
      * @param userLoginDatas
      *            The <code>List</code> of
-     *            {@link de.escidoc.core.aa.business.persistence.UserLoginData}
+     *            {@link UserLoginData}
      *            objects to check.
      * @return Returns <code>List</code> of all non-expired
-     *         {@link de.escidoc.core.aa.business.persistence.UserLoginData}
+     *         {@link UserLoginData}
      *         objects of the provided list.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
@@ -1385,16 +1400,16 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
     /**
      * Checks if the provided
-     * {@link de.escidoc.core.aa.business.persistence.UserLoginData} object for
+     * {@link UserLoginData} object for
      * is expired. If this is the case, the object is deleted from the storage.
      * And object is removed from Cache.
      * 
      * @param data
      *            The
-     *            {@link de.escidoc.core.aa.business.persistence.UserLoginData}
+     *            {@link UserLoginData}
      *            object to check.
      * @return Returns the provided
-     *         {@link de.escidoc.core.aa.business.persistence.UserLoginData}
+     *         {@link UserLoginData}
      *         object or <code>null</code> if it is expired.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
@@ -1433,16 +1448,16 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
 
     /**
      * Checks if the provided
-     * {@link de.escidoc.core.aa.business.persistence.UserLoginData} object is
+     * {@link UserLoginData} object is
      * expired.
      * 
      * @param data
      *            The
-     *            {@link de.escidoc.core.aa.business.persistence.UserLoginData}
+     *            {@link UserLoginData}
      *            object to check.
      * @return Returns <code>true</code> if the provided object is expired.
      */
-    private boolean isExpired(final UserLoginData data) {
+    private static boolean isExpired(final UserLoginData data) {
 
         boolean result = false;
         if (data.getExpiryts() - System.currentTimeMillis() <= 0) {
@@ -1457,7 +1472,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param mySessionFactory
      *            The mySessionFactory to set.
-     * @spring.property ref="eSciDoc.core.aa.SessionFactory"
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 
@@ -1472,9 +1486,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @return List of UserPreference objects
      * @throws SqlDatabaseSystemException
      *             e
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrievePreferenceByUserId(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public List<UserPreference> retrievePreferencesByUserId(final String userId)
@@ -1487,7 +1501,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                     getHibernateTemplate().find(
                         QUERY_RETRIEVE_PREFERENCES_BY_USER_ID, userId);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -1501,10 +1515,10 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *            The <code>UserPreference</code> object to save.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #retrievePreferenceByUserId(java.lang.String)
      * 
-     * @aa
+     *
      */
     @Override
     public void save(final UserPreference preference)
@@ -1519,9 +1533,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *            userPreference Object
      * @throws SqlDatabaseSystemException
      *             e
-     * @see de.escidoc.core.aa.business.persistence.UserAccountDaoInterface
+     * @see UserAccountDaoInterface
      *      #delete(de.escidoc.core.aa.business.persistence.UserPreference)
-     * @aa
+     *
      */
     @Override
     public void delete(final UserPreference data)
@@ -1539,10 +1553,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *            field-name for in-restriction
      * @return Criterion
      * 
-     * @aa
+     *
      */
-    private Criterion getInRestrictions(
-        final Collection<String> criteria, final String fieldName) {
+    private static Criterion getInRestrictions(final Collection<String> criteria, final String fieldName) {
         if (criteria.contains("")) {
             criteria.remove("");
             return criteria.isEmpty() ? Restrictions.isNull(fieldName) : Restrictions.or(Restrictions.isNull(fieldName),

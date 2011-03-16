@@ -33,7 +33,7 @@ import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 /**
  * Class encapsulating service redirection.
  * 
- * @common
+ *
  */
 public class EscidocServiceRedirect implements EscidocServiceRedirectInterface {
 

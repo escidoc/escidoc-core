@@ -48,8 +48,6 @@ public class ComponentUpdateHandler extends DefaultHandler {
 
     private String itemId;
 
-    private String componentId;
-
     public ComponentUpdateHandler(final String itemId, final String componentPath,
         final StaxParser parser) {
         this.itemId = itemId;
@@ -69,8 +67,8 @@ public class ComponentUpdateHandler extends DefaultHandler {
             final int indexHref =
                 element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
             if (indexObjid >= 0 || indexHref >= 0) {
-                componentId = indexObjid >= 0 ? element.getAttribute(indexObjid).getValue() : Utility.getId(element
-                        .getAttribute(indexHref).getValue());
+                final String componentId = indexObjid >= 0 ? element.getAttribute(indexObjid).getValue() :
+                        Utility.getId(element.getAttribute(indexHref).getValue());
 
                 if (componentId.length() > 0) {
                     // check if component exists
@@ -105,14 +103,14 @@ public class ComponentUpdateHandler extends DefaultHandler {
             // check title
             int index =
                 element.indexOfAttribute(
-                    de.escidoc.core.common.business.Constants.XLINK_URI,
+                    Constants.XLINK_URI,
                     "title");
 
             // check href
             index =
                 element
                     .indexOfAttribute(
-                        de.escidoc.core.common.business.Constants.XLINK_URI,
+                        Constants.XLINK_URI,
                         "href");
         }
         return data;

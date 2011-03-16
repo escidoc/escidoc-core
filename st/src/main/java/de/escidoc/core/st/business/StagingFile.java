@@ -42,7 +42,7 @@ import java.io.OutputStream;
  * This class represents a file in the staging area.
  * 
  * @author TTE
- * @st
+ *
  */
 public class StagingFile
     extends de.escidoc.core.st.business.persistence.StagingFile {
@@ -54,7 +54,7 @@ public class StagingFile
      * @return Returns <code>true</code> if an existing file in the file system
      *         has been associated to this staging file, <code>false</code> if
      *         there does not exist an associated file.
-     * @st
+     *
      */
     public boolean hasFile() {
 
@@ -70,7 +70,7 @@ public class StagingFile
      * 
      * @return Returns <code>true</code> if an existing, readable file in the
      *         file system has been associated to this staging file.
-     * @st
+     *
      */
     public boolean canRead() {
 
@@ -87,7 +87,7 @@ public class StagingFile
      *         system has been set and the file system's file would be
      *         writeable.
      * 
-     * @st
+     *
      */
     public boolean canWrite() {
 
@@ -101,7 +101,7 @@ public class StagingFile
      * Checks if this staging file has been expired.
      * 
      * @return Returns <code>true</code> if this staging file has been expired.
-     * @st
+     *
      */
     public boolean isExpired() {
 
@@ -114,7 +114,7 @@ public class StagingFile
      * @return The file referenced by this staging file.
      * @throws IOException
      *             If file cannot be retrieved.
-     * @st
+     *
      */
     private File getFile() throws IOException {
 
@@ -132,7 +132,7 @@ public class StagingFile
      * @return The file referenced by this staging file.
      * @throws IOException
      *             If file cannot be retrieved.
-     * @st
+     *
      */
     public File createFile() throws IOException {
 
@@ -154,14 +154,14 @@ public class StagingFile
      *         staging file.
      * @throws IOException
      *             If file input stream cannot be retrieved.
-     * @st
+     *
      */
     public FileInputStream getFileInputStream() throws IOException {
 
         try {
             return new FileInputStream(getFile());
         }
-        catch (FileNotFoundException e) {
+        catch (final FileNotFoundException e) {
             throw new IOException(e);
         }
     }
@@ -173,7 +173,7 @@ public class StagingFile
      *            The stream to which the file content shall be written.
      * @throws IOException
      *             If operation fails.
-     * @st
+     *
      */
     public void write(final OutputStream outputStream) throws IOException {
 
@@ -203,7 +203,7 @@ public class StagingFile
      *         inputStream and have been read in to the StagingFile.
      * @throws IOException
      *             If operation fails.
-     * @st
+     *
      */
     public void read(final InputStream inputStream) throws IOException {
 
@@ -230,7 +230,7 @@ public class StagingFile
      * 
      * @throws IOException
      *             If clear fails.
-     * @st
+     *
      */
     public void clear() throws IOException {
 

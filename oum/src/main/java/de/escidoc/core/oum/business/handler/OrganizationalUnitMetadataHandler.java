@@ -32,7 +32,8 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
@@ -48,7 +49,7 @@ import java.util.Map;
  * 
  * @author MSC
  * 
- * @om
+ *
  */
 public class OrganizationalUnitMetadataHandler
     extends OrganizationalUnitHandlerBase {
@@ -73,8 +74,8 @@ public class OrganizationalUnitMetadataHandler
 
     private String escidocMetadataRecordNameSpace;
 
-    private static final AppLogger LOGGER =
-        new AppLogger(OrganizationalUnitMetadataHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(OrganizationalUnitMetadataHandler.class);
 
     private final Map<String, Map<String, String>> metadataAttributes =
         new HashMap<String, Map<String, String>>();
@@ -90,7 +91,7 @@ public class OrganizationalUnitMetadataHandler
      *            The parser.
      * @param rootPath
      *            XML root element path
-     * @om
+     *
      */
     public OrganizationalUnitMetadataHandler(final StaxParser parser,
         final String rootPath) {
@@ -107,9 +108,9 @@ public class OrganizationalUnitMetadataHandler
      * @throws MissingAttributeValueException
      * @throws MissingAttributeValueException
      *             If a required attribute is missing.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement
+     * @see DefaultHandler#startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @om
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -132,7 +133,7 @@ public class OrganizationalUnitMetadataHandler
                     mandatoryMdRecordFound = true;
                 }
             }
-            catch (NoSuchAttributeException e) {
+            catch (final NoSuchAttributeException e) {
                 throw new MissingAttributeValueException("The mandatory attribute 'name' of the element "
                         + elementName + " was not found!", e);
             }
@@ -167,9 +168,9 @@ public class OrganizationalUnitMetadataHandler
      * @param element
      *            The element.
      * @return The element.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement
+     * @see DefaultHandler#endElement
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
-     * @om
+     *
      */
     @Override
     public EndElement endElement(final EndElement element)
@@ -196,10 +197,10 @@ public class OrganizationalUnitMetadataHandler
      * @param element
      *            The element.
      * @return The character section.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
+     * @see DefaultHandler#characters
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @om
+     *
      */
     @Override
     public String characters(final String s, final StartElement element) {

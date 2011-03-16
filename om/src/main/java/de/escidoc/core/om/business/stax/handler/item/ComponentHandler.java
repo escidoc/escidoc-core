@@ -37,7 +37,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingAttributeVal
 import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -54,8 +54,8 @@ import java.io.IOException;
  */
 public class ComponentHandler extends DefaultHandler {
 
-    private static final AppLogger LOGGER =
-        new AppLogger(ComponentHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ComponentHandler.class);
 
     private static final String XPATH_COMPONENT = "/item/components/component";
 
@@ -122,7 +122,9 @@ public class ComponentHandler extends DefaultHandler {
         else {
             final String currentPath = parser.getCurPath();
             if (XPATH_COMPONENT_PROPERTIES.equals(currentPath)) {
-                LOGGER.debug("Parser reached " + XPATH_COMPONENT_PROPERTIES);
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Parser reached " + XPATH_COMPONENT_PROPERTIES);
+                }
                 // creating a new Component shows that the parser is within a
                 // component element.
                 this.parsingProperties = true;
@@ -167,7 +169,9 @@ public class ComponentHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
 
         if (XPATH_COMPONENT_PROPERTIES.equals(currentPath)) {
-            LOGGER.debug("Parser reached end of " + XPATH_COMPONENT_PROPERTIES);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_COMPONENT_PROPERTIES);
+            }
             // parser leaves the XML component element
             this.parsingProperties = false;
             this.propertiesHandler.endElement(element);
@@ -176,7 +180,9 @@ public class ComponentHandler extends DefaultHandler {
             this.propertiesHandler = null;
         }
         else if (XPATH_COMPONENT_METADATA.equals(currentPath)) {
-            LOGGER.debug("Parser reached end of " + XPATH_COMPONENT_METADATA);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_COMPONENT_METADATA);
+            }
             // parser leaves the XML md-records element
             this.parsingMetaData = false;
 

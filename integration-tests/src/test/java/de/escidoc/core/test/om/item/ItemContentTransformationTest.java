@@ -149,7 +149,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
                 "?ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300");
             fail(ec + " expected but no error occurred!");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -170,7 +170,7 @@ public class ItemContentTransformationTest extends ItemTestBase {
                 "?ws=1.0&wy=0.8&wh=1.8&ww=0.3&wx=0.1&dw=600&dh=300");
             fail(ec + " expected but no error occurred!");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }

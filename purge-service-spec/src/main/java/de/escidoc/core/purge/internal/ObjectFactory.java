@@ -1,5 +1,7 @@
 package de.escidoc.core.purge.internal;
 
+import de.escidoc.core.purge.PurgeRequest;
+
 import javax.xml.bind.annotation.XmlRegistry;
 
 /**
@@ -14,9 +16,9 @@ import javax.xml.bind.annotation.XmlRegistry;
 public class ObjectFactory  {
 
     /**
-     * Creates a new instance of {@link de.escidoc.core.purge.PurgeRequest}.
+     * Creates a new instance of {@link PurgeRequest}.
      *
-     * @return a new instance of {@link de.escidoc.core.purge.PurgeRequest}
+     * @return a new instance of {@link PurgeRequest}
      */
     public PurgeRequestImpl createIndexRequest() {
         return new PurgeRequestImpl();

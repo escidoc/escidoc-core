@@ -312,7 +312,7 @@ public class UserAccountTestBase extends AaTestBase {
         try {
             createdUserAccountXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         return assertActiveUserAccount(createdUserAccountXml, toBeCreatedXml,
@@ -334,7 +334,7 @@ public class UserAccountTestBase extends AaTestBase {
         try {
             retrievedXml = retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving user account failed. ", e);
         }
@@ -372,7 +372,7 @@ public class UserAccountTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -422,7 +422,7 @@ public class UserAccountTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -460,7 +460,7 @@ public class UserAccountTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -511,7 +511,7 @@ public class UserAccountTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -553,7 +553,7 @@ public class UserAccountTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -603,7 +603,7 @@ public class UserAccountTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -641,7 +641,7 @@ public class UserAccountTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -696,7 +696,7 @@ public class UserAccountTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -734,7 +734,7 @@ public class UserAccountTestBase extends AaTestBase {
                 "<param last-modification-date=\"" 
                     + lastModificationDate + "\" />";
             userAccountClient.deactivate(accountId, taskParamXml);
-        } catch (AlreadyDeactiveException e) {}
+        } catch (final AlreadyDeactiveException e) {}
 
         String userAccountXml = 
             handleResult(userAccountClient.retrieve(accountId));
@@ -753,7 +753,7 @@ public class UserAccountTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -808,7 +808,7 @@ public class UserAccountTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -847,7 +847,7 @@ public class UserAccountTestBase extends AaTestBase {
                 "<param last-modification-date=\"" 
                     + lastModificationDate + "\" />";
             userAccountClient.activate(accountId, taskParamXml);
-        } catch (AlreadyActiveException e) {}
+        } catch (final AlreadyActiveException e) {}
 
         String userAccountXml = 
             handleResult(userAccountClient.retrieve(accountId));
@@ -866,7 +866,7 @@ public class UserAccountTestBase extends AaTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -1069,7 +1069,7 @@ public class UserAccountTestBase extends AaTestBase {
             orgUnitXml =
                 handleXmlResult(getOrganizationalUnitClient().create(template));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Init: OU create failed.", e);
         }
         return orgUnitXml;
@@ -1086,7 +1086,7 @@ public class UserAccountTestBase extends AaTestBase {
             getOrganizationalUnitClient().open(ouId,
                 "<param last-modification-date=\"" + lastModDate + "\" />");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Init: OU open failed. [" + ouId + "]", e);
         }
 
@@ -1098,7 +1098,7 @@ public class UserAccountTestBase extends AaTestBase {
             getOrganizationalUnitClient().close(ouId,
                 "<param last-modification-date=\"" + lastModDate + "\" />");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Init: OU close failed.", e);
         }
         return ouId;

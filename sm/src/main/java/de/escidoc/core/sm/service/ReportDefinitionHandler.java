@@ -46,11 +46,7 @@ import java.util.Map;
 /**
  * A statistic ReportDefinition resource handler.
  * 
- * @spring.bean id="service.ReportDefinitionHandler" scope="prototype"
- * @interface class="de.escidoc.core.sm.service.interfaces.ReportDefinitionHandlerInterface"
  * @author MIH
- * @service
- * @sm
  */
 public class ReportDefinitionHandler
     implements ReportDefinitionHandlerInterface {
@@ -62,10 +58,6 @@ public class ReportDefinitionHandler
      * 
      * @param reportDefinitionHandler
      *            The ReportDefinition handler bean to inject.
-     * 
-     * @spring.property ref="business.ReportDefinitionHandler"
-     * @service.exclude
-     * @sm
      */
     public void setReportDefinitionHandler(
         final de.escidoc.core.sm.business.interfaces.ReportDefinitionHandlerInterface reportDefinitionHandler) {
@@ -102,7 +94,7 @@ public class ReportDefinitionHandler
      * @throws SystemException
      *             ex
      * 
-     * @sm
+     *
      */
     @Override
     public String create(final String xmlData) throws AuthenticationException,
@@ -133,7 +125,7 @@ public class ReportDefinitionHandler
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public void delete(final String id) throws AuthenticationException,
@@ -163,7 +155,7 @@ public class ReportDefinitionHandler
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public String retrieve(final String id) throws AuthenticationException,
@@ -234,7 +226,7 @@ public class ReportDefinitionHandler
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public String update(final String id, final String xmlData)

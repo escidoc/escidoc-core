@@ -32,7 +32,7 @@ import de.escidoc.core.common.business.fedora.resources.StatusType;
 import de.escidoc.core.common.business.fedora.resources.create.ContentRelationProperties;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -45,8 +45,8 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  */
 public class ContentRelationPropertiesHandler extends DefaultHandler {
 
-    private static final AppLogger LOG =
-        new AppLogger(ContentRelationPropertiesHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContentRelationPropertiesHandler.class);
 
     private final StaxParser parser;
 
@@ -117,7 +117,9 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
 
         final String currentPath = parser.getCurPath();
         if (XPATH_DESCRIPTION.equals(currentPath)) {
-            LOG.debug("Parser reached end of " + XPATH_DESCRIPTION);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_DESCRIPTION);
+            }
             // parser leaves the XML description element
             this.parsingDescription = false;
             this.properties.setDescription(

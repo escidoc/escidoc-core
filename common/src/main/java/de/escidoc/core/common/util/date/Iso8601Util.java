@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.date;
 
 import de.escidoc.core.common.util.string.StringUtility;
@@ -42,7 +34,7 @@ import java.util.TimeZone;
  * Utility class to support date and time conversion to ISO86001 format.
  * 
  * @author TTE
- * @common
+ *
  */
 @Deprecated
 public final class Iso8601Util {
@@ -64,7 +56,7 @@ public final class Iso8601Util {
     /**
      * Private Constructor to prevent instantiation.
      * 
-     * @common
+     *
      */
     private Iso8601Util() {
     }
@@ -76,7 +68,7 @@ public final class Iso8601Util {
      *            The format pattern.
      * @return Returns an instance of <code>SimpleDateFormat</code> using the
      *         provided pattern and the gregorian CALENDAR with UTC time zone.
-     * @common
+     *
      */
     private static DateFormat createDateFormat(final String pattern) {
         final DateFormat df = new SimpleDateFormat(pattern);
@@ -94,7 +86,7 @@ public final class Iso8601Util {
      * @return Returns the value of date in ISO8601 format
      *         yyyy-MM-ddThh:mm:ss.sssZ, yyyy-MM-dd-Thh:mm:ss.sss+hh:mm, or
      *         yyyy-MM-dd-Thh:mm:ss.sss-hh:mm
-     * @common
+     *
      * 
      */
     @Deprecated
@@ -104,9 +96,12 @@ public final class Iso8601Util {
         if (preformatted.endsWith("Z")) {
             return preformatted;
         }
-        else
-            return preformatted.endsWith("+0000") ? preformatted.substring(0, preformatted.length() - "+0000".length()) + 'Z' : preformatted.substring(0, preformatted.length() - 2) + ':'
-                    + preformatted.substring(preformatted.length() - 2, preformatted.length());
+        else {
+            return preformatted.endsWith("+0000") ?
+                    preformatted.substring(0, preformatted.length() - "+0000".length()) + 'Z' :
+                    preformatted.substring(0, preformatted.length() - 2) + ':' +
+                            preformatted.substring(preformatted.length() - 2, preformatted.length());
+        }
     }
 
     /**
@@ -120,7 +115,7 @@ public final class Iso8601Util {
      *         and time.
      * @throws ParseException
      *             Thrown if the parsing fails.
-     * @common
+     *
      */
     @Deprecated
     public static Date parseIso8601(final String dateText)

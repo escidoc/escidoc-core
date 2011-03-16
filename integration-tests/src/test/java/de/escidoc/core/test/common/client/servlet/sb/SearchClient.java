@@ -243,7 +243,7 @@ public class SearchClient extends ClientBase {
 
             url = new URL(httpUrl);
         }
-        catch (MalformedURLException e) {
+        catch (final MalformedURLException e) {
             throw new ServiceException(e);
         }
         result = service.getSRW(url);
@@ -290,7 +290,7 @@ public class SearchClient extends ClientBase {
                         "srw/search/" + parameters.get("database"));
             url = new URL(httpUrl);
         }
-        catch (MalformedURLException e) {
+        catch (final MalformedURLException e) {
             throw new ServiceException(e);
         }
         result = service.getExplainSOAP(url);

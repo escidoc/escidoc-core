@@ -30,7 +30,6 @@ package de.escidoc.core.test.common.fedora;
 
 import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
 import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.logger.AppLogger;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -44,6 +43,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URL;
@@ -57,8 +58,7 @@ import java.util.regex.Pattern;
  */
 public class TripleStoreTestBase {
 
-    protected static AppLogger log =
-            new AppLogger(TripleStoreTestBase.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(TripleStoreTestBase.class);
 
     static final String TYPE_TUPLES = "tuples";
 
@@ -172,7 +172,7 @@ public class TripleStoreTestBase {
 
             return result;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new Exception(e.toString(), e);
         }
     }

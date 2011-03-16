@@ -32,7 +32,7 @@ import de.escidoc.core.common.business.fedora.resources.create.ComponentProperti
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -47,8 +47,8 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  */
 public class ComponentPropertiesHandler2 extends DefaultHandler {
 
-    private static final AppLogger LOGGER =
-        new AppLogger(ComponentPropertiesHandler2.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ComponentPropertiesHandler2.class);
 
     private static final String XPATH_COMPONENT_PROPERTIES =
         "/item/components/component/properties";

@@ -39,7 +39,7 @@ import java.util.Map;
  * Interface of an container foxml renderer.
  * 
  * @author ROF
- * @om
+ *
  */
 public interface ContainerFoXmlRendererInterface {
 
@@ -51,7 +51,7 @@ public interface ContainerFoXmlRendererInterface {
      * @return Returns the foxml representation of the container.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @om
+     *
      */
     String render(
         Map<String, Object> values, final Map<String, String> properties,

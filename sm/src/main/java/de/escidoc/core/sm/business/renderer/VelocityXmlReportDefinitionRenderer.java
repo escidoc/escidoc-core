@@ -54,9 +54,6 @@ import de.escidoc.core.sm.business.util.comparator.ReportDefinitionRoleComparato
  * ReportDefinition renderer implementation using the velocity template engine.
  * 
  * @author MIH
- * @spring.bean 
- *              id="eSciDoc.core.aa.business.renderer.VelocityXmlReportDefinitionRenderer"
- * @aa
  */
 public final class VelocityXmlReportDefinitionRenderer
     implements ReportDefinitionRendererInterface {
@@ -77,7 +74,7 @@ public final class VelocityXmlReportDefinitionRenderer
      * @throws SystemException
      * @see de.escidoc.core.sm.business.renderer.interfaces.
      *      ReportDefinitionRendererInterface#render(Map)
-     * @sm
+     *
      */
     @Override
     public String render(final ReportDefinition reportDefinition)
@@ -100,9 +97,8 @@ public final class VelocityXmlReportDefinitionRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addReportDefinitionValues(
-        final ReportDefinition reportDefinition,
-        final Map<String, Object> values) throws SystemException {
+    private static void addReportDefinitionValues(final ReportDefinition reportDefinition,
+                                                  final Map<String, Object> values) throws SystemException {
         DateTime createDateTime =
             new DateTime(reportDefinition.getCreationDate());
         createDateTime = createDateTime.withZone(DateTimeZone.UTC);
@@ -188,7 +184,7 @@ public final class VelocityXmlReportDefinitionRenderer
      * @see de.escidoc.core.aa.business.renderer.interfaces.
      *      ReportDefinitionRendererInterface
      *      #renderReportDefinitions(de.escidoc.core.sm.business.ReportDefinition)
-     * @sm
+     *
      */
     @Override
     public String renderReportDefinitions(
@@ -233,10 +229,9 @@ public final class VelocityXmlReportDefinitionRenderer
      *            The {@link Map} to that the values shall be added.
      * @throws SystemException
      *             e
-     * @sm
+     *
      */
-    private void addReportDefinitionNamespaceValues(
-        final Map<String, Object> values) throws SystemException {
+    private static void addReportDefinitionNamespaceValues(final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
         values.put("reportDefinitionNamespacePrefix",
             Constants.REPORT_DEFINITION_NS_PREFIX);
@@ -259,10 +254,9 @@ public final class VelocityXmlReportDefinitionRenderer
      *            The {@link Map} to that the values shall be added.
      * @throws SystemException
      *             e
-     * @sm
+     *
      */
-    private void addReportDefinitionListNamespaceValues(
-        final Map<String, Object> values) throws SystemException {
+    private static void addReportDefinitionListNamespaceValues(final Map<String, Object> values) throws SystemException {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
         values.put("reportDefinitionListNamespacePrefix",
@@ -278,7 +272,7 @@ public final class VelocityXmlReportDefinitionRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @sm
+     *
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -293,7 +287,7 @@ public final class VelocityXmlReportDefinitionRenderer
      * @return Returns the <code>ReportDefinitionXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @sm
+     *
      */
     private static ReportDefinitionXmlProvider getReportDefinitionXmlProvider()
         throws WebserverSystemException {

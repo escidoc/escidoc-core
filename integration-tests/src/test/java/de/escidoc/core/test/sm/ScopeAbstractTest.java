@@ -150,7 +150,7 @@ public class ScopeAbstractTest extends ScopeTestBase {
             fail("No exception occured on retrieve with invalid id.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals(exceptionType, "ScopeNotFoundException");
         }
@@ -191,7 +191,7 @@ public class ScopeAbstractTest extends ScopeTestBase {
             fail("No exception occured on create with invalid xml.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals(exceptionType, "XmlSchemaValidationException");
         }
@@ -213,7 +213,7 @@ public class ScopeAbstractTest extends ScopeTestBase {
             fail("No exception occured on create with invalid xml.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals(exceptionType, "XmlSchemaValidationException");
         }
@@ -235,7 +235,7 @@ public class ScopeAbstractTest extends ScopeTestBase {
             fail("No exception occured on update with wrong primkey.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals(exceptionType, "ScopeNotFoundException");
         }
@@ -257,7 +257,7 @@ public class ScopeAbstractTest extends ScopeTestBase {
             fail("No exception occured on create with wrong namespace-prefix.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals(exceptionType, "XmlCorruptedException");
         }
@@ -378,7 +378,7 @@ public class ScopeAbstractTest extends ScopeTestBase {
         try {
             result = retrieveScopes(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);

@@ -1,36 +1,30 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.axis;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.apache.axis.providers.java.EJBProvider;
+import org.apache.axis.providers.java.JavaProvider;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
@@ -50,14 +44,14 @@ import java.util.List;
 
 /**
  * Axis provider implementation that extends
- * {@link org.apache.axis.providers.java.RPCProvider} to lookup a spring bean
+ * {@link RPCProvider} to lookup a spring bean
  * that shall be exposed as a web service. Besides the creation of the service
  * object, the security parameters from webservice security are used to
  * initialize the spring-security (acegisecurity) security context for the
  * service call.<br>
  * 
  * @author TTE
- * @common
+ *
  */
 public class EscidocSpringProvider extends RPCProvider {
 
@@ -69,8 +63,8 @@ public class EscidocSpringProvider extends RPCProvider {
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(EscidocSpringProvider.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(EscidocSpringProvider.class);
 
     protected static final String MISSING_MANDATORY_PARAMETER =
         "Missing mandatory parameter in deployment descriptor";
@@ -87,30 +81,31 @@ public class EscidocSpringProvider extends RPCProvider {
      * @param className
      * @return
      * @throws Exception
-     * @see org.apache.axis.providers.java.EJBProvider#makeNewServiceObject(
-     *      org.apache.axis.MessageContext, java.lang.String)
+     * @see EJBProvider#makeNewServiceObject(
+     *      MessageContext, String)
      */
     @Override
     protected Object makeNewServiceObject(
         final MessageContext messageContext, final String className)
         throws Exception {
-
         final Object springBean = lookupSpringBean(messageContext.getService());
-
-        LOG.debug("makeNewServiceObject: Bean created");
-
         // initialize user context from webservice security data
         try {
             UserContext.setUserContext(getHandle(messageContext));
             try {
                 UserContext.getSecurityContext();
             }
-            catch (SystemException e1) {
+            catch (final SystemException e1) {
                 throw new InvocationTargetException(e1);
             }
         }
-        catch (Exception ex) {
-            LOG.error("Setting UserContext failed.", ex);
+        catch (final Exception ex) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Setting user context failed.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Setting user context failed.", ex);
+            }
         }
 
         return springBean;
@@ -124,11 +119,11 @@ public class EscidocSpringProvider extends RPCProvider {
      * @param messageContext
      * @return
      * @throws AxisFault
-     * @see org.apache.axis.providers.java.JavaProvider
+     * @see JavaProvider
      *      #getServiceClass(java.lang.String,
      *      org.apache.axis.handlers.soap.SOAPService,
      *      org.apache.axis.MessageContext)
-     * @common
+     *
      */
     @Override
     protected Class getServiceClass(final String className, final SOAPService service,
@@ -136,7 +131,7 @@ public class EscidocSpringProvider extends RPCProvider {
         try {
             return BeanLocator.getBeanType(BeanLocator.COMMON_FACTORY_ID,getSpringBeanId(service));
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new AxisFault(StringUtility.format("Spring bean type lookup failed", getSpringBeanId(service)), e);
         }
     }
@@ -145,9 +140,9 @@ public class EscidocSpringProvider extends RPCProvider {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.apache.axis.providers.java.JavaProvider
+     * @see JavaProvider
      *      #getServiceClassNameOptionName()
-     * @common
+     *
      */
     @Override
     protected String getServiceClassNameOptionName() {
@@ -166,7 +161,7 @@ public class EscidocSpringProvider extends RPCProvider {
      * @return user name and password as {@link String} array {username,
      *         password}
      */
-    private String getHandle(final MessageContext messageContext) {
+    private static String getHandle(final MessageContext messageContext) {
 
         // get the result Vector from the property
         final List results = (List) messageContext
@@ -184,7 +179,7 @@ public class EscidocSpringProvider extends RPCProvider {
                 eSciDocUserHandle = messageContext.getPassword();
             }
             else {
-                LOG
+                LOGGER
                     .info("No security results!! Setting empty username and password");
                 eSciDocUserHandle = "";
             }
@@ -222,7 +217,7 @@ public class EscidocSpringProvider extends RPCProvider {
      *         If a bean cannot be found, an {@link AxisFault} is thrown.
      * @throws AxisFault
      *             Thrown if bean lookup fails.
-     * @common
+     *
      */
     private Object lookupSpringBean(final Handler service) throws AxisFault {
 
@@ -233,7 +228,7 @@ public class EscidocSpringProvider extends RPCProvider {
                 BeanLocator
                     .getBean(BeanLocator.COMMON_FACTORY_ID, springBeanId);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new AxisFault(StringUtility.format(
                 "Spring bean lookup failed", springBeanId), e);
         }
@@ -250,7 +245,7 @@ public class EscidocSpringProvider extends RPCProvider {
      * @throws AxisFault
      *             Thrown if the parameter {@link OPTION_SPRING_BEAN} is not
      *             found and no spring bean id could be returned.
-     * @common
+     *
      */
     private String getSpringBeanId(final Handler service) throws AxisFault {
 

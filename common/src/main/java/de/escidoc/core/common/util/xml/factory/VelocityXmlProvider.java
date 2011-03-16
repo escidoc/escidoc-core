@@ -1,35 +1,27 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.xml.factory;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlEscaper;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.velocity.Template;
@@ -47,27 +39,26 @@ import java.util.Map;
  * This implementation uses the velocity singleton pattern.
  *
  * @author TTE
- * @common
+ *
  */
 public abstract class VelocityXmlProvider extends XmlTemplateProvider {
 
-    private static final AppLogger LOG =
-            new AppLogger(VelocityXmlProvider.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(VelocityXmlProvider.class);
 
     /**
      * Protected constructor to prevent initialization.
      *
-     * @common
+     *
      */
     protected VelocityXmlProvider() {
         // velocity logging configuration
         Velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.tools.generic."
-                        + "log.CommonsLogLogSystem");
+                        + "LOGGER.CommonsLogLogSystem");
         Velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM, new VelocityOutputLogger());
         // use class loader
         Velocity.setProperty("resource.loader", "class");
         // the classloader class, using own implementation
-        Velocity.setProperty("class.resource.loader.class", VelocityClasspathResourceLoader.class.getName());
+        Velocity.setProperty("class.resource.loader.class", VelocityClasspathResourceLoader.class);
         Velocity.setProperty("class.resource.loader.cache", "true");
         Velocity.setProperty("directive.set.null.allowed", "true");
         // There is a problem with macros defined in template files
@@ -84,8 +75,8 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
         Velocity.setProperty("velocimacro.library", "common/macros.vm");
         try {
             Velocity.init();
-        } catch (Exception e) {
-            LOG.error("Error on initializing Velocity!", e);
+        } catch (final Exception e) {
+            LOGGER.error("Error on initializing Velocity!", e);
         }
     }
 
@@ -105,8 +96,8 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
      * @param values
      * @return
      * @throws WebserverSystemException
-     * @common
-     * @see de.escidoc.core.common.util.xml.factory.XmlTemplateProvider
+     *
+     * @see XmlTemplateProvider
      *      #getXml(java.lang.String, java.lang.String, java.util.Map)
      */
     @Override
@@ -125,7 +116,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
             final Context context = new VelocityContext(values);
             template.merge(context, out);
             return out.toString();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new WebserverSystemException(e.getMessage(), e);
         }
     }

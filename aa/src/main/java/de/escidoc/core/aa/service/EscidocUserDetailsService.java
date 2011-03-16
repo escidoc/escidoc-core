@@ -32,7 +32,7 @@ import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
 import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.springframework.orm.ObjectRetrievalFailureException;
@@ -43,10 +43,7 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
 /**
  * Implementation of an Acegi UserDetailsService.
  * 
- * @spring.bean id="eSciDoc.core.common.security.EscidocUserDetailsService"
- * 
  * @author TTE
- * @aa
  * @see UserDetailsService
  */
 public class EscidocUserDetailsService
@@ -55,8 +52,8 @@ public class EscidocUserDetailsService
     /**
      * The logger.
      */
-    private static final AppLogger LOG =
-        new AppLogger(EscidocUserDetailsService.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(EscidocUserDetailsService.class);
 
     private static final String FAILED_TO_AUTHENTICATE_USER_BY_HANDLE =
         "Failed to authenticate user with provided information";
@@ -72,12 +69,10 @@ public class EscidocUserDetailsService
      * @return
      * @see org.acegisecurity.userdetails.UserDetailsService
      *      #loadUserByUsername(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public UserDetails loadUserByUsername(final String identifier) {
-
-        LOG.debug("loadUserByUsername");
         boolean wasExternalBefore = false;
         try {
             // Calls from the authorization component to other components run
@@ -88,23 +83,27 @@ public class EscidocUserDetailsService
             final UserDetails retrievedUserDetails =
                 getUserAccountHandler().retrieveUserDetails(identifier);
 
-            LOG.debug(retrievedUserDetails);
+            LOGGER.debug(retrievedUserDetails.toString());
 
             return retrievedUserDetails;
-        } catch (UserAccountNotFoundException e) {
+        } catch (final UserAccountNotFoundException e) {
             throw new UsernameNotFoundException(StringUtility.format(
                     FAILED_TO_AUTHENTICATE_USER_BY_HANDLE, identifier), e);
-        } catch (WebserverSystemException e) {
+        } catch (final WebserverSystemException e) {
             throw new ObjectRetrievalFailureException(e.getMessage(), e);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new ObjectRetrievalFailureException(e.getMessage(), new WebserverSystemException(e));
         } finally {
             if (wasExternalBefore) {
                 try {
                     UserContext.runAsExternalUser();
-                }
-                catch (WebserverSystemException e) {
-                    LOG.debug("Error on changing user context.", e);
+                } catch (final WebserverSystemException e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on changing user context.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on changing user context.", e);
+                    }
                 }
             }
         }
@@ -116,7 +115,7 @@ public class EscidocUserDetailsService
      * Gets the user account handler.
      * 
      * @return Returns the {@link UserAccountHandlerInterface}.
-     * @common
+     *
      */
     private UserAccountHandlerInterface getUserAccountHandler() {
 
@@ -129,8 +128,6 @@ public class EscidocUserDetailsService
      * @param userAccountHandler
      *            The {@link UserAccountHandlerInterface} implementation to be
      *            injected.
-     * @spring.property ref="service.UserAccountHandler"
-     * @common
      */
     public void setUserAccountHandler(
         final UserAccountHandlerInterface userAccountHandler) {

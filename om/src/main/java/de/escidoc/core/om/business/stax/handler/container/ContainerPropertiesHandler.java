@@ -41,7 +41,7 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
@@ -66,7 +66,7 @@ import java.util.Map;
  * values of the elements <code>description</code> and <code>pid</code> and
  * stores they in a Map.
  * 
- * @om
+ *
  */
 public class ContainerPropertiesHandler extends DefaultHandler {
 
@@ -81,8 +81,8 @@ public class ContainerPropertiesHandler extends DefaultHandler {
 
     private final Collection<String> expectedElements = new ArrayList<String>();
 
-    private static final AppLogger log =
-        new AppLogger(ContainerPropertiesHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContainerPropertiesHandler.class);
 
     /**
      * Instantiate a PropertiesHandler.
@@ -90,7 +90,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      * @param parser
      *            The parser.
      * 
-     * @om
+     *
      */
     public ContainerPropertiesHandler(final StaxParser parser) {
 
@@ -124,7 +124,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      * 
-     * @om
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -152,15 +152,19 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                             "No context id found.");
                     }
                 }
-                catch (NoSuchAttributeException e) {
+                catch (final NoSuchAttributeException e) {
                     final String href;
                     try {
                         href =
                             element.getAttributeValue(Constants.XLINK_NS_URI,
                                 Elements.ATTRIBUTE_XLINK_HREF);
-                    }
-                    catch (NoSuchAttributeException e1) {
-                        log.debug("Error on getting attribute value.", e1);
+                    } catch (final NoSuchAttributeException e1) {
+                        if(LOGGER.isWarnEnabled()) {
+                            LOGGER.warn("Error on getting attribute value.");
+                        }
+                        if(LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Error on getting attribute value.", e1);
+                        }
                         String att = Elements.ATTRIBUTE_XLINK_OBJID;
                         if (UserContext.isRestAccess()) {
                             att = Elements.ATTRIBUTE_XLINK_HREF;
@@ -201,15 +205,20 @@ public class ContainerPropertiesHandler extends DefaultHandler {
                             "No content-model id found.");
                     }
                 }
-                catch (NoSuchAttributeException e) {
+                catch (final NoSuchAttributeException e) {
                     final String href;
                     try {
                         href =
                             element.getAttributeValue(Constants.XLINK_NS_URI,
                                 Elements.ATTRIBUTE_XLINK_HREF);
                     }
-                    catch (NoSuchAttributeException e1) {
-                        log.debug("Error on getting attribute value.", e1);
+                    catch (final NoSuchAttributeException e1) {
+                        if(LOGGER.isWarnEnabled()) {
+                            LOGGER.warn("Error on getting attribute value.");
+                        }
+                        if(LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Error on getting attribute value.", e1);
+                        }
                         String att = Elements.ATTRIBUTE_XLINK_OBJID;
                         if (UserContext.isRestAccess()) {
                             att = Elements.ATTRIBUTE_XLINK_HREF;
@@ -257,7 +266,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      *             Thrown if referenced Context does not exist
      * @throws SystemException
      *             Thrown if internal failure occur
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement
+     * @see DefaultHandler#endElement
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
@@ -309,10 +318,10 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The character section.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
+     * @see DefaultHandler#characters
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @om
+     *
      */
     @Override
     public String characters(final String s, final StartElement element)

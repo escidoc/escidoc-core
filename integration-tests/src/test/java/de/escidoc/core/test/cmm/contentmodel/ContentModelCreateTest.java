@@ -200,7 +200,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
             create(null);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -223,7 +223,7 @@ public class ContentModelCreateTest extends ContentModelTestBase {
             create("laber-rababer");
             fail("Missing Invalid XML exception");
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             // that's ok
         }
     }

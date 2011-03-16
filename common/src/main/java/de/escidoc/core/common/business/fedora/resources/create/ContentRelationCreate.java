@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora.resources.create;
 
 import de.escidoc.core.common.business.fedora.FedoraUtility;
@@ -38,7 +30,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.ContentRelationFoXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -68,8 +60,8 @@ public class ContentRelationCreate extends GenericResourceCreate
 
     private static final long serialVersionUID = -2959419814324564197L;
 
-    private static final AppLogger LOG =
-        new AppLogger(ContentRelationCreate.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContentRelationCreate.class);
 
     private final RepositoryIndicator ri = new RepositoryIndicator();
 
@@ -159,8 +151,6 @@ public class ContentRelationCreate extends GenericResourceCreate
      * 
      * @param idProvider
      *            The {@link EscidocIdProvider} to set.
-     * 
-     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
 
@@ -208,7 +198,7 @@ public class ContentRelationCreate extends GenericResourceCreate
             }
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SystemException(e);
         }
     }
@@ -235,8 +225,8 @@ public class ContentRelationCreate extends GenericResourceCreate
                 try {
                     this.dcXml = getDC(mdRecord, "");
                 }
-                catch (Exception e) {
-                    LOG.info("DC mapping of to create resource failed. " + e);
+                catch (final Exception e) {
+                    LOGGER.info("DC mapping of to create resource failed. " + e);
                 }
             }
         }
@@ -576,8 +566,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @throws InvalidContentException
      *             Thrown if the md-record name is not unique.
      */
-    private void checkUniqueName(
-        final Iterable<MdRecordCreate> records, final String name)
+    private static void checkUniqueName(final Iterable<MdRecordCreate> records, final String name)
         throws InvalidContentException {
 
         for (final MdRecordCreate record : records) {
@@ -676,7 +665,7 @@ public class ContentRelationCreate extends GenericResourceCreate
                     relsExt.getBytes(XmlUtility.CHARACTER_ENCODING), false);
             getProperties().setLastModificationDate(lmd);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new SystemException(e);
      
         }
@@ -726,7 +715,7 @@ public class ContentRelationCreate extends GenericResourceCreate
             content =
                 mdRecord.getContent().getBytes(XmlUtility.CHARACTER_ENCODING);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -758,7 +747,7 @@ public class ContentRelationCreate extends GenericResourceCreate
             content =
                 mdRecord.getContent().getBytes(XmlUtility.CHARACTER_ENCODING);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -797,7 +786,7 @@ public class ContentRelationCreate extends GenericResourceCreate
             } finally {
                 IOUtils.closeStream(ois);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             final CloneNotSupportedException cnse = new CloneNotSupportedException(e.toString()); // Ignore FindBugs
             cnse.initCause(e);
             throw cnse;

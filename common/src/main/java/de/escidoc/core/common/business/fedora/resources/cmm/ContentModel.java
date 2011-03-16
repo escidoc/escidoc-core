@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora.resources.cmm;
 
 import de.escidoc.core.common.business.Constants;
@@ -33,6 +25,7 @@ import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
+import de.escidoc.core.common.business.fedora.resources.GenericResource;
 import de.escidoc.core.common.business.fedora.resources.GenericVersionableResourcePid;
 import de.escidoc.core.common.business.fedora.resources.create.ResourceDefinitionCreate;
 import de.escidoc.core.common.business.fedora.resources.interfaces.VersionableResource;
@@ -45,7 +38,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.DcReadHandler;
 import de.escidoc.core.common.util.stax.handler.cmm.DsCompositeModelHandler;
@@ -87,7 +80,7 @@ public class ContentModel extends GenericVersionableResourcePid
 
     private Map<String, ResourceDefinitionCreate> resourceDefinitions;
 
-    private static final AppLogger log = new AppLogger(ContentModel.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentModel.class);
 
     /**
      * Constructs the Content Model with the specified id. The datastreams are
@@ -140,7 +133,7 @@ public class ContentModel extends GenericVersionableResourcePid
      *             Thrown if TripleStore request failed.
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
-     * @see de.escidoc.core.common.business.fedora.resources.GenericResource#getResourceProperties()
+     * @see GenericResource#getResourceProperties()
      */
     @Override
     public Map<String, String> getResourceProperties()
@@ -153,7 +146,7 @@ public class ContentModel extends GenericVersionableResourcePid
             try {
                 addResourceProperties(getDublinCorePropertiesMap());
             }
-            catch (XmlParserSystemException e) {
+            catch (final XmlParserSystemException e) {
                 throw new WebserverSystemException(e);
             }
             this.resourceInit = true;
@@ -186,7 +179,7 @@ public class ContentModel extends GenericVersionableResourcePid
             try {
                 ds = new Datastream("DC", getId(), getVersionDate());
             }
-            catch (StreamNotFoundException e) {
+            catch (final StreamNotFoundException e) {
                 throw new WebserverSystemException(e);
             }
 
@@ -303,8 +296,9 @@ public class ContentModel extends GenericVersionableResourcePid
                 ds.setLabel(label);
                 this.otherStreams.put(name, ds);
             } else {
-                log.debug("Datastream " + getId() + '/' + name
-                        + " not instanziated in ContentModel.<init>.");
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Datastream " + getId() + '/' + name + " not instanziated in ContentModel.<init>.");
+                }
             }
         }
     }
@@ -319,11 +313,10 @@ public class ContentModel extends GenericVersionableResourcePid
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private Collection<String> expandPropertiesNames(
-        final Collection<String> propertiesNames) {
+    private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
-        final Collection<String> newPropertiesNames;
-        newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
+        final Collection<String> newPropertiesNames =
+                propertiesNames != null ? propertiesNames : new ArrayList<String>();
 
         newPropertiesNames.add(TripleStoreUtility.PROP_CONTENT_CATEGORY);
         newPropertiesNames.add(TripleStoreUtility.PROP_DESCRIPTION);
@@ -342,8 +335,7 @@ public class ContentModel extends GenericVersionableResourcePid
      *            key "LATEST_VERSION_STATUS".
      * @return The key mapping.
      */
-    private Map<String, String> expandPropertiesNamesMapping(
-        final Map<String, String> propertiesMapping) {
+    private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesMapping) {
 
         final Map<String, String> newPropertiesNames;
         newPropertiesNames = propertiesMapping != null ? propertiesMapping : new HashMap<String, String>();
@@ -444,14 +436,14 @@ public class ContentModel extends GenericVersionableResourcePid
             final String x = dcm.toStringUTF8();
             sp.parse(x);
         }
-        catch (IntegritySystemException e) {
+        catch (final IntegritySystemException e) {
             throw e;
         }
-        catch (RuntimeException e) {
+        catch (final RuntimeException e) {
             throw new WebserverSystemException(
                 "Unexpected exception parsing datastream DS-COMPOSITE-MODEL.",
                 e);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new WebserverSystemException(
                 "Unexpected exception parsing datastream DS-COMPOSITE-MODEL.",
                 e);
@@ -474,7 +466,7 @@ public class ContentModel extends GenericVersionableResourcePid
                 pl.add("info:fedora/fedora-system:def/model#hasService");
                 services = this.getResourceProperties(pl);
             }
-            catch (TripleStoreSystemException e) {
+            catch (final TripleStoreSystemException e) {
                 throw new WebserverSystemException(
                     "Can not access triplestore.", e);
             }
@@ -491,7 +483,7 @@ public class ContentModel extends GenericVersionableResourcePid
                     resourceDef.setMdRecordName("escdioc");
                     // FIXME create correct href?
                     // resourceDef.setXsltHref("");
-                } catch (MissingAttributeValueException e) {
+                } catch (final MissingAttributeValueException e) {
                     throw new IntegritySystemException(
                             "Service ID but no name.", e);
                 }
@@ -515,7 +507,7 @@ public class ContentModel extends GenericVersionableResourcePid
                     xml.getBytes(XmlUtility.CHARACTER_ENCODING), "text/xml");
             setDsCompositeModel(ds);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -615,7 +607,7 @@ public class ContentModel extends GenericVersionableResourcePid
                         contentChanged = true;
                     }
                 }
-                catch (IOException e) {
+                catch (final IOException e) {
                     // FIXME catch IOE in EscidocConfiguration.getInstance()
                     throw new WebserverSystemException(e);
                 }
@@ -628,7 +620,12 @@ public class ContentModel extends GenericVersionableResourcePid
             }
         }
         catch (final FedoraSystemException e) {
-            log.debug("Error on setting stream.", e);
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on setting stream.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on setting stream.", e);
+            }
             // this is not an update; its a create
             ds.persist(false);
         }

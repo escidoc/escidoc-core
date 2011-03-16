@@ -54,8 +54,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
 
     /**
      * Injects the indexing handler.
-     * 
-     * @spring.property ref="common.business.indexing.IndexingHandler"
+     *
      * @param indexingHandler
      *            The indexing handler.
      */
@@ -208,10 +207,10 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
                 result = render();
             }
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new SystemException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // should not happen here
             throw new SystemException(e);
         }

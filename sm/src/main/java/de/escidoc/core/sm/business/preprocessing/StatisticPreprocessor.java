@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundExcep
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.StatisticPreprocessingSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
 import de.escidoc.core.sm.business.persistence.SmAggregationDefinitionsDaoInterface;
@@ -71,13 +71,12 @@ import java.util.List;
  *  do rollback of data-insertion for this aggregation-definition
  *  and process next aggregation-definition.
  * 
- * @spring.bean id="business.StatisticPreprocessor" scope="prototype"
  * @author MIH
  */
 public class StatisticPreprocessor {
 
-    private static final AppLogger log =
-        new AppLogger(StatisticPreprocessor.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(StatisticPreprocessor.class);
 
     private SmAggregationDefinitionsDaoInterface dao;
 
@@ -105,13 +104,13 @@ public class StatisticPreprocessor {
      */
     public void execute(final Date inputDate) 
         throws StatisticPreprocessingSystemException {
-        if (log.isInfoEnabled()) {
-            log.info("Preprocessing Statistics for Date " + inputDate);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Preprocessing Statistics for Date " + inputDate);
         }
         final Date date;
         date = inputDate != null ? inputDate : new Date();
-        if (log.isInfoEnabled()) {
-            log.info("ComputedDate: " + date);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("ComputedDate: " + date);
         }
         try {
             // Get all Aggregation Definitions from Database
@@ -122,18 +121,20 @@ public class StatisticPreprocessor {
                                         : aggregationDefinitions) {
                     try {
                         execute(date, aggregationDefinition);
-                    } catch (Exception e) {
-                        errorMessageHandler.putErrorMessage(
-                                new HashMap<String, String>(), e,
-                            de.escidoc.core.common.business.Constants.
-                            STATISTIC_PREPROCESSING_ERROR_LOGFILE);
-                        log.error(e);
-                        
+                    } catch (final Exception e) {
+                        errorMessageHandler.putErrorMessage(new HashMap<String, String>(), e,
+                            de.escidoc.core.common.business.Constants.STATISTIC_PREPROCESSING_ERROR_LOGFILE);
+                        if(LOGGER.isWarnEnabled()) {
+                            LOGGER.warn("Error on retrieving aggregation definitions.");
+                        }
+                        if(LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Error on retrieving aggregation definitions.", e);
+                        }
                     }
                 }
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new StatisticPreprocessingSystemException(e);
         }
     }
@@ -153,8 +154,8 @@ public class StatisticPreprocessor {
             final Date endDate, 
             final String aggregationDefinitionId) 
         throws StatisticPreprocessingSystemException {
-        if (log.isInfoEnabled()) {
-            log.info("Preprocessing Statistics for AggregationDefinition " 
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Preprocessing Statistics for AggregationDefinition "
                                                     + aggregationDefinitionId
                                                     + ", StartDate:"
                                                     + startDate
@@ -171,9 +172,9 @@ public class StatisticPreprocessor {
             final Date executionDate = determineStartDate(
                     startDate, aggregationDefinition.getScope().getId());
             final Date internalEndDate = determineEndDate(endDate);
-            if (log.isInfoEnabled()) {
-                log.info("ComputedStartDate: " + executionDate);
-                log.info("ComputedEndDate: " + internalEndDate);
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("ComputedStartDate: " + executionDate);
+                LOGGER.info("ComputedEndDate: " + internalEndDate);
             } 
             if (internalEndDate.before(executionDate)) {
                 return;
@@ -185,7 +186,7 @@ public class StatisticPreprocessor {
                 cal.add(Calendar.DATE, 1);
                 executionDate.setTime(cal.getTimeInMillis());
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             errorMessageHandler.putErrorMessage(
                     new HashMap<String, String>(), e,
                 de.escidoc.core.common.business.Constants.
@@ -225,15 +226,15 @@ public class StatisticPreprocessor {
                     aggregationDefinition.getId(), date, false);
             if (preprocessingLogs != null && !preprocessingLogs.isEmpty()) {
                 final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                log.error("aggregation-definition "
+                LOGGER.error("aggregation-definition "
                         + aggregationDefinition.getId()
                         + " already preprocessed successfully for date "
                         + dateFormat.format(date));
                 return;
             }
 
-            if (log.isInfoEnabled()) {
-                log.info("preprocessing aggregation-definition " 
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("preprocessing aggregation-definition "
                         + aggregationDefinition.getName() + " for Date " + date);
             }
 
@@ -253,8 +254,8 @@ public class StatisticPreprocessor {
                                         aggregationStatisticDataSelector,
                                         aggregationDefinition.getScope().getId(),
                                         date));
-                        if (log.isInfoEnabled() && resultList != null) {
-                            log.info("found " 
+                        if (LOGGER.isInfoEnabled() && resultList != null) {
+                            LOGGER.info("found "
                                     + resultList.size() + " records");
                         }
                         // preprocess Data
@@ -276,9 +277,9 @@ public class StatisticPreprocessor {
                     }
                 }
             }
-        } catch (RuntimeException e) {
+        } catch (final RuntimeException e) {
            handleException(date, aggregationDefinition, e);
-        } catch (Exception e) {
+        } catch (final Exception e) {
            handleException(date, aggregationDefinition, e);
         }
     }
@@ -293,8 +294,13 @@ public class StatisticPreprocessor {
             preprocessingLog.setProcessingDate(new java.sql.Date(date.getTime()));
             try {
                 preprocessingLogsDao.savePreprocessingLog(preprocessingLog);
-            } catch (SqlDatabaseSystemException e1) {
-                log.debug("Error on saving preprocessing log.", e1);
+            } catch (final SqlDatabaseSystemException e1) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on saving preprocessing log.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on saving preprocessing log.", e1);
+                }
             }
             final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             throw new StatisticPreprocessingSystemException(
@@ -324,7 +330,7 @@ public class StatisticPreprocessor {
      *             e
      * 
      * 
-     * @sm
+     *
      */
     private DatabaseSelectVo generateStatisticTableSelectVo(
         final AggregationStatisticDataSelector aggregationStatisticDataSelector, 
@@ -416,7 +422,7 @@ public class StatisticPreprocessor {
      * @throws StatisticPreprocessingSystemException
      *             e
      * 
-     * @sm
+     *
      */
     private String handleXpathQuery(
         final String inputXpathQuery, final String field)
@@ -488,7 +494,7 @@ public class StatisticPreprocessor {
             dbXpathQuery.append(") ");
             return dbXpathQuery.toString();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new StatisticPreprocessingSystemException(
                 "Cannot handle xpath-query for statistic-table", e);
         }
@@ -533,10 +539,9 @@ public class StatisticPreprocessor {
      *            requested endDate.
      * @return Date
      * 
-     * @sm
+     *
      */
-    private Date determineEndDate(
-            final Date endDate) {
+    private static Date determineEndDate(final Date endDate) {
         final Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         cal.set(Calendar.HOUR_OF_DAY, 23);
@@ -557,11 +562,8 @@ public class StatisticPreprocessor {
     /**
      * Setter for the dao.
      * 
-     * @spring.property ref="persistence.SmAggregationDefinitionsDao"
      * @param dao
      *            The data access object.
-     * 
-     * @sm
      */
     public void setDao(final SmAggregationDefinitionsDaoInterface dao) {
         this.dao = dao;
@@ -570,11 +572,8 @@ public class StatisticPreprocessor {
     /**
      * Setter for the scopesDao.
      * 
-     * @spring.property ref="persistence.SmScopesDao"
      * @param scopesDao
      *            The data access object.
-     * 
-     * @sm
      */
     public void setScopesDao(final SmScopesDaoInterface scopesDao) {
         this.scopesDao = scopesDao;
@@ -583,11 +582,8 @@ public class StatisticPreprocessor {
     /**
      * Setter for the statisticDataDao.
      * 
-     * @spring.property ref="persistence.SmStatisticDataDao"
      * @param statisticDataDao
      *            The data access object.
-     * 
-     * @sm
      */
     public void setStatisticDataDao(
             final SmStatisticDataDaoInterface statisticDataDao) {
@@ -597,11 +593,8 @@ public class StatisticPreprocessor {
     /**
      * Setter for the preprocessingLogsDao.
      * 
-     * @spring.property ref="persistence.SmPreprocessingLogsDao"
      * @param preprocessingLogsDao
      *            The data access object.
-     * 
-     * @sm
      */
     public void setPreprocessingLogsDao(
             final SmPreprocessingLogsDaoInterface preprocessingLogsDao) {
@@ -613,7 +606,6 @@ public class StatisticPreprocessor {
      * 
      * @param dbAccessorIn
      *            The directDatabaseAccessor to set.
-     * @spring.property ref="sm.persistence.DirectDatabaseAccessor"
      */
     public final void setDirectDatabaseAccessor(
         final DirectDatabaseAccessorInterface dbAccessorIn) {
@@ -625,7 +617,6 @@ public class StatisticPreprocessor {
      * 
      * @param aggregationPreprocessor
      *            The AggregationPreprocessor to set.
-     * @spring.property ref="business.AggregationPreprocessor"
      */
     public final void setAggregationPreprocessor(
         final AggregationPreprocessor aggregationPreprocessor) {
@@ -637,7 +628,6 @@ public class StatisticPreprocessor {
      * 
      * @param errorMessageHandler
      *            The ErrorMessageHandler to set.
-     * @spring.property ref="common.ErrorMessageHandler"
      */
     public final void setErrorMessageHandler(
         final ErrorMessageHandler errorMessageHandler) {

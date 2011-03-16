@@ -16,11 +16,7 @@ import java.util.Map;
 /**
  * A set definition resource handler.
  * 
- * @spring.bean id="service.SetDefinitionHandler" scope="prototype"
- * @interface class="de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface"
  * @author rof
- * @service
- * @oai
  */
 public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     /**
@@ -107,10 +103,6 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * 
      * @param handler
      *            The set definition handler bean to inject.
-     * 
-     * @spring.property ref="business.SetDefinitionHandler"
-     * @service.exclude
-     * @om
      */
     public void setSetDefinitionHandler(
         final de.escidoc.core.oai.business.interfaces.SetDefinitionHandlerInterface handler) {

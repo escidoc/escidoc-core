@@ -6,6 +6,8 @@ import de.escidoc.core.test.common.resources.BinaryContent;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.om.item.ItemTestBase;
 import org.apache.axis.encoding.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -25,6 +27,8 @@ import java.util.Vector;
 import static org.junit.Assert.assertEquals;
 
 public class ContentTestBase extends ItemTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ContentTestBase.class);
 
     private static final int BUFFER_SIZE = 0x4FFF;
 
@@ -330,7 +334,7 @@ public class ContentTestBase extends ItemTestBase {
      */
     protected void removeSilent(final File temp) {
         if (temp.exists() && !temp.delete()) {
-            log.warn("Could not delete temporary file. " + temp.getPath());
+            LOGGER.warn("Could not delete temporary file. " + temp.getPath());
         }
     }
 
@@ -369,7 +373,7 @@ public class ContentTestBase extends ItemTestBase {
             }
         }
 
-        log.debug(urls.size() + " files uploaded to staging");
+        LOGGER.debug(urls.size() + " files uploaded to staging");
         return urls;
     }
 

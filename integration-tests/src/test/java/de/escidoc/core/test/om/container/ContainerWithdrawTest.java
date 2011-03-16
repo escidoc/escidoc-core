@@ -91,7 +91,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
             fail("No exception occurred on withdraw with non"
                 + "existing container id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -143,7 +143,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
             fail("No exception occurred on withdraw with "
                 + "wrong time stamp.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -165,7 +165,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
             fail("No exception occurred on withdraw with missing "
                 + "container id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -185,7 +185,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
             fail("No exception occurred on withdraw with missing"
                 + "time stamp.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -208,7 +208,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
             withdraw(theContainerId, param);
             fail("No exception occurred on withdraw bevore submit.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -291,7 +291,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
                 withdrawnContainer, "/container/properties/public-status",
                 STATUS_WITHDRAWN);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("Unexpected exception occurred on retrieve after withdraw.");
         }
 
@@ -304,7 +304,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         // withdrawnContainer, "/container/properties/status",
         // STATUS_WITHDRAWN);
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // fail("Unexpected exception occurred on retrieve after withdraw.");
         // }
         //
@@ -314,7 +314,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
         // assertXMLEquals("Item is not in state withdrawn!", xmlResult,
         // "/item/properties/status", STATUS_WITHDRAWN);
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // fail("Unexpected exception occurred! " + e);
         // }
 
@@ -326,7 +326,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
             update(theContainerId, newItemXml);
             fail("Update after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
 
@@ -335,7 +335,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
                 theContainerId));
             fail("Submit after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
 
@@ -344,7 +344,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
                 theContainerId));
             fail("Revise after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
 
@@ -353,7 +353,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
                 theContainerId));
             fail("Release after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
 
@@ -361,7 +361,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
             delete(theContainerId);
             fail("Delete after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
 
@@ -370,7 +370,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
                 theContainerId));
             fail("Lock after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
     }
@@ -449,7 +449,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
             withdraw(theContainerId, param);
             fail("No exception occurred on second withdraw.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = AlreadyWithdrawnException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -473,7 +473,7 @@ public class ContainerWithdrawTest extends ContainerTestBase {
                 atts.getNamedItem("last-modification-date");
             lastModificationDate = lastModificationDateNode.getNodeValue();
         }
-        catch (ContainerNotFoundException e) {
+        catch (final ContainerNotFoundException e) {
             // nothing to do
         }
         if (lastModificationDate == null) {

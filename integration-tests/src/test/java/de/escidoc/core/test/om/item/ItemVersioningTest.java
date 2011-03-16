@@ -209,7 +209,7 @@ public class ItemVersioningTest extends ItemTestBase {
         try {
             retrieveVersionHistory("escidoc:foo");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ItemNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -227,7 +227,7 @@ public class ItemVersioningTest extends ItemTestBase {
         try {
             retrieveVersionHistory(null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -564,7 +564,7 @@ public class ItemVersioningTest extends ItemTestBase {
             assertXmlValidItem(xml);
             fail("Succesful update after withdraw.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -679,7 +679,7 @@ public class ItemVersioningTest extends ItemTestBase {
             fail("Can retrieve unreleased Item as anonymous!"
                 + " Missing AuthorizationException!");
         }
-        catch (AuthorizationException e) {
+        catch (final AuthorizationException e) {
             // that's quite well
         }
         PWCallback.setHandle(PWCallback.AUTHOR_HANDLE);
@@ -688,7 +688,7 @@ public class ItemVersioningTest extends ItemTestBase {
             fail("Can retrieve unreleased Item with Author role!"
                 + " Missing AuthorizationException!");
         }
-        catch (AuthorizationException e) {
+        catch (final AuthorizationException e) {
             // that's quite well
         }
         PWCallback.setHandle(PWCallback.ADMINISTRATOR_HANDLE);
@@ -697,7 +697,7 @@ public class ItemVersioningTest extends ItemTestBase {
             fail("Can retrieve unreleased Item with SystemAdministrator role!"
                 + " Missing AuthorizationException!");
         }
-        catch (AuthorizationException e) {
+        catch (final AuthorizationException e) {
             // that's quite well
         }
 
@@ -721,7 +721,7 @@ public class ItemVersioningTest extends ItemTestBase {
             fail("Can retrieve unreleased Item as anonymous!"
                 + " Missing AuthorizationException!");
         }
-        catch (AuthorizationException e) {
+        catch (final AuthorizationException e) {
             // that's quite well
         }
         PWCallback.setHandle(PWCallback.AUTHOR_HANDLE);
@@ -730,7 +730,7 @@ public class ItemVersioningTest extends ItemTestBase {
             fail("Can retrieve unreleased Item with Author role!"
                 + " Missing AuthorizationException!");
         }
-        catch (AuthorizationException e) {
+        catch (final AuthorizationException e) {
             // that's quite well
         }
         PWCallback.setHandle(PWCallback.ADMINISTRATOR_HANDLE);
@@ -739,7 +739,7 @@ public class ItemVersioningTest extends ItemTestBase {
             fail("Can retrieve unreleased Item with SystemAdministrator role!"
                 + " Missing AuthorizationException!");
         }
-        catch (AuthorizationException e) {
+        catch (final AuthorizationException e) {
             // that's quite well
         }
 
@@ -931,7 +931,7 @@ public class ItemVersioningTest extends ItemTestBase {
             fail("Can retrieve unreleased Item with Anonymous role!"
                 + " Missing AuthorizationException!");
         }
-        catch (AuthorizationException e) {
+        catch (final AuthorizationException e) {
             // thats quite well
         }
 
@@ -944,7 +944,7 @@ public class ItemVersioningTest extends ItemTestBase {
             fail("Can retrieve unreleased Item with wrong Author role!"
                 + " Missing AuthorizationException!");
         }
-        catch (AuthorizationException e) {
+        catch (final AuthorizationException e) {
             // thats quite well
         }
 
@@ -956,7 +956,7 @@ public class ItemVersioningTest extends ItemTestBase {
             fail("Can retrieve unreleased Item with Administrator role!"
                 + " Missing AuthorizationException!");
         }
-        catch (AuthorizationException e) {
+        catch (final AuthorizationException e) {
             // thats quite well
         }
 
@@ -2019,7 +2019,7 @@ public class ItemVersioningTest extends ItemTestBase {
             update(theItemId, xml);
             fail("Update after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
 
@@ -2027,7 +2027,7 @@ public class ItemVersioningTest extends ItemTestBase {
             submit(theItemId, getTheLastModificationParam(false, theItemId));
             fail("Submit after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
 
@@ -2035,7 +2035,7 @@ public class ItemVersioningTest extends ItemTestBase {
             revise(theItemId, getTheLastModificationParam(false, theItemId));
             fail("Revise after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
 
@@ -2043,7 +2043,7 @@ public class ItemVersioningTest extends ItemTestBase {
             release(theItemId, getTheLastModificationParam(false, theItemId));
             fail("Release after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
 
@@ -2051,7 +2051,7 @@ public class ItemVersioningTest extends ItemTestBase {
             delete(theItemId);
             fail("Delete after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
 
@@ -2059,7 +2059,7 @@ public class ItemVersioningTest extends ItemTestBase {
             lock(theItemId, getTheLastModificationParam(false, theItemId));
             fail("Lock after withdrawn is possible.");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             // that's ok
         }
     }
@@ -3226,7 +3226,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
             expectedValues.put("/item/components/component[@href='/ir/item/"
                 + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@storage",
+                + componentIds.get("2").get(0) + "']/content/orage",
                 "internal-managed");
         }
         else {
@@ -3262,7 +3262,7 @@ public class ItemVersioningTest extends ItemTestBase {
                     + componentIds.get("2").get(0) + "/content");
 
             expectedValues.put("/item/components/component[@objid='"
-                + componentIds.get("2").get(0) + "']/content/@storage",
+                + componentIds.get("2").get(0) + "']/content/orage",
                 "internal-managed");
         }
 
@@ -3480,7 +3480,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
             expectedValues.put("/item/components/component[@href='/ir/item/"
                 + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@storage",
+                + componentIds.get("2").get(0) + "']/content/orage",
                 "internal-managed");
         }
         else {
@@ -3520,7 +3520,7 @@ public class ItemVersioningTest extends ItemTestBase {
                     + componentIds.get("2").get(0) + "/content");
 
             expectedValues.put("/item/components/component[@objid='"
-                + componentIds.get("2").get(0) + "']/content/@storage",
+                + componentIds.get("2").get(0) + "']/content/orage",
                 "internal-managed");
         }
 
@@ -3654,7 +3654,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
             expectedValues.put("/item/components/component[@href='/ir/item/"
                 + objid + "/components/component/"
-                + componentIds.get("3").get(0) + "']/content/@storage",
+                + componentIds.get("3").get(0) + "']/content/orage",
                 "internal-managed");
         }
         else {
@@ -3686,7 +3686,7 @@ public class ItemVersioningTest extends ItemTestBase {
                     + componentIds.get("3").get(0) + "/content");
 
             expectedValues.put("/item/components/component[@objid='"
-                + componentIds.get("3").get(0) + "']/content/@storage",
+                + componentIds.get("3").get(0) + "']/content/orage",
                 "internal-managed");
         }
 
@@ -3815,7 +3815,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
             expectedValues.put("/item/components/component[@href='/ir/item/"
                 + objid + ":2" + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/@storage",
+                + componentIds.get("2").get(0) + "']/content/orage",
                 "internal-managed");
         }
         else {

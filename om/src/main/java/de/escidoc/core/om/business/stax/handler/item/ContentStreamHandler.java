@@ -321,7 +321,7 @@ public class ContentStreamHandler extends WriteHandler {
 
                     }
                 }
-                catch (NoSuchAttributeException e) {
+                catch (final NoSuchAttributeException e) {
                     throw new XmlCorruptedException(e);
                 }
             }

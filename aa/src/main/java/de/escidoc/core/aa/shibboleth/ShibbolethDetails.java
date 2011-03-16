@@ -32,7 +32,7 @@ package de.escidoc.core.aa.shibboleth;
  * Class encapsulating the details of a shibboleth session.
  * 
  * @author TTE
- * @aa
+ *
  * 
  */
 public class ShibbolethDetails {
@@ -94,7 +94,7 @@ public class ShibbolethDetails {
      * @param shibSessionId
      *            The value of the request header "Shib-Session-ID"
      * 
-     * @aa
+     *
      */
     public ShibbolethDetails(final String shibApplicationId,
         final String shibAssertionCount, final String shibAuthenticationMethod,
@@ -114,7 +114,7 @@ public class ShibbolethDetails {
 
     /**
      * @return Returns the value of the request header "Shib_Application_ID".
-     * @aa
+     *
      */
     public String getShibApplicationId() {
         return shibApplicationId;
@@ -122,7 +122,7 @@ public class ShibbolethDetails {
 
     /**
      * @return Returns the value of the request header "Shib-Assertion-Count".
-     * @aa
+     *
      */
     public String getShibAssertionCount() {
         return shibAssertionCount;
@@ -131,7 +131,7 @@ public class ShibbolethDetails {
     /**
      * @return Returns the value of the request header
      *         "Shib-Authentication-Method".
-     * @aa
+     *
      */
     public String getShibAuthenticationMethod() {
         return shibAuthenticationMethod;
@@ -140,7 +140,7 @@ public class ShibbolethDetails {
     /**
      * @return Returns the value of the request header
      *         "Shib-Authentication-Instant".
-     * @aa
+     *
      */
     public String getShibAuthenticationInstant() {
         return shibAuthenticationInstant;
@@ -149,7 +149,7 @@ public class ShibbolethDetails {
     /**
      * @return Returns the value of the request header
      *         "Shib-AuthnContext-Class".
-     * @aa
+     *
      */
     public String getShibAuthnContextClass() {
         return shibAuthnContextClass;
@@ -157,7 +157,7 @@ public class ShibbolethDetails {
 
     /**
      * @return Returns the value of the request header "Shib-AuthnContext-Decl".
-     * @aa
+     *
      */
     public String getShibAuthContextDecl() {
         return shibAuthContextDecl;
@@ -165,7 +165,7 @@ public class ShibbolethDetails {
 
     /**
      * @return Returns the value of the request header "Shib-Identity-Provider".
-     * @aa
+     *
      */
     public String getShibIdentityProvider() {
         return shibIdentityProvider;
@@ -173,7 +173,7 @@ public class ShibbolethDetails {
 
     /**
      * @return Returns the value of the request header "Shib-Session-ID".
-     * @aa
+     *
      */
     public String getShibSessionId() {
         return shibSessionId;

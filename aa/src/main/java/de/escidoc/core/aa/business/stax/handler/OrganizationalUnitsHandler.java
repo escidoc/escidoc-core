@@ -50,7 +50,7 @@ import de.escidoc.core.common.util.xml.stax.handler.LinkCollectionStaxHandler;
  * </ul>
  * 
  * @author TTE
- * @aa
+ *
  */
 public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
 
@@ -67,7 +67,7 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
      * @param tsu
      *            The triple store utility to retrieve organizational units
      *            properties.
-     * @aa
+     *
      */
     public OrganizationalUnitsHandler(final TripleStoreUtility tsu) {
 
@@ -85,9 +85,9 @@ public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {
      * @param element
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.common.util.xml.stax.handler.LinkCollectionStaxHandler
+     * @see LinkCollectionStaxHandler
      *      #endLinkElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
-     * @aa
+     *
      */
     @Override
     public EndElement endLinkElement(final EndElement element)

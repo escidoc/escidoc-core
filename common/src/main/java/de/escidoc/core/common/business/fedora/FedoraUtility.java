@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora;
 
 import de.escidoc.core.common.business.Constants;
@@ -33,10 +25,9 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.FileSystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.security.PreemptiveAuthInterceptor;
 import de.escidoc.core.common.util.service.BeanLocator;
-import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.axis.types.NonNegativeInteger;
 import org.apache.commons.pool.BasePoolableObjectFactory;
@@ -100,9 +91,6 @@ import java.util.regex.Pattern;
  * This class uses pools for the fedora interfaces.
  *
  * @author ROF
- * @spring.bean id="escidoc.core.business.FedoraUtility"
- * @om
- *
  */
 @ManagedResource(objectName = "eSciDocCore:name=FedoraUtility", description = "The utility class to access the fedora repository.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class FedoraUtility implements InitializingBean {
@@ -121,8 +109,8 @@ public class FedoraUtility implements InitializingBean {
 
     public static final int SYNC_RETRIES = 10;
 
-    private static final AppLogger LOG = new AppLogger(
-        FedoraUtility.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        FedoraUtility.class);
 
     private static final int MAX_IDLE = 5;
 
@@ -175,7 +163,7 @@ public class FedoraUtility implements InitializingBean {
      * Gets the FoXML version.
      *
      * @return The version of FOXML
-     * @common
+     *
      */
     @ManagedAttribute(description = "The FoXML version.")
     public String getFoxmlVersion() {
@@ -187,7 +175,7 @@ public class FedoraUtility implements InitializingBean {
      * Gets the URL to the Fedora repository.
      *
      * @return Returns the URL to the Fedora repository.
-     * @common
+     *
      */
     @ManagedAttribute(description = "The URL to the fedora repository.")
     public String getFedoraUrl() {
@@ -199,7 +187,7 @@ public class FedoraUtility implements InitializingBean {
      * Gets the number of active apia connections.
      *
      * @return Returns the number of active apia connections.
-     * @common
+     *
      */
     @ManagedAttribute(description = "The number of active apia connections.")
     public int getApiaPoolNumActive() {
@@ -211,7 +199,7 @@ public class FedoraUtility implements InitializingBean {
      * Gets the number of idle apia connections.
      *
      * @return Returns the number of idle apia connections.
-     * @common
+     *
      */
     @ManagedAttribute(description = "The number of idle apia connections.")
     public int getApiaPoolNumIdle() {
@@ -232,7 +220,7 @@ public class FedoraUtility implements InitializingBean {
      * Gets the number of active apim connections.
      *
      * @return Returns the number of active apim connections.
-     * @common
+     *
      */
     @ManagedAttribute(description = "The number of active apim connections.")
     public int getApimPoolNumActive() {
@@ -244,7 +232,7 @@ public class FedoraUtility implements InitializingBean {
      * Gets the number of idle apim connections.
      *
      * @return Returns the number of idle apim connections.
-     * @common
+     *
      */
     @ManagedAttribute(description = "The number of idle apim connections.")
     public int getApimPoolNumIdle() {
@@ -265,7 +253,7 @@ public class FedoraUtility implements InitializingBean {
      * Gets the number of active fedora clients.
      *
      * @return Returns the number of active fedora clients.
-     * @common
+     *
      */
     @ManagedAttribute(description = "The number of active fedora clients.")
     public int getFedoraClientPoolNumActive() {
@@ -277,7 +265,7 @@ public class FedoraUtility implements InitializingBean {
      * Gets the number of idle fedora clients.
      *
      * @return Returns the number of idle fedora clients.
-     * @common
+     *
      */
     @ManagedAttribute(description = "The number of idle fedora clients.")
     public int getFedoraClientPoolNumIdle() {
@@ -310,7 +298,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             return apim.export(pid, FOXML_FORMAT, "public");
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
             throw new FedoraSystemException("APIM export failure: " + e.getMessage(), e);
         }
         finally {
@@ -338,7 +326,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             pids = apim.getNextPID(number, this.identifierPrefix);
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
             throw new FedoraSystemException("Unable to get Obids from Fedora: " + e.getMessage(), e);
         }
         finally {
@@ -372,7 +360,7 @@ public class FedoraUtility implements InitializingBean {
                 apim.setDatastreamState(pid, dsName, dsState,
                     "ds state is changed.");
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
             throw new FedoraSystemException("APIM setDatastreamState failure: " + e.getMessage(), e);
         }
         finally {
@@ -407,9 +395,9 @@ public class FedoraUtility implements InitializingBean {
             return apia
                 .getDatastreamDissemination(pid, dataStreamId, timestamp);
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
             // Workaround
-            LOG.warn("APIA getDatastreamWithMimeType(..) " + e);
+            LOGGER.warn("APIA getDatastreamWithMimeType(..) " + e);
             invalidateApiaObject(apia);
             clearApimPool();
             apia = borrowApia();
@@ -417,7 +405,7 @@ public class FedoraUtility implements InitializingBean {
                 return apia.getDatastreamDissemination(pid, dataStreamId,
                     timestamp);
             }
-            catch (RemoteException e1) {
+            catch (final RemoteException e1) {
                 throw new FedoraSystemException("Retrieve datastream (pid='" + pid
                     + "', dataStreamId='" + dataStreamId + "', timestamp='"
                     + timestamp + "') ", e1);
@@ -447,7 +435,7 @@ public class FedoraUtility implements InitializingBean {
      *             Thrown if Fedora access failed.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @om
+     *
      */
     public String modifyDatastream(
         final String pid, final String datastreamName,
@@ -463,7 +451,7 @@ public class FedoraUtility implements InitializingBean {
                     new String[0], datastreamLabel, "text/xml", null,
                     datastream, null, null, null, true);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             preventWrongLogging(e, datastream);
             throw new FedoraSystemException(e.toString(), e);
         }
@@ -500,7 +488,7 @@ public class FedoraUtility implements InitializingBean {
      *             Thrown if request to Fedora failed.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @om
+     *
      */
     public String modifyDatastream(
         final String pid, final String datastreamName,
@@ -516,7 +504,7 @@ public class FedoraUtility implements InitializingBean {
                     datastreamLabel, mimeType, null, url, null, null,
                     "Modified by reference.", true);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FedoraSystemException("Failed to modify Fedora datastream by reference: " + url, e);
         }
         finally {
@@ -552,7 +540,7 @@ public class FedoraUtility implements InitializingBean {
      *             Thrown if request to Fedora failed.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @om
+     *
      */
     public String modifyDatastream(
         final String pid, final String datastreamName,
@@ -569,7 +557,7 @@ public class FedoraUtility implements InitializingBean {
                     datastreamLabel, mimeType, null, datastream, null, null,
                     null, true);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FedoraSystemException("Failed to modify Fedora datastream.", e);
         }
         finally {
@@ -604,7 +592,7 @@ public class FedoraUtility implements InitializingBean {
             apim.purgeDatastream(pid, datastreamName, startDT, endDT,
                 "datastream purged", false);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FedoraSystemException("Failed to purge Fedora datastream.", e);
         }
         finally {
@@ -661,7 +649,7 @@ public class FedoraUtility implements InitializingBean {
         final String pid, final String altId) throws FedoraSystemException {
         final Collection<String> names = new ArrayList<String>();
 
-        final org.fcrepo.server.types.gen.Datastream[] ds =
+        final Datastream[] ds =
             getDatastreamsInformation(pid);
 
         for (final Datastream d : ds) {
@@ -698,11 +686,11 @@ public class FedoraUtility implements InitializingBean {
                 apim.ingest(foxml.getBytes(XmlUtility.CHARACTER_ENCODING),
                     FOXML_FORMAT, "eSciDoc object created");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             // Workaround - try a secound connection
             if (e.getMessage().contains("Address already in use: connect")) {
-                LOG.warn("APIM storeObjectInFedora(..) " + e);
+                LOGGER.warn("APIM storeObjectInFedora(..) " + e);
                 invalidateApimObject(apim);
                 apim = borrowApim();
 
@@ -712,7 +700,7 @@ public class FedoraUtility implements InitializingBean {
                             foxml.getBytes(XmlUtility.CHARACTER_ENCODING),
                             FOXML_FORMAT, "eSciDoc object created");
                 }
-                catch (Exception e1) {
+                catch (final Exception e1) {
                     preventWrongLogging(e1, foxml);
                     throw new FedoraSystemException(
                         "Ingest to Fedora failed. ", e1);
@@ -761,35 +749,33 @@ public class FedoraUtility implements InitializingBean {
      *             Thrown if Fedora request failed.
      */
     public Datastream[] getDatastreamsInformation(
-        final String pid, final String timestamp) throws FedoraSystemException {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
-                    "getDatastreamsInformation ", pid, timestamp));
-        }
-
+            final String pid, final String timestamp) throws FedoraSystemException {
         Datastream[] datastreams = null;
         FedoraAPIM apim = borrowApim();
         try {
             // work around to prevent null returns
             datastreams = apim.getDatastreams(pid, timestamp, null);
             if (datastreams == null) {
-                LOG.warn("APIM getDatastreams(" + pid + ", ..) returns null.");
+                LOGGER.warn("APIM getDatastreams(" + pid + ", ..) returns null.");
                 returnApim(apim);
                 apim = borrowApim();
                 datastreams = apim.getDatastreams(pid, timestamp, null);
             }
         }
-        catch (RemoteException e) {
-            // Workaround
-            LOG.info("APIM getDatastreams(..) " + e);
+        catch (final RemoteException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on APIM getDatastreams(..)");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on APIM getDatastreams(..)", e);
+            }
             invalidateApimObject(apim);
             clearApimPool();
             apim = borrowApim();
             try {
                 datastreams = apim.getDatastreams(pid, timestamp, null);
             }
-            catch (RemoteException e1) {
+            catch (final RemoteException e1) {
                 throw new FedoraSystemException(e.toString(), e1);
             }
         }
@@ -823,7 +809,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             return apim.getDatastream(pid, name, timestamp);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FedoraSystemException(e.toString(), e);
         }
         finally {
@@ -846,7 +832,7 @@ public class FedoraUtility implements InitializingBean {
                         Constants.COLON_REPLACEMENT_PID) + '-' + name, name,
                 null, null).getStream();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FedoraSystemException(
                 "Failed to get result of dynamic resource.", e);
         }
@@ -868,18 +854,12 @@ public class FedoraUtility implements InitializingBean {
      */
     public Datastream[] getDatastreamHistory(final String pid, final String dsID)
         throws FedoraSystemException {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format(
-                    "getDatastreamHistory ", pid, dsID));
-        }
-
         Datastream[] datastreams = null;
         final FedoraAPIM apim = borrowApim();
         try {
             datastreams = apim.getDatastreamHistory(pid, dsID);
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
             throw new FedoraSystemException(e.toString(), e);
         }
         finally {
@@ -898,7 +878,7 @@ public class FedoraUtility implements InitializingBean {
             tempURI =
                 Utility.getInstance().upload(stream, pid + name, "text/xml");
         }
-        catch (FileSystemException e) {
+        catch (final FileSystemException e) {
             throw new WebserverSystemException("Error while uploading of content of datastream '" + name
                     + "' of the fedora object with id '" + pid
                     + "' to the staging area. ", e);
@@ -948,7 +928,7 @@ public class FedoraUtility implements InitializingBean {
             tempURI =
                 Utility.getInstance().upload(stream, pid + name, "text/xml");
         }
-        catch (FileSystemException e) {
+        catch (final FileSystemException e) {
             throw new WebserverSystemException("Error while uploading of content of datastream '" + name
                     + "' of the fedora object with id '" + pid
                     + "' to the staging area. ", e);
@@ -1081,7 +1061,7 @@ public class FedoraUtility implements InitializingBean {
                 mimeType, formatURI, dsLocation, controlGroup, dsState, null,
                 null, logMessage);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new FedoraSystemException(e.toString(), e);
         }
         finally {
@@ -1113,7 +1093,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             timestamp = apim.modifyObject(pid, null, null, null, "touched");
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
             throw new FedoraSystemException(e.toString(), e);
         }
         finally {
@@ -1136,7 +1116,7 @@ public class FedoraUtility implements InitializingBean {
      *             Thrown if Fedora request failed.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @om
+     *
      */
     public void deleteObject(final String pid, final boolean syncTripleStore)
         throws FedoraSystemException, WebserverSystemException {
@@ -1146,7 +1126,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             apim.purgeObject(pid, msg, false);
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
             throw new FedoraSystemException("While deleting: ", e);
         }
         finally {
@@ -1176,25 +1156,34 @@ public class FedoraUtility implements InitializingBean {
             try {
                 callSync();
                 break;
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 logExcetionAndWait(e, i);
-            } catch (TripleStoreSystemException e) {
+            } catch (final TripleStoreSystemException e) {
                 logExcetionAndWait(e, i);
             }
             i++;
             if (i >= SYNC_RETRIES) {
-                throw new FedoraSystemException("Triplestore sync failed.");
+                throw new FedoraSystemException("TripleStore sync failed.");
             }
         }
     }
 
-    private void logExcetionAndWait(final Exception e, final int i) throws FedoraSystemException {
-        LOG.error(e);
+    private static void logExcetionAndWait(final Exception e, final int i) throws FedoraSystemException {
+        if(LOGGER.isWarnEnabled()) {
+            LOGGER.warn("Error syncing with TripleStore.");
+        }
+        if(LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Error syncing with TripleStore.", e);
+        }
         try {
             Thread.sleep(i + 1000);
-        } catch (InterruptedException e1) {
-            LOG.debug("Error on waiting for Fedora.", e1);
-            // Ignore exception
+        } catch (final InterruptedException e1) {
+            if(LOGGER.isWarnEnabled()) {
+            LOGGER.warn("Error on waiting for Fedora.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on waiting for Fedora.", e);
+            }
         }
     }
 
@@ -1216,7 +1205,7 @@ public class FedoraUtility implements InitializingBean {
         FedoraClient fc = null;
         try {
             fc = borrowFedoraClient();
-            final org.fcrepo.client.HttpInputStream httpInStr =
+            final HttpInputStream httpInStr =
                 fc.get(syncRestQuery, true);
             if (httpInStr.getStatusCode() != HTTP_OK) {
                 throw new FedoraSystemException("Triplestore sync failed.");
@@ -1247,16 +1236,16 @@ public class FedoraUtility implements InitializingBean {
         try {
             op = apia.getObjectProfile(pid, null);
         }
-        catch (RemoteException e) {
+        catch (final RemoteException e) {
             // Workaround
-            LOG.warn("APIA getLastModificationDate(..) " + e);
+            LOGGER.warn("APIA getLastModificationDate(..) " + e);
             invalidateApiaObject(apia);
             apia = borrowApia();
 
             try {
                 op = apia.getObjectProfile(pid, null);
             }
-            catch (RemoteException e1) {
+            catch (final RemoteException e1) {
                 throw new FedoraSystemException(e.toString(), e1);
             }
 
@@ -1313,7 +1302,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             return (FedoraClient) fedoraClientPool.borrowObject();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw convertPoolException(e);
         }
     }
@@ -1331,7 +1320,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             fedoraClientPool.returnObject(fedoraClient);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw convertPoolException(e);
         }
     }
@@ -1347,7 +1336,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             return (FedoraAPIA) apiaPool.borrowObject();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw convertPoolException(e);
         }
     }
@@ -1365,7 +1354,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             apiaPool.returnObject(fedoraApia);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw convertPoolException(e);
         }
     }
@@ -1381,7 +1370,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             return (FedoraAPIM) apimPool.borrowObject();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw convertPoolException(e);
         }
     }
@@ -1399,7 +1388,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             apimPool.returnObject(fedoraApim);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw convertPoolException(e);
         }
     }
@@ -1418,7 +1407,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             apiaPool.invalidateObject(fedoraApia);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw convertPoolException(e);
         }
     }
@@ -1436,7 +1425,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             apimPool.invalidateObject(fedoraApim);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw convertPoolException(e);
         }
     }
@@ -1449,7 +1438,7 @@ public class FedoraUtility implements InitializingBean {
      *            The {@link Exception} to be converted.
      * @return Returns the {@link FedoraSystemException}
      */
-    private FedoraSystemException convertPoolException(final Exception e) {
+    private static FedoraSystemException convertPoolException(final Exception e) {
         return e instanceof FedoraSystemException ? (FedoraSystemException) e : new FedoraSystemException(e.getMessage(), e);
     }
 
@@ -1457,9 +1446,9 @@ public class FedoraUtility implements InitializingBean {
      * See Interface for functional description.
      *
      * @throws Exception
-     * @see org.springframework.beans.factory.InitializingBean
+     * @see InitializingBean
      *      #afterPropertiesSet()
-     * @common
+     *
      */
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -1470,7 +1459,7 @@ public class FedoraUtility implements InitializingBean {
              *
              * @return
              * @throws Exception
-             * @see org.apache.commons.pool.BasePoolableObjectFactory
+             * @see BasePoolableObjectFactory
              *      #makeObject()
              */
             @Override
@@ -1485,7 +1474,7 @@ public class FedoraUtility implements InitializingBean {
              *
              * @return
              * @throws Exception
-             * @see org.apache.commons.pool.BasePoolableObjectFactory
+             * @see BasePoolableObjectFactory
              *      #makeObject()
              */
             @Override
@@ -1500,7 +1489,7 @@ public class FedoraUtility implements InitializingBean {
              *
              * @return
              * @throws Exception
-             * @see org.apache.commons.pool.BasePoolableObjectFactory
+             * @see BasePoolableObjectFactory
              *      #makeObject()
              */
             @Override
@@ -1597,7 +1586,7 @@ public class FedoraUtility implements InitializingBean {
 
             return httpClient;
         }
-        catch (MalformedURLException e) {
+        catch (final MalformedURLException e) {
             throw new WebserverSystemException(
                 "Fedora URL from configuration malformed.", e);
         }
@@ -1639,7 +1628,7 @@ public class FedoraUtility implements InitializingBean {
             fedoraResponseStream = httpResponse.getEntity().getContent();
 
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -1649,8 +1638,6 @@ public class FedoraUtility implements InitializingBean {
     /**
      * @param fedoraUrl
      *            the fedoraUrl to inject
-     * @spring.property value="${fedora.url}"
-     * @common
      */
     public void setFedoraUrl(final String fedoraUrl) {
 
@@ -1664,8 +1651,6 @@ public class FedoraUtility implements InitializingBean {
     /**
      * @param fedoraUser
      *            the fedoraUser to inject
-     * @spring.property value="${fedora.user}"
-     * @common
      */
     public void setFedoraUser(final String fedoraUser) {
 
@@ -1679,8 +1664,6 @@ public class FedoraUtility implements InitializingBean {
     /**
      * @param fedoraPassword
      *            the fedoraPassword to inject
-     * @spring.property value="${fedora.password}"
-     * @common
      */
     public void setFedoraPassword(final String fedoraPassword) {
 
@@ -1694,8 +1677,6 @@ public class FedoraUtility implements InitializingBean {
     /**
      * @param identifierPrefix
      *            the identifierPrefix to inject
-     * @spring.property value="${escidoc-core.identifier.prefix}"
-     * @common
      */
     public void setIdentifierPrefix(final String identifierPrefix) {
 
@@ -1704,8 +1685,6 @@ public class FedoraUtility implements InitializingBean {
 
     /**
      * Injects the TripleStore utility.
-     *
-     * @spring.property ref="business.TripleStoreUtility"
      * @param tripleStoreUtility
      *            TripleStoreUtility from Spring
      */
@@ -1728,7 +1707,7 @@ public class FedoraUtility implements InitializingBean {
                 BeanLocator.COMMON_FACTORY_ID,
                 "escidoc.core.business.FedoraUtility");
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new FedoraSystemException("FedoraUtility creation failed", e);
         }
     }
@@ -1762,13 +1741,19 @@ public class FedoraUtility implements InitializingBean {
             PATTERN_MALFORMED_URL.matcher(e.getMessage());
 
         if (matcherErrorGetting.find() || matcherMalformedUrl.find()) {
-            LOG.debug("Failed to load content. " + e.toString());
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Failed to load content. ");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Failed to load content. ", e);
+            }
         } else {
-            LOG.debug("Failed to modify Fedora datastream. " + e.toString());
-            // LOG.warn("Failed to modify Fedora datastream:\n"
-            // + "======== begin data stream ================\n"
-            // + new String(datastream) + "\n"
-            // + "======== end data stream ==================\n" + e);
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Failed to modify Fedora datastream.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Failed to modify Fedora datastream.", e);
+            }
         }
 
     }
@@ -1787,7 +1772,7 @@ public class FedoraUtility implements InitializingBean {
             preventWrongLogging(e,
                 datastream.getBytes(XmlUtility.CHARACTER_ENCODING));
         }
-        catch (UnsupportedEncodingException e1) {
+        catch (final UnsupportedEncodingException e1) {
             // nothing to do ? (FRS)
             // SWA: This is derived from crud code. The main failure is the
             // approach to write something to Fedora and if an Exception failed,

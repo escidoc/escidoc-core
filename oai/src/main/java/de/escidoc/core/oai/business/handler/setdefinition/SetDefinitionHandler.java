@@ -14,7 +14,7 @@ import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintVi
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -40,9 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @spring.bean id="business.SetDefinitionHandler" scope="prototype"
  * @author rof
- * 
  */
 public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 
@@ -58,8 +56,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     /**
      * The logger.
      */
-    private static final AppLogger LOG = new AppLogger(
-        SetDefinitionHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(SetDefinitionHandler.class);
 
     /*
      * (non-Javadoc)
@@ -82,7 +79,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             sp.parse(in);
             sp.clearHandlerChain();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         final SetDefinition setDefinition = new SetDefinition();
@@ -144,9 +141,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *             Thrown in case of an internal error.
      * 
      */
-    private boolean setModificationValues(
-        final SetDefinition setDefinition,
-        final Map<String, String> setProperties) throws SystemException {
+    private static boolean setModificationValues(final SetDefinition setDefinition,
+                                                 final Map<String, String> setProperties) throws SystemException {
         boolean changed = false;
         if (setProperties != null) {
             final String newDescription =
@@ -203,7 +199,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *             e
      * @see de.escidoc.core.oai.service.interfaces.SetDefinitionIdHandlerInterface
      *      #retrieve(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieve(final String setDefinitionId)
@@ -252,10 +248,10 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         try {
             sp.parse(in);
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -276,7 +272,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      *             e
      * @see de.escidoc.core.oai.service.interfaces.SetDefinitionHandlerInterface
      *      #delete(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void delete(final String setDefinitionId)
@@ -288,7 +284,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
             final String message =
                 StringUtility.format(MSG_SET_DEFINITION_NOT_FOUND_BY_ID,
                     setDefinitionId);
-            LOG.error(message);
+            LOGGER.error(message);
             throw new ResourceNotFoundException(message);
         }
         setDefinitionDao.delete(setDefinition);
@@ -382,12 +378,12 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
                         }
                     }
                 }
-                catch (MissingMethodParameterException e) {
+                catch (final MissingMethodParameterException e) {
                     throw new SystemException(
                         "Unexpected exception during evaluating access "
                             + "rights.", e);
                 }
-                catch (ResourceNotFoundException e) {
+                catch (final ResourceNotFoundException e) {
                     throw new SystemException(
                         "Unexpected exception during evaluating access "
                             + "rights.", e);
@@ -418,14 +414,11 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * 
      * @param setDefinitionDao
      *            The data access object.
-     * 
-     * @spring.property ref="persistence.SetDefinitionDao"
-     * @aa
      */
     public void setSetDefinitionDao(
         final SetDefinitionDaoInterface setDefinitionDao) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(StringUtility
                 .format("setDefinitionDao", setDefinitionDao));
         }
         this.setDefinitionDao = setDefinitionDao;
@@ -441,7 +434,6 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
         if (this.pdp == null) {
             this.pdp = BeanLocator.locatePolicyDecisionPoint();
         }
-        LOG.debug("setPdp");
     }
 
     /**

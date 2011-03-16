@@ -1981,7 +1981,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             retrieve(id);
             fail("No exception on retrieve user after delete.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = UserAccountNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -2016,7 +2016,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             delete(TEST_SYSTEMADMINISTRATOR_ID1);
             fail("No exception on delete user with references.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = SqlDatabaseSystemException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
@@ -2360,7 +2360,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             failMissingException(
                 "Retrieving with unknown filter criteria not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Retrieving with unknown filter criteria not declined,"
                     + " properly.", ec, e);
@@ -3015,7 +3015,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
             failMissingException(
                 "Retrieving with unknown filter criteria not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Retrieving with unknown filter criteria not declined,"
                     + " properly.", ec, e);
@@ -3508,7 +3508,7 @@ public abstract class UserAccountTest extends UserAccountTestBase {
         try {
             result = retrieveUserAccounts(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);

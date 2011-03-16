@@ -40,6 +40,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 import java.io.BufferedWriter;
@@ -66,6 +68,8 @@ import static org.junit.Assert.assertEquals;
 @RunWith(value = Parameterized.class)
 @Ignore // DigiLib Tests sollen laut Matthias bis auf weiteres deaktiviert werden.
 public class ItemRetrieveContentTest extends ContentTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ItemRetrieveContentTest.class);
 
     private static final int MAX_RETRIEVES = 30;
 
@@ -302,11 +306,11 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // cleanup -------------------------------------------------------------
         if (temp.exists() && !temp.delete()) {
-            log.warn("Could not delete temporary file. " + temp.getPath());
+            LOGGER.warn("Could not delete temporary file. " + temp.getPath());
         }
 
         if (tempRef.exists() && !tempRef.delete()) {
-            log.warn("Could not delete temporary file. " + tempRef.getPath());
+            LOGGER.warn("Could not delete temporary file. " + tempRef.getPath());
         }
 
         // compare with direct Scaler request ----------------------------------
@@ -417,11 +421,11 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // cleanup -------------------------------------------------------------
         if (temp.exists() && !temp.delete()) {
-            log.warn("Could not delete temporary file. " + temp.getPath());
+            LOGGER.warn("Could not delete temporary file. " + temp.getPath());
         }
 
         if (tempRef.exists() && !tempRef.delete()) {
-            log.warn("Could not delete temporary file. " + tempRef.getPath());
+            LOGGER.warn("Could not delete temporary file. " + tempRef.getPath());
         }
 
         // compare with direct Scaler request ----------------------------------
@@ -460,7 +464,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
             String responseMessage =
                 "Retrieving content from transformation service failed. "
                     + conn.getResponseMessage();
-            log.info(responseMessage);
+            LOGGER.info(responseMessage);
             throw new Exception(responseMessage);
         }
 
@@ -487,7 +491,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         // cleanup -------------------------------------------------------------
         temp = new File(tempFileName);
         if (temp.exists() && !temp.delete()) {
-            log.warn("Could not delete temporary file. " + temp.getPath());
+            LOGGER.warn("Could not delete temporary file. " + temp.getPath());
         }
 
     }
@@ -534,7 +538,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
             String responseMessage =
                 "Retrieving content from transformation service failed. "
                     + conn.getResponseMessage();
-            log.info(responseMessage);
+            LOGGER.info(responseMessage);
             throw new Exception(responseMessage);
         }
 
@@ -562,7 +566,7 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // cleanup -------------------------------------------------------------
         if (temp.exists() && !temp.delete()) {
-            log.warn("Could not delete temporary file. " + temp.getPath());
+            LOGGER.warn("Could not delete temporary file. " + temp.getPath());
         }
 
     }

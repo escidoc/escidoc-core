@@ -93,7 +93,7 @@ public class RetrieveTest extends ContentModelTestBase {
         try {
             delete(this.contentModelId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // do nothing
         }
     }
@@ -140,7 +140,7 @@ public class RetrieveTest extends ContentModelTestBase {
             retrieve(UNKNOWN_ID);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -170,7 +170,7 @@ public class RetrieveTest extends ContentModelTestBase {
             retrieve(CONTEXT_ID);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -189,7 +189,7 @@ public class RetrieveTest extends ContentModelTestBase {
             retrieve(null);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -217,7 +217,7 @@ public class RetrieveTest extends ContentModelTestBase {
         try {
             subResource = retrieveResources(this.contentModelId);
         }
-        catch (NoSuchMethodException e) {
+        catch (final NoSuchMethodException e) {
             if (getTransport() != Constants.TRANSPORT_SOAP) {
                 throw e;
             }

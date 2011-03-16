@@ -67,9 +67,6 @@ import java.util.Map;
  *          datevalue
  * 
  * @author MIH
- * @spring.bean 
- *              id="eSciDoc.core.aa.business.renderer.VelocityXmlReportRenderer"
- * @sm
  */
 public final class VelocityXmlReportRenderer
     implements ReportRendererInterface {
@@ -93,7 +90,7 @@ public final class VelocityXmlReportRenderer
      * @throws SystemException
      * @see de.escidoc.core.sm.business.renderer.interfaces.
      *      ReportRendererInterface#render(List, ReportDefinition)
-     * @sm
+     *
      */
     @Override
     public String render(final List dbResult,
@@ -116,9 +113,7 @@ public final class VelocityXmlReportRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addDataValues(
-        final Collection dbResult,
-        final Map<String, Object> values)
+    private static void addDataValues(final Collection dbResult, final Map<String, Object> values)
         throws SystemException {
 
         final Collection<List<HashMap<String, Object>>> recordsList =
@@ -183,9 +178,7 @@ public final class VelocityXmlReportRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addReportValues(
-        final ReportDefinition reportDefinition, 
-        final Map<String, Object> values)
+    private static void addReportValues(final ReportDefinition reportDefinition, final Map<String, Object> values)
         throws SystemException {
 
         values.put("reportDefinitionId", reportDefinition.getId());
@@ -202,7 +195,7 @@ public final class VelocityXmlReportRenderer
      * @param values
      *            The {@link Map} to that the values shall be added.
      * @throws SystemException e
-     * @sm
+     *
      */
     private void addReportNamespaceValues(
             final Map<String, Object> values) throws SystemException {
@@ -228,9 +221,9 @@ public final class VelocityXmlReportRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @sm
+     *
      */
-    private void addEscidocBaseUrl(final Map<String, Object> values)
+    private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_ESCIDOC_BASE_URL, XmlUtility
@@ -243,9 +236,9 @@ public final class VelocityXmlReportRenderer
      * @return Returns the <code>ReportXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @sm
+     *
      */
-    private ReportXmlProvider getReportXmlProvider()
+    private static ReportXmlProvider getReportXmlProvider()
         throws WebserverSystemException {
 
         return ReportXmlProvider.getInstance();

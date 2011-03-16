@@ -61,7 +61,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
 import de.escidoc.core.common.util.stax.handler.ItemRelsExtUpdateHandler;
@@ -96,8 +96,8 @@ import java.util.TreeMap;
  */
 public class ContextHandlerUpdate extends ContextHandlerDelete {
 
-    private static final AppLogger LOGGER = new AppLogger(
-        ContextHandlerUpdate.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ContextHandlerUpdate.class);
 
     private static final String XPATH_ADMIN_DESCRIPTORS =
         "/context/admin-descriptors/admin-descriptor";
@@ -899,14 +899,16 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
 
                 if (oldDs.equals(newDs)
                     && "text/xml".equals(oldDs.getMimeType())) {
-                    LOGGER.debug("Datastreams identical; updated of Context "
-                        + getContext().getId() + " with admin-descriptor "
-                        + name + " skipped.");
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Datastreams identical; updated of Context " + getContext().getId() +
+                                " with admin-descriptor " + name + " skipped.");
+                    }
                 }
                 else {
                     getContext().setAdminDescriptor(newDs);
-                    LOGGER.debug("updated Context " + getContext().getId()
-                        + " with admin-descriptor " + name);
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("updated Context " + getContext().getId() + " with admin-descriptor " + name);
+                    }
                     updated = true;
                 }
                 newDS = false;
@@ -914,7 +916,6 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             }
 
             if (newDS) {
-
                 getFedoraUtility()
                     .addDatastream(
                         getContext().getId(),
@@ -924,8 +925,9 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                         true,
                         ((ByteArrayOutputStream) streams.get(name))
                             .toByteArray(), false);
-                LOGGER.debug("add to Context " + getContext().getId()
-                    + " new admin-descriptor " + name);
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("add to Context " + getContext().getId() + " new admin-descriptor " + name);
+                }
                 updated = true;
             }
         }
@@ -935,8 +937,10 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
         for(final Entry<String, Datastream> entry : adminDescriptorsEntrySet) {
             final Datastream nextDatastream = entry.getValue();
             nextDatastream.delete();
-            LOGGER.debug("Admin-descriptor datastream '" + entry.getKey()
-                + "' of Context " + getContext().getId() + " deleted.");
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Admin-descriptor datastream '" + entry.getKey() + "' of Context " + getContext().getId
+                        () + " deleted.");
+            }
             updated = true;
         }
         return updated;

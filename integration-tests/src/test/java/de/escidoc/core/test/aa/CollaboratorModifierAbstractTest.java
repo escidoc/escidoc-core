@@ -305,10 +305,10 @@ public abstract class CollaboratorModifierAbstractTest extends GrantTestBase {
             } finally {
                 try {
                     revokeAllGrants(USER_GROUP_WITH_OU_LIST_ID);
-                } catch (Exception e){}
+                } catch (final Exception e){}
                 try {
                     revokeAllGrants(USER_GROUP_WITH_USER_LIST_ID);
-                } catch (Exception e){}
+                } catch (final Exception e){}
             }
         }
     }

@@ -40,7 +40,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
  * Interface of an container renderer.
  * 
  * @author ROF
- * @om
+ *
  */
 public interface ContainerRendererInterface {
 

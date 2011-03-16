@@ -68,7 +68,7 @@ public class SetDefinitionCreateTest extends SetDefinitionTestBase {
             create(createdSetDefinition);
             fail("No exception on create set definition with not unique set specification.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = UniqueConstraintViolationException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }

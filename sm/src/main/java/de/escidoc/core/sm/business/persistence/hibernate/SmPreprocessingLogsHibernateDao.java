@@ -40,8 +40,6 @@ import java.util.Date;
  * Database-Backend for the PreprocessingLogs database-table.
  * 
  * @author MIH
- * @spring.bean id="persistence.SmPreprocessingLogsDao"
- * @sm
  */
 public class SmPreprocessingLogsHibernateDao 
     extends AbstractHibernateDao
@@ -72,14 +70,14 @@ public class SmPreprocessingLogsHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmPreprocessingLogsDaoInterface
+     * @see SmPreprocessingLogsDaoInterface
      *      #savePreprocessingLog(PreprocessingLog)
      * 
      * @param preprocessingLog
      *            preprocessingLog-Hibernate Object.
      * @return Integer primary key of created Object
      * 
-     * @sm
+     *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
@@ -96,7 +94,7 @@ public class SmPreprocessingLogsHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmPreprocessingLogsDaoInterface
+     * @see SmPreprocessingLogsDaoInterface
      *      #retrievePreprocessingLogs(java.lang.String)
      * 
      * @param aggregationDefinitionId
@@ -105,7 +103,7 @@ public class SmPreprocessingLogsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<PreprocessingLog>
@@ -117,7 +115,7 @@ public class SmPreprocessingLogsHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmPreprocessingLogsDaoInterface
+     * @see SmPreprocessingLogsDaoInterface
      *      #retrievePreprocessingLogs(java.lang.Date)
      * 
      * @param processingDate
@@ -126,7 +124,7 @@ public class SmPreprocessingLogsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<PreprocessingLog>
@@ -139,7 +137,7 @@ public class SmPreprocessingLogsHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmPreprocessingLogsDaoInterface
+     * @see SmPreprocessingLogsDaoInterface
      *      #retrievePreprocessingLogs(java.lang.String, java.lang.Date)
      * 
      * @param aggregationDefinitionId
@@ -150,7 +148,7 @@ public class SmPreprocessingLogsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<PreprocessingLog>
@@ -164,7 +162,7 @@ public class SmPreprocessingLogsHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmPreprocessingLogsDaoInterface
+     * @see SmPreprocessingLogsDaoInterface
      *      #retrievePreprocessingLogs(java.lang.String, boolean)
      * 
      * @param aggregationDefinitionId
@@ -175,7 +173,7 @@ public class SmPreprocessingLogsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<PreprocessingLog>
@@ -189,7 +187,7 @@ public class SmPreprocessingLogsHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmPreprocessingLogsDaoInterface
+     * @see SmPreprocessingLogsDaoInterface
      *      #retrievePreprocessingLogs(java.lang.Date, boolean)
      * 
      * 
@@ -201,7 +199,7 @@ public class SmPreprocessingLogsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<PreprocessingLog>
@@ -214,7 +212,7 @@ public class SmPreprocessingLogsHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmPreprocessingLogsDaoInterface
+     * @see SmPreprocessingLogsDaoInterface
      *      #retrievePreprocessingLogs(java.lang.String,java.lang.Date, boolean)
      * 
      * 
@@ -228,7 +226,7 @@ public class SmPreprocessingLogsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<PreprocessingLog>
@@ -245,8 +243,6 @@ public class SmPreprocessingLogsHibernateDao
      * 
      * @param mySessionFactory
      *            The sessionFactory to set.
-     * @spring.property ref="sm.SessionFactory"
-     * @sm
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 

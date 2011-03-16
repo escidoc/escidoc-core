@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<deployment 
+    xmlns="http://xml.apache.org/axis/wsdd/" 
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java"
+    xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance">
+
+  <service name="UserAccountHandlerService"
+      provider="java:EscidocEJB"
+      >
+		<requestFlow>
+	<handler type="java:org.apache.ws.axis.security.WSDoAllReceiver">
+		<parameter name="action" value="UsernameToken"/>
+		<parameter name="passwordCallbackClass" 
+		value="de.escidoc.core.aa.security.server.PWCallback"/>
+		<parameter name="passwordType" value="PasswordText" />
+		<parameter name="addUTElement" value="Nonce Created" />		
+	</handler>
+</requestFlow>
+    <parameter name="springBean" value="service.UserAccountHandlerBean"/>
+    <parameter name="beanJndiName" value="ejb/UserAccountHandler"/>
+    <parameter name="homeInterfaceName" value="de.escidoc.core.aa.ejb.interfaces.UserAccountHandlerRemoteHome"/>
+    <parameter name="remoteInterfaceName" value="de.escidoc.core.aa.ejb.interfaces.UserAccountHandlerRemote"/>
+    <parameter name="jndiURL"
+               value="${de.escidoc.core.aa.service.provider.url}"/>
+    <parameter name="wsdlPortType" value="UserAccountHandler"/>
+    <parameter name="wsdlServiceElement" value="UserAccountHandlerService"/>
+    <parameter name="wsdlServicePort" value="UserAccountHandlerService"/>
+    <parameter name="allowedMethods"
+               value="create create delete delete update update updatePassword updatePassword retrieve retrieve retrieveCurrentUser retrieveCurrentUser retrieveCurrentGrants retrieveCurrentGrants retrieveGrant retrieveGrant retrieveGrants retrieveGrants activate activate deactivate deactivate createGrant createGrant revokeGrant revokeGrant revokeGrants revokeGrants retrieveUserAccounts retrieveUserAccounts retrievePreferences retrievePreferences createPreference createPreference updatePreferences updatePreferences updatePreference updatePreference retrievePreference retrievePreference deletePreference deletePreference createAttribute createAttribute retrieveAttributes retrieveAttributes retrieveNamedAttributes retrieveNamedAttributes retrieveAttribute retrieveAttribute updateAttribute updateAttribute deleteAttribute deleteAttribute retrievePermissionFilterQuery retrievePermissionFilterQuery "
+    />
+    <parameter name="scope" value="Request"/>
+    <parameter name="wsdlTargetNamespace" value="http://www.escidoc.de/services/UserAccountHandlerService/0.1"/>
+  </service>
+</deployment>

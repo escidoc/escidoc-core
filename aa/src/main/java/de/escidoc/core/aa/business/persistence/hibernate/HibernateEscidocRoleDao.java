@@ -45,6 +45,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Subqueries;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 
 import java.util.ArrayList;
@@ -54,13 +56,17 @@ import java.util.Set;
 
 /**
  * Escidoc role data access object using hibernate.
- * 
- * @spring.bean id="persistence.EscidocRoleDao"
+ *
  * @author TTE
  * 
  */
 public class HibernateEscidocRoleDao extends AbstractHibernateDao
     implements EscidocRoleDaoInterface {
+
+    /**
+     * The logger.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(HibernateEscidocRoleDao.class);
 
     private final Map<String, Object[]> criteriaMap;
 
@@ -68,17 +74,20 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
     
     private RoleFilter roleFilter;
 
-
-
     /**
      * Constructor to initialize filter-names with RoleFilter-Class.
      */
     public HibernateEscidocRoleDao() {
         try {
             roleFilter = new RoleFilter(null);
-        } catch (InvalidSearchQueryException e) {
-            logger.debug("Expected exception for null-query", e);
+        } catch (final InvalidSearchQueryException e) {
             // Dont do anything because null-query is given.
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Expected exception for null-query");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Expected exception for null-query", e);
+            }
         }
         criteriaMap = roleFilter.getCriteriaMap();
         propertiesNamesMap = roleFilter.getPropertyMap();
@@ -90,9 +99,9 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      * @param identifier
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface
+     * @see EscidocRoleDaoInterface
      *      #roleExists(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public boolean roleExists(final String identifier)
@@ -108,13 +117,13 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
                 result =
                     !getHibernateTemplate().findByCriteria(criteria).isEmpty();
             }
-            catch (DataAccessException e1) {
+            catch (final DataAccessException e1) {
                 throw new SqlDatabaseSystemException(e1);
             }
-            catch (IllegalStateException e1) {
+            catch (final IllegalStateException e1) {
                 throw new SqlDatabaseSystemException(e1);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -128,9 +137,9 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      * 
      * @param role
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface
+     * @see EscidocRoleDaoInterface
      *      #deleteRole(de.escidoc.core.aa.business.persistence.EscidocRole)
-     * @aa
+     *
      */
     @Override
     public void deleteRole(final EscidocRole role)
@@ -145,9 +154,9 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      * @param identifier
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface
+     * @see EscidocRoleDaoInterface
      *      #retrieveRole(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public EscidocRole retrieveRole(final String identifier)
@@ -169,15 +178,15 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
                                         Restrictions.eq("roleName", identifier))));
                 }
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -194,10 +203,10 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      * @param sorting
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface
+     * @see EscidocRoleDaoInterface
      *      #retrieveRoles(java.util.Map, int, int, java.lang.String,
      *      de.escidoc.core.common.util.list.ListSorting)
-     * @aa
+     *
      */
     @Override
     public List<EscidocRole> retrieveRoles(
@@ -280,7 +289,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
                     getHibernateTemplate().findByCriteria(detachedCriteria,
                         offset, maxResults);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
 
@@ -302,7 +311,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      * @return
      * @throws InvalidSearchQueryException
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface
+     * @see EscidocRoleDaoInterface
      *      #retrieveRoles(java.lang.String, int, int)
      */
     @Override
@@ -326,7 +335,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
                 result = getHibernateTemplate().findByCriteria(
                     detachedCriteria, offset, maxResults);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -338,9 +347,9 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      * 
      * @param role
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface
+     * @see EscidocRoleDaoInterface
      *      #saveOrUpdate(de.escidoc.core.aa.business.persistence.EscidocRole)
-     * @aa
+     *
      */
     @Override
     public void saveOrUpdate(final EscidocRole role)
@@ -354,9 +363,9 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      * 
      * @param scopeDef
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.EscidocRoleDaoInterface
+     * @see EscidocRoleDaoInterface
      *      #deleteScopeDef(de.escidoc.core.aa.business.persistence.ScopeDef)
-     * @aa
+     *
      */
     @Override
     public void deleteScopeDef(final ScopeDef scopeDef)
@@ -373,8 +382,6 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      * 
      * @param mySessionFactory
      *            The sessionFactory to set.
-     * @spring.property ref="eSciDoc.core.aa.SessionFactory"
-     * @aa
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 

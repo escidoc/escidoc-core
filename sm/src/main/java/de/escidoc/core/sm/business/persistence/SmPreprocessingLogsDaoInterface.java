@@ -48,7 +48,7 @@ public interface SmPreprocessingLogsDaoInterface {
      *            preprocessingLog-Hibernate Object.
      * @return Integer primary key of created Object
      * 
-     * @sm
+     *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
@@ -65,7 +65,7 @@ public interface SmPreprocessingLogsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<PreprocessingLog> 
         retrievePreprocessingLogs(final String aggregationDefinitionId)
@@ -80,7 +80,7 @@ public interface SmPreprocessingLogsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<PreprocessingLog> retrievePreprocessingLogs(
                                     final Date processingDate)
@@ -98,7 +98,7 @@ public interface SmPreprocessingLogsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<PreprocessingLog> 
         retrievePreprocessingLogs(final String aggregationDefinitionId, 
@@ -117,7 +117,7 @@ public interface SmPreprocessingLogsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<PreprocessingLog> 
         retrievePreprocessingLogs(final String aggregationDefinitionId, 
@@ -136,7 +136,7 @@ public interface SmPreprocessingLogsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<PreprocessingLog> 
         retrievePreprocessingLogs(
@@ -157,7 +157,7 @@ public interface SmPreprocessingLogsDaoInterface {
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     Collection<PreprocessingLog> 
         retrievePreprocessingLogs(final String aggregationDefinitionId,

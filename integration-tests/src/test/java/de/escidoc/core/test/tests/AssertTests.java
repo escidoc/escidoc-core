@@ -87,7 +87,7 @@ public class AssertTests extends OmTestBase {
 
             fail("AssertXmlEquals does not recognize root element");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = Exception.class;
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }

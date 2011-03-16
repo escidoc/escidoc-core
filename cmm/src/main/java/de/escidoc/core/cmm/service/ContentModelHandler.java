@@ -56,13 +56,8 @@ import java.util.Map;
 
 /**
  * Implementation for the Service layer of the ctm component.
- * 
- * @spring.bean id="service.ContentModelHandler" scope="prototype"
- * @interface 
- *            class="de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface"
+ *
  * @author MSC
- * @ctm
- * @service
  */
 
 public class ContentModelHandler
@@ -73,12 +68,9 @@ public class ContentModelHandler
 
     /**
      * Setter for the business object.
-     * 
-     * @spring.property ref="business.FedoraContentModelHandler"
+     *
      * @param business
      *            business object.
-     * @service.exclude
-     * @ctm
      */
     public void setBusiness(final ContentModelHandlerInterface business) {
         this.business = business;
@@ -225,23 +217,6 @@ public class ContentModelHandler
         return business.retrieveContentStream(id, name);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @param name
-     * @return
-     * @throws ContentModelNotFoundException
-     * @throws SystemException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws ContentStreamNotFoundException
-     * @throws InvalidStatusException
-     * @see de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
-     *      #retrieveContentStreamContent(java.lang.String, java.lang.String)
-     * @axis.exclude
-     */
     @Override
     public EscidocBinaryContent retrieveContentStreamContent(
         final String id, final String name)
@@ -252,21 +227,6 @@ public class ContentModelHandler
         return business.retrieveContentStreamContent(id, name);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws ContentModelNotFoundException
-     * @throws SystemException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @see package
-     *      de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface
-     *      #retrieveResources(java.lang.String)
-     * @axis.exclude
-     */
     @Override
     public String retrieveResources(final String id)
         throws ContentModelNotFoundException, SystemException,
@@ -334,13 +294,6 @@ public class ContentModelHandler
         return business.update(id, xmlData);
     }
 
-    /**
-     * @see de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface#retrieveMdRecordDefinitionSchemaContent(java.lang.String,
-     *      java.lang.String)
-     * 
-     * @axis.exclude
-     * @cmm
-     */
     @Override
     public EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(
         final String id, final String name) throws AuthenticationException,
@@ -349,11 +302,6 @@ public class ContentModelHandler
         return business.retrieveMdRecordDefinitionSchemaContent(id, name);
     }
 
-    /**
-     * 
-     * @axis.exclude
-     * @cmm
-     */
     @Override
     public EscidocBinaryContent retrieveResourceDefinitionXsltContent(
         final String id, final String name) throws AuthenticationException,

@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.persistence.impl;
 
 import de.escidoc.core.common.business.fedora.Utility;
@@ -35,15 +27,18 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.PIDSystem;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
@@ -70,8 +65,8 @@ import java.net.URL;
  */
 public class PIDManagerRESTService implements PIDSystem {
 
-    private static final AppLogger log =
-        new AppLogger(PIDManagerRESTService.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(PIDManagerRESTService.class);
 
     private String pidGeneratorServer;
 
@@ -120,7 +115,7 @@ public class PIDManagerRESTService implements PIDSystem {
                 EscidocConfiguration.getInstance().get(
                     "escidoc-core.PidSystemRESTService.password");
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -140,7 +135,7 @@ public class PIDManagerRESTService implements PIDSystem {
                 throw new PidSystemException(EntityUtils.toString(httpPostRes.getEntity(), XmlUtility.CHARACTER_ENCODING));
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new PidSystemException(e);
         }
       
@@ -205,7 +200,7 @@ public class PIDManagerRESTService implements PIDSystem {
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new Exception("PID System connetion broken (" + url.toString() + ") " + conn.getResponseCode());
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new PidSystemException(e);
         }
     }
@@ -290,18 +285,17 @@ public class PIDManagerRESTService implements PIDSystem {
      * @throws TransformerFactoryConfigurationError
      * @throws TransformerException
      */
-    private String preparePidManagerDatastructure(
-        final String systemID, final String param)
+    private static String preparePidManagerDatastructure(final String systemID, final String param)
         throws ParserConfigurationException, SAXException, IOException,
         TransformerFactoryConfigurationError, TransformerException {
 
         final String xmlParam;
 
         // add the systemID of object for semantic identifier
-        final javax.xml.parsers.DocumentBuilder db =
-            javax.xml.parsers.DocumentBuilderFactory
+        final DocumentBuilder db =
+            DocumentBuilderFactory
                 .newInstance().newDocumentBuilder();
-        final org.w3c.dom.Document doc =
+        final Document doc =
             db.parse(new ByteArrayInputStream(param.getBytes()));
         final NodeList systemIDs = doc.getElementsByTagName("systemID");
 
@@ -335,16 +329,16 @@ public class PIDManagerRESTService implements PIDSystem {
      * @throws SAXException
      * @throws IOException
      */
-    private String obtainPidResult(final InputStream in)
+    private static String obtainPidResult(final InputStream in)
         throws ParserConfigurationException, SAXException, IOException {
         String returnValue;
         try {
-            final javax.xml.parsers.DocumentBuilder db =
-                javax.xml.parsers.DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            final org.w3c.dom.Document doc = db.parse(in);
+            final DocumentBuilder db =
+                DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            final Document doc = db.parse(in);
             // retrieve PID result
-            final org.w3c.dom.NodeList nl = doc.getElementsByTagName("pid");
-            final org.w3c.dom.Node n = nl.item(0);
+            final NodeList nl = doc.getElementsByTagName("pid");
+            final Node n = nl.item(0);
             returnValue = n.getTextContent();
         } finally {
             IOUtils.closeStream(in);

@@ -126,7 +126,7 @@ public class ContainerReviseTest extends ContainerTestBase {
         try {
             resultXml = revise(theContainerId, paramXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Revising the submitted container failed", e);
         }
@@ -169,7 +169,7 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(InvalidStatusException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Revising failed with unexpected exception. ",
                 InvalidStatusException.class, e);
@@ -232,7 +232,7 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(InvalidStatusException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Revising failed with unexpected exception. ",
                 InvalidStatusException.class, e);
@@ -300,7 +300,7 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(InvalidStatusException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Revising failed with unexpected exception. ",
                 InvalidStatusException.class, e);
@@ -333,7 +333,7 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(ContainerNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase
                 .assertExceptionType(
                     "Revising unknown container failed with unexpected exception. ",
@@ -367,7 +367,7 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Revising without id failed with unexpected exception. ",
                 MissingMethodParameterException.class, e);
@@ -404,7 +404,7 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Revising without id failed with unexpected exception. ",
                 MissingMethodParameterException.class, e);
@@ -443,7 +443,7 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Revising without last modification date failed with"
                     + " unexpected exception. ", XmlCorruptedException.class, e);
@@ -479,7 +479,7 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Revising without last modification date failed with"
                     + " unexpected exception. ", XmlCorruptedException.class, e);
@@ -515,7 +515,7 @@ public class ContainerReviseTest extends ContainerTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(OptimisticLockingException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Revising with outdated last modification date failed "
                     + "with unexpected exception. ",

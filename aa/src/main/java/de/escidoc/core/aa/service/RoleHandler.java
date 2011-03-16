@@ -47,12 +47,8 @@ import java.util.Map;
 
 /**
  * Service layer implementation of a handler that manages eSciDoc roles.
- * 
- * @spring.bean id="service.RoleHandler"
- * @interface class="de.escidoc.core.aa.service.interfaces.RoleHandlerInterface"
- * @service
+ *
  * @author TTE
- * @aa
  */
 public class RoleHandler implements RoleHandlerInterface {
 
@@ -74,7 +70,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
      *      #create(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String create(final String xmlData)
@@ -98,7 +94,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
      *      #delete(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void delete(final String id) throws AuthenticationException,
@@ -120,7 +116,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
      *      #retrieve(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieve(final String id) throws RoleNotFoundException,
@@ -130,22 +126,6 @@ public class RoleHandler implements RoleHandlerInterface {
         return business.retrieve(id);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws RoleNotFoundException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
-     *      #retrieveResources(java.lang.String)
-     * @aa
-     * 
-     * @axis.exclude
-     */
     @Override
     public String retrieveResources(final String id)
         throws AuthenticationException, AuthorizationException,
@@ -154,26 +134,6 @@ public class RoleHandler implements RoleHandlerInterface {
         return business.retrieveResources(id);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @param xmlData
-     * @return
-     * @throws RoleNotFoundException
-     * @throws XmlCorruptedException 
-     * @throws XmlSchemaValidationException,
-     * @throws MissingAttributeValueException
-     * @throws UniqueConstraintViolationException
-     * @throws OptimisticLockingException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
-     *      #update(java.lang.String, java.lang.String)
-     * @aa
-     */
     @Override
     public String update(final String id, final String xmlData)
         throws RoleNotFoundException, 
@@ -213,9 +173,6 @@ public class RoleHandler implements RoleHandlerInterface {
      * 
      * @param business
      *            The business layer bean
-     * @spring.property ref="business.RoleHandler"
-     * @service.exclude
-     * @aa
      */
     public void setBusiness(
         final de.escidoc.core.aa.business.interfaces.RoleHandlerInterface business) {

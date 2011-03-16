@@ -47,7 +47,7 @@ public interface SmStatisticDataDaoInterface {
      * @param scopeId
      *            The id of the scope.
      * 
-     * @sm
+     *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */
@@ -61,7 +61,7 @@ public interface SmStatisticDataDaoInterface {
      *            The id of the scope.
      * @return Date lowest date
      * 
-     * @sm
+     *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      */

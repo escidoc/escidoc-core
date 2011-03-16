@@ -44,7 +44,7 @@ import de.escidoc.core.common.exceptions.application.notfound.AggregationDefinit
 import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.factory.ExplainXmlProvider;
 import de.escidoc.core.sm.business.filter.AggregationDefinitionFilter;
@@ -72,16 +72,14 @@ import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
 
 /**
  * A statistic AggregationDefinition resource handler.
- * 
- * @spring.bean id="business.AggregationDefinitionHandler" scope="prototype"
+ *
  * @author MIH
- * @sm
  */
 public class AggregationDefinitionHandler
     implements AggregationDefinitionHandlerInterface {
 
-    private static final AppLogger log = new AppLogger(
-        AggregationDefinitionHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        AggregationDefinitionHandler.class);
 
     private SmAggregationDefinitionsDaoInterface dao;
 
@@ -109,16 +107,13 @@ public class AggregationDefinitionHandler
      *             ex
      * @throws SystemException
      *             ex
-     * @tx
-     * @sm
+     *
+     *
      */
     @Override
     public String create(final String xmlData)
         throws MissingMethodParameterException, ScopeNotFoundException,
         SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("AggregationDefinitionHandler does create");
-        }
         if (xmlData == null || xmlData.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -131,7 +126,7 @@ public class AggregationDefinitionHandler
         try {
             sp.parse(xmlData);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SystemException(e);
         }
 
@@ -194,16 +189,13 @@ public class AggregationDefinitionHandler
      *             e.
      * @throws SystemException
      *             e.
-     * @tx
-     * @sm
+     *
+     *
      */
     @Override
     public void delete(final String id)
         throws AggregationDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("AggregationDefinitionHandler does delete");
-        }
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -212,7 +204,7 @@ public class AggregationDefinitionHandler
             // get aggregation definition to get aggregation table infos
             aggregationDefinition = dao.retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new AggregationDefinitionNotFoundException(
                 "AggregationDefinition with id " + id + " not found", e);
         }
@@ -251,15 +243,12 @@ public class AggregationDefinitionHandler
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public String retrieve(final String id)
         throws AggregationDefinitionNotFoundException,
         MissingMethodParameterException, SystemException {
-        if (log.isDebugEnabled()) {
-            log.debug("AggregationDefinitionHandler does retrieve");
-        }
         if (id == null) {
             throw new MissingMethodParameterException("id may not be null");
         }
@@ -267,7 +256,7 @@ public class AggregationDefinitionHandler
             final AggregationDefinition aggregationDefinition = dao.retrieve(id);
             return renderer.render(aggregationDefinition);
         }
-        catch (NumberFormatException e) {
+        catch (final NumberFormatException e) {
             throw new AggregationDefinitionNotFoundException(
                 "AggregationDefinition with id " + id + " not found", e);
         }
@@ -353,7 +342,7 @@ public class AggregationDefinitionHandler
      * @throws SqlDatabaseSystemException
      *             e
      * 
-     * @sm
+     *
      */
     private Collection<DatabaseTableVo> generateAggregationDatabaseTableVos(
         final AggregationDefinition aggregationDefinition)
@@ -450,27 +439,22 @@ public class AggregationDefinitionHandler
      * @throws SqlDatabaseSystemException
      *             e
      * 
-     * @sm
+     *
      */
-    private DatabaseSelectVo generateAggregationDatabaseRecordVoForDeletion(
-        final String primKey) throws SqlDatabaseSystemException {
+    private static DatabaseSelectVo generateAggregationDatabaseRecordVoForDeletion(final String primKey)
+            throws SqlDatabaseSystemException {
         final DatabaseSelectVo databaseSelectVo = new DatabaseSelectVo();
         databaseSelectVo.setSelectType(Constants.DATABASE_SELECT_TYPE_DELETE);
         final Collection<String> tablenames = new ArrayList<String>();
-        tablenames.add(Constants.SM_SCHEMA_NAME + '.'
-            + Constants.AGGREGATION_DEFINITIONS_TABLE_NAME);
+        tablenames.add(Constants.SM_SCHEMA_NAME + '.' + Constants.AGGREGATION_DEFINITIONS_TABLE_NAME);
         databaseSelectVo.setTableNames(tablenames);
-
         final RootWhereGroupVo rootWhereGroupVo = new RootWhereGroupVo();
         final RootWhereFieldVo rootWhereFieldVo = new RootWhereFieldVo();
-
         rootWhereFieldVo.setFieldName("id");
         rootWhereFieldVo.setFieldType(Constants.DATABASE_FIELD_TYPE_TEXT);
         rootWhereFieldVo.setOperator(Constants.DATABASE_OPERATOR_EQUALS);
         rootWhereFieldVo.setFieldValue(primKey);
-
         rootWhereGroupVo.setRootWhereFieldVo(rootWhereFieldVo);
-
         databaseSelectVo.setRootWhereGroupVo(rootWhereGroupVo);
         return databaseSelectVo;
     }
@@ -478,11 +462,8 @@ public class AggregationDefinitionHandler
     /**
      * Setter for the dao.
      * 
-     * @spring.property ref="persistence.SmAggregationDefinitionsDao"
      * @param dao
      *            The data access object.
-     * 
-     * @sm
      */
     public void setDao(final SmAggregationDefinitionsDaoInterface dao) {
         this.dao = dao;
@@ -491,11 +472,8 @@ public class AggregationDefinitionHandler
     /**
      * Setter for the scopesDao.
      * 
-     * @spring.property ref="persistence.SmScopesDao"
      * @param scopesDao
      *            The data access object.
-     * 
-     * @sm
      */
     public void setScopesDao(final SmScopesDaoInterface scopesDao) {
         this.scopesDao = scopesDao;
@@ -506,7 +484,6 @@ public class AggregationDefinitionHandler
      * 
      * @param dbAccessorIn
      *            The directDatabaseAccessor to set.
-     * @spring.property ref="sm.persistence.DirectDatabaseAccessor"
      */
     public final void setDirectDatabaseAccessor(
         final DirectDatabaseAccessorInterface dbAccessorIn) {
@@ -518,7 +495,6 @@ public class AggregationDefinitionHandler
      * 
      * @param filterUtility
      *            The filterUtility to set.
-     * @spring.property ref="business.sm.FilterUtility"
      */
     public final void setFilterUtility(final SmFilterUtility filterUtility) {
         this.filterUtility = filterUtility;
@@ -529,10 +505,6 @@ public class AggregationDefinitionHandler
      * 
      * @param renderer
      *            The renderer to inject.
-     * 
-     * @spring.property ref=
-     *                  "eSciDoc.core.aa.business.renderer.VelocityXmlAggregationDefinitionRenderer"
-     * @aa
      */
     public void setRenderer(
         final AggregationDefinitionRendererInterface renderer) {

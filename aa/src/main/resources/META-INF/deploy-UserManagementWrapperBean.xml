@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<deployment 
+    xmlns="http://xml.apache.org/axis/wsdd/" 
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java"
+    xmlns:xsi="http://www.w3.org/2000/10/XMLSchema-instance">
+
+  <service name="UserManagementWrapperService"
+      provider="java:EscidocEJB"
+      >
+		<requestFlow>
+	<handler type="java:org.apache.ws.axis.security.WSDoAllReceiver">
+		<parameter name="action" value="UsernameToken"/>
+		<parameter name="passwordCallbackClass" 
+		value="de.escidoc.core.aa.security.server.PWCallback"/>
+		<parameter name="passwordType" value="PasswordText" />
+		<parameter name="addUTElement" value="Nonce Created" />		
+	</handler>
+</requestFlow>
+    <parameter name="springBean" value="service.UserManagementWrapperBean"/>
+    <parameter name="beanJndiName" value="ejb/UserManagementWrapper"/>
+    <parameter name="homeInterfaceName" value="de.escidoc.core.aa.ejb.interfaces.UserManagementWrapperRemoteHome"/>
+    <parameter name="remoteInterfaceName" value="de.escidoc.core.aa.ejb.interfaces.UserManagementWrapperRemote"/>
+    <parameter name="jndiURL"
+               value="${de.escidoc.core.aa.service.provider.url}"/>
+    <parameter name="wsdlPortType" value="UserManagementWrapper"/>
+    <parameter name="wsdlServiceElement" value="UserManagementWrapperService"/>
+    <parameter name="wsdlServicePort" value="UserManagementWrapperService"/>
+    <parameter name="allowedMethods"
+               value="logout logout initHandleExpiryTimestamp initHandleExpiryTimestamp "
+    />
+    <parameter name="scope" value="Request"/>
+    <parameter name="wsdlTargetNamespace" value="http://www.escidoc.de/services/UserManagementWrapperService/0.1"/>
+  </service>
+</deployment>

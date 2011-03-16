@@ -41,4 +41,10 @@ public class Constants {
     public static final String SB_SPRING_CONTEXT_NAME = "Sb.spring.ejb.context";
 
 
+    /**
+     * Private constructor to avoid instantiation.
+     */
+    private Constants() {
+    }
+
 }

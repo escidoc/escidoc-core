@@ -41,7 +41,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -59,15 +59,11 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
     public static final String CONTAINER = "/container";
 
-    private static final AppLogger LOGGER = new AppLogger(ContentRelationsCreateHandler2Edition.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationsCreateHandler2Edition.class);
 
     private final StaxParser parser;
 
     private boolean inContentRelation;
-
-    private String currentPath;
-
-    private String contentRelationPath;
 
     private String targetId;
 
@@ -85,7 +81,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
      *            The id of the parsed object.
      * @param parser
      *            The parser.
-     * @om
+     *
      */
     public ContentRelationsCreateHandler2Edition(final String id, final StaxParser parser) {
         this.parser = parser;
@@ -105,7 +101,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
      *             Thrown in case of an internal error.
      * @throws RelationPredicateNotFoundException
      *
-     * @om
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -113,8 +109,8 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
         RelationPredicateNotFoundException, TripleStoreSystemException,
         WebserverSystemException, EncodingSystemException,
         XmlParserSystemException, InvalidXmlException {
-        currentPath = parser.getCurPath();
-        contentRelationPath = "/item/relations/relation";
+        final String currentPath = parser.getCurPath();
+        String contentRelationPath = "/item/relations/relation";
         if (currentPath.startsWith(CONTAINER)) {
             contentRelationPath = "/container/relations/relation";
 
@@ -160,7 +156,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @om
+     *
      */
     @Override
     public EndElement endElement(final EndElement element) {

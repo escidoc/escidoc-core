@@ -81,7 +81,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The urn of the status attribute.
      * @param urnVersionStatus
      *            The urn of the version-status attribute.
-     * @aa
+     *
      */
     public AbstractResourceAttributeStaxHandler(final EvaluationCtx ctx,
         final String resourceId, final String urnModifiedBy,
@@ -102,10 +102,10 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      * @param element
      * @return
      * @throws Exception
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @aa
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -138,7 +138,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      * @throws Exception
      *             Thrown if anything fails. This depends on the implementation
      *             of the concrete class.
-     * @aa
+     *
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
@@ -158,10 +158,10 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      * @param element
      * @return
      * @throws Exception
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #characters(java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @aa
+     *
      */
     @Override
     public String characters(final String data, final StartElement element)
@@ -196,7 +196,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The attribute id.
      * @param attributeValues
      *            The attribute values.
-     * @aa
+     *
      */
     protected void cacheAttribute(
         final String attributeId,
@@ -214,7 +214,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The attribute id.
      * @param attributeValue
      *            The attribute value.
-     * @aa
+     *
      */
     protected void cacheAttribute(
         final String attributeId, final String attributeValue) {
@@ -236,7 +236,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The attribute id used as part of the key for caching.
      * @param attributeValues
      *            The attribute values.
-     * @aa
+     *
      */
     protected static void cacheAttribute(
         final EvaluationCtx ctx, final String resourceId,
@@ -263,7 +263,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      *            The attribute id used as part of the key for caching.
      * @param attributeValue
      *            The attribute value.
-     * @aa
+     *
      */
     protected static void cacheAttribute(
         final EvaluationCtx ctx, final String resourceId,

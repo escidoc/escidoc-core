@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora.resources;
 
 import de.escidoc.core.common.business.Constants;
@@ -42,7 +34,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
@@ -80,8 +72,7 @@ import java.util.regex.Pattern;
  */
 public class GenericVersionableResourcePid extends GenericVersionableResource {
 
-    private static final AppLogger LOG =
-        new AppLogger(GenericVersionableResourcePid.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenericVersionableResourcePid.class);
 
     private static final Pattern LATEST_RELEASE_PID_ENTRY =
         Pattern.compile("<[^:]+:" + TripleStoreUtility.PROP_LATEST_RELEASE_PID
@@ -191,10 +182,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 try {
                     relsExt = getRelsExt(latestReleaseDate);
                 }
-                catch (FedoraSystemException e) {
+                catch (final FedoraSystemException e) {
                     throw new IntegritySystemException(e);
                 }
-                catch (StreamNotFoundException e) {
+                catch (final StreamNotFoundException e) {
                     throw new IntegritySystemException(e);
                 }
 
@@ -338,7 +329,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         try {
             pid = getVersionPid();
         }
-        catch (IntegritySystemException e) {
+        catch (final IntegritySystemException e) {
             throw new WebserverSystemException(e);
         }
         return validPidStructure(pid);
@@ -771,8 +762,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private Collection<String> expandPropertiesNames(
-        final Collection<String> propertiesNames) {
+    private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
         newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
@@ -793,8 +783,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private Map<String, String> expandPropertiesNamesMapping(
-        final Map<String, String> propertiesNamesMap) {
+    private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
 
         final Map<String, String> newPropertiesNamesMap;
         newPropertiesNamesMap = propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
@@ -827,7 +816,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         try {
             relsExt = getRelsExt();
         }
-        catch (StreamNotFoundException e1) {
+        catch (final StreamNotFoundException e1) {
             throw new IntegritySystemException("Datastream not found.", e1);
         }
         final byte[] relsExtContent = relsExt.getStream();
@@ -841,10 +830,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         try {
             sp.parse(relsExtInputStream);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         return reHandler.getRelations();
@@ -890,10 +879,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         try {
             sp.parse(relsExtInputStream);
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             throw new XmlParserSystemException(e.getMessage(), e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
         sp.clearHandlerChain();
@@ -943,7 +932,7 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                     new StartElementWithChildElements();
                 newContentRelationElement.setLocalName(predicate[1]);
                 newContentRelationElement
-                    .setPrefix(de.escidoc.core.common.business.Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
+                    .setPrefix(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
                 newContentRelationElement.setNamespace(predicate[0] + '/');
                 final Attribute resource =
                     new Attribute("resource", Constants.RDF_NAMESPACE_URI,
@@ -982,10 +971,10 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
                 setRelsExt(new String(newRelsExtBytes,
                     XmlUtility.CHARACTER_ENCODING));
             }
-            catch (EncodingSystemException e) {
+            catch (final EncodingSystemException e) {
                 throw new IntegritySystemException(e);
             }
-            catch (UnsupportedEncodingException e) {
+            catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
         }

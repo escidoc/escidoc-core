@@ -177,7 +177,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                     values.put(XmlTemplateProvider.VAR_CONTENT_STREAM_CONTENT,
                         ds.toStringUTF8());
                 }
-                catch (EncodingSystemException e) {
+                catch (final EncodingSystemException e) {
                     throw new WebserverSystemException(e);
                 }
             }
@@ -233,7 +233,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                 Iso8601Util.getIso8601(Iso8601Util.parseIso8601(contentModel
                     .getLastModificationDate())));
         }
-        catch (ParseException e) {
+        catch (final ParseException e) {
             try {
                 throw new WebserverSystemException(
                     "Unable to parse last-modification-date '"
@@ -241,11 +241,11 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
                         + "' of content model '" + contentModel.getId() + "'!",
                     e);
             }
-            catch (FedoraSystemException e1) {
+            catch (final FedoraSystemException e1) {
                 throw new WebserverSystemException(e1);
             }
         }
-        catch (FedoraSystemException e) {
+        catch (final FedoraSystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -313,9 +313,8 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
      * @throws FedoraSystemException
      * @throws ContentModelNotFoundException
      */
-    private Map<String, String> getPropertiesValues(
-        final ContentModel contentModel) throws TripleStoreSystemException,
-        WebserverSystemException, IntegritySystemException,
+    private static Map<String, String> getPropertiesValues(final ContentModel contentModel)
+            throws TripleStoreSystemException, WebserverSystemException, IntegritySystemException,
         XmlParserSystemException, EncodingSystemException,
         FedoraSystemException, ContentModelNotFoundException {
 
@@ -339,7 +338,7 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
             values.put(XmlTemplateProvider.VAR_CONTENT_MODEL_CREATION_DATE,
                 contentModel.getCreationDate());
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             throw new ContentModelNotFoundException(e);
         }
 
@@ -600,13 +599,11 @@ public class ContentModelHandlerRetrieve extends HandlerBase {
     }
 
     // TODO ContentModelHandlerRetrieve ?
-    private Map<String, String> getResourcesValues(
-        final FedoraResource contentModel) throws WebserverSystemException {
-
+    private static Map<String, String> getResourcesValues(final FedoraResource contentModel)
+            throws WebserverSystemException {
         final Map<String, String> values = new HashMap<String, String>();
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
         values.put("resourcesHref", contentModel.getHref() + "/resources");
-
         return values;
     }
 }

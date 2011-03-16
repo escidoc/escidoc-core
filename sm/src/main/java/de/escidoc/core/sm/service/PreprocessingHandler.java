@@ -39,11 +39,7 @@ import de.escidoc.core.sm.service.interfaces.PreprocessingHandlerInterface;
 /**
  * A statistic data resource handler.
  * 
- * @spring.bean id="service.PreprocessingHandler" scope="prototype"
- * @interface class="de.escidoc.core.sm.service.interfaces.PreprocessingHandlerInterface"
  * @author MIH
- * @service
- * @sm
  */
 public class PreprocessingHandler implements PreprocessingHandlerInterface {
 
@@ -54,10 +50,6 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
      * 
      * @param preprocessingHandler
      *            The Preprocessing handler bean to inject.
-     * 
-     * @spring.property ref="business.PreprocessingHandler"
-     * @service.exclude
-     * @sm
      */
     public void setPreprocessingHandler(
         final de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface preprocessingHandler) {
@@ -89,7 +81,7 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
      * @throws SystemException
      *             ex
      * 
-     * @sm
+     *
      */
     @Override
     public void preprocess(final String aggregationDefinitionId,

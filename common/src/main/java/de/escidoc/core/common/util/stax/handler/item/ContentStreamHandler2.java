@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.stax.handler.item;
 
 import de.escidoc.core.common.business.Constants;
@@ -36,7 +28,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingAttributeVal
 import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -58,8 +50,7 @@ import java.util.Map;
  */
 public class ContentStreamHandler2 extends DefaultHandler {
 
-    private static final AppLogger LOG =
-        new AppLogger(ContentStreamHandler2.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentStreamHandler2.class);
 
     private String xpathContentStream =
         "/item/content-streams/content-stream";
@@ -128,9 +119,9 @@ public class ContentStreamHandler2 extends DefaultHandler {
         else {
             final String currentPath = parser.getCurPath();
             if (currentPath.equals(xpathContentStream)) {
-
-                LOG.debug("Parser reached " + currentPath);
-
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Parser reached " + currentPath);
+                }
                 this.parsingContent = true;
 
                 this.contentStream = new ContentStreamCreate();
@@ -184,7 +175,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
                 // should be only possible to extract one with this parser
                 // chain.
                 if (outputStreams.size() > 1) {
-                    LOG.warn("Multiple content-streams.");
+                    LOGGER.warn("Multiple content-streams.");
                 }
                 final Iterator<String> it = outputStreams.keySet().iterator();
                 final ByteArrayOutputStream outStream =
@@ -194,7 +185,7 @@ public class ContentStreamHandler2 extends DefaultHandler {
                     this.content.setContent(outStream
                         .toString(XmlUtility.CHARACTER_ENCODING));
                 }
-                catch (UnsupportedEncodingException e) {
+                catch (final UnsupportedEncodingException e) {
                     throw new WebserverSystemException(
                         "Application default encoding not supported.", e);
                 }

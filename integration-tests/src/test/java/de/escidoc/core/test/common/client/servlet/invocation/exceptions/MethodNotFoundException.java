@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletResponse;
  * be found to a REST call.
  * 
  * @author Michael Schneider
- * @common
+ *
  */
 public class MethodNotFoundException extends EscidocException {
 
@@ -52,7 +52,7 @@ public class MethodNotFoundException extends EscidocException {
     /**
      * Default constructor.
      * 
-     * @common
+     *
      */
     public MethodNotFoundException() {
         super(HTTP_STATUS_CODE, HTTP_STATUS_CODE + " " + HTTP_STATUS_MESSAGE,
@@ -64,7 +64,7 @@ public class MethodNotFoundException extends EscidocException {
     // *
     // * @param error
     // * Throwable
-    // * @common
+    // *
     // */
     // public MethodNotFoundException(final Throwable error) {
     // super(error, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -75,7 +75,7 @@ public class MethodNotFoundException extends EscidocException {
     // *
     // * @param message
     // * the detail message.
-    // * @common
+    // *
     // */
     // public MethodNotFoundException(final String message) {
     // super(message, HTTP_STATUS_CODE, HTTP_STATUS_MESSAGE);
@@ -89,7 +89,7 @@ public class MethodNotFoundException extends EscidocException {
     // * the detail message.
     // * @param error
     // * Throwable
-    // * @common
+    // *
     // */
     // public MethodNotFoundException(final String message,
     // final Throwable error) {

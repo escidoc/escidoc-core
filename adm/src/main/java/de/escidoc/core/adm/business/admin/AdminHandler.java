@@ -41,7 +41,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.purge.PurgeRequest;
@@ -57,14 +57,12 @@ import java.util.Properties;
 /**
  * Administration tool that rebuilds the search index, rebuilds the resource
  * cache and deletes objects physically from the repository.
- * 
- * @spring.bean id="business.AdminHandler"
- * 
+ *
  * @author sche
  */
 public class AdminHandler {
-    private static final AppLogger LOG = new AppLogger(
-        AdminHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        AdminHandler.class);
 
     private Examples examples;
 
@@ -254,7 +252,7 @@ public class AdminHandler {
         try {
             config = EscidocConfiguration.getInstance();
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -292,7 +290,7 @@ public class AdminHandler {
             properties.setProperty("escidoc-core.database.consistent",
                 String.valueOf(frameworkInfo.isConsistent()));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
 
@@ -313,14 +311,14 @@ public class AdminHandler {
         try {
             properties.storeToXML(os, null);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new WebserverSystemException(e);
         }
         final String propertiesXml;
         try {
             propertiesXml = os.toString(XmlUtility.CHARACTER_ENCODING);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e);
         }
         return propertiesXml;
@@ -332,7 +330,7 @@ public class AdminHandler {
      * @return Properties with name and Namespace URI of important eSciDoc
      *         schemas
      */
-    private Map schemaNamespaces() {
+    private static Map schemaNamespaces() {
 
         final Properties p = new Properties();
 
@@ -379,7 +377,7 @@ public class AdminHandler {
             }
             result.append(examples.load(selfUrl + "examples/escidoc/"));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SystemException(e);
         }
 
@@ -391,8 +389,6 @@ public class AdminHandler {
      * 
      * @param examples
      *            Examples object to be ingested
-     * 
-     * @spring.property ref="admin.Examples"
      */
     public void setExamples(final Examples examples) {
         this.examples = examples;
@@ -403,8 +399,6 @@ public class AdminHandler {
      * 
      * @param frameworkInfo
      *            FrameworkInfo object to be ingested
-     * 
-     * @spring.property ref="admin.FrameworkInfo"
      */
     public void setFrameworkInfo(final FrameworkInfo frameworkInfo) {
         this.frameworkInfo = frameworkInfo;
@@ -415,8 +409,6 @@ public class AdminHandler {
      * 
      * @param reindexer
      *            reindexer object to be ingested
-     * 
-     * @spring.property ref="admin.Reindexer"
      */
     public void setReindexer(final Reindexer reindexer) {
         this.reindexer = reindexer;
@@ -427,7 +419,6 @@ public class AdminHandler {
      * 
      * @param indexingHandler
      *            The indexingHandler to set.
-     * @spring.property ref="common.business.indexing.IndexingHandler"
      */
     public final void setIndexingHandler(final IndexingHandler indexingHandler) {
         this.indexingHandler = indexingHandler;
@@ -438,9 +429,6 @@ public class AdminHandler {
      * 
      * @param renderer
      *            The renderer to inject.
-     * 
-     * @spring.property 
-     *                  ref="eSciDoc.core.adm.business.renderer.VelocityXmlAdminRenderer"
      */
     public void setRenderer(final AdminRendererInterface renderer) {
         this.renderer = renderer;
@@ -458,8 +446,7 @@ public class AdminHandler {
 
     /**
      * Injects the TripleStore utility.
-     * 
-     * @spring.property ref="business.TripleStoreUtility"
+     *
      * @param tripleStoreUtility
      *            TripleStoreUtility from Spring
      */

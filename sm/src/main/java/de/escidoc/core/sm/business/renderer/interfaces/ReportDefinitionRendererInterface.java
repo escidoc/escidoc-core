@@ -38,7 +38,7 @@ import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
  * Interface of an report definition renderer.
  * 
  * @author MIH
- * @aa
+ *
  */
 public interface ReportDefinitionRendererInterface {
 
@@ -50,7 +50,7 @@ public interface ReportDefinitionRendererInterface {
      * @return Returns the XML representation of the report definition.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String render(final ReportDefinition reportDefinition)
         throws SystemException;
@@ -70,7 +70,7 @@ public interface ReportDefinitionRendererInterface {
      * @return Returns the XML representation of the list of reportDefinitions.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     String renderReportDefinitions(
         final Collection<ReportDefinition> reportDefinitions,

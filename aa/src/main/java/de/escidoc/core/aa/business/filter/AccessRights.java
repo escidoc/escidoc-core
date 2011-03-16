@@ -47,8 +47,6 @@ import de.escidoc.core.common.business.fedora.resources.Values;
  * access rights are SQL WHERE clauses which represent the read policies for a
  * specific user role.
  * 
- * @spring.bean id="business.AccessRights" scope="singleton"
- * 
  * @author SCHE
  */
 public class AccessRights {
@@ -356,7 +354,7 @@ public class AccessRights {
      * 
      * @return SQL snippet with all group ids
      */
-    private String getGroupSql(final Collection<String> groupIds) {
+    private static String getGroupSql(final Collection<String> groupIds) {
         final StringBuilder result = new StringBuilder();
 
         result.append('(');
@@ -370,8 +368,7 @@ public class AccessRights {
                     result.append(groupId);
                     result.append('\'');
                 }
-            }
-            catch (Exception ignored) {
+            } catch (final Exception ignored) {
                 result.append("FALSE");
             }
         }

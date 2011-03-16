@@ -38,7 +38,7 @@ import java.util.Collection;
  * (enclosed by brackets in the resulting sql-statement).
  * 
  * @author MIH
- * @sm
+ *
  */
 public class AdditionalWhereGroupVo {
     // alliance also can be 'or'

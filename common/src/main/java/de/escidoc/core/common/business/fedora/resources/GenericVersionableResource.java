@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora.resources;
 
 import de.escidoc.core.common.business.Constants;
@@ -40,7 +32,7 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
@@ -82,8 +74,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      */
     public static final String DATASTREAM_WOV = "version-history";
 
-    private static final AppLogger LOG =
-        new AppLogger(GenericVersionableResource.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(GenericVersionableResource.class);
 
     private String description;
 
@@ -165,7 +156,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         try {
             setLastVersionData();
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             if (TripleStoreUtility.getInstance().exists(id)) {
                 throw new WebserverSystemException("Unexpected exception during RELS-EXT parsing.", e);
             } else {
@@ -341,7 +332,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 this.creationDate =
                     datastreams[datastreams.length - 1].getCreateDate();
             }
-            catch (FedoraSystemException e) {
+            catch (final FedoraSystemException e) {
                 throw new WebserverSystemException(e);
             }
 
@@ -364,7 +355,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             versionDate =
                 getVersionElementData(PropertyMapKeys.CURRENT_VERSION_VERSION_DATE);
         }
-        catch (IntegritySystemException e) {
+        catch (final IntegritySystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -385,7 +376,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             setVersionElementData(TripleStoreUtility.PROP_LATEST_VERSION_DATE,
                 timestamp);
         }
-        catch (IntegritySystemException e) {
+        catch (final IntegritySystemException e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -497,7 +488,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                     TripleStoreUtility.getInstance().getPropertiesElements(
                         getId(), TripleStoreUtility.PROP_LATEST_RELEASE_NUMBER);
             }
-            catch (TripleStoreSystemException tse) {
+            catch (final TripleStoreSystemException tse) {
                 throw new WebserverSystemException(tse);
             }
         }
@@ -541,7 +532,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                         .getInstance().getPropertiesElements(getId(),
                             TripleStoreUtility.PROP_LATEST_VERSION_DATE));
                 }
-                catch (TripleStoreSystemException e) {
+                catch (final TripleStoreSystemException e) {
                     throw new WebserverSystemException(e);
                 }
             }
@@ -550,7 +541,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 try {
                     setLastModificationDate(getVersionElementData(Elements.ELEMENT_WOV_VERSION_TIMESTAMP));
                 }
-                catch (IntegritySystemException e) {
+                catch (final IntegritySystemException e) {
                     throw new WebserverSystemException(e);
                 }
             }
@@ -628,7 +619,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             try {
                 this.currentVersionData = getVersionData(getVersionNumber());
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new IntegritySystemException(
                     "No version data for resource " + getId() + '.' + e);
             }
@@ -658,7 +649,7 @@ public class GenericVersionableResource extends GenericResourcePid {
         try {
             versionData = super.getResourceProperties();  // TODO: Refactor this!
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             throw new WebserverSystemException(e);
         }
         if (versionNo != null) {
@@ -670,7 +661,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 final Map<String, String> prop = wrh.getVersionData();
                 versionData.putAll(prop);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new IntegritySystemException(
                     "No version data for resource " + getId() + '.' + e);
             }
@@ -814,7 +805,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                     null, newVersionTimestamp, null));
             }
         }
-        catch (IntegritySystemException e) {
+        catch (final IntegritySystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -894,7 +885,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                         getId(), getVersionDate()));
                 }
             }
-            catch (WebserverSystemException e) {
+            catch (final WebserverSystemException e) {
                 throw new FedoraSystemException(e);
             }
         }
@@ -944,10 +935,10 @@ public class GenericVersionableResource extends GenericResourcePid {
         try {
             sp.parse(this.getWov().getStream());
         }
-        catch (IntegritySystemException e) {
+        catch (final IntegritySystemException e) {
             throw new XmlParserSystemException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new XmlParserSystemException("Unexpected exception.", e);
         }
         currentVersionData = wrh.getVersionData();
@@ -1098,7 +1089,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 getId(), tmpWov.getBytes(XmlUtility.CHARACTER_ENCODING),
                 "text/xml"));
         }
-        catch (Exception e1) {
+        catch (final Exception e1) {
             throw new WebserverSystemException(e1);
         }
     }
@@ -1225,7 +1216,7 @@ public class GenericVersionableResource extends GenericResourcePid {
                 getId(), newWovString.getBytes(XmlUtility.CHARACTER_ENCODING),
                 "text/xml"));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -1240,8 +1231,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      *            the version resource specific propertiesNames.
      * @return Parameter name collection
      */
-    private Collection<String> expandPropertiesNames(
-        final Collection<String> propertiesNames) {
+    private static Collection<String> expandPropertiesNames(final Collection<String> propertiesNames) {
 
         final Collection<String> newPropertiesNames;
         newPropertiesNames = propertiesNames != null ? propertiesNames : new ArrayList<String>();
@@ -1271,8 +1261,7 @@ public class GenericVersionableResource extends GenericResourcePid {
      *            newKeyName&gt;
      * @return propertiesNamesMappingMap
      */
-    private Map<String, String> expandPropertiesNamesMapping(
-        final Map<String, String> propertiesNamesMap) {
+    private static Map<String, String> expandPropertiesNamesMapping(final Map<String, String> propertiesNamesMap) {
 
         final Map<String, String> newPropertiesNamesMap;
         newPropertiesNamesMap = propertiesNamesMap != null ? propertiesNamesMap : new HashMap<String, String>();
@@ -1354,8 +1343,11 @@ public class GenericVersionableResource extends GenericResourcePid {
                                     .equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS)) {
                                 currentVersionKey =
                                         PropertyMapKeys.CURRENT_VERSION_STATUS;
-                            } else currentVersionKey = targetKey
-                                    .equals(PropertyMapKeys.LATEST_VERSION_DATE) ? PropertyMapKeys.CURRENT_VERSION_VERSION_DATE : targetKey.replace("LATEST_", "CURRENT_");
+                            } else {
+                                currentVersionKey = targetKey.equals(PropertyMapKeys.LATEST_VERSION_DATE) ?
+                                        PropertyMapKeys.CURRENT_VERSION_VERSION_DATE :
+                                        targetKey.replace("LATEST_", "CURRENT_");
+                            }
                             properties.put(currentVersionKey, value);
                         }
                     } else {
@@ -1442,12 +1434,10 @@ public class GenericVersionableResource extends GenericResourcePid {
                 ds.setLabel(label);
                 setWov(ds);
             } else {
-                LOG
-                        .debug("Datastream "
-                                + getId()
-                                + '/'
-                                + name
-                                + " not instanziated in GenericVersionableResource.<init>.");
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Datastream " + getId() + '/' + name
+                            + " not instanziated in GenericVersionableResource.<init>.");
+                }
             }
         }
     }

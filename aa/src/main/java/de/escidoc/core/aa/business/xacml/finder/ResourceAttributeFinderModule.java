@@ -96,11 +96,7 @@ import java.util.regex.Pattern;
  * -info:escidoc/names:aa:1.0:resource:container:version-status<br>
  *  the version-status of the container, single value attribute
  * 
- * @spring.bean id="eSciDoc.core.aa.ResourceAttributeFinderModule"
- * 
  * @author TTE
- * 
- * @aa
  */
 public class ResourceAttributeFinderModule
     extends AbstractAttributeFinderModule {
@@ -253,22 +249,22 @@ public class ResourceAttributeFinderModule
                     sp.parse(new ByteArrayInputStream(itemXml
                         .getBytes(XmlUtility.CHARACTER_ENCODING)));
                 }
-                catch (MissingAttributeValueException e) {
+                catch (final MissingAttributeValueException e) {
                     throw e;
                 }
-                catch (InvalidXmlException e) {
+                catch (final InvalidXmlException e) {
                     throw e;
                 }
-                catch (OptimisticLockingException e) {
+                catch (final OptimisticLockingException e) {
                     throw e;
                 }
-                catch (UniqueConstraintViolationException e) {
+                catch (final UniqueConstraintViolationException e) {
                     throw e;
                 }
-                catch (SystemException e) {
+                catch (final SystemException e) {
                     throw e;
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     throw new WebserverSystemException(StringUtility
                         .format(
                             "Error during parsing item XML", e.getMessage()), e);
@@ -283,22 +279,22 @@ public class ResourceAttributeFinderModule
                     sp.parse(new ByteArrayInputStream(containerXml
                         .getBytes(XmlUtility.CHARACTER_ENCODING)));
                 }
-                catch (MissingAttributeValueException e) {
+                catch (final MissingAttributeValueException e) {
                     throw e;
                 }
-                catch (InvalidXmlException e) {
+                catch (final InvalidXmlException e) {
                     throw e;
                 }
-                catch (OptimisticLockingException e) {
+                catch (final OptimisticLockingException e) {
                     throw e;
                 }
-                catch (UniqueConstraintViolationException e) {
+                catch (final UniqueConstraintViolationException e) {
                     throw e;
                 }
-                catch (SystemException e) {
+                catch (final SystemException e) {
                     throw e;
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     throw new WebserverSystemException(StringUtility
                         .format(
                             "Error during parsing container XML", e
@@ -359,22 +355,22 @@ public class ResourceAttributeFinderModule
                 sp.parse(new ByteArrayInputStream(componentXml
                     .getBytes(XmlUtility.CHARACTER_ENCODING)));
             }
-            catch (MissingAttributeValueException e) {
+            catch (final MissingAttributeValueException e) {
                 throw e;
             }
-            catch (InvalidXmlException e) {
+            catch (final InvalidXmlException e) {
                 throw e;
             }
-            catch (OptimisticLockingException e) {
+            catch (final OptimisticLockingException e) {
                 throw e;
             }
-            catch (UniqueConstraintViolationException e) {
+            catch (final UniqueConstraintViolationException e) {
                 throw e;
             }
-            catch (SystemException e) {
+            catch (final SystemException e) {
                 throw e;
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Error during parsing component XML", e.getMessage()), e);
@@ -405,7 +401,7 @@ public class ResourceAttributeFinderModule
      *             Thrown in case of an internal error.
      * @throws ItemNotFoundException
      *             Thrown if no item with provided id exists.
-     * @aa
+     *
      */
     private String retrieveItem(final EvaluationCtx ctx, final String itemId)
         throws WebserverSystemException, ItemNotFoundException {
@@ -419,10 +415,10 @@ public class ResourceAttributeFinderModule
                 itemXml = itemHandler.retrieve(itemId);
                 RequestAttributesCache.put(ctx, key.toString(), itemXml);
             }
-            catch (ItemNotFoundException e) {
+            catch (final ItemNotFoundException e) {
                 throw e;
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during retrieval of the item", e
@@ -451,7 +447,7 @@ public class ResourceAttributeFinderModule
      * @throws ComponentNotFoundException
      *             Thrown if no component with provided id exists.
      * 
-     * @aa
+     *
      */
     private String retrieveComponent(
         final EvaluationCtx ctx, final String itemId, final String componentId)
@@ -467,13 +463,13 @@ public class ResourceAttributeFinderModule
                 componentXml =
                     itemHandler.retrieveComponent(itemId, componentId);
             }
-            catch (ItemNotFoundException e) {
+            catch (final ItemNotFoundException e) {
                 throw e;
             }
-            catch (ComponentNotFoundException e) {
+            catch (final ComponentNotFoundException e) {
                 throw e;
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during retrieval of the item", e
@@ -498,7 +494,7 @@ public class ResourceAttributeFinderModule
      *             Thrown in case of an internal error.
      * @throws ContainerNotFoundException
      *             Thrown if no item with provided id exists.
-     * @aa
+     *
      */
     private String retrieveContainer(
         final EvaluationCtx ctx, final String containerId)
@@ -513,10 +509,10 @@ public class ResourceAttributeFinderModule
                 containerXml = containerHandler.retrieve(containerId);
                 RequestAttributesCache.put(ctx, key.toString(), containerXml);
             }
-            catch (ContainerNotFoundException e) {
+            catch (final ContainerNotFoundException e) {
                 throw e;
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during retrieval of the container", e
@@ -532,7 +528,6 @@ public class ResourceAttributeFinderModule
      * 
      * @param containerHandler
      *            The container handler.
-     * @spring.property ref="service.ContainerHandlerBean"
      */
     public void setContainerHandler(
         final ContainerHandlerInterface containerHandler) {
@@ -545,7 +540,6 @@ public class ResourceAttributeFinderModule
      * 
      * @param itemHandler
      *            The item handler.
-     * @spring.property ref="service.ItemHandlerBean"
      */
     public void setItemHandler(final ItemHandlerInterface itemHandler) {
 

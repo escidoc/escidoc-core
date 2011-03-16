@@ -37,7 +37,7 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
  * database-table.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class DatabaseTableFieldVo {
     private String fieldName;

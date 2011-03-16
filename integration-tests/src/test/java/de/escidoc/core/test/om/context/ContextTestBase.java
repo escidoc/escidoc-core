@@ -84,7 +84,7 @@ public class ContextTestBase extends OmTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException("Create of OU failed. ", e);
         }
         return createdXml;

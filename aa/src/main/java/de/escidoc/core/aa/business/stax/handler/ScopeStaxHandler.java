@@ -34,6 +34,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.naming.directory.NoSuchAttributeException;
 
@@ -46,9 +48,11 @@ import java.util.List;
  * Stax handler that manages the scope definition of a role.
  * 
  * @author TTE
- * @aa
+ *
  */
 public class ScopeStaxHandler extends DefaultHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScopeStaxHandler.class);
 
     private static final String ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME =
         "resource-type";
@@ -81,7 +85,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * 
      * @param role
      *            The role to handle.
-     * @aa
+     *
      */
     public ScopeStaxHandler(final EscidocRole role) {
         this.role = role;
@@ -99,7 +103,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
      *      #startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @aa
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -112,7 +116,7 @@ public class ScopeStaxHandler extends DefaultHandler {
                     scopeDefResourceTypes.add(element.getAttributeValue(null,
                         ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME));
                 }
-                catch (NoSuchAttributeException e) {
+                catch (final NoSuchAttributeException e) {
                     throw createMandatoryAttributeNotFoundException(element,
                         null, ROLE_SCOPE_DEF_RESOURCE_TYPE_NAME, e);
                 }
@@ -121,8 +125,13 @@ public class ScopeStaxHandler extends DefaultHandler {
                     scopeDefAttributeId = element.getAttributeValue(null,
                             ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_ID_NAME);
                     scopeDefAttributeIds.add(scopeDefAttributeId);
-                }
-                catch (NoSuchAttributeException e) {
+                } catch (final NoSuchAttributeException e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on getting attribute.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on getting attribute.", e);
+                    }
                     scopeDefAttributeIds.add(null);
                 }
                 try {
@@ -130,7 +139,7 @@ public class ScopeStaxHandler extends DefaultHandler {
                             element.getAttributeValue(null,
                             ROLE_SCOPE_DEF_RELATION_ATTRIBUTE_OBJECT_TYPE_NAME));
                 }
-                catch (NoSuchAttributeException e) {
+                catch (final NoSuchAttributeException e) {
                     if (scopeDefAttributeId != null) {
                         throw createMandatoryAttributeNotFoundException(element,
                                 null, 
@@ -153,7 +162,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * @throws Exception
      * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
      *      #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
-     * @aa
+     *
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
@@ -198,7 +207,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * 
      * @return Returns <code>true</code>, if a unlimited role has been
      *         parsed, <code>false</code> else.
-     * @aa
+     *
      */
     public boolean isUnlimited() {
 
@@ -211,7 +220,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * @return Returns the attribute id definitions of the scope defs. If no
      *         scope definitions have been found, an empty <code>List</code>
      *         is returned.
-     * @aa
+     *
      */
     public List<String> getScopeDefAttributeIds() {
         return scopeDefAttributeIds;
@@ -223,7 +232,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * @return Returns the resource type definitions of the scope defs. If no
      *         scope definitions have been found, an empty <code>List</code>
      *         is returned.
-     * @aa
+     *
      */
     public List<String> getScopeDefResourceTypes() {
         return scopeDefResourceTypes;

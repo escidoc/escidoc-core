@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingElementValue
 import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
@@ -47,7 +47,7 @@ import java.util.Map;
 
 public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
-    private static final AppLogger LOG = new AppLogger(ContentRelationsRemoveHandler2Edition.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationsRemoveHandler2Edition.class);
 
     private StaxParser parser;
 
@@ -149,7 +149,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
         return relationsData;
     }
 
-    private String[] splitPredicate(final String predicate) {
+    private static String[] splitPredicate(final String predicate) {
         int index = predicate.lastIndexOf('#');
         if (index < 0) {
             index = predicate.lastIndexOf('/');

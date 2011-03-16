@@ -47,7 +47,7 @@ public interface ActionDaoInterface {
      * @return The {@link UnsecuredActionList} object related to the context
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database error.
-     * @aa
+     *
      */
     UnsecuredActionList retrieveUnsecuredActionList(final String contextId)
         throws SqlDatabaseSystemException;
@@ -59,7 +59,7 @@ public interface ActionDaoInterface {
      *            The {@link UnsecuredActionList} object to save or update.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database error.
-     * @aa
+     *
      */
     void saveOrUpdate(UnsecuredActionList unsecuredActionList)
         throws SqlDatabaseSystemException;

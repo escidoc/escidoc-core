@@ -53,7 +53,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
@@ -97,8 +97,8 @@ public class ItemHandlerCreate extends ItemResourceListener {
     private static final Pattern PATTERN_INVALID_FOXML =
         Pattern.compile("fedora.server.errors.ObjectValidityException");
 
-    private static final AppLogger LOGGER =
-        new AppLogger(ItemHandlerCreate.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ItemHandlerCreate.class);
 
     /**
      * Render RELS-EXT of a Component.
@@ -167,7 +167,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
                             .get(Elements.MANDATORY_MD_RECORD_NAME))
                             .toString(XmlUtility.CHARACTER_ENCODING), id, null);
             }
-            catch (UnsupportedEncodingException e) {
+            catch (final UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
             if (dcXml != null) {
@@ -211,14 +211,13 @@ public class ItemHandlerCreate extends ItemResourceListener {
                             .get(
                                 EscidocConfiguration.ESCIDOC_CORE_OM_CONTENT_CHECKSUM_ALGORITHM,
                                 "DISABLED"));
-            }
-            catch (IOException e) {
-                // FIXME IOException will occur earlier if no configuration can
-                // be
-                // found, if the retrieved value is not available the default
-                // value
-                // will be set
-                LOGGER.warn(e);
+            } catch (final IOException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on loading configuration.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on loading configuration.", e);
+                }
             }
         }
 

@@ -76,11 +76,8 @@ import java.util.Map;
 
 /**
  * An item resource handler.
- * 
- * @spring.bean id="service.ItemHandler" scope="prototype"
- * @interface class="de.escidoc.core.om.service.interfaces.ItemHandlerInterface"
+ *
  * @author TTE
- * @service
  */
 public class ItemHandler implements ItemHandlerInterface {
 
@@ -91,9 +88,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * @param itemHandler
      *            The item handler bean to inject.
-     * 
-     * @spring.property ref="business.FedoraItemHandler"
-     * @service.exclude
      */
     public void setItemHandler(
         final de.escidoc.core.om.business.interfaces.ItemHandlerInterface itemHandler) {
@@ -431,23 +425,6 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.createMdRecord(id, xmlData);
     }
 
-    //
-    // Subresource - content
-    //
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @param contentId
-     * @return
-     * @throws ItemNotFoundException
-     * @throws InvalidStatusException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
-     *      #retrieveContent(java.lang.String, java.lang.String)
-     * @axis.exclude
-     * 
-     * 
-     */
     @Override
     public EscidocBinaryContent retrieveContent(
         final String id, final String contentId) throws ItemNotFoundException,
@@ -458,25 +435,6 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.retrieveContent(id, contentId);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param itemId
-     * @param name
-     * @return
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws MissingMethodParameterException
-     * @throws ItemNotFoundException
-     * @throws SystemException
-     * @throws ContentStreamNotFoundException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
-     *      #retrieveContentStreamContent(java.lang.String, java.lang.String)
-     * 
-     * @axis.exclude
-     * 
-     * 
-     */
     @Override
     public EscidocBinaryContent retrieveContentStreamContent(
         final String itemId, final String name) throws AuthenticationException,
@@ -485,24 +443,6 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.retrieveContentStreamContent(itemId, name);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     *            The item id.
-     * @param contentId
-     * @param transformer
-     * @param param
-     * @return transformed binary content
-     * 
-     * @throws ItemNotFoundException
-     * @throws InvalidStatusException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
-     *      #retrieveContent(java.lang.String, java.lang.String)
-     * @axis.exclude
-     * 
-     * 
-     */
     @Override
     public EscidocBinaryContent retrieveContent(
         final String id, final String contentId, final String transformer,
@@ -514,23 +454,6 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.retrieveContent(id, contentId, transformer, param);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     *            The item id.
-     * @param contentId
-     * @param transformer
-     * @return
-     * 
-     * @throws ItemNotFoundException
-     * @throws InvalidStatusException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
-     *      #retrieveContent(java.lang.String, java.lang.String)
-     * @axis.exclude
-     * 
-     * 
-     */
     @Override
     public EscidocServiceRedirectInterface redirectContentService(
         final String id, final String contentId, final String transformer,
@@ -563,18 +486,6 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.retrieveMdRecord(id, mdRecordId);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @param mdRecordId
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
-     *      #retrieveMdRecordContent(java.lang.String, java.lang.String)
-     * @axis.exclude
-     * 
-     * 
-     */
     @Override
     public String retrieveMdRecordContent(
         final String id, final String mdRecordId) throws ItemNotFoundException,
@@ -585,16 +496,6 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.retrieveMdRecordContent(id, mdRecordId);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
-     *      #retrieveDcRecordContent(java.lang.String)
-     * @axis.exclude
-     * @om
-     */
     @Override
     public String retrieveDcRecordContent(final String id)
         throws ItemNotFoundException, MissingMethodParameterException,
@@ -701,17 +602,6 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.retrieveProperties(id);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
-     *      #retrieveResources(java.lang.String)
-     * @axis.exclude
-     * 
-     * 
-     */
     @Override
     public String retrieveResources(final String id)
         throws ItemNotFoundException, AuthenticationException,
@@ -721,21 +611,6 @@ public class ItemHandler implements ItemHandlerInterface {
         return handler.retrieveResources(id);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws OperationNotFoundException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
-     *      #retrieveResources(java.lang.String)
-     * @axis.exclude
-     * 
-     * @escidoc_core.warning Experimental
-     * 
-     * 
-     * 
-     */
     @Override
     public EscidocBinaryContent retrieveResource(
         final String id, final String resourceName,

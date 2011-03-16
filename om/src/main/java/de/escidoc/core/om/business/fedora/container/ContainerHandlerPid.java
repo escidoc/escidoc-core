@@ -44,7 +44,7 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.PIDSystem;
 import de.escidoc.core.common.persistence.PIDSystemFactory;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.joda.time.DateTime;
@@ -65,8 +65,8 @@ import java.io.ByteArrayInputStream;
  */
 public class ContainerHandlerPid extends ContainerHandlerCreate {
 
-    private static final AppLogger log = new AppLogger(
-        ContainerHandlerPid.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ContainerHandlerPid.class);
 
     private PIDSystemFactory pidGenFactory;
 
@@ -280,7 +280,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         // String msg =
         // "The object is not in state '" + Constants.STATUS_RELEASED
         // + "' and can not be" + " changed.";
-        // log.error(msg);
+        // LOGGER.error(msg);
         // throw new InvalidStatusException(msg);
         // }
         // FIXME pid structure check ?
@@ -306,10 +306,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
                 .getProperty("cmm.Container.objectPid.releaseWithoutPid"))) {
             return true;
         } // objectPid is needed
-        if (getContainer().hasObjectPid()) {
-            return true;
-        }
-        return false;
+        return getContainer().hasObjectPid();
     }
 
     /**
@@ -376,7 +373,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         try {
             lmd = getContainer().getLastModificationDate();
         }
-        catch (FedoraSystemException e) {
+        catch (final FedoraSystemException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -385,7 +382,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
             final DateTime t = new DateTime(lmd, DateTimeZone.UTC);
             result = getUtility().prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw new WebserverSystemException(e);
         }
         return result;

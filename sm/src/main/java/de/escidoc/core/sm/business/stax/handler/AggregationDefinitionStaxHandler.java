@@ -126,7 +126,7 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @return The character section.
      * @throws Exception
      *             e
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
+     * @see DefaultHandler#characters
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
@@ -377,9 +377,8 @@ public class AggregationDefinitionStaxHandler extends DefaultHandler {
      * @return String prefixed name
      * @throws SystemException e
      */
-    private String getReplacedTableOrIndexName(
-            final AggregationDefinition aggregationDef, 
-            final String orgName) throws SystemException {
+    private static String getReplacedTableOrIndexName(final AggregationDefinition aggregationDef, final String orgName)
+            throws SystemException {
         if (aggregationDef == null 
                 || aggregationDef.getId() == null) {
             throw new SystemException(

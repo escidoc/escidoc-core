@@ -46,7 +46,7 @@ import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexRequestBuilder;
 import de.escidoc.core.index.IndexService;
@@ -105,8 +105,8 @@ public class Reindexer {
             + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
             + ResourceType.OU.getUri() + "%3e";
 
-    private static final AppLogger LOG = new AppLogger(
-        Reindexer.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        Reindexer.class);
 
     private FedoraUtility fedoraUtility;
 
@@ -323,7 +323,7 @@ public class Reindexer {
      * 
      * @return the subject of the given triple
      */
-    private String getSubject(final String triple) {
+    private static String getSubject(final String triple) {
         String result = null;
 
         if (triple != null) {
@@ -358,7 +358,7 @@ public class Reindexer {
                     .withObjectType(objectType.getUri()).build();
             this.indexService.index(indexRequest);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new ApplicationServerSystemException(e);
         }
     }
@@ -381,7 +381,7 @@ public class Reindexer {
                     .withResource(resource).build();
             this.indexService.index(indexRequest);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new ApplicationServerSystemException(e);
         }
     }
@@ -411,7 +411,7 @@ public class Reindexer {
                     .withIsReindexerCaller(true).build();
             this.indexService.index(indexRequest);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new ApplicationServerSystemException(e);
         }
     }
@@ -462,7 +462,7 @@ public class Reindexer {
                         }
                     }
                 }
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 throw new SystemException(e);
             } finally {
                 IOUtils.closeStream(input);

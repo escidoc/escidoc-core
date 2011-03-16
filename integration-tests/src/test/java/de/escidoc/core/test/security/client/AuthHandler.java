@@ -28,10 +28,11 @@
  */
 package de.escidoc.core.test.security.client;
 
-import de.escidoc.core.test.common.logger.AppLogger;
 import org.apache.axis.AxisFault;
 import org.apache.axis.MessageContext;
 import org.apache.axis.handlers.BasicHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Iterator;
 
@@ -48,7 +49,7 @@ public class AuthHandler extends BasicHandler {
      */
     private static final long serialVersionUID = -9068919134806221143L;
 
-    protected static AppLogger log = new AppLogger(AuthHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthHandler.class);
 
     /**
      * The invoke method of the handler.
@@ -59,10 +60,10 @@ public class AuthHandler extends BasicHandler {
      *             the exception
      */
     public void invoke(final MessageContext ctx) throws AxisFault {
-        if (log.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             Iterator it = ctx.getAllPropertyNames();
             while (it.hasNext()) {
-                log.debug("The properties:" + it.next());
+                LOGGER.debug("The properties:" + it.next());
             }
         }
     }

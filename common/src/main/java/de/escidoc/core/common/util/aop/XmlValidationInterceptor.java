@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2007-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.aop;
 
 import de.escidoc.core.common.annotation.Validate;
@@ -46,12 +38,7 @@ import java.lang.reflect.Method;
  * Interceptor to validate incoming XML documents. The validation takes only
  * place if the called method is annotated accordingly.
  * 
- * @spring.bean id="common.XmlValidationInterceptor" factory-method="aspectOf"
- *              lazy-init="false"
- * 
  * @author MSC
- * 
- * @common
  */
 @Aspect
 public class XmlValidationInterceptor implements Ordered {
@@ -62,8 +49,8 @@ public class XmlValidationInterceptor implements Ordered {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.core.Ordered#getOrder()
-     * @common
+     * @see Ordered#getOrder()
+     *
      */
     @Override
     public int getOrder() {
@@ -81,7 +68,7 @@ public class XmlValidationInterceptor implements Ordered {
      *            The current {@link JoinPoint}.
      * @throws Throwable
      *             Thrown in case of an error.
-     * @common
+     *
      */
 //    @Before("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
 //        + " && within(de.escidoc.core.*.ejb.*Bean)")
@@ -112,7 +99,7 @@ public class XmlValidationInterceptor implements Ordered {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      * @throws XmlParserSystemException
-     * @common
+     *
      */
     private void validate(
         final String xml, final String resolvingMethod, final String root)
@@ -131,15 +118,15 @@ public class XmlValidationInterceptor implements Ordered {
      * @return Returns the schema location.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @common
+     *
      */
-    private String getSchemaLocation(final String resolvingMethod)
+    private static String getSchemaLocation(final String resolvingMethod)
         throws WebserverSystemException {
         final Class[] paramTypes = {};
         try {
             final Method getSchemaLocationM = XmlUtility.class.getMethod(resolvingMethod, paramTypes);
             return (String) getSchemaLocationM.invoke(null, new Object[0]);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new WebserverSystemException("Could not find schema location for schema " + resolvingMethod + '!', e);
         }
     }

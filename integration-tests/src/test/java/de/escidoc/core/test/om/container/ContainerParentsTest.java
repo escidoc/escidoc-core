@@ -332,7 +332,7 @@ public class ContainerParentsTest extends ContainerTestBase {
             retrieveParents("wrongId");
             EscidocRestSoapTestBase
             .failMissingException(ContainerNotFoundException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     ContainerNotFoundException.class, e);
         }
@@ -359,7 +359,7 @@ public class ContainerParentsTest extends ContainerTestBase {
            retrieveParents(null);
            EscidocRestSoapTestBase
            .failMissingException(MissingMethodParameterException.class);
-       } catch (Exception e) {
+       } catch (final Exception e) {
            EscidocRestSoapTestBase.assertExceptionType(
                    MissingMethodParameterException.class, e);
        }

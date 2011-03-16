@@ -110,7 +110,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
         String storageBeforeCreate = "external-managed";
         Document newItem =
             (Document) substitute(item,
-                "/item/components/component[2]/content/@storage",
+                "/item/components/component[2]/content/orage",
                 storageBeforeCreate);
         Document newItem2 =
             (Document) substitute(newItem,
@@ -139,7 +139,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
                 + "/ir/item/" + theItemId 
                 + "/components/component/" + componentId + "/content");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "WebserverSystemException", WebserverSystemException.class, e);
         }

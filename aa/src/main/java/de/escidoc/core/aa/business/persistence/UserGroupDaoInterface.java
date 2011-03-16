@@ -39,7 +39,7 @@ import java.util.Map;
  * Interface of an data access object to access user group data.
  * 
  * @author sche
- * @aa
+ *
  */
 public interface UserGroupDaoInterface {
     /**
@@ -49,7 +49,7 @@ public interface UserGroupDaoInterface {
      *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void delete(final UserGroupMember userGroupMember) 
                         throws SqlDatabaseSystemException;
@@ -61,7 +61,7 @@ public interface UserGroupDaoInterface {
      *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void delete(final UserGroup userGroup) throws SqlDatabaseSystemException;
 
@@ -78,7 +78,7 @@ public interface UserGroupDaoInterface {
      *         <code>null</code>.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     RoleGrant retrieveCurrentGrant(
         final UserGroup userGroup, final EscidocRole role,
@@ -95,7 +95,7 @@ public interface UserGroupDaoInterface {
      * @return Returns the found Grants in a HashMap.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     Map<String, List<RoleGrant>> retrieveCurrentGrants(
             final List<String> groupIds) throws SqlDatabaseSystemException;
@@ -109,7 +109,7 @@ public interface UserGroupDaoInterface {
      *         <code>null</code>.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     RoleGrant retrieveGrant(final String grantId)
         throws SqlDatabaseSystemException;
@@ -123,7 +123,7 @@ public interface UserGroupDaoInterface {
      * @return Returns sorted List of <code>Grant</code> objects.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<RoleGrant> retrieveGrants(final String groupId)
         throws SqlDatabaseSystemException;
@@ -137,13 +137,13 @@ public interface UserGroupDaoInterface {
      *         <code>null</code>.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     UserGroup retrieveUserGroup(final String groupId)
         throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link de.escidoc.core.aa.business.persistence.UserGroup}
+     * Retrieves {@link UserGroup}
      * objects using the provided values for filtering.
      * 
      * @param criteria
@@ -159,12 +159,12 @@ public interface UserGroupDaoInterface {
      *            The kind of ordering, i.e. ascending or descending.
      * 
      * @return Returns <code>List</code> of
-     *         {@link de.escidoc.core.aa.business.persistence.UserGroup}
+     *         {@link UserGroup}
      *         objects selected by the provided parameters. If no parameter is
      *         provided, all user account objects are returned.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<UserGroup> retrieveUserGroups(
         final Map<String, Object> criteria, final int offset,
@@ -172,7 +172,7 @@ public interface UserGroupDaoInterface {
         throws SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link de.escidoc.core.aa.business.persistence.UserGroup}
+     * Retrieves {@link UserGroup}
      * objects using the provided values for filtering.
      * 
      * @param criteria
@@ -183,33 +183,33 @@ public interface UserGroupDaoInterface {
      *            The maximal number of results to be returned.
      * 
      * @return Returns <code>List</code> of
-     *         {@link de.escidoc.core.aa.business.persistence.UserGroup}
+     *         {@link UserGroup}
      *         objects selected by the provided parameters. If no parameter is
      *         provided, all user account objects are returned.
      * @throws InvalidSearchQueryException thrown if the given search query could
      *                                     not be translated into a SQL query
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<UserGroup> retrieveUserGroups(
         final String criteria, final int offset, final int maxResults)
         throws InvalidSearchQueryException, SqlDatabaseSystemException;
 
     /**
-     * Retrieves {@link de.escidoc.core.aa.business.persistence.UserGroupMember}
+     * Retrieves {@link UserGroupMember}
      * objects using the provided values for filtering.
      * 
      * @param criteria
      *            The {@link Map} containing the filter criteria. This object is
      *            kept as provided by this method.
      * @return Returns <code>List</code> of
-     *         {@link de.escidoc.core.aa.business.persistence.UserGroupMember}
+     *         {@link UserGroupMember}
      *         objects selected by the provided parameters. If no parameter is
      *         provided, all user group member objects are returned.
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     List<UserGroupMember> retrieveUserGroupMembers(
         final Map<String, Object> criteria)
@@ -222,7 +222,7 @@ public interface UserGroupDaoInterface {
      *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void save(final RoleGrant grant) throws SqlDatabaseSystemException;
 
@@ -233,7 +233,7 @@ public interface UserGroupDaoInterface {
      * 
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void save(final UserGroup userGroup) throws SqlDatabaseSystemException;
 
@@ -244,7 +244,7 @@ public interface UserGroupDaoInterface {
      * 
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void save(final UserGroupMember userGroupMember) 
                         throws SqlDatabaseSystemException;
@@ -256,7 +256,7 @@ public interface UserGroupDaoInterface {
      *
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void update(final RoleGrant grant) throws SqlDatabaseSystemException;
 
@@ -267,7 +267,7 @@ public interface UserGroupDaoInterface {
      * 
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @aa
+     *
      */
     void update(final UserGroup userGroup) throws SqlDatabaseSystemException;
     

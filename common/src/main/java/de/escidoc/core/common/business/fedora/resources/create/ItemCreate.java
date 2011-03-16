@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.fedora.resources.create;
 
 import de.escidoc.core.common.business.Constants;
@@ -45,7 +37,7 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -80,8 +72,8 @@ import java.util.regex.Pattern;
  */
 public class ItemCreate extends GenericResourceCreate {
 
-    private static final AppLogger LOG = new AppLogger(
-        ItemCreate.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ItemCreate.class);
 
     private ItemProperties properties;
 
@@ -190,7 +182,6 @@ public class ItemCreate extends GenericResourceCreate {
      *            The {@link EscidocIdProvider} to set.
      * 
      *            FIXME This Spring construct seams not to work.
-     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
     public void setIdProvider(final EscidocIdProvider idProvider) {
 
@@ -296,7 +287,7 @@ public class ItemCreate extends GenericResourceCreate {
             }
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             rollbackComponents();
             throw new SystemException(e);
@@ -327,8 +318,8 @@ public class ItemCreate extends GenericResourceCreate {
                         getDC(mdRecord, this.properties
                             .getObjectProperties().getContentModelId());
                 }
-                catch (Exception e) {
-                    LOG.info("DC mapping of to create resource failed. " + e);
+                catch (final Exception e) {
+                    LOGGER.info("DC mapping of to create resource failed. " + e);
                 }
             }
         }
@@ -438,18 +429,26 @@ public class ItemCreate extends GenericResourceCreate {
                 try {
                     FedoraUtility.getInstance().deleteObject(
                         getComponents().get(i).getObjid(), true);
-                }
-                catch (Exception e2) {
-                    LOG.debug(e2);
+                } catch (final Exception e2) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on deleting object.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on deleting object.", e2);
+                    }
                 }
             }
         }
         // now the object it self (maybe it doesn't exists)
         try {
             FedoraUtility.getInstance().deleteObject(getObjid(), true);
-        }
-        catch (Exception e2) {
-            LOG.debug(e2);
+        } catch (final Exception e2) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on deleting object.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on deleting object.", e2);
+            }
         }
 
     }
@@ -633,41 +632,21 @@ public class ItemCreate extends GenericResourceCreate {
                 /*
                  * FIXME upload method to staging service is not thread safe!
                  */
-                // ThreadPoolExecutor executor =
-                // (ThreadPoolExecutor) Executors.newCachedThreadPool();
-                // // ThreadPoolExecutor executor = (ThreadPoolExecutor)
-                // // Executors.newFixedThreadPool(MAX_THREADS);
                 componentIds = new ArrayList<String>();
-                // Vector<Future<String>> threads = new
-                // Vector<Future<String>>();
                 for (i = 0; i < this.components.size(); i++) {
                     // old unthreaded - works
                     final ComponentCreate component = this.components.get(i);
                     component.setIdProvider(this.idProvider);
                     final String id = component.persist(false);
                     componentIds.add(id);
-
-                    // // new threaded
-                    // component = this.components.get(i);
-                    // component.setIdProvider(this.idProvider);
-                    // threads.add(executor.submit(component));
                 }
-
-                // System.out.println("Running threads "
-                // + executor.getActiveCount());
-                // for (int j = 0; j < threads.size(); j++) {
-                // Future<String> f = threads.get(j);
-                // componentIds.add(f.get());
-                // }
-                // purge all components if exception was thrown
-                // FIXME
             }
         }
-        catch (InvalidContentException fne) {
+        catch (final InvalidContentException fne) {
             rollbackCreate(componentIds);
             throw fne;
         }
-        catch (FedoraSystemException e) {
+        catch (final FedoraSystemException e) {
 
             final Pattern patternInvalidFoXml =
                 Pattern.compile("fedora.server.errors.ObjectValidityException");
@@ -684,7 +663,7 @@ public class ItemCreate extends GenericResourceCreate {
                     .get(i).getContent().getDataLocation().toString(), e);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             rollbackCreate(componentIds);
             throw new SystemException("Failure during create Fedora object.", e);
         }
@@ -809,7 +788,7 @@ public class ItemCreate extends GenericResourceCreate {
      * 
      * @return HashMap with namespace values for XML representation.
      */
-    private Map<String, String> getRelsExtNamespaceValues() {
+    private static Map<String, String> getRelsExtNamespaceValues() {
 
         final Map<String, String> values = new HashMap<String, String>();
 
@@ -841,10 +820,10 @@ public class ItemCreate extends GenericResourceCreate {
             Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
 
         values.put(XmlTemplateProvider.ESCIDOC_ORIGIN_NS,
-            de.escidoc.core.common.business.Constants.ORIGIN_NS_URI);
+            Constants.ORIGIN_NS_URI);
 
         values.put(XmlTemplateProvider.ESCIDOC_ORIGIN_NS_PREFIX,
-            de.escidoc.core.common.business.Constants.ORIGIN_NS_PREFIX);
+            Constants.ORIGIN_NS_PREFIX);
 
         return values;
     }
@@ -855,15 +834,19 @@ public class ItemCreate extends GenericResourceCreate {
      * @param componentIds
      *            Fedora objid of resources which are to purge.
      */
-    private void rollbackCreate(final Iterable<String> componentIds) {
+    private static void rollbackCreate(final Iterable<String> componentIds) {
 
         for (final String componentId : componentIds) {
-            LOG.debug("Rollback Component create (" + componentId + ").");
+            LOGGER.debug("Rollback Component create (" + componentId + ").");
             try {
                 FedoraUtility.getInstance().deleteObject(componentId, false);
-            } catch (Exception e2) {
-                LOG.debug("Purging of Fedora Object (" + componentId
-                        + ") failed.", e2);
+            } catch (final Exception e2) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Purging of Fedora Object (" + componentId + ") failed.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Purging of Fedora Object (" + componentId + ") failed.", e2);
+                }
             }
         }
     }
@@ -881,7 +864,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @throws FedoraSystemException
      *             Thrown if request to Fedora failed.
      */
-    private String getLastModificationDateByWorkaround(final String objid)
+    private static String getLastModificationDateByWorkaround(final String objid)
         throws FedoraSystemException {
 
         // Work around for Fedora30 bug APIM.getDatastreams()
@@ -950,8 +933,7 @@ public class ItemCreate extends GenericResourceCreate {
      *             Thrown if the reason for the Fedora Exception was not an
      *             unaccible content resource (file).
      */
-    private void handleFedoraUploadError(
-        final String url, final FedoraSystemException e)
+    private static void handleFedoraUploadError(final String url, final FedoraSystemException e)
         throws FileNotFoundException, FedoraSystemException {
 
         final Matcher matcherErrorGetting =

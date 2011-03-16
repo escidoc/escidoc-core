@@ -46,6 +46,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 
 import java.util.ArrayList;
@@ -56,11 +58,15 @@ import java.util.Set;
 
 /**
  * @author sche
- * @spring.bean id="persistence.UserGroupDao"
- * @aa
  */
 public class HibernateUserGroupDao extends AbstractHibernateDao
     implements UserGroupDaoInterface {
+
+    /**
+     * The logger.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(HibernateUserGroupDao.class);
+
     private static final String QUERY_RETRIEVE_GRANTS_BY_GROUP_ID =
         "from "
             + RoleGrant.class.getName()
@@ -81,9 +87,14 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
         try {
             userGroupFilter = new UserGroupFilter(null);
         }
-        catch (InvalidSearchQueryException e) {
-            logger.debug("Expected exception for null-query", e);
-            // Dont do anything because null-query is given
+        catch (final InvalidSearchQueryException e) {
+            // Dont do anything because null-query is given.
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Expected exception for null-query");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Expected exception for null-query", e);
+            }
         }
         criteriaMap = userGroupFilter.getCriteriaMap();
         propertiesNamesMap = userGroupFilter.getPropertyMap();
@@ -94,9 +105,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param userGroup
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #delete(de.escidoc.core.aa.business.persistence.UserGroup)
-     * @aa
+     *
      */
     @Override
     public void delete(final UserGroup userGroup)
@@ -115,15 +126,15 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                         DetachedCriteria.forClass(UserGroup.class).add(
                             Restrictions.eq("label", label))));
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
-        catch (HibernateException e) {
+        catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored,ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(
                 convertHibernateAccessException(e));
         }
-        catch (IllegalStateException e) {
+        catch (final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);
         }
         return result;
@@ -134,9 +145,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param userGroupMember
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #delete(de.escidoc.core.aa.business.persistence.UserGroupMember)
-     * @aa
+     *
      */
     @Override
     public void delete(final UserGroupMember userGroupMember)
@@ -152,10 +163,10 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * @param objId
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveCurrentGrant(java.lang.String, EscidocRole,
      *      java.lang.String)
-     * @aa
+     *
      */
     @Override
     public RoleGrant retrieveCurrentGrant(
@@ -177,13 +188,13 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                     (RoleGrant) getUniqueResult(getHibernateTemplate()
                         .findByCriteria(criteria));
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -197,9 +208,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param grantId
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveGrant(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public RoleGrant retrieveGrant(final String grantId)
@@ -212,13 +223,13 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                         getHibernateTemplate().get(RoleGrant.class,
                             grantId);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -232,9 +243,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param groupId
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveGrants(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public List<RoleGrant> retrieveGrants(final String groupId)
@@ -248,7 +259,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                     getHibernateTemplate().find(
                         QUERY_RETRIEVE_GRANTS_BY_GROUP_ID, groupId);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -260,9 +271,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param groupIds
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveGrants(List)
-     * @aa
+     *
      */
     @Override
     public Map<String, List<RoleGrant>> retrieveCurrentGrants(
@@ -282,7 +293,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
             roleGrants =
                 getHibernateTemplate().findByCriteria(detachedCriteria);
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
         if (roleGrants !=  null) {
@@ -303,9 +314,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param groupId
      * @return
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveUserGroup(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public UserGroup retrieveUserGroup(final String groupId)
@@ -318,13 +329,13 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                         getHibernateTemplate().get(UserGroup.class,
                             groupId);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -344,9 +355,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveUserGroups(java.util.Map, int, int, String, ListSorting)
-     * @aa
+     *
      */
     @Override
     public List<UserGroup> retrieveUserGroups(
@@ -411,7 +422,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                     getHibernateTemplate().findByCriteria(detachedCriteria,
                         offset, maxResults);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -433,7 +444,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * @return
      * @throws InvalidSearchQueryException
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveUserGroups(java.lang.String, int, int)
      */
     @Override
@@ -457,7 +468,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                     getHibernateTemplate().findByCriteria(detachedCriteria,
                         offset, maxResults);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -471,9 +482,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @return
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveUserGroupMembers(java.util.Map)
-     * @aa
+     *
      */
     @Override
     public List<UserGroupMember> retrieveUserGroupMembers(
@@ -529,7 +540,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 result =
                     getHibernateTemplate().findByCriteria(detachedCriteria);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -548,9 +559,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @return List
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #retrieveGrantsByUserId(String)
-     * @aa
+     *
      */
     public List<RoleGrant> retrieveGrantsByUserId(final String userId)
         throws SqlDatabaseSystemException {
@@ -563,9 +574,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param grant
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #save(de.escidoc.core.aa.business.persistence.RoleGrant)
-     * @aa
+     *
      */
     @Override
     public void save(final RoleGrant grant) throws SqlDatabaseSystemException {
@@ -577,9 +588,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param userGroup
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #save(de.escidoc.core.aa.business.persistence.UserGroup)
-     * @aa
+     *
      */
     @Override
     public void save(final UserGroup userGroup)
@@ -592,9 +603,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param userGroupMember
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #save(de.escidoc.core.aa.business.persistence.UserGroupMember)
-     * @aa
+     *
      */
     @Override
     public void save(final UserGroupMember userGroupMember)
@@ -607,9 +618,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param grant
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #update(de.escidoc.core.aa.business.persistence.RoleGrant)
-     * @aa
+     *
      */
     @Override
     public void update(final RoleGrant grant) throws SqlDatabaseSystemException {
@@ -621,9 +632,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param userGroup
      * @throws SqlDatabaseSystemException
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #update(de.escidoc.core.aa.business.persistence.UserGroup)
-     * @aa
+     *
      */
     @Override
     public void update(final UserGroup userGroup)
@@ -641,9 +652,9 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * @return boolean
      * @throws SqlDatabaseSystemException
      *             e
-     * @see de.escidoc.core.aa.business.persistence.UserGroupDaoInterface
+     * @see UserGroupDaoInterface
      *      #userGroupExists(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public boolean userGroupExists(final String identityInfo)
@@ -660,13 +671,13 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 result =
                     !getHibernateTemplate().findByCriteria(criteria).isEmpty();
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -681,7 +692,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      * 
      * @param mySessionFactory
      *            The mySessionFactory to set.
-     * @spring.property ref="eSciDoc.core.aa.SessionFactory"
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
         setSessionFactory(mySessionFactory);

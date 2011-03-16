@@ -34,6 +34,7 @@ import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,7 +48,7 @@ import java.util.Collection;
  * <code>RequestAttributesCache</code>.
  * 
  * @author TTE
- * @aa
+ *
  */
 
 public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
@@ -87,7 +88,7 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
      * @see de.escidoc.core.aa.business.stax.handler.
      *      AbstractResourceAttributeStaxHandler#startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @aa
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -120,9 +121,9 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
      * @param element
      * @return
      * @throws Exception
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
-     * @aa
+     *
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {

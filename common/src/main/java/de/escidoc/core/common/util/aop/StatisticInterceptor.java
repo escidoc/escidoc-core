@@ -1,36 +1,28 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.aop;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.statistic.StatisticRecord;
@@ -94,12 +86,12 @@ import java.util.regex.Pattern;
  * record and adding information to it.
  * 
  * @author TTE
- * @common
+ *
  */
 @Aspect
 public class StatisticInterceptor implements Ordered {
 
-    private static final AppLogger LOG = new AppLogger(StatisticInterceptor.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(StatisticInterceptor.class);
 
     /**
      * Pattern used to determine that a method parameter is XML parameter and
@@ -144,8 +136,8 @@ public class StatisticInterceptor implements Ordered {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.core.Ordered#getOrder()
-     * @common
+     * @see Ordered#getOrder()
+     *
      */
     @Override
     public int getOrder() {
@@ -162,7 +154,7 @@ public class StatisticInterceptor implements Ordered {
      * @return Returns the changed result.
      * @throws Throwable
      *             Thrown in case of an error.
-     * @common
+     *
      */
     @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
         + " && within(de.escidoc.core.*.ejb.*Bean)"
@@ -170,9 +162,6 @@ public class StatisticInterceptor implements Ordered {
         + " && !call(* de.escidoc.core..*.StatisticService*.*(..))"
         + " && !call(* de.escidoc.core.common..*.*(..))")
     public Object createStatisticRecord(final ProceedingJoinPoint joinPoint) throws Throwable {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("createStatisticRecord", this));
-        }
         final long invocationStartTime = System.currentTimeMillis();
         boolean successful = true;
         boolean internal = false;
@@ -237,14 +226,8 @@ public class StatisticInterceptor implements Ordered {
      * @throws Throwable
      *             Thrown in case of an error during proceeding the method call.
      */
-    private Object proceed(final ProceedingJoinPoint joinPoint)
+    private static Object proceed(final ProceedingJoinPoint joinPoint)
         throws Throwable {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("proceed",
-                this));
-        }
-
         return joinPoint.proceed();
     }
 
@@ -264,11 +247,10 @@ public class StatisticInterceptor implements Ordered {
      *            The name of the called method.
      * @param arguments
      *            The arguments of the method call.
-     * @common
+     *
      */
-    private void handleObjectIds(
-        final StatisticRecordBuilder statisticRecordBuilder, final String calledMethodName,
-        final Object[] arguments) {
+    private static void handleObjectIds(final StatisticRecordBuilder statisticRecordBuilder,
+                                        final String calledMethodName, final Object[] arguments) {
 
         if (arguments != null && arguments.length > 0) {
             int indexLastObjid = -1;
@@ -276,8 +258,8 @@ public class StatisticInterceptor implements Ordered {
                 if (!(arguments[i] instanceof String)) {
                     // e.g., this is the case for binary content
                     // (createStagingFile)
-                    if (LOG.isDebugEnabled()) {
-                        LOG.debug(MSG_CLASS_CAST_EXCEPTION + calledMethodName);
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug(MSG_CLASS_CAST_EXCEPTION + calledMethodName);
                     }
                     // Parameter found that is not a string. In this case, the
                     // loop is stopped and no objids are logged, as it seems to
@@ -298,7 +280,8 @@ public class StatisticInterceptor implements Ordered {
             if (indexLastObjid >= 0) {
                 statisticRecordBuilder.withParameter(PARAM_OBJID, (String) arguments[indexLastObjid]);
                 for (int i = indexLastObjid - 1, parent = 1; i >= 0; i--) {
-                    statisticRecordBuilder.withParameter(PARAM_PARENT_OBJID + parent++, (String) arguments[i]);
+                    statisticRecordBuilder.withParameter(PARAM_PARENT_OBJID + parent, (String) arguments[i]);
+                    parent++;
                 }
             }
         }

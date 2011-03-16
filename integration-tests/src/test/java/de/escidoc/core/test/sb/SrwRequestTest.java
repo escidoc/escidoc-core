@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.test.sb;
 
-import de.escidoc.core.test.common.logger.AppLogger;
 import gov.loc.www.zing.srw.ExplainRequestType;
 import gov.loc.www.zing.srw.service.ExplainPort;
 import gov.loc.www.zing.srw.service.SRWPort;
@@ -36,6 +35,8 @@ import gov.loc.www.zing.srw.service.SRWSampleServiceLocator;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 
@@ -45,8 +46,7 @@ import java.net.URL;
  */
 public class SrwRequestTest {
 
-    protected static AppLogger log = new AppLogger(
-        SrwRequestTest.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(SrwRequestTest.class);
 
     protected SRWPort srwService;
 
@@ -97,12 +97,12 @@ public class SrwRequestTest {
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
                 + "<SOAP:Envelope xmlns:SOAP=\"http://schemas.xmlsoap.org/soap/envelope/\">"
                 + "<SOAP:Body>"
-                + "<ExplainSOAP:ExplainOperation xmlns:ExplainSOAP=\"http://www.log.gov/zing/srw/\">"
+                + "<ExplainSOAP:ExplainOperation xmlns:ExplainSOAP=\"http://www.LOGGER.gov/zing/srw/\">"
                 + "</ExplainSOAP:ExplainOperation>" + "</SOAP:Body>"
                 + "</SOAP:Envelope>";
         HttpRequester requester = new HttpRequester(location, "mih:11311");
-        if (log.isDebugEnabled()) {
-            log.debug(requester.doPost("", soapPost));
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(requester.doPost("", soapPost));
         }
     }
 
@@ -124,8 +124,8 @@ public class SrwRequestTest {
         // srwService.searchRetrieveOperation(request);
         ExplainRequestType request = new ExplainRequestType();
         request.setVersion("1.1");
-        if (log.isDebugEnabled()) {
-            log.debug(explainService.explainOperation(request).getVersion());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(explainService.explainOperation(request).getVersion());
         }
     }
 

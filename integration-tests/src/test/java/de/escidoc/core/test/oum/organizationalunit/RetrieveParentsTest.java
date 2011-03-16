@@ -207,7 +207,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
             retrieveParents(UNKNOWN_ID);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -237,7 +237,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
             retrieveParents(CONTEXT_ID);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -266,7 +266,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
             retrieveParents(null);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -295,7 +295,7 @@ public class RetrieveParentsTest extends OrganizationalUnitTestBase {
             retrieveParents("");
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }

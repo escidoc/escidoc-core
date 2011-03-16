@@ -38,6 +38,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -57,6 +59,8 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(value = Parameterized.class)
 public class ContentModelAdminSearchTest extends SearchTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ContentModelAdminSearchTest.class);
 
     private static final String INDEX_NAME = "content_model_admin";
 
@@ -134,7 +138,7 @@ public class ContentModelAdminSearchTest extends SearchTestBase {
      *             If anything fails.
      */
     private void prepare() throws Exception {
-        log.info("starting SearchTest at "
+        LOGGER.info("starting SearchTest at "
                 + new DateTime(System.currentTimeMillis()
                         + (60 * 60 * 1000), DateTimeZone.UTC).toString());
         // create empty indices/////////////////////////////////////////////////

@@ -865,7 +865,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             try {
                 createdXml = create(ITEM_HANDLER_CODE, prepareItemData(contextId));
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertNotNull(createdXml);
@@ -972,7 +972,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 createdXml = create(CONTAINER_HANDLER_CODE, 
                                 prepareContainerData(contextId));
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertNotNull(createdXml);
@@ -1075,7 +1075,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     create(ORGANIZATIONAL_UNIT_HANDLER_CODE,
                         prepareOrgUnitData(parentIds));
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertNotNull(createdXml);
@@ -1126,7 +1126,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 createdXml =
                     create(USER_ACCOUNT_HANDLER_CODE, prepareUserAccountData());
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertNotNull(createdXml);
@@ -1165,7 +1165,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             createdXml =
                 create(USER_GROUP_HANDLER_CODE, prepareUserGroupData());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         } finally {
             PWCallback.setHandle(PWCallback.DEFAULT_HANDLE);
@@ -1221,7 +1221,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                 contentRelationClient.create(
                         prepareContentRelationData(subjectHref, objectHref)));
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 EscidocRestSoapTestBase.failException(e);
             }
             assertNotNull(createdXml);
@@ -1540,7 +1540,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -1629,7 +1629,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -1680,7 +1680,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -1747,7 +1747,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -1789,7 +1789,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -1879,7 +1879,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -1971,7 +1971,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2025,7 +2025,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2087,7 +2087,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2147,7 +2147,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2212,7 +2212,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2251,7 +2251,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2335,7 +2335,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2400,7 +2400,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2478,7 +2478,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2537,7 +2537,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2596,7 +2596,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2658,7 +2658,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2731,7 +2731,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2810,7 +2810,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2883,7 +2883,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -2928,7 +2928,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3014,7 +3014,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3052,7 +3052,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3090,7 +3090,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3129,7 +3129,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3167,7 +3167,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3219,7 +3219,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3267,7 +3267,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3329,7 +3329,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3399,7 +3399,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3455,7 +3455,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3507,7 +3507,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3577,7 +3577,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3615,7 +3615,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3653,7 +3653,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3691,7 +3691,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3852,7 +3852,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3895,7 +3895,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3944,7 +3944,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -3993,7 +3993,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4042,7 +4042,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4091,7 +4091,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4142,7 +4142,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4195,7 +4195,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4251,7 +4251,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4300,7 +4300,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             }
             return contextXml;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4349,7 +4349,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             }
             return contextXml;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4395,7 +4395,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             }
             return contextXml;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4439,7 +4439,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
                     .failMissingException(expectedExceptionClass);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4490,7 +4490,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             }
             return contextXml;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4549,7 +4549,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             }
             return contextXml;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4633,7 +4633,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             }
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             if (expectedExceptionClass == null) {
                 EscidocRestSoapTestBase.failException(e);
             }
@@ -4663,7 +4663,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
         try {
             userHandle = login(loginname, password, true);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "INIT: Log in of the user failed.", e);
         }
@@ -4693,7 +4693,7 @@ public class AaTestBase extends EscidocRestSoapTestBase {
             }
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Logging out of the user failed.", e);
         } finally {

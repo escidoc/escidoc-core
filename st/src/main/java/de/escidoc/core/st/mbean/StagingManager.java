@@ -39,9 +39,7 @@ import java.io.IOException;
 /**
  * Managed bean for the staging file area. This should be exposed (as a mbean)
  * to a JMX server.
- * 
- * @spring.bean id="eSciDoc.core.st.mbean.StagingManager"
- * @st
+ *
  * @author TTE
  * 
  */
@@ -54,7 +52,7 @@ public class StagingManager {
      * Cleans up the staging file area.<br>
      * This delegates to {@link StagingCleaner}.cleanUp.
      * 
-     * @st
+     *
      */
     @ManagedOperation(description = "Clean up the staging file area.")
     public void cleanUp() {
@@ -82,8 +80,6 @@ public class StagingManager {
      * 
      * @param stagingCleaner
      *            The {@link StagingCleaner} object to use.
-     * @spring.property ref="st.StagingCleaner"
-     * @st
      */
     public void setStagingCleaner(final StagingCleaner stagingCleaner) {
         this.stagingCleaner = stagingCleaner;

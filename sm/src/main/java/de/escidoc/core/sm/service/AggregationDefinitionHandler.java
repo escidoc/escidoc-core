@@ -44,12 +44,7 @@ import java.util.Map;
 /**
  * An statistic aggregationDefinition resource handler.
  * 
- * @spring.bean id="service.AggregationDefinitionHandler" scope="prototype"
- * @interface class=
- *            "de.escidoc.core.sm.service.interfaces.AggregationDefinitionHandlerInterface"
  * @author MIH
- * @service
- * @sm
  */
 public class AggregationDefinitionHandler
     implements AggregationDefinitionHandlerInterface {
@@ -61,10 +56,6 @@ public class AggregationDefinitionHandler
      * 
      * @param aggregationDefinitionHandler
      *            The AggregationDefinition handler bean to inject.
-     * 
-     * @spring.property ref="business.AggregationDefinitionHandler"
-     * @service.exclude
-     * @sm
      */
     public void setAggregationDefinitionHandler(
         final de.escidoc.core.sm.business.interfaces.AggregationDefinitionHandlerInterface aggregationDefinitionHandler) {
@@ -97,7 +88,7 @@ public class AggregationDefinitionHandler
      * @throws SystemException
      *             ex
      * 
-     * @sm
+     *
      */
     @Override
     public String create(final String xmlData) throws AuthenticationException,
@@ -127,7 +118,7 @@ public class AggregationDefinitionHandler
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public void delete(final String id) throws AuthenticationException,
@@ -157,7 +148,7 @@ public class AggregationDefinitionHandler
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public String retrieve(final String id) throws AuthenticationException,

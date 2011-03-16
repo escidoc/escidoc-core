@@ -195,7 +195,7 @@ public class ContentModelFilterTest extends ContentModelTestBase {
         try {
             result = retrieveContentModels(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);

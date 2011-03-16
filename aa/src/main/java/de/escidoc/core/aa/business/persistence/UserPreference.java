@@ -33,7 +33,7 @@ package de.escidoc.core.aa.business.persistence;
  * 
  * @author FRS
  *
- * @aa
+ *
  */
 public class UserPreference extends UserPreferenceBase {
 
@@ -45,7 +45,7 @@ public class UserPreference extends UserPreferenceBase {
     /**
      * The default constructor.
      * 
-     * @aa
+     *
      */
     public UserPreference() {
     }

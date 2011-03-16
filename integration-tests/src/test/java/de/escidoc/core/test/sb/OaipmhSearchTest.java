@@ -38,6 +38,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 import java.util.HashMap;
@@ -54,6 +56,8 @@ import static org.junit.Assert.fail;
  */
 @RunWith(value = Parameterized.class)
 public class OaipmhSearchTest extends SearchTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(OaipmhSearchTest.class);
 
     private static String[] itemIds = null;
 
@@ -117,7 +121,7 @@ public class OaipmhSearchTest extends SearchTestBase {
      *             If anything fails.
      */
     private void prepare() throws Exception {
-        log.info("starting OAIPMHSearchTest at " 
+        LOGGER.info("starting OAIPMHSearchTest at "
                 + new DateTime(System.currentTimeMillis() 
                 + (60 * 60 * 1000), DateTimeZone.UTC).toString());
         // create empty indices/////////////////////////////////////////////////
@@ -172,8 +176,8 @@ public class OaipmhSearchTest extends SearchTestBase {
             }
             Thread.sleep(30000);
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
         }
         // /////////////////////////////////////////////////////////////////////
 
@@ -227,8 +231,8 @@ public class OaipmhSearchTest extends SearchTestBase {
                 // ////////////////////////////////////////////////////////////
             }
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
         }
         try {
             // release container with items as new members
@@ -260,8 +264,8 @@ public class OaipmhSearchTest extends SearchTestBase {
             xml = xml.replaceAll("Hoppe", "Hoppe1");
             container.update(containerIds[0], xml);
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
         }
         waitForIndexerToAppear(
                 itemIds[Constants.NUM_OAIPMH_ITEMS - 1], INDEX_NAME);
@@ -344,7 +348,7 @@ public class OaipmhSearchTest extends SearchTestBase {
             fail("No exception occurred on explain in non-existing database.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME: Assert exception
         }
     }
@@ -401,7 +405,7 @@ public class OaipmhSearchTest extends SearchTestBase {
             search(parameters, "escidoc_fault");
             fail("No exception occured on search in non-existing database.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME: assert exception
         }
     }
@@ -465,7 +469,7 @@ public class OaipmhSearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(FILTER_PARAMETER_STARTRECORD, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -531,7 +535,7 @@ public class OaipmhSearchTest extends SearchTestBase {
                     "1/java.lang.IllegalArgumentException: nDocs must be &gt; 0", 
                     getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 
@@ -561,7 +565,7 @@ public class OaipmhSearchTest extends SearchTestBase {
             assertXmlValidSearchResult(response);
             assertEquals(FILTER_PARAMETER_MAXIMUMRECORDS, getDiagnostics(response));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 

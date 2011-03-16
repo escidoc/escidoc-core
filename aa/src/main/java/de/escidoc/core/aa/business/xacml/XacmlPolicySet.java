@@ -36,6 +36,8 @@ import com.sun.xacml.combine.PolicyCombiningAlgorithm;
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.net.URI;
@@ -48,9 +50,11 @@ import java.util.List;
  * 
  * @author TTE
  * 
- * @aa
+ *
  */
 public class XacmlPolicySet extends PolicySet implements Serializable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(XacmlPolicySet.class);
 
     private static final CombiningAlgFactory factory = CombiningAlgFactory
         .getInstance();
@@ -84,7 +88,7 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
      * @throws UnknownIdentifierException
      *             Thrown if the provided combinig algorithm id is inknown.
      * 
-     * @aa
+     *
      */
     public XacmlPolicySet(final String policySetId,
         final String combiningAlgorithmId, final String description,
@@ -115,7 +119,7 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
      * @throws UnknownIdentifierException
      *             Thrown if the provided combinig algorithm id is inknown.
      * 
-     * @aa
+     *
      */
     public XacmlPolicySet(final String policySetId,
         final String combiningAlgorithmId, final String description,
@@ -147,7 +151,7 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
      * @throws UnknownIdentifierException
      *             Thrown if the provided combinig algorithm id is inknown.
      * 
-     * @aa
+     *
      */
     public XacmlPolicySet(final String policySetId,
         final String combiningAlgorithmId, final String description,
@@ -170,7 +174,7 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
      *             Thrown if the provided identifier is unknown.
      * @throws URISyntaxException
      *             Thrown if no URI can be generated for the provided id.
-     * @aa
+     *
      */
     private static PolicyCombiningAlgorithm getPolicyCombiningAlgorithm(
         final String combiningAlgorithmId) throws UnknownIdentifierException,
@@ -186,7 +190,7 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
      * See Interface for functional description.
      * 
      * @return
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString() {
@@ -194,7 +198,7 @@ public class XacmlPolicySet extends PolicySet implements Serializable {
         try {
             return CustomPolicyBuilder.encode(this);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             return super.toString();
         }
     }

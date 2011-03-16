@@ -93,7 +93,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
             assignContentPid(itemId, componentId, pidParam);
             fail("Missing InvalidStatusException");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -346,7 +346,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
             assignContentPid(itemId, componentId, pidParam);
             fail("Missing OptimisticalLockingException");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -411,7 +411,7 @@ public class ItemContentPIDAssignmentTest extends ItemTestBase {
             assignContentPid(itemId, componentId, taskParam);
             fail("Expect exception if pid element in taskParam is empty.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }

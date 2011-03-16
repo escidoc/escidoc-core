@@ -99,7 +99,7 @@ public class RetrievePropertiesTest extends OrganizationalUnitTestBase {
             retrieveProperties(UNKNOWN_ID);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -129,7 +129,7 @@ public class RetrievePropertiesTest extends OrganizationalUnitTestBase {
             retrieveProperties(CONTEXT_ID);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -158,7 +158,7 @@ public class RetrievePropertiesTest extends OrganizationalUnitTestBase {
             retrieveProperties(null);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -187,7 +187,7 @@ public class RetrievePropertiesTest extends OrganizationalUnitTestBase {
             retrieveProperties("");
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }

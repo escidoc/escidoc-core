@@ -53,12 +53,7 @@ import java.util.Map;
 /**
  * A content relation resource handler.
  * 
- * @spring.bean id="service.ContentRelationHandler" scope="prototype"
- * @interface class=
- *            "de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface"
  * @author SWA
- * @service
- * @om
  */
 public class ContentRelationHandler implements ContentRelationHandlerInterface {
 
@@ -69,10 +64,6 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      * 
      * @param contentRelationHandler
      *            The contentRelationHandler bean to inject.
-     * 
-     * @spring.property ref="business.FedoraContentRelationHandler"
-     * @service.exclude
-     * @om
      */
     public void setContentRelationHandler(
         final de.escidoc.core.om.business.interfaces.ContentRelationHandlerInterface contentRelationHandler) {
@@ -110,7 +101,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *             e
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #create(java.lang.String)
-     * @om
+     *
      */
     @Override
     public String create(final String xmlData) throws AuthenticationException,
@@ -138,7 +129,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *             Thrown if Content Relation is locked by other user
      * @throws SystemException
      *             Thrown if internal error occurs.
-     * @om
+     *
      */
     @Override
     public void delete(final String id) throws AuthenticationException,
@@ -365,7 +356,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *             e
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #retrieve(java.lang.String)
-     * @om
+     *
      */
     @Override
     public String retrieve(final String id) throws AuthenticationException,
@@ -593,16 +584,6 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
         return handler.retrieveMdRecord(id, name);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface
-     *      #retrieveResources(java.lang.String)
-     * @axis.exclude
-     * 
-     */
     @Override
     public String retrieveResources(final String id)
         throws ContentRelationNotFoundException, AuthenticationException,

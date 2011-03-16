@@ -44,7 +44,7 @@ import java.io.IOException;
  * This password can be changed by using the <code>setHandle</code> and reset
  * by using the <code>resetHandle</code> methods
  * 
- * @aa
+ *
  */
 public class PWCallback implements CallbackHandler {
 
@@ -147,7 +147,7 @@ public class PWCallback implements CallbackHandler {
      *             Exception
      * @see javax.security.auth.callback.CallbackHandler#handle
      *      (javax.security.auth.callback.Callback[])
-     * @aa
+     *
      */
     public void handle(final Callback[] callbacks) throws IOException,
         UnsupportedCallbackException {

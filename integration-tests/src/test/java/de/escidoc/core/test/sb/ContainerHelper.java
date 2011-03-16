@@ -173,7 +173,7 @@ public class ContainerHelper extends ContainerTestBase {
                         .getDocument(retrieve(id))) + "\" >"
                     + "<url>http://escidoc.de</url>" + "</param>";
         }
-        catch (RuntimeException e) {
+        catch (final RuntimeException e) {
             EscidocRestSoapTestBase.failException(
                 "Failed to retrieve last modification date of item " + id, e);
         }

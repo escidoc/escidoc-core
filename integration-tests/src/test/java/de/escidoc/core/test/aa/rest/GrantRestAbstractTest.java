@@ -93,7 +93,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
             EscidocRestSoapTestBase.failMissingException(
                 XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -132,7 +132,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
             EscidocRestSoapTestBase.failMissingException(
                 XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -173,7 +173,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         final Document createdDocument =
@@ -247,7 +247,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
             EscidocRestSoapTestBase.failMissingException(
                 "Creating grant with invalid object href not declined. ", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating grant with invalid object href not declined,"
                     + " properly. ", ec, e);
@@ -294,7 +294,7 @@ public class GrantRestAbstractTest extends GrantAbstractTest {
             EscidocRestSoapTestBase.failMissingException(
                 "Creating grant with invalid object href not declined. ", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating grant with invalid object href not declined,"
                     + " properly. ", ec, e);

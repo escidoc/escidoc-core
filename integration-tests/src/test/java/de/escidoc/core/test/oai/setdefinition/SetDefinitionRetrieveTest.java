@@ -65,7 +65,7 @@ public class SetDefinitionRetrieveTest extends SetDefinitionTestBase {
             retrieve(null);
             fail("No exception on retrieve without id..");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);

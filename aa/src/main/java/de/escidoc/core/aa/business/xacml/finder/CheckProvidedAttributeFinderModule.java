@@ -38,7 +38,7 @@ import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 
 import java.lang.reflect.Constructor;
@@ -64,15 +64,12 @@ import java.util.regex.Pattern;
  * This finder module must be the first eSciDoc specific finder module in the
  * chain, but must be placed after the 'standard' finder modules.
  * 
- * @spring.bean id="eSciDoc.core.aa.CheckProvidedAttributeFinderModule"
- * 
  * @author TTE
- * @aa
  */
 public class CheckProvidedAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
-    private static final AppLogger LOG = new AppLogger(CheckProvidedAttributeFinderModule.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(CheckProvidedAttributeFinderModule.class);
 
     private static final String PROVIDED_ATTRIBUTES_ID =
         AttributeIds.INTERNAL_ENVIRONMENT_PREFIX + "provided-attributes";
@@ -90,8 +87,13 @@ public class CheckProvidedAttributeFinderModule
     static {
             try {
                 PROVIDED_ATTRIBUTES_ID_URI = new URI(PROVIDED_ATTRIBUTES_ID);
-            } catch (URISyntaxException e) {
-                LOG.debug("Error on initialising provided attributes ID.", e);
+            } catch (final URISyntaxException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on initialising provided attributes ID.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on initialising provided attributes ID.", e);
+                }
             }
     }
 
@@ -106,10 +108,10 @@ public class CheckProvidedAttributeFinderModule
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -141,10 +143,10 @@ public class CheckProvidedAttributeFinderModule
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -173,7 +175,7 @@ public class CheckProvidedAttributeFinderModule
                     try {
                         objectType = fetchObjectType(ctx, id);
                     }
-                    catch (ResourceNotFoundException e) {
+                    catch (final ResourceNotFoundException e) {
                         objectType = "";
                     }
                     if (!expectedObjectType.equals(objectType)) {
@@ -197,10 +199,10 @@ public class CheckProvidedAttributeFinderModule
                                     String.class, Throwable.class });
                             throw constructor.newInstance(errorMsg, null);
                         }
-                        catch (ResourceNotFoundException e) {
+                        catch (final ResourceNotFoundException e) {
                             throw e;
                         }
-                        catch (Exception e) {
+                        catch (final Exception e) {
                             throw new ResourceNotFoundException(errorMsg, e);
                         }
                     }
@@ -222,7 +224,7 @@ public class CheckProvidedAttributeFinderModule
      * @return Returns an {@link URI} representing the attribute id.
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     * @aa
+     *
      */
     public static URI getAttributeId() throws SystemException {
         return PROVIDED_ATTRIBUTES_ID_URI;

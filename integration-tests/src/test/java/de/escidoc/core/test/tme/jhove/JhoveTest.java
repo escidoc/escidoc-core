@@ -96,7 +96,7 @@ public class JhoveTest extends JhoveTestBase {
             extract(request);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -111,7 +111,7 @@ public class JhoveTest extends JhoveTestBase {
             extract(request);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -125,7 +125,7 @@ public class JhoveTest extends JhoveTestBase {
             extract(request);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -139,7 +139,7 @@ public class JhoveTest extends JhoveTestBase {
             extract(null);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -154,7 +154,7 @@ public class JhoveTest extends JhoveTestBase {
             extract(request);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -170,7 +170,7 @@ public class JhoveTest extends JhoveTestBase {
             extract(request);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -186,7 +186,7 @@ public class JhoveTest extends JhoveTestBase {
             extract(request);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }

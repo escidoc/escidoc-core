@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
  * Object that holds Shibboleth-Userdata.
  * 
  * @author MIH
- * @aa
+ *
  */
 public class ShibbolethUser {
 
@@ -59,7 +59,7 @@ public class ShibbolethUser {
      * @param attName name of attribute
      * @param value value of attribute
      * 
-     * @aa
+     *
      */
     public void addStringAttribute(final String attName, final String value) {
         if (stringAttributes.get(attName) == null) {

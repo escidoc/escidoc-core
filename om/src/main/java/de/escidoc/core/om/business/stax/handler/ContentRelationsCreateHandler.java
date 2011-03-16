@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.application.notfound.ReferencedResource
 import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
@@ -83,8 +83,8 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
     private List<Map<String, String>> relationsData;
 
-    private static final AppLogger LOGGER =
-        new AppLogger(ContentRelationsCreateHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContentRelationsCreateHandler.class);
 
     /**
      * Instantiate a ContentRelationsCreateHandler.
@@ -108,7 +108,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @return The element.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement
+     * @see DefaultHandler#startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
@@ -155,7 +155,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                     }
 
                 }
-                catch (NoSuchAttributeException e) {
+                catch (final NoSuchAttributeException e) {
                     throw new InvalidContentException("Attribute 'href' of the element '" + theName
                             + "' is missing.", e);
                 }
@@ -196,8 +196,13 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                             + "type must be set to 'simple'");
                 }
             }
-            catch (NoSuchAttributeException e) {
-                LOGGER.debug("Error on getting attribute.", e);
+            catch (final NoSuchAttributeException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on getting attribute.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on getting attribute.", e);
+                }
                 element.addAttribute(new Attribute("type", Constants.XLINK_URI,
                     Constants.XLINK_PREFIX, "simple"));
             }
@@ -213,7 +218,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement
+     * @see DefaultHandler#endElement
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
@@ -284,7 +289,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             // targetId = "<info:fedora/" + targetId + ">";
 
         }
-        catch (NoSuchAttributeException e) {
+        catch (final NoSuchAttributeException e) {
             throw new InvalidContentException("Expected attribute in object reference " + "in 'relation' of "
                     + id + " is not set. (create item)", e);
 

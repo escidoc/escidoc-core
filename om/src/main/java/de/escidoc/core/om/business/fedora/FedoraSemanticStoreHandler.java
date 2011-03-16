@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
 import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.SemanticQueryHandler;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -51,16 +51,14 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 /**
- * @spring.bean id="business.FedoraSemanticStoreHandler"
  * @author ROF
- * 
  */
 
 public class FedoraSemanticStoreHandler
     implements SemanticStoreHandlerInterface {
 
-    private static final AppLogger log = new AppLogger(
-        FedoraSemanticStoreHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        FedoraSemanticStoreHandler.class);
 
     private TripleStoreConnector tripleStoreConnector;
 
@@ -89,7 +87,7 @@ public class FedoraSemanticStoreHandler
      *             Thrown in case of internal failure.
      * @throws InvalidTripleStoreOutputFormatException
      *             Thrown if triple store output format is wrong defined.
-     * @om
+     *
      */
     @Override
     public String spo(final String taskParam) throws SystemException,
@@ -104,10 +102,10 @@ public class FedoraSemanticStoreHandler
             sp.parse(taskParam);
             sp.clearHandlerChain();
         }
-        catch (MissingElementValueException e) {
+        catch (final MissingElementValueException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         sp.clearHandlerChain();
@@ -156,12 +154,12 @@ public class FedoraSemanticStoreHandler
                     }
 
                     result = sw.toString();
-                } catch (XMLStreamException e) {
+                } catch (final XMLStreamException e) {
                     throw new WebserverSystemException(e);
                 }
             }
             else {
-                log.warn("No filter defined for result format '" + format
+                LOGGER.warn("No filter defined for result format '" + format
                     + "'.");
             }
         }
@@ -173,7 +171,6 @@ public class FedoraSemanticStoreHandler
      * 
      * @param tripleStoreConnector
      *            The {@link TripleStoreConnector}.
-     * @spring.property ref="business.TripleStoreConnector"
      * 
      */
     public void setTripleStoreConnector(

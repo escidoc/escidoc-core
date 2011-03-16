@@ -62,24 +62,21 @@ import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * Custom implementation of a PolicyFinderModule.
  * <p/>
- * 
- * @spring.bean id="eSciDoc.core.aa.DatabasePolicyFinderModule"
- * 
+ *
  * @author Roland Werner (Accenture)
- * @aa
  */
 public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
     /** The logger. */
-    private static final AppLogger log = new AppLogger(
-        DatabasePolicyFinderModule.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        DatabasePolicyFinderModule.class);
 
     /**
      * The property which is used to specify the schema file to validate against
@@ -116,7 +113,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * policies based on requests, it returns true.
      * 
      * @return true, since finding policies based on requests is supported
-     * @aa
+     *
      */
     @Override
     public boolean isRequestSupported() {
@@ -130,7 +127,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * 
      * @return false, since finding policies based on referencing is not
      *         supported
-     * @aa
+     *
      */
     @Override
     public boolean isIdReferenceSupported() {
@@ -143,7 +140,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * 
      * @param finder
      *            a PolicyFinder used to help in instantiating PolicySets
-     * @aa
+     *
      */
     @Override
     public void init(final PolicyFinder finder) {
@@ -153,9 +150,9 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     /**
      * See Interface for functional description.
      * 
-     * @see com.sun.xacml.finder.PolicyFinderModule#invalidateCache()
+     * @see PolicyFinderModule#invalidateCache()
      * 
-     * @aa
+     *
      */
     @Override
     public void invalidateCache() {
@@ -172,7 +169,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @param type
      * @return
      * @throws IllegalArgumentException
-     * @see com.sun.xacml.finder.PolicyFinderModule#findPolicy(java.net.URI,
+     * @see PolicyFinderModule#findPolicy(URI,
      *      int)
      */
     @Override
@@ -203,7 +200,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
         try {
             roleIdentifierUri = new URI(roleIdentifier.toString());
         }
-        catch (URISyntaxException e1) {
+        catch (final URISyntaxException e1) {
             return createProcessingError(
                 "Error during resolving policy reference. ", e1);
         }
@@ -218,9 +215,14 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                     role = roleDao.retrieveRole(roleIdentifier.toString());
                     role.isLimited();
                     PoliciesCache.putRole(role.getId(), role);
-                }
-                catch (SqlDatabaseSystemException e) {
-                    log.debug("Error on retrieving role '" + roleIdentifier + "'", e);
+                } catch (final SqlDatabaseSystemException e) {
+                    final String message = "Error on retrieving role '" + roleIdentifier + '\'';
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn(message);
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug(message, e);
+                    }
                     role = null;
                 }
             }
@@ -231,19 +233,23 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
             try {
                 result = (XacmlPolicySet) role.getXacmlPolicySet();
             }
-            catch (WebserverSystemException e) {
+            catch (final WebserverSystemException e) {
                 return createProcessingError(
                     "Error during resolving policy reference. ", e);
             }
 
-            if (log.isDebugEnabled()) {
+            if (LOGGER.isDebugEnabled()) {
                 try {
-                    log.debug(role.getXacmlPolicySet().toString());
-                }
-                catch (WebserverSystemException e) {
-                    log.debug(StringUtility.format(
-                        "Fetching of role's policy set failed.",
-                        role.toString()), e);
+                    LOGGER.debug(role.getXacmlPolicySet().toString());
+                } catch (final WebserverSystemException e) {
+                    final String message = StringUtility.format("Fetching of role's policy set failed.",
+                            role.toString());
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn(message);
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug(message, e);
+                    }
                 }
             }
 
@@ -254,7 +260,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                 CustomPolicyBuilder.regeneratePolicySet(result,
                     idReference.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             return createProcessingError(
                 "Error during resolving policy reference. ", e);
         }
@@ -302,7 +308,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @see FinderModuleHelper#retrieveSingleAttribute
      * @see #retrievePoliciesFromCache
      * @see PoliciesCache
-     * @aa
+     *
      */
     @Override
     public PolicyFinderResult findPolicy(final EvaluationCtx context) {
@@ -337,7 +343,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
             return new PolicyFinderResult(result);
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             return createProcessingError(
                 "Exception happened while searching for policies: ", e);
         }
@@ -353,7 +359,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      *         user.
      * @throws Exception
      *             e
-     * @aa
+     *
      */
     private XacmlPolicySet getUserPolicies(final String userId)
         throws Exception {
@@ -384,8 +390,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                     XacmlPolicySet.URN_POLICY_COMBINING_ALGORITHM_ORDERED_PERMIT_OVERRIDES,
                     null, policies);
 
-            if (log.isDebugEnabled()) {
-                log.debug(result.toString());
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(result.toString());
             }
 
             PoliciesCache.putUserPolicies(userId, result);
@@ -405,7 +411,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      *         user.
      * @throws Exception
      *             e
-     * @aa
+     *
      */
     private XacmlPolicySet getUserGroupPolicies(final String userId)
         throws Exception {
@@ -469,12 +475,11 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @param e
      *            The exception causing the error.
      * @return Returns the created <code>PolicyFinderResult</code> object.
-     * @aa
+     *
      */
-    private PolicyFinderResult createProcessingError(
-        final String msg, final Exception e) {
+    private static PolicyFinderResult createProcessingError(final String msg, final Exception e) {
 
-        log.error(msg, e);
+        LOGGER.error(msg, e);
         final Exception ex;
         ex = e instanceof EscidocException ? e : new WebserverSystemException(e);
         return new PolicyFinderResult(CustomStatusBuilder.createErrorStatus(
@@ -490,7 +495,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      *         of default policies.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private AbstractPolicy retrieveDefaultPolicies()
         throws WebserverSystemException {
@@ -502,7 +507,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                         EscidocRole.DEFAULT_USER_ROLE_ID),
                         PolicyReference.POLICYSET_REFERENCE, policyFinder);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -525,7 +530,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @throws WebserverSystemException
      *             In case of an internal error.
      * 
-     * @aa
+     *
      */
     private XacmlPolicySet retrieveUserRolesPolicies(final String userId)
         throws WebserverSystemException {
@@ -545,7 +550,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
             return retrieveRolesPolicies(roleGrants, userId, true);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -566,7 +571,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @throws WebserverSystemException
      *             In case of an internal error.
      * 
-     * @aa
+     *
      */
     private Map<String, XacmlPolicySet> retrieveGroupRolesPolicies(
         final List<String> groupIds) throws WebserverSystemException {
@@ -595,7 +600,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
             }
             return ret;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
     }
@@ -621,7 +626,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @throws WebserverSystemException
      *             In case of an internal error.
      * 
-     * @aa
+     *
      */
     private XacmlPolicySet retrieveRolesPolicies(
         final Map roleGrants, final String userOrGroupId, final boolean isUser)
@@ -656,7 +661,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
             }
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
         return null;
@@ -664,8 +669,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
     /**
      * Injects the policies cache proxy.
-     * 
-     * @spring.property ref="resource.PoliciesCacheProxy"
+     *
      * @param policiesCacheProxy
      *            the {@link PoliciesCacheProxy} to inject.
      */
@@ -694,7 +698,6 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * 
      * @param roleDao
      *            The {@link EscidocRoleDaoInterface} implementation.
-     * @spring.property ref="persistence.EscidocRoleDao"
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
 
@@ -706,7 +709,6 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * 
      * @param userAccountHandler
      *            The {@link UserAccountHandlerInterface} implementation.
-     * @spring.property ref="business.UserAccountHandler"
      */
     public void setUserAccountHandler(
         final UserAccountHandlerInterface userAccountHandler) {
@@ -719,7 +721,6 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * 
      * @param userGroupHandler
      *            The {@link UserGroupHandlerInterface} implementation.
-     * @spring.property ref="business.UserGroupHandler"
      */
     public void setUserGroupHandler(
         final UserGroupHandlerInterface userGroupHandler) {

@@ -51,7 +51,7 @@ import java.util.Set;
  * will represent the Container Resource.
  * 
  * @author ROF
- * @om
+ *
  */
 public class ContainerHandlerCreate extends ContainerResourceListener {
 
@@ -117,7 +117,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                             .toString(XmlUtility.CHARACTER_ENCODING),
                         containerId, contentModel);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
@@ -140,7 +140,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                         values.put(outsideKey, outsideValue
                                 .toString(XmlUtility.CHARACTER_ENCODING));
                     }
-                } catch (UnsupportedEncodingException e) {
+                } catch (final UnsupportedEncodingException e) {
                     throw new EncodingSystemException(e);
                 }
 
@@ -176,7 +176,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
                                     insideValue
                                             .toString(XmlUtility.CHARACTER_ENCODING));
 
-                        } catch (UnsupportedEncodingException e) {
+                        } catch (final UnsupportedEncodingException e) {
                             throw new EncodingSystemException(e);
                         }
                         mdRecords.add(mdRecord);

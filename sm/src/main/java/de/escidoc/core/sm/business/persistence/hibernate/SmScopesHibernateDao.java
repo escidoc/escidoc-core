@@ -47,8 +47,6 @@ import java.util.Collection;
  * Database-Backend for the Scopes database-table.
  * 
  * @author MIH
- * @spring.bean id="persistence.SmScopesDao"
- * @sm
  */
 public class SmScopesHibernateDao     
     extends AbstractHibernateDao
@@ -57,7 +55,7 @@ public class SmScopesHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmScopesDaoInterface
+     * @see SmScopesDaoInterface
      *      #save(de.escidoc.core.sm.business.persistence.hibernate.Scope)
      * 
      * @param scope
@@ -65,7 +63,7 @@ public class SmScopesHibernateDao
      * @throws SqlDatabaseSystemException
      *             e
      * 
-     * @sm
+     *
      */
     @Override
     public void save(final Scope scope)
@@ -76,7 +74,7 @@ public class SmScopesHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmScopesDaoInterface
+     * @see SmScopesDaoInterface
      *      #update(de.escidoc.core.sm.business.persistence.hibernate.Scope)
      * 
      * @param scope
@@ -84,7 +82,7 @@ public class SmScopesHibernateDao
      * @throws SqlDatabaseSystemException
      *             e
      * 
-     * @sm
+     *
      */
     @Override
     public void update(final Scope scope)
@@ -95,7 +93,7 @@ public class SmScopesHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmScopesDaoInterface
+     * @see SmScopesDaoInterface
      *      #delete(de.escidoc.core.sm.business.persistence.hibernate.Scope)
      * 
      * @param scope
@@ -103,7 +101,7 @@ public class SmScopesHibernateDao
      * 
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
-     * @sm
+     *
      */
     @Override
     public void delete(final Scope scope)
@@ -123,7 +121,7 @@ public class SmScopesHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmScopesDaoInterface
+     * @see SmScopesDaoInterface
      *      #retrieve(java.lang.Integer)
      * 
      * @param id
@@ -134,7 +132,7 @@ public class SmScopesHibernateDao
      *             Thrown if scope with given id was not found.
      * @return Scope scope as hibernate Object
      * 
-     * @sm
+     *
      */
     @Override
     public Scope retrieve(final String id)
@@ -146,13 +144,13 @@ public class SmScopesHibernateDao
                         getHibernateTemplate().get(Scope.class,
                             id);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -168,14 +166,14 @@ public class SmScopesHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmScopesDaoInterface
+     * @see SmScopesDaoInterface
      *      #retrieveScopes()
      * 
      * @return Collection of Scopes as hibernate Objects
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<Scope> retrieveScopes() throws SqlDatabaseSystemException {
@@ -186,7 +184,7 @@ public class SmScopesHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmScopesDaoInterface
+     * @see SmScopesDaoInterface
      *      #retrieveScopes(java.util.Collection)
      * 
      * @param scopeIds
@@ -195,7 +193,7 @@ public class SmScopesHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<Scope> retrieveScopes(final Collection<String> scopeIds)
@@ -257,14 +255,14 @@ public class SmScopesHibernateDao
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.SmScopesDaoInterface
+     * @see SmScopesDaoInterface
      *      #retrieveScopeIds()
      * 
      * @return Collection of Scope-ids
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<String> retrieveScopeIds()
@@ -292,8 +290,6 @@ public class SmScopesHibernateDao
      * 
      * @param mySessionFactory
      *            The sessionFactory to set.
-     * @spring.property ref="sm.SessionFactory"
-     * @sm
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 

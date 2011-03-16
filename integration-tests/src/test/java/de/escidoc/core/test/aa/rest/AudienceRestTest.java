@@ -109,7 +109,7 @@ public class AudienceRestTest extends AudienceAbstractTest {
             ((ItemClient) getClient(ITEM_HANDLER_CODE)).retrieveContent(
                     itemId, audienceComponentId);
         } 
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                     "retrieving content failed. ", e);
         }
@@ -144,7 +144,7 @@ public class AudienceRestTest extends AudienceAbstractTest {
                     itemId, privateComponentId);
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         } finally {

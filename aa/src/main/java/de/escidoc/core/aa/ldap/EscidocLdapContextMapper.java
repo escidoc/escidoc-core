@@ -30,7 +30,7 @@
 package de.escidoc.core.aa.ldap;
 
 import de.escidoc.core.aa.business.authorisation.Constants;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.AuthenticationCredentialsNotFoundException;
@@ -51,12 +51,12 @@ import java.util.HashSet;
  * Writes all attributes from LDAP into EscidocLdapUserDetails-Object.
  * 
  * @author MIH
- * @aa
+ *
  */
 public class EscidocLdapContextMapper implements UserDetailsContextMapper {
 
-    private static final AppLogger LOG = new AppLogger(
-        EscidocLdapContextMapper.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        EscidocLdapContextMapper.class);
     
     private static final Collection<String> IGNORED_VALUES = new HashSet<String>();
 
@@ -73,7 +73,7 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
      * 
      * @return UserDetails object with userDetails
      * 
-     * @aa
+     *
      */
     @Override
     public UserDetails mapUserFromContext(final DirContextOperations ctx,
@@ -111,15 +111,20 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
                                     if (val != null && val.length() != 0) {
                                         user.addStringAttribute(key, val);
                                     }
-                                } catch (Exception e) {
-                                    LOG.debug("Error on setting attribute.", e);
+                                } catch (final Exception e) {
+                                    if(LOGGER.isWarnEnabled()) {
+                                        LOGGER.warn("Error on setting attribute.");
+                                    }
+                                    if(LOGGER.isDebugEnabled()) {
+                                        LOGGER.debug("Error on setting attribute.", e);
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        } catch (NamingException e) {
+        } catch (final NamingException e) {
             throw new AuthenticationCredentialsNotFoundException(
                     "User-Attributes not found", e);
         }
@@ -135,7 +140,7 @@ public class EscidocLdapContextMapper implements UserDetailsContextMapper {
      * @param arg0 UserDetails
      * @param arg1 DirContextAdapter
      * 
-     * @aa
+     *
      */
     @Override
     public void mapUserToContext(

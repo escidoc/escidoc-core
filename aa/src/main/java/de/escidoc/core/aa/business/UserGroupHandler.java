@@ -93,7 +93,7 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.TaskParamHandler;
 import de.escidoc.core.common.util.stax.handler.filter.FilterHandler;
@@ -108,14 +108,13 @@ import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler
  * Implementation for the user group handler.
  *
  * @author sche
- * @aa
  */
 public class UserGroupHandler implements UserGroupHandlerInterface {
     /**
      * The logger.
      */
-    private static final AppLogger LOG = new AppLogger(
-        UserGroupHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        UserGroupHandler.class);
 
     private static final Pattern USER_FILTER_PATTERN = Pattern
         .compile("(?s)\"{0,1}(" + Constants.FILTER_USER + '|'
@@ -169,7 +168,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             sp.parse(in);
             sp.clearHandlerChain();
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -281,10 +280,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             sp.parse(in);
             sp.clearHandlerChain();
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -334,19 +333,19 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".activate: " + e.getClass().getName();
@@ -360,9 +359,13 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             setModificationValues(userGroup, null);
         }
-        catch (UniqueConstraintViolationException e) {
-            // can not occur
-            LOG.debug("Error on setting modification values.", e);
+        catch (final UniqueConstraintViolationException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on getting users for group.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on setting modification values.", e);
+            }
         }
         userGroup.setActive(Boolean.TRUE);
         userGroupDao.update(userGroup);
@@ -410,19 +413,19 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".activate: " + e.getClass().getName();
@@ -436,9 +439,13 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             setModificationValues(userGroup, null);
         }
-        catch (UniqueConstraintViolationException e) {
-            // can not occur
-            LOG.debug("Error on setting modification values.", e);
+        catch (final UniqueConstraintViolationException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on setting modification values.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on setting modification values.", e);
+            }
         }
         userGroup.setActive(Boolean.FALSE);
         userGroupDao.update(userGroup);
@@ -500,16 +507,16 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             sp.parse(in);
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (RoleNotFoundException e) {
+        catch (final RoleNotFoundException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName()
                     + ".createGrant: " + e.getClass().getName();
@@ -542,7 +549,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 objectAttributes =
                     objectAttributeResolver.resolveObjectAttributes(objectId);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new SystemException(e);
             }
 
@@ -668,10 +675,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             sp.parse(in);
             sp.clearHandlerChain();
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         final List<String[]> selectors = groupHandler.getGroupSelectors();
@@ -793,10 +800,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             sp.parse(in);
             sp.clearHandlerChain();
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         final List<String> membersToRemove =
@@ -911,12 +918,12 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                         }
                     }
                 }
-                catch (MissingMethodParameterException e) {
+                catch (final MissingMethodParameterException e) {
                     throw new SystemException(
                         "Unexpected exception during evaluating access "
                             + "rights.", e);
                 }
-                catch (ResourceNotFoundException e) {
+                catch (final ResourceNotFoundException e) {
                     throw new SystemException(
                         "Unexpected exception during evaluating access "
                             + "rights.", e);
@@ -1014,8 +1021,13 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                                 throw new UserAccountNotFoundException("");
                             }
                         }
-                        catch (UserAccountNotFoundException e) {
-                            LOG.debug("Error on getting user account.", e);
+                        catch (final UserAccountNotFoundException e) {
+                            if(LOGGER.isWarnEnabled()) {
+                                LOGGER.warn("Error on getting user account.");
+                            }
+                            if(LOGGER.isDebugEnabled()) {
+                                LOGGER.debug("Error on getting user account.", e);
+                            }
                             // if user has no groups or user not found,
                             // write nonexisting group in query
                             replacement.append('\"');
@@ -1169,7 +1181,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.ESCIDOC_CORE_AA_OU_ATTRIBUTE_NAME);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException(e);
         }
         final Set<UserAttribute> attributes =
@@ -1552,11 +1564,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 filteredCurrentGrants.add(grantsMap.get(obj[1]));
             }
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             throw new SystemException("Unexpected exception "
                 + "during evaluating access rights.", e);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new SystemException("Unexpected exception "
                 + "during evaluating access rights.", e);
         }
@@ -1695,16 +1707,16 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         try {
             sp.parse(XmlUtility.convertToByteArrayInputStream(taskParam));
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final String msg =
                 MSG_UNEXPECTED_EXCEPTION + getClass().getName() + ".parse: "
                     + e.getClass().getName();
@@ -1766,10 +1778,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             fp.parse(new ByteArrayInputStream(filterXML
                 .getBytes(XmlUtility.CHARACTER_ENCODING)));
         }
-        catch (InvalidContentException e) {
+        catch (final InvalidContentException e) {
             throw new XmlCorruptedException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -1818,11 +1830,11 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                         + "one of the specified grants");
             }
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             throw new SystemException("Unexpected exception "
                 + "during evaluating access rights.", e);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new SystemException("Unexpected exception "
                 + "during evaluating access rights.", e);
         }
@@ -1879,7 +1891,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             Thrown in case of an internal error.
      *
      */
-    private void sendUserGroupUpdateEvent(final String groupId)
+    private static void sendUserGroupUpdateEvent(final String groupId)
         throws WebserverSystemException {
 
         PoliciesCache.clearGroupPolicies(groupId);
@@ -1895,7 +1907,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             Thrown in case of an internal error.
      *
      */
-    private void sendUserGroupMemberUpdateEvent(final String groupId)
+    private static void sendUserGroupMemberUpdateEvent(final String groupId)
         throws WebserverSystemException {
 
         PoliciesCache.clearUserGroups();
@@ -1914,7 +1926,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void setCreationValues(final UserGroup userGroup)
+    private static void setCreationValues(final UserGroup userGroup)
         throws SystemException {
 
         // initialize creation-date value
@@ -2020,9 +2032,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *
      */
     public void setRenderer(final UserGroupRendererInterface renderer) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("setRenderer", renderer));
-        }
         this.renderer = renderer;
     }
 
@@ -2034,9 +2043,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("setRoleDao", roleDao));
-        }
         this.roleDao = roleDao;
     }
 
@@ -2049,9 +2055,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *
      */
     public void setTsu(final TripleStoreUtility tsu) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("setTsu", tsu));
-        }
         this.tsu = tsu;
     }
 
@@ -2063,11 +2066,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *
      */
     public void setUserAccountDao(final UserAccountDaoInterface userAccountDao) {
-        if (LOG.isDebugEnabled()) {
-            LOG
-                .debug(StringUtility
-                    .format("setUserAccountDao", userAccountDao));
-        }
         this.userAccountDao = userAccountDao;
     }
 
@@ -2079,9 +2077,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *
      */
     public void setUserGroupDao(final UserGroupDaoInterface userGroupDao) {
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("setUserGroupDao", userGroupDao));
-        }
         this.userGroupDao = userGroupDao;
     }
 
@@ -2109,9 +2104,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
-
-        LOG.debug("setPdp");
-
         this.pdp = pdp;
     }
 
@@ -2123,12 +2115,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      */
     public void setObjectAttributeResolver(
         final ObjectAttributeResolver objectAttributeResolver) {
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug(StringUtility.format("setObjectAttributeResolver",
-                objectAttributeResolver));
-        }
-
         this.objectAttributeResolver = objectAttributeResolver;
     }
 

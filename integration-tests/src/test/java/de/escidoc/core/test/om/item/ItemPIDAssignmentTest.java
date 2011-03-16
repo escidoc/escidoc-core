@@ -210,7 +210,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             assignObjectPid(itemId, pidParam);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -237,7 +237,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             assignObjectPid(itemId, false);
             fail("InvalidStatusException expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -369,7 +369,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             assignVersionPid(versionId, pidParam);
             fail("InvalidStatusException expected. ");
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -461,7 +461,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             submit(itemVersionId, getTheLastModificationParam(itemId, false));
             release(itemVersionId, getTheLastModificationParam(itemId, false));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -483,7 +483,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             submit(itemVersionId, getTheLastModificationParam(itemId, false));
             release(itemVersionId, getTheLastModificationParam(itemId, false));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -502,7 +502,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
 
             pid = assignVersionPid(itemVersionId, pidParam);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ReadonlyVersionException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -586,7 +586,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Prepare: Creating item failed.", e);
         }
@@ -597,7 +597,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             submit(versionId, getTheLastModificationParam(false, id));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Prepare: Submitting item failed.", e);
         }
@@ -606,7 +606,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             release(versionId, getTheLastModificationParam(false, id));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Prepare: Releasing item failed.", e);
         }
@@ -617,7 +617,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             String pidParam = getPidParam(id, ITEM_URL + id);
             pidXml = assignVersionPid(id, pidParam);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -632,7 +632,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             retrievedXml = retrieve(versionId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException("Retrieving item failed.", e);
         }
 
@@ -717,7 +717,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             String versionHistory = retrieveVersionHistory(itemId);
             assertXmlValidVersionHistory(getTransport(), versionHistory);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -747,7 +747,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             pid = assignVersionPid(itemVersionId, pidParam);
             fail("InvalidStatusException expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -862,7 +862,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             assignObjectPid(itemId, null);
             fail("MissingMethodParameterException expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -872,7 +872,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             assignObjectPid(itemId, "");
             fail("MissingMethodParameterException expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -898,7 +898,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             assignVersionPid(versionId, null);
             fail("MissingMethodParameterException expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -908,7 +908,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             assignVersionPid(versionId, "");
             fail("MissingMethodParameterException expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -1129,7 +1129,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // pid = assignObjectPid(theItemId, pidParam);
         // fail("InvalidStatusException expected. ");
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // Class<?> ec = InvalidStatusException.class;
         // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
         // + " expected.", ec, e);
@@ -1187,7 +1187,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // pid = assignObjectPid(theItemId, pidParam);
         // fail("InvalidStatusException expected. ");
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // Class<?> ec = InvalidStatusException.class;
         // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
         // + " expected.", ec, e);
@@ -1263,7 +1263,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         // pid = assignContentPid(theItemId, componentId, pidParam);
         // fail("InvalidStatusException expected. ");
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // Class<?> ec = InvalidStatusException.class;
         // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
         // + " expected.", ec, e);
@@ -1356,7 +1356,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
                     fail("ObjectPid assignment after release is forbidden by"
                         + " configuration");
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     Class<?> ec = InvalidStatusException.class;
                     EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                         + " expected.", ec, e);
@@ -1375,7 +1375,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
                         + " without objectPid.");
                 }
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 Class<?> ec = InvalidStatusException.class;
                 EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                     + " expected.", ec, e);
@@ -1389,7 +1389,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
                     fail("Through the configuration is the Item not releasable"
                         + " without versionPid.");
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     Class<?> ec = InvalidStatusException.class;
                     EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                         + " expected.", ec, e);
@@ -1450,7 +1450,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
                     + "configuration.");
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -1551,7 +1551,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             pidXml = assignVersionPid(itemId, pidParam);
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             fail("AssignVersionPid() does check for a version number.");
         }
 
@@ -1628,7 +1628,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
         try {
             pid = assignVersionPid(versionId, pidParam);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -1769,7 +1769,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             assignVersionPid(itemId, pidParam);
             fail("Missing OptimisticalLockingException");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
 
@@ -1800,7 +1800,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             assignObjectPid(itemId, pidParam);
             fail("Missing OptimisticalLockingException");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
 
@@ -1896,7 +1896,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             assignVersionPid(itemId, taskParam);
             fail("Expect exception if pid element in taskParam is empty.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -1929,7 +1929,7 @@ public class ItemPIDAssignmentTest extends ItemTestBase {
             assignObjectPid(itemId, taskParam);
             fail("Expect exception if pid element in taskParam is empty.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }

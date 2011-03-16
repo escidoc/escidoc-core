@@ -31,7 +31,8 @@ package de.escidoc.core.test.common.resources;
 import de.escidoc.core.test.EscidocTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.HttpHelper;
-import de.escidoc.core.test.common.logger.AppLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
@@ -48,8 +49,7 @@ import java.io.InputStream;
  */
 public class ResourceProvider {
 
-    private static AppLogger log =
-        new AppLogger(ResourceProvider.class.getName());
+    private final static Logger LOGGER = LoggerFactory.getLogger(ResourceProvider.class);
 
     private static final String DEFAULT_PACKAGE =
         "/data/";
@@ -156,8 +156,8 @@ public class ResourceProvider {
             f.flush();
             f.close();
         }
-        catch (IOException e) {
-            log.error(e);
+        catch (final IOException e) {
+            LOGGER.error("", e);
             throw e;
         }
     }
@@ -172,7 +172,7 @@ public class ResourceProvider {
      * @param appendix
      *            The path to append.
      * @return The concatenated path.
-     * @st
+     *
      */
     public static String concatenatePath(
         final String path, final String appendix) {

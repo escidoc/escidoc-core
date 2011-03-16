@@ -75,7 +75,7 @@ public class RetrieveResourcesRestTest extends OrganizationalUnitTestBase {
         try {
             retrievedXml = retrieveResources(objid);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(
                 "Retrieving list of resources of existing OU failed.", e);
         }
@@ -137,7 +137,7 @@ public class RetrieveResourcesRestTest extends OrganizationalUnitTestBase {
                 "Retrieving of resources of OU with providing unknown id"
                     + " has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Retrieving of resources of OU with providing unknown id"
                     + " has not been declined, correctly.", ec, e);
@@ -171,7 +171,7 @@ public class RetrieveResourcesRestTest extends OrganizationalUnitTestBase {
                     + " of resource of another resource type"
                     + " has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Retrieving of resources of OU with providing id"
                     + " of resource of another resource type"
@@ -204,7 +204,7 @@ public class RetrieveResourcesRestTest extends OrganizationalUnitTestBase {
                 "Retrieving of resources of OU without providing id"
                     + " has not been declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Retrieving of resources of OU without providing id"
                     + " has not been declined, correctly.", ec, e);

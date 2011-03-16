@@ -145,7 +145,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
             assertXmlValidAggregationDefinition(result);
             primKeys.add(getPrimKey(result));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             fail("Exception occured " + e.toString());
         }
     }
@@ -187,7 +187,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
             fail("No exception occured on retrieve with invalid id.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals("AggregationDefinitionNotFoundException",
                 exceptionType);
@@ -212,7 +212,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
             fail("No exception occured on create with invalid xml.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals(exceptionType, "XmlSchemaValidationException");
         }
@@ -235,7 +235,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
             fail("No exception occured on create with wrong namespace-prefix.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals(exceptionType, "XmlCorruptedException");
         }
@@ -293,7 +293,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
             fail("No exception occured on create with wrong scope.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals("ScopeNotFoundException", exceptionType);
         }
@@ -317,7 +317,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
                 + "reserved expression in fieldname.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals("SqlDatabaseSystemException", exceptionType);
         }
@@ -341,7 +341,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
                 + "whitespace in tablename.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals("SqlDatabaseSystemException", exceptionType);
         }
@@ -365,7 +365,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
                 + "whitespace in fieldname.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals("SqlDatabaseSystemException", exceptionType);
         }
@@ -389,7 +389,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
                 + "whitespace in indexname.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals("SqlDatabaseSystemException", exceptionType);
         }
@@ -413,7 +413,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
                 + "whitespace in index fieldname.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals("SqlDatabaseSystemException", exceptionType);
         }
@@ -437,7 +437,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
                 + "quote in tablename.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals("SqlDatabaseSystemException", exceptionType);
         }
@@ -461,7 +461,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
                 + "quote in fieldname.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals("SqlDatabaseSystemException", exceptionType);
         }
@@ -485,7 +485,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
                 + "quote in indexname.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals("SqlDatabaseSystemException", exceptionType);
         }
@@ -509,7 +509,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
                 + "quote in index fieldname.");
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             String exceptionType = e.getClass().getSimpleName();
             assertEquals("SqlDatabaseSystemException", exceptionType);
         }
@@ -597,7 +597,7 @@ public class AggregationDefinitionTest extends AggregationDefinitionTestBase {
         try {
             result = retrieveAggregationDefinitions(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);

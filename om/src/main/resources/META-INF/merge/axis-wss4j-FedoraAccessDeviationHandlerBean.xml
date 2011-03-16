@@ -1,3 +1,0 @@
-<requestFlow>
-    <handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
-</requestFlow>

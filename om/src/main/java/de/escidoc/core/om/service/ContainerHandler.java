@@ -72,13 +72,8 @@ import java.util.Map;
 
 /**
  * A container resource handler.
- * 
- * @spring.bean id="service.ContainerHandler" scope="prototype"
- * @interface 
- *            class="de.escidoc.core.om.service.interfaces.ContainerHandlerInterface"
+ *
  * @author TTE
- * @service
- * @om
  */
 public class ContainerHandler implements ContainerHandlerInterface {
 
@@ -89,10 +84,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * 
      * @param containerHandler
      *            The container handler bean to inject.
-     * 
-     * @spring.property ref="business.FedoraContainerHandler"
-     * @service.exclude
-     * @om
      */
     public void setContainerHandler(
         final de.escidoc.core.om.business.interfaces.ContainerHandlerInterface containerHandler) {
@@ -131,7 +122,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws InvalidStatusException
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #delete(java.lang.String)
-     * @om
+     *
      */
     @Override
     public void delete(final String id) throws ContainerNotFoundException,
@@ -149,7 +140,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @return
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #retrieve(java.lang.String)
-     * @om
+     *
      */
     @Override
     public String retrieve(final String id)
@@ -174,7 +165,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws ReadonlyAttributeViolationException
      * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
      *      #update(java.lang.String, java.lang.String)
-     * @om
+     *
      */
     @Override
     public String update(final String id, final String xmlData)
@@ -298,7 +289,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @return
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
      *      #createMetadataRecord(java.lang.String, java.lang.String)
-     * @service.exclude
      */
     @Override
     @Deprecated
@@ -318,7 +308,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @return
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
      *      #createMdRecord(java.lang.String, java.lang.String)
-     * @service.exclude
      */
     @Override
     public String createMdRecord(final String id, final String xmlData)
@@ -337,7 +326,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @return
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
      *      #retrieveMdRecord(java.lang.String, java.lang.String)
-     * @om
+     *
      */
     @Override
     public String retrieveMdRecord(final String id, final String mdRecordId)
@@ -348,17 +337,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
         return handler.retrieveMdRecord(id, mdRecordId);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @param mdRecordId
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
-     *      #retrieveMdRecordContent(java.lang.String, java.lang.String)
-     * @axis.exclude
-     * @om
-     */
     @Override
     public String retrieveMdRecordContent(
         final String id, final String mdRecordId)
@@ -369,16 +347,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
         return handler.retrieveMdRecordContent(id, mdRecordId);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
-     *      #retrieveDcRecordContent(java.lang.String)
-     * @axis.exclude
-     * @om
-     */
     @Override
     public String retrieveDcRecordContent(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
@@ -386,20 +354,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
         return handler.retrieveDcRecordContent(id);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @param mdRecordId
-     * @param xmlData
-     * @return
-     * @throws InvalidStatusException
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
-     *      #updateMetadataRecord(java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @service.exclude
-     * @om
-     */
     @Override
     public String updateMetadataRecord(
         final String id, final String mdRecordId, final String xmlData)
@@ -412,19 +366,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
         return handler.updateMetadataRecord(id, mdRecordId, xmlData);
     }
 
-    //
-    // Subresource - metadata records
-    //
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
-     *      #retrieveMdRecords(java.lang.String)
-     * @om
-     */
     @Override
     public String retrieveMdRecords(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
@@ -433,19 +374,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
         return handler.retrieveMdRecords(id);
     }
 
-    //
-    // Subresource - properties
-    //
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
-     *      #retrieveProperties(java.lang.String)
-     * @om
-     */
     @Override
     public String retrieveProperties(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
@@ -454,16 +382,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
         return handler.retrieveProperties(id);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
-     *      #retrieveResources(java.lang.String)
-     * @axis.exclude
-     * @om
-     */
     @Override
     public String retrieveResources(final String id)
         throws ContainerNotFoundException, MissingMethodParameterException,
@@ -472,20 +390,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
         return handler.retrieveResources(id);
     }
 
-    /**
-     * @param id
-     * @param resourceName
-     * @return
-     * @throws SystemException
-     * @throws ContainerNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws OperationNotFoundException
-     * 
-     * @axis.exclude
-     * 
-     */
     @Override
     public EscidocBinaryContent retrieveResource(
         final String id, final String resourceName,
@@ -539,7 +443,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @return
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
      *      #retrieveContentRelations(java.lang.String)
-     * @om
+     *
      */
     @Override
     public String retrieveRelations(final String id)
@@ -699,7 +603,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#addContentRelations(java.lang.String,
      *      java.lang.String)
      * 
-     * @om
+     *
      */
     @Override
     public String addContentRelations(final String id, final String param)
@@ -735,7 +639,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#removeContentRelations(java.lang.String,
      *      java.lang.String)
      * 
-     * @om
+     *
      */
     @Override
     public String removeContentRelations(final String id, final String param)

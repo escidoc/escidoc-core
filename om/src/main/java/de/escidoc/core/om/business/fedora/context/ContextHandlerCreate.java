@@ -52,7 +52,7 @@ import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssigned
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.xml.Elements;
@@ -78,8 +78,8 @@ import java.util.Map;
  */
 public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
-    private static final AppLogger LOGGER = new AppLogger(
-        ContextHandlerCreate.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ContextHandlerCreate.class);
 
     private static final String XPATH_PROPERTIES = "/context/properties";
 

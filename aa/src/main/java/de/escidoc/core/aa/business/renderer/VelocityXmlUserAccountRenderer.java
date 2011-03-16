@@ -57,9 +57,6 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
  * User account renderer implementation using the velocity template engine.
  * 
  * @author TTE
- * @spring.bean 
- *              id="eSciDoc.core.aa.business.renderer.VelocityXmlUserAccountRenderer"
- * @aa
  */
 public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     implements UserAccountRendererInterface {
@@ -78,9 +75,9 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param userAccount
      * @return
      * @throws SystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#
+     * @see UserAccountRendererInterface#
      *      render(Map)
-     * @aa
+     *
      */
     @Override
     public String render(final UserAccount userAccount) throws SystemException {
@@ -104,8 +101,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addUserAccountValues(
-        final UserAccount userAccount, final Map<String, Object> values)
+    private static void addUserAccountValues(final UserAccount userAccount, final Map<String, Object> values)
         throws SystemException {
         DateTime lmdDateTime =
             new DateTime(userAccount.getLastModificationDate());
@@ -143,9 +139,9 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param currentGrants
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#renderCurrentGrants
+     * @see UserAccountRendererInterface#renderCurrentGrants
      *      (de.escidoc.core.aa.business.UserAccount, java.util.List)
-     * @aa
+     *
      */
     @Override
     public String renderCurrentGrants(
@@ -194,7 +190,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * 
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#renderCurrentGrants
+     * @see UserAccountRendererInterface#renderCurrentGrants
      *      (de.escidoc.core.aa.business.UserAccount, java.util.List)
      */
     @Override
@@ -234,9 +230,9 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param grant
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#renderGrant
+     * @see UserAccountRendererInterface#renderGrant
      *      (de.escidoc.core.aa.business.persistence.RoleGrant)
-     * @aa
+     *
      */
     @Override
     public String renderGrant(final RoleGrant grant)
@@ -321,9 +317,9 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param userAccount
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface
+     * @see UserAccountRendererInterface
      *      #renderResources(de.escidoc.core.aa.business.UserAccount)
-     * @aa
+     *
      */
     @Override
     public String renderResources(final UserAccount userAccount)
@@ -352,7 +348,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * 
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface
+     * @see UserAccountRendererInterface
      *      #renderUserAccounts(de.escidoc.core.aa.business.UserAccount)
      */
     @Override
@@ -388,7 +384,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * 
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private void addCommonValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -404,7 +400,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * 
      * @param values
      *            The {@link Map} to that the values shall be added.
-     * @aa
+     *
      */
     private static void addUserAccountNamespaceValues(
         final Map<String, Object> values) {
@@ -418,9 +414,9 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * 
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
-    private void addUserAccountListValues(final Map<String, Object> values) {
+    private static void addUserAccountListValues(final Map<String, Object> values) {
 
         addUserAccountsNamespaceValues(values);
         values.put("userAccountListTitle", "User Account List");
@@ -432,7 +428,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * 
      * @param values
      *            The MAP to add the values to.
-     * @aa
+     *
      */
     private static void addUserAccountsNamespaceValues(
         final Map<String, Object> values) {
@@ -451,7 +447,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -467,7 +463,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *            The user account for that data shall be created.
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
     private static void addResourcesValues(
         final UserAccount userAccount, final Map<String, Object> values) {
@@ -488,7 +484,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @return Returns the <code>UserAccountXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private static UserAccountXmlProvider getUserAccountXmlProvider()
         throws WebserverSystemException {
@@ -503,9 +499,8 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
         return renderPreference(userAccount, preference, true);
     }
 
-    private String renderPreference(
-        final UserAccount userAccount, final UserPreference preference,
-        final boolean isRootPreference) throws WebserverSystemException {
+    private static String renderPreference(final UserAccount userAccount, final UserPreference preference,
+                                           final boolean isRootPreference) throws WebserverSystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
@@ -570,9 +565,9 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @return String rendered attribute
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#renderAttribute
+     * @see UserAccountRendererInterface#renderAttribute
      *      (de.escidoc.core.aa.business.persistence.UserAttribute)
-     * @aa
+     *
      */
     @Override
     public String renderAttribute(final UserAttribute attribute)
@@ -590,7 +585,7 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @return String rendered attribute
      * @throws WebserverSystemException
      *             e
-     * @aa
+     *
      */
     private String renderAttribute(
         final UserAttribute attribute, final String isRootAttribute)
@@ -627,9 +622,9 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @return String rendered attributes
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.business.renderer.interfaces.UserAccountRendererInterface#renderAttributes
+     * @see UserAccountRendererInterface#renderAttributes
      *      (de.escidoc.core.aa.business.persistence.UserAccount, Set)
-     * @aa
+     *
      */
     @Override
     public String renderAttributes(
@@ -669,9 +664,9 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      *            map with values
      * @throws WebserverSystemException
      *             e
-     * @aa
+     *
      */
-    private void addAttributesCommonValues(final Map<String, Object> values)
+    private static void addAttributesCommonValues(final Map<String, Object> values)
         throws WebserverSystemException {
         values.put("attributesNamespacePrefix",
             Constants.USER_ATTRIBUTES_NS_PREFIX);

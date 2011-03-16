@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.application.missing.MissingMethodParame
 import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.sm.business.interfaces.ReportHandlerInterface;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
@@ -51,13 +51,11 @@ import java.util.regex.Matcher;
 /**
  * An statistic Report resource handler.
  * 
- * @spring.bean id="business.ReportHandler" scope="prototype"
  * @author MIH
- * @sm
  */
 public class ReportHandler implements ReportHandlerInterface {
 
-    private static final AppLogger LOGGER = new AppLogger(ReportHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportHandler.class);
 
     private SmReportDefinitionsDaoInterface dao;
 
@@ -84,15 +82,12 @@ public class ReportHandler implements ReportHandlerInterface {
      * @throws SystemException
      *             e.
      * 
-     * @sm
+     *
      */
     @Override
     public String retrieve(final String xml) throws
         ReportDefinitionNotFoundException, MissingMethodParameterException,
         InvalidSqlException, SystemException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("ReportHandler does create");
-        }
         if (xml == null || xml.length() == 0) {
             throw new MissingMethodParameterException("xml may not be null");
         }
@@ -104,7 +99,7 @@ public class ReportHandler implements ReportHandlerInterface {
         sp.addHandler(handler);
         try {
             sp.parse(xml);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new SystemException(e);
         }
         
@@ -120,7 +115,7 @@ public class ReportHandler implements ReportHandlerInterface {
         try {
             results = dbAccessor.executeReadOnlySql(sql);
         }
-        catch (SqlDatabaseSystemException e) {
+        catch (final SqlDatabaseSystemException e) {
             throw new InvalidSqlException(e);
         }
 
@@ -140,11 +135,10 @@ public class ReportHandler implements ReportHandlerInterface {
      * 
      * @return String sql
      * 
-     * @sm
+     *
      */
-    private String generateSql(
-        final ReportParametersVo reportParametersVo,
-        final ReportDefinition reportDefinition)
+    private static String generateSql(final ReportParametersVo reportParametersVo,
+                                      final ReportDefinition reportDefinition)
         throws MissingMethodParameterException {
         String sql = reportDefinition.getSql();
         if (sql == null || sql.length() == 0) {
@@ -208,11 +202,8 @@ public class ReportHandler implements ReportHandlerInterface {
     /**
      * Setter for the dao.
      * 
-     * @spring.property ref="persistence.SmReportDefinitionsDao"
      * @param dao
      *            The data access object.
-     * 
-     * @sm
      */
     public void setDao(final SmReportDefinitionsDaoInterface dao) {
         this.dao = dao;
@@ -223,7 +214,6 @@ public class ReportHandler implements ReportHandlerInterface {
      * 
      * @param dbAccessorIn
      *            The directDatabaseAccessor to set.
-     * @spring.property ref="sm.persistence.DirectDatabaseAccessor"
      */
     public final void setDirectDatabaseAccessor(
         final DirectDatabaseAccessorInterface dbAccessorIn) {
@@ -235,9 +225,6 @@ public class ReportHandler implements ReportHandlerInterface {
      * 
      * @param renderer
      *            The renderer to inject.
-     * 
-     * @spring.property ref="eSciDoc.core.aa.business.renderer.VelocityXmlReportRenderer"
-     * @aa
      */
     public void setRenderer(
             final ReportRendererInterface renderer) {

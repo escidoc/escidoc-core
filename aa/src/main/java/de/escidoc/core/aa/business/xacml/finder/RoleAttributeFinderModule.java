@@ -65,11 +65,7 @@ import java.util.regex.Pattern;
  * 
  * created-by and modified-by can have tailing string with user-account-attributes.
  * 
- * @spring.bean id="eSciDoc.core.aa.RoleAttributeFinderModule"
- * 
  * @author TTE
- * 
- * @aa
  */
 public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
 
@@ -128,7 +124,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
      *      AbstractAttributeFinderModule#assertAttribute(java.lang.String,
      *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
      *      java.lang.String, int)
-     * @aa
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -165,7 +161,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
      *      AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
      *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
      *      java.lang.String)
-     * @aa
+     *
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -226,7 +222,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
      *             Thrown in case of an internal error.
      * @throws RoleNotFoundException
      *             Thrown if no role with provided id exists.
-     * @aa
+     *
      */
     private EscidocRole retrieveRole(
         final EvaluationCtx ctx, final String roleId)
@@ -246,7 +242,7 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
                 }
                 RequestAttributesCache.put(ctx, key.toString(), role);
             }
-            catch (SqlDatabaseSystemException e) {
+            catch (final SqlDatabaseSystemException e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Exception during retrieval of the role", e
@@ -262,7 +258,6 @@ public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
      * 
      * @param roleDao
      *            The role dao.
-     * @spring.property ref="persistence.EscidocRoleDao"
      */
     public void setRoleDao(final EscidocRoleDaoInterface roleDao) {
         this.roleDao = roleDao;

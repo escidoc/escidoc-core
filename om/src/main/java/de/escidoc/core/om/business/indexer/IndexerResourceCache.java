@@ -37,7 +37,7 @@ import de.escidoc.core.common.servlet.invocation.MethodMapper;
 import de.escidoc.core.common.servlet.invocation.exceptions.MethodNotFoundException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.common.util.service.UserContext;
@@ -87,7 +87,7 @@ public final class IndexerResourceCache {
 
     private ConnectionUtility connectionUtility;
 
-    private static final AppLogger LOG = new AppLogger(IndexerResourceCache.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(IndexerResourceCache.class);
 
     private static final IndexerResourceCache instance = new IndexerResourceCache();
 
@@ -111,14 +111,22 @@ public final class IndexerResourceCache {
                 indexerCacheSize =
                     Integer.parseInt(EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_INDEXER_CACHE_SIZE));
-            }
-            catch (Exception e) {
-                LOG.debug("Error on parsing indexer resource cache size.", e);
+            } catch (final Exception e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on parsing indexer resource cache size.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on parsing indexer resource cache size.", e);
+                }
                 indexerCacheSize = INDEXER_CACHE_SIZE_FALL_BACK;
             }
-        }
-        catch (Exception e) {
-            LOG.debug("Error on initializing indexer resource cache.", e);
+        } catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on initializing indexer resource cache.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on initializing indexer resource cache.", e);
+            }
         }
         final CacheManager cacheManager = CacheManager.create();
         resources = new Cache(new CacheConfiguration("resourcesCache", indexerCacheSize));
@@ -186,7 +194,7 @@ public final class IndexerResourceCache {
      */
     private Object getResourceWithInternalKey(final String identifier)
         throws SystemException {
-        Element element = resources.get(identifier);
+        final Element element = resources.get(identifier);
         return element != null ? element.getObjectValue() : null;
     }
 
@@ -224,7 +232,7 @@ public final class IndexerResourceCache {
         final String href = getHref(identifier);
         final Collection<String> keys = new ArrayList<String>();
         for (final Object key : resources.getKeys()) {
-            String keyAsString = (String) key;
+            final String keyAsString = (String) key;
             if (keyAsString.startsWith(href)) {
                 keys.add(keyAsString);
             }
@@ -272,7 +280,7 @@ public final class IndexerResourceCache {
                 final MIMETypedStream stream = new MIMETypedStream(
                         escidocBinaryContent.getMimeType(), out.toByteArray(), null);
                 setResource(identifier, stream);
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     throw new SystemException(e);
                 } finally {
                     IOUtils.closeStream(in);
@@ -284,16 +292,20 @@ public final class IndexerResourceCache {
                 setResource(identifier, xml);
             }
         }
-        catch (InvocationTargetException e) {
+        catch (final InvocationTargetException e) {
             if (!"AuthorizationException".equals(e.getTargetException().getClass().getSimpleName())
                 && !"InvalidStatusException".equals(e.getTargetException().getClass().getSimpleName())) {
                 throw new SystemException(e);
             }
+        } catch (final MethodNotFoundException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on caching internal resource.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on caching internal resource.", e);
+            }
         }
-        catch (MethodNotFoundException e) {
-            LOG.error(e);
-        }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SystemException(e);
         }
     }
@@ -330,9 +342,13 @@ public final class IndexerResourceCache {
                     new MIMETypedStream(mimeType, out.toByteArray(), null);
                 setResource(identifier, stream);
             }
-        }
-        catch (Exception e) {
-            LOG.error(e);
+        } catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on caching external resource.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on caching external resource.", e);
+            }
         }
         finally {
             IOUtils.closeStream(in);

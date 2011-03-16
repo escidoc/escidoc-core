@@ -40,7 +40,7 @@ import java.net.URI;
  * Class holding the data of a policy reference.
  * 
  * @author TTE
- * @aa
+ *
  */
 public class XacmlPolicyReference extends PolicyReference {
 
@@ -66,7 +66,7 @@ public class XacmlPolicyReference extends PolicyReference {
      * See Interface for functional description.
      * 
      * @return
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     public String toString() {
         final ByteArrayOutputStream writer = new ByteArrayOutputStream();

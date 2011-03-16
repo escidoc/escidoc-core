@@ -29,7 +29,7 @@
 package de.escidoc.core.sm.business.persistence.sql;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
 import de.escidoc.core.sm.business.vo.database.record.DatabaseRecordFieldVo;
@@ -58,7 +58,7 @@ import java.util.regex.Pattern;
  * Class for direct JDBC Database access via Hibernate.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     implements DirectDatabaseAccessorInterface {
@@ -75,7 +75,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     
     //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumeric)
 
-    private static final AppLogger LOG = new AppLogger(DirectPostgresDatabaseAccessor.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(DirectPostgresDatabaseAccessor.class);
 
     private static final String TIMESTAMP_FIELD_TYPE = "timestamp";
 
@@ -127,7 +127,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException e
      * 
      */
-    private String convertDate(final String xmldate)
+    private static String convertDate(final String xmldate)
                     throws SqlDatabaseSystemException {
 
         return DATE_FUNCTION.replaceFirst(
@@ -137,7 +137,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #createTable(DatabaseTableVo)
      * 
      * @param databaseTableVo
@@ -158,7 +158,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 getJdbcTemplate().execute(sql);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -166,7 +166,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #dropTable(DatabaseTableVo)
      * 
      * @param databaseTableVo
@@ -185,7 +185,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
                 getJdbcTemplate().execute(sql);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -193,7 +193,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #createRecord(DatabaseRecordVo)
      * 
      * @param databaseRecordVo
@@ -244,7 +244,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
             sql.append(fieldsSql).append(valuesSql);
             getJdbcTemplate().execute(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
 
@@ -253,7 +253,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #deleteRecord(DatabaseRecordVo)
      * 
      * @param databaseSelectVo
@@ -280,7 +280,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
 
             getJdbcTemplate().execute(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -288,7 +288,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #updateRecord(DatabaseSelectVo)
      * 
      * @param databaseSelectVo
@@ -326,7 +326,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
 
             getJdbcTemplate().execute(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -334,7 +334,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #executeSql(DatabaseSelectVo)
      * 
      * @param databaseSelectVo
@@ -393,7 +393,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
 
             return getJdbcTemplate().queryForList(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -401,7 +401,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #executeSql(java.lang.String)
      * 
      * @param sql
@@ -442,7 +442,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
         try {
             return getJdbcTemplate().queryForList(executionSql);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -1077,9 +1077,9 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
      *             SqlDatabaseSystemException
      * 
      */
-    private void checkWhereFieldVo(
-        final CharSequence type, final CharSequence fieldName, final String fieldType,
-        final String fieldValue, final CharSequence operator, final CharSequence xpath)
+    private static void checkWhereFieldVo(final CharSequence type, final CharSequence fieldName, final String fieldType,
+                                          final String fieldValue, final CharSequence operator,
+                                          final CharSequence xpath)
         throws SqlDatabaseSystemException {
         if (type == null || type.length() == 0
             || !"root".equals(type) && !"additional".equals(type)) {
@@ -1146,11 +1146,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     /**
      * Wrapper of setDataSource to enable bean stuff generation for this
      * handler.
-     * 
-     * @spring.property ref="escidoc-core.DataSource"
-     * @param myDataSource
-     *            ds
-     * 
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);

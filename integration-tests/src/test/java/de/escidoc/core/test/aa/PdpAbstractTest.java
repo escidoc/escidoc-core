@@ -113,7 +113,7 @@ public class PdpAbstractTest extends AaTestBase {
         try {
             evaluationResponsesXml = evaluate(requestsXML);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(evaluationResponsesXml);
@@ -144,7 +144,7 @@ public class PdpAbstractTest extends AaTestBase {
             evaluate("<Corrupt XML data");
             EscidocRestSoapTestBase.failMissingException(XmlCorruptedException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(XmlCorruptedException.class, e);
         }
     }
@@ -170,7 +170,7 @@ public class PdpAbstractTest extends AaTestBase {
             evaluate(null);
             EscidocRestSoapTestBase.failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(MissingMethodParameterException.class, e);
         }
     }
@@ -199,7 +199,7 @@ public class PdpAbstractTest extends AaTestBase {
         try {
             evaluationResponsesXml = evaluate(requestsXML);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(evaluationResponsesXml);
@@ -235,7 +235,7 @@ public class PdpAbstractTest extends AaTestBase {
         try {
             evaluationResponsesXml = evaluate(requestsXML);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(evaluationResponsesXml);

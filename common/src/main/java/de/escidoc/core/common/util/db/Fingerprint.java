@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2009 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.db;
 
 import java.beans.XMLDecoder;
@@ -150,7 +142,7 @@ public class Fingerprint implements Comparable<Object> {
                 .toString().replaceAll(JAVA_VERSION_PATTERN, "").compareTo(
                     b2.toString().replaceAll(JAVA_VERSION_PATTERN, ""));
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -170,8 +162,7 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getColumns(
-        final Connection conn, final String schema, final String table)
+    private static String[] getColumns(final Connection conn, final String schema, final String table)
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
@@ -210,8 +201,7 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getImportedKeys(
-        final Connection conn, final String schema, final String table)
+    private static String[] getImportedKeys(final Connection conn, final String schema, final String table)
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
@@ -248,8 +238,7 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getIndexInfo(
-        final Connection conn, final String schema, final String table)
+    private static String[] getIndexInfo(final Connection conn, final String schema, final String table)
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
@@ -285,8 +274,7 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getPrimaryKeys(
-        final Connection conn, final String schema, final String table)
+    private static String[] getPrimaryKeys(final Connection conn, final String schema, final String table)
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
@@ -318,7 +306,7 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getSchemaNames(final Connection conn) throws SQLException {
+    private static String[] getSchemaNames(final Connection conn) throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
         final ResultSet rs = metaData.getSchemas();
@@ -356,7 +344,7 @@ public class Fingerprint implements Comparable<Object> {
      * @throws SQLException
      *             Thrown if an SQL statement failed to be executed.
      */
-    private String[] getTableNames(final Connection conn, final String schema)
+    private static String[] getTableNames(final Connection conn, final String schema)
         throws SQLException {
         final ArrayList<String> result = new ArrayList<String>();
         final DatabaseMetaData metaData = conn.getMetaData();
@@ -365,7 +353,7 @@ public class Fingerprint implements Comparable<Object> {
             while (rs.next()) {
                 final String name = rs.getString(3);
                 // ignore dynamically created tables for statistics manager
-                if (!schema.equals("sm") 
+                if (! "sm".equals(schema)
                 		|| VALID_SM_TABLES.contains(name)) {
                     result.add(name);
                 }

@@ -30,7 +30,7 @@ package de.escidoc.core.sm.business.stax.handler;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
@@ -45,11 +45,11 @@ import java.util.Map;
  * Fills xml-data into hibernate object.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class ReportDefinitionStaxHandler extends DefaultHandler {
 
-    private static final AppLogger LOG = new AppLogger(ReportDefinitionStaxHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportDefinitionStaxHandler.class);
 
     private ReportDefinition reportDefinition = new ReportDefinition();
     
@@ -67,7 +67,7 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
      * @return StartElement startElement
      * @throws Exception e
      * 
-     * @sm
+     *
      */
     @Override
     public StartElement startElement(final StartElement element) throws Exception {
@@ -99,8 +99,13 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
                         && !reportDefinition.getId().equals(reportDefinitionId)) {
                     throw new IntegritySystemException(MSG_INCONSISTENT_IDS);
                 }
-            } catch (MissingAttributeValueException e) {
-                LOG.debug("Missing attribute value.", e);
+            } catch (final MissingAttributeValueException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Missing attribute value.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Missing attribute value.", e);
+                }
             }
         }
         return element;
@@ -115,10 +120,10 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
      *            The element.
      * @return The character section.
      * @throws Exception e
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
+     * @see DefaultHandler#characters
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @om
+     *
      */
     @Override
     public String characters(final String s, final StartElement element)

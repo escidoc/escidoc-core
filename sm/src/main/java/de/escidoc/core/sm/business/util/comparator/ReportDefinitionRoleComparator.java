@@ -38,7 +38,7 @@ import java.util.Comparator;
  * Sorts ReportDefinitionRole-Objects according to their listIndex.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class ReportDefinitionRoleComparator 
         implements Comparator<ReportDefinitionRole>,Serializable {
@@ -50,7 +50,7 @@ public class ReportDefinitionRoleComparator
      * @param a2 ReportDefinitionRole2
      * @return Returns compare result.
      * 
-     * @sm
+     *
      */
     @Override
     public int compare(

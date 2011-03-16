@@ -39,6 +39,7 @@ import java.util.Map;
 import de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
+import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
@@ -46,6 +47,7 @@ import de.escidoc.core.common.business.fedora.resources.listener.ResourceListene
 import de.escidoc.core.common.business.filter.LuceneRequestParameters;
 import de.escidoc.core.common.business.filter.SRURequest;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
+import de.escidoc.core.common.business.interfaces.IngestableResource;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -66,22 +68,20 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementVio
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationHandler;
 import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
 
 /**
- * @spring.bean id="business.FedoraContextHandler" scope="prototype"
  * @author FRS
- * 
  */
 public class FedoraContextHandler extends ContextHandlerUpdate
     implements ContextHandlerInterface {
 
-    private static final AppLogger LOG = new AppLogger(
-        FedoraContextHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        FedoraContextHandler.class);
 
     private final Collection<ResourceListener> contextListeners =
         new ArrayList<ResourceListener>();
@@ -109,7 +109,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * 
      * @param pdp
      *            the {@link PolicyDecisionPointInterface} to be injected.
-     * @spring.property ref="service.PolicyDecisionPointBean"
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
@@ -159,7 +158,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
         try {
             setContext(id);
         }
-        catch (ContextNotFoundException e) {
+        catch (final ContextNotFoundException e) {
             throw new SystemException("Created resource not found.", e);
         }
         final String contextXml = getContextXml(this);
@@ -185,7 +184,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
     }
 
     /**
-     * @see de.escidoc.core.common.business.interfaces.IngestableResource#ingest(String)
+     * @see IngestableResource#ingest(String)
      */
     @Override
     public String ingest(final String xmlData)
@@ -235,7 +234,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                     XmlUtility.CHARACTER_ENCODING)));
                 return content;
             }
-            catch (UnsupportedEncodingException e) {
+            catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -246,7 +245,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                         XmlUtility.CHARACTER_ENCODING)));
                 return content;
             }
-            catch (UnsupportedEncodingException e) {
+            catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -566,10 +565,10 @@ public class FedoraContextHandler extends ContextHandlerUpdate
                 result = getContextXml(this);
             }
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new SystemException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // should not happen here
             throw new SystemException(e);
         }
@@ -615,7 +614,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * 
      * @param contentRelationHandler
      *            The {@link FedoraContentRelationHandler}.
-     * @spring.property ref="business.FedoraContentRelationHandler"
      * 
      */
     public void setContentRelationHandler(
@@ -628,8 +626,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * 
      * @param sruRequest
      *            SRURequest
-     * 
-     * @spring.property ref="de.escidoc.core.common.business.filter.SRURequest"
      */
     public void setSruRequest(final SRURequest sruRequest) {
         this.sruRequest = sruRequest;
@@ -640,7 +636,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
      * 
      */
     @Override
@@ -653,10 +648,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * 
      * @param fedoraUtility
      *            Fedora utility
-     * @see de.escidoc.core.common.business.fedora.HandlerBase
+     * @see HandlerBase
      *      #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
-     * 
-     * @spring.property ref="escidoc.core.business.FedoraUtility"
      */
     @Override
     public void setFedoraUtility(final FedoraUtility fedoraUtility) {
@@ -669,10 +662,8 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * 
      * @param idProvider
      *            id provider
-     * @see de.escidoc.core.common.business.fedora.HandlerBase
+     * @see HandlerBase
      *      #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
-     * 
-     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
     @Override
     public void setIdProvider(final EscidocIdProvider idProvider) {
@@ -682,8 +673,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
 
     /**
      * Injects the indexing handler.
-     * 
-     * @spring.property ref="common.business.indexing.IndexingHandler"
+     *
      * @param indexingHandler
      *            The indexing handler.
      */

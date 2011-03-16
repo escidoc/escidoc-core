@@ -73,7 +73,7 @@ import java.io.ByteArrayInputStream;
  */
 public class ContainerHandlerBase extends HandlerBase {
 
-    private static final Logger LOG = LoggerFactory
+    private static final Logger LOGGER = LoggerFactory
         .getLogger(ContainerHandlerBase.class);
 
     private Container container;
@@ -127,8 +127,12 @@ public class ContainerHandlerBase extends HandlerBase {
 
         }
         catch (final FedoraSystemException e) {
-            // FIXME all exceptions are caught in caller
-            LOG.error("Error on setting item", e);
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on setting item.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on setting item.", e);
+            }
         }
         catch (final StreamNotFoundException e) {
             throw new ItemNotFoundException(e);

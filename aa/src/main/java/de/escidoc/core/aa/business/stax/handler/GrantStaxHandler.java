@@ -48,7 +48,7 @@ public class GrantStaxHandler extends DefaultHandler {
      * @param grant
      *            The grant.
      * 
-     * @aa
+     *
      */
     public GrantStaxHandler(final RoleGrant grant) {
 
@@ -63,7 +63,7 @@ public class GrantStaxHandler extends DefaultHandler {
      * @param s
      * @param element
      * @return
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #characters(java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.Star tElement)
      */

@@ -1,35 +1,29 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.access.BeanFactoryLocator;
 import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
@@ -47,13 +41,11 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 /**
- * @spring.bean id="business.LockHandler"
  * @author FRS
- * 
- * @common
- * 
  */
 public class LockHandler extends JdbcDaoSupport {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LockHandler.class);
 
     private static final boolean LOCKED_VALUE = true;
 
@@ -63,10 +55,7 @@ public class LockHandler extends JdbcDaoSupport {
      * 
      * @param myDataSource
      *            The {@link DataSource} to wrap.
-     * 
-     * @spring.property ref="escidoc-core.DataSource"
-     * @param driverManagerDataSource
-     * @common
+     *
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);
@@ -81,7 +70,7 @@ public class LockHandler extends JdbcDaoSupport {
      *            The id of the lock owner.
      * @throws SqlDatabaseSystemException
      *             Thrown if an error occurs accessing the database.
-     * @common
+     *
      */
     public void lock(final String objid, final String[] lockOwner)
         throws SqlDatabaseSystemException {
@@ -92,7 +81,7 @@ public class LockHandler extends JdbcDaoSupport {
                     + "VALUES ('" + objid + "','" + lockOwner[0] + "','"
                     + lockOwner[1] + "', " + LOCKED_VALUE + ')');
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
             // TODO throw this Exception
             // throw new SqlDatabaseSystemException("Could not lock object '"
@@ -107,7 +96,7 @@ public class LockHandler extends JdbcDaoSupport {
      *            The id of the object to unlock.
      * @throws SqlDatabaseSystemException
      *             Thrown if an error occurs accessing the database.
-     * @common
+     *
      */
     public void unlock(final String objid) throws SqlDatabaseSystemException {
 
@@ -116,7 +105,7 @@ public class LockHandler extends JdbcDaoSupport {
                 "DELETE FROM om.lockstatus WHERE objid = ?",
                 new Object[] { objid });
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
             // TODO throw this Exception
             // throw new SqlDatabaseSystemException("Could not unlock object '"
@@ -132,7 +121,7 @@ public class LockHandler extends JdbcDaoSupport {
      * @return The lock owner.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @common
+     *
      */
     public String getLockOwner(final String objid)
         throws WebserverSystemException {
@@ -141,12 +130,16 @@ public class LockHandler extends JdbcDaoSupport {
         try {
             return getJdbcTemplate().queryForObject("SELECT owner FROM om.lockstatus WHERE objid = ?",
                         new Object[] { objid }, String.class);
-        }
-        catch (IncorrectResultSizeDataAccessException e) {
-            logger.debug("Error on quering for lock owner.", e);
+        } catch (final IncorrectResultSizeDataAccessException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on quering for lock owner.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on quering for lock owner.", e);
+            }
             return null;
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new WebserverSystemException("Error on quering for lock owner.", e);
             // TODO throw this Exception
             // throw new SqlDatabaseSystemException(
@@ -162,7 +155,7 @@ public class LockHandler extends JdbcDaoSupport {
      * @return Returns the title of the lock owner.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @common
+     *
      */
     public String getLockOwnerTitle(final String objid)
         throws WebserverSystemException {
@@ -170,12 +163,16 @@ public class LockHandler extends JdbcDaoSupport {
         try {
             return getJdbcTemplate().queryForObject("SELECT ownertitle FROM om.lockstatus WHERE objid = ?",
                         new Object[] { objid }, String.class);
-        }
-        catch (IncorrectResultSizeDataAccessException e) {
-            logger.debug("Error on quering for lock owner title.", e);
+        } catch (final IncorrectResultSizeDataAccessException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on quering for lock owner title.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on quering for lock owner title.", e);
+            }
             return null;
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new WebserverSystemException(e);
             // TODO throw this Exception
             // throw new SqlDatabaseSystemException(
@@ -191,7 +188,7 @@ public class LockHandler extends JdbcDaoSupport {
      * @return The lock owner.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @common
+     *
      */
     public String getLockDate(final String objid)
         throws WebserverSystemException {
@@ -211,14 +208,19 @@ public class LockHandler extends JdbcDaoSupport {
                     (GregorianCalendar) cal);
             result = xmlcal.toString();
         }
-        catch (IncorrectResultSizeDataAccessException e) {
-            logger.debug("Error on quering for lock date.", e);
+        catch (final IncorrectResultSizeDataAccessException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on quering for lock date.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on quering for lock date.", e);
+            }
             return null;
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new WebserverSystemException(e);
         }
-        catch (DatatypeConfigurationException e) {
+        catch (final DatatypeConfigurationException e) {
             throw new WebserverSystemException(e);
         }
 
@@ -242,11 +244,16 @@ public class LockHandler extends JdbcDaoSupport {
             return getJdbcTemplate().queryForObject("SELECT locked FROM om.lockstatus WHERE objid = ?",
                         new Object[] { objid }, Boolean.class);
         }
-        catch (IncorrectResultSizeDataAccessException e) {
-            logger.debug("Error on quering for lock.", e);
+        catch (final IncorrectResultSizeDataAccessException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on quering for lock.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on quering for lock.", e);
+            }
             return false;
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new WebserverSystemException(
                 "Could not find lock status for object '" + objid + '!', e);
         }

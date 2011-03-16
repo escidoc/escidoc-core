@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.stax.handler.context;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
@@ -38,7 +39,7 @@ import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnit
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
 import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -58,8 +59,8 @@ import java.util.Map;
  */
 public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
-    private static final AppLogger log =
-        new AppLogger(ContextPropertiesUpdateHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContextPropertiesUpdateHandler.class);
 
     private StaxParser parser;
 
@@ -111,7 +112,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @throws OrganizationalUnitNotFoundException
      * @throws InvalidStatusException
      * @throws SystemException
-     * @om
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -133,11 +134,11 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
                     TripleStoreUtility.PROP_PUBLIC_STATUS);
 
             if (!orgUnitStatus
-                .equals(de.escidoc.core.common.business.Constants.STATUS_OU_OPENED)) {
+                .equals(Constants.STATUS_OU_OPENED)) {
                 throw new InvalidStatusException("Organizational unit with id "
                         + id
                         + " should be in status "
-                        + de.escidoc.core.common.business.Constants.STATUS_OU_OPENED
+                        + Constants.STATUS_OU_OPENED
                         + " but is in status " + orgUnitStatus);
             }
             this.orgunits.add(id);
@@ -189,7 +190,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
                 deletableValues.remove(Elements.ELEMENT_DESCRIPTION);
                 if (TripleStoreUtility.getInstance().getPropertiesElements(
                     contextId,
-                    de.escidoc.core.common.business.Constants.DC_NS_URI
+                    Constants.DC_NS_URI
                         + Elements.ELEMENT_DESCRIPTION) == null) {
                     valuesToAdd.put(Elements.ELEMENT_DESCRIPTION, data);
                 }
@@ -248,9 +249,9 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
         repositoryValue = key.equals(Elements.ELEMENT_DESCRIPTION) ? TripleStoreUtility.getInstance().getPropertiesElements(
                 contextId,
-                de.escidoc.core.common.business.Constants.DC_NS_URI + key) : key.equals(Elements.ELEMENT_NAME) ? TripleStoreUtility.getInstance().getTitle(contextId) : TripleStoreUtility.getInstance().getPropertiesElements(
+                Constants.DC_NS_URI + key) : key.equals(Elements.ELEMENT_NAME) ? TripleStoreUtility.getInstance().getTitle(contextId) : TripleStoreUtility.getInstance().getPropertiesElements(
                 contextId,
-                de.escidoc.core.common.business.Constants.PROPERTIES_NS_URI
+                Constants.PROPERTIES_NS_URI
                         + key);
 
         boolean changed = false;

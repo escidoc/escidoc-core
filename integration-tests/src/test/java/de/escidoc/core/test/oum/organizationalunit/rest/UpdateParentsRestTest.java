@@ -92,7 +92,7 @@ public class UpdateParentsRestTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = updateMdRecords(objid, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Updating OU with changed read only values failed. ",
                 e);
         }
@@ -146,7 +146,7 @@ public class UpdateParentsRestTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = updateMdRecords(objid, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Updating OU without read only values failed. ", e);
         }
         assertEscidocMdRecord(objid, getDocument(updatedXml), createdDocument,

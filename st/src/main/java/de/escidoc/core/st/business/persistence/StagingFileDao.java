@@ -48,7 +48,7 @@ public interface StagingFileDao {
      *            The token identifying the staging file.
      * @return Returns the staging file object identified by the token or
      *         <code>null</code>.
-     * @st
+     *
      * @throws SqlDatabaseSystemException
      *             TODO
      */

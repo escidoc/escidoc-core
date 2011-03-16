@@ -88,7 +88,7 @@ public class GrantSoapAbstractTest extends GrantAbstractTest {
             createGrant(defaultUserAccountOrGroupId, toString(grantDocument, false));
             EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
@@ -124,7 +124,7 @@ public class GrantSoapAbstractTest extends GrantAbstractTest {
             createGrant(defaultUserAccountOrGroupId, toString(grantDocument, false));
             EscidocRestSoapTestBase.failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(XmlSchemaValidationException.class, e);
         }
     }
@@ -163,7 +163,7 @@ public class GrantSoapAbstractTest extends GrantAbstractTest {
         try {
             createdXml = createGrant(defaultUserAccountOrGroupId, toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         final Document createdDocument =

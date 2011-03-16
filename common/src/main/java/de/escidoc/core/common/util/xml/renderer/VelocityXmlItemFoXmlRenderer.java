@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.xml.renderer;
 
 import de.escidoc.core.common.business.Constants;
@@ -44,6 +36,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * velocity render for FoXML representation of Item and Item sub-elements.
@@ -55,10 +48,6 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
 
     private final VelocityXmlCommonFoXmlRenderer commonRenderer =
         new VelocityXmlCommonFoXmlRenderer();
-
-    // not needed if no one logs
-    // private static AppLogger log =
-    // new AppLogger(VelocityXmlItemFoXmlRenderer.class.getName());
 
     private String buildNumber;
 
@@ -105,10 +94,10 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
      * @return
      * @throws WebserverSystemException
      *             cf. Interface
-     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderRelsExt(java.util.HashMap,
-     *      java.lang.String, java.util.ArrayList, java.lang.String,
-     *      java.lang.String, java.lang.String, java.util.Vector,
-     *      java.lang.String)
+     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderRelsExt(HashMap,
+     *      String, ArrayList, String,
+     *      String, String, Vector,
+     *      String)
      */
     @Override
     public String renderDefaultDc(final String componentId)
@@ -208,10 +197,10 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
      * @return
      * @throws WebserverSystemException
      *             cf. Interface
-     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderRelsExt(java.util.HashMap,
-     *      java.lang.String, java.util.ArrayList, java.lang.String,
-     *      java.lang.String, java.lang.String, java.util.Vector,
-     *      java.lang.String)
+     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderRelsExt(HashMap,
+     *      String, ArrayList, String,
+     *      String, String, Vector,
+     *      String)
      */
     @Override
     public String renderItemRelsExt(
@@ -243,9 +232,9 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
      * @return
      * @throws WebserverSystemException
      *             cf. Interface
-     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderWov(java.lang.String,
-     *      java.lang.String, java.lang.String, java.lang.String,
-     *      java.lang.String, java.lang.String, java.lang.String)
+     * @see de.escidoc.core.om.business.renderer.interfaces.ContainerFoXmlRendererInterface#renderWov(String,
+     *      String, String, String,
+     *      String, String, String)
      */
     @Override
     public String renderWov(
@@ -333,8 +322,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
      *            If it is an attribute or element value.
      * @return The escaped string.
      */
-    private String getEscpapedValue(
-        final String value, final boolean isAttribute) {
+    private static String getEscpapedValue(final String value, final boolean isAttribute) {
 
         return XmlUtility.escapeForbiddenXmlCharacters(value);
     }

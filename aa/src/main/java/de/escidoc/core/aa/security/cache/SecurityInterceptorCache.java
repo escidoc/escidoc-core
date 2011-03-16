@@ -32,7 +32,7 @@ import de.escidoc.core.aa.security.aop.SecurityInterceptor;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.security.persistence.MethodMappingList;
 import de.escidoc.core.common.util.security.persistence.RequestMappingDaoInterface;
 import de.escidoc.core.common.util.string.StringUtility;
@@ -45,21 +45,19 @@ import java.util.TreeMap;
  * database.<br>
  * 
  * @author TTE
- * @spring.bean id="eSciDoc.core.common.SecurityInterceptorCache"
- * @common
  */
 public class SecurityInterceptorCache {
 
     /**
      * The logger.
      */
-    private static final AppLogger log =
-        new AppLogger(SecurityInterceptorCache.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(SecurityInterceptorCache.class);
 
     /**
      * Cache for method mappings.
      * 
-     * @common
+     *
      */
     private final Map<String, MethodMappingList> mappingsCache =
         new TreeMap<String, MethodMappingList>();
@@ -72,7 +70,7 @@ public class SecurityInterceptorCache {
     /**
      * The default constructor.
      * 
-     * @common
+     *
      */
     public SecurityInterceptorCache() {
 
@@ -82,7 +80,7 @@ public class SecurityInterceptorCache {
     /**
      * Clears the cache.
      * 
-     * @common
+     *
      */
     public final void clear() {
 
@@ -101,7 +99,7 @@ public class SecurityInterceptorCache {
      * @return Returns the method mappings.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @common
+     *
      */
     public synchronized MethodMappingList getMethodMappings(
         final String className, final String methodName)
@@ -116,7 +114,7 @@ public class SecurityInterceptorCache {
             try {
                 methodMappings = retrieveMethodMappings(className, methodName);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(
                     "Exception during method mappings retrieval. ", e);
             }
@@ -149,7 +147,7 @@ public class SecurityInterceptorCache {
      * @throws SystemException
      *             Thrown in case of an internal error.
      * 
-     * @common
+     *
      */
     public MethodMappingList retrieveMethodMappings(
         final String className, final String methodName)
@@ -165,8 +163,6 @@ public class SecurityInterceptorCache {
      * @param requestMappingDao
      *            The {@link RequestMappingDaoInterface} implementation to
      *            inject.
-     * @spring.property ref="persistence.HibernateRequestMappingDao"
-     * @common
      */
     public void setRequestMappingDao(
         final RequestMappingDaoInterface requestMappingDao) {

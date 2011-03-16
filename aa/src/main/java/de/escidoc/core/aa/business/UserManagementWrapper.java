@@ -41,10 +41,9 @@ import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * Implementation of a wrapper of an external user management.
- * 
- * @spring.bean id="business.UserManagementWrapper"
+ *
  * @author TTE
- * @aa
+ *
  */
 public class UserManagementWrapper implements UserManagementWrapperInterface {
 
@@ -61,12 +60,11 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
 
     /**
      * Setter for the dao.
-     * 
-     * @spring.property ref="persistence.UserAccountDao"
+     *
      * @param dao
      *            The data access object.
      * 
-     * @aa
+     *
      */
     public void setDao(final UserAccountDaoInterface dao) {
 
@@ -83,7 +81,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      * @throws WebserverSystemException
      * @see de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface
      *      #logout()
-     * @aa
+     *
      */
     @Override
     public void logout() throws AuthenticationException,
@@ -110,7 +108,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      * @throws SystemException
      *             Thrown in case of an internal error.
      * 
-     * @aa
+     *
      */
     @Override
     public void initHandleExpiryTimestamp(final String handle)

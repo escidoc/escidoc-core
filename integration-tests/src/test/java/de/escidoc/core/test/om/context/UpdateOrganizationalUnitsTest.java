@@ -34,6 +34,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -50,6 +52,8 @@ import static org.junit.Assert.assertNull;
  */
 @RunWith(value = Parameterized.class)
 public class UpdateOrganizationalUnitsTest extends ContextTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateOrganizationalUnitsTest.class);
 
     private String path = "";
 
@@ -131,8 +135,8 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
 
             assertNull("OU not removed from Context", node);
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
             EscidocRestSoapTestBase.failException("No error expected!", e);
         }
     }
@@ -226,8 +230,8 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
             assertNotNull("OU not added to Context", node);
 
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
             EscidocRestSoapTestBase.failException("No error expected!", e);
         }
     }
@@ -323,8 +327,8 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
             assertEquals("More than one OUs for update", 1, updateOu
                 .getLength());
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
             EscidocRestSoapTestBase.failException("No error expected!", e);
         }
     }

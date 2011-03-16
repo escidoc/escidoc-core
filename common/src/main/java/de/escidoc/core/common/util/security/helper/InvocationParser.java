@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.security.helper;
 
 import java.io.ByteArrayInputStream;
@@ -74,7 +66,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * @author Roland Werner (Accenture)
  * @spring.bean id="eSciDoc.core.common.helper.InvocationParser" lazy-init =
  *              "true"
- * @aa
  * 
  */
 public class InvocationParser {
@@ -105,7 +96,6 @@ public class InvocationParser {
      * {@link Collections}.synchronizedMap({@link Map})).
      * 
      * @author TTE
-     * @aa
      */
     private static final class DocumentCache {
 
@@ -116,7 +106,6 @@ public class InvocationParser {
          * 
          * @param size
          *            The number of elements in the cache.
-         * @aa
          */
         @SuppressWarnings("unchecked")
         private DocumentCache(final int size) {
@@ -140,7 +129,6 @@ public class InvocationParser {
          *             Thrown in case of an error in parser configuration
          * @throws SAXException
          *             Thrown in case of a parse error
-         * @aa
          */
         public Document retrieveDocument(final Object documentData)
             throws IOException, ParserConfigurationException, SAXException {
@@ -184,8 +172,6 @@ public class InvocationParser {
      * @throws InvalidXmlException
      *             Thrown if an argument is expected to contain XML data but
      *             cannot be parsed.
-     * 
-     * @aa
      */
     public List<Map<String, String>> buildRequestsList(
         final Object[] arguments, final MethodMapping methodMapping)
@@ -219,8 +205,6 @@ public class InvocationParser {
      * @throws InvalidXmlException
      *             Thrown if an argument is expected to contain XML data but
      *             cannot be parsed.
-     * 
-     * @aa
      */
     public List<Map<String, String>> buildRequestsList(
         final Object argument, final MethodMapping methodMapping)
@@ -255,8 +239,6 @@ public class InvocationParser {
      * @throws InvalidXmlException
      *             Thrown if an argument is expected to contain XML data but
      *             cannot be parsed.
-     * 
-     * @aa
      */
     private List<Map<String, String>> buildRequestsList(
         final Object arguments, final MethodMapping methodMapping,
@@ -291,7 +273,7 @@ public class InvocationParser {
                 request.put(AttributeIds.URN_ACTION_ID, methodMapping
                     .getActionName());
             }
-            catch (IndexOutOfBoundsException e) {
+            catch (final IndexOutOfBoundsException e) {
                 break;
             }
 
@@ -338,7 +320,6 @@ public class InvocationParser {
      * @throws InvalidXmlException
      *             Thrown if an argument should contain XML but cannot be parsed
      *             or an argument or element is expected but missing.
-     * @aa
      */
     private Map<String, String> setupResourceAttributes(
         final Object arguments,
@@ -412,8 +393,6 @@ public class InvocationParser {
      *             Thrown in case of provided invalid xml.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * 
-     * @aa
      */
     private StringAttribute getValueForInvocationMapping(
         final Object arguments, final boolean isArray, final int index,
@@ -441,7 +420,7 @@ public class InvocationParser {
                             "Invocation mapping error. Position "+
                             invocationMapping.getPosition()+
                             " invalid for single argument, must be 0. [id="+
-                            invocationMapping.getId()+ "]");
+                            invocationMapping.getId()+ ']');
                 }
                 currentObject = arguments;
             }
@@ -466,13 +445,13 @@ public class InvocationParser {
                 try {
                     document = documentCache.retrieveDocument(currentObject);
                 }
-                catch (SAXException e) {
+                catch (final SAXException e) {
                     throw new XmlCorruptedException(StringUtility
                         .format(
                                 "Parsing of provided XML data failed. ", e
                                 .getMessage()), e);
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     throw new WebserverSystemException(
                         "Internal error. Parsing of XML failed.", e);
                 }
@@ -490,7 +469,7 @@ public class InvocationParser {
                 try {
                     nodeList = XPathAPI.selectNodeList(document, xpath);
                 }
-                catch (TransformerException e) {
+                catch (final TransformerException e) {
                     throw new WebserverSystemException(StringUtility
                         .format(
                             "Invocation mapping error. Xpath invalid?", xpath,
@@ -535,7 +514,7 @@ public class InvocationParser {
                             values.add(tmpValue.trim());
                         }
                     }
-                    if (values.size() > 0) {
+                    if (! values.isEmpty()) {
                         final StringBuilder valueBuf = new StringBuilder("");
                         for (final String val : values) {
                             if (!val.isEmpty()) {

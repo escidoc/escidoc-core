@@ -49,8 +49,6 @@ import java.util.Collection;
  * Hibernate Database-Backend for the Aggregation-Definitions database-table.
  * 
  * @author MIH
- * @spring.bean id="persistence.SmAggregationDefinitionsDao"
- * @sm
  */
 public class SmAggregationDefinitionsHibernateDao
     extends AbstractHibernateDao
@@ -69,7 +67,7 @@ public class SmAggregationDefinitionsHibernateDao
      *            The aggregationDefinition Hibernate Object.
      * @throws SqlDatabaseSystemException
      *             e
-     * @sm
+     *
      */
     @Override
     public void save(final AggregationDefinition aggregationDefinition)
@@ -88,7 +86,7 @@ public class SmAggregationDefinitionsHibernateDao
      *            The aggregationTable Hibernate Object.
      * @throws SqlDatabaseSystemException
      *             e
-     * @sm
+     *
      */
     @Override
     public void save(final AggregationTable aggregationTable)
@@ -107,7 +105,7 @@ public class SmAggregationDefinitionsHibernateDao
      *            The aggregationStatisticDataSelector Hibernate Object.
      * @throws SqlDatabaseSystemException
      *             e
-     * @sm
+     *
      */
     @Override
     public void save(final AggregationStatisticDataSelector
@@ -128,7 +126,7 @@ public class SmAggregationDefinitionsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public void delete(final AggregationDefinition aggregationDefinition)
@@ -151,7 +149,7 @@ public class SmAggregationDefinitionsHibernateDao
      * @throws AggregationDefinitionNotFoundException
      *             Thrown if aggregation-definition with given id was not found.
      * 
-     * @sm
+     *
      */
     @Override
     public AggregationDefinition retrieve(final String id)
@@ -163,13 +161,13 @@ public class SmAggregationDefinitionsHibernateDao
                         getHibernateTemplate().get(AggregationDefinition.class,
                             id);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (IllegalStateException e) {
+            catch (final IllegalStateException e) {
                 throw new SqlDatabaseSystemException(e);
             }
-            catch (HibernateException e) {
+            catch (final HibernateException e) {
                 //noinspection ThrowableResultOfMethodCallIgnored
                 throw new SqlDatabaseSystemException(
                     convertHibernateAccessException(e));
@@ -193,7 +191,7 @@ public class SmAggregationDefinitionsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<AggregationDefinition> retrieveAggregationDefinitions()
@@ -266,7 +264,7 @@ public class SmAggregationDefinitionsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public Collection<AggregationDefinition> retrieveAggregationDefinitions(
@@ -295,14 +293,14 @@ public class SmAggregationDefinitionsHibernateDao
      * @throws SqlDatabaseSystemException
      *             Thrown in case of an internal database access error.
      * 
-     * @sm
+     *
      */
     @Override
     public String getNextPrimkey()
         throws SqlDatabaseSystemException {
         try {
             return idProvider.getNextPid();
-        } catch (SystemException e) {
+        } catch (final SystemException e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -312,7 +310,6 @@ public class SmAggregationDefinitionsHibernateDao
      * 
      * @param idProvider
      *            The idProvider to set.
-     * @spring.property ref="escidoc.core.business.EscidocIdProvider"
      */
     public final void setIdProvider(final EscidocIdProvider idProvider) {
         this.idProvider = idProvider;
@@ -324,8 +321,6 @@ public class SmAggregationDefinitionsHibernateDao
      * 
      * @param mySessionFactory
      *            The sessionFactory to set.
-     * @spring.property ref="sm.SessionFactory"
-     * @sm
      */
     public final void setMySessionFactory(final SessionFactory mySessionFactory) {
 

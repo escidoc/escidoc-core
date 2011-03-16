@@ -111,7 +111,7 @@ public class CollaboratorModifierAddRemoveMembersRestTest
                     itemId, privateComponentId);
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     AuthorizationException.class, e);
         } finally {
@@ -146,7 +146,7 @@ public class CollaboratorModifierAddRemoveMembersRestTest
                     itemId, privateComponentId);
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     AuthorizationException.class, e);
         } finally {

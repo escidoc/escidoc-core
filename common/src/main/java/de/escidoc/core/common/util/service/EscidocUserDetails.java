@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.service;
 
 import org.springframework.security.GrantedAuthority;
@@ -37,7 +29,7 @@ import org.springframework.security.userdetails.UserDetails;
  * This class implements <code>UserDetails</code> and is serializable.
  * 
  * @author TTE
- * @aa
+ *
  */
 public class EscidocUserDetails implements UserDetails {
 
@@ -56,7 +48,7 @@ public class EscidocUserDetails implements UserDetails {
      * Gets the id.
      * 
      * @return Returns the id of the user.
-     * @aa
+     *
      */
     public String getId() {
 
@@ -69,7 +61,7 @@ public class EscidocUserDetails implements UserDetails {
      * 
      * @param id
      *            The id of the user.
-     * @aa
+     *
      */
     public void setId(final String id) {
 
@@ -80,7 +72,7 @@ public class EscidocUserDetails implements UserDetails {
      * Gets the real name of the user.
      * 
      * @return Returns the real name of the user as stored in the UserAccount.
-     * @aa
+     *
      */
     public String getRealName() {
 
@@ -93,7 +85,7 @@ public class EscidocUserDetails implements UserDetails {
      * 
      * @param realName
      *            The real name of the user as stored in the UserAccount.
-     * @aa
+     *
      */
     public void setRealName(final String realName) {
 
@@ -106,7 +98,7 @@ public class EscidocUserDetails implements UserDetails {
      * @param key
      *            The key. This must not be <code>null</code>. If it is
      *            <code>null</code>, nothing is done.
-     * @aa
+     *
      */
     public void sign(final String key) {
     }
@@ -117,7 +109,7 @@ public class EscidocUserDetails implements UserDetails {
      * 
      * @return
      * @see org.acegisecurity.userdetails.UserDetails#getAuthorities()
-     * @aa
+     *
      */
     @Override
     public GrantedAuthority[] getAuthorities() {
@@ -131,7 +123,7 @@ public class EscidocUserDetails implements UserDetails {
      * 
      * @return
      * @see org.acegisecurity.userdetails.UserDetails#getPassword()
-     * @aa
+     *
      */
     @Override
     public String getPassword() {
@@ -145,7 +137,7 @@ public class EscidocUserDetails implements UserDetails {
      * 
      * @return Returns the realName of the user account.
      * @see org.acegisecurity.userdetails.UserDetails#getUsername()
-     * @aa
+     *
      */
     @Override
     public String getUsername() {
@@ -159,7 +151,7 @@ public class EscidocUserDetails implements UserDetails {
      * 
      * @return
      * @see org.acegisecurity.userdetails.UserDetails#isAccountNonExpired()
-     * @aa
+     *
      */
     @Override
     public boolean isAccountNonExpired() {
@@ -173,7 +165,7 @@ public class EscidocUserDetails implements UserDetails {
      * 
      * @return
      * @see org.acegisecurity.userdetails.UserDetails#isAccountNonLocked()
-     * @aa
+     *
      */
     @Override
     public boolean isAccountNonLocked() {
@@ -187,7 +179,7 @@ public class EscidocUserDetails implements UserDetails {
      * 
      * @return
      * @see org.acegisecurity.userdetails.UserDetails#isCredentialsNonExpired()
-     * @aa
+     *
      */
     @Override
     public boolean isCredentialsNonExpired() {
@@ -201,7 +193,7 @@ public class EscidocUserDetails implements UserDetails {
      * 
      * @return
      * @see org.acegisecurity.userdetails.UserDetails#isEnabled()
-     * @aa
+     *
      */
     @Override
     public boolean isEnabled() {

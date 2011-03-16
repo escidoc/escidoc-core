@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.aa.security.server;
 
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
@@ -49,7 +49,7 @@ import java.lang.reflect.Method;
 public class PWCallback implements CallbackHandler {
 
     /** The logger. */
-    private static final AppLogger LOG = new AppLogger(PWCallback.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PWCallback.class);
 
     /**
      * The handle class of the callback handler.
@@ -74,12 +74,17 @@ public class PWCallback implements CallbackHandler {
                 final String name =
                         (String) method.invoke(callback);
 
-                LOG.debug("The CallbackHandler server-side: " + name);
+                LOGGER.debug("The CallbackHandler server-side: " + name);
 
-            } catch (Exception ex) {
-                LOG.error("Error:", ex);
+            } catch (final Exception ex) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on invoking callback handeler.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on invoking callback handeler.", ex);
+                }
             }
-            LOG.debug("The authentication for: " + callback.toString());
+            LOGGER.debug("The authentication for: " + callback.toString());
         }
     }
 }

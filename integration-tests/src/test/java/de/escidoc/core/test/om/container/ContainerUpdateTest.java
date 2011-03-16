@@ -49,6 +49,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -71,6 +73,8 @@ import static org.junit.Assert.fail;
  */
 @RunWith(value = Parameterized.class)
 public class ContainerUpdateTest extends ContainerTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ContainerUpdateTest.class);
 
     private String theContainerXml;
 
@@ -369,7 +373,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             createItem(theContainerId, xmlData);
             fail("No exception on createItem with invalid item xml.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = XmlSchemaValidationException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -417,7 +421,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             createItem(null, xmlData);
             fail("No exception on createItem without container id..");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -435,7 +439,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             createContainer(null, xmlData);
             fail("No exception on createItem without container id..");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -449,7 +453,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             createItem(theContainerId, null);
             fail("No exception on createItem without item.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -463,7 +467,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             createContainer(theContainerId, null);
             fail("No exception on createContainer without container.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -577,7 +581,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update name.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ee.getName()
                 + " expected.", ee, e);
         }
@@ -589,7 +593,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update description.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ee.getName()
                 + " expected.", ee, e);
         }
@@ -601,7 +605,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update creation-date.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ee.getName()
                 + " expected.", ee, e);
         }
@@ -617,7 +621,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update status.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ee.getName()
                 + " expected.", ee, e);
         }
@@ -632,7 +636,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update lock-status.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ee.getName()
                 + " expected.", ee, e);
         }
@@ -650,7 +654,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update number.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ee.getName()
                 + " expected.", ee, e);
         }
@@ -663,7 +667,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update date.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ee.getName()
                 + " expected.", ee, e);
         }
@@ -678,7 +682,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update status.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ee.getName()
                 + " expected.", ee, e);
         }
@@ -692,7 +696,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
         // update(theContainerId, toString(testContainer, true));
         // fail("No exception after update valid-status.");
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // assertExceptionType(ee.getName() + " expected.", ee, e);
         // }
 
@@ -706,7 +710,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update number.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ee.getName()
                 + " expected.", ee, e);
         }
@@ -719,7 +723,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(testContainer, true));
             fail("No exception after update date.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ee.getName()
                 + " expected.", ee, e);
         }
@@ -847,8 +851,8 @@ public class ContainerUpdateTest extends ContainerTestBase {
                 updateTile);
 
         }
-        catch (Exception e) {
-            log.error(e);
+        catch (final Exception e) {
+            LOGGER.error("", e);
             EscidocRestSoapTestBase.failException("No error expected!", e);
         }
     }
@@ -1142,7 +1146,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
         try {
             updatedXml = update(theContainerId, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Updating pending container failed. ", e);
         }
@@ -1183,7 +1187,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update("escidoc:nonexist1", retrieve(theContainerId));
             fail("No exception on update with non existing id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ContainerNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -1227,7 +1231,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(container, true));
             fail("No exception on update with invalid values in admin descriptor.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ReadonlyAttributeViolationException.class;
             // if(getTransport() == Constants.TRANSPORT_SOAP){
             // ec = InvalidStatusException.class;
@@ -1267,7 +1271,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(container, true));
             fail("No exception on update with invalid values in admin descriptor.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ReadonlyAttributeViolationException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -1336,7 +1340,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(null, retrieve(theContainerId));
             fail("No exception on update without id. (id=null)");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -1362,7 +1366,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, null);
             fail("No exception on update without xml.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -1415,7 +1419,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, toString(container, true));
             fail("No exception on update with invalid values in admin descriptor.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = OptimisticLockingException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -1483,7 +1487,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             update(theContainerId, theContainerXml);
             fail("No exception on update withdrawn container.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             // Class<?> ec = ContainerNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
@@ -1886,7 +1890,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             fail("No exception occured on added an relation with non existing predicate "
                 + "to the container");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "RelationPredicateNotFoundException.",
                 RelationPredicateNotFoundException.class, e);
@@ -1961,7 +1965,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             fail("No exception occured on added an relation with non "
                 + "existing target to the container");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "ReferencedResourceNotFoundException.",
                 ReferencedResourceNotFoundException.class, e);
@@ -2019,7 +2023,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             fail("No exception occured on added an relation with unequal ids attributes "
                 + "to the container");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "InvalidContentException.", InvalidContentException.class, e);
         }
@@ -2086,7 +2090,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
                 update(theContainerId, containerWithoutEscidocMdRecordXml);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
 
@@ -2293,7 +2297,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
             createItem(theContainerId, itemXml);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
 
@@ -2411,7 +2415,7 @@ public class ContainerUpdateTest extends ContainerTestBase {
     // "has the same target and predicate as one existing container " +
     // "relation");
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType("AlreadyExistException expected.",
     // AlreadyExistsException.class, e);
     // }

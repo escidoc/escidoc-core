@@ -132,7 +132,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             try {
                 retrieveContainer(id, validate);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 result.add(id);
             }
         }
@@ -165,7 +165,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             try {
                 retrieveContext(id, validate);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 result.add(id);
             }
         }
@@ -194,7 +194,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             try {
                 retrieveContentModel(id);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 result.add(id);
             }
         }
@@ -227,7 +227,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             try {
                 retrieveItem(id, validate);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 result.add(id);
             }
         }
@@ -260,7 +260,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             try {
                 retrieveOrganizationalUnit(id, validate);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 result.add(id);
             }
         }
@@ -293,7 +293,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             try {
                 retrieveRole(id, validate);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 result.add(id);
             }
         }
@@ -325,7 +325,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
             try {
                 retrieveUserAccount(id, validate);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 result.add(id);
             }
         }
@@ -620,7 +620,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
                 result = null;
             }
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             result = null;
         }
         return result;
@@ -651,7 +651,7 @@ public class MigrationTestBase extends EscidocRestSoapTestBase {
         try {
             Thread.sleep(SLEEP_TIME);
         }
-        catch (InterruptedException e) {
+        catch (final InterruptedException e) {
             // ignore
         }
     }

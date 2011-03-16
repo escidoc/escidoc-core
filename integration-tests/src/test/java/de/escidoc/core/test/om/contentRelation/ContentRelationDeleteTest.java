@@ -73,7 +73,7 @@ public class ContentRelationDeleteTest extends ContentRelationTestBase {
             retrieve(relationId);
             fail("Content Relation wasn't deleted.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ContentRelationNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);

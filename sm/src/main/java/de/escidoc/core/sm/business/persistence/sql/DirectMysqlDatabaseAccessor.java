@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.sm.business.persistence.sql;
 
 import java.text.SimpleDateFormat;
@@ -45,7 +37,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
 import de.escidoc.core.sm.business.vo.database.record.DatabaseRecordFieldVo;
@@ -64,7 +56,7 @@ import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
  * Class for direct JDBC Database access via Hibernate.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     implements DirectDatabaseAccessorInterface {
@@ -81,8 +73,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     
     //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumeric)
 
-    private static final AppLogger log =
-        new AppLogger(DirectMysqlDatabaseAccessor.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(DirectMysqlDatabaseAccessor.class);
 
     private static final String TIMESTAMP_FIELD_TYPE = "DATETIME";
 
@@ -133,9 +125,9 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      *            date in xml-format
      * @return String date in database-specific format
      * 
-     * @sm
+     *
      */
-    private String convertDate(final String xmldate)
+    private static String convertDate(final String xmldate)
                     throws SqlDatabaseSystemException {
         try {
             final XMLGregorianCalendar xmlCal =
@@ -145,7 +137,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
             final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             return DATE_FUNCTION.replaceFirst(
                 "\\$\\{date_placeholder\\}", dateFormat.format(cal.getTime()));
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -153,7 +145,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #createTable(DatabaseTableVo)
      * 
      * @param databaseTableVo
@@ -163,7 +155,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
+     *
      */
     @Override
     public void createTable(final DatabaseTableVo databaseTableVo)
@@ -175,7 +167,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                 getJdbcTemplate().execute(sql);
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -183,7 +175,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #dropTable(DatabaseTableVo)
      * 
      * @param databaseTableVo
@@ -191,7 +183,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
+     *
      */
     @Override
     public void dropTable(final DatabaseTableVo databaseTableVo)
@@ -203,16 +195,15 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
                 getJdbcTemplate().execute(sql);
             }
         }
-        catch (Exception e) {
-            log.error(e);
-            throw new SqlDatabaseSystemException(e);
+        catch (final Exception e) {
+            throw new SqlDatabaseSystemException("Error on dropping table.", e);
         }
     }
 
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #createRecord(DatabaseRecordVo)
      * 
      * @param databaseRecordVo
@@ -221,7 +212,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
+     *
      */
     @Override
     public void createRecord(final DatabaseRecordVo databaseRecordVo)
@@ -264,7 +255,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
             sql.append(fieldsSql).append(valuesSql);
             getJdbcTemplate().execute(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
 
@@ -273,7 +264,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #deleteRecord(DatabaseRecordVo)
      * 
      * @param databaseSelectVo
@@ -281,7 +272,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
+     *
      */
     @Override
     public void deleteRecord(final DatabaseSelectVo databaseSelectVo)
@@ -301,7 +292,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
 
             getJdbcTemplate().execute(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -309,7 +300,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #updateRecord(DatabaseSelectVo)
      * 
      * @param databaseSelectVo
@@ -317,7 +308,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
+     *
      */
     @Override
     public void updateRecord(final DatabaseSelectVo databaseSelectVo)
@@ -348,7 +339,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
 
             getJdbcTemplate().execute(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -356,7 +347,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #executeSql(DatabaseSelectVo)
      * 
      * @param databaseSelectVo
@@ -365,7 +356,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
+     *
      */
     @Override
     public List executeSql(final DatabaseSelectVo databaseSelectVo)
@@ -415,7 +406,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
 
             return getJdbcTemplate().queryForList(sql.toString());
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -423,7 +414,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface
+     * @see DirectDatabaseAccessorInterface
      *      #executeSql(java.lang.String)
      * 
      * @param sql
@@ -432,7 +423,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
+     *
      */
     @Override
     public List executeReadOnlySql(final String sql) throws SqlDatabaseSystemException {
@@ -464,7 +455,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
        try {
              return getJdbcTemplate().queryForList(executionSql);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -477,7 +468,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      *            and indexnames.
      * @return Collection with sql-statements
      * 
-     * @sm
+     *
      */
     private Collection<String> getCreateStatements(
             final DatabaseTableVo databaseTableVo) {
@@ -547,7 +538,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      *            indexnames.
      * @return Collection with sql-statements
      * 
-     * @sm
+     *
      */
     private Collection<String> getDropStatements(
             final DatabaseTableVo databaseTableVo) {
@@ -585,7 +576,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
+     *
      */
     private String handleWhereClause(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException {
@@ -697,7 +688,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
+     *
      */
     private String handleFieldTypeWhere(
         final String tableName, final String fieldName, final String fieldType,
@@ -776,7 +767,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             If an error occurs accessing the database.
      * 
-     * @sm
+     *
      */
     private String handleSelectFields(
         final Iterable<SelectFieldVo> selectFieldVos)
@@ -814,7 +805,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      *            db-field.
      * @return String database-dependant query for an xpath-boolean request.
      * 
-     * @sm
+     *
      */
     @Override
     public String getXpathBoolean(final String xpath, final String field) {
@@ -831,7 +822,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      *            db-field.
      * @return String database-dependant query for an xpath-string request.
      * 
-     * @sm
+     *
      */
     @Override
     public String getXpathString(final String xpath, final String field) {
@@ -848,7 +839,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      *            db-field.
      * @return String database-dependant query for an xpath-string request.
      * 
-     * @sm
+     *
      */
     public String getXpathNumeric(final String xpath, final String field) {
         return XPATH_MATCHER.reset(XPATH_NUMBER_FUNCTION).replaceAll(Matcher.quoteReplacement(field) + "$1"
@@ -863,7 +854,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             SqlDatabaseSystemException
      * 
-     * @sm
+     *
      */
     public void checkDatabaseTableVo(final DatabaseTableVo databaseTableVo)
         throws SqlDatabaseSystemException {
@@ -921,7 +912,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             SqlDatabaseSystemException
      * 
-     * @sm
+     *
      */
     public void checkDatabaseRecordVo(final DatabaseRecordVo databaseRecordVo)
         throws SqlDatabaseSystemException {
@@ -961,7 +952,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             SqlDatabaseSystemException
      * 
-     * @sm
+     *
      */
     public void checkDatabaseSelectVo(final DatabaseSelectVo databaseSelectVo)
         throws SqlDatabaseSystemException {
@@ -1094,11 +1085,11 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             SqlDatabaseSystemException
      * 
-     * @sm
+     *
      */
-    private void checkWhereFieldVo(
-        final CharSequence type, final CharSequence fieldName, final String fieldType,
-        final String fieldValue, final CharSequence operator, final CharSequence xpath)
+    private static void checkWhereFieldVo(final CharSequence type, final CharSequence fieldName, final String fieldType,
+                                          final String fieldValue, final CharSequence operator,
+                                          final CharSequence xpath)
         throws SqlDatabaseSystemException {
         if (type == null || type.length() == 0
             || !"root".equals(type) && !"additional".equals(type)) {
@@ -1137,7 +1128,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      *            name of table
      * @return String replaced tablename
      * 
-     * @sm
+     *
      */
     public String handleTableName(final String tablename) {
         return tablename.matches(".*\\..*") ? tablename : Constants.SM_SCHEMA_NAME + '.' + tablename;
@@ -1152,7 +1143,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @throws SqlDatabaseSystemException
      *             e
      * 
-     * @sm
+     *
      */
     @Override
     public void checkReservedExpressions(final String fieldname)
@@ -1167,12 +1158,6 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     /**
      * Wrapper of setDataSource to enable bean stuff generation for this
      * handler.
-     * 
-     * @spring.property ref="escidoc-core.DataSource"
-     * @param myDataSource
-     *            ds
-     * 
-     * @sm
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);

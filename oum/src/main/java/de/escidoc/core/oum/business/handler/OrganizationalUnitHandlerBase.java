@@ -85,11 +85,11 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
                 XmlUtility.getIdFromURI(element.getAttribute(
                     Constants.XLINK_URI, "href").getValue());
         }
-        catch (NoSuchAttributeException e) {
+        catch (final NoSuchAttributeException e) {
             try {
                 result = element.getAttribute(null, "objid").getValue();
             }
-            catch (NoSuchAttributeException e1) {
+            catch (final NoSuchAttributeException e1) {
                 throw new MissingAttributeValueException(
                     "Parent attribute 'href' or 'objid' has to be set! ", e1);
             }
@@ -97,7 +97,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
         try {
             Utility.getInstance().checkIsOrganizationalUnit(result);
         }
-        catch (OrganizationalUnitNotFoundException e) {
+        catch (final OrganizationalUnitNotFoundException e) {
             throw new OrganizationalUnitNotFoundException(
                 "Reference to parent organizational-unit is not valid! "
                     + e.getMessage(), e);

@@ -36,7 +36,7 @@ import java.util.Collection;
  * Holds report-parameters data.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class ReportParametersVo {
     private String reportDefinitionId;

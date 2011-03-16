@@ -45,7 +45,7 @@ import java.util.Map;
  * 
  * @author MSC
  * 
- * @om
+ *
  */
 public class ComponentMetadataHandler extends DefaultHandler {
 
@@ -93,7 +93,7 @@ public class ComponentMetadataHandler extends DefaultHandler {
      *            The parser.
      * @param componentPath
      *            XPath to component element.
-     * @om
+     *
      */
     public ComponentMetadataHandler(final StaxParser parser,
         final String componentPath) {
@@ -122,9 +122,9 @@ public class ComponentMetadataHandler extends DefaultHandler {
      * @throws MissingAttributeValueException
      * @throws MissingAttributeValueException
      *             If a required attribute is missing.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#startElement
+     * @see DefaultHandler#startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @om
+     *
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -203,9 +203,9 @@ public class ComponentMetadataHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#endElement
+     * @see DefaultHandler#endElement
      *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
-     * @om
+     *
      */
     @Override
     public EndElement endElement(final EndElement element) {
@@ -231,10 +231,10 @@ public class ComponentMetadataHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The character section.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
+     * @see DefaultHandler#characters
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @om
+     *
      */
     @Override
     public String characters(final String s, final StartElement element) {

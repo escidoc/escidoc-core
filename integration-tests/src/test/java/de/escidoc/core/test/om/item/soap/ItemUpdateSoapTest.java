@@ -74,7 +74,7 @@ public class ItemUpdateSoapTest extends ItemTestBase {
                 TEMPLATE_ITEM_PATH + "/" + getTransport(false),
                 "escidoc_item_198_for_create.xml")));
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             return;
         }
         fail("Not expected exception");

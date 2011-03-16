@@ -45,7 +45,7 @@ import java.util.Map;
  * 
  * 
  * @author KST
- * @om
+ *
  */
 // CHECKSTYLE:OFF
 @ManagedResource(objectName = "eSciDocCore:name=PerformanceStatistics", description = "Obtains and stores method execution times of desired operations.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)

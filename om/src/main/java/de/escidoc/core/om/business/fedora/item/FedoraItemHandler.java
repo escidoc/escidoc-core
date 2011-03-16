@@ -49,6 +49,7 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.PropertyMapKeys;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.FedoraUtility;
+import de.escidoc.core.common.business.fedora.HandlerBase;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -110,7 +111,8 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.persistence.EscidocIdProvider;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
 import de.escidoc.core.common.util.stax.handler.OptimisticLockingHandler;
@@ -136,23 +138,23 @@ import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
 
 /**
  * The retrieve, update, create and delete methods implement the
- * {@link de.escidoc.core.om.business.interfaces.ItemHandlerInterface
+ * {@link ItemHandlerInterface
  * ItemHandlerInterface}. These methods handle strings of xmlData and use the
  * private (get,) set and render methods to set xmlData in the system or get
  * xmlData from the system.
  * <p>
  * The private set methods take strings of xmlData as parameter and handling
  * objects of type
- * {@link de.escidoc.core.common.business.fedora.datastream.Datastream
+ * {@link Datastream
  * Datastream} that hold the xmlData in an Item or Component object.
  * <p>
  * To split incoming xmlData into the datastreams it consists of, the
- * {@link de.escidoc.core.common.util.stax.StaxParser StaxParser} is used. In
+ * {@link StaxParser StaxParser} is used. In
  * order to modify datastreams or handle values provided in datastreams more
  * than one Handler (implementations of
- * {@link de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+ * {@link DefaultHandler
  * DefaultHandler}) can be added to the StaxParser. The
- * {@link de.escidoc.core.common.util.stax.handler.MultipleExtractor
+ * {@link MultipleExtractor
  * MultipleExtractor} have to be the last Handler in the HandlerChain of a
  * StaxParser.
  *
@@ -161,8 +163,8 @@ import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
 public class FedoraItemHandler extends ItemHandlerPid
     implements ItemHandlerInterface {
 
-    private static final AppLogger LOGGER = new AppLogger(
-        FedoraItemHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        FedoraItemHandler.class);
 
     private FedoraContentRelationHandler contentRelationHandler;
 
@@ -202,7 +204,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws MissingMethodParameterException
      * @throws SystemException
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieve(java.lang.String)
+     * @see ItemHandlerInterface#retrieve(String)
      */
     @Override
     public String retrieve(final String id) throws ItemNotFoundException,
@@ -245,8 +247,8 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws RelationPredicateNotFoundException
      * @throws ReferencedResourceNotFoundException
      * @throws ReadonlyVersionException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#update(java.lang.String,
-     *      java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#update(String,
+     *      String)
      */
     @Override
     public String update(final String id, final String xmlData)
@@ -339,43 +341,43 @@ public class FedoraItemHandler extends ItemHandlerPid
             try {
                 sp.parse(xmlData);
             }
-            catch (OptimisticLockingException e) {
+            catch (final OptimisticLockingException e) {
                 throw e;
             }
-            catch (MissingAttributeValueException e) {
+            catch (final MissingAttributeValueException e) {
                 throw e;
             }
-            catch (MissingMdRecordException e) {
+            catch (final MissingMdRecordException e) {
                 throw e;
             }
-            catch (WebserverSystemException e) {
+            catch (final WebserverSystemException e) {
                 throw e;
             }
-            catch (InvalidContentException e) {
+            catch (final InvalidContentException e) {
                 throw e;
             }
-            catch (InvalidXmlException e) {
+            catch (final InvalidXmlException e) {
                 throw e;
             }
-            catch (ReferencedResourceNotFoundException e) {
+            catch (final ReferencedResourceNotFoundException e) {
                 throw e;
             }
-            catch (RelationPredicateNotFoundException e) {
+            catch (final RelationPredicateNotFoundException e) {
                 throw e;
             }
-            catch (TripleStoreSystemException e) {
+            catch (final TripleStoreSystemException e) {
                 throw e;
             }
-            catch (EncodingSystemException e) {
+            catch (final EncodingSystemException e) {
                 throw e;
             }
-            catch (XmlParserSystemException e) {
+            catch (final XmlParserSystemException e) {
                 throw e;
             }
-            catch (XMLStreamException e) {
+            catch (final XMLStreamException e) {
                 throw new XmlParserSystemException(e);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 XmlUtility.handleUnexpectedStaxParserException("", e);
             }
             sp.clearHandlerChain();
@@ -389,7 +391,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                         .toString(XmlUtility.CHARACTER_ENCODING));
                 }
             }
-            catch (UnsupportedEncodingException e) {
+            catch (final UnsupportedEncodingException e) {
                 throw new EncodingSystemException(e.getMessage(), e);
             }
             final Map mdRecordsStreams = (Map) streams.get("md-records");
@@ -453,10 +455,10 @@ public class FedoraItemHandler extends ItemHandlerPid
 
             return updatedXmlData;
         }
-        catch (MissingContentException e) {
+        catch (final MissingContentException e) {
             throw new WebserverSystemException(e);
         }
-        catch (MissingElementValueException e) {
+        catch (final MissingElementValueException e) {
             throw new WebserverSystemException("unreachable", e);
         }
     }
@@ -481,7 +483,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws InvalidContentException
      * @throws RelationPredicateNotFoundException
      * @throws InvalidStatusException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#create(java.lang.String)
+     * @see ItemHandlerInterface#create(String)
      */
     @Override
     public String create(final String xml) throws MissingContentException,
@@ -507,7 +509,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             resultItem = retrieve(objid);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new IntegritySystemException("The Item with id '" + objid + "', which was just created, "
                     + "could not be found for retrieve.", e);
         }
@@ -564,11 +566,11 @@ public class FedoraItemHandler extends ItemHandlerPid
                 fireItemCreated(objid, retrieve(objid));
             }
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException(
                 "The eSciDoc configuration could not be read", e);
         }
-        catch (ResourceNotFoundException e) {
+        catch (final ResourceNotFoundException e) {
             throw new IntegritySystemException("The Item with id '" + objid + "', which was just ingested, "
                     + "could not be found for retrieve.", e);
         }
@@ -585,7 +587,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @throws SystemException
      * @throws AuthorizationException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#delete(java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#delete(String)
      */
     @Override
     public void delete(final String id) throws ItemNotFoundException,
@@ -602,7 +604,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ItemNotFoundException
      * @throws MissingMethodParameterException
      * @throws SystemException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveProperties(java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveProperties(String)
      */
     @Override
     public String retrieveProperties(final String id)
@@ -619,7 +621,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ItemNotFoundException
      * @throws MissingMethodParameterException
      * @throws SystemException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecords(java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecords(String)
      */
     @Override
     public String retrieveMdRecords(final String id)
@@ -652,7 +654,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws MdRecordNotFoundException
      * @throws MissingMethodParameterException
      * @throws SystemException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecord(java.lang.String,java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecord(String,String)
      */
     @Override
     public String retrieveMdRecord(final String id, final String mdRecordId)
@@ -669,7 +671,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 throw new MdRecordNotFoundException();
             }
         }
-        catch (MdRecordNotFoundException e) {
+        catch (final MdRecordNotFoundException e) {
             final String originObjectId =
                 getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN);
             if (originObjectId != null) {
@@ -709,7 +711,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws AuthorizationException
      * @return
      * 
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecordContent(java.lang.String,java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecordContent(String,String)
      */
     @Override
     public String retrieveMdRecordContent(
@@ -721,7 +723,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             mdRecord = retrieveMdRecord(mdRecordId, false);
         }
-        catch (MdRecordNotFoundException e) {
+        catch (final MdRecordNotFoundException e) {
             String message =
                 "Md-record with name " + mdRecordId + " is owned by the item "
                     + getOriginId()
@@ -750,7 +752,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws MissingMethodParameterException
      * @throws SystemException
      * @throws AuthorizationException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecordContent(java.lang.String,java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveMdRecordContent(String,String)
      */
     @Override
     public String retrieveDcRecordContent(final String id)
@@ -766,7 +768,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             }
             dc = getItem().getDc().toString();
         }
-        catch (MdRecordNotFoundException e) {
+        catch (final MdRecordNotFoundException e) {
             String message =
                 "Md-record with name DC" + " is owned by the item "
                     + getOriginId()
@@ -806,8 +808,8 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws OptimisticLockingException
      * @throws InvalidStatusException
      * @throws ReadonlyVersionException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#updateMdRecord(java.lang.String,java.lang.String,
-     *      java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#updateMdRecord(String,String,
+     *      String)
      */
     @Override
     public String updateMetadataRecord(
@@ -842,11 +844,11 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             sp.parse(xmlData);
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             // the only exception thrown by MultipleExtractor
             throw new XmlParserSystemException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(e.getMessage(), e);
         }
 
@@ -862,7 +864,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 mdXml.toString(XmlUtility.CHARACTER_ENCODING),
                 mdRecordAttributes);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
 
@@ -873,7 +875,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             try {
                 fireItemModified(getItem().getId());
             }
-            catch (ComponentNotFoundException e) {
+            catch (final ComponentNotFoundException e) {
                 throw new SystemException(e);
             }
         }
@@ -881,7 +883,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             newMdRecord = retrieveMdRecord(getItem().getId(), mdRecordId);
         }
-        catch (MdRecordNotFoundException e) {
+        catch (final MdRecordNotFoundException e) {
             throw new IntegritySystemException(
                 "After succesfully update metadata.", e);
         }
@@ -903,7 +905,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws MissingMethodParameterException
      * @throws XmlCorruptedException
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#createMetadataRecord(java.lang.String,java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#createMetadataRecord(String,String)
      */
     @Override
     @Deprecated
@@ -936,7 +938,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws MissingMethodParameterException
      * @throws XmlCorruptedException
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#createMdRecord(java.lang.String,java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#createMdRecord(String,String)
      */
     @Override
     public String createMdRecord(final String id, final String xmlData)
@@ -962,7 +964,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             sp.parse(xmlData);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(
                 "Unexpected exception while parsing xml data in "
                     + "FedoraItemHandler.createMetadataRecord.", e);
@@ -981,7 +983,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             xmlDataBytes = xmlData.getBytes(XmlUtility.CHARACTER_ENCODING);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
         final Datastream newMDS =
@@ -1001,15 +1003,15 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             newMdRecord = retrieveMdRecord(getItem().getId(), name);
         }
-        catch (ItemNotFoundException e) {
+        catch (final ItemNotFoundException e) {
             throw new IntegritySystemException(
                 "After succesfully create metadata.", e);
         }
-        catch (MdRecordNotFoundException e) {
+        catch (final MdRecordNotFoundException e) {
             throw new IntegritySystemException(
                 "After succesfully create metadata.", e);
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             throw new IntegritySystemException(
                 "After succesfully create metadata.", e);
         }
@@ -1025,7 +1027,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @throws MissingMethodParameterException
      * @throws SystemException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveComponents(java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveComponents(String)
      */
     @Override
     public String retrieveComponents(final String id)
@@ -1153,11 +1155,11 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             sp.parse(xmlData);
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             // the only exception thrown from MultipleExtractor
             throw new XmlParserSystemException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
@@ -1170,8 +1172,13 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             updatedXmlData = retrieveComponents(id);
         }
-        catch (AuthorizationException e) {
-            LOGGER.debug("Error on retrieving components.", e);
+        catch (final AuthorizationException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on retrieving components.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on retrieving components.", e);
+            }
             // can not occur
         }
         final String endTimestamp = getItem().getLastFedoraModificationDate();
@@ -1190,7 +1197,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ItemNotFoundException
      * @throws MissingMethodParameterException
      * @throws SystemException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveResources(java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveResources(String)
      */
     @Override
     public String retrieveResources(final String id)
@@ -1207,7 +1214,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @return
      * @throws SystemException
      * @throws ItemNotFoundException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveResources(java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#retrieveResources(String)
      */
     @Override
     public EscidocBinaryContent retrieveResource(
@@ -1225,7 +1232,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                         XmlUtility.CHARACTER_ENCODING)));
                 return content;
             }
-            catch (UnsupportedEncodingException e) {
+            catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -1236,7 +1243,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                         XmlUtility.CHARACTER_ENCODING)));
                 return content;
             }
-            catch (UnsupportedEncodingException e) {
+            catch (final UnsupportedEncodingException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -1251,7 +1258,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 FedoraUtility.getInstance().getDissemination(id,
                     contentModelId, resourceName);
         }
-        catch (FedoraSystemException e) {
+        catch (final FedoraSystemException e) {
             throw new OperationNotFoundException(e);
         }
         content.setContent(new ByteArrayInputStream(bytes));
@@ -1265,7 +1272,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ItemNotFoundException
      * @throws MissingMethodParameterException
      * @throws SystemException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveRelations(java.lang.String)
+     * @see ItemHandlerInterface#retrieveRelations(String)
      */
     @Override
     public String retrieveRelations(final String id)
@@ -1283,7 +1290,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @throws MissingMethodParameterException
      * @throws SystemException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveComponent(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#retrieveComponent(String,String)
      */
     @Override
     public String retrieveComponent(final String id, final String componentId)
@@ -1316,7 +1323,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @throws MissingMethodParameterException
      * @throws SystemException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #retrieveComponentMdRecords(java.lang.String,java.lang.String)
      */
     @Override
@@ -1352,7 +1359,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @throws MissingMethodParameterException
      * @throws SystemException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveComponentMdRecord(java.lang.String,java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#retrieveComponentMdRecord(String,String,String)
      */
     @Override
     public String retrieveComponentMdRecord(
@@ -1388,7 +1395,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws InvalidStatusException
      * @throws ItemNotFoundException
      * @throws ResourceNotFoundException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#deleteComponent(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#deleteComponent(String,String)
      */
     @Override
     public void deleteComponent(final String itemId, final String componentId)
@@ -1434,8 +1441,8 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws MissingAttributeValueException
      *             cf. Interface
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#createComponent(java.lang.String,
-     *      java.lang.String)
+     * @see ItemHandlerInterface#createComponent(String,
+     *      String)
      */
     @Override
     public String createComponent(final String id, final String xmlData)
@@ -1457,16 +1464,16 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             sp.parse(xmlData);
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             throw e;
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             throw e;
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
         sp.clearHandlerChain();
@@ -1500,8 +1507,8 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws MissingContentException
      * @throws InvalidContentException
      * @throws ReadonlyVersionException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#updateComponent(java.lang.String,java.lang.String,
-     *      java.lang.String)
+     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#updateComponent(String,String,
+     *      String)
      */
     @Override
     public String updateComponent(
@@ -1521,7 +1528,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                 getItem().addComponent(
                     new Component(componentId, getItem().getId(), null));
             }
-            catch (ResourceNotFoundException e) {
+            catch (final ResourceNotFoundException e) {
                 throw new ComponentNotFoundException(e);
             }
         }
@@ -1552,11 +1559,11 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             sp.parse(xmlData);
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             // the only exception MultipleExtractor throws
             throw new XmlParserSystemException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
@@ -1593,7 +1600,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ReadonlyViolationException
      * @throws ReadonlyVersionException
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#release(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#release(String,String)
      */
     @Override
     public String release(final String id, final String param)
@@ -1672,7 +1679,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ReadonlyViolationException
      * @throws ReadonlyVersionException
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#submit(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#submit(String,String)
      */
     @Override
     public String submit(final String id, final String param)
@@ -1731,7 +1738,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ReadonlyVersionException
      * @throws ComponentNotFoundException
      * @throws XmlCorruptedException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#revise(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#revise(String,String)
      */
     @Override
     public String revise(final String id, final String param)
@@ -1782,7 +1789,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ReadonlyViolationException
      * @throws ReadonlyVersionException
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#withdraw(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#withdraw(String,String)
      */
     @Override
     public String withdraw(final String id, final String param)
@@ -1863,7 +1870,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws XmlSchemaValidationException
      * @throws ReadonlyVersionException
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#addContentRelations(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#addContentRelations(String,String)
      */
     @Override
     public String addContentRelations(final String id, final String param)
@@ -1893,28 +1900,28 @@ public class FedoraItemHandler extends ItemHandlerPid
             sp.parse(param);
             sp.clearHandlerChain();
         }
-        catch (MissingElementValueException e) {
+        catch (final MissingElementValueException e) {
             throw e;
         }
-        catch (ReferencedResourceNotFoundException e) {
+        catch (final ReferencedResourceNotFoundException e) {
             throw e;
         }
-        catch (RelationPredicateNotFoundException e) {
+        catch (final RelationPredicateNotFoundException e) {
             throw e;
         }
-        catch (InvalidContentException e) {
+        catch (final InvalidContentException e) {
             throw e;
         }
-        catch (InvalidXmlException e) {
+        catch (final InvalidXmlException e) {
             throw e;
         }
-        catch (SystemException e) {
+        catch (final SystemException e) {
             throw e;
         }
-        catch (AlreadyExistsException e) {
+        catch (final AlreadyExistsException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
         final List<Map<String, String>> relationsData = addHandler.getRelations();
@@ -1970,7 +1977,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ReadonlyViolationException
      * @throws ReadonlyVersionException
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#removeContentRelations(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#removeContentRelations(String,String)
      */
     @Override
     public String removeContentRelations(final String id, final String param)
@@ -2000,19 +2007,19 @@ public class FedoraItemHandler extends ItemHandlerPid
             sp.parse(param);
             sp.clearHandlerChain();
         }
-        catch (MissingElementValueException e) {
+        catch (final MissingElementValueException e) {
             throw new MissingElementValueException(e);
         }
-        catch (ContentRelationNotFoundException e) {
+        catch (final ContentRelationNotFoundException e) {
             throw new ContentRelationNotFoundException(e);
         }
-        catch (TripleStoreSystemException e) {
+        catch (final TripleStoreSystemException e) {
             throw new TripleStoreSystemException(e);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new TripleStoreSystemException(e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
@@ -2059,11 +2066,12 @@ public class FedoraItemHandler extends ItemHandlerPid
             }
 
            final Set<Map.Entry<String,List<StartElementWithChildElements>>> entrySet   = predicateValuesVectorAssignment.entrySet();
-           for (Iterator it = entrySet.iterator();it.hasNext();) {
-               Map.Entry entry = (Map.Entry) it.next();
-               String predicateValue = (String)entry.getKey();
-               final List<StartElementWithChildElements> elements = (List<StartElementWithChildElements>)entry.getValue();
-               toRemove.put("/RDF/Description/" + predicateValue, elements);
+            for(final Object anEntrySet : entrySet) {
+                final Map.Entry entry = (Map.Entry) anEntrySet;
+                final String predicateValue = (String) entry.getKey();
+                final List<StartElementWithChildElements> elements =
+                        (List<StartElementWithChildElements>) entry.getValue();
+                toRemove.put("/RDF/Description/" + predicateValue, elements);
             }
 
             final byte[] relsExtNewBytes =
@@ -2098,7 +2106,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws OptimisticLockingException
      * @throws ComponentNotFoundException
      * @throws InvalidStatusException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#lock(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#lock(String,String)
      */
     @Override
     public String lock(final String id, final String param)
@@ -2137,7 +2145,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      * @throws OptimisticLockingException
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#unlock(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#unlock(String,String)
      */
     @Override
     public String unlock(final String id, final String param)
@@ -2172,7 +2180,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @return
      * @throws ItemNotFoundException
      * @throws SystemException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveVersionHistory(java.lang.String)
+     * @see ItemHandlerInterface#retrieveVersionHistory(String)
      */
     @Override
     public String retrieveVersionHistory(final String id)
@@ -2198,7 +2206,7 @@ public class FedoraItemHandler extends ItemHandlerPid
                         + Elements.ATTRIBUTE_LAST_MODIFICATION_DATE + "=\""
                         + getItem().getLastModificationDate() + "\" ");
         }
-        catch (StreamNotFoundException e) {
+        catch (final StreamNotFoundException e) {
             throw new IntegritySystemException("Version history not found.", e);
         }
 
@@ -2215,7 +2223,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      *             e
      * @throws SystemException
      *             cf. Interface
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveParents(java.lang.String)
+     * @see ItemHandlerInterface#retrieveParents(String)
      */
     @Override
     public String retrieveParents(final String id)
@@ -2252,7 +2260,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws ComponentNotFoundException
      * @throws MissingMethodParameterException
      * @throws SystemException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveComponentProperties(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#retrieveComponentProperties(String,String)
      */
     @Override
     public String retrieveComponentProperties(
@@ -2345,7 +2353,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws TripleStoreSystemException
      * @throws IntegritySystemException
      */
-    private ItemCreate parseItem(final String xml)
+    private static ItemCreate parseItem(final String xml)
         throws WebserverSystemException, XmlParserSystemException,
         ReadonlyElementViolationException, ReadonlyAttributeViolationException,
         ContentModelNotFoundException, ContextNotFoundException,
@@ -2364,28 +2372,28 @@ public class FedoraItemHandler extends ItemHandlerPid
         try {
             sp.parse(xml);
         }
-        catch (LockingException e) {
+        catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
-        catch (AlreadyExistsException e) {
+        catch (final AlreadyExistsException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
-        catch (OrganizationalUnitNotFoundException e) {
+        catch (final OrganizationalUnitNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
-        catch (ContentRelationNotFoundException e) {
+        catch (final ContentRelationNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
-        catch (PidAlreadyAssignedException e) {
+        catch (final PidAlreadyAssignedException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
-        catch (TmeException e) {
+        catch (final TmeException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             XmlUtility.handleUnexpectedStaxParserException(null, e);
         }
 
@@ -2435,7 +2443,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * See Interface for functional description.
      * 
      * @param fedoraUtility
-     * @see de.escidoc.core.common.business.fedora.HandlerBase
+     * @see HandlerBase
      *      #setFedoraUtility(de.escidoc.core.common.business.fedora.FedoraUtility)
      */
     @Override
@@ -2460,7 +2468,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * See Interface for functional description.
      * 
      * @param idProvider
-     * @see de.escidoc.core.common.business.fedora.HandlerBase
+     * @see HandlerBase
      *      #setIdProvider(de.escidoc.core.common.persistence.EscidocIdProvider)
      */
     @Override
@@ -2483,9 +2491,8 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void setMetadataRecord(
-        final String name, final String xml,
-        final Map<String, String> mdAttributes) throws SystemException {
+    private static void setMetadataRecord(final String name, final String xml, final Map<String, String> mdAttributes)
+            throws SystemException {
 
         // this method must be reimplemented to use set-method in item
         throw new SystemException("Not yet implemented.");
@@ -2496,7 +2503,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         // try {
         // xmlBytes = xml.getBytes(XmlUtility.CHARACTER_ENCODING);
         // }
-        // catch (UnsupportedEncodingException e) {
+        // catch (final UnsupportedEncodingException e) {
         // throw new EncodingSystemException(e.getMessage(), e);
         // }
         //
@@ -2667,9 +2674,9 @@ public class FedoraItemHandler extends ItemHandlerPid
             item.getProperties().getObjectProperties().getStatus();
 
         if (publicStatus != StatusType.PENDING) {
-
-            LOGGER.debug("New Items has to be in public-status '"
-                + StatusType.PENDING + "'.");
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("New Items has to be in public-status '" + StatusType.PENDING + "'.");
+            }
             item.getProperties().getObjectProperties()
                 .setStatus(StatusType.PENDING);
             // item.getProperties().getObjectProperties().setStatusComment(
@@ -2741,8 +2748,10 @@ public class FedoraItemHandler extends ItemHandlerPid
                 item.getProperties().getCurrentVersion());
         }
         else if (publicStatus != StatusType.PENDING) {
-            LOGGER.debug("New Items has to be in public-status '"
-                + StatusType.PENDING + "' or '" + StatusType.RELEASED);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("New Items has to be in public-status '" + StatusType.PENDING + "' or '" + StatusType
+                        .RELEASED);
+            }
             item.getProperties().getObjectProperties()
                 .setStatus(StatusType.PENDING);
             item.getProperties().getCurrentVersion()
@@ -2872,7 +2881,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             try {
                 setOriginItem(origin);
             }
-            catch (ItemNotFoundException e) {
+            catch (final ItemNotFoundException e) {
                 throw new InvalidContentException("The referenced Item '" + origin + "' does not exist.");
             }
 
@@ -2906,7 +2915,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws InvalidContentException
      *             Thrown if content is invalid.
      */
-    private void checkMetadataRecords(final ItemCreate item)
+    private static void checkMetadataRecords(final ItemCreate item)
         throws MissingMdRecordException, InvalidContentException {
 
         /*
@@ -2972,9 +2981,9 @@ public class FedoraItemHandler extends ItemHandlerPid
         if (targetObjectType == null) {
             throw new ReferencedResourceNotFoundException("Resource with id '" + targetId + "' does not exist.");
         }
-        if (!de.escidoc.core.common.business.Constants.ITEM_OBJECT_TYPE
+        if (! Constants.ITEM_OBJECT_TYPE
             .equals(targetObjectType)
-            && !de.escidoc.core.common.business.Constants.CONTAINER_OBJECT_TYPE
+            && ! Constants.CONTAINER_OBJECT_TYPE
                 .equals(targetObjectType)) {
             throw new InvalidContentException("A related resource '" + targetId
                     + "' is neither 'Item' nor 'Container' ");

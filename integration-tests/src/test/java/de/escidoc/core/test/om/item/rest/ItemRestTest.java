@@ -96,7 +96,7 @@ public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
             EscidocRestSoapTestBase.failMissingException(
                 "Creating item with invalid object href not declined. ", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating item with invalid object href not declined,"
                     + " properly. ", ec, e);
@@ -147,7 +147,7 @@ public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {
             EscidocRestSoapTestBase.failMissingException(
                 "Creating item with invalid object href not declined. ", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating item with invalid object href not declined,"
                     + " properly. ", ec, e);

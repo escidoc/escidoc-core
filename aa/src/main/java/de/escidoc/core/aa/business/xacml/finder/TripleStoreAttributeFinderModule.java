@@ -186,10 +186,7 @@ import java.util.regex.Pattern;
  * -info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents<br>
  * the ids of the parents of the organizational-unit (hierarchical), multi value attribute
  * 
- * @spring.bean id="eSciDoc.core.aa.TripleStoreAttributeFinderModule"
- * 
  * @author TTE
- * @aa
  */
 public class TripleStoreAttributeFinderModule
     extends AbstractAttributeFinderModule {
@@ -304,10 +301,10 @@ public class TripleStoreAttributeFinderModule
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -376,10 +373,10 @@ public class TripleStoreAttributeFinderModule
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -401,7 +398,7 @@ public class TripleStoreAttributeFinderModule
                     ctx.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING,
                         new URI(mapresult.getresolvableAttributeId()), null);
             }
-            catch (URISyntaxException e) {
+            catch (final URISyntaxException e) {
                 result =
                     CustomEvaluationResultBuilder.createSyntaxErrorResult(e);
             }
@@ -458,7 +455,7 @@ public class TripleStoreAttributeFinderModule
      * @throws SystemException
      *             e
      * 
-     * @aa
+     *
      */
     protected List<String> getHierarchicalCachedAttributes(
         final Collection<String> attributesList,
@@ -508,7 +505,7 @@ public class TripleStoreAttributeFinderModule
         // of an Escidoc resource does not always contain dc:identifier entry
         // due to using of custom XSLTs for DC-Mapping
         String cacheId =
-            de.escidoc.core.common.business.fedora.TripleStoreUtility.FEDORA_CREATION_DATE_PREDICATE;
+            TripleStoreUtility.FEDORA_CREATION_DATE_PREDICATE;
 
         mapping.put("component-id", new MapResult(cacheId, true));
         mapping.put("component:id", new MapResult(cacheId, true));
@@ -842,8 +839,6 @@ public class TripleStoreAttributeFinderModule
      * 
      * @param tsu
      *            The {@link TripleStoreUtility}.
-     * @spring.property ref="business.TripleStoreUtility"
-     * @aa
      */
     public void setTsu(final TripleStoreUtility tsu) {
         this.tsu = tsu;

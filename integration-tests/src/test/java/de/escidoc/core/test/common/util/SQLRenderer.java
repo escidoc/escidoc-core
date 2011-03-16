@@ -146,7 +146,7 @@ public class SQLRenderer implements MeasurementRenderer {
                 }
                 statement.close();
             }
-            catch (SQLException e) {
+            catch (final SQLException e) {
                 System.out.println(sqlStatement);
                 System.out.println("Measurement not stored in DB. " + e);
             }

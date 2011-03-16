@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.util.stax.handler;
 
 import de.escidoc.core.common.business.Constants;
@@ -37,6 +29,8 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.naming.directory.NoSuchAttributeException;
 
@@ -47,6 +41,8 @@ import javax.naming.directory.NoSuchAttributeException;
  * 
  */
 public class RelsExtReadHandler extends DefaultHandler {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RelsExtReadHandler.class);
 
     private final StaxParser parser;
 
@@ -110,7 +106,7 @@ public class RelsExtReadHandler extends DefaultHandler {
                     }
                     getObjectValue(element);
                 }
-                catch (NoSuchAttributeException e) {
+                catch (final NoSuchAttributeException e) {
                     throw new WebserverSystemException(e);
                 }
             }
@@ -202,8 +198,13 @@ public class RelsExtReadHandler extends DefaultHandler {
                 this.object = cleanIdentifier(this.object);
             }
 
-        }
-        catch (NoSuchAttributeException e) {
+        } catch (final NoSuchAttributeException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on getting attribute.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on getting attribute.", e);
+            }
             this.readCharacter = true;
             this.object = "";
         }
@@ -218,7 +219,7 @@ public class RelsExtReadHandler extends DefaultHandler {
      *            The String where info:fedora/ is to remove
      * @return the cleaned resource identifier.
      */
-    private String cleanIdentifier(final String identifier) {
+    private static String cleanIdentifier(final String identifier) {
 
         if (identifier.startsWith(IDENTIFIER_PREFIX)) {
             return identifier.substring(IDENTIFIER_PREFIX.length());

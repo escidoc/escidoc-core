@@ -41,7 +41,7 @@ import java.util.regex.Pattern;
  * Helper class to change the base-url of imported schemas.
  * 
  * @author MIH
- * @common
+ *
  */
 public class SchemaBaseResourceResolver implements LSResourceResolver {
 
@@ -62,7 +62,7 @@ public class SchemaBaseResourceResolver implements LSResourceResolver {
      * @param s4 String4
      * @return LSInput LSInput.
      * 
-     * @common
+     *
      */
     public LSInput resolveResource(final String s,
             final String s1, final String s2,

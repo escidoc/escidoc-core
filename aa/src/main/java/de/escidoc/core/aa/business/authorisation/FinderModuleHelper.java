@@ -34,13 +34,14 @@ import com.sun.xacml.attr.BagAttribute;
 import com.sun.xacml.attr.StringAttribute;
 import com.sun.xacml.cond.EvaluationResult;
 import com.sun.xacml.ctx.Status;
+import com.sun.xacml.ctx.Subject;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 
 import java.net.URI;
@@ -59,12 +60,11 @@ import java.util.regex.Pattern;
  * 
  * @author TTE
  * 
- * @aa
+ *
  */
 public final class FinderModuleHelper {
 
-    private static final AppLogger LOG =
-        new AppLogger(FinderModuleHelper.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(FinderModuleHelper.class);
 
     private static final String ERROR_EXCEPTION_INSTANTIATION =
         "Could not create ResourceNotFoundException instance.";
@@ -87,7 +87,7 @@ public final class FinderModuleHelper {
     /**
      * Constructor.
      * 
-     * @aa
+     *
      */
     private FinderModuleHelper() {
     }
@@ -99,7 +99,7 @@ public final class FinderModuleHelper {
      *            The id to check.
      * @return Returns <code>true</code> if the provided id is the dummy id of
      *         new resources.
-     * @common
+     *
      */
     public static boolean isNewResourceId(final String resourceId) {
 
@@ -125,7 +125,7 @@ public final class FinderModuleHelper {
      *             from that it should be fetched does not exist.
      * @throws WebserverSystemException
      *             Thrown if an internal error occurred.
-     * @aa
+     *
      */
     public static String retrieveSingleResourceAttribute(
         final EvaluationCtx context, final URI idUri,
@@ -156,7 +156,7 @@ public final class FinderModuleHelper {
      *             from that it should be fetched does not exist.
      * @throws WebserverSystemException
      *             Thrown if an internal error occurred.
-     * @aa
+     *
      */
     public static String retrieveSingleSubjectAttribute(
         final EvaluationCtx context, final URI idUri,
@@ -165,7 +165,7 @@ public final class FinderModuleHelper {
 
         return extractSingleResult(idUri, context.getSubjectAttribute(
             Constants.URI_XMLSCHEMA_STRING, idUri,
-            com.sun.xacml.ctx.Subject.DEFAULT_CATEGORY),
+            Subject.DEFAULT_CATEGORY),
             forceEmptyResultException);
     }
 
@@ -187,7 +187,7 @@ public final class FinderModuleHelper {
      *             from that it should be fetched does not exist.
      * @throws WebserverSystemException
      *             Thrown if an internal error occurred.
-     * @aa
+     *
      */
     private static String extractSingleResult(
         final URI idUri, final EvaluationResult result,
@@ -258,7 +258,7 @@ public final class FinderModuleHelper {
      *             from that it should be fetched does not exist.
      * @throws WebserverSystemException
      *             Thrown if an internal error occurred.
-     * @aa
+     *
      */
     public static Set<String> retrieveMultiResourceAttribute(
         final EvaluationCtx context, final URI idUri,
@@ -288,7 +288,7 @@ public final class FinderModuleHelper {
      *             from that it should be fetched does not exist.
      * @throws WebserverSystemException
      *             Thrown if an internal error occurred.
-     * @aa
+     *
      */
     private static Set<String> extractMultiResult(
         final URI idUri, final EvaluationResult result,
@@ -347,7 +347,7 @@ public final class FinderModuleHelper {
      *             Thrown in case of an internal error.
      * @throws ResourceNotFoundException
      *             Thrown if a resource does not exist.
-     * @aa
+     *
      */
     private static void convertToException(
         final String msg, final String statusCode)
@@ -373,7 +373,7 @@ public final class FinderModuleHelper {
                 throw new WebserverSystemException(StringUtility.format(
                             ERROR_EXCEPTION_INSTANTIATION, exceptionClassName), e);
             }
-            LOG.error(exceptionClassName + ' ' + msg + ' ' + statusCode);
+            LOGGER.error(exceptionClassName + ' ' + msg + ' ' + statusCode);
             throw exceptionInstance;
         }
         else {
@@ -420,7 +420,7 @@ public final class FinderModuleHelper {
      *             the triple store.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public static List<String> retrieveFromTripleStore(
         final boolean targetIsSubject, final StringBuffer whereClause,

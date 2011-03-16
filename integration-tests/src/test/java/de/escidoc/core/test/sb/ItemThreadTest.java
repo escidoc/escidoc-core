@@ -93,7 +93,7 @@ public class ItemThreadTest extends SearchTestBase {
             try {
                 ts[threadlength].join();
             }
-            catch (Exception e) {
+            catch (final Exception e) {
             }
 
         }

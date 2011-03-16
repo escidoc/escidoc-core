@@ -1,37 +1,29 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.persistence;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.PidSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -43,15 +35,20 @@ import java.io.IOException;
  */
 public abstract class PIDSystemFactory {
 
-    private static final AppLogger LOG = new AppLogger(PIDSystemFactory.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(PIDSystemFactory.class);
 
     private static PIDSystemFactory pidSystemFactory ;
 
     static {
         try {
             createNewInstanceFromConfig();
-        } catch (PidSystemException e) {
-            LOG.debug("Error on creating new instance of PIDSystemFactory.", e);
+        } catch (final PidSystemException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on creating new instance of PIDSystemFactory.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on creating new instance of PIDSystemFactory.", e);
+            }
        }
     }
 
@@ -69,7 +66,7 @@ public abstract class PIDSystemFactory {
      * Get a new instance using the class name specified in
      * escidoc-core.properties with 'escidoc-core.PidGeneratorFactory'.
      * 
-     * @see de.escidoc.core.common.util.configuration.EscidocConfiguration
+     * @see EscidocConfiguration
      * 
      * @return An instance of the PIDGeneratorFactory class specified in
      *         escidoc-core.properties with escidoc-core.PidGeneratorFactory.
@@ -97,8 +94,13 @@ public abstract class PIDSystemFactory {
             if (factoryClassName == null) {
                 factoryClassName = defaultFactory;
             }
-        }
-        catch (IOException e) {
+        } catch (final IOException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on instanziating esidoc configuration factory.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on instanziating esidoc configuration factory.", e);
+            }
             factoryClassName = defaultFactory;
         }
 
@@ -106,13 +108,13 @@ public abstract class PIDSystemFactory {
             final Class<?> factoryClass = Class.forName(factoryClassName);
             pidSystemFactory = (PIDSystemFactory) factoryClass.newInstance();
         }
-        catch (ClassNotFoundException e) {
+        catch (final ClassNotFoundException e) {
             throw new PidSystemException(e);
         }
-        catch (InstantiationException e) {
+        catch (final InstantiationException e) {
             throw new PidSystemException(e);
         }
-        catch (IllegalAccessException e) {
+        catch (final IllegalAccessException e) {
             throw new PidSystemException(e);
         }
     }

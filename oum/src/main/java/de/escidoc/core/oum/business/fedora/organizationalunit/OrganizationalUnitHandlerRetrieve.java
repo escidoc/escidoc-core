@@ -64,7 +64,6 @@ public class OrganizationalUnitHandlerRetrieve
      * 
      * @param pdp
      *            the {@link PolicyDecisionPointInterface} to be injected.
-     * @spring.property ref="service.PolicyDecisionPointBean"
      */
     public void setPdp(final PolicyDecisionPointInterface pdp) {
 
@@ -179,7 +178,7 @@ public class OrganizationalUnitHandlerRetrieve
                 childId = chidrenId;
                 setOrganizationalUnit(childId);
                 children.add(getOrganizationalUnitXml());
-            } catch (OrganizationalUnitNotFoundException e) {
+            } catch (final OrganizationalUnitNotFoundException e) {
                 throw new IntegritySystemException(
                         "Referenced child organizational unit '" + childId
                                 + "' could not be retrieved! ", e);
@@ -188,7 +187,7 @@ public class OrganizationalUnitHandlerRetrieve
         try {
             setOrganizationalUnit(parentId);
         }
-        catch (OrganizationalUnitNotFoundException e) {
+        catch (final OrganizationalUnitNotFoundException e) {
             throw new IntegritySystemException("Parent organizational unit '"
                 + parentId + "' is not available! ", e);
         }
@@ -216,7 +215,7 @@ public class OrganizationalUnitHandlerRetrieve
                 parentId = parentsId;
                 setOrganizationalUnit(parentId);
                 parents.add(getOrganizationalUnitXml());
-            } catch (OrganizationalUnitNotFoundException e) {
+            } catch (final OrganizationalUnitNotFoundException e) {
                 throw new IntegritySystemException(
                         "Referenced parent organizational unit '" + parentId
                                 + "' could not be retrieved! ", e);
@@ -225,7 +224,7 @@ public class OrganizationalUnitHandlerRetrieve
         try {
             setOrganizationalUnit(childId);
         }
-        catch (OrganizationalUnitNotFoundException e) {
+        catch (final OrganizationalUnitNotFoundException e) {
             throw new IntegritySystemException("Child organizational unit '"
                 + childId + "' is not available! ", e);
         }

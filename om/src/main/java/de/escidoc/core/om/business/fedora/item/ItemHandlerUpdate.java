@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -50,7 +51,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.item.ComponentPropertiesUpdateHandler;
@@ -80,8 +81,8 @@ import java.util.Map.Entry;
  */
 public class ItemHandlerUpdate extends ItemHandlerDelete {
 
-    private static final AppLogger LOGGER = new AppLogger(
-        ItemHandlerUpdate.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        ItemHandlerUpdate.class);
 
     /**
      * Update the components of an item.
@@ -170,7 +171,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                             createComponent(newComponent
                                     .toString(XmlUtility.CHARACTER_ENCODING));
                     getItem().addComponent(componentId);
-                } catch (UnsupportedEncodingException e) {
+                } catch (final UnsupportedEncodingException e) {
                     throw new EncodingSystemException(e.getMessage(), e);
                 }
             }
@@ -217,7 +218,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                         .toString(XmlUtility.CHARACTER_ENCODING), getItem()
                         .getId());
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
         String mimeType = properties.get(TripleStoreUtility.PROP_MIME_TYPE);
@@ -225,7 +226,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             mimeType = FoXmlProvider.MIME_TYPE_APPLICATION_OCTET_STREAM;
         }
         String fileName =
-            properties.get(de.escidoc.core.common.business.Constants.DC_NS_URI
+            properties.get(Constants.DC_NS_URI
                 + Elements.ELEMENT_DC_TITLE);
         if (fileName == null || fileName.length() == 0) {
             fileName = "content of component " + c.getId();
@@ -236,7 +237,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                     .toString(XmlUtility.CHARACTER_ENCODING), mimeType,
                 fileName);
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
         final Map<String, ByteArrayOutputStream> mdRecords;
@@ -264,10 +265,9 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
      * @throws ComponentNotFoundException
      *             Thrown if Component with provided objid was not found.
      */
-    private void setComponentMetadataRecords(
-        final Component c, final Map<String, ByteArrayOutputStream> mdMap,
-        final Map<String, Map<String, String>> mdAttributesMap,
-        final String escidocMdRecordnsUri) throws SystemException,
+    private static void setComponentMetadataRecords(final Component c, final Map<String, ByteArrayOutputStream> mdMap,
+                                                    final Map<String, Map<String, String>> mdAttributesMap,
+                                                    final String escidocMdRecordnsUri) throws SystemException,
         ComponentNotFoundException {
 
         final Map<String, Datastream> dsMap = new HashMap<String, Datastream>();
@@ -318,10 +318,10 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         try {
             sp.parse(xml);
         }
-        catch (InvalidContentException e) {
+        catch (final InvalidContentException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
 
@@ -338,7 +338,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             component.setRelsExt(newRelsExt);
             component.persist();
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new XmlParserSystemException(
                 "While building component RELS-EXT.", e);
         }
@@ -381,7 +381,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
             }
 
         }
-        catch (UnsupportedEncodingException e) {
+        catch (final UnsupportedEncodingException e) {
             throw new EncodingSystemException(e.getMessage(), e);
         }
     }
@@ -422,10 +422,10 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
         try {
             sp.parse(xml);
         }
-        catch (MissingContentException e) {
+        catch (final MissingContentException e) {
             throw e;
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
 
@@ -458,7 +458,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                     getFedoraUtility().modifyDatastream(component.getId(),
                         "content", null, null, null, url, true);
                 }
-                catch (FedoraSystemException e) {
+                catch (final FedoraSystemException e) {
                     handleFedoraUploadError(url, e);
                 }
 
@@ -494,7 +494,7 @@ public class ItemHandlerUpdate extends ItemHandlerDelete {
                 getFedoraUtility().modifyDatastream(component.getId(),
                     "content", null, null, null, url, true);
             }
-            catch (FedoraSystemException e) {
+            catch (final FedoraSystemException e) {
                 handleFedoraUploadError(url, e);
             }
         }

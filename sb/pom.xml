@@ -38,99 +38,6 @@
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>xdoclet-maven-plugin</artifactId>
-				<version>1.0</version>
-				<dependencies>
-					<!--  Added because the usual plugin does not support jdk1.5+++ -->
-					<dependency>
-						<groupId>xdoclet</groupId>
-						<artifactId>xjavadoc</artifactId>
-						<version>1.5-20050611</version>
-					</dependency>
-				</dependencies>
-				<executions>
-					<execution>
-						<id>ejbSet</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>xdoclet</goal>
-						</goals>
-						<configuration>
-							<tasks>
-                                <mkdir dir="${basedir}/target/generated-sources"/>
-								<ejbdoclet ejbSpec="2.1" excludedTags="@version,@author,@todo"
-									destDir="${basedir}/target/generated-sources" verbose="true"
-									force="true" addedTags="">
-									<fileset dir="${basedir}/src/main/java" includes="**/*.java"></fileset>
-									<template templatefile="${basedir}/src/main/resources/xdoclet/bean.xdt"
-										destinationFile="{0}Bean.java" destdir="${basedir}/target/generated-sources"
-										havingclasstag="service">
-										<packageSubstitution packages="service"
-											substituteWith="ejb" />
-									</template>
-								</ejbdoclet>
-								<ejbdoclet ejbSpec="2.1" excludedTags="@version,@author,@todo"
-									destDir="${basedir}/target/generated-sources" verbose="true"
-									addedTags="">
-									<fileset dir="${basedir}/target/generated-sources">
-										<include name="**/*Bean.java" />
-									</fileset>
-									<fileset dir="${project.build.sourceDirectory}">
-										<include name="**/*Bean.java"></include>
-									</fileset>
-									<packageSubstitution packages="ejb"
-										substituteWith="ejb.interfaces" />
-									<homeinterface />
-									<remoteinterface />
-									<localhomeinterface />
-									<localinterface />
-
-									<session destDir="${basedir}/target/generated-sources" />
-									<deploymentdescriptor validateXML="false"
-										destinationFile="ejb-jar.xml" destDir="${basedir}/target/classes/META-INF"
-										mergeDir="${basedir}/src/main/resources/META-INF/merge">
-									</deploymentdescriptor>
-									<service-endpoint
-										templateFile="${basedir}/src/main/resources/xdoclet/service-endpoint.xdt"
-										destDir="${basedir}/target/generated-sources" />
-									<axisdeploy
-										templateFile="${basedir}/src/main/resources/xdoclet/axis-deploy_wsdd.xdt"
-										contextProviderUrl="de.escidoc.${project.artifactId}"
-										prefixWithPackageStructure="false"
-										destDir="${basedir}/target/generated-sources/META-INF"
-										mergeDir="${basedir}/src/main/resources/META-INF/merge">
-									</axisdeploy>
-									<axisundeploy prefixWithPackageStructure="false"
-										destDir="${basedir}/target/generated-sources/META-INF"
-										mergeDir="${basedir}/src/main/resources/META-INF/merge">
-									</axisundeploy>
-								</ejbdoclet>
-							</tasks>
-						</configuration>
-					</execution>
-					<execution>
-						<id>hibernateSet</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>xdoclet</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<hibernatedoclet excludedTags="@version,@author,@todo"
-									destDir="${basedir}/target/generated-sources" force="true"
-									verbose="true">
-									<fileset dir="${basedir}/src/main/java" includes="**/persistence/hibernate/*.java"
-										excludes="">
-									</fileset>
-									<hibernate Version="3.0" />
-								</hibernatedoclet>
-							</tasks>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>aspectj-maven-plugin</artifactId>
 				<version>1.3</version>
                 <dependencies>
@@ -150,7 +57,7 @@
 					<source>${java.source.version}</source>
 					<complianceLevel>${java.target.version}</complianceLevel>
 					<outxml>true</outxml>
-					<showWeaveInfo>true</showWeaveInfo>
+					<showWeaveInfo>false</showWeaveInfo>
 					<aspectLibraries>
 						<aspectLibrary>
 							<groupId>org.springframework</groupId>

@@ -132,10 +132,10 @@ public class ModeratorAbstractTest extends GrantTestBase {
             revokeAllGrants(grantCreationUserOrGroupId);
             try {
                 revokeAllGrants(TEST_USER_ACCOUNT_ID1);
-            } catch (Exception e) {}
+            } catch (final Exception e) {}
             try {
                 revokeAllGrants(TEST_USER_GROUP_ID);
-            } catch (Exception e) {}
+            } catch (final Exception e) {}
             methodCounter = 0;
         }
     }
@@ -304,7 +304,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
             retrieve(ITEM_HANDLER_CODE, id);
             fail("No exception occurred on moderator retrieving pending item.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(AuthorizationException.class, e);
         }
     }
@@ -403,7 +403,7 @@ public class ModeratorAbstractTest extends GrantTestBase {
             fail(
             "No exception occurred on moderator retrieving pending container.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(AuthorizationException.class, e);
         }
     }

@@ -642,7 +642,7 @@ public class SurrogateItemTest extends ItemTestBase {
             fail("Missing Exception on create an surrogate item with a "
                 + "fixed reference to an unreleased version");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME correct exception? its a value to much! JavaDoc: a
             // mandatory attribute value is not set
             Class<?> ec = InvalidStatusException.class;
@@ -684,7 +684,7 @@ public class SurrogateItemTest extends ItemTestBase {
             fail("Missing Exception on create an surrogate item with a reference"
                 + "to an unreleased item");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME correct exception? its a value to much! JavaDoc: a
             // mandatory attribute value is not set
             Class<?> ec = InvalidStatusException.class;
@@ -738,7 +738,7 @@ public class SurrogateItemTest extends ItemTestBase {
             fail("Missing Exception on create an surrogate item with a reference"
                 + "to a withdrawn item");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME correct exception? its a value to much! JavaDoc: a
             // mandatory attribute value is not set
             Class<?> ec = InvalidStatusException.class;
@@ -772,7 +772,7 @@ public class SurrogateItemTest extends ItemTestBase {
             fail("Missing Exception on create an surrogate item with a not "
                 + "existing reference");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME correct exception? its a value to much! JavaDoc: a
             // mandatory attribute value is not set
             Class<?> ec = InvalidContentException.class;
@@ -855,7 +855,7 @@ public class SurrogateItemTest extends ItemTestBase {
             fail("Missing Exception on create an surrogate item with a reference "
                 + "to a surrogate item");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME correct exception? its a value to much! JavaDoc: a
             // mandatory attribute value is not set
             Class<?> ec = InvalidContentException.class;

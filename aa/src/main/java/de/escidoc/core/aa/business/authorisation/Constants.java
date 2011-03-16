@@ -42,7 +42,7 @@ import java.util.regex.Pattern;
  * 
  * @author TTE
  * 
- * @aa
+ *
  */
 public final class Constants {
 
@@ -50,7 +50,7 @@ public final class Constants {
      * Pattern used to parse a resource id and identify the objid and optional
      * version number.
      * 
-     * @aa
+     *
      */
     public static final Pattern PATTERN_PARSE_RESOURCE_ID =
         Pattern.compile("([^:]*:[^:]*)(:([^:]*)){0,1}");
@@ -117,7 +117,7 @@ public final class Constants {
      * @param uriString
      *            The string defining the URI.
      * @return Returns the URI for the provided string or <code>null</code>.
-     * @aa
+     *
      */
     public static URI getURI(final String uriString) {
 
@@ -127,7 +127,7 @@ public final class Constants {
                 uri = new URI(uriString);
                 URI_MAP.put(uriString, uri);
             }
-            catch (URISyntaxException e) {
+            catch (final URISyntaxException e) {
                 uri = null;
             }
         }
@@ -137,7 +137,7 @@ public final class Constants {
     /**
      * Constructor.
      * 
-     * @aa
+     *
      */
     private Constants() {
     }

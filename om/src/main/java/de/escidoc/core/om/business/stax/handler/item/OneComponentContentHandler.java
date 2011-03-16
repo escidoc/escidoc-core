@@ -30,7 +30,7 @@ package de.escidoc.core.om.business.stax.handler.item;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
@@ -62,8 +62,8 @@ public class OneComponentContentHandler extends DefaultHandler {
 
     private boolean inContent;
 
-    private static final AppLogger LOGGER =
-        new AppLogger(OneComponentContentHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(OneComponentContentHandler.class);
 
     /**
      * OneComponentContentHandler.

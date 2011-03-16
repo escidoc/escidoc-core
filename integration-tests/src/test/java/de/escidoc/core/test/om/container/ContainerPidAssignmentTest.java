@@ -114,7 +114,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             getItemClient().delete(this.theItemId);
             delete(this.theContainerId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // do nothing
         }
     }
@@ -237,7 +237,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             assignObjectPid(theContainerId, pidParam);
             fail("InvalidStatusException expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -288,7 +288,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             pid = assignObjectPid(theContainerId, pidParam);
             fail("InvalidStatusException expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -355,7 +355,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             pid = assignVersionPid(versionId, pidParam);
 
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ReadonlyVersionException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -426,7 +426,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             assignVersionPid(versionId, pidParam);
             fail("ReadonlyVersionException expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ReadonlyVersionException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -468,7 +468,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             assignVersionPid(versionId, pidParam);
             fail("ReadonlyVersionException expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ReadonlyVersionException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -497,7 +497,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
         // pid = assignVersionPid(versionId, pidParam);
         // fail("InvalidStatusException expected.");
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // Class<?> ec = InvalidStatusException.class;
         // EscidocRestSoapTestBase.assertExceptionType(ec.getName()
         // + " expected.", ec, e);
@@ -516,7 +516,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             assignObjectPid(theItemId, null);
             fail("MissingMethodParameterException expected.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMethodParameterException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -551,7 +551,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             assignVersionPid(containerId, taskParam);
             fail("Expect exception if pid element in taskParam is empty.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -585,7 +585,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             assignObjectPid(containerId, taskParam);
             fail("Expect exception if pid element in taskParam is empty.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -759,7 +759,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
         try {
             pidXml = assignVersionPid(theContainerId, pidParam);
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             fail("AssignVersionPid() does check for a version number.");
         }
 
@@ -814,7 +814,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             assignObjectPid(theContainerId, pidParam);
             fail("ObjectPid assignment to a withdrawn Container is illegal.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidStatusException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -963,7 +963,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             assignVersionPid(containerId, pidParam);
             fail("Missing OptimisticalLockingException");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }
@@ -991,7 +991,7 @@ public class ContainerPidAssignmentTest extends ContainerTestBase {
             assignObjectPid(containerId, pidParam);
             fail("Missing OptimisticalLockingException");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
         }

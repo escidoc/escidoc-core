@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.om.business.fedora.item;
 
+import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
@@ -44,7 +45,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.common.util.xml.Elements;
@@ -71,8 +73,8 @@ import java.util.regex.Pattern;
  */
 public class ItemHandlerContent extends ItemHandlerUpdate {
 
-    private static final AppLogger LOGGER =
-        new AppLogger(ItemHandlerContent.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ItemHandlerContent.class);
 
     private static final String TRANSFORM_SERVICE_DIGILIB = "digilib";
 
@@ -106,7 +108,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @throws MissingMethodParameterException
      * @throws SystemException
      * @throws InvalidStatusException
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#retrieveContent(java.lang.String,java.lang.String)
+     * @see ItemHandlerInterface#retrieveContent(String,String)
      */
     public EscidocBinaryContent retrieveContent(
         final String id, final String componentId)
@@ -130,7 +132,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         try {
             checkWithdrawn("Content not retrievable.");
         }
-        catch (InvalidStatusException e1) {
+        catch (final InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
         final String visibility =
@@ -158,7 +160,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 .isDeleted()) {
             fileName =
                 properties
-                    .get(de.escidoc.core.common.business.Constants.DC_NS_URI
+                    .get(Constants.DC_NS_URI
                         + Elements.ELEMENT_DC_TITLE);
             if (fileName == null || fileName.length() == 0) {
                 fileName = "Content of component " + componentId;
@@ -188,7 +190,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                     fedoraLocalUrl));
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new WebserverSystemException(e);
         }
 
@@ -228,7 +230,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         try {
             checkWithdrawn("Content not retrievable.");
         }
-        catch (InvalidStatusException e1) {
+        catch (final InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
         final String visibility =
@@ -255,7 +257,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 getContentUrl(component.getId(), getItem().getVersionDate(),
                     transformer, param);
         }
-        catch (MalformedURLException e1) {
+        catch (final MalformedURLException e1) {
             throw new WebserverSystemException("Internal content URL corrupt.",
                 e1);
         }
@@ -304,7 +306,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         try {
             checkWithdrawn("Content not retrievable.");
         }
-        catch (InvalidStatusException e1) {
+        catch (final InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
         final String visibility =
@@ -332,7 +334,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                         + getComponent(componentId).getHrefPart() + "/content";
                 // + "/" + getItem().getVersionDate();
             }
-            catch (IOException e) {
+            catch (final IOException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -362,7 +364,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @throws SystemException
      *             Thrown if the URL could not be obtained from configuration.
      */
-    private String getDigilibScalerUrl() throws SystemException {
+    private static String getDigilibScalerUrl() throws SystemException {
 
         final String diglibUrl;
         try {
@@ -370,7 +372,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
                 EscidocConfiguration.getInstance().get(
                     EscidocConfiguration.DIGILIB_SCALER);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException(e);
         }
 
@@ -386,13 +388,13 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @throws SystemException
      *             Thrown if the URL could not be obtained from configuration.
      */
-    private String getServiceUrl(final String service) throws SystemException {
+    private static String getServiceUrl(final String service) throws SystemException {
 
         final EscidocConfiguration conf;
         try {
             conf = EscidocConfiguration.getInstance();
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException(e);
         }
 
@@ -446,7 +448,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
             try {
                 templ = initFileContent(templateFileName);
             }
-            catch (IOException e) {
+            catch (final IOException e) {
                 throw new WebserverSystemException(e);
             }
         }
@@ -465,7 +467,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * 
      * @throws IOException
      *             Thrown in case of an I/O error.
-     * @om
+     *
      */
     private String initFileContent(final String templateFileName)
         throws IOException {
@@ -516,8 +518,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
-    public String updateContentStream(
-        final String id, final String name, final String xml)
+    public String updateContentStream(final String id, final String name, final String xml)
         throws ItemNotFoundException, SystemException,
         ContentStreamNotFoundException {
         throw new UnsupportedOperationException("Not yet implemented.");
@@ -556,7 +557,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
         try {
             checkWithdrawn("Content not retrievable.");
         }
-        catch (InvalidStatusException e1) {
+        catch (final InvalidStatusException e1) {
             throw new AuthorizationException(e1);
         }
         return getContentStream(name);

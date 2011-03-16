@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidContentExcep
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -49,7 +49,7 @@ import java.util.List;
  * 
  * @author FRS
  * 
- * @om
+ *
  */
 public class StructMapCreateHandler extends DefaultHandler {
 
@@ -59,8 +59,8 @@ public class StructMapCreateHandler extends DefaultHandler {
 
     private final List<String> entries = new ArrayList<String>();
 
-    private static final AppLogger logger =
-        new AppLogger(StructMapCreateHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(StructMapCreateHandler.class);
 
     /**
      * Struct Map Handler.
@@ -186,13 +186,6 @@ public class StructMapCreateHandler extends DefaultHandler {
                 "Referenced object in struct-map is no " + elementName + '.');
         }
         return entryId;
-    }
-
-    /**
-     * @return Returns the logger.
-     */
-    public static AppLogger getLogger() {
-        return logger;
     }
 
     /**

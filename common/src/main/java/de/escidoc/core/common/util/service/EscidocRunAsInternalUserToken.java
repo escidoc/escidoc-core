@@ -1,3 +1,23 @@
+/*
+ * CDDL HEADER START
+ *
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
+ *
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
+ *
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+ *
+ * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
+ */
+
 package de.escidoc.core.common.util.service;
 
 import org.springframework.security.Authentication;
@@ -10,7 +30,7 @@ import org.springframework.security.providers.AbstractAuthenticationToken;
  * internal user, that is not further authorized.
  * 
  * @author TTE
- * @common
+ *
  * 
  */
 public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
@@ -43,7 +63,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * Gets the original {@link Authentication}.
      * 
      * @return Returns the original {@link Authentication}.
-     * @common
+     *
      */
     public Authentication getOrginalAuthentication() {
         return orginalAuthentication;
@@ -53,9 +73,9 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.security.providers.AbstractAuthenticationToken
+     * @see AbstractAuthenticationToken
      *      #getCredentials()
-     * @common
+     *
      */
     @Override
     public Object getCredentials() {
@@ -67,9 +87,9 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.security.providers.AbstractAuthenticationToken
+     * @see AbstractAuthenticationToken
      *      #getPrincipal()
-     * @common
+     *
      */
     @Override
     public Object getPrincipal() {
@@ -81,9 +101,9 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.security.providers.AbstractAuthenticationToken
+     * @see AbstractAuthenticationToken
      *      #getDetails()
-     * @common
+     *
      */
     @Override
     public Object getDetails() {
@@ -95,9 +115,9 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.security.providers.AbstractAuthenticationToken
+     * @see AbstractAuthenticationToken
      *      #getAuthorities()
-     * @common
+     *
      */
     @Override
     public GrantedAuthority[] getAuthorities() {
@@ -109,9 +129,9 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      * See Interface for functional description.
      * 
      * @return
-     * @see org.springframework.security.providers.AbstractAuthenticationToken
+     * @see AbstractAuthenticationToken
      *      #getName()
-     * @common
+     *
      */
     @Override
     public String getName() {

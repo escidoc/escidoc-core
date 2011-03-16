@@ -184,7 +184,7 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
             deletePreference(userId, key);
             fail("Expected exception " + ec.getCanonicalName() + " not thrown.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -204,7 +204,7 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
                 "<preferenc xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
                     + " name=\"" + key + "\">" + value + "</preference>");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
         try {
@@ -212,7 +212,7 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
                 "<preferenc xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
                     + " name=\"" + key + "\">");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
 
@@ -222,7 +222,7 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
                 "<preference xmlns=\"http://www.escidoc.de/schemas/preferences/0.1\""
                     + " >" + value + "</preference>");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
         try {
@@ -230,7 +230,7 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
                 "<preference xmlns=\"http://www.escidoc.de\"" + " name=\""
                     + key + "\">" + value + "</preference>");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -292,7 +292,7 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
                     + "\">updated</preference></preferences>");
             fail(ec.getName() + " expected");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
 
@@ -326,7 +326,7 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
                     + "\">updated2</preference></preferences>");
             fail(ec.getName() + " expected");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
 
@@ -351,7 +351,7 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
                 + "<preference name=\"" + key
                 + "\">updated</preference></preferences>");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
 
@@ -405,7 +405,7 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
                     + " name=\"" + key + "\">single updated</preference>");
             fail(ec.getName() + " expected");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -431,7 +431,7 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
                     + " name=\"" + key + "\">single updated</preference>");
             fail(ec.getName() + " expected");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -502,7 +502,7 @@ public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase 
                     + "]");
             }
         }
-        catch (AssertionError e) {
+        catch (final AssertionError e) {
             System.out.println("FailedXML[" + preferencesXml + "]");
             throw e;
         }

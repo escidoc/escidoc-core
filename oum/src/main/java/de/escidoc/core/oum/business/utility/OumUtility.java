@@ -31,7 +31,7 @@ package de.escidoc.core.oum.business.utility;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
 import de.escidoc.core.common.exceptions.application.violated.OrganizationalUnitHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,7 +49,7 @@ public class OumUtility {
 
     private final Collection<String> closed;
 
-    private static final AppLogger logger = new AppLogger(OumUtility.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(OumUtility.class);
 
     /**
      * 

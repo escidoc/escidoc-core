@@ -30,7 +30,7 @@ package de.escidoc.core.sm.business.preprocessing;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.StatisticPreprocessingSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
@@ -70,14 +70,12 @@ import java.util.Set;
  * Preprocesses Raw Statistic Data according one Aggregation-Definition and
  * writes it into the aggregation-tables defined in the aggregation-definition.
  * 
- * @spring.bean id="business.AggregationPreprocessor" scope="prototype"
- * 
  * @author MIH
  */
 public class AggregationPreprocessor {
 
-    private static final AppLogger log =
-        new AppLogger(AggregationPreprocessor.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(AggregationPreprocessor.class);
 
     private DirectDatabaseAccessorInterface dbAccessor;
 
@@ -144,7 +142,7 @@ public class AggregationPreprocessor {
      *             e
      * 
      */
-    private Map initFieldTypeHash(final Collection<AggregationTableField> fieldList)
+    private static Map initFieldTypeHash(final Collection<AggregationTableField> fieldList)
         throws StatisticPreprocessingSystemException {
         final Map fields = new HashMap();
         final HashMap fieldtypes = new HashMap();
@@ -230,9 +228,9 @@ public class AggregationPreprocessor {
                     if (xml != null && timestamp != null) {
                         handleRecord(xml, timestamp, aggregationPreprocessorVo);
                     } else {
-                        log.error("xml or timestamp is null");
+                        LOGGER.error("xml or timestamp is null");
                     }
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     throw new StatisticPreprocessingSystemException(e);
                 }
             }
@@ -390,7 +388,7 @@ public class AggregationPreprocessor {
                 .getUniqueKeyForOneRecord()
                     .append(fieldValue);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new StatisticPreprocessingSystemException(e);
         }
 
@@ -457,7 +455,7 @@ public class AggregationPreprocessor {
             aggregationPreprocessorVo
                 .getUniqueKeyForOneRecord().append(hashValue);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new StatisticPreprocessingSystemException(e);
         }
     }
@@ -472,8 +470,8 @@ public class AggregationPreprocessor {
      *            Object that holds all values
      * 
      */
-    private void handleCountCumulationField(final AggregationTableField field, 
-                    final AggregationPreprocessorVo aggregationPreprocessorVo) {
+    private static void handleCountCumulationField(final AggregationTableField field,
+                                                   final AggregationPreprocessorVo aggregationPreprocessorVo) {
         // process count-cumulation-field:
         // just put 1 in fieldsHash
         aggregationPreprocessorVo
@@ -519,7 +517,7 @@ public class AggregationPreprocessor {
                 .getName(), field.getName()
                 + fieldValue);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new StatisticPreprocessingSystemException(e);
         }
         aggregationPreprocessorVo
@@ -541,8 +539,7 @@ public class AggregationPreprocessor {
      *             e
      * 
      */
-    private void mergeRecord(final String tablename, 
-            final AggregationPreprocessorVo aggregationPreprocessorVo)
+    private static void mergeRecord(final String tablename, final AggregationPreprocessorVo aggregationPreprocessorVo)
         throws StatisticPreprocessingSystemException {
         // Iterate over differenceCumulationFields,
         // build unique key with tablename,
@@ -630,7 +627,7 @@ public class AggregationPreprocessor {
      *            processing-date
      * @throws SqlDatabaseSystemException
      *             e
-     * @tx
+     *
      */
     public void persistAggregation(
             final AggregationPreprocessorVo aggregationPreprocessorVo, 
@@ -645,7 +642,7 @@ public class AggregationPreprocessor {
                 aggregationDefinitionId, date, false);
         if (preprocessingLogs != null && !preprocessingLogs.isEmpty()) {
             final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            log.error("aggregation-definition "
+            LOGGER.error("aggregation-definition "
                     + aggregationDefinitionId
                     + " already preprocessed successfully for date "
                     + dateFormat.format(date));
@@ -935,7 +932,7 @@ public class AggregationPreprocessor {
                         i++;
                     }
                 }
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 throw new SqlDatabaseSystemException(e);
             }
             databaseSelectVo.setRootWhereGroupVo(rootWhereGroupVo);
@@ -955,10 +952,8 @@ public class AggregationPreprocessor {
      *            Object that holds all values
      * @return String fieldType (text or numeric)
      */
-    private String getDbFieldType(
-            final String tablename, 
-            final String fieldname, 
-            final AggregationPreprocessorVo aggregationPreprocessorVo) {
+    private static String getDbFieldType(final String tablename, final String fieldname,
+                                         final AggregationPreprocessorVo aggregationPreprocessorVo) {
         final Map tableFieldTypes = (Map) aggregationPreprocessorVo.getFieldTypeHash().get(tablename);
         if (tableFieldTypes != null) {
             final Map dbFieldTypes = (Map) tableFieldTypes.get("dbtype");
@@ -966,11 +961,11 @@ public class AggregationPreprocessor {
                 return (String) dbFieldTypes.get(fieldname);
             }
             else {
-                log.error(fieldname + " not found in fieldTypeHash");
+                LOGGER.error(fieldname + " not found in fieldTypeHash");
             }
         }
         else {
-            log.error(tablename + " not found in fieldTypeHash");
+            LOGGER.error(tablename + " not found in fieldTypeHash");
         }
         return null;
     }
@@ -985,7 +980,7 @@ public class AggregationPreprocessor {
      * @return String reduced time
      * 
      */
-    private String reduceTime(final Calendar cal, final String reduceTo) {
+    private static String reduceTime(final Calendar cal, final String reduceTo) {
         if (reduceTo.equals(Constants.TIME_REDUCTION_TYPE_YEAR)) {
             return Integer.valueOf(cal.get(Calendar.YEAR)).toString();
         }
@@ -1006,7 +1001,6 @@ public class AggregationPreprocessor {
      * 
      * @param dbAccessorIn
      *            The directDatabaseAccessor to set.
-     * @spring.property ref="sm.persistence.DirectDatabaseAccessor"
      */
     public void setDirectDatabaseAccessor(
         final DirectDatabaseAccessorInterface dbAccessorIn) {
@@ -1016,7 +1010,6 @@ public class AggregationPreprocessor {
     /**
      * Setter for the preprocessingLogsDao.
      * 
-     * @spring.property ref="persistence.SmPreprocessingLogsDao"
      * @param preprocessingLogsDao
      *            The data access object.
      * 

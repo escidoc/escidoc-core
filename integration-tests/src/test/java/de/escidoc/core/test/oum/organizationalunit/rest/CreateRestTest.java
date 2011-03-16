@@ -84,7 +84,7 @@ public class CreateRestTest extends OrganizationalUnitTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Creating OU with set read only values failed. ", e);
         }
         assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
@@ -123,7 +123,7 @@ public class CreateRestTest extends OrganizationalUnitTestBase {
             create(toString(toBeCreatedDocument, false));
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }

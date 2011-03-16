@@ -41,6 +41,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
@@ -68,7 +69,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.servlet.EscidocServlet;
 import de.escidoc.core.common.servlet.UserHandleCookieUtil;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
@@ -76,14 +77,12 @@ import de.escidoc.core.common.util.string.StringUtility;
 /**
  * Login servlet for eSciDoc.
  * 
- * @spring.bean id="de.escidoc.core.servlet.Login"
  * @author MSC
- * @aa
  */
 public class Login extends HttpServlet {
 
     /** The logger. */
-    private static final AppLogger LOGGER = new AppLogger(Login.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(Login.class);
 
     private static final int NUM_CHARS = 10;
 
@@ -186,8 +185,8 @@ public class Login extends HttpServlet {
      * See Interface for functional description.
      * 
      * @throws ServletException
-     * @see javax.servlet.GenericServlet#init()
-     * @aa
+     * @see GenericServlet#init()
+     *
      */
     @Override
     public void init() throws ServletException {
@@ -207,7 +206,7 @@ public class Login extends HttpServlet {
         catch (final WebserverSystemException e) {
             throw new ServletException(e.getMessage(), e);
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new ServletException(e.getMessage(), e);
         }
     }
@@ -231,9 +230,9 @@ public class Login extends HttpServlet {
      *             e.
      * @throws IOException
      *             e.
-     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
-     * @aa
+     * @see HttpServlet#doGet(HttpServletRequest,
+     *      HttpServletResponse)
+     *
      */
     @Override
     public void doGet(
@@ -255,9 +254,9 @@ public class Login extends HttpServlet {
      * @param response
      * @throws ServletException
      * @throws IOException
-     * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest,
-     *      javax.servlet.http.HttpServletResponse)
-     * @aa
+     * @see HttpServlet#doPost(HttpServletRequest,
+     *      HttpServletResponse)
+     *
      */
     @Override
     public void doPost(
@@ -293,7 +292,7 @@ public class Login extends HttpServlet {
      *             Thrown in case of an IO error.
      * @throws ServletException
      *             Thrown in case of any other error.
-     * @aa
+     *
      */
     private void doLogout(
         final HttpServletRequest request, final HttpServletResponse response)
@@ -319,7 +318,7 @@ public class Login extends HttpServlet {
 
             sendLoggedOut(request, response);
         }
-        catch (WebserverSystemException e) {
+        catch (final WebserverSystemException e) {
             throw new ServletException(e.getMessage(), e);
         }
     }
@@ -432,7 +431,7 @@ public class Login extends HttpServlet {
             try {
                 deleteExternalAttributes(userAccount);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new ServletException(e);
             }
 
@@ -441,7 +440,7 @@ public class Login extends HttpServlet {
                 try {
                     createExternalAttributes(userAccount, attributes);
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     throw new ServletException(e);
                 }
             }
@@ -467,7 +466,7 @@ public class Login extends HttpServlet {
      *             Thrown in case of an internal system error.
      * @throws IOException
      *             Thrown in case of an I/O error.
-     * @aa
+     *
      */
     private void doLoginOfExistingUser(
         final HttpServletRequest request, final HttpServletResponse response,
@@ -484,11 +483,11 @@ public class Login extends HttpServlet {
             try {
                 sendAuthenticated(request, response, loginData.getHandle());
             }
-            catch (WebserverSystemException e) {
+            catch (final WebserverSystemException e) {
                 dao.delete(loginData);
                 throw e;
             }
-            catch (IOException e) {
+            catch (final IOException e) {
                 dao.delete(loginData);
                 throw e;
             }
@@ -507,7 +506,7 @@ public class Login extends HttpServlet {
      * @throws MissingParameterException
      *             Thrown if a mandatory parameter is missing.
      */
-    private String retrieveDecodedTarget(final ServletRequest request)
+    private static String retrieveDecodedTarget(final ServletRequest request)
         throws MissingParameterException {
 
         try {
@@ -521,8 +520,13 @@ public class Login extends HttpServlet {
                 throw new MissingParameterException(
                     "No target parameter provided in URL");
             }
-        }
-        catch (final UnsupportedEncodingException e) {
+        } catch (final UnsupportedEncodingException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on retriving decoded target.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on retriving decoded target.", e);
+            }
             return "";
         }
     }
@@ -545,7 +549,7 @@ public class Login extends HttpServlet {
      *             Thrown in case of an error.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private void sendAuthenticated(
         final HttpServletRequest request, final HttpServletResponse response,
@@ -562,6 +566,12 @@ public class Login extends HttpServlet {
             redirectUrlWithHandle = createRedirectUrl(request, handle);
         }
         catch (final MissingParameterException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on creating redirect URL.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on creating redirect URL.", e);
+            }
             redirectUrlWithHandle = null;
         }
 
@@ -587,7 +597,7 @@ public class Login extends HttpServlet {
      *             Thrown in case of an I/O error.
      * @throws WebserverSystemException
      *             Thrown if cookie creation fails due to an internal error.
-     * @aa
+     *
      */
     private void sendDeactivatedUserAccount(
         final HttpServletRequest request, final HttpServletResponse response)
@@ -624,7 +634,7 @@ public class Login extends HttpServlet {
      *             In case of an error.
      * @throws WebserverSystemException
      *             Thrown if cookie creation fails due to an internal error.
-     * @aa
+     *
      */
     private void sendLoggedOut(
         final HttpServletRequest request, final HttpServletResponse response)
@@ -642,6 +652,12 @@ public class Login extends HttpServlet {
             redirectUrl = retrieveDecodedTarget(request);
         }
         catch (final MissingParameterException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on retriving decoded target.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on retriving decoded target.", e);
+            }
             redirectUrl = null;
         }
 
@@ -666,7 +682,7 @@ public class Login extends HttpServlet {
      *         parameter.
      * @throws MissingParameterException
      *             Thrown if the target parameter is not found.
-     * @aa
+     *
      */
     private String createRedirectUrl(
         final HttpServletRequest request, final String userHandle)
@@ -686,10 +702,9 @@ public class Login extends HttpServlet {
      * @return Returns the redirectUrl containing the eScidoc user handle as a
      *         parameter. This is <code>null</code> if no redirect Url has been
      *         provided.
-     * @aa
+     *
      */
-    private String createRedirectUrl(
-        final String redirectUrl, final String userHandle)
+    private static String createRedirectUrl(final String redirectUrl, final String userHandle)
         throws WebserverSystemException {
 
         if (StringUtils.isEmpty(redirectUrl)) {
@@ -709,7 +724,7 @@ public class Login extends HttpServlet {
      * @param redirectUrl
      *            The URL to that the user shall be redirected.
      * @return Returns the page content.
-     * @aa
+     *
      */
     private String getAuthenticatedPage(final String redirectUrl) {
 
@@ -750,7 +765,7 @@ public class Login extends HttpServlet {
      * Gets the deactivated user account error page (HTML).
      * 
      * @return Returns the error page.
-     * @aa
+     *
      */
     private String getDeactivatedUserAccountErrorPage() {
 
@@ -768,7 +783,7 @@ public class Login extends HttpServlet {
      *            The file name of the template that shall be retrieved/loaded.
      * @throws IOException
      *             Thrown in case of an I/O error.
-     * @aa
+     *
      */
     private void initFileContent(final String templateFileName)
         throws IOException {
@@ -801,7 +816,7 @@ public class Login extends HttpServlet {
      * @param templateFileName
      *            The file name of the template that shall be retrieved/loaded.
      * @return The content of the template file.
-     * @aa
+     *
      */
     private String getFileContent(final String templateFileName) {
 
@@ -841,10 +856,8 @@ public class Login extends HttpServlet {
      * @throws IOException
      *             Thrown in case of a failed i/o operation.
      */
-    private void sendResponse(
-        final HttpServletResponse response, final String page,
-        final int statusCode) throws IOException {
-
+    private static void sendResponse(final HttpServletResponse response, final String page, final int statusCode)
+            throws IOException {
         final PrintWriter writer = response.getWriter();
         try {
             writer.print(page);
@@ -868,9 +881,8 @@ public class Login extends HttpServlet {
      * @throws IOException
      *             Thrown in case of a failed i/o operation.
      */
-    private void sendRedirectingResponse(
-        final HttpServletResponse response, final String page,
-        final String redirectUrl) throws IOException {
+    private static void sendRedirectingResponse(final HttpServletResponse response, final String page,
+                                                final String redirectUrl) throws IOException {
 
         final PrintWriter writer = response.getWriter();
         writer.print(page);
@@ -892,7 +904,7 @@ public class Login extends HttpServlet {
      *         storage.
      * @throws WebserverSystemException
      *             Thrown if cookie creation fails due to an internal error.
-     * @aa
+     *
      */
     private Cookie deleteAuthCookie() throws WebserverSystemException {
 
@@ -929,7 +941,7 @@ public class Login extends HttpServlet {
      *         storage.
      * @throws WebserverSystemException
      *             Thrown if cookie creation fails due to an internal error.
-     * @aa
+     *
      */
     private Cookie deleteSpringSecurityCookie() throws WebserverSystemException {
 
@@ -949,7 +961,7 @@ public class Login extends HttpServlet {
      *         to "/".
      * @throws WebserverSystemException
      *             Thrown if cookie creation fails due to an internal error.
-     * @aa
+     *
      */
     private Cookie createCookie(
         final String name, final String value, final int maxAge)

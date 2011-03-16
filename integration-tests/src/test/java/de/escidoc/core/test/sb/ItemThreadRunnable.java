@@ -55,7 +55,7 @@ public class ItemThreadRunnable implements Runnable {
             String id = getId(xml);
             xml = item.retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
         }
     }
 

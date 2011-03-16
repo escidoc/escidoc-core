@@ -31,7 +31,6 @@ package de.escidoc.core.om.business.interfaces;
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.filter.SRURequestParameters;
 import de.escidoc.core.common.business.interfaces.IngestableResource;
-import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -148,7 +147,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ReferencedResourceNotFoundException
      * @throws RelationPredicateNotFoundException
      *             cf. Interface
-     * @see de.escidoc.core.om.business.interfaces.ItemHandlerInterface#create(java.lang.String)
+     * @see ItemHandlerInterface#create(String)
      */
     String create(String xmlData) throws MissingContentException,
         ContextNotFoundException, ContentModelNotFoundException,

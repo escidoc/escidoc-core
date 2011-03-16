@@ -30,7 +30,6 @@ package de.escidoc.core.test;
 
 import de.escidoc.core.test.common.client.servlet.Constants;
 import de.escidoc.core.test.common.client.servlet.aa.UserManagementWrapperClient;
-import de.escidoc.core.test.common.logger.AppLogger;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.resources.ResourceProvider;
 import org.apache.axis.encoding.Base64;
@@ -39,6 +38,8 @@ import org.apache.http.HttpResponse;
 import org.apache.xpath.XPathAPI;
 import org.joda.time.DateTime;
 import org.junit.runners.Parameterized.Parameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -96,8 +97,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
         return parameters;
     }
 
-    protected static AppLogger log = new AppLogger(
-        EscidocRestSoapTestBase.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(EscidocRestSoapTestBase.class);
 
     private static final String XPATH_MODIFIED_BY = "//" + NAME_PROPERTIES
         + "/" + NAME_MODIFIED_BY;
@@ -3988,15 +3988,14 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
                 docBuilder
                     .parse(new ByteArrayInputStream(xml.getBytes(charset)));
         }
-        catch (SAXException e) {
+        catch (final SAXException e) {
             if (failOnParseError) {
                 final StringBuffer errorMsg = new StringBuffer("XML invalid. ");
                 errorMsg.append(e.getMessage());
-                if (EscidocTestBase.log.isDebugEnabled()) {
-                    EscidocTestBase.log.debug(errorMsg.toString());
-                    EscidocTestBase.log.debug(xml);
-                    EscidocTestBase.log
-                        .debug("============ End of invalid xml ============");
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug(errorMsg.toString());
+                    LOGGER.debug(xml);
+                    LOGGER.debug("============ End of invalid xml ============");
                     appendStackTrace(errorMsg, e);
                 }
                 fail(errorMsg.toString());
@@ -4028,7 +4027,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
      *            The unexpected exception.
      */
     public static void failException(final String message, final Exception e) {
-        log.error("test failed due to an unexpected exception: " + e);
+        LOGGER.error("test failed due to an unexpected exception: " + e);
 
         StringBuffer msg =
             new StringBuffer(
@@ -4121,7 +4120,7 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
     private static void appendStackTrace(
         final StringBuffer msg, final Exception e) {
 
-        if (log.isDebugEnabled()) {
+        if (LOGGER.isDebugEnabled()) {
             msg.append("\n");
             msg.append(getStackTrace(e));
         }

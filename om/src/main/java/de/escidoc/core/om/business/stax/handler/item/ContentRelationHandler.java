@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidContentExcep
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -58,8 +58,8 @@ import java.net.URISyntaxException;
  */
 public class ContentRelationHandler extends DefaultHandler {
 
-    private static final AppLogger LOG =
-        new AppLogger(ContentRelationHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContentRelationHandler.class);
 
     private static final String XPATH_CONTENT_RELATION =
             '/' + Elements.ELEMENT_CONTENT_RELATION;
@@ -141,16 +141,14 @@ public class ContentRelationHandler extends DefaultHandler {
             final String currentPath = parser.getCurPath();
 
             if (XPATH_CONTENT_RELATION_PROPERTIES.equals(currentPath)) {
-                LOG
-                    .debug("Parser reached "
-                        + XPATH_CONTENT_RELATION_PROPERTIES);
-
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Parser reached " + XPATH_CONTENT_RELATION_PROPERTIES);
+                }
                 this.parsingProperties = true;
                 this.propertiesHandler =
                     new ContentRelationPropertiesHandler(parser);
                 this.propertiesHandler.startElement(element);
-            }
-            else if (XPATH_CONTENT_RELATION_METADATA.equals(currentPath)) {
+            } else if (XPATH_CONTENT_RELATION_METADATA.equals(currentPath)) {
                 this.parsingMetaData = true;
                 this.metadataHandler =
                     new MetadataHandler2(parser,
@@ -207,8 +205,9 @@ public class ContentRelationHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
 
         if (XPATH_CONTENT_RELATION_PROPERTIES.equals(currentPath)) {
-            LOG.debug("Parser reached end of "
-                + XPATH_CONTENT_RELATION_PROPERTIES);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_CONTENT_RELATION_PROPERTIES);
+            }
             // parser leaves the XML component element
             this.parsingProperties = false;
             this.propertiesHandler.endElement(element);
@@ -217,23 +216,25 @@ public class ContentRelationHandler extends DefaultHandler {
             this.propertiesHandler = null;
         }
         else if (XPATH_CONTENT_RELATION_METADATA.equals(currentPath)) {
-            LOG.debug("Parser reached end of "
-                + XPATH_CONTENT_RELATION_METADATA);
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_CONTENT_RELATION_METADATA);
+            }
             // parser leaves the XML md-records element
             this.parsingMetaData = false;
             this.metadataHandler.endElement(element);
             this.contentRelation.addMdRecord(this.metadataHandler
                 .getMetadataRecord());
             this.metadataHandler = null;
-        }
-        else if (XPATH_TYPE.equals(currentPath)) {
-            LOG.debug("Parser reached end of " + XPATH_TYPE);
+        } else if (XPATH_TYPE.equals(currentPath)) {
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Parser reached end of " + XPATH_TYPE);
+            }
             // parser leaves the XML type element
             this.parsingType = false;
             try {
                 this.contentRelation.setType(new URI(this.tmpType));
             }
-            catch (URISyntaxException e) {
+            catch (final URISyntaxException e) {
                 throw new InvalidContentException(e);
             }
         }
@@ -302,7 +303,7 @@ public class ContentRelationHandler extends DefaultHandler {
      * @throws MissingAttributeValueException
      *             Thrown if element has neither objid nor href attribute
      */
-    private String handleReferences(final StartElement element)
+    private static String handleReferences(final StartElement element)
         throws MissingAttributeValueException {
 
         String objid;
@@ -311,14 +312,14 @@ public class ContentRelationHandler extends DefaultHandler {
                 element.getAttribute(null, Elements.ATTRIBUTE_XLINK_OBJID);
             objid = curAttr.getValue();
         }
-        catch (NoSuchAttributeException e) {
+        catch (final NoSuchAttributeException e) {
             try {
                 final Attribute curAttr =
                     element.getAttribute(Constants.XLINK_NS_URI,
                         Elements.ATTRIBUTE_XLINK_HREF);
                 objid = Utility.getId(curAttr.getValue());
             }
-            catch (NoSuchAttributeException e1) {
+            catch (final NoSuchAttributeException e1) {
                 throw new MissingAttributeValueException(
                     "Objid or href is missing for subject reference", e);
             }

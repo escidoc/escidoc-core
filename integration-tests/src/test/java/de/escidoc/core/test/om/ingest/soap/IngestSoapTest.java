@@ -31,7 +31,7 @@ public class IngestSoapTest extends IngestAbstractTest {
             ingest("laber-rababer");
             fail("Missing Invalid XML exception");
         }
-        catch (AxisFault e) {
+        catch (final AxisFault e) {
             // that's ok
         }
     }

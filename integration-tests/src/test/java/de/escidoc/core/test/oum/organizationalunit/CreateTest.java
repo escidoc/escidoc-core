@@ -88,7 +88,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
         try {
             xml = create(template);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("OU create failed with exception. ", e);
         }
         assertOrganizationalUnit(xml, template, startTimestamp, startTimestamp);
@@ -123,7 +123,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
         try {
             xml = create(template);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("OU create failed with exception. ", e);
         }
         assertOrganizationalUnit(xml, template, startTimestamp, startTimestamp);
@@ -165,7 +165,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Creating OU with parents failed with exception. ", e);
         }
         assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
@@ -199,7 +199,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
     // try {
     // createdXml = create(toBeCreatedXml);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // failException("Creating OU with PID failed", e);
     // }
     // assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
@@ -285,7 +285,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
                 create(toBeCreatedXml);
                 failMissingException(ec);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 assertExceptionType(ec, e);
             }
         }
@@ -294,7 +294,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
             try {
                 createdXml = create(toBeCreatedXml);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 failException("Lax creating of ou failed. ", e);
             }
             assertOrganizationalUnit(createdXml, toBeCreatedXml,
@@ -358,7 +358,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Lax creating of ou failed. ", e);
         }
         assertXmlValidOrganizationalUnit(createdXml);
@@ -404,7 +404,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Lax creating of ou failed. ", e);
         }
         assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
@@ -455,7 +455,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Creating OU with parents failed with exception. ", e);
         }
         assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
@@ -502,7 +502,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Creating OU with parents failed with exception. ", e);
         }
         assertOrganizationalUnit(createdXml, toBeCreatedXml, startTimestamp,
@@ -539,7 +539,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
             create(toBeCreatedXml);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -569,7 +569,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
             create(toBeCreatedXml);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -601,7 +601,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
             create(toString(ou, false));
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -648,7 +648,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
             create(toBeCreatedXml);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
 
@@ -676,7 +676,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
             create(null);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -725,7 +725,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
         try {
             create(toString(childOu1Document, false));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(
                 "Failure during init, creation of first child failed.", e);
         }
@@ -748,7 +748,7 @@ public class CreateTest extends OrganizationalUnitTestBase {
         // try {
         // createdChildOu2Xml = create(toBeCreatedChildOu2Xml);
         // }
-        // catch (Exception e) {
+        // catch (final Exception e) {
         // failException("creating 2nd child ou with same name but in"
         // + " another scope failed with exception.", e);
         // }

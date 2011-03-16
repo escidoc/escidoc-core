@@ -30,8 +30,9 @@ package de.escidoc.core.test.common;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
-import de.escidoc.core.test.common.logger.AppLogger;
 import org.apache.xpath.XPathAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -46,8 +47,8 @@ import java.util.Vector;
  */
 public class CountRepository {
 
-    private static AppLogger log =
-        new AppLogger(CountRepository.class.getName());
+    private final static Logger LOGGER =
+        LoggerFactory.getLogger(CountRepository.class);
 
     private static final String RDF_TYPE =
         "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
@@ -60,11 +61,11 @@ public class CountRepository {
 
         try {
             int numOfResources = countResources();
-            log.info(numOfResources + " objects in repository.");
+            LOGGER.info(numOfResources + " objects in repository.");
             int numOfItems = countItems();
-            log.info(numOfItems + " Items in repository.");
+            LOGGER.info(numOfItems + " Items in repository.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             e.printStackTrace();
         }
     }

@@ -36,7 +36,7 @@ import de.escidoc.core.common.exceptions.EscidocException;
  * 
  * @author SWA,KST
  * 
- * @om
+ *
  */
 public interface IngestHandlerInterface {
 	

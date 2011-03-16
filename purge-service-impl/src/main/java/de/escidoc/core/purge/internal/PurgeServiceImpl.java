@@ -7,16 +7,17 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.purge.PurgeRequest;
+import de.escidoc.core.purge.PurgeService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
- * Default implementation of {@link de.escidoc.core.purge.PurgeService}.
+ * Default implementation of {@link PurgeService}.
  */
 public class PurgeServiceImpl implements InitializingBean {
 
-    private static final Log LOG = LogFactory.getLog(PurgeServiceImpl.class);
+    private static final Log LOGGER = LogFactory.getLog(PurgeServiceImpl.class);
 
     private FedoraUtility fedoraUtility;
 
@@ -32,9 +33,13 @@ public class PurgeServiceImpl implements InitializingBean {
                     UserContext.setUserContext("");
                     UserContext.runAsInternalUser();
                 }
-            }
-            catch (final Exception e) {
-                LOG.debug("Error on setting user context.", e);
+            } catch (final Exception e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on setting user context.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on setting user context.", e);
+                }
                 UserContext.setUserContext("");
                 UserContext.runAsInternalUser();
             }
@@ -49,7 +54,7 @@ public class PurgeServiceImpl implements InitializingBean {
 
         }
         catch (final Exception e) {
-            LOG.error("could not dequeue message", e);
+            LOGGER.error("could not dequeue message", e);
         }
         finally {
             PurgeStatus.getInstance().dec();
@@ -68,8 +73,8 @@ public class PurgeServiceImpl implements InitializingBean {
                     "escidoc.core.business.FedoraUtility");
             tripleStoreUtility = BeanLocator.locateTripleStoreUtility();
         }
-        catch (WebserverSystemException e) {
-            LOG.error("could not localize bean", e);
+        catch (final WebserverSystemException e) {
+            LOGGER.error("could not localize bean", e);
         }
     }
 }

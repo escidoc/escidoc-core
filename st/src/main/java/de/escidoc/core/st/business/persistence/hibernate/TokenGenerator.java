@@ -31,6 +31,7 @@ package de.escidoc.core.st.business.persistence.hibernate;
 import org.apache.axis.components.uuid.UUIDGen;
 import org.apache.axis.components.uuid.UUIDGenFactory;
 import org.hibernate.engine.SessionImplementor;
+import org.hibernate.id.IdentifierGenerator;
 
 import java.io.Serializable;
 
@@ -42,7 +43,7 @@ import java.io.Serializable;
  * @author TTE
  *
  */
-public class TokenGenerator implements org.hibernate.id.IdentifierGenerator {
+public class TokenGenerator implements IdentifierGenerator {
     
     private static final String ID_PREFIX = "escidoctoken:";
 
@@ -56,8 +57,8 @@ public class TokenGenerator implements org.hibernate.id.IdentifierGenerator {
      * @param arg0
      * @param arg1
      * @return
-     * @see org.hibernate.id.IdentifierGenerator#generate(
-     *      org.hibernate.engine.SessionImplementor, java.lang.Object)
+     * @see IdentifierGenerator#generate(
+     *      SessionImplementor, Object)
      */
     @Override
     public Serializable generate(final SessionImplementor sessionImplementor,

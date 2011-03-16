@@ -34,12 +34,7 @@ import de.escidoc.core.om.service.interfaces.IngestHandlerInterface;
 /**
  * The resource ingest handler.
  * 
- * @spring.bean id="service.IngestHandler" scope="prototype"
- * @interface 
- *            class="de.escidoc.core.om.service.interfaces.IngestHandlerInterface"
  * @author SWA
- * @service
- * @om
  */
 public class IngestHandler implements IngestHandlerInterface {
 
@@ -50,10 +45,6 @@ public class IngestHandler implements IngestHandlerInterface {
      * 
      * @param ingestHandler
      *            The ingest handler bean to inject.
-     * 
-     * @spring.property ref="business.FedoraIngestHandler"
-     * @service.exclude
-     * @om
      */
     public void setIngestHandler(
         final de.escidoc.core.om.business.interfaces.IngestHandlerInterface ingestHandler) {

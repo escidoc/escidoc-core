@@ -1,31 +1,23 @@
 /*
  * CDDL HEADER START
  *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License, Version 1.0 only
- * (the "License").  You may not use this file except in compliance
- * with the License.
+ * The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+ * only (the "License"). You may not use this file except in compliance with the License.
  *
- * You can obtain a copy of the license at license/ESCIDOC.LICENSE
- * or http://www.escidoc.de/license.
- * See the License for the specific language governing permissions
- * and limitations under the License.
+ * You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License for
+ * the specific language governing permissions and limitations under the License.
  *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at license/ESCIDOC.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
+ * When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+ * license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+ * brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
  *
  * CDDL HEADER END
+ *
+ * Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+ * and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+ * terms.
  */
 
-/*
- * Copyright 2006-2008 Fachinformationszentrum Karlsruhe Gesellschaft
- * fuer wissenschaftlich-technische Information mbH and Max-Planck-
- * Gesellschaft zur Foerderung der Wissenschaft e.V.  
- * All rights reserved.  Use is subject to license terms.
- */
 package de.escidoc.core.common.business.aa.authorisation;
 
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -53,14 +45,14 @@ public final class AttributeIds {
     /**
      * Prefix of eSciDoc attributes.
      * 
-     * @aa
+     *
      */
     public static final String ATTR_PREFIX = "info:escidoc/names:aa:1.0:";
 
     /**
      * Prefix identifying eSciDoc actions.
      * 
-     * @aa
+     *
      */
     public static final String ACTION_PREFIX = ATTR_PREFIX + "action:";
 
@@ -69,14 +61,14 @@ public final class AttributeIds {
      * These attributes are for internal use, only, and must not be used in
      * policies nor in evaluation requests.
      * 
-     * @aa
+     *
      */
     public static final String ATTR_INTERNAL_PREFIX = ATTR_PREFIX + "internal:";
 
     /**
      * Prefix identifying internal environment attributes.
      * 
-     * @aa
+     *
      */
     public static final String INTERNAL_ENVIRONMENT_PREFIX =
         ATTR_INTERNAL_PREFIX + "environment:";
@@ -84,7 +76,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc (internal?) functions.
      * 
-     * @aa
+     *
      */
     // FIXME: internal, only?
     public static final String FUNCTION_PREFIX = ATTR_PREFIX + "function:";
@@ -92,7 +84,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying internal status.
      * 
-     * @aa
+     *
      */
     // FIXME: internal, only?
     public static final String STATUS_PREFIX = ATTR_PREFIX + "status:";
@@ -100,14 +92,14 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource attributes.
      * 
-     * @aa
+     *
      */
     public static final String RESOURCE_ATTR_PREFIX = ATTR_PREFIX + "resource:";
 
     /**
      * Length of prefix identifying eSciDoc resource attributes.
      * 
-     * @aa
+     *
      */
     public static final int RESOURCE_ATTR_PREFIX_LENGTH =
         RESOURCE_ATTR_PREFIX.length();
@@ -115,7 +107,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource aggregation definition attributes.
      * 
-     * @aa
+     *
      */
     public static final String RESOURCE_AGGREGATION_DEFINITION_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_AGGREGATION_DEFINITION + ':';
@@ -123,14 +115,14 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc subject attributes.
      * 
-     * @aa
+     *
      */
     public static final String SUBJECT_ATTR_PREFIX = ATTR_PREFIX + "subject:";
 
     /**
      * Prefix identifying eSciDoc resource container attributes.
      * 
-     * @aa
+     *
      */
     public static final String CONTAINER_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTAINER + ':';
@@ -138,7 +130,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource content-model attributes.
      * 
-     * @aa
+     *
      */
     public static final String CONTENT_MODEL_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTENT_MODEL + ':';
@@ -146,7 +138,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource context attributes.
      * 
-     * @aa
+     *
      */
     public static final String CONTEXT_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_CONTEXT + ':';
@@ -154,7 +146,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource item attributes.
      * 
-     * @aa
+     *
      */
     public static final String ITEM_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_ITEM + ':';
@@ -162,7 +154,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource component attributes.
      * 
-     * @aa
+     *
      */
     public static final String ITEM_COMPONENT_ATTR_PREFIX =
         ITEM_ATTR_PREFIX + XmlUtility.NAME_COMPONENT + ':';
@@ -170,7 +162,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource organizational unit attributes.
      * 
-     * @aa
+     *
      */
     public static final String ORGANIZATIONAL_UNIT_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_ORGANIZATIONAL_UNIT + ':';
@@ -178,7 +170,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource report attributes.
      * 
-     * @aa
+     *
      */
     public static final String REPORT_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_REPORT + ':';
@@ -186,7 +178,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource report definition attributes.
      * 
-     * @aa
+     *
      */
     public static final String REPORT_DEFINITION_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_REPORT_DEFINITION + ':';
@@ -194,7 +186,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource role attributes.
      * 
-     * @aa
+     *
      */
     public static final String ROLE_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_ROLE + ':';
@@ -202,7 +194,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource user-account attributes.
      * 
-     * @aa
+     *
      */
     public static final String USER_ACCOUNT_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_USER_ACCOUNT + ':';
@@ -210,7 +202,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource user-account attributes.
      * 
-     * @aa
+     *
      */
     public static final String USER_GROUP_ATTR_PREFIX =
         RESOURCE_ATTR_PREFIX + XmlUtility.NAME_USER_GROUP + ':';
@@ -218,7 +210,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource grant attributes.
      * 
-     * @aa
+     *
      */
     public static final String USER_ACCOUNT_GRANT_ATTR_PREFIX = 
         USER_ACCOUNT_ATTR_PREFIX + XmlUtility.NAME_GRANT + ':';
@@ -226,7 +218,7 @@ public final class AttributeIds {
     /**
      * Prefix identifying eSciDoc resource grant attributes.
      * 
-     * @aa
+     *
      */
     public static final String USER_GROUP_GRANT_ATTR_PREFIX = 
         USER_GROUP_ATTR_PREFIX + XmlUtility.NAME_GRANT + ':';

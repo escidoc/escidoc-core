@@ -35,7 +35,7 @@ import java.util.Map;
  * 
  * @author MIH
  * 
- * @om
+ *
  */
 public interface FedoraDescribeDeviationHandlerInterface {
 
@@ -50,7 +50,7 @@ public interface FedoraDescribeDeviationHandlerInterface {
      * @throws Exception
      *             ex
      * 
-     * @om
+     *
      */
     String getFedoraDescription(Map<String, String[]> parameters) throws Exception;
 

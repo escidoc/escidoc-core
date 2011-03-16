@@ -335,7 +335,7 @@ public class ItemParentsTest extends ItemTestBase {
             retrieveParents("wrongId");
             EscidocRestSoapTestBase
             .failMissingException(ItemNotFoundException.class);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                     ItemNotFoundException.class, e);
         }
@@ -362,7 +362,7 @@ public class ItemParentsTest extends ItemTestBase {
            retrieveParents(null);
            EscidocRestSoapTestBase
            .failMissingException(MissingMethodParameterException.class);
-       } catch (Exception e) {
+       } catch (final Exception e) {
            EscidocRestSoapTestBase.assertExceptionType(
                    MissingMethodParameterException.class, e);
        }

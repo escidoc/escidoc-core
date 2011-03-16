@@ -55,9 +55,6 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
  * User group renderer implementation using the velocity template engine.
  * 
  * @author sche
- * @spring.bean 
- *              id="eSciDoc.core.aa.business.renderer.VelocityXmlUserGroupRenderer"
- * @aa
  */
 public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     implements UserGroupRendererInterface {
@@ -79,7 +76,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * @throws SystemException
      * @see de.escidoc.core.aa.business.renderer.interfaces.
      *      UserGroupRendererInterface#render(Map)
-     * @aa
+     *
      */
     @Override
     public String render(final UserGroup userGroup) throws SystemException {
@@ -101,8 +98,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
-    private void addUserGroupValues(
-        final UserGroup userGroup, final Map<String, Object> values)
+    private static void addUserGroupValues(final UserGroup userGroup, final Map<String, Object> values)
         throws SystemException {
         DateTime lmdDateTime =
             new DateTime(userGroup.getLastModificationDate());
@@ -149,7 +145,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * @see de.escidoc.core.aa.business.renderer.interfaces.
      *      UserGroupRendererInterface#renderCurrentGrants
      *      (de.escidoc.core.aa.business.UserGroup, java.util.List)
-     * @aa
+     *
      */
     @Override
     public String renderCurrentGrants(
@@ -193,7 +189,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * @see de.escidoc.core.aa.business.renderer.interfaces.
      *      UserGroupRendererInterface#renderGrant
      *      (de.escidoc.core.aa.business.persistence.RoleGrant)
-     * @aa
+     *
      */
     @Override
     public String renderGrant(final RoleGrant grant)
@@ -283,7 +279,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * @see de.escidoc.core.aa.business.renderer.interfaces.
      *      UserGroupRendererInterface
      *      #renderResources(de.escidoc.core.aa.business.UserGroup)
-     * @aa
+     *
      */
     @Override
     public String renderResources(final UserGroup userGroup)
@@ -347,7 +343,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * 
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private void addCommonValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -363,7 +359,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * 
      * @param values
      *            The {@link Map} to that the values shall be added.
-     * @aa
+     *
      */
     private static void addUserGroupNamespaceValues(
         final Map<String, Object> values) {
@@ -376,9 +372,9 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * 
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
-    private void addUserGroupListValues(final Map<String, Object> values) {
+    private static void addUserGroupListValues(final Map<String, Object> values) {
 
         addUserGroupsNamespaceValues(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
@@ -391,7 +387,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * 
      * @param values
      *            The MAP to add the values to.
-     * @aa
+     *
      */
     private static void addUserGroupsNamespaceValues(
         final Map<String, Object> values) {
@@ -408,7 +404,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -424,7 +420,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      *            The user group for that data shall be created.
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
     private static void addResourcesValues(
         final UserGroup userGroup, final Map<String, Object> values) {
@@ -441,7 +437,7 @@ public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
      * @return Returns the <code>UserGroupXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private static UserGroupXmlProvider getUserGroupXmlProvider()
         throws WebserverSystemException {

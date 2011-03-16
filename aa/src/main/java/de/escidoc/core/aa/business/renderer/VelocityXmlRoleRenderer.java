@@ -46,7 +46,7 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.date.Iso8601Util;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.factory.RoleXmlProvider;
 import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
@@ -55,15 +55,13 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
  * Role renderer implementation using the velocity template engine.
  * 
  * @author TTE
- * @spring.bean id="eSciDoc.core.aa.business.renderer.VelocityXmlRoleRenderer"
- * @aa
  */
 public class VelocityXmlRoleRenderer extends AbstractRenderer
     implements RoleRendererInterface {
 
     /** The logger. */
-    private static final AppLogger LOG = new AppLogger(
-        VelocityXmlRoleRenderer.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        VelocityXmlRoleRenderer.class);
 
 
 
@@ -73,25 +71,17 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * @param role
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface
+     * @see RoleRendererInterface
      *      #render(de.escidoc.core.aa.business.persistence.EscidocRole)
-     * @aa
+     *
      */
     @Override
-    public String render(final EscidocRole role)
-        throws WebserverSystemException {
-
+    public String render(final EscidocRole role) throws WebserverSystemException {
         final Map<String, Object> values = new HashMap<String, Object>();
-
         addCommonValues(values);
         addRoleValues(role, values);
         addXacmlNamespaceValues(values);
-
-        final String ret = getRoleXmlProvider().getRoleXml(values);
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Built XML");
-        }
-        return ret;
+        return getRoleXmlProvider().getRoleXml(values);
     }
 
     /**
@@ -100,8 +90,8 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * @param role
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface#renderResources(de.escidoc.core.aa.business.persistence.EscidocRole)
-     * @aa
+     * @see RoleRendererInterface#renderResources(EscidocRole)
+     *
      */
     @Override
     public String renderResources(final EscidocRole role)
@@ -131,7 +121,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * 
      * @return
      * @throws WebserverSystemException
-     * @see de.escidoc.core.aa.business.renderer.interfaces.RoleRendererInterface#renderRoles(java.util.List)
+     * @see RoleRendererInterface#renderRoles(List)
      */
     @Override
     public String renderRoles(
@@ -162,7 +152,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * 
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private void addCommonValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -184,8 +174,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * @throws WebserverSystemException
      */
     @SuppressWarnings("unchecked")
-    private void addRoleValues(
-        final EscidocRole role, final Map<String, Object> values)
+    private static void addRoleValues(final EscidocRole role, final Map<String, Object> values)
         throws WebserverSystemException {
 
         values.put(XmlTemplateProvider.VAR_LAST_MODIFICATION_DATE,
@@ -237,7 +226,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private static void addPolicyValues(
         final EscidocRole role, final Map<String, Object> values)
@@ -264,7 +253,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      *            The role for that data shall be created.
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
     private static void addResourcesValues(
         final EscidocRole role, final Map<String, Object> values) {
@@ -278,9 +267,9 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * 
      * @param values
      *            The map to add values to.
-     * @aa
+     *
      */
-    private void addRoleListValues(final Map<String, Object> values) {
+    private static void addRoleListValues(final Map<String, Object> values) {
 
         addRolesNamespaceValues(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
@@ -294,7 +283,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * 
      * @param values
      *            The {@link Map} to add the values to
-     * @aa.
+     * .
      */
     private static void addRolesNamespaceValues(final Map<String, Object> values) {
         values.put("roleListNamespacePrefix", Constants.ROLE_LIST_NS_PREFIX);
@@ -307,7 +296,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * 
      * @param values
      *            The {@link Map} to add the values to.
-     * @aa
+     *
      */
     private static void addXacmlNamespaceValues(final Map<String, Object> values) {
         values.put(XmlTemplateProvider.VAR_XACML_POLICY_NAMESPACE_PREFIX,
@@ -322,7 +311,7 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * @return Returns the {@link RoleXmlProvider} object.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     private static RoleXmlProvider getRoleXmlProvider()
         throws WebserverSystemException {

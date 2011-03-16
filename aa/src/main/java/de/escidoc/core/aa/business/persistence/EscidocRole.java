@@ -44,7 +44,7 @@ import java.util.List;
  * A role in eSciDoc.
  * 
  * @author TTE
- * @aa
+ *
  */
 public class EscidocRole extends EscidocRoleBase {
 
@@ -65,7 +65,7 @@ public class EscidocRole extends EscidocRoleBase {
      * 
      * @return Returns <code>true</code> if this is a limited role,
      *         <code>false</code> else.
-     * @aa
+     *
      */
     public boolean isLimited() {
         return getScopeDefs() != null && !getScopeDefs().isEmpty();
@@ -81,7 +81,7 @@ public class EscidocRole extends EscidocRoleBase {
      * @return Returns the <code>XacmlRolePolicySet</code> of this role.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public PolicySet getXacmlPolicySet() throws WebserverSystemException {
 
@@ -89,7 +89,7 @@ public class EscidocRole extends EscidocRoleBase {
             try {
                 policySet = CustomPolicyBuilder.buildXacmlRolePolicySet(this);
             }
-            catch (Exception e) {
+            catch (final Exception e) {
                 throw new WebserverSystemException(StringUtility
                     .format(
                         "Error during getting of the role's policy set", e
@@ -106,7 +106,7 @@ public class EscidocRole extends EscidocRoleBase {
      * @return Returns the policy set id of this role.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @aa
+     *
      */
     public URI getPolicySetId() throws WebserverSystemException {
 
@@ -117,7 +117,7 @@ public class EscidocRole extends EscidocRoleBase {
      * Gets the objectTypes of the role's scope definitions.
      * 
      * @return Returns the objectTypes in a <code>List</code>.
-     * @aa
+     *
      */
     public Collection<String> getObjectTypes() {
         if (objectTypes == null) {
@@ -139,7 +139,7 @@ public class EscidocRole extends EscidocRoleBase {
      * Gets the href for this role.
      * 
      * @return Returns the href of this role.
-     * @aa
+     *
      */
     public String getHref() {
 
@@ -150,7 +150,7 @@ public class EscidocRole extends EscidocRoleBase {
      * See Interface for functional description.
      * 
      * @return
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString() {

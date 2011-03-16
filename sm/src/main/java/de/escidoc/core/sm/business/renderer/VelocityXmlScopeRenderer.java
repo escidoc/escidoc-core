@@ -51,8 +51,6 @@ import de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface;
  * Scope renderer implementation using the velocity template engine.
  * 
  * @author MIH
- * @spring.bean id="eSciDoc.core.aa.business.renderer.VelocityXmlScopeRenderer"
- * @aa
  */
 public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
 
@@ -72,7 +70,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * @throws SystemException
      * @see de.escidoc.core.sm.business.renderer.interfaces.
      *      ScopeRendererInterface#render(Map)
-     * @sm
+     *
      */
     @Override
     public String render(final Scope scope) throws SystemException {
@@ -133,7 +131,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * @see de.escidoc.core.aa.business.renderer.interfaces.
      *      ScopeRendererInterface
      *      #renderScopes(de.escidoc.core.sm.business.Scope)
-     * @sm
+     *
      */
     @Override
     public String renderScopes(
@@ -174,9 +172,9 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *            The {@link Map} to that the values shall be added.
      * @throws SystemException
      *             e
-     * @sm
+     *
      */
-    private void addScopeNamespaceValues(final Map<String, Object> values)
+    private static void addScopeNamespaceValues(final Map<String, Object> values)
         throws SystemException {
         addEscidocBaseUrl(values);
         values.put("scopeNamespacePrefix", Constants.SCOPE_NS_PREFIX);
@@ -198,9 +196,9 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *            The {@link Map} to that the values shall be added.
      * @throws SystemException
      *             e
-     * @sm
+     *
      */
-    private void addScopeListNamespaceValues(final Map<String, Object> values)
+    private static void addScopeListNamespaceValues(final Map<String, Object> values)
         throws SystemException {
         addEscidocBaseUrl(values);
         values.put("searchResultNamespace", Constants.SEARCH_RESULT_NS_URI);
@@ -215,7 +213,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @sm
+     *
      */
     private static void addEscidocBaseUrl(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -230,7 +228,7 @@ public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
      * @return Returns the <code>ScopeXmlProvider</code> object.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @sm
+     *
      */
     private static ScopeXmlProvider getScopeXmlProvider()
         throws WebserverSystemException {

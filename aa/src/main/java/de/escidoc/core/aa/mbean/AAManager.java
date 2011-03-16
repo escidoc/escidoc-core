@@ -41,10 +41,7 @@ import java.io.IOException;
  * Managed bean to access values and operations of the authentication and
  * authorization component.
  * 
- * @spring.bean id="eSciDoc.core.aa.mbean.AAManager"
- * @aa
  * @author TTE
- * 
  */
 @ManagedResource(objectName = "eSciDocCore:name=AAManager", description = "Manager of the authentication and authorization component.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class AAManager {
@@ -58,7 +55,7 @@ public class AAManager {
      * Cleans up the eSciDoc user handles.<br>
      * This delegates to {@link UserHandleCleaner}.cleanUp.
      * 
-     * @aa
+     *
      */
     @ManagedOperation(description = "Clean up the eSciDoc user handles that have been expired.")
     public void cleanUpUserHandles() {
@@ -69,7 +66,7 @@ public class AAManager {
     /**
      * Removes all objects dstored in the PoliciesCache.<br>
      * 
-     * @aa
+     *
      */
     @ManagedOperation(description = "remove everything from the PoliciesCache.")
     public void clearPoliciesCache() {
@@ -96,7 +93,7 @@ public class AAManager {
      * Gets the {@link UserHandleCleaner}.
      * 
      * @return Returns the {@link UserHandleCleaner}.
-     * @aa
+     *
      */
     private UserHandleCleaner getUserHandleCleaner() {
         return userHandleCleaner;
@@ -107,8 +104,6 @@ public class AAManager {
      * 
      * @param userHandleCleaner
      *            The {@link UserHandleCleaner} to inject.
-     * @spring.property ref="eSciDoc.core.aa.UserHandleCleaner"
-     * @aa
      */
     public void setUserHandleCleaner(final UserHandleCleaner userHandleCleaner) {
         this.userHandleCleaner = userHandleCleaner;

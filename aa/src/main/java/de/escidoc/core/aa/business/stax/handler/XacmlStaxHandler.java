@@ -52,7 +52,6 @@ import java.util.Collection;
  * <code>EscidocRole</code>object.
  * 
  * @author TTE
- * @aa
  */
 public class XacmlStaxHandler extends DefaultHandler {
 
@@ -73,8 +72,7 @@ public class XacmlStaxHandler extends DefaultHandler {
      * 
      * @param role
      *            The role to handle
-     * 
-     * @aa
+     *
      */
     public XacmlStaxHandler(final EscidocRole role) {
 
@@ -93,10 +91,9 @@ public class XacmlStaxHandler extends DefaultHandler {
      * @return
      * @throws EscidocException
      *             Thrown exceptions depend on sub class implementations.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @aa
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -111,7 +108,7 @@ public class XacmlStaxHandler extends DefaultHandler {
                 try {
                     policyWriter = XmlUtility.createXmlStreamWriter(writer);
                 }
-                catch (XMLStreamException e) {
+                catch (final XMLStreamException e) {
                     throw new SystemException("Writer creation failed.", e);
                 }
             }
@@ -130,7 +127,7 @@ public class XacmlStaxHandler extends DefaultHandler {
                             attribute.getValue());
                     }
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     throw new SystemException("Extracting policy failed.", e);
                 }
             }
@@ -146,9 +143,8 @@ public class XacmlStaxHandler extends DefaultHandler {
      * @param element
      * @return
      * @throws Exception
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters(java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @aa
+     * @see DefaultHandler#characters(String,
+     *      StartElement)
      */
     @Override
     public String characters(final String data, final StartElement element)
@@ -166,9 +162,8 @@ public class XacmlStaxHandler extends DefaultHandler {
      * @param element
      * @return
      * @throws Exception
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
-     * @aa
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
@@ -218,7 +213,6 @@ public class XacmlStaxHandler extends DefaultHandler {
      * 
      * @return Returns the xml representation of the XACML policy (set) or
      *         <code>null</code> if no policy has been found.
-     * @aa
      */
     public String getPolicyXml() {
         return policyXml;

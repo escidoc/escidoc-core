@@ -112,7 +112,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
             try {
                 organizationalUnit = new OrganizationalUnit(id);
             }
-            catch (ResourceNotFoundException e) {
+            catch (final ResourceNotFoundException e) {
                 throw new OrganizationalUnitNotFoundException(e);
             }
         }
@@ -239,52 +239,52 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
             parser.clearHandlerChain();
         }
-        catch (LockingException e) {
+        catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (OptimisticLockingException e) {
+        catch (final OptimisticLockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (AlreadyExistsException e) {
+        catch (final AlreadyExistsException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ContentModelNotFoundException e) {
+        catch (final ContentModelNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ContextNotFoundException e) {
+        catch (final ContextNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (MissingContentException e) {
+        catch (final MissingContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ReferencedResourceNotFoundException e) {
+        catch (final ReferencedResourceNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (RelationPredicateNotFoundException e) {
+        catch (final RelationPredicateNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ContentRelationNotFoundException e) {
+        catch (final ContentRelationNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ReadonlyElementViolationException e) {
+        catch (final ReadonlyElementViolationException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ReadonlyAttributeViolationException e) {
+        catch (final ReadonlyAttributeViolationException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (InvalidContentException e) {
+        catch (final InvalidContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (PidAlreadyAssignedException e) {
+        catch (final PidAlreadyAssignedException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (TmeException e) {
+        catch (final TmeException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
     }
@@ -315,66 +315,66 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
             parser.parse(XmlUtility.convertToByteArrayInputStream(xml));
             parser.clearHandlerChain();
         }
-        catch (XMLStreamException e) {
+        catch (final XMLStreamException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (MissingElementValueException e) {
+        catch (final MissingElementValueException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (MissingContentException e) {
+        catch (final MissingContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (MissingMdRecordException e) {
+        catch (final MissingMdRecordException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ContextNotFoundException e) {
+        catch (final ContextNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ContentModelNotFoundException e) {
+        catch (final ContentModelNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (LockingException e) {
+        catch (final LockingException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (AlreadyExistsException e) {
+        catch (final AlreadyExistsException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ReferencedResourceNotFoundException e) {
+        catch (final ReferencedResourceNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (RelationPredicateNotFoundException e) {
+        catch (final RelationPredicateNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ContentRelationNotFoundException e) {
+        catch (final ContentRelationNotFoundException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ReadonlyAttributeViolationException e) {
+        catch (final ReadonlyAttributeViolationException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (InvalidContentException e) {
+        catch (final InvalidContentException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (InvalidStatusException e) {
+        catch (final InvalidStatusException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (ReadonlyElementViolationException e) {
+        catch (final ReadonlyElementViolationException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (PidAlreadyAssignedException e) {
+        catch (final PidAlreadyAssignedException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
-        catch (TmeException e) {
+        catch (final TmeException e) {
             XmlUtility.handleUnexpectedStaxParserException("", e);
         }
     }
 
     /**
      * Creates and initlizes a
-     * {@link de.escidoc.core.common.util.stax.handler.MultipleExtractor2} that
-     * uses the provided {@link de.escidoc.core.common.util.stax.StaxParser}.<br/>
+     * {@link MultipleExtractor2} that
+     * uses the provided {@link StaxParser}.<br/>
      * The created <code>MultipleExtractor2</code> extracts the pathes
      * {@link OrganizationalUnitHandlerBase.OU_ORGANIZATION_DETAILS_PATH}.<br/>
      * It is initilized with the prefixes for
@@ -382,12 +382,12 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * {@link Constants.XLINK_NS_URI}.
      * 
      * @param sp
-     *            The {@link de.escidoc.core.common.util.stax.StaxParser} to
+     *            The {@link StaxParser} to
      *            use.
      * @param mdRecordPath
      *            The xpath to organization-details element.
      * @return Returns the created
-     *         {@link de.escidoc.core.common.util.stax.handler.MultipleExtractor2}
+     *         {@link MultipleExtractor2}
      *         .
      */
     protected MultipleExtractor2 createMultipleExtractor(

@@ -47,7 +47,6 @@ import java.util.List;
  * Implementation of a staging file data access object (DAO).
  * 
  * @author TTE
- * @spring.bean id="persistence.StagingFileDao"
  */
 public class HibernateStagingFileDao extends HibernateDaoSupport
     implements StagingFileDao {
@@ -58,7 +57,6 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * 
      * @param stagingSessionFactory
      *            The sessionFactory to set.
-     * @spring.property ref="st.SessionFactory"
      */
     public final void setStagingSessionFactory(
         final SessionFactory stagingSessionFactory) {
@@ -73,7 +71,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * 
      * @param token
      * @return
-     * @see StagingFileDao#findStagingFile(java.lang.String)
+     * @see StagingFileDao#findStagingFile(String)
      */
     @Override
     public StagingFile findStagingFile(final String token)
@@ -85,15 +83,15 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
             criteria.add(Restrictions.eq("token", token));
             return (StagingFile) criteria.uniqueResult();
         }
-        catch (DataAccessResourceFailureException e) {
+        catch (final DataAccessResourceFailureException e) {
             throw new SqlDatabaseSystemException(e);
         }
-        catch (HibernateException e) {
+        catch (final HibernateException e) {
             //noinspection ThrowableResultOfMethodCallIgnored
             throw new SqlDatabaseSystemException(
                 convertHibernateAccessException(e));
         }
-        catch (IllegalStateException e) {
+        catch (final IllegalStateException e) {
             throw new SqlDatabaseSystemException(e);
         }
 
@@ -116,7 +114,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
                     .currentTimeMillis()));
             return getHibernateTemplate().findByCriteria(criteria);
         }
-        catch (DataAccessException e) {
+        catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
         }
     }
@@ -125,7 +123,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * See Interface for functional description.
      * 
      * @param stagingFile
-     * @see StagingFileDao#save(de.escidoc.core.st.business.StagingFile)
+     * @see StagingFileDao#save(StagingFile)
      */
     @Override
     public void save(final StagingFile stagingFile)
@@ -135,7 +133,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
             try {
                 getHibernateTemplate().save(stagingFile);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -145,7 +143,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * See Interface for functional description.
      * 
      * @param stagingFile
-     * @see StagingFileDao#update(de.escidoc.core.st.business.StagingFile)
+     * @see StagingFileDao#update(StagingFile)
      */
     @Override
     public void update(final StagingFile stagingFile)
@@ -155,7 +153,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
             try {
                 getHibernateTemplate().update(stagingFile);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -166,7 +164,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * See Interface for functional description.
      * 
      * @param stagingFile
-     * @see StagingFileDao#saveOrUpdate(de.escidoc.core.st.business.StagingFile)
+     * @see StagingFileDao#saveOrUpdate(StagingFile)
      */
     @Override
     public void saveOrUpdate(final StagingFile stagingFile)
@@ -176,7 +174,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
             try {
                 getHibernateTemplate().saveOrUpdate(stagingFile);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -186,7 +184,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * See Interface for functional description.
      * 
      * @param stagingFile
-     * @see StagingFileDao#delete(de.escidoc.core.st.business.StagingFile)
+     * @see StagingFileDao#delete(StagingFile)
      */
     @Override
     public void delete(final StagingFile stagingFile)
@@ -196,7 +194,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
             try {
                 getHibernateTemplate().delete(stagingFile);
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }
@@ -206,7 +204,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * See Interface for functional description.
      * 
      * @param stagingFiles
-     * @see StagingFileDao#delete(de.escidoc.core.st.business.StagingFile[])
+     * @see StagingFileDao#delete(StagingFile[])
      */
     @Override
     public void delete(final StagingFile[] stagingFiles)
@@ -218,7 +216,7 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
                     getHibernateTemplate().delete(stagingFile);
                 }
             }
-            catch (DataAccessException e) {
+            catch (final DataAccessException e) {
                 throw new SqlDatabaseSystemException(e);
             }
         }

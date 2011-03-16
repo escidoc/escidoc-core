@@ -42,10 +42,7 @@ import java.util.Map;
  * it delegates to secured resource handlers with providing the original user
  * information.
  * 
- * @spring.bean id="service.FedoraRestDeviationHandler" scope="prototype"
- * @interface class="de.escidoc.core.om.service.interfaces.FedoraRestDeviationHandlerInterface"
  * @author MIH
- * @service
  */
 public class FedoraRestDeviationHandler
     implements FedoraRestDeviationHandlerInterface {
@@ -57,9 +54,6 @@ public class FedoraRestDeviationHandler
      * 
      * @param fedoraRestDeviationHandler
      *            The FedoraRestDeviation handler bean to inject.
-     * 
-     * @spring.property ref="business.FedoraRestDeviationHandler"
-     * @service.exclude
      */
     public void setFedoraRestDeviationHandler(
         final de.escidoc.core.om.business.interfaces.FedoraRestDeviationHandlerInterface fedoraRestDeviationHandler) {
@@ -133,7 +127,7 @@ public class FedoraRestDeviationHandler
      * @throws Exception
      *             ex
      * 
-     * @om
+     *
      */
     @Override
     public void removeFromCache(final String pid) throws Exception {
@@ -151,7 +145,7 @@ public class FedoraRestDeviationHandler
      * @throws Exception
      *             ex
      * 
-     * @om
+     *
      */
     @Override
     public void replaceInCache(

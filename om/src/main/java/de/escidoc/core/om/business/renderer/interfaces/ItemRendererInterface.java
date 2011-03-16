@@ -44,7 +44,7 @@ import java.util.List;
  * Interface of an item renderer.
  * 
  * @author MSC
- * @um
+ *
  */
 public interface ItemRendererInterface {
 

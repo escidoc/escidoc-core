@@ -41,7 +41,7 @@ import java.util.Map;
  * Object that holds LDAP-Userdata and all attributes from LDAP.
  * 
  * @author MIH
- * @aa
+ *
  */
 public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
     
@@ -60,7 +60,7 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
      * @param name name of attribute
      * @param value value of attribute
      * 
-     * @aa
+     *
      */
     public void addStringAttribute(final String name, final String value) {
         if (stringAttributes.get(name) == null) {

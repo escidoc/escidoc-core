@@ -3,7 +3,7 @@ package de.escidoc.core.tme.business.jhove;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.IOUtils;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.tme.business.TmeHandlerBase;
 import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
 import edu.harvard.hul.ois.jhove.App;
@@ -20,16 +20,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 
 /**
  * @author MSC
- * @spring.bean id="business.JhoveHandler"
  */
 public class JhoveHandler extends TmeHandlerBase
     implements JhoveHandlerInterface {
 
-    private static final AppLogger LOG = new AppLogger(JhoveHandlerInterface.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(JhoveHandlerInterface.class);
 
     /** Application name. */
     private static final String NAME = "Jhove";
@@ -63,12 +61,6 @@ public class JhoveHandler extends TmeHandlerBase
 
     /** Buffer size for file copy. */
     private static final int BUFFER_SIZE = 0xffff;
-
-    /**
-     * Logging goes there.
-     */
-    private static final AppLogger logger =
-        new AppLogger(JhoveHandler.class.getName());
 
     /** Temporary file which contains the JHove configuration. */
     private final File jhoveConfigFile;
@@ -141,9 +133,7 @@ public class JhoveHandler extends TmeHandlerBase
      */
     private String callJhove(final String[] files) throws SystemException,
         TmeException {
-        final StringBuffer result = new StringBuffer();
-
-        logger.debug("callJhove(" + Arrays.toString(files) + ')');
+        final StringBuilder result = new StringBuilder();
         BufferedReader outputFileReader = null;
         File outputFile = null;
         try {
@@ -175,10 +165,10 @@ public class JhoveHandler extends TmeHandlerBase
                 result.append('\n');
             }
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             throw new SystemException("Error in Jhove output handling!", e);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new TmeException(e.getMessage(), e);
         }
         finally {
@@ -188,13 +178,16 @@ public class JhoveHandler extends TmeHandlerBase
             if (outputFileReader != null) {
                 try {
                     outputFileReader.close();
-                }
-                catch (IOException e) {
-                    LOG.debug("Error on closing file stream.", e);
+                } catch (final IOException e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on closing file stream.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on closing file stream.", e);
+                    }
                 }
             }
         }
-        logger.debug("callJhove returned " + result);
         return result.toString();
     }
 }

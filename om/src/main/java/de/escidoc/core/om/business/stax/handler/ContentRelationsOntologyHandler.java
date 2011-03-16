@@ -32,7 +32,7 @@ import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -69,8 +69,8 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
 
     private static final String RDF_TYPE_PATH = "/RDF/Description/type";
 
-    private static final AppLogger LOGGER =
-        new AppLogger(ContentRelationsOntologyHandler.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ContentRelationsOntologyHandler.class);
 
     public ContentRelationsOntologyHandler(final StaxParser parser) {
 
@@ -163,7 +163,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
         throws InvalidContentException {
         final int indexOfId =
             element.indexOfAttribute(
-                de.escidoc.core.common.business.Constants.RDF_NAMESPACE_URI,
+                Constants.RDF_NAMESPACE_URI,
                 "ID");
         if (indexOfId == -1) {
             final int indexOfAbout =
@@ -178,8 +178,13 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                         // test if a value of about is an absolute URI
                         final URI aboutUri = new URI(about);
                         this.predicate = about;
-                    } catch (URISyntaxException e) {
-                        LOGGER.debug("Invalid URL '" + about + "'", e);
+                    } catch (final URISyntaxException e) {
+                        if(LOGGER.isWarnEnabled()) {
+                            LOGGER.warn("Invalid URL '" + about + '\'');
+                        }
+                        if(LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Invalid URL '" + about + '\'', e);
+                        }
                         this.predicate = this.base + about;
                     }
                 } else {

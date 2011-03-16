@@ -36,7 +36,7 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
  * Holds all values needed to represent a field in an root where-clause.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class RootWhereFieldVo {
     private String tableName;

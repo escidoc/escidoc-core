@@ -58,10 +58,7 @@ import java.util.regex.Pattern;
  * This finder module should be the one of the first eSciDoc specific finder
  * module in the chain, but must be placed after the 'standard' finder modules.
  * 
- * @spring.bean id="eSciDoc.core.aa.PartlyResolveableAttributeFinderModule"
- * 
  * @author TTE
- * @aa
  */
 public class PartlyResolveableAttributeFinderModule
     extends AbstractAttributeFinderModule {
@@ -91,10 +88,10 @@ public class PartlyResolveableAttributeFinderModule
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -129,10 +126,10 @@ public class PartlyResolveableAttributeFinderModule
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -158,7 +155,7 @@ public class PartlyResolveableAttributeFinderModule
                 ctx.getResourceAttribute(Constants.URI_XMLSCHEMA_STRING,
                     new URI(firstPartAttributeId), null);
         }
-        catch (URISyntaxException e) {
+        catch (final URISyntaxException e) {
             result = CustomEvaluationResultBuilder.createSyntaxErrorResult(e);
         }
         if (isEmptyResult(result)) {

@@ -38,7 +38,7 @@ import java.util.Comparator;
  * Sorts AggregationStatisticDataSelector-Objects according to their listIndex.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class AggregationStatisticDataSelectorComparator 
         implements Comparator<AggregationStatisticDataSelector>,Serializable {
@@ -50,7 +50,7 @@ public class AggregationStatisticDataSelectorComparator
      * @param a2 AggregationStatisticDataSelector2
      * @return Returns compare result.
      * 
-     * @sm
+     *
      */
     @Override
     public int compare(

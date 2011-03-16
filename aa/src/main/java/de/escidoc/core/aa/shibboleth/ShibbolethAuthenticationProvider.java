@@ -12,9 +12,9 @@ public class ShibbolethAuthenticationProvider implements AuthenticationProvider 
      * @param authentication
      * @return
      * @throws AuthenticationException
-     * @see org.springframework.security.providers.AuthenticationProvider
+     * @see AuthenticationProvider
      *      #authenticate(org.springframework.security.Authentication)
-     * @aa
+     *
      */
     @Override
     public Authentication authenticate(final Authentication authentication)
@@ -28,9 +28,9 @@ public class ShibbolethAuthenticationProvider implements AuthenticationProvider 
      * 
      * @param authentication
      * @return
-     * @see org.springframework.security.providers.AuthenticationProvider
+     * @see AuthenticationProvider
      *      #supports(java.lang.Class)
-     * @aa
+     *
      */
     @Override
     public boolean supports(final Class authentication) {

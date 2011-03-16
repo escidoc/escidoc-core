@@ -42,7 +42,7 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 
 /**
@@ -55,16 +55,13 @@ import de.escidoc.core.common.util.string.StringUtility;
  * -info:escidoc/names:aa:1.0:resource:object-type<br>
  *  the object-type of the resource, single value attribute
  * 
- * @spring.bean id="eSciDoc.core.aa.ObjectTypeAttributeFinderModule"
- * 
  * @author TTE
- * @aa
  */
 public class ObjectTypeAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
-    private final AppLogger log =
-        new AppLogger(ObjectTypeAttributeFinderModule.class.getName());
+    private static final Logger LOGGER =
+        LoggerFactory.getLogger(ObjectTypeAttributeFinderModule.class);
 
     private ObjectAttributeResolver objectAttributeResolver;
 
@@ -79,10 +76,10 @@ public class ObjectTypeAttributeFinderModule
      * @param designatorType designatorType
      * @return boolean
      * @throws EscidocException e
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#assertAttribute(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String, int)
-     * @aa
+     * @see AbstractAttributeFinderModule#assertAttribute(String,
+     *      EvaluationCtx, String, String,
+     *      String, int)
+     *
      */
     @Override
     protected boolean assertAttribute(
@@ -106,10 +103,10 @@ public class ObjectTypeAttributeFinderModule
      * @param resourceVersionNumber resourceVersionNumber
      * @return Object[]
      * @throws EscidocException e
-     * @see de.escidoc.core.aa.business.xacml.finder.AbstractAttributeFinderModule#resolveLocalPart(java.lang.String,
-     *      com.sun.xacml.EvaluationCtx, java.lang.String, java.lang.String,
-     *      java.lang.String)
-     * @aa
+     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
+     *      EvaluationCtx, String, String,
+     *      String)
+     *
      */
     @Override
     protected Object[] resolveLocalPart(
@@ -157,7 +154,7 @@ public class ObjectTypeAttributeFinderModule
         if (result == null) {
             final String msg = StringUtility
                     .format("Resource not found", resourceId);
-            log.debug(msg);
+            LOGGER.debug(msg);
             throw new ResourceNotFoundException(msg);
         }
 
@@ -193,9 +190,13 @@ public class ObjectTypeAttributeFinderModule
             objectType =
                 fetchSingleResourceAttribute(ctx,
                     AttributeIds.URN_OBJECT_TYPE_NEW);
-        }
-        catch (WebserverSystemException e) {
-            log.debug("Error on fetching resource attribute.", e);
+        } catch (final WebserverSystemException e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Error on fetching resource attribute.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on fetching resource attribute.", e);
+            }
             // This can happen due to an internal error or because the
             // object-type-new attribute has not been provided, e.g. in case
             // of a task like logout or evaluate where neither resource-id
@@ -215,8 +216,6 @@ public class ObjectTypeAttributeFinderModule
      * 
      * @param objectAttributeResolver
      *            The objectAttributeResolver.
-     * 
-     * @spring.property ref="eSciDoc.core.aa.ObjectAttributeResolver"
      */
     public void setObjectAttributeResolver(
             final ObjectAttributeResolver objectAttributeResolver) {

@@ -315,7 +315,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             createdXml = create(toBeCreatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         return assertXmlValidRetrievedRole(createdXml, toBeCreatedXml,
@@ -452,7 +452,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException("Retrieval of role failed.",
                 e);
         }
@@ -582,7 +582,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlCorruptedException.class, e);
         }
@@ -609,7 +609,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -647,7 +647,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(UniqueConstraintViolationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 UniqueConstraintViolationException.class, e);
         }
@@ -682,7 +682,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlCorruptedException.class, e);
         }
@@ -717,7 +717,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -749,7 +749,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -784,7 +784,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -817,7 +817,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlCorruptedException.class, e);
         }
@@ -847,7 +847,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(WebserverSystemException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 WebserverSystemException.class, e);
         }
@@ -877,7 +877,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -907,7 +907,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             delete(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
 
@@ -917,7 +917,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(RoleNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleNotFoundException.class, e);
         }
@@ -945,7 +945,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(RoleNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleNotFoundException.class, e);
         }
@@ -974,7 +974,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(RoleNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleNotFoundException.class, e);
         }
@@ -1002,7 +1002,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -1031,7 +1031,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(RoleInUseViolationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleInUseViolationException.class, e);
         }
@@ -1040,7 +1040,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
     }
@@ -1067,7 +1067,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(RoleNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleNotFoundException.class, e);
         }
@@ -1098,7 +1098,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedDocument = retrieveSuccessfully(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieveing existing role by its id failed. ", e);
         }
@@ -1131,7 +1131,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedDocument = retrieveSuccessfully(name);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieveing existing role by its name failed. ", e);
         }
@@ -1161,7 +1161,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(RoleNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleNotFoundException.class, e);
         }
@@ -1190,7 +1190,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(RoleNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleNotFoundException.class, e);
         }
@@ -1218,7 +1218,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -1247,7 +1247,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException("Retrieval of role failed.",
                 e);
         }
@@ -1411,7 +1411,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidRetrievedRole(updatedXml, toBeUpdatedXml, startTimestamp,
@@ -1421,7 +1421,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieve of updated role failed. ", e);
         }
@@ -1453,7 +1453,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlCorruptedException.class, e);
         }
@@ -1485,7 +1485,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(RoleNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleNotFoundException.class, e);
         }
@@ -1518,7 +1518,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(RoleNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleNotFoundException.class, e);
         }
@@ -1550,7 +1550,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -1581,7 +1581,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingMethodParameterException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingMethodParameterException.class, e);
         }
@@ -1621,7 +1621,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlCorruptedException.class, e);
         }
@@ -1663,7 +1663,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -1699,7 +1699,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(MissingAttributeValueException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 MissingAttributeValueException.class, e);
         }
@@ -1737,7 +1737,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -1771,7 +1771,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -1805,7 +1805,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlSchemaValidationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlSchemaValidationException.class, e);
         }
@@ -1847,7 +1847,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(UniqueConstraintViolationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 UniqueConstraintViolationException.class, e);
         }
@@ -1882,7 +1882,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             updatedXml = update(id, toString(toBeUpdatedDocument, false));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(updatedXml);
@@ -1903,7 +1903,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(OptimisticLockingException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 OptimisticLockingException.class, e);
         }
@@ -1938,7 +1938,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(XmlCorruptedException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 XmlCorruptedException.class, e);
         }
@@ -1972,7 +1972,7 @@ public class RoleAbstractTest extends AaTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(RoleNotFoundException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 RoleNotFoundException.class, e);
         }
@@ -2022,7 +2022,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             updatedXml = update(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidRetrievedRole(updatedXml, toBeUpdatedXml, startTimestamp,
@@ -2032,7 +2032,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieve(id);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieve of updated role failed. ", e);
         }
@@ -2088,7 +2088,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2158,7 +2158,7 @@ public class RoleAbstractTest extends AaTestBase {
                 "Retrieving roles with providing corrupted filter params"
                     + " not declined. ", InvalidSearchQueryException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving roles with providing corrupted filter params"
                     + "not declined, properly. ",
@@ -2195,7 +2195,7 @@ public class RoleAbstractTest extends AaTestBase {
                 "Retrieving roles with providing corrupted filter params"
                     + " not declined. ", InvalidSearchQueryException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Retrieving roles with providing corrupted filter params"
                     + "not declined, properly. ",
@@ -2234,7 +2234,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2283,7 +2283,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2331,7 +2331,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2386,7 +2386,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2445,7 +2445,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2502,7 +2502,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2566,7 +2566,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2626,7 +2626,7 @@ public class RoleAbstractTest extends AaTestBase {
             failMissingException(
                 "Retrieving with unknown filter criteria not declined.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(
                 "Retrieving with unknown filter criteria not declined,"
                     + " properly.", ec, e);
@@ -2681,7 +2681,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2755,7 +2755,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2830,7 +2830,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2908,7 +2908,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             retrievedXml = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(
                 "Retrieving list of roles failed. ", e);
         }
@@ -2998,7 +2998,7 @@ public class RoleAbstractTest extends AaTestBase {
         try {
             result = retrieveRoles(filterParams);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertXmlValidSrwResponse(result);

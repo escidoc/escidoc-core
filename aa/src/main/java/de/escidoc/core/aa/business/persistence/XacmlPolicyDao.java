@@ -35,7 +35,7 @@ import java.util.List;
  * layer.
  * 
  * @author TTE
- * @aa
+ *
  */
 public interface XacmlPolicyDao {
 
@@ -47,7 +47,7 @@ public interface XacmlPolicyDao {
      * @param action
      *            The action to fetch policies for.
      * @return The Policies as Set of Xacml policy objects.
-     * @aa
+     *
      */
     List loadUserPolicies(final String userId, final String action);
 
@@ -61,7 +61,7 @@ public interface XacmlPolicyDao {
      * @param action
      *            The action to fetch policies for.
      * @return The Policies as Set of Xacml policy objects.
-     * @aa
+     *
      */
     List loadUserRestrictRolesPolicies(final String userId, final String action);
 
@@ -71,7 +71,7 @@ public interface XacmlPolicyDao {
      * @param roleId
      *            The id of the role to load policies for.
      * @return The role's polices Set of Xacml policy objects.
-     * @aa
+     *
      */
     List loadRolePolices(final String roleId);
 
@@ -81,7 +81,7 @@ public interface XacmlPolicyDao {
      * @param actionName
      *            The name of the action
      * @return The action object.
-     * @aa
+     *
      */
     Action loadAction(final String actionName);
 

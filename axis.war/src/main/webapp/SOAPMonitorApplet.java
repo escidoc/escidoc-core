@@ -74,7 +74,7 @@ public class SOAPMonitorApplet extends JApplet {
         // Try to use the system look and feel
         try {
            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e){
+        } catch (final Exception e){
         }
         // Create main panel to hold notebook
         main_panel = new JPanel();
@@ -371,7 +371,7 @@ public class SOAPMonitorApplet extends JApplet {
                     // thread to read data from the server
                     in = new ObjectInputStream(socket.getInputStream());
                     new Thread(this).start();
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     // Exceptions here are unexpected, but we can't
                     // really do anything (so just write it to stdout
                     // in case someone cares and then ignore it)
@@ -400,7 +400,7 @@ public class SOAPMonitorApplet extends JApplet {
                 if (out != null) {
                     try {
                         out.close();
-                    } catch (IOException ioe) {
+                    } catch (final IOException ioe) {
                     }
                     out = null;
                 }
@@ -410,7 +410,7 @@ public class SOAPMonitorApplet extends JApplet {
                 if (socket != null) {
                     try {
                         socket.close();
-                    } catch (IOException ioe) {
+                    } catch (final IOException ioe) {
                     }
                     socket = null;
                 }
@@ -488,7 +488,7 @@ public class SOAPMonitorApplet extends JApplet {
                             break;
                     }
 
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     // Exceptions are expected here when the
                     // server communication has been terminated.
                     if (stop_button.isEnabled()) {
@@ -1294,16 +1294,16 @@ public class SOAPMonitorApplet extends JApplet {
             panel.add(status_panel);
             panel.add(buttons);
             dialog = new JDialog();
-            dialog.setTitle("SOAP Monitor Filter");
-            dialog.setContentPane(panel);
-            dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            dialog.setModal(true);
-            dialog.pack();
-            final Dimension d = dialog.getToolkit().getScreenSize();
-            dialog.setLocation((d.width-dialog.getWidth())/2,
-                               (d.height-dialog.getHeight())/2);
+            diaLOGGER.setTitle("SOAP Monitor Filter");
+            diaLOGGER.setContentPane(panel);
+            diaLOGGER.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            diaLOGGER.setModal(true);
+            diaLOGGER.pack();
+            final Dimension d = diaLOGGER.getToolkit().getScreenSize();
+            diaLOGGER.setLocation((d.width-diaLOGGER.getWidth())/2,
+                               (d.height-diaLOGGER.getHeight())/2);
             ok_pressed = false;
-            dialog.show();
+            diaLOGGER.show();
         }
 
         /**
@@ -1322,11 +1322,11 @@ public class SOAPMonitorApplet extends JApplet {
                     filter_complete = false;
                 }
                 ok_pressed = true;
-                dialog.dispose();
+                diaLOGGER.dispose();
             }
             // Check if the user pressed the cancel button
             if (e.getSource() == cancel_button) {
-                dialog.dispose();
+                diaLOGGER.dispose();
             }
             // Check if the user changed the status filter option
             if (e.getSource() == status_box) {

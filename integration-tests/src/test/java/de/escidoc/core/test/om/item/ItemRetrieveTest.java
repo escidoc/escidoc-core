@@ -133,7 +133,7 @@ public class ItemRetrieveTest extends ItemTestBase {
             retrieve("test");
             fail("No ItemNotFoundException retrieving item with not existing id.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 ItemNotFoundException.class, e);
         }
@@ -173,7 +173,7 @@ public class ItemRetrieveTest extends ItemTestBase {
         try {
             retrieve(componentId);
         }
-        catch (ItemNotFoundException e) {
+        catch (final ItemNotFoundException e) {
             return;
         }
         fail("Not expected exception");
@@ -194,7 +194,7 @@ public class ItemRetrieveTest extends ItemTestBase {
 
             retrieve(null);
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             return;
         }
         fail("Not expected exception");
@@ -225,7 +225,7 @@ public class ItemRetrieveTest extends ItemTestBase {
             retrieve(itemId);
             fail(ec.getName() + " expected");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
         finally {
@@ -258,7 +258,7 @@ public class ItemRetrieveTest extends ItemTestBase {
             retrieve(itemId);
             fail(ec.getName() + " expected");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
         finally {
@@ -289,7 +289,7 @@ public class ItemRetrieveTest extends ItemTestBase {
             EscidocRestSoapTestBase
                 .failMissingException(AuthorizationException.class);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 AuthorizationException.class, e);
         }
@@ -321,7 +321,7 @@ public class ItemRetrieveTest extends ItemTestBase {
     // retrieve(itemId);
     // fail(ec.getName() + " expected");
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType(ec, e);
     // }
     // finally {
@@ -387,7 +387,7 @@ public class ItemRetrieveTest extends ItemTestBase {
         try {
             retrieveMdRecord(false, "escidoc");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(msg, ec, e);
         }
     }
@@ -408,7 +408,7 @@ public class ItemRetrieveTest extends ItemTestBase {
         try {
             retrieveMdRecord(true, null);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(msg, ec, e);
         }
     }
@@ -429,7 +429,7 @@ public class ItemRetrieveTest extends ItemTestBase {
         try {
             retrieveMdRecord(true, "");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(msg, ec, e);
         }
     }
@@ -450,7 +450,7 @@ public class ItemRetrieveTest extends ItemTestBase {
         try {
             retrieveMdRecord(true, "blablub");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(msg, ec, e);
         }
     }
@@ -483,7 +483,7 @@ public class ItemRetrieveTest extends ItemTestBase {
         try {
             retrieve(componentId);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Wrong exception", ItemNotFoundException.class,
                 e);
         }
@@ -491,7 +491,7 @@ public class ItemRetrieveTest extends ItemTestBase {
         try {
             retrieve(componentId + ":1");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Wrong exception", ItemNotFoundException.class,
                 e);
         }
@@ -499,7 +499,7 @@ public class ItemRetrieveTest extends ItemTestBase {
         try {
             retrieve(componentId + ":a");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType("Wrong exception", ItemNotFoundException.class,
                 e);
         }

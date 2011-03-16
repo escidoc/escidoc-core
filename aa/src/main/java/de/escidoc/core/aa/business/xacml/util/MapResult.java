@@ -37,7 +37,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * Class encapsulating the mapping from aa attribute id to the identified
  * used in the triple store.
  * 
- * @aa
+ *
  * @author TTE
  * 
  */
@@ -165,7 +165,7 @@ public class MapResult {
      * See Interface for functional description.
      * 
      * @return
-     * @see java.lang.Object#toString()
+     * @see Object#toString()
      */
     @Override
     public String toString() {

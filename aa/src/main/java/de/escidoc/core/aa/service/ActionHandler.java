@@ -38,12 +38,8 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 
 /**
  * Service layer implementation of a handler that manages eSciDoc actions.
- * 
- * @spring.bean id="service.ActionHandler"
- * @interface class="de.escidoc.core.aa.service.interfaces.ActionHandlerInterface"
- * @service
+ *
  * @author TTE
- * @aa
  */
 public class ActionHandler implements ActionHandlerInterface {
 
@@ -65,7 +61,7 @@ public class ActionHandler implements ActionHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.ActionHandlerInterface#createUnsecuredActions(java.lang.String,
      *      java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String createUnsecuredActions(
@@ -87,7 +83,7 @@ public class ActionHandler implements ActionHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.ActionHandlerInterface
      *      #deleteUnsecuredActions(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public void deleteUnsecuredActions(final String contextId)
@@ -108,7 +104,7 @@ public class ActionHandler implements ActionHandlerInterface {
      * @throws SystemException
      * @see de.escidoc.core.aa.service.interfaces.ActionHandlerInterface
      *      #retrieveUnsecuredActions(java.lang.String)
-     * @aa
+     *
      */
     @Override
     public String retrieveUnsecuredActions(final String contextId)
@@ -125,9 +121,6 @@ public class ActionHandler implements ActionHandlerInterface {
      * 
      * @param business
      *            The business layer bean
-     * @spring.property ref="business.ActionHandler"
-     * @service.exclude
-     * @aa
      */
     public void setBusiness(
         final de.escidoc.core.aa.service.interfaces.ActionHandlerInterface business) {

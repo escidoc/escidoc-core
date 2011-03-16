@@ -37,6 +37,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -51,6 +53,8 @@ import static org.junit.Assert.fail;
  */
 @RunWith(value = Parameterized.class)
 public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(ItemRetrieveComponentPropertiesTest.class);
 
     private static String itemId = null;
 
@@ -180,7 +184,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             retrieveComponentProperties("unknown", componentId);
             fail(ec + " expected but no error occurred!");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
@@ -201,7 +205,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             retrieveComponentProperties(itemId, "unknown");
             fail(ec + " expected but no error occurred!");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
@@ -223,7 +227,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             retrieveComponentProperties(null, componentId);
             fail(ec + " expected but no error occurred!");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec.getName() + " expected.", ec, e);
         }
 
@@ -245,7 +249,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
             retrieveComponentProperties(itemId, null);
             fail(ec + " expected but no error occurred!");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec.getName() + " expected.", ec, e);
         }
     }
@@ -328,7 +332,7 @@ public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
         String creationDate =
             selectSingleNode(createdProperties, "/properties/creation-date")
                 .getTextContent();
-        log.debug("assertTimestampIsEqualOrAfter( " + creationDate + ", "
+        LOGGER.debug("assertTimestampIsEqualOrAfter( " + creationDate + ", "
             + timestampBeforeCreation + ")");
         assertTimestampIsEqualOrAfter(
             "Component Properties error: creation-date is not as expected!",

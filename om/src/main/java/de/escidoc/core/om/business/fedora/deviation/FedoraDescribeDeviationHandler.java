@@ -29,7 +29,7 @@
 package de.escidoc.core.om.business.fedora.deviation;
 
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface;
 
@@ -37,21 +37,16 @@ import java.net.URL;
 import java.util.Map;
 import java.util.Map.Entry;
 
-/*******************************************************************************
+/**
  * @author MIH
- * 
- * @spring.bean id = "business.FedoraDescribeDeviationHandler"
  */
 public class FedoraDescribeDeviationHandler
     implements FedoraDescribeDeviationHandlerInterface {
 
-    private static final AppLogger LOG = new AppLogger(
-        FedoraDescribeDeviationHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(
+        FedoraDescribeDeviationHandler.class);
 
     private ConnectionUtility connectionUtility;
-
-    // private static AppLogger log =
-    // new AppLogger(FedoraDescribeDeviationHandler.class.getName());
 
     private String baseURL;
 
@@ -97,9 +92,13 @@ public class FedoraDescribeDeviationHandler
             if (describeUrl != null) {
                 try {
                     connectionUtility.resetAuthentication(new URL(describeUrl));
-                }
-                catch (Exception e) {
-                    LOG.debug("Error on reseting authentication.", e);
+                } catch (final Exception e) {
+                    if(LOGGER.isWarnEnabled()) {
+                        LOGGER.warn("Error on reseting authentication.");
+                    }
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Error on reseting authentication.", e);
+                    }
                 }
             }
         }
@@ -114,7 +113,7 @@ public class FedoraDescribeDeviationHandler
      * @return String http requestparameters as String
      * 
      */
-    private String buildUrlParameters(final Map<String, String[]> parameters) {
+    private static String buildUrlParameters(final Map<String, String[]> parameters) {
         final StringBuilder urlParams = new StringBuilder("");
         if (parameters != null && !parameters.isEmpty()) {
             urlParams.append('?');
@@ -137,8 +136,6 @@ public class FedoraDescribeDeviationHandler
      * 
      * @param connectionUtility
      *            The HTTP connection utility.
-     * 
-     * @spring.property ref="escidoc.core.common.util.service.ConnectionUtility"
      */
     public void setConnectionUtility(final ConnectionUtility connectionUtility) {
 

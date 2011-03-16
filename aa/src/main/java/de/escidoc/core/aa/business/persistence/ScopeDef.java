@@ -32,7 +32,7 @@ package de.escidoc.core.aa.business.persistence;
  * Class encapsulating the information stored about the scope definition of an
  * {@link EscidocRole}.
  * 
- * @aa
+ *
  * @author TTE
  * 
  */
@@ -46,13 +46,13 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
 
 
     /**
-     * @see de.escidoc.core.aa.business.persistence.ScopeDefBase()
+     * @see ScopeDefBase()
      */
     public ScopeDef() {
     }
 
     /**
-     * @see de.escidoc.core.aa.business.persistence.ScopeDefBase(String, String,
+     * @see ScopeDefBase(String, String,
      *      EscidocRole)
      */
     public ScopeDef(final String objectType, final String attributeId,
@@ -61,7 +61,7 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
     }
 
     /**
-     * @see de.escidoc.core.aa.business.persistence.ScopeDefBase(String)
+     * @see ScopeDefBase(String)
      */
     public ScopeDef(final String objectType) {
         super(objectType);
@@ -72,8 +72,8 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      * 
      * @param o
      * @return
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     * @aa
+     * @see Comparable#compareTo(Object)
+     *
      */
     @Override
     public int compareTo(final ScopeDef o) {
@@ -96,7 +96,9 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
                 if (ownId.length() == oId.length()) {
                     return ownId.compareTo(oId);
                 }
-                else return ownId.length() > oId.length() ? 1 : -1;
+                else {
+                    return ownId.length() > oId.length() ? 1 : - 1;
+                }
             }
         }
     }
@@ -106,8 +108,8 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      * 
      * @param obj
      * @return
-     * @see java.lang.Object#equals(java.lang.Object)
-     * @aa
+     * @see Object#equals(Object)
+     *
      */
     @Override
     public boolean equals(final Object obj) {
@@ -123,8 +125,8 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      * See Interface for functional description.
      * 
      * @return
-     * @see java.lang.Object#hashCode()
-     * @aa
+     * @see Object#hashCode()
+     *
      */
     @Override
     public int hashCode() {

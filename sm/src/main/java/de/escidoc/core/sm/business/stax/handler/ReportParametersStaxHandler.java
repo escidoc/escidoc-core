@@ -29,7 +29,7 @@
 package de.escidoc.core.sm.business.stax.handler;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
-import de.escidoc.core.common.util.logger.AppLogger;
+import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -40,11 +40,11 @@ import org.joda.time.DateTime;
  * Fills xml-data into VO.
  * 
  * @author MIH
- * @sm
+ *
  */
 public class ReportParametersStaxHandler extends DefaultHandler {
 
-    private static final AppLogger LOG = new AppLogger(ReportParametersStaxHandler.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportParametersStaxHandler.class);
     
     private final ReportParametersVo reportParametersVo = new ReportParametersVo();
     
@@ -57,7 +57,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
      * @return StartElement startElement
      * @throws Exception e
      * 
-     * @sm
+     *
      */
     @Override
     public StartElement startElement(final StartElement element) throws Exception {
@@ -65,8 +65,13 @@ public class ReportParametersStaxHandler extends DefaultHandler {
             try {
                 reportParametersVo.setReportDefinitionId(
                         XmlUtility.getIdFromStartElement(element));
-            } catch (MissingAttributeValueException e) {
-                LOG.debug("Missing attribute value.", e);
+            } catch (final MissingAttributeValueException e) {
+                if(LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Missing attribute value.");
+                }
+                if(LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Missing attribute value.", e);
+                }
             }
         }
         else if ("parameter".equals(element.getLocalName())) {
@@ -82,7 +87,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
      * @return EndElement endElement
      * @throws Exception e
      * 
-     * @sm
+     *
      */
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
@@ -101,10 +106,10 @@ public class ReportParametersStaxHandler extends DefaultHandler {
      *            The element.
      * @return The character section.
      * @throws Exception e
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler#characters
+     * @see DefaultHandler#characters
      *      (java.lang.String,
      *      de.escidoc.core.common.util.xml.stax.events.StartElement)
-     * @om
+     *
      */
     @Override
     public String characters(

@@ -38,7 +38,7 @@ import java.util.Map;
  * Singleton for caching aggregationDefinitionIds.
  * used to write aggregation-tables synchronized.
  * 
- * @sm
+ *
  */
 public final class AggregationIdMapper {
 
@@ -49,7 +49,7 @@ public final class AggregationIdMapper {
     /**
      * private Constructor for Singleton.
      * 
-     * @sm
+     *
      */
     private AggregationIdMapper() {
     }
@@ -59,7 +59,7 @@ public final class AggregationIdMapper {
      * 
      * @return AggregationIdMapper AggregationIdMapper
      * 
-     * @sm
+     *
      */
     public static AggregationIdMapper getInstance() {
         return instance;
@@ -73,7 +73,7 @@ public final class AggregationIdMapper {
      *            id of the aggregation definition
      * @return String entry
      * 
-     * @sm
+     *
      */
     public synchronized String getAggregationIdEntry(
                         final String aggregationDefinitionId) {

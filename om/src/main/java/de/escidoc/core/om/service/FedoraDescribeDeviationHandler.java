@@ -38,13 +38,8 @@ import java.util.Map;
  * Security note: This handler should not be intercepted for authorization, as
  * it does not provide security relevant information and can be public
  * accessible.
- * 
- * @spring.bean id="service.FedoraDescribeDeviationHandler" scope="prototype"
- * @interface class="de.escidoc.core.om.service.interfaces.FedoraDescribeDeviationHandlerInterface"
+ *
  * @author MIH
- * @service
- * @axis.exclude
- * @om
  */
 public class FedoraDescribeDeviationHandler
     implements FedoraDescribeDeviationHandlerInterface {
@@ -56,10 +51,6 @@ public class FedoraDescribeDeviationHandler
      * 
      * @param fedoraDescribeDeviationHandler
      *            The FedoraDescribeDeviation handler bean to inject.
-     * 
-     * @spring.property ref="business.FedoraDescribeDeviationHandler"
-     * @service.exclude
-     * @om
      */
     public void setFedoraDescribeDeviationHandler(
         final de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface fedoraDescribeDeviationHandler) {

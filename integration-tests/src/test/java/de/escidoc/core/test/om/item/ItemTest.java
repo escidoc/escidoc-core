@@ -165,7 +165,7 @@ public class ItemTest extends ItemTestBase {
             item = create(item);
             itemId = getObjidValue(item);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("No exception expected!", e);
         }
         assertXmlValidItem(item);
@@ -631,7 +631,7 @@ public class ItemTest extends ItemTestBase {
                 "Creating item with empty content-model element not declined.",
                 ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "Creating item with empty content-model element not declined"
                     + ", properly", ec, e);
@@ -679,7 +679,7 @@ public class ItemTest extends ItemTestBase {
         try {
             String xml = create(itemWithoutContextId);
         }
-        catch (MissingAttributeValueException e) {
+        catch (final MissingAttributeValueException e) {
             return;
         }
         fail("Not expected exception");
@@ -719,7 +719,7 @@ public class ItemTest extends ItemTestBase {
             String xml = create(itemWithoutContentType);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -758,7 +758,7 @@ public class ItemTest extends ItemTestBase {
             String xml = create(itemWithoutEscidocMetadata);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -801,7 +801,7 @@ public class ItemTest extends ItemTestBase {
             String xml = create(itemWithoutInternalMetadataXml);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -849,7 +849,7 @@ public class ItemTest extends ItemTestBase {
             create(itemWithNotExistingContext);
             EscidocRestSoapTestBase.failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
         }
     }
@@ -1790,7 +1790,7 @@ public class ItemTest extends ItemTestBase {
             deleteElement(xmlItem, "item/components/component[1]/md-records");
         Node itemWithContentin1ComponentWithExternalUrl =
             substitute(itemWith1ComponentWithoutMdRecords,
-                "item/components/component[1]/content/@storage", "external-url");
+                "item/components/component[1]/content/orage", "external-url");
 
         String xml =
             create(toString(itemWith1ComponentWithoutMdRecords, false));
@@ -1799,7 +1799,7 @@ public class ItemTest extends ItemTestBase {
         Document createdItem = getDocument(xml);
         Node firstComponentContent =
             selectSingleNode(createdItem,
-                "item/components/component[1]/content/@storage");
+                "item/components/component[1]/content/orage");
         if (firstComponentContent.getNodeValue().equals("external-url")) {
             Node mdRecords =
                 selectSingleNode(createdItem,
@@ -1843,7 +1843,7 @@ public class ItemTest extends ItemTestBase {
         try {
             create(itemWithWrongtHrefContent);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType("",
                 FileNotFoundException.class, e);
 
@@ -1902,7 +1902,7 @@ public class ItemTest extends ItemTestBase {
             // read only elements are ignored now
             // failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // read only elements are ignored now
             fail("Exception on update with read-only element set.");
             EscidocRestSoapTestBase.assertExceptionType(ec, e);
@@ -2081,7 +2081,7 @@ public class ItemTest extends ItemTestBase {
             fail("No exception occured on item created with relations, which "
                 + " references non existing targets.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "ReferencedResourceNotFound expected.",
                 ReferencedResourceNotFoundException.class, e);
@@ -2129,7 +2129,7 @@ public class ItemTest extends ItemTestBase {
             fail("No exception occured on item crate with relations, which "
                 + " target ids containing a version number.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "InvalidContentException expected.",
                 InvalidContentException.class, e);
@@ -2206,7 +2206,7 @@ public class ItemTest extends ItemTestBase {
             fail("No exception occured on item create with relations, which "
                 + " references non existing predicate.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.assertExceptionType(
                 "RelationPredicateNotFoundException expected.",
                 RelationPredicateNotFoundException.class, e);
@@ -2312,7 +2312,7 @@ public class ItemTest extends ItemTestBase {
             fail("InvalidContentException expected if cretaing item without"
                 + " Md-records.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = InvalidContentException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -2343,7 +2343,7 @@ public class ItemTest extends ItemTestBase {
             fail("MissingMdRecordException expected if cretaing item without"
                 + " Md-records.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = MissingMdRecordException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -2423,7 +2423,7 @@ public class ItemTest extends ItemTestBase {
             fail("ComponentNotFoundException expected if deleting not"
                 + " existing Component.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             Class<?> ec = ComponentNotFoundException.class;
             EscidocRestSoapTestBase.assertExceptionType(ec.getName()
                 + " expected.", ec, e);
@@ -2448,7 +2448,7 @@ public class ItemTest extends ItemTestBase {
         String storage = "external-url";
         xmlItemDoc =
             substitute(xmlItemDoc,
-                "/item/components/component/content/@storage", storage);
+                "/item/components/component/content/orage", storage);
 
         String xml = toString(xmlItemDoc, true);
 
@@ -2505,7 +2505,7 @@ public class ItemTest extends ItemTestBase {
             fail("Missing Exception if Item contains more than one md-record"
                 + " with name 'escidoc'.");
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             // FIXME correct exception? its a value to much! JavaDoc: a
             // mandatory attribute value is not set
             Class<?> ec = InvalidContentException.class;
@@ -2521,7 +2521,7 @@ public class ItemTest extends ItemTestBase {
 
             create(null);
         }
-        catch (MissingMethodParameterException e) {
+        catch (final MissingMethodParameterException e) {
             return;
         }
         fail("Not expected exception");

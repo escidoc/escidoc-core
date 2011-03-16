@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-Notes:
--item and container are handled separately because of different namespaces
--each metadata-field is indexed as own field ($CONTEXTNAME.<md-elementname>) and additionally into field $CONTEXTNAME.metadata
--all properties and metadata-elements of all components are indexed as $COMPONENT_CONTEXTNAME.<elementname>
--fulltexts are indexed if mime-type of component is application/pdf application/msword text/xml application/xml text/plain
--fulltexts are not indexed if component-type is correspondence or copyright transfer agreement
--store=yes: 
-	-all fields for highlighting: xml_metadata and escidoc.fulltext
-	-all fields for display: xml_representation
-	-all fields for sorting
-	-just all fields, except PID and sortfields, this is because scan-operation needs stored fields
--!!all fields are stored because of the scan-request!!
--separate fields for highlighting are stored, but not indexed:
-	-xml_metadata for hit-terms in the context of the metadata-xml.
-	 (metadata for indexing is extracted out of the xml-structure)
-	-stored_fulltext<n> (for each fulltext one field) for hit-terms in the context of fulltext
-	 (complete fulltext is stored)
-	-stored_filename<n> (for each fulltext one field with the filename. So filename can get displayed in highlighting)
--sorting can be done for all fields that are untokenized and only occur once in a document.
--additional sortfields can be defined in variable sortfields
--additional compound indexfields can be defined in variable userdefined-indexes
-
--
- -->
+<!--
+  ~ CDDL HEADER START
+  ~
+  ~ The contents of this file are subject to the terms of the Common Development and Distribution License, Version 1.0
+  ~ only (the "License"). You may not use this file except in compliance with the License.
+  ~
+  ~ You can obtain a copy of the license at license/ESCIDOC.LICENSE or http://www.escidoc.de/license. See the License
+  ~ for the specific language governing permissions and limitations under the License.
+  ~
+  ~ When distributing Covered Code, include this CDDL HEADER in each file and include the License file at
+  ~ license/ESCIDOC.LICENSE. If applicable, add the following below this CDDL HEADER, with the fields enclosed by
+  ~ brackets "[]" replaced with your own identifying information: Portions Copyright [yyyy] [name of copyright owner]
+  ~
+  ~ CDDL HEADER END
+  ~
+  ~ Copyright 2006-2011 Fachinformationszentrum Karlsruhe Gesellschaft fuer wissenschaftlich-technische Information mbH
+  ~ and Max-Planck-Gesellschaft zur Foerderung der Wissenschaft e.V. All rights reserved. Use is subject to license
+  ~ terms.
+  -->
 <xsl:stylesheet version="1.0"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:xalan="http://xml.apache.org/xalan"

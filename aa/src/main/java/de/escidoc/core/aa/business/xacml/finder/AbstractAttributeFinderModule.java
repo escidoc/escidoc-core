@@ -66,7 +66,7 @@ import java.util.regex.Pattern;
  * 
  * @author TTE
  * 
- * @aa
+ *
  */
 public abstract class AbstractAttributeFinderModule
     extends AttributeFinderModule {
@@ -176,7 +176,7 @@ public abstract class AbstractAttributeFinderModule
      * 
      * @return Always returns true.
      * @see AttributeFinderModuleInterface#isDesignatorSupported()
-     * @aa
+     *
      */
     @Override
     public boolean isDesignatorSupported() {
@@ -191,9 +191,9 @@ public abstract class AbstractAttributeFinderModule
      * Sub classes may override this.
      * 
      * @return Set only containing the value RESOURCE_TARGET.
-     * @see com.sun.xacml.finder.AttributeFinderModule
+     * @see AttributeFinderModule
      *      #getSupportedDesignatorTypes()
-     * @aa
+     *
      */
     @Override
     public Set<Integer> getSupportedDesignatorTypes() {
@@ -248,7 +248,7 @@ public abstract class AbstractAttributeFinderModule
     }
 
     /**
-     * Gets a {@link com.sun.xacml.cond.EvaluationResult} from the cache
+     * Gets a {@link EvaluationResult} from the cache
      * identified by the provided values.
      * 
      * @param resourceId
@@ -262,7 +262,7 @@ public abstract class AbstractAttributeFinderModule
      * @param ctx
      *            The {@link EvaluationCtx} for that the result has been cached.
      * @return Returns the cached {@link EvaluationResult} or <code>null</code>.
-     * @aa
+     *
      */
     protected final EvaluationResult getFromCache(
         final String resourceId, final String resourceObjid,
@@ -276,7 +276,7 @@ public abstract class AbstractAttributeFinderModule
     }
 
     /**
-     * Puts the provided {@link com.sun.xacml.cond.EvaluationResult} into the
+     * Puts the provided {@link EvaluationResult} into the
      * cache using the other provided keys to construct the cache key.
      * 
      * @param resourceId
@@ -291,7 +291,7 @@ public abstract class AbstractAttributeFinderModule
      *            The {@link EvaluationCtx} for that the result shall be cached.
      * @param result
      *            The {@link EvaluationResult to cache}
-     * @aa
+     *
      */
     protected final void putInCache(
         final String resourceId, final String resourceObjid,
@@ -386,10 +386,10 @@ public abstract class AbstractAttributeFinderModule
      *            The designatorType. Has to be RESOURCE_TARGET in this case.
      * @return EvaluationResult An EvaluationResult containing the requested
      *         attribute.
-     * @see com.sun.xacml.finder.AttributeFinderModule#findAttribute(java.net.URI,
-     *      java.net.URI, java.net.URI, java.net.URI,
-     *      com.sun.xacml.EvaluationCtx, int)
-     * @aa
+     * @see AttributeFinderModule#findAttribute(URI,
+     *      URI, URI, URI,
+     *      EvaluationCtx, int)
+     *
      */
     @Override
     public final EvaluationResult findAttribute(
@@ -516,7 +516,7 @@ public abstract class AbstractAttributeFinderModule
      * 
      * 
      * @return Returns the result of <code>ctx.getResourceAttribute</code>.
-     * @aa
+     *
      */
     protected EvaluationResult recursivelyCallCtxGetResourceAttribute(
         final EvaluationCtx ctx, final String newResourceId,
@@ -549,7 +549,7 @@ public abstract class AbstractAttributeFinderModule
      * @param objectType
      *            The object type string to convert.
      * @return Returns the corresponding object type or <code>null</code>.
-     * @aa
+     *
      */
     protected String fixObjectType(final String objectType) {
 
@@ -584,7 +584,7 @@ public abstract class AbstractAttributeFinderModule
      *            result is returned.
      * 
      * @return Returns the result of <code>ctx.getResourceAttribute</code>.
-     * @aa
+     *
      */
     protected EvaluationResult recursivelyCallCtxGetResourceAttribute(
         final String attributeId, final String resolvedAttributeId,
@@ -725,7 +725,7 @@ public abstract class AbstractAttributeFinderModule
      *             Thrown in case of an internal error.
      * @throws ResourceNotFoundException
      *             Thrown if no resource with the provided id exists.
-     * @aa
+     *
      */
     protected String fetchSingleResourceAttribute(
         final EvaluationCtx ctx, final String attributeId)
@@ -764,7 +764,7 @@ public abstract class AbstractAttributeFinderModule
      *             Thrown in case of an internal error.
      * @throws ResourceNotFoundException
      *             Thrown if no resource with the provided id exists.
-     * @aa
+     *
      */
     protected String fetchSingleResourceAttribute(
         final EvaluationCtx ctx, final String newResourceId,
@@ -803,7 +803,7 @@ public abstract class AbstractAttributeFinderModule
      *             Thrown in case of an internal error.
      * @throws ResourceNotFoundException
      *             Thrown if no resource with the provided id exists.
-     * @aa
+     *
      */
     protected String fetchObjectType(final EvaluationCtx ctx)
         throws WebserverSystemException, ResourceNotFoundException {
@@ -829,7 +829,7 @@ public abstract class AbstractAttributeFinderModule
      *             Thrown in case of an internal error.
      * @throws ResourceNotFoundException
      *             Thrown if no resource with the provided id exists.
-     * @aa
+     *
      */
     protected String fetchObjectType(
         final EvaluationCtx ctx, final String newResourceId)
@@ -943,7 +943,7 @@ public abstract class AbstractAttributeFinderModule
      *            The <code>EvaluationResult</code> object to check.
      * @return Returns <code>true</code> if the provided
      *         <code>EvaluationResult</code>'s attribute value is null or empty.
-     * @aa
+     *
      */
     protected boolean isEmptyResult(final EvaluationResult result) {
 

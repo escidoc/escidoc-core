@@ -59,12 +59,8 @@ import java.util.Map;
 
 /**
  * A context resource handler.
- * 
- * @spring.bean id="service.ContextHandler"
- * @interface 
- *            class="de.escidoc.core.om.service.interfaces.ContextHandlerInterface"
+ *
  * @author TTE
- * @service
  */
 public class ContextHandler implements ContextHandlerInterface {
 
@@ -72,330 +68,192 @@ public class ContextHandler implements ContextHandlerInterface {
 
     /**
      * Injects the context handler.
-     * 
-     * @param contextHandler
-     *            The context handler bean to inject.
-     * 
-     * @spring.property ref="business.FedoraContextHandler"
-     * @service.exclude
+     *
+     * @param contextHandler The context handler bean to inject.
      */
-    public void setContextHandler(
-        final de.escidoc.core.om.business.interfaces.ContextHandlerInterface contextHandler) {
+    public void setContextHandler(final de.escidoc.core.om.business.interfaces.ContextHandlerInterface contextHandler) {
 
         this.handler = contextHandler;
     }
 
 
-
     // FIXME: exception handling
+
     /**
      * See Interface for functional description.
-     * 
-     * @param xmlData
-     * @return
-     * @throws ContextNotFoundException
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
-     *      #create(java.lang.String)
+     *
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#create(java.lang.String)
      */
     @Override
     public String create(final String xmlData)
-        throws MissingMethodParameterException, ContextNameNotUniqueException,
-        AuthenticationException, AuthorizationException, SystemException,
-        ContentModelNotFoundException, ReadonlyElementViolationException,
-        MissingAttributeValueException, MissingElementValueException,
-        ReadonlyAttributeViolationException, InvalidContentException,
-        OrganizationalUnitNotFoundException, InvalidStatusException,
-        XmlCorruptedException, XmlSchemaValidationException {
+            throws MissingMethodParameterException, ContextNameNotUniqueException, AuthenticationException,
+            AuthorizationException, SystemException, ContentModelNotFoundException, ReadonlyElementViolationException,
+            MissingAttributeValueException, MissingElementValueException, ReadonlyAttributeViolationException,
+            InvalidContentException, OrganizationalUnitNotFoundException, InvalidStatusException, XmlCorruptedException,
+            XmlSchemaValidationException {
 
         return handler.create(xmlData);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
-     *      #delete(java.lang.String)
+     *
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#delete(java.lang.String)
      */
     @Override
-    public void delete(final String id) throws ContextNotFoundException,
-        ContextNotEmptyException, MissingMethodParameterException,
-        InvalidStatusException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public void delete(final String id)
+            throws ContextNotFoundException, ContextNotEmptyException, MissingMethodParameterException,
+            InvalidStatusException, AuthenticationException, AuthorizationException, SystemException {
 
         handler.delete(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
-     *      #retrieve(java.lang.String)
+     *
+     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#retrieve(java.lang.String)
      */
     @Override
-    public String retrieve(final String id) throws ContextNotFoundException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public String retrieve(final String id)
+            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
 
         return handler.retrieve(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws ContextNotFoundException
-     * @throws SystemException
+     *
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveProperties(java.lang.String)
      */
     @Override
-    public String retrieveProperties(final String id)
-        throws ContextNotFoundException, SystemException {
+    public String retrieveProperties(final String id) throws ContextNotFoundException, SystemException {
         return handler.retrieveProperties(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param xmlData
-     * @return
-     * @throws InvalidContentException
-     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface
-     *      #update(java.lang.String, java.lang.String)
+     *
+     * @see de.escidoc.core.common.service.interfaces.ResourceHandlerInterface #update(java.lang.String,
+     *      java.lang.String)
      */
     @Override
     public String update(final String id, final String xmlData)
-        throws ContextNotFoundException, MissingMethodParameterException,
-        InvalidContentException, InvalidStatusException,
-        AuthenticationException, AuthorizationException,
-        ReadonlyElementViolationException, ReadonlyAttributeViolationException,
-        OptimisticLockingException, ContextNameNotUniqueException,
-        InvalidXmlException, MissingElementValueException, SystemException {
+            throws ContextNotFoundException, MissingMethodParameterException, InvalidContentException,
+            InvalidStatusException, AuthenticationException, AuthorizationException, ReadonlyElementViolationException,
+            ReadonlyAttributeViolationException, OptimisticLockingException, ContextNameNotUniqueException,
+            InvalidXmlException, MissingElementValueException, SystemException {
 
         return handler.update(id, xmlData);
     }
 
-    //
-    // Subresources
-    //
-
-    //
-    // Subresource - resources
-    //
-
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @param resourceName
-     * @param parameters
-     * 
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface
-     *      #retrieveResource(java.lang.String, java.lang.String, java.util.Map)
-     * @axis.exclude
-     */
     @Override
-    public EscidocBinaryContent retrieveResource(
-        final String id, final String resourceName,
-        final Map<String, String[]> parameters)
-        throws OperationNotFoundException, ContextNotFoundException,
-        MissingMethodParameterException, AuthenticationException,
-        AuthorizationException, SystemException {
+    public EscidocBinaryContent retrieveResource(final String id, final String resourceName,
+                                                 final Map<String, String[]> parameters)
+            throws OperationNotFoundException, ContextNotFoundException, MissingMethodParameterException,
+            AuthenticationException, AuthorizationException, SystemException {
 
         return handler.retrieveResource(id, resourceName, parameters);
     }
 
-    /**
-     * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface
-     *      #retrieveResources(java.lang.String)
-     * @axis.exclude
-     */
     @Override
     public String retrieveResources(final String id)
-        throws ContextNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
 
         return handler.retrieveResources(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param taskParam
-     * @throws ContextNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws InvalidStatusException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws OptimisticLockingException
-     * @throws InvalidXmlException
-     * @throws SystemException
-     * @throws StreamNotFoundException
-     * @throws LockingException
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#open(java.lang.String,
-     *      java.lang.String)
+     *
+     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#open(java.lang.String, java.lang.String)
      */
     @Override
     public String open(final String id, final String taskParam)
-        throws ContextNotFoundException, MissingMethodParameterException,
-        InvalidStatusException, AuthenticationException,
-        AuthorizationException, OptimisticLockingException,
-        InvalidXmlException, SystemException, LockingException,
-        StreamNotFoundException {
+            throws ContextNotFoundException, MissingMethodParameterException, InvalidStatusException,
+            AuthenticationException, AuthorizationException, OptimisticLockingException, InvalidXmlException,
+            SystemException, LockingException, StreamNotFoundException {
 
         return handler.open(id, taskParam);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param taskParam
-     * @throws ContextNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws InvalidXmlException
-     * @throws InvalidStatusException
-     * @throws StreamNotFoundException
-     * @throws LockingException
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#close(java.lang.String,
-     *      java.lang.String)
+     *
+     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#close(java.lang.String, java.lang.String)
      */
     @Override
     public String close(final String id, final String taskParam)
-        throws ContextNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException,
-        OptimisticLockingException, InvalidXmlException,
-        InvalidStatusException, LockingException, StreamNotFoundException {
+            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException, OptimisticLockingException, InvalidXmlException,
+            InvalidStatusException, LockingException, StreamNotFoundException {
 
         return handler.close(id, taskParam);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param filter
-     * @return
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface
-     *      #retrieveContexts(java.util.Map)
+     *
+     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface #retrieveContexts(java.util.Map)
      */
     @Override
     public String retrieveContexts(final Map<String, String[]> filter)
-        throws MissingMethodParameterException, SystemException {
+            throws MissingMethodParameterException, SystemException {
         return handler.retrieveContexts(new LuceneRequestParameters(filter));
     }
 
-    //
-    // Subresource - members
-    //
-
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param filter
-     * @return
-     * @throws ContextNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
+     *
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveMembers(java.lang.String,
      *      java.util.Map)
      */
     @Override
-    public String retrieveMembers(
-        final String id, final Map<String, String[]> filter)
-        throws ContextNotFoundException, MissingMethodParameterException,
-        SystemException {
+    public String retrieveMembers(final String id, final Map<String, String[]> filter)
+            throws ContextNotFoundException, MissingMethodParameterException, SystemException {
 
         return handler.retrieveMembers(id, new LuceneRequestParameters(filter));
     }
 
-    //
-    // Subresource - admin descriptor
-    //
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws ContextNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @throws AdminDescriptorNotFoundException
+     *
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveAdminDescriptor(java.lang.String)
      */
     @Override
     public String retrieveAdminDescriptor(final String id, final String name)
-        throws ContextNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException,
-        AdminDescriptorNotFoundException {
+            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException, AdminDescriptorNotFoundException {
 
         return handler.retrieveAdminDescriptor(id, name);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @return
-     * @throws ContextNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
+     *
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveAdminDescriptor(java.lang.String)
      */
     @Override
     public String retrieveAdminDescriptors(final String id)
-        throws ContextNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException {
+            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException {
 
         return handler.retrieveAdminDescriptors(id);
     }
 
     /**
      * See Interface for functional description.
-     * 
-     * @param id
-     * @param xmlData
-     * @return
-     * @throws ContextNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws AuthenticationException
-     * @throws AuthorizationException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws AdminDescriptorNotFoundException
-     * @throws InvalidXmlException
+     *
      * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#updateAdminDescriptor(java.lang.String,
      *      java.lang.String)
-     * 
-     * @service.exclude
      */
     @Override
     public String updateAdminDescriptor(final String id, final String xmlData)
-        throws ContextNotFoundException, MissingMethodParameterException,
-        AuthenticationException, AuthorizationException, SystemException,
-        OptimisticLockingException, AdminDescriptorNotFoundException,
-        InvalidXmlException {
+            throws ContextNotFoundException, MissingMethodParameterException, AuthenticationException,
+            AuthorizationException, SystemException, OptimisticLockingException, AdminDescriptorNotFoundException,
+            InvalidXmlException {
 
         return handler.updateAdminDescriptor(id, xmlData);
     }

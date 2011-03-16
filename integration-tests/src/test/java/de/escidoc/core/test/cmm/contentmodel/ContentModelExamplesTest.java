@@ -122,7 +122,7 @@ public class ContentModelExamplesTest extends ContentModelTestBase {
             contentStreamDefinition.add(2, selectSingleNode(
                 contentModel,
                 "/content-model/content-streams/content-stream[@name = '"
-                    + name + "']/@storage").getNodeValue());
+                    + name + "']/orage").getNodeValue());
             contentStreamDefinitions.add(contentStreamDefinition);
         }
 

@@ -36,6 +36,8 @@ import de.escidoc.core.test.security.client.PWCallback;
 import org.apache.http.HttpResponse;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 import static org.junit.Assert.assertNotNull;
@@ -47,6 +49,8 @@ import static org.junit.Assert.assertNotNull;
  * 
  */
 public class SbTestBase extends EscidocRestSoapTestBase {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SbTestBase.class);
 
     private SearchClient sbClient = null;
 
@@ -148,7 +152,7 @@ public class SbTestBase extends EscidocRestSoapTestBase {
                 create(ORGANIZATIONAL_UNIT_HANDLER_CODE, prepareOrgUnitData(
                     template, parentIds));
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             EscidocRestSoapTestBase.failException(e);
         }
         assertNotNull(createdXml);
@@ -158,7 +162,7 @@ public class SbTestBase extends EscidocRestSoapTestBase {
         if (!ORGANIZATIONAL_UNIT_STATUS_CREATED.equals(status)
                 && !ORGANIZATIONAL_UNIT_STATUS_DELETED.equals(status)) {
             Thread.sleep(5000);
-            log.info("opening ou with id " + objidValue);
+            LOGGER.info("opening ou with id " + objidValue);
             createdXml = openOrgUnit(objidValue);
             if (!ORGANIZATIONAL_UNIT_STATUS_OPENED.equals(status)) {
                 createdXml = closeOrgUnit(objidValue);

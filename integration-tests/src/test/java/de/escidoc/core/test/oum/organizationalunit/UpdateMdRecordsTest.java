@@ -96,7 +96,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = updateMdRecords(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException("Updating OU failed with exception. ", e);
         }
         assertEscidocMdRecord(id, getDocument(updatedXml), createdDocument,
@@ -198,7 +198,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
     // try {
     // updatedXml = updateOrganizationDetails(id, toBeUpdatedXml);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // failException(
     // "Updating Organization Details with set new external id failed with
     // exception. ",
@@ -246,7 +246,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = updateMdRecords(id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
 
             failException(
                 "Updating Organization Details with set new external id failed with exception. ",
@@ -290,7 +290,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
                 "No exception occured on update of organization-details with non existing id.",
                 ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -326,7 +326,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
                 "No exception occured on update with id of resoure of"
                     + " another type.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -367,7 +367,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with wrong time stamp.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -409,7 +409,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with wrong time stamp.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -445,7 +445,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with missing id.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -484,7 +484,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
                 "No exception occured on update with missing organization-details xml.",
                 ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -515,7 +515,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with corrupted xml.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -546,7 +546,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with corrupted xml.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -577,7 +577,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
             failMissingException(
                 "No exception occured on update with corrupted xml.", ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }
@@ -627,7 +627,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
     // updateMdRecords(ou2Id, toBeUpdatedXml);
     // failMissingException(ec);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType(ec, e);
     // }
     //
@@ -676,7 +676,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
     // updateMdRecords(objid, toString(toBeUpdatedDocument, false));
     // failMissingException(ec);
     // }
-    // catch (Exception e) {
+    // catch (final Exception e) {
     // assertExceptionType(ec, e);
     // }
     // }
@@ -738,7 +738,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
         try {
             updatedXml = updateMdRecords(child2Id, toBeUpdatedXml);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             failException(
                 "Updating OU with name of ou in another scope failed.", e);
         }
@@ -792,7 +792,7 @@ public class UpdateMdRecordsTest extends OrganizationalUnitTestBase {
             updateMdRecords(ou1Id, toBeUpdatedXml);
             failMissingException(ec);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             assertExceptionType(ec, e);
         }
     }

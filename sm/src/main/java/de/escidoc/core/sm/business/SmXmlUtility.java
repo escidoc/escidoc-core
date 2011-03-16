@@ -36,9 +36,7 @@ import java.util.Collection;
 /**
  * An utility class for SM XML Handling.
  * 
- * @spring.bean id="business.sm.XmlUtility"
  * @author MIH
- * 
  */
 public class SmXmlUtility {
 

@@ -167,7 +167,7 @@ public class ContextModifierAbstractTest extends GrantTestBase {
         
         try {
             contextClient.delete(contextId);
-        } catch (InvalidStatusException e) {}
+        } catch (final InvalidStatusException e) {}
     }
 
     /**
