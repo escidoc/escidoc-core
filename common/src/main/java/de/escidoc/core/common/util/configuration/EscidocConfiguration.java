@@ -166,6 +166,8 @@ public final class EscidocConfiguration {
 
     public static final String SRW_URL = "srw.url";
 
+    public static final String ADMIN_TOOL_URL = "admin-tool.url";
+
     private static final String TRUE = "true";
 
     private static final String ONE = "1";
