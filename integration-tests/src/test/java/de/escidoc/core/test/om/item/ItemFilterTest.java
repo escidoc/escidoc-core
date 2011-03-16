@@ -538,6 +538,34 @@ public class ItemFilterTest extends ItemTestBase {
     }
 
     /**
+     * Check if only items are returned from retrieveItems() if the filter query
+     * is not empty.
+     * 
+     * See https://www.escidoc.org/jira/browse/INFR-1106.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testIssue1106() throws Exception {
+        final Map<String, String[]> filterParams =
+            new HashMap<String, String[]>();
+
+        filterParams.put(FILTER_PARAMETER_QUERY, new String[] { "\""
+            + "\"/properties/public-status\"=pending" });
+
+        String result = retrieveItems(filterParams);
+
+        assertXmlValidSrwResponse(result);
+
+        Document resultDoc = EscidocRestSoapTestBase.getDocument(result);
+        NodeList nl =
+            selectNodeList(resultDoc, XPATH_SRW_CONTAINER_LIST_CONTAINER);
+
+        assertEquals("Only items should be retrieved.", nl.getLength(), 0);
+    }
+
+    /**
      * Test successfully retrieving an explain response.
      * 
      * @test.name testExplainRetrieveItems
