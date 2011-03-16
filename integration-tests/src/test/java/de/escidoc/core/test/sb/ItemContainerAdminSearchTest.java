@@ -717,38 +717,38 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 put("user", TEST_USER_ACCOUNT_ID1);
                 put("handle", PWCallback.DEFAULT_HANDLE);
                 put("forUser", TEST_USER_ACCOUNT_ID1);
-                put("forRole", GrantHelper.ROLE_ID_DEPOSITOR);
+                put("forRole", GrantHelper.ROLE_ID_ADMINISTRATOR);
                 put("expectedHits", "86");
                 put("searchresultIds", new HashMap<String, ArrayList<String>>() {
                     private static final long serialVersionUID = 1L;
                     {
-                        for (int i = 0; i < 10; i++) {
+                        for (int i = 3; i < 9; i++) {
                             if (i == 8) {
-                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "pending"));
-                            } else {
-                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, null));
-                            }
-                            
-                        }
-                        for (int i = 13; i < 19; i++) {
-                            if (i == 18) {
                                 put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "released"));
                             } else {
                                 put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, null));
                             }
                             
                         }
-                        for (int i = 0; i < 7; i++) {
+                        for (int i = 10; i < 20; i++) {
+                            if (i == 18) {
+                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, "pending"));
+                            } else {
+                                put(adminTestContainerIds[i], getAdminTestContainerXpathList(i, null));
+                            }
+                            
+                        }
+                        for (int i = 7; i < 14; i++) {
                             put(containerIds[i], null);
                         }
-                        for (int i = 0; i < 42; i++) {
+                        for (int i = 42; i < 84; i++) {
                             if (i % 6 == 4) {
                                 put(itemIds[i], getItemXpathList(i, "pending"));
                             } else {
                                 put(itemIds[i], getItemXpathList(i, null));
                             }
                         }
-                        for (int i = 42; i < 84; i += 6) {
+                        for (int i = 0; i < 42; i += 6) {
                             put(itemIds[i + 2], getItemXpathList(i + 2, null));
                             put(itemIds[i + 3], getItemXpathList(i + 3, null));
                             put(itemIds[i + 4], getItemXpathList(i + 4, "released"));
