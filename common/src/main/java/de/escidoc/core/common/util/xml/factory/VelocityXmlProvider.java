@@ -58,7 +58,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
         // use class loader
         Velocity.setProperty("resource.loader", "class");
         // the classloader class, using own implementation
-        Velocity.setProperty("class.resource.loader.class", VelocityClasspathResourceLoader.class);
+        Velocity.setProperty("class.resource.loader.class", VelocityClasspathResourceLoader.class.getName());
         Velocity.setProperty("class.resource.loader.cache", "true");
         Velocity.setProperty("directive.set.null.allowed", "true");
         // There is a problem with macros defined in template files
