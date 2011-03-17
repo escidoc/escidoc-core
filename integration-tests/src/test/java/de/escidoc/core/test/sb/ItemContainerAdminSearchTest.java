@@ -4809,7 +4809,13 @@ public class ItemContainerAdminSearchTest extends SearchTestBase {
                 + "hits not as expected: expected: " + role.get("expectedHits")
                 + ", but was " + getNumberOfHits(response) + " for ",
                 role.get("expectedHits"), getNumberOfHits(response));
-            assertEquals(true, checkHighlighting(response));
+            if (role.get("omitHighlighting") == null 
+                || new Boolean((String)role.get("omitHighlighting")) 
+                                                    .equals(Boolean.FALSE)) {
+                assertEquals(true, checkHighlighting(response));
+            } else {
+                assertEquals(false, checkHighlighting(response));
+            }
             HashSet<String> foundIds = new HashSet<String>();
             // check if all items in result may be there
             for (String xPath : RESULT_XPATHS) {
