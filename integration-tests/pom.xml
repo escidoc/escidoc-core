@@ -53,7 +53,7 @@
 		<filters>
 			<filter>${basedir}/src/test/filters/database-filter-values.properties</filter>
 		</filters>
-		
+
 		<plugins>
 
 			<plugin>
@@ -552,9 +552,9 @@
 					<artifactId>owlapi</artifactId>
 				</exclusion>
 				<exclusion>
-		           <groupId>gnu.getopt</groupId>
- 		           <artifactId>java-getopt</artifactId>
- 				</exclusion>
+					<groupId>gnu.getopt</groupId>
+					<artifactId>java-getopt</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -1156,37 +1156,50 @@
 					</plugin>
 
 					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>wagon-maven-plugin</artifactId>
-						<version>1.0-beta-3</version>
+						<artifactId>maven-resources-plugin</artifactId>
+						<version>2.5</version>
 						<executions>
 							<execution>
 								<id>deploy-fedora-to-jboss</id>
 								<phase>initialize</phase>
 								<goals>
-									<goal>copy</goal>
+									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<source>file://${project.build.directory}/fedora/install/</source>
-									<includes>fedora.war</includes>
-									<!-- if you change the name of the JBoss package, change it here too. -->
-									<target>file://${project.build.directory}/installs/jboss-4.2.3.GA.escidoc-core-10/jboss-4.2.3.GA/server/default/deploy/</target>
+									<outputDirectory>${project.build.directory}/installs/jboss-4.2.3.GA.escidoc-core-10/jboss-4.2.3.GA/server/default/deploy</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${project.build.directory}/fedora/install</directory>
+											<includes>
+												<include>fedora.war</include>
+											</includes>
+											<filtering>false</filtering>
+										</resource>
+									</resources>
 								</configuration>
 							</execution>
 							<execution>
 								<id>deploy-fedora-config</id>
 								<phase>initialize</phase>
 								<goals>
-									<goal>copy</goal>
+									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<source>file://${basedir}/src/test/resources/fedora</source>
-									<includes>fedora.fcfg</includes>
-									<target>file://${project.build.directory}/fedora/server/config</target>
+									<outputDirectory>${project.build.directory}/fedora/server/config</outputDirectory>
+									<resources>
+										<resource>
+											<directory>${basedir}/src/test/resources/fedora</directory>
+											<includes>
+												<include>fedora.fcfg</include>
+											</includes>
+											<filtering>false</filtering>
+										</resource>
+									</resources>
 								</configuration>
 							</execution>
 						</executions>
 					</plugin>
+
 				</plugins>
 			</build>
 		</profile>
@@ -1234,7 +1247,8 @@
 								<containerId>jboss42x</containerId>
 								<timeout>240000</timeout>
 								<zipUrlInstaller>
-									<!-- If you change the name of the JBoss package, change the install path too! -->
+									<!-- If you change the name of the JBoss package, change the install 
+										path too! -->
 									<url>http://escidev5.fiz-karlsruhe.de:8888/files/jboss-4.2.3.GA.escidoc-core-10.zip</url>
 									<!-- url>http://escidev5:8888/files/jboss-4.2.3.GA-jdk6.zip</url -->
 									<installDir>${project.build.directory}/installs</installDir>
