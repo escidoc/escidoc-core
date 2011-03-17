@@ -46,6 +46,13 @@ public class AllStaxHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
+    /**
+     * Holds values of all elements and attributes as key-value pairs.
+     * Key is path to element or attribute
+     * eg /properties/version/number
+     * If attribute is href, extract objectId out of href and write it as key id
+     * If element is root-element, write root-element name as value with key = type.
+     */
     private List<String> values = new ArrayList<String>();
     
     /**
@@ -95,7 +102,7 @@ public class AllStaxHandler extends DefaultHandler {
                 String namespace = attribute.getNamespace();
                 String localName = attribute.getLocalName();
                 if (namespace != null 
-                    && namespace.equals("http://www.w3.org/1999/xlink")) {
+                    && "http://www.w3.org/1999/xlink".equals(namespace)) {
                     if (attribute.getLocalName().equals("href")) {
                         localName = "id";
                         value = value.replaceFirst(".*/", "");
