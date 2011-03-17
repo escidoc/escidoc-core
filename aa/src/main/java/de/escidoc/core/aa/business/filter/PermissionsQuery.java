@@ -215,8 +215,9 @@ public class PermissionsQuery {
                 if (rights != null && rights.length() > 0) {
                     LOGGER.info("AND restricting access rights from "
                         + "another user (1): " + rights);
-                    result.append(" AND ");
+                    result.append(" AND (");
                     result.append(rights);
+                    result.append(")");
                 }
             }
             result.append(')');
