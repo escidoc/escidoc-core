@@ -286,13 +286,7 @@ public class CreateTest extends ContextTestBase {
             substitute(context, "/context/properties/name",
                 getUniqueName("Large Context-1 "));
 
-            try {
-                create(toString(context, false));
-            }
-            catch (Exception e) {
-                log.error(e);
-                fail("Large Context failed to create.");
-            }
+            create(toString(context, false));
         }
     }
 
