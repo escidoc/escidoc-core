@@ -982,6 +982,7 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP DATABASE IF EXISTS "${escidoc.database}"</sqlCommand>
+									<onError>continue</onError>
 								</configuration>
 							</execution>
 							<execution>
@@ -997,6 +998,7 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP ROLE IF EXISTS "${escidoc.database.user}"</sqlCommand>
+									<onError>continue</onError>
 								</configuration>
 							</execution>
 						</executions>
@@ -1046,6 +1048,7 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP DATABASE IF EXISTS "${fedora.database}"</sqlCommand>
+									<onError>continue</onError>
 								</configuration>
 							</execution>
 							<execution>
@@ -1059,6 +1062,7 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP DATABASE IF EXISTS "${triplestore.database}"</sqlCommand>
+									<onError>continue</onError>
 								</configuration>
 							</execution>
 							<execution>
@@ -1072,6 +1076,7 @@
 									<url>jdbc:postgresql://localhost:5432/postgres</url>
 									<autocommit>true</autocommit>
 									<sqlCommand>DROP ROLE IF EXISTS "${fedora.database.user}"</sqlCommand>
+									<onError>continue</onError>
 								</configuration>
 							</execution>
 
