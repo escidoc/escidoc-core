@@ -84,7 +84,14 @@
       </td>
     </tr>
     <tr>
-      <td colspan="2"><a href="<%= EscidocConfiguration.getInstance().get(EscidocConfiguration.ADMIN_TOOL_URL) %>">Admin Tool</a></td>
+      <td colspan="2">
+   <% 
+    	String adminToolUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ADMIN_TOOL_URL);
+    	if(adminToolUrl != null) {
+    		out.println("<a href=\"" + adminToolUrl + "\">Admin Tool</a>");
+    	} 
+   %>
+		</td>
     </tr>
     <tr>
       <td colspan="2"><hr></td>
