@@ -201,10 +201,8 @@ public class SRURequest {
      *            The position within the sequence of matched records of the
      *            first record to be returned. The first position in the
      *            sequence is 1. The value supplied MUST be greater than 0.
-     * @param user
-     *            foreign user id to limit the access rights
-     * @param role
-     *            foreign role id to limit the access rights
+     * @param extraData
+     *            map with additional parameters like user id, role id
      * @param recordPacking
      *            A string to determine how the record should be escaped in the
      *            response. Defined values are 'string' and 'xml'. The default
@@ -216,7 +214,7 @@ public class SRURequest {
     public final void searchRetrieve(
         final Writer output, final ResourceType[] resourceTypes,
         final String query, final int limit, final int offset,
-        final HashMap<String, String> extraData, final RecordPacking recordPacking)
+        final Map<String, String> extraData, final RecordPacking recordPacking)
         throws WebserverSystemException {
         try {
             final StringBuilder resourceTypeQuery = new StringBuilder();
@@ -256,13 +254,15 @@ public class SRURequest {
                     + Constants.SRU_PARAMETER_QUERY
                     + '='
                     + URLEncoder.encode(internalQuery.toString(),
-                        XmlUtility.CHARACTER_ENCODING)
-                    + '&'
-                    + Constants.SRU_PARAMETER_START_RECORD + '=' + offset;
+                        XmlUtility.CHARACTER_ENCODING);
 
             if (limit != LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS) {
                 url +=
                     '&' + Constants.SRU_PARAMETER_MAXIMUM_RECORDS + '=' + limit;
+            }
+            if (offset != LuceneRequestParameters.DEFAULT_START_RECORD) {
+                url +=
+                    '&' + Constants.SRU_PARAMETER_START_RECORD + '=' + offset;
             }
             if (extraData != null) {
                 for (final Entry<String, String> entry : extraData.entrySet()) {
