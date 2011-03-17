@@ -1481,22 +1481,6 @@
 									<outputFile>${project.build.directory}/fcrepo-ingest.log</outputFile>
 								</configuration>
 							</execution>
-							<execution>
-								<id>install-fedora</id>
-								<phase>validate</phase>
-								<goals>
-									<goal>exec</goal>
-								</goals>
-								<configuration>
-									<executable>java</executable>
-									<arguments>
-										<argument>-jar</argument>
-										<argument>${settings.localRepository}/org/escidoc/fcrepo-installer/${fcrepo.version}/fcrepo-installer-${fcrepo.version}.jar</argument>
-										<argument>src/test/resources/fedora/install.properties</argument>
-									</arguments>
-									<outputFile>${project.build.directory}/fcrepo-install-error.log</outputFile>
-								</configuration>
-							</execution>
 						</executions>
 					</plugin>
 				</plugins>
