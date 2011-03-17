@@ -1,10 +1,11 @@
 package de.escidoc.core.statistic.internal;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface;
 import de.escidoc.core.statistic.StatisticService;
 import de.escidoc.core.statistic.StatisticServiceException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * Default implementation of {@link StatisticService}.
@@ -26,7 +27,11 @@ public class StatisticServiceImpl {
             // TODO: Refactor StatisticDataHandler and move to this module.
             this.statisticDataHandler.insertStatisticData(statisticData);
         } catch (final Exception e) {
-            throw new StatisticServiceException("Error on saving statistic data.", e);
+            throw new StatisticServiceException(
+                "Error on saving statistic data "
+                + statisticData
+                + ":\n"
+                + e.getMessage(), e);
         }
     }
 

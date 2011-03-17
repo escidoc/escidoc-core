@@ -556,7 +556,7 @@ public class IndexingHandler implements ResourceListener {
                         (String) parameters.get("indexFulltextVisibilities"));
                 }
             } catch (final Exception e) {
-                throw new SystemException(e);
+                throw new SystemException(e.getMessage(), e);
             }
         }
         else if (action

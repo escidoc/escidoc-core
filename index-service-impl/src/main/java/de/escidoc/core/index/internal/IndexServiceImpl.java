@@ -46,7 +46,17 @@ public class IndexServiceImpl {
                 }
             }
         } catch (final EscidocException e) {
-            throw new IndexServiceException( "Error on indexing resource.", e);
+            throw new IndexServiceException(
+                "Error on indexing resource " 
+                + indexRequest.getResource() 
+                + ", index "
+                + indexName
+                + ", all indexes "
+                + allIndexes
+                + ", action "
+                + indexRequest.getAction()
+                + ":"
+                + e.getMessage(), e);
         }
     }
 
