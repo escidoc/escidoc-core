@@ -53,7 +53,7 @@ public abstract class VelocityXmlProvider extends XmlTemplateProvider {
     protected VelocityXmlProvider() {
         // velocity logging configuration
         Velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM_CLASS, "org.apache.velocity.tools.generic."
-                        + "LOGGER.CommonsLogLogSystem");
+                        + "log.CommonsLogLogSystem");
         Velocity.setProperty(RuntimeConstants.RUNTIME_LOG_LOGSYSTEM, new VelocityOutputLogger());
         // use class loader
         Velocity.setProperty("resource.loader", "class");
