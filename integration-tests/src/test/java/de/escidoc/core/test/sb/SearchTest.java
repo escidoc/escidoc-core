@@ -2329,6 +2329,52 @@ public class SearchTest extends SearchTestBase {
     }
 
     /**
+     * : Test searching for phrase.
+     * 
+     * @test.name : check search result
+     * @test.id SB_SR-57
+     * @test.input mandatory request parameters: - any single date term query
+     *             which results in all hits - existing database
+     * @test.inputDescription
+     * @test.expected
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSBSR57() throws Exception {
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(
+                FILTER_PARAMETER_QUERY, "escidoc.complete-name=\"Gollmer Werner\"");
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals("1", getNumberOfHits(response));
+    }
+
+    /**
+     * : Test searching for phrase over field boundary.
+     * 
+     * @test.name : check search result
+     * @test.id SB_SR-58
+     * @test.input mandatory request parameters: - any single date term query
+     *             which results in all hits - existing database
+     * @test.inputDescription
+     * @test.expected
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    @Test
+    public void testSBSR58() throws Exception {
+        HashMap<String, String> parameters = new HashMap<String, String>();
+        parameters.put(
+                FILTER_PARAMETER_QUERY, "escidoc.complete-name=\"Werner Wolfer\"");
+        String response = search(parameters, INDEX_NAME);
+        assertXmlValidSearchResult(response);
+        assertEquals("0", getNumberOfHits(response));
+    }
+
+    /**
      * Operation without optional parameters.
      * 
      * @test.name Operation without optional parameters
