@@ -264,10 +264,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) throws XMLStreamException {
-
         deepLevel--;
-//        String theName = element.getLocalName();
-
         if (inside) {
             insideLevel--;
 
@@ -287,8 +284,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
             }
 
             // attribute namespaces
-            // TODO iteration is a hack, use
-            // javax.xml.namespace.NamespaceContext
+            // TODO iteration is a hack, use javax.xml.namespace.NamespaceContext
             final Iterator it = nsuris.keySet().iterator();
             final Collection<String> toRemove = new ArrayList<String>();
             while (it.hasNext()) {
@@ -340,12 +336,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 }
                 if(deepLevelInMAp >= deep) {
                     writer.writeStartElement(myPrefix, name, uri);
-                    // if (isRelsExt && isNew && !isContentRelation) {
-                    // writer.writeNamespace(prefix, uri + "/");
-                    // }
-                    // else {
                     writer.writeNamespace(myPrefix, uri);
-                    // }
                 } else {
                     writer.writeStartElement(myPrefix, name, uri);
                 }
@@ -356,12 +347,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 namespaceTrace.add(myPrefix);
                 nsuris.put(uri, namespaceTrace);
                 writer.writeStartElement(myPrefix, name, uri);
-                // if (isRelsExt && isNew && !isContentRelation) {
-                // writer.writeNamespace(prefix, uri + "/");
-                // }
-                // else {
                 writer.writeNamespace(myPrefix, uri);
-                // }
             }
         } else {
             writer.writeStartElement(name);
@@ -386,14 +372,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 if (deepLevelInMAp == deep && !elementName
                         .equals(nameTrace)
                         || deepLevelInMAp > deep) {
-                    // if (isRelsExt && isNew) {
-                    //
-                    // writer.writeNamespace(prefix, uri + "/");
-                    // }
-                    // else {
                     writer.writeNamespace(prefix, uri);
-                    // }
-
                 }
             } else {
                 final List namespaceTrace = new ArrayList();
@@ -401,13 +380,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
-                // if (isRelsExt && isNew && !isContentRelation) {
-                // writer.writeNamespace(prefix, uri + "/");
-                // }
-                // else {
                 writer.writeNamespace(prefix, uri);
-                // }
-
             }
         }
         writer.writeAttribute(prefix, uri, attributeName, attributeValue);

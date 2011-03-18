@@ -514,19 +514,19 @@ public class InvocationParser {
                             values.add(tmpValue.trim());
                         }
                     }
-                    if (! values.isEmpty()) {
+                    if(values.isEmpty()) {
+                        value = null;
+                    } else {
                         final StringBuilder valueBuf = new StringBuilder("");
-                        for (final String val : values) {
-                            if (!val.isEmpty()) {
-                                if (valueBuf.length() > 0) {
+                        for(final String val : values) {
+                            if(! val.isEmpty()) {
+                                if(valueBuf.length() > 0) {
                                     valueBuf.append(' ');
                                 }
                                 valueBuf.append(val);
                             }
                         }
                         value = new StringAttribute(valueBuf.toString());
-                    } else {
-                        value = null;
                     }
                 }
             }

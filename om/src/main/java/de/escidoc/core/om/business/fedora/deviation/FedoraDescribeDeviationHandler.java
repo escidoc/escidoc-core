@@ -48,12 +48,6 @@ public class FedoraDescribeDeviationHandler
 
     private ConnectionUtility connectionUtility;
 
-    private String baseURL;
-
-    private String user;
-
-    private String pass;
-
     /**
      * @see de.escidoc.core.om.business.interfaces
      *      .FedoraDescribeDeviationHandlerInterface#getDatastreamDissemination(Map)
@@ -70,16 +64,10 @@ public class FedoraDescribeDeviationHandler
         final Map<String, String[]> parameters) throws Exception {
 
         final String urlParams = buildUrlParameters(parameters);
-        baseURL =
-            EscidocConfiguration.getInstance().get(
-                EscidocConfiguration.FEDORA_URL);
-        user =
-            EscidocConfiguration.getInstance().get(
-                EscidocConfiguration.FEDORA_USER);
-        pass =
-            EscidocConfiguration.getInstance().get(
-                EscidocConfiguration.FEDORA_PASSWORD);
-        if (!baseURL.endsWith("/")) {
+        String baseURL = EscidocConfiguration.getInstance().get(EscidocConfiguration.FEDORA_URL);
+        final String user = EscidocConfiguration.getInstance().get(EscidocConfiguration.FEDORA_USER);
+        final String pass = EscidocConfiguration.getInstance().get(EscidocConfiguration.FEDORA_PASSWORD);
+        if (! baseURL.endsWith("/")) {
             baseURL += "/";
         }
 

@@ -1339,15 +1339,11 @@ public class GenericVersionableResource extends GenericResourcePid {
                             // current und latest haben
                             // consistente namen
                             final String currentVersionKey;
-                            if (targetKey
-                                    .equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS)) {
-                                currentVersionKey =
-                                        PropertyMapKeys.CURRENT_VERSION_STATUS;
-                            } else {
-                                currentVersionKey = targetKey.equals(PropertyMapKeys.LATEST_VERSION_DATE) ?
-                                        PropertyMapKeys.CURRENT_VERSION_VERSION_DATE :
-                                        targetKey.replace("LATEST_", "CURRENT_");
-                            }
+                            currentVersionKey = targetKey.equals(PropertyMapKeys.LATEST_VERSION_VERSION_STATUS) ?
+                                    PropertyMapKeys.CURRENT_VERSION_STATUS :
+                                    targetKey.equals(PropertyMapKeys.LATEST_VERSION_DATE) ?
+                                            PropertyMapKeys.CURRENT_VERSION_VERSION_DATE :
+                                            targetKey.replace("LATEST_", "CURRENT_");
                             properties.put(currentVersionKey, value);
                         }
                     } else {

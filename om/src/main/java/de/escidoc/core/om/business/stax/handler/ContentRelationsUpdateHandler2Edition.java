@@ -65,10 +65,6 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     private boolean inContentRelation;
 
-    private String currentPath;
-
-    private String contentRelationPath;
-
     private String targetId;
 
     private String predicate;
@@ -103,8 +99,8 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
         RelationPredicateNotFoundException, WebserverSystemException,
         TripleStoreSystemException, EncodingSystemException,
         XmlParserSystemException, InvalidXmlException {
-        currentPath = parser.getCurPath();
-        contentRelationPath = "/item/relations/relation";
+        final String currentPath = parser.getCurPath();
+        String contentRelationPath = "/item/relations/relation";
         if (currentPath.startsWith(CONTAINER)) {
             contentRelationPath = "/container/relations/relation";
         }

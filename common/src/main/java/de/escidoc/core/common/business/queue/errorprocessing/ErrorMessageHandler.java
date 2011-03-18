@@ -30,9 +30,7 @@ import java.util.Map.Entry;
  */
 public class ErrorMessageHandler {
 
-    private Logger errorLogger;
-
-    private static final String DELIMITER = 
+    private static final String DELIMITER =
             "######################################################"
             + "#################################################\n";
 
@@ -63,7 +61,7 @@ public class ErrorMessageHandler {
                 '\n');
         
         //write StringBuffer into logfile
-        errorLogger = LoggerFactory.getLogger(logfile);
+        final Logger errorLogger = LoggerFactory.getLogger(logfile);
         errorLogger.error(messageBuf.toString());
 
         // ////////////////////////////////////////////////////////////////

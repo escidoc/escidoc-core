@@ -58,7 +58,7 @@ public final class ContentRelationsUtility {
     private static final Logger LOGGER =
         LoggerFactory.getLogger(ContentRelationsUtility.class);
 
-    private static List<String> predicates = new ArrayList<String>();
+    private static final List<String> PREDICATES = new ArrayList<String>();
 
     static {
         try {
@@ -95,7 +95,7 @@ public final class ContentRelationsUtility {
      * @return true if predicate is registered, false otherwise
      */
     public static boolean validPredicate(final String predicateUriReference) {
-        return predicates.contains(predicateUriReference);
+        return PREDICATES.contains(predicateUriReference);
     }
 
     /**
@@ -117,7 +117,8 @@ public final class ContentRelationsUtility {
         final String location = getLocation();
         final InputStream in = getInputStream(location);
 
-        predicates = parseOntology(in);
+        PREDICATES.clear();
+        PREDICATES.addAll(parseOntology(in));
     }
 
     /**
@@ -222,6 +223,6 @@ public final class ContentRelationsUtility {
      * @return vector with PREDICATES
      */
     public static List<String> getPredicates() {
-        return predicates;
+        return PREDICATES;
     }
 }

@@ -209,14 +209,8 @@ public class XMLBase {
 
         String result = xPath;
         if (xPath != null && path != null) {
-            if (!xPath.endsWith(XPATH_DELIMITER)
-                && !path.startsWith(XPATH_DELIMITER)) {
-                result += XPATH_DELIMITER + path;
-            }
-            else {
-                result +=
-                        xPath.endsWith(XPATH_DELIMITER) && path.startsWith(XPATH_DELIMITER) ? path.substring(1) : path;
-            }
+            result += ! xPath.endsWith(XPATH_DELIMITER) && ! path.startsWith(XPATH_DELIMITER) ? XPATH_DELIMITER + path :
+                    xPath.endsWith(XPATH_DELIMITER) && path.startsWith(XPATH_DELIMITER) ? path.substring(1) : path;
         }
         return result;
     }

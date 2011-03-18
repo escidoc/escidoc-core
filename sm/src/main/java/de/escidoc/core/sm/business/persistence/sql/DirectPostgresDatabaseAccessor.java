@@ -85,7 +85,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     
     private static final String SYSDATE = "'now'";
 
-    private static String DATE_FUNCTION = "'${date_placeholder}'";
+    private static final String DATE_FUNCTION = "'${date_placeholder}'";
 
     private static final String DAY_OF_MONTH_FUNCTION = 
                         "date_trunc('day',${FIELD_NAME})";

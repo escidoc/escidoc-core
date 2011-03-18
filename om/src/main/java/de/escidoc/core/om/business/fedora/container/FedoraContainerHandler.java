@@ -183,9 +183,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
     /** The policy decision point used to check access privileges. */
     private PolicyDecisionPointInterface pdp;
 
-    // A setter exists. Consider removing from Spring.
-    private IndexingHandler indexingHandler;
-
     /** SRU request. */
     private SRURequest sruRequest;
 
@@ -217,7 +214,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *            The indexing handler.
      */
     public void setIndexingHandler(final IndexingHandler indexingHandler) {
-        this.indexingHandler = indexingHandler;
         addContainerListener(indexingHandler);
         addContainerMemberListener(indexingHandler);
     }

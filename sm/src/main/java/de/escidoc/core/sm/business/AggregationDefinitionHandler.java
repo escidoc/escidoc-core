@@ -369,7 +369,9 @@ public class AggregationDefinitionHandler
             for (final AggregationTableField field : sortedAggregationTableFields) {
                 final DatabaseTableFieldVo databaseTableFieldVo =
                     new DatabaseTableFieldVo();
-                if (field.getFieldTypeId() == Constants.COUNT_CUMULATION_FIELD_ID || field.getFieldTypeId() == Constants.DIFFERENCE_CUMULATION_FIELD_ID) {
+                if (field.getFieldTypeId() == Constants.COUNT_CUMULATION_FIELD_ID ||
+                        field.getFieldTypeId() == Constants.DIFFERENCE_CUMULATION_FIELD_ID ||
+                        field.getFieldTypeId() == Constants.TIME_REDUCTION_FIELD_ID) {
                     dbAccessor.checkReservedExpressions(field.getName());
                     databaseTableFieldVo.setFieldName(field
                         .getName().toLowerCase());
@@ -381,13 +383,6 @@ public class AggregationDefinitionHandler
                     databaseTableFieldVo.setFieldName(field
                         .getName().toLowerCase());
                     databaseTableFieldVo.setFieldType(field.getDataType());
-                }
-                else if (field.getFieldTypeId() == Constants.TIME_REDUCTION_FIELD_ID) {
-                    dbAccessor.checkReservedExpressions(field.getName());
-                    databaseTableFieldVo.setFieldName(field
-                        .getName().toLowerCase());
-                    databaseTableFieldVo
-                        .setFieldType(Constants.DATABASE_FIELD_TYPE_NUMERIC);
                 }
                 else {
                     throw new SqlDatabaseSystemException(

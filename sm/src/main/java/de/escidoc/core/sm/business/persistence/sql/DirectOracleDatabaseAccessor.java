@@ -79,7 +79,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     
     private static final String SYSDATE = "SYSDATE";
 
-    private static String DATE_FUNCTION =
+    private static final String DATE_FUNCTION =
             "to_date('${date_placeholder}', 'yyyy-mm-dd hh24:mi:ss')";
 
     private static final String DAY_OF_MONTH_FUNCTION =

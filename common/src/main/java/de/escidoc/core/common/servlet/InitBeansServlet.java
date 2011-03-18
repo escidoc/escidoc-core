@@ -42,8 +42,6 @@ public class InitBeansServlet extends HttpServlet {
     private static final Pattern PATTERN_SPLIT_IDS = Pattern.compile(",\\s*");
     private static final long serialVersionUID = -1471080999315442967L;
 
-    private String factoryId;
-
     /**
      * See Interface for functional description.
      * 
@@ -57,7 +55,7 @@ public class InitBeansServlet extends HttpServlet {
 
         super.init();
 
-        factoryId = getServletConfig().getInitParameter("factoryId");
+        final String factoryId = getServletConfig().getInitParameter("factoryId");
         final String beanIds = getServletConfig().getInitParameter("beanIds");
 
         if (factoryId == null || beanIds == null) {

@@ -476,12 +476,9 @@ public class IndexingHandler implements ResourceListener {
                 }
             }
             else {
-                if (latestReleasedVersion == null) {
-                    pidSuffix = Constants.LATEST_VERSION_PID_SUFFIX;
-                }
-                else {
-                    pidSuffix = latestReleasedVersion.equals(thisVersion) ? Constants.LATEST_RELEASE_PID_SUFFIX : Constants.LATEST_VERSION_PID_SUFFIX;
-                }
+                pidSuffix = latestReleasedVersion == null ? Constants.LATEST_VERSION_PID_SUFFIX :
+                        latestReleasedVersion.equals(thisVersion) ? Constants.LATEST_RELEASE_PID_SUFFIX :
+                                Constants.LATEST_VERSION_PID_SUFFIX;
             }
         }
 

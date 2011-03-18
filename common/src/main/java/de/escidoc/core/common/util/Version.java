@@ -87,12 +87,7 @@ public class Version implements Comparable<Version> {
                 result = -1;
             }
             else if (o.minorNumber == minorNumber) {
-                if (o.revisionNumber > revisionNumber) {
-                    result = -1;
-                }
-                else {
-                    result = o.revisionNumber == revisionNumber ? 0 : 1;
-                }
+                result = o.revisionNumber > revisionNumber ? - 1 : o.revisionNumber == revisionNumber ? 0 : 1;
             }
             else {
                 result = 1;

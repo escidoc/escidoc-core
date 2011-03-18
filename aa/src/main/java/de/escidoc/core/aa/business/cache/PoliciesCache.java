@@ -159,12 +159,6 @@ public final class PoliciesCache {
      */
     private static Cache roleIsGrantedCache;
 
-    private static int rolesCacheSize;
-
-    private static int usersCacheSize;
-
-    private static int groupsCacheSize;
-
     private static int resourcesInXacmlFunctionRoleIsGrantedCacheSize;
 
     static {
@@ -183,6 +177,7 @@ public final class PoliciesCache {
      */
     private static void initCaches() {
 
+        int rolesCacheSize;
         try {
             rolesCacheSize =
                 Integer.parseInt(EscidocConfiguration.getInstance().get(
@@ -196,6 +191,7 @@ public final class PoliciesCache {
             }
             rolesCacheSize = ROLES_CACHE_SIZE_FALL_BACK;
         }
+        int usersCacheSize;
         try {
             usersCacheSize =
                 Integer.parseInt(EscidocConfiguration.getInstance().get(
@@ -210,6 +206,7 @@ public final class PoliciesCache {
             }
             usersCacheSize = USERS_CACHE_SIZE_FALL_BACK;
         }
+        int groupsCacheSize;
         try {
             groupsCacheSize =
                 Integer.parseInt(EscidocConfiguration.getInstance().get(

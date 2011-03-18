@@ -93,15 +93,10 @@ public final class Iso8601Util {
     public static String getIso8601(final Date date) {
         final DateFormat outputDateFormat = createDateFormat(DATE_FORMAT_PATTERN);
         final String preformatted = outputDateFormat.format(date);
-        if (preformatted.endsWith("Z")) {
-            return preformatted;
-        }
-        else {
-            return preformatted.endsWith("+0000") ?
-                    preformatted.substring(0, preformatted.length() - "+0000".length()) + 'Z' :
-                    preformatted.substring(0, preformatted.length() - 2) + ':' +
-                            preformatted.substring(preformatted.length() - 2, preformatted.length());
-        }
+        return preformatted.endsWith("Z") ? preformatted : preformatted.endsWith("+0000") ?
+                preformatted.substring(0, preformatted.length() - "+0000".length()) + 'Z' :
+                preformatted.substring(0, preformatted.length() - 2) + ':' +
+                        preformatted.substring(preformatted.length() - 2, preformatted.length());
     }
 
     /**

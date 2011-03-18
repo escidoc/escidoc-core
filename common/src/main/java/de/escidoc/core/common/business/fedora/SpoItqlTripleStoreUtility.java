@@ -182,13 +182,10 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             if (format == Format.RDF_XML) {
                 queryAddress = new StringBuffer(fedoraRdfXmlUrl);
             }
-            else if (format == Format.N_TRIPLES) {
-                queryAddress = new StringBuffer(fedoraItqlNtriplesUrl);
-            }
-            else {
-                queryAddress = format == Format.CSV ? new StringBuffer(fedoraItqlCsvUrl) :
-                        new StringBuffer(fedoraItqlNtriplesUrl);
-            }
+            else
+                queryAddress = format == Format.N_TRIPLES ? new StringBuffer(fedoraItqlNtriplesUrl) :
+                        format == Format.CSV ? new StringBuffer(fedoraItqlCsvUrl) :
+                                new StringBuffer(fedoraItqlNtriplesUrl);
 
             queryAddress.append(URLEncoder.encode(itqlQuery,
                 XmlUtility.CHARACTER_ENCODING));

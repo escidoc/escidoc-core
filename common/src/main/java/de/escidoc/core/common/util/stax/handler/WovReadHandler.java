@@ -55,8 +55,6 @@ public class WovReadHandler extends DefaultHandler {
 
     private String versionId;
 
-    private String versionCreatedDate;
-
     private boolean inLatestVersion;
 
     private boolean inCertainVersion;
@@ -128,12 +126,9 @@ public class WovReadHandler extends DefaultHandler {
                     if (objectId.endsWith(':' + versionId)) {
                         inCertainVersion = true;
                         try {
-                            this.versionCreatedDate =
-                                element
-                                    .getAttribute(null, "timestamp").getValue();
+                            final String versionCreatedDate = element.getAttribute(null, "timestamp").getValue();
                             versionData.put(
-                                PropertyMapKeys.CURRENT_VERSION_VERSION_DATE,
-                                this.versionCreatedDate);
+                                PropertyMapKeys.CURRENT_VERSION_VERSION_DATE, versionCreatedDate);
                         }
                         catch (final NoSuchAttributeException e) {
                             throw new IntegritySystemException(

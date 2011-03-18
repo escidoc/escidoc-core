@@ -111,11 +111,8 @@ public final class StagingUtil {
         String append = appendix.replaceAll(":", "_");
         result = result.replace("\\", "/");
         append = append.replace("\\", "/");
-        if (result.endsWith("/")) {
-            result += append.startsWith("/") ? append.substring(1) : append;
-        } else {
-            result += append.startsWith("/") ? append : '/' + append;
-        }
+        result += result.endsWith("/") ? append.startsWith("/") ? append.substring(1) : append :
+                append.startsWith("/") ? append : '/' + append;
         return result;
     }
 

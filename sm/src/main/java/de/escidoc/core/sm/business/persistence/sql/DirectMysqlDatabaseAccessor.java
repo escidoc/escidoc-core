@@ -84,7 +84,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     
     private static final String SYSDATE = "CURDATE()";
 
-    private static String DATE_FUNCTION = "'${date_placeholder}'";
+    private static final String DATE_FUNCTION = "'${date_placeholder}'";
 
     private static final String DAY_OF_MONTH_FUNCTION = 
         "DATE(${FIELD_NAME})";

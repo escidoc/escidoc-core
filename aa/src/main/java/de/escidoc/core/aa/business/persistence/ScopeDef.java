@@ -93,12 +93,7 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
                 return 1;
             }
             else {
-                if (ownId.length() == oId.length()) {
-                    return ownId.compareTo(oId);
-                }
-                else {
-                    return ownId.length() > oId.length() ? 1 : - 1;
-                }
+                return ownId.length() == oId.length() ? ownId.compareTo(oId) : ownId.length() > oId.length() ? 1 : - 1;
             }
         }
     }

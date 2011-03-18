@@ -151,8 +151,6 @@ public class FedoraUtility implements InitializingBean {
 
     private String identifierPrefix;
 
-    private ClientConnectionManager cm;
-
     private DefaultHttpClient httpClient;
 
     private TripleStoreUtility tripleStoreUtility;
@@ -1526,9 +1524,9 @@ public class FedoraUtility implements InitializingBean {
                         80);
                 final SchemeRegistry sr = new SchemeRegistry();
                 sr.register(http);
-                cm = new ThreadSafeClientConnManager(params, sr);
+                final ClientConnectionManager cm = new ThreadSafeClientConnManager(params, sr);
 
-                this.httpClient = new DefaultHttpClient(this.cm, params);
+                this.httpClient = new DefaultHttpClient(cm, params);
                 final URL url = new URL(fedoraUrl);
                 final CredentialsProvider credsProvider =
                     new BasicCredentialsProvider();

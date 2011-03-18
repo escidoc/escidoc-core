@@ -51,8 +51,6 @@ public class OptimisticLockingHandler extends DefaultHandler {
 
     private boolean done;
 
-    private String requestedModificationDate;
-
     private String lastModifiedDate;
 
     private static final String MODIFIED_DATE_ATT_NAME =
@@ -103,7 +101,7 @@ public class OptimisticLockingHandler extends DefaultHandler {
                         + element.getLocalName() + " is missing.", e);
             }
 
-            requestedModificationDate = requestedDate.getValue();
+            final String requestedModificationDate = requestedDate.getValue();
             if (lastModifiedDate != null) {
                 Utility.getInstance().checkOptimisticLockingCriteria(
                     lastModifiedDate, requestedModificationDate,

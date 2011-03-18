@@ -144,14 +144,9 @@ public class BinaryContent {
         throws WebserverSystemException {
 
         try {
-            if (url == null) {
-                this.dataLocation = null;
-            }
-            else {
-                this.dataLocation = url.startsWith("/") ? new URL(EscidocConfiguration.getInstance().get(
-                        EscidocConfiguration.ESCIDOC_CORE_BASEURL)
-                        + url) : new URL(url);
-            }
+            this.dataLocation = url == null ? null : url.startsWith("/") ?
+                    new URL(EscidocConfiguration.getInstance().get(EscidocConfiguration.ESCIDOC_CORE_BASEURL) + url) :
+                    new URL(url);
         }
         catch (final MalformedURLException e) {
             throw new WebserverSystemException("Invalid URL.", e);

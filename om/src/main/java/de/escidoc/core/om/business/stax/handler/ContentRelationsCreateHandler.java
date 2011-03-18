@@ -67,12 +67,6 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
 
     private boolean inContentRelation;
 
-    private String currentPath;
-
-    private String contentRelationsPath;
-
-    private String contentRelationPath;
-
     private String targetId;
 
     private String targetIdWithoutVersion;
@@ -117,9 +111,9 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
         ReferencedResourceNotFoundException,
         RelationPredicateNotFoundException, SystemException {
 
-        currentPath = parser.getCurPath();
-        contentRelationsPath = "/item/relations";
-        contentRelationPath = "/item/relations/relation";
+        final String currentPath = parser.getCurPath();
+        String contentRelationsPath = "/item/relations";
+        String contentRelationPath = "/item/relations/relation";
 
         if (currentPath.startsWith(CONTAINER)) {
             contentRelationsPath = "/container/relations";
