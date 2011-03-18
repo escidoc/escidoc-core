@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface ContainerHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/ContainerHandler";
-    public static final String JNDI_NAME = "ejb/ContainerHandler";
+    String COMP_NAME = "java:comp/env/ejb/ContainerHandler";
+    String JNDI_NAME = "ejb/ContainerHandler";
 
-    public ContainerHandlerRemote create()
+    ContainerHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

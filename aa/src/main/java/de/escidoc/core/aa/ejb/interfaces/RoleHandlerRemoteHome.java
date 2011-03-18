@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface RoleHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/RoleHandler";
-    public static final String JNDI_NAME = "ejb/RoleHandler";
+    String COMP_NAME = "java:comp/env/ejb/RoleHandler";
+    String JNDI_NAME = "ejb/RoleHandler";
 
-    public RoleHandlerRemote create()
+    RoleHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

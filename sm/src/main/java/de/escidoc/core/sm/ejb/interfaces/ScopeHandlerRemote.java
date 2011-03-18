@@ -22,8 +22,7 @@ import java.util.Map;
  */
 public interface ScopeHandlerRemote extends EJBObject {
 
-    public String create(String xmlData,
-                                   SecurityContext securityContext)
+    String create(String xmlData, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             XmlSchemaValidationException,
@@ -31,7 +30,7 @@ public interface ScopeHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String create(String xmlData, String authHandle, Boolean restAccess)
+    String create(String xmlData, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             XmlSchemaValidationException,
@@ -39,53 +38,49 @@ public interface ScopeHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ScopeNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ScopeNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ScopeNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ScopeNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveScopes(Map parameters,
-                                           SecurityContext securityContext)
+    String retrieveScopes(Map parameters, SecurityContext securityContext)
             throws InvalidSearchQueryException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveScopes(Map parameters, String authHandle,
-                                           Boolean restAccess)
+    String retrieveScopes(Map parameters, String authHandle, Boolean restAccess)
             throws InvalidSearchQueryException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String update(String id, String xmlData,
-                                   SecurityContext securityContext)
+    String update(String id, String xmlData, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ScopeNotFoundException,
@@ -94,8 +89,7 @@ public interface ScopeHandlerRemote extends EJBObject {
             XmlCorruptedException,
             SystemException, RemoteException;
 
-    public String update(String id, String xmlData, String authHandle,
-                                   Boolean restAccess)
+    String update(String id, String xmlData, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ScopeNotFoundException,

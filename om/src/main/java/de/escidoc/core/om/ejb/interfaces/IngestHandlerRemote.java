@@ -14,11 +14,10 @@ import java.rmi.RemoteException;
  */
 public interface IngestHandlerRemote extends EJBObject {
 
-    public String ingest(String xmlData,
-                                   SecurityContext securityContext)
+    String ingest(String xmlData, SecurityContext securityContext)
             throws EscidocException, RemoteException;
 
-    public String ingest(String xmlData, String authHandle, Boolean restAccess)
+    String ingest(String xmlData, String authHandle, Boolean restAccess)
             throws EscidocException, RemoteException;
 
 }

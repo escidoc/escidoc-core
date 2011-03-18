@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface ScopeHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/ScopeHandlerLocal";
-    public static final String JNDI_NAME = "ejb/ScopeHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/ScopeHandlerLocal";
+    String JNDI_NAME = "ejb/ScopeHandlerLocal";
 
-    public ScopeHandlerLocal create() throws CreateException;
+    ScopeHandlerLocal create() throws CreateException;
 
 }

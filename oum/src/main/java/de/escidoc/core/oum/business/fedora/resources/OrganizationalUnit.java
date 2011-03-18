@@ -509,14 +509,14 @@ public class OrganizationalUnit extends GenericResource
             final boolean contentChanged = !ds.equals(curDs);
             if (contentChanged || !type.equals(curType)
                 || !schema.equals(curSchema) || !mimeType.equals(curMimeType)) {
-                if (contentChanged && name.equals(OrganizationalUnit.ESCIDOC)) {
+                if (contentChanged && name.equals(ESCIDOC)) {
 
                     final Map<String, String> mdProperties = ds.getProperties();
                     if (mdProperties != null) {
-                        if (mdProperties.containsKey(OrganizationalUnit.NS_URI)) {
+                        if (mdProperties.containsKey(NS_URI)) {
                             final String dcNewContent =
                                 XmlUtility.createDC(mdProperties
-                                    .get(OrganizationalUnit.NS_URI), ds
+                                    .get(NS_URI), ds
                                     .toStringUTF8(), getId());
                             if (dcNewContent != null
                                 && dcNewContent.trim().length() > 0) {

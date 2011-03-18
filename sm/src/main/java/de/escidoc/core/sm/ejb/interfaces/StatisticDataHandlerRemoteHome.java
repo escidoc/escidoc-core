@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface StatisticDataHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/StatisticDataHandler";
-    public static final String JNDI_NAME = "ejb/StatisticDataHandler";
+    String COMP_NAME = "java:comp/env/ejb/StatisticDataHandler";
+    String JNDI_NAME = "ejb/StatisticDataHandler";
 
-    public StatisticDataHandlerRemote create()
+    StatisticDataHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

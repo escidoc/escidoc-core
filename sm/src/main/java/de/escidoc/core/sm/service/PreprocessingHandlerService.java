@@ -8,8 +8,8 @@ package de.escidoc.core.sm.service;
  */
 public interface PreprocessingHandlerService extends java.rmi.Remote {
 
-    public void preprocess(java.lang.String aggregationDefinitionId, java.lang.String xmlData,
-                           org.springframework.security.context.SecurityContext securityContext)
+    void preprocess(java.lang.String aggregationDefinitionId, java.lang.String xmlData,
+                    org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
@@ -17,8 +17,8 @@ public interface PreprocessingHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public void preprocess(java.lang.String aggregationDefinitionId, java.lang.String xmlData,
-                           java.lang.String authHandle, java.lang.Boolean restAccess)
+    void preprocess(java.lang.String aggregationDefinitionId, java.lang.String xmlData, java.lang.String authHandle,
+                    java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,

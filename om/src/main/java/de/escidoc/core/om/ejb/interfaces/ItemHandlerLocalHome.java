@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface ItemHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/ItemHandlerLocal";
-    public static final String JNDI_NAME = "ejb/ItemHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/ItemHandlerLocal";
+    String JNDI_NAME = "ejb/ItemHandlerLocal";
 
-    public ItemHandlerLocal create() throws CreateException;
+    ItemHandlerLocal create() throws CreateException;
 
 }

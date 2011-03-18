@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface FedoraDescribeDeviationHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/FedoraDescribeDeviationHandler";
-    public static final String JNDI_NAME = "ejb/FedoraDescribeDeviationHandler";
+    String COMP_NAME = "java:comp/env/ejb/FedoraDescribeDeviationHandler";
+    String JNDI_NAME = "ejb/FedoraDescribeDeviationHandler";
 
-    public FedoraDescribeDeviationHandlerRemote create()
+    FedoraDescribeDeviationHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

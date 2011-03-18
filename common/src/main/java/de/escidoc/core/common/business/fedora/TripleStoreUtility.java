@@ -696,7 +696,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      */
     public String getTitle(final String pid) throws TripleStoreSystemException {
 
-        return getPropertiesElements(pid, TripleStoreUtility.PROP_DC_TITLE);
+        return getPropertiesElements(pid, PROP_DC_TITLE);
     }
 
     /**
@@ -712,7 +712,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
 
         return getPropertiesElements(pid,
-            TripleStoreUtility.PROP_DC_DESCRIPTION);
+            PROP_DC_DESCRIPTION);
     }
 
     /**
@@ -1064,10 +1064,10 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     public static TripleStoreUtility getInstance()
         throws WebserverSystemException {
 
-        if (TripleStoreUtility.mptu == null) {
-            TripleStoreUtility.mptu = BeanLocator.locateTripleStoreUtility();
+        if (mptu == null) {
+            mptu = BeanLocator.locateTripleStoreUtility();
         }
-        return TripleStoreUtility.mptu;
+        return mptu;
     }
 
     // FIXME don't use triplestore?
@@ -1100,7 +1100,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
         throws TripleStoreSystemException {
         final List<String> surrogates = new ArrayList<String>();
         final List<String> surrogateIds =
-            executeQueryId(id, true, TripleStoreUtility.PROP_ORIGIN);
+            executeQueryId(id, true, PROP_ORIGIN);
         final Iterator<String> it = surrogateIds.iterator();
         if (it.hasNext()) {
             String entry = it.next();

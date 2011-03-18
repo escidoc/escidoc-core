@@ -648,17 +648,15 @@ public abstract class XmlTemplateProvider {
     public static final String VAR_CONTENT_MODEL_CREATED_BY_ID =
         "resourceCreatedById";
 
-    public static final String VAR_CONTENT_MODEL_STATUS =
-        XmlTemplateProvider.VAR_CONTENT_MODEL_PUBLIC_STATUS;
-
     public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS =
         "resourcePublicStatus";
 
-    public static final String VAR_CONTENT_MODEL_STATUS_COMMENT =
-        XmlTemplateProvider.VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT;
+    public static final String VAR_CONTENT_MODEL_STATUS = VAR_CONTENT_MODEL_PUBLIC_STATUS;
 
     public static final String VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT =
         "resourcePublicStatusComment";
+
+    public static final String VAR_CONTENT_MODEL_STATUS_COMMENT = VAR_CONTENT_MODEL_PUBLIC_STATUS_COMMENT;
 
     public static final String VAR_CONTENT_MODEL_OBJECT_PID =
         "resourceObjectPid";
@@ -923,7 +921,7 @@ public abstract class XmlTemplateProvider {
      * @return The path to resource.
      */
     private static String getTemplatePath(final String path) {
-        return path.startsWith("/") ? XmlTemplateProvider.BASE_TEMPLATE_PATH + path : XmlTemplateProvider.BASE_TEMPLATE_PATH + '/' + path;
+        return path.startsWith("/") ? BASE_TEMPLATE_PATH + path : BASE_TEMPLATE_PATH + '/' + path;
     }
 
     /**

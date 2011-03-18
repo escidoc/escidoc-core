@@ -32,10 +32,10 @@ import java.rmi.RemoteException;
  */
 public interface SoapExceptionGenerationRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/SoapExceptionGeneration";
-    public static final String JNDI_NAME = "ejb/SoapExceptionGeneration";
+    String COMP_NAME = "java:comp/env/ejb/SoapExceptionGeneration";
+    String JNDI_NAME = "ejb/SoapExceptionGeneration";
 
-    public SoapExceptionGenerationRemote create()
+    SoapExceptionGenerationRemote create()
             throws CreateException, RemoteException;
 
 }

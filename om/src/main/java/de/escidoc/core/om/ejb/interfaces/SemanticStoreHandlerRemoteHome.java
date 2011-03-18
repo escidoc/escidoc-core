@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface SemanticStoreHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/SemanticStoreHandler";
-    public static final String JNDI_NAME = "ejb/SemanticStoreHandler";
+    String COMP_NAME = "java:comp/env/ejb/SemanticStoreHandler";
+    String JNDI_NAME = "ejb/SemanticStoreHandler";
 
-    public SemanticStoreHandlerRemote create()
+    SemanticStoreHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

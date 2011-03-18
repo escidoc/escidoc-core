@@ -26,8 +26,7 @@ import java.util.Map;
  */
 public interface RoleHandlerRemote extends EJBObject {
 
-    public String create(String xmlData,
-                                   SecurityContext securityContext)
+    String create(String xmlData, SecurityContext securityContext)
             throws UniqueConstraintViolationException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -36,7 +35,7 @@ public interface RoleHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String create(String xmlData, String authHandle, Boolean restAccess)
+    String create(String xmlData, String authHandle, Boolean restAccess)
             throws UniqueConstraintViolationException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -45,7 +44,7 @@ public interface RoleHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -53,7 +52,7 @@ public interface RoleHandlerRemote extends EJBObject {
             RoleInUseViolationException,
             SystemException, RemoteException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -61,39 +60,35 @@ public interface RoleHandlerRemote extends EJBObject {
             RoleInUseViolationException,
             SystemException, RemoteException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws RoleNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws RoleNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveResources(String id,
-                                              SecurityContext securityContext)
+    String retrieveResources(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             RoleNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveResources(String id, String authHandle,
-                                              Boolean restAccess)
+    String retrieveResources(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             RoleNotFoundException,
             SystemException, RemoteException;
 
-    public String update(String id, String xmlData,
-                                   SecurityContext securityContext)
+    String update(String id, String xmlData, SecurityContext securityContext)
             throws RoleNotFoundException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -105,8 +100,7 @@ public interface RoleHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String update(String id, String xmlData, String authHandle,
-                                   Boolean restAccess)
+    String update(String id, String xmlData, String authHandle, Boolean restAccess)
             throws RoleNotFoundException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -118,16 +112,14 @@ public interface RoleHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveRoles(Map filter,
-                                          SecurityContext securityContext)
+    String retrieveRoles(Map filter, SecurityContext securityContext)
             throws MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException,
             InvalidSearchQueryException, RemoteException;
 
-    public String retrieveRoles(Map filter, String authHandle,
-                                          Boolean restAccess)
+    String retrieveRoles(Map filter, String authHandle, Boolean restAccess)
             throws MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,

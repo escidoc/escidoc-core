@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface RoleHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/RoleHandlerLocal";
-    public static final String JNDI_NAME = "ejb/RoleHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/RoleHandlerLocal";
+    String JNDI_NAME = "ejb/RoleHandlerLocal";
 
-    public RoleHandlerLocal create() throws CreateException;
+    RoleHandlerLocal create() throws CreateException;
 
 }

@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface StatisticDataHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/StatisticDataHandlerLocal";
-    public static final String JNDI_NAME = "ejb/StatisticDataHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/StatisticDataHandlerLocal";
+    String JNDI_NAME = "ejb/StatisticDataHandlerLocal";
 
-    public StatisticDataHandlerLocal create() throws CreateException;
+    StatisticDataHandlerLocal create() throws CreateException;
 
 }

@@ -38,8 +38,7 @@ import java.util.Map;
  */
 public interface ContextHandlerRemote extends EJBObject {
 
-    public String create(String xmlData,
-                                   SecurityContext securityContext)
+    String create(String xmlData, SecurityContext securityContext)
             throws MissingMethodParameterException,
             ContextNameNotUniqueException,
             AuthenticationException,
@@ -57,7 +56,7 @@ public interface ContextHandlerRemote extends EJBObject {
             XmlSchemaValidationException,
             RemoteException;
 
-    public String create(String xmlData, String authHandle, Boolean restAccess)
+    String create(String xmlData, String authHandle, Boolean restAccess)
             throws MissingMethodParameterException,
             ContextNameNotUniqueException,
             AuthenticationException,
@@ -75,7 +74,7 @@ public interface ContextHandlerRemote extends EJBObject {
             XmlSchemaValidationException,
             RemoteException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws ContextNotFoundException,
             ContextNotEmptyException,
             MissingMethodParameterException,
@@ -84,7 +83,7 @@ public interface ContextHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             ContextNotEmptyException,
             MissingMethodParameterException,
@@ -93,33 +92,29 @@ public interface ContextHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveProperties(String id,
-                                               SecurityContext securityContext)
+    String retrieveProperties(String id, SecurityContext securityContext)
             throws ContextNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveProperties(String id, String authHandle,
-                                               Boolean restAccess)
+    String retrieveProperties(String id, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             SystemException, RemoteException;
 
-    public String update(String id, String xmlData,
-                                   SecurityContext securityContext)
+    String update(String id, String xmlData, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             InvalidContentException,
@@ -134,8 +129,7 @@ public interface ContextHandlerRemote extends EJBObject {
             MissingElementValueException,
             SystemException, RemoteException;
 
-    public String update(String id, String xmlData, String authHandle,
-                                   Boolean restAccess)
+    String update(String id, String xmlData, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             InvalidContentException,
@@ -150,10 +144,8 @@ public interface ContextHandlerRemote extends EJBObject {
             MissingElementValueException,
             SystemException, RemoteException;
 
-    public EscidocBinaryContent retrieveResource(String id,
-                                                                                        String resourceName,
-                                                                                        Map parameters,
-                                                                                        SecurityContext securityContext)
+    EscidocBinaryContent retrieveResource(String id, String resourceName, Map parameters,
+                                          SecurityContext securityContext)
             throws OperationNotFoundException,
             ContextNotFoundException,
             MissingMethodParameterException,
@@ -161,11 +153,8 @@ public interface ContextHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public EscidocBinaryContent retrieveResource(String id,
-                                                                                        String resourceName,
-                                                                                        Map parameters,
-                                                                                        String authHandle,
-                                                                                        Boolean restAccess)
+    EscidocBinaryContent retrieveResource(String id, String resourceName, Map parameters, String authHandle,
+                                          Boolean restAccess)
             throws OperationNotFoundException,
             ContextNotFoundException,
             MissingMethodParameterException,
@@ -173,24 +162,21 @@ public interface ContextHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveResources(String id,
-                                              SecurityContext securityContext)
+    String retrieveResources(String id, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveResources(String id, String authHandle,
-                                              Boolean restAccess)
+    String retrieveResources(String id, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String open(String id, String taskParam,
-                                 SecurityContext securityContext)
+    String open(String id, String taskParam, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             InvalidStatusException,
@@ -202,8 +188,7 @@ public interface ContextHandlerRemote extends EJBObject {
             LockingException,
             StreamNotFoundException, RemoteException;
 
-    public String open(String id, String taskParam, String authHandle,
-                                 Boolean restAccess)
+    String open(String id, String taskParam, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             InvalidStatusException,
@@ -215,8 +200,7 @@ public interface ContextHandlerRemote extends EJBObject {
             LockingException,
             StreamNotFoundException, RemoteException;
 
-    public String close(String id, String taskParam,
-                                  SecurityContext securityContext)
+    String close(String id, String taskParam, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
@@ -228,8 +212,7 @@ public interface ContextHandlerRemote extends EJBObject {
             LockingException,
             StreamNotFoundException, RemoteException;
 
-    public String close(String id, String taskParam, String authHandle,
-                                  Boolean restAccess)
+    String close(String id, String taskParam, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
@@ -241,30 +224,25 @@ public interface ContextHandlerRemote extends EJBObject {
             LockingException,
             StreamNotFoundException, RemoteException;
 
-    public String retrieveContexts(Map filter,
-                                             SecurityContext securityContext)
+    String retrieveContexts(Map filter, SecurityContext securityContext)
             throws MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveContexts(Map filter, String authHandle,
-                                             Boolean restAccess)
+    String retrieveContexts(Map filter, String authHandle, Boolean restAccess)
             throws MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveMembers(String id, Map filter,
-                                            SecurityContext securityContext)
+    String retrieveMembers(String id, Map filter, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveMembers(String id, Map filter, String authHandle,
-                                            Boolean restAccess)
+    String retrieveMembers(String id, Map filter, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveAdminDescriptor(String id, String name,
-                                                    SecurityContext securityContext)
+    String retrieveAdminDescriptor(String id, String name, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
@@ -273,8 +251,7 @@ public interface ContextHandlerRemote extends EJBObject {
             AdminDescriptorNotFoundException,
             RemoteException;
 
-    public String retrieveAdminDescriptor(String id, String name,
-                                                    String authHandle, Boolean restAccess)
+    String retrieveAdminDescriptor(String id, String name, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
@@ -283,16 +260,14 @@ public interface ContextHandlerRemote extends EJBObject {
             AdminDescriptorNotFoundException,
             RemoteException;
 
-    public String retrieveAdminDescriptors(String id,
-                                                     SecurityContext securityContext)
+    String retrieveAdminDescriptors(String id, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveAdminDescriptors(String id, String authHandle,
-                                                     Boolean restAccess)
+    String retrieveAdminDescriptors(String id, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,

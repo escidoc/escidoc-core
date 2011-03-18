@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface ContainerHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/ContainerHandlerLocal";
-    public static final String JNDI_NAME = "ejb/ContainerHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/ContainerHandlerLocal";
+    String JNDI_NAME = "ejb/ContainerHandlerLocal";
 
-    public ContainerHandlerLocal create() throws CreateException;
+    ContainerHandlerLocal create() throws CreateException;
 
 }

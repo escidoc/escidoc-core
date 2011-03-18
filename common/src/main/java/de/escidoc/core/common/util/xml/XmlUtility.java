@@ -162,8 +162,7 @@ public final class XmlUtility {
         .compile(ESC_AMPERSAND + '|' + ESC_LESS_THAN + '|' + ESC_GREATER_THAN
             + '|' + ESC_QUOT + '|' + ESC_APOS);
 
-    private static final Pattern PATTERN_AMPERSAND = Pattern.compile('('
-        + AMPERSAND + ')');
+    private static final Pattern PATTERN_AMPERSAND = Pattern.compile('(' + AMPERSAND + ')');
 
     private static final Pattern PATTERN_LESS_THAN = Pattern.compile('('
         + LESS_THAN + ')');
@@ -1128,7 +1127,7 @@ public final class XmlUtility {
      */
     public static String getRoleHref(final String roleId) {
 
-        return XmlUtility.BASE_ROLE + roleId;
+        return BASE_ROLE + roleId;
     }
 
     /**
@@ -1140,7 +1139,7 @@ public final class XmlUtility {
      */
     public static String getScopeHref(final String scopeId) {
 
-        return XmlUtility.BASE_SCOPE + scopeId;
+        return BASE_SCOPE + scopeId;
     }
 
     /**
@@ -1154,7 +1153,7 @@ public final class XmlUtility {
     public static String getAggregationDefinitionHref(
         final String aggregationDefinitionId) {
 
-        return XmlUtility.BASE_AGGREGATION_DEFINITION + aggregationDefinitionId;
+        return BASE_AGGREGATION_DEFINITION + aggregationDefinitionId;
     }
 
     /**
@@ -1166,7 +1165,7 @@ public final class XmlUtility {
      */
     public static String getReportDefinitionHref(final String reportDefinitionId) {
 
-        return XmlUtility.BASE_REPORT_DEFINITION + reportDefinitionId;
+        return BASE_REPORT_DEFINITION + reportDefinitionId;
     }
 
     /**
@@ -1489,7 +1488,7 @@ public final class XmlUtility {
 
         final ByteArrayInputStream byteArrayInputStream =
             convertToByteArrayInputStream(xmlData);
-        XmlUtility.validate(byteArrayInputStream, schemaUri);
+        validate(byteArrayInputStream, schemaUri);
         return byteArrayInputStream;
     }
 
@@ -1572,7 +1571,7 @@ public final class XmlUtility {
         if (root.length() > 0) {
             checkRootElement(xmlData, root);
         }
-        XmlUtility.validate(xmlData, schemaUri);
+        validate(xmlData, schemaUri);
     }
 
     /**
@@ -1662,7 +1661,7 @@ public final class XmlUtility {
         final String xmlData, final ResourceType resourceType)
         throws XmlCorruptedException, XmlSchemaValidationException,
         WebserverSystemException {
-        validate(xmlData, XmlUtility.getSchemaLocationForResource(resourceType));
+        validate(xmlData, getSchemaLocationForResource(resourceType));
 
     }
 
@@ -1776,8 +1775,8 @@ public final class XmlUtility {
             return objid;
         }
         catch (final NoSuchAttributeException e) {
-            throwMissingAttributeValueException(element, XmlUtility.NAME_OBJID
-                + '|' + XmlUtility.NAME_HREF);
+            throwMissingAttributeValueException(element, NAME_OBJID
+                + '|' + NAME_HREF);
             return null;
         }
     }
@@ -3075,7 +3074,7 @@ public final class XmlUtility {
 
         throw new MissingAttributeValueException(
             StringUtility.format(
-                XmlUtility.ERR_MSG_MISSING_ATTRIBUTE, element.getPath(),
+                ERR_MSG_MISSING_ATTRIBUTE, element.getPath(),
                 attributeName, element.getLocationString()));
     }
 

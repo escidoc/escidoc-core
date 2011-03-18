@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface JhoveHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/JhoveHandlerLocal";
-    public static final String JNDI_NAME = "ejb/JhoveHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/JhoveHandlerLocal";
+    String JNDI_NAME = "ejb/JhoveHandlerLocal";
 
-    public JhoveHandlerLocal create() throws CreateException;
+    JhoveHandlerLocal create() throws CreateException;
 
 }

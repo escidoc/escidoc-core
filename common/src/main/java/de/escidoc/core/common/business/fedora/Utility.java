@@ -724,7 +724,7 @@ public class Utility {
                 Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX,
                 null, getCurrentUserRealName(), null));
 
-        final String buildNumber = Utility.getInstance().getBuildNumber();
+        final String buildNumber = getInstance().getBuildNumber();
         updateElementsRelsExt.put("build", new StartElementWithChildElements(
             "build", "http://escidoc.de/core/01/system/", "system", null,
             buildNumber, null));

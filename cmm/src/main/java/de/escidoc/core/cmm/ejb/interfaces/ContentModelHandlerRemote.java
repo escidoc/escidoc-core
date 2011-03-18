@@ -33,8 +33,7 @@ import java.util.Map;
  */
 public interface ContentModelHandlerRemote extends EJBObject {
 
-    public String create(String xmlData,
-                                   SecurityContext securityContext)
+    String create(String xmlData, SecurityContext securityContext)
             throws InvalidContentException,
             MissingAttributeValueException,
             SystemException,
@@ -45,7 +44,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             XmlSchemaValidationException,
             RemoteException;
 
-    public String create(String xmlData, String authHandle, Boolean restAccess)
+    String create(String xmlData, String authHandle, Boolean restAccess)
             throws InvalidContentException,
             MissingAttributeValueException,
             SystemException,
@@ -56,7 +55,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             XmlSchemaValidationException,
             RemoteException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws SystemException,
             ContentModelNotFoundException,
             AuthenticationException,
@@ -66,7 +65,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             InvalidStatusException,
             ResourceInUseException, RemoteException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws SystemException,
             ContentModelNotFoundException,
             AuthenticationException,
@@ -76,23 +75,21 @@ public interface ContentModelHandlerRemote extends EJBObject {
             InvalidStatusException,
             ResourceInUseException, RemoteException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws ContentModelNotFoundException,
             SystemException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws ContentModelNotFoundException,
             SystemException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String retrieveProperties(String id,
-                                               SecurityContext securityContext)
+    String retrieveProperties(String id, SecurityContext securityContext)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -100,8 +97,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public String retrieveProperties(String id, String authHandle,
-                                               Boolean restAccess)
+    String retrieveProperties(String id, String authHandle, Boolean restAccess)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -109,8 +105,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public String retrieveContentStreams(String id,
-                                                   SecurityContext securityContext)
+    String retrieveContentStreams(String id, SecurityContext securityContext)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -118,8 +113,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public String retrieveContentStreams(String id, String authHandle,
-                                                   Boolean restAccess)
+    String retrieveContentStreams(String id, String authHandle, Boolean restAccess)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -127,8 +121,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public String retrieveContentStream(String id, String name,
-                                                  SecurityContext securityContext)
+    String retrieveContentStream(String id, String name, SecurityContext securityContext)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -136,8 +129,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public String retrieveContentStream(String id, String name,
-                                                  String authHandle, Boolean restAccess)
+    String retrieveContentStream(String id, String name, String authHandle, Boolean restAccess)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -145,9 +137,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public EscidocBinaryContent retrieveContentStreamContent(String id,
-                                                                                                    String name,
-                                                                                                    SecurityContext securityContext)
+    EscidocBinaryContent retrieveContentStreamContent(String id, String name, SecurityContext securityContext)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -156,10 +146,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             ContentStreamNotFoundException,
             InvalidStatusException, RemoteException;
 
-    public EscidocBinaryContent retrieveContentStreamContent(String id,
-                                                                                                    String name,
-                                                                                                    String authHandle,
-                                                                                                    Boolean restAccess)
+    EscidocBinaryContent retrieveContentStreamContent(String id, String name, String authHandle, Boolean restAccess)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -168,8 +155,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             ContentStreamNotFoundException,
             InvalidStatusException, RemoteException;
 
-    public String retrieveResources(String id,
-                                              SecurityContext securityContext)
+    String retrieveResources(String id, SecurityContext securityContext)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -177,8 +163,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public String retrieveResources(String id, String authHandle,
-                                              Boolean restAccess)
+    String retrieveResources(String id, String authHandle, Boolean restAccess)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -186,8 +171,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public String retrieveVersionHistory(String id,
-                                                   SecurityContext securityContext)
+    String retrieveVersionHistory(String id, SecurityContext securityContext)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -195,8 +179,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public String retrieveVersionHistory(String id, String authHandle,
-                                                   Boolean restAccess)
+    String retrieveVersionHistory(String id, String authHandle, Boolean restAccess)
             throws ContentModelNotFoundException,
             SystemException,
             AuthenticationException,
@@ -204,18 +187,15 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public String retrieveContentModels(Map parameterMap,
-                                                  SecurityContext securityContext)
+    String retrieveContentModels(Map parameterMap, SecurityContext securityContext)
             throws InvalidSearchQueryException,
             SystemException, RemoteException;
 
-    public String retrieveContentModels(Map parameterMap, String authHandle,
-                                                  Boolean restAccess)
+    String retrieveContentModels(Map parameterMap, String authHandle, Boolean restAccess)
             throws InvalidSearchQueryException,
             SystemException, RemoteException;
 
-    public String update(String id, String xmlData,
-                                   SecurityContext securityContext)
+    String update(String id, String xmlData, SecurityContext securityContext)
             throws InvalidXmlException,
             ContentModelNotFoundException,
             OptimisticLockingException,
@@ -227,8 +207,7 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingAttributeValueException,
             InvalidContentException, RemoteException;
 
-    public String update(String id, String xmlData, String authHandle,
-                                   Boolean restAccess)
+    String update(String id, String xmlData, String authHandle, Boolean restAccess)
             throws InvalidXmlException,
             ContentModelNotFoundException,
             OptimisticLockingException,
@@ -240,26 +219,23 @@ public interface ContentModelHandlerRemote extends EJBObject {
             MissingAttributeValueException,
             InvalidContentException, RemoteException;
 
-    public EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(
-            String id, String name,
-            SecurityContext securityContext)
+    EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(String id, String name,
+                                                                 SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             ContentModelNotFoundException,
             SystemException, RemoteException;
 
-    public EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(
-            String id, String name, String authHandle, Boolean restAccess)
+    EscidocBinaryContent retrieveMdRecordDefinitionSchemaContent(String id, String name, String authHandle,
+                                                                 Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             ContentModelNotFoundException,
             SystemException, RemoteException;
 
-    public EscidocBinaryContent retrieveResourceDefinitionXsltContent(
-            String id, String name,
-            SecurityContext securityContext)
+    EscidocBinaryContent retrieveResourceDefinitionXsltContent(String id, String name, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -267,8 +243,8 @@ public interface ContentModelHandlerRemote extends EJBObject {
             ResourceNotFoundException,
             SystemException, RemoteException;
 
-    public EscidocBinaryContent retrieveResourceDefinitionXsltContent(
-            String id, String name, String authHandle, Boolean restAccess)
+    EscidocBinaryContent retrieveResourceDefinitionXsltContent(String id, String name, String authHandle,
+                                                               Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,

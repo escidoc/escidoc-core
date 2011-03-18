@@ -16,13 +16,13 @@ import javax.ejb.EJBLocalObject;
  */
 public interface StatisticDataHandlerLocal extends EJBLocalObject {
 
-    public void create(String xmlData, SecurityContext securityContext)
+    void create(String xmlData, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             SystemException;
 
-    public void create(String xmlData, String authHandle, Boolean restAccess)
+    void create(String xmlData, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,

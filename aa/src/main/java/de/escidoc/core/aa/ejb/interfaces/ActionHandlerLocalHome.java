@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface ActionHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/ActionHandlerLocal";
-    public static final String JNDI_NAME = "ejb/ActionHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/ActionHandlerLocal";
+    String JNDI_NAME = "ejb/ActionHandlerLocal";
 
-    public ActionHandlerLocal create() throws CreateException;
+    ActionHandlerLocal create() throws CreateException;
 
 }

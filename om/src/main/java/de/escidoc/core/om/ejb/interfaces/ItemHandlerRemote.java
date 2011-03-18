@@ -55,8 +55,7 @@ import java.util.Map;
  */
 public interface ItemHandlerRemote extends EJBObject {
 
-    public String create(String xmlData,
-                                   SecurityContext securityContext)
+    String create(String xmlData, SecurityContext securityContext)
             throws MissingContentException,
             ContextNotFoundException,
             ContentModelNotFoundException,
@@ -77,7 +76,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMdRecordException,
             InvalidStatusException, RemoteException;
 
-    public String create(String xmlData, String authHandle, Boolean restAccess)
+    String create(String xmlData, String authHandle, Boolean restAccess)
             throws MissingContentException,
             ContextNotFoundException,
             ContentModelNotFoundException,
@@ -98,7 +97,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMdRecordException,
             InvalidStatusException, RemoteException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws ItemNotFoundException,
             AlreadyPublishedException,
             LockingException,
@@ -108,7 +107,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws ItemNotFoundException,
             AlreadyPublishedException,
             LockingException,
@@ -118,8 +117,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             AuthenticationException,
@@ -127,7 +125,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             AuthenticationException,
@@ -135,8 +133,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String update(String id, String xmlData,
-                                   SecurityContext securityContext)
+    String update(String id, String xmlData, SecurityContext securityContext)
             throws ItemNotFoundException,
             FileNotFoundException,
             InvalidContextException,
@@ -161,8 +158,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingAttributeValueException,
             MissingMdRecordException, RemoteException;
 
-    public String update(String id, String xmlData, String authHandle,
-                                   Boolean restAccess)
+    String update(String id, String xmlData, String authHandle, Boolean restAccess)
             throws ItemNotFoundException,
             FileNotFoundException,
             InvalidContextException,
@@ -187,8 +183,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingAttributeValueException,
             MissingMdRecordException, RemoteException;
 
-    public String createComponent(String id, String xmlData,
-                                            SecurityContext securityContext)
+    String createComponent(String id, String xmlData, SecurityContext securityContext)
             throws MissingContentException,
             ItemNotFoundException,
             ComponentNotFoundException,
@@ -207,8 +202,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingAttributeValueException,
             RemoteException;
 
-    public String createComponent(String id, String xmlData, String authHandle,
-                                            Boolean restAccess)
+    String createComponent(String id, String xmlData, String authHandle, Boolean restAccess)
             throws MissingContentException,
             ItemNotFoundException,
             ComponentNotFoundException,
@@ -227,8 +221,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingAttributeValueException,
             RemoteException;
 
-    public String retrieveComponent(String id, String componentId,
-                                              SecurityContext securityContext)
+    String retrieveComponent(String id, String componentId, SecurityContext securityContext)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             AuthenticationException,
@@ -236,8 +229,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveComponent(String id, String componentId,
-                                              String authHandle, Boolean restAccess)
+    String retrieveComponent(String id, String componentId, String authHandle, Boolean restAccess)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             AuthenticationException,
@@ -245,8 +237,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveComponentMdRecords(String id, String componentId,
-                                                       SecurityContext securityContext)
+    String retrieveComponentMdRecords(String id, String componentId, SecurityContext securityContext)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             AuthenticationException,
@@ -254,8 +245,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveComponentMdRecords(String id, String componentId,
-                                                       String authHandle, Boolean restAccess)
+    String retrieveComponentMdRecords(String id, String componentId, String authHandle, Boolean restAccess)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             AuthenticationException,
@@ -263,9 +253,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveComponentMdRecord(String id, String componentId,
-                                                      String mdRecordId,
-                                                      SecurityContext securityContext)
+    String retrieveComponentMdRecord(String id, String componentId, String mdRecordId, SecurityContext securityContext)
             throws ItemNotFoundException,
             AuthenticationException,
             AuthorizationException,
@@ -274,591 +262,510 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveComponentMdRecord(String id, String componentId,
-                                                      String mdRecordId, String authHandle,
-                                                      Boolean restAccess)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            ComponentNotFoundException,
-            MdRecordNotFoundException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String updateComponent(String id, String componentId, String xmlData,
-                                            SecurityContext securityContext)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            LockingException,
-            FileNotFoundException,
-            MissingAttributeValueException,
-            AuthenticationException,
-            AuthorizationException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException,
-            ReadonlyViolationException,
-            MissingContentException,
-            InvalidContentException,
-            ReadonlyVersionException, RemoteException;
-
-    public String updateComponent(String id, String componentId, String xmlData,
-                                            String authHandle, Boolean restAccess)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            LockingException,
-            FileNotFoundException,
-            MissingAttributeValueException,
-            AuthenticationException,
-            AuthorizationException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException,
-            ReadonlyViolationException,
-            MissingContentException,
-            InvalidContentException,
-            ReadonlyVersionException, RemoteException;
-
-    public String retrieveComponents(String id,
-                                               SecurityContext securityContext)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            ComponentNotFoundException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveComponents(String id, String authHandle,
-                                               Boolean restAccess)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            ComponentNotFoundException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveComponentProperties(String id, String componentId,
-                                                        SecurityContext securityContext)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveComponentProperties(String id, String componentId,
-                                                        String authHandle, Boolean restAccess)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String createMetadataRecord(String id, String xmlData,
-                                                 SecurityContext securityContext)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            XmlSchemaNotFoundException,
-            LockingException,
-            MissingAttributeValueException,
-            AuthenticationException,
-            AuthorizationException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            SystemException,
-            InvalidXmlException, RemoteException;
-
-    public String createMetadataRecord(String id, String xmlData,
-                                                 String authHandle, Boolean restAccess)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            XmlSchemaNotFoundException,
-            LockingException,
-            MissingAttributeValueException,
-            AuthenticationException,
-            AuthorizationException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            SystemException,
-            InvalidXmlException, RemoteException;
-
-    public String createMdRecord(String id, String xmlData,
-                                           SecurityContext securityContext)
-            throws ItemNotFoundException,
-            SystemException,
-            InvalidXmlException,
-            LockingException,
-            MissingAttributeValueException,
-            InvalidStatusException,
-            ComponentNotFoundException,
-            MissingMethodParameterException,
-            AuthorizationException,
-            AuthenticationException, RemoteException;
-
-    public String createMdRecord(String id, String xmlData, String authHandle,
-                                           Boolean restAccess)
-            throws ItemNotFoundException,
-            SystemException,
-            InvalidXmlException,
-            LockingException,
-            MissingAttributeValueException,
-            InvalidStatusException,
-            ComponentNotFoundException,
-            MissingMethodParameterException,
-            AuthorizationException,
-            AuthenticationException, RemoteException;
-
-    public EscidocBinaryContent retrieveContent(String id,
-                                                                                       String contentId,
-                                                                                       SecurityContext securityContext)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            InvalidStatusException,
-            ResourceNotFoundException, RemoteException;
-
-    public EscidocBinaryContent retrieveContent(String id,
-                                                                                       String contentId,
-                                                                                       String authHandle,
-                                                                                       Boolean restAccess)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            InvalidStatusException,
-            ResourceNotFoundException, RemoteException;
-
-    public EscidocBinaryContent retrieveContentStreamContent(
-            String itemId, String name,
-            SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ItemNotFoundException,
-            SystemException,
-            ContentStreamNotFoundException,
-            RemoteException;
-
-    public EscidocBinaryContent retrieveContentStreamContent(
-            String itemId, String name, String authHandle, Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            ItemNotFoundException,
-            SystemException,
-            ContentStreamNotFoundException,
-            RemoteException;
-
-    public EscidocBinaryContent retrieveContent(String id,
-                                                                                       String contentId,
-                                                                                       String transformer,
-                                                                                       String param,
-                                                                                       SecurityContext securityContext)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            InvalidStatusException, RemoteException;
-
-    public EscidocBinaryContent retrieveContent(String id,
-                                                                                       String contentId,
-                                                                                       String transformer,
-                                                                                       String param,
-                                                                                       String authHandle,
-                                                                                       Boolean restAccess)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            InvalidStatusException, RemoteException;
-
-    public EscidocServiceRedirectInterface redirectContentService(
-            String id, String contentId, String transformer,
-            String clientService, SecurityContext securityContext)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            InvalidStatusException, RemoteException;
-
-    public EscidocServiceRedirectInterface redirectContentService(
-            String id, String contentId, String transformer,
-            String clientService, String authHandle, Boolean restAccess)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            InvalidStatusException, RemoteException;
-
-    public String retrieveMdRecord(String id, String mdRecordId,
-                                             SecurityContext securityContext)
-            throws ItemNotFoundException,
-            MdRecordNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveMdRecord(String id, String mdRecordId,
-                                             String authHandle, Boolean restAccess)
-            throws ItemNotFoundException,
-            MdRecordNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveMdRecordContent(String id, String mdRecordId,
-                                                    SecurityContext securityContext)
-            throws ItemNotFoundException,
-            MdRecordNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveMdRecordContent(String id, String mdRecordId,
-                                                    String authHandle, Boolean restAccess)
-            throws ItemNotFoundException,
-            MdRecordNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveDcRecordContent(String id,
-                                                    SecurityContext securityContext)
-            throws ItemNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            MdRecordNotFoundException,
-            SystemException, RemoteException;
-
-    public String retrieveDcRecordContent(String id, String authHandle,
-                                                    Boolean restAccess)
-            throws ItemNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            MdRecordNotFoundException,
-            SystemException, RemoteException;
-
-    public String updateMdRecord(String id, String mdRecordId, String xmlData,
-                                           SecurityContext securityContext)
-            throws ItemNotFoundException,
-            XmlSchemaNotFoundException,
-            LockingException,
-            InvalidContentException,
-            MdRecordNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException,
-            ReadonlyViolationException,
-            ReadonlyVersionException, RemoteException;
-
-    public String updateMdRecord(String id, String mdRecordId, String xmlData,
-                                           String authHandle, Boolean restAccess)
-            throws ItemNotFoundException,
-            XmlSchemaNotFoundException,
-            LockingException,
-            InvalidContentException,
-            MdRecordNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            SystemException,
-            OptimisticLockingException,
-            InvalidXmlException,
-            ReadonlyViolationException,
-            ReadonlyVersionException, RemoteException;
-
-    public String retrieveMdRecords(String id,
-                                              SecurityContext securityContext)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveMdRecords(String id, String authHandle,
-                                              Boolean restAccess)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveContentStreams(String id,
-                                                   SecurityContext securityContext)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveContentStreams(String id, String authHandle,
-                                                   Boolean restAccess)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveContentStream(String id, String name,
-                                                  SecurityContext securityContext)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            ContentStreamNotFoundException,
-            RemoteException;
-
-    public String retrieveContentStream(String id, String name,
-                                                  String authHandle, Boolean restAccess)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            ContentStreamNotFoundException,
-            RemoteException;
-
-    public String retrieveProperties(String id,
-                                               SecurityContext securityContext)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveProperties(String id, String authHandle,
-                                               Boolean restAccess)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveResources(String id,
-                                              SecurityContext securityContext)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveResources(String id, String authHandle,
-                                              Boolean restAccess)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public EscidocBinaryContent retrieveResource(String id,
-                                                                                        String resourceName,
-                                                                                        Map parameters,
-                                                                                        SecurityContext securityContext)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            OperationNotFoundException, RemoteException;
-
-    public EscidocBinaryContent retrieveResource(String id,
-                                                                                        String resourceName,
-                                                                                        Map parameters,
-                                                                                        String authHandle,
-                                                                                        Boolean restAccess)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            OperationNotFoundException, RemoteException;
-
-    public String retrieveVersionHistory(String id,
-                                                   SecurityContext securityContext)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveVersionHistory(String id, String authHandle,
-                                                   Boolean restAccess)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveParents(String id,
-                                            SecurityContext securityContext)
-            throws ItemNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException, RemoteException;
-
-    public String retrieveParents(String id, String authHandle,
-                                            Boolean restAccess)
-            throws ItemNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException, RemoteException;
-
-    public String retrieveRelations(String id,
-                                              SecurityContext securityContext)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String retrieveRelations(String id, String authHandle,
-                                              Boolean restAccess)
-            throws ItemNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException, RemoteException;
-
-    public String release(String id, String lastModified,
-                                    SecurityContext securityContext)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            LockingException,
-            InvalidStatusException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            OptimisticLockingException,
-            ReadonlyViolationException,
-            ReadonlyVersionException,
-            InvalidXmlException, RemoteException;
-
-    public String release(String id, String lastModified, String authHandle,
-                                    Boolean restAccess)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            LockingException,
-            InvalidStatusException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            OptimisticLockingException,
-            ReadonlyViolationException,
-            ReadonlyVersionException,
-            InvalidXmlException, RemoteException;
-
-    public String submit(String id, String lastModified,
-                                   SecurityContext securityContext)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            LockingException,
-            InvalidStatusException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            OptimisticLockingException,
-            ReadonlyViolationException,
-            ReadonlyVersionException,
-            InvalidXmlException, RemoteException;
-
-    public String submit(String id, String lastModified, String authHandle,
-                                   Boolean restAccess)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            LockingException,
-            InvalidStatusException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException,
-            OptimisticLockingException,
-            ReadonlyViolationException,
-            ReadonlyVersionException,
-            InvalidXmlException, RemoteException;
-
-    public String revise(String id, String lastModified,
-                                   SecurityContext securityContext)
-            throws AuthenticationException,
-            AuthorizationException,
-            ItemNotFoundException,
-            ComponentNotFoundException,
-            LockingException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            SystemException,
-            OptimisticLockingException,
-            ReadonlyViolationException,
-            ReadonlyVersionException,
-            InvalidContentException,
-            XmlCorruptedException, RemoteException;
-
-    public String revise(String id, String lastModified, String authHandle,
-                                   Boolean restAccess)
-            throws AuthenticationException,
-            AuthorizationException,
-            ItemNotFoundException,
-            ComponentNotFoundException,
-            LockingException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            SystemException,
-            OptimisticLockingException,
-            ReadonlyViolationException,
-            ReadonlyVersionException,
-            InvalidContentException,
-            XmlCorruptedException, RemoteException;
-
-    public String withdraw(String id, String lastModified,
-                                     SecurityContext securityContext)
-            throws ItemNotFoundException,
-            ComponentNotFoundException,
-            NotPublishedException,
-            LockingException,
-            AlreadyWithdrawnException,
-            AuthenticationException,
-            AuthorizationException,
-            InvalidStatusException,
-            MissingMethodParameterException,
-            SystemException,
-            OptimisticLockingException,
-            ReadonlyViolationException,
-            ReadonlyVersionException,
-            InvalidXmlException, RemoteException;
-
-    public String withdraw(String id, String lastModified, String authHandle,
+    String retrieveComponentMdRecord(String id, String componentId, String mdRecordId, String authHandle,
                                      Boolean restAccess)
             throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            ComponentNotFoundException,
+            MdRecordNotFoundException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String updateComponent(String id, String componentId, String xmlData, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            LockingException,
+            FileNotFoundException,
+            MissingAttributeValueException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            ReadonlyViolationException,
+            MissingContentException,
+            InvalidContentException,
+            ReadonlyVersionException, RemoteException;
+
+    String updateComponent(String id, String componentId, String xmlData, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            LockingException,
+            FileNotFoundException,
+            MissingAttributeValueException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            ReadonlyViolationException,
+            MissingContentException,
+            InvalidContentException,
+            ReadonlyVersionException, RemoteException;
+
+    String retrieveComponents(String id, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            ComponentNotFoundException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveComponents(String id, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            ComponentNotFoundException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveComponentProperties(String id, String componentId, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveComponentProperties(String id, String componentId, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String createMetadataRecord(String id, String xmlData, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            XmlSchemaNotFoundException,
+            LockingException,
+            MissingAttributeValueException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidXmlException, RemoteException;
+
+    String createMetadataRecord(String id, String xmlData, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            XmlSchemaNotFoundException,
+            LockingException,
+            MissingAttributeValueException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidXmlException, RemoteException;
+
+    String createMdRecord(String id, String xmlData, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            SystemException,
+            InvalidXmlException,
+            LockingException,
+            MissingAttributeValueException,
+            InvalidStatusException,
+            ComponentNotFoundException,
+            MissingMethodParameterException,
+            AuthorizationException,
+            AuthenticationException, RemoteException;
+
+    String createMdRecord(String id, String xmlData, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            SystemException,
+            InvalidXmlException,
+            LockingException,
+            MissingAttributeValueException,
+            InvalidStatusException,
+            ComponentNotFoundException,
+            MissingMethodParameterException,
+            AuthorizationException,
+            AuthenticationException, RemoteException;
+
+    EscidocBinaryContent retrieveContent(String id, String contentId, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidStatusException,
+            ResourceNotFoundException, RemoteException;
+
+    EscidocBinaryContent retrieveContent(String id, String contentId, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidStatusException,
+            ResourceNotFoundException, RemoteException;
+
+    EscidocBinaryContent retrieveContentStreamContent(String itemId, String name, SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            ItemNotFoundException,
+            SystemException,
+            ContentStreamNotFoundException,
+            RemoteException;
+
+    EscidocBinaryContent retrieveContentStreamContent(String itemId, String name, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            ItemNotFoundException,
+            SystemException,
+            ContentStreamNotFoundException,
+            RemoteException;
+
+    EscidocBinaryContent retrieveContent(String id, String contentId, String transformer, String param,
+                                         SecurityContext securityContext)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidStatusException, RemoteException;
+
+    EscidocBinaryContent retrieveContent(String id, String contentId, String transformer, String param,
+                                         String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidStatusException, RemoteException;
+
+    EscidocServiceRedirectInterface redirectContentService(String id, String contentId, String transformer,
+                                                           String clientService, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidStatusException, RemoteException;
+
+    EscidocServiceRedirectInterface redirectContentService(String id, String contentId, String transformer,
+                                                           String clientService, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidStatusException, RemoteException;
+
+    String retrieveMdRecord(String id, String mdRecordId, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveMdRecord(String id, String mdRecordId, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveMdRecordContent(String id, String mdRecordId, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveMdRecordContent(String id, String mdRecordId, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveDcRecordContent(String id, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            MdRecordNotFoundException,
+            SystemException, RemoteException;
+
+    String retrieveDcRecordContent(String id, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            MdRecordNotFoundException,
+            SystemException, RemoteException;
+
+    String updateMdRecord(String id, String mdRecordId, String xmlData, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            XmlSchemaNotFoundException,
+            LockingException,
+            InvalidContentException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            ReadonlyViolationException,
+            ReadonlyVersionException, RemoteException;
+
+    String updateMdRecord(String id, String mdRecordId, String xmlData, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            XmlSchemaNotFoundException,
+            LockingException,
+            InvalidContentException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            ReadonlyViolationException,
+            ReadonlyVersionException, RemoteException;
+
+    String retrieveMdRecords(String id, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveMdRecords(String id, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveContentStreams(String id, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveContentStreams(String id, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveContentStream(String id, String name, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            ContentStreamNotFoundException,
+            RemoteException;
+
+    String retrieveContentStream(String id, String name, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            ContentStreamNotFoundException,
+            RemoteException;
+
+    String retrieveProperties(String id, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveProperties(String id, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveResources(String id, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveResources(String id, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    EscidocBinaryContent retrieveResource(String id, String resourceName, Map parameters,
+                                          SecurityContext securityContext)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            OperationNotFoundException, RemoteException;
+
+    EscidocBinaryContent retrieveResource(String id, String resourceName, Map parameters, String authHandle,
+                                          Boolean restAccess)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            OperationNotFoundException, RemoteException;
+
+    String retrieveVersionHistory(String id, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveVersionHistory(String id, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveParents(String id, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
+
+    String retrieveParents(String id, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
+
+    String retrieveRelations(String id, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String retrieveRelations(String id, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
+
+    String release(String id, String lastModified, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            ReadonlyViolationException,
+            ReadonlyVersionException,
+            InvalidXmlException, RemoteException;
+
+    String release(String id, String lastModified, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            ReadonlyViolationException,
+            ReadonlyVersionException,
+            InvalidXmlException, RemoteException;
+
+    String submit(String id, String lastModified, SecurityContext securityContext)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            ReadonlyViolationException,
+            ReadonlyVersionException,
+            InvalidXmlException, RemoteException;
+
+    String submit(String id, String lastModified, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            ReadonlyViolationException,
+            ReadonlyVersionException,
+            InvalidXmlException, RemoteException;
+
+    String revise(String id, String lastModified, SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ItemNotFoundException,
+            ComponentNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            ReadonlyViolationException,
+            ReadonlyVersionException,
+            InvalidContentException,
+            XmlCorruptedException, RemoteException;
+
+    String revise(String id, String lastModified, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ItemNotFoundException,
+            ComponentNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            ReadonlyViolationException,
+            ReadonlyVersionException,
+            InvalidContentException,
+            XmlCorruptedException, RemoteException;
+
+    String withdraw(String id, String lastModified, SecurityContext securityContext)
+            throws ItemNotFoundException,
             ComponentNotFoundException,
             NotPublishedException,
             LockingException,
@@ -873,8 +780,23 @@ public interface ItemHandlerRemote extends EJBObject {
             ReadonlyVersionException,
             InvalidXmlException, RemoteException;
 
-    public String lock(String id, String lastModified,
-                                 SecurityContext securityContext)
+    String withdraw(String id, String lastModified, String authHandle, Boolean restAccess)
+            throws ItemNotFoundException,
+            ComponentNotFoundException,
+            NotPublishedException,
+            LockingException,
+            AlreadyWithdrawnException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            ReadonlyViolationException,
+            ReadonlyVersionException,
+            InvalidXmlException, RemoteException;
+
+    String lock(String id, String lastModified, SecurityContext securityContext)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             LockingException,
@@ -887,8 +809,7 @@ public interface ItemHandlerRemote extends EJBObject {
             InvalidXmlException,
             InvalidStatusException, RemoteException;
 
-    public String lock(String id, String lastModified, String authHandle,
-                                 Boolean restAccess)
+    String lock(String id, String lastModified, String authHandle, Boolean restAccess)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             LockingException,
@@ -901,8 +822,7 @@ public interface ItemHandlerRemote extends EJBObject {
             InvalidXmlException,
             InvalidStatusException, RemoteException;
 
-    public String unlock(String id, String lastModified,
-                                   SecurityContext securityContext)
+    String unlock(String id, String lastModified, SecurityContext securityContext)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             LockingException,
@@ -913,8 +833,7 @@ public interface ItemHandlerRemote extends EJBObject {
             OptimisticLockingException,
             InvalidXmlException, RemoteException;
 
-    public String unlock(String id, String lastModified, String authHandle,
-                                   Boolean restAccess)
+    String unlock(String id, String lastModified, String authHandle, Boolean restAccess)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             LockingException,
@@ -925,8 +844,7 @@ public interface ItemHandlerRemote extends EJBObject {
             OptimisticLockingException,
             InvalidXmlException, RemoteException;
 
-    public void deleteComponent(String itemId, String componentId,
-                                SecurityContext securityContext)
+    void deleteComponent(String itemId, String componentId, SecurityContext securityContext)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             LockingException,
@@ -936,8 +854,7 @@ public interface ItemHandlerRemote extends EJBObject {
             SystemException,
             InvalidStatusException, RemoteException;
 
-    public void deleteComponent(String itemId, String componentId, String authHandle,
-                                Boolean restAccess)
+    void deleteComponent(String itemId, String componentId, String authHandle, Boolean restAccess)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             LockingException,
@@ -947,8 +864,7 @@ public interface ItemHandlerRemote extends EJBObject {
             SystemException,
             InvalidStatusException, RemoteException;
 
-    public String moveToContext(String id, String taskParam,
-                                          SecurityContext securityContext)
+    String moveToContext(String id, String taskParam, SecurityContext securityContext)
             throws ContextNotFoundException,
             InvalidContentException,
             ItemNotFoundException,
@@ -959,8 +875,7 @@ public interface ItemHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String moveToContext(String id, String taskParam, String authHandle,
-                                          Boolean restAccess)
+    String moveToContext(String id, String taskParam, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             InvalidContentException,
             ItemNotFoundException,
@@ -971,16 +886,13 @@ public interface ItemHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveItems(Map filter,
-                                          SecurityContext securityContext)
+    String retrieveItems(Map filter, SecurityContext securityContext)
             throws SystemException, RemoteException;
 
-    public String retrieveItems(Map filter, String authHandle,
-                                          Boolean restAccess)
+    String retrieveItems(Map filter, String authHandle, Boolean restAccess)
             throws SystemException, RemoteException;
 
-    public String assignVersionPid(String id, String taskParam,
-                                             SecurityContext securityContext)
+    String assignVersionPid(String id, String taskParam, SecurityContext securityContext)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             LockingException,
@@ -993,8 +905,7 @@ public interface ItemHandlerRemote extends EJBObject {
             XmlCorruptedException,
             ReadonlyVersionException, RemoteException;
 
-    public String assignVersionPid(String id, String taskParam,
-                                             String authHandle, Boolean restAccess)
+    String assignVersionPid(String id, String taskParam, String authHandle, Boolean restAccess)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             LockingException,
@@ -1007,8 +918,7 @@ public interface ItemHandlerRemote extends EJBObject {
             XmlCorruptedException,
             ReadonlyVersionException, RemoteException;
 
-    public String assignObjectPid(String id, String taskParam,
-                                            SecurityContext securityContext)
+    String assignObjectPid(String id, String taskParam, SecurityContext securityContext)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             LockingException,
@@ -1020,8 +930,7 @@ public interface ItemHandlerRemote extends EJBObject {
             InvalidStatusException,
             XmlCorruptedException, RemoteException;
 
-    public String assignObjectPid(String id, String taskParam,
-                                            String authHandle, Boolean restAccess)
+    String assignObjectPid(String id, String taskParam, String authHandle, Boolean restAccess)
             throws ItemNotFoundException,
             ComponentNotFoundException,
             LockingException,
@@ -1033,9 +942,7 @@ public interface ItemHandlerRemote extends EJBObject {
             InvalidStatusException,
             XmlCorruptedException, RemoteException;
 
-    public String assignContentPid(String id, String componentId,
-                                             String taskParam,
-                                             SecurityContext securityContext)
+    String assignContentPid(String id, String componentId, String taskParam, SecurityContext securityContext)
             throws ItemNotFoundException,
             LockingException,
             AuthenticationException,
@@ -1048,9 +955,7 @@ public interface ItemHandlerRemote extends EJBObject {
             XmlCorruptedException,
             ReadonlyVersionException, RemoteException;
 
-    public String assignContentPid(String id, String componentId,
-                                             String taskParam, String authHandle,
-                                             Boolean restAccess)
+    String assignContentPid(String id, String componentId, String taskParam, String authHandle, Boolean restAccess)
             throws ItemNotFoundException,
             LockingException,
             AuthenticationException,
@@ -1063,8 +968,7 @@ public interface ItemHandlerRemote extends EJBObject {
             XmlCorruptedException,
             ReadonlyVersionException, RemoteException;
 
-    public String addContentRelations(String id, String param,
-                                                SecurityContext securityContext)
+    String addContentRelations(String id, String param, SecurityContext securityContext)
             throws SystemException,
             ItemNotFoundException,
             ComponentNotFoundException,
@@ -1083,8 +987,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             ReadonlyVersionException, RemoteException;
 
-    public String addContentRelations(String id, String param,
-                                                String authHandle, Boolean restAccess)
+    String addContentRelations(String id, String param, String authHandle, Boolean restAccess)
             throws SystemException,
             ItemNotFoundException,
             ComponentNotFoundException,
@@ -1103,8 +1006,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             ReadonlyVersionException, RemoteException;
 
-    public String removeContentRelations(String id, String param,
-                                                   SecurityContext securityContext)
+    String removeContentRelations(String id, String param, SecurityContext securityContext)
             throws SystemException,
             ItemNotFoundException,
             ComponentNotFoundException,
@@ -1122,8 +1024,7 @@ public interface ItemHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             ReadonlyVersionException, RemoteException;
 
-    public String removeContentRelations(String id, String param,
-                                                   String authHandle, Boolean restAccess)
+    String removeContentRelations(String id, String param, String authHandle, Boolean restAccess)
             throws SystemException,
             ItemNotFoundException,
             ComponentNotFoundException,

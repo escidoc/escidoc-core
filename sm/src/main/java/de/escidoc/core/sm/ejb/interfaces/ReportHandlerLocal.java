@@ -20,8 +20,7 @@ import javax.ejb.EJBLocalObject;
  */
 public interface ReportHandlerLocal extends EJBLocalObject {
 
-    public String retrieve(String xml,
-                                     SecurityContext securityContext)
+    String retrieve(String xml, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             XmlCorruptedException,
@@ -31,7 +30,7 @@ public interface ReportHandlerLocal extends EJBLocalObject {
             InvalidSqlException,
             SystemException;
 
-    public String retrieve(String xml, String authHandle, Boolean restAccess)
+    String retrieve(String xml, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             XmlCorruptedException,

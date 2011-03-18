@@ -8,8 +8,8 @@ package de.escidoc.core.sm.service;
  */
 public interface AggregationDefinitionHandlerService extends java.rmi.Remote {
 
-    public java.lang.String create(java.lang.String xmlData,
-                                   org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String create(java.lang.String xmlData,
+                            org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
@@ -18,7 +18,7 @@ public interface AggregationDefinitionHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
+    java.lang.String create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
@@ -27,45 +27,44 @@ public interface AggregationDefinitionHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public void delete(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
+    void delete(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.notfound.AggregationDefinitionNotFoundException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public void delete(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
+    void delete(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.notfound.AggregationDefinitionNotFoundException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieve(java.lang.String id,
-                                     org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieve(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.notfound.AggregationDefinitionNotFoundException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieve(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
+    java.lang.String retrieve(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.notfound.AggregationDefinitionNotFoundException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieveAggregationDefinitions(java.util.Map parameters,
-                                                           org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieveAggregationDefinitions(java.util.Map parameters,
+                                                    org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieveAggregationDefinitions(java.util.Map parameters, java.lang.String authHandle,
-                                                           java.lang.Boolean restAccess)
+    java.lang.String retrieveAggregationDefinitions(java.util.Map parameters, java.lang.String authHandle,
+                                                    java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,

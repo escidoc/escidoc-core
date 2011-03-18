@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface AdminHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/AdminHandlerLocal";
-    public static final String JNDI_NAME = "ejb/AdminHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/AdminHandlerLocal";
+    String JNDI_NAME = "ejb/AdminHandlerLocal";
 
-    public AdminHandlerLocal create() throws CreateException;
+    AdminHandlerLocal create() throws CreateException;
 
 }

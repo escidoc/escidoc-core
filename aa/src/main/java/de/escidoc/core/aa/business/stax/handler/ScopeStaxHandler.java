@@ -100,7 +100,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * @return
      * @throws SystemException
      *             Thrown in case of an internal system error.
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #startElement
      *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
@@ -160,7 +160,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * @param element
      * @return
      * @throws Exception
-     * @see de.escidoc.core.common.util.xml.stax.handler.DefaultHandler
+     * @see DefaultHandler
      *      #endElement(de.escidoc.core.common.util.xml.stax.events.EndElement)
      *
      */

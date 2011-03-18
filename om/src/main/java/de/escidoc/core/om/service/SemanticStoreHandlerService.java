@@ -8,8 +8,8 @@ package de.escidoc.core.om.service;
  */
 public interface SemanticStoreHandlerService extends java.rmi.Remote {
 
-    public java.lang.String spo(java.lang.String taskParam,
-                                org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String spo(java.lang.String taskParam,
+                         org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException,
             de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException,
@@ -18,7 +18,7 @@ public interface SemanticStoreHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
 
-    public java.lang.String spo(java.lang.String taskParam, java.lang.String authHandle, java.lang.Boolean restAccess)
+    java.lang.String spo(java.lang.String taskParam, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException,
             de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException,

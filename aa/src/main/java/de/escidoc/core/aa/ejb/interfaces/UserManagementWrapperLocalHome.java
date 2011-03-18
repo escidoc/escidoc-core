@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface UserManagementWrapperLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/UserManagementWrapperLocal";
-    public static final String JNDI_NAME = "ejb/UserManagementWrapperLocal";
+    String COMP_NAME = "java:comp/env/ejb/UserManagementWrapperLocal";
+    String JNDI_NAME = "ejb/UserManagementWrapperLocal";
 
-    public UserManagementWrapperLocal create() throws CreateException;
+    UserManagementWrapperLocal create() throws CreateException;
 
 }

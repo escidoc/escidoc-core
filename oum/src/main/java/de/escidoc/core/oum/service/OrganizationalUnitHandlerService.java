@@ -31,8 +31,7 @@ import java.util.Map;
  */
 public interface OrganizationalUnitHandlerService extends Remote {
 
-    public String create(String xml,
-                                   SecurityContext securityContext)
+    String create(String xml, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -45,7 +44,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             XmlSchemaValidationException,
             MissingMdRecordException, RemoteException;
 
-    public String create(String xml, String authHandle, Boolean restAccess)
+    String create(String xml, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -58,7 +57,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             XmlSchemaValidationException,
             MissingMdRecordException, RemoteException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -67,7 +66,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             OrganizationalUnitHasChildrenException,
             SystemException, RemoteException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -76,8 +75,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             OrganizationalUnitHasChildrenException,
             SystemException, RemoteException;
 
-    public String update(String id, String user,
-                                   SecurityContext securityContext)
+    String update(String id, String user, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -89,8 +87,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             MissingElementValueException,
             InvalidStatusException, RemoteException;
 
-    public String update(String id, String user, String authHandle,
-                                   Boolean restAccess)
+    String update(String id, String user, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -102,8 +99,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             MissingElementValueException,
             InvalidStatusException, RemoteException;
 
-    public String updateMdRecords(String id, String xml,
-                                            SecurityContext securityContext)
+    String updateMdRecords(String id, String xml, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             InvalidXmlException,
@@ -114,8 +110,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             MissingElementValueException,
             SystemException, RemoteException;
 
-    public String updateMdRecords(String id, String xml, String authHandle,
-                                            Boolean restAccess)
+    String updateMdRecords(String id, String xml, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             InvalidXmlException,
@@ -126,8 +121,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             MissingElementValueException,
             SystemException, RemoteException;
 
-    public String updateParents(String id, String xml,
-                                          SecurityContext securityContext)
+    String updateParents(String id, String xml, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             InvalidXmlException,
@@ -139,8 +133,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             SystemException,
             InvalidStatusException, RemoteException;
 
-    public String updateParents(String id, String xml, String authHandle,
-                                          Boolean restAccess)
+    String updateParents(String id, String xml, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             InvalidXmlException,
@@ -152,55 +145,49 @@ public interface OrganizationalUnitHandlerService extends Remote {
             SystemException,
             InvalidStatusException, RemoteException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveProperties(String id,
-                                               SecurityContext securityContext)
+    String retrieveProperties(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveProperties(String id, String authHandle,
-                                               Boolean restAccess)
+    String retrieveProperties(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveMdRecords(String id,
-                                              SecurityContext securityContext)
+    String retrieveMdRecords(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveMdRecords(String id, String authHandle,
-                                              Boolean restAccess)
+    String retrieveMdRecords(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveMdRecord(String id, String name,
-                                             SecurityContext securityContext)
+    String retrieveMdRecord(String id, String name, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MdRecordNotFoundException,
@@ -208,8 +195,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveMdRecord(String id, String name, String authHandle,
-                                             Boolean restAccess)
+    String retrieveMdRecord(String id, String name, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MdRecordNotFoundException,
@@ -217,72 +203,63 @@ public interface OrganizationalUnitHandlerService extends Remote {
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveParents(String id,
-                                            SecurityContext securityContext)
+    String retrieveParents(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveParents(String id, String authHandle,
-                                            Boolean restAccess)
+    String retrieveParents(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveParentObjects(String ouId,
-                                                  SecurityContext securityContext)
+    String retrieveParentObjects(String ouId, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveParentObjects(String ouId, String authHandle,
-                                                  Boolean restAccess)
+    String retrieveParentObjects(String ouId, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveSuccessors(String id,
-                                               SecurityContext securityContext)
+    String retrieveSuccessors(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveSuccessors(String id, String authHandle,
-                                               Boolean restAccess)
+    String retrieveSuccessors(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveChildObjects(String ouId,
-                                                 SecurityContext securityContext)
+    String retrieveChildObjects(String ouId, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveChildObjects(String ouId, String authHandle,
-                                                 Boolean restAccess)
+    String retrieveChildObjects(String ouId, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             OrganizationalUnitNotFoundException,
             SystemException, RemoteException;
 
-    public String retrievePathList(String ouId,
-                                             SecurityContext securityContext)
+    String retrievePathList(String ouId, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             OrganizationalUnitNotFoundException,
@@ -290,8 +267,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             MissingMethodParameterException,
             RemoteException;
 
-    public String retrievePathList(String ouId, String authHandle,
-                                             Boolean restAccess)
+    String retrievePathList(String ouId, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             OrganizationalUnitNotFoundException,
@@ -299,22 +275,19 @@ public interface OrganizationalUnitHandlerService extends Remote {
             MissingMethodParameterException,
             RemoteException;
 
-    public String retrieveOrganizationalUnits(Map filter,
-                                                        SecurityContext securityContext)
+    String retrieveOrganizationalUnits(Map filter, SecurityContext securityContext)
             throws MissingMethodParameterException,
             SystemException,
             InvalidSearchQueryException,
             InvalidXmlException, RemoteException;
 
-    public String retrieveOrganizationalUnits(Map filter, String authHandle,
-                                                        Boolean restAccess)
+    String retrieveOrganizationalUnits(Map filter, String authHandle, Boolean restAccess)
             throws MissingMethodParameterException,
             SystemException,
             InvalidSearchQueryException,
             InvalidXmlException, RemoteException;
 
-    public String close(String id, String taskParam,
-                                  SecurityContext securityContext)
+    String close(String id, String taskParam, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -324,8 +297,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             OptimisticLockingException,
             InvalidXmlException, RemoteException;
 
-    public String close(String id, String taskParam, String authHandle,
-                                  Boolean restAccess)
+    String close(String id, String taskParam, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -335,8 +307,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             OptimisticLockingException,
             InvalidXmlException, RemoteException;
 
-    public String open(String id, String taskParam,
-                                 SecurityContext securityContext)
+    String open(String id, String taskParam, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -346,8 +317,7 @@ public interface OrganizationalUnitHandlerService extends Remote {
             OptimisticLockingException,
             InvalidXmlException, RemoteException;
 
-    public String open(String id, String taskParam, String authHandle,
-                                 Boolean restAccess)
+    String open(String id, String taskParam, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,

@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface OrganizationalUnitHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/OrganizationalUnitHandlerLocal";
-    public static final String JNDI_NAME = "ejb/OrganizationalUnitHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/OrganizationalUnitHandlerLocal";
+    String JNDI_NAME = "ejb/OrganizationalUnitHandlerLocal";
 
-    public OrganizationalUnitHandlerLocal create() throws CreateException;
+    OrganizationalUnitHandlerLocal create() throws CreateException;
 
 }

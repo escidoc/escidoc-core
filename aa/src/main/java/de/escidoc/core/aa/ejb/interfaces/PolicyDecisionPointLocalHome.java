@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface PolicyDecisionPointLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/PolicyDecisionPointLocal";
-    public static final String JNDI_NAME = "ejb/PolicyDecisionPointLocal";
+    String COMP_NAME = "java:comp/env/ejb/PolicyDecisionPointLocal";
+    String JNDI_NAME = "ejb/PolicyDecisionPointLocal";
 
-    public PolicyDecisionPointLocal create() throws CreateException;
+    PolicyDecisionPointLocal create() throws CreateException;
 
 }

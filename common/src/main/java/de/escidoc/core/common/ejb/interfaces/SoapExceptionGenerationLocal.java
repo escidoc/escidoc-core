@@ -129,7 +129,7 @@ import javax.ejb.EJBLocalObject;
  */
 public interface SoapExceptionGenerationLocal extends EJBLocalObject {
 
-    public void generateExceptions(SecurityContext securityContext)
+    void generateExceptions(SecurityContext securityContext)
             throws EscidocException,
             AggregationDefinitionNotFoundException,
             ApplicationException,
@@ -229,7 +229,7 @@ public interface SoapExceptionGenerationLocal extends EJBLocalObject {
             UserGroupHierarchyViolationException,
             ResourceInUseException;
 
-    public void generateExceptions(String authHandle, Boolean restAccess)
+    void generateExceptions(String authHandle, Boolean restAccess)
             throws EscidocException,
             AggregationDefinitionNotFoundException,
             ApplicationException,

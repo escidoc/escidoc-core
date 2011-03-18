@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface AggregationDefinitionHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/AggregationDefinitionHandler";
-    public static final String JNDI_NAME = "ejb/AggregationDefinitionHandler";
+    String COMP_NAME = "java:comp/env/ejb/AggregationDefinitionHandler";
+    String JNDI_NAME = "ejb/AggregationDefinitionHandler";
 
-    public AggregationDefinitionHandlerRemote create()
+    AggregationDefinitionHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

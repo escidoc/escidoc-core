@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface IngestHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/IngestHandler";
-    public static final String JNDI_NAME = "ejb/IngestHandler";
+    String COMP_NAME = "java:comp/env/ejb/IngestHandler";
+    String JNDI_NAME = "ejb/IngestHandler";
 
-    public IngestHandlerRemote create()
+    IngestHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

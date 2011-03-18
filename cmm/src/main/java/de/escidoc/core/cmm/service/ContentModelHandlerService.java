@@ -8,8 +8,8 @@ package de.escidoc.core.cmm.service;
  */
 public interface ContentModelHandlerService extends java.rmi.Remote {
 
-    public java.lang.String create(java.lang.String xmlData,
-                                   org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String create(java.lang.String xmlData,
+                            org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
             de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
             de.escidoc.core.common.exceptions.system.SystemException,
@@ -20,7 +20,7 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
             java.rmi.RemoteException;
 
-    public java.lang.String create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
+    java.lang.String create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
             de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
             de.escidoc.core.common.exceptions.system.SystemException,
@@ -31,7 +31,7 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
             java.rmi.RemoteException;
 
-    public void delete(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
+    void delete(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
@@ -41,7 +41,7 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
             de.escidoc.core.common.exceptions.application.violated.ResourceInUseException, java.rmi.RemoteException;
 
-    public void delete(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
+    void delete(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
@@ -51,23 +51,22 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
             de.escidoc.core.common.exceptions.application.violated.ResourceInUseException, java.rmi.RemoteException;
 
-    public java.lang.String retrieve(java.lang.String id,
-                                     org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieve(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
 
-    public java.lang.String retrieve(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
+    java.lang.String retrieve(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
 
-    public java.lang.String retrieveProperties(java.lang.String id,
-                                               org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieveProperties(java.lang.String id,
+                                        org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
@@ -75,8 +74,7 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             java.rmi.RemoteException;
 
-    public java.lang.String retrieveProperties(java.lang.String id, java.lang.String authHandle,
-                                               java.lang.Boolean restAccess)
+    java.lang.String retrieveProperties(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
@@ -84,8 +82,8 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             java.rmi.RemoteException;
 
-    public java.lang.String retrieveContentStreams(java.lang.String id,
-                                                   org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieveContentStreams(java.lang.String id,
+                                            org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
@@ -93,8 +91,8 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             java.rmi.RemoteException;
 
-    public java.lang.String retrieveContentStreams(java.lang.String id, java.lang.String authHandle,
-                                                   java.lang.Boolean restAccess)
+    java.lang.String retrieveContentStreams(java.lang.String id, java.lang.String authHandle,
+                                            java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
@@ -102,8 +100,8 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             java.rmi.RemoteException;
 
-    public java.lang.String retrieveContentStream(java.lang.String id, java.lang.String name,
-                                                  org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieveContentStream(java.lang.String id, java.lang.String name,
+                                           org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
@@ -111,8 +109,8 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             java.rmi.RemoteException;
 
-    public java.lang.String retrieveContentStream(java.lang.String id, java.lang.String name,
-                                                  java.lang.String authHandle, java.lang.Boolean restAccess)
+    java.lang.String retrieveContentStream(java.lang.String id, java.lang.String name, java.lang.String authHandle,
+                                           java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
@@ -120,8 +118,8 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             java.rmi.RemoteException;
 
-    public java.lang.String retrieveVersionHistory(java.lang.String id,
-                                                   org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieveVersionHistory(java.lang.String id,
+                                            org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
@@ -129,8 +127,8 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             java.rmi.RemoteException;
 
-    public java.lang.String retrieveVersionHistory(java.lang.String id, java.lang.String authHandle,
-                                                   java.lang.Boolean restAccess)
+    java.lang.String retrieveVersionHistory(java.lang.String id, java.lang.String authHandle,
+                                            java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
@@ -138,18 +136,18 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             java.rmi.RemoteException;
 
-    public java.lang.String retrieveContentModels(java.util.Map parameterMap,
-                                                  org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieveContentModels(java.util.Map parameterMap,
+                                           org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieveContentModels(java.util.Map parameterMap, java.lang.String authHandle,
-                                                  java.lang.Boolean restAccess)
+    java.lang.String retrieveContentModels(java.util.Map parameterMap, java.lang.String authHandle,
+                                           java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String update(java.lang.String id, java.lang.String xmlData,
-                                   org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String update(java.lang.String id, java.lang.String xmlData,
+                            org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
             de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
@@ -161,8 +159,8 @@ public interface ContentModelHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
             de.escidoc.core.common.exceptions.application.invalid.InvalidContentException, java.rmi.RemoteException;
 
-    public java.lang.String update(java.lang.String id, java.lang.String xmlData, java.lang.String authHandle,
-                                   java.lang.Boolean restAccess)
+    java.lang.String update(java.lang.String id, java.lang.String xmlData, java.lang.String authHandle,
+                            java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
             de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
             de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,

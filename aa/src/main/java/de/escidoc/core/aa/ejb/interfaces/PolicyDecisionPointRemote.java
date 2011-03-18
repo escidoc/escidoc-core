@@ -21,8 +21,7 @@ import java.util.List;
  */
 public interface PolicyDecisionPointRemote extends EJBObject {
 
-    public String evaluate(String requestsXml,
-                                     SecurityContext securityContext)
+    String evaluate(String requestsXml, SecurityContext securityContext)
             throws ResourceNotFoundException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -31,8 +30,7 @@ public interface PolicyDecisionPointRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String evaluate(String requestsXml, String authHandle,
-                                     Boolean restAccess)
+    String evaluate(String requestsXml, String authHandle, Boolean restAccess)
             throws ResourceNotFoundException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -41,60 +39,54 @@ public interface PolicyDecisionPointRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public boolean[] evaluateRequestList(List requests,
-                                         SecurityContext securityContext)
+    boolean[] evaluateRequestList(List requests, SecurityContext securityContext)
             throws ResourceNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public boolean[] evaluateRequestList(List requests, String authHandle,
-                                         Boolean restAccess)
+    boolean[] evaluateRequestList(List requests, String authHandle, Boolean restAccess)
             throws ResourceNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public List evaluateRetrieve(String resourceName, List ids,
-                                           SecurityContext securityContext)
+    List evaluateRetrieve(String resourceName, List ids, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             ResourceNotFoundException,
             SystemException, RemoteException;
 
-    public List evaluateRetrieve(String resourceName, List ids,
-                                           String authHandle, Boolean restAccess)
+    List evaluateRetrieve(String resourceName, List ids, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             ResourceNotFoundException,
             SystemException, RemoteException;
 
-    public List evaluateMethodForList(String resourceName, String methodName,
-                                                List argumentList,
-                                                SecurityContext securityContext)
+    List evaluateMethodForList(String resourceName, String methodName, List argumentList,
+                               SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             ResourceNotFoundException,
             SystemException, RemoteException;
 
-    public List evaluateMethodForList(String resourceName, String methodName,
-                                                List argumentList, String authHandle,
-                                                Boolean restAccess)
+    List evaluateMethodForList(String resourceName, String methodName, List argumentList, String authHandle,
+                               Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             ResourceNotFoundException,
             SystemException, RemoteException;
 
-    public void touch(SecurityContext securityContext)
+    void touch(SecurityContext securityContext)
             throws SystemException, RemoteException;
 
-    public void touch(String authHandle, Boolean restAccess)
+    void touch(String authHandle, Boolean restAccess)
             throws SystemException, RemoteException;
 
 }

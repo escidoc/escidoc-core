@@ -19,8 +19,7 @@ import java.rmi.RemoteException;
  */
 public interface PreprocessingHandlerRemote extends EJBObject {
 
-    public void preprocess(String aggregationDefinitionId, String xmlData,
-                           SecurityContext securityContext)
+    void preprocess(String aggregationDefinitionId, String xmlData, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             XmlSchemaValidationException,
@@ -28,8 +27,7 @@ public interface PreprocessingHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public void preprocess(String aggregationDefinitionId, String xmlData,
-                           String authHandle, Boolean restAccess)
+    void preprocess(String aggregationDefinitionId, String xmlData, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             XmlSchemaValidationException,

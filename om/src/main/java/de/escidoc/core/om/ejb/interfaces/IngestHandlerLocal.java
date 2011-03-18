@@ -13,11 +13,10 @@ import javax.ejb.EJBLocalObject;
  */
 public interface IngestHandlerLocal extends EJBLocalObject {
 
-    public String ingest(String xmlData,
-                                   SecurityContext securityContext)
+    String ingest(String xmlData, SecurityContext securityContext)
             throws EscidocException;
 
-    public String ingest(String xmlData, String authHandle, Boolean restAccess)
+    String ingest(String xmlData, String authHandle, Boolean restAccess)
             throws EscidocException;
 
 }

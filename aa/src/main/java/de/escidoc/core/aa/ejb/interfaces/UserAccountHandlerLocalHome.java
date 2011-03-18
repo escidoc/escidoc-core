@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface UserAccountHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/UserAccountHandlerLocal";
-    public static final String JNDI_NAME = "ejb/UserAccountHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/UserAccountHandlerLocal";
+    String JNDI_NAME = "ejb/UserAccountHandlerLocal";
 
-    public UserAccountHandlerLocal create() throws CreateException;
+    UserAccountHandlerLocal create() throws CreateException;
 
 }

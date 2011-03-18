@@ -19,8 +19,7 @@ import javax.ejb.EJBLocalObject;
  */
 public interface SemanticStoreHandlerLocal extends EJBLocalObject {
 
-    public String spo(String taskParam,
-                                SecurityContext securityContext)
+    String spo(String taskParam, SecurityContext securityContext)
             throws SystemException,
             InvalidTripleStoreQueryException,
             InvalidTripleStoreOutputFormatException,
@@ -29,7 +28,7 @@ public interface SemanticStoreHandlerLocal extends EJBLocalObject {
             AuthenticationException,
             AuthorizationException;
 
-    public String spo(String taskParam, String authHandle, Boolean restAccess)
+    String spo(String taskParam, String authHandle, Boolean restAccess)
             throws SystemException,
             InvalidTripleStoreQueryException,
             InvalidTripleStoreOutputFormatException,

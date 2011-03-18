@@ -17,97 +17,89 @@ import javax.ejb.EJBLocalObject;
  */
 public interface AdminHandlerLocal extends EJBLocalObject {
 
-    public String deleteObjects(String taskParam,
-                                          SecurityContext securityContext)
+    String deleteObjects(String taskParam, SecurityContext securityContext)
             throws InvalidXmlException,
             SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String deleteObjects(String taskParam, String authHandle,
-                                          Boolean restAccess)
+    String deleteObjects(String taskParam, String authHandle, Boolean restAccess)
             throws InvalidXmlException,
             SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String getPurgeStatus(SecurityContext securityContext)
+    String getPurgeStatus(SecurityContext securityContext)
             throws SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String getPurgeStatus(String authHandle, Boolean restAccess)
+    String getPurgeStatus(String authHandle, Boolean restAccess)
             throws SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String getReindexStatus(SecurityContext securityContext)
+    String getReindexStatus(SecurityContext securityContext)
             throws SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String getReindexStatus(String authHandle, Boolean restAccess)
+    String getReindexStatus(String authHandle, Boolean restAccess)
             throws SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public void decreaseReindexStatus(String objectTypeXml,
-                                      SecurityContext securityContext)
+    void decreaseReindexStatus(String objectTypeXml, SecurityContext securityContext)
             throws InvalidXmlException,
             SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public void decreaseReindexStatus(String objectTypeXml, String authHandle,
-                                      Boolean restAccess)
+    void decreaseReindexStatus(String objectTypeXml, String authHandle, Boolean restAccess)
             throws InvalidXmlException,
             SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String reindex(String clearIndex, String indexNamePrefix,
-                                    SecurityContext securityContext)
+    String reindex(String clearIndex, String indexNamePrefix, SecurityContext securityContext)
             throws SystemException,
             InvalidSearchQueryException,
             AuthenticationException,
             AuthorizationException;
 
-    public String reindex(String clearIndex, String indexNamePrefix,
-                                    String authHandle, Boolean restAccess)
+    String reindex(String clearIndex, String indexNamePrefix, String authHandle, Boolean restAccess)
             throws SystemException,
             InvalidSearchQueryException,
             AuthenticationException,
             AuthorizationException;
 
-    public String getIndexConfiguration(SecurityContext securityContext)
+    String getIndexConfiguration(SecurityContext securityContext)
             throws SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String getIndexConfiguration(String authHandle, Boolean restAccess)
+    String getIndexConfiguration(String authHandle, Boolean restAccess)
             throws SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String getRepositoryInfo(SecurityContext securityContext)
+    String getRepositoryInfo(SecurityContext securityContext)
             throws SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String getRepositoryInfo(String authHandle, Boolean restAccess)
+    String getRepositoryInfo(String authHandle, Boolean restAccess)
             throws SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String loadExamples(String type,
-                                         SecurityContext securityContext)
+    String loadExamples(String type, SecurityContext securityContext)
             throws InvalidSearchQueryException,
             SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String loadExamples(String type, String authHandle,
-                                         Boolean restAccess)
+    String loadExamples(String type, String authHandle, Boolean restAccess)
             throws InvalidSearchQueryException,
             SystemException,
             AuthenticationException,

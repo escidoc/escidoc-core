@@ -8,13 +8,13 @@ package de.escidoc.core.sm.service;
  */
 public interface StatisticDataHandlerService extends java.rmi.Remote {
 
-    public void create(java.lang.String xmlData, org.springframework.security.context.SecurityContext securityContext)
+    void create(java.lang.String xmlData, org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public void create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
+    void create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,

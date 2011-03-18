@@ -22,8 +22,7 @@ import java.util.Map;
  */
 public interface SetDefinitionHandlerLocal extends EJBLocalObject {
 
-    public String create(String setDefinition,
-                                   SecurityContext securityContext)
+    String create(String setDefinition, SecurityContext securityContext)
             throws UniqueConstraintViolationException,
             InvalidXmlException,
             MissingMethodParameterException,
@@ -31,8 +30,7 @@ public interface SetDefinitionHandlerLocal extends EJBLocalObject {
             AuthenticationException,
             AuthorizationException;
 
-    public String create(String setDefinition, String authHandle,
-                                   Boolean restAccess)
+    String create(String setDefinition, String authHandle, Boolean restAccess)
             throws UniqueConstraintViolationException,
             InvalidXmlException,
             MissingMethodParameterException,
@@ -40,24 +38,21 @@ public interface SetDefinitionHandlerLocal extends EJBLocalObject {
             AuthenticationException,
             AuthorizationException;
 
-    public String retrieve(String setDefinitionId,
-                                     SecurityContext securityContext)
+    String retrieve(String setDefinitionId, SecurityContext securityContext)
             throws ResourceNotFoundException,
             MissingMethodParameterException,
             SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String retrieve(String setDefinitionId, String authHandle,
-                                     Boolean restAccess)
+    String retrieve(String setDefinitionId, String authHandle, Boolean restAccess)
             throws ResourceNotFoundException,
             MissingMethodParameterException,
             SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String update(String setDefinitionId, String xmlData,
-                                   SecurityContext securityContext)
+    String update(String setDefinitionId, String xmlData, SecurityContext securityContext)
             throws ResourceNotFoundException,
             OptimisticLockingException,
             MissingMethodParameterException,
@@ -65,8 +60,7 @@ public interface SetDefinitionHandlerLocal extends EJBLocalObject {
             AuthenticationException,
             AuthorizationException;
 
-    public String update(String setDefinitionId, String xmlData,
-                                   String authHandle, Boolean restAccess)
+    String update(String setDefinitionId, String xmlData, String authHandle, Boolean restAccess)
             throws ResourceNotFoundException,
             OptimisticLockingException,
             MissingMethodParameterException,
@@ -74,31 +68,28 @@ public interface SetDefinitionHandlerLocal extends EJBLocalObject {
             AuthenticationException,
             AuthorizationException;
 
-    public void delete(String setDefinitionId,
-                       SecurityContext securityContext)
+    void delete(String setDefinitionId, SecurityContext securityContext)
             throws ResourceNotFoundException,
             MissingMethodParameterException,
             SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public void delete(String setDefinitionId, String authHandle, Boolean restAccess)
+    void delete(String setDefinitionId, String authHandle, Boolean restAccess)
             throws ResourceNotFoundException,
             MissingMethodParameterException,
             SystemException,
             AuthenticationException,
             AuthorizationException;
 
-    public String retrieveSetDefinitions(Map filter,
-                                                   SecurityContext securityContext)
+    String retrieveSetDefinitions(Map filter, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             InvalidSearchQueryException,
             SystemException;
 
-    public String retrieveSetDefinitions(Map filter, String authHandle,
-                                                   Boolean restAccess)
+    String retrieveSetDefinitions(Map filter, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,

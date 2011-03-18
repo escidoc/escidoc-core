@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface ContextHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/ContextHandlerLocal";
-    public static final String JNDI_NAME = "ejb/ContextHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/ContextHandlerLocal";
+    String JNDI_NAME = "ejb/ContextHandlerLocal";
 
-    public ContextHandlerLocal create() throws CreateException;
+    ContextHandlerLocal create() throws CreateException;
 
 }

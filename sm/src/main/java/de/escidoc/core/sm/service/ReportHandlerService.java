@@ -8,8 +8,8 @@ package de.escidoc.core.sm.service;
  */
 public interface ReportHandlerService extends java.rmi.Remote {
 
-    public java.lang.String retrieve(java.lang.String xml,
-                                     org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieve(java.lang.String xml,
+                              org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
@@ -19,7 +19,7 @@ public interface ReportHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieve(java.lang.String xml, java.lang.String authHandle, java.lang.Boolean restAccess)
+    java.lang.String retrieve(java.lang.String xml, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,

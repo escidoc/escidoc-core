@@ -344,9 +344,9 @@ public final class CustomPolicyBuilder {
         }
         final XacmlPolicySet xacmlRolePolicySet =
             new XacmlPolicySet(escidocRole.getId(),
-                CustomPolicyBuilder.COMB_ALG_ID,
-                CustomPolicyBuilder.DESCRIPTION + escidocRole.getRoleName(),
-                null, CustomPolicyBuilder.generateTargetResources(escidocRole),
+                COMB_ALG_ID,
+                DESCRIPTION + escidocRole.getRoleName(),
+                null, generateTargetResources(escidocRole),
                 xacmlPolicies);
 
         if (LOGGER.isDebugEnabled()) {
@@ -456,8 +456,8 @@ public final class CustomPolicyBuilder {
             .getId().toString().equals(EscidocRole.DEFAULT_USER_ROLE_ID)) {
             return xacmlPolicySet;
         }
-        return new XacmlPolicySet(policyId, CustomPolicyBuilder.COMB_ALG_ID,
-            CustomPolicyBuilder.DESCRIPTION + policyId, null,
+        return new XacmlPolicySet(policyId, COMB_ALG_ID,
+            DESCRIPTION + policyId, null,
             generateTargetResources(policyId), xacmlPolicySet.getChildren());
 
     }

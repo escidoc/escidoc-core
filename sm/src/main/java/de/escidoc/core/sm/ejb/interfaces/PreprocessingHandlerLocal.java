@@ -18,8 +18,7 @@ import javax.ejb.EJBLocalObject;
  */
 public interface PreprocessingHandlerLocal extends EJBLocalObject {
 
-    public void preprocess(String aggregationDefinitionId, String xmlData,
-                           SecurityContext securityContext)
+    void preprocess(String aggregationDefinitionId, String xmlData, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             XmlSchemaValidationException,
@@ -27,8 +26,7 @@ public interface PreprocessingHandlerLocal extends EJBLocalObject {
             MissingMethodParameterException,
             SystemException;
 
-    public void preprocess(String aggregationDefinitionId, String xmlData,
-                           String authHandle, Boolean restAccess)
+    void preprocess(String aggregationDefinitionId, String xmlData, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             XmlSchemaValidationException,

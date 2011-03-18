@@ -19,8 +19,7 @@ import java.rmi.RemoteException;
  */
 public interface ActionHandlerRemote extends EJBObject {
 
-    public String createUnsecuredActions(String contextId, String actions,
-                                                   SecurityContext securityContext)
+    String createUnsecuredActions(String contextId, String actions, SecurityContext securityContext)
             throws ContextNotFoundException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -28,8 +27,7 @@ public interface ActionHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String createUnsecuredActions(String contextId, String actions,
-                                                   String authHandle, Boolean restAccess)
+    String createUnsecuredActions(String contextId, String actions, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -37,29 +35,25 @@ public interface ActionHandlerRemote extends EJBObject {
             AuthorizationException,
             SystemException, RemoteException;
 
-    public void deleteUnsecuredActions(String contextId,
-                                       SecurityContext securityContext)
+    void deleteUnsecuredActions(String contextId, SecurityContext securityContext)
             throws ContextNotFoundException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public void deleteUnsecuredActions(String contextId, String authHandle,
-                                       Boolean restAccess)
+    void deleteUnsecuredActions(String contextId, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveUnsecuredActions(String contextId,
-                                                     SecurityContext securityContext)
+    String retrieveUnsecuredActions(String contextId, SecurityContext securityContext)
             throws ContextNotFoundException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveUnsecuredActions(String contextId, String authHandle,
-                                                     Boolean restAccess)
+    String retrieveUnsecuredActions(String contextId, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             AuthenticationException,
             AuthorizationException,

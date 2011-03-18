@@ -8,8 +8,8 @@ package de.escidoc.core.aa.service;
  */
 public interface PolicyDecisionPointService extends java.rmi.Remote {
 
-    public java.lang.String evaluate(java.lang.String requestsXml,
-                                     org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String evaluate(java.lang.String requestsXml,
+                              org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException,
             de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
@@ -18,8 +18,7 @@ public interface PolicyDecisionPointService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String evaluate(java.lang.String requestsXml, java.lang.String authHandle,
-                                     java.lang.Boolean restAccess)
+    java.lang.String evaluate(java.lang.String requestsXml, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException,
             de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
@@ -28,10 +27,10 @@ public interface PolicyDecisionPointService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public void touch(org.springframework.security.context.SecurityContext securityContext)
+    void touch(org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public void touch(java.lang.String authHandle, java.lang.Boolean restAccess)
+    void touch(java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
 }

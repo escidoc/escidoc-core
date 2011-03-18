@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface ReportDefinitionHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/ReportDefinitionHandlerLocal";
-    public static final String JNDI_NAME = "ejb/ReportDefinitionHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/ReportDefinitionHandlerLocal";
+    String JNDI_NAME = "ejb/ReportDefinitionHandlerLocal";
 
-    public ReportDefinitionHandlerLocal create() throws CreateException;
+    ReportDefinitionHandlerLocal create() throws CreateException;
 
 }

@@ -37,8 +37,7 @@ import java.util.Map;
  */
 public interface ContextHandlerLocal extends EJBLocalObject {
 
-    public String create(String xmlData,
-                                   SecurityContext securityContext)
+    String create(String xmlData, SecurityContext securityContext)
             throws MissingMethodParameterException,
             ContextNameNotUniqueException,
             AuthenticationException,
@@ -55,7 +54,7 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             XmlCorruptedException,
             XmlSchemaValidationException;
 
-    public String create(String xmlData, String authHandle, Boolean restAccess)
+    String create(String xmlData, String authHandle, Boolean restAccess)
             throws MissingMethodParameterException,
             ContextNameNotUniqueException,
             AuthenticationException,
@@ -72,7 +71,7 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             XmlCorruptedException,
             XmlSchemaValidationException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws ContextNotFoundException,
             ContextNotEmptyException,
             MissingMethodParameterException,
@@ -81,7 +80,7 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             SystemException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             ContextNotEmptyException,
             MissingMethodParameterException,
@@ -90,33 +89,29 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             SystemException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieveProperties(String id,
-                                               SecurityContext securityContext)
+    String retrieveProperties(String id, SecurityContext securityContext)
             throws ContextNotFoundException,
             SystemException;
 
-    public String retrieveProperties(String id, String authHandle,
-                                               Boolean restAccess)
+    String retrieveProperties(String id, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             SystemException;
 
-    public String update(String id, String xmlData,
-                                   SecurityContext securityContext)
+    String update(String id, String xmlData, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             InvalidContentException,
@@ -131,8 +126,7 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             MissingElementValueException,
             SystemException;
 
-    public String update(String id, String xmlData, String authHandle,
-                                   Boolean restAccess)
+    String update(String id, String xmlData, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             InvalidContentException,
@@ -147,10 +141,8 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             MissingElementValueException,
             SystemException;
 
-    public EscidocBinaryContent retrieveResource(String id,
-                                                                                        String resourceName,
-                                                                                        Map parameters,
-                                                                                        SecurityContext securityContext)
+    EscidocBinaryContent retrieveResource(String id, String resourceName, Map parameters,
+                                          SecurityContext securityContext)
             throws OperationNotFoundException,
             ContextNotFoundException,
             MissingMethodParameterException,
@@ -158,11 +150,8 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             SystemException;
 
-    public EscidocBinaryContent retrieveResource(String id,
-                                                                                        String resourceName,
-                                                                                        Map parameters,
-                                                                                        String authHandle,
-                                                                                        Boolean restAccess)
+    EscidocBinaryContent retrieveResource(String id, String resourceName, Map parameters, String authHandle,
+                                          Boolean restAccess)
             throws OperationNotFoundException,
             ContextNotFoundException,
             MissingMethodParameterException,
@@ -170,24 +159,21 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             SystemException;
 
-    public String retrieveResources(String id,
-                                              SecurityContext securityContext)
+    String retrieveResources(String id, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieveResources(String id, String authHandle,
-                                              Boolean restAccess)
+    String retrieveResources(String id, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String open(String id, String taskParam,
-                                 SecurityContext securityContext)
+    String open(String id, String taskParam, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             InvalidStatusException,
@@ -199,8 +185,7 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             LockingException,
             StreamNotFoundException;
 
-    public String open(String id, String taskParam, String authHandle,
-                                 Boolean restAccess)
+    String open(String id, String taskParam, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             InvalidStatusException,
@@ -212,8 +197,7 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             LockingException,
             StreamNotFoundException;
 
-    public String close(String id, String taskParam,
-                                  SecurityContext securityContext)
+    String close(String id, String taskParam, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
@@ -225,8 +209,7 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             LockingException,
             StreamNotFoundException;
 
-    public String close(String id, String taskParam, String authHandle,
-                                  Boolean restAccess)
+    String close(String id, String taskParam, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
@@ -238,30 +221,25 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             LockingException,
             StreamNotFoundException;
 
-    public String retrieveContexts(Map filter,
-                                             SecurityContext securityContext)
+    String retrieveContexts(Map filter, SecurityContext securityContext)
             throws MissingMethodParameterException,
             SystemException;
 
-    public String retrieveContexts(Map filter, String authHandle,
-                                             Boolean restAccess)
+    String retrieveContexts(Map filter, String authHandle, Boolean restAccess)
             throws MissingMethodParameterException,
             SystemException;
 
-    public String retrieveMembers(String id, Map filter,
-                                            SecurityContext securityContext)
+    String retrieveMembers(String id, Map filter, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             SystemException;
 
-    public String retrieveMembers(String id, Map filter, String authHandle,
-                                            Boolean restAccess)
+    String retrieveMembers(String id, Map filter, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             SystemException;
 
-    public String retrieveAdminDescriptor(String id, String name,
-                                                    SecurityContext securityContext)
+    String retrieveAdminDescriptor(String id, String name, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
@@ -269,8 +247,7 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             SystemException,
             AdminDescriptorNotFoundException;
 
-    public String retrieveAdminDescriptor(String id, String name,
-                                                    String authHandle, Boolean restAccess)
+    String retrieveAdminDescriptor(String id, String name, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
@@ -278,16 +255,14 @@ public interface ContextHandlerLocal extends EJBLocalObject {
             SystemException,
             AdminDescriptorNotFoundException;
 
-    public String retrieveAdminDescriptors(String id,
-                                                     SecurityContext securityContext)
+    String retrieveAdminDescriptors(String id, SecurityContext securityContext)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieveAdminDescriptors(String id, String authHandle,
-                                                     Boolean restAccess)
+    String retrieveAdminDescriptors(String id, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,

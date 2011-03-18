@@ -23,8 +23,7 @@ import java.util.Map;
  */
 public interface AggregationDefinitionHandlerRemote extends EJBObject {
 
-    public String create(String xmlData,
-                                   SecurityContext securityContext)
+    String create(String xmlData, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             XmlSchemaValidationException,
@@ -33,7 +32,7 @@ public interface AggregationDefinitionHandlerRemote extends EJBObject {
             ScopeNotFoundException,
             SystemException, RemoteException;
 
-    public String create(String xmlData, String authHandle, Boolean restAccess)
+    String create(String xmlData, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             XmlSchemaValidationException,
@@ -42,45 +41,42 @@ public interface AggregationDefinitionHandlerRemote extends EJBObject {
             ScopeNotFoundException,
             SystemException, RemoteException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             AggregationDefinitionNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             AggregationDefinitionNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             AggregationDefinitionNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             AggregationDefinitionNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveAggregationDefinitions(Map parameters,
-                                                           SecurityContext securityContext)
+    String retrieveAggregationDefinitions(Map parameters, SecurityContext securityContext)
             throws InvalidSearchQueryException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveAggregationDefinitions(Map parameters, String authHandle,
-                                                           Boolean restAccess)
+    String retrieveAggregationDefinitions(Map parameters, String authHandle, Boolean restAccess)
             throws InvalidSearchQueryException,
             MissingMethodParameterException,
             AuthenticationException,

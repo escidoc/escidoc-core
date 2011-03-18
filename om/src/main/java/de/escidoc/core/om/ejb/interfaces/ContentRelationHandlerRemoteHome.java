@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface ContentRelationHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/ContentRelationHandler";
-    public static final String JNDI_NAME = "ejb/ContentRelationHandler";
+    String COMP_NAME = "java:comp/env/ejb/ContentRelationHandler";
+    String JNDI_NAME = "ejb/ContentRelationHandler";
 
-    public ContentRelationHandlerRemote create()
+    ContentRelationHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

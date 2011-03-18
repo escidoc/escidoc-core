@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface SetDefinitionHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/SetDefinitionHandler";
-    public static final String JNDI_NAME = "ejb/SetDefinitionHandler";
+    String COMP_NAME = "java:comp/env/ejb/SetDefinitionHandler";
+    String JNDI_NAME = "ejb/SetDefinitionHandler";
 
-    public SetDefinitionHandlerRemote create()
+    SetDefinitionHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

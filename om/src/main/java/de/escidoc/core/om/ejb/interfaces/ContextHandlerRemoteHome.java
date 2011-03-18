@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface ContextHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/ContextHandler";
-    public static final String JNDI_NAME = "ejb/ContextHandler";
+    String COMP_NAME = "java:comp/env/ejb/ContextHandler";
+    String JNDI_NAME = "ejb/ContextHandler";
 
-    public ContextHandlerRemote create()
+    ContextHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

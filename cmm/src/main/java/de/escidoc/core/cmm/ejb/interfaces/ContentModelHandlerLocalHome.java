@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface ContentModelHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/ContentModelHandlerLocal";
-    public static final String JNDI_NAME = "ejb/ContentModelHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/ContentModelHandlerLocal";
+    String JNDI_NAME = "ejb/ContentModelHandlerLocal";
 
-    public ContentModelHandlerLocal create() throws CreateException;
+    ContentModelHandlerLocal create() throws CreateException;
 
 }

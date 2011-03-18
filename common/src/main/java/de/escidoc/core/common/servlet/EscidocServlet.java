@@ -898,7 +898,7 @@ public class EscidocServlet extends HttpServlet {
         throws IOException {
 
         // Authentication via browser cookie
-        final Cookie cookie = EscidocServlet.getCookie(COOKIE_LOGIN, request);
+        final Cookie cookie = getCookie(COOKIE_LOGIN, request);
         if (cookie != null) {
             final String handle = cookie.getValue();
             if (LOGGER.isDebugEnabled()) {

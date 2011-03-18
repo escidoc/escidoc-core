@@ -31,8 +31,7 @@ import java.util.Map;
  */
 public interface ContentRelationHandlerRemote extends EJBObject {
 
-    public String create(String xmlData,
-                                   SecurityContext securityContext)
+    String create(String xmlData, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingAttributeValueException,
@@ -43,7 +42,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             RelationPredicateNotFoundException,
             SystemException, RemoteException;
 
-    public String create(String xmlData, String authHandle, Boolean restAccess)
+    String create(String xmlData, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingAttributeValueException,
@@ -54,22 +53,21 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             RelationPredicateNotFoundException,
             SystemException, RemoteException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
             SystemException,
             LockingException, RemoteException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
             SystemException,
             LockingException, RemoteException;
 
-    public String lock(String id, String param,
-                                 SecurityContext securityContext)
+    String lock(String id, String param, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -81,8 +79,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             InvalidXmlException,
             InvalidStatusException, RemoteException;
 
-    public String lock(String id, String param, String authHandle,
-                                 Boolean restAccess)
+    String lock(String id, String param, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -94,8 +91,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             InvalidXmlException,
             InvalidStatusException, RemoteException;
 
-    public String unlock(String id, String param,
-                                   SecurityContext securityContext)
+    String unlock(String id, String param, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -107,8 +103,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             InvalidContentException,
             InvalidStatusException, RemoteException;
 
-    public String unlock(String id, String param, String authHandle,
-                                   Boolean restAccess)
+    String unlock(String id, String param, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -120,8 +115,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             InvalidContentException,
             InvalidStatusException, RemoteException;
 
-    public String submit(String id, String param,
-                                   SecurityContext securityContext)
+    String submit(String id, String param, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -133,8 +127,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             InvalidXmlException,
             InvalidContentException, RemoteException;
 
-    public String submit(String id, String param, String authHandle,
-                                   Boolean restAccess)
+    String submit(String id, String param, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -146,8 +139,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             InvalidXmlException,
             InvalidContentException, RemoteException;
 
-    public String release(String id, String param,
-                                    SecurityContext securityContext)
+    String release(String id, String param, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -159,8 +151,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             InvalidXmlException,
             InvalidContentException, RemoteException;
 
-    public String release(String id, String param, String authHandle,
-                                    Boolean restAccess)
+    String release(String id, String param, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -172,8 +163,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             InvalidXmlException,
             InvalidContentException, RemoteException;
 
-    public String revise(String id, String param,
-                                   SecurityContext securityContext)
+    String revise(String id, String param, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -185,8 +175,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             XmlCorruptedException,
             InvalidContentException, RemoteException;
 
-    public String revise(String id, String param, String authHandle,
-                                   Boolean restAccess)
+    String revise(String id, String param, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -198,45 +187,39 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             XmlCorruptedException,
             InvalidContentException, RemoteException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveContentRelations(Map parameterMap,
-                                                     SecurityContext securityContext)
+    String retrieveContentRelations(Map parameterMap, SecurityContext securityContext)
             throws InvalidSearchQueryException,
             SystemException, RemoteException;
 
-    public String retrieveContentRelations(Map parameterMap, String authHandle,
-                                                     Boolean restAccess)
+    String retrieveContentRelations(Map parameterMap, String authHandle, Boolean restAccess)
             throws InvalidSearchQueryException,
             SystemException, RemoteException;
 
-    public String retrieveProperties(String id,
-                                               SecurityContext securityContext)
+    String retrieveProperties(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveProperties(String id, String authHandle,
-                                               Boolean restAccess)
+    String retrieveProperties(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
             SystemException, RemoteException;
 
-    public String update(String id, String xmlData,
-                                   SecurityContext securityContext)
+    String update(String id, String xmlData, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -252,8 +235,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public String update(String id, String xmlData, String authHandle,
-                                   Boolean restAccess)
+    String update(String id, String xmlData, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -269,8 +251,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             MissingMethodParameterException,
             RemoteException;
 
-    public String assignObjectPid(String id, String taskParam,
-                                            SecurityContext securityContext)
+    String assignObjectPid(String id, String taskParam, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -282,8 +263,7 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             PidAlreadyAssignedException,
             RemoteException;
 
-    public String assignObjectPid(String id, String taskParam,
-                                            String authHandle, Boolean restAccess)
+    String assignObjectPid(String id, String taskParam, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
@@ -295,57 +275,50 @@ public interface ContentRelationHandlerRemote extends EJBObject {
             PidAlreadyAssignedException,
             RemoteException;
 
-    public String retrieveMdRecords(String id,
-                                              SecurityContext securityContext)
+    String retrieveMdRecords(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveMdRecords(String id, String authHandle,
-                                              Boolean restAccess)
+    String retrieveMdRecords(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveRegisteredPredicates(
-            SecurityContext securityContext)
+    String retrieveRegisteredPredicates(SecurityContext securityContext)
             throws InvalidContentException,
             InvalidXmlException,
             SystemException, RemoteException;
 
-    public String retrieveRegisteredPredicates(String authHandle, Boolean restAccess)
+    String retrieveRegisteredPredicates(String authHandle, Boolean restAccess)
             throws InvalidContentException,
             InvalidXmlException,
             SystemException, RemoteException;
 
-    public String retrieveMdRecord(String id, String name,
-                                             SecurityContext securityContext)
+    String retrieveMdRecord(String id, String name, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
             MdRecordNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveMdRecord(String id, String name, String authHandle,
-                                             Boolean restAccess)
+    String retrieveMdRecord(String id, String name, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ContentRelationNotFoundException,
             MdRecordNotFoundException,
             SystemException, RemoteException;
 
-    public String retrieveResources(String id,
-                                              SecurityContext securityContext)
+    String retrieveResources(String id, SecurityContext securityContext)
             throws ContentRelationNotFoundException,
             AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveResources(String id, String authHandle,
-                                              Boolean restAccess)
+    String retrieveResources(String id, String authHandle, Boolean restAccess)
             throws ContentRelationNotFoundException,
             AuthenticationException,
             AuthorizationException,

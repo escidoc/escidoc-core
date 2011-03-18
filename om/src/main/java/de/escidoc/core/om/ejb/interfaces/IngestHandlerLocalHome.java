@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface IngestHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/IngestHandlerLocal";
-    public static final String JNDI_NAME = "ejb/IngestHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/IngestHandlerLocal";
+    String JNDI_NAME = "ejb/IngestHandlerLocal";
 
-    public IngestHandlerLocal create() throws CreateException;
+    IngestHandlerLocal create() throws CreateException;
 
 }

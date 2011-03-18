@@ -977,8 +977,7 @@ public class UserAccountHandler
 
         final Date creationDate = new Date();
         grant.setCreationDate(creationDate);
-        grant.setUserAccountByCreatorId(UserAccountHandler
-            .getAuthenticatedUser(dao));
+        grant.setUserAccountByCreatorId(getAuthenticatedUser(dao));
 
         final String roleId = roleLinkHandler.getObjid();
         final EscidocRole role = roleDao.retrieveRole(roleId);
@@ -1267,7 +1266,7 @@ public class UserAccountHandler
         }
 
         final UserAccount authenticateUser =
-            UserAccountHandler.getAuthenticatedUser(dao);
+            getAuthenticatedUser(dao);
         try {
             for (final String grantId : grantIds) {
                 // set revoke-date, -user and -remark
@@ -2026,8 +2025,7 @@ public class UserAccountHandler
 
         userAccount
             .setLastModificationDate(new Date());
-        userAccount.setUserAccountByModifiedById(UserAccountHandler
-            .getAuthenticatedUser(dao));
+        userAccount.setUserAccountByModifiedById(getAuthenticatedUser(dao));
     }
 
     /**

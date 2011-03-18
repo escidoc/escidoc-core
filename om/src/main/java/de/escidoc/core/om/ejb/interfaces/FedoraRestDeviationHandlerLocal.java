@@ -14,44 +14,32 @@ import java.util.Map;
  */
 public interface FedoraRestDeviationHandlerLocal extends EJBLocalObject {
 
-    public EscidocBinaryContent getDatastreamDissemination(String pid,
-                                                                                                  String dsID,
-                                                                                                  Map parameters,
-                                                                                                  SecurityContext securityContext)
+    EscidocBinaryContent getDatastreamDissemination(String pid, String dsID, Map parameters,
+                                                    SecurityContext securityContext)
             throws Exception;
 
-    public EscidocBinaryContent getDatastreamDissemination(String pid,
-                                                                                                  String dsID,
-                                                                                                  Map parameters,
-                                                                                                  String authHandle,
-                                                                                                  Boolean restAccess)
+    EscidocBinaryContent getDatastreamDissemination(String pid, String dsID, Map parameters, String authHandle,
+                                                    Boolean restAccess)
             throws Exception;
 
-    public String export(String pid, Map parameters,
-                                   SecurityContext securityContext)
+    String export(String pid, Map parameters, SecurityContext securityContext)
             throws Exception;
 
-    public String export(String pid, Map parameters, String authHandle,
-                                   Boolean restAccess) throws Exception;
+    String export(String pid, Map parameters, String authHandle, Boolean restAccess) throws Exception;
 
-    public void cache(String pid, String xml,
-                      SecurityContext securityContext) throws Exception;
+    void cache(String pid, String xml, SecurityContext securityContext) throws Exception;
 
-    public void cache(String pid, String xml, String authHandle,
-                      Boolean restAccess) throws Exception;
+    void cache(String pid, String xml, String authHandle, Boolean restAccess) throws Exception;
 
-    public void removeFromCache(String pid,
-                                SecurityContext securityContext)
+    void removeFromCache(String pid, SecurityContext securityContext)
             throws Exception;
 
-    public void removeFromCache(String pid, String authHandle, Boolean restAccess)
+    void removeFromCache(String pid, String authHandle, Boolean restAccess)
             throws Exception;
 
-    public void replaceInCache(String pid, String xml,
-                               SecurityContext securityContext)
+    void replaceInCache(String pid, String xml, SecurityContext securityContext)
             throws Exception;
 
-    public void replaceInCache(String pid, String xml, String authHandle,
-                               Boolean restAccess) throws Exception;
+    void replaceInCache(String pid, String xml, String authHandle, Boolean restAccess) throws Exception;
 
 }

@@ -8,8 +8,8 @@ package de.escidoc.core.aa.service;
  */
 public interface UserGroupHandlerService extends java.rmi.Remote {
 
-    public java.lang.String create(java.lang.String xmlData,
-                                   org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String create(java.lang.String xmlData,
+                            org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
             de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
@@ -18,7 +18,7 @@ public interface UserGroupHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
+    java.lang.String create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
             de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
@@ -27,155 +27,154 @@ public interface UserGroupHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public void delete(java.lang.String groupId, org.springframework.security.context.SecurityContext securityContext)
+    void delete(java.lang.String groupId, org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public void delete(java.lang.String groupId, java.lang.String authHandle, java.lang.Boolean restAccess)
+    void delete(java.lang.String groupId, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieve(java.lang.String groupId,
-                                     org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieve(java.lang.String groupId,
+                              org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieve(java.lang.String groupId, java.lang.String authHandle,
-                                     java.lang.Boolean restAccess)
+    java.lang.String retrieve(java.lang.String groupId, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String update(java.lang.String groupId, java.lang.String xmlData,
-                                   org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
-
-    public java.lang.String update(java.lang.String groupId, java.lang.String xmlData, java.lang.String authHandle,
-                                   java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
-
-    public void activate(java.lang.String groupId, java.lang.String taskParam,
-                         org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyActiveException,
-            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
-
-    public void activate(java.lang.String groupId, java.lang.String taskParam, java.lang.String authHandle,
-                         java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyActiveException,
-            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
-
-    public void deactivate(java.lang.String groupId, java.lang.String taskParam,
-                           org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyDeactiveException,
-            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
-
-    public void deactivate(java.lang.String groupId, java.lang.String taskParam, java.lang.String authHandle,
-                           java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyDeactiveException,
-            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
-
-    public java.lang.String retrieveCurrentGrants(java.lang.String userGroupId,
-                                                  org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
-
-    public java.lang.String retrieveCurrentGrants(java.lang.String userGroupId, java.lang.String authHandle,
-                                                  java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
-
-    public java.lang.String createGrant(java.lang.String groupId, java.lang.String grantXML,
-                                        org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException,
-            de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
-
-    public java.lang.String createGrant(java.lang.String groupId, java.lang.String grantXML,
-                                        java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException,
-            de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
-
-    public void revokeGrant(java.lang.String groupId, java.lang.String grantId, java.lang.String taskParam,
+    java.lang.String update(java.lang.String groupId, java.lang.String xmlData,
                             org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
+            de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
+            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
+            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
+            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
+            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
+            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
+            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+
+    java.lang.String update(java.lang.String groupId, java.lang.String xmlData, java.lang.String authHandle,
+                            java.lang.Boolean restAccess)
+            throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
+            de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
+            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
+            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
+            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
+            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
+            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
+            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+
+    void activate(java.lang.String groupId, java.lang.String taskParam,
+                  org.springframework.security.context.SecurityContext securityContext)
+            throws de.escidoc.core.common.exceptions.application.violated.AlreadyActiveException,
+            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
+            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
+            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
+            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
+            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
+            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
+            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+
+    void activate(java.lang.String groupId, java.lang.String taskParam, java.lang.String authHandle,
+                  java.lang.Boolean restAccess)
+            throws de.escidoc.core.common.exceptions.application.violated.AlreadyActiveException,
+            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
+            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
+            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
+            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
+            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
+            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
+            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+
+    void deactivate(java.lang.String groupId, java.lang.String taskParam,
+                    org.springframework.security.context.SecurityContext securityContext)
+            throws de.escidoc.core.common.exceptions.application.violated.AlreadyDeactiveException,
+            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
+            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
+            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
+            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
+            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
+            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
+            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+
+    void deactivate(java.lang.String groupId, java.lang.String taskParam, java.lang.String authHandle,
+                    java.lang.Boolean restAccess)
+            throws de.escidoc.core.common.exceptions.application.violated.AlreadyDeactiveException,
+            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
+            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
+            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
+            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
+            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
+            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
+            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+
+    java.lang.String retrieveCurrentGrants(java.lang.String userGroupId,
+                                           org.springframework.security.context.SecurityContext securityContext)
+            throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
+            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
+            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
+            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
+            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+
+    java.lang.String retrieveCurrentGrants(java.lang.String userGroupId, java.lang.String authHandle,
+                                           java.lang.Boolean restAccess)
+            throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
+            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
+            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
+            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
+            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+
+    java.lang.String createGrant(java.lang.String groupId, java.lang.String grantXML,
+                                 org.springframework.security.context.SecurityContext securityContext)
+            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
+            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
+            de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException,
+            de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
+            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
+            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
+            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
+            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+
+    java.lang.String createGrant(java.lang.String groupId, java.lang.String grantXML, java.lang.String authHandle,
+                                 java.lang.Boolean restAccess)
+            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
+            de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
+            de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException,
+            de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
+            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
+            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
+            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
+            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+
+    void revokeGrant(java.lang.String groupId, java.lang.String grantId, java.lang.String taskParam,
+                     org.springframework.security.context.SecurityContext securityContext)
+            throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
             de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
             de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedException,
             de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
@@ -185,8 +184,8 @@ public interface UserGroupHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public void revokeGrant(java.lang.String groupId, java.lang.String grantId, java.lang.String taskParam,
-                            java.lang.String authHandle, java.lang.Boolean restAccess)
+    void revokeGrant(java.lang.String groupId, java.lang.String grantId, java.lang.String taskParam,
+                     java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
             de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
             de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedException,
@@ -197,8 +196,8 @@ public interface UserGroupHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieveGrant(java.lang.String groupId, java.lang.String grantId,
-                                          org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieveGrant(java.lang.String groupId, java.lang.String grantId,
+                                   org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
             de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
@@ -206,8 +205,8 @@ public interface UserGroupHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieveGrant(java.lang.String groupId, java.lang.String grantId,
-                                          java.lang.String authHandle, java.lang.Boolean restAccess)
+    java.lang.String retrieveGrant(java.lang.String groupId, java.lang.String grantId, java.lang.String authHandle,
+                                   java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
             de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
             de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
@@ -215,20 +214,8 @@ public interface UserGroupHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public void revokeGrants(java.lang.String groupId, java.lang.String taskParam,
-                             org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
-
-    public void revokeGrants(java.lang.String groupId, java.lang.String taskParam, java.lang.String authHandle,
-                             java.lang.Boolean restAccess)
+    void revokeGrants(java.lang.String groupId, java.lang.String taskParam,
+                      org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
             de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
             de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedException,
@@ -239,34 +226,45 @@ public interface UserGroupHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieveResources(java.lang.String groupId,
-                                              org.springframework.security.context.SecurityContext securityContext)
+    void revokeGrants(java.lang.String groupId, java.lang.String taskParam, java.lang.String authHandle,
+                      java.lang.Boolean restAccess)
+            throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
+            de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
+            de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedException,
+            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
+            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
+            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
+            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
+            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
+            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+
+    java.lang.String retrieveResources(java.lang.String groupId,
+                                       org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieveResources(java.lang.String groupId, java.lang.String authHandle,
-                                              java.lang.Boolean restAccess)
+    java.lang.String retrieveResources(java.lang.String groupId, java.lang.String authHandle,
+                                       java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieveUserGroups(java.util.Map filter,
-                                               org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String retrieveUserGroups(java.util.Map filter,
+                                        org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String retrieveUserGroups(java.util.Map filter, java.lang.String authHandle,
-                                               java.lang.Boolean restAccess)
+    java.lang.String retrieveUserGroups(java.util.Map filter, java.lang.String authHandle, java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
             de.escidoc.core.common.exceptions.application.security.AuthorizationException,
             de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
             de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
 
-    public java.lang.String addSelectors(java.lang.String groupId, java.lang.String taskParam,
-                                         org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String addSelectors(java.lang.String groupId, java.lang.String taskParam,
+                                  org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException,
             de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
             de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
@@ -281,8 +279,8 @@ public interface UserGroupHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.violated.UserGroupHierarchyViolationException,
             java.rmi.RemoteException;
 
-    public java.lang.String addSelectors(java.lang.String groupId, java.lang.String taskParam,
-                                         java.lang.String authHandle, java.lang.Boolean restAccess)
+    java.lang.String addSelectors(java.lang.String groupId, java.lang.String taskParam, java.lang.String authHandle,
+                                  java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException,
             de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
             de.escidoc.core.common.exceptions.application.notfound.UserGroupNotFoundException,
@@ -297,8 +295,8 @@ public interface UserGroupHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.violated.UserGroupHierarchyViolationException,
             java.rmi.RemoteException;
 
-    public java.lang.String removeSelectors(java.lang.String groupId, java.lang.String taskParam,
-                                            org.springframework.security.context.SecurityContext securityContext)
+    java.lang.String removeSelectors(java.lang.String groupId, java.lang.String taskParam,
+                                     org.springframework.security.context.SecurityContext securityContext)
             throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,
@@ -311,8 +309,8 @@ public interface UserGroupHandlerService extends java.rmi.Remote {
             de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException,
             java.rmi.RemoteException;
 
-    public java.lang.String removeSelectors(java.lang.String groupId, java.lang.String taskParam,
-                                            java.lang.String authHandle, java.lang.Boolean restAccess)
+    java.lang.String removeSelectors(java.lang.String groupId, java.lang.String taskParam, java.lang.String authHandle,
+                                     java.lang.Boolean restAccess)
             throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
             de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
             de.escidoc.core.common.exceptions.application.security.AuthenticationException,

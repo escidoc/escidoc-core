@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface SetDefinitionHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/SetDefinitionHandlerLocal";
-    public static final String JNDI_NAME = "ejb/SetDefinitionHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/SetDefinitionHandlerLocal";
+    String JNDI_NAME = "ejb/SetDefinitionHandlerLocal";
 
-    public SetDefinitionHandlerLocal create() throws CreateException;
+    SetDefinitionHandlerLocal create() throws CreateException;
 
 }

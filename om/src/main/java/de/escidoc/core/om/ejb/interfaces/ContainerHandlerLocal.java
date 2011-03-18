@@ -48,8 +48,7 @@ import java.util.Map;
  */
 public interface ContainerHandlerLocal extends EJBLocalObject {
 
-    public String create(String xmlData,
-                                   SecurityContext securityContext)
+    String create(String xmlData, SecurityContext securityContext)
             throws ContextNotFoundException,
             ContentModelNotFoundException,
             InvalidContentException,
@@ -66,7 +65,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             MissingMdRecordException,
             XmlSchemaValidationException;
 
-    public String create(String xmlData, String authHandle, Boolean restAccess)
+    String create(String xmlData, String authHandle, Boolean restAccess)
             throws ContextNotFoundException,
             ContentModelNotFoundException,
             InvalidContentException,
@@ -83,7 +82,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             MissingMdRecordException,
             XmlSchemaValidationException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws ContainerNotFoundException,
             LockingException,
             InvalidStatusException,
@@ -92,7 +91,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthenticationException,
             AuthorizationException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             LockingException,
             InvalidStatusException,
@@ -101,23 +100,21 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthenticationException,
             AuthorizationException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws MissingMethodParameterException,
             ContainerNotFoundException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws MissingMethodParameterException,
             ContainerNotFoundException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String update(String id, String xmlData,
-                                   SecurityContext securityContext)
+    String update(String id, String xmlData, SecurityContext securityContext)
             throws ContainerNotFoundException,
             LockingException,
             InvalidContentException,
@@ -134,8 +131,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             MissingAttributeValueException,
             MissingMdRecordException;
 
-    public String update(String id, String xmlData, String authHandle,
-                                   Boolean restAccess)
+    String update(String id, String xmlData, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             LockingException,
             InvalidContentException,
@@ -152,38 +148,33 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             MissingAttributeValueException,
             MissingMdRecordException;
 
-    public String retrieveMembers(String id, Map filter,
-                                            SecurityContext securityContext)
+    String retrieveMembers(String id, Map filter, SecurityContext securityContext)
             throws ContainerNotFoundException,
             InvalidSearchQueryException,
             MissingMethodParameterException,
             SystemException;
 
-    public String retrieveMembers(String id, Map filter, String authHandle,
-                                            Boolean restAccess)
+    String retrieveMembers(String id, Map filter, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             InvalidSearchQueryException,
             MissingMethodParameterException,
             SystemException;
 
-    public String retrieveTocs(String id, Map filter,
-                                         SecurityContext securityContext)
+    String retrieveTocs(String id, Map filter, SecurityContext securityContext)
             throws ContainerNotFoundException,
             InvalidXmlException,
             InvalidSearchQueryException,
             MissingMethodParameterException,
             SystemException;
 
-    public String retrieveTocs(String id, Map filter, String authHandle,
-                                         Boolean restAccess)
+    String retrieveTocs(String id, Map filter, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             InvalidXmlException,
             InvalidSearchQueryException,
             MissingMethodParameterException,
             SystemException;
 
-    public String addMembers(String id, String taskParam,
-                                       SecurityContext securityContext)
+    String addMembers(String id, String taskParam, SecurityContext securityContext)
             throws ContainerNotFoundException,
             LockingException,
             InvalidContentException,
@@ -195,8 +186,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             MissingAttributeValueException;
 
-    public String addMembers(String id, String taskParam, String authHandle,
-                                       Boolean restAccess)
+    String addMembers(String id, String taskParam, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             LockingException,
             InvalidContentException,
@@ -208,8 +198,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             MissingAttributeValueException;
 
-    public String addTocs(String id, String taskParam,
-                                    SecurityContext securityContext)
+    String addTocs(String id, String taskParam, SecurityContext securityContext)
             throws ContainerNotFoundException,
             LockingException,
             InvalidContentException,
@@ -221,8 +210,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             MissingAttributeValueException;
 
-    public String addTocs(String id, String taskParam, String authHandle,
-                                    Boolean restAccess)
+    String addTocs(String id, String taskParam, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             LockingException,
             InvalidContentException,
@@ -234,8 +222,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             MissingAttributeValueException;
 
-    public String removeMembers(String id, String taskParam,
-                                          SecurityContext securityContext)
+    String removeMembers(String id, String taskParam, SecurityContext securityContext)
             throws ContextNotFoundException,
             LockingException,
             XmlSchemaValidationException,
@@ -248,124 +235,118 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             ContainerNotFoundException,
             InvalidContentException;
 
-    public String removeMembers(String id, String taskParam, String authHandle,
+    String removeMembers(String id, String taskParam, String authHandle, Boolean restAccess)
+            throws ContextNotFoundException,
+            LockingException,
+            XmlSchemaValidationException,
+            ItemNotFoundException,
+            InvalidContextStatusException,
+            InvalidItemStatusException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            ContainerNotFoundException,
+            InvalidContentException;
+
+    String retrieveMdRecord(String id, String mdRecordId, SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException;
+
+    String retrieveMdRecord(String id, String mdRecordId, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException;
+
+    String retrieveMdRecordContent(String id, String mdRecordId, SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException;
+
+    String retrieveMdRecordContent(String id, String mdRecordId, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException;
+
+    String retrieveDcRecordContent(String id, SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException;
+
+    String retrieveDcRecordContent(String id, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException;
+
+    String retrieveMdRecords(String id, SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException;
+
+    String retrieveMdRecords(String id, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException;
+
+    String retrieveProperties(String id, SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException;
+
+    String retrieveProperties(String id, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException;
+
+    String retrieveResources(String id, SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException;
+
+    String retrieveResources(String id, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException;
+
+    EscidocBinaryContent retrieveResource(String id, String resourceName, Map parameters,
+                                          SecurityContext securityContext)
+            throws SystemException,
+            ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            OperationNotFoundException;
+
+    EscidocBinaryContent retrieveResource(String id, String resourceName, Map parameters, String authHandle,
                                           Boolean restAccess)
-            throws ContextNotFoundException,
-            LockingException,
-            XmlSchemaValidationException,
-            ItemNotFoundException,
-            InvalidContextStatusException,
-            InvalidItemStatusException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException,
-            ContainerNotFoundException,
-            InvalidContentException;
-
-    public String retrieveMdRecord(String id, String mdRecordId,
-                                             SecurityContext securityContext)
-            throws ContainerNotFoundException,
-            MissingMethodParameterException,
-            MdRecordNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
-
-    public String retrieveMdRecord(String id, String mdRecordId,
-                                             String authHandle, Boolean restAccess)
-            throws ContainerNotFoundException,
-            MissingMethodParameterException,
-            MdRecordNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
-
-    public String retrieveMdRecordContent(String id, String mdRecordId,
-                                                    SecurityContext securityContext)
-            throws ContainerNotFoundException,
-            MdRecordNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException;
-
-    public String retrieveMdRecordContent(String id, String mdRecordId,
-                                                    String authHandle, Boolean restAccess)
-            throws ContainerNotFoundException,
-            MdRecordNotFoundException,
-            AuthenticationException,
-            AuthorizationException,
-            MissingMethodParameterException,
-            SystemException;
-
-    public String retrieveDcRecordContent(String id,
-                                                    SecurityContext securityContext)
-            throws ContainerNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
-
-    public String retrieveDcRecordContent(String id, String authHandle,
-                                                    Boolean restAccess)
-            throws ContainerNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
-
-    public String retrieveMdRecords(String id,
-                                              SecurityContext securityContext)
-            throws ContainerNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
-
-    public String retrieveMdRecords(String id, String authHandle,
-                                              Boolean restAccess)
-            throws ContainerNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
-
-    public String retrieveProperties(String id,
-                                               SecurityContext securityContext)
-            throws ContainerNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
-
-    public String retrieveProperties(String id, String authHandle,
-                                               Boolean restAccess)
-            throws ContainerNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
-
-    public String retrieveResources(String id,
-                                              SecurityContext securityContext)
-            throws ContainerNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
-
-    public String retrieveResources(String id, String authHandle,
-                                              Boolean restAccess)
-            throws ContainerNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            SystemException;
-
-    public EscidocBinaryContent retrieveResource(String id,
-                                                                                        String resourceName,
-                                                                                        Map parameters,
-                                                                                        SecurityContext securityContext)
             throws SystemException,
             ContainerNotFoundException,
             MissingMethodParameterException,
@@ -373,84 +354,63 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             OperationNotFoundException;
 
-    public EscidocBinaryContent retrieveResource(String id,
-                                                                                        String resourceName,
-                                                                                        Map parameters,
-                                                                                        String authHandle,
-                                                                                        Boolean restAccess)
-            throws SystemException,
-            ContainerNotFoundException,
-            MissingMethodParameterException,
-            AuthenticationException,
-            AuthorizationException,
-            OperationNotFoundException;
-
-    public String retrieveStructMap(String id,
-                                              SecurityContext securityContext)
+    String retrieveStructMap(String id, SecurityContext securityContext)
             throws ContainerNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieveStructMap(String id, String authHandle,
-                                              Boolean restAccess)
+    String retrieveStructMap(String id, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieveVersionHistory(String id,
-                                                   SecurityContext securityContext)
+    String retrieveVersionHistory(String id, SecurityContext securityContext)
             throws ContainerNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieveVersionHistory(String id, String authHandle,
-                                                   Boolean restAccess)
+    String retrieveVersionHistory(String id, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieveParents(String id,
-                                            SecurityContext securityContext)
+    String retrieveParents(String id, SecurityContext securityContext)
             throws ContainerNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieveParents(String id, String authHandle,
-                                            Boolean restAccess)
+    String retrieveParents(String id, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieveRelations(String id,
-                                              SecurityContext securityContext)
+    String retrieveRelations(String id, SecurityContext securityContext)
             throws ContainerNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieveRelations(String id, String authHandle,
-                                              Boolean restAccess)
+    String retrieveRelations(String id, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String release(String id, String lastModified,
-                                    SecurityContext securityContext)
+    String release(String id, String lastModified, SecurityContext securityContext)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -462,8 +422,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             OptimisticLockingException,
             InvalidXmlException;
 
-    public String release(String id, String lastModified, String authHandle,
-                                    Boolean restAccess)
+    String release(String id, String lastModified, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -475,8 +434,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             OptimisticLockingException,
             InvalidXmlException;
 
-    public String submit(String id, String lastModified,
-                                   SecurityContext securityContext)
+    String submit(String id, String lastModified, SecurityContext securityContext)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -488,8 +446,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             ReadonlyVersionException,
             InvalidXmlException;
 
-    public String submit(String id, String lastModified, String authHandle,
-                                   Boolean restAccess)
+    String submit(String id, String lastModified, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -501,8 +458,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             ReadonlyVersionException,
             InvalidXmlException;
 
-    public String withdraw(String id, String lastModified,
-                                     SecurityContext securityContext)
+    String withdraw(String id, String lastModified, SecurityContext securityContext)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -515,8 +471,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             ReadonlyVersionException,
             InvalidXmlException;
 
-    public String withdraw(String id, String lastModified, String authHandle,
-                                     Boolean restAccess)
+    String withdraw(String id, String lastModified, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -529,8 +484,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             ReadonlyVersionException,
             InvalidXmlException;
 
-    public String revise(String id, String lastModified,
-                                   SecurityContext securityContext)
+    String revise(String id, String lastModified, SecurityContext securityContext)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -540,8 +494,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             ReadonlyVersionException,
             XmlCorruptedException;
 
-    public String revise(String id, String lastModified, String authHandle,
-                                   Boolean restAccess)
+    String revise(String id, String lastModified, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -551,8 +504,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             ReadonlyVersionException,
             XmlCorruptedException;
 
-    public String lock(String id, String lastModified,
-                                 SecurityContext securityContext)
+    String lock(String id, String lastModified, SecurityContext securityContext)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -563,8 +515,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             InvalidStatusException,
             InvalidXmlException;
 
-    public String lock(String id, String lastModified, String authHandle,
-                                 Boolean restAccess)
+    String lock(String id, String lastModified, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -575,8 +526,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             InvalidStatusException,
             InvalidXmlException;
 
-    public String unlock(String id, String lastModified,
-                                   SecurityContext securityContext)
+    String unlock(String id, String lastModified, SecurityContext securityContext)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -587,8 +537,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             InvalidStatusException,
             InvalidXmlException;
 
-    public String unlock(String id, String lastModified, String authHandle,
-                                   Boolean restAccess)
+    String unlock(String id, String lastModified, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -599,8 +548,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             InvalidStatusException,
             InvalidXmlException;
 
-    public String moveToContext(String containerId, String taskParam,
-                                          SecurityContext securityContext)
+    String moveToContext(String containerId, String taskParam, SecurityContext securityContext)
             throws ContainerNotFoundException,
             ContextNotFoundException,
             InvalidContentException,
@@ -610,8 +558,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             SystemException;
 
-    public String moveToContext(String containerId, String taskParam,
-                                          String authHandle, Boolean restAccess)
+    String moveToContext(String containerId, String taskParam, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             ContextNotFoundException,
             InvalidContentException,
@@ -621,8 +568,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             SystemException;
 
-    public String createItem(String containerId, String xmlData,
-                                       SecurityContext securityContext)
+    String createItem(String containerId, String xmlData, SecurityContext securityContext)
             throws ContainerNotFoundException,
             MissingContentException,
             ContextNotFoundException,
@@ -645,8 +591,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             MissingMdRecordException,
             InvalidStatusException;
 
-    public String createItem(String containerId, String xmlData,
-                                       String authHandle, Boolean restAccess)
+    String createItem(String containerId, String xmlData, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             MissingContentException,
             ContextNotFoundException,
@@ -669,8 +614,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             MissingMdRecordException,
             InvalidStatusException;
 
-    public String createContainer(String containerId, String xmlData,
-                                            SecurityContext securityContext)
+    String createContainer(String containerId, String xmlData, SecurityContext securityContext)
             throws MissingMethodParameterException,
             ContainerNotFoundException,
             LockingException,
@@ -689,8 +633,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             SystemException,
             MissingMdRecordException;
 
-    public String createContainer(String containerId, String xmlData,
-                                            String authHandle, Boolean restAccess)
+    String createContainer(String containerId, String xmlData, String authHandle, Boolean restAccess)
             throws MissingMethodParameterException,
             ContainerNotFoundException,
             LockingException,
@@ -709,22 +652,19 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             SystemException,
             MissingMdRecordException;
 
-    public String retrieveContainers(Map filter,
-                                               SecurityContext securityContext)
+    String retrieveContainers(Map filter, SecurityContext securityContext)
             throws MissingMethodParameterException,
             InvalidSearchQueryException,
             InvalidXmlException,
             SystemException;
 
-    public String retrieveContainers(Map filter, String authHandle,
-                                               Boolean restAccess)
+    String retrieveContainers(Map filter, String authHandle, Boolean restAccess)
             throws MissingMethodParameterException,
             InvalidSearchQueryException,
             InvalidXmlException,
             SystemException;
 
-    public String addContentRelations(String id, String param,
-                                                SecurityContext securityContext)
+    String addContentRelations(String id, String param, SecurityContext securityContext)
             throws SystemException,
             ContainerNotFoundException,
             OptimisticLockingException,
@@ -741,8 +681,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             MissingMethodParameterException;
 
-    public String addContentRelations(String id, String param,
-                                                String authHandle, Boolean restAccess)
+    String addContentRelations(String id, String param, String authHandle, Boolean restAccess)
             throws SystemException,
             ContainerNotFoundException,
             OptimisticLockingException,
@@ -759,8 +698,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             MissingMethodParameterException;
 
-    public String removeContentRelations(String id, String param,
-                                                   SecurityContext securityContext)
+    String removeContentRelations(String id, String param, SecurityContext securityContext)
             throws SystemException,
             ContainerNotFoundException,
             OptimisticLockingException,
@@ -773,8 +711,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthenticationException,
             AuthorizationException;
 
-    public String removeContentRelations(String id, String param,
-                                                   String authHandle, Boolean restAccess)
+    String removeContentRelations(String id, String param, String authHandle, Boolean restAccess)
             throws SystemException,
             ContainerNotFoundException,
             OptimisticLockingException,
@@ -787,8 +724,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             AuthenticationException,
             AuthorizationException;
 
-    public String assignObjectPid(String id, String param,
-                                            SecurityContext securityContext)
+    String assignObjectPid(String id, String param, SecurityContext securityContext)
             throws InvalidStatusException,
             ContainerNotFoundException,
             LockingException,
@@ -797,8 +733,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             SystemException,
             InvalidXmlException;
 
-    public String assignObjectPid(String id, String param, String authHandle,
-                                            Boolean restAccess)
+    String assignObjectPid(String id, String param, String authHandle, Boolean restAccess)
             throws InvalidStatusException,
             ContainerNotFoundException,
             LockingException,
@@ -807,8 +742,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             SystemException,
             InvalidXmlException;
 
-    public String assignVersionPid(String id, String param,
-                                             SecurityContext securityContext)
+    String assignVersionPid(String id, String param, SecurityContext securityContext)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,
@@ -818,8 +752,7 @@ public interface ContainerHandlerLocal extends EJBLocalObject {
             XmlCorruptedException,
             ReadonlyVersionException;
 
-    public String assignVersionPid(String id, String param, String authHandle,
-                                             Boolean restAccess)
+    String assignVersionPid(String id, String param, String authHandle, Boolean restAccess)
             throws ContainerNotFoundException,
             LockingException,
             MissingMethodParameterException,

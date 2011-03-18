@@ -1,5 +1,9 @@
 package de.escidoc.core.statistic.internal;
 
+import de.escidoc.core.statistic.LinkRequired;
+import de.escidoc.core.statistic.Parameter;
+import de.escidoc.core.statistic.StatisticRecord;
+
 import javax.xml.bind.annotation.XmlRegistry;
 
 /**
@@ -14,27 +18,27 @@ import javax.xml.bind.annotation.XmlRegistry;
 public class ObjectFactory {
 
     /**
-     * Creates a new instance of {@link de.escidoc.core.statistic.LinkRequired}.
+     * Creates a new instance of {@link LinkRequired}.
      *
-     * @return a new instance of {@link de.escidoc.core.statistic.LinkRequired}
+     * @return a new instance of {@link LinkRequired}
      */
     public LinkRequiredImpl createLinkRequired() {
         return new LinkRequiredImpl();
     }
 
     /**
-     * Creates a new instance of {@link de.escidoc.core.statistic.Parameter}.
+     * Creates a new instance of {@link Parameter}.
      *
-     * @return a new instance of {@link de.escidoc.core.statistic.Parameter}.
+     * @return a new instance of {@link Parameter}.
      */
     public ParameterImpl createParameter() {
         return new ParameterImpl();
     }
 
     /**
-     * Creates a new instance of {@link de.escidoc.core.statistic.StatisticRecord}.
+     * Creates a new instance of {@link StatisticRecord}.
      *
-     * @return a new instance of {@link de.escidoc.core.statistic.StatisticRecord}
+     * @return a new instance of {@link StatisticRecord}
      */
     public StatisticRecordImpl createStatisticRecord(){
         return new StatisticRecordImpl();

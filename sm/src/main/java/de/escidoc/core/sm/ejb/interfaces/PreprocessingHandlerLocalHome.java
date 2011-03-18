@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface PreprocessingHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/PreprocessingHandlerLocal";
-    public static final String JNDI_NAME = "ejb/PreprocessingHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/PreprocessingHandlerLocal";
+    String JNDI_NAME = "ejb/PreprocessingHandlerLocal";
 
-    public PreprocessingHandlerLocal create() throws CreateException;
+    PreprocessingHandlerLocal create() throws CreateException;
 
 }

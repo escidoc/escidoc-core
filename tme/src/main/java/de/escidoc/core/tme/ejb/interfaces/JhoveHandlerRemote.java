@@ -20,8 +20,7 @@ import java.rmi.RemoteException;
  */
 public interface JhoveHandlerRemote extends EJBObject {
 
-    public String extract(String requests,
-                                    SecurityContext securityContext)
+    String extract(String requests, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             XmlCorruptedException,
@@ -30,8 +29,7 @@ public interface JhoveHandlerRemote extends EJBObject {
             SystemException,
             TmeException, RemoteException;
 
-    public String extract(String requests, String authHandle,
-                                    Boolean restAccess)
+    String extract(String requests, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             XmlCorruptedException,

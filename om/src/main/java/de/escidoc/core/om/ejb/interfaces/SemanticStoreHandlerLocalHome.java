@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface SemanticStoreHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/SemanticStoreHandlerLocal";
-    public static final String JNDI_NAME = "ejb/SemanticStoreHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/SemanticStoreHandlerLocal";
+    String JNDI_NAME = "ejb/SemanticStoreHandlerLocal";
 
-    public SemanticStoreHandlerLocal create() throws CreateException;
+    SemanticStoreHandlerLocal create() throws CreateException;
 
 }

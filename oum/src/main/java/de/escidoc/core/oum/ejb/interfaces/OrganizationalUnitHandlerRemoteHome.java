@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface OrganizationalUnitHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/OrganizationalUnitHandler";
-    public static final String JNDI_NAME = "ejb/OrganizationalUnitHandler";
+    String COMP_NAME = "java:comp/env/ejb/OrganizationalUnitHandler";
+    String JNDI_NAME = "ejb/OrganizationalUnitHandler";
 
-    public OrganizationalUnitHandlerRemote create()
+    OrganizationalUnitHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

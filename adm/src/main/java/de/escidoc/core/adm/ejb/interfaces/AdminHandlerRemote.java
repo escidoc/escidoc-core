@@ -18,97 +18,89 @@ import java.rmi.RemoteException;
  */
 public interface AdminHandlerRemote extends EJBObject {
 
-    public String deleteObjects(String taskParam,
-                                          SecurityContext securityContext)
+    String deleteObjects(String taskParam, SecurityContext securityContext)
             throws InvalidXmlException,
             SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String deleteObjects(String taskParam, String authHandle,
-                                          Boolean restAccess)
+    String deleteObjects(String taskParam, String authHandle, Boolean restAccess)
             throws InvalidXmlException,
             SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String getPurgeStatus(SecurityContext securityContext)
+    String getPurgeStatus(SecurityContext securityContext)
             throws SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String getPurgeStatus(String authHandle, Boolean restAccess)
+    String getPurgeStatus(String authHandle, Boolean restAccess)
             throws SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String getReindexStatus(SecurityContext securityContext)
+    String getReindexStatus(SecurityContext securityContext)
             throws SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String getReindexStatus(String authHandle, Boolean restAccess)
+    String getReindexStatus(String authHandle, Boolean restAccess)
             throws SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public void decreaseReindexStatus(String objectTypeXml,
-                                      SecurityContext securityContext)
+    void decreaseReindexStatus(String objectTypeXml, SecurityContext securityContext)
             throws InvalidXmlException,
             SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public void decreaseReindexStatus(String objectTypeXml, String authHandle,
-                                      Boolean restAccess)
+    void decreaseReindexStatus(String objectTypeXml, String authHandle, Boolean restAccess)
             throws InvalidXmlException,
             SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String reindex(String clearIndex, String indexNamePrefix,
-                                    SecurityContext securityContext)
+    String reindex(String clearIndex, String indexNamePrefix, SecurityContext securityContext)
             throws SystemException,
             InvalidSearchQueryException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String reindex(String clearIndex, String indexNamePrefix,
-                                    String authHandle, Boolean restAccess)
+    String reindex(String clearIndex, String indexNamePrefix, String authHandle, Boolean restAccess)
             throws SystemException,
             InvalidSearchQueryException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String getIndexConfiguration(SecurityContext securityContext)
+    String getIndexConfiguration(SecurityContext securityContext)
             throws SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String getIndexConfiguration(String authHandle, Boolean restAccess)
+    String getIndexConfiguration(String authHandle, Boolean restAccess)
             throws SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String getRepositoryInfo(SecurityContext securityContext)
+    String getRepositoryInfo(SecurityContext securityContext)
             throws SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String getRepositoryInfo(String authHandle, Boolean restAccess)
+    String getRepositoryInfo(String authHandle, Boolean restAccess)
             throws SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String loadExamples(String type,
-                                         SecurityContext securityContext)
+    String loadExamples(String type, SecurityContext securityContext)
             throws InvalidSearchQueryException,
             SystemException,
             AuthenticationException,
             AuthorizationException, RemoteException;
 
-    public String loadExamples(String type, String authHandle,
-                                         Boolean restAccess)
+    String loadExamples(String type, String authHandle, Boolean restAccess)
             throws InvalidSearchQueryException,
             SystemException,
             AuthenticationException,

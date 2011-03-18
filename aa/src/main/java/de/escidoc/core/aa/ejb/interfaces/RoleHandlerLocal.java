@@ -25,8 +25,7 @@ import java.util.Map;
  */
 public interface RoleHandlerLocal extends EJBLocalObject {
 
-    public String create(String xmlData,
-                                   SecurityContext securityContext)
+    String create(String xmlData, SecurityContext securityContext)
             throws UniqueConstraintViolationException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -35,7 +34,7 @@ public interface RoleHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             SystemException;
 
-    public String create(String xmlData, String authHandle, Boolean restAccess)
+    String create(String xmlData, String authHandle, Boolean restAccess)
             throws UniqueConstraintViolationException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -44,7 +43,7 @@ public interface RoleHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             SystemException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -52,7 +51,7 @@ public interface RoleHandlerLocal extends EJBLocalObject {
             RoleInUseViolationException,
             SystemException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
@@ -60,39 +59,35 @@ public interface RoleHandlerLocal extends EJBLocalObject {
             RoleInUseViolationException,
             SystemException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws RoleNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws RoleNotFoundException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException;
 
-    public String retrieveResources(String id,
-                                              SecurityContext securityContext)
+    String retrieveResources(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             RoleNotFoundException,
             SystemException;
 
-    public String retrieveResources(String id, String authHandle,
-                                              Boolean restAccess)
+    String retrieveResources(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             MissingMethodParameterException,
             RoleNotFoundException,
             SystemException;
 
-    public String update(String id, String xmlData,
-                                   SecurityContext securityContext)
+    String update(String id, String xmlData, SecurityContext securityContext)
             throws RoleNotFoundException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -104,8 +99,7 @@ public interface RoleHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             SystemException;
 
-    public String update(String id, String xmlData, String authHandle,
-                                   Boolean restAccess)
+    String update(String id, String xmlData, String authHandle, Boolean restAccess)
             throws RoleNotFoundException,
             XmlCorruptedException,
             XmlSchemaValidationException,
@@ -117,16 +111,14 @@ public interface RoleHandlerLocal extends EJBLocalObject {
             AuthorizationException,
             SystemException;
 
-    public String retrieveRoles(Map filter,
-                                          SecurityContext securityContext)
+    String retrieveRoles(Map filter, SecurityContext securityContext)
             throws MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException,
             InvalidSearchQueryException;
 
-    public String retrieveRoles(Map filter, String authHandle,
-                                          Boolean restAccess)
+    String retrieveRoles(Map filter, String authHandle, Boolean restAccess)
             throws MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,

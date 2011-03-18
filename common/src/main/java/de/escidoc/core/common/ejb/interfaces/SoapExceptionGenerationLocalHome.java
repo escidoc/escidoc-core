@@ -31,9 +31,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface SoapExceptionGenerationLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/SoapExceptionGenerationLocal";
-    public static final String JNDI_NAME = "ejb/SoapExceptionGenerationLocal";
+    String COMP_NAME = "java:comp/env/ejb/SoapExceptionGenerationLocal";
+    String JNDI_NAME = "ejb/SoapExceptionGenerationLocal";
 
-    public SoapExceptionGenerationLocal create() throws CreateException;
+    SoapExceptionGenerationLocal create() throws CreateException;
 
 }

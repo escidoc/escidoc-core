@@ -19,8 +19,7 @@ import javax.ejb.EJBLocalObject;
  */
 public interface JhoveHandlerLocal extends EJBLocalObject {
 
-    public String extract(String requests,
-                                    SecurityContext securityContext)
+    String extract(String requests, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             XmlCorruptedException,
@@ -29,8 +28,7 @@ public interface JhoveHandlerLocal extends EJBLocalObject {
             SystemException,
             TmeException;
 
-    public String extract(String requests, String authHandle,
-                                    Boolean restAccess)
+    String extract(String requests, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             XmlCorruptedException,

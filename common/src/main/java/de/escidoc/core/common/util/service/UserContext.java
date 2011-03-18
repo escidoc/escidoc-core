@@ -137,8 +137,7 @@ public final class UserContext {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(StringUtility.format(
-                "Stored provided security context", UserContext
-                    .getSecurityContext()));
+                "Stored provided security context", getSecurityContext()));
         }
     }
 

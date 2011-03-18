@@ -14,21 +14,19 @@ import javax.ejb.EJBLocalObject;
  */
 public interface UserManagementWrapperLocal extends EJBLocalObject {
 
-    public void logout(SecurityContext securityContext)
+    void logout(SecurityContext securityContext)
             throws AuthenticationException,
             SystemException;
 
-    public void logout(String authHandle, Boolean restAccess)
+    void logout(String authHandle, Boolean restAccess)
             throws AuthenticationException,
             SystemException;
 
-    public void initHandleExpiryTimestamp(String handle,
-                                          SecurityContext securityContext)
+    void initHandleExpiryTimestamp(String handle, SecurityContext securityContext)
             throws AuthenticationException,
             SystemException;
 
-    public void initHandleExpiryTimestamp(String handle, String authHandle,
-                                          Boolean restAccess)
+    void initHandleExpiryTimestamp(String handle, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             SystemException;
 

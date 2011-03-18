@@ -25,8 +25,7 @@ import java.util.Map;
  */
 public interface ReportDefinitionHandlerRemote extends EJBObject {
 
-    public String create(String xmlData,
-                                   SecurityContext securityContext)
+    String create(String xmlData, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             XmlSchemaValidationException,
@@ -37,7 +36,7 @@ public interface ReportDefinitionHandlerRemote extends EJBObject {
             ScopeContextViolationException,
             SystemException, RemoteException;
 
-    public String create(String xmlData, String authHandle, Boolean restAccess)
+    String create(String xmlData, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             XmlSchemaValidationException,
@@ -48,53 +47,49 @@ public interface ReportDefinitionHandlerRemote extends EJBObject {
             ScopeContextViolationException,
             SystemException, RemoteException;
 
-    public void delete(String id, SecurityContext securityContext)
+    void delete(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ReportDefinitionNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public void delete(String id, String authHandle, Boolean restAccess)
+    void delete(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ReportDefinitionNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieve(String id,
-                                     SecurityContext securityContext)
+    String retrieve(String id, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ReportDefinitionNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieve(String id, String authHandle, Boolean restAccess)
+    String retrieve(String id, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ReportDefinitionNotFoundException,
             MissingMethodParameterException,
             SystemException, RemoteException;
 
-    public String retrieveReportDefinitions(Map filter,
-                                                      SecurityContext securityContext)
+    String retrieveReportDefinitions(Map filter, SecurityContext securityContext)
             throws InvalidSearchQueryException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String retrieveReportDefinitions(Map filter, String authHandle,
-                                                      Boolean restAccess)
+    String retrieveReportDefinitions(Map filter, String authHandle, Boolean restAccess)
             throws InvalidSearchQueryException,
             MissingMethodParameterException,
             AuthenticationException,
             AuthorizationException,
             SystemException, RemoteException;
 
-    public String update(String id, String xmlData,
-                                   SecurityContext securityContext)
+    String update(String id, String xmlData, SecurityContext securityContext)
             throws AuthenticationException,
             AuthorizationException,
             ReportDefinitionNotFoundException,
@@ -106,8 +101,7 @@ public interface ReportDefinitionHandlerRemote extends EJBObject {
             XmlCorruptedException,
             SystemException, RemoteException;
 
-    public String update(String id, String xmlData, String authHandle,
-                                   Boolean restAccess)
+    String update(String id, String xmlData, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             AuthorizationException,
             ReportDefinitionNotFoundException,

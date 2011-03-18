@@ -722,53 +722,53 @@ public final class Constants {
     /**
      * Filter (URI).
      */
-    public static final String FILTER_USER = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_USER = PROPERTIES_NS_URI
         + "user";
 
-    public static final String FILTER_GROUP = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_GROUP = PROPERTIES_NS_URI
         + "group";
 
-    public static final String FILTER_LABEL = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_LABEL = PROPERTIES_NS_URI
         + "label";
 
-    public static final String FILTER_EMAIL = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_EMAIL = PROPERTIES_NS_URI
         + "email";
 
-    public static final String FILTER_ROLE = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_ROLE = PROPERTIES_NS_URI
         + "role";
 
-    public static final String FILTER_ASSIGNED_ON = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_ASSIGNED_ON = PROPERTIES_NS_URI
         + "assigned-on";
 
     public static final String FILTER_REVOCATION_DATE =
-        Constants.PROPERTIES_NS_URI + "revocation-date";
+        PROPERTIES_NS_URI + "revocation-date";
 
     public static final String FILTER_CREATION_DATE =
-        Constants.PROPERTIES_NS_URI + "creation-date";
+        PROPERTIES_NS_URI + "creation-date";
 
     public static final String FILTER_GRANTED_FROM =
-        Constants.PROPERTIES_NS_URI + "granted-from";
+        PROPERTIES_NS_URI + "granted-from";
 
-    public static final String FILTER_GRANTED_TO = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_GRANTED_TO = PROPERTIES_NS_URI
         + "granted-to";
 
-    public static final String FILTER_CREATED_BY = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_CREATED_BY = PROPERTIES_NS_URI
         + "created-by";
 
-    public static final String FILTER_REVOKED_BY = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_REVOKED_BY = PROPERTIES_NS_URI
         + "revoked-by";
 
-    public static final String FILTER_ACTIVE = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_ACTIVE = PROPERTIES_NS_URI
         + XmlUtility.NAME_ACTIVE;
 
     public static final String FILTER_ORGANIZATIONAL_UNIT =
-        Constants.STRUCTURAL_RELATIONS_NS_URI
+        STRUCTURAL_RELATIONS_NS_URI
             + XmlUtility.NAME_ORGANIZATIONAL_UNIT;
 
-    public static final String FILTER_VALUE = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_VALUE = PROPERTIES_NS_URI
         + XmlUtility.NAME_VALUE;
 
-    public static final String FILTER_TYPE = Constants.PROPERTIES_NS_URI
+    public static final String FILTER_TYPE = PROPERTIES_NS_URI
         + XmlUtility.NAME_TYPE;
 
     /**
@@ -910,19 +910,19 @@ public final class Constants {
      * Forms of Predecessors
      */
     public static final String PREDECESSOR_REPLACEMENT =
-        Constants.STRUCTURAL_RELATIONS_NS_URI + "replacement";
+        STRUCTURAL_RELATIONS_NS_URI + "replacement";
 
     public static final String PREDECESSOR_SPLITTING =
-        Constants.STRUCTURAL_RELATIONS_NS_URI + "splitting";
+        STRUCTURAL_RELATIONS_NS_URI + "splitting";
 
     public static final String PREDECESSOR_AFFILIATION =
-        Constants.STRUCTURAL_RELATIONS_NS_URI + "affiliation";
+        STRUCTURAL_RELATIONS_NS_URI + "affiliation";
 
     public static final String PREDECESSOR_SPIN_OFF =
-        Constants.STRUCTURAL_RELATIONS_NS_URI + "spin-off";
+        STRUCTURAL_RELATIONS_NS_URI + "spin-off";
 
     public static final String PREDECESSOR_FUSION =
-        Constants.STRUCTURAL_RELATIONS_NS_URI + "fusion";
+        STRUCTURAL_RELATIONS_NS_URI + "fusion";
 
     /**
      * Do not instantiate this class.

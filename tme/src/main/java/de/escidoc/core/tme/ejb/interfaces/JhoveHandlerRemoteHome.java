@@ -12,10 +12,10 @@ import java.rmi.RemoteException;
  */
 public interface JhoveHandlerRemoteHome extends EJBHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/JhoveHandler";
-    public static final String JNDI_NAME = "ejb/JhoveHandler";
+    String COMP_NAME = "java:comp/env/ejb/JhoveHandler";
+    String JNDI_NAME = "ejb/JhoveHandler";
 
-    public JhoveHandlerRemote create()
+    JhoveHandlerRemote create()
             throws CreateException, RemoteException;
 
 }

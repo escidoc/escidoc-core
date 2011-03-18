@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface UserGroupHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/UserGroupHandlerLocal";
-    public static final String JNDI_NAME = "ejb/UserGroupHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/UserGroupHandlerLocal";
+    String JNDI_NAME = "ejb/UserGroupHandlerLocal";
 
-    public UserGroupHandlerLocal create() throws CreateException;
+    UserGroupHandlerLocal create() throws CreateException;
 
 }

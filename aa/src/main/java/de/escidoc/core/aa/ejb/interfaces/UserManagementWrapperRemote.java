@@ -15,21 +15,19 @@ import java.rmi.RemoteException;
  */
 public interface UserManagementWrapperRemote extends EJBObject {
 
-    public void logout(SecurityContext securityContext)
+    void logout(SecurityContext securityContext)
             throws AuthenticationException,
             SystemException, RemoteException;
 
-    public void logout(String authHandle, Boolean restAccess)
+    void logout(String authHandle, Boolean restAccess)
             throws AuthenticationException,
             SystemException, RemoteException;
 
-    public void initHandleExpiryTimestamp(String handle,
-                                          SecurityContext securityContext)
+    void initHandleExpiryTimestamp(String handle, SecurityContext securityContext)
             throws AuthenticationException,
             SystemException, RemoteException;
 
-    public void initHandleExpiryTimestamp(String handle, String authHandle,
-                                          Boolean restAccess)
+    void initHandleExpiryTimestamp(String handle, String authHandle, Boolean restAccess)
             throws AuthenticationException,
             SystemException, RemoteException;
 

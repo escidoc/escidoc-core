@@ -130,7 +130,7 @@ import java.rmi.RemoteException;
  */
 public interface SoapExceptionGenerationService extends Remote {
 
-    public void generateExceptions(SecurityContext securityContext)
+    void generateExceptions(SecurityContext securityContext)
             throws EscidocException,
             AggregationDefinitionNotFoundException,
             ApplicationException,
@@ -230,7 +230,7 @@ public interface SoapExceptionGenerationService extends Remote {
             UserGroupHierarchyViolationException,
             ResourceInUseException, RemoteException;
 
-    public void generateExceptions(String authHandle, Boolean restAccess)
+    void generateExceptions(String authHandle, Boolean restAccess)
             throws EscidocException,
             AggregationDefinitionNotFoundException,
             ApplicationException,

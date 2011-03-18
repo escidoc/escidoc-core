@@ -75,10 +75,10 @@ public enum LockStatus {
 
         if (status != null) {
             if (status.equals(LockStatus.LOCKED.toString())) {
-                return LockStatus.LOCKED;
+                return LOCKED;
             }
             else if (status.equals(LockStatus.UNLOCKED.toString())) {
-                return LockStatus.UNLOCKED;
+                return UNLOCKED;
             }
         }
         throw new InvalidStatusException("Invalid lock status '" + status + '\'');

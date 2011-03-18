@@ -11,9 +11,9 @@ import javax.ejb.EJBLocalHome;
  */
 public interface StagingFileHandlerLocalHome extends EJBLocalHome {
 
-    public static final String COMP_NAME = "java:comp/env/ejb/StagingFileHandlerLocal";
-    public static final String JNDI_NAME = "ejb/StagingFileHandlerLocal";
+    String COMP_NAME = "java:comp/env/ejb/StagingFileHandlerLocal";
+    String JNDI_NAME = "ejb/StagingFileHandlerLocal";
 
-    public StagingFileHandlerLocal create() throws CreateException;
+    StagingFileHandlerLocal create() throws CreateException;
 
 }

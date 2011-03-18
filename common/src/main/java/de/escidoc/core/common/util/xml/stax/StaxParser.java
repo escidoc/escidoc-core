@@ -96,7 +96,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * Sets the list of handlers.
      * 
      * @param hc
-     *            A {@link java.util.List List} of DefaultHandler
+     *            A {@link List List} of DefaultHandler
      *            implementations. Same as call <code>clearHandlerChain()</code>
      *            and add every single Handler in list order.
      */
@@ -130,7 +130,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     }
 
     /**
-     * Parse with {@link javax.xml.stream.XMLStreamReader XMLStreamReader}.
+     * Parse with {@link XMLStreamReader XMLStreamReader}.
      * 
      * @param in
      *            XML
@@ -202,7 +202,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     }
 
     /**
-     * Parse with {@link javax.xml.stream.XMLEventReader XMLEventReader}.
+     * Parse with {@link XMLEventReader XMLEventReader}.
      * 
      * @param in
      *            XML
@@ -333,7 +333,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * value set during creation of the parser..
      * 
      * @param e
-     *            {@link de.escidoc.core.common.util.xml.stax.events.StartElement
+     *            {@link StartElement
      *            StartElement}
      * @throws Exception
      *             If anything fails. This depends on the implementation of the
@@ -365,7 +365,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * Calls endElement() for every Handler in the handler chain.
      * 
      * @param e
-     *            {@link de.escidoc.core.common.util.xml.stax.events.EndElement
+     *            {@link EndElement
      *            EndElement}
      * @throws Exception
      *             If anything fails. This depends on the implementation of the

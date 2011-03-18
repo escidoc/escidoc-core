@@ -15,45 +15,33 @@ import java.util.Map;
  */
 public interface FedoraRestDeviationHandlerRemote extends EJBObject {
 
-    public EscidocBinaryContent getDatastreamDissemination(String pid,
-                                                                                                  String dsID,
-                                                                                                  Map parameters,
-                                                                                                  SecurityContext securityContext)
+    EscidocBinaryContent getDatastreamDissemination(String pid, String dsID, Map parameters,
+                                                    SecurityContext securityContext)
             throws Exception, RemoteException;
 
-    public EscidocBinaryContent getDatastreamDissemination(String pid,
-                                                                                                  String dsID,
-                                                                                                  Map parameters,
-                                                                                                  String authHandle,
-                                                                                                  Boolean restAccess)
+    EscidocBinaryContent getDatastreamDissemination(String pid, String dsID, Map parameters, String authHandle,
+                                                    Boolean restAccess)
             throws Exception, RemoteException;
 
-    public String export(String pid, Map parameters,
-                                   SecurityContext securityContext)
+    String export(String pid, Map parameters, SecurityContext securityContext)
             throws Exception, RemoteException;
 
-    public String export(String pid, Map parameters, String authHandle,
-                                   Boolean restAccess) throws Exception, RemoteException;
+    String export(String pid, Map parameters, String authHandle, Boolean restAccess) throws Exception, RemoteException;
 
-    public void cache(String pid, String xml,
-                      SecurityContext securityContext)
+    void cache(String pid, String xml, SecurityContext securityContext)
             throws Exception, RemoteException;
 
-    public void cache(String pid, String xml, String authHandle,
-                      Boolean restAccess) throws Exception, RemoteException;
+    void cache(String pid, String xml, String authHandle, Boolean restAccess) throws Exception, RemoteException;
 
-    public void removeFromCache(String pid,
-                                SecurityContext securityContext)
+    void removeFromCache(String pid, SecurityContext securityContext)
             throws Exception, RemoteException;
 
-    public void removeFromCache(String pid, String authHandle, Boolean restAccess)
+    void removeFromCache(String pid, String authHandle, Boolean restAccess)
             throws Exception, RemoteException;
 
-    public void replaceInCache(String pid, String xml,
-                               SecurityContext securityContext)
+    void replaceInCache(String pid, String xml, SecurityContext securityContext)
             throws Exception, RemoteException;
 
-    public void replaceInCache(String pid, String xml, String authHandle,
-                               Boolean restAccess) throws Exception, RemoteException;
+    void replaceInCache(String pid, String xml, String authHandle, Boolean restAccess) throws Exception, RemoteException;
 
 }
