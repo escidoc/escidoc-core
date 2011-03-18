@@ -71,6 +71,11 @@ changes since version 1.2
     March 2011:
     	-remove Interface-Method UserGrouphandler.retrieveGroupsForUser 
     	 (use filter-method with filter /structural-relations/user/id)
+    	-Search-Indexing: Always set PositionIncrementGap of 1 with EscidocAnalyzer.
+    	 If doing a phrase-search over multiple fields with same name (eg complete-name of author)
+    	 the phrase-search now doesnt go over field boundaries.
+    	 EG: 2 fields complete-name: Hoppe, Michael and Wagner, Steffen. Search for "Michael Wagner"
+    	 returned a hit. With PositionIncrementGap of 1, this search doesnt return a hit anymore.
     	
 changes since version 1.1
 --------------------------
