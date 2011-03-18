@@ -158,7 +158,7 @@ public class ContentModelTestBase extends CmmTestBase {
             contentStreamDefinition.add(2, selectSingleNode(
                 contentModel,
                 "/content-model/content-streams/content-stream[@name = '"
-                    + name + "']/orage").getNodeValue());
+                    + name + "']/@storage").getNodeValue());
             contentStreamDefinitions.add(contentStreamDefinition);
         }
 
@@ -315,7 +315,7 @@ public class ContentModelTestBase extends CmmTestBase {
                 contentStreamDefinition.get(2), selectSingleNode(
                     contentModel,
                     "/content-model/content-streams/content-stream[@name = '"
-                        + contentStreamName + "']/orage").getNodeValue());
+                        + contentStreamName + "']/@storage").getNodeValue());
         }
 
         if (checkBehavior) {
