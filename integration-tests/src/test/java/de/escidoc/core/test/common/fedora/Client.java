@@ -70,12 +70,10 @@ public class Client {
      */
     public Client() throws Exception {
 
-        PropertiesProvider p = new PropertiesProvider();
-
         try {
             fc =
-                new FedoraClient(p.getProperty(PropertiesProvider.FEDORA_URL),
-                    p.getProperty(PropertiesProvider.FEDORA_USER), p
+                new FedoraClient(PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_URL),
+                    PropertiesProvider.getInstance().getProperty(PropertiesProvider.FEDORA_USER), PropertiesProvider.getInstance()
                         .getProperty(PropertiesProvider.FEDORA_PASSWORD));
             apia = fc.getAPIA();
             apim = fc.getAPIM();

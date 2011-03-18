@@ -28,12 +28,6 @@
  */
 package de.escidoc.core.test.common.resources;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,6 +35,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
 
 /**
  * @author MSC
@@ -82,11 +82,37 @@ public class PropertiesProvider {
 
     private final List<String> files;
 
+    private static PropertiesProvider instance;
+
+    static {
+        try {
+            instance = new PropertiesProvider();
+        } catch (final Exception e) {
+            if(LOGGER.isWarnEnabled()) {
+                LOGGER.warn("Problem initializing PropertiesProvider.");
+            }
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Problem initializing PropertiesProvider.", e);
+            }
+        }
+    }
+
+    /**
+     * Returns and perhaps initializes Object.
+     * 
+     * @return EscidocConfiguration self
+     * @throws IOException
+     *             Thrown if properties loading fails.
+     */
+    public static PropertiesProvider getInstance() {
+        return instance;
+    }
+
     /**
      * @throws Exception
      *             Thrown if init of properties failed.
      */
-    public PropertiesProvider() throws Exception {
+    private PropertiesProvider() throws Exception {
 
         this.files = new LinkedList<String>();
         addFile("escidoc.properties");
@@ -132,7 +158,7 @@ public class PropertiesProvider {
      * @throws Exception
      *             Thrown if init of properties failed.
      */
-    public synchronized void init() throws Exception {
+    private synchronized void init() throws Exception {
 
         Properties result = new Properties();
         Iterator<String> fileIter = files.iterator();
@@ -144,10 +170,10 @@ public class PropertiesProvider {
             }
             catch (final Exception e) {
                 if(LOGGER.isWarnEnabled()) {
-                    LOGGER.warn("Error on loading properties.");
+                    LOGGER.warn("Error on loading properties file " + next);
                 }
                 if(LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Error on loading properties.", e);
+                    LOGGER.debug("Error on loading properties file " + next, e);
                 }
             }
         }
@@ -167,8 +193,12 @@ public class PropertiesProvider {
         throws IOException {
         final ApplicationContext applicationContext =
             new ClassPathXmlApplicationContext(new String[] {});
-        final Resource[] resource =
-            applicationContext.getResources("classpath*:**/" + filename);
+        Resource[] resource =
+            applicationContext.getResources("classpath*:" + filename);
+        if (resource.length == 0) {
+            resource =
+                applicationContext.getResources("classpath*:**/" + filename);
+        }
         if (resource.length == 0) {
             throw new FileNotFoundException("Unable to find file '" + filename
                 + "' in classpath.");
@@ -205,7 +235,7 @@ public class PropertiesProvider {
      * @param name
      *            Name of properties file.
      */
-    public synchronized void addFile(final String name) {
+    private synchronized void addFile(final String name) {
 
         this.files.add(name);
     }

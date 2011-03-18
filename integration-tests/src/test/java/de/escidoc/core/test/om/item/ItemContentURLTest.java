@@ -324,7 +324,8 @@ public class ItemContentURLTest extends ItemTestBase {
         // download file from test data service to local tempfile
         File f =
             downloadTempFile(new URL(
-                properties.getProperty(PropertiesProvider.TESTDATA_URL) + "/"
+                PropertiesProvider.getInstance()
+                    .getProperty(PropertiesProvider.TESTDATA_URL) + "/"
                     + testUploadFile));
 
         InputStream fileInputStream = new FileInputStream(f);
@@ -373,7 +374,8 @@ public class ItemContentURLTest extends ItemTestBase {
 
         // content to staging
         String fedoraUrl =
-            this.properties.getProperty(PropertiesProvider.FEDORA_URL,
+            PropertiesProvider.getInstance()
+                .getProperty(PropertiesProvider.FEDORA_URL,
                 "http://localhost:8082/fedora");
         String url = fedoraUrl + "/get/escidoc:ex6/content";
 
@@ -417,7 +419,8 @@ public class ItemContentURLTest extends ItemTestBase {
 
         // content to staging
         String fedoraUrl =
-            this.properties.getProperty(PropertiesProvider.FEDORA_URL,
+            PropertiesProvider.getInstance()
+                .getProperty(PropertiesProvider.FEDORA_URL,
                 "http://localhost:8082/fedora");
         String url = fedoraUrl + "/get/escidoc:ex6/content";
 

@@ -132,7 +132,8 @@ public class ComponentChecksumTest extends ItemTestBase {
                 .getNodeValue();
 
         String fedoraUrl =
-            this.properties.getProperty("fedora.url",
+            PropertiesProvider.getInstance()
+                .getProperty("fedora.url",
                 "http://localhost:8082/fedora");
 
         String imageUrl = fedoraUrl + "/images/newlogo2.jpg";
@@ -189,10 +190,10 @@ public class ComponentChecksumTest extends ItemTestBase {
 
         String imageUrl =
             "http://"
-                + this.properties
+                + PropertiesProvider.getInstance()
                     .getProperty(PropertiesProvider.ESCIDOC_SERVER_NAME)
                 + ":"
-                + this.properties
+                + PropertiesProvider.getInstance()
                     .getProperty(PropertiesProvider.ESCIDOC_SERVER_PORT)
                 + "/images/escidoc-logo.jpg";
 

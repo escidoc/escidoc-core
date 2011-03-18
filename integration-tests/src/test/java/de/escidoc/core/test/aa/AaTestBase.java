@@ -2915,7 +2915,8 @@ public class AaTestBase extends EscidocRestSoapTestBase {
 
         File f =
             downloadTempFile(new URL(
-                properties.getProperty(PropertiesProvider.TESTDATA_URL) + "/"
+                PropertiesProvider.getInstance()
+                .getProperty(PropertiesProvider.TESTDATA_URL) + "/"
                     + testUploadFile));
 
         InputStream fileInputStream = new FileInputStream(f);

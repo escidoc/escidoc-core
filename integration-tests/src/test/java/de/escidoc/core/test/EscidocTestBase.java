@@ -28,57 +28,18 @@
  */
 package de.escidoc.core.test;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
-import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
-import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.common.resources.ResourceProvider;
-import de.escidoc.core.test.common.util.xml.SchemaBaseResourceResolver;
-import de.escidoc.core.test.om.OmTestBase;
-import de.escidoc.core.test.security.client.PWCallback;
-import de.escidoc.core.test.st.StagingFileTestBase;
-import etm.core.configuration.EtmManager;
-import etm.core.monitor.EtmMonitor;
-import etm.core.monitor.EtmPoint;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
-import org.apache.xerces.dom.AttrImpl;
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
-import org.apache.xpath.XPathAPI;
-import org.junit.After;
-import org.junit.Before;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.bootstrap.DOMImplementationRegistry;
-import org.w3c.dom.ls.DOMImplementationLS;
-import org.w3c.dom.ls.LSOutput;
-import org.w3c.dom.ls.LSSerializer;
-import org.xml.sax.InputSource;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.xml.XMLConstants;
-import javax.xml.datatype.DatatypeConstants;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.sax.SAXSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.lang.annotation.Annotation;
@@ -99,12 +60,53 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.XMLConstants;
+import javax.xml.datatype.DatatypeConstants;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.sax.SAXSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
+import org.apache.http.Header;
+import org.apache.http.HttpResponse;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+import org.apache.xerces.dom.AttrImpl;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
+import org.apache.xpath.XPathAPI;
+import org.junit.After;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.bootstrap.DOMImplementationRegistry;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSOutput;
+import org.w3c.dom.ls.LSSerializer;
+import org.xml.sax.InputSource;
+
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
+import de.escidoc.core.test.common.client.servlet.interfaces.ResourceHandlerClientInterface;
+import de.escidoc.core.test.common.client.servlet.st.StagingFileClient;
+import de.escidoc.core.test.common.resources.PropertiesProvider;
+import de.escidoc.core.test.common.resources.ResourceProvider;
+import de.escidoc.core.test.common.util.xml.SchemaBaseResourceResolver;
+import de.escidoc.core.test.om.OmTestBase;
+import de.escidoc.core.test.security.client.PWCallback;
+import de.escidoc.core.test.st.StagingFileTestBase;
+import etm.core.configuration.EtmManager;
+import etm.core.monitor.EtmMonitor;
+import etm.core.monitor.EtmPoint;
 
 /**
  * Base class for Escidoc tests.
@@ -113,8 +115,6 @@ import static org.junit.Assert.fail;
  * 
  */
 public abstract class EscidocTestBase {
-
-    public PropertiesProvider properties = null;
 
     public static final String VERSION_SUFFIX_SEPARATOR = ":";
 
@@ -1123,12 +1123,6 @@ public abstract class EscidocTestBase {
         this.transport = transport;
         this.stagingFileClient =
             new StagingFileClient(Constants.TRANSPORT_REST);
-        try {
-            this.properties = new PropertiesProvider();
-        }
-        catch (final Exception e) {
-            LOGGER.warn("Unable to load properties: " + e);
-        }
     }
 
     /**
@@ -1159,15 +1153,6 @@ public abstract class EscidocTestBase {
             result = result.toUpperCase();
         }
         return result;
-    }
-
-    /**
-     * Get test Properties.
-     * 
-     * @return properties for tests
-     */
-    public PropertiesProvider getProperties() {
-        return this.properties;
     }
 
     /**
@@ -1703,11 +1688,11 @@ public abstract class EscidocTestBase {
     public String getFrameworkUrl() {
 
         String hostUrl = Constants.PROTOCOL + "://";
-        hostUrl += this.properties.getProperty("server.name", "localhost");
+        hostUrl += PropertiesProvider.getInstance().getProperty("server.name", "localhost");
 
-        if (this.properties.getProperty("server.port") != null
-            && this.properties.getProperty("server.port").length() > 0) {
-            hostUrl += ":" + this.properties.getProperty("server.port");
+        if (PropertiesProvider.getInstance().getProperty("server.port") != null
+            && PropertiesProvider.getInstance().getProperty("server.port").length() > 0) {
+            hostUrl += ":" + PropertiesProvider.getInstance().getProperty("server.port");
         }
         else {
             hostUrl += ":8080";

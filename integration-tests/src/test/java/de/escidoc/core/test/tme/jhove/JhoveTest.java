@@ -62,7 +62,8 @@ public class JhoveTest extends JhoveTestBase {
         // prepare item with pdf content
         File f =
             downloadTempFile(new URL(
-                properties.getProperty(PropertiesProvider.TESTDATA_URL) + "/testDocuments/"
+            		PropertiesProvider.getInstance()
+            		    .getProperty(PropertiesProvider.TESTDATA_URL) + "/testDocuments/"
                     + "ges-eSciDoc-article.pdf"));
         URL file = uploadFileToStagingServlet(f, "application/pdf");
 

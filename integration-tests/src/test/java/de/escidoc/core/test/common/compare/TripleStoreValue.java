@@ -28,21 +28,20 @@
  */
 package de.escidoc.core.test.common.compare;
 
-import de.escidoc.core.test.EscidocRestSoapTestBase;
-import de.escidoc.core.test.EscidocTestBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
-import de.escidoc.core.test.common.resources.PropertiesProvider;
-import de.escidoc.core.test.common.util.Version;
-import de.escidoc.core.test.common.util.xml.Assert;
-import de.escidoc.core.test.common.util.xml.Select;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
+
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.fedora.TripleStoreTestBase;
+import de.escidoc.core.test.common.util.Version;
+import de.escidoc.core.test.common.util.xml.Assert;
+import de.escidoc.core.test.common.util.xml.Select;
 
 /**
  * Methods to compare values with TripleStore values.
@@ -51,8 +50,6 @@ import static junit.framework.Assert.assertNull;
  * 
  */
 public class TripleStoreValue {
-
-    private PropertiesProvider properties;
 
     private int transport = 0;
 
@@ -64,7 +61,6 @@ public class TripleStoreValue {
      */
     public TripleStoreValue(final int transport) throws Exception {
 
-        this.properties = new PropertiesProvider();
         this.setTransport(transport);
     }
 

@@ -3839,17 +3839,17 @@ public class EscidocRestSoapTestBase extends EscidocTestBase {
             ResourceProvider.getContentsFromInputStream(new FileInputStream(f));
 
         // replace URLs if they don't fit to the current framework config
-        PropertiesProvider prop = new PropertiesProvider();
-
         String fedoraTemplateUrl = "http://localhost:8082/fedora";
-        String fedoraUrl = prop.getProperty(PropertiesProvider.FEDORA_URL);
+        String fedoraUrl = PropertiesProvider.getInstance()
+                    .getProperty(PropertiesProvider.FEDORA_URL);
 
         if (fedoraUrl != null && !fedoraTemplateUrl.equals(fedoraUrl)) {
             template = template.replaceAll(fedoraTemplateUrl, fedoraUrl);
         }
 
         String testdataTemplateUrl = "http://localhost:8082/ir/";
-        String testdataUrl = prop.getProperty(PropertiesProvider.TESTDATA_URL);
+        String testdataUrl = PropertiesProvider.getInstance()
+                    .getProperty(PropertiesProvider.TESTDATA_URL);
         
         if (testdataUrl != null && !testdataTemplateUrl.equals(testdataUrl)) {
             template = template.replaceAll(testdataTemplateUrl, testdataUrl + "/testDocuments/ir/");

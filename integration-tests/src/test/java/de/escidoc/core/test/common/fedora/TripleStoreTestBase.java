@@ -100,8 +100,8 @@ public class TripleStoreTestBase {
     }
 
     protected String getFedoraUrl() throws Exception {
-        PropertiesProvider propProv = new PropertiesProvider();
-        return propProv.getProperty("fedora.url", "http://localhost:8082/fedora");
+        return PropertiesProvider.getInstance().getProperty(
+            "fedora.url", "http://localhost:8082/fedora");
     }
 
     /**

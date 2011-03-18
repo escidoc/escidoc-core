@@ -272,13 +272,15 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // compare it with direct request from Repository ----------------------
         String fedoraUrl =
-            this.properties.getProperty(PropertiesProvider.FEDORA_URL)
+        	PropertiesProvider.getInstance()
+        	    .getProperty(PropertiesProvider.FEDORA_URL)
                 + "/get/" + componentId + "/content";
 
         String auth =
-            this.properties.getProperty(PropertiesProvider.FEDORA_USER)
+        	PropertiesProvider.getInstance()
+        	    .getProperty(PropertiesProvider.FEDORA_USER)
                 + ":"
-                + this.properties
+                + PropertiesProvider.getInstance()
                     .getProperty(PropertiesProvider.FEDORA_PASSWORD);
 
         URL url = new URL(fedoraUrl);
@@ -358,8 +360,10 @@ public class ItemRetrieveContentTest extends ContentTestBase {
         // retrieveBinaryContent(itemId, componentId, "digilib", "?"
         // + transformParams);
         String href =
-            "http://" + this.properties.getProperty("server.name") + ":"
-                + this.properties.getProperty("server.port") + "/" + itemId
+            "http://" + PropertiesProvider.getInstance()
+                    .getProperty("server.name") + ":"
+                + PropertiesProvider.getInstance()
+                    .getProperty("server.port") + "/" + itemId
                 + "/components/component" + componentId + "/content/digilib?"
                 + transformParams;
 
@@ -387,13 +391,15 @@ public class ItemRetrieveContentTest extends ContentTestBase {
 
         // compare it with direct request from Repository ----------------------
         String fedoraUrl =
-            this.properties.getProperty(PropertiesProvider.FEDORA_URL)
+        	PropertiesProvider.getInstance()
+        	    .getProperty(PropertiesProvider.FEDORA_URL)
                 + "/get/" + componentId + "/content";
 
         String auth =
-            this.properties.getProperty(PropertiesProvider.FEDORA_USER)
+        	PropertiesProvider.getInstance()
+        	    .getProperty(PropertiesProvider.FEDORA_USER)
                 + ":"
-                + this.properties
+                + PropertiesProvider.getInstance()
                     .getProperty(PropertiesProvider.FEDORA_PASSWORD);
 
         URL url = new URL(fedoraUrl);

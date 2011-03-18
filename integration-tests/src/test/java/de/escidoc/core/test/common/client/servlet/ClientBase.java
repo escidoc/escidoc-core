@@ -502,8 +502,6 @@ public abstract class ClientBase {
 
     private int transport;
 
-    private static PropertiesProvider properties = null;
-
     private DefaultHttpClient httpClient;
 
     /**
@@ -549,30 +547,27 @@ public abstract class ClientBase {
 
     private HttpHost getHttpHost() {
         HttpHost httpHost = null;
-        if (properties == null) {
-            try {
-                properties = new PropertiesProvider();
-                if (properties.getProperty("server.name") != null
-                    && properties.getProperty("server.port") != null) {
-                    Constants.HOST = properties.getProperty("server.name");
-                    Constants.HOST_PORT =
-                        Constants.HOST + ":"
-                            + properties.getProperty("server.port");
-                }
-                if (properties.getProperty("http.proxyHost") != null
-                    && properties.getProperty("http.proxyPort") != null) {
-                    httpHost =
-                        new HttpHost(properties.getProperty("http.proxyHost"),
-                            Integer.parseInt(properties
-                                .getProperty("http.proxyPort")));
+        try {
+            if (PropertiesProvider.getInstance().getProperty("server.name") != null
+                && PropertiesProvider.getInstance().getProperty("server.port") != null) {
+                Constants.HOST = PropertiesProvider.getInstance().getProperty("server.name");
+                Constants.HOST_PORT =
+                    Constants.HOST + ":"
+                        + PropertiesProvider.getInstance().getProperty("server.port");
+            }
+            if (PropertiesProvider.getInstance().getProperty("http.proxyHost") != null
+                && PropertiesProvider.getInstance().getProperty("http.proxyPort") != null) {
+                httpHost =
+                    new HttpHost(PropertiesProvider.getInstance().getProperty("http.proxyHost"),
+                        Integer.parseInt(PropertiesProvider.getInstance()
+                            .getProperty("http.proxyPort")));
 
-                }
             }
-            catch (final Exception e) {
-                throw new RuntimeException(
-                    "[ClientBase] Error occured loading properties! "
-                        + e.getMessage(), e);
-            }
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(
+                "[ClientBase] Error occured loading properties! "
+                    + e.getMessage(), e);
         }
         return httpHost;
     }
@@ -1381,7 +1376,7 @@ public abstract class ClientBase {
      *         true. False otherwise.
      */
     public final Boolean getPidConfig(final String var, final String defValue) {
-        return (Boolean.valueOf(properties.getProperty(var, defValue)));
+        return (Boolean.valueOf(PropertiesProvider.getInstance().getProperty(var, defValue)));
     }
 
     /**

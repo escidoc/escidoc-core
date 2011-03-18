@@ -21,6 +21,9 @@
     <category name="org.springframework.context.support.ClassPathXmlApplicationContext">
 		<priority value="WARN" />
 	</category>
+    <category name="etm.core.monitor.EtmMonitor">
+		<priority value="ERROR" />
+	</category>
 	
 	<root>
         <priority value="INFO" />

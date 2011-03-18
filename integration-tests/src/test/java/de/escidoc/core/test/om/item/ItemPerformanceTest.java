@@ -94,16 +94,16 @@ public class ItemPerformanceTest extends ItemTestBase {
         monitor = EtmManager.getEtmMonitor();
         this.testEv = setTestEnviromentValues(new Environment());
 
-        PropertiesProvider propProv = new PropertiesProvider();
-
-        String databaseUrl = propProv.getProperty("performance.database.url");
+        String databaseUrl = PropertiesProvider.getInstance().getProperty(
+                                                "performance.database.url");
 
         try {
             this.renderer =
-                new SQLRenderer(propProv
+                new SQLRenderer(PropertiesProvider.getInstance()
                     .getProperty("performance.database.driverClassName"),
-                    databaseUrl, propProv
-                        .getProperty("performance.database.username"), propProv
+                    databaseUrl, PropertiesProvider.getInstance()
+                        .getProperty("performance.database.username"), 
+                        PropertiesProvider.getInstance()
                         .getProperty("performance.database.password"),
                     this.testEv);
         }
