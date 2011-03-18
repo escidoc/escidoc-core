@@ -1790,7 +1790,7 @@ public class ItemTest extends ItemTestBase {
             deleteElement(xmlItem, "item/components/component[1]/md-records");
         Node itemWithContentin1ComponentWithExternalUrl =
             substitute(itemWith1ComponentWithoutMdRecords,
-                "item/components/component[1]/content/orage", "external-url");
+                "item/components/component[1]/content/@storage", "external-url");
 
         String xml =
             create(toString(itemWith1ComponentWithoutMdRecords, false));
@@ -1799,7 +1799,7 @@ public class ItemTest extends ItemTestBase {
         Document createdItem = getDocument(xml);
         Node firstComponentContent =
             selectSingleNode(createdItem,
-                "item/components/component[1]/content/orage");
+                "item/components/component[1]/content/@storage");
         if (firstComponentContent.getNodeValue().equals("external-url")) {
             Node mdRecords =
                 selectSingleNode(createdItem,
@@ -2448,7 +2448,7 @@ public class ItemTest extends ItemTestBase {
         String storage = "external-url";
         xmlItemDoc =
             substitute(xmlItemDoc,
-                "/item/components/component/content/orage", storage);
+                "/item/components/component/content/@storage", storage);
 
         String xml = toString(xmlItemDoc, true);
 
