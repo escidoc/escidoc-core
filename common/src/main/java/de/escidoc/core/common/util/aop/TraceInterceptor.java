@@ -50,9 +50,9 @@ public class TraceInterceptor {
                 final Object returnValue = joinPoint.proceed();
                 LOGGER.debug(createMessage(false, depthString, signature));
                 return returnValue;
-            } catch(final Throwable t) {
-                LOGGER.debug(createExceptionMessage(depthString, t));
-                throw t;
+            } catch(final Exception e) {
+                LOGGER.debug(createExceptionMessage(depthString, e));
+                throw e;
             }
         }
         return joinPoint.proceed();
