@@ -110,7 +110,7 @@ public class ItemComponentExternalContentRestTest extends ItemTestBase
         String storageBeforeCreate = "external-managed";
         Document newItem =
             (Document) substitute(item,
-                "/item/components/component[2]/content/orage",
+                "/item/components/component[2]/content/@storage",
                 storageBeforeCreate);
         Document newItem2 =
             (Document) substitute(newItem,
