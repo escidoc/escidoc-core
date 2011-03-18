@@ -3226,7 +3226,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
             expectedValues.put("/item/components/component[@href='/ir/item/"
                 + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/orage",
+                + componentIds.get("2").get(0) + "']/content/@storage",
                 "internal-managed");
         }
         else {
@@ -3262,7 +3262,7 @@ public class ItemVersioningTest extends ItemTestBase {
                     + componentIds.get("2").get(0) + "/content");
 
             expectedValues.put("/item/components/component[@objid='"
-                + componentIds.get("2").get(0) + "']/content/orage",
+                + componentIds.get("2").get(0) + "']/content/@storage",
                 "internal-managed");
         }
 
@@ -3480,7 +3480,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
             expectedValues.put("/item/components/component[@href='/ir/item/"
                 + objid + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/orage",
+                + componentIds.get("2").get(0) + "']/content/@storage",
                 "internal-managed");
         }
         else {
@@ -3520,7 +3520,7 @@ public class ItemVersioningTest extends ItemTestBase {
                     + componentIds.get("2").get(0) + "/content");
 
             expectedValues.put("/item/components/component[@objid='"
-                + componentIds.get("2").get(0) + "']/content/orage",
+                + componentIds.get("2").get(0) + "']/content/@storage",
                 "internal-managed");
         }
 
@@ -3654,7 +3654,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
             expectedValues.put("/item/components/component[@href='/ir/item/"
                 + objid + "/components/component/"
-                + componentIds.get("3").get(0) + "']/content/orage",
+                + componentIds.get("3").get(0) + "']/content/@storage",
                 "internal-managed");
         }
         else {
@@ -3686,7 +3686,7 @@ public class ItemVersioningTest extends ItemTestBase {
                     + componentIds.get("3").get(0) + "/content");
 
             expectedValues.put("/item/components/component[@objid='"
-                + componentIds.get("3").get(0) + "']/content/orage",
+                + componentIds.get("3").get(0) + "']/content/@storage",
                 "internal-managed");
         }
 
@@ -3815,7 +3815,7 @@ public class ItemVersioningTest extends ItemTestBase {
 
             expectedValues.put("/item/components/component[@href='/ir/item/"
                 + objid + ":2" + "/components/component/"
-                + componentIds.get("2").get(0) + "']/content/orage",
+                + componentIds.get("2").get(0) + "']/content/@storage",
                 "internal-managed");
         }
         else {

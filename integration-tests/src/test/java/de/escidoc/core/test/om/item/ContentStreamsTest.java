@@ -238,13 +238,13 @@ public class ContentStreamsTest extends ItemTestBase {
             // persistent: mime-type, href (external-url)
             Node typeAttributeRemoveNode =
                 selectSingleNodeAsserted(itemDoc,
-                    "/item/content-streams/content-stream[orage = 'external-managed']");
+                    "/item/content-streams/content-stream[@storage = 'external-managed']");
             NamedNodeMap attMap = typeAttributeRemoveNode.getAttributes();
             attMap.removeNamedItem("xlink:type");
             String newTitle = "something";
             substitute(
                 itemDoc,
-                "/item/content-streams/content-stream[orage = 'external-managed']/@title",
+                "/item/content-streams/content-stream[@storage = 'external-managed']/@title",
                 newTitle);
             String newHref =
                 Constants.PROTOCOL
@@ -255,12 +255,12 @@ public class ContentStreamsTest extends ItemTestBase {
                         .getNodeValue();
             substitute(
                 itemDoc,
-                "/item/content-streams/content-stream[orage = 'external-managed']/@href",
+                "/item/content-streams/content-stream[@storage = 'external-managed']/@href",
                 newHref);
             String newMimeType = "text/xml";
             substitute(
                 itemDoc,
-                "/item/content-streams/content-stream[orage = 'external-managed']/@mime-type",
+                "/item/content-streams/content-stream[@storage = 'external-managed']/@mime-type",
                 newMimeType);
 
             String updateXml = toString(itemDoc, false);
@@ -287,20 +287,20 @@ public class ContentStreamsTest extends ItemTestBase {
             // content-stream: xlink:type, xlink:href must not be changed
             selectSingleNodeAsserted(
                 updatedDoc,
-                "/item/content-streams/content-stream[orage = 'external-managed' and @type = 'simple']");
+                "/item/content-streams/content-stream[@storage = 'external-managed' and @type = 'simple']");
             selectSingleNodeAsserted(
                 updatedDoc,
-                "/item/content-streams/content-stream[orage = 'external-managed' and @href = '/ir/item/"
+                "/item/content-streams/content-stream[@storage = 'external-managed' and @href = '/ir/item/"
                     + createdItemId
                     + "/content-streams/content-stream/external_image/content']");
             // new xlink:title and mime-type
             selectSingleNodeAsserted(
                 updatedDoc,
-                "/item/content-streams/content-stream[orage = 'external-managed' and @title = '"
+                "/item/content-streams/content-stream[@storage = 'external-managed' and @title = '"
                     + newTitle + "']");
             selectSingleNodeAsserted(
                 updatedDoc,
-                "/item/content-streams/content-stream[orage = 'external-managed' and @mime-type = '"
+                "/item/content-streams/content-stream[@storage = 'external-managed' and @mime-type = '"
                     + newMimeType + "']");
         }
         finally {
@@ -468,14 +468,14 @@ public class ContentStreamsTest extends ItemTestBase {
         updateDoc = itemDoc;
         substitute(
             updateDoc,
-            "/item/content-streams/content-stream[orage='external-url']/orage",
+            "/item/content-streams/content-stream[@storage='external-url']/@storage",
             "internal-managed");
         update(createdItemId, toString(updateDoc, false));
         updateDoc = getDocument(retrieve(createdItemId));
 
         Node storage =
             selectSingleNode(updateDoc,
-                "/item/content-streams/content-stream/orage");
+                "/item/content-streams/content-stream/@storage");
 
         assertEquals("read only attribute storage type has changed",
             storage.getTextContent(), "internal-managed");

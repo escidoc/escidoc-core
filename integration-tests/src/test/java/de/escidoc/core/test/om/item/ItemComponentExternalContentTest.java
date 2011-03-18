@@ -134,7 +134,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
         String storageBeforeCreate = storage;
         Document newItem =
             (Document) substitute(item,
-                "/item/components/component[1]/content/orage",
+                "/item/components/component[1]/content/@storage",
                 storageBeforeCreate);
         Node itemWithoutSecondComponent =
             deleteElement(newItem, "/item/components/component[2]");
@@ -164,7 +164,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
 
         Document newItem =
             (Document) deleteAttribute(item,
-                "/item/components/component[1]/content/orage");
+                "/item/components/component[1]/content/@storage");
         Node itemWithoutSecondComponent =
             deleteElement(newItem, "/item/components/component[2]");
         String xmlData = toString(itemWithoutSecondComponent, false);
@@ -233,7 +233,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
         }
         Node withUpdatedStorage =
             substitute(createdItem,
-                "/item/components/component/content/orage", storage);
+                "/item/components/component/content/@storage", storage);
         String toUpdate = toString(withUpdatedStorage, true);
         update(theItemId, toUpdate);
     }
@@ -274,7 +274,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
         }
         Node withoutStorage =
             deleteAttribute(createdItem,
-                "/item/components/component/content/orage");
+                "/item/components/component/content/@storage");
         String toUpdate = toString(withoutStorage, true);
         update(theItemId, toUpdate);
     }
@@ -315,7 +315,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
             deleteElement(item, "/item/components/component[1]");
         Node itemWithContentExternalUrl =
             substitute(itemWithoutSecondComponent,
-                "/item/components/component/content/orage", storage);
+                "/item/components/component/content/@storage", storage);
         String xmlData = toString(itemWithContentExternalUrl, false);
         // System.out.println("item " + xmlData);
         theItemXml = create(xmlData);
@@ -326,7 +326,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
 
         Node withUpdatedStorage =
             substitute(createdItem,
-                "/item/components/component/content/orage",
+                "/item/components/component/content/@storage",
                 "internal-managed");
         Node withUpdatedStorageAndBinaryInline =
             substitute(withUpdatedStorage,
@@ -380,7 +380,7 @@ public class ItemComponentExternalContentTest extends ItemTestBase
         Node itemWithFirstComponentWithoutAttributeStorage =
             deleteAttribute(
                 EscidocRestSoapTestBase.getDocument(templateComponentXml),
-                "/item/components/component[1]/content/orage");
+                "/item/components/component[1]/content/@storage");
         Node newComponent =
             selectSingleNode(itemWithFirstComponentWithoutAttributeStorage,
                 "/item/components/component[1]");

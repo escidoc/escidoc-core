@@ -4882,34 +4882,34 @@ public abstract class EscidocTestBase {
             "//content-streams/content-stream[4]"));
         // one of each storage type
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[orage='external-managed']");
+            "//content-streams/content-stream[@storage='external-managed']");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[orage='internal-managed']");
+            "//content-streams/content-stream[@storage='internal-managed']");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[orage='external-url']");
+            "//content-streams/content-stream[@storage='external-url']");
         // check content URLs
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[orage='external-managed'"
+            "//content-streams/content-stream[@storage='external-managed'"
                 + " and starts-with(@href,'/ir/item/')]");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[orage='internal-managed'"
+            "//content-streams/content-stream[@storage='internal-managed'"
                 + " and starts-with(@href,'/ir/item/')]");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[orage='external-url'"
+            "//content-streams/content-stream[@storage='external-url'"
                 + " and starts-with(@href,'http://')]");
 
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[orage='external-managed'"
+            "//content-streams/content-stream[@storage='external-managed'"
                 + " and @name='external_image' and @mime-type='image/jpeg'"
                 + " and @href = '/ir/item/" + itemId
                 + "/content-streams/content-stream/external_image/content']");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[orage='internal-managed'"
+            "//content-streams/content-stream[@storage='internal-managed'"
                 + " and @name='internal_xml' and @mime-type='text/xml'"
                 + " and @href = '/ir/item/" + itemId
                 + "/content-streams/content-stream/internal_xml/content']");
         selectSingleNodeAsserted(itemDoc,
-            "//content-streams/content-stream[orage='external-url'"
+            "//content-streams/content-stream[@storage='external-url'"
                 + " and @name='redirect_image' and @mime-type='image/jpeg']");
 
     }
