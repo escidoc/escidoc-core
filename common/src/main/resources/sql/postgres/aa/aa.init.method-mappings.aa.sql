@@ -153,6 +153,9 @@ INSERT INTO aa.method_mappings (id, class_name, method_name, action_name, exec_b
   VALUES ('escidoc:mm-current-user-account-retrieve', 'de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface', 'retrieveCurrentUser', 
   'info:escidoc/names:aa:1.0:action:retrieve-current-user-account', true, true,
   'de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException');
+INSERT INTO aa.invocation_mappings (id, attribute_id, path, position, attribute_type, mapping_type, multi_value, value, method_mapping)
+  VALUES ('escidoc-im-current-user-account-retrieve', 'info:escidoc/names:aa:1.0:resource:object-type-new', '', 0, 
+          'http://www.w3.org/2001/XMLSchema#string', 3, false, 'user-account', 'escidoc:mm-current-user-account-retrieve');
 
         /**
          * AA mm - retrieve user accounts
