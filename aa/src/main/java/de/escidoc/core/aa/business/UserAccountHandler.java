@@ -2808,6 +2808,11 @@ public class UserAccountHandler
 
                             return parameter != null && parameter.length > 0 ? parameter[0] : null;
                         }
+                        
+                        @Override
+                        public String toString() {
+                            return "[userId=" + getUserId() + ",roleId=" + getRoleId() + "]";
+                        }
                     }) + "</filter>");
     }
 }
