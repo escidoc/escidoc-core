@@ -33,6 +33,7 @@ import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotF
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -59,6 +60,7 @@ public class AdminDescriptorsTest extends ContextTestBase {
      */
     public AdminDescriptorsTest(final int transport) {
         super(transport);
+        this.path += "/" + getTransport(false);
     }
 
     /**
@@ -67,57 +69,42 @@ public class AdminDescriptorsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Before
-    public void setUp() throws Exception {
-        this.path += "/" + getTransport(false);
+    @BeforeClass
+    public void setUpOnce() throws Exception {
 
-        if (contextId == null) {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
-            String template = toString(context, false);
-            contextXml = create(template);
-            assertXmlValidContext(contextXml);
-            assertCreatedContext(contextXml, template, startTimestamp);
-            contextId =
-                getObjidValue(EscidocRestSoapTestBase.getDocument(contextXml));
-            String lastModificationDate =
-                getLastModificationDateValue(EscidocRestSoapTestBase
-                    .getDocument(contextXml));
-            this.getContextClient().open(
-                contextId,
-                getTheLastModificationParam(true, contextId, "comment",
-                    lastModificationDate));
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name",
+            getUniqueName("PubMan Context "));
+        String template = toString(context, false);
+        contextXml = create(template);
+        assertXmlValidContext(contextXml);
+        assertCreatedContext(contextXml, template, startTimestamp);
 
-            // open Context
-            Document createdDoc =
-                EscidocRestSoapTestBase.getDocument(contextXml);
-            String lastModified = getLastModificationDateValue(createdDoc);
-            open(contextId, getTaskParam(lastModified));
+        contextId =
+            getObjidValue(EscidocRestSoapTestBase.getDocument(contextXml));
 
-            String item = null;
-            String filename = "escidoc_item_198_for_create.xml";
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                item =
-                    createItem(toString(
-                        substitute(
-                            EscidocRestSoapTestBase.getTemplateAsDocument(
-                                TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                                filename), "/item/properties/context/@href",
-                            "/ir/context/" + contextId), true));
-            }
-            else {
-                item =
-                    createItem(toString(
-                        EscidocRestSoapTestBase.getTemplateAsDocument(
-                            TEMPLATE_ITEM_PATH + "/" + getTransport(false),
-                            filename), true));
-            }
+        // open Context
+        String lastModificationDate =
+            getLastModificationDateValue(EscidocRestSoapTestBase
+                .getDocument(contextXml));
+        this.getContextClient().open(
+            contextId,
+            getTheLastModificationParam(true, contextId, "comment",
+                lastModificationDate));
 
-            // nonContextId =
-            // getObjidValue(EscidocRestSoapTestBase.getDocument(item));
+        String filename = "escidoc_item_198_for_create.xml";
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            createItem(toString(
+                substitute(EscidocRestSoapTestBase.getTemplateAsDocument(
+                    TEMPLATE_ITEM_PATH + "/" + getTransport(false), filename),
+                    "/item/properties/context/@href", "/ir/context/"
+                        + contextId), true));
+        }
+        else {
+            createItem(toString(EscidocRestSoapTestBase.getTemplateAsDocument(
+                TEMPLATE_ITEM_PATH + "/" + getTransport(false), filename), true));
         }
     }
 
