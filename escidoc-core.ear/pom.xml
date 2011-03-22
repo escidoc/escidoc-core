@@ -35,7 +35,7 @@
 				</property>
 			</activation>
 			<build>
-				<finalName>${project.artifactId}-${releaseVersion}</finalName>
+				<finalName>${project.artifactId}-${RELEASE_VERSION}</finalName>
 			</build>
 		</profile>
 	</profiles>
