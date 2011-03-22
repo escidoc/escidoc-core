@@ -17,6 +17,17 @@
 
 	<profiles>
 		<profile>
+			<id>hudson-release-build</id>
+			<activation>
+				<property>
+					<name>releaseVersion</name>
+				</property>
+			</activation>
+			<build>
+				<finalName>${project.artifactId}-${releaseVersion}</finalName>
+			</build>
+		</profile>
+		<profile>
 			<id>hudson-build</id>
 			<activation>
 				<property>
