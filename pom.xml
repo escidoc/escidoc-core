@@ -1695,9 +1695,9 @@
             <configuration>
               <source>${java.source.version}</source>
               <target>${java.target.version}</target>
-              <showDeprecation>true</showDeprecation>
-              <showWarnings>true</showWarnings>
-              <verbose>true</verbose>
+              <showDeprecation>false</showDeprecation>
+              <showWarnings>false</showWarnings>
+              <verbose>false</verbose>
               <fork>true</fork>
               <meminitial>128m</meminitial>
               <maxmem>512m</maxmem>
