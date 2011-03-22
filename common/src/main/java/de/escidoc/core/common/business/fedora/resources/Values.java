@@ -63,7 +63,8 @@ public abstract class Values {
     /**
      * This set contains scopes which are ignored by this parser.
      */
-    protected static final Collection<String> IGNORED_SCOPES = new HashSet<String>();
+    protected static final Collection<String> IGNORED_SCOPES =
+        new HashSet<String>();
 
     /**
      * This map contains all scopes which can be mapped.
@@ -195,7 +196,7 @@ public abstract class Values {
 
     /**
      * Get a statement which does not affect another statement when combining it
-     * with AND.
+     * with AND (evaluates to TRUE).
      * 
      * @param resourceType
      *            resource type
@@ -203,6 +204,17 @@ public abstract class Values {
      * @return neutral element for AND
      */
     public abstract String getNeutralAndElement(final ResourceType resourceType);
+
+    /**
+     * Get a statement which does not affect another statement when combining it
+     * with OR (evaluates to FALSE).
+     * 
+     * @param resourceType
+     *            resource type
+     * 
+     * @return neutral element for OR
+     */
+    public abstract String getNeutralOrElement(final ResourceType resourceType);
 
     /**
      * Combine the given operands with OR.

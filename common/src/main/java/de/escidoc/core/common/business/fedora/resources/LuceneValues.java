@@ -43,8 +43,8 @@ public final class LuceneValues extends Values {
     private static final String LUCENE_ESCAPE_CHARS =
         "[\\\\+\\-\\!\\(\\)\\:\\^\\]\\{\\}\\~\\*\\?]";
 
-    private static final Pattern LUCENE_PATTERN =
-        Pattern.compile(LUCENE_ESCAPE_CHARS);
+    private static final Pattern LUCENE_PATTERN = Pattern
+        .compile(LUCENE_ESCAPE_CHARS);
 
     private static final String REPLACEMENT_STRING = "\\\\$0";
 
@@ -209,7 +209,7 @@ public final class LuceneValues extends Values {
 
     /**
      * Get a statement which does not affect another statement when combining it
-     * with AND.
+     * with AND (evaluates to TRUE).
      * 
      * @param resourceType
      *            resource type
@@ -219,6 +219,20 @@ public final class LuceneValues extends Values {
     @Override
     public String getNeutralAndElement(final ResourceType resourceType) {
         return "permissions-filter.objecttype:" + resourceType.getLabel();
+    }
+
+    /**
+     * Get a statement which does not affect another statement when combining it
+     * with OR (evaluates to FALSE).
+     * 
+     * @param resourceType
+     *            resource type
+     * 
+     * @return neutral element for OR
+     */
+    @Override
+    public String getNeutralOrElement(final ResourceType resourceType) {
+        return "NOT permissions-filter.objecttype:" + resourceType.getLabel();
     }
 
     /**
