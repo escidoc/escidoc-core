@@ -84,14 +84,16 @@ public class AdminDescriptorsTest extends ContextTestBase {
             contextId =
                 getObjidValue(EscidocRestSoapTestBase.getDocument(contextXml));
             String lastModificationDate =
-            getLastModificationDateValue(
-                EscidocRestSoapTestBase.getDocument(contextXml));
-            this.getContextClient().open(contextId, getTheLastModificationParam(
-                                true, contextId,
-                                "comment", lastModificationDate));
+                getLastModificationDateValue(EscidocRestSoapTestBase
+                    .getDocument(contextXml));
+            this.getContextClient().open(
+                contextId,
+                getTheLastModificationParam(true, contextId, "comment",
+                    lastModificationDate));
 
             // open Context
-            Document createdDoc = EscidocRestSoapTestBase.getDocument(contextXml);
+            Document createdDoc =
+                EscidocRestSoapTestBase.getDocument(contextXml);
             String lastModified = getLastModificationDateValue(createdDoc);
             open(contextId, getTaskParam(lastModified));
 
@@ -99,17 +101,19 @@ public class AdminDescriptorsTest extends ContextTestBase {
             String filename = "escidoc_item_198_for_create.xml";
             if (getTransport() == Constants.TRANSPORT_REST) {
                 item =
-                    createItem(toString(substitute(EscidocRestSoapTestBase
-                        .getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/"
-                            + getTransport(false), filename),
-                        "/item/properties/context/@href", "/ir/context/"
-                            + contextId), true));
+                    createItem(toString(
+                        substitute(
+                            EscidocRestSoapTestBase.getTemplateAsDocument(
+                                TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                                filename), "/item/properties/context/@href",
+                            "/ir/context/" + contextId), true));
             }
             else {
                 item =
-                    createItem(toString(EscidocRestSoapTestBase
-                        .getTemplateAsDocument(TEMPLATE_ITEM_PATH + "/"
-                            + getTransport(false), filename), true));
+                    createItem(toString(
+                        EscidocRestSoapTestBase.getTemplateAsDocument(
+                            TEMPLATE_ITEM_PATH + "/" + getTransport(false),
+                            filename), true));
             }
 
             // nonContextId =
@@ -150,17 +154,10 @@ public class AdminDescriptorsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test
+    @Test(expected = ContextNotFoundException.class)
     public void testOmReAdmDescs2() throws Exception {
 
-        Class<?> ec = ContextNotFoundException.class;
-        try {
-            retrieveAdminDescriptors("escidoc:UnknownContext");
-            EscidocRestSoapTestBase.failMissingException(ec);
-        }
-        catch (final Exception e) {
-            EscidocRestSoapTestBase.assertExceptionType(ec, e);
-        }
+        retrieveAdminDescriptors("escidoc:UnknownContext");
     }
 
     /**
@@ -185,7 +182,7 @@ public class AdminDescriptorsTest extends ContextTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test(expected=AdminDescriptorNotFoundException.class)
+    @Test(expected = AdminDescriptorNotFoundException.class)
     public void retrieveNonExisitingAdmDesc01() throws Exception {
 
         retrieveAdminDescriptor(contextId, "Test");
