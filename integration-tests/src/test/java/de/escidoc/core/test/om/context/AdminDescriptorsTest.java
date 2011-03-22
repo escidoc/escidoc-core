@@ -28,7 +28,7 @@
  */
 package de.escidoc.core.test.om.context;
 
-import de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException;
+import de.escidoc.core.common.exceptions.remote.application.notfound.AdminDescriptorNotFoundException;
 import de.escidoc.core.common.exceptions.remote.application.notfound.ContextNotFoundException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.client.servlet.Constants;
