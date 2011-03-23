@@ -248,10 +248,9 @@ public class AccessRights {
         final String ouGrants = ensureNotEmpty(getSetAsString(hierarchicalOUs));
 
         synchronized (this.rightsMap) {
-            if (roleId != null && roleId.length() > 0) {
-                if (!groupIds.isEmpty() && userGroupGrants != null
-                    && userGroupGrants.containsKey(roleId)
-                    || userGrants.containsKey(roleId)) {
+            if ((roleId != null) && (roleId.length() > 0)) {
+                if ((!groupIds.isEmpty() && (userGroupGrants != null) && userGroupGrants
+                    .containsKey(roleId)) || userGrants.containsKey(roleId)) {
                     final Rules rights = this.rightsMap[type.ordinal()].get(roleId);
 
                     if (rights != null) {
@@ -266,7 +265,7 @@ public class AccessRights {
                                 groupSQL,
                                 quotedGroupSQL,
                                 ensureNotEmpty(getGrantsAsString(getScopeIds(
-                                    userGrants, userGroupGrants))),
+                                    userGrants, userGroupGrants, roleId))),
                                 containerGrants, ouGrants);
                         final String policySql =
                             MessageFormat
@@ -277,8 +276,8 @@ public class AccessRights {
                                     groupSQL,
                                     quotedGroupSQL,
                                     ensureNotEmpty(getGrantsAsString(getOptimizedScopeIds(
-                                        type, userGrants, userGroupGrants))),
-                                    containerGrants, ouGrants);
+                                        type, userGrants, userGroupGrants,
+                                        roleId))), containerGrants, ouGrants);
 
                         if (scopeSql.length() > 0) {
                             accessRights.append(values.getAndCondition(
@@ -295,7 +294,7 @@ public class AccessRights {
                 for (final Entry<String, Rules> role : this.rightsMap[type.ordinal()]
                     .entrySet()) {
                     if (!groupIds.isEmpty()
-                        && userGroupGrants.containsKey(roleId)
+                        && userGroupGrants.containsKey(role.getKey())
                         || userGrants.containsKey(role.getKey())) {
                         final String groupSQL = getGroupSql(groupIds);
                         final String quotedGroupSQL =
@@ -314,18 +313,21 @@ public class AccessRights {
                                 groupSQL,
                                 quotedGroupSQL,
                                 getGrantsAsString(getScopeIds(userGrants,
-                                    userGroupGrants)), containerGrants,
-                                ouGrants);
-                        final String policySql =
-                            MessageFormat.format(
-                                role.getValue().policyRules.replace("'", "''"),
-                                values.escape(userId),
-                                values.escape(role.getKey()),
-                                groupSQL,
-                                quotedGroupSQL,
-                                getGrantsAsString(getOptimizedScopeIds(type,
-                                    userGrants, userGroupGrants)),
+                                    userGroupGrants, role.getKey())),
                                 containerGrants, ouGrants);
+                        final String policySql =
+                            MessageFormat
+                                .format(
+                                    role.getValue().policyRules.replace("'",
+                                        "''"),
+                                    values.escape(userId),
+                                    values.escape(role.getKey()),
+                                    groupSQL,
+                                    quotedGroupSQL,
+                                    getGrantsAsString(getOptimizedScopeIds(
+                                        type, userGrants, userGroupGrants,
+                                        role.getKey())), containerGrants,
+                                    ouGrants);
 
                         if (scopeSql.length() > 0) {
                             accessRights.append(values.getAndCondition(
@@ -368,7 +370,8 @@ public class AccessRights {
                     result.append(groupId);
                     result.append('\'');
                 }
-            } catch (final Exception ignored) {
+            }
+            catch (final Exception ignored) {
                 result.append("FALSE");
             }
         }
@@ -499,19 +502,24 @@ public class AccessRights {
      *            user grants
      * @param groupGrants
      *            group grants
+     * @param roleId
+     *            role id
      * 
      * @return set of ids of all scopes
      */
-    public Set<String> getScopeIds(
+    private Set<String> getScopeIds(
         final Map<String, Map<String, List<RoleGrant>>> userGrants,
-        final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
+        final Map<String, Map<String, List<RoleGrant>>> groupGrants,
+        final String roleId) {
         final Set<String> result = new HashSet<String>();
         if (userGrants != null) {
             for (final Entry<String, Map<String, List<RoleGrant>>> entry : userGrants
                 .entrySet()) {
-                for (final String scopeId : entry.getValue().keySet()) {
-                    if (scopeId.length() != 0) {
-                        result.add(scopeId);
+                if ((roleId == null) || (roleId.equals(entry.getKey()))) {
+                    for (final String scopeId : entry.getValue().keySet()) {
+                        if (scopeId.length() != 0) {
+                            result.add(scopeId);
+                        }
                     }
                 }
             }
@@ -519,9 +527,11 @@ public class AccessRights {
         if (groupGrants != null) {
             for (final Entry<String, Map<String, List<RoleGrant>>> entry : groupGrants
                 .entrySet()) {
-                for (final String scopeId : entry.getValue().keySet()) {
-                    if (scopeId.length() != 0) {
-                        result.add(scopeId);
+                if ((roleId == null) || (roleId.equals(entry.getKey()))) {
+                    for (final String scopeId : entry.getValue().keySet()) {
+                        if (scopeId.length() != 0) {
+                            result.add(scopeId);
+                        }
                     }
                 }
             }
@@ -538,30 +548,36 @@ public class AccessRights {
      *            user grants
      * @param groupGrants
      *            group grants
+     * @param roleId
+     *            role id
      * 
      * @return set of ids of all scopes
      */
     public Set<String> getOptimizedScopeIds(
         final ResourceType resourceType,
         final Map<String, Map<String, List<RoleGrant>>> userGrants,
-        final Map<String, Map<String, List<RoleGrant>>> groupGrants) {
+        final Map<String, Map<String, List<RoleGrant>>> groupGrants,
+        final String roleId) {
         final Set<String> result = new HashSet<String>();
         if (userGrants != null) {
             for (final Entry<String, Map<String, List<RoleGrant>>> entry : userGrants
                 .entrySet()) {
-                for (final Entry<String, List<RoleGrant>> subentry : entry
-                    .getValue().entrySet()) {
-                    if (subentry.getKey().length() != 0) {
-                        final List<RoleGrant> grants = subentry.getValue();
-                        if (grants != null) {
-                            for (final RoleGrant grant : grants) {
-                                final String objectHref = grant.getObjectHref();
-                                final ResourceType grantType =
-                                    getResourceTypeFromHref(objectHref);
+                if ((roleId == null) || (roleId.equals(entry.getKey()))) {
+                    for (final Entry<String, List<RoleGrant>> subentry : entry
+                        .getValue().entrySet()) {
+                        if (subentry.getKey().length() != 0) {
+                            final List<RoleGrant> grants = subentry.getValue();
+                            if (grants != null) {
+                                for (final RoleGrant grant : grants) {
+                                    final String objectHref =
+                                        grant.getObjectHref();
+                                    final ResourceType grantType =
+                                        getResourceTypeFromHref(objectHref);
 
-                                if (grantType == resourceType) {
-                                    result.add(subentry.getKey());
-                                    break;
+                                    if (grantType == resourceType) {
+                                        result.add(subentry.getKey());
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -572,18 +588,20 @@ public class AccessRights {
         if (groupGrants != null) {
             for (final Entry<String, Map<String, List<RoleGrant>>> entry : groupGrants
                 .entrySet()) {
-                for (final Entry<String, List<RoleGrant>> subentry : entry
-                    .getValue().entrySet()) {
-                    if (subentry.getKey().length() != 0) {
-                        final List<RoleGrant> grants = subentry.getValue();
-                        for (final RoleGrant grant : grants) {
-                            final String objectHref = grant.getObjectHref();
-                            final ResourceType grantType =
-                                getResourceTypeFromHref(objectHref);
+                if ((roleId == null) || (roleId.equals(entry.getKey()))) {
+                    for (final Entry<String, List<RoleGrant>> subentry : entry
+                        .getValue().entrySet()) {
+                        if (subentry.getKey().length() != 0) {
+                            final List<RoleGrant> grants = subentry.getValue();
+                            for (final RoleGrant grant : grants) {
+                                final String objectHref = grant.getObjectHref();
+                                final ResourceType grantType =
+                                    getResourceTypeFromHref(objectHref);
 
-                            if (grantType == resourceType) {
-                                result.add(subentry.getKey());
-                                break;
+                                if (grantType == resourceType) {
+                                    result.add(subentry.getKey());
+                                    break;
+                                }
                             }
                         }
                     }

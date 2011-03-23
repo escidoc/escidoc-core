@@ -45,12 +45,13 @@ import de.escidoc.core.common.business.fedora.resources.interfaces.FilterInterfa
 import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Encapsulate the work which has to be done to get the permission filter
  * queries for Lucene filtering.
- *
+ * 
  * @author Andr&eacute; Schenk
  */
 public class PermissionsQuery {
@@ -61,8 +62,8 @@ public class PermissionsQuery {
     /**
      * Logging goes there.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        PermissionsQuery.class);
+    private static final Logger LOGGER = LoggerFactory
+        .getLogger(PermissionsQuery.class);
 
     private AccessRights accessRights;
 
@@ -113,14 +114,15 @@ public class PermissionsQuery {
                     hierarchicalContainers =
                         getHierarchicalContainers(accessRights
                             .getOptimizedScopeIds(ResourceType.CONTAINER,
-                                userGrants, userGroupGrants));
+                                userGrants, userGroupGrants, roleId));
                 }
                 if (hierarchicalOUs == null
                     && accessRights.needsHierarchicalPermissions(resourceType,
                         roleId, HIERARCHICAL_OUS_PLACEHOLDER)) {
                     hierarchicalOUs =
                         getHierarchicalOUs(accessRights.getOptimizedScopeIds(
-                            ResourceType.OU, userGrants, userGroupGrants));
+                            ResourceType.OU, userGrants, userGroupGrants,
+                            roleId));
                 }
 
                 final String rights =
@@ -130,8 +132,8 @@ public class PermissionsQuery {
                         hierarchicalOUs);
 
                 if (rights != null && rights.length() > 0) {
-                    LOGGER.info("OR access rights for (" + userId + ',' + roleId
-                        + "): " + rights);
+                    LOGGER.info("OR access rights for (" + userId + ','
+                        + roleId + "): " + rights);
                     statements.add(rights);
                 }
             }
@@ -195,14 +197,15 @@ public class PermissionsQuery {
                     hierarchicalContainers =
                         getHierarchicalContainers(accessRights
                             .getOptimizedScopeIds(ResourceType.CONTAINER,
-                                userGrants, userGroupGrants));
+                                userGrants, userGroupGrants, filter.getRoleId()));
                 }
                 Set<String> hierarchicalOUs = null;
                 if (accessRights.needsHierarchicalPermissions(resourceType,
                     filter.getRoleId(), HIERARCHICAL_OUS_PLACEHOLDER)) {
                     hierarchicalOUs =
                         getHierarchicalOUs(accessRights.getOptimizedScopeIds(
-                            ResourceType.OU, userGrants, userGroupGrants));
+                            ResourceType.OU, userGrants, userGroupGrants,
+                            filter.getRoleId()));
                 }
 
                 final String rights =
@@ -381,7 +384,7 @@ public class PermissionsQuery {
 
     /**
      * Injects the AccessRights object.
-     *
+     * 
      * @param accessRights
      *            AccessRights from Spring
      */
@@ -391,7 +394,7 @@ public class PermissionsQuery {
 
     /**
      * Injects the policies cache proxy.
-     *
+     * 
      * @param policiesCacheProxy
      *            the {@link PoliciesCacheProxy} to inject.
      */
