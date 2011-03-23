@@ -64,7 +64,7 @@ public class LinkStaxHandler extends DefaultHandler {
 
     private final String parentPath;
 
-    private final String hrefBaseUri;
+    private String hrefBaseUri;
 
     private Class exceptionClass;
 

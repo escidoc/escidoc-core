@@ -39,13 +39,13 @@ public class OntologyHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private final String predicateWithoutBase;
+    private String predicateWithoutBase;
 
     private String base = "";
 
-    private final String predicate;
+    private String predicate;
 
-    private final String predicateBase;
+    private String predicateBase;
 
     private boolean exist;
 
