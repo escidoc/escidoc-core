@@ -1245,7 +1245,7 @@
 						<configuration>
 							<container>
 								<containerId>jboss42x</containerId>
-								<timeout>240000</timeout>
+								<timeout>600000</timeout>
 								<zipUrlInstaller>
 									<!-- If you change the name of the JBoss package, change the install 
 										path too! -->
