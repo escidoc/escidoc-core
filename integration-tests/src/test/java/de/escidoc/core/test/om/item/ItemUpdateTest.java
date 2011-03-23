@@ -3272,7 +3272,6 @@ public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
         Vector<String> compIds = new Vector<String>();
         for (int i = 0; i < componentIds.getLength(); i++) {
             Node objRef = componentIds.item(i);
-            System.out.println(objRef.getNodeValue());
             String ref = objRef.getTextContent();
             if (getTransport() == Constants.TRANSPORT_REST) {
                 ref = getObjidFromHref(ref);
