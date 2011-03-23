@@ -97,15 +97,7 @@
 					<artifactId>maven-ejb-plugin</artifactId>
 					<version>2.3</version>
 				</plugin>
-			    <plugin>
-			      <groupId>org.apache.maven.plugins</groupId>
-			      <artifactId>maven-release-plugin</artifactId>
-			      <version>2.1</version>
-			      <configuration>
-			        <tagBase>http://escidev5:8888/prototype/branches/eSciDocCore</tagBase>
-			      </configuration>
-			    </plugin>
- 			</plugins>
+			</plugins>
 		</pluginManagement>
 		<resources>
 			<resource>
@@ -1703,9 +1695,9 @@
             <configuration>
               <source>${java.source.version}</source>
               <target>${java.target.version}</target>
-              <showDeprecation>false</showDeprecation>
-              <showWarnings>false</showWarnings>
-              <verbose>false</verbose>
+              <showDeprecation>true</showDeprecation>
+              <showWarnings>true</showWarnings>
+              <verbose>true</verbose>
               <fork>true</fork>
               <meminitial>128m</meminitial>
               <maxmem>512m</maxmem>

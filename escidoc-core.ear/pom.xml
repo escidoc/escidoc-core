@@ -27,17 +27,6 @@
 				<finalName>${project.artifactId}-${project.version}-build${BUILD_NUMBER}</finalName>
 			</build>
 		</profile>
-		<profile>
-			<id>hudson-release-build</id>
-			<activation>
-				<property>
-					<name>RELEASE_VERSION</name>
-				</property>
-			</activation>
-			<build>
-				<finalName>${project.artifactId}-${RELEASE_VERSION}</finalName>
-			</build>
-		</profile>
 	</profiles>
 
 	<dependencies>
