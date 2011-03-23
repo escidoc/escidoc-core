@@ -34,8 +34,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -52,8 +50,6 @@ import static org.junit.Assert.assertNull;
  */
 @RunWith(value = Parameterized.class)
 public class UpdateOrganizationalUnitsTest extends ContextTestBase {
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateOrganizationalUnitsTest.class);
 
     private String path = "";
 
@@ -84,61 +80,55 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
      */
     @Test
     public void testOmContextDelOU() throws Exception {
-        try {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
-            String template = toString(context, false);
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name",
+            getUniqueName("PubMan Context "));
+        String template = toString(context, false);
 
-            String created = create(template);
-            assertXmlValidContext(created);
+        String created = create(template);
+        assertXmlValidContext(created);
 
-            Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
-            String id = getObjidValue(createdDoc);
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
+        String id = getObjidValue(createdDoc);
 
-            // remove second OU from Context
-            Node node =
-                selectSingleNode(createdDoc,
-                    "/context/properties/organizational-units/organizational-unit");
-            node.getParentNode().removeChild(node);
+        // remove second OU from Context
+        Node node =
+            selectSingleNode(createdDoc,
+                "/context/properties/organizational-units/organizational-unit");
+        node.getParentNode().removeChild(node);
 
-            // get id from removed OU
-            String attrId = null;
-            // String debug = toString(node, false);
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                Node hrefNode = selectSingleNode(node, "@href");
-                attrId = hrefNode.getNodeValue();
-            }
-            else {
-                Node hrefNode = selectSingleNode(node, "@objid");
-                attrId = hrefNode.getNodeValue();
-            }
-
-            created = toString(createdDoc, false);
-            String newContext = update(id, created);
-
-            // assert second OU does was removed from Context
-            Document newContextDoc =
-                EscidocRestSoapTestBase.getDocument(newContext);
-
-            String xpath =
-                "/context/properties/organizational-units/organizational-unit";
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                xpath += "[@href = '" + attrId + "']";
-            }
-            else {
-                xpath += "[@objid = '" + attrId + "']";
-            }
-            node = selectSingleNode(newContextDoc, xpath);
-
-            assertNull("OU not removed from Context", node);
+        // get id from removed OU
+        String attrId = null;
+        // String debug = toString(node, false);
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            Node hrefNode = selectSingleNode(node, "@href");
+            attrId = hrefNode.getNodeValue();
         }
-        catch (final Exception e) {
-            LOGGER.error("", e);
-            EscidocRestSoapTestBase.failException("No error expected!", e);
+        else {
+            Node hrefNode = selectSingleNode(node, "@objid");
+            attrId = hrefNode.getNodeValue();
         }
+
+        created = toString(createdDoc, false);
+        String newContext = update(id, created);
+
+        // assert second OU does was removed from Context
+        Document newContextDoc =
+            EscidocRestSoapTestBase.getDocument(newContext);
+
+        String xpath =
+            "/context/properties/organizational-units/organizational-unit";
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            xpath += "[@href = '" + attrId + "']";
+        }
+        else {
+            xpath += "[@objid = '" + attrId + "']";
+        }
+        node = selectSingleNode(newContextDoc, xpath);
+
+        assertNull("OU not removed from Context", node);
     }
 
     /**
@@ -149,91 +139,82 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
      */
     @Test
     public void testOmContextAddOU() throws Exception {
-        try {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name",
+            getUniqueName("PubMan Context "));
 
-            // remove second OU from Context
-            Node node =
-                selectSingleNode(context,
-                    "/context/properties/organizational-units/organizational-unit");
+        // remove second OU from Context
+        Node node =
+            selectSingleNode(context,
+                "/context/properties/organizational-units/organizational-unit");
 
-            String attrId = null;
-            // String debug = toString(node, false);
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                Node hrefNode = selectSingleNode(node, "@href");
-                attrId = hrefNode.getNodeValue();
-            }
-            else {
-                Node hrefNode = selectSingleNode(node, "@objid");
-                attrId = hrefNode.getNodeValue();
-            }
-
-            node.getParentNode().removeChild(node);
-
-            String template = toString(context, false);
-            String created = create(template);
-            assertXmlValidContext(created);
-
-            Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
-            String id = getObjidValue(createdDoc);
-
-            // add new OU to properties/org-units
-            Node ou =
-                selectSingleNode(createdDoc,
-                    "/context/properties/organizational-units/organizational-unit");
-            Node newOu = ou.cloneNode(true);
-
-            String xpath = "";
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                xpath = "@href";
-            }
-            else {
-                xpath = "@objid";
-            }
-
-            substitute(newOu, xpath, attrId);
-
-            Node ous =
-                selectSingleNode(createdDoc,
-                    "/context/properties/organizational-units");
-
-            ous.appendChild(newOu);
-
-            template = toString(createdDoc, false);
-            String newContext = update(id, template);
-
-            // assert second OU does was removed from Context
-            Document newContextDoc =
-                EscidocRestSoapTestBase.getDocument(newContext);
-
-            // assert number of OUs == 2
-            NodeList updatedOus =
-                selectNodeList(newContextDoc,
-                    "/context/properties/organizational-units/organizational-unit");
-            assertEquals("Missing new OU after update", 2, updatedOus
-                .getLength());
-
-            xpath =
-                "/context/properties/organizational-units/organizational-unit";
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                xpath += "[@href = '" + attrId + "']";
-            }
-            else {
-                xpath += "[@objid = '" + attrId + "']";
-            }
-            node = selectSingleNode(newContextDoc, xpath);
-
-            assertNotNull("OU not added to Context", node);
-
+        String attrId = null;
+        // String debug = toString(node, false);
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            Node hrefNode = selectSingleNode(node, "@href");
+            attrId = hrefNode.getNodeValue();
         }
-        catch (final Exception e) {
-            LOGGER.error("", e);
-            EscidocRestSoapTestBase.failException("No error expected!", e);
+        else {
+            Node hrefNode = selectSingleNode(node, "@objid");
+            attrId = hrefNode.getNodeValue();
         }
+
+        node.getParentNode().removeChild(node);
+
+        String template = toString(context, false);
+        String created = create(template);
+        assertXmlValidContext(created);
+
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
+        String id = getObjidValue(createdDoc);
+
+        // add new OU to properties/org-units
+        Node ou =
+            selectSingleNode(createdDoc,
+                "/context/properties/organizational-units/organizational-unit");
+        Node newOu = ou.cloneNode(true);
+
+        String xpath = "";
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            xpath = "@href";
+        }
+        else {
+            xpath = "@objid";
+        }
+
+        substitute(newOu, xpath, attrId);
+
+        Node ous =
+            selectSingleNode(createdDoc,
+                "/context/properties/organizational-units");
+
+        ous.appendChild(newOu);
+
+        template = toString(createdDoc, false);
+        String newContext = update(id, template);
+
+        // assert second OU does was removed from Context
+        Document newContextDoc =
+            EscidocRestSoapTestBase.getDocument(newContext);
+
+        // assert number of OUs == 2
+        NodeList updatedOus =
+            selectNodeList(newContextDoc,
+                "/context/properties/organizational-units/organizational-unit");
+        assertEquals("Missing new OU after update", 2, updatedOus.getLength());
+
+        xpath = "/context/properties/organizational-units/organizational-unit";
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            xpath += "[@href = '" + attrId + "']";
+        }
+        else {
+            xpath += "[@objid = '" + attrId + "']";
+        }
+        node = selectSingleNode(newContextDoc, xpath);
+
+        assertNotNull("OU not added to Context", node);
     }
 
     /**
@@ -244,92 +225,83 @@ public class UpdateOrganizationalUnitsTest extends ContextTestBase {
      */
     @Test
     public void testOmContextReplaceOU() throws Exception {
-        try {
-            Document context =
-                EscidocRestSoapTestBase.getTemplateAsDocument(
-                    TEMPLATE_CONTEXT_PATH + this.path, "context_create.xml");
-            substitute(context, "/context/properties/name",
-                getUniqueName("PubMan Context "));
+        Document context =
+            EscidocRestSoapTestBase.getTemplateAsDocument(TEMPLATE_CONTEXT_PATH
+                + this.path, "context_create.xml");
+        substitute(context, "/context/properties/name",
+            getUniqueName("PubMan Context "));
 
-            // remove second OU from Context
-            Node node =
-                selectSingleNode(context,
-                    "/context/properties/organizational-units/organizational-unit");
+        // remove second OU from Context
+        Node node =
+            selectSingleNode(context,
+                "/context/properties/organizational-units/organizational-unit");
 
-            String attrId = null;
-            // String debug = toString(node, false);
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                Node hrefNode = selectSingleNode(node, "@href");
-                attrId = hrefNode.getNodeValue();
-            }
-            else {
-                Node hrefNode = selectSingleNode(node, "@objid");
-                attrId = hrefNode.getNodeValue();
-            }
-
-            node.getParentNode().removeChild(node);
-
-            String template = toString(context, false);
-            String created = create(template);
-            assertXmlValidContext(created);
-
-            Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
-            String id = getObjidValue(createdDoc);
-
-            NodeList createdOus =
-                selectNodeList(createdDoc,
-                    "/context/properties/organizational-units/organizational-unit");
-            assertEquals("More than one OUs created", createdOus.getLength(), 1);
-
-            // replace id
-            String xpath =
-                "/context/properties/organizational-units/organizational-unit/";
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                xpath += "@href";
-            }
-            else {
-                xpath += "@objid";
-            }
-            // node = selectSingleNode(newContextDoc, xpath);
-            substitute(createdDoc, xpath, attrId);
-
-            // assert that update Context has only one OU
-            NodeList updateOu =
-                selectNodeList(createdDoc,
-                    "/context/properties/organizational-units/organizational-unit");
-            assertEquals("More than one OUs for update", 1, updateOu
-                .getLength());
-
-            created = toString(createdDoc, false);
-            String newContext = update(id, created);
-
-            // assert that the OU was replaced in Context
-            Document newContextDoc =
-                EscidocRestSoapTestBase.getDocument(newContext);
-
-            // assert that only one OU is part of Context after OU
-            NodeList updatedOus =
-                selectNodeList(newContextDoc,
-                    "/context/properties/organizational-units/organizational-unit");
-            assertEquals("Only one OU after update", updatedOus.getLength(), 1);
-
-            // assert that the single OU has the right id
-            xpath =
-                "/context/properties/organizational-units/organizational-unit";
-            if (getTransport() == Constants.TRANSPORT_REST) {
-                xpath += "[@href = '" + attrId + "']";
-            }
-            else {
-                xpath += "[@objid = '" + attrId + "']";
-            }
-
-            updateOu = selectNodeList(createdDoc, xpath);
-            assertEquals("More than one OUs for update", 1, updateOu
-                .getLength());
+        String attrId = null;
+        // String debug = toString(node, false);
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            Node hrefNode = selectSingleNode(node, "@href");
+            attrId = hrefNode.getNodeValue();
         }
-        catch (final Exception e) {
-            LOGGER.error("", e);
-            EscidocRestSoapTestBase.failException("No error expected!", e);
+        else {
+            Node hrefNode = selectSingleNode(node, "@objid");
+            attrId = hrefNode.getNodeValue();
         }
+
+        node.getParentNode().removeChild(node);
+
+        String template = toString(context, false);
+        String created = create(template);
+        assertXmlValidContext(created);
+
+        Document createdDoc = EscidocRestSoapTestBase.getDocument(created);
+        String id = getObjidValue(createdDoc);
+
+        NodeList createdOus =
+            selectNodeList(createdDoc,
+                "/context/properties/organizational-units/organizational-unit");
+        assertEquals("More than one OUs created", createdOus.getLength(), 1);
+
+        // replace id
+        String xpath =
+            "/context/properties/organizational-units/organizational-unit/";
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            xpath += "@href";
+        }
+        else {
+            xpath += "@objid";
+        }
+        // node = selectSingleNode(newContextDoc, xpath);
+        substitute(createdDoc, xpath, attrId);
+
+        // assert that update Context has only one OU
+        NodeList updateOu =
+            selectNodeList(createdDoc,
+                "/context/properties/organizational-units/organizational-unit");
+        assertEquals("More than one OUs for update", 1, updateOu.getLength());
+
+        created = toString(createdDoc, false);
+        String newContext = update(id, created);
+
+        // assert that the OU was replaced in Context
+        Document newContextDoc =
+            EscidocRestSoapTestBase.getDocument(newContext);
+
+        // assert that only one OU is part of Context after OU
+        NodeList updatedOus =
+            selectNodeList(newContextDoc,
+                "/context/properties/organizational-units/organizational-unit");
+        assertEquals("Only one OU after update", updatedOus.getLength(), 1);
+
+        // assert that the single OU has the right id
+        xpath = "/context/properties/organizational-units/organizational-unit";
+        if (getTransport() == Constants.TRANSPORT_REST) {
+            xpath += "[@href = '" + attrId + "']";
+        }
+        else {
+            xpath += "[@objid = '" + attrId + "']";
+        }
+
+        updateOu = selectNodeList(createdDoc, xpath);
+        assertEquals("More than one OUs for update", 1, updateOu.getLength());
     }
 }
