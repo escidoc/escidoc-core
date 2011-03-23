@@ -120,7 +120,8 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
      * @param xmldate
      *            date in xml-format
      * @return String date in database-specific format
-     * 
+     *
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private static String convertDate(final String xmldate)
                     throws SqlDatabaseSystemException {

@@ -96,6 +96,9 @@ public interface ContainerRendererInterface {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      * @oum
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     String renderMetadataRecords(final Container container)
         throws EncodingSystemException, FedoraSystemException,
@@ -107,11 +110,15 @@ public interface ContainerRendererInterface {
      * 
      * @param container
      *            The Container to render.
+     * @param mdRecord
+     * @param isRootMdRecord
      * @return Returns the XML representation of the sub resource
      *         <code>data</code> of an organizational unit.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      * @oum
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
     String renderMetadataRecord(
         final Container container, final Datastream mdRecord,

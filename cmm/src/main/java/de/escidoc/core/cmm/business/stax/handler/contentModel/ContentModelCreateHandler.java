@@ -95,7 +95,7 @@ public class ContentModelCreateHandler extends DefaultHandler {
 
     private MdRecordDefinitionHandler metadataHandler;
 
-    private ContentModelCreate contentModel;
+    private final ContentModelCreate contentModel;
 
     /**
      * ItemHandler.
@@ -154,13 +154,13 @@ public class ContentModelCreateHandler extends DefaultHandler {
                 }
                 this.parsingProperties = true;
                 this.propertiesHandler =
-                    new ContentModelPropertiesHandler(parser);
+                    new ContentModelPropertiesHandler(this.parser);
                 this.propertiesHandler.startElement(element);
             }
             else if (XPATH_CONTENT_MODEL_METADATA.equals(currentPath)) {
                 this.parsingMetaData = true;
                 this.metadataHandler =
-                    new MdRecordDefinitionHandler(parser,
+                    new MdRecordDefinitionHandler(this.parser,
                         XPATH_CONTENT_MODEL_METADATA);
                 this.metadataHandler.startElement(element);
             }
@@ -168,14 +168,14 @@ public class ContentModelCreateHandler extends DefaultHandler {
                 .equals(currentPath)) {
                 this.parsingResourceDefinitions = true;
                 this.resourceDefinitionHandler =
-                    new ResourceDefinitionHandler(parser,
+                    new ResourceDefinitionHandler(this.parser,
                         XPATH_CONTENT_MODEL_RESOURCE_DEFINITIONS);
                 this.resourceDefinitionHandler.startElement(element);
             }
             else if (XPATH_CONTENT_MODEL_CONTENT_STREAMS.equals(currentPath)) {
                 this.parsingContentStreams = true;
                 this.contentStreamsHandler =
-                    new ContentStreamsHandler(parser,
+                    new ContentStreamsHandler(this.parser,
                         XPATH_CONTENT_MODEL_CONTENT_STREAMS);
                 this.contentStreamsHandler.startElement(element);
             }

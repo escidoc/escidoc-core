@@ -115,7 +115,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (final ResourceListener containerListener : containerListeners) {
+        for (final ResourceListener containerListener : this.containerListeners) {
             containerListener.resourceCreated(id, restXml,
                     soapXml);
         }
@@ -131,7 +131,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
      *             One of the listeners threw an exception.
      */
     protected void fireContainerDeleted(final String id) throws SystemException {
-        for (final ResourceListener containerListener : containerListeners) {
+        for (final ResourceListener containerListener : this.containerListeners) {
             containerListener.resourceDeleted(id);
         }
     }
@@ -162,7 +162,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = getContainerXml(getContainer());
         }
-        for (final ResourceListener containerListener : containerListeners) {
+        for (final ResourceListener containerListener : this.containerListeners) {
             containerListener.resourceModified(id, restXml,
                     soapXml);
         }
@@ -192,7 +192,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (final ResourceListener containerListener : containerListeners) {
+        for (final ResourceListener containerListener : this.containerListeners) {
             containerListener.resourceModified(id, restXml,
                     soapXml);
         }
@@ -211,7 +211,7 @@ public class ContainerResourceListener extends ContainerHandlerRetrieve {
         final String restXml = null;
         final String soapXml = null;
 
-        for (final ResourceListener containerMemberListener : containerMemberListeners) {
+        for (final ResourceListener containerMemberListener : this.containerMemberListeners) {
             containerMemberListener
                     .resourceModified(id, restXml, soapXml);
         }

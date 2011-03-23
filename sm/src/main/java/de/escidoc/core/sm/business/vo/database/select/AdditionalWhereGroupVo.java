@@ -52,7 +52,7 @@ public class AdditionalWhereGroupVo {
      * @return the additionalWhereFieldVos
      */
     public Collection<AdditionalWhereFieldVo> getAdditionalWhereFieldVos() {
-        return additionalWhereFieldVos;
+        return this.additionalWhereFieldVos;
     }
 
     /**
@@ -70,7 +70,7 @@ public class AdditionalWhereGroupVo {
      * @return the alliance
      */
     public String getAlliance() {
-        return alliance;
+        return this.alliance;
     }
 
     /**
@@ -78,6 +78,7 @@ public class AdditionalWhereGroupVo {
      * 
      * @param alliance
      *            the alliance to set
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     public void setAlliance(final String alliance) 
                         throws SqlDatabaseSystemException {
@@ -93,7 +94,7 @@ public class AdditionalWhereGroupVo {
      * @return the rootWhereFieldVo
      */
     public RootWhereFieldVo getRootWhereFieldVo() {
-        return rootWhereFieldVo;
+        return this.rootWhereFieldVo;
     }
 
     /**

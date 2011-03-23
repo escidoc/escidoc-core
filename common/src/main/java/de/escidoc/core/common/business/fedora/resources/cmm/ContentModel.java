@@ -70,9 +70,9 @@ public class ContentModel extends GenericVersionableResourcePid
     public static final String DATASTREAM_DS_COMPOSITE_MODEL =
         "DS-COMPOSITE-MODEL";
 
-    private Map<String, Datastream> contentStreams;
+    private final Map<String, Datastream> contentStreams;
 
-    private Map<String, Datastream> otherStreams;
+    private final Map<String, Datastream> otherStreams;
 
     private Datastream dsCompositeModel;
 
@@ -119,8 +119,8 @@ public class ContentModel extends GenericVersionableResourcePid
         setTitle(getProperty(TripleStoreUtility.PROP_DC_TITLE));
         setDescription(getProperty(TripleStoreUtility.PROP_DC_DESCRIPTION));
 
-        contentStreams = new HashMap<String, Datastream>();
-        otherStreams = new HashMap<String, Datastream>();
+        this.contentStreams = new HashMap<String, Datastream>();
+        this.otherStreams = new HashMap<String, Datastream>();
         initDatastreams(getDatastreamInfos());
     }
 

@@ -135,7 +135,7 @@ public class RoleFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                detachedCriteria =
+                this.detachedCriteria =
                     DetachedCriteria.forClass(EscidocRole.class, "r");
                 detachedCriteria.add(Restrictions.ne("id",
                     EscidocRole.DEFAULT_USER_ROLE_ID));

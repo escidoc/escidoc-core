@@ -53,7 +53,7 @@ public class StartElementWithText extends StartElement {
     }
 
     public String getElementText() {
-        return elementText;
+        return this.elementText;
     }
 
     public void setElementText(final String elementText) {

@@ -63,6 +63,9 @@ public interface UserAccountRendererInterface {
      * 
      * @param grants
      *            A list of grants.
+     * @param numberOfHits
+     * @param offset
+     * @param limit
      * @param recordPacking
      *            A string to determine how the record should be escaped in the
      *            response. Defined values are 'string' and 'xml'. The default
@@ -130,6 +133,7 @@ public interface UserAccountRendererInterface {
      * Gets the representation of the provided <code>UserPreference</code>
      * object.
      * 
+     * @param userAccount
      * @param preference
      *            The {@link UserPreference} to render.
      * @return Returns the XML representation of the provided

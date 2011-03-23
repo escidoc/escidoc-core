@@ -31,6 +31,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -63,12 +64,12 @@ public class XMLHashHandler extends DefaultHandler {
     }
 
     public String getHash() {
-        return hash;
+        return this.hash;
     }
 
     @Override
     public void startDocument() throws SAXException {
-        string = new StringBuffer();
+        this.string = new StringBuffer();
         string.append("begin");
     }
 
@@ -91,8 +92,8 @@ public class XMLHashHandler extends DefaultHandler {
                 atts.put(attName, attributes.getValue(i));
             }
         }
-        final Set<Map.Entry<String, String>> attsEntrySet = atts.entrySet();
-        for (final Map.Entry entry : attsEntrySet) {
+        final Set<Entry<String, String>> attsEntrySet = atts.entrySet();
+        for (final Entry entry : attsEntrySet) {
             string.append('#');
             string.append(entry.getKey());
             string.append('=');
@@ -116,7 +117,7 @@ public class XMLHashHandler extends DefaultHandler {
         try {
             final MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(string.toString().getBytes());
-            hash = new String(md.digest());
+            this.hash = new String(md.digest());
         }
         catch (final NoSuchAlgorithmException e) {
             throw new SAXException("No such digest algorithm.", e);

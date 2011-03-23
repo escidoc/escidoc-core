@@ -68,7 +68,7 @@ public class OrganizationalUnitMetadataHandler
 
     private String currentMdRecordName;
 
-    private String rootPath;
+    private final String rootPath;
 
     private String dcTitle = "";
 
@@ -119,7 +119,7 @@ public class OrganizationalUnitMetadataHandler
         final String elementName = element.getLocalName();
 
         if (getMdRecordPath().equals(getParser().getCurPath())) {
-            insideMdRecord = true;
+            this.insideMdRecord = true;
             try {
                 final Attribute name = element.getAttribute(null, NAME);
                 this.currentMdRecordName = name.getValue();
@@ -129,8 +129,8 @@ public class OrganizationalUnitMetadataHandler
                             + elementName + " was not set!");
 
                 }
-                else if (MANDATORY_MD_RECORD_NAME.equals(currentMdRecordName)) {
-                    mandatoryMdRecordFound = true;
+                else if (MANDATORY_MD_RECORD_NAME.equals(this.currentMdRecordName)) {
+                    this.mandatoryMdRecordFound = true;
                 }
             }
             catch (final NoSuchAttributeException e) {
@@ -153,8 +153,8 @@ public class OrganizationalUnitMetadataHandler
             metadataAttributes.put(this.currentMdRecordName, md);
 
         }
-        else if (insideMdRecord && !rootMetadataElementFound) {
-            rootMetadataElementFound = true;
+        else if (this.insideMdRecord && ! this.rootMetadataElementFound) {
+            this.rootMetadataElementFound = true;
             if (this.currentMdRecordName.equals(MANDATORY_MD_RECORD_NAME)) {
                 this.escidocMetadataRecordNameSpace = element.getNamespace();
             }
@@ -177,12 +177,12 @@ public class OrganizationalUnitMetadataHandler
         throws MissingMdRecordException {
 
         if (getMdRecordPath().equals(getParser().getCurPath())) {
-            insideMdRecord = false;
-            rootMetadataElementFound = false;
-            currentMdRecordName = null;
+            this.insideMdRecord = false;
+            this.rootMetadataElementFound = false;
+            this.currentMdRecordName = null;
         }
         else if (getMdRecordsPath().equals(getParser().getCurPath())
-            && !mandatoryMdRecordFound) {
+            && ! this.mandatoryMdRecordFound) {
             throw new MissingMdRecordException("Mandatory md-record with a name "
                     + MANDATORY_MD_RECORD_NAME + " is missing.");
         }
@@ -205,10 +205,10 @@ public class OrganizationalUnitMetadataHandler
     @Override
     public String characters(final String s, final StartElement element) {
 
-        if (MANDATORY_MD_RECORD_NAME.equals(currentMdRecordName)
+        if (MANDATORY_MD_RECORD_NAME.equals(this.currentMdRecordName)
             && "title".equals(element.getLocalName())
                 && Constants.DC_NS_URI.equals(element.getNamespace())) {
-            dcTitle = s;
+            this.dcTitle = s;
         }
         return s;
     }
@@ -234,7 +234,7 @@ public class OrganizationalUnitMetadataHandler
      * @return the rootPath
      */
     private String getRootPath() {
-        return rootPath;
+        return this.rootPath;
     }
 
     /**
@@ -255,7 +255,7 @@ public class OrganizationalUnitMetadataHandler
      * @return the dcTitle
      */
     public String getDcTitle() {
-        return dcTitle;
+        return this.dcTitle;
     }
 
 }

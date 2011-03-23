@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * The methods of the class deals with datastreams for fedora objects, which
@@ -81,8 +82,7 @@ public class OrganizationalUnitHandlerCreate
 
         final Map<String, Object> values = new HashMap<String, Object>();
         values.putAll(relsExtValues);
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility
-            .getInstance().getBuildNumber());
+        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
         values.put(XmlTemplateProvider.VAR_ID, id);
         // values.put("organizationDetails", organizationDetails);
         values.put(XmlTemplateProvider.VAR_PARENTS, parents);
@@ -90,7 +90,7 @@ public class OrganizationalUnitHandlerCreate
         if (metadataStreams != null) {
             final Collection<Map<String, String>> mdRecords =
                 new ArrayList<Map<String, String>>(metadataStreams.size());
-            for (final Map.Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : metadataStreams.entrySet()) {
+            for (final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : metadataStreams.entrySet()) {
                 final Map<String, String> mdRecord = new HashMap<String, String>();
                 if (metadataProperties != null) {
                     final Map<String, String> properties =

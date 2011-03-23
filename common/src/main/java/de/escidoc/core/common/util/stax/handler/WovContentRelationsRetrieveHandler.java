@@ -42,7 +42,7 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private GregorianCalendar sourceVersionTimeStamp;
+    private final GregorianCalendar sourceVersionTimeStamp;
 
     private GregorianCalendar latestStatusTimestamp;
 
@@ -75,21 +75,21 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
 
         if (elementPath.equals(currentPath)) {
-            inside = true;
-            insideLevel++;
+            this.inside = true;
+            this.insideLevel++;
         }
-        else if (inside) {
-            insideLevel++;
+        else if (this.inside) {
+            this.insideLevel++;
         }
         return null;
     }
 
     @Override
     public EndElement endElement(final EndElement element) {
-        if (inside) {
-            insideLevel--;
-            if (insideLevel == 0) {
-                inside = false;
+        if (this.inside) {
+            this.insideLevel--;
+            if (this.insideLevel == 0) {
+                this.inside = false;
             }
         }
         return null;
@@ -98,7 +98,7 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
     @Override
     public String characters(final String s, final StartElement element)
         throws IntegritySystemException, XmlParserSystemException {
-        if (inside) {
+        if (this.inside) {
             final String theName = element.getLocalName();
             try {
                 if (theName.equals(Elements.ELEMENT_WOV_VERSION_STATUS)) {
@@ -108,8 +108,8 @@ public class WovContentRelationsRetrieveHandler extends DefaultHandler {
                         DatatypeFactory.newInstance().newXMLGregorianCalendar(
                             elementTimestampString).toGregorianCalendar();
                     if (sourceVersionTimeStamp.after(elementTimestamp)
-                        && elementTimestamp.after(latestStatusTimestamp)) {
-                        latestStatusTimestamp = elementTimestamp;
+                        && elementTimestamp.after(this.latestStatusTimestamp)) {
+                        this.latestStatusTimestamp = elementTimestamp;
                         this.status = s;
                     }
                 }

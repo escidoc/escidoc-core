@@ -40,7 +40,6 @@ import com.sun.xacml.cond.FunctionBase;
 import com.sun.xacml.finder.PolicyFinderResult;
 import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.aa.business.cache.PoliciesCache;
-import de.escidoc.core.aa.business.xacml.XacmlPolicyReference;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.service.UserContext;
@@ -142,8 +141,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
     private static Collection<String> getRoleNames(final PolicyTreeElement policy, final Collection<String> roleNames) {
         if (policy != null) {
             try {
-                final PolicyTreeElement policyReference =
-                    (XacmlPolicyReference) policy;
+                final PolicyTreeElement policyReference = policy;
                 roleNames.add(policyReference.getId().getPath().toLowerCase());
             }
             catch (final Exception e) {
@@ -152,8 +150,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
                     for (final Object o : policy.getChildren()) {
                         try {
                             abstractPolicy = (AbstractPolicy) o;
-                            final PolicyTreeElement policyReference =
-                                    (XacmlPolicyReference) abstractPolicy;
+                            final PolicyTreeElement policyReference = abstractPolicy;
                             roleNames.add(policyReference
                                     .getId().getPath().toLowerCase());
                         } catch (final Exception e1) {
@@ -174,6 +171,7 @@ public class XacmlFunctionRoleInList extends FunctionBase {
      * 
      * @return String userId
      * @wm
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String getUserId() throws WebserverSystemException {
         return UserContext.getId();

@@ -52,6 +52,7 @@ public class ParameterImpl implements Parameter {
      * Instantiate a new {@link Parameter} instance using the given name and date value.
      *
      * @param name the name of the parameter
+     * @param value
      * @value value the date value of the parameter
      */
     public ParameterImpl(final String name, final ReadableInstant value) {
@@ -69,6 +70,7 @@ public class ParameterImpl implements Parameter {
      * Instantiate a new {@link Parameter} instance using the given name and string value.
      *
      * @param name the name of the parameter
+     * @param value
      * @value value the string value of the parameter
      */
     public ParameterImpl(final String name, final String value) {
@@ -80,6 +82,7 @@ public class ParameterImpl implements Parameter {
      * Instantiate a new {@link Parameter} instance using the given name and decimal value.
      *
      * @param name the name of the parameter
+     * @param value
      * @value value the decimal value of the parameter
      */
     public ParameterImpl(final String name, final BigDecimal value) {
@@ -91,6 +94,7 @@ public class ParameterImpl implements Parameter {
      * Instantiate a new {@link Parameter} instance using the given name and boolean value.
      *
      * @param name the name of the parameter
+     * @param value
      * @value value the boolean value of the parameter
      */
     public ParameterImpl(final String name, final boolean value) {
@@ -136,10 +140,10 @@ public class ParameterImpl implements Parameter {
     @Override
     public String toString() {
         return "ParameterImpl{" +
-                "name='" + name + '\'' +
-                ", datevalue=" + datevalue +
-                ", stringvalue='" + stringvalue + '\'' +
-                ", decimalvalue=" + decimalvalue +
+                "name='" + this.name + '\'' +
+                ", datevalue=" + this.datevalue +
+                ", stringvalue='" + this.stringvalue + '\'' +
+                ", decimalvalue=" + this.decimalvalue +
                 '}';
     }
 }

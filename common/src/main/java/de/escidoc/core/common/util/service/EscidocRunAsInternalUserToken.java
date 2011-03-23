@@ -66,7 +66,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
      *
      */
     public Authentication getOrginalAuthentication() {
-        return orginalAuthentication;
+        return this.orginalAuthentication;
     }
 
     /**

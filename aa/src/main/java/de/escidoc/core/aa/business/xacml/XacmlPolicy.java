@@ -98,7 +98,7 @@ public class XacmlPolicy extends Policy {
      *
      */
     public String getRoleId() {
-        return roleId;
+        return this.roleId;
     }
 
 

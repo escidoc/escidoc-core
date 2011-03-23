@@ -45,7 +45,7 @@ public class ReportParametersVo {
      * @return the reportDefinitionId
      */
     public String getReportDefinitionId() {
-        return reportDefinitionId;
+        return this.reportDefinitionId;
     }
     /**
      * @param reportDefinitionId the reportDefinitionId to set
@@ -57,7 +57,7 @@ public class ReportParametersVo {
      * @return the parameterVos
      */
     public Collection<ParameterVo> getParameterVos() {
-        return parameterVos;
+        return this.parameterVos;
     }
 
 }

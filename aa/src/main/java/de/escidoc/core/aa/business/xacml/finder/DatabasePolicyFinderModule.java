@@ -500,18 +500,18 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     private AbstractPolicy retrieveDefaultPolicies()
         throws WebserverSystemException {
 
-        if (defaultPolicies == null) {
+        if (this.defaultPolicies == null) {
             try {
-                defaultPolicies =
+                this.defaultPolicies =
                     new XacmlPolicyReference(new URI(
                         EscidocRole.DEFAULT_USER_ROLE_ID),
-                        PolicyReference.POLICYSET_REFERENCE, policyFinder);
+                        PolicyReference.POLICYSET_REFERENCE, this.policyFinder);
             }
             catch (final Exception e) {
                 throw new WebserverSystemException(e);
             }
         }
-        return defaultPolicies;
+        return this.defaultPolicies;
     }
 
     /**
@@ -652,7 +652,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
                         new URI(role.getPolicySetId().toString() + '/'
                                 + userOrGroupIdentifier + '/' + userOrGroupId);
                 rolesPolicies.add(new XacmlPolicyReference(policySetId,
-                        PolicyReference.POLICYSET_REFERENCE, policyFinder));
+                        PolicyReference.POLICYSET_REFERENCE, this.policyFinder));
             }
 
             if (!rolesPolicies.isEmpty()) {

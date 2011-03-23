@@ -93,13 +93,13 @@ public class OrganizationalUnitParentsHandler
         InvalidXmlException, MissingAttributeValueException {
 
         final String curPath = getParser().getCurPath();
-        if (!rootElementPathChecked) {
-            if (!getParser().getCurPath().startsWith('/' + rootElement)) {
+        if (! this.rootElementPathChecked) {
+            if (!getParser().getCurPath().startsWith('/' + this.rootElement)) {
                 throw new XmlCorruptedException("Root element is "
-                    + element.getLocalName() + " not as expected" + rootElement
+                    + element.getLocalName() + " not as expected" + this.rootElement
                     + "! ");
             }
-            rootElementPathChecked = true;
+            this.rootElementPathChecked = true;
         }
 
         if (curPath.endsWith(XmlUtility.NAME_PARENT)) {
@@ -130,7 +130,7 @@ public class OrganizationalUnitParentsHandler
      * @return the parentOus
      */
     public List<String> getParentOus() {
-        return parents;
+        return this.parents;
     }
 
     /**

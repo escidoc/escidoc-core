@@ -76,11 +76,11 @@ public class Component extends GenericResourcePid implements ComponentInterface 
 
     private Map<String, Datastream> mdRecords;
 
-    private String parent;
+    private final String parent;
 
     private Datastream content;
 
-    private String parentVersionDate;
+    private final String parentVersionDate;
 
     private ItemFoXmlRendererInterface foxmlRenderer;
 

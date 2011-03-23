@@ -68,7 +68,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @throws AuthenticationException
      * @throws AuthorizationException
      * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
+     * @see RoleHandlerInterface
      *      #create(java.lang.String)
      *
      */
@@ -92,7 +92,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @throws RoleNotFoundException
      * @throws RoleInUseViolationException
      * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
+     * @see RoleHandlerInterface
      *      #delete(java.lang.String)
      *
      */
@@ -114,7 +114,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @throws AuthenticationException
      * @throws AuthorizationException
      * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
+     * @see RoleHandlerInterface
      *      #retrieve(java.lang.String)
      *
      */
@@ -155,7 +155,7 @@ public class RoleHandler implements RoleHandlerInterface {
      * @throws AuthorizationException
      * @throws SystemException
      * @throws InvalidSearchQueryException
-     * @see de.escidoc.core.aa.service.interfaces.RoleHandlerInterface
+     * @see RoleHandlerInterface
      *      #retrieveRoles(java.util.Map)
      */
     @Override

@@ -90,14 +90,14 @@ public class ContainerHandlerBase extends HandlerBase {
      * @return the container
      */
     public Container getContainer() {
-        return container;
+        return this.container;
     }
 
     /**
      * @return the item
      */
     public GenericResource getItem() {
-        return item;
+        return this.item;
     }
 
     /**
@@ -202,8 +202,7 @@ public class ContainerHandlerBase extends HandlerBase {
     protected void checkLocked() throws LockingException,
         WebserverSystemException {
         if (getContainer().isLocked()
-            && !getContainer().getLockOwner().equals(
-                getUtility().getCurrentUser()[0])) {
+            && !getContainer().getLockOwner().equals(Utility.getCurrentUser()[0])) {
             throw new LockingException("Container + "
                     + getContainer().getId()
                     + " is locked by "
@@ -466,10 +465,10 @@ public class ContainerHandlerBase extends HandlerBase {
      */
     @Override
     protected Utility getUtility() {
-        if (utility == null) {
-            utility = Utility.getInstance();
+        if (this.utility == null) {
+            this.utility = Utility.getInstance();
         }
-        return utility;
+        return this.utility;
     }
 
     /**
@@ -478,21 +477,22 @@ public class ContainerHandlerBase extends HandlerBase {
      */
     public ContainerFoXmlRendererInterface getFoxmlRenderer() {
 
-        if (foxmlRenderer == null) {
-            foxmlRenderer = new VelocityXmlContainerFoXmlRenderer();
+        if (this.foxmlRenderer == null) {
+            this.foxmlRenderer = new VelocityXmlContainerFoXmlRenderer();
         }
-        return foxmlRenderer;
+        return this.foxmlRenderer;
     }
 
     /**
      * @return the renderer
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public ContainerRendererInterface getRenderer()
         throws WebserverSystemException {
-        if (renderer == null) {
-            renderer = new VelocityXmlContainerRenderer();
+        if (this.renderer == null) {
+            this.renderer = new VelocityXmlContainerRenderer();
         }
-        return renderer;
+        return this.renderer;
     }
 
     /**

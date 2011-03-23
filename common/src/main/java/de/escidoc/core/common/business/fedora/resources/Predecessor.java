@@ -53,14 +53,14 @@ public class Predecessor {
      * @return the objid
      */
     public String getObjid() {
-        return objid;
+        return this.objid;
     }
 
     /**
      * @return the predecessor form
      */
     public PredecessorForm getForm() {
-        return form;
+        return this.form;
     }
 
     @Override
@@ -74,17 +74,17 @@ public class Predecessor {
 
         final Predecessor that = (Predecessor) o;
 
-        if (form != that.form) {
+        if (this.form != that.form) {
             return false;
         }
-        return !(objid != null ? !objid.equals(that.objid) : that.objid != null);
+        return !(this.objid != null ? !objid.equals(that.objid) : that.objid != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = objid != null ? objid.hashCode() : 0;
-        result = 31 * result + (form != null ? form.hashCode() : 0);
+        int result = this.objid != null ? objid.hashCode() : 0;
+        result = 31 * result + (this.form != null ? form.hashCode() : 0);
         return result;
     }
 }

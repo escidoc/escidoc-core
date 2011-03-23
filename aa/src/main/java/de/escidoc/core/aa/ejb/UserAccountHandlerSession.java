@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for UserAccountHandler.
  */
-public class UserAccountHandlerSession extends UserAccountHandlerBean
-        implements SessionBean {
+public class UserAccountHandlerSession extends UserAccountHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

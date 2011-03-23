@@ -266,7 +266,7 @@ public class MdRecordCreate implements Serializable {
      * @return datastream label
      */
     public String getLabel() {
-        return label;
+        return this.label;
     }
 
     /**
@@ -285,7 +285,7 @@ public class MdRecordCreate implements Serializable {
      * @return datastream checksum
      */
     public String getChecksum() {
-        return checksum;
+        return this.checksum;
     }
 
     /**
@@ -304,7 +304,7 @@ public class MdRecordCreate implements Serializable {
      * @return true if checksum is enabled, false otherwise
      */
     public boolean isChecksumEnabled() {
-        return checksumEnabled;
+        return this.checksumEnabled;
     }
 
     /**
@@ -323,7 +323,7 @@ public class MdRecordCreate implements Serializable {
      * @return mime type of meta data
      */
     public String getMimeType() {
-        return mimeType;
+        return this.mimeType;
     }
 
     /**
@@ -342,7 +342,7 @@ public class MdRecordCreate implements Serializable {
      * @return ControlGroup
      */
     public String getControlGroup() {
-        return controlGroup;
+        return this.controlGroup;
     }
 
     /**
@@ -361,7 +361,7 @@ public class MdRecordCreate implements Serializable {
      * @return location of datastream
      */
     public String getDatastreamLocation() {
-        return datastreamLocation;
+        return this.datastreamLocation;
     }
 
     /**

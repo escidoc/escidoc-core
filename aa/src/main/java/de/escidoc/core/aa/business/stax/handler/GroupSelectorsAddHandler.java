@@ -58,7 +58,7 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
 
         final String currenrPath = parser.getCurPath();
         if (SELECTOR_PATH.equals(currenrPath)) {
-            inSelector = true;
+            this.inSelector = true;
             this.selector = new String[3];
             final int indexName = element.indexOfAttribute(null, "name");
             if (indexName >= 0) {
@@ -87,7 +87,7 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
         final String currenrPath = parser.getCurPath();
 
        if (SELECTOR_PATH.equals(currenrPath)) {
-            inSelector = false;
+           this.inSelector = false;
             groupSelectors.add(this.selector);
             this.selector = null;
         }
@@ -98,7 +98,7 @@ public class GroupSelectorsAddHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element) throws XmlCorruptedException {
 
         final String theName = element.getLocalName();
-        if (inSelector && "selector".equals(theName) && s != null) {
+        if (this.inSelector && "selector".equals(theName) && s != null) {
             if (s.length() == 0) {
                 throw new XmlCorruptedException("the value of element 'selector' is missing");
             }

@@ -49,7 +49,7 @@ public abstract class WriteHandler extends DefaultHandler {
     private int deepLevel;
 
     protected XMLStreamWriter getWriter() {
-        return writer;
+        return this.writer;
     }
 
     protected void setWriter(final XMLStreamWriter writer) {
@@ -57,7 +57,7 @@ public abstract class WriteHandler extends DefaultHandler {
     }
 
     protected Map<String, List> getNsuris() {
-        return nsuris;
+        return this.nsuris;
     }
 
     protected void setNsuris(final Map<String, List> nsuris) {
@@ -65,15 +65,15 @@ public abstract class WriteHandler extends DefaultHandler {
     }
 
     protected int getDeepLevel() {
-        return deepLevel;
+        return this.deepLevel;
     }
 
     protected void increaseDeepLevel() {
-        deepLevel++;
+        this.deepLevel++;
     }
 
     protected void decreaseDeepLevel() {
-        deepLevel--;
+        this.deepLevel--;
     }
 
     protected void writeElement(final StartElement element) throws XMLStreamException {
@@ -90,7 +90,7 @@ public abstract class WriteHandler extends DefaultHandler {
                 if (prefixTrace == null || !prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
-                if (deepLevelInMAp >= deepLevel) {
+                if (deepLevelInMAp >= this.deepLevel) {
                     writer.writeStartElement(prefix, name, uri);
                     writer.writeNamespace(prefix, uri);
                 } else {
@@ -98,7 +98,7 @@ public abstract class WriteHandler extends DefaultHandler {
                 }
             } else {
                 final List namespaceTrace = new ArrayList();
-                namespaceTrace.add(deepLevel);
+                namespaceTrace.add(this.deepLevel);
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -130,7 +130,7 @@ public abstract class WriteHandler extends DefaultHandler {
                 // }
             } else {
                 final List namespaceTrace = new ArrayList();
-                namespaceTrace.add(deepLevel);
+                namespaceTrace.add(this.deepLevel);
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -167,7 +167,7 @@ public abstract class WriteHandler extends DefaultHandler {
 
                                 } else {
                                     final List namespaceTrace = new ArrayList();
-                                    namespaceTrace.add(deepLevel);
+                                    namespaceTrace.add(this.deepLevel);
                                     namespaceTrace.add(elementName);
                                     namespaceTrace.add(prefixValue);
                                     nsuris.put(valueUri, namespaceTrace);

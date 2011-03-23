@@ -2979,7 +2979,7 @@ public final class XmlUtility {
     private static XMLOutputFactory getInitilizedXmlOutputFactory(
         final boolean repairing) {
 
-        final XMLOutputFactory xmlof = XMLOutputFactory2.newInstance();
+        final XMLOutputFactory xmlof = XMLOutputFactory.newInstance();
         xmlof.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES,
                 repairing);
         if (repairing) {

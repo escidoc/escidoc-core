@@ -56,11 +56,11 @@ import java.util.Map;
 
 public class ContentRelationsAddHandler2Edition extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private boolean inRelation;
 
-    private String sourceId;
+    private final String sourceId;
 
     private String targetId;
 
@@ -97,7 +97,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
 
                 this.targetId = data;
                 final String targetIdWithoutVersion =
-                    XmlUtility.getObjidWithoutVersion(targetId);
+                    XmlUtility.getObjidWithoutVersion(this.targetId);
                 String targetVersion =
                     targetId.replaceFirst(targetIdWithoutVersion, "");
                 if (targetVersion.length() > 0) {
@@ -106,18 +106,18 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
                             + " identifier containing a version number. Use a floating "
                             + "identifier like 'escidoc:123' to reference a target");
                 }
-                if (!TripleStoreUtility.getInstance().exists(targetId)) {
-                    throw new ReferencedResourceNotFoundException("Referenced target resource with id " + targetId
+                if (!TripleStoreUtility.getInstance().exists(this.targetId)) {
+                    throw new ReferencedResourceNotFoundException("Referenced target resource with id " + this.targetId
                             + " does not exist.");
                 }
                 final String targetObjectType =
-                    TripleStoreUtility.getInstance().getObjectType(targetId);
+                    TripleStoreUtility.getInstance().getObjectType(this.targetId);
 
                 if (!Constants.ITEM_OBJECT_TYPE.equals(targetObjectType)
                     && !Constants.CONTAINER_OBJECT_TYPE
                         .equals(targetObjectType)) {
                     throw new InvalidContentException("A related resource has to be either 'item' or 'container'. "
-                            + "A object with id " + targetId
+                            + "A object with id " + this.targetId
                             + " is neither 'item' nor 'container' ");
                 }
             }
@@ -140,7 +140,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
         final String curPath = parser.getCurPath();
 
         if ("/param/relation".equals(curPath)) {
-            inRelation = true;
+            this.inRelation = true;
 
         }
 
@@ -151,20 +151,19 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws AlreadyExistsException, TripleStoreSystemException,
         WebserverSystemException {
-        if (inRelation && "relation".equals(element.getLocalName())) {
-            final String[] splittedPredicate = splitPredicate(predicate);
+        if (this.inRelation && "relation".equals(element.getLocalName())) {
+            final String[] splittedPredicate = splitPredicate(this.predicate);
             final String predicateNs = splittedPredicate[0];
             final String predicateValue = splittedPredicate[1];
             final String existRelationTarget =
-                TripleStoreUtility.getInstance().getRelation(sourceId,
-                    predicate);
+                TripleStoreUtility.getInstance().getRelation(this.sourceId, this.predicate);
             if (existRelationTarget != null
-                && existRelationTarget.equals(targetId)) {
-                throw new AlreadyExistsException("A relation with predicate " + predicate
-                        + " between resources with ids " + sourceId
-                        + " and " + targetId + " already exists.");
+                && existRelationTarget.equals(this.targetId)) {
+                throw new AlreadyExistsException("A relation with predicate " + this.predicate
+                        + " between resources with ids " + this.sourceId
+                        + " and " + this.targetId + " already exists.");
             }
-            final String relationDataCheck = predicate + "###" + targetId;
+            final String relationDataCheck = this.predicate + "###" + this.targetId;
             if (!relationsDataCheck.contains(relationDataCheck)) {
                 relationsDataCheck.add(relationDataCheck);
 
@@ -173,10 +172,10 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
                 relationsData.add(relationData);
                 relationData.put("predicateNs", predicateNs);
                 relationData.put("predicateValue", predicateValue);
-                relationData.put("target", targetId);
-                targetId = null;
-                predicate = null;
-                inRelation = false;
+                relationData.put("target", this.targetId);
+                this.targetId = null;
+                this.predicate = null;
+                this.inRelation = false;
             }
         }
         return element;
@@ -188,7 +187,7 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
      * @return Relations Map
      */
     public List<Map<String, String>> getRelations() {
-        return relationsData;
+        return this.relationsData;
     }
 
     private static String[] splitPredicate(final String predicate) {

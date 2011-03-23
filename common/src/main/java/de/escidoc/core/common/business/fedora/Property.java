@@ -31,19 +31,19 @@ public class Property implements Serializable {
     private static final long serialVersionUID = 2923670166779578404L;
 
     public Property() {
-        __equalsCalc = null;
-        __hashCodeCalc = false;
+        this.__equalsCalc = null;
+        this.__hashCodeCalc = false;
     }
 
     public Property(final String name, final String value) {
-        __equalsCalc = null;
-        __hashCodeCalc = false;
+        this.__equalsCalc = null;
+        this.__hashCodeCalc = false;
         this.name = name;
         this.value = value;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(final String name) {
@@ -51,7 +51,7 @@ public class Property implements Serializable {
     }
 
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     public void setValue(final String value) {
@@ -66,26 +66,26 @@ public class Property implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (__equalsCalc != null) {
-            return __equalsCalc == obj;
+        if (this.__equalsCalc != null) {
+            return this.__equalsCalc == obj;
         }
         else {
-            __equalsCalc = obj;
+            this.__equalsCalc = obj;
             final boolean _equals =
-                (name == null && other.getName() == null || name != null
+                (this.name == null && other.getName() == null || this.name != null
                     && name.equals(other.getName()))
-                    && (value == null && other.getValue() == null || value != null
+                    && (this.value == null && other.getValue() == null || this.value != null
                         && value.equals(other.getValue()));
-            __equalsCalc = null;
+            this.__equalsCalc = null;
             return _equals;
         }
     }
 
     public int hashCode() {
-        if (__hashCodeCalc) {
+        if (this.__hashCodeCalc) {
             return 0;
         }
-        __hashCodeCalc = true;
+        this.__hashCodeCalc = true;
         int _hashCode = 1;
         if (getName() != null) {
             _hashCode += getName().hashCode();
@@ -93,7 +93,7 @@ public class Property implements Serializable {
         if (getValue() != null) {
             _hashCode += getValue().hashCode();
         }
-        __hashCodeCalc = false;
+        this.__hashCodeCalc = false;
         return _hashCode;
     }
 

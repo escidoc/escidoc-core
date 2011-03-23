@@ -53,8 +53,8 @@ public final class PurgeStatus extends AdminMethodStatus {
      * Decrease the number of resources which still have to be processed.
      */
     public synchronized void dec() {
-        count--;
-        if (this.isFillingComplete() && count == 0) {
+        this.count--;
+        if (this.isFillingComplete() && this.count == 0) {
             finishMethod();
         }
     }
@@ -72,7 +72,7 @@ public final class PurgeStatus extends AdminMethodStatus {
      * Increase the number of resources which still have to be processed.
      */
     public synchronized void inc() {
-        count++;
+        this.count++;
     }
 
     /**
@@ -81,7 +81,7 @@ public final class PurgeStatus extends AdminMethodStatus {
      */
     public void setFillingComplete() {
         this.setFillingComplete(true);
-        if (count == 0) {
+        if (this.count == 0) {
             finishMethod();
         }
     }
@@ -100,7 +100,7 @@ public final class PurgeStatus extends AdminMethodStatus {
         else {
             result.append("<message>purging currently running</message>\n");
             result.append("<message>");
-            result.append(count);
+            result.append(this.count);
             result.append(" object(s) still to be purged\n");
             result.append("</message>\n");
         }

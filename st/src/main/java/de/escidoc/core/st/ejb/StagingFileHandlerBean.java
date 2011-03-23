@@ -26,7 +26,7 @@ import java.rmi.RemoteException;
 
 public class StagingFileHandlerBean implements SessionBean {
 
-    StagingFileHandlerInterface service = null;
+    StagingFileHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(StagingFileHandlerBean.class);
 
@@ -35,7 +35,7 @@ public class StagingFileHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("StagingFileHandler.spring.ejb.context").getFactory();
-            service = (StagingFileHandlerInterface) factory.getBean("service.StagingFileHandler");
+            this.service = (StagingFileHandlerInterface) factory.getBean("service.StagingFileHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception StagingFileHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -43,7 +43,7 @@ public class StagingFileHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

@@ -86,7 +86,7 @@ public class ReportDefinitionFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                detachedCriteria =
+                this.detachedCriteria =
                     DetachedCriteria.forClass(ReportDefinition.class, "r");
 
                 final Criterion criterion = evaluate(parser.parse(query));

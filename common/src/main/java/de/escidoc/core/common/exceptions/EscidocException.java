@@ -23,6 +23,7 @@ package de.escidoc.core.common.exceptions;
 import de.escidoc.core.common.util.xml.XmlEscaper;
 
 import javax.servlet.http.HttpServletResponse;
+import java.lang.Throwable;
 
 /**
  * EscidocExeption contains a HttpStatusCode and a HttpStatusMessage which
@@ -71,7 +72,7 @@ public class EscidocException extends Exception {
      *
      */
     public int getHttpStatusCode() {
-        return httpStatusCode;
+        return this.httpStatusCode;
     }
 
     /**
@@ -82,7 +83,7 @@ public class EscidocException extends Exception {
      *
      */
     public String getHttpStatusMsg() {
-        return httpStatusMsg;
+        return this.httpStatusMsg;
     }
 
 
@@ -91,7 +92,7 @@ public class EscidocException extends Exception {
      * See Interface for functional description.
      * 
      * @return
-     * @see java.lang.Throwable#toString()
+     * @see Throwable#toString()
      */
     public String toString() {
         return toXmlString();
@@ -115,7 +116,7 @@ public class EscidocException extends Exception {
      * @return The HTTP status line.
      */
     public String getHttpStatusLine() {
-        return String.valueOf(httpStatusCode) + ' ' + httpStatusMsg;
+        return String.valueOf(this.httpStatusCode) + ' ' + this.httpStatusMsg;
     }
 
     /**

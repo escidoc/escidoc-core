@@ -97,18 +97,18 @@ public final class IndexerResourceCache {
      */
     private IndexerResourceCache() {
         try {
-            methodMapper =
+            this.methodMapper =
                 (MethodMapper) BeanLocator.getBean("Common.spring.ejb.context",
                     "common.CommonMethodMapper");
-            connectionUtility =
+            this.connectionUtility =
                 (ConnectionUtility) BeanLocator.getBean(
                     "Common.spring.ejb.context",
                     "escidoc.core.common.util.service.ConnectionUtility");
-            tripleStoreUtility = TripleStoreUtility.getInstance();
+            this.tripleStoreUtility = TripleStoreUtility.getInstance();
 
             //initialize map that holds cached Objects for indexing
             try {
-                indexerCacheSize =
+                this.indexerCacheSize =
                     Integer.parseInt(EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_INDEXER_CACHE_SIZE));
             } catch (final Exception e) {
@@ -118,7 +118,7 @@ public final class IndexerResourceCache {
                 if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on parsing indexer resource cache size.", e);
                 }
-                indexerCacheSize = INDEXER_CACHE_SIZE_FALL_BACK;
+                this.indexerCacheSize = INDEXER_CACHE_SIZE_FALL_BACK;
             }
         } catch (final Exception e) {
             if(LOGGER.isWarnEnabled()) {
@@ -129,8 +129,8 @@ public final class IndexerResourceCache {
             }
         }
         final CacheManager cacheManager = CacheManager.create();
-        resources = new Cache(new CacheConfiguration("resourcesCache", indexerCacheSize));
-        cacheManager.addCache(resources);
+        this.resources = new Cache(new CacheConfiguration("resourcesCache", this.indexerCacheSize));
+        cacheManager.addCache(this.resources);
     }
 
     /**
@@ -225,6 +225,7 @@ public final class IndexerResourceCache {
      * 
      * @param identifier
      *            identifier
+     * @param resource
      * @throws SystemException
      *             e
      */

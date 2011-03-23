@@ -3,89 +3,105 @@
  */
 package de.escidoc.core.sm.service;
 
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.Map;
+
 /**
  * Service endpoint interface for ScopeHandler.
  */
-public interface ScopeHandlerService extends java.rmi.Remote {
+public interface ScopeHandlerService extends Remote {
 
-    java.lang.String create(java.lang.String xmlData,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String create(String xmlData,
+                            SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            XmlSchemaValidationException,
+            XmlCorruptedException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
-    java.lang.String create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String create(String xmlData, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            XmlSchemaValidationException,
+            XmlCorruptedException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
-    void delete(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void delete(String id, SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ScopeNotFoundException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
-    void delete(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void delete(String id, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ScopeNotFoundException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieve(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String id, SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ScopeNotFoundException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieve(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String id, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ScopeNotFoundException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveScopes(java.util.Map parameters,
-                                    org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveScopes(Map parameters,
+                                    SecurityContext securityContext)
+            throws InvalidSearchQueryException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveScopes(java.util.Map parameters, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveScopes(Map parameters, String authHandle, Boolean restAccess)
+            throws InvalidSearchQueryException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String update(java.lang.String id, java.lang.String xmlData,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String update(String id, String xmlData,
+                            SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ScopeNotFoundException,
+            MissingMethodParameterException,
+            XmlSchemaValidationException,
+            XmlCorruptedException,
+            SystemException, RemoteException;
 
-    java.lang.String update(java.lang.String id, java.lang.String xmlData, java.lang.String authHandle,
-                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ScopeNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String update(String id, String xmlData, String authHandle,
+                            Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ScopeNotFoundException,
+            MissingMethodParameterException,
+            XmlSchemaValidationException,
+            XmlCorruptedException,
+            SystemException, RemoteException;
 
 }

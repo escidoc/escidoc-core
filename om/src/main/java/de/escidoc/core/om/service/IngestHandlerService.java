@@ -3,16 +3,24 @@
  */
 package de.escidoc.core.om.service;
 
+import de.escidoc.core.common.exceptions.EscidocException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  * Service endpoint interface for IngestHandler.
  */
-public interface IngestHandlerService extends java.rmi.Remote {
+public interface IngestHandlerService extends Remote {
 
-    java.lang.String ingest(java.lang.String xmlData,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.EscidocException, java.rmi.RemoteException;
+    String ingest(String xmlData,
+                            SecurityContext securityContext)
+            throws EscidocException, RemoteException;
 
-    java.lang.String ingest(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.EscidocException, java.rmi.RemoteException;
+    String ingest(String xmlData, String authHandle, Boolean restAccess)
+            throws EscidocException, RemoteException;
 
 }

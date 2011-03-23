@@ -30,6 +30,7 @@ package de.escidoc.core.om.business.fedora.container;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.TripleStoreUtility;
+import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -207,10 +208,10 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         WebserverSystemException {
 
         if (this.pidGenFactory == null) {
-            pidGenFactory = PIDSystemFactory.getInstance();
+            this.pidGenFactory = PIDSystemFactory.getInstance();
         }
         if (this.pidGen == null) {
-            pidGen = pidGenFactory.getPIDGenerator();
+            this.pidGen = pidGenFactory.getPIDGenerator();
         }
 
         return pidGen.assignPID(id, param);
@@ -380,7 +381,7 @@ public class ContainerHandlerPid extends ContainerHandlerCreate {
         final String result;
         try {
             final DateTime t = new DateTime(lmd, DateTimeZone.UTC);
-            result = getUtility().prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
+            result = Utility.prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
         }
         catch (final SystemException e) {
             throw new WebserverSystemException(e);

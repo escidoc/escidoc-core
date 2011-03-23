@@ -39,13 +39,13 @@ public class OntologyHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private String predicateWithoutBase;
+    private final String predicateWithoutBase;
 
     private String base = "";
 
-    private String predicate;
+    private final String predicate;
 
-    private String predicateBase;
+    private final String predicateBase;
 
     private boolean exist;
 
@@ -64,7 +64,7 @@ public class OntologyHandler extends DefaultHandler {
         //thrown away
         final String[] predicateArray = p.split("#");
         if (predicateArray.length != 2) {
-            exist = false;
+            this.exist = false;
             return;
         }
         this.predicateBase = predicateArray[0];
@@ -95,9 +95,9 @@ public class OntologyHandler extends DefaultHandler {
             if (indexOfId != -1) {
                 final String id = element.getAttribute(indexOfId).getValue();
                 if (id.equals(this.predicateWithoutBase) && base
-                    .equals(predicateBase)
+                    .equals(this.predicateBase)
                     || id.equals(this.predicate)) {
-                    exist = true;                    
+                    this.exist = true;
                 }
             }
         }
@@ -105,7 +105,7 @@ public class OntologyHandler extends DefaultHandler {
     }
 
     public boolean isExist() {
-        return exist;
+        return this.exist;
     }
 
 }

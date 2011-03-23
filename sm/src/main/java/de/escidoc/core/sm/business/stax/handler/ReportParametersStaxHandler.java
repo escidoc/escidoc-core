@@ -75,7 +75,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
             }
         }
         else if ("parameter".equals(element.getLocalName())) {
-            parameterVo = new ParameterVo();
+            this.parameterVo = new ParameterVo();
         }
         return element;
     }
@@ -92,7 +92,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
         if ("parameter".equals(element.getLocalName())) {
-            reportParametersVo.getParameterVos().add(parameterVo);
+            reportParametersVo.getParameterVos().add(this.parameterVo);
         }
         return element;
     }
@@ -137,7 +137,7 @@ public class ReportParametersStaxHandler extends DefaultHandler {
      * @return the reportParametersVo
      */
     public ReportParametersVo getReportParametersVo() {
-        return reportParametersVo;
+        return this.reportParametersVo;
     }
 
 }

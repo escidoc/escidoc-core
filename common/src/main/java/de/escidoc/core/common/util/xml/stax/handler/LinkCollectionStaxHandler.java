@@ -99,7 +99,7 @@ public class LinkCollectionStaxHandler extends LinkStaxHandler {
 
         hrefs.add(getHref());
         objids.add(getObjid());
-        index++;
+        this.index++;
         
         return super.endLinkElement(element);
     }
@@ -108,21 +108,21 @@ public class LinkCollectionStaxHandler extends LinkStaxHandler {
      * @return the hrefs
      */
     public List<String> getHrefs() {
-        return hrefs;
+        return this.hrefs;
     }
 
     /**
      * @return the objids
      */
     public List<String> getObjids() {
-        return objids;
+        return this.objids;
     }
 
     /**
      * @return the index
      */
     public int getIndex() {
-        return index;
+        return this.index;
     }
     
 

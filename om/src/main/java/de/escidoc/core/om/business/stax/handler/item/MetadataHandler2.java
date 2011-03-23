@@ -145,7 +145,7 @@ public class MetadataHandler2 extends DefaultHandler {
 
                 this.payloadRootElement = true;
                 this.me =
-                    new MultipleExtractor(this.metadataXPath, "name", parser);
+                    new MultipleExtractor(this.metadataXPath, "name", this.parser);
                 this.me.startElement(element);
             }
         }

@@ -55,6 +55,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Generic Resource supports object id, title, last modified, datastream,
@@ -228,7 +229,7 @@ public class GenericResource implements FedoraResource {
     }
 
     public boolean isNeedSync() {
-        return needSync;
+        return this.needSync;
     }
 
     public void setNeedSync(final boolean needSync) {
@@ -737,7 +738,7 @@ public class GenericResource implements FedoraResource {
 
         final Map<String, String> properties = new HashMap<String, String>();
 
-        for (final Map.Entry<String, String> stringStringEntry : tripleStoreMap.entrySet()) {
+        for (final Entry<String, String> stringStringEntry : tripleStoreMap.entrySet()) {
             final String value = stringStringEntry.getValue();
             if (value != null) {
                 final String targetKey = this.propertiesNamesMapping.get(stringStringEntry.getKey());
@@ -1060,10 +1061,10 @@ public class GenericResource implements FedoraResource {
      *             Thrown if instantiating of FedoraUtility fails.
      */
     public FedoraUtility getFedoraUtility() throws FedoraSystemException {
-        if (fu == null) {
-            fu = FedoraUtility.getInstance();
+        if (this.fu == null) {
+            this.fu = FedoraUtility.getInstance();
         }
-        return fu;
+        return this.fu;
     }
 
     /**

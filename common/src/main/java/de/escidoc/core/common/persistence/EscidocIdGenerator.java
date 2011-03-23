@@ -79,13 +79,13 @@ public class EscidocIdGenerator implements IdentifierGenerator {
      */
     public EscidocIdProvider getIdProvider() throws SystemException {
 
-        if (idProvider == null) {
-            idProvider =
+        if (this.idProvider == null) {
+            this.idProvider =
                 (EscidocIdProvider) BeanLocator.getBean(
                     BeanLocator.COMMON_FACTORY_ID,
                     EscidocIdProvider.SPRING_BEAN_ID);
         }
-        return idProvider;
+        return this.idProvider;
     }
 
 }

@@ -110,15 +110,15 @@ public class ContentStreamHandler2 extends DefaultHandler {
             if (this.contentHandler == null) {
                 // reached first element after content-stream root element
                 this.contentHandler =
-                    new MultipleExtractor(xpathContentStream + '/'
-                        + element.getLocalName(), parser);
+                    new MultipleExtractor(this.xpathContentStream + '/'
+                        + element.getLocalName(), this.parser);
             }
             this.hasContent = true;
             this.contentHandler.startElement(element);
         }
         else {
             final String currentPath = parser.getCurPath();
-            if (currentPath.equals(xpathContentStream)) {
+            if (currentPath.equals(this.xpathContentStream)) {
                 if(LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Parser reached " + currentPath);
                 }

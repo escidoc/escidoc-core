@@ -403,7 +403,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface
+     * @see ContentRelationHandlerInterface
      *      #retrieveProperties(java.lang.String)
      */
     @Override
@@ -497,7 +497,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *             Thrown if taskParam has invalid XML.
      * @throws SystemException
      *             Thrown in case of internal error.
-     * @see de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface
+     * @see ContentRelationHandlerInterface
      *      #assignObjectPid(java.lang.String,java.lang.String)
      */
     @Override
@@ -524,7 +524,7 @@ public class ContentRelationHandler implements ContentRelationHandlerInterface {
      *             Thrown if under provided id no ContentRelation could be found
      * @throws SystemException
      *             Thrown if internal error occurs.
-     * @see de.escidoc.core.om.service.interfaces.ContentRelationHandlerInterface
+     * @see ContentRelationHandlerInterface
      *      #retrieveMdRecords(java.lang.String)
      */
     @Override

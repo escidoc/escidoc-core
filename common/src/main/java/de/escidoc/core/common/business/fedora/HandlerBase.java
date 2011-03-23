@@ -44,13 +44,13 @@ import java.net.URL;
  */
 public abstract class HandlerBase {
 
-    private FedoraUtility fedoraUtility = null;
+    private FedoraUtility fedoraUtility;
 
-    private TripleStoreUtility tripleStoreUtility = null;
+    private TripleStoreUtility tripleStoreUtility;
 
-    private EscidocIdProvider idProvider = null;
+    private EscidocIdProvider idProvider;
 
-    private Utility utility = null;
+    private Utility utility;
 
     protected String transformSearchResponse2relations(final String searchResponse)
         throws SystemException {
@@ -157,9 +157,9 @@ public abstract class HandlerBase {
      * @return Returns the utility.
      */
     protected Utility getUtility() {
-        if (utility == null) {
-            utility = Utility.getInstance();
+        if (this.utility == null) {
+            this.utility = Utility.getInstance();
         }
-        return utility;
+        return this.utility;
     }
 }

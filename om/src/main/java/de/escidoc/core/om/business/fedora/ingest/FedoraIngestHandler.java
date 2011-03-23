@@ -59,7 +59,7 @@ public class FedoraIngestHandler implements IngestHandlerInterface {
      * @return ingestFacade the ingestFacade that has been injected
      */
     public IngestFacade getIngestFacade() {
-        return ingestFacade;
+        return this.ingestFacade;
     }
 
     /**

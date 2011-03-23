@@ -50,6 +50,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * This class contains common methods for all handler methods.
@@ -82,7 +83,7 @@ public class OrganizationalUnitHandlerUpdate
         final Map<String, Datastream> updated = new HashMap<String, Datastream>();
 
         // iterate over md-record names (keys) with
-        for (final Map.Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : xml.entrySet()) {
+        for (final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : xml.entrySet()) {
             // for every retrieved md-record XML create a Datastream
             Map<String, String> mdProperties = null;
             if (stringByteArrayOutputStreamEntry.getKey().equals(OrganizationalUnit.ESCIDOC)) {
@@ -135,7 +136,7 @@ public class OrganizationalUnitHandlerUpdate
     protected void updateState(final String state) throws SystemException {
 
         final Map<String, Object> values = new HashMap<String, Object>();
-        final String buildNumber = Utility.getInstance().getBuildNumber();
+        final String buildNumber = Utility.getBuildNumber();
         values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, buildNumber);
         values.put(XmlTemplateProvider.PUBLIC_STATUS, state);
         values.put(XmlTemplateProvider.CREATED_BY_ID, getOrganizationalUnit()

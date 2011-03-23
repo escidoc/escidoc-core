@@ -39,7 +39,7 @@ public abstract class SRURequestParameters {
 
     private final boolean explain;
 
-    private HashMap<String, String> extraData = null;
+    private HashMap<String, String> extraData;
 
     private RecordPacking recordPacking;
 
@@ -50,16 +50,16 @@ public abstract class SRURequestParameters {
      *            map map containing the CQL request parameters
      */
     protected SRURequestParameters(final Map<String, String[]> parameters) {
-        query =
+        this.query =
             getStringParameter(parameters.get(Constants.SRU_PARAMETER_QUERY));
-        maximumRecords =
+        this.maximumRecords =
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_MAXIMUM_RECORDS),
                 getDefaultMaximumRecords());
         final int givenStartRecord =
             getIntParameter(
                 parameters.get(Constants.SRU_PARAMETER_START_RECORD), -1);
-        startRecord = givenStartRecord > -1 ? givenStartRecord + getDefaultStartRecord() - 1 : getDefaultStartRecord();
+        this.startRecord = givenStartRecord > -1 ? givenStartRecord + getDefaultStartRecord() - 1 : getDefaultStartRecord();
         putExtraDataParameter(Constants.SRU_PARAMETER_USER, 
             parameters.get(Constants.SRU_PARAMETER_USER));
         putExtraDataParameter(Constants.SRU_PARAMETER_ROLE, 
@@ -71,39 +71,39 @@ public abstract class SRURequestParameters {
             getStringParameter(parameters
                 .get(Constants.SRU_PARAMETER_OPERATION));
 
-        explain =
+        this.explain =
             getStringParameter(parameters.get(Constants.SRU_PARAMETER_EXPLAIN)) != null
                 || Constants.SRU_PARAMETER_EXPLAIN.equalsIgnoreCase(operation);
-        recordPacking =
+        this.recordPacking =
             RecordPacking.fromType(getStringParameter(
                 parameters.get(Constants.SRU_PARAMETER_RECORD_PACKING), "xml"));
-        if (recordPacking == null) {
-            recordPacking = RecordPacking.XML;
+        if (this.recordPacking == null) {
+            this.recordPacking = RecordPacking.XML;
         }
     }
 
     public String getQuery() {
-        return query;
+        return this.query;
     }
 
     public int getMaximumRecords() {
-        return maximumRecords;
+        return this.maximumRecords;
     }
 
     public int getStartRecord() {
-        return startRecord;
+        return this.startRecord;
     }
 
     public boolean isExplain() {
-        return explain;
+        return this.explain;
     }
 
     public final RecordPacking getRecordPacking() {
-        return recordPacking;
+        return this.recordPacking;
     }
 
     public HashMap<String, String> getExtraData() {
-        return extraData;
+        return this.extraData;
     }
 
     /**
@@ -185,8 +185,8 @@ public abstract class SRURequestParameters {
     private void putExtraDataParameter(
         final String key, final Object[] parameter) {
         if (key != null && parameter != null && parameter.length > 0) {
-            if (extraData == null) {
-                extraData = new HashMap<String, String>();
+            if (this.extraData == null) {
+                this.extraData = new HashMap<String, String>();
             }
             extraData.put(key, getStringParameter(parameter));
         }

@@ -90,7 +90,7 @@ public class MultipleExtractor extends WriteHandler {
 
     private boolean insideRemoveElement;
 
-    private Map<String, String> pathes;
+    private final Map<String, String> pathes;
 
     private int insideLevel;
 
@@ -300,10 +300,10 @@ public class MultipleExtractor extends WriteHandler {
                     }
                 }
             }
-            if (isMatchedAttribute) {
+            if (this.isMatchedAttribute) {
                 removeElements.put(currentPath, elementsToDelete);
                 this.insideRemoveElement = true;
-                isMatchedAttribute = false;
+                this.isMatchedAttribute = false;
                 return element;
             }
 
@@ -312,11 +312,11 @@ public class MultipleExtractor extends WriteHandler {
             && element
                 .indexOfAttribute(Constants.RDF_NAMESPACE_URI, "resource") < 0
             && element.indexOfAttribute(null, "inherited") < 0) {
-            inComponent = true;
+            this.inComponent = true;
             // Object id = pids.get(number);
-            if (pids != null) {
-                componentId = pids.get(number);
-                number++;
+            if (this.pids != null) {
+                this.componentId = pids.get(this.number);
+                this.number++;
             }
             else {
                 final int indexOfObjid = element.indexOfAttribute(null, "objid");
@@ -324,7 +324,7 @@ public class MultipleExtractor extends WriteHandler {
                     final String value =
                         element.getAttribute(indexOfObjid).getValue();
                     if (value != null && value.length() > 0) {
-                        componentId = value;
+                        this.componentId = value;
                     }
                 }
                 final int indexOfHref =
@@ -335,13 +335,13 @@ public class MultipleExtractor extends WriteHandler {
 
                         final Matcher m1 = PATTERN_OBJID_IN_HREF.matcher(value);
                         if (m1.find()) {
-                            componentId = m1.group(1);
+                            this.componentId = m1.group(1);
                         }
                     }
                 }
 
                 // FIXME workaround issue 630
-                if (components != null && components.containsKey(componentId)) {
+                if (this.components != null && components.containsKey(this.componentId)) {
                     throw new InvalidContentException(
                         "Found component ID twice.");
                 }
@@ -350,7 +350,7 @@ public class MultipleExtractor extends WriteHandler {
         }
 
         try {
-            if (inside) {
+            if (this.inside) {
 
                 writeElement(element);
 
@@ -359,7 +359,7 @@ public class MultipleExtractor extends WriteHandler {
                     final Attribute curAtt = element.getAttribute(i);
                     handleAttributeInInsideElement(curAtt, nscontext, theName);
                 }
-                insideLevel++;
+                this.insideLevel++;
             }
             else {
                 if (pathes.containsKey(currentPath)
@@ -369,7 +369,7 @@ public class MultipleExtractor extends WriteHandler {
                     this.setWriter(XmlUtility.createXmlStreamWriter(out));
                     final String attributeName = pathes.get(currentPath);
 
-                    inside = true;
+                    this.inside = true;
                     // create and initialize namespace map
                     this.setNsuris(new HashMap<String, List>());
                     List namespaceTrace = new ArrayList();
@@ -402,19 +402,19 @@ public class MultipleExtractor extends WriteHandler {
                         }
                     }
 
-                    if (inComponent) {
-                        if (components == null) {
-                            components = new HashMap();
-                            outputStreams.put("components", components);
+                    if (this.inComponent) {
+                        if (this.components == null) {
+                            this.components = new HashMap();
+                            outputStreams.put("components", this.components);
                         }
                         final HashMap component;
-                        if (components.containsKey(componentId)) {
+                        if (components.containsKey(this.componentId)) {
                             component =
-                                    (HashMap) components.get(componentId);
+                                    (HashMap) components.get(this.componentId);
                         } else {
                             component = new HashMap();
 
-                            components.put(componentId, component);
+                            components.put(this.componentId, component);
                         }
 
                         // String subId = (String) pids.get(number);
@@ -464,11 +464,10 @@ public class MultipleExtractor extends WriteHandler {
                         }
                         else {
                             if ("md-record".equals(theName)) {
-                                if (metadata == null) {
-                                    metadata =
+                                if (this.metadata == null) {
+                                    this.metadata =
                                         new HashMap<String, ByteArrayOutputStream>();
-                                    outputStreams.put("md-records",
-                                        metadata);
+                                    outputStreams.put("md-records", this.metadata);
                                 }
                                 if (metadata.containsKey(attributeValue)) {
                                     throw new InvalidContentException(
@@ -505,10 +504,10 @@ public class MultipleExtractor extends WriteHandler {
                         }
                     }
                     // writeElementStart(theName, xmlr);
-                    insideLevel++;
-                    if (insideLevel != 1) {
+                    this.insideLevel++;
+                    if (this.insideLevel != 1) {
                         throw new XMLStreamException("insideLevel != 1: "
-                            + insideLevel);
+                            + this.insideLevel);
                     }
                 }
             }
@@ -532,7 +531,7 @@ public class MultipleExtractor extends WriteHandler {
         throws WebserverSystemException {
         final String theName = element.getLocalName();
         final String currentPath = parser.getCurPath();
-        if (this.insideRemoveElement && isMatchedText) {
+        if (this.insideRemoveElement && this.isMatchedText) {
             if (this.removeElements.containsKey(currentPath)) {
                 this.insideRemoveElement = false;
                 this.isMatchedText = false;
@@ -544,21 +543,21 @@ public class MultipleExtractor extends WriteHandler {
             }
         }
         this.decreaseDeepLevel();
-        if (inComponent && "component".equals(theName)) {
-            if (componentId == null) {
+        if (this.inComponent && "component".equals(theName)) {
+            if (this.componentId == null) {
                 final Map components = (Map) outputStreams.get("components");
-                components.remove(componentId);
+                components.remove(this.componentId);
             }
-            inComponent = false;
-            componentId = null;
+            this.inComponent = false;
+            this.componentId = null;
 
         }
 
         try {
-            if (inside) {
-                insideLevel--;
-                if (insideLevel > 0
-                    || insideLevel == 0 && !"md-record".equals(theName) && !"admin-descriptor".equals(theName)) {
+            if (this.inside) {
+                this.insideLevel--;
+                if (this.insideLevel > 0
+                    || this.insideLevel == 0 && !"md-record".equals(theName) && !"admin-descriptor".equals(theName)) {
                     this.getWriter().writeEndElement();
                 }
 
@@ -598,8 +597,8 @@ public class MultipleExtractor extends WriteHandler {
                     this.getNsuris().remove(key);
                 }
 
-                if (insideLevel == 0) {
-                    inside = false;
+                if (this.insideLevel == 0) {
+                    this.inside = false;
                     this.getWriter().flush();
                     this.getWriter().close();
                 }
@@ -624,7 +623,7 @@ public class MultipleExtractor extends WriteHandler {
         throws WebserverSystemException {
 
         try {
-            if (inside) {
+            if (this.inside) {
                 if (this.insideRemoveElement) {
                     final String text = this.elementToDelete.getElementText();
                     if (text != null && text.length() > 0) {

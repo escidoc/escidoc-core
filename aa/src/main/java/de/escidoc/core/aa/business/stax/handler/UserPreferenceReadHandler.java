@@ -51,7 +51,7 @@ public class UserPreferenceReadHandler extends DefaultHandler {
     }
 
     public Map<String, String> getPreferences() {
-        return preferences;
+        return this.preferences;
     }
 
 }

@@ -3,34 +3,48 @@
  */
 package de.escidoc.core.aa.service;
 
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  * Service endpoint interface for PolicyDecisionPoint.
  */
-public interface PolicyDecisionPointService extends java.rmi.Remote {
+public interface PolicyDecisionPointService extends Remote {
 
-    java.lang.String evaluate(java.lang.String requestsXml,
-                              org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String evaluate(String requestsXml,
+                              SecurityContext securityContext)
+            throws ResourceNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String evaluate(java.lang.String requestsXml, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String evaluate(String requestsXml, String authHandle, Boolean restAccess)
+            throws ResourceNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void touch(org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void touch(SecurityContext securityContext)
+            throws SystemException, RemoteException;
 
-    void touch(java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void touch(String authHandle, Boolean restAccess)
+            throws SystemException, RemoteException;
 
 }

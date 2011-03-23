@@ -28,7 +28,7 @@ import java.rmi.RemoteException;
 
 public class ReportHandlerBean implements SessionBean {
 
-    ReportHandlerInterface service = null;
+    ReportHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportHandlerBean.class);
 
@@ -36,7 +36,7 @@ public class ReportHandlerBean implements SessionBean {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory = beanFactoryLocator.useBeanFactory("ReportHandler.spring.ejb.context").getFactory();
-            service = (ReportHandlerInterface) factory.getBean("service.ReportHandler");
+            this.service = (ReportHandlerInterface) factory.getBean("service.ReportHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception ReportHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -44,7 +44,7 @@ public class ReportHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

@@ -50,7 +50,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
     private boolean inside;
 
-    private String path;
+    private final String path;
 
     private int insideLevel;
 
@@ -150,73 +150,73 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
     public StartElement startElement(final StartElement element)
         throws XMLStreamException {
         if (path.startsWith("/RDF")) {
-            isRelsExt = true;
+            this.isRelsExt = true;
         }
 
-        deepLevel++;
+        this.deepLevel++;
         final String theName = element.getLocalName();
         final String nsuri = element.getNamespace();
         final String prefix = element.getPrefix();
 
-        if (inside) {
-            writeElement(nsuri, theName, prefix, deepLevel, isRelsExt, isNew,
+        if (this.inside) {
+            writeElement(nsuri, theName, prefix, this.deepLevel, this.isRelsExt, this.isNew,
                 false);
             final List<Attribute> attributes = element.getAttributes();
             for (final Attribute curAtt : attributes) {
-                handleAttribute(curAtt, theName, deepLevel, isRelsExt, isNew, false);
+                handleAttribute(curAtt, theName, this.deepLevel, this.isRelsExt, this.isNew, false);
             }
-            insideLevel++;
+            this.insideLevel++;
         }
         else {
             final String currentPath = parser.getCurPath();
             if (path.equals(currentPath)) {
                 this.out = new ByteArrayOutputStream();
-                this.writer = XmlUtility.createXmlStreamWriter(out);
-                inside = true;
-                nsuris = new HashMap();
-                writeElement(nsuri, theName, prefix, deepLevel, isRelsExt, isNew, false);
+                this.writer = XmlUtility.createXmlStreamWriter(this.out);
+                this.inside = true;
+                this.nsuris = new HashMap();
+                writeElement(nsuri, theName, prefix, this.deepLevel, this.isRelsExt, this.isNew, false);
                 final List<Attribute> attributes = element.getAttributes();
                 for (final Attribute curAtt : attributes) {
-                    handleAttribute(curAtt, theName, deepLevel, isRelsExt, isNew, false);
+                    handleAttribute(curAtt, theName, this.deepLevel, this.isRelsExt, this.isNew, false);
                 }
-                insideLevel++;
-                if (insideLevel != 1) {
+                this.insideLevel++;
+                if (this.insideLevel != 1) {
                     throw new XMLStreamException("insideLevel != 1: "
-                        + insideLevel);
+                        + this.insideLevel);
                 }
             }
 
         }
         if (theName.equals(pointerElement.getLocalName())
             && nsuri.equals(pointerElement.getNamespace())
-            && prefix.equals(pointerElement.getPrefix()) && !isParsed
-            && equalAttr(pointerElement, element)) {
+            && prefix.equals(pointerElement.getPrefix()) && ! this.isParsed
+            && equalAttr(this.pointerElement, element)) {
 
-            isNew = true;
+            this.isNew = true;
 
-            for (final StartElementWithChildElements subtreeToInsert : subtreesToInsert) {
+            for (final StartElementWithChildElements subtreeToInsert : this.subtreesToInsert) {
                 final String subtreeName = subtreeToInsert.getLocalName();
                 final String subtreeNsUri = subtreeToInsert.getNamespace();
                 final String subtreePrefix = subtreeToInsert.getPrefix();
                 if (subtreePrefix
                         .equals(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
-                    isContentRelation = true;
+                    this.isContentRelation = true;
                 }
 
-                writeElement(subtreeNsUri, subtreeName, subtreePrefix,
-                        deepLevel + 1, isRelsExt, isNew, isContentRelation);
+                writeElement(subtreeNsUri, subtreeName, subtreePrefix, this.deepLevel + 1, this.isRelsExt, this.isNew,
+                        this.isContentRelation);
                 final int attCount = subtreeToInsert.getAttributeCount();
                 for (int j = 0; j < attCount; j++) {
                     final Attribute curAtt = subtreeToInsert.getAttribute(j);
-                    handleAttribute(curAtt, theName, deepLevel + 1, isRelsExt,
-                            isNew, isContentRelation);
+                    handleAttribute(curAtt, theName, this.deepLevel + 1, this.isRelsExt, this.isNew,
+                            this.isContentRelation);
                 }
                 final String subtreeText = subtreeToInsert.getElementText();
                 if (subtreeText != null && subtreeText.length() > 0) {
                     writer.writeCharacters(subtreeText);
                     writer.flush();
                 }
-                isContentRelation = false;
+                this.isContentRelation = false;
                 final List<StartElementWithText> children =
                         subtreeToInsert.getChildrenElements();
                 if (children != null && !children.isEmpty()) {
@@ -226,17 +226,16 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                         final String insertedPrefix = inserted.getPrefix();
                         if (insertedPrefix
                                 .equals(Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
-                            isContentRelation = true;
+                            this.isContentRelation = true;
                         }
                         writeElement(insertedNsUri, insertedName,
-                                insertedPrefix, deepLevel + 2, isRelsExt, isNew,
-                                isContentRelation);
+                                insertedPrefix, this.deepLevel + 2, this.isRelsExt, this.isNew, this.isContentRelation);
 
                         final int attCount2 = inserted.getAttributeCount();
                         for (int j = 0; j < attCount2; j++) {
                             final Attribute curAtt = inserted.getAttribute(j);
-                            handleAttribute(curAtt, theName, deepLevel + 2,
-                                    isRelsExt, isNew, isContentRelation);
+                            handleAttribute(curAtt, theName, this.deepLevel + 2, this.isRelsExt, this.isNew,
+                                    this.isContentRelation);
                         }
                         final String insertedText = inserted.getElementText();
                         if (insertedText != null && insertedText.length() > 0) {
@@ -244,14 +243,14 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                             writer.flush();
                         }
                         writer.writeEndElement();
-                        isContentRelation = false;
+                        this.isContentRelation = false;
                     }
                 }
                 writer.writeEndElement();
                 writer.flush();
             }
-            isNew = false;
-            isParsed = true;
+            this.isNew = false;
+            this.isParsed = true;
         }
         // this have to be the last handler
         return null;
@@ -264,9 +263,9 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) throws XMLStreamException {
-        deepLevel--;
-        if (inside) {
-            insideLevel--;
+        this.deepLevel--;
+        if (this.inside) {
+            this.insideLevel--;
 
             writer.writeEndElement();
             // remove namespace if is defined in this element
@@ -277,7 +276,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 && (nsTrace.get(2) == null || nsTrace.get(2).equals(
                     element.getPrefix()))
                 && nsTrace.get(1).equals(element.getLocalName())
-                && (Integer) nsTrace.get(0) == deepLevel + 1) {
+                && (Integer) nsTrace.get(0) == this.deepLevel + 1) {
 
                 nsuris.remove(ns);
 
@@ -291,7 +290,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
                 try {
                     final String key = (String) it.next();
                     nsTrace = (List) nsuris.get(key);
-                    if ((Integer) nsTrace.get(0) == deepLevel + 1) {
+                    if ((Integer) nsTrace.get(0) == this.deepLevel + 1) {
                         toRemove.add(key);
                     }
                 }
@@ -302,8 +301,8 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
             for(final String key : toRemove) {
                 nsuris.remove(key);
             }
-            if (insideLevel == 0) {
-                inside = false;
+            if (this.insideLevel == 0) {
+                this.inside = false;
 
                 writer.flush();
                 writer.close();
@@ -316,7 +315,7 @@ public class AddNewSubTreesToDatastream extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element)
         throws XMLStreamException {
-        if (inside) {
+        if (this.inside) {
             writer.writeCharacters(data);
         }
         return null;

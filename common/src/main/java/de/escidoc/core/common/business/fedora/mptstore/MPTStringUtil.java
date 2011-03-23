@@ -64,31 +64,31 @@ public class MPTStringUtil {
 
         for (int i = 0; i < len; i++) {
             final char c = s.charAt(i);
-            if (c == '\'') {
+            if ((int) c == (int) '\'') {
                 out.append("\\\'");
             }
-            else if (c == '\\') {
+            else if ((int) c == (int) '\\') {
                 out.append("\\\\\\\\");
             }
-            else if (c == '"') {
+            else if ((int) c == (int) '"') {
                 out.append("\\\\\"");
             }
-            else if (c == '\n') {
+            else if ((int) c == (int) '\n') {
                 out.append("\\\\n");
             }
-            else if (c == '\r') {
+            else if ((int) c == (int) '\r') {
                 out.append("\\\\r");
             }
-            else if (c == '\t') {
+            else if ((int) c == (int) '\t') {
                 out.append("\\\\t");
             }
-            else if (isLowUnicode(c)) {
+            else if (isLowUnicode((int) c)) {
                 out.append("\\\\u");
-                out.append(hexString(c, SHORT_ESCAPE_LENGTH - 1));
+                out.append(hexString((int) c, SHORT_ESCAPE_LENGTH - 1));
             }
-            else if (isHighUnicode(c)) {
+            else if (isHighUnicode((int) c)) {
                 out.append("\\\\U");
-                out.append(hexString(c, LONG_ESCAPE_LENGTH - 2));
+                out.append(hexString((int) c, LONG_ESCAPE_LENGTH - 2));
             }
             else {
                 out.append(c);

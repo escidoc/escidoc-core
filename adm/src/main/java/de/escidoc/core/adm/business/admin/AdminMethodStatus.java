@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
 
@@ -51,7 +52,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
     protected final Map<ResourceType, Integer> treeMap = new EnumMap<ResourceType, Integer>(ResourceType.class);
 
     protected boolean isFillingComplete() {
-        return fillingComplete;
+        return this.fillingComplete;
     }
 
     protected void setFillingComplete(final boolean fillingComplete) {
@@ -62,7 +63,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
      * This method must be called if the admin method has been finished.
      */
     public void finishMethod() {
-        completionDate = new Date();
+        this.completionDate = new Date();
         semaphore.release();
     }
 
@@ -73,7 +74,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
      * @return completion date
      */
     public Date getCompletionDate() {
-        return completionDate;
+        return this.completionDate;
     }
 
     /**
@@ -86,8 +87,8 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
         boolean result = false;
 
         if (semaphore.tryAcquire()) {
-            completionDate = null;
-            fillingComplete = false;
+            this.completionDate = null;
+            this.fillingComplete = false;
             result = true;
         }
         return result;
@@ -122,7 +123,7 @@ public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
     }
 
     @Override
-    public Set<Map.Entry<ResourceType, Integer>> entrySet() {
+    public Set<Entry<ResourceType, Integer>> entrySet() {
         return treeMap.entrySet();
     }
 

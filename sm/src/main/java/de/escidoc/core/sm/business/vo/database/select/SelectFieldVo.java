@@ -55,7 +55,7 @@ public class SelectFieldVo {
      * @return the fieldName
      */
     public String getFieldName() {
-        return fieldName;
+        return this.fieldName;
     }
 
     /**
@@ -73,7 +73,7 @@ public class SelectFieldVo {
      * @return the tableName
      */
     public String getTableName() {
-        return tableName;
+        return this.tableName;
     }
 
     /**
@@ -91,7 +91,7 @@ public class SelectFieldVo {
      * @return the fieldValue
      */
     public String getFieldValue() {
-        return fieldValue;
+        return this.fieldValue;
     }
 
     /**
@@ -109,7 +109,7 @@ public class SelectFieldVo {
      * @return the fieldType
      */
     public String getFieldType() {
-        return fieldType;
+        return this.fieldType;
     }
 
     /**

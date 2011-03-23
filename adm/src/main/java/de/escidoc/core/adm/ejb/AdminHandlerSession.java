@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for AdminHandler.
  */
-public class AdminHandlerSession extends AdminHandlerBean implements SessionBean {
+public class AdminHandlerSession extends AdminHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

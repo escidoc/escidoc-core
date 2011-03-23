@@ -84,10 +84,10 @@ public class ContentStreamHandler extends WriteHandler {
     @Override
     public String characters(final String data, final StartElement element)
         throws XMLStreamException {
-        if (inContentStreams
-            && contentStreamName != null
+        if (this.inContentStreams
+            && this.contentStreamName != null
                 && getWriter() != null
-                && "text/xml".equals(contentStreams.get(contentStreamName).get(
+                && "text/xml".equals(contentStreams.get(this.contentStreamName).get(
                 Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
             getWriter().writeCharacters(data);
         }
@@ -121,27 +121,27 @@ public class ContentStreamHandler extends WriteHandler {
         }
 
         if (element.getLocalName().equals(Elements.ELEMENT_CONTENT_STREAMS)) {
-            inContentStreams = false;
+            this.inContentStreams = false;
         }
-        else if (inContentStreams) {
+        else if (this.inContentStreams) {
             if (Elements.ELEMENT_CONTENT_STREAM.equals(element.getLocalName())) {
                 // end of content-stream
                 if (getWriter() != null) {
-                    if (wrote) {
+                    if (this.wrote) {
                         getWriter().flush();
                         getWriter().close();
-                        wrote = false;
+                        this.wrote = false;
                     }
                     else {
-                        contentStreams.get(contentStreamName).remove(
+                        contentStreams.get(this.contentStreamName).remove(
                             Elements.ELEMENT_CONTENT);
                     }
                 }
                 // check if we got an href or content
-                if (!contentStreams.get(contentStreamName).containsKey(
+                if (!contentStreams.get(this.contentStreamName).containsKey(
                     Elements.ATTRIBUTE_XLINK_HREF)
                     && contentStreams
-                        .get(contentStreamName)
+                        .get(this.contentStreamName)
                         .get(Elements.ATTRIBUTE_STORAGE)
                         .equals(
                             de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
@@ -149,7 +149,7 @@ public class ContentStreamHandler extends WriteHandler {
                     // or content
                     final ByteArrayOutputStream baos =
                         (ByteArrayOutputStream) contentStreams
-                            .get(contentStreamName).get(
+                            .get(this.contentStreamName).get(
                                 Elements.ELEMENT_CONTENT);
                     if (baos.size() < 1) {
                         throw new XmlCorruptedException(
@@ -157,7 +157,7 @@ public class ContentStreamHandler extends WriteHandler {
                                 + "neither href nor XML content.");
                     }
                 }
-                contentStreamName = null;
+                this.contentStreamName = null;
             }
             else {
                 // in a particular stream
@@ -185,32 +185,32 @@ public class ContentStreamHandler extends WriteHandler {
         this.increaseDeepLevel();
 
         if (Elements.ELEMENT_CONTENT_STREAMS.equals(element.getLocalName())) {
-            inContentStreams = true;
+            this.inContentStreams = true;
         }
-        else if (inContentStreams) {
+        else if (this.inContentStreams) {
             if (Elements.ELEMENT_CONTENT_STREAM.equals(element.getLocalName())) {
                 // begin of content-stream, create a new map for its values
                 try {
                     // name
-                    contentStreamName =
+                    this.contentStreamName =
                         element
                             .getAttributeValue(null, Elements.ATTRIBUTE_NAME);
 
                     // content stream name must be unique within one XML
                     // representation
-                    if (contentStreams.containsKey(contentStreamName)) {
+                    if (contentStreams.containsKey(this.contentStreamName)) {
                         throw new XmlCorruptedException(
                             "Found more than one content stream with name '"
-                                + contentStreamName + "'.");
+                                + this.contentStreamName + "'.");
                     }
                     // create map for this content stream
-                    contentStreams.put(contentStreamName,
+                    contentStreams.put(this.contentStreamName,
                         new HashMap<String, Object>());
 
                     // mime-type
                     if (element.hasAttribute(null,
                         Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE)) {
-                        contentStreams.get(contentStreamName).put(
+                        contentStreams.get(this.contentStreamName).put(
                             Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE,
                             element.getAttributeValue(null,
                                 Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE));
@@ -219,7 +219,7 @@ public class ContentStreamHandler extends WriteHandler {
                     // xlink:title
                     if (element.hasAttribute(Constants.XLINK_NS_URI,
                         Elements.ATTRIBUTE_XLINK_TITLE)) {
-                        contentStreams.get(contentStreamName).put(
+                        contentStreams.get(this.contentStreamName).put(
                             Elements.ATTRIBUTE_XLINK_TITLE,
                             element.getAttributeValue(Constants.XLINK_NS_URI,
                                 Elements.ATTRIBUTE_XLINK_TITLE));
@@ -228,7 +228,7 @@ public class ContentStreamHandler extends WriteHandler {
                     // xlink:href
                     if (element.hasAttribute(Constants.XLINK_NS_URI,
                         Elements.ATTRIBUTE_XLINK_HREF)) {
-                        contentStreams.get(contentStreamName).put(
+                        contentStreams.get(this.contentStreamName).put(
                             Elements.ATTRIBUTE_XLINK_HREF,
                             element.getAttributeValue(Constants.XLINK_NS_URI,
                                 Elements.ATTRIBUTE_XLINK_HREF));
@@ -238,21 +238,21 @@ public class ContentStreamHandler extends WriteHandler {
                     final String storage;
                     storage = element.hasAttribute(null, Elements.ATTRIBUTE_STORAGE) ? element.getAttributeValue(null,
                             Elements.ATTRIBUTE_STORAGE) : de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED;
-                    contentStreams.get(contentStreamName).put(
+                    contentStreams.get(this.contentStreamName).put(
                         Elements.ATTRIBUTE_STORAGE, storage);
 
                     String curControlGroup = null;
-                    if (item != null) {
+                    if (this.item != null) {
                         curControlGroup =
                             item
-                                .getContentStream(contentStreamName)
+                                .getContentStream(this.contentStreamName)
                                 .getControlGroup();
                     }
 
                     if (storage
                         .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_INTERNAL_MANAGED)) {
                         if ("text/xml".equals(contentStreams
-                                .get(contentStreamName).get(
+                                .get(this.contentStreamName).get(
                                         Elements.ATTRIBUTE_CONTENT_STREAM_MIME_TYPE))) {
 
                             // check if control group is changed
@@ -260,13 +260,13 @@ public class ContentStreamHandler extends WriteHandler {
                                 && !("M".equals(curControlGroup) || "X".equals(curControlGroup))) {
                                 throw new InvalidContentException(
                                     "The value of storage can not be changed in existing content stream '"
-                                        + contentStreamName + "'.");
+                                        + this.contentStreamName + "'.");
                             }
 
                             // prepare XML writing
                             final ByteArrayOutputStream out =
                                 new ByteArrayOutputStream();
-                            contentStreams.get(contentStreamName).put(
+                            contentStreams.get(this.contentStreamName).put(
                                 Elements.ELEMENT_CONTENT, out);
                             this.setWriter(XmlUtility.createXmlStreamWriter(out));
                             this.setNsuris(new HashMap());
@@ -277,7 +277,7 @@ public class ContentStreamHandler extends WriteHandler {
                                 "Inline base64 content in ContentStreams needs to be implemented.");
                         }
                         else if (!contentStreams
-                            .get(contentStreamName).containsKey(
+                            .get(this.contentStreamName).containsKey(
                                 Elements.ATTRIBUTE_XLINK_HREF)) {
                             throw new XmlCorruptedException(
                                 "Internal managed content stream has "
@@ -286,7 +286,7 @@ public class ContentStreamHandler extends WriteHandler {
                     }
                     else if (storage
                         .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_MANAGED)) {
-                        if (!contentStreams.get(contentStreamName).containsKey(
+                        if (!contentStreams.get(this.contentStreamName).containsKey(
                             Elements.ATTRIBUTE_XLINK_HREF)) {
                             throw new XmlCorruptedException(
                                 "Content stream with storage set to '"
@@ -298,13 +298,13 @@ public class ContentStreamHandler extends WriteHandler {
                             && !"E".equals(curControlGroup)) {
                             throw new InvalidContentException(
                                 "The value of storage can not be changed in existing content stream '"
-                                    + contentStreamName + "'.");
+                                    + this.contentStreamName + "'.");
                         }
 
                     }
                     else if (storage
                         .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)) {
-                        if (!contentStreams.get(contentStreamName).containsKey(
+                        if (!contentStreams.get(this.contentStreamName).containsKey(
                             Elements.ATTRIBUTE_XLINK_HREF)) {
                             throw new XmlCorruptedException(
                                 "Content stream with storage set to '"
@@ -316,7 +316,7 @@ public class ContentStreamHandler extends WriteHandler {
                             && !"R".equals(curControlGroup)) {
                             throw new InvalidContentException(
                                 "The value of storage can not be changed in existing content stream '"
-                                    + contentStreamName + "'.");
+                                    + this.contentStreamName + "'.");
                         }
 
                     }
@@ -327,7 +327,7 @@ public class ContentStreamHandler extends WriteHandler {
             }
             else {
                 // in a particular stream
-                wrote = true;
+                this.wrote = true;
                 writeElement(element);
                 final int c = element.getAttributeCount();
                 for (int i = 0; i < c; i++) {
@@ -345,7 +345,7 @@ public class ContentStreamHandler extends WriteHandler {
      * @return the contentStreams
      */
     public Map<String, Map<String, Object>> getContentStreams() {
-        return contentStreams;
+        return this.contentStreams;
     }
 
 }

@@ -56,6 +56,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -161,7 +162,7 @@ public class OrganizationalUnit extends GenericResource
         this.publicStatus =
             getPropertyFromTriplestore(TripleStoreUtility.PROP_PUBLIC_STATUS);
 
-        hasChildren = !TripleStoreUtility.getInstance().getChildren(getId()).isEmpty();
+        this.hasChildren = !TripleStoreUtility.getInstance().getChildren(getId()).isEmpty();
         this.name = TripleStoreUtility.getInstance().getTitle(getId());
         this.description =
             TripleStoreUtility.getInstance().getDescription(getId());
@@ -320,7 +321,7 @@ public class OrganizationalUnit extends GenericResource
      * @return the createdByTitle
      */
     public String getCreatedByTitle() {
-        return createdByTitle;
+        return this.createdByTitle;
     }
 
     /**
@@ -335,7 +336,7 @@ public class OrganizationalUnit extends GenericResource
      * @return the hasChildren
      */
     public boolean hasChildren() {
-        return hasChildren;
+        return this.hasChildren;
     }
 
     /**
@@ -363,7 +364,7 @@ public class OrganizationalUnit extends GenericResource
      * @return the modifiedBy
      */
     public String getModifiedBy() {
-        return modifiedBy;
+        return this.modifiedBy;
     }
 
     /**
@@ -378,7 +379,7 @@ public class OrganizationalUnit extends GenericResource
      * @return the modifiedByTitle
      */
     public String getModifiedByTitle() {
-        return modifiedByTitle;
+        return this.modifiedByTitle;
     }
 
     /**
@@ -393,7 +394,7 @@ public class OrganizationalUnit extends GenericResource
      * @return the name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -597,7 +598,7 @@ public class OrganizationalUnit extends GenericResource
         }
         
         // create or update Datastreams which are send
-        for (final Map.Entry<String, Datastream> stringDatastreamEntry : mdRecords.entrySet()) {
+        for (final Entry<String, Datastream> stringDatastreamEntry : mdRecords.entrySet()) {
             if (namesInFedora.contains(stringDatastreamEntry.getKey())) {
                 setMdRecord(stringDatastreamEntry.getKey(), stringDatastreamEntry.getValue());
                 namesInFedora.remove(stringDatastreamEntry.getKey());
@@ -664,7 +665,7 @@ public class OrganizationalUnit extends GenericResource
      * @return the publicStatus
      */
     public String getPublicStatus() {
-        return publicStatus;
+        return this.publicStatus;
     }
 
     /**
@@ -679,7 +680,7 @@ public class OrganizationalUnit extends GenericResource
      * @return the parentOus
      */
     public List<String> getParents() {
-        return parents;
+        return this.parents;
     }
 
     /**
@@ -712,7 +713,7 @@ public class OrganizationalUnit extends GenericResource
      * @return the description
      */
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
 }

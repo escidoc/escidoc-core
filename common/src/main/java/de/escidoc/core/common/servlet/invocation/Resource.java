@@ -234,6 +234,7 @@ public class Resource extends XMLBase {
      *            The uri
      * @param query
      *            The request Query.
+     * @param parameters
      * @param body
      *            The http request body
      * @param uriRegexp
@@ -426,7 +427,7 @@ public class Resource extends XMLBase {
      *
      */
     public Map<String, Node> getDescriptors() {
-        return descriptors;
+        return this.descriptors;
     }
 
     /**
@@ -443,7 +444,7 @@ public class Resource extends XMLBase {
      *
      */
     public Node getResource() {
-        return resource;
+        return this.resource;
     }
 
     /**
@@ -460,7 +461,7 @@ public class Resource extends XMLBase {
      *
      */
     public String getBaseUri() {
-        return baseUri;
+        return this.baseUri;
     }
 
     /**
@@ -477,7 +478,7 @@ public class Resource extends XMLBase {
      *
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -494,7 +495,7 @@ public class Resource extends XMLBase {
      *
      */
     public Map getDefinitions() {
-        return definitions;
+        return this.definitions;
     }
 
     /**
@@ -522,13 +523,13 @@ public class Resource extends XMLBase {
      * @return the beanName
      */
     public String getBeanId() {
-        return beanId;
+        return this.beanId;
     }
 
     /**
      * @return the serviceName
      */
     public String getServiceName() {
-        return serviceName;
+        return this.serviceName;
     }
 }

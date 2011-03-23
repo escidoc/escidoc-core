@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for ContextHandler.
  */
-public class ContextHandlerSession extends ContextHandlerBean implements SessionBean {
+public class ContextHandlerSession extends ContextHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

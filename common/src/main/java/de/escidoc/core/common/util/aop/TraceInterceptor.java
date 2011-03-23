@@ -21,6 +21,7 @@
 package de.escidoc.core.common.util.aop;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.JoinPoint.StaticPart;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -42,7 +43,7 @@ public class TraceInterceptor {
             " && !within(de.escidoc.core.common.util.aop..*)")
     public Object traceMethod(final ProceedingJoinPoint joinPoint) throws Throwable {
         if(LOGGER.isDebugEnabled()) {
-            final JoinPoint.StaticPart staticPart = joinPoint.getStaticPart();
+            final StaticPart staticPart = joinPoint.getStaticPart();
             final Signature signature = staticPart.getSignature();
             final String depthString = getDepthString();
             try {

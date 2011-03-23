@@ -109,13 +109,13 @@ public class StructMapCreateHandler extends DefaultHandler {
         WebserverSystemException, MissingAttributeValueException {
         final String curPath = parser.getCurPath();
 
-        if (curPath.startsWith(structMapPath)) {
-            if (curPath.equals(structMapPath + "/item")) {
+        if (curPath.startsWith(this.structMapPath)) {
+            if (curPath.equals(this.structMapPath + "/item")) {
                 final String itemId =
                     checkRefElement(element, Constants.ITEM_OBJECT_TYPE, "item");
                 entries.add(itemId);
             }
-            else if (curPath.equals(structMapPath + "/container")) {
+            else if (curPath.equals(this.structMapPath + "/container")) {
                 final String containerId =
                     checkRefElement(element, Constants.CONTAINER_OBJECT_TYPE,
                         "container");
@@ -194,7 +194,7 @@ public class StructMapCreateHandler extends DefaultHandler {
      * @return struct-map entries.
      */
     public List<String> getEntries() {
-        return entries;
+        return this.entries;
     }
 
 }

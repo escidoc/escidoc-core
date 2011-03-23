@@ -38,7 +38,7 @@ import java.util.Map;
 
 public class ContentRelationHandlerBean implements SessionBean {
 
-    ContentRelationHandlerInterface service = null;
+    ContentRelationHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationHandlerBean.class);
 
@@ -47,7 +47,7 @@ public class ContentRelationHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("ContentRelationHandler.spring.ejb.context").getFactory();
-            service = (ContentRelationHandlerInterface) factory.getBean("service.ContentRelationHandler");
+            this.service = (ContentRelationHandlerInterface) factory.getBean("service.ContentRelationHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception ContentRelationHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -55,7 +55,7 @@ public class ContentRelationHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

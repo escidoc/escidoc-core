@@ -34,7 +34,7 @@ import java.io.InputStreamReader;
 import java.io.Writer;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -63,7 +63,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 public class SRURequest {
     // map from resource type to the corresponding admin index
     private static final Map<ResourceType, String> ADMIN_INDEXES =
-        new HashMap<ResourceType, String>();
+        new EnumMap<ResourceType, String>(ResourceType.class);
 
     static {
         ADMIN_INDEXES.put(ResourceType.CONTAINER, "item_container_admin");
@@ -231,11 +231,11 @@ public class SRURequest {
 
             if ((query != null) && (query.length() > 0)) {
                 if (resourceTypeQuery.length() > 0) {
-                    internalQuery.append("(");
+                    internalQuery.append('(');
                     internalQuery.append(resourceTypeQuery);
                     internalQuery.append(") AND ");
                 }
-                internalQuery.append("(" + query + ")");
+                internalQuery.append('(').append(query).append(')');
             }
             else {
                 internalQuery.append(resourceTypeQuery);

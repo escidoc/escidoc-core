@@ -55,7 +55,7 @@ public class IndexServiceImpl {
                 + allIndexes
                 + ", action "
                 + indexRequest.getAction()
-                + ":"
+                + ':'
                 + e.getMessage(), e);
         }
     }
@@ -71,7 +71,7 @@ public class IndexServiceImpl {
     @Override
     public String toString() {
         return "IndexServiceImpl{" +
-                "indexingHandler=" + indexingHandler +
+                "indexingHandler=" + this.indexingHandler +
                 '}';
     }
 }

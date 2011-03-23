@@ -57,7 +57,7 @@ public class Schema {
      * @return schema name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -66,7 +66,7 @@ public class Schema {
      * @return table names
      */
     public Set<Table> getTables() {
-        return tables;
+        return this.tables;
     }
 
     /**

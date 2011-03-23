@@ -30,8 +30,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for SoapExceptionGeneration.
  */
-public class SoapExceptionGenerationSession extends SoapExceptionGenerationBean
-        implements SessionBean {
+public class SoapExceptionGenerationSession extends SoapExceptionGenerationBean {
 
     public void ejbActivate() throws RemoteException {
 

@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for ReportHandler.
  */
-public class ReportHandlerSession extends ReportHandlerBean implements SessionBean {
+public class ReportHandlerSession extends ReportHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

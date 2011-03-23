@@ -27,7 +27,7 @@ public class DsTypeModel {
     private boolean hasSchema;
 
     public boolean hasSchema() {
-        return hasSchema;
+        return this.hasSchema;
     }
 
     public void setHasSchema(final boolean hasSchema) {
@@ -35,7 +35,7 @@ public class DsTypeModel {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(final String name) {

@@ -50,7 +50,7 @@ public class DatabaseRecordFieldVo {
      * @return the fieldName
      */
     public String getFieldName() {
-        return fieldName;
+        return this.fieldName;
     }
 
     /**
@@ -71,7 +71,7 @@ public class DatabaseRecordFieldVo {
      * @return the fieldType
      */
     public String getFieldType() {
-        return fieldType;
+        return this.fieldType;
     }
 
     /**
@@ -96,7 +96,7 @@ public class DatabaseRecordFieldVo {
      * @return the fieldValue
      */
     public String getFieldValue() {
-        return fieldValue;
+        return this.fieldValue;
     }
 
     /**

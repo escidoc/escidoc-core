@@ -109,6 +109,7 @@ public class ItemHandlerContent extends ItemHandlerUpdate {
      * @throws SystemException
      * @throws InvalidStatusException
      * @see ItemHandlerInterface#retrieveContent(String,String)
+     * @throws de.escidoc.core.common.exceptions.application.security.AuthorizationException
      */
     public EscidocBinaryContent retrieveContent(
         final String id, final String componentId)

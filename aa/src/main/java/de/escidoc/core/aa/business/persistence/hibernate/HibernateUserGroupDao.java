@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -85,7 +86,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      */
     public HibernateUserGroupDao() {
         try {
-            userGroupFilter = new UserGroupFilter(null);
+            this.userGroupFilter = new UserGroupFilter(null);
         }
         catch (final InvalidSearchQueryException e) {
             // Dont do anything because null-query is given.
@@ -96,8 +97,8 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 LOGGER.debug("Expected exception for null-query", e);
             }
         }
-        criteriaMap = userGroupFilter.getCriteriaMap();
-        propertiesNamesMap = userGroupFilter.getPropertyMap();
+        this.criteriaMap = userGroupFilter.getCriteriaMap();
+        this.propertiesNamesMap = userGroupFilter.getPropertyMap();
     }
 
     /**
@@ -393,7 +394,7 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
                 Boolean.valueOf(active1)));
         }
 
-        for (final Map.Entry<String, Object[]> stringEntry : criteriaMap.entrySet()) {
+        for (final Entry<String, Object[]> stringEntry : criteriaMap.entrySet()) {
             final Object criteriaValue = clonedCriterias.remove(stringEntry.getKey());
             if (criteriaValue != null) {
                 final Object[] parts = stringEntry.getValue();

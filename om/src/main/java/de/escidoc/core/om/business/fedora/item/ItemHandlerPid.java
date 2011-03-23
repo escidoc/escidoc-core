@@ -31,6 +31,7 @@ package de.escidoc.core.om.business.fedora.item;
 import java.io.IOException;
 import java.util.Collection;
 
+import de.escidoc.core.common.business.fedora.Utility;
 import de.escidoc.core.om.business.interfaces.ItemHandlerInterface;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -320,10 +321,10 @@ public class ItemHandlerPid extends ItemHandlerContent {
         WebserverSystemException {
 
         if (this.pidGenFactory == null) {
-            pidGenFactory = PIDSystemFactory.getInstance();
+            this.pidGenFactory = PIDSystemFactory.getInstance();
         }
         if (this.pidGen == null) {
-            pidGen = pidGenFactory.getPIDGenerator();
+            this.pidGen = pidGenFactory.getPIDGenerator();
         }
 
         return pidGen.assignPID(id, param);
@@ -686,8 +687,7 @@ public class ItemHandlerPid extends ItemHandlerContent {
         final String result;
         try {
             final DateTime t = new DateTime(lmd, DateTimeZone.UTC);
-            result =
-                getUtility().prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
+            result = Utility.prepareReturnXml(t, "<pid>" + pid + "</pid>\n");
         }
         catch (final SystemException e) {
             throw new WebserverSystemException(e);

@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for ContentRelationHandler.
  */
-public class ContentRelationHandlerSession extends ContentRelationHandlerBean
-        implements SessionBean {
+public class ContentRelationHandlerSession extends ContentRelationHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

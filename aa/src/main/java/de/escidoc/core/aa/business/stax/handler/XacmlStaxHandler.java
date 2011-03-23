@@ -101,22 +101,22 @@ public class XacmlStaxHandler extends DefaultHandler {
 
         if (isNotReady()) {
             final String elementName = element.getLocalName();
-            if (!insidePolicy && elementName.startsWith("Policy")) {
+            if (! this.insidePolicy && elementName.startsWith("Policy")) {
 
-                insidePolicy = true;
-                writer = new StringWriter();
+                this.insidePolicy = true;
+                this.writer = new StringWriter();
                 try {
-                    policyWriter = XmlUtility.createXmlStreamWriter(writer);
+                    this.policyWriter = XmlUtility.createXmlStreamWriter(this.writer);
                 }
                 catch (final XMLStreamException e) {
                     throw new SystemException("Writer creation failed.", e);
                 }
             }
 
-            if (insidePolicy) {
+            if (this.insidePolicy) {
 
                 if (elementName.startsWith("Policy")) {
-                    policyLevel++;
+                    this.policyLevel++;
                 }
 
                 try {
@@ -150,7 +150,7 @@ public class XacmlStaxHandler extends DefaultHandler {
     public String characters(final String data, final StartElement element)
         throws Exception {
 
-        if (isNotReady() && insidePolicy) {
+        if (isNotReady() && this.insidePolicy) {
             policyWriter.writeCharacters(data);
         }
         return data;
@@ -168,18 +168,18 @@ public class XacmlStaxHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) throws Exception {
 
-        if (isNotReady() && insidePolicy) {
+        if (isNotReady() && this.insidePolicy) {
 
             policyWriter.writeEndElement();
 
             final String elementName = element.getLocalName();
             if (elementName.startsWith("Policy")) {
-                policyLevel--;
-                if (policyLevel == 0) {
-                    insidePolicy = false;
+                this.policyLevel--;
+                if (this.policyLevel == 0) {
+                    this.insidePolicy = false;
                     policyWriter.close();
-                    IOUtils.closeWriter(writer);
-                    policyXml = writer.toString();
+                    IOUtils.closeWriter(this.writer);
+                    this.policyXml = writer.toString();
 
                     Collection<EscidocPolicy> escidocPolicies =
                         role.getEscidocPolicies();
@@ -190,13 +190,13 @@ public class XacmlStaxHandler extends DefaultHandler {
 
                     if (escidocPolicies.isEmpty()) {
                         final EscidocPolicy policy =
-                            new EscidocPolicy(policyXml, role);
+                            new EscidocPolicy(this.policyXml, this.role);
                         escidocPolicies.add(policy);
                     }
                     else {
                         final EscidocPolicy policy =
                             escidocPolicies.iterator().next();
-                        policy.setXml(policyXml);
+                        policy.setXml(this.policyXml);
                     }
 
                     setReady();
@@ -215,6 +215,6 @@ public class XacmlStaxHandler extends DefaultHandler {
      *         <code>null</code> if no policy has been found.
      */
     public String getPolicyXml() {
-        return policyXml;
+        return this.policyXml;
     }
 }

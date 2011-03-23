@@ -78,7 +78,7 @@ public class PIDManagerRESTService implements PIDSystem {
 
     private String localPrefix = "";
 
-    private ConnectionUtility connectionUtility;
+    private final ConnectionUtility connectionUtility;
 
     /**
      * PIDManagerRESTService.
@@ -150,9 +150,9 @@ public class PIDManagerRESTService implements PIDSystem {
      */
     @Override
     public String generatePID(final String systemID) throws PidSystemException {
-        String result = pidNamespace + ':' + globalPrefix + separator;
-        if (localPrefix != null && localPrefix.length() > 0) {
-            result += localPrefix + separator;
+        String result = this.pidNamespace + ':' + this.globalPrefix + this.separator;
+        if (this.localPrefix != null && localPrefix.length() > 0) {
+            result += this.localPrefix + this.separator;
         }
         result += systemID;
 
@@ -225,8 +225,7 @@ public class PIDManagerRESTService implements PIDSystem {
      */
     public void setGlobalPrefix(final String globalPrefix)
         throws MissingMethodParameterException {
-        Utility.getInstance().checkNotNull(globalPrefix,
-            "global prefix for PID");
+        Utility.checkNotNull(globalPrefix, "global prefix for PID");
         this.globalPrefix = globalPrefix;
     }
 
@@ -252,7 +251,7 @@ public class PIDManagerRESTService implements PIDSystem {
      */
     public void setSeparator(final String separator)
         throws MissingMethodParameterException {
-        Utility.getInstance().checkNotNull(separator, "separator");
+        Utility.checkNotNull(separator, "separator");
         this.separator = separator;
     }
 
@@ -266,7 +265,7 @@ public class PIDManagerRESTService implements PIDSystem {
      */
     public void setPidNamespace(final String pidNamespace)
         throws MissingMethodParameterException {
-        Utility.getInstance().checkNotNull(pidNamespace, "namespace for PID");
+        Utility.checkNotNull(pidNamespace, "namespace for PID");
         this.pidNamespace = pidNamespace;
     }
 

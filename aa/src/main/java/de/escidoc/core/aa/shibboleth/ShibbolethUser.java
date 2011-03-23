@@ -72,7 +72,7 @@ public class ShibbolethUser {
      * @return the attributes
      */
     public Map<String, List<String>> getStringAttributes() {
-        return stringAttributes;
+        return this.stringAttributes;
     }
     
     /**
@@ -89,7 +89,7 @@ public class ShibbolethUser {
      * @return the loginName
      */
     public String getLoginName() {
-        return loginName;
+        return this.loginName;
     }
 
     /**
@@ -103,7 +103,7 @@ public class ShibbolethUser {
      * @return the name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**

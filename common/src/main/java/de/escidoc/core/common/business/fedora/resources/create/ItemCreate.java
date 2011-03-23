@@ -365,7 +365,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @return the relations
      */
     public RelationsCreate getRelations() {
-        return relations;
+        return this.relations;
     }
 
     /**
@@ -397,7 +397,7 @@ public class ItemCreate extends GenericResourceCreate {
      * @return the contentStreams
      */
     public List<ContentStreamCreate> getContentStreams() {
-        return contentStreams;
+        return this.contentStreams;
     }
 
     /**
@@ -563,7 +563,7 @@ public class ItemCreate extends GenericResourceCreate {
 
         // add Metadata as Map
         valueMap.put(XmlTemplateProvider.MD_RECORDS,
-            getMetadataRecordsMap(mdRecords));
+            getMetadataRecordsMap(this.mdRecords));
 
         // DC (inclusive mapping)----------------------------------------------
         final String dcXml = getDC();

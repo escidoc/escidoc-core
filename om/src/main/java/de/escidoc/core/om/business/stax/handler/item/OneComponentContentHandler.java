@@ -112,7 +112,7 @@ public class OneComponentContentHandler extends DefaultHandler {
                 storageValue = storage.getValue();
             }
             componentBinary.put(Elements.ATTRIBUTE_STORAGE, storageValue);
-            inContent = true;
+            this.inContent = true;
             final int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI,
                     Elements.ATTRIBUTE_XLINK_HREF);
@@ -130,7 +130,7 @@ public class OneComponentContentHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws MissingContentException {
 
-        if (inContent) {
+        if (this.inContent) {
 
             if (this.content == null) {
                 if (this.uploadUrl != null && this.uploadUrl.length() > 0) {
@@ -142,7 +142,7 @@ public class OneComponentContentHandler extends DefaultHandler {
                         "The content of one component is missing");
                 }
             }
-            inContent = false;
+            this.inContent = false;
             this.content = null;
         }
         return element;
@@ -151,7 +151,7 @@ public class OneComponentContentHandler extends DefaultHandler {
     @Override
     public String characters(final String s, final StartElement element) {
 
-        if (inContent && s != null && s.length() > 0) {
+        if (this.inContent && s != null && s.length() > 0) {
             if (this.content != null) {
                 // we have to concatinate the characters
                 this.content += s;

@@ -56,7 +56,7 @@ public class OrganizationalUnitHandlerRetrieve
      */
     protected PolicyDecisionPointInterface getPdp() {
 
-        return pdp;
+        return this.pdp;
     }
 
     /**

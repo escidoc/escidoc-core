@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class ContentModelHandlerBean implements SessionBean {
 
-    ContentModelHandlerInterface service = null;
+    ContentModelHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentModelHandlerBean.class);
 
@@ -49,7 +49,7 @@ public class ContentModelHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("ContentModelHandler.spring.ejb.context").getFactory();
-            service = (ContentModelHandlerInterface) factory.getBean("service.ContentModelHandler");
+            this.service = (ContentModelHandlerInterface) factory.getBean("service.ContentModelHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception ContentModelHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -57,7 +57,7 @@ public class ContentModelHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

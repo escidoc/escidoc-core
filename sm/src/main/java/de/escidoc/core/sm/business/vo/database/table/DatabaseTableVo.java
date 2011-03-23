@@ -51,7 +51,7 @@ public class DatabaseTableVo {
      * @return the databaseFieldVos
      */
     public Collection<DatabaseTableFieldVo> getDatabaseFieldVos() {
-        return databaseFieldVos;
+        return this.databaseFieldVos;
     }
 
     /**
@@ -67,7 +67,7 @@ public class DatabaseTableVo {
      * @return the databaseIndexVos
      */
     public Collection<DatabaseIndexVo> getDatabaseIndexVos() {
-        return databaseIndexVos;
+        return this.databaseIndexVos;
     }
 
     /**
@@ -83,7 +83,7 @@ public class DatabaseTableVo {
      * @return the tableName
      */
     public String getTableName() {
-        return tableName;
+        return this.tableName;
     }
 
     /**

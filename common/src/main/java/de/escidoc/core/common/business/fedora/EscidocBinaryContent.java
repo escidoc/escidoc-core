@@ -53,7 +53,7 @@ public class EscidocBinaryContent {
      * @return the redirectUrl
      */
     public String getRedirectUrl() {
-        return redirectUrl;
+        return this.redirectUrl;
     }
 
     /**
@@ -67,9 +67,10 @@ public class EscidocBinaryContent {
     /**
      * @return the content
      * @throws IOException
+     * @throws NullPointerException
      */
     public InputStream getContent() throws IOException, NullPointerException {
-        if (getMethod == null) {
+        if (this.getMethod == null) {
             if (this.content != null) {
                 return this.content;
             }
@@ -98,7 +99,7 @@ public class EscidocBinaryContent {
      * @return the fileName
      */
     public String getFileName() {
-        return fileName;
+        return this.fileName;
     }
 
     /**

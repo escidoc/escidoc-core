@@ -42,11 +42,11 @@ import java.util.List;
 
 public class ComponentUpdateHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
-    private String componentPath;
+    private final String componentPath;
 
-    private String itemId;
+    private final String itemId;
 
     public ComponentUpdateHandler(final String itemId, final String componentPath,
         final StaxParser parser) {
@@ -60,7 +60,7 @@ public class ComponentUpdateHandler extends DefaultHandler {
         throws TripleStoreSystemException, WebserverSystemException,
         InvalidContentException {
         final String curPath = parser.getCurPath();
-        if (curPath.startsWith(componentPath) && curPath.equals(componentPath)) {
+        if (curPath.startsWith(this.componentPath) && curPath.equals(this.componentPath)) {
             // do my job
             // save componentId
             final int indexObjid = element.indexOfAttribute(null, "objid");
@@ -74,8 +74,7 @@ public class ComponentUpdateHandler extends DefaultHandler {
                     // check if component exists
                     boolean componentExists = false;
                     final List<String> existingComponents =
-                        TripleStoreUtility.getInstance().getComponents(
-                            itemId);
+                        TripleStoreUtility.getInstance().getComponents(this.itemId);
                     for (final String existingComponent : existingComponents) {
                         if (existingComponent.equals(componentId)) {
                             componentExists = true;
@@ -85,7 +84,7 @@ public class ComponentUpdateHandler extends DefaultHandler {
                     if (!componentExists) {
                         throw new InvalidContentException(
                             "Component with id " + componentId
-                                + " does not exist in item " + itemId + '.');
+                                + " does not exist in item " + this.itemId + '.');
                     }
                 }
             }
@@ -98,7 +97,7 @@ public class ComponentUpdateHandler extends DefaultHandler {
         final String curPath = parser.getCurPath();
 
         // check content
-        if (curPath.equals(componentPath + "/content")) {
+        if (curPath.equals(this.componentPath + "/content")) {
 
             // check title
             int index =

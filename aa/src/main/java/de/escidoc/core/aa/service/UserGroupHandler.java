@@ -28,6 +28,7 @@
  */
 package de.escidoc.core.aa.service;
 
+import de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface;
 import de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
@@ -54,6 +55,7 @@ import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintVi
 import de.escidoc.core.common.exceptions.application.violated.UserGroupHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
+import java.lang.String;
 import java.util.Map;
 
 /**
@@ -62,8 +64,7 @@ import java.util.Map;
  * @author MIH
  */
 public class UserGroupHandler implements UserGroupHandlerInterface {
-    private de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface business =
-        null;
+    private de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface business;
 
     /**
      * See Interface for functional description.
@@ -86,7 +87,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#create(java.lang.String)
+     * @see UserGroupHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData)
@@ -117,7 +118,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#delete(java.lang.String)
+     * @see UserGroupHandlerInterface#delete(String)
      */
     @Override
     public void delete(final String groupId) throws UserGroupNotFoundException,
@@ -148,7 +149,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#retrieve(java.lang.String)
+     * @see UserGroupHandlerInterface#retrieve(String)
      */
     @Override
     public String retrieve(final String groupId)
@@ -191,8 +192,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#update(java.lang.String,
-     *      java.lang.String)
+     * @see UserGroupHandlerInterface#update(String,
+     *      String)
      */
     @Override
     public String update(final String groupId, final String xmlData)
@@ -238,8 +239,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#activate(java.lang.String,
-     *      java.lang.String)
+     * @see UserGroupHandlerInterface#activate(String,
+     *      String)
      */
     @Override
     public void activate(final String groupId, final String taskParam)
@@ -281,8 +282,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#deactivate(java.lang.String,
-     *      java.lang.String)
+     * @see UserGroupHandlerInterface#deactivate(String,
+     *      String)
      */
     @Override
     public void deactivate(final String groupId, final String taskParam)
@@ -314,7 +315,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface
+     * @see UserGroupHandlerInterface
      *      #retrieveCurrentGrants(java.lang.String)
      *
      */
@@ -361,8 +362,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#createGrant(java.lang.String,
-     *      java.lang.String)
+     * @see UserGroupHandlerInterface#createGrant(String,
+     *      String)
      */
     @Override
     public String createGrant(final String groupId, final String grantXML)
@@ -410,8 +411,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#revokeGrant(java.lang.String,
-     *      java.lang.String)
+     * @see UserGroupHandlerInterface#revokeGrant(String,
+     *      String)
      */
     @Override
     public void revokeGrant(
@@ -453,7 +454,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieveGrant(java.lang.String, java.lang.String)
      *
      */
@@ -502,8 +503,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#revokeGrants(java.lang.String,
-     *      java.lang.String)
+     * @see UserGroupHandlerInterface#revokeGrants(String,
+     *      String)
      */
     @Override
     public void revokeGrants(final String groupId, final String taskParam)
@@ -562,7 +563,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#retrieveUserGroups(java.util.Map)
+     * @see UserGroupHandlerInterface#retrieveUserGroups(Map)
      */
     @Override
     public String retrieveUserGroups(final Map<String, String[]> filter)
@@ -604,8 +605,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws UserGroupHierarchyViolationException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#addSelectors(java.lang.String,
-     *      java.lang.String)
+     * @see UserGroupHandlerInterface#addSelectors(String,
+     *      String)
      */
     @Override
     public String addSelectors(final String groupId, final String taskParam)
@@ -647,8 +648,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws OrganizationalUnitNotFoundException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserGroupHandlerInterface#removeSelectors(java.lang.String,
-     *      java.lang.String)
+     * @see UserGroupHandlerInterface#removeSelectors(String,
+     *      String)
      */
     @Override
     public String removeSelectors(final String groupId, final String taskParam)

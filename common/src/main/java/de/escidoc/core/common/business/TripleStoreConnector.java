@@ -90,10 +90,13 @@ public class TripleStoreConnector {
     /**
      * 
      * @param spoQuery
+     * @param outputFormat
      * @return
      * @throws TripleStoreSystemException
      * 
      *             TODO move to TriplestoreUtility implementation
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreOutputFormatException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidTripleStoreQueryException
      */
     public String requestMPT(final String spoQuery, final String outputFormat)
         throws TripleStoreSystemException,
@@ -112,14 +115,13 @@ public class TripleStoreConnector {
             // flushed to the triplestore before executing the query.
             params.add(new BasicNameValuePair("flush", FLUSH));
 
-            final String url = fedoraUrl + "/risearch";
+            final String url = this.fedoraUrl + "/risearch";
             final HttpPost httpPost = new HttpPost(url);
             final HttpEntity entity =
                 new UrlEncodedFormEntity(params, XmlUtility.CHARACTER_ENCODING);
 
             httpPost.setEntity(entity);
-            connectionUtility.setAuthentication(new URL(url), fedoraUser,
-                fedoraPassword);
+            connectionUtility.setAuthentication(new URL(url), this.fedoraUser, this.fedoraPassword);
 
             final HttpResponse httpResponse =
                 connectionUtility.getHttpClient(url).execute(httpPost);

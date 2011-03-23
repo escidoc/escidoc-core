@@ -74,7 +74,7 @@ public class ContainerPropertiesHandler extends DefaultHandler {
 
     public static final String PID = "pid";
 
-    private StaxParser staxParser;
+    private final StaxParser staxParser;
 
     private final Map<String, String> properties =
         new HashMap<String, String>();

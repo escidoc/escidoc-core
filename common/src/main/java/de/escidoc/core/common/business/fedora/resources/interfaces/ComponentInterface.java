@@ -41,6 +41,8 @@ public interface ComponentInterface extends FedoraResource {
     /**
      * 
      * @return A Map containing the metadata datastreams of this resource.
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
      Map <String, Datastream> getMdRecords() throws FedoraSystemException, IntegritySystemException;
 
@@ -61,6 +63,8 @@ public interface ComponentInterface extends FedoraResource {
      * @param name
      *            The name of a matadata datastream.
      * @return A metadata datastreams of this resource.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     Datastream getMdRecord(String name) throws StreamNotFoundException,
         FedoraSystemException;

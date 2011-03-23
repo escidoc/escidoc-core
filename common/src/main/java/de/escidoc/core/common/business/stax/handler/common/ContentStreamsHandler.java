@@ -81,6 +81,7 @@ public class ContentStreamsHandler extends DefaultHandler {
      * 
      * @param parser
      *            StAX Parser.
+     * @param xpathContentStreams
      */
     public ContentStreamsHandler(final StaxParser parser,
         final String xpathContentStreams) {
@@ -115,11 +116,11 @@ public class ContentStreamsHandler extends DefaultHandler {
 
             if (xpathContentStream.equals(currentPath)) {
                 if(LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Parsing " + xpathContentStream);
+                    LOGGER.debug("Parsing " + this.xpathContentStream);
                 }
                 this.parsingContentStream = true;
                 this.contentStreamHandler =
-                    new ContentStreamHandler2(parser, this.xpathContentStream);
+                    new ContentStreamHandler2(this.parser, this.xpathContentStream);
                 this.contentStreamHandler.startElement(element);
             }
         }
@@ -144,7 +145,7 @@ public class ContentStreamsHandler extends DefaultHandler {
 
         if (xpathContentStream.equals(currentPath)) {
             if(LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Reached end of " + xpathContentStream);
+                LOGGER.debug("Reached end of " + this.xpathContentStream);
             }
 
             this.parsingContentStream = false;

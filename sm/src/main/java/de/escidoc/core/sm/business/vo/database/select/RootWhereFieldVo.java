@@ -58,7 +58,7 @@ public class RootWhereFieldVo {
      * @return the fieldName
      */
     public String getFieldName() {
-        return fieldName;
+        return this.fieldName;
     }
 
     /**
@@ -79,7 +79,7 @@ public class RootWhereFieldVo {
      * @return the fieldType
      */
     public String getFieldType() {
-        return fieldType;
+        return this.fieldType;
     }
 
     /**
@@ -110,7 +110,7 @@ public class RootWhereFieldVo {
      * @return the fieldValue
      */
     public String getFieldValue() {
-        return fieldValue;
+        return this.fieldValue;
     }
 
     /**
@@ -127,7 +127,7 @@ public class RootWhereFieldVo {
      * @return the operator
      */
     public String getOperator() {
-        return operator;
+        return this.operator;
     }
 
     /**
@@ -152,7 +152,7 @@ public class RootWhereFieldVo {
      * @return the tableName
      */
     public String getTableName() {
-        return tableName;
+        return this.tableName;
     }
 
     /**
@@ -170,7 +170,7 @@ public class RootWhereFieldVo {
      * @return the xpath
      */
     public String getXpath() {
-        return xpath;
+        return this.xpath;
     }
 
     /**

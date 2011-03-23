@@ -178,7 +178,7 @@ public class FedoraUtility implements InitializingBean {
     @ManagedAttribute(description = "The URL to the fedora repository.")
     public String getFedoraUrl() {
 
-        return fedoraUrl;
+        return this.fedoraUrl;
     }
 
     /**
@@ -954,8 +954,7 @@ public class FedoraUtility implements InitializingBean {
      *            Label
      * @param stream
      *            byte[] information dataset
-     * @param public void sync()public void sync()yncTripleStore
-     *            whether the triples should be flushed
+     * @param syncTripleStore
      * @return Fedora Identifier of added Datastream.
      * @throws FedoraSystemException
      *             Thrown if add of datastream failed during Fedora
@@ -1174,7 +1173,7 @@ public class FedoraUtility implements InitializingBean {
             LOGGER.debug("Error syncing with TripleStore.", e);
         }
         try {
-            Thread.sleep(i + 1000);
+            Thread.sleep((long) (i + 1000));
         } catch (final InterruptedException e1) {
             if(LOGGER.isWarnEnabled()) {
             LOGGER.warn("Error on waiting for Fedora.");
@@ -1204,7 +1203,7 @@ public class FedoraUtility implements InitializingBean {
         try {
             fc = borrowFedoraClient();
             final HttpInputStream httpInStr =
-                fc.get(syncRestQuery, true);
+                fc.get(this.syncRestQuery, true);
             if (httpInStr.getStatusCode() != HTTP_OK) {
                 throw new FedoraSystemException("Triplestore sync failed.");
             }
@@ -1451,7 +1450,7 @@ public class FedoraUtility implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
 
-        fedoraClientPool = new StackObjectPool(PoolUtils.synchronizedPoolableFactory(new BasePoolableObjectFactory() {
+        this.fedoraClientPool = new StackObjectPool(PoolUtils.synchronizedPoolableFactory(new BasePoolableObjectFactory() {
             /**
              * See Interface for functional description.
              *
@@ -1462,11 +1461,12 @@ public class FedoraUtility implements InitializingBean {
              */
             @Override
             public Object makeObject() throws Exception {
-                return new FedoraClient(fedoraUrl, fedoraUser, fedoraPassword);
+                return new FedoraClient(FedoraUtility.this.fedoraUrl, FedoraUtility.this.fedoraUser,
+                        FedoraUtility.this.fedoraPassword);
             }
         }), MAX_IDLE, INIT_IDLE_CAPACITY);
 
-        apiaPool = new StackObjectPool(PoolUtils.synchronizedPoolableFactory(new BasePoolableObjectFactory() {
+        this.apiaPool = new StackObjectPool(PoolUtils.synchronizedPoolableFactory(new BasePoolableObjectFactory() {
             /**
              * See Interface for functional description.
              *
@@ -1477,11 +1477,12 @@ public class FedoraUtility implements InitializingBean {
              */
             @Override
             public Object makeObject() throws Exception {
-                return new FedoraClient(fedoraUrl, fedoraUser, fedoraPassword).getAPIA();
+                return new FedoraClient(FedoraUtility.this.fedoraUrl, FedoraUtility.this.fedoraUser,
+                        FedoraUtility.this.fedoraPassword).getAPIA();
             }
         }), MAX_IDLE, INIT_IDLE_CAPACITY);
 
-        apimPool = new StackObjectPool(new BasePoolableObjectFactory() {
+        this.apimPool = new StackObjectPool(new BasePoolableObjectFactory() {
             /**
              * See Interface for functional description.
              *
@@ -1492,11 +1493,12 @@ public class FedoraUtility implements InitializingBean {
              */
             @Override
             public Object makeObject() throws Exception {
-                return new FedoraClient(fedoraUrl, fedoraUser, fedoraPassword).getAPIM();
+                return new FedoraClient(FedoraUtility.this.fedoraUrl, FedoraUtility.this.fedoraUser,
+                        FedoraUtility.this.fedoraPassword).getAPIM();
             }
         }, MAX_IDLE, INIT_IDLE_CAPACITY);
 
-        syncRestQuery = fedoraUrl + "/risearch?flush=true";
+        this.syncRestQuery = this.fedoraUrl + "/risearch?flush=true";
     }
 
     /**
@@ -1509,7 +1511,7 @@ public class FedoraUtility implements InitializingBean {
      */
     DefaultHttpClient getHttpClient() throws WebserverSystemException {
         try {
-            if (httpClient == null) {
+            if (this.httpClient == null) {
                 final HttpParams params = new BasicHttpParams();
                 ConnManagerParams.setMaxTotalConnections(params,
                     HTTP_MAX_TOTAL_CONNECTIONS);
@@ -1527,7 +1529,7 @@ public class FedoraUtility implements InitializingBean {
                 final ClientConnectionManager cm = new ThreadSafeClientConnManager(params, sr);
 
                 this.httpClient = new DefaultHttpClient(cm, params);
-                final URL url = new URL(fedoraUrl);
+                final URL url = new URL(this.fedoraUrl);
                 final CredentialsProvider credsProvider =
                     new BasicCredentialsProvider();
 
@@ -1535,7 +1537,7 @@ public class FedoraUtility implements InitializingBean {
                     new AuthScope(url.getHost(), AuthScope.ANY_PORT,
                         AuthScope.ANY_REALM);
                 final Credentials creds =
-                    new UsernamePasswordCredentials(fedoraUser, fedoraPassword);
+                    new UsernamePasswordCredentials(this.fedoraUser, this.fedoraPassword);
                 credsProvider.setCredentials(authScope, creds);
 
                 httpClient.setCredentialsProvider(credsProvider);
@@ -1582,7 +1584,7 @@ public class FedoraUtility implements InitializingBean {
 
             // try only BASIC auth; skip to test NTLM and DIGEST
 
-            return httpClient;
+            return this.httpClient;
         }
         catch (final MalformedURLException e) {
             throw new WebserverSystemException(
@@ -1613,13 +1615,13 @@ public class FedoraUtility implements InitializingBean {
             localcontext.setAttribute("preemptive-auth", basicAuth);
             httpClient
                 .addRequestInterceptor(new PreemptiveAuthInterceptor(), 0);
-            final HttpGet httpGet = new HttpGet(fedoraUrl + localUrl);
+            final HttpGet httpGet = new HttpGet(this.fedoraUrl + localUrl);
             final HttpResponse httpResponse = httpClient.execute(httpGet);
             final int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (responseCode != HttpServletResponse.SC_OK) {
 
                 throw new WebserverSystemException("Bad response code '"
-                    + responseCode + "' requesting '" + fedoraUrl + localUrl
+                    + responseCode + "' requesting '" + this.fedoraUrl + localUrl
                     + "'.", new FedoraSystemException(httpResponse
                     .getStatusLine().getReasonPhrase()));
             }

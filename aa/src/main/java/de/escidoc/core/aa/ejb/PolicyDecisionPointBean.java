@@ -28,7 +28,7 @@ import java.util.List;
 
 public class PolicyDecisionPointBean implements SessionBean {
 
-    PolicyDecisionPointInterface service = null;
+    PolicyDecisionPointInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(PolicyDecisionPointBean.class);
 
@@ -37,7 +37,7 @@ public class PolicyDecisionPointBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("PolicyDecisionPoint.spring.ejb.context").getFactory();
-            service = (PolicyDecisionPointInterface) factory.getBean("service.PolicyDecisionPoint");
+            this.service = (PolicyDecisionPointInterface) factory.getBean("service.PolicyDecisionPoint");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception PolicyDecisionPointComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -45,7 +45,7 @@ public class PolicyDecisionPointBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

@@ -52,6 +52,7 @@ import org.springframework.dao.DataAccessException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -79,7 +80,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
      */
     public HibernateEscidocRoleDao() {
         try {
-            roleFilter = new RoleFilter(null);
+            this.roleFilter = new RoleFilter(null);
         } catch (final InvalidSearchQueryException e) {
             // Dont do anything because null-query is given.
             if(LOGGER.isWarnEnabled()) {
@@ -89,8 +90,8 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
                 LOGGER.debug("Expected exception for null-query", e);
             }
         }
-        criteriaMap = roleFilter.getCriteriaMap();
-        propertiesNamesMap = roleFilter.getPropertyMap();
+        this.criteriaMap = roleFilter.getCriteriaMap();
+        this.propertiesNamesMap = roleFilter.getPropertyMap();
     }
 
     /**
@@ -255,7 +256,7 @@ public class HibernateEscidocRoleDao extends AbstractHibernateDao
                 }
             }
 
-            for (final Map.Entry<String, Object[]> stringEntry : criteriaMap.entrySet()) {
+            for (final Entry<String, Object[]> stringEntry : criteriaMap.entrySet()) {
                 final Object criteriaValue = criterias.remove(stringEntry.getKey());
                 if (criteriaValue != null) {
                     final Object[] parts = stringEntry.getValue();

@@ -41,19 +41,19 @@ public abstract class DefaultHandler {
      * Mode indicating an attribute/element is discarded, i.e. it may be set but
      * will be ignored.
      */
-    public static final char DISCARDED = 4;
+    public static final char DISCARDED = (char) 4;
 
     /** Mode indicating an attribute/element is optional. */
-    public static final char OPTIONAL = 2;
+    public static final char OPTIONAL = (char) 2;
 
     /** Mode indicating an attribute/element is mandatory. */
-    public static final char MANDATORY = 1;
+    public static final char MANDATORY = (char) 1;
 
     /**
      * Mode indicating an attribute/element is not allowed to be in the Xml
      * data.
      */
-    public static final char FORBIDDEN = 0;
+    public static final char FORBIDDEN = (char) 0;
 
     /**
      * Error message in case of not found attribute that is mandatory in schema.
@@ -132,6 +132,7 @@ public abstract class DefaultHandler {
      *            The namespace of the expected attribute.
      * @param attributeName
      *            The name of the expected attribute
+     * @param e
      * @return Returns a {@link SystemException} as this situation can occur due
      *         to internal errors, only.
      */
@@ -148,7 +149,7 @@ public abstract class DefaultHandler {
      * @return Returns <code>true</code> if the ready flag is not set.
      */
     protected boolean isNotReady() {
-        return !ready;
+        return ! this.ready;
     }
 
     /**

@@ -86,7 +86,7 @@ public class IndexingHandler implements ResourceListener {
 
     private IndexingCacheHandler indexingCacheHandler;
 
-    private DocumentBuilder docBuilder;
+    private final DocumentBuilder docBuilder;
 
     private IndexService indexService;
 
@@ -108,13 +108,13 @@ public class IndexingHandler implements ResourceListener {
         final DocumentBuilderFactory docBuilderFactory =
             DocumentBuilderFactory.newInstance();
         try {
-            docBuilder = docBuilderFactory.newDocumentBuilder();
+            this.docBuilder = docBuilderFactory.newDocumentBuilder();
         }
         catch (final ParserConfigurationException e) {
             throw new SystemException(e.getMessage(), e);
         }
         try {
-            notifyIndexerEnabled =
+            this.notifyIndexerEnabled =
                 EscidocConfiguration.getInstance().getAsBoolean(
                     EscidocConfiguration.ESCIDOC_CORE_NOTIFY_INDEXER_ENABLED);
         }
@@ -142,7 +142,7 @@ public class IndexingHandler implements ResourceListener {
     public void resourceCreated(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
-        if (!notifyIndexerEnabled) {
+        if (! this.notifyIndexerEnabled) {
             return;
         }
         if (LOGGER.isDebugEnabled()) {
@@ -177,7 +177,7 @@ public class IndexingHandler implements ResourceListener {
      */
     @Override
     public void resourceDeleted(final String id) throws SystemException {
-        if (!notifyIndexerEnabled) {
+        if (! this.notifyIndexerEnabled) {
             return;
         }
         if (LOGGER.isDebugEnabled()) {
@@ -207,7 +207,7 @@ public class IndexingHandler implements ResourceListener {
     public void resourceModified(
         final String id, final String restXml, final String soapXml)
         throws SystemException {
-        if (!notifyIndexerEnabled) {
+        if (! this.notifyIndexerEnabled) {
             return;
         }
         if (LOGGER.isDebugEnabled()) {
@@ -595,6 +595,7 @@ public class IndexingHandler implements ResourceListener {
      * @return int action to take (delete, update, nothing)
      * @throws Exception
      *             e
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private int checkPrerequisites(
         String xml, final Map<String, Object> parameters,
@@ -768,6 +769,7 @@ public class IndexingHandler implements ResourceListener {
     /**
      * Return all PIDs contained in given index.
      * 
+     * @param objectType
      * @param indexName
      *            name of the index
      * 
@@ -884,17 +886,17 @@ public class IndexingHandler implements ResourceListener {
      */
     private Iterable<String> getIndexNames() throws IOException,
         SystemException {
-        if (indexNames == null) {
+        if (this.indexNames == null) {
             // Get index names from gsearch-config
             final Map<String, Map<String, String>> indexConfig =
                 gsearchHandler.getIndexConfigurations();
-            indexNames = new ArrayList<String>();
+            this.indexNames = new ArrayList<String>();
             indexNames.addAll(indexConfig.keySet());
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("configured indexNames: " + indexConfig.keySet());
             }
         }
-        return indexNames;
+        return this.indexNames;
     }
 
     /**
@@ -908,7 +910,7 @@ public class IndexingHandler implements ResourceListener {
      */
     private void getIndexConfigs() throws IOException, SystemException {
         // Build IndexInfo HashMap
-        objectTypeParameters =
+        this.objectTypeParameters =
             new HashMap<String, Map<String, Map<String, Object>>>();
         final String searchPropertiesDirectory =
             EscidocConfiguration.getInstance().get(
@@ -1022,6 +1024,7 @@ public class IndexingHandler implements ResourceListener {
      * @return Document xml as dom-Document
      * @throws Exception
      *             e
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
      */
     private Document getXmlAsDocument(final String xml) throws SystemException {
         try {
@@ -1042,7 +1045,7 @@ public class IndexingHandler implements ResourceListener {
      */
     public Map<String, Map<String, Map<String, Object>>> getObjectTypeParameters()
         throws WebserverSystemException {
-        if (objectTypeParameters == null) {
+        if (this.objectTypeParameters == null) {
             try {
                 getIndexConfigs();
             }
@@ -1050,7 +1053,7 @@ public class IndexingHandler implements ResourceListener {
                 throw new WebserverSystemException(e.getMessage(), e);
             }
         }
-        return objectTypeParameters;
+        return this.objectTypeParameters;
     }
 
     /**

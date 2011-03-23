@@ -110,7 +110,7 @@ public class InvocationParser {
         @SuppressWarnings("unchecked")
         private DocumentCache(final int size) {
 
-            map = Collections.synchronizedMap(new LRUMap(size));
+            this.map = Collections.synchronizedMap(new LRUMap(size));
         }
 
         /**

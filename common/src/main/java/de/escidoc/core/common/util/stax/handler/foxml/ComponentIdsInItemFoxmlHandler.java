@@ -65,11 +65,11 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
 
         final String currentPath = parser.getCurPath();
 
-        if (!inDescription && DESCRIPTION_PATH.equals(currentPath)) {
-            inDescription = true;
+        if (! this.inDescription && DESCRIPTION_PATH.equals(currentPath)) {
+            this.inDescription = true;
 
         }
-        if (inDescription && "component".equals(theName)) {
+        if (this.inDescription && "component".equals(theName)) {
 
             final int indexOfComponentId =
                 element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
@@ -93,9 +93,9 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
     @Override
     public String characters(final String data, final StartElement element) {
         final String namespace = element.getNamespace();
-        if (inDescription && "pid".equals(element.getLocalName())
+        if (this.inDescription && "pid".equals(element.getLocalName())
             && namespace.equals(Constants.VERSION_NS_URI)) {
-            versionPid = data;
+            this.versionPid = data;
         }
         return data;
     }
@@ -103,7 +103,7 @@ public class ComponentIdsInItemFoxmlHandler extends DefaultHandler {
     public StartElement endElement(final StartElement element) {
         final String currentPath = parser.getCurPath();
         if (DESCRIPTION_PATH.equals(currentPath)) {
-            inDescription = false;
+            this.inDescription = false;
         }
         return element;
     }

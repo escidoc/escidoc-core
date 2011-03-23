@@ -85,7 +85,7 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
                 throw new MissingMethodParameterException(
                     "Binary content must be provided.");
             }
-            stagingFile = StagingUtil.generateStagingFile(true, dao);
+            stagingFile = StagingUtil.generateStagingFile(true, this.dao);
             token = stagingFile.getToken();
             stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil
                 .getUploadStagingArea(), token));

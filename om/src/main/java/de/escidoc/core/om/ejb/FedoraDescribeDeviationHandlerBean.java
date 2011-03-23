@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class FedoraDescribeDeviationHandlerBean implements SessionBean {
 
-    FedoraDescribeDeviationHandlerInterface service = null;
+    FedoraDescribeDeviationHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(FedoraDescribeDeviationHandlerBean.class);
 
@@ -31,7 +31,7 @@ public class FedoraDescribeDeviationHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("FedoraDescribeDeviationHandler.spring.ejb.context").getFactory();
-            service =
+            this.service =
                     (FedoraDescribeDeviationHandlerInterface) factory.getBean("service.FedoraDescribeDeviationHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception FedoraDescribeDeviationHandlerComponent: " + e);
@@ -40,7 +40,7 @@ public class FedoraDescribeDeviationHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

@@ -411,6 +411,7 @@ public final class FinderModuleHelper {
      * @param objectId
      *            The id of the resource object for that the values hall be
      *            retrieved.
+     * @param predicateId
      * @param tsu
      *            The {@link TripleStoreUtility} to use.
      * @return Returns the specified attribute of the specified resource.<br>

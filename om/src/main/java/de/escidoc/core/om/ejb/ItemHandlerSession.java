@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for ItemHandler.
  */
-public class ItemHandlerSession extends ItemHandlerBean implements SessionBean {
+public class ItemHandlerSession extends ItemHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

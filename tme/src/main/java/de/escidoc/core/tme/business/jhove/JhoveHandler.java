@@ -86,10 +86,10 @@ public class JhoveHandler extends TmeHandlerBase
                 throw new FileNotFoundException(CONFIG_FILE + " not found!");
             }
 
-            jhoveConfigFile = File.createTempFile(NAME, null);
+            this.jhoveConfigFile = File.createTempFile(NAME, null);
             jhoveConfigFile.deleteOnExit();
             inputStream = new BufferedInputStream(inputStream);
-            outputStream = new FileOutputStream(jhoveConfigFile);
+            outputStream = new FileOutputStream(this.jhoveConfigFile);
             IOUtils.copyAndCloseInput(inputStream, outputStream);
         } finally {
             IOUtils.closeStream(outputStream);

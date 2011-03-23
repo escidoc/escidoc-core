@@ -37,7 +37,7 @@ import java.io.Serializable;
  * 
  * @author rof
  */
-public class SetDefinition extends SetDefinitionBase implements Serializable {
+public class SetDefinition extends SetDefinitionBase {
 
     /**
      * The serial version uid.

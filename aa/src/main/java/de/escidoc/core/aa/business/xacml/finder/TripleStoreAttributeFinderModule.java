@@ -416,8 +416,8 @@ public class TripleStoreAttributeFinderModule
             cachedAttribute =
                     FinderModuleHelper.retrieveFromTripleStore(mapresult
                             .isInverse(), mapresult.getResolveCurrentWhereClause(
-                            resourceObjid, tsu), resourceObjid,
-                            mapresult.getCacheId(), tsu);
+                            resourceObjid, this.tsu), resourceObjid,
+                            mapresult.getCacheId(), this.tsu);
         }
 
         final List<StringAttribute> stringAttributes =
@@ -467,7 +467,7 @@ public class TripleStoreAttributeFinderModule
                 final List<String> theseAttributes =
                     FinderModuleHelper.retrieveFromTripleStore(mapresult
                         .isInverse(), mapresult.getResolveCurrentWhereClause(
-                        attribute, tsu), attribute, mapresult.getCacheId(), tsu);
+                        attribute, this.tsu), attribute, mapresult.getCacheId(), this.tsu);
                 if (theseAttributes != null && !theseAttributes.isEmpty()) {
                     hierarchicalAttributesList.addAll(theseAttributes);
                     hierarchicalAttributesList =
@@ -487,7 +487,7 @@ public class TripleStoreAttributeFinderModule
      */
     private void initMapping() {
 
-        mapping = new HashMap<String, MapResult>();
+        this.mapping = new HashMap<String, MapResult>();
 
         // *************************
         // common attribute id
@@ -592,17 +592,15 @@ public class TripleStoreAttributeFinderModule
      */
     private void initMappingOrganizationalUnit() {
 
-        mapping.put("organizational-unit:created-by", createdByMapResult);
+        mapping.put("organizational-unit:created-by", this.createdByMapResult);
 
-        mapping.put("organizational-unit:latest-version-number",
-            latestVersionNumberMapResult);
+        mapping.put("organizational-unit:latest-version-number", this.latestVersionNumberMapResult);
 
-        mapping.put("organizational-unit:public-status", publicStatusMapResult);
+        mapping.put("organizational-unit:public-status", this.publicStatusMapResult);
 
-        mapping.put("organizational-unit:parent", parentMapResult);
+        mapping.put("organizational-unit:parent", this.parentMapResult);
 
-        mapping.put("organizational-unit:hierarchical-parents",
-            hierarchicalParentMapResult);
+        mapping.put("organizational-unit:hierarchical-parents", this.hierarchicalParentMapResult);
 
     }
 
@@ -611,35 +609,34 @@ public class TripleStoreAttributeFinderModule
      * triple store (e.g. mulgara) for attributes related to items.
      */
     private void initMappingItem() {
-        mapping.put("item:component", componentMapResult);
+        mapping.put("item:component", this.componentMapResult);
 
         // container (of latest version, only? or version independent?)
-        mapping.put("item:container", memberMapResult);
+        mapping.put("item:container", this.memberMapResult);
 
         mapping
-            .put("item:hierarchical-containers", hierarchicalMemberMapResult);
+            .put("item:hierarchical-containers", this.hierarchicalMemberMapResult);
 
-        mapping.put("item:content-model", contentModelMapResult);
+        mapping.put("item:content-model", this.contentModelMapResult);
 
-        mapping.put("item:context", contextMapResult);
+        mapping.put("item:context", this.contextMapResult);
 
         // created-by
-        mapping.put("item:created-by", createdByMapResult);
+        mapping.put("item:created-by", this.createdByMapResult);
 
-        mapping.put("item:latest-release-number", latestReleaseNumberMapResult);
+        mapping.put("item:latest-release-number", this.latestReleaseNumberMapResult);
 
-        mapping.put("item:latest-release-pid", latestReleasePidMapResult);
+        mapping.put("item:latest-release-pid", this.latestReleasePidMapResult);
 
-        mapping.put("item:latest-version-modified-by",
-            latestVersionUserMapResult);
+        mapping.put("item:latest-version-modified-by", this.latestVersionUserMapResult);
 
         // latest version number
-        mapping.put("item:latest-version-number", latestVersionNumberMapResult);
+        mapping.put("item:latest-version-number", this.latestVersionNumberMapResult);
 
-        mapping.put("item:latest-version-status", latestVersionStatusMapResult);
+        mapping.put("item:latest-version-status", this.latestVersionStatusMapResult);
 
         // public-status
-        mapping.put("item:public-status", publicStatusMapResult);
+        mapping.put("item:public-status", this.publicStatusMapResult);
 
         // modified-by (of latest version)
         mapping.put("item:version-modified-by", mapping
@@ -656,9 +653,9 @@ public class TripleStoreAttributeFinderModule
      */
     private void initMappingContentRelation() {
         // created-by
-        mapping.put("content-relation:created-by", createdByMapResult);
+        mapping.put("content-relation:created-by", this.createdByMapResult);
         // public-status
-        mapping.put("content-relation:public-status", publicStatusMapResult);
+        mapping.put("content-relation:public-status", this.publicStatusMapResult);
     }
 
     /**
@@ -667,12 +664,12 @@ public class TripleStoreAttributeFinderModule
      */
     private void initMappingContext() {
         // created-by
-        mapping.put("context:created-by", createdByMapResult);
+        mapping.put("context:created-by", this.createdByMapResult);
 
-        mapping.put("context:organizational-unit", organizationalUnitMapResult);
+        mapping.put("context:organizational-unit", this.organizationalUnitMapResult);
 
         // public-status
-        mapping.put("context:public-status", publicStatusMapResult);
+        mapping.put("context:public-status", this.publicStatusMapResult);
     }
 
     /**
@@ -681,41 +678,36 @@ public class TripleStoreAttributeFinderModule
      */
     private void initMappingContainer() {
         // containers (of latest version, only? or version independent?)
-        mapping.put("container:container", memberMapResult);
+        mapping.put("container:container", this.memberMapResult);
 
-        mapping.put("container:hierarchical-containers",
-            hierarchicalMemberMapResult);
+        mapping.put("container:hierarchical-containers", this.hierarchicalMemberMapResult);
 
         // content type
-        mapping.put("container:content-model", contentModelMapResult);
+        mapping.put("container:content-model", this.contentModelMapResult);
 
         // context
-        mapping.put("container:context", contextMapResult);
+        mapping.put("container:context", this.contextMapResult);
 
         // created-by
-        mapping.put("container:created-by", createdByMapResult);
+        mapping.put("container:created-by", this.createdByMapResult);
 
         // latest release number
-        mapping.put("container:latest-release-number",
-            latestReleaseNumberMapResult);
+        mapping.put("container:latest-release-number", this.latestReleaseNumberMapResult);
 
         // latest release pid
-        mapping.put("container:latest-release-pid", latestReleasePidMapResult);
+        mapping.put("container:latest-release-pid", this.latestReleasePidMapResult);
 
         // latest version modified by
-        mapping.put("container:latest-version-modified-by",
-            latestVersionUserMapResult);
+        mapping.put("container:latest-version-modified-by", this.latestVersionUserMapResult);
 
         // latest version number
-        mapping.put("container:latest-version-number",
-            latestVersionNumberMapResult);
+        mapping.put("container:latest-version-number", this.latestVersionNumberMapResult);
 
         // latest version status
-        mapping.put("container:latest-version-status",
-            latestVersionStatusMapResult);
+        mapping.put("container:latest-version-status", this.latestVersionStatusMapResult);
 
         // public-status
-        mapping.put("container:public-status", publicStatusMapResult);
+        mapping.put("container:public-status", this.publicStatusMapResult);
 
         // modified-by (of latest version)
         mapping.put("container:version-modified-by", mapping
@@ -741,7 +733,7 @@ public class TripleStoreAttributeFinderModule
             TripleStoreUtility.PROP_CONTENT_CATEGORY, false));
 
         // created-by
-        mapping.put("component:created-by", createdByMapResult);
+        mapping.put("component:created-by", this.createdByMapResult);
 
         // status
         mapping.put("component:valid-status", new MapResult(

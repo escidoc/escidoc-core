@@ -56,7 +56,7 @@ import java.util.Map;
 
 public class ContainerHandlerBean implements SessionBean {
 
-    ContainerHandlerInterface service = null;
+    ContainerHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(ContainerHandlerBean.class);
 
@@ -64,7 +64,7 @@ public class ContainerHandlerBean implements SessionBean {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory = beanFactoryLocator.useBeanFactory("ContainerHandler.spring.ejb.context").getFactory();
-            service = (ContainerHandlerInterface) factory.getBean("service.ContainerHandler");
+            this.service = (ContainerHandlerInterface) factory.getBean("service.ContainerHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception ContainerHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -72,7 +72,7 @@ public class ContainerHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

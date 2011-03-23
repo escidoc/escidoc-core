@@ -343,8 +343,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
         FedoraSystemException, IntegritySystemException,
         TripleStoreSystemException {
 
-        final Map<String, Datastream> mdRecords =
-            (HashMap<String, Datastream>) getItem().getMdRecords();
+        final Map<String, Datastream> mdRecords = getItem().getMdRecords();
 
         final StringBuilder content = new StringBuilder();
         final Map<String, String> values = new HashMap<String, String>();
@@ -370,8 +369,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
 
         if (getItem().getResourceProperties().get(PropertyMapKeys.ORIGIN) != null) {
             values.put(XmlTemplateProvider.ORIGIN, XmlTemplateProvider.TRUE);
-            final Map<String, Datastream> originMdRecords =
-                (HashMap<String, Datastream>) getOriginItem().getMdRecords();
+            final Map<String, Datastream> originMdRecords = getOriginItem().getMdRecords();
             for (final String mdRecordName : originMdRecords.keySet()) {
                 if (!mdRecords.keySet().contains(mdRecordName)) {
                     try {
@@ -692,8 +690,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
                         + de.escidoc.core.common.business.Constants.MD_RECORDS_URL_PART);
             values.putAll(getCommonValues(getItem()));
         }
-        final Map<String, Datastream> mdRecords =
-            (HashMap<String, Datastream>) component.getMdRecords();
+        final Map<String, Datastream> mdRecords = component.getMdRecords();
         final StringBuilder content = new StringBuilder();
         for (final String mdRecordName : mdRecords.keySet()) {
             try {
@@ -867,6 +864,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * Gets the representation of the virtual resource <code>parents</code> of
      * an item/container.
      * 
+     * @param itemId
      * @return Returns the XML representation of the virtual resource
      *         <code>parents</code> of an container.
      * @throws SystemException
@@ -893,6 +891,7 @@ public class ItemHandlerRetrieve extends ItemHandlerBase
      * 
      * @param values
      *            The map to add values to.
+     * @param itemId
      * @throws SystemException
      *             Thrown in case of an internal error.
      */

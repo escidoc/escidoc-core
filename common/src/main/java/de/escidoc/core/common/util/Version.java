@@ -61,9 +61,9 @@ public class Version implements Comparable<Version> {
     public Version(final String version) {
         final String[] parts = version.split("\\.");
 
-        majorNumber = Integer.parseInt(parts[0]);
-        minorNumber = Integer.parseInt(parts[1]);
-        revisionNumber = Integer.parseInt(parts[2]);
+        this.majorNumber = Integer.parseInt(parts[0]);
+        this.minorNumber = Integer.parseInt(parts[1]);
+        this.revisionNumber = Integer.parseInt(parts[2]);
     }
 
     /**
@@ -79,15 +79,15 @@ public class Version implements Comparable<Version> {
     public int compareTo(final Version o) {
         final int result;
 
-        if (o.majorNumber > majorNumber) {
+        if (o.majorNumber > this.majorNumber) {
             result = -1;
         }
-        else if (o.majorNumber == majorNumber) {
-            if (o.minorNumber > minorNumber) {
+        else if (o.majorNumber == this.majorNumber) {
+            if (o.minorNumber > this.minorNumber) {
                 result = -1;
             }
-            else if (o.minorNumber == minorNumber) {
-                result = o.revisionNumber > revisionNumber ? - 1 : o.revisionNumber == revisionNumber ? 0 : 1;
+            else if (o.minorNumber == this.minorNumber) {
+                result = o.revisionNumber > this.revisionNumber ? - 1 : o.revisionNumber == this.revisionNumber ? 0 : 1;
             }
             else {
                 result = 1;
@@ -118,7 +118,8 @@ public class Version implements Comparable<Version> {
 
         final Version other = (Version) obj;
 
-        return !(majorNumber != other.majorNumber || minorNumber != other.minorNumber || revisionNumber != other.revisionNumber);
+        return !(this.majorNumber != other.majorNumber || this.minorNumber != other.minorNumber ||
+                this.revisionNumber != other.revisionNumber);
     }
 
     /**
@@ -132,9 +133,9 @@ public class Version implements Comparable<Version> {
         final int prime = 31;
         int result = 1;
 
-        result = prime * result + majorNumber;
-        result = prime * result + minorNumber;
-        result = prime * result + revisionNumber;
+        result = prime * result + this.majorNumber;
+        result = prime * result + this.minorNumber;
+        result = prime * result + this.revisionNumber;
         return result;
     }
 
@@ -144,6 +145,6 @@ public class Version implements Comparable<Version> {
      * @return a string representation of the object
      */
     public String toString() {
-        return majorNumber + "." + minorNumber + '.' + revisionNumber;
+        return this.majorNumber + "." + this.minorNumber + '.' + this.revisionNumber;
     }
 }

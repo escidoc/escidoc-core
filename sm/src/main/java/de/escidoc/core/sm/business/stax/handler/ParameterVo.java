@@ -49,7 +49,7 @@ public class ParameterVo {
      * @return the name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
     /**
      * @param name the name to set
@@ -61,7 +61,7 @@ public class ParameterVo {
      * @return the stringValue
      */
     public String getStringValue() {
-        return stringValue;
+        return this.stringValue;
     }
     /**
      * @param stringValue the stringValue to set
@@ -73,7 +73,7 @@ public class ParameterVo {
      * @return the decimalValue
      */
     public Double getDecimalValue() {
-        return decimalValue;
+        return this.decimalValue;
     }
     /**
      * @param decimalValue the decimalValue to set
@@ -85,7 +85,7 @@ public class ParameterVo {
      * @return the dateValue
      */
     public ReadableDateTime getDateValue() {
-        return dateValue;
+        return this.dateValue;
     }
     /**
      * @param dateValue the dateValue to set

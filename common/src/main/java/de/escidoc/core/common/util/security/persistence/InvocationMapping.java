@@ -52,6 +52,12 @@ public class InvocationMapping extends InvocationMappingBase {
 
     /**
      * Creates a invocation mapping for single parameter .
+     * @param id
+     * @param path
+     * @param position
+     * @param attributeType
+     * @param mappingType
+     * @param value
      */
     public InvocationMapping(final String id, final String path,
         final int position, final String attributeType, final int mappingType,
@@ -64,6 +70,13 @@ public class InvocationMapping extends InvocationMappingBase {
 
     /**
      * Creates an invocation mapping.
+     * @param id
+     * @param path
+     * @param position
+     * @param attributeType
+     * @param mappingType
+     * @param multipleValue
+     * @param value
      */
     public InvocationMapping(final String id, final String path,
         final int position, final String attributeType, final int mappingType,

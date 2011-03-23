@@ -61,7 +61,7 @@ public class HandlerBase extends DefaultHandler {
      */
     public DefaultHandlerStackInterface getParser() {
 
-        return parser;
+        return this.parser;
     }
 
     /**

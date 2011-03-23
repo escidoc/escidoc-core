@@ -65,7 +65,7 @@ public class GsearchRepositoryInfoHandler extends DefaultHandler {
      */
     public Map<String, String> 
                         getGsearchRepositoryInfo() {
-        return gsearchRepositoryInfo;
+        return this.gsearchRepositoryInfo;
     }
 
 }

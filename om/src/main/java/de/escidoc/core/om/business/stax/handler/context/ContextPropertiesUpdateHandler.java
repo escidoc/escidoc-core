@@ -62,19 +62,19 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
     private static final Logger LOGGER =
         LoggerFactory.getLogger(ContextPropertiesUpdateHandler.class);
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private String propertiesPath = "/context/properties";
 
-    private String contextId;
+    private final String contextId;
 
-    private Map<String, String> changedValuesInRelsExt;
+    private final Map<String, String> changedValuesInRelsExt;
 
-    private Map<String, String> changedValuesInDc;
+    private final Map<String, String> changedValuesInDc;
 
-    private List<String> deletableValues;
+    private final List<String> deletableValues;
 
-    private Map<String, String> valuesToAdd;
+    private final Map<String, String> valuesToAdd;
 
     private final List<String> orgunits = new ArrayList<String>();
 
@@ -97,8 +97,8 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
         this.changedValuesInDc = new HashMap<String, String>();
         this.changedValuesInRelsExt = new HashMap<String, String>();
-        deletableValues = new ArrayList<String>();
-        valuesToAdd = new HashMap<String, String>();
+        this.deletableValues = new ArrayList<String>();
+        this.valuesToAdd = new HashMap<String, String>();
         deletableValues.add(Elements.ELEMENT_DESCRIPTION);
     }
 
@@ -159,9 +159,9 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
         throws Exception {
         final String curPath = parser.getCurPath();
 
-        if (curPath.startsWith(propertiesPath)) {
+        if (curPath.startsWith(this.propertiesPath)) {
             // name
-            if (curPath.equals(propertiesPath + '/' + Elements.ELEMENT_NAME)) {
+            if (curPath.equals(this.propertiesPath + '/' + Elements.ELEMENT_NAME)) {
                 if (data.length() == 0) {
                     throw new MissingElementValueException(
                         "element 'name' is empty.");
@@ -172,7 +172,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
             }
 
             // type
-            else if (curPath.equals(propertiesPath + '/'
+            else if (curPath.equals(this.propertiesPath + '/'
                 + Elements.ELEMENT_TYPE)) {
                 if (data.length() == 0) {
                     throw new MissingElementValueException(
@@ -185,11 +185,10 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
             }
             // description
-            else if (curPath.equals(propertiesPath + '/'
+            else if (curPath.equals(this.propertiesPath + '/'
                 + Elements.ELEMENT_DESCRIPTION)) {
                 deletableValues.remove(Elements.ELEMENT_DESCRIPTION);
-                if (TripleStoreUtility.getInstance().getPropertiesElements(
-                    contextId,
+                if (TripleStoreUtility.getInstance().getPropertiesElements(this.contextId,
                     Constants.DC_NS_URI
                         + Elements.ELEMENT_DESCRIPTION) == null) {
                     valuesToAdd.put(Elements.ELEMENT_DESCRIPTION, data);
@@ -248,9 +247,9 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
         final String repositoryValue;
 
         repositoryValue = key.equals(Elements.ELEMENT_DESCRIPTION) ? TripleStoreUtility.getInstance().getPropertiesElements(
-                contextId,
-                Constants.DC_NS_URI + key) : key.equals(Elements.ELEMENT_NAME) ? TripleStoreUtility.getInstance().getTitle(contextId) : TripleStoreUtility.getInstance().getPropertiesElements(
-                contextId,
+                this.contextId,
+                Constants.DC_NS_URI + key) : key.equals(Elements.ELEMENT_NAME) ? TripleStoreUtility.getInstance().getTitle(
+                this.contextId) : TripleStoreUtility.getInstance().getPropertiesElements(this.contextId,
                 Constants.PROPERTIES_NS_URI
                         + key);
 
@@ -268,7 +267,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @return
      */
     public List<String> getPropertiesToRemove() {
-        return deletableValues;
+        return this.deletableValues;
     }
 
     /**
@@ -276,7 +275,7 @@ public class ContextPropertiesUpdateHandler extends DefaultHandler {
      * @return
      */
     public Map<String, String> getPropertiesToAdd() {
-        return valuesToAdd;
+        return this.valuesToAdd;
     }
 
     /**

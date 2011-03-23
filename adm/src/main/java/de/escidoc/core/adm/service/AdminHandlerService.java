@@ -3,104 +3,116 @@
  */
 package de.escidoc.core.adm.service;
 
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  * Service endpoint interface for AdminHandler.
  */
-public interface AdminHandlerService extends java.rmi.Remote {
+public interface AdminHandlerService extends Remote {
 
-    java.lang.String deleteObjects(java.lang.String taskParam,
-                                   org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String deleteObjects(String taskParam,
+                                   SecurityContext securityContext)
+            throws InvalidXmlException,
+            SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String deleteObjects(java.lang.String taskParam, java.lang.String authHandle,
-                                   java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String deleteObjects(String taskParam, String authHandle,
+                                   Boolean restAccess)
+            throws InvalidXmlException,
+            SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String getPurgeStatus(org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String getPurgeStatus(SecurityContext securityContext)
+            throws SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String getPurgeStatus(java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String getPurgeStatus(String authHandle, Boolean restAccess)
+            throws SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String getReindexStatus(org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String getReindexStatus(SecurityContext securityContext)
+            throws SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String getReindexStatus(java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String getReindexStatus(String authHandle, Boolean restAccess)
+            throws SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    void decreaseReindexStatus(java.lang.String objectTypeXml,
-                               org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    void decreaseReindexStatus(String objectTypeXml,
+                               SecurityContext securityContext)
+            throws InvalidXmlException,
+            SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    void decreaseReindexStatus(java.lang.String objectTypeXml, java.lang.String authHandle,
-                               java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    void decreaseReindexStatus(String objectTypeXml, String authHandle,
+                               Boolean restAccess)
+            throws InvalidXmlException,
+            SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String reindex(java.lang.String clearIndex, java.lang.String indexNamePrefix,
-                             org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String reindex(String clearIndex, String indexNamePrefix,
+                             SecurityContext securityContext)
+            throws SystemException,
+            InvalidSearchQueryException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String reindex(java.lang.String clearIndex, java.lang.String indexNamePrefix, java.lang.String authHandle,
-                             java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String reindex(String clearIndex, String indexNamePrefix, String authHandle,
+                             Boolean restAccess)
+            throws SystemException,
+            InvalidSearchQueryException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String getIndexConfiguration(org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String getIndexConfiguration(SecurityContext securityContext)
+            throws SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String getIndexConfiguration(java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String getIndexConfiguration(String authHandle, Boolean restAccess)
+            throws SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String getRepositoryInfo(org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String getRepositoryInfo(SecurityContext securityContext)
+            throws SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String getRepositoryInfo(java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String getRepositoryInfo(String authHandle, Boolean restAccess)
+            throws SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String loadExamples(java.lang.String type,
-                                  org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String loadExamples(String type,
+                                  SecurityContext securityContext)
+            throws InvalidSearchQueryException,
+            SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String loadExamples(java.lang.String type, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String loadExamples(String type, String authHandle, Boolean restAccess)
+            throws InvalidSearchQueryException,
+            SystemException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
 }

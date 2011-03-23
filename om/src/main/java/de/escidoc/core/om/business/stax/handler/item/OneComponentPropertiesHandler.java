@@ -89,17 +89,17 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
         throws ReadonlyElementViolationException,
         ReadonlyAttributeViolationException, InvalidContentException {
 
-        if (inside) {
+        if (this.inside) {
 
-            insideLevel++;
+            this.insideLevel++;
 
         }
         else {
             final String currenrPath = parser.getCurPath();
             final String elementPath = "/component/properties";
             if (elementPath.equals(currenrPath)) {
-                inside = true;
-                insideLevel++;
+                this.inside = true;
+                this.insideLevel++;
 
             }
         }
@@ -109,11 +109,11 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) {
-        if (inside) {
-            insideLevel--;
+        if (this.inside) {
+            this.insideLevel--;
 
-            if (insideLevel == 0) {
-                inside = false;
+            if (this.insideLevel == 0) {
+                this.inside = false;
             }
         }
         return element;
@@ -126,7 +126,7 @@ public class OneComponentPropertiesHandler extends DefaultHandler {
 
         final String theName = element.getLocalName();
 
-        if (inside) {
+        if (this.inside) {
             if (theName.equals(Elements.ELEMENT_MIME_TYPE)) {
                 if (s != null && s.length() > 0) {
                     properties.put(TripleStoreUtility.PROP_MIME_TYPE, s);

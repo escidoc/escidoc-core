@@ -39,7 +39,7 @@ public class PurgeRequestImpl implements PurgeRequest {
      */
     @Override
     public String getResourceId() {
-        return resourceId;
+        return this.resourceId;
     }
 
     /**
@@ -57,9 +57,9 @@ public class PurgeRequestImpl implements PurgeRequest {
     @Override
     public String toString() {
         return "PurgeRequestImpl{" +
-                "requestId='" + requestId + '\'' +
-                ", creationTimestamp=" + creationTimestamp +
-                ", resourceId='" + resourceId + '\'' +
+                "requestId='" + this.requestId + '\'' +
+                ", creationTimestamp=" + this.creationTimestamp +
+                ", resourceId='" + this.resourceId + '\'' +
                 '}';
     }
 }

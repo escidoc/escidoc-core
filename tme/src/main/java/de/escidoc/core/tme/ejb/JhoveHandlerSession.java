@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for JhoveHandler.
  */
-public class JhoveHandlerSession extends JhoveHandlerBean implements SessionBean {
+public class JhoveHandlerSession extends JhoveHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

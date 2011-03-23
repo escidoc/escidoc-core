@@ -89,8 +89,7 @@ public class ComponentStaxHandler extends DefaultHandler {
         if (isNotReady()) {
             final String localName = element.getLocalName();
             if (XmlUtility.NAME_CREATED_BY.equals(localName)) {
-                AbstractResourceAttributeStaxHandler.cacheAttribute(ctx,
-                    componentId,
+                AbstractResourceAttributeStaxHandler.cacheAttribute(this.ctx, this.componentId,
                     AttributeIds.URN_ITEM_COMPONENT_CREATED_BY_ATTR, XmlUtility
                         .getIdFromStartElement(element));
             }
@@ -120,18 +119,16 @@ public class ComponentStaxHandler extends DefaultHandler {
             final String localName = element.getLocalName();
             if (XmlUtility.NAME_VALID_STATUS.equals(localName)) {
 
-                AbstractResourceAttributeStaxHandler.cacheAttribute(ctx,
-                    componentId,
+                AbstractResourceAttributeStaxHandler.cacheAttribute(this.ctx, this.componentId,
                     AttributeIds.URN_ITEM_COMPONENT_VALID_STATUS_ATTR, data);
             }
             else if (XmlUtility.NAME_VISIBILITY.equals(localName)) {
-                AbstractResourceAttributeStaxHandler.cacheAttribute(ctx,
-                    componentId,
+                AbstractResourceAttributeStaxHandler.cacheAttribute(this.ctx, this.componentId,
                     AttributeIds.URN_ITEM_COMPONENT_VISIBILITY_ATTR, data);
             }
             else if (XmlUtility.NAME_CONTENT_CATEGORY.equals(localName)) {
                 AbstractResourceAttributeStaxHandler
-                    .cacheAttribute(ctx, componentId,
+                    .cacheAttribute(this.ctx, this.componentId,
                         AttributeIds.URN_ITEM_COMPONENT_CONTENT_CATEGORY_ATTR,
                         data);
             }

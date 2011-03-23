@@ -101,6 +101,11 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *             Thrown if provided data is corrupted.
      * @throws XmlSchemaValidationException
      *             Thrown if the schema validation of the provided data fails.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
     String create(final String xmlData) throws ContextNotFoundException,
         ContentModelNotFoundException, InvalidContentException,
@@ -172,6 +177,10 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @throws ReadonlyVersionException
      *             TODO
      *
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
     String update(final String id, final String xmlData)
         throws ContainerNotFoundException, LockingException,
@@ -521,6 +530,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      * @param resourceName
      *            The name of the resource.
      * 
+     * @param parameters
      * @return The content of the resource.
      * 
      * @throws ContainerNotFoundException
@@ -747,6 +757,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *             TODO
      * @throws InvalidXmlException
      *             TODO
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      */
     String release(final String id, final String taskParam)
         throws ContainerNotFoundException, LockingException,
@@ -777,6 +788,7 @@ public interface ContainerHandlerInterface extends IngestableResource {
      *             TODO
      * @throws InvalidXmlException
      *             TODO
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException
      */
     String submit(final String id, final String taskParam)
         throws ContainerNotFoundException, LockingException,

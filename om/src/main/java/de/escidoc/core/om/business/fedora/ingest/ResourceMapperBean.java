@@ -75,7 +75,7 @@ public class ResourceMapperBean {
      * @return the validator
      */
     public IngestValidator getValidator() {
-        return validator;
+        return this.validator;
     }
 
     /**
@@ -93,7 +93,7 @@ public class ResourceMapperBean {
      * @return ResourceType
      */
     public ResourceType getResourceType() {
-        return resourceType;
+        return this.resourceType;
     }
 
     /**
@@ -111,7 +111,7 @@ public class ResourceMapperBean {
      * @return the instance.
      */
     public IngestableResource getResource() {
-        return resource;
+        return this.resource;
     }
 
     /**

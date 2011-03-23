@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * The method mapper.<br>
@@ -227,7 +228,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         final String xPath =
             appendToXpath(appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT,
                 DEFINITION_ELEMENT), type);
-        for (final Document methodMapping : methodMappings) {
+        for (final Document methodMapping : this.methodMappings) {
             final NodeList methodDefinitions = parse(xPath, methodMapping);
             final int noOfDefinitions = methodDefinitions.getLength();
             for (int i = 0; i < noOfDefinitions; ++i) {
@@ -251,7 +252,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
 
         final String xPath =
             appendToXpath(XPATH_DELIMITER + ROOT_ELEMENT, RESOURCE_ELEMENT);
-        for (final Document methodMapping : methodMappings) {
+        for (final Document methodMapping : this.methodMappings) {
             final NodeList resourcesNodes = parse(xPath, methodMapping);
             final int noOfResources = resourcesNodes.getLength();
             for (int i = 0; i < noOfResources; ++i) {
@@ -348,7 +349,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
         // FIXME: Remove this iteration. All base-URIs are like
         // /<ir, um, oum, ...>/<resourcename>
         final Map<String, Resource> resourcesMap = getResources();
-        for (final Map.Entry<String, Resource> stringResourceEntry : resourcesMap.entrySet()) {
+        for (final Entry<String, Resource> stringResourceEntry : resourcesMap.entrySet()) {
             if (uri.startsWith(stringResourceEntry.getKey())) {
                 result = stringResourceEntry.getValue();
                 break;
@@ -363,7 +364,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      */
     public Map getDescriptors() {
 
-        return descriptors;
+        return this.descriptors;
     }
 
     /**
@@ -412,7 +413,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *
      */
     public Map<String, Collection> getDefinitions() {
-        return definitions;
+        return this.definitions;
     }
 
     /**
@@ -430,7 +431,7 @@ public class MethodMapper extends XMLBase implements MapperInterface {
      *
      */
     public Map<String, Resource> getResources() {
-        return resources;
+        return this.resources;
     }
 
     /**

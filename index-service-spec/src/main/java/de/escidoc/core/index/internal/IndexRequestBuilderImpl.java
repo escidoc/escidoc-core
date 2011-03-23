@@ -81,7 +81,7 @@ public class IndexRequestBuilderImpl extends IndexRequestBuilder {
     @Override
     public String toString() {
         return "IndexRequestBuilderImpl{" +
-                "indexRequest=" + indexRequest +
+                "indexRequest=" + this.indexRequest +
                 '}';
     }
 }

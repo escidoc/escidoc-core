@@ -91,7 +91,7 @@ public class RemoteStatelessEjbProxyFactoryBean
 
         try {
             this.setJndiEnvironment(EjbFactoryBeanHelper
-                .getInitialContextJndiProperties(packageName));
+                .getInitialContextJndiProperties(this.packageName));
         }
         catch (final WebserverSystemException e) {
             final NamingException ex = new NamingException(); // Ignore FindBugs
@@ -104,7 +104,7 @@ public class RemoteStatelessEjbProxyFactoryBean
                     .matcher(getBusinessInterface().getName()).replaceAll(
                         "Remote")).replaceAll("ejb.interfaces");
         try {
-            extendedInterface = Class.forName(className);
+            this.extendedInterface = Class.forName(className);
         }
         catch (final ClassNotFoundException e) {
             final NamingException ex = new NamingException(); // Ignore FindBugs
@@ -180,15 +180,14 @@ public class RemoteStatelessEjbProxyFactoryBean
 
         final String methodName = method.getName();
         final MethodInvocation extendedMethodInvocation =
-            MethodInvocationUtils.createFromClass(null, extendedInterface,
+            MethodInvocationUtils.createFromClass(null, this.extendedInterface,
                 methodName, extendedArgsTypes, extendedArgs);
         if (extendedMethodInvocation == null) {
             throw new InvocationTargetException(
                 new SystemException(
                     StringUtility
                         .format(
-                            "Remote Invocation failed, could not find extended target method.",
-                            extendedInterface, methodName, extendedArgs)));
+                            "Remote Invocation failed, could not find extended target method.", this.extendedInterface, methodName, extendedArgs)));
         }
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug(StringUtility.format("Calling super.invoke", methodName, extendedArgs));

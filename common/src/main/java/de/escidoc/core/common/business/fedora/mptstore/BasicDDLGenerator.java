@@ -47,24 +47,28 @@ public class BasicDDLGenerator
      * Constructor.
      */
     public BasicDDLGenerator() {
-        users = splitProperty("mptstore.postgres.autoGrantUsers");
-        groups = splitProperty("mptstore.postgres.autoGrantGroups");
+        this.users = splitProperty("mptstore.postgres.autoGrantUsers");
+        this.groups = splitProperty("mptstore.postgres.autoGrantGroups");
     }
 
     /**
      * Copied from superclass.
+     * @param cmds
+     * @param table
      */
     protected void addSelectGrants(final Collection<String> cmds, final String table) {
-        for (final String name : users) {
+        for (final String name : this.users) {
             cmds.add("GRANT SELECT ON TABLE " + table + " TO " + name);
         }
-        for (final String name : groups) {
+        for (final String name : this.groups) {
             cmds.add("GRANT SELECT ON TABLE " + table + " TO GROUP " + name);
         }
     }
 
     /**
      * Copied from superclass.
+     * @param name
+     * @return
      */
     protected static String[] splitProperty(final String name) {
         final String val = System.getProperty(name);

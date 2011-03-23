@@ -85,9 +85,9 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
         
         // The last modification date attribute has to be fetched from the root
         // which is the first element that is processed during xml parsing.
-        if (notReadyFlag && !rootElementFound) {
-            
-            rootElementFound = true;
+        if (notReadyFlag && ! this.rootElementFound) {
+
+            this.rootElementFound = true;
             try {
                 final String lastModificationDateValue = element.getAttributeValue(null,
                         XmlUtility.NAME_LAST_MODIFICATION_DATE);
@@ -95,13 +95,12 @@ public class OptimisticLockingStaxHandler extends DefaultHandler {
                 try {
                     final Date lastModificationDate = Iso8601Util
                             .parseIso8601(lastModificationDateValue);
-                    if (expectedLastModificationDate != null
-                        && !lastModificationDate.equals(
-                        expectedLastModificationDate)) {
+                    if (this.expectedLastModificationDate != null
+                        && !lastModificationDate.equals(this.expectedLastModificationDate)) {
                         throw new OptimisticLockingException(StringUtility
                             .format(
                                     "Optimistic locking error", Iso8601Util
-                                    .getIso8601(expectedLastModificationDate),
+                                    .getIso8601(this.expectedLastModificationDate),
                                     lastModificationDateValue));
                     }
                 } catch (final ParseException e) {

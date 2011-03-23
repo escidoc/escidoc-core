@@ -69,6 +69,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Handler to create Context objects.
@@ -276,7 +277,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
         final Collection<Map<String, String>> adminDescriptors = new ArrayList<Map<String, String>>();
 
-        for (final Map.Entry<String, Object> stringObjectEntry : dataStreams.entrySet()) {
+        for (final Entry<String, Object> stringObjectEntry : dataStreams.entrySet()) {
             final Map<String, String> adminDescriptor = new HashMap<String, String>();
             adminDescriptor.put("name", stringObjectEntry.getKey());
             adminDescriptor.put("id", stringObjectEntry.getKey());
@@ -299,8 +300,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         values.put("dcProperties", dcProperties);
         values.put("propertiesAsReferences", propertiesAsReferences);
 
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility
-            .getInstance().getBuildNumber());
+        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
         values.put(XmlTemplateProvider.ESCIDOC_PROPERTIES_NS_PREFIX,
             Constants.PROPERTIES_NS_PREFIX);
         values.put(XmlTemplateProvider.ESCIDOC_SREL_NS_PREFIX,
@@ -312,8 +312,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
         values.put("resourcesOntologiesNamespace", Constants.RESOURCES_NS_URI);
         values.put("contentRelationsNamespacePrefix",
             Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
-        values.put("latestVersionUserTitle", Utility
-            .getInstance().getCurrentUser()[1]);
+        values.put("latestVersionUserTitle", Utility.getCurrentUser()[1]);
 
         return getFoxmlRenderer().render(values);
     }
@@ -336,7 +335,7 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
         final Map<String, Object> values = new HashMap<String, Object>();
 
-        final String buildNumber = Utility.getInstance().getBuildNumber();
+        final String buildNumber = Utility.getBuildNumber();
         values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, buildNumber);
         return getFoxmlRenderer().renderRelsExt(values);
     }
@@ -347,10 +346,10 @@ public class ContextHandlerCreate extends ContextHandlerRetrieve {
      */
     public ContextFoXmlRendererInterface getFoxmlRenderer() {
 
-        if (foxmlRenderer == null) {
-            foxmlRenderer = new VelocityXmlContextFoXmlRenderer();
+        if (this.foxmlRenderer == null) {
+            this.foxmlRenderer = new VelocityXmlContextFoXmlRenderer();
         }
-        return foxmlRenderer;
+        return this.foxmlRenderer;
     }
 
 }

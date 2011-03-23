@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for IngestHandler.
  */
-public class IngestHandlerSession extends IngestHandlerBean implements SessionBean {
+public class IngestHandlerSession extends IngestHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

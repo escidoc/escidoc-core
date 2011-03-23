@@ -64,7 +64,7 @@ public class LinkStaxHandler extends DefaultHandler {
 
     private final String parentPath;
 
-    private String hrefBaseUri;
+    private final String hrefBaseUri;
 
     private Class exceptionClass;
 
@@ -133,31 +133,31 @@ public class LinkStaxHandler extends DefaultHandler {
         throws EscidocException {
 
         final String currentPath = element.getPath();
-        if (isNotReady() && currentPath.equals(elementPath)) {
-            href = null;
-            objid = null;
+        if (isNotReady() && currentPath.equals(this.elementPath)) {
+            this.href = null;
+            this.objid = null;
 
             if (UserContext.isRestAccess()) {
                 final int index =
                     element.indexOfAttribute(Constants.XLINK_NS_URI, "href");
                 if (index != -1) {
-                    href = element.getAttribute(index).getValue();
-                    objid = XmlUtility.getIdFromURI(href);
+                    this.href = element.getAttribute(index).getValue();
+                    this.objid = XmlUtility.getIdFromURI(this.href);
 
                     // check if href refers to the correct object type, if this
                     // has been specified
-                    if (hrefBaseUri != null) {
-                        final String expectedHref =hrefBaseUri + objid;
-                        if (!expectedHref.equals(href)) {
+                    if (this.hrefBaseUri != null) {
+                        final String expectedHref = this.hrefBaseUri + this.objid;
+                        if (!expectedHref.equals(this.href)) {
                             final String errorMsg =
                                 StringUtility.format(
-                                        MSG_WRONG_BASE_URI, hrefBaseUri, href,
+                                        MSG_WRONG_BASE_URI, this.hrefBaseUri, this.href,
                                         element.getLocationString());
                             try {
                                 final Constructor constructor = exceptionClass
                                         .getConstructor(new Class[]{String.class});
                                 throw (EscidocException) constructor
-                                    .newInstance(new Object[] { errorMsg });
+                                    .newInstance(errorMsg);
                             }
                             catch (final EscidocException e) {
                                 throw e;
@@ -176,7 +176,7 @@ public class LinkStaxHandler extends DefaultHandler {
             else {
                 final int index = element.indexOfAttribute(null, "objid");
                 if (index != -1) {
-                    objid = element.getAttribute(index).getValue();
+                    this.objid = element.getAttribute(index).getValue();
                 }
             }
 
@@ -208,12 +208,12 @@ public class LinkStaxHandler extends DefaultHandler {
         throws EscidocException {
 
         if (isNotReady()) {
-            if (element.getPath().equals(parentPath)) {
+            if (element.getPath().equals(this.parentPath)) {
                 endParentElement(element);
                 checkReady(element);
                 return element;
             }
-            else if (element.getPath().equals(elementPath)) {
+            else if (element.getPath().equals(this.elementPath)) {
                 endLinkElement(element);
             }
         }
@@ -296,7 +296,7 @@ public class LinkStaxHandler extends DefaultHandler {
      *
      */
     public String getHref() {
-        return href;
+        return this.href;
     }
 
     /**
@@ -304,7 +304,7 @@ public class LinkStaxHandler extends DefaultHandler {
      *
      */
     public String getObjid() {
-        return objid;
+        return this.objid;
     }
 
 }

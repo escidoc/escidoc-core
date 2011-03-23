@@ -116,15 +116,15 @@ public class WovReadHandler extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element)
         throws IntegritySystemException {
-        if (!isParsed) {
+        if (! this.isParsed) {
             if (ELEMENT_PATH.equals(parser.getCurPath())) {
-                inside = true;
-                insideLevel++;
-                if (versionId != null) {
+                this.inside = true;
+                this.insideLevel++;
+                if (this.versionId != null) {
 
                     final String objectId = getObjId(element);
-                    if (objectId.endsWith(':' + versionId)) {
-                        inCertainVersion = true;
+                    if (objectId.endsWith(':' + this.versionId)) {
+                        this.inCertainVersion = true;
                         try {
                             final String versionCreatedDate = element.getAttribute(null, "timestamp").getValue();
                             versionData.put(
@@ -140,21 +140,21 @@ public class WovReadHandler extends DefaultHandler {
                     }
                 }
                 else {
-                    inLatestVersion = true;
+                    this.inLatestVersion = true;
                 }
             }
-            else if (inside) {
+            else if (this.inside) {
                 final String theName = element.getLocalName();
                 if (theName.equals(Elements.ELEMENT_WOV_EVENT_USER)) {
-                    if (certainVersionIsLatestVersion || inLatestVersion) {
+                    if (this.certainVersionIsLatestVersion || this.inLatestVersion) {
                         setLatestVersionValues(theName, null, element);
                         setCurrentVersionValues(theName, null, element);
                     }
-                    else if (inCertainVersion) {
+                    else if (this.inCertainVersion) {
                         setCurrentVersionValues(theName, null, element);
                     }
                 }
-                insideLevel++;
+                this.insideLevel++;
             }
         }
         return null;
@@ -162,19 +162,19 @@ public class WovReadHandler extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) {
-        if (!isParsed && inside) {
-            insideLevel--;
+        if (! this.isParsed && this.inside) {
+            this.insideLevel--;
 
-            if (insideLevel == 0) {
-                inside = false;
-                if (inLatestVersion) {
+            if (this.insideLevel == 0) {
+                this.inside = false;
+                if (this.inLatestVersion) {
                     this.inLatestVersion = false;
-                    isParsed = true;
+                    this.isParsed = true;
                     return null;
                 }
-                if (inCertainVersion) {
+                if (this.inCertainVersion) {
                     this.inCertainVersion = false;
-                    isParsed = true;
+                    this.isParsed = true;
                     return null;
                 }
 
@@ -187,13 +187,13 @@ public class WovReadHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element)
         throws IntegritySystemException, XmlParserSystemException {
 
-        if (!isParsed) {
+        if (! this.isParsed) {
             final String theName = element.getLocalName();
-            if (certainVersionIsLatestVersion || inLatestVersion) {
+            if (this.certainVersionIsLatestVersion || this.inLatestVersion) {
                 setLatestVersionValues(theName, s, element);
                 setCurrentVersionValues(theName, s, element);
             }
-            else if (inCertainVersion) {
+            else if (this.inCertainVersion) {
                 setCurrentVersionValues(theName, s, element);
             }
 

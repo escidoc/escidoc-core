@@ -51,7 +51,7 @@ public class PreprocessingHandler implements PreprocessingHandlerInterface {
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface
+     * @see PreprocessingHandlerInterface
      *      #create(java.lang.String)
      * 
      * @param aggregationDefinitionId

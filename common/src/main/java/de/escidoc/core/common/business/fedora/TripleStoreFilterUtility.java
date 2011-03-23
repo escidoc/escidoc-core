@@ -58,13 +58,18 @@ public interface TripleStoreFilterUtility {
      * 
      * TODO more than one id-filter (name="items" and name="containers")
      * 
+     * @param objectType
+     * @param filterMap
+     * @param additionalQueryPart
+     * @param whereClause
      * @throws MissingMethodParameterException
      * 
      * @throws SystemException
      *             Thrown in case of an internal error that prevents the
      *             filtering using user id and role.
      * 
-     * 
+     *
+     * @return
      */
     List<String> evaluate(
         final String objectType, final Map<String, Object> filterMap,
@@ -73,6 +78,7 @@ public interface TripleStoreFilterUtility {
 
     /**
      * @param id
+     * @param whereClause
      * @return
      * @throws TripleStoreSystemException
      * @throws TripleStoreSystemException
@@ -97,6 +103,7 @@ public interface TripleStoreFilterUtility {
      * is called after sync of MPT-TripleStore.
      * 
      * @throws TripleStoreSystemException
+     * @return
      */
     Object reinitialize() throws TripleStoreSystemException;
 

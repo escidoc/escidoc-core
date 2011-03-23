@@ -106,13 +106,13 @@ public class Resource extends XMLBase {
 
     private static final String SERVICE_POSTFIX = "Service";
 
-    private List<Node> resources = null;
+    private List<Node> resources;
 
-    private String name = null;
+    private String name;
 
-    private boolean includeErrors = false;
+    private boolean includeErrors;
 
-    private boolean checkVisibility = false;
+    private boolean checkVisibility;
 
     private String restDocumentation = "";
 
@@ -194,7 +194,7 @@ public class Resource extends XMLBase {
      */
     public void toDocbook() {
 
-        LOGGER.info("[Resource " + name
+        LOGGER.info("[Resource " + this.name
             + "] Creating documentation for REST and SOAP interface.");
         initResult(INTERFACE_REST, getChapterStart(getTitle(INTERFACE_REST)));
         initResult(INTERFACE_SOAP, getChapterStart(getTitle(INTERFACE_SOAP)));
@@ -280,7 +280,7 @@ public class Resource extends XMLBase {
      */
     private String getTitle(final String access) {
 
-        String result = "Methods of Resource " + name;
+        String result = "Methods of Resource " + this.name;
         if (access.equals(INTERFACE_REST)) {
             result += " for REST Interface ";
         }
@@ -319,15 +319,15 @@ public class Resource extends XMLBase {
             prepareParameter(getAttributeValue(descriptor, DESCRIPTOR_URI_ATTR));
         try {
             final NodeList invokes = parse(xPath, descriptor);
-            if ((invokes != null) && (invokes.getLength() > 0)) {
+            if (invokes != null && invokes.getLength() > 0) {
                 for (int i = 0; i < invokes.getLength(); ++i) {
                     boolean visible = VISIBILTY_DEFAULT;
                     final Node value =
                         getChild(invokes.item(i), DOCUMENTATION_ELEMENT);
-                    if ((checkVisibility)
-                        && ((value != null)
-                            && (getAttributeValue(value,
-                                DOCUMENTATION_VISIBLE_ATTR) != null))) {
+                    if (checkVisibility
+                        && value != null
+                            && getAttributeValue(value,
+                                DOCUMENTATION_VISIBLE_ATTR) != null) {
                         if ("false".equalsIgnoreCase(getAttributeValue(value,
                                 DOCUMENTATION_VISIBLE_ATTR))) {
                             visible = false;
@@ -337,15 +337,15 @@ public class Resource extends XMLBase {
                             visible = true;
                         }
                     }
-                    if ((value != null)
-                        && (getAttributeValue(value,
-                            DOCUMENTATION_AVAILABLE_ATTR) != null)) {
-                        visible = (getAttributeValue(value,
+                    if (value != null
+                        && getAttributeValue(value,
+                            DOCUMENTATION_AVAILABLE_ATTR) != null) {
+                        visible = getAttributeValue(value,
                                 DOCUMENTATION_AVAILABLE_ATTR).toLowerCase()
-                                .equals(access.toLowerCase()))
-                                || (getAttributeValue(value,
+                                .equals(access.toLowerCase())
+                                || getAttributeValue(value,
                                 DOCUMENTATION_AVAILABLE_ATTR).toLowerCase()
-                                .equals(INTERFACE_BOTH.toLowerCase()));
+                                .equals(INTERFACE_BOTH.toLowerCase());
                     }
                     if (visible) {
                         String title = DEFAULT_TEXT;
@@ -447,11 +447,11 @@ public class Resource extends XMLBase {
                     if (paramNo == 1 || "Input from Body".equals(c1)) {
                         c1 = "Input from Uri";
                     }
-                    if ((prepareParameter("${" + VAR_BODY + '}')
-                        .equalsIgnoreCase(c2))
-                        || (prepareParameter("${"
+                    if (prepareParameter("${" + VAR_BODY + '}')
+                        .equalsIgnoreCase(c2)
+                        || prepareParameter("${"
                             + VAR_BODY_LAST_MODIFICATION_DATE + '}')
-                            .equalsIgnoreCase(c2))) {
+                            .equalsIgnoreCase(c2)) {
                         if ("".equals(parameter)) {
                             result +=
                                     getMethodTableRow2Cols(c1, "No input values");
@@ -502,9 +502,9 @@ public class Resource extends XMLBase {
                     + RESULT_ELEMENT);
             if (child != null) {
                 String output = child.getTextContent();
-                if (("".equals(output))
-                    && ("void".equalsIgnoreCase(getAttributeValue(child,
-                        RESULT_ATTR_TYPE)))) {
+                if ("".equals(output)
+                    && "void".equalsIgnoreCase(getAttributeValue(child,
+                        RESULT_ATTR_TYPE))) {
                     output = "No return value";
                 }
                 if (output != null) {
@@ -546,7 +546,7 @@ public class Resource extends XMLBase {
             final Class[] exceptionTypes =
                 getExceptions(getAttributeValue(invoke, INVOKE_METHOD_ATTR),
                     paramNo - 1);
-            if ((exceptionTypes != null) && (exceptionTypes.length > 0)) {
+            if (exceptionTypes != null && exceptionTypes.length > 0) {
                 c1 = new StringBuffer();
                 final StringBuilder c2 = new StringBuilder();
                 String msg;
@@ -556,8 +556,7 @@ public class Resource extends XMLBase {
                             exceptionTypes[i].getMethod("getHttpStatusLine",
                                 new Class[0]);
                         msg =
-                            statusLine.invoke(exceptionTypes[i]
-                                .newInstance(), new Object[]{})
+                            statusLine.invoke(exceptionTypes[i].getConstructor().newInstance())
                                 + " (caused by "
                                 + exceptionTypes[i].getSimpleName() + ')';
                     }
@@ -565,7 +564,7 @@ public class Resource extends XMLBase {
                         msg =
                             HttpServletResponse.SC_INTERNAL_SERVER_ERROR
                                 + " Internal eSciDoc Error";
-                        LOGGER.info('[' + name + ']'
+                        LOGGER.info('[' + this.name + ']'
                             + ": Error generating documentation for "
                             + "[Rest: " + title + "] " + exceptionTypes[i]);
                     }
@@ -618,8 +617,7 @@ public class Resource extends XMLBase {
     private String createSoapDocumentation(final Node invoke, final String title) {
         String result = "";
 
-        String method =
-            name + HANDLER_POSTFIX + SERVICE_POSTFIX + '.'
+        String method = this.name + HANDLER_POSTFIX + SERVICE_POSTFIX + '.'
                 + getAttributeValue(invoke, INVOKE_METHOD_ATTR) + " ( ";
         String paramDocumentation = "";
 
@@ -676,9 +674,9 @@ public class Resource extends XMLBase {
         if (child != null) {
             String output = child.getTextContent();
 
-            if (("".equals(output))
-                && ("void".equalsIgnoreCase(getAttributeValue(child,
-                    RESULT_ATTR_TYPE)))) {
+            if ("".equals(output)
+                && "void".equalsIgnoreCase(getAttributeValue(child,
+                    RESULT_ATTR_TYPE))) {
                 output = "No return value";
             }
             if (output != null) {
@@ -700,7 +698,7 @@ public class Resource extends XMLBase {
                     getExceptions(
                         getAttributeValue(invoke, INVOKE_METHOD_ATTR),
                         paramNo - 1);
-                if ((exceptionTypes != null) && (exceptionTypes.length > 0)) {
+                if (exceptionTypes != null && exceptionTypes.length > 0) {
                     String c1 = "";
                     String c2 = "";
                     for (int i = 0; i < exceptionTypes.length; ++i) {
@@ -972,7 +970,7 @@ public class Resource extends XMLBase {
      */
     final Class getInstance() {
 
-        final String beanName = "service." + name + "HandlerBean";
+        final String beanName = "service." + this.name + "HandlerBean";
         return getConfiguredClass(beanName);
     }
 
@@ -1013,7 +1011,7 @@ public class Resource extends XMLBase {
      * @return Returns the includeErrors.
      */
     public boolean isIncludeErrors() {
-        return includeErrors;
+        return this.includeErrors;
     }
 
     /**
@@ -1028,7 +1026,7 @@ public class Resource extends XMLBase {
      * @return Returns the checkVisibility.
      */
     public boolean isCheckVisibility() {
-        return checkVisibility;
+        return this.checkVisibility;
     }
 
     /**
@@ -1043,13 +1041,13 @@ public class Resource extends XMLBase {
      * @return the restDocumentation
      */
     public String getRestDocumentation() {
-        return restDocumentation;
+        return this.restDocumentation;
     }
 
     /**
      * @return the soapDocumentation
      */
     public String getSoapDocumentation() {
-        return soapDocumentation;
+        return this.soapDocumentation;
     }
 }

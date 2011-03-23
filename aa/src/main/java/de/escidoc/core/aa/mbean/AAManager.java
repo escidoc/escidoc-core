@@ -96,7 +96,7 @@ public class AAManager {
      *
      */
     private UserHandleCleaner getUserHandleCleaner() {
-        return userHandleCleaner;
+        return this.userHandleCleaner;
     }
 
     /**

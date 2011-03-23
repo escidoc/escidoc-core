@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for RoleHandler.
  */
-public class RoleHandlerSession extends RoleHandlerBean implements SessionBean {
+public class RoleHandlerSession extends RoleHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

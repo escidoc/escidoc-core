@@ -598,7 +598,7 @@ public class VelocityXmlOrganizationalUnitRenderer
         values.put("mdRecordsTitle", "Metadata");
 
         try {
-            final Map<String, Datastream> mdRecords = (HashMap<String, Datastream>) organizationalUnit.getMdRecords();
+            final Map<String, Datastream> mdRecords = organizationalUnit.getMdRecords();
             final Iterator<Datastream> mdRecordsIter = mdRecords.values().iterator();
             final StringBuilder mdRecordsContent = new StringBuilder();
             while (mdRecordsIter.hasNext()) {

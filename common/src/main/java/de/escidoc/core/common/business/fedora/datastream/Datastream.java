@@ -497,7 +497,7 @@ public class Datastream {
                 }
                 getFedoraUtility().setDatastreamState(this.parentId, this.name,
                     "A");
-                timestamp =
+                this.timestamp =
                     getFedoraUtility().modifyDatastream(this.parentId,
                         this.name, this.label, this.mimeType,
                         this.alternateIDs.toArray(new String[alternateIDs.size()]), loc, false);
@@ -506,7 +506,7 @@ public class Datastream {
         else if (this.getStream() != null) {
             if ("X".equals(this.getControlGroup())) {
                 try {
-                    timestamp =
+                    this.timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId,
                             this.name, this.label, this.mimeType,
                             this.alternateIDs.toArray(new String[alternateIDs.size()]),
@@ -516,7 +516,7 @@ public class Datastream {
                     LOGGER.debug("Error on modifing datastream.", e);
                     getFedoraUtility().setDatastreamState(this.parentId,
                         this.name, "A");
-                    timestamp =
+                    this.timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId,
                             this.name, this.label, this.mimeType,
                             this.alternateIDs.toArray(new String[alternateIDs.size()]),
@@ -537,7 +537,7 @@ public class Datastream {
                                 + "' of the fedora object with id '"
                                 + this.parentId + "' to the staging area. ", e);
                     }
-                    timestamp =
+                    this.timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId,
                             this.name, this.label, this.mimeType,
                             this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI,
@@ -547,7 +547,7 @@ public class Datastream {
                     LOGGER.debug("Error on modifing datastream.", e);
                     getFedoraUtility().setDatastreamState(this.parentId,
                         this.name, "A");
-                    timestamp =
+                    this.timestamp =
                         getFedoraUtility().modifyDatastream(this.parentId,
                             this.name, this.label, this.mimeType,
                             this.alternateIDs.toArray(new String[alternateIDs.size()]), tempURI,
@@ -556,7 +556,7 @@ public class Datastream {
 
             }
         }
-        return timestamp;
+        return this.timestamp;
     }
 
     /**
@@ -574,19 +574,19 @@ public class Datastream {
         WebserverSystemException {
 
         if (this.getStream() == null && this.location != null) {
-            timestamp =
+            this.timestamp =
                 getFedoraUtility().addDatastream(this.parentId, this.name,
                     this.alternateIDs.toArray(new String[alternateIDs.size()]), this.label,
                     this.location, this.mimeType, this.controlGroupValue, sync);
         }
         else if (this.getStream() != null) {
-            timestamp =
+            this.timestamp =
                 getFedoraUtility().addDatastream(this.parentId, this.name,
                     this.alternateIDs.toArray(new String[alternateIDs.size()]), this.label,
                         VERSIONABLE, this.getStream(), sync);
         }
 
-        return timestamp;
+        return this.timestamp;
     }
 
     /**
@@ -636,7 +636,7 @@ public class Datastream {
      * @return The name of this datastream.
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /*
@@ -654,7 +654,7 @@ public class Datastream {
      * @return The alternate IDs of this datastream.
      */
     public List<String> getAlternateIDs() {
-        return alternateIDs;
+        return this.alternateIDs;
     }
 
     /**
@@ -701,7 +701,7 @@ public class Datastream {
      * @return The ID of the parent of this datastream.
      */
     public String getParentId() {
-        return parentId;
+        return this.parentId;
     }
 
     /**
@@ -914,7 +914,7 @@ public class Datastream {
      * @return The label of this datastream.
      */
     public String getLabel() {
-        return label;
+        return this.label;
     }
 
     /**
@@ -1006,7 +1006,7 @@ public class Datastream {
      * @return the mimeType
      */
     public String getMimeType() {
-        return mimeType;
+        return this.mimeType;
     }
 
     /**
@@ -1027,24 +1027,24 @@ public class Datastream {
      */
     protected FedoraUtility getFedoraUtility() throws FedoraSystemException {
 
-        if (fu == null) {
-            fu = FedoraUtility.getInstance();
+        if (this.fu == null) {
+            this.fu = FedoraUtility.getInstance();
         }
-        return fu;
+        return this.fu;
     }
 
     /**
      * @return The method by which the checksum was calculated.
      */
     public String getChecksumMethod() {
-        return checksumMethod;
+        return this.checksumMethod;
     }
 
     /**
      * @return The checksum of the stream.
      */
     public String getChecksum() {
-        return checksum;
+        return this.checksum;
     }
 
     public void setContentUnchanged(final boolean b) {

@@ -49,7 +49,7 @@ public class BeanMethod {
     private static final Map<String, Object> RESOURCE_POOL =
         Collections.synchronizedMap(new HashMap<String, Object>());
 
-    private String beanId;
+    private final String beanId;
 
     private String method;
 
@@ -127,23 +127,24 @@ public class BeanMethod {
                 UserContext.setRestAccess(restAccess);
             }
             Class[] parameterTypes = null;
-            if (parameters != null) {
+            if (this.parameters != null) {
                 final int noOfArguments = parameters.length;
                 parameterTypes = new Class[noOfArguments];
                 for (int i = 0; i < noOfArguments; ++i) {
-                    if (parameters[i] != null) {
-                        if (parameters[i] instanceof String) {
+                    if (this.parameters[i] != null) {
+                        if (this.parameters[i] instanceof String) {
                             parameterTypes[i] = String.class;
                         }
-                        else if (parameters[i] instanceof EscidocBinaryContent) {
+                        else if (this.parameters[i] instanceof EscidocBinaryContent) {
                             parameterTypes[i] = EscidocBinaryContent.class;
                         }
-                        else if (parameters[i] instanceof Map) {
+                        else if (this.parameters[i] instanceof Map) {
                             parameterTypes[i] = Map.class;
                         }
                         else {
                             throw new InvocationTargetException(
-                                new SystemException("Unsupported parameter type [" + parameters[i].getClass().getName()
+                                new SystemException("Unsupported parameter type [" +
+                                        this.parameters[i].getClass().getName()
                                         + ']'));
                         }
                     }
@@ -157,23 +158,23 @@ public class BeanMethod {
             result = execute.invoke(getBean(), getParameters());
         }
         catch (final SecurityException e) {
-            throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
+            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource "
                     + getBeanId(), e);
         }
         catch (final IllegalArgumentException e) {
-            throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
+            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource "
                     + getBeanId(), e);
         }
         catch (final NoSuchMethodException e) {
-            throw new MethodNotFoundException("Cannot execute method '" + method + "' on resource "
+            throw new MethodNotFoundException("Cannot execute method '" + this.method + "' on resource "
                     + getBeanId(), e);
         }
         catch (final IllegalAccessException e) {
-            throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
+            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource "
                     + getBeanId(), e);
         }
         catch (final MissingMethodParameterException e) {
-            throw new WebserverSystemException("Cannot execute method '" + method + "' on resource "
+            throw new WebserverSystemException("Cannot execute method '" + this.method + "' on resource "
                     + getBeanId(), e);
         }
         return result;
@@ -217,7 +218,7 @@ public class BeanMethod {
      *
      */
     public String getMethod() {
-        return method;
+        return this.method;
     }
 
     /**
@@ -234,7 +235,7 @@ public class BeanMethod {
      *
      */
     public Object[] getParameters() {
-        return parameters;
+        return this.parameters;
     }
 
     /**
@@ -251,7 +252,7 @@ public class BeanMethod {
      *
      */
     public String getBeanId() {
-        return beanId;
+        return this.beanId;
     }
 
 }

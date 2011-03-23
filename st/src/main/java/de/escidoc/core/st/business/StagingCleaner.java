@@ -50,7 +50,7 @@ public class StagingCleaner {
      * Offset added to staging files' expire time stamp before removing them to
      * avoid removing of currently transmitted files.
      */
-    private static final long EXPIRY_OFFSET = 500000;
+    private static final long EXPIRY_OFFSET = 500000L;
 
     /** The staging file data access object used in this cleaner. */
     private StagingFileDao stagingFileDao;

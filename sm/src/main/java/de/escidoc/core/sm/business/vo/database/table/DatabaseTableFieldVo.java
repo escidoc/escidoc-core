@@ -49,7 +49,7 @@ public class DatabaseTableFieldVo {
      * @return the fieldName
      */
     public String getFieldName() {
-        return fieldName;
+        return this.fieldName;
     }
 
     /**
@@ -69,7 +69,7 @@ public class DatabaseTableFieldVo {
      * @return the fieldType
      */
     public CharSequence getFieldType() {
-        return fieldType;
+        return this.fieldType;
     }
 
     /**

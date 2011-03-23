@@ -329,7 +329,7 @@ public class Fingerprint implements Comparable<Object> {
      * @return schema list
      */
     public Schema[] getSchemas() {
-        return schemas;
+        return this.schemas;
     }
 
     /**

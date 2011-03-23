@@ -20,6 +20,7 @@
 
 package de.escidoc.core.aa.service.interfaces;
 
+import com.sun.xacml.ctx.RequestCtx;
 import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
 import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
@@ -45,7 +46,7 @@ public interface PolicyDecisionPointInterface {
      * The method evaluates the provided authorization requests. <br/>
      * Information about user(s), action(s) and resource(s) are contained in the
      * provided XML data string which represents the content of a
-     * {@link com.sun.xacml.ctx.RequestCtx} objects.<br/>
+     * {@link RequestCtx} objects.<br/>
      * 
      * <b>Prerequisites:</b><br/>
      * 

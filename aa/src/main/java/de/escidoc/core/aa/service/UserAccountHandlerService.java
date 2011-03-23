@@ -3,581 +3,612 @@
  */
 package de.escidoc.core.aa.service;
 
+import de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.PreferenceNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.UserAttributeNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.application.violated.AlreadyActiveException;
+import de.escidoc.core.common.exceptions.application.violated.AlreadyDeactiveException;
+import de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException;
+import de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedException;
+import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
+import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.Map;
+
 /**
  * Service endpoint interface for UserAccountHandler.
  */
-public interface UserAccountHandlerService extends java.rmi.Remote {
+public interface UserAccountHandlerService extends Remote {
 
-    java.lang.String create(java.lang.String user, org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException, java.rmi.RemoteException;
+    String create(String user, SecurityContext securityContext)
+            throws UniqueConstraintViolationException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            OrganizationalUnitNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            InvalidStatusException, RemoteException;
 
-    java.lang.String create(java.lang.String user, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException, java.rmi.RemoteException;
+    String create(String user, String authHandle, Boolean restAccess)
+            throws UniqueConstraintViolationException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            OrganizationalUnitNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            InvalidStatusException, RemoteException;
 
-    void delete(java.lang.String userId, org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void delete(String userId, SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void delete(java.lang.String userId, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void delete(String userId, String authHandle, Boolean restAccess)
+            throws UserAccountNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String update(java.lang.String userId, java.lang.String user,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException, java.rmi.RemoteException;
+    String update(String userId, String user,
+                            SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            UniqueConstraintViolationException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            MissingAttributeValueException,
+            OptimisticLockingException,
+            AuthenticationException,
+            AuthorizationException,
+            OrganizationalUnitNotFoundException,
+            SystemException,
+            InvalidStatusException, RemoteException;
 
-    java.lang.String update(java.lang.String userId, java.lang.String user, java.lang.String authHandle,
-                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.OrganizationalUnitNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException, java.rmi.RemoteException;
+    String update(String userId, String user, String authHandle,
+                            Boolean restAccess)
+            throws UserAccountNotFoundException,
+            UniqueConstraintViolationException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            MissingAttributeValueException,
+            OptimisticLockingException,
+            AuthenticationException,
+            AuthorizationException,
+            OrganizationalUnitNotFoundException,
+            SystemException,
+            InvalidStatusException, RemoteException;
 
-    void updatePassword(java.lang.String userId, java.lang.String taskParam,
-                        org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void updatePassword(String userId, String taskParam,
+                        SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            InvalidStatusException,
+            XmlCorruptedException,
+            MissingMethodParameterException,
+            OptimisticLockingException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void updatePassword(java.lang.String userId, java.lang.String taskParam, java.lang.String authHandle,
-                        java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void updatePassword(String userId, String taskParam, String authHandle,
+                        Boolean restAccess)
+            throws UserAccountNotFoundException,
+            InvalidStatusException,
+            XmlCorruptedException,
+            MissingMethodParameterException,
+            OptimisticLockingException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieve(java.lang.String userId,
-                              org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String userId,
+                              SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieve(java.lang.String userId, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String userId, String authHandle, Boolean restAccess)
+            throws UserAccountNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveCurrentUser(org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveCurrentUser(SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveCurrentUser(java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveCurrentUser(String authHandle, Boolean restAccess)
+            throws UserAccountNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveCurrentGrants(java.lang.String userId,
-                                           org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveCurrentGrants(String userId,
+                                           SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveCurrentGrants(java.lang.String userId, java.lang.String authHandle,
-                                           java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveCurrentGrants(String userId, String authHandle,
+                                           Boolean restAccess)
+            throws UserAccountNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveGrant(java.lang.String userId, java.lang.String grantId,
-                                   org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveGrant(String userId, String grantId,
+                                   SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            GrantNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveGrant(java.lang.String userId, java.lang.String grantId, java.lang.String authHandle,
-                                   java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveGrant(String userId, String grantId, String authHandle,
+                                   Boolean restAccess)
+            throws UserAccountNotFoundException,
+            GrantNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveGrants(java.util.Map filter,
-                                    org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveGrants(Map filter,
+                                    SecurityContext securityContext)
+            throws MissingMethodParameterException,
+            InvalidSearchQueryException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveGrants(java.util.Map filter, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveGrants(Map filter, String authHandle, Boolean restAccess)
+            throws MissingMethodParameterException,
+            InvalidSearchQueryException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void activate(java.lang.String userId, java.lang.String taskParam,
-                  org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyActiveException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void activate(String userId, String taskParam,
+                  SecurityContext securityContext)
+            throws AlreadyActiveException,
+            UserAccountNotFoundException,
+            XmlCorruptedException,
+            MissingMethodParameterException,
+            MissingAttributeValueException,
+            OptimisticLockingException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void activate(java.lang.String userId, java.lang.String taskParam, java.lang.String authHandle,
-                  java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyActiveException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void activate(String userId, String taskParam, String authHandle,
+                  Boolean restAccess)
+            throws AlreadyActiveException,
+            UserAccountNotFoundException,
+            XmlCorruptedException,
+            MissingMethodParameterException,
+            MissingAttributeValueException,
+            OptimisticLockingException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void deactivate(java.lang.String userId, java.lang.String taskParam,
-                    org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyDeactiveException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void deactivate(String userId, String taskParam,
+                    SecurityContext securityContext)
+            throws AlreadyDeactiveException,
+            UserAccountNotFoundException,
+            XmlCorruptedException,
+            MissingMethodParameterException,
+            MissingAttributeValueException,
+            OptimisticLockingException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void deactivate(java.lang.String userId, java.lang.String taskParam, java.lang.String authHandle,
-                    java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyDeactiveException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void deactivate(String userId, String taskParam, String authHandle,
+                    Boolean restAccess)
+            throws AlreadyDeactiveException,
+            UserAccountNotFoundException,
+            XmlCorruptedException,
+            MissingMethodParameterException,
+            MissingAttributeValueException,
+            OptimisticLockingException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String createGrant(java.lang.String userId, java.lang.String grantXML,
-                                 org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException,
-            de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String createGrant(String userId, String grantXML,
+                                 SecurityContext securityContext)
+            throws AlreadyExistsException,
+            UserAccountNotFoundException,
+            InvalidScopeException,
+            RoleNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String createGrant(java.lang.String userId, java.lang.String grantXML, java.lang.String authHandle,
-                                 java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidScopeException,
-            de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String createGrant(String userId, String grantXML, String authHandle,
+                                 Boolean restAccess)
+            throws AlreadyExistsException,
+            UserAccountNotFoundException,
+            InvalidScopeException,
+            RoleNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void revokeGrant(java.lang.String userId, java.lang.String grantId, java.lang.String taskParam,
-                     org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void revokeGrant(String userId, String grantId, String taskParam,
+                     SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            GrantNotFoundException,
+            AlreadyRevokedException,
+            XmlCorruptedException,
+            MissingAttributeValueException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void revokeGrant(java.lang.String userId, java.lang.String grantId, java.lang.String taskParam,
-                     java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void revokeGrant(String userId, String grantId, String taskParam,
+                     String authHandle, Boolean restAccess)
+            throws UserAccountNotFoundException,
+            GrantNotFoundException,
+            AlreadyRevokedException,
+            XmlCorruptedException,
+            MissingAttributeValueException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void revokeGrants(java.lang.String userId, java.lang.String taskParam,
-                      org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void revokeGrants(String userId, String taskParam,
+                      SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            GrantNotFoundException,
+            AlreadyRevokedException,
+            XmlCorruptedException,
+            MissingAttributeValueException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void revokeGrants(java.lang.String userId, java.lang.String taskParam, java.lang.String authHandle,
-                      java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.GrantNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.AlreadyRevokedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void revokeGrants(String userId, String taskParam, String authHandle,
+                      Boolean restAccess)
+            throws UserAccountNotFoundException,
+            GrantNotFoundException,
+            AlreadyRevokedException,
+            XmlCorruptedException,
+            MissingAttributeValueException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveUserAccounts(java.util.Map filter,
-                                          org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException, java.rmi.RemoteException;
+    String retrieveUserAccounts(Map filter,
+                                          SecurityContext securityContext)
+            throws MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            InvalidSearchQueryException, RemoteException;
 
-    java.lang.String retrieveUserAccounts(java.util.Map filter, java.lang.String authHandle,
-                                          java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException, java.rmi.RemoteException;
+    String retrieveUserAccounts(Map filter, String authHandle,
+                                          Boolean restAccess)
+            throws MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            InvalidSearchQueryException, RemoteException;
 
-    java.lang.String retrievePreferences(java.lang.String userId,
-                                         org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrievePreferences(String userId,
+                                         SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrievePreferences(java.lang.String userId, java.lang.String authHandle,
-                                         java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrievePreferences(String userId, String authHandle,
+                                         Boolean restAccess)
+            throws UserAccountNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String createPreference(java.lang.String userId, java.lang.String preferenceXML,
-                                      org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.PreferenceNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String createPreference(String userId, String preferenceXML,
+                                      SecurityContext securityContext)
+            throws AlreadyExistsException,
+            UserAccountNotFoundException,
+            PreferenceNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String createPreference(java.lang.String userId, java.lang.String preferenceXML,
-                                      java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.PreferenceNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String createPreference(String userId, String preferenceXML,
+                                      String authHandle, Boolean restAccess)
+            throws AlreadyExistsException,
+            UserAccountNotFoundException,
+            PreferenceNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String updatePreferences(java.lang.String userId, java.lang.String preferencesXML,
-                                       org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            java.rmi.RemoteException;
+    String updatePreferences(String userId, String preferencesXML,
+                                       SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            OptimisticLockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            MissingAttributeValueException,
+            RemoteException;
 
-    java.lang.String updatePreferences(java.lang.String userId, java.lang.String preferencesXML,
-                                       java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            java.rmi.RemoteException;
+    String updatePreferences(String userId, String preferencesXML,
+                                       String authHandle, Boolean restAccess)
+            throws UserAccountNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            OptimisticLockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            MissingAttributeValueException,
+            RemoteException;
 
-    java.lang.String updatePreference(java.lang.String userId, java.lang.String preferenceName,
-                                      java.lang.String preferenceXML,
-                                      org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.PreferenceNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            java.rmi.RemoteException;
+    String updatePreference(String userId, String preferenceName,
+                                      String preferenceXML,
+                                      SecurityContext securityContext)
+            throws AlreadyExistsException,
+            UserAccountNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            PreferenceNotFoundException,
+            OptimisticLockingException,
+            MissingAttributeValueException,
+            RemoteException;
 
-    java.lang.String updatePreference(java.lang.String userId, java.lang.String preferenceName,
-                                      java.lang.String preferenceXML, java.lang.String authHandle,
-                                      java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.PreferenceNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            java.rmi.RemoteException;
+    String updatePreference(String userId, String preferenceName,
+                                      String preferenceXML, String authHandle,
+                                      Boolean restAccess)
+            throws AlreadyExistsException,
+            UserAccountNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            PreferenceNotFoundException,
+            OptimisticLockingException,
+            MissingAttributeValueException,
+            RemoteException;
 
-    java.lang.String retrievePreference(java.lang.String userId, java.lang.String preferenceName,
-                                        org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.PreferenceNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrievePreference(String userId, String preferenceName,
+                                        SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            PreferenceNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrievePreference(java.lang.String userId, java.lang.String preferenceName,
-                                        java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.PreferenceNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrievePreference(String userId, String preferenceName,
+                                        String authHandle, Boolean restAccess)
+            throws UserAccountNotFoundException,
+            PreferenceNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void deletePreference(java.lang.String userId, java.lang.String preferenceName,
-                          org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.PreferenceNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void deletePreference(String userId, String preferenceName,
+                          SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            PreferenceNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void deletePreference(java.lang.String userId, java.lang.String preferenceName, java.lang.String authHandle,
-                          java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.PreferenceNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void deletePreference(String userId, String preferenceName, String authHandle,
+                          Boolean restAccess)
+            throws UserAccountNotFoundException,
+            PreferenceNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String createAttribute(java.lang.String userId, java.lang.String attributeXml,
-                                     org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String createAttribute(String userId, String attributeXml,
+                                     SecurityContext securityContext)
+            throws AlreadyExistsException,
+            UserAccountNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String createAttribute(java.lang.String userId, java.lang.String attributeXml,
-                                     java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String createAttribute(String userId, String attributeXml,
+                                     String authHandle, Boolean restAccess)
+            throws AlreadyExistsException,
+            UserAccountNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveAttributes(java.lang.String userId,
-                                        org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveAttributes(String userId,
+                                        SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveAttributes(java.lang.String userId, java.lang.String authHandle,
-                                        java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveAttributes(String userId, String authHandle,
+                                        Boolean restAccess)
+            throws UserAccountNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveNamedAttributes(java.lang.String userId, java.lang.String name,
-                                             org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAttributeNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveNamedAttributes(String userId, String name,
+                                             SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            UserAttributeNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveNamedAttributes(java.lang.String userId, java.lang.String name,
-                                             java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAttributeNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveNamedAttributes(String userId, String name,
+                                             String authHandle, Boolean restAccess)
+            throws UserAccountNotFoundException,
+            UserAttributeNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveAttribute(java.lang.String userId, java.lang.String attributeId,
-                                       org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAttributeNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveAttribute(String userId, String attributeId,
+                                       SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            UserAttributeNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveAttribute(java.lang.String userId, java.lang.String attributeId,
-                                       java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAttributeNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveAttribute(String userId, String attributeId,
+                                       String authHandle, Boolean restAccess)
+            throws UserAccountNotFoundException,
+            UserAttributeNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String updateAttribute(java.lang.String userId, java.lang.String attributeId,
-                                     java.lang.String attributeXml,
-                                     org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAttributeNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String updateAttribute(String userId, String attributeId,
+                                     String attributeXml,
+                                     SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            OptimisticLockingException,
+            UserAttributeNotFoundException,
+            ReadonlyElementViolationException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String updateAttribute(java.lang.String userId, java.lang.String attributeId,
-                                     java.lang.String attributeXml, java.lang.String authHandle,
-                                     java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAttributeNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String updateAttribute(String userId, String attributeId,
+                                     String attributeXml, String authHandle,
+                                     Boolean restAccess)
+            throws UserAccountNotFoundException,
+            OptimisticLockingException,
+            UserAttributeNotFoundException,
+            ReadonlyElementViolationException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void deleteAttribute(java.lang.String userId, java.lang.String attributeId,
-                         org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAttributeNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void deleteAttribute(String userId, String attributeId,
+                         SecurityContext securityContext)
+            throws UserAccountNotFoundException,
+            UserAttributeNotFoundException,
+            ReadonlyElementViolationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void deleteAttribute(java.lang.String userId, java.lang.String attributeId, java.lang.String authHandle,
-                         java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.UserAccountNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.UserAttributeNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void deleteAttribute(String userId, String attributeId, String authHandle,
+                         Boolean restAccess)
+            throws UserAccountNotFoundException,
+            UserAttributeNotFoundException,
+            ReadonlyElementViolationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrievePermissionFilterQuery(java.util.Map parameters,
-                                                   org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String retrievePermissionFilterQuery(Map parameters,
+                                                   SecurityContext securityContext)
+            throws SystemException,
+            InvalidSearchQueryException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String retrievePermissionFilterQuery(java.util.Map parameters, java.lang.String authHandle,
-                                                   java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String retrievePermissionFilterQuery(Map parameters, String authHandle,
+                                                   Boolean restAccess)
+            throws SystemException,
+            InvalidSearchQueryException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
 }

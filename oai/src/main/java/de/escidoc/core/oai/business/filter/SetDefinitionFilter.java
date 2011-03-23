@@ -115,7 +115,7 @@ public class SetDefinitionFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                detachedCriteria =
+                this.detachedCriteria =
                     DetachedCriteria.forClass(SetDefinition.class, "sd");
 
                 final Criterion criterion = evaluate(parser.parse(query));

@@ -62,13 +62,13 @@ public class CheckRootElementStaxHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element)
         throws EscidocException {
 
-        if (element.getLocalName().equals(expectedRootElement)) {
+        if (element.getLocalName().equals(this.expectedRootElement)) {
             throw new WebserverSystemException(
                     "Check successful, please ignore.");
         } else {
             throw new XmlCorruptedException(StringUtility
                     .format(
-                            "Root element is not as expected", expectedRootElement,
+                            "Root element is not as expected", this.expectedRootElement,
                             element.getLocalName()));
         }
     }

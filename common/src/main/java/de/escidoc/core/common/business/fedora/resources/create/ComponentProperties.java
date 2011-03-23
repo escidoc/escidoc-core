@@ -68,7 +68,7 @@ public class ComponentProperties {
      * @return the contentCatagory
      */
     public String getContentCatagory() {
-        return contentCatagory;
+        return this.contentCatagory;
     }
 
     /**
@@ -83,7 +83,7 @@ public class ComponentProperties {
      * @return the createdById
      */
     public String getCreatedById() {
-        return createdById;
+        return this.createdById;
     }
 
     /**
@@ -98,7 +98,7 @@ public class ComponentProperties {
      * @return the createdByName
      */
     public String getCreatedByName() {
-        return createdByName;
+        return this.createdByName;
     }
 
     /**
@@ -113,7 +113,7 @@ public class ComponentProperties {
      * @return the visibility
      */
     public String getVisibility() {
-        return visibility;
+        return this.visibility;
     }
 
     /**
@@ -128,7 +128,7 @@ public class ComponentProperties {
      * @return the validStatus
      */
     public String getValidStatus() {
-        return validStatus;
+        return this.validStatus;
     }
 
     /**
@@ -143,7 +143,7 @@ public class ComponentProperties {
      * @return the mimeType
      */
     public String getMimeType() {
-        return mimeType;
+        return this.mimeType;
     }
 
 }

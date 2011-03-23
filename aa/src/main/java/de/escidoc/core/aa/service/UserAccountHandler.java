@@ -56,6 +56,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.springframework.security.userdetails.UserDetails;
 
+import java.lang.String;
 import java.util.Map;
 
 /**
@@ -97,7 +98,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #create(java.lang.String)
      *
      */
@@ -126,7 +127,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #delete(java.lang.String)
      *
      */
@@ -170,7 +171,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #update(java.lang.String, java.lang.String)
      *
      */
@@ -210,8 +211,8 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface#updatePassword(java.lang.String,
-     *      java.lang.String)
+     * @see UserAccountHandlerInterface#updatePassword(String,
+     *      String)
      *
      */
     @Override
@@ -240,7 +241,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieve(java.lang.String)
      *
      */
@@ -264,7 +265,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieveCurrentUser(java.lang.String)
      */
     @Override
@@ -310,7 +311,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieveGrant(java.lang.String, java.lang.String)
      *
      */
@@ -339,7 +340,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieveGrants(java.lang.String)
      */
     @Override
@@ -375,7 +376,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #activate(java.lang.String, java.lang.String)
      *
      */
@@ -414,7 +415,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #deactivate(java.lang.String, java.lang.String)
      *
      */
@@ -456,7 +457,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #createGrant(java.lang.String, java.lang.String)
      *
      */
@@ -497,7 +498,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #revokeGrant(java.lang.String, java.lang.String, java.lang.String)
      *
      */
@@ -537,7 +538,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #revokeGrants(java.lang.String, java.lang.String)
      *
      */
@@ -567,7 +568,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieveUserAccounts(java.util.Map)
      */
     @Override
@@ -612,7 +613,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieveCurrentGrants(java.lang.String)
      *
      */
@@ -651,7 +652,7 @@ public class UserAccountHandler
      *             eSciDocUserHandle.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #createPreference(java.lang.String, java.lang.String)
      *
      */
@@ -693,7 +694,7 @@ public class UserAccountHandler
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
      * @throws MissingAttributeValueException
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #updatePreferences(java.lang.String, java.lang.String)
      *
      */
@@ -745,7 +746,7 @@ public class UserAccountHandler
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
      * @throws MissingAttributeValueException
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #updatePreference(java.lang.String, java.lang.String,
      *      java.lang.String)
      *
@@ -786,7 +787,7 @@ public class UserAccountHandler
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
      * @throws MissingAttributeValueException
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrievePreference(java.lang.String, java.lang.String)
      *
      */
@@ -822,7 +823,7 @@ public class UserAccountHandler
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
      * @throws MissingAttributeValueException
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #deletePreference(java.lang.String, java.lang.String)
      *
      */
@@ -860,7 +861,7 @@ public class UserAccountHandler
      *             eSciDocUserHandle.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #createAttribute(java.lang.String, java.lang.String)
      *
      */
@@ -890,7 +891,7 @@ public class UserAccountHandler
      *             eSciDocUserHandle.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieveAttributes(java.lang.String)
      *
      */
@@ -924,7 +925,7 @@ public class UserAccountHandler
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieveAttribute(java.lang.String, java.lang.String)
      *
      */
@@ -957,7 +958,7 @@ public class UserAccountHandler
      *             Thrown if the authorization fails.
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #retrieveAttribute(java.lang.String, java.lang.String)
      *
      */
@@ -1000,7 +1001,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #updateAttribute(java.lang.String, java.lang.String)
      */
     @Override
@@ -1035,7 +1036,7 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface
+     * @see UserAccountHandlerInterface
      *      #deleteAttribute(java.lang.String, java.lang.String)
      */
     @Override

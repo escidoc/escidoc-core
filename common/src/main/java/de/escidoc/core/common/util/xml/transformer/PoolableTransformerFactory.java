@@ -163,7 +163,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
         InputStream xslt;
         xslt = nsUri != null
                 && nsUri.startsWith(NS_BASE_METADATAPROFILE_SCHEMA_ESCIDOC_MPG_DE) ? new URL(EscidocConfiguration.getInstance().appendToSelfURL(
-                XSL_MAPPING_MPDL_TO_DC)).openStream() : new URL(defaultXsltUrl).openStream();
+                XSL_MAPPING_MPDL_TO_DC)).openStream() : new URL(this.defaultXsltUrl).openStream();
         // xslt is the mpdl-xslt- or default-xslt-stream
         if (contentModelId.length() > 0
             && !"null".equalsIgnoreCase(contentModelId)) {

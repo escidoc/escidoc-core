@@ -105,7 +105,7 @@ public class ItemHandler extends DefaultHandler {
 
     private RelationHandler2 relationHandler;
 
-    private ItemCreate item;
+    private final ItemCreate item;
 
     /**
      * ItemHandler.
@@ -166,31 +166,31 @@ public class ItemHandler extends DefaultHandler {
                     LOGGER.debug("Parser reached " + XPATH_ITEM_PROPERTIES);
                 }
                 this.parsingProperties = true;
-                this.propertiesHandler = new ItemPropertiesHandler(parser);
+                this.propertiesHandler = new ItemPropertiesHandler(this.parser);
                 this.propertiesHandler.startElement(element);
             }
             else if (XPATH_ITEM_METADATA.equals(currentPath)) {
                 this.parsingMetaData = true;
                 this.metadataHandler =
-                    new MetadataHandler2(parser, XPATH_ITEM_METADATA);
+                    new MetadataHandler2(this.parser, XPATH_ITEM_METADATA);
                 this.metadataHandler.startElement(element);
             }
-            else if (!surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
+            else if (! this.surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
                 this.parsingComponents = true;
                 this.componentsHandler =
-                    new ComponentsHandler(parser, this.getItem());
+                    new ComponentsHandler(this.parser, this.getItem());
                 this.componentsHandler.startElement(element);
             }
             else if (XPATH_ITEM_RELATION.equals(currentPath)) {
                 this.parsingRelations = true;
                 this.relationHandler =
-                    new RelationHandler2(parser, XPATH_ITEM_RELATION);
+                    new RelationHandler2(this.parser, XPATH_ITEM_RELATION);
                 this.relationHandler.startElement(element);
             }
-            else if (!surrogate
+            else if (! this.surrogate
                 && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
                 this.parsingContentStreams = true;
-                this.contentStreamsHandler = new ContentStreamsHandler(parser);
+                this.contentStreamsHandler = new ContentStreamsHandler(this.parser);
                 this.contentStreamsHandler.startElement(element);
             }
         }
@@ -247,7 +247,7 @@ public class ItemHandler extends DefaultHandler {
             this.item.addMdRecord(this.metadataHandler.getMetadataRecord());
             this.metadataHandler = null;
         }
-        else if (!surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
+        else if (! this.surrogate && XPATH_ITEM_COMPONENTS.equals(currentPath)) {
             if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_COMPONENTS);
             }
@@ -267,7 +267,7 @@ public class ItemHandler extends DefaultHandler {
             // }
             this.relationHandler = null;
         }
-        else if (!surrogate && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
+        else if (! this.surrogate && XPATH_ITEM_CONTENT_STREAMS.equals(currentPath)) {
             if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached end of " + XPATH_ITEM_CONTENT_STREAMS);
             }

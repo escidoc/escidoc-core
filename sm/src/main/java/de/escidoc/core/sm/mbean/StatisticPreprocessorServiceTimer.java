@@ -34,13 +34,14 @@ public final class StatisticPreprocessorServiceTimer {
     
     /**
      * Get lastExecutionTime.
-     * 
+     *
+     * @return
      */
     public long getLastExecutionTime() {
         final long newLastExecutionTime = System.currentTimeMillis();
         synchronized(instance) {
-            final long savedLastExecutionTime = lastExecutionTime;
-            lastExecutionTime = newLastExecutionTime;
+            final long savedLastExecutionTime = this.lastExecutionTime;
+            this.lastExecutionTime = newLastExecutionTime;
             return savedLastExecutionTime;
         }
     }

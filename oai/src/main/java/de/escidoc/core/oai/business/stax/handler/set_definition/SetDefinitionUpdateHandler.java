@@ -65,7 +65,7 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element) {
         final String currenrPath = parser.getCurPath();
         if (PROPERTIES_PATH.equals(currenrPath)) {
-            inProperties = true;
+            this.inProperties = true;
         } 
         return element;
     }
@@ -74,7 +74,7 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element) {
         final String currenrPath = parser.getCurPath();
         if (PROPERTIES_PATH.equals(currenrPath)) {
-            inProperties = false;
+            this.inProperties = false;
         } 
         return element;
         }
@@ -84,7 +84,7 @@ public class SetDefinitionUpdateHandler extends DefaultHandler {
         throws InvalidXmlException {
 
         final String theName = element.getLocalName();
-        if (inProperties) {
+        if (this.inProperties) {
             if (theName.equals(Elements.ELEMENT_NAME)) {
                 if (s != null && s.length() > 0) {
                     setDefinitionProperties.put(Elements.ELEMENT_NAME, s);

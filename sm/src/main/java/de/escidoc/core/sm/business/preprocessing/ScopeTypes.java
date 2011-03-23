@@ -54,11 +54,11 @@ public enum ScopeTypes {
     private final String value;
 
     ScopeTypes(final String v) {
-        value = v;
+        this.value = v;
     }
 
     public String value() {
-        return value;
+        return this.value;
     }
 
     public static ScopeTypes fromValue(final String v) {

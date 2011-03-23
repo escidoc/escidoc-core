@@ -109,7 +109,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @return the id
      */
     public String getId() {
-        return id;
+        return this.id;
     }
 
     /**

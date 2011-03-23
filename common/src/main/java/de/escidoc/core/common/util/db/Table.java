@@ -104,7 +104,7 @@ public class Table implements Comparable<Object> {
      * @return column names
      */
     public TreeSet<String> getColumns() {
-        return columns;
+        return this.columns;
     }
 
     /**
@@ -113,7 +113,7 @@ public class Table implements Comparable<Object> {
      * @return foreign keys
      */
     public TreeSet<String> getForeignKeys() {
-        return foreignKeys;
+        return this.foreignKeys;
     }
 
     /**
@@ -122,7 +122,7 @@ public class Table implements Comparable<Object> {
      * @return table indexes
      */
     public TreeSet<String> getIndexes() {
-        return indexes;
+        return this.indexes;
     }
 
     /**
@@ -131,7 +131,7 @@ public class Table implements Comparable<Object> {
      * @return table name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -140,7 +140,7 @@ public class Table implements Comparable<Object> {
      * @return primary keys
      */
     public TreeSet<String> getPrimaryKeys() {
-        return primaryKeys;
+        return this.primaryKeys;
     }
 
     /**

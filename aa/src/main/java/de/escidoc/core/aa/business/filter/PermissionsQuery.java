@@ -217,7 +217,7 @@ public class PermissionsQuery {
                         + "another user (1): " + rights);
                     result.append(" AND (");
                     result.append(rights);
-                    result.append(")");
+                    result.append(')');
                 }
             }
             result.append(')');

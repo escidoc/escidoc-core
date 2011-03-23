@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for UserGroupHandler.
  */
-public class UserGroupHandlerSession extends UserGroupHandlerBean
-        implements SessionBean {
+public class UserGroupHandlerSession extends UserGroupHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

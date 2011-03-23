@@ -26,6 +26,7 @@ import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Factory for PID Generator and Management Systems.
@@ -106,7 +107,7 @@ public abstract class PIDSystemFactory {
 
         try {
             final Class<?> factoryClass = Class.forName(factoryClassName);
-            pidSystemFactory = (PIDSystemFactory) factoryClass.newInstance();
+            pidSystemFactory = (PIDSystemFactory) factoryClass.getConstructor().newInstance();
         }
         catch (final ClassNotFoundException e) {
             throw new PidSystemException(e);
@@ -115,6 +116,10 @@ public abstract class PIDSystemFactory {
             throw new PidSystemException(e);
         }
         catch (final IllegalAccessException e) {
+            throw new PidSystemException(e);
+        } catch(NoSuchMethodException e) {
+            throw new PidSystemException(e);
+        } catch(InvocationTargetException e) {
             throw new PidSystemException(e);
         }
     }

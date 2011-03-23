@@ -75,7 +75,7 @@ public class EscidocRequestDetail implements Serializable {
      */
     public boolean isRestAccess() {
 
-        return restAccess;
+        return this.restAccess;
     }
 
     /**

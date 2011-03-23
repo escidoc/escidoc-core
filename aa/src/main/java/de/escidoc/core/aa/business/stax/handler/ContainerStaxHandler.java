@@ -133,8 +133,8 @@ public class ContainerStaxHandler extends AbstractResourceAttributeStaxHandler {
             final Collection<StringAttribute> memberIds =
                 new ArrayList<StringAttribute>(containerIds.size()
                     + itemIds.size());
-            memberIds.addAll(containerIds);
-            memberIds.addAll(itemIds);
+            memberIds.addAll(this.containerIds);
+            memberIds.addAll(this.itemIds);
             cacheAttribute(AttributeIds.URN_CONTAINER_MEMBER_ATTR,
                 memberIds);
 

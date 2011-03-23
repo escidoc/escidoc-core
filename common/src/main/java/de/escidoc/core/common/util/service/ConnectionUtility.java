@@ -563,7 +563,7 @@ public class ConnectionUtility {
      */
     private HttpHost getProxyHost() throws WebserverSystemException {
         try {
-            if (!proxyConfigured) {
+            if (! this.proxyConfigured) {
                 final String proxyHostName =
                     EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_PROXY_HOST);
@@ -574,7 +574,7 @@ public class ConnectionUtility {
                     this.proxyHost = proxyPort != null && proxyPort.trim().length() != 0 ? new HttpHost(proxyHostName,
                             Integer.parseInt(proxyPort)) : new HttpHost(proxyHostName);
                 }
-                proxyConfigured = true;
+                this.proxyConfigured = true;
             }
             return this.proxyHost;
 
@@ -612,12 +612,12 @@ public class ConnectionUtility {
                     }
                     else {
                         this.httpClient.getParams().setParameter(
-                            ConnRoutePNames.DEFAULT_PROXY, proxyHost);
+                            ConnRoutePNames.DEFAULT_PROXY, this.proxyHost);
                     }
                 }
                 else {
                     this.httpClient.getParams().setParameter(
-                        ConnRoutePNames.DEFAULT_PROXY, proxyHost);
+                        ConnRoutePNames.DEFAULT_PROXY, this.proxyHost);
 
                 }
             }
@@ -666,9 +666,9 @@ public class ConnectionUtility {
 
             this.httpClient = new DefaultHttpClient(cm, params);
 
-            if (timeout != -1) {
+            if (this.timeout != -1) {
                 // TODO timeout testen
-                ConnManagerParams.setTimeout(params, timeout);
+                ConnManagerParams.setTimeout(params, (long) this.timeout);
             }
         }
         if (getProxyHost() != null && url != null) {

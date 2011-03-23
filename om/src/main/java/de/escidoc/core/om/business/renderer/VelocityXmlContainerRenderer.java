@@ -92,10 +92,11 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
 
     /**
      * Constructor. Initialize Spring Beans.
-     * 
+     *
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     public VelocityXmlContainerRenderer() throws WebserverSystemException {
-        tsu = BeanLocator.locateTripleStoreUtility();
+        this.tsu = BeanLocator.locateTripleStoreUtility();
     }
 
     /**

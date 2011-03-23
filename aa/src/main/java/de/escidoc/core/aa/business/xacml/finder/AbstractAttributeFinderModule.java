@@ -109,7 +109,7 @@ public abstract class AbstractAttributeFinderModule
      */
     protected AbstractAttributeFinderModule() {
 
-        convertToObjectType = new HashMap<String, String>();
+        this.convertToObjectType = new HashMap<String, String>();
 
         convertToObjectType.put(XmlUtility.NAME_COMPONENT,
             XmlUtility.NAME_COMPONENT);

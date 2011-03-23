@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class AggregationDefinitionHandlerBean implements SessionBean {
 
-    AggregationDefinitionHandlerInterface service = null;
+    AggregationDefinitionHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(AggregationDefinitionHandlerBean.class);
 
@@ -39,7 +39,7 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("AggregationDefinitionHandler.spring.ejb.context").getFactory();
-            service = (AggregationDefinitionHandlerInterface) factory.getBean("service.AggregationDefinitionHandler");
+            this.service = (AggregationDefinitionHandlerInterface) factory.getBean("service.AggregationDefinitionHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception AggregationDefinitionHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -47,7 +47,7 @@ public class AggregationDefinitionHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

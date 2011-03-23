@@ -1146,6 +1146,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     /**
      * Wrapper of setDataSource to enable bean stuff generation for this
      * handler.
+     * @param myDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);

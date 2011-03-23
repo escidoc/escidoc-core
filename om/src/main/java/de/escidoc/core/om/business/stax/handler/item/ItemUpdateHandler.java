@@ -48,11 +48,11 @@ public class ItemUpdateHandler extends DefaultHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemUpdateHandler.class);
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private static final String ITEM_PATH = "/item";
 
-    private String itemId;
+    private final String itemId;
 
     private boolean done;
 
@@ -86,7 +86,7 @@ public class ItemUpdateHandler extends DefaultHandler {
         throws InvalidContentException {
 
         final String curPath = parser.getCurPath();
-        if (!done && curPath.equals(ITEM_PATH)) {
+        if (! this.done && curPath.equals(ITEM_PATH)) {
             // handle xlink:href attribute
             try {
                 final String href = element
@@ -115,12 +115,11 @@ public class ItemUpdateHandler extends DefaultHandler {
             // objid has been provided.
             try {
                 final String objid = element.getAttribute(null, "objid").getValue();
-                if (!objid.equals(itemId)) {
+                if (!objid.equals(this.itemId)) {
                     throw new InvalidContentException(
                         StringUtility
                             .format(
-                                    "Attribute objid has invalid value.", objid,
-                                    itemId));
+                                    "Attribute objid has invalid value.", objid, this.itemId));
                 }
 
             } catch (final NoSuchAttributeException e) {
@@ -131,7 +130,7 @@ public class ItemUpdateHandler extends DefaultHandler {
                     LOGGER.debug("Error on parsing item.", e);
                 }
             }
-            done = true;
+            this.done = true;
         }
         return element;
     }

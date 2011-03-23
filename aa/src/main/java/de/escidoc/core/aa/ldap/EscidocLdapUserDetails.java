@@ -73,7 +73,7 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
      * @return the attributes
      */
     public Map<String, List<String>> getStringAttributes() {
-        return stringAttributes;
+        return this.stringAttributes;
     }
     
     /**
@@ -91,7 +91,7 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
      */
     @Override
     public String getDn() {
-        return dn;
+        return this.dn;
     }
 
     /**
@@ -106,7 +106,7 @@ public class EscidocLdapUserDetails extends LdapUserDetailsImpl {
      */
     @Override
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     /**

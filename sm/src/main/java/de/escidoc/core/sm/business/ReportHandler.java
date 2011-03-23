@@ -66,7 +66,7 @@ public class ReportHandler implements ReportHandlerInterface {
     /**
      * See Interface for functional description.
      * 
-     * @see de.escidoc.core.sm.business.interfaces.ReportHandlerInterface
+     * @see ReportHandlerInterface
      *      #retrieve(java.lang.String)
      * 
      * @param xml

@@ -205,7 +205,7 @@ public class XacmlParser {
         factory.addFunction(new XacmlFunctionIsIn());
         factory.addFunction(new XacmlFunctionRoleInList());
         factory.addFunction(new XacmlFunctionOneAttributeInBothLists());
-        factory.addFunction(xacmlFunctionRoleIsGranted);
+        factory.addFunction(this.xacmlFunctionRoleIsGranted);
         FunctionFactory.setDefaultFactory(proxy);
     }
 
@@ -236,7 +236,7 @@ public class XacmlParser {
      *             Thrown in case of an internal error.
      */
     public void parse(final File file) throws Exception {
-        role = new EscidocRole();
+        this.role = new EscidocRole();
         initFactory();
 
         InputStream in = null;
@@ -246,15 +246,15 @@ public class XacmlParser {
 
             final StaxParser sp = new StaxParser(XmlUtility.NAME_ROLE);
             final RolePropertiesStaxHandler propertiesHandler =
-                new RolePropertiesStaxHandler(role, roleDao);
+                new RolePropertiesStaxHandler(this.role, this.roleDao);
 
             sp.addHandler(propertiesHandler);
 
-            final ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
+            final ScopeStaxHandler scopeHandler = new ScopeStaxHandler(this.role);
 
             sp.addHandler(scopeHandler);
 
-            final XacmlStaxHandler xacmlHandler = new XacmlStaxHandler(role);
+            final XacmlStaxHandler xacmlHandler = new XacmlStaxHandler(this.role);
 
             sp.addHandler(xacmlHandler);
             sp.parse(in);

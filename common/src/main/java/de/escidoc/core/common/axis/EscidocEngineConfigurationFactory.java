@@ -92,12 +92,12 @@ public class EscidocEngineConfigurationFactory
         if (param != null) {
             path = param.getServletContext().getRealPath("/WEB-INF") + '/';
         }
-        clientConfigFile =
+        this.clientConfigFile =
             path
                 + AxisProperties.getProperty(OPTION_CLIENT_CONFIG_FILE,
                     CLIENT_CONFIG_FILE);
 
-        serverConfigFile =
+        this.serverConfigFile =
             path
                 + AxisProperties.getProperty(OPTION_SERVER_CONFIG_FILE,
                     SERVER_CONFIG_FILE);
@@ -111,7 +111,7 @@ public class EscidocEngineConfigurationFactory
     @Override
     public EngineConfiguration getClientEngineConfig() {
 
-        return new FileProvider(clientConfigFile);
+        return new FileProvider(this.clientConfigFile);
     }
 
     /**
@@ -122,7 +122,7 @@ public class EscidocEngineConfigurationFactory
     @Override
     public EngineConfiguration getServerEngineConfig() {
 
-        return new FileProvider(serverConfigFile);
+        return new FileProvider(this.serverConfigFile);
     }
 
     /**

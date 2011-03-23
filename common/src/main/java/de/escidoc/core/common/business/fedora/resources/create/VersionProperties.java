@@ -79,7 +79,7 @@ public class VersionProperties {
      * @return the versionNumber
      */
     public String getNumber() {
-        return versionNumber;
+        return this.versionNumber;
     }
 
     /**
@@ -98,7 +98,7 @@ public class VersionProperties {
      * @return the creator id
      */
     public String getCreatedById() {
-        return createdById;
+        return this.createdById;
     }
 
     /**
@@ -117,7 +117,7 @@ public class VersionProperties {
      * @return the modifiedById
      */
     public String getModifiedById() {
-        return modifiedById;
+        return this.modifiedById;
     }
 
     /**
@@ -134,7 +134,7 @@ public class VersionProperties {
      * @return the status
      */
     public StatusType getStatus() {
-        return status;
+        return this.status;
     }
 
     /**
@@ -149,7 +149,7 @@ public class VersionProperties {
      * @return the statusComment
      */
     public String getComment() {
-        return comment;
+        return this.comment;
     }
 
     /**
@@ -164,7 +164,7 @@ public class VersionProperties {
      * @return the createdByName
      */
     public String getCreatedByName() {
-        return createdByName;
+        return this.createdByName;
     }
 
     /**
@@ -179,7 +179,7 @@ public class VersionProperties {
      * @return the modifiedByName
      */
     public String getModifiedByName() {
-        return modifiedByName;
+        return this.modifiedByName;
     }
 
     /**
@@ -194,7 +194,7 @@ public class VersionProperties {
      * @return the pid
      */
     public String getPid() {
-        return pid;
+        return this.pid;
     }
 
     /**
@@ -209,7 +209,7 @@ public class VersionProperties {
      * @return the date
      */
     public String getDate() {
-        return date;
+        return this.date;
     }
 
 }

@@ -52,11 +52,11 @@ import java.util.Stack;
  */
 public class StaxParser implements DefaultHandlerStackInterface {
 
-    private boolean started = false;
+    private boolean started;
 
-    private boolean rootChecked = false;
+    private boolean rootChecked;
 
-    private String expectedName = null;
+    private String expectedName;
 
     private List handlerChain = new ArrayList();
 
@@ -76,7 +76,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      */
     public StaxParser(final String rootElementName) {
 
-        expectedName = rootElementName;
+        this.expectedName = rootElementName;
     }
 
     /**
@@ -101,7 +101,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *            and add every single Handler in list order.
      */
     public void setHandlerChain(final List hc) {
-        handlerChain = hc;
+        this.handlerChain = hc;
     }
 
     /**
@@ -121,7 +121,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *             handlers in the used handler chain
      */
     public void parse(final InputStream in) throws Exception {
-        if (handlerChain == null || handlerChain.isEmpty()) {
+        if (this.handlerChain == null || handlerChain.isEmpty()) {
             throw new XMLStreamException(
                 "Parser has no handlers. Try StaxParser sp.addHandler"
                     + "(new DefaultHandler());");
@@ -155,13 +155,13 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     // close the XMLStreamReader or TODO reset the input stream
                     parser.close();
                     // reset for next run
-                    started = false;
+                    this.started = false;
                     startElements.pop();
                     break;
 
                 case XMLStreamConstants.START_ELEMENT:
                     // bug?
-                    if (!started) {
+                    if (! this.started) {
                         init();
                     }
 
@@ -227,7 +227,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     parser.close();
 
                     // set ready
-                    started = false;
+                    this.started = false;
 
                     // there have to be the root element
                     startElements.pop();
@@ -235,7 +235,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
                 case XMLStreamConstants.START_ELEMENT:
                     // bug?
-                    if (!started) {
+                    if (! this.started) {
                         init();
                     }
                     ((StartElement) startElements.peek()).setHasChild(true);
@@ -294,8 +294,8 @@ public class StaxParser implements DefaultHandlerStackInterface {
         startElements.clear();
         startElements.push(new StartElement("root", null, null, null));
         curPath.setLength(0);
-        started = true;
-        rootChecked = false;
+        this.started = true;
+        this.rootChecked = false;
     }
 
     /**
@@ -322,6 +322,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * Inserts the specified Handler at the specified position in the handler
      * chain. Shifts the element currently at that position (if any) and any
      * subsequent elements to the right (adds one to their indices).
+     * @param index
      */
     public void addHandler(final int index, final DefaultHandler dh) {
         handlerChain.add(index, dh);
@@ -342,18 +343,18 @@ public class StaxParser implements DefaultHandlerStackInterface {
     protected void handle(final StartElement e) throws Exception {
 
         StartElement element = e;
-        if (!rootChecked) {
+        if (! this.rootChecked) {
             final String localName = e.getLocalName();
             if (!expectedName.equals(localName)) {
                 throw new XmlCorruptedException(
-                    "Unexpected root element, expected " + expectedName
+                    "Unexpected root element, expected " + this.expectedName
                         + "but was " + localName + '.');
             }
-            rootChecked = true;
+            this.rootChecked = true;
         }
 
 //        int chainSize = handlerChain.size();
-        for (final Object aHandlerChain : handlerChain) {
+        for (final Object aHandlerChain : this.handlerChain) {
             final DefaultHandler handler = (DefaultHandler) aHandlerChain;
             if (handler != null) {
                 element = handler.startElement(element);
@@ -374,7 +375,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     protected void handle(final EndElement e) throws Exception {
         EndElement element = e;
 //        int chainSize = handlerChain.size();
-        for (final Object aHandlerChain : handlerChain) {
+        for (final Object aHandlerChain : this.handlerChain) {
             final DefaultHandler handler = (DefaultHandler) aHandlerChain;
             if (handler != null) {
                 element = handler.endElement(element);
@@ -394,7 +395,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
     protected void handle(final String s) throws Exception {
         String chars = s;
 //        int chainSize = handlerChain.size();
-        for (final Object aHandlerChain : handlerChain) {
+        for (final Object aHandlerChain : this.handlerChain) {
             final DefaultHandler handler = (DefaultHandler) aHandlerChain;
             if (handler != null) {
                 final StartElement e = (StartElement) startElements.peek();

@@ -266,6 +266,7 @@ public final class EscidocConfiguration {
     /**
      * Private Constructor, in order to prevent instantiation of this utility
      * class. read the Properties and fill it in properties attribute.
+     * @throws de.escidoc.core.common.exceptions.EscidocException
      */
     private EscidocConfiguration() throws EscidocException {
         System.setProperty("java.awt.headless", "true");

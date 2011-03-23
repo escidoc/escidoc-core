@@ -141,7 +141,7 @@ public class UserGroupFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                detachedCriteria = DetachedCriteria.forClass(UserGroup.class);
+                this.detachedCriteria = DetachedCriteria.forClass(UserGroup.class);
 
                 final Criterion criterion = evaluate(parser.parse(query));
 

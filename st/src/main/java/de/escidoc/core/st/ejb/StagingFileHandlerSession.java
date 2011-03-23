@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for StagingFileHandler.
  */
-public class StagingFileHandlerSession extends StagingFileHandlerBean
-        implements SessionBean {
+public class StagingFileHandlerSession extends StagingFileHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

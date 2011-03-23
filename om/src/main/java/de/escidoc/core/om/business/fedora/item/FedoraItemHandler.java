@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -181,7 +182,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      */
     PolicyDecisionPointInterface getPdp() {
 
-        return pdp;
+        return this.pdp;
     }
 
     /**
@@ -2065,9 +2066,9 @@ public class FedoraItemHandler extends ItemHandlerPid
 
             }
 
-           final Set<Map.Entry<String,List<StartElementWithChildElements>>> entrySet   = predicateValuesVectorAssignment.entrySet();
+           final Set<Entry<String,List<StartElementWithChildElements>>> entrySet   = predicateValuesVectorAssignment.entrySet();
             for(final Object anEntrySet : entrySet) {
-                final Map.Entry entry = (Map.Entry) anEntrySet;
+                final Entry entry = (Entry) anEntrySet;
                 final String predicateValue = (String) entry.getKey();
                 final List<StartElementWithChildElements> elements =
                         (List<StartElementWithChildElements>) entry.getValue();
@@ -2125,7 +2126,7 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getLastModificationDate(),
             taskParameter.getLastModificationDate(),
             "Item " + getItem().getId())) {
-            getItem().setLocked(true, getUtility().getCurrentUser());
+            getItem().setLocked(true, Utility.getCurrentUser());
             // to lock/unlock is no modification of the object, don't update
             // timestamp
 
@@ -2530,6 +2531,7 @@ public class FedoraItemHandler extends ItemHandlerPid
      *            ByteArrayOutputStream.
      * @param mdAttributesMap
      *            A HashMap which contains the metadata attributes.
+     * @param escidocMdRecordnsUri
      * @throws SystemException
      *             Thrown in case of an internal error.
      */
@@ -2587,7 +2589,7 @@ public class FedoraItemHandler extends ItemHandlerPid
         final Map<String, Datastream> contentStreamDatastreams =
             new HashMap<String, Datastream>();
 
-        for (final Map.Entry<String, Map<String, Object>> stringMapEntry : contentStreamMap.entrySet()) {
+        for (final Entry<String, Map<String, Object>> stringMapEntry : contentStreamMap.entrySet()) {
             final Map<String, Object> csValues = stringMapEntry.getValue();
             final Datastream ds;
             if (csValues.containsKey(Elements.ELEMENT_CONTENT)) {

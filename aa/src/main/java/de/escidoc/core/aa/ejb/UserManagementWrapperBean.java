@@ -22,7 +22,7 @@ import java.rmi.RemoteException;
 
 public class UserManagementWrapperBean implements SessionBean {
 
-    UserManagementWrapperInterface service = null;
+    UserManagementWrapperInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(UserManagementWrapperBean.class);
 
@@ -31,7 +31,7 @@ public class UserManagementWrapperBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("UserManagementWrapper.spring.ejb.context").getFactory();
-            service = (UserManagementWrapperInterface) factory.getBean("service.UserManagementWrapper");
+            this.service = (UserManagementWrapperInterface) factory.getBean("service.UserManagementWrapper");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception UserManagementWrapperComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -39,7 +39,7 @@ public class UserManagementWrapperBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

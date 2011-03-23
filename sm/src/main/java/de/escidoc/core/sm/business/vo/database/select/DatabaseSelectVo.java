@@ -57,7 +57,7 @@ public class DatabaseSelectVo {
      * @return the additionalWhereGroupVos
      */
     public Collection<AdditionalWhereGroupVo> getAdditionalWhereGroupVos() {
-        return additionalWhereGroupVos;
+        return this.additionalWhereGroupVos;
     }
 
     /**
@@ -73,7 +73,7 @@ public class DatabaseSelectVo {
      * @return the rootWhereGroupVo
      */
     public RootWhereGroupVo getRootWhereGroupVo() {
-        return rootWhereGroupVo;
+        return this.rootWhereGroupVo;
     }
 
     /**
@@ -88,7 +88,7 @@ public class DatabaseSelectVo {
      * @return the selectFieldVos
      */
     public Collection<SelectFieldVo> getSelectFieldVos() {
-        return selectFieldVos;
+        return this.selectFieldVos;
     }
 
     /**
@@ -105,7 +105,7 @@ public class DatabaseSelectVo {
      * @return the selectType
      */
     public String getSelectType() {
-        return selectType;
+        return this.selectType;
     }
 
     /**
@@ -130,7 +130,7 @@ public class DatabaseSelectVo {
      * @return the tableNames
      */
     public Collection<String> getTableNames() {
-        return tableNames;
+        return this.tableNames;
     }
 
     /**

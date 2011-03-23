@@ -52,6 +52,10 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
     }
 
     /**
+     * @param objectType
+     * @param attributeId
+     * @param attributeObjectType
+     * @param escidocRole
      * @see ScopeDefBase(String, String,
      *      EscidocRole)
      */
@@ -61,6 +65,7 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
     }
 
     /**
+     * @param objectType
      * @see ScopeDefBase(String)
      */
     public ScopeDef(final String objectType) {

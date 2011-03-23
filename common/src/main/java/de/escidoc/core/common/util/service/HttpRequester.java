@@ -59,7 +59,7 @@ public class HttpRequester {
 
     private static final boolean SSL = false;
 
-    private String domain;
+    private final String domain;
 
     private String securityHandle;
 
@@ -100,7 +100,7 @@ public class HttpRequester {
      */
     public void setFollowRedirects(final boolean flag) {
         HttpURLConnection.setFollowRedirects(flag);
-        HttpsURLConnection.setFollowRedirects(flag);
+        HttpURLConnection.setFollowRedirects(flag);
     }
 
     /**
@@ -215,7 +215,7 @@ public class HttpRequester {
         final String response;
 
         // Open Connection to given resource
-        final URL url = new URL(domain + resource);
+        final URL url = new URL(this.domain + resource);
         final TrustManager[] tm = { new RelaxedX509TrustManager() };
         final SSLContext sslContext = SSLContext.getInstance("SSL");
         sslContext.init(null, tm, new SecureRandom());
@@ -224,13 +224,13 @@ public class HttpRequester {
         con.setSSLSocketFactory(sslSF);
 
         // Set Basic-Authentication Header
-        if (securityHandle != null && securityHandle.length() != 0) {
+        if (this.securityHandle != null && securityHandle.length() != 0) {
             final String encoding =
-                UserHandleCookieUtil.createEncodedUserHandle(securityHandle);
+                UserHandleCookieUtil.createEncodedUserHandle(this.securityHandle);
             con.setRequestProperty("Authorization", "Basic " + encoding);
             // Set Cookie
             con.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN + '='
-                + securityHandle);
+                + this.securityHandle);
         }
         else if (getCookie() != null) {
             con.setRequestProperty("Cookie", getCookie());
@@ -238,7 +238,7 @@ public class HttpRequester {
 
         // Set request-method and timeout
         con.setRequestMethod(method.toUpperCase());
-        con.setReadTimeout(timeout);
+        con.setReadTimeout(this.timeout);
 
         // If PUT or POST, write given body in Output-Stream
         if (("PUT".equalsIgnoreCase(method) || "POST".equalsIgnoreCase(method))
@@ -292,18 +292,18 @@ public class HttpRequester {
 
         try {
             // Open Connection to given resource
-            final URL url = new URL(domain + resource);
+            final URL url = new URL(this.domain + resource);
             connection = (HttpURLConnection) url.openConnection();
 
             // Set Basic-Authentication Header
-            if (securityHandle != null && securityHandle.length() != 0) {
+            if (this.securityHandle != null && securityHandle.length() != 0) {
                 final String encoding =
                     UserHandleCookieUtil
-                        .createEncodedUserHandle(securityHandle);
+                        .createEncodedUserHandle(this.securityHandle);
                 connection.setRequestProperty("Authorization", "Basic " + encoding);
                 // Set Cookie
                 connection.setRequestProperty("Cookie", EscidocServlet.COOKIE_LOGIN
-                    + '=' + securityHandle);
+                    + '=' + this.securityHandle);
             }
             else if (getCookie() != null) {
                 connection.setRequestProperty("Cookie", getCookie());
@@ -311,7 +311,7 @@ public class HttpRequester {
 
             // Set request-method and timeout
             connection.setRequestMethod(method.toUpperCase());
-            connection.setReadTimeout(timeout);
+            connection.setReadTimeout(this.timeout);
 
             // If PUT or POST, write given body in Output-Stream
             if (("PUT".equalsIgnoreCase(method) || "POST".equalsIgnoreCase(method)) && body != null) {
@@ -407,7 +407,7 @@ public class HttpRequester {
      * @return the cookie
      */
     public String getCookie() {
-        return cookie;
+        return this.cookie;
     }
 
     /**

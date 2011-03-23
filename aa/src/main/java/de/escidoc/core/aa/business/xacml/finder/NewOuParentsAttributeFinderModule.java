@@ -167,7 +167,7 @@ public class NewOuParentsAttributeFinderModule
                 cachedAttribute =
                     tripleStoreAttributeFinderModule
                         .getHierarchicalCachedAttributes(expandedParentIds,
-                            cachedAttribute, hierarchicalParentMapResult);
+                            cachedAttribute, this.hierarchicalParentMapResult);
 
                 if (StringUtils.isNotEmpty(resourceId)) {
                     cachedAttribute.add(resourceId);

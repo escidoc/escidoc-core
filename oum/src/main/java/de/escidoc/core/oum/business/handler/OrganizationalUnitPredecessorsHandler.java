@@ -149,7 +149,7 @@ public class OrganizationalUnitPredecessorsHandler extends HandlerBase {
      * @return list of predecessors
      */
     public List<Predecessor> getPredecessors() {
-        return predecessors;
+        return this.predecessors;
     }
 
     /**

@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for PolicyDecisionPoint.
  */
-public class PolicyDecisionPointSession extends PolicyDecisionPointBean
-        implements SessionBean {
+public class PolicyDecisionPointSession extends PolicyDecisionPointBean {
 
     public void ejbActivate() throws RemoteException {
 

@@ -74,11 +74,11 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
         if ("allowed-role".equals(element.getLocalName())) {
             final String objId = XmlUtility.getIdFromStartElement(element);
             if (objId != null) {
-                allowedRolesIndex++;
+                this.allowedRolesIndex++;
                 final ReportDefinitionRole reportDefinitionRole =
                                         new ReportDefinitionRole();
                 reportDefinitionRole.setRoleId(objId);
-                reportDefinitionRole.setListIndex(allowedRolesIndex);
+                reportDefinitionRole.setListIndex(this.allowedRolesIndex);
                 reportDefinition.getReportDefinitionRoles()
                                     .add(reportDefinitionRole);
             }
@@ -157,7 +157,7 @@ public class ReportDefinitionStaxHandler extends DefaultHandler {
      * @return the reportDefinition
      */
     public ReportDefinition getReportDefinition() {
-        return reportDefinition;
+        return this.reportDefinition;
     }
 
     /**

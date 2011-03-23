@@ -157,7 +157,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @return the item
      */
     final Item getItem() {
-        return item;
+        return this.item;
     }
 
     /**
@@ -167,7 +167,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @return the item
      */
     final Item getOriginItem() {
-        return originItem;
+        return this.originItem;
     }
 
     /**
@@ -300,7 +300,7 @@ public class ItemHandlerBase extends HandlerBase {
         WebserverSystemException {
         if (getItem().isLocked()
             && !getItem().getLockOwner().equals(
-                getUtility().getCurrentUser()[0])) {
+                Utility.getCurrentUser()[0])) {
             throw new LockingException("Item + " + getItem().getId()
                 + " is locked by " + getItem().getLockOwner() + '.');
         }
@@ -597,10 +597,10 @@ public class ItemHandlerBase extends HandlerBase {
      */
     final ItemFoXmlRendererInterface getFoxmlRenderer() {
 
-        if (foxmlRenderer == null) {
-            foxmlRenderer = new VelocityXmlItemFoXmlRenderer();
+        if (this.foxmlRenderer == null) {
+            this.foxmlRenderer = new VelocityXmlItemFoXmlRenderer();
         }
-        return foxmlRenderer;
+        return this.foxmlRenderer;
     }
 
     /**
@@ -609,7 +609,7 @@ public class ItemHandlerBase extends HandlerBase {
      * @return objid of origin
      */
     final String getOriginId() {
-        return originId;
+        return this.originId;
     }
 
     /**

@@ -501,6 +501,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      *
      * @param status The XACML status to encode.
      * @return Returns the encoded status.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String encode(final Status status) throws WebserverSystemException {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -687,7 +688,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @return Returns the customPdp.
      */
     public CustomPdp getCustomPdp() {
-        return customPdp;
+        return this.customPdp;
     }
 
     /**
@@ -710,7 +711,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @return Returns the requestMappingLoader.
      */
     public RequestMappingDaoInterface getRequestMappingDao() {
-        return requestMappingDao;
+        return this.requestMappingDao;
     }
 
     /**

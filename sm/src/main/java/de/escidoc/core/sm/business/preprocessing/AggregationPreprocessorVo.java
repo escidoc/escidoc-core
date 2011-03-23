@@ -84,7 +84,7 @@ public class AggregationPreprocessorVo {
      * @return the aggregationDefinition
      */
     public AggregationDefinition getAggregationDefinition() {
-        return aggregationDefinition;
+        return this.aggregationDefinition;
     }
 
     /**
@@ -99,7 +99,7 @@ public class AggregationPreprocessorVo {
      * @return the dataHash
      */
     public Map getDataHash() {
-        return dataHash;
+        return this.dataHash;
     }
 
     /**
@@ -113,7 +113,7 @@ public class AggregationPreprocessorVo {
      * @return the differencesHash
      */
     public Map getDifferencesHash() {
-        return differencesHash;
+        return this.differencesHash;
     }
 
     /**
@@ -127,7 +127,7 @@ public class AggregationPreprocessorVo {
      * @return the fieldTypeHash
      */
     public Map getFieldTypeHash() {
-        return fieldTypeHash;
+        return this.fieldTypeHash;
     }
 
     /**
@@ -141,7 +141,7 @@ public class AggregationPreprocessorVo {
      * @return the fieldHashForOneRecord
      */
     public Map getFieldHashForOneRecord() {
-        return fieldHashForOneRecord;
+        return this.fieldHashForOneRecord;
     }
 
     /**
@@ -155,7 +155,7 @@ public class AggregationPreprocessorVo {
      * @return the differenceHashForOneRecord
      */
     public Map getDifferenceHashForOneRecord() {
-        return differenceHashForOneRecord;
+        return this.differenceHashForOneRecord;
     }
 
     /**
@@ -170,7 +170,7 @@ public class AggregationPreprocessorVo {
      * @return the uniqueKeyForOneRecord
      */
     public StringBuffer getUniqueKeyForOneRecord() {
-        return uniqueKeyForOneRecord;
+        return this.uniqueKeyForOneRecord;
     }
 
     /**

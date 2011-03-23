@@ -50,7 +50,7 @@ import java.util.Date;
  */
 public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
 
-    private UserAccount authenticateUser;
+    private final UserAccount authenticateUser;
 
     /**
      * The constructor.
@@ -71,7 +71,7 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
         SystemException {
 
         super(grant, false);
-        authenticateUser = UserAccountHandler.getAuthenticatedUser(dao);
+        this.authenticateUser = UserAccountHandler.getAuthenticatedUser(dao);
         if (grant.getRevocationDate() != null) {
             throw new AlreadyRevokedException();
         }
@@ -92,7 +92,7 @@ public class RevokeStaxHandler extends UserAccountStaxHandlerBase {
     public StartElement startElement(final StartElement element) {
 
         if (isNotReady() && getGrant().getRevocationDate() == null) {
-            getGrant().setUserAccountByRevokerId(authenticateUser);
+            getGrant().setUserAccountByRevokerId(this.authenticateUser);
             getGrant().setRevocationDate(new Date());
         }
         return element;

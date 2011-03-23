@@ -169,7 +169,7 @@ public class CustomPdp {
         databasePolicyFinder.setPolicyFinder(policyFinder);
         final Set<PolicyFinderModule> policyModules =
             new HashSet<PolicyFinderModule>();
-        policyModules.add(databasePolicyFinder);
+        policyModules.add(this.databasePolicyFinder);
         policyFinder.setModules(policyModules);
 
         // now setup attribute finder modules
@@ -186,24 +186,24 @@ public class CustomPdp {
 
         // the CheckProvidedAttributeFinderModule must be the first eSciDoc
         // specific finder module in the chain
-        attributeModules.add(checkProvidedAttrFinder);
+        attributeModules.add(this.checkProvidedAttrFinder);
 
-        attributeModules.add(resourceNotFoundAttrFinder);
+        attributeModules.add(this.resourceNotFoundAttrFinder);
         // the PartlyResolveableAttributeFinderModule must be the second eSciDoc
         // specific finder module in the chain
-        attributeModules.add(partlyResolveableAttrFinder);
-        attributeModules.add(objectTypeAttrFinder);
-        attributeModules.add(tripleStoreAttrFinder);
-        attributeModules.add(userAccountAttrFinder);
-        attributeModules.add(userGroupAttrFinder);
-        attributeModules.add(grantAttrFinder);
-        attributeModules.add(lockOwnerAttributeFinderModule);
-        attributeModules.add(newOuParentsAttributeFinderModule);
-        attributeModules.add(resourceAttrFinder);
-        attributeModules.add(roleAttrFinder);
+        attributeModules.add(this.partlyResolveableAttrFinder);
+        attributeModules.add(this.objectTypeAttrFinder);
+        attributeModules.add(this.tripleStoreAttrFinder);
+        attributeModules.add(this.userAccountAttrFinder);
+        attributeModules.add(this.userGroupAttrFinder);
+        attributeModules.add(this.grantAttrFinder);
+        attributeModules.add(this.lockOwnerAttributeFinderModule);
+        attributeModules.add(this.newOuParentsAttributeFinderModule);
+        attributeModules.add(this.resourceAttrFinder);
+        attributeModules.add(this.roleAttrFinder);
 
-        attributeModules.add(smAttributesFinderModule);
-        attributeModules.add(resourceIdAttrFinderModule);
+        attributeModules.add(this.smAttributesFinderModule);
+        attributeModules.add(this.resourceIdAttrFinderModule);
         attributeFinder.setModules(attributeModules);
 
         // Setup the FunctionFactory
@@ -214,12 +214,12 @@ public class CustomPdp {
         factory.addFunction(new XacmlFunctionIsIn());
         factory.addFunction(new XacmlFunctionRoleInList());
         factory.addFunction(new XacmlFunctionOneAttributeInBothLists());
-        factory.addFunction(xacmlFunctionRoleIsGranted);
+        factory.addFunction(this.xacmlFunctionRoleIsGranted);
 
         FunctionFactory.setDefaultFactory(proxy);
 
-        pdpConfig = new PDPConfig(attributeFinder, policyFinder, null);
-        pdp = new PDP(pdpConfig);
+        this.pdpConfig = new PDPConfig(attributeFinder, policyFinder, null);
+        this.pdp = new PDP(this.pdpConfig);
     }
 
     /**
@@ -242,7 +242,7 @@ public class CustomPdp {
     public ResponseCtx evaluate(final String requestFile) throws IOException,
         ParsingException, WebserverSystemException {
 
-        if (pdp == null) {
+        if (this.pdp == null) {
             init();
         }
 
@@ -272,7 +272,7 @@ public class CustomPdp {
     public ResponseCtx evaluate(final RequestCtx request)
         throws WebserverSystemException {
 
-        if (pdp == null) {
+        if (this.pdp == null) {
             init();
         }
 
@@ -454,10 +454,10 @@ public class CustomPdp {
      */
     public PDPConfig getPdpConfig() throws WebserverSystemException {
 
-        if (pdpConfig == null) {
+        if (this.pdpConfig == null) {
             init();
         }
-        return pdpConfig;
+        return this.pdpConfig;
     }
 
     /**

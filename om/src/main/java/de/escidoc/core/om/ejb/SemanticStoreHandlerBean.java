@@ -27,7 +27,7 @@ import java.rmi.RemoteException;
 
 public class SemanticStoreHandlerBean implements SessionBean {
 
-    SemanticStoreHandlerInterface service = null;
+    SemanticStoreHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(SemanticStoreHandlerBean.class);
 
@@ -36,7 +36,7 @@ public class SemanticStoreHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("SemanticStoreHandler.spring.ejb.context").getFactory();
-            service = (SemanticStoreHandlerInterface) factory.getBean("service.SemanticStoreHandler");
+            this.service = (SemanticStoreHandlerInterface) factory.getBean("service.SemanticStoreHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception SemanticStoreHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -44,7 +44,7 @@ public class SemanticStoreHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

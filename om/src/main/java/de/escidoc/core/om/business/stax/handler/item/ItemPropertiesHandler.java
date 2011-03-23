@@ -68,7 +68,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private ItemProperties properties;
+    private final ItemProperties properties;
 
     private static final String XPATH_ITEM = '/' + Elements.ELEMENT_ITEM;
 
@@ -153,7 +153,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
                     this.parsingContentModelSpecific = true;
                     this.contentModelHandler =
                         new MultipleExtractor(
-                            XPATH_ITEM_CONTENT_MODEL_SPECIFIC, parser);
+                            XPATH_ITEM_CONTENT_MODEL_SPECIFIC, this.parser);
 
                     this.contentModelHandler.startElement(element);
                 }
@@ -363,6 +363,7 @@ public class ItemPropertiesHandler extends DefaultHandler {
      * @throws MissingAttributeValueException
      * @throws WebserverSystemException
      * @throws ContentModelNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private void handleOrigin(final StartElement element)
         throws MissingAttributeValueException, WebserverSystemException,

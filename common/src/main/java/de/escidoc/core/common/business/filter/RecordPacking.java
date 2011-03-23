@@ -47,7 +47,7 @@ public enum RecordPacking {
      * @return the record packing type
      */
     public String getType() {
-        return type;
+        return this.type;
     }
 
     /**

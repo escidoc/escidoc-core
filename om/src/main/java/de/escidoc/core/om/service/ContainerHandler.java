@@ -68,6 +68,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 
+import java.lang.String;
 import java.util.Map;
 
 /**
@@ -195,8 +196,8 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @param id
      * @param filter
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#retrieveMembers(java.lang.String,
-     *      java.util.Map)
+     * @see ContainerHandlerInterface#retrieveMembers(String,
+     *      Map)
      */
     @Override
     public String retrieveMembers(
@@ -214,8 +215,8 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @param filter
      * @return List of Tocs
      * 
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#retrieveTocs(java.lang.String,
-     *      java.util.Map)
+     * @see ContainerHandlerInterface#retrieveTocs(String,
+     *      Map)
      */
     @Override
     public String retrieveTocs(
@@ -287,7 +288,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @param id
      * @param xmlData
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
+     * @see ContainerHandlerInterface
      *      #createMetadataRecord(java.lang.String, java.lang.String)
      */
     @Override
@@ -306,7 +307,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @param id
      * @param xmlData
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
+     * @see ContainerHandlerInterface
      *      #createMdRecord(java.lang.String, java.lang.String)
      */
     @Override
@@ -324,7 +325,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @param id
      * @param mdRecordId
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
+     * @see ContainerHandlerInterface
      *      #retrieveMdRecord(java.lang.String, java.lang.String)
      *
      */
@@ -426,7 +427,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * 
      * @param id
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
+     * @see ContainerHandlerInterface
      *      #retrieveParents(java.lang.String)
      */
     @Override
@@ -441,7 +442,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * 
      * @param id
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
+     * @see ContainerHandlerInterface
      *      #retrieveContentRelations(java.lang.String)
      *
      */
@@ -570,7 +571,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws AuthenticationException
      * @throws AuthorizationException
      * @throws SystemException
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface
+     * @see ContainerHandlerInterface
      *      #retrieveContainers(java.util.Map)
      */
     @Override
@@ -600,8 +601,8 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws LockingException
      * @throws ReadonlyVersionException
      *             cf. Interface
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#addContentRelations(java.lang.String,
-     *      java.lang.String)
+     * @see ContainerHandlerInterface#addContentRelations(String,
+     *      String)
      * 
      *
      */
@@ -636,8 +637,8 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws LockingException
      * @throws ReadonlyVersionException
      *             cf. Interface
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#removeContentRelations(java.lang.String,
-     *      java.lang.String)
+     * @see ContainerHandlerInterface#removeContentRelations(String,
+     *      String)
      * 
      *
      */
@@ -665,8 +666,8 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws MissingMethodParameterException
      * @throws OptimisticLockingException
      * @throws SystemException
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#assignObjectPid(java.lang.String,
-     *      java.lang.String)
+     * @see ContainerHandlerInterface#assignObjectPid(String,
+     *      String)
      */
     @Override
     public String assignObjectPid(final String id, final String param)
@@ -693,8 +694,8 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws ReadonlyVersionException
      *             Thrown if a provided container version id is not a latest
      *             version.
-     * @see de.escidoc.core.om.service.interfaces.ContainerHandlerInterface#assignVersionPid(java.lang.String,
-     *      java.lang.String)
+     * @see ContainerHandlerInterface#assignVersionPid(String,
+     *      String)
      */
     @Override
     public String assignVersionPid(final String id, final String param)

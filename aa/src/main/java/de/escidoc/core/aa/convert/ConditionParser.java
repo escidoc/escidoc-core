@@ -95,8 +95,8 @@ public class ConditionParser {
          * @return string representation of this object
          */
         public String toString() {
-            return "[operation=" + operation + ", operand1=" + operand1
-                + ",operand2=" + operand2 + ']';
+            return "[operation=" + this.operation + ", operand1=" + this.operand1
+                + ",operand2=" + this.operand2 + ']';
         }
     }
 

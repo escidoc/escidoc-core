@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import de.escidoc.core.common.business.fedora.Utility;
 import org.joda.time.DateTime;
 
 import de.escidoc.core.common.business.Constants;
@@ -496,10 +497,8 @@ public class FedoraContentRelationHandler extends HandlerBase
         validateToSubmitStatus(cr);
 
         // check optimistic locking criteria
-        getUtility().checkOptimisticLockingCriteria(
-            cr.getProperties().getLastModificationDate(),
-            new DateTime(taskParameter.getLastModificationDate()),
-            "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
+                new DateTime(taskParameter.getLastModificationDate()), "Content relation " + id);
 
         cr.getProperties().setStatus(StatusType.SUBMITTED);
         // set status comment
@@ -518,8 +517,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         fireContentRelationModified(cr, ContentRelationXmlProvider
             .getInstance().getContentRelationXml(cr));
 
-        return getUtility().prepareReturnXml(
-            cr.getProperties().getLastModificationDate(), null);
+        return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
 
     /**
@@ -571,10 +569,8 @@ public class FedoraContentRelationHandler extends HandlerBase
             throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_SUBMITTED
                     + "' and can not be " + Constants.STATUS_RELEASED + '.');
         }
-        getUtility().checkOptimisticLockingCriteria(
-            cr.getProperties().getLastModificationDate(),
-            new DateTime(taskParameter.getLastModificationDate()),
-            "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
+                new DateTime(taskParameter.getLastModificationDate()), "Content relation " + id);
 
         cr.getProperties().setStatus(StatusType.RELEASED);
 
@@ -593,8 +589,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         fireContentRelationModified(cr, ContentRelationXmlProvider
             .getInstance().getContentRelationXml(cr));
 
-        return getUtility().prepareReturnXml(
-            cr.getProperties().getLastModificationDate(), null);
+        return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
 
     /**
@@ -636,10 +631,8 @@ public class FedoraContentRelationHandler extends HandlerBase
             throw new InvalidStatusException("The object is not in state '" + Constants.STATUS_SUBMITTED
                     + "' and can not be revised.");
         }
-        getUtility().checkOptimisticLockingCriteria(
-            cr.getProperties().getLastModificationDate(),
-            new DateTime(taskParameter.getLastModificationDate()),
-            "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
+                new DateTime(taskParameter.getLastModificationDate()), "Content relation " + id);
 
         cr.getProperties().setStatus(StatusType.INREVISION);
         // set status comment
@@ -658,8 +651,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         fireContentRelationModified(cr, ContentRelationXmlProvider
             .getInstance().getContentRelationXml(cr));
 
-        return getUtility().prepareReturnXml(
-            cr.getProperties().getLastModificationDate(), null);
+        return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
 
     /**
@@ -699,15 +691,13 @@ public class FedoraContentRelationHandler extends HandlerBase
         checkLocked(cr);
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
-        getUtility().checkOptimisticLockingCriteria(
-            cr.getProperties().getLastModificationDate(),
-            new DateTime(taskParameter.getLastModificationDate()),
-            "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
+                new DateTime(taskParameter.getLastModificationDate()), "Content relation " + id);
 
         // lock resource
         final LockHandler lockHandler = LockHandler.getInstance();
         if (!cr.getProperties().isLocked()) {
-            lockHandler.lock(cr.getObjid(), getUtility().getCurrentUser());
+            lockHandler.lock(cr.getObjid(), Utility.getCurrentUser());
 
             cr.getProperties().setLockStatus(LockStatus.LOCKED);
             cr.getProperties().setLockOwnerId(getUtility().getCurrentUserId());
@@ -721,8 +711,7 @@ public class FedoraContentRelationHandler extends HandlerBase
             .getInstance().getContentRelationXml(cr));
 
         // timestamp
-        return getUtility().prepareReturnXml(
-            cr.getProperties().getLastModificationDate(), null);
+        return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
 
     /**
@@ -760,10 +749,8 @@ public class FedoraContentRelationHandler extends HandlerBase
         final ContentRelationCreate cr = setContentRelation(id);
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
 
-        getUtility().checkOptimisticLockingCriteria(
-            cr.getProperties().getLastModificationDate(),
-            new DateTime(taskParameter.getLastModificationDate()),
-            "Content relation " + id);
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
+                new DateTime(taskParameter.getLastModificationDate()), "Content relation " + id);
 
         // lock resource
         final LockHandler lockHandler = LockHandler.getInstance();
@@ -779,8 +766,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         fireContentRelationModified(cr, ContentRelationXmlProvider
             .getInstance().getContentRelationXml(cr));
 
-        return getUtility().prepareReturnXml(
-            cr.getProperties().getLastModificationDate(), null);
+        return Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), null);
     }
 
     /**
@@ -826,10 +812,8 @@ public class FedoraContentRelationHandler extends HandlerBase
         final TaskParamHandler taskParameter =
             XmlUtility.parseTaskParam(taskParam);
         checkLocked(cr);
-        getUtility().checkOptimisticLockingCriteria(
-            cr.getProperties().getLastModificationDate(),
-            new DateTime(taskParameter.getLastModificationDate()),
-            "Content-relation " + cr.getObjid());
+        Utility.checkOptimisticLockingCriteria(cr.getProperties().getLastModificationDate(),
+                new DateTime(taskParameter.getLastModificationDate()), "Content-relation " + cr.getObjid());
 
         String pid = taskParameter.getPid();
         if (pid == null) {
@@ -892,10 +876,10 @@ public class FedoraContentRelationHandler extends HandlerBase
         WebserverSystemException {
 
         if (this.pidGenFactory == null) {
-            pidGenFactory = PIDSystemFactory.getInstance();
+            this.pidGenFactory = PIDSystemFactory.getInstance();
         }
         if (this.pidGen == null) {
-            pidGen = pidGenFactory.getPIDGenerator();
+            this.pidGen = pidGenFactory.getPIDGenerator();
         }
 
         return pidGen.assignPID(id, param);
@@ -1447,7 +1431,7 @@ public class FedoraContentRelationHandler extends HandlerBase
             restXml = getAlternateForm(cr);
             soapXml = xmlData;
         }
-        for (final ResourceListener contentRelationListener : contentRelationListeners) {
+        for (final ResourceListener contentRelationListener : this.contentRelationListeners) {
             contentRelationListener.resourceModified(cr.getObjid(), restXml,
                 soapXml);
         }
@@ -1478,7 +1462,7 @@ public class FedoraContentRelationHandler extends HandlerBase
             restXml = getAlternateForm(cr);
             soapXml = xmlData;
         }
-        for (final ResourceListener contentRelationListener : contentRelationListeners) {
+        for (final ResourceListener contentRelationListener : this.contentRelationListeners) {
             contentRelationListener.resourceCreated(cr.getObjid(), restXml,
                 soapXml);
         }
@@ -1494,7 +1478,7 @@ public class FedoraContentRelationHandler extends HandlerBase
      */
     private void fireContentRelationDeleted(final ContentRelationCreate cr)
         throws SystemException {
-        for (final ResourceListener contentRelationListener : contentRelationListeners) {
+        for (final ResourceListener contentRelationListener : this.contentRelationListeners) {
             contentRelationListener.resourceDeleted(cr.getObjid());
         }
     }
@@ -1523,9 +1507,7 @@ public class FedoraContentRelationHandler extends HandlerBase
         final String result;
         try {
             result =
-                getUtility().prepareReturnXml(
-                    cr.getProperties().getLastModificationDate(),
-                    "<pid>" + pid + "</pid>\n");
+                Utility.prepareReturnXml(cr.getProperties().getLastModificationDate(), "<pid>" + pid + "</pid>\n");
         }
         catch (final SystemException e) {
             throw new WebserverSystemException(e);

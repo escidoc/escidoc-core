@@ -158,7 +158,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      *            and add every single Handler in list order.
      */
     public void setHandlerChain(final List<DefaultHandler> hc) {
-        handlerChain = hc;
+        this.handlerChain = hc;
     }
 
     /**
@@ -316,7 +316,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         XmlParserSystemException, IntegritySystemException,
         MissingMdRecordException, TmeException, XmlCorruptedException {
 
-        if (handlerChain == null || handlerChain.isEmpty()) {
+        if (this.handlerChain == null || handlerChain.isEmpty()) {
             throw new XMLStreamException(
                 "Parser has no handlers. Try StaxParser sp.addHandler"
                     + "(new DefaultHandler());");
@@ -498,14 +498,14 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     // close the XMLStreamReader or TODO reset the input stream
                     parser.close();
                     // reset for next run
-                    started = false;
+                    this.started = false;
                     startElements.pop();
                     this.xmlBase = null;
                     break;
 
                 case XMLStreamConstants.START_ELEMENT:
                     // bug?
-                    if (!started) {
+                    if (! this.started) {
                         init();
                     }
 
@@ -650,7 +650,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
                     parser.close();
 
                     // set ready
-                    started = false;
+                    this.started = false;
 
                     // there have to be the root element
                     startElements.pop();
@@ -658,7 +658,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
 
                 case XMLStreamConstants.START_ELEMENT:
                     // bug?
-                    if (!started) {
+                    if (! this.started) {
                         init();
                     }
                     startElements.peek().setHasChild(true);
@@ -728,7 +728,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         startElements.clear();
         startElements.push(new StartElement("root", null, null, null));
         curPath.setLength(0);
-        started = true;
+        this.started = true;
     }
 
     /**
@@ -836,16 +836,16 @@ public class StaxParser implements DefaultHandlerStackInterface {
         XmlCorruptedException {
 
         StartElement element = startElement;
-        if (checkRootElementName && !rootChecked) {
+        if (this.checkRootElementName && ! this.rootChecked) {
             final String localName = element.getLocalName();
             if (!expectedName.equals(localName)) {
                 throw new XmlCorruptedException(
-                    "Unexpected root element, expected " + expectedName
+                    "Unexpected root element, expected " + this.expectedName
                         + "but was " + localName + '.');
             }
-            rootChecked = true;
+            this.rootChecked = true;
         }
-        for (final DefaultHandler handler : handlerChain) {
+        for (final DefaultHandler handler : this.handlerChain) {
             if (handler != null) {
                 try {
                     element = handler.startElement(element);
@@ -947,7 +947,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         InvalidContentException, XmlCorruptedException {
 
         EndElement element = endElement;
-        for (final DefaultHandler handler : handlerChain) {
+        for (final DefaultHandler handler : this.handlerChain) {
             if (handler != null) {
                 try {
                     element = handler.endElement(element);
@@ -1033,7 +1033,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
         IntegritySystemException, InvalidStatusException, TmeException {
 
         String chars = characters;
-        for (final DefaultHandler handler : handlerChain) {
+        for (final DefaultHandler handler : this.handlerChain) {
             if (handler != null) {
                 final StartElement e = startElements.peek();
                 try {

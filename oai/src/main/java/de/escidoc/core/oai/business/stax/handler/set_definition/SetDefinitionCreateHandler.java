@@ -69,9 +69,9 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element) {
         final String currenrPath = parser.getCurPath();
         if (PROPERTIES_PATH.equals(currenrPath)) {
-            inProperties = true;
+            this.inProperties = true;
         } else if (ROOT_PATH.equals(currenrPath)) {
-            inRoot = true;
+            this.inRoot = true;
         }
         return element;
     }
@@ -80,9 +80,9 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element) {
         final String currenrPath = parser.getCurPath();
         if (PROPERTIES_PATH.equals(currenrPath)) {
-            inProperties = false;
+            this.inProperties = false;
         } else if (ROOT_PATH.equals(currenrPath)) {
-            inRoot = false;
+            this.inRoot = false;
         }  
         return element;
         }
@@ -92,7 +92,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
         throws InvalidXmlException {
 
         final String theName = element.getLocalName();
-        if (inProperties) {
+        if (this.inProperties) {
             if (theName.equals(Elements.ELEMENT_NAME)) {
                 if (s != null && s.length() > 0) {
                     setDefinitionProperties.put(Elements.ELEMENT_NAME, s);
@@ -108,7 +108,7 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
                     .put(Elements.ELEMENT_DESCRIPTION, s);
             }
         }
-        else if (inRoot) {
+        else if (this.inRoot) {
             if ("query".equals(theName)) {
                 if (s != null) {
                     setDefinitionProperties.put("query", s);

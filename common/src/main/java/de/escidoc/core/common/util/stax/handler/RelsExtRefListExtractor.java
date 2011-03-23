@@ -36,7 +36,7 @@ public class RelsExtRefListExtractor extends DefaultHandler {
 
     private final Map<String, List<String>> entries;
 
-    private List<String> predicates;
+    private final List<String> predicates;
 
     public RelsExtRefListExtractor(final List<String> predicates, final StaxParser parser) {
         this.predicates = predicates;
@@ -72,7 +72,7 @@ public class RelsExtRefListExtractor extends DefaultHandler {
     }
 
     public Map<String, List<String>> getEntries() {
-        return entries;
+        return this.entries;
     }
 
 }

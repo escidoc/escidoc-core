@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for PreprocessingHandler.
  */
-public class PreprocessingHandlerSession extends PreprocessingHandlerBean
-        implements SessionBean {
+public class PreprocessingHandlerSession extends PreprocessingHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

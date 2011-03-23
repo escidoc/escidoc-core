@@ -76,7 +76,7 @@ public class Triple {
      * @return the subject
      */
     public String getSubject() {
-        return subject;
+        return this.subject;
     }
 
     /**
@@ -91,7 +91,7 @@ public class Triple {
      * @return the predicate
      */
     public String getPredicate() {
-        return predicate;
+        return this.predicate;
     }
 
     /**
@@ -106,7 +106,7 @@ public class Triple {
      * @return the object
      */
     public String getObject() {
-        return object;
+        return this.object;
     }
 
     /**
@@ -115,7 +115,7 @@ public class Triple {
      * @return string representation of this object
      */
     public String toString() {
-        return "[subject=" + subject + ", predicate=" + predicate + ", object="
-            + object + ']';
+        return "[subject=" + this.subject + ", predicate=" + this.predicate + ", object="
+            + this.object + ']';
     }
 }

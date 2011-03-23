@@ -75,7 +75,7 @@ public enum ResourceType {
      * @return object label
      */
     public String getLabel() {
-        return label;
+        return this.label;
     }
 
     /**
@@ -84,6 +84,6 @@ public enum ResourceType {
      * @return object URI
      */
     public String getUri() {
-        return uri;
+        return this.uri;
     }
 }

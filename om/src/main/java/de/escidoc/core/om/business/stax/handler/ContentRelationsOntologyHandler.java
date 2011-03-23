@@ -91,10 +91,10 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
             }
         }
         // check if a parent element 'Description' defines rdf:Property
-        else if (inDescription && currentPath.startsWith(DESCRIPTION_PATH)) {
+        else if (this.inDescription && currentPath.startsWith(DESCRIPTION_PATH)) {
             if (RDF_TYPE_PATH.equals(currentPath)
                 && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
-                inRdfType = true;
+                this.inRdfType = true;
 
                 final int indexOfResource =
                     element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
@@ -124,7 +124,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
         }
         else if (DESCRIPTION_PATH.equals(currentPath)
             && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
-            inDescription = true;
+            this.inDescription = true;
             setPredicate(element);
             if (this.predicate == null) {
                 throw new XmlCorruptedException("The ontology-xml is not valide rdf/xml."
@@ -142,10 +142,10 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
         if (DESCRIPTION_PATH.equals(currentPath)
             && element.getNamespace().equals(Constants.RDF_NAMESPACE_URI)) {
-            if (!inRdfType) {
+            if (! this.inRdfType) {
                 this.predicate = null;
             }
-            inDescription = false;
+            this.inDescription = false;
         }
 
         if (this.predicate != null

@@ -36,11 +36,11 @@ public class UserAccountHandler extends DefaultHandler {
     private String accountName;
 
     public String getAccountId() {
-        return accountId;
+        return this.accountId;
     }
 
     public String getAccountName() {
-        return accountName;
+        return this.accountName;
     }
 
     /*

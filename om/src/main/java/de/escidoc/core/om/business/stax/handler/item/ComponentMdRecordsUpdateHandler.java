@@ -59,9 +59,9 @@ import java.util.regex.Pattern;
  */
 public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
-    private String componentPath;
+    private final String componentPath;
 
     private String name;
 
@@ -107,9 +107,9 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
         throws MissingAttributeValueException {
         final String curPath = parser.getCurPath();
         final String theName = element.getLocalName();
-        if (curPath.startsWith(componentPath) || componentPath.length() == 0) {
+        if (curPath.startsWith(this.componentPath) || componentPath.length() == 0) {
 
-            if (curPath.equals(componentPath)) {
+            if (curPath.equals(this.componentPath)) {
 
                 final int indexOfObjid =
                     element.indexOfAttribute(null,
@@ -118,7 +118,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                     final String value =
                         element.getAttribute(indexOfObjid).getValue();
                     if (value != null && value.length() > 0) {
-                        componentId = value;
+                        this.componentId = value;
                     }
                 }
                 final int indexOfHref =
@@ -130,26 +130,27 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
                         final Matcher m1 = PATTERN_OBJID_IN_HREF.matcher(value);
                         if (m1.find()) {
-                            componentId = m1.group(1);
+                            this.componentId = m1.group(1);
                         }
                     }
                 }
             }
-            else if (isInside && !isRootMetadataElement) {
-                isRootMetadataElement = true;
+            else if (this.isInside && ! this.isRootMetadataElement) {
+                this.isRootMetadataElement = true;
                 if (this.name.equals(Elements.MANDATORY_MD_RECORD_NAME)) {
                     this.escidocMdRecordNameSpace = element.getNamespace();
                     this.escidocMdNamespacesMap.put(this.componentId,
                         this.escidocMdRecordNameSpace);
                 }
             }
-            else if (curPath.equals(componentPath + "/md-records")) {
-                this.componentMdRecords = this.metadataAttributes.containsKey(componentId) ? this.metadataAttributes.get(componentId) : new HashMap<String, Map<String, String>>();
+            else if (curPath.equals(this.componentPath + "/md-records")) {
+                this.componentMdRecords = this.metadataAttributes.containsKey(this.componentId) ? this.metadataAttributes.get(
+                        this.componentId) : new HashMap<String, Map<String, String>>();
             }
-            else if (curPath.equals(componentPath + "/md-records/md-record")) {
+            else if (curPath.equals(this.componentPath + "/md-records/md-record")) {
 
                 try {
-                    name = element.getAttribute(null, "name").getValue();
+                    this.name = element.getAttribute(null, "name").getValue();
                     if (name.length() == 0) {
                         throw new MissingAttributeValueException(
                             "The value of the"
@@ -166,7 +167,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
                         LOGGER.debug("Error accessing attribute.", e);
                     }
                 }
-                isInside = true;
+                this.isInside = true;
 
                 String typeValue = null;
 
@@ -200,7 +201,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
 
                 componentMdRecords.put(this.name, md);
                 // keep in mind, that new components are ignored at this point.
-                if (componentId != null) {
+                if (this.componentId != null) {
                     metadataAttributes.put(this.componentId,
                         this.componentMdRecords);
                 }
@@ -220,10 +221,10 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
      */
     @Override
     public EndElement endElement(final EndElement element) {
-        if (parser.getCurPath().equals(componentPath + "/md-records/md-record")) {
+        if (parser.getCurPath().equals(this.componentPath + "/md-records/md-record")) {
             this.name = null;
-            isInside = false;
-            isRootMetadataElement = false;
+            this.isInside = false;
+            this.isRootMetadataElement = false;
         }
         else if (componentPath.equals(parser.getCurPath())) {
             this.escidocMdRecordNameSpace = null;
@@ -239,7 +240,7 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
      * @return Attributes of md-record element.
      */
     public Map<String, Map<String, Map<String, String>>> getMetadataAttributes() {
-        return metadataAttributes;
+        return this.metadataAttributes;
     }
 
     /**

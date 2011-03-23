@@ -45,13 +45,13 @@ import javax.naming.directory.NoSuchAttributeException;
  */
 public class OptimisticLockingHandler extends DefaultHandler {
 
-    private String objid;
+    private final String objid;
 
-    private String objectType;
+    private final String objectType;
 
     private boolean done;
 
-    private String lastModifiedDate;
+    private final String lastModifiedDate;
 
     private static final String MODIFIED_DATE_ATT_NAME =
         "last-modification-date";
@@ -88,7 +88,7 @@ public class OptimisticLockingHandler extends DefaultHandler {
     public StartElement startElement(final StartElement element)
         throws OptimisticLockingException, MissingAttributeValueException,
         WebserverSystemException, InvalidContentException {
-        if (!done) {
+        if (! this.done) {
             final Attribute requestedDate;
             try {
                 requestedDate =
@@ -102,12 +102,11 @@ public class OptimisticLockingHandler extends DefaultHandler {
             }
 
             final String requestedModificationDate = requestedDate.getValue();
-            if (lastModifiedDate != null) {
-                Utility.getInstance().checkOptimisticLockingCriteria(
-                    lastModifiedDate, requestedModificationDate,
-                    objectType + " with id " + objid);
+            if (this.lastModifiedDate != null) {
+                Utility.getInstance().checkOptimisticLockingCriteria(this.lastModifiedDate, requestedModificationDate,
+                        this.objectType + " with id " + this.objid);
             }
-            done = true;
+            this.done = true;
 
         }
         return element;

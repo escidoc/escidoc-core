@@ -3,54 +3,67 @@
  */
 package de.escidoc.core.aa.service;
 
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  * Service endpoint interface for ActionHandler.
  */
-public interface ActionHandlerService extends java.rmi.Remote {
+public interface ActionHandlerService extends Remote {
 
-    java.lang.String createUnsecuredActions(java.lang.String contextId, java.lang.String actions,
-                                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String createUnsecuredActions(String contextId, String actions,
+                                            SecurityContext securityContext)
+            throws ContextNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String createUnsecuredActions(java.lang.String contextId, java.lang.String actions,
-                                            java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String createUnsecuredActions(String contextId, String actions,
+                                            String authHandle, Boolean restAccess)
+            throws ContextNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void deleteUnsecuredActions(java.lang.String contextId,
-                                org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void deleteUnsecuredActions(String contextId,
+                                SecurityContext securityContext)
+            throws ContextNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void deleteUnsecuredActions(java.lang.String contextId, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void deleteUnsecuredActions(String contextId, String authHandle, Boolean restAccess)
+            throws ContextNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveUnsecuredActions(java.lang.String contextId,
-                                              org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveUnsecuredActions(String contextId,
+                                              SecurityContext securityContext)
+            throws ContextNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveUnsecuredActions(java.lang.String contextId, java.lang.String authHandle,
-                                              java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveUnsecuredActions(String contextId, String authHandle,
+                                              Boolean restAccess)
+            throws ContextNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
 }

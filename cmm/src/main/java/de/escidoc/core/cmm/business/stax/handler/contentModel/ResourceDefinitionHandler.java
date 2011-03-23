@@ -72,7 +72,7 @@ public class ResourceDefinitionHandler extends DefaultHandler {
      * @return The resource definitions.
      */
     public Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
-        return resourceDefinitions;
+        return this.resourceDefinitions;
     }
 
     /**

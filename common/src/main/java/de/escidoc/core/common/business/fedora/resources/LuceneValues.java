@@ -158,8 +158,7 @@ public final class LuceneValues extends Values {
      */
     @Override
     public String getAndCondition(final String operand1, final String operand2) {
-        return MessageFormat.format("({0}) AND ({1})", new Object[] { operand1,
-            operand2 });
+        return MessageFormat.format("({0}) AND ({1})", operand1, operand2);
     }
 
     /**
@@ -187,8 +186,7 @@ public final class LuceneValues extends Values {
      */
     @Override
     public String getEqualCondition(final String operand1, final String operand2) {
-        return MessageFormat.format("{0}:{1}", new Object[] { operand1,
-            operand2 });
+        return MessageFormat.format("{0}:{1}", operand1, operand2);
     }
 
     /**
@@ -247,7 +245,6 @@ public final class LuceneValues extends Values {
      */
     @Override
     public String getOrCondition(final String operand1, final String operand2) {
-        return MessageFormat.format("({0}) OR ({1})", new Object[] { operand1,
-            operand2 });
+        return MessageFormat.format("({0}) OR ({1})", operand1, operand2);
     }
 }

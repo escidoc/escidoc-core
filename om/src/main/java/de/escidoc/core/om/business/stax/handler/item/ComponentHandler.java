@@ -88,6 +88,7 @@ public class ComponentHandler extends DefaultHandler {
      * 
      * @param parser
      *            StAX parser.
+     * @param item
      */
     public ComponentHandler(final StaxParser parser, final ItemCreate item) {
         this.parser = parser;
@@ -129,13 +130,13 @@ public class ComponentHandler extends DefaultHandler {
                 // component element.
                 this.parsingProperties = true;
                 this.propertiesHandler =
-                    new ComponentPropertiesHandler2(parser);
+                    new ComponentPropertiesHandler2(this.parser);
                 this.propertiesHandler.startElement(element);
             }
             else if (XPATH_COMPONENT_METADATA.equals(currentPath)) {
                 this.parsingMetaData = true;
                 this.metadataHandler =
-                    new MetadataHandler2(parser,
+                    new MetadataHandler2(this.parser,
                         "/item/components/component/md-records/md-record");
                 this.metadataHandler.startElement(element);
             }

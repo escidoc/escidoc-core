@@ -51,6 +51,7 @@ import de.escidoc.core.common.exceptions.application.violated.ResourceInUseExcep
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 import javax.xml.stream.XMLStreamException;
+import java.lang.String;
 import java.net.MalformedURLException;
 import java.util.Map;
 
@@ -94,7 +95,7 @@ public class ContentModelHandler
      * @throws MissingMethodParameterException
      * @throws XMLStreamException
      * @throws MalformedURLException
-     * @see de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface#create(java.lang.String)
+     * @see de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData) throws InvalidContentException,

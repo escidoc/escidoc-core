@@ -61,7 +61,7 @@ public class KeyValuePair implements Serializable {
      * @return Returns the key.
      */
     public final String getKey() {
-        return key;
+        return this.key;
     }
 
     /**
@@ -76,7 +76,7 @@ public class KeyValuePair implements Serializable {
      * @return Returns the value.
      */
     public final String getValue() {
-        return value;
+        return this.value;
     }
 
     /**

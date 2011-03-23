@@ -683,6 +683,7 @@ public class Login extends HttpServlet {
      * @throws MissingParameterException
      *             Thrown if the target parameter is not found.
      *
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private String createRedirectUrl(
         final HttpServletRequest request, final String userHandle)
@@ -703,6 +704,7 @@ public class Login extends HttpServlet {
      *         parameter. This is <code>null</code> if no redirect Url has been
      *         provided.
      *
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
      */
     private static String createRedirectUrl(final String redirectUrl, final String userHandle)
         throws WebserverSystemException {
@@ -968,7 +970,7 @@ public class Login extends HttpServlet {
         throws WebserverSystemException {
 
         final Cookie cookie = new Cookie(name, value);
-        cookie.setVersion(getEscidocCookieVersion());
+        cookie.setVersion((int) getEscidocCookieVersion());
         cookie.setMaxAge(maxAge);
         cookie.setPath("/");
         return cookie;
@@ -1054,12 +1056,12 @@ public class Login extends HttpServlet {
                     .toLowerCase().trim();
             if ("netscape".equals(configProperty)
                 || "0".equals(configProperty)) {
-                escidocCookieVersion = 0;
+                escidocCookieVersion = (byte) 0;
             }
             else if ("rfc2109".equals(configProperty)
                 || "rfc 2109".equals(configProperty)
                 || "1".equals(configProperty)) {
-                escidocCookieVersion = 1;
+                escidocCookieVersion = (byte) 1;
             }
             else {
                 throw new WebserverSystemException(

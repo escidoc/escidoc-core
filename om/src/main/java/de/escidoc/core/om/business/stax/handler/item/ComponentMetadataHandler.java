@@ -57,11 +57,11 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
     public static final String CONTAINER = "/container";
 
-    private String elementPath;
+    private final String elementPath;
 
-    private String mdRecordsPath;
+    private final String mdRecordsPath;
 
-    private String componentPath;
+    private final String componentPath;
 
     private String componentId;
 
@@ -100,7 +100,7 @@ public class ComponentMetadataHandler extends DefaultHandler {
         this.parser = parser;
         this.componentPath = componentPath;
         this.mdRecordsPath = componentPath + "/md-records";
-        this.elementPath = mdRecordsPath + "/md-record";
+        this.elementPath = this.mdRecordsPath + "/md-record";
     }
 
     /**
@@ -145,7 +145,7 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
             }
 
-            isInside = true;
+            this.isInside = true;
             String typeValue = null;
             final int indexOfType = element.indexOfAttribute(null, "md-type");
             if (indexOfType != -1) {
@@ -173,19 +173,19 @@ public class ComponentMetadataHandler extends DefaultHandler {
 
 
         }
-        else if (isInside && !isRootMetadataElement) {
-            isRootMetadataElement = true;
+        else if (this.isInside && ! this.isRootMetadataElement) {
+            this.isRootMetadataElement = true;
             if (this.nameValue.equals(Elements.MANDATORY_MD_RECORD_NAME)) {
                 this.escidocMdRecordNameSpace = element.getNamespace();
-                this.escidocMdNamespacesMap.put(componentId,
+                this.escidocMdNamespacesMap.put(this.componentId,
                     this.escidocMdRecordNameSpace);
             }
 
         }
         else if (componentPath.equals(currentPath)) {
-            if (pids != null) {
-                componentId = pids.get(number);
-                number++;
+            if (this.pids != null) {
+                this.componentId = pids.get(this.number);
+                this.number++;
             }
         }
         else if (mdRecordsPath.equals(currentPath)) {
@@ -211,11 +211,11 @@ public class ComponentMetadataHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element) {
         if (elementPath.equals(parser.getCurPath())) {
             this.nameValue = null;
-            isInside = false;
-            isRootMetadataElement = false;
+            this.isInside = false;
+            this.isRootMetadataElement = false;
         }
         else if (componentPath.equals(parser.getCurPath())) {
-            componentId = null;
+            this.componentId = null;
             this.componentMdRecords = null;
             this.escidocMdRecordNameSpace = null;
         }

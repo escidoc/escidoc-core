@@ -71,7 +71,7 @@ public class ObjectProperties {
      * @return the status
      */
     public StatusType getStatus() {
-        return status;
+        return this.status;
     }
 
     /**
@@ -86,7 +86,7 @@ public class ObjectProperties {
      * @return the statusComment
      */
     public String getStatusComment() {
-        return statusComment;
+        return this.statusComment;
     }
 
     /**
@@ -101,7 +101,7 @@ public class ObjectProperties {
      * @return the pid
      */
     public String getPid() {
-        return pid;
+        return this.pid;
     }
 
     /**
@@ -116,7 +116,7 @@ public class ObjectProperties {
      * @return the contextId
      */
     public String getContextId() {
-        return contextId;
+        return this.contextId;
     }
 
     /**
@@ -142,28 +142,28 @@ public class ObjectProperties {
      * @return the contentModelId
      */
     public String getContentModelId() {
-        return contentModelId;
+        return this.contentModelId;
     }
 
     /**
      * @return the contentModelId
      */
     public String getOrigin() {
-        return origin;
+        return this.origin;
     }
 
     /**
      * @return the contentModelId
      */
     public String getOriginObjectId() {
-        return originObjectId;
+        return this.originObjectId;
     }
 
     /**
      * @return the contentModelId
      */
     public String getOriginVersionId() {
-        return originVersionId;
+        return this.originVersionId;
     }
 
     /**
@@ -178,7 +178,7 @@ public class ObjectProperties {
      * @return the title
      */
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     /**
@@ -208,7 +208,7 @@ public class ObjectProperties {
      * @return the conextTitle
      */
     public String getContextTitle() {
-        return contextTitle;
+        return this.contextTitle;
     }
 
     /**
@@ -223,7 +223,7 @@ public class ObjectProperties {
      * @return the contentModelTitle
      */
     public String getContentModelTitle() {
-        return contentModelTitle;
+        return this.contentModelTitle;
     }
 
 }

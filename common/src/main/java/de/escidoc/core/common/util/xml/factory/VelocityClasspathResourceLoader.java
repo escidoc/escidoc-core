@@ -48,7 +48,7 @@ public class VelocityClasspathResourceLoader extends ResourceLoader {
      *
      */
     public VelocityClasspathResourceLoader() {
-        loader = new ClasspathResourceLoader();
+        this.loader = new ClasspathResourceLoader();
     }
 
 

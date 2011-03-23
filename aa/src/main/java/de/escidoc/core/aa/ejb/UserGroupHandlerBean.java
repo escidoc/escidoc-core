@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class UserGroupHandlerBean implements SessionBean {
 
-    UserGroupHandlerInterface service = null;
+    UserGroupHandlerInterface service;
     SessionContext sessionCtx;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserGroupHandlerBean.class);
@@ -52,7 +52,7 @@ public class UserGroupHandlerBean implements SessionBean {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory = beanFactoryLocator.useBeanFactory("UserGroupHandler.spring.ejb.context").getFactory();
-            service = (UserGroupHandlerInterface) factory.getBean("service.UserGroupHandler");
+            this.service = (UserGroupHandlerInterface) factory.getBean("service.UserGroupHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception UserGroupHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -60,7 +60,7 @@ public class UserGroupHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

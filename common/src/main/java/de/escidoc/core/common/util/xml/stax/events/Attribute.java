@@ -94,7 +94,7 @@ public class Attribute {
      * @return local name
      */
     public String getLocalName() {
-        return localName;
+        return this.localName;
     }
 
     /**
@@ -113,7 +113,7 @@ public class Attribute {
      * @return namespace
      */
     public String getNamespace() {
-        return namespace;
+        return this.namespace;
     }
 
     /**
@@ -132,7 +132,7 @@ public class Attribute {
      * @return prefix
      */
     public String getPrefix() {
-        return prefix;
+        return this.prefix;
     }
 
     /**
@@ -151,7 +151,7 @@ public class Attribute {
      * @return value of attribute
      */
     public String getValue() {
-        return value;
+        return this.value;
     }
 
     /**

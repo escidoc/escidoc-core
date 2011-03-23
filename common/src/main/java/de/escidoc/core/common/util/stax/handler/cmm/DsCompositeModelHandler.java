@@ -55,7 +55,8 @@ public class DsCompositeModelHandler extends DefaultHandler {
     private final StaxParser parser;
 
     /**
-     * 
+     *
+     * @param parser
      */
     public DsCompositeModelHandler(final StaxParser parser) {
         this.parser = parser;
@@ -63,7 +64,7 @@ public class DsCompositeModelHandler extends DefaultHandler {
     }
 
     public List<DsTypeModel> getDsTypeModels() {
-        return dsTypeModels;
+        return this.dsTypeModels;
     }
 
     @Override
@@ -101,7 +102,7 @@ public class DsCompositeModelHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element) {
 
         if (parser.getCurPath().equals(DS_TYPE_MODEL_PATH)) {
-            this.dsTypeModels.add(dtm);
+            this.dsTypeModels.add(this.dtm);
             this.dtm = null;
         }
 

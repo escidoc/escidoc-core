@@ -119,7 +119,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
         if (isNotReady() && !isInMetadata()) {
             final String localName = element.getLocalName();
             if (XmlUtility.NAME_MODIFIED_BY.equals(localName)) {
-                cacheAttribute(urnModifiedBy, XmlUtility
+                cacheAttribute(this.urnModifiedBy, XmlUtility
                     .getIdFromStartElement(element));
             }
         }
@@ -169,16 +169,16 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
 
         if (isNotReady() && !isInMetadata()) {
             final String localName = element.getLocalName();
-            if (!statusFound && XmlUtility.NAME_PUBLIC_STATUS.equals(localName)) {
-                cacheAttribute(urnStatus, data);
+            if (! this.statusFound && XmlUtility.NAME_PUBLIC_STATUS.equals(localName)) {
+                cacheAttribute(this.urnStatus, data);
                 // in an item representation, status is contained in item
                 // properties and in the component properties. We have to mark
                 // the found item status to prevent overriding with component
                 // status.
-                statusFound = true;
+                this.statusFound = true;
             }
             else if (XmlUtility.NAME_STATUS.equals(localName)) {
-                cacheAttribute(urnVersionStatus, data);
+                cacheAttribute(this.urnVersionStatus, data);
             }
         }
 
@@ -202,7 +202,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
         final String attributeId,
         final Collection<StringAttribute> attributeValues) {
 
-        cacheAttribute(ctx, resourceId, attributeId, attributeValues);
+        cacheAttribute(this.ctx, this.resourceId, attributeId, attributeValues);
     }
 
     /**
@@ -219,7 +219,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
     protected void cacheAttribute(
         final String attributeId, final String attributeValue) {
 
-        cacheAttribute(ctx, resourceId, attributeId, attributeValue);
+        cacheAttribute(this.ctx, this.resourceId, attributeId, attributeValue);
     }
 
     /**
@@ -279,7 +279,7 @@ public class AbstractResourceAttributeStaxHandler extends DefaultHandler {
      * @return the inMetadata
      */
     protected boolean isInMetadata() {
-        return inMetadata;
+        return this.inMetadata;
     }
 
     /**

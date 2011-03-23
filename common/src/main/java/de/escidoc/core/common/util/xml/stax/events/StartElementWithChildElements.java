@@ -104,6 +104,7 @@ public class StartElementWithChildElements extends StartElementWithText {
      *            The element text
      * @param nscontext
      *            TODO
+     * @param position
      */
     public StartElementWithChildElements(final String localName,
         final String namespace, final String prefix,
@@ -134,7 +135,7 @@ public class StartElementWithChildElements extends StartElementWithText {
      */
     public void addChildElement(final StartElementWithText child) {
         if (this.children == null) {
-            children = new ArrayList<StartElementWithText>();
+            this.children = new ArrayList<StartElementWithText>();
         }
         children.add(child);
     }

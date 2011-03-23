@@ -24,7 +24,7 @@ import java.rmi.RemoteException;
 
 public class StatisticDataHandlerBean implements SessionBean {
 
-    StatisticDataHandlerInterface service = null;
+    StatisticDataHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(StatisticDataHandlerBean.class);
 
@@ -33,7 +33,7 @@ public class StatisticDataHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("StatisticDataHandler.spring.ejb.context").getFactory();
-            service = (StatisticDataHandlerInterface) factory.getBean("service.StatisticDataHandler");
+            this.service = (StatisticDataHandlerInterface) factory.getBean("service.StatisticDataHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception StatisticDataHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -41,7 +41,7 @@ public class StatisticDataHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

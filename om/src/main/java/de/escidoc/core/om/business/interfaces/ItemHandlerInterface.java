@@ -148,6 +148,8 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws RelationPredicateNotFoundException
      *             cf. Interface
      * @see ItemHandlerInterface#create(String)
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
      */
     String create(String xmlData) throws MissingContentException,
         ContextNotFoundException, ContentModelNotFoundException,
@@ -251,6 +253,12 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws MissingAttributeValueException
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingContentException
+     * @throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
      */
     String update(String id, String xmlData) throws ItemNotFoundException,
         FileNotFoundException, InvalidContextException, InvalidStatusException,
@@ -299,6 +307,11 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws OptimisticLockingException
      *             Thrown in case of an optimistic locking error.
      * @throws MissingAttributeValueException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingContentException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ComponentNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
      */
     String createComponent(final String id, final String xmlData)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -447,6 +460,8 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ReadonlyVersionException
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
     String updateComponent(
         final String id, final String componentId, final String xmlData)
@@ -652,6 +667,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             found.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
     @Deprecated
     String createMetadataRecord(final String id, final String xmlData)
@@ -691,6 +707,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             found.
      * @throws AuthorizationException
      *             Thrown if the authorization fails.
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException
      */
     String createMdRecord(final String id, final String xmlData)
         throws ItemNotFoundException, SystemException,
@@ -1163,6 +1180,7 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ComponentNotFoundException
      *             Thrown if a component with the specified id could not be
      *             found.
+     * @throws de.escidoc.core.common.exceptions.application.violated.AlreadyWithdrawnException
      */
     String withdraw(final String id, final String taskParam)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -1403,6 +1421,17 @@ public interface ItemHandlerInterface extends IngestableResource {
      *             Thrown in case of an invalid status.
      * @throws SystemException
      *             If an unexpected error occurs.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
+     * @throws de.escidoc.core.common.exceptions.application.violated.LockingException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException
+     * @throws de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException
      */
     String addContentRelations(final String id, final String taskParameter)
         throws SystemException, ItemNotFoundException,

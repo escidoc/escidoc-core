@@ -225,6 +225,8 @@ public interface SoapExceptionGenerationInterface {
      * @throws XmlParserSystemException
      * @throws TmeException
      * @throws UserGroupHierarchyViolationExceptionTODO
+     * @throws de.escidoc.core.common.exceptions.application.violated.UserGroupHierarchyViolationException
+     * @throws de.escidoc.core.common.exceptions.application.violated.ResourceInUseException
      */
     void generateExceptions() throws EscidocException,
         AggregationDefinitionNotFoundException, ApplicationException,

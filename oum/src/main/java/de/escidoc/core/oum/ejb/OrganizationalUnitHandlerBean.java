@@ -41,7 +41,7 @@ import java.util.Map;
 
 public class OrganizationalUnitHandlerBean implements SessionBean {
 
-    OrganizationalUnitHandlerInterface service = null;
+    OrganizationalUnitHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationalUnitHandlerBean.class);
 
@@ -50,7 +50,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("OrganizationalUnitHandler.spring.ejb.context").getFactory();
-            service = (OrganizationalUnitHandlerInterface) factory.getBean("service.OrganizationalUnitHandler");
+            this.service = (OrganizationalUnitHandlerInterface) factory.getBean("service.OrganizationalUnitHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception OrganizationalUnitHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -58,7 +58,7 @@ public class OrganizationalUnitHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

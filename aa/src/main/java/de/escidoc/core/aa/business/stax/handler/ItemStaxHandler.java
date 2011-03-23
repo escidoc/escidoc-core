@@ -120,8 +120,7 @@ public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {
 
         super.endElement(element);
         if (isNotReady() && !isInMetadata() && XmlUtility.NAME_COMPONENTS.equals(element.getLocalName())) {
-            cacheAttribute(AttributeIds.URN_ITEM_COMPONENT_ATTR,
-                componentIds);
+            cacheAttribute(AttributeIds.URN_ITEM_COMPONENT_ATTR, this.componentIds);
             setReady();
         }
 

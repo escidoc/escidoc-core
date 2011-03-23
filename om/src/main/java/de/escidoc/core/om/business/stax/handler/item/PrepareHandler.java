@@ -81,11 +81,11 @@ public class PrepareHandler extends DefaultHandler {
         if (ELEMENT_PATH.equals(currentPath)) {
 
             this.storageValue = getStorageAttribute(element);
-            inContent = true;
+            this.inContent = true;
             final Map<String, String> componentBinary =
                 new HashMap<String, String>();
             componentBinary.put("storage", this.storageValue);
-            binaryData.put(componentNumber, componentBinary);
+            binaryData.put(this.componentNumber, componentBinary);
 
             final int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");
@@ -102,20 +102,20 @@ public class PrepareHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws MissingContentException {
 
-        if (inContent) {
-            final Map<String, String> componentBinary = (HashMap<String, String>) binaryData.get(componentNumber);
+        if (this.inContent) {
+            final Map<String, String> componentBinary = binaryData.get(this.componentNumber);
             if (this.content == null) {
                 if (this.uploadUrl != null && this.uploadUrl.length() > 0) {
                     // FIXME use constant as in
                     // ItemHandlerCreate.handleComponent()
                     componentBinary.put("uploadUrl", this.uploadUrl);
                 } else {
-                    throw new MissingContentException("The content of component with id " + componentNumber
+                    throw new MissingContentException("The content of component with id " + this.componentNumber
                             + " is missing");
                 }
             }
-            inContent = false;
-            componentNumber++;
+            this.inContent = false;
+            this.componentNumber++;
             this.uploadUrl = null;
             this.content = null;
             this.storageValue = null;
@@ -127,10 +127,10 @@ public class PrepareHandler extends DefaultHandler {
     public String characters(final String s, final StartElement element)
         throws InvalidContentException {
 
-        if (inContent) {
+        if (this.inContent) {
 
             final Map<String, String> componentBinary =
-                binaryData.get(componentNumber);
+                binaryData.get(this.componentNumber);
             if (s != null && s.length() > 0) {
                 if (this.storageValue
                     .equals(de.escidoc.core.common.business.fedora.Constants.STORAGE_EXTERNAL_URL)

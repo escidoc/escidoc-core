@@ -46,7 +46,7 @@ public class RootWhereGroupVo {
      * @return the additionalWhereFieldVos
      */
     public Collection<AdditionalWhereFieldVo> getAdditionalWhereFieldVos() {
-        return additionalWhereFieldVos;
+        return this.additionalWhereFieldVos;
     }
 
     /**
@@ -62,7 +62,7 @@ public class RootWhereGroupVo {
      * @return the rootWhereFieldVo
      */
     public RootWhereFieldVo getRootWhereFieldVo() {
-        return rootWhereFieldVo;
+        return this.rootWhereFieldVo;
     }
 
     /**

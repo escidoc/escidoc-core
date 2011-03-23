@@ -91,7 +91,7 @@ public class OuListOuIdHandler extends DefaultHandler {
      * @return the ids
      */
     public List<String> getIds() {
-        return ids;
+        return this.ids;
     }
 
 }

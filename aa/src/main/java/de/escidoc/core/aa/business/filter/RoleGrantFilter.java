@@ -156,7 +156,7 @@ public class RoleGrantFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                detachedCriteria =
+                this.detachedCriteria =
                     DetachedCriteria.forClass(RoleGrant.class, "roleGrant");
 
                 final Criterion criterion = evaluate(parser.parse(query));
@@ -261,7 +261,7 @@ public class RoleGrantFilter extends CqlFilter {
      * @return list of the collected user group ids
      */
     public Set<String> getGroupIds() {
-        return groupIds;
+        return this.groupIds;
     }
 
     /**
@@ -283,7 +283,7 @@ public class RoleGrantFilter extends CqlFilter {
      * @return list of the collected user account ids
      */
     public Set<String> getUserIds() {
-        return userIds;
+        return this.userIds;
     }
 
     /**
@@ -321,15 +321,15 @@ public class RoleGrantFilter extends CqlFilter {
         // users
         Criterion userCriterion = null;
 
-        if (userIds != null && !userIds.isEmpty()) {
-            userCriterion = getInRestrictions(userIds, "userId");
+        if (this.userIds != null && !userIds.isEmpty()) {
+            userCriterion = getInRestrictions(this.userIds, "userId");
         }
 
         // groups
         Criterion groupCriterion = null;
 
-        if (groupIds != null && !groupIds.isEmpty()) {
-            groupCriterion = getInRestrictions(groupIds, "groupId");
+        if (this.groupIds != null && !groupIds.isEmpty()) {
+            groupCriterion = getInRestrictions(this.groupIds, "groupId");
         }
 
         // concatenate users and groups with OR

@@ -67,11 +67,11 @@ public class PurgeServiceImpl implements InitializingBean {
             // TODO: Dependency Auflösung mit Spring wird hier umgangen. Spring
             // kann somit rekursive Abhängigkeiten nicht auflösen. BeanLocator
             // muss entfernt werden!
-            fedoraUtility =
+            this.fedoraUtility =
                 (FedoraUtility) BeanLocator.getBean(
                     BeanLocator.COMMON_FACTORY_ID,
                     "escidoc.core.business.FedoraUtility");
-            tripleStoreUtility = BeanLocator.locateTripleStoreUtility();
+            this.tripleStoreUtility = BeanLocator.locateTripleStoreUtility();
         }
         catch (final WebserverSystemException e) {
             LOGGER.error("could not localize bean", e);

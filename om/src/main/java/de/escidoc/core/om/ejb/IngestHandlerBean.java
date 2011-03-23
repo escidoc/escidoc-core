@@ -22,7 +22,7 @@ import java.rmi.RemoteException;
 
 public class IngestHandlerBean implements SessionBean {
 
-    IngestHandlerInterface service = null;
+    IngestHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(IngestHandlerBean.class);
 
@@ -30,7 +30,7 @@ public class IngestHandlerBean implements SessionBean {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory = beanFactoryLocator.useBeanFactory("IngestHandler.spring.ejb.context").getFactory();
-            service = (IngestHandlerInterface) factory.getBean("service.IngestHandler");
+            this.service = (IngestHandlerInterface) factory.getBean("service.IngestHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception IngestHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -38,7 +38,7 @@ public class IngestHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

@@ -51,7 +51,7 @@ public class ContentModelPropertiesHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private ContentModelProperties properties;
+    private final ContentModelProperties properties;
 
     private static final String XPATH_CONTENT_MODEL =
             '/' + Elements.ELEMENT_CONTENT_MODEL;

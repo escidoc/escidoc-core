@@ -3,99 +3,119 @@
  */
 package de.escidoc.core.aa.service;
 
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.application.violated.RoleInUseViolationException;
+import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.Map;
+
 /**
  * Service endpoint interface for RoleHandler.
  */
-public interface RoleHandlerService extends java.rmi.Remote {
+public interface RoleHandlerService extends Remote {
 
-    java.lang.String create(java.lang.String xmlData,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String create(String xmlData,
+                            SecurityContext securityContext)
+            throws UniqueConstraintViolationException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String create(String xmlData, String authHandle, Boolean restAccess)
+            throws UniqueConstraintViolationException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    void delete(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.RoleInUseViolationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void delete(String id, SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            RoleNotFoundException,
+            RoleInUseViolationException,
+            SystemException, RemoteException;
 
-    void delete(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.RoleInUseViolationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void delete(String id, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            RoleNotFoundException,
+            RoleInUseViolationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieve(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String id, SecurityContext securityContext)
+            throws RoleNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieve(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String id, String authHandle, Boolean restAccess)
+            throws RoleNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String update(java.lang.String id, java.lang.String xmlData,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String update(String id, String xmlData,
+                            SecurityContext securityContext)
+            throws RoleNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingAttributeValueException,
+            UniqueConstraintViolationException,
+            OptimisticLockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String update(java.lang.String id, java.lang.String xmlData, java.lang.String authHandle,
-                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.RoleNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.violated.UniqueConstraintViolationException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String update(String id, String xmlData, String authHandle,
+                            Boolean restAccess)
+            throws RoleNotFoundException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            MissingAttributeValueException,
+            UniqueConstraintViolationException,
+            OptimisticLockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveRoles(java.util.Map filter,
-                                   org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException, java.rmi.RemoteException;
+    String retrieveRoles(Map filter,
+                                   SecurityContext securityContext)
+            throws MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            InvalidSearchQueryException, RemoteException;
 
-    java.lang.String retrieveRoles(java.util.Map filter, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException, java.rmi.RemoteException;
+    String retrieveRoles(Map filter, String authHandle, Boolean restAccess)
+            throws MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            InvalidSearchQueryException, RemoteException;
 
 }

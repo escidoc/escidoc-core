@@ -126,7 +126,7 @@ public class ContainerHandlerCreate extends ContainerResourceListener {
         }
 
         for (final Entry<String, Object> entry : containerDataStreams.entrySet()) {
-            final String outsideKey = (String) entry.getKey();
+            final String outsideKey = entry.getKey();
             if (entry.getValue() instanceof ByteArrayOutputStream) {
                 final ByteArrayOutputStream outsideValue = (ByteArrayOutputStream) entry.getValue();
                 try {

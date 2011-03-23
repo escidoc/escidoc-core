@@ -30,6 +30,7 @@ package de.escidoc.core.om.service;
 
 import de.escidoc.core.common.business.fedora.EscidocBinaryContent;
 import de.escidoc.core.common.business.filter.LuceneRequestParameters;
+import de.escidoc.core.common.business.interfaces.ResourceHandlerInterface;
 import de.escidoc.core.common.exceptions.application.invalid.ContextNotEmptyException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
 import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
@@ -55,6 +56,7 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementVio
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 
+import java.lang.String;
 import java.util.Map;
 
 /**
@@ -82,7 +84,7 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#create(java.lang.String)
+     * @see ResourceHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData)
@@ -98,7 +100,7 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#delete(java.lang.String)
+     * @see ResourceHandlerInterface#delete(String)
      */
     @Override
     public void delete(final String id)
@@ -111,7 +113,7 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.common.business.interfaces.ResourceHandlerInterface#retrieve(java.lang.String)
+     * @see ResourceHandlerInterface#retrieve(String)
      */
     @Override
     public String retrieve(final String id)
@@ -124,7 +126,7 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveProperties(java.lang.String)
+     * @see ContextHandlerInterface#retrieveProperties(String)
      */
     @Override
     public String retrieveProperties(final String id) throws ContextNotFoundException, SystemException {
@@ -167,7 +169,7 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#open(java.lang.String, java.lang.String)
+     * @see ContextHandlerInterface#open(String, String)
      */
     @Override
     public String open(final String id, final String taskParam)
@@ -181,7 +183,7 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#close(java.lang.String, java.lang.String)
+     * @see ContextHandlerInterface#close(String, String)
      */
     @Override
     public String close(final String id, final String taskParam)
@@ -195,7 +197,7 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface #retrieveContexts(java.util.Map)
+     * @see ContextHandlerInterface #retrieveContexts(java.util.Map)
      */
     @Override
     public String retrieveContexts(final Map<String, String[]> filter)
@@ -206,8 +208,8 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveMembers(java.lang.String,
-     *      java.util.Map)
+     * @see ContextHandlerInterface#retrieveMembers(String,
+     *      Map)
      */
     @Override
     public String retrieveMembers(final String id, final Map<String, String[]> filter)
@@ -220,7 +222,7 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveAdminDescriptor(java.lang.String)
+     * @see ContextHandlerInterface#retrieveAdminDescriptor(String)
      */
     @Override
     public String retrieveAdminDescriptor(final String id, final String name)
@@ -233,7 +235,7 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#retrieveAdminDescriptor(java.lang.String)
+     * @see ContextHandlerInterface#retrieveAdminDescriptor(String)
      */
     @Override
     public String retrieveAdminDescriptors(final String id)
@@ -246,8 +248,8 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see de.escidoc.core.om.service.interfaces.ContextHandlerInterface#updateAdminDescriptor(java.lang.String,
-     *      java.lang.String)
+     * @see ContextHandlerInterface#updateAdminDescriptor(String,
+     *      String)
      */
     @Override
     public String updateAdminDescriptor(final String id, final String xmlData)

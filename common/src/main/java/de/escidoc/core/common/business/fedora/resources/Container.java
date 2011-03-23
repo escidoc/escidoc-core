@@ -205,7 +205,7 @@ public class Container extends GenericVersionableResourcePid
                 throw new FedoraSystemException(e);
             }
         }
-        return cts;
+        return this.cts;
     }
 
     /**
@@ -693,11 +693,11 @@ public class Container extends GenericVersionableResourcePid
                 this.escidocRelsExt.setStream(getRelsExt().getStream());
             }
             else {
-                escidocRelsExt =
+                this.escidocRelsExt =
                     new Datastream(DATASTREAM_ESCIDOC_RELS_EXT, getId(),
                         getRelsExt().getStream(), "text/xml");
                 escidocRelsExt.setControlGroup("M");
-                setEscidocRelsExt(escidocRelsExt);
+                setEscidocRelsExt(this.escidocRelsExt);
 
             }
         }

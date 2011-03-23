@@ -56,15 +56,15 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
         }
         else if (event instanceof EndElement) {
             final EndElement element = event.asEndElement();
-            if (workaroundForItemList
+            if (this.workaroundForItemList
                 && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {
                 return false;
             }
         }
 
-        if (inFilteredEvent) {
+        if (this.inFilteredEvent) {
             if (event instanceof EndElement) {
-                inFilteredEvent = false;
+                this.inFilteredEvent = false;
             }
             return false;
         }
@@ -74,7 +74,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
 
     public boolean accept(final StartElement element) {
         try {
-            if (workaroundForItemList
+            if (this.workaroundForItemList
                 && "RDF".equalsIgnoreCase(element.getName().getLocalPart())) {
                 return false;
             }
@@ -85,7 +85,9 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
             else {
                 final QName name = element.getName();
                 final String predicate = name.getNamespaceURI() + name.getLocalPart();
-                if (OntologyUtility.checkPredicate(predicate) || workaroundForItemList && predicate.startsWith(Constants.DC_NS_URI) || workaroundForItemList
+                if (OntologyUtility.checkPredicate(predicate) ||
+                        this.workaroundForItemList && predicate.startsWith(Constants.DC_NS_URI) ||
+                        this.workaroundForItemList
                         && ("created-by-title".equals(name.getLocalPart())
                         || "context-title".equals(name.getLocalPart())
                         || "latest-version.date".equals(name.getLocalPart())
@@ -96,7 +98,7 @@ public class RDFRegisteredOntologyFilter implements EventFilter {
                 }
                 // workaround for item list is to allow dc and some specials
                 else {
-                    inFilteredEvent = true;
+                    this.inFilteredEvent = true;
                     return false;
                 }
             }

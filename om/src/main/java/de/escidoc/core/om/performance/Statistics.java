@@ -60,7 +60,7 @@ public class Statistics {
      * created.
      */
     public Statistics() {
-        statisticsMap = new HashMap<String, SummaryStatistics>();
+        this.statisticsMap = new HashMap<String, SummaryStatistics>();
     }
 
     /**
@@ -71,7 +71,7 @@ public class Statistics {
      */
     public void addValueToStatistics(final String key, final long value) {
         final SummaryStatistics statistics = getStatistics(key);
-        statistics.addValue(value);
+        statistics.addValue((double) value);
     }
 
     /**
@@ -82,7 +82,7 @@ public class Statistics {
      */
     private SummaryStatistics getStatistics(final String key) {
         SummaryStatistics statistics = statisticsMap.get(key);
-        if (statistics == null || statistics.getN() >= maxValues) {
+        if (statistics == null || statistics.getN() >= (long) this.maxValues) {
             statistics = new SummaryStatistics();
             statisticsMap.put(key, statistics);
         }

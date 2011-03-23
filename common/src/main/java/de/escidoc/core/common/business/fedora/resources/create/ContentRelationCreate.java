@@ -295,7 +295,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @return URI with predicate
      */
     public URI getType() {
-        return type;
+        return this.type;
     }
 
     /**
@@ -314,7 +314,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @return get list of subjects.
      */
     public String getSubject() {
-        return subject;
+        return this.subject;
     }
 
     /**
@@ -333,7 +333,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @return version number of subject
      */
     public String getSubjectVersion() {
-        return subjectVersion;
+        return this.subjectVersion;
     }
 
     /**
@@ -352,7 +352,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @return version number of object
      */
     public String getObjectVersion() {
-        return objectVersion;
+        return this.objectVersion;
     }
 
     /**
@@ -371,7 +371,7 @@ public class ContentRelationCreate extends GenericResourceCreate
      * @return get list of objects.
      */
     public String getObject() {
-        return object;
+        return this.object;
     }
 
     /**

@@ -134,7 +134,7 @@ public class RoleHandler implements RoleHandlerInterface {
         final StaxParser sp = new StaxParser(XmlUtility.NAME_ROLE);
 
         final RolePropertiesStaxHandler propertiesHandler =
-            new RolePropertiesStaxHandler(role, roleDao);
+            new RolePropertiesStaxHandler(role, this.roleDao);
         sp.addHandler(propertiesHandler);
         final ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
         sp.addHandler(scopeHandler);
@@ -321,7 +321,7 @@ public class RoleHandler implements RoleHandlerInterface {
             new OptimisticLockingStaxHandler(role.getLastModificationDate());
         sp.addHandler(optimisticLockingHandler);
         final RolePropertiesStaxHandler propertiesHandler =
-            new RolePropertiesStaxHandler(role, roleDao);
+            new RolePropertiesStaxHandler(role, this.roleDao);
         sp.addHandler(propertiesHandler);
         final ScopeStaxHandler scopeHandler = new ScopeStaxHandler(role);
         sp.addHandler(scopeHandler);
@@ -551,14 +551,16 @@ public class RoleHandler implements RoleHandlerInterface {
 
     /**
      * Get the {@link XacmlParser}.
+     * @throws de.escidoc.core.common.exceptions.system.WebserverSystemException
+     * @return
      */
     private XacmlParser getXacmlParser() throws WebserverSystemException {
-        if (xacmlParser == null) {
-            xacmlParser =
+        if (this.xacmlParser == null) {
+            this.xacmlParser =
                 (XacmlParser) BeanLocator.getBean(BeanLocator.AA_FACTORY_ID,
                     "convert.XacmlParser");
         }
-        return xacmlParser;
+        return this.xacmlParser;
     }
 
     /**

@@ -101,7 +101,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      */
     protected PolicyDecisionPointInterface getPdp() {
 
-        return pdp;
+        return this.pdp;
     }
 
     /**
@@ -490,7 +490,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (final ResourceListener contextListener : contextListeners) {
+        for (final ResourceListener contextListener : this.contextListeners) {
             contextListener.resourceModified(id, restXml, soapXml);
         }
     }
@@ -519,7 +519,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (final ResourceListener contextListener : contextListeners) {
+        for (final ResourceListener contextListener : this.contextListeners) {
             contextListener.resourceCreated(id, restXml, soapXml);
         }
     }
@@ -534,7 +534,7 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      *             One of the listeners threw an exception.
      */
     private void fireContextDeleted(final String id) throws SystemException {
-        for (final ResourceListener contextListener : contextListeners) {
+        for (final ResourceListener contextListener : this.contextListeners) {
             contextListener.resourceDeleted(id);
         }
     }

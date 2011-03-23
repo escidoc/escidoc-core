@@ -3,310 +3,335 @@
  */
 package de.escidoc.core.om.service;
 
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.application.violated.LockingException;
+import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.Map;
+
 /**
  * Service endpoint interface for ContentRelationHandler.
  */
-public interface ContentRelationHandlerService extends java.rmi.Remote {
+public interface ContentRelationHandlerService extends Remote {
 
-    java.lang.String create(java.lang.String xmlData,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String create(String xmlData,
+                            SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            MissingAttributeValueException,
+            MissingMethodParameterException,
+            InvalidXmlException,
+            InvalidContentException,
+            ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException,
+            SystemException, RemoteException;
 
-    java.lang.String create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String create(String xmlData, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            MissingAttributeValueException,
+            MissingMethodParameterException,
+            InvalidXmlException,
+            InvalidContentException,
+            ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException,
+            SystemException, RemoteException;
 
-    void delete(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException, java.rmi.RemoteException;
+    void delete(String id, SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            SystemException,
+            LockingException, RemoteException;
 
-    void delete(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException, java.rmi.RemoteException;
+    void delete(String id, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            SystemException,
+            LockingException, RemoteException;
 
-    java.lang.String lock(java.lang.String id, java.lang.String param,
-                          org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException, java.rmi.RemoteException;
+    String lock(String id, String param,
+                          SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            InvalidContentException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            InvalidStatusException, RemoteException;
 
-    java.lang.String lock(java.lang.String id, java.lang.String param, java.lang.String authHandle,
-                          java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException, java.rmi.RemoteException;
+    String lock(String id, String param, String authHandle,
+                          Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            InvalidContentException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            InvalidStatusException, RemoteException;
 
-    java.lang.String unlock(java.lang.String id, java.lang.String param,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException, java.rmi.RemoteException;
+    String unlock(String id, String param,
+                            SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            InvalidContentException,
+            InvalidStatusException, RemoteException;
 
-    java.lang.String unlock(java.lang.String id, java.lang.String param, java.lang.String authHandle,
-                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException, java.rmi.RemoteException;
+    String unlock(String id, String param, String authHandle,
+                            Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            InvalidContentException,
+            InvalidStatusException, RemoteException;
 
-    java.lang.String submit(java.lang.String id, java.lang.String param,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException, java.rmi.RemoteException;
+    String submit(String id, String param,
+                            SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            InvalidContentException, RemoteException;
 
-    java.lang.String submit(java.lang.String id, java.lang.String param, java.lang.String authHandle,
-                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException, java.rmi.RemoteException;
+    String submit(String id, String param, String authHandle,
+                            Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            InvalidContentException, RemoteException;
 
-    java.lang.String release(java.lang.String id, java.lang.String param,
-                             org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException, java.rmi.RemoteException;
+    String release(String id, String param,
+                             SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            InvalidContentException, RemoteException;
 
-    java.lang.String release(java.lang.String id, java.lang.String param, java.lang.String authHandle,
-                             java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException, java.rmi.RemoteException;
+    String release(String id, String param, String authHandle,
+                             Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            InvalidContentException, RemoteException;
 
-    java.lang.String revise(java.lang.String id, java.lang.String param,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException, java.rmi.RemoteException;
+    String revise(String id, String param,
+                            SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            XmlCorruptedException,
+            InvalidContentException, RemoteException;
 
-    java.lang.String revise(java.lang.String id, java.lang.String param, java.lang.String authHandle,
-                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException, java.rmi.RemoteException;
+    String revise(String id, String param, String authHandle,
+                            Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            XmlCorruptedException,
+            InvalidContentException, RemoteException;
 
-    java.lang.String retrieve(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String id, SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieve(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String id, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveContentRelations(java.util.Map parameterMap,
-                                              org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveContentRelations(Map parameterMap,
+                                              SecurityContext securityContext)
+            throws InvalidSearchQueryException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveContentRelations(java.util.Map parameterMap, java.lang.String authHandle,
-                                              java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveContentRelations(Map parameterMap, String authHandle,
+                                              Boolean restAccess)
+            throws InvalidSearchQueryException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveProperties(java.lang.String id,
-                                        org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveProperties(String id,
+                                        SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveProperties(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveProperties(String id, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            SystemException, RemoteException;
 
-    java.lang.String update(java.lang.String id, java.lang.String xmlData,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            java.rmi.RemoteException;
+    String update(String id, String xmlData,
+                            SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            OptimisticLockingException,
+            InvalidContentException,
+            InvalidStatusException,
+            LockingException,
+            MissingAttributeValueException,
+            SystemException,
+            InvalidXmlException,
+            ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException,
+            MissingMethodParameterException,
+            RemoteException;
 
-    java.lang.String update(java.lang.String id, java.lang.String xmlData, java.lang.String authHandle,
-                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            java.rmi.RemoteException;
+    String update(String id, String xmlData, String authHandle,
+                            Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            OptimisticLockingException,
+            InvalidContentException,
+            InvalidStatusException,
+            LockingException,
+            MissingAttributeValueException,
+            SystemException,
+            InvalidXmlException,
+            ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException,
+            MissingMethodParameterException,
+            RemoteException;
 
-    java.lang.String assignObjectPid(java.lang.String id, java.lang.String taskParam,
-                                     org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException,
-            java.rmi.RemoteException;
+    String assignObjectPid(String id, String taskParam,
+                                     SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            SystemException,
+            PidAlreadyAssignedException,
+            RemoteException;
 
-    java.lang.String assignObjectPid(java.lang.String id, java.lang.String taskParam, java.lang.String authHandle,
-                                     java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.PidAlreadyAssignedException,
-            java.rmi.RemoteException;
+    String assignObjectPid(String id, String taskParam, String authHandle,
+                                     Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            OptimisticLockingException,
+            InvalidXmlException,
+            SystemException,
+            PidAlreadyAssignedException,
+            RemoteException;
 
-    java.lang.String retrieveMdRecords(java.lang.String id,
-                                       org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveMdRecords(String id,
+                                       SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveMdRecords(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveMdRecords(String id, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveRegisteredPredicates(org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveRegisteredPredicates(SecurityContext securityContext)
+            throws InvalidContentException,
+            InvalidXmlException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveRegisteredPredicates(java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveRegisteredPredicates(String authHandle, Boolean restAccess)
+            throws InvalidContentException,
+            InvalidXmlException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveMdRecord(java.lang.String id, java.lang.String name,
-                                      org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveMdRecord(String id, String name,
+                                      SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            MdRecordNotFoundException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveMdRecord(java.lang.String id, java.lang.String name, java.lang.String authHandle,
-                                      java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveMdRecord(String id, String name, String authHandle,
+                                      Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            ContentRelationNotFoundException,
+            MdRecordNotFoundException,
+            SystemException, RemoteException;
 
 }

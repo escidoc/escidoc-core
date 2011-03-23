@@ -100,13 +100,19 @@ public final class CollectionsConverter {
         // Generate new object of provided type
         final Map map;
         try {
-            map = (Map) objectClass.newInstance();
+            map = (Map) objectClass.getConstructor().newInstance();
         }
         catch (final IllegalAccessException e) {
             throw new RuntimeException("Cannot access constructor of class "
                 + objectClass.getName(), e);
         }
         catch (final InstantiationException e) {
+            throw new RuntimeException("Cannot instantiate class "
+                + objectClass.getName(), e);
+        } catch(NoSuchMethodException e) {
+            throw new RuntimeException("Cannot instantiate class "
+                + objectClass.getName(), e);
+        } catch(InvocationTargetException e) {
             throw new RuntimeException("Cannot instantiate class "
                 + objectClass.getName(), e);
         }

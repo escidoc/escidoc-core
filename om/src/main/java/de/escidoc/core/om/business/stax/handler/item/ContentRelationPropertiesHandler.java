@@ -50,7 +50,7 @@ public class ContentRelationPropertiesHandler extends DefaultHandler {
 
     private final StaxParser parser;
 
-    private ContentRelationProperties properties;
+    private final ContentRelationProperties properties;
 
     private static final String XPATH_CONTENT_RELATION =
             '/' + Elements.ELEMENT_CONTENT_RELATION;

@@ -61,7 +61,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
     }
 
     public boolean isInRelation() {
-        return inRelation;
+        return this.inRelation;
     }
 
     public void setInRelation(final boolean inRelation) {
@@ -69,7 +69,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
     }
 
     public String getTargetId() {
-        return targetId;
+        return this.targetId;
     }
 
     public void setTargetId(final String targetId) {
@@ -77,7 +77,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
     }
 
     public String getPredicate() {
-        return predicate;
+        return this.predicate;
     }
 
     public void setPredicate(final String predicate) {
@@ -90,12 +90,12 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
         final String curPath = parser.getCurPath();
 
         if (curPath.equals(PATH)) {
-            inRdf = true;
+            this.inRdf = true;
         }
-        if (inRdf
+        if (this.inRdf
             && element.getPrefix().equals(
                 Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT)) {
-            inRelation = true;
+            this.inRelation = true;
 
             final int indexOfResource =
                 element.indexOfAttribute(Constants.RDF_NAMESPACE_URI,
@@ -107,12 +107,12 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
             final String resourceValue =
                     element.getAttribute(indexOfResource).getValue();
             final String[] target = resourceValue.split("/");
-            targetId = target[1];
+            this.targetId = target[1];
             String predicateNs = element.getNamespace();
             predicateNs =
                 predicateNs.substring(0, predicateNs.length() - 1);
             final String predicateValue = element.getLocalName();
-            predicate = predicateNs + '#' + predicateValue;
+            this.predicate = predicateNs + '#' + predicateValue;
         }
         return element;
     }
@@ -120,16 +120,16 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) {
 
-        if (inRelation) {
+        if (this.inRelation) {
             final Map<String, String> relationData =
                 new HashMap<String, String>();
             relations.add(relationData);
-            relationData.put("predicate", predicate);
-            relationData.put("target", targetId);
+            relationData.put("predicate", this.predicate);
+            relationData.put("target", this.targetId);
 
-            targetId = null;
-            predicate = null;
-            inRelation = false;
+            this.targetId = null;
+            this.predicate = null;
+            this.inRelation = false;
         }
 
         return element;

@@ -289,7 +289,7 @@ public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
                         .getRetrieveWhereClause(true,
                             TripleStoreUtility.PROP_COMPONENT,
                             assignedOnObjectId, null, null, null),
-                        assignedOnObjectId, TripleStoreUtility.PROP_COMPONENT, tsu);
+                        assignedOnObjectId, TripleStoreUtility.PROP_COMPONENT, this.tsu);
                 if (itemIds == null || itemIds.isEmpty() || itemIds.size() != 1) {
                     result =
                         CustomEvaluationResultBuilder

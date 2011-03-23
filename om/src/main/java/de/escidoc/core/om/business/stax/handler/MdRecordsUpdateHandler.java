@@ -44,9 +44,9 @@ import java.util.Map;
 
 public class MdRecordsUpdateHandler extends DefaultHandler {
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
-    private String mdRecordsPath;
+    private final String mdRecordsPath;
 
     private String name;
 
@@ -68,7 +68,6 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
 
     /**
      * 
-     * @param itemId
      * @param mdRecordsPath
      * @param parser
      */
@@ -93,17 +92,17 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
         final String curPath = parser.getCurPath();
         final String theName = element.getLocalName();
         final int indexInherited = element.indexOfAttribute(null, "inherited");
-        if (curPath.startsWith(mdRecordsPath) || mdRecordsPath.length() == 0) {
+        if (curPath.startsWith(this.mdRecordsPath) || mdRecordsPath.length() == 0) {
 
-            if (curPath.equals(mdRecordsPath + "/md-record")
+            if (curPath.equals(this.mdRecordsPath + "/md-record")
                 && indexInherited < 0) {
                 // the entire md-record element is stored in fedora, so adjust
                 // all values
-                isInside = true;
+                this.isInside = true;
                 // get name of md-record
 
                 try {
-                    name = element.getAttribute(null, "name").getValue();
+                    this.name = element.getAttribute(null, "name").getValue();
                     if (name.length() == 0) {
                         throw new MissingAttributeValueException(
                             "the value of the"
@@ -112,7 +111,7 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
 
                     }
                     if (name.equals(Elements.MANDATORY_MD_RECORD_NAME)) {
-                        isMandatoryName = true;
+                        this.isMandatoryName = true;
                     }
                 } catch (final NoSuchAttributeException e) {
                     if(LOGGER.isWarnEnabled()) {
@@ -149,9 +148,9 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
                 else {
                     md.put("schema", "unknown");
                 }
-                metadataAttributes.put(name, md);
-            } else if (isInside && !isRootMetadataElement) {
-                isRootMetadataElement = true;
+                metadataAttributes.put(this.name, md);
+            } else if (this.isInside && ! this.isRootMetadataElement) {
+                this.isRootMetadataElement = true;
                 if ("escidoc".equals(this.name)) {
                     this.escidocMdRecordNameSpace = element.getNamespace();
                 }
@@ -174,13 +173,13 @@ public class MdRecordsUpdateHandler extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element)
         throws MissingMdRecordException {
-        if (parser.getCurPath().equals(mdRecordsPath + "/md-record")) {
-            isInside = false;
-            isRootMetadataElement = false;
+        if (parser.getCurPath().equals(this.mdRecordsPath + "/md-record")) {
+            this.isInside = false;
+            this.isRootMetadataElement = false;
             this.name = null;
         }
         else if (mdRecordsPath.equals(parser.getCurPath())
-            && !isMandatoryName && !origin) {
+            && ! this.isMandatoryName && ! this.origin) {
             throw new MissingMdRecordException("Mandatory md-record with a name "
                     + Elements.MANDATORY_MD_RECORD_NAME + " is missing.");
         }

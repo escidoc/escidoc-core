@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for UserManagementWrapper.
  */
-public class UserManagementWrapperSession extends UserManagementWrapperBean
-        implements SessionBean {
+public class UserManagementWrapperSession extends UserManagementWrapperBean {
 
     public void ejbActivate() throws RemoteException {
 

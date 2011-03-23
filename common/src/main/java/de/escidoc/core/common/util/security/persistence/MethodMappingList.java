@@ -70,13 +70,13 @@ public class MethodMappingList {
     public final void setMethodMappings(final Iterable<MethodMapping> methodMappings) {
 
         if (methodMappings == null) {
-            methodMappingsBefore = new ArrayList<MethodMapping>();
-            methodMappingsAfter = new ArrayList<MethodMapping>();
+            this.methodMappingsBefore = new ArrayList<MethodMapping>();
+            this.methodMappingsAfter = new ArrayList<MethodMapping>();
             return;
         }
 
-        methodMappingsBefore = new ArrayList<MethodMapping>();
-        methodMappingsAfter = new ArrayList<MethodMapping>();
+        this.methodMappingsBefore = new ArrayList<MethodMapping>();
+        this.methodMappingsAfter = new ArrayList<MethodMapping>();
 
         for (final MethodMapping methodMapping : methodMappings) {
             if (methodMapping.isExecBefore()) {
@@ -159,7 +159,7 @@ public class MethodMappingList {
      */
     public String toString() {
         return
-            "[methodMappingsBefore=" + methodMappingsBefore + ','
-            + "methodMappingsAfter=" + methodMappingsAfter + ']';
+            "[methodMappingsBefore=" + this.methodMappingsBefore + ','
+            + "methodMappingsAfter=" + this.methodMappingsAfter + ']';
     }
 }

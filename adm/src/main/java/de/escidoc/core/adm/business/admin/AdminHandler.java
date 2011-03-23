@@ -183,10 +183,10 @@ public class AdminHandler {
      * @return Returns the utility.
      */
     private Utility getUtility() {
-        if (utility == null) {
-            utility = Utility.getInstance();
+        if (this.utility == null) {
+            this.utility = Utility.getInstance();
         }
-        return utility;
+        return this.utility;
     }
 
     /**

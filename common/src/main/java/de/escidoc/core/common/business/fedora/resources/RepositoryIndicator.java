@@ -59,7 +59,7 @@ public class RepositoryIndicator implements Serializable {
      * @return true if resource has changed, false if not.
      */
     public boolean isResourceChanged() {
-        return !repositorySynchron;
+        return ! this.repositorySynchron;
     }
 
     /**
@@ -79,7 +79,7 @@ public class RepositoryIndicator implements Serializable {
      * @return true if the resource is to delete from the repository
      */
     public boolean isResourceToDelete() {
-        return resourceToDeleted;
+        return this.resourceToDeleted;
     }
 
     /**
@@ -100,7 +100,7 @@ public class RepositoryIndicator implements Serializable {
      *         otherwise
      */
     public boolean isResourceIsNew() {
-        return resourceIsNew;
+        return this.resourceIsNew;
     }
 
     /**
@@ -121,7 +121,7 @@ public class RepositoryIndicator implements Serializable {
      *         otherwise.
      */
     public boolean isStatusDeleted() {
-        return statusDeleted;
+        return this.statusDeleted;
     }
 
 }

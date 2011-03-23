@@ -102,8 +102,7 @@ public class LockHandler extends JdbcDaoSupport {
 
         try {
             getJdbcTemplate().update(
-                "DELETE FROM om.lockstatus WHERE objid = ?",
-                new Object[] { objid });
+                "DELETE FROM om.lockstatus WHERE objid = ?", objid);
         }
         catch (final DataAccessException e) {
             throw new SqlDatabaseSystemException(e);
@@ -200,8 +199,7 @@ public class LockHandler extends JdbcDaoSupport {
                     getJdbcTemplate().queryForObject(
                         "SELECT lock_timestamp FROM om.lockstatus WHERE objid = ?",
                         new Object[] { objid }, Timestamp.class);
-            final Calendar cal =
-                GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
+            final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
             cal.setTimeInMillis(ts.getTime());
             final XMLGregorianCalendar xmlcal =
                 DatatypeFactory.newInstance().newXMLGregorianCalendar(

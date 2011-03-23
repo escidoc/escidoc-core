@@ -26,7 +26,7 @@ import java.rmi.RemoteException;
 
 public class PreprocessingHandlerBean implements SessionBean {
 
-    PreprocessingHandlerInterface service = null;
+    PreprocessingHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(PreprocessingHandlerBean.class);
 
@@ -35,7 +35,7 @@ public class PreprocessingHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("PreprocessingHandler.spring.ejb.context").getFactory();
-            service = (PreprocessingHandlerInterface) factory.getBean("service.PreprocessingHandler");
+            this.service = (PreprocessingHandlerInterface) factory.getBean("service.PreprocessingHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception PreprocessingHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -43,7 +43,7 @@ public class PreprocessingHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

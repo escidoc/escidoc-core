@@ -54,6 +54,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -96,23 +97,24 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             throw new TripleStoreSystemException("Failed to retrieve configuration parameter "
                     + EscidocConfiguration.FEDORA_URL, e);
         }
-        fedoraRdfXmlUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_RDF_XML;
-        fedoraItqlNtriplesUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_NTRIPLES;
-        fedoraItqlCsvUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_CSV;
-        fedoraSpoNtriplesUrl = fedoraUrl + HTTP_QUERY_BASE_SPO_NTRIPLES;
+        this.fedoraRdfXmlUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_RDF_XML;
+        this.fedoraItqlNtriplesUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_NTRIPLES;
+        this.fedoraItqlCsvUrl = fedoraUrl + HTTP_QUERY_BASE_ITQL_CSV;
+        this.fedoraSpoNtriplesUrl = fedoraUrl + HTTP_QUERY_BASE_SPO_NTRIPLES;
 
         // Initialize select clause
         final StringBuilder retrieveSelectClauseBuf =
                 new StringBuilder("select ");
         retrieveSelectClauseBuf.append(SELECT_VAR);
         retrieveSelectClauseBuf.append(" from <#ri> where ");
-        retrieveSelectClause = retrieveSelectClauseBuf.toString();
+        this.retrieveSelectClause = retrieveSelectClauseBuf.toString();
     }
 
     /**
      * Injects the data source.
      *
      * @param driverManagerDataSource
+     * @param myDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);
@@ -180,12 +182,13 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
             final StringBuffer queryAddress;
 
             if (format == Format.RDF_XML) {
-                queryAddress = new StringBuffer(fedoraRdfXmlUrl);
+                queryAddress = new StringBuffer(this.fedoraRdfXmlUrl);
             }
-            else
-                queryAddress = format == Format.N_TRIPLES ? new StringBuffer(fedoraItqlNtriplesUrl) :
-                        format == Format.CSV ? new StringBuffer(fedoraItqlCsvUrl) :
-                                new StringBuffer(fedoraItqlNtriplesUrl);
+            else {
+                queryAddress = format == Format.N_TRIPLES ? new StringBuffer(this.fedoraItqlNtriplesUrl) :
+                        format == Format.CSV ? new StringBuffer(this.fedoraItqlCsvUrl) :
+                                new StringBuffer(this.fedoraItqlNtriplesUrl);
+            }
 
             queryAddress.append(URLEncoder.encode(itqlQuery,
                 XmlUtility.CHARACTER_ENCODING));
@@ -211,8 +214,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         final String queryAddress;
         try {
-            queryAddress =
-                fedoraSpoNtriplesUrl
+            queryAddress = this.fedoraSpoNtriplesUrl
                     + URLEncoder
                         .encode(spoQuery, XmlUtility.CHARACTER_ENCODING);
         }
@@ -687,7 +689,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
     public StringBuffer getRetrieveSelectClause(
         final boolean targetIsSubject, final String predicateId) {
 
-        return new StringBuffer(retrieveSelectClause);
+        return new StringBuffer(this.retrieveSelectClause);
     }
 
 
@@ -700,7 +702,7 @@ public class SpoItqlTripleStoreUtility extends TripleStoreUtility {
 
         final StringBuilder queryPart = new StringBuilder();
 
-        for (final Map.Entry<String, String> stringStringEntry : filters.entrySet()) {
+        for (final Entry<String, String> stringStringEntry : filters.entrySet()) {
             final String object;
             final String val = stringStringEntry.getValue();
             // make URIs from given IDs or HREFs for all structural-relation

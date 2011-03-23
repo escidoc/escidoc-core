@@ -32,20 +32,20 @@ public class MIMETypedStream implements Serializable {
     private static final long serialVersionUID = -7845383715052874329L;
 
     public MIMETypedStream() {
-        equalsCalc = null;
-        hashCodeCalc = false;
+        this.equalsCalc = null;
+        this.hashCodeCalc = false;
     }
 
     public MIMETypedStream(final String mimeType, final byte[] stream, final Property[] header) {
-        equalsCalc = null;
-        hashCodeCalc = false;
+        this.equalsCalc = null;
+        this.hashCodeCalc = false;
         this.mimeType = mimeType;
         this.stream = stream;
         this.header = header;
     }
 
     public String getMIMEType() {
-        return mimeType;
+        return this.mimeType;
     }
 
     public void setMIMEType(final String mimeType) {
@@ -53,7 +53,7 @@ public class MIMETypedStream implements Serializable {
     }
 
     public byte[] getStream() {
-        return stream;
+        return this.stream;
     }
 
     public void setStream(final byte[] stream) {
@@ -61,7 +61,7 @@ public class MIMETypedStream implements Serializable {
     }
 
     public Property[] getHeader() {
-        return header;
+        return this.header;
     }
 
     public void setHeader(final Property[] header) {
@@ -76,27 +76,27 @@ public class MIMETypedStream implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (equalsCalc != null) {
-            return equalsCalc == obj;
+        if (this.equalsCalc != null) {
+            return this.equalsCalc == obj;
         }
         else {
-            equalsCalc = obj;
-            final boolean equals = (mimeType == null && other.getMIMEType() == null || mimeType != null
+            this.equalsCalc = obj;
+            final boolean equals = (this.mimeType == null && other.getMIMEType() == null || this.mimeType != null
                 && mimeType.equals(other.getMIMEType()))
-                && (stream == null && other.getStream() == null || stream != null
-                    && Arrays.equals(stream, other.getStream()))
-                && (header == null && other.getHeader() == null || header != null
-                    && Arrays.equals(header, other.getHeader()));
-            equalsCalc = null;
+                && (this.stream == null && other.getStream() == null || this.stream != null
+                    && Arrays.equals(this.stream, other.getStream()))
+                && (this.header == null && other.getHeader() == null || this.header != null
+                    && Arrays.equals(this.header, other.getHeader()));
+            this.equalsCalc = null;
             return equals;
         }
     }
 
     public int hashCode() {
-        if (hashCodeCalc) {
+        if (this.hashCodeCalc) {
             return 0;
         }
-        hashCodeCalc = true;
+        this.hashCodeCalc = true;
         int hashCode = 1;
         if (getMIMEType() != null) {
             hashCode += getMIMEType().hashCode();
@@ -117,7 +117,7 @@ public class MIMETypedStream implements Serializable {
                 }
             }
         }
-        hashCodeCalc = false;
+        this.hashCodeCalc = false;
         return hashCode;
     }
 

@@ -84,15 +84,15 @@ public class ExtendedFilterHandler extends DefaultHandler {
             + XmlUtility.NAME_GRANTED_DATE_TO + '|'
             + XmlUtility.NAME_CREATOR_ID + '|' + XmlUtility.NAME_REVOKER_ID);
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private boolean inFilter;
 
     private boolean inObjectList;
 
-    private Map<String, Set<String>> rules;
+    private final Map<String, Set<String>> rules;
 
-    private Set<String> objectsToFindIdList;
+    private final Set<String> objectsToFindIdList;
 
     private int offset = DEFAULT_OFFSET;
 
@@ -139,9 +139,9 @@ public class ExtendedFilterHandler extends DefaultHandler {
         throws InvalidContentException {
 
         final String localName = element.getLocalName();
-        if (inFilter) {
+        if (this.inFilter) {
             if ("id".equals(localName)) {
-                if (!inObjectList) {
+                if (! this.inObjectList) {
                     throw new InvalidContentException(
                         "Invalid id element in filter rule.");
                 }
@@ -177,13 +177,13 @@ public class ExtendedFilterHandler extends DefaultHandler {
             }
         }
         else if (localName.equals(XmlUtility.NAME_OFFSET)) {
-            offset = Integer.parseInt(data);
+            this.offset = Integer.parseInt(data);
         }
         else if (localName.equals(XmlUtility.NAME_LIMIT)) {
-            limit = Integer.parseInt(data);
+            this.limit = Integer.parseInt(data);
         }
         else if (localName.equals(XmlUtility.NAME_ORDER_BY)) {
-            orderBy = transformFilterName(data);
+            this.orderBy = transformFilterName(data);
         }
 
         return data;
@@ -201,13 +201,13 @@ public class ExtendedFilterHandler extends DefaultHandler {
         final String curPath = parser.getCurPath();
 
         if (curPath.equals(XPATH_FILTER)) {
-            inFilter = true;
+            this.inFilter = true;
             final int indexOfName = element.indexOfAttribute(null, "name");
             if (indexOfName >= 0) {
                 final String filterName =
                     element.getAttribute(indexOfName).getValue();
                 if (filterName.equals(Constants.DC_IDENTIFIER_URI)) {
-                    inObjectList = true;
+                    this.inObjectList = true;
                 }
             }
         }
@@ -215,7 +215,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
             final int indexOfSorting =
                 element.indexOfAttribute(null, XmlUtility.NAME_SORTING);
             if (indexOfSorting >= 0) {
-                sorting =
+                this.sorting =
                     ListSorting.valueOf(element
                         .getAttribute(indexOfSorting).getValue().toUpperCase());
             }
@@ -235,11 +235,11 @@ public class ExtendedFilterHandler extends DefaultHandler {
         final String curPath = parser.getCurPath();
 
         if (curPath.equals(XPATH_FILTER)) {
-            if (inObjectList) {
-                inObjectList = false;
-                rules.put(Constants.DC_IDENTIFIER_URI, objectsToFindIdList);
+            if (this.inObjectList) {
+                this.inObjectList = false;
+                rules.put(Constants.DC_IDENTIFIER_URI, this.objectsToFindIdList);
             }
-            inFilter = false;
+            this.inFilter = false;
         }
         return element;
     }
@@ -287,7 +287,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
      */
     public Map<String, Set<String>> getRules() {
 
-        return rules;
+        return this.rules;
     }
 
     /**
@@ -299,7 +299,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
      */
     public int getOffset() {
 
-        return offset;
+        return this.offset;
     }
 
     /**
@@ -311,7 +311,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
      */
     public int getLimit() {
 
-        return limit;
+        return this.limit;
     }
 
     /**
@@ -322,7 +322,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
      *
      */
     public String getOrderBy() {
-        return orderBy;
+        return this.orderBy;
     }
 
     /**
@@ -334,7 +334,7 @@ public class ExtendedFilterHandler extends DefaultHandler {
      *
      */
     public ListSorting getSorting() {
-        return sorting;
+        return this.sorting;
     }
 
 }

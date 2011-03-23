@@ -49,7 +49,7 @@ public class XmlPolicy {
      * @hibernate.id generator-class = "increment"
      */
     public int getId() {
-        return id;
+        return this.id;
     }
 
     /**
@@ -65,7 +65,7 @@ public class XmlPolicy {
      * @hibernate.property column = "action"
      */
     public String getAction() {
-        return action;
+        return this.action;
     }
 
     /**
@@ -81,7 +81,7 @@ public class XmlPolicy {
      * @hibernate.property column = "user_id"
      */
     public String getUserId() {
-        return userId;
+        return this.userId;
     }
 
     /**
@@ -97,7 +97,7 @@ public class XmlPolicy {
      * @hibernate.property column = "xml" type = "text"
      */
     public String getXml() {
-        return xml;
+        return this.xml;
     }
 
     /**

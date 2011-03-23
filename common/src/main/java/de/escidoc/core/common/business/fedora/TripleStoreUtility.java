@@ -787,6 +787,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * 
      * @param pid
      *            Objid/PID of the object.
+     * @param fullqualifiedNamedProperties
      * @param properties
      * @param namespaceUri
      * 
@@ -805,6 +806,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * <code>TripleStoreUtility.getRelation</code>.
      * 
      * @param pid
+     * @param fullQualifiedNameProperty
      * @param property
      * @param namespaceUri
      * 
@@ -843,6 +845,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * getProperty the namespace is used as it is. (Without an additional '/')
      * 
      * @param pid
+     * @param fullQualifiedPropertyName
      * @param property
      * @param namespaceUri
      * 
@@ -904,6 +907,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
     /**
      * 
      * @param pid
+     * @param fullPropertyElementName
      * @param elementName
      * @param namespaceUri
      * 
@@ -924,7 +928,9 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * 
      * @param pid
      * @param fullPropertyElementName
+     * @param targetIsSubject
      * @return
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public List<String> getPropertiesElementsVector(
         final String pid, final String fullPropertyElementName,
@@ -1045,6 +1051,7 @@ public abstract class TripleStoreUtility extends JdbcDaoSupport
      * 
      * 
      * @return Returns the where clause searching for the specified subjects.
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     public abstract StringBuffer getRetrieveWhereClause(
         boolean targetIsSubject, final String predicateId,

@@ -88,8 +88,8 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
     @Override
     public String toString() {
         return "StatisticRecordBuilderImpl{" +
-                "statisticRecord=" + statisticRecord +
-                ", scopeId='" + scopeId + '\'' +
+                "statisticRecord=" + this.statisticRecord +
+                ", scopeId='" + this.scopeId + '\'' +
                 '}';
     }
 }

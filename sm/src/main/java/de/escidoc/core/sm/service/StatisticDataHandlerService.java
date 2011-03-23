@@ -3,21 +3,32 @@
  */
 package de.escidoc.core.sm.service;
 
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  * Service endpoint interface for StatisticDataHandler.
  */
-public interface StatisticDataHandlerService extends java.rmi.Remote {
+public interface StatisticDataHandlerService extends Remote {
 
-    void create(java.lang.String xmlData, org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void create(String xmlData, SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
-    void create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    void create(String xmlData, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
 }

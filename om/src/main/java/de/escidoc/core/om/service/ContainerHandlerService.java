@@ -3,718 +3,759 @@
  */
 package de.escidoc.core.om.service;
 
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContentException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContextException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidItemStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException;
+import de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingContentException;
+import de.escidoc.core.common.exceptions.application.missing.MissingElementValueException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException;
+import de.escidoc.core.common.exceptions.application.violated.AlreadyWithdrawnException;
+import de.escidoc.core.common.exceptions.application.violated.LockingException;
+import de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException;
+import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.Map;
+
 /**
  * Service endpoint interface for ContainerHandler.
  */
-public interface ContainerHandlerService extends java.rmi.Remote {
+public interface ContainerHandlerService extends Remote {
 
-    java.lang.String create(java.lang.String xmlData,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingElementValueException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            java.rmi.RemoteException;
+    String create(String xmlData,
+                            SecurityContext securityContext)
+            throws ContextNotFoundException,
+            ContentModelNotFoundException,
+            InvalidContentException,
+            MissingMethodParameterException,
+            XmlCorruptedException,
+            MissingAttributeValueException,
+            MissingElementValueException,
+            SystemException,
+            ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            MissingMdRecordException,
+            XmlSchemaValidationException,
+            RemoteException;
 
-    java.lang.String create(java.lang.String xmlData, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingElementValueException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            java.rmi.RemoteException;
+    String create(String xmlData, String authHandle, Boolean restAccess)
+            throws ContextNotFoundException,
+            ContentModelNotFoundException,
+            InvalidContentException,
+            MissingMethodParameterException,
+            XmlCorruptedException,
+            MissingAttributeValueException,
+            MissingElementValueException,
+            SystemException,
+            ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            MissingMdRecordException,
+            XmlSchemaValidationException,
+            RemoteException;
 
-    void delete(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    void delete(String id, SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            SystemException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    void delete(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    void delete(String id, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            LockingException,
+            InvalidStatusException,
+            SystemException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String retrieve(java.lang.String id, org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String id, SecurityContext securityContext)
+            throws MissingMethodParameterException,
+            ContainerNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieve(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String id, String authHandle, Boolean restAccess)
+            throws MissingMethodParameterException,
+            ContainerNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String update(java.lang.String id, java.lang.String xmlData,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException, java.rmi.RemoteException;
+    String update(String id, String xmlData,
+                            SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            LockingException,
+            InvalidContentException,
+            MissingMethodParameterException,
+            InvalidXmlException,
+            OptimisticLockingException,
+            InvalidStatusException,
+            ReadonlyVersionException,
+            SystemException,
+            ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingAttributeValueException,
+            MissingMdRecordException, RemoteException;
 
-    java.lang.String update(java.lang.String id, java.lang.String xmlData, java.lang.String authHandle,
-                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException, java.rmi.RemoteException;
+    String update(String id, String xmlData, String authHandle,
+                            Boolean restAccess)
+            throws ContainerNotFoundException,
+            LockingException,
+            InvalidContentException,
+            MissingMethodParameterException,
+            InvalidXmlException,
+            OptimisticLockingException,
+            InvalidStatusException,
+            ReadonlyVersionException,
+            SystemException,
+            ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingAttributeValueException,
+            MissingMdRecordException, RemoteException;
 
-    java.lang.String retrieveMembers(java.lang.String id, java.util.Map filter,
-                                     org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveMembers(String id, Map filter,
+                                     SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            InvalidSearchQueryException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveMembers(java.lang.String id, java.util.Map filter, java.lang.String authHandle,
-                                     java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveMembers(String id, Map filter, String authHandle,
+                                     Boolean restAccess)
+            throws ContainerNotFoundException,
+            InvalidSearchQueryException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveTocs(java.lang.String id, java.util.Map filter,
-                                  org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveTocs(String id, Map filter,
+                                  SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            InvalidXmlException,
+            InvalidSearchQueryException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveTocs(java.lang.String id, java.util.Map filter, java.lang.String authHandle,
-                                  java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveTocs(String id, Map filter, String authHandle,
+                                  Boolean restAccess)
+            throws ContainerNotFoundException,
+            InvalidXmlException,
+            InvalidSearchQueryException,
+            MissingMethodParameterException,
+            SystemException, RemoteException;
 
-    java.lang.String addMembers(java.lang.String id, java.lang.String taskParam,
-                                org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContextException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            java.rmi.RemoteException;
+    String addMembers(String id, String taskParam,
+                                SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            LockingException,
+            InvalidContentException,
+            OptimisticLockingException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidContextException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingAttributeValueException,
+            RemoteException;
 
-    java.lang.String addMembers(java.lang.String id, java.lang.String taskParam, java.lang.String authHandle,
-                                java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContextException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            java.rmi.RemoteException;
+    String addMembers(String id, String taskParam, String authHandle,
+                                Boolean restAccess)
+            throws ContainerNotFoundException,
+            LockingException,
+            InvalidContentException,
+            OptimisticLockingException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidContextException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingAttributeValueException,
+            RemoteException;
 
-    java.lang.String addTocs(java.lang.String id, java.lang.String taskParam,
-                             org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContextException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            java.rmi.RemoteException;
+    String addTocs(String id, String taskParam,
+                             SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            LockingException,
+            InvalidContentException,
+            OptimisticLockingException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidContextException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingAttributeValueException,
+            RemoteException;
 
-    java.lang.String addTocs(java.lang.String id, java.lang.String taskParam, java.lang.String authHandle,
-                             java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContextException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            java.rmi.RemoteException;
+    String addTocs(String id, String taskParam, String authHandle,
+                             Boolean restAccess)
+            throws ContainerNotFoundException,
+            LockingException,
+            InvalidContentException,
+            OptimisticLockingException,
+            MissingMethodParameterException,
+            SystemException,
+            InvalidContextException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingAttributeValueException,
+            RemoteException;
 
-    java.lang.String removeMembers(java.lang.String id, java.lang.String taskParam,
-                                   org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidItemStatusException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException, java.rmi.RemoteException;
+    String removeMembers(String id, String taskParam,
+                                   SecurityContext securityContext)
+            throws ContextNotFoundException,
+            LockingException,
+            XmlSchemaValidationException,
+            ItemNotFoundException,
+            InvalidContextStatusException,
+            InvalidItemStatusException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            ContainerNotFoundException,
+            InvalidContentException, RemoteException;
 
-    java.lang.String removeMembers(java.lang.String id, java.lang.String taskParam, java.lang.String authHandle,
-                                   java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.notfound.ItemNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContextStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidItemStatusException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException, java.rmi.RemoteException;
+    String removeMembers(String id, String taskParam, String authHandle,
+                                   Boolean restAccess)
+            throws ContextNotFoundException,
+            LockingException,
+            XmlSchemaValidationException,
+            ItemNotFoundException,
+            InvalidContextStatusException,
+            InvalidItemStatusException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            ContainerNotFoundException,
+            InvalidContentException, RemoteException;
 
-    java.lang.String retrieveMdRecord(java.lang.String id, java.lang.String mdRecordId,
-                                      org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveMdRecord(String id, String mdRecordId,
+                                      SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveMdRecord(java.lang.String id, java.lang.String mdRecordId, java.lang.String authHandle,
-                                      java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveMdRecord(String id, String mdRecordId, String authHandle,
+                                      Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            MdRecordNotFoundException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveMdRecords(java.lang.String id,
-                                       org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveMdRecords(String id,
+                                       SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveMdRecords(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveMdRecords(String id, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveProperties(java.lang.String id,
-                                        org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveProperties(String id,
+                                        SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveProperties(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveProperties(String id, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveStructMap(java.lang.String id,
-                                       org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveStructMap(String id,
+                                       SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveStructMap(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveStructMap(String id, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveVersionHistory(java.lang.String id,
-                                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveVersionHistory(String id,
+                                            SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveVersionHistory(java.lang.String id, java.lang.String authHandle,
-                                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveVersionHistory(String id, String authHandle,
+                                            Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveParents(java.lang.String id,
-                                     org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveParents(String id,
+                                     SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveParents(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveParents(String id, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveRelations(java.lang.String id,
-                                       org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveRelations(String id,
+                                       SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveRelations(java.lang.String id, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveRelations(String id, String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String release(java.lang.String id, java.lang.String lastModified,
-                             org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String release(String id, String lastModified,
+                             SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            ReadonlyVersionException,
+            AuthorizationException,
+            InvalidStatusException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String release(java.lang.String id, java.lang.String lastModified, java.lang.String authHandle,
-                             java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String release(String id, String lastModified, String authHandle,
+                             Boolean restAccess)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            ReadonlyVersionException,
+            AuthorizationException,
+            InvalidStatusException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String submit(java.lang.String id, java.lang.String lastModified,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String submit(String id, String lastModified,
+                            SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            SystemException,
+            OptimisticLockingException,
+            ReadonlyVersionException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String submit(java.lang.String id, java.lang.String lastModified, java.lang.String authHandle,
-                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String submit(String id, String lastModified, String authHandle,
+                            Boolean restAccess)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            SystemException,
+            OptimisticLockingException,
+            ReadonlyVersionException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String withdraw(java.lang.String id, java.lang.String lastModified,
-                              org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.violated.AlreadyWithdrawnException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String withdraw(String id, String lastModified,
+                              SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            SystemException,
+            OptimisticLockingException,
+            AlreadyWithdrawnException,
+            ReadonlyVersionException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String withdraw(java.lang.String id, java.lang.String lastModified, java.lang.String authHandle,
-                              java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.violated.AlreadyWithdrawnException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String withdraw(String id, String lastModified, String authHandle,
+                              Boolean restAccess)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidStatusException,
+            SystemException,
+            OptimisticLockingException,
+            AlreadyWithdrawnException,
+            ReadonlyVersionException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String revise(java.lang.String id, java.lang.String lastModified,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException, java.rmi.RemoteException;
+    String revise(String id, String lastModified,
+                            SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            InvalidStatusException,
+            SystemException,
+            OptimisticLockingException,
+            ReadonlyVersionException,
+            XmlCorruptedException, RemoteException;
 
-    java.lang.String revise(java.lang.String id, java.lang.String lastModified, java.lang.String authHandle,
-                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException, java.rmi.RemoteException;
+    String revise(String id, String lastModified, String authHandle,
+                            Boolean restAccess)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            InvalidStatusException,
+            SystemException,
+            OptimisticLockingException,
+            ReadonlyVersionException,
+            XmlCorruptedException, RemoteException;
 
-    java.lang.String lock(java.lang.String id, java.lang.String lastModified,
-                          org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String lock(String id, String lastModified,
+                          SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidStatusException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String lock(java.lang.String id, java.lang.String lastModified, java.lang.String authHandle,
-                          java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String lock(String id, String lastModified, String authHandle,
+                          Boolean restAccess)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidStatusException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String unlock(java.lang.String id, java.lang.String lastModified,
-                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String unlock(String id, String lastModified,
+                            SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidStatusException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String unlock(java.lang.String id, java.lang.String lastModified, java.lang.String authHandle,
-                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String unlock(String id, String lastModified, String authHandle,
+                            Boolean restAccess)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidStatusException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String moveToContext(java.lang.String containerId, java.lang.String taskParam,
-                                   org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String moveToContext(String containerId, String taskParam,
+                                   SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            ContextNotFoundException,
+            InvalidContentException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String moveToContext(java.lang.String containerId, java.lang.String taskParam,
-                                   java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String moveToContext(String containerId, String taskParam,
+                                   String authHandle, Boolean restAccess)
+            throws ContainerNotFoundException,
+            ContextNotFoundException,
+            InvalidContentException,
+            LockingException,
+            MissingMethodParameterException,
+            AuthenticationException,
+            AuthorizationException,
+            SystemException, RemoteException;
 
-    java.lang.String createItem(java.lang.String containerId, java.lang.String xmlData,
-                                org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingContentException,
-            de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingElementValueException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContextException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException, java.rmi.RemoteException;
+    String createItem(String containerId, String xmlData,
+                                SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            MissingContentException,
+            ContextNotFoundException,
+            ContentModelNotFoundException,
+            ReadonlyElementViolationException,
+            MissingAttributeValueException,
+            MissingElementValueException,
+            ReadonlyAttributeViolationException,
+            MissingMethodParameterException,
+            InvalidXmlException,
+            FileNotFoundException,
+            LockingException,
+            InvalidContentException,
+            InvalidContextException,
+            RelationPredicateNotFoundException,
+            ReferencedResourceNotFoundException,
+            SystemException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMdRecordException,
+            InvalidStatusException, RemoteException;
 
-    java.lang.String createItem(java.lang.String containerId, java.lang.String xmlData, java.lang.String authHandle,
-                                java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingContentException,
-            de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyElementViolationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingElementValueException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyAttributeViolationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.notfound.FileNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContextException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException, java.rmi.RemoteException;
+    String createItem(String containerId, String xmlData, String authHandle,
+                                Boolean restAccess)
+            throws ContainerNotFoundException,
+            MissingContentException,
+            ContextNotFoundException,
+            ContentModelNotFoundException,
+            ReadonlyElementViolationException,
+            MissingAttributeValueException,
+            MissingElementValueException,
+            ReadonlyAttributeViolationException,
+            MissingMethodParameterException,
+            InvalidXmlException,
+            FileNotFoundException,
+            LockingException,
+            InvalidContentException,
+            InvalidContextException,
+            RelationPredicateNotFoundException,
+            ReferencedResourceNotFoundException,
+            SystemException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMdRecordException,
+            InvalidStatusException, RemoteException;
 
-    java.lang.String createContainer(java.lang.String containerId, java.lang.String xmlData,
-                                     org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingElementValueException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContextException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException, java.rmi.RemoteException;
+    String createContainer(String containerId, String xmlData,
+                                     SecurityContext securityContext)
+            throws MissingMethodParameterException,
+            ContainerNotFoundException,
+            LockingException,
+            ContextNotFoundException,
+            ContentModelNotFoundException,
+            InvalidContentException,
+            InvalidXmlException,
+            MissingAttributeValueException,
+            MissingElementValueException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidContextException,
+            RelationPredicateNotFoundException,
+            InvalidStatusException,
+            ReferencedResourceNotFoundException,
+            SystemException,
+            MissingMdRecordException, RemoteException;
 
-    java.lang.String createContainer(java.lang.String containerId, java.lang.String xmlData,
-                                     java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.notfound.ContextNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException,
-            de.escidoc.core.common.exceptions.application.missing.MissingElementValueException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContextException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException, java.rmi.RemoteException;
+    String createContainer(String containerId, String xmlData,
+                                     String authHandle, Boolean restAccess)
+            throws MissingMethodParameterException,
+            ContainerNotFoundException,
+            LockingException,
+            ContextNotFoundException,
+            ContentModelNotFoundException,
+            InvalidContentException,
+            InvalidXmlException,
+            MissingAttributeValueException,
+            MissingElementValueException,
+            AuthenticationException,
+            AuthorizationException,
+            InvalidContextException,
+            RelationPredicateNotFoundException,
+            InvalidStatusException,
+            ReferencedResourceNotFoundException,
+            SystemException,
+            MissingMdRecordException, RemoteException;
 
-    java.lang.String retrieveContainers(java.util.Map filter,
-                                        org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveContainers(Map filter,
+                                        SecurityContext securityContext)
+            throws MissingMethodParameterException,
+            InvalidSearchQueryException,
+            InvalidXmlException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieveContainers(java.util.Map filter, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSearchQueryException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieveContainers(Map filter, String authHandle, Boolean restAccess)
+            throws MissingMethodParameterException,
+            InvalidSearchQueryException,
+            InvalidXmlException,
+            SystemException, RemoteException;
 
-    java.lang.String addContentRelations(java.lang.String id, java.lang.String param,
-                                         org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.missing.MissingElementValueException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            java.rmi.RemoteException;
+    String addContentRelations(String id, String param,
+                                         SecurityContext securityContext)
+            throws SystemException,
+            ContainerNotFoundException,
+            OptimisticLockingException,
+            ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException,
+            AlreadyExistsException,
+            InvalidStatusException,
+            InvalidXmlException,
+            MissingElementValueException,
+            LockingException,
+            ReadonlyVersionException,
+            InvalidContentException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            RemoteException;
 
-    java.lang.String addContentRelations(java.lang.String id, java.lang.String param, java.lang.String authHandle,
-                                         java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.notfound.ReferencedResourceNotFoundException,
-            de.escidoc.core.common.exceptions.application.notfound.RelationPredicateNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.AlreadyExistsException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.missing.MissingElementValueException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidContentException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            java.rmi.RemoteException;
+    String addContentRelations(String id, String param, String authHandle,
+                                         Boolean restAccess)
+            throws SystemException,
+            ContainerNotFoundException,
+            OptimisticLockingException,
+            ReferencedResourceNotFoundException,
+            RelationPredicateNotFoundException,
+            AlreadyExistsException,
+            InvalidStatusException,
+            InvalidXmlException,
+            MissingElementValueException,
+            LockingException,
+            ReadonlyVersionException,
+            InvalidContentException,
+            AuthenticationException,
+            AuthorizationException,
+            MissingMethodParameterException,
+            RemoteException;
 
-    java.lang.String removeContentRelations(java.lang.String id, java.lang.String param,
-                                            org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.missing.MissingElementValueException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String removeContentRelations(String id, String param,
+                                            SecurityContext securityContext)
+            throws SystemException,
+            ContainerNotFoundException,
+            OptimisticLockingException,
+            InvalidStatusException,
+            MissingElementValueException,
+            InvalidXmlException,
+            ContentRelationNotFoundException,
+            LockingException,
+            ReadonlyVersionException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String removeContentRelations(java.lang.String id, java.lang.String param, java.lang.String authHandle,
-                                            java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.missing.MissingElementValueException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException,
-            de.escidoc.core.common.exceptions.application.notfound.ContentRelationNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException,
-            de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException, java.rmi.RemoteException;
+    String removeContentRelations(String id, String param, String authHandle,
+                                            Boolean restAccess)
+            throws SystemException,
+            ContainerNotFoundException,
+            OptimisticLockingException,
+            InvalidStatusException,
+            MissingElementValueException,
+            InvalidXmlException,
+            ContentRelationNotFoundException,
+            LockingException,
+            ReadonlyVersionException,
+            AuthenticationException,
+            AuthorizationException, RemoteException;
 
-    java.lang.String assignObjectPid(java.lang.String id, java.lang.String param,
-                                     org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String assignObjectPid(String id, String param,
+                                     SecurityContext securityContext)
+            throws InvalidStatusException,
+            ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            OptimisticLockingException,
+            SystemException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String assignObjectPid(java.lang.String id, java.lang.String param, java.lang.String authHandle,
-                                     java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException, java.rmi.RemoteException;
+    String assignObjectPid(String id, String param, String authHandle,
+                                     Boolean restAccess)
+            throws InvalidStatusException,
+            ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            OptimisticLockingException,
+            SystemException,
+            InvalidXmlException, RemoteException;
 
-    java.lang.String assignVersionPid(java.lang.String id, java.lang.String param,
-                                      org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException, java.rmi.RemoteException;
+    String assignVersionPid(String id, String param,
+                                      SecurityContext securityContext)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidStatusException,
+            XmlCorruptedException,
+            ReadonlyVersionException, RemoteException;
 
-    java.lang.String assignVersionPid(java.lang.String id, java.lang.String param, java.lang.String authHandle,
-                                      java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.notfound.ContainerNotFoundException,
-            de.escidoc.core.common.exceptions.application.violated.LockingException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.system.SystemException,
-            de.escidoc.core.common.exceptions.application.violated.OptimisticLockingException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidStatusException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionException, java.rmi.RemoteException;
+    String assignVersionPid(String id, String param, String authHandle,
+                                      Boolean restAccess)
+            throws ContainerNotFoundException,
+            LockingException,
+            MissingMethodParameterException,
+            SystemException,
+            OptimisticLockingException,
+            InvalidStatusException,
+            XmlCorruptedException,
+            ReadonlyVersionException, RemoteException;
 
 }

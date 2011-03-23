@@ -22,7 +22,7 @@ public class UserHandleCleaner {
      * Offset added to user handle expire time stamp before removing them to
      * avoid removing of currently used handles.
      */
-    private static final long EXPIRY_OFFSET = 500000;
+    private static final long EXPIRY_OFFSET = 500000L;
 
     /**
      * The login data DAO.

@@ -36,12 +36,12 @@ public abstract class AbstractElement {
 
     public int getLineNumber() {
 
-        return parser != null ? parser.getLocation().getLineNumber() : -1;
+        return this.parser != null ? parser.getLocation().getLineNumber() : -1;
     }
 
     public int getColumnNumber() {
 
-        return parser != null ? parser.getLocation().getColumnNumber() : -1;
+        return this.parser != null ? parser.getLocation().getColumnNumber() : -1;
     }
 
     public String getLocationString() {
@@ -56,7 +56,7 @@ public abstract class AbstractElement {
      *
      */
     public String getPath() {
-        return path;
+        return this.path;
     }
 
 }

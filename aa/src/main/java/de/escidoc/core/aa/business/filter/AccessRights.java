@@ -153,7 +153,7 @@ public class AccessRights {
         }
 
         @Override
-        public Set<Map.Entry<String, Rules>> entrySet() {
+        public Set<Entry<String, Rules>> entrySet() {
             return hashMap.entrySet();
         }
     }
@@ -174,8 +174,8 @@ public class AccessRights {
      *            role id
      */
     public void deleteAccessRight(final String roleId) {
-        synchronized (rightsMap) {
-            for (final RightsMap aRightsMap : rightsMap) {
+        synchronized (this.rightsMap) {
+            for (final RightsMap aRightsMap : this.rightsMap) {
                 aRightsMap.remove(roleId);
             }
         }
@@ -185,9 +185,9 @@ public class AccessRights {
      * Delete all access rights.
      */
     public void deleteAccessRights() {
-        synchronized (rightsMap) {
+        synchronized (this.rightsMap) {
             for (int index = 0; index < rightsMap.length; index++) {
-                rightsMap[index] = null;
+                this.rightsMap[index] = null;
             }
         }
     }
@@ -247,12 +247,12 @@ public class AccessRights {
             ensureNotEmpty(getSetAsString(hierarchicalContainers));
         final String ouGrants = ensureNotEmpty(getSetAsString(hierarchicalOUs));
 
-        synchronized (rightsMap) {
+        synchronized (this.rightsMap) {
             if (roleId != null && roleId.length() > 0) {
                 if (!groupIds.isEmpty() && userGroupGrants != null
                     && userGroupGrants.containsKey(roleId)
                     || userGrants.containsKey(roleId)) {
-                    final Rules rights = rightsMap[type.ordinal()].get(roleId);
+                    final Rules rights = this.rightsMap[type.ordinal()].get(roleId);
 
                     if (rights != null) {
                         final String groupSQL = getGroupSql(groupIds);
@@ -292,7 +292,7 @@ public class AccessRights {
             }
             else {
                 // concatenate all rules with "OR"
-                for (final Entry<String, Rules> role : rightsMap[type.ordinal()]
+                for (final Entry<String, Rules> role : this.rightsMap[type.ordinal()]
                     .entrySet()) {
                     if (!groupIds.isEmpty()
                         && userGroupGrants.containsKey(roleId)
@@ -388,7 +388,7 @@ public class AccessRights {
      * @return list of all role ids
      */
     public Iterable<String> getRoleIds(final ResourceType type) {
-        return rightsMap[type.ordinal()].keySet();
+        return this.rightsMap[type.ordinal()].keySet();
     }
 
     /**
@@ -448,9 +448,9 @@ public class AccessRights {
         final CharSequence placeHolder) {
         boolean result = false;
 
-        synchronized (rightsMap) {
+        synchronized (this.rightsMap) {
             if (type != null && roleId != null && roleId.length() > 0) {
-                final Rules rules = rightsMap[type.ordinal()].get(roleId);
+                final Rules rules = this.rightsMap[type.ordinal()].get(roleId);
 
                 if (rules != null) {
                     result =
@@ -480,14 +480,14 @@ public class AccessRights {
         final ResourceType type, String roleId, final String scopeRules,
         final String policyRules) {
         final int resourceType = type.ordinal();
-        synchronized (rightsMap) {
-            if (rightsMap[resourceType] == null) {
-                rightsMap[resourceType] = new RightsMap();
+        synchronized (this.rightsMap) {
+            if (this.rightsMap[resourceType] == null) {
+                this.rightsMap[resourceType] = new RightsMap();
             }
             if (roleId == null) {
                 roleId = DEFAULT_ROLE;
             }
-            rightsMap[resourceType].put(roleId, new Rules(scopeRules,
+            this.rightsMap[resourceType].put(roleId, new Rules(scopeRules,
                 policyRules));
         }
     }
@@ -640,11 +640,11 @@ public class AccessRights {
     public String toString() {
         final StringBuilder result = new StringBuilder();
 
-        if (rightsMap != null) {
+        if (this.rightsMap != null) {
             for (final ResourceType type : ResourceType.values()) {
                 result.append(type);
                 result.append(":\n");
-                for (final Entry<String, Rules> role : rightsMap[type.ordinal()]
+                for (final Entry<String, Rules> role : this.rightsMap[type.ordinal()]
                     .entrySet()) {
                     result.append("  ");
                     result.append(role.getKey());

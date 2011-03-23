@@ -91,7 +91,7 @@ public class UserAccountPropertiesStaxHandler
             && XmlUtility.XPATH_USER_ACCOUNT_PROPERTIES.equals(element
                 .getPath())) {
 
-            insideProperties = true;
+            this.insideProperties = true;
         }
         return element;
     }
@@ -112,7 +112,7 @@ public class UserAccountPropertiesStaxHandler
     public String characters(final String s, final StartElement element)
         throws UniqueConstraintViolationException, SqlDatabaseSystemException {
 
-        if (isNotReady() && insideProperties) {
+        if (isNotReady() && this.insideProperties) {
             final String elementName = element.getLocalName();
             if (XmlUtility.NAME_NAME.equals(elementName)) {
                 getUserAccount().setName(s);

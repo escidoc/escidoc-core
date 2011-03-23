@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for SemanticStoreHandler.
  */
-public class SemanticStoreHandlerSession extends SemanticStoreHandlerBean
-        implements SessionBean {
+public class SemanticStoreHandlerSession extends SemanticStoreHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

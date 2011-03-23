@@ -75,6 +75,7 @@ public interface AdminDescriptorInterface extends FedoraResource {
      * @param name
      *            The name of a matadata datastream.
      * @return A metadata datastreams of this resource.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException
      */
     Datastream getMdRecord(String name) throws StreamNotFoundException;
 

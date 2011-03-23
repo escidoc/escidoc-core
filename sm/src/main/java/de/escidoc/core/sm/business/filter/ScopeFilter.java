@@ -79,7 +79,7 @@ public class ScopeFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                detachedCriteria =
+                this.detachedCriteria =
                     DetachedCriteria.forClass(Scope.class, "s");
 
                 final Criterion criterion = evaluate(parser.parse(query));

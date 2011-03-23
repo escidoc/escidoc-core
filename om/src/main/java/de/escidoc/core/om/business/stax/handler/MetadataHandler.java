@@ -108,11 +108,11 @@ public class MetadataHandler extends DefaultHandler {
         throws MissingAttributeValueException {
 
         final String currentPath = parser.getCurPath();
-        mdRecordsPath = "/item/md-records";
-        elementPath = "/item/md-records/md-record";
+        this.mdRecordsPath = "/item/md-records";
+        this.elementPath = "/item/md-records/md-record";
         if (currentPath.startsWith(CONTAINER)) {
-            mdRecordsPath = "/container/md-records";
-            elementPath = "/container/md-records/md-record";
+            this.mdRecordsPath = "/container/md-records";
+            this.elementPath = "/container/md-records/md-record";
         }
         final String theName = element.getLocalName();
 
@@ -128,9 +128,9 @@ public class MetadataHandler extends DefaultHandler {
 
             }
             if (nameValue.equals(MANDATORY_MD_RECORD_NAME)) {
-                isMandatoryName = true;
+                this.isMandatoryName = true;
             }
-            isInside = true;
+            this.isInside = true;
             String typeValue = null;
             final int indexOfType = element.indexOfAttribute(null, "md-type");
             if (indexOfType != -1) {
@@ -159,8 +159,8 @@ public class MetadataHandler extends DefaultHandler {
 
             metadataAttributes.put(this.nameValue, md);
         }
-        else if (isInside && !isRootMetadataElement) {
-            isRootMetadataElement = true;
+        else if (this.isInside && ! this.isRootMetadataElement) {
+            this.isRootMetadataElement = true;
             if (this.nameValue.equals(MANDATORY_MD_RECORD_NAME)) {
                 this.escidocMdRecordNameSpace = element.getNamespace();
             }
@@ -188,12 +188,12 @@ public class MetadataHandler extends DefaultHandler {
         throws MissingMdRecordException {
         if (elementPath.equals(parser.getCurPath())) {
 
-            isInside = false;
-            isRootMetadataElement = false;
-            nameValue = null;
+            this.isInside = false;
+            this.isRootMetadataElement = false;
+            this.nameValue = null;
         }
         else if (mdRecordsPath.equals(parser.getCurPath())
-            && !isMandatoryName) {
+            && ! this.isMandatoryName) {
             throw new MissingMdRecordException("Mandatory md-record with a name "
                     + MANDATORY_MD_RECORD_NAME + " is missing.");
         }

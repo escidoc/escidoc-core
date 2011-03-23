@@ -117,7 +117,7 @@ public class ShibbolethDetails {
      *
      */
     public String getShibApplicationId() {
-        return shibApplicationId;
+        return this.shibApplicationId;
     }
 
     /**
@@ -125,7 +125,7 @@ public class ShibbolethDetails {
      *
      */
     public String getShibAssertionCount() {
-        return shibAssertionCount;
+        return this.shibAssertionCount;
     }
 
     /**
@@ -134,7 +134,7 @@ public class ShibbolethDetails {
      *
      */
     public String getShibAuthenticationMethod() {
-        return shibAuthenticationMethod;
+        return this.shibAuthenticationMethod;
     }
 
     /**
@@ -143,7 +143,7 @@ public class ShibbolethDetails {
      *
      */
     public String getShibAuthenticationInstant() {
-        return shibAuthenticationInstant;
+        return this.shibAuthenticationInstant;
     }
 
     /**
@@ -152,7 +152,7 @@ public class ShibbolethDetails {
      *
      */
     public String getShibAuthnContextClass() {
-        return shibAuthnContextClass;
+        return this.shibAuthnContextClass;
     }
 
     /**
@@ -160,7 +160,7 @@ public class ShibbolethDetails {
      *
      */
     public String getShibAuthContextDecl() {
-        return shibAuthContextDecl;
+        return this.shibAuthContextDecl;
     }
 
     /**
@@ -168,7 +168,7 @@ public class ShibbolethDetails {
      *
      */
     public String getShibIdentityProvider() {
-        return shibIdentityProvider;
+        return this.shibIdentityProvider;
     }
 
     /**
@@ -176,7 +176,7 @@ public class ShibbolethDetails {
      *
      */
     public String getShibSessionId() {
-        return shibSessionId;
+        return this.shibSessionId;
     }
 
 }

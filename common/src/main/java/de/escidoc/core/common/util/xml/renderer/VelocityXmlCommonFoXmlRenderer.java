@@ -41,6 +41,7 @@ public class VelocityXmlCommonFoXmlRenderer {
      * @param versionStatus
      * @param validStatus
      * @param comment
+     * @param baseUrl
      * @return
      * @throws WebserverSystemException
      *             cf. Interface
@@ -54,8 +55,8 @@ public class VelocityXmlCommonFoXmlRenderer {
         final String comment, final String baseUrl)
         throws WebserverSystemException {
 
-        final String currentUserId = Utility.getInstance().getCurrentUser()[0];
-        final String currentUserName = Utility.getInstance().getCurrentUser()[1];
+        final String currentUserId = Utility.getCurrentUser()[0];
+        final String currentUserName = Utility.getCurrentUser()[1];
 
         final Map<String, String> values = new HashMap<String, String>();
 

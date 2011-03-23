@@ -211,7 +211,7 @@ public class AggregationPreprocessor {
         final Iterable statisticDatas)
         throws StatisticPreprocessingSystemException,
         SqlDatabaseSystemException {
-        xpathFactory = XPathFactory.newInstance();
+        this.xpathFactory = XPathFactory.newInstance();
         if (statisticDatas != null) {
             // initialize DataHash depending on AggregationDefinition
             final AggregationPreprocessorVo aggregationPreprocessorVo =

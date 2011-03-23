@@ -65,7 +65,7 @@ public class ContentModelProperties {
      * @return the currentVersion
      */
     public VersionProperties getCurrentVersion() {
-        return currentVersion;
+        return this.currentVersion;
     }
 
     /**
@@ -80,7 +80,7 @@ public class ContentModelProperties {
      * @return the latestVersion
      */
     public VersionProperties getLatestVersion() {
-        return latestVersion;
+        return this.latestVersion;
     }
 
     /**
@@ -96,7 +96,7 @@ public class ContentModelProperties {
      * @return the latestReleasedVersion
      */
     public VersionProperties getLatestReleasedVersion() {
-        return latestReleasedVersion;
+        return this.latestReleasedVersion;
     }
 
     /**
@@ -111,7 +111,7 @@ public class ContentModelProperties {
      * @return the objectProperties
      */
     public ObjectProperties getObjectProperties() {
-        return objectProperties;
+        return this.objectProperties;
     }
 
 }

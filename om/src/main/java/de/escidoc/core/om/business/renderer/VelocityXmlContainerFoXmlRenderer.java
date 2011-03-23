@@ -111,8 +111,7 @@ public class VelocityXmlContainerFoXmlRenderer
         values.put("contentRelationsNamespacePrefix",
             Constants.CONTENT_RELATIONS_NS_PREFIX_IN_RELSEXT);
 
-        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility
-            .getInstance().getBuildNumber());
+        values.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
 
         if (properties != null && !properties.isEmpty()) {
             values.put("properties", properties);
@@ -132,8 +131,7 @@ public class VelocityXmlContainerFoXmlRenderer
         }
         values.put(XmlTemplateProvider.OBJID, containerId);
         values.put("latestVersionDate", lastModificationDate);
-        values.put("latestVersionUserTitle", Utility
-            .getInstance().getCurrentUser()[1]);
+        values.put("latestVersionUserTitle", Utility.getCurrentUser()[1]);
         values.put("latestVersionComment", comment);
         if (contentRelations != null && !contentRelations.isEmpty()) {
             values.put("contentRelations", contentRelations);

@@ -123,7 +123,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
         final String theName = element.getLocalName();
 
         if (contentRelationPath.equals(currentPath)) {
-            inContentRelation = true;
+            this.inContentRelation = true;
             final int indexOfObjId = element.indexOfAttribute(null, "objid");
             if (indexOfObjId != -1) {
                 throw new ReadonlyAttributeViolationException("Read only attribute \"objid\" of the " + "element "
@@ -132,7 +132,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             }
 
         }
-        if (inContentRelation) {
+        if (this.inContentRelation) {
             if ("target".equals(theName)) {
                 checkRefElement(element);
             }
@@ -143,7 +143,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
                             .getAttribute(Constants.XLINK_URI, "href")
                             .getValue();
                     if (OntologyUtility.checkPredicate(xlinkHref)) {
-                        predicate = xlinkHref;
+                        this.predicate = xlinkHref;
                     } else {
                         throw new RelationPredicateNotFoundException("Predicate " + xlinkHref + " is wrong. ");
                     }
@@ -166,7 +166,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             }
         }
         else if (contentRelationsPath.equals(currentPath)) {
-            relationsData = new ArrayList<Map<String, String>>();
+            this.relationsData = new ArrayList<Map<String, String>>();
             final int indexOfTitle =
                 element.indexOfAttribute(Constants.XLINK_URI, "title");
 
@@ -217,17 +217,17 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      */
     @Override
     public EndElement endElement(final EndElement element) {
-        if (inContentRelation && "relation".equals(element.getLocalName())) {
-            inContentRelation = false;
+        if (this.inContentRelation && "relation".equals(element.getLocalName())) {
+            this.inContentRelation = false;
             final Map<String, String> relationData = new HashMap<String, String>();
             relationsData.add(relationData);
-            relationData.put("predicate", predicate);
-            relationData.put("target", targetIdWithoutVersion);
-            relationData.put("targetVersion", targetVersion);
-            targetId = null;
-            targetIdWithoutVersion = null;
-            targetVersion = null;
-            predicate = null;
+            relationData.put("predicate", this.predicate);
+            relationData.put("target", this.targetIdWithoutVersion);
+            relationData.put("targetVersion", this.targetVersion);
+            this.targetId = null;
+            this.targetIdWithoutVersion = null;
+            this.targetVersion = null;
+            this.predicate = null;
         }
         return element;
     }
@@ -236,7 +236,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @return Returns the title.
      */
     public List<Map<String, String>> getContentRelationsData() {
-        return relationsData;
+        return this.relationsData;
     }
 
     /**
@@ -254,23 +254,22 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
             final String objectId = element.getAttribute(null, "objid").getValue();
             final String xlinkHref =
                 element.getAttribute(Constants.XLINK_URI, "href").getValue();
-            targetId = XmlUtility.getIdFromURI(xlinkHref);
-            if (!objectId.equals(targetId)) {
+            this.targetId = XmlUtility.getIdFromURI(xlinkHref);
+            if (!objectId.equals(this.targetId)) {
                 throw new InvalidContentException("Value of the attribute 'href' is wrong. It must contain "
-                        + objectId + " instead of " + targetId);
+                        + objectId + " instead of " + this.targetId);
             }
-            targetIdWithoutVersion =
-                XmlUtility.getObjidWithoutVersion(targetId);
-            targetVersion = targetId.replaceFirst(targetIdWithoutVersion, "");
-            targetVersion = targetVersion.length() > 0 ? targetVersion.substring(1) : null;
+            this.targetIdWithoutVersion =
+                XmlUtility.getObjidWithoutVersion(this.targetId);
+            this.targetVersion = targetId.replaceFirst(this.targetIdWithoutVersion, "");
+            this.targetVersion = targetVersion.length() > 0 ? targetVersion.substring(1) : null;
 
             final String targetObjectType =
-                TripleStoreUtility.getInstance().getObjectType(
-                    targetIdWithoutVersion);
+                TripleStoreUtility.getInstance().getObjectType(this.targetIdWithoutVersion);
             targetExist(targetObjectType);
-            if (!xlinkHref.equals("/ir/" + targetObjectType + '/' + targetId)) {
+            if (!xlinkHref.equals("/ir/" + targetObjectType + '/' + this.targetId)) {
                 throw new InvalidContentException("Value of the attribute 'href' is wrong. It must be"
-                        + "/ir/" + targetObjectType + '/' + targetId);
+                        + "/ir/" + targetObjectType + '/' + this.targetId);
             }
 
             final int indexOfTitle =
@@ -285,7 +284,7 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
         }
         catch (final NoSuchAttributeException e) {
             throw new InvalidContentException("Expected attribute in object reference " + "in 'relation' of "
-                    + id + " is not set. (create item)", e);
+                    + this.id + " is not set. (create item)", e);
 
         }
     }
@@ -298,23 +297,23 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      */
     private void targetExist(final String targetObjectType)
         throws ReferencedResourceNotFoundException, SystemException {
-        if (!TripleStoreUtility.getInstance().exists(targetIdWithoutVersion)) {
-            throw new ReferencedResourceNotFoundException("Referenced target resource with id " + targetIdWithoutVersion
+        if (!TripleStoreUtility.getInstance().exists(this.targetIdWithoutVersion)) {
+            throw new ReferencedResourceNotFoundException("Referenced target resource with id " +
+                    this.targetIdWithoutVersion
                     + " does not exist.");
 
         }
-        if (targetVersion != null) {
+        if (this.targetVersion != null) {
             String targetLatestVersion = null;
             if ("item".equals(targetObjectType) || "container".equals(targetObjectType)) {
                 targetLatestVersion =
-                    TripleStoreUtility.getInstance().getPropertiesElements(
-                        targetIdWithoutVersion,
+                    TripleStoreUtility.getInstance().getPropertiesElements(this.targetIdWithoutVersion,
                         TripleStoreUtility.PROP_LATEST_VERSION_NUMBER);
             }
-            if (targetLatestVersion == null || Integer.parseInt(targetVersion) > Integer
+            if (targetLatestVersion == null || Integer.parseInt(this.targetVersion) > Integer
                 .parseInt(targetLatestVersion)) {
                 throw new ReferencedResourceNotFoundException("Referenced target resource with id "
-                        + targetIdWithoutVersion + ':' + targetVersion
+                        + this.targetIdWithoutVersion + ':' + this.targetVersion
                         + " does not exist.");
             }
         }

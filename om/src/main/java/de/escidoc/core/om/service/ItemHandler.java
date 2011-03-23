@@ -72,6 +72,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 
+import java.lang.String;
 import java.util.Map;
 
 /**
@@ -111,7 +112,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws InvalidContentException
      * @throws InvalidStatusException
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#create(java.lang.String)
+     * @see ItemHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData) throws MissingContentException,
@@ -219,8 +220,8 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws OptimisticLockingException
      * @throws MissingAttributeValueException
      *             cf. Interface
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#createComponent(java.lang.String,
-     *      java.lang.String)
+     * @see ItemHandlerInterface#createComponent(String,
+     *      String)
      * 
      * 
      */
@@ -244,7 +245,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @param id
      * @param componentId
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #retrieveComponent(java.lang.String, java.lang.String)
      * 
      * 
@@ -264,7 +265,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @param itemId
      * @param componentId
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #retrieveComponentMdRecords(java.lang.String, java.lang.String)
      * 
      * 
@@ -285,7 +286,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @param componentId
      * @param mdRecordId
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #retrieveComponentMdRecord(java.lang.String, java.lang.String,
      *      java.lang.String)
      * 
@@ -314,7 +315,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws InvalidContentException
      * @throws MissingContentException
      * @throws ReadonlyVersionException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #updateComponent(java.lang.String, java.lang.String,
      *      java.lang.String)
      * 
@@ -341,7 +342,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @param id
      * @return
      * @throws ComponentNotFoundException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #retrieveComponents(java.lang.String)
      * 
      * 
@@ -361,7 +362,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @param id
      * @param componentId
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #retrieveComponentProperties(java.lang.String, java.lang.String)
      * 
      * 
@@ -386,7 +387,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @return
      * @throws MissingAttributeValueException
      * @throws InvalidStatusException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #createMetadataRecord(java.lang.String, java.lang.String)
      */
     @Override
@@ -409,7 +410,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @return
      * @throws MissingAttributeValueException
      * @throws InvalidStatusException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #createMetadataRecord(java.lang.String, java.lang.String)
      * 
      * 
@@ -472,7 +473,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @param id
      * @param mdRecordId
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #retrieveMdRecord(java.lang.String, java.lang.String)
      * 
      * 
@@ -517,7 +518,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws InvalidStatusException
      * @throws OptimisticLockingException
      * @throws ReadonlyVersionException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #updateMdRecord(java.lang.String, java.lang.String,
      *      java.lang.String)
      * 
@@ -541,7 +542,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * @param id
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #retrieveMdRecords(java.lang.String)
      * 
      * 
@@ -588,7 +589,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * @param id
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #retrieveProperties(java.lang.String)
      * 
      * 
@@ -634,7 +635,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * @param id
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #retrieveParents(java.lang.String)
      */
     @Override
@@ -708,8 +709,8 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws ReadonlyViolationException
      * @throws ReadonlyVersionException
      * @throws InvalidXmlException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#withdraw(java.lang.String,
-     *      java.lang.String)
+     * @see ItemHandlerInterface#withdraw(String,
+     *      String)
      */
     @Override
     public String withdraw(final String id, final String lastModified)
@@ -740,8 +741,8 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws OptimisticLockingException
      * @throws InvalidXmlException
      * @throws InvalidStatusException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#lock(java.lang.String,
-     *      java.lang.String)
+     * @see ItemHandlerInterface#lock(String,
+     *      String)
      */
     @Override
     public String lock(final String id, final String lastModified)
@@ -768,8 +769,8 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws SystemException
      * @throws OptimisticLockingException
      * @throws InvalidXmlException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#unlock(java.lang.String,
-     *      java.lang.String)
+     * @see ItemHandlerInterface#unlock(String,
+     *      String)
      */
     @Override
     public String unlock(final String id, final String lastModified)
@@ -794,8 +795,8 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws MissingMethodParameterException
      * @throws SystemException
      * @throws InvalidStatusException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#deleteComponent(java.lang.String,
-     *      java.lang.String)
+     * @see ItemHandlerInterface#deleteComponent(String,
+     *      String)
      * 
      * 
      */
@@ -824,8 +825,8 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws AuthenticationException
      * @throws AuthorizationException
      * @throws SystemException
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#moveToContext(java.lang.String,
-     *      java.lang.String)
+     * @see ItemHandlerInterface#moveToContext(String,
+     *      String)
      * 
      * 
      */
@@ -844,7 +845,7 @@ public class ItemHandler implements ItemHandlerInterface {
      * 
      * @param filter
      * @return
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface
+     * @see ItemHandlerInterface
      *      #retrieveItems(java.util.Map)
      */
     @Override
@@ -949,8 +950,8 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws LockingException
      * @throws ReadonlyViolationException
      *             cf. Interface
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#addContentRelations(java.lang.String,
-     *      java.lang.String)
+     * @see ItemHandlerInterface#addContentRelations(String,
+     *      String)
      */
     @Override
     public String addContentRelations(final String id, final String param)
@@ -984,8 +985,8 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws LockingException
      * @throws ReadonlyViolationException
      *             cf. Interface
-     * @see de.escidoc.core.om.service.interfaces.ItemHandlerInterface#removeContentRelations(java.lang.String,
-     *      java.lang.String)
+     * @see ItemHandlerInterface#removeContentRelations(String,
+     *      String)
      */
     @Override
     public String removeContentRelations(final String id, final String param)

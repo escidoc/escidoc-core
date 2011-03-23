@@ -155,8 +155,7 @@ public class SmPreprocessingLogsHibernateDao
         retrievePreprocessingLogs(final String aggregationDefinitionId, 
                 final Date processingDate)
         throws SqlDatabaseSystemException {
-        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE,
-                new Object[] { aggregationDefinitionId, processingDate });
+        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE, aggregationDefinitionId, processingDate);
     }
 
     /**
@@ -180,8 +179,7 @@ public class SmPreprocessingLogsHibernateDao
         retrievePreprocessingLogs(final String aggregationDefinitionId, 
                 final boolean hasError)
         throws SqlDatabaseSystemException {
-        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_ERROR,
-                new Object[] { aggregationDefinitionId, hasError });
+        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_ERROR, aggregationDefinitionId, hasError);
     }
 
     /**
@@ -206,7 +204,7 @@ public class SmPreprocessingLogsHibernateDao
         retrievePreprocessingLogs(
                 final Date processingDate, final boolean hasError)
         throws SqlDatabaseSystemException {
-        return getHibernateTemplate().find(QUERY_LOGS_BY_DATE_AND_ERROR, new Object[] { processingDate, hasError });
+        return getHibernateTemplate().find(QUERY_LOGS_BY_DATE_AND_ERROR, processingDate, hasError);
     }
 
     /**
@@ -233,8 +231,8 @@ public class SmPreprocessingLogsHibernateDao
         retrievePreprocessingLogs(final String aggregationDefinitionId,
                 final Date processingDate, final boolean hasError)
         throws SqlDatabaseSystemException {
-        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE_AND_ERROR, new Object[] {
-                       aggregationDefinitionId, processingDate, hasError });
+        return getHibernateTemplate().find(QUERY_LOGS_BY_AGG_DEF_ID_AND_DATE_AND_ERROR, aggregationDefinitionId,
+                processingDate, hasError);
     }
 
     /**

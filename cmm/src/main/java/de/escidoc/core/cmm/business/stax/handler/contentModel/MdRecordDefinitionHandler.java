@@ -63,12 +63,12 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
     private String metadataXPath =
         "/content-model/md-record-definitions/md-record-definition";
 
-    private List<MdRecordDefinitionCreate> mdRecordDefinitions;
+    private final List<MdRecordDefinitionCreate> mdRecordDefinitions;
 
     private MdRecordDefinitionCreate curMdRecordDefinition;
 
     public List<MdRecordDefinitionCreate> getMdRecordDefinitions() {
-        return mdRecordDefinitions;
+        return this.mdRecordDefinitions;
     }
 
     /**
@@ -118,7 +118,7 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
             if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Parser reached " + this.metadataXPath);
             }
-            curMdRecordDefinition = new MdRecordDefinitionCreate();
+            this.curMdRecordDefinition = new MdRecordDefinitionCreate();
 
             try {
                 curMdRecordDefinition.setName(element.getAttributeValue(null,
@@ -156,7 +156,7 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
         if (currentPath.equals(this.metadataXPath)) {
 
-            this.mdRecordDefinitions.add(curMdRecordDefinition);
+            this.mdRecordDefinitions.add(this.curMdRecordDefinition);
         }
 
         return element;

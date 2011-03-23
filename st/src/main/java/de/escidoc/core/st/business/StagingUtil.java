@@ -167,7 +167,7 @@ public final class StagingUtil {
 
         final StagingFile stagingFile = new StagingFile();
         stagingFile.setReference(null);
-        stagingFile.setExpiryTs(timestamp + TOKEN_VALID_DURATION);
+        stagingFile.setExpiryTs(timestamp + (long) TOKEN_VALID_DURATION);
         stagingFile.setUpload(isUpload);
         stagingFileDao.save(stagingFile);
         return stagingFile;

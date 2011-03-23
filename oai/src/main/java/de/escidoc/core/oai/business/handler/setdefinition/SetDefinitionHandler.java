@@ -99,6 +99,7 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * 
      * @param setDefinition
      *            definition The <code>SetDefinition</code> object to modify.
+     * @param setProperties
      * @throws SystemException
      *             Thrown in case of an internal error.
      * @throws UniqueConstraintViolationException
@@ -139,7 +140,8 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * 
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * 
+     *
+     * @return
      */
     private static boolean setModificationValues(final SetDefinition setDefinition,
                                                  final Map<String, String> setProperties) throws SystemException {
@@ -441,10 +443,10 @@ public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
      * 
      */
     public SetDefinitionRendererInterface getRenderer() {
-        if (renderer == null) {
-            renderer = new VelocityXmlSetDefinitionRenderer();
+        if (this.renderer == null) {
+            this.renderer = new VelocityXmlSetDefinitionRenderer();
         }
-        return renderer;
+        return this.renderer;
     }
 
 }

@@ -107,7 +107,7 @@ public class ResourceDefinitionCreate {
     }
 
     public String getXsltHref() {
-        return xsltHref;
+        return this.xsltHref;
     }
 
     public void setXsltHref(final String xsltHref) throws MalformedURLException,
@@ -120,7 +120,7 @@ public class ResourceDefinitionCreate {
     }
 
     public String getMdRecordName() {
-        return mdRecordName;
+        return this.mdRecordName;
     }
 
     public void setMdRecordName(final String mdRecordName) {
@@ -128,7 +128,7 @@ public class ResourceDefinitionCreate {
     }
 
     public String getFedoraId(final String parentId) {
-        if (name == null) {
+        if (this.name == null) {
             throw new NullPointerException(
                 "Name must not be null to provide FedoraId.");
         }

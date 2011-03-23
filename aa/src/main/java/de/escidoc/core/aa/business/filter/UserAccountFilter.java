@@ -157,7 +157,7 @@ public class UserAccountFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                detachedCriteria =
+                this.detachedCriteria =
                     DetachedCriteria.forClass(UserAccount.class, "user");
 
                 final Criterion criterion = evaluate(parser.parse(query));

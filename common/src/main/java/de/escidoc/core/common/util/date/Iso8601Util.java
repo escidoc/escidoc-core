@@ -128,7 +128,7 @@ public final class Iso8601Util {
         else {
             final int pos = dateText.length() - SIX;
             final char c = dateText.charAt(pos);
-            if (c == '+' || c == '-') {
+            if ((int) c == (int) '+' || (int) c == (int) '-') {
                 tmpDateText =
                     dateText.substring(0, dateText.length() - FOUR)
                         + dateText.substring(dateText.length() - 2);

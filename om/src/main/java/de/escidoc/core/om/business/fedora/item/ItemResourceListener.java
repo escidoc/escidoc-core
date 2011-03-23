@@ -97,7 +97,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (final ResourceListener itemListener : itemListeners) {
+        for (final ResourceListener itemListener : this.itemListeners) {
             itemListener.resourceCreated(id, restXml, soapXml);
         }
     }
@@ -132,7 +132,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = render();
         }
-        for (final ResourceListener itemListener : itemListeners) {
+        for (final ResourceListener itemListener : this.itemListeners) {
             itemListener.resourceModified(id, restXml, soapXml);
         }
     }
@@ -161,7 +161,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (final ResourceListener itemListener : itemListeners) {
+        for (final ResourceListener itemListener : this.itemListeners) {
             itemListener.resourceModified(id, restXml, soapXml);
         }
     }
@@ -176,7 +176,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
      *             One of the listeners threw an exception.
      */
     protected void fireItemDeleted(final String id) throws SystemException {
-        for (final ResourceListener itemListener : itemListeners) {
+        for (final ResourceListener itemListener : this.itemListeners) {
             itemListener.resourceDeleted(id);
         }
     }
@@ -238,7 +238,7 @@ public class ItemResourceListener extends ItemHandlerRetrieve {
     protected void queueItemsModified(final Iterable<String> ids)
         throws ComponentNotFoundException, ItemNotFoundException,
         SystemException {
-        if (indexingHandler != null) {
+        if (this.indexingHandler != null) {
             for (final String id : ids) {
 
                 setItem(id);

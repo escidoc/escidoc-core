@@ -45,7 +45,7 @@ import java.util.Map;
 
 public class UserAccountHandlerBean implements SessionBean {
 
-    UserAccountHandlerInterface service = null;
+    UserAccountHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(UserAccountHandlerBean.class);
 
@@ -54,7 +54,7 @@ public class UserAccountHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("UserAccountHandler.spring.ejb.context").getFactory();
-            service = (UserAccountHandlerInterface) factory.getBean("service.UserAccountHandler");
+            this.service = (UserAccountHandlerInterface) factory.getBean("service.UserAccountHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception UserAccountHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -62,7 +62,7 @@ public class UserAccountHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

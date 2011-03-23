@@ -83,9 +83,9 @@ public class Item extends GenericVersionableResourcePid
 
     private Datastream cts;
 
-    private Map<String, Datastream> mdRecords;
+    private final Map<String, Datastream> mdRecords;
 
-    private Map<String, Datastream> contentStreams;
+    private final Map<String, Datastream> contentStreams;
 
     private Map<String, Component> components;
 

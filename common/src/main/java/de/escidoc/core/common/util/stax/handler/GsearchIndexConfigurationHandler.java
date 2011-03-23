@@ -71,17 +71,17 @@ public class GsearchIndexConfigurationHandler extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws WebserverSystemException {
         if (element.getLocalName().equals(PROPERTY_ELEMENT_NAME)) {
-            properties.put(key, value);
-            key = null;
-            value = null;
+            properties.put(this.key, this.value);
+            this.key = null;
+            this.value = null;
         }
         else if (element.getLocalName().equals(INDEX_ELEMENT_NAME)) {
-            if (indexName == null) {
+            if (this.indexName == null) {
                 throw new WebserverSystemException("index name is null");
             }
-            gsearchIndexConfiguration.put(indexName, properties);
-            indexName = null;
-            properties = new HashMap<String, String>();
+            gsearchIndexConfiguration.put(this.indexName, this.properties);
+            this.indexName = null;
+            this.properties = new HashMap<String, String>();
         }
         return element;
     }
@@ -107,13 +107,13 @@ public class GsearchIndexConfigurationHandler extends DefaultHandler {
             final StartElement element)
             throws Exception {
         if (INDEX_NAME_ELEMENT_NAME.equals(element.getLocalName())) {
-            indexName = s;
+            this.indexName = s;
         } 
         else if (KEY_ELEMENT_NAME.equals(element.getLocalName())) {
-            key = s;
+            this.key = s;
         }
         else if (VALUE_ELEMENT_NAME.equals(element.getLocalName())) {
-            value = s;
+            this.value = s;
         }
         return s;
     }
@@ -123,7 +123,7 @@ public class GsearchIndexConfigurationHandler extends DefaultHandler {
      */
     public Map<String, Map<String, String>> 
                         getGsearchIndexConfiguration() {
-        return gsearchIndexConfiguration;
+        return this.gsearchIndexConfiguration;
     }
 
 }

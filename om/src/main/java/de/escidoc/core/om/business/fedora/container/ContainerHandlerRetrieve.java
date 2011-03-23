@@ -117,6 +117,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @throws FedoraSystemException
      * @throws IntegritySystemException
      * @throws WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.application.notfound.MdRecordNotFoundException
      */
     protected String getMetadataRecordXml(final String mdRecordId)
         throws EncodingSystemException, FedoraSystemException,
@@ -150,6 +151,7 @@ public class ContainerHandlerRetrieve extends ContainerHandlerBase {
      * @throws EncodingSystemException
      * @throws FedoraSystemException
      * @throws WebserverSystemException
+     * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      */
     protected String getMetadataRecordsXml() throws EncodingSystemException,
         FedoraSystemException, WebserverSystemException,

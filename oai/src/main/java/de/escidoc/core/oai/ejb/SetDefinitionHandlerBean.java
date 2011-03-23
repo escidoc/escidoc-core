@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class SetDefinitionHandlerBean implements SessionBean {
 
-    SetDefinitionHandlerInterface service = null;
+    SetDefinitionHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(SetDefinitionHandlerBean.class);
 
@@ -39,7 +39,7 @@ public class SetDefinitionHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("SetDefinitionHandler.spring.ejb.context").getFactory();
-            service = (SetDefinitionHandlerInterface) factory.getBean("service.SetDefinitionHandler");
+            this.service = (SetDefinitionHandlerInterface) factory.getBean("service.SetDefinitionHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception SetDefinitionHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -47,7 +47,7 @@ public class SetDefinitionHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

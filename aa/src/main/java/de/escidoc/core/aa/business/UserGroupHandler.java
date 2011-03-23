@@ -527,7 +527,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
 
         grant.setCreationDate(creationDate);
         grant.setUserAccountByCreatorId(UserAccountHandler
-            .getAuthenticatedUser(userAccountDao));
+            .getAuthenticatedUser(this.userAccountDao));
 
         final String roleId = roleLinkHandler.getObjid();
         final EscidocRole role = roleDao.retrieveRole(roleId);
@@ -1700,7 +1700,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         sp.addHandler(grantHandler);
 
         final RevokeStaxHandler revokeStaxHandler =
-            new RevokeStaxHandler(grantToRevoke, userAccountDao);
+            new RevokeStaxHandler(grantToRevoke, this.userAccountDao);
 
         sp.addHandler(revokeStaxHandler);
 
@@ -1840,7 +1840,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
         }
 
         final UserAccount authenticateUser =
-                UserAccountHandler.getAuthenticatedUser(userAccountDao);
+                UserAccountHandler.getAuthenticatedUser(this.userAccountDao);
 
         for (final String grantId : grantIds) {
             // set revoke-date, -user and -remark
@@ -2011,7 +2011,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 userGroup.setLastModificationDate(new Date(System
                     .currentTimeMillis()));
                 userGroup.setModifiedById(UserAccountHandler
-                    .getAuthenticatedUser(userAccountDao));
+                    .getAuthenticatedUser(this.userAccountDao));
             }
         }
         else {
@@ -2019,7 +2019,7 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
             userGroup.setLastModificationDate(new Date(System
                 .currentTimeMillis()));
             userGroup.setModifiedById(UserAccountHandler
-                .getAuthenticatedUser(userAccountDao));
+                .getAuthenticatedUser(this.userAccountDao));
         }
         return changed;
     }

@@ -658,6 +658,7 @@ public class ItemHandlerCreate extends ItemResourceListener {
      *             If binary content can not be retrieved.
      * @throws InvalidContentException
      * @throws TripleStoreSystemException
+     * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      */
     protected void handleComponent(
         final String componentId, final Map<String, String> properties,

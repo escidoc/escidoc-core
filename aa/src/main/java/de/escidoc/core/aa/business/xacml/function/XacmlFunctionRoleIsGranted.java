@@ -400,6 +400,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
      * @param roleIsGranted
      *            Flag indicating if the role has been granted to the user
      *            (optional: for the provided resource).
+     * @return
      */
     private static EvaluationResult createCachedResult(final String userId, final String roleId,
                                                        final String resourceId, final boolean roleIsGranted) {
@@ -416,10 +417,11 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
     /**
      * Gets the data access object bean used to access role data from the
      * database.<br>
+     * @return
      */
     private EscidocRoleDaoInterface getRoleDao() {
 
-        return roleDao;
+        return this.roleDao;
     }
 
     /**

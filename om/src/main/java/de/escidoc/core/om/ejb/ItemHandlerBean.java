@@ -62,7 +62,7 @@ import java.util.Map;
 
 public class ItemHandlerBean implements SessionBean {
 
-    ItemHandlerInterface service = null;
+    ItemHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(ItemHandlerBean.class);
 
@@ -70,7 +70,7 @@ public class ItemHandlerBean implements SessionBean {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory = beanFactoryLocator.useBeanFactory("ItemHandler.spring.ejb.context").getFactory();
-            service = (ItemHandlerInterface) factory.getBean("service.ItemHandler");
+            this.service = (ItemHandlerInterface) factory.getBean("service.ItemHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception ItemHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -78,7 +78,7 @@ public class ItemHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

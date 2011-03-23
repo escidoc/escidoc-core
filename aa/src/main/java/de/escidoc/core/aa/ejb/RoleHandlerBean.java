@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class RoleHandlerBean implements SessionBean {
 
-    RoleHandlerInterface service = null;
+    RoleHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(RoleHandlerBean.class);
 
@@ -41,7 +41,7 @@ public class RoleHandlerBean implements SessionBean {
         try {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory = beanFactoryLocator.useBeanFactory("RoleHandler.spring.ejb.context").getFactory();
-            service = (RoleHandlerInterface) factory.getBean("service.RoleHandler");
+            this.service = (RoleHandlerInterface) factory.getBean("service.RoleHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception RoleHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -49,7 +49,7 @@ public class RoleHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

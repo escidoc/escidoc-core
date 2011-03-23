@@ -3,30 +3,45 @@
  */
 package de.escidoc.core.sm.service;
 
+import de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException;
+import de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException;
+import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
+import de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException;
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
+import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  * Service endpoint interface for ReportHandler.
  */
-public interface ReportHandlerService extends java.rmi.Remote {
+public interface ReportHandlerService extends Remote {
 
-    java.lang.String retrieve(java.lang.String xml,
-                              org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String xml,
+                              SecurityContext securityContext)
+            throws AuthenticationException,
+            AuthorizationException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            ReportDefinitionNotFoundException,
+            MissingMethodParameterException,
+            InvalidSqlException,
+            SystemException, RemoteException;
 
-    java.lang.String retrieve(java.lang.String xml, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            de.escidoc.core.common.exceptions.application.security.AuthorizationException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException,
-            de.escidoc.core.common.exceptions.application.invalid.XmlSchemaValidationException,
-            de.escidoc.core.common.exceptions.application.notfound.ReportDefinitionNotFoundException,
-            de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException,
-            de.escidoc.core.common.exceptions.application.invalid.InvalidSqlException,
-            de.escidoc.core.common.exceptions.system.SystemException, java.rmi.RemoteException;
+    String retrieve(String xml, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            AuthorizationException,
+            XmlCorruptedException,
+            XmlSchemaValidationException,
+            ReportDefinitionNotFoundException,
+            MissingMethodParameterException,
+            InvalidSqlException,
+            SystemException, RemoteException;
 
 }

@@ -54,7 +54,7 @@ public class ShibbolethAuthenticationEntryPoint
         ServletException {
         final HttpServletRequest httpRequest = (HttpServletRequest) request;
         // FIXME:URL!!!
-        final StringBuilder target = new StringBuilder(serviceProviderBaseUrl).append("aa/login");
+        final StringBuilder target = new StringBuilder(this.serviceProviderBaseUrl).append("aa/login");
 
         final String queryString = httpRequest.getQueryString();
         if (queryString != null) {
@@ -62,8 +62,9 @@ public class ShibbolethAuthenticationEntryPoint
             target.append(queryString);
         }
         final String redirectUrl;
-        redirectUrl = httpRequest.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null ? target.toString() : serviceProviderBaseUrl
-                + sessionInitiatorPath
+        redirectUrl = httpRequest.getHeader(ShibbolethDetails.SHIB_SESSION_ID) == null ? target.toString() :
+                this.serviceProviderBaseUrl
+                + this.sessionInitiatorPath
                 + "?target="
                 + URLEncoder.encode(target.toString(),
                 XmlUtility.CHARACTER_ENCODING);

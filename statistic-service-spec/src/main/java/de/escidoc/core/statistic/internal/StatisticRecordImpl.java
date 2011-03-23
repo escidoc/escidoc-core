@@ -68,8 +68,8 @@ public class StatisticRecordImpl implements StatisticRecord {
     @Override
     public String toString() {
         return "StatisticRecordImpl{" +
-                "scope=" + scope +
-                ", parameter=" + parameter +
+                "scope=" + this.scope +
+                ", parameter=" + this.parameter +
                 '}';
     }
 }

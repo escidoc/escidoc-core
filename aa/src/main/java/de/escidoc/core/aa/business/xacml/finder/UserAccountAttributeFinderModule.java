@@ -817,7 +817,7 @@ public class UserAccountAttributeFinderModule
     private UserAccountDaoInterface getUserAccountDao()
         throws WebserverSystemException {
 
-        return userAccountDao;
+        return this.userAccountDao;
     }
 
     /**

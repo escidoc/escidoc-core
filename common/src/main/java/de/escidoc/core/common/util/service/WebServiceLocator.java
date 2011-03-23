@@ -80,7 +80,7 @@ public class WebServiceLocator extends Service {
         this.serviceInterface = serviceInterface;
         this.serviceName = serviceName;
         this.serviceUrl = serviceUrl;
-        serviceAddress = serviceUrl + serviceName;
+        this.serviceAddress = serviceUrl + serviceName;
     }
 
     /**
@@ -106,7 +106,7 @@ public class WebServiceLocator extends Service {
         this.serviceUrl =
             (String) config.getService(new QName(serviceName)).getOption(
                 "serviceUrl");
-        serviceAddress = serviceUrl + serviceName;
+        this.serviceAddress = this.serviceUrl + serviceName;
     }
 
     /**
@@ -115,7 +115,7 @@ public class WebServiceLocator extends Service {
      * @return String Returns the address of the service
      */
     public String getServiceAddress() {
-        return serviceAddress;
+        return this.serviceAddress;
     }
 
     /**
@@ -124,7 +124,7 @@ public class WebServiceLocator extends Service {
      * @return String the WSDD service name
      */
     public String getServiceWSDDServiceName() {
-        return serviceName;
+        return this.serviceName;
     }
 
     /**
@@ -134,8 +134,8 @@ public class WebServiceLocator extends Service {
      *            The WSDD name
      */
     public void setServiceWSDDServiceName(final String name) {
-        serviceName = name;
-        serviceAddress = serviceUrl + serviceName;
+        this.serviceName = name;
+        this.serviceAddress = this.serviceUrl + this.serviceName;
     }
 
     /**
@@ -149,7 +149,7 @@ public class WebServiceLocator extends Service {
 
         final Call call = (Call) this.createCall();
         final Remote stub =
-            call.getService().getPort(serviceAddress, serviceInterface);
+            call.getService().getPort(this.serviceAddress, this.serviceInterface);
 
         try {
             final Stub msg = (Stub) stub;
@@ -188,7 +188,7 @@ public class WebServiceLocator extends Service {
 
         final Call call = (Call) this.createCall();
         final Remote stub =
-            call.getService().getPort(serviceAddress, serviceInterface);
+            call.getService().getPort(this.serviceAddress, this.serviceInterface);
 
         try {
             final Stub msg = (Stub) stub;
@@ -266,7 +266,7 @@ public class WebServiceLocator extends Service {
                     new BeanDeserializerFactory(mapping.getBean(), poqn));
         }
         final Remote stub =
-            call.getService().getPort(serviceAddress, serviceInterface);
+            call.getService().getPort(this.serviceAddress, this.serviceInterface);
 
         try {
             final Stub msg = (Stub) stub;
@@ -343,7 +343,7 @@ public class WebServiceLocator extends Service {
      *            String for the endpoint address
      */
     public void setServiceEndpointAddress(final String address) {
-        serviceAddress = address;
+        this.serviceAddress = address;
     }
 
 //    /**
@@ -376,7 +376,7 @@ public class WebServiceLocator extends Service {
      */
     @Override
     public QName getServiceName() {
-        return new QName(serviceAddress, serviceName);
+        return new QName(this.serviceAddress, this.serviceName);
     }
 
 }

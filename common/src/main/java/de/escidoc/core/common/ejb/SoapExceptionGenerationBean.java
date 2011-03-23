@@ -137,7 +137,7 @@ import java.rmi.RemoteException;
 
 public class SoapExceptionGenerationBean implements SessionBean {
 
-    SoapExceptionGenerationInterface service = null;
+    SoapExceptionGenerationInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(SoapExceptionGenerationBean.class);
 
@@ -146,7 +146,7 @@ public class SoapExceptionGenerationBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("SoapExceptionGeneration.spring.ejb.context").getFactory();
-            service = (SoapExceptionGenerationInterface) factory.getBean("service.SoapExceptionGeneration");
+            this.service = (SoapExceptionGenerationInterface) factory.getBean("service.SoapExceptionGeneration");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception SoapExceptionGenerationComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -154,7 +154,7 @@ public class SoapExceptionGenerationBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

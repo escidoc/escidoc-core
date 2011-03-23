@@ -40,6 +40,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -193,7 +194,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      */
     protected PolicyDecisionPointInterface getPdp() {
 
-        return pdp;
+        return this.pdp;
     }
 
     /**
@@ -315,6 +316,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @throws MissingMethodParameterException
      * @see ContainerHandlerInterface#create(String)
      *
+     * @throws de.escidoc.core.common.exceptions.application.invalid.XmlCorruptedException
      */
     private String doCreate(final String xmlData, final boolean isCreate)
         throws SystemException, ContentModelNotFoundException,
@@ -324,7 +326,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         InvalidStatusException, RelationPredicateNotFoundException,
         MissingMdRecordException, MissingMethodParameterException {
 
-        final String[] creator = getUtility().getCurrentUser();
+        final String[] creator = Utility.getCurrentUser();
         final String containerId = getIdProvider().getNextPid();
         final String createComment = "Object " + containerId + " created.";
 
@@ -845,9 +847,8 @@ public class FedoraContainerHandler extends ContainerHandlerPid
                 setCts(cts);
             }
             // md-records
-            final Map<String, Map<String, String>> mdRecordsAttributes =
-                (HashMap<String, Map<String, String>>) mdHandler
-                    .getMetadataAttributes();
+            final Map<String, Map<String, String>> mdRecordsAttributes = mdHandler
+                .getMetadataAttributes();
             final Map mdRecordsStreams = (Map) streams.get("md-records");
             if (!mdRecordsStreams.containsKey("escidoc")) {
                 throw new XmlCorruptedException(
@@ -1340,7 +1341,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         final Map<String, Datastream> dsMap =
             new HashMap<String, Datastream>();
 
-        for (final Map.Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : mdMap.entrySet()) {
+        for (final Entry<String, ByteArrayOutputStream> stringByteArrayOutputStreamEntry : mdMap.entrySet()) {
             final ByteArrayOutputStream stream = stringByteArrayOutputStreamEntry.getValue();
             final byte[] xmlBytes = stream.toByteArray();
             HashMap<String, String> mdProperties = null;
@@ -1571,8 +1572,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         final String label = "Container " + getContainer().getId();
-        if (getUtility().checkUnlocked(getContainer().isLocked(), "Release",
-            label, getContainer().getLockOwner())
+        if (Utility.checkUnlocked(getContainer().isLocked(), "Release", label, getContainer().getLockOwner())
             && getUtility().checkOptimisticLockingCriteria(getContainer()
                 .getLastModificationDate(), taskParameter
                 .getLastModificationDate(), label)) {
@@ -1765,8 +1765,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         checkReleased();
 
         final String label = "Container " + getContainer().getId();
-        if (getUtility().checkUnlocked(getContainer().isLocked(), "Submit",
-            label, getContainer().getLockOwner())
+        if (Utility.checkUnlocked(getContainer().isLocked(), "Submit", label, getContainer().getLockOwner())
             && getUtility().checkOptimisticLockingCriteria(getContainer()
                 .getLastModificationDate(), taskParameter
                 .getLastModificationDate(), label)) {
@@ -1838,8 +1837,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         checkVersionStatus(Constants.STATUS_SUBMITTED);
 
         final String label = "Container " + getContainer().getId();
-        if (getUtility().checkUnlocked(getContainer().isLocked(), "Submit",
-            label, getContainer().getLockOwner())
+        if (Utility.checkUnlocked(getContainer().isLocked(), "Submit", label, getContainer().getLockOwner())
             && getUtility().checkOptimisticLockingCriteria(getContainer()
                 .getLastModificationDate(), taskParameter
                 .getLastModificationDate(), label)) {
@@ -1929,8 +1927,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         checkLatestVersion();
         final TaskParamHandler taskParameter = XmlUtility.parseTaskParam(param);
         final String label = "Container " + getContainer().getId();
-        if (getUtility().checkUnlocked(getContainer().isLocked(), "Withdraw",
-            label, getContainer().getLockOwner())
+        if (Utility.checkUnlocked(getContainer().isLocked(), "Withdraw", label, getContainer().getLockOwner())
             && getUtility().checkOptimisticLockingCriteria(getContainer()
                 .getLastModificationDate(), taskParameter
                 .getLastModificationDate(), label)) {
@@ -2109,7 +2106,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             getContainer().getLastModificationDate(),
             taskParameter.getLastModificationDate(),
             "Container " + getContainer().getId())) {
-            getContainer().setLocked(true, getUtility().getCurrentUser());
+            getContainer().setLocked(true, Utility.getCurrentUser());
             fireContainerModified(getContainer().getId(),
                 retrieve(getContainer().getId()));
         }
@@ -2167,7 +2164,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
             getContainer().getLastModificationDate(),
             taskParameter.getLastModificationDate(),
             "Container " + getContainer().getId())) {
-            getContainer().setLocked(false, getUtility().getCurrentUser());
+            getContainer().setLocked(false, Utility.getCurrentUser());
             fireContainerModified(getContainer().getId(),
                 retrieve(getContainer().getId()));
         }
@@ -3121,9 +3118,9 @@ public class FedoraContainerHandler extends ContainerHandlerPid
 
             }
 
-           final Set<Map.Entry<String,List<StartElementWithChildElements>>> entrySet   = predicateValuesVectorAssignment.entrySet();
+           final Set<Entry<String,List<StartElementWithChildElements>>> entrySet   = predicateValuesVectorAssignment.entrySet();
             for(final Object anEntrySet : entrySet) {
-                final Map.Entry entry = (Map.Entry) anEntrySet;
+                final Entry entry = (Entry) anEntrySet;
                 final String predicateValue = (String) entry.getKey();
                 final List<StartElementWithChildElements> elements =
                         (List<StartElementWithChildElements>) entry.getValue();

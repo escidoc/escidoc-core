@@ -89,20 +89,20 @@ public class SemanticQueryHandler extends DefaultHandler {
      * @return the query object part
      */
     public String getObject() {
-        return object;
+        return this.object;
     }
 
     /**
      * @return the query predicate part
      */
     public String getPredicate() {
-        return predicate;
+        return this.predicate;
     }
 
     /**
      * @return the query subject part
      */
     public String getSubject() {
-        return subject;
+        return this.subject;
     }
 }

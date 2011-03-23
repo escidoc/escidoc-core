@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for StatisticDataHandler.
  */
-public class StatisticDataHandlerSession extends StatisticDataHandlerBean
-        implements SessionBean {
+public class StatisticDataHandlerSession extends StatisticDataHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

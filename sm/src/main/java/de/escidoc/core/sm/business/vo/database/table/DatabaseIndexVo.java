@@ -48,7 +48,7 @@ public class DatabaseIndexVo {
      * @return the fields
      */
     public Collection<String> getFields() {
-        return fields;
+        return this.fields;
     }
 
     /**
@@ -68,7 +68,7 @@ public class DatabaseIndexVo {
      * @return the indexName
      */
     public String getIndexName() {
-        return indexName;
+        return this.indexName;
     }
 
     /**

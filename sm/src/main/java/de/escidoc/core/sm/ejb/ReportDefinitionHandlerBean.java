@@ -32,7 +32,7 @@ import java.util.Map;
 
 public class ReportDefinitionHandlerBean implements SessionBean {
 
-    ReportDefinitionHandlerInterface service = null;
+    ReportDefinitionHandlerInterface service;
     SessionContext sessionCtx;
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportDefinitionHandlerBean.class);
 
@@ -41,7 +41,7 @@ public class ReportDefinitionHandlerBean implements SessionBean {
             final BeanFactoryLocator beanFactoryLocator = SingletonBeanFactoryLocator.getInstance();
             final BeanFactory factory =
                     beanFactoryLocator.useBeanFactory("ReportDefinitionHandler.spring.ejb.context").getFactory();
-            service = (ReportDefinitionHandlerInterface) factory.getBean("service.ReportDefinitionHandler");
+            this.service = (ReportDefinitionHandlerInterface) factory.getBean("service.ReportDefinitionHandler");
         } catch(Exception e) {
             LOGGER.error("ejbCreate(): Exception ReportDefinitionHandlerComponent: " + e);
             throw new CreateException(e.getMessage());
@@ -49,7 +49,7 @@ public class ReportDefinitionHandlerBean implements SessionBean {
     }
 
     public void setSessionContext(final SessionContext arg0) throws RemoteException {
-        sessionCtx = arg0;
+        this.sessionCtx = arg0;
     }
 
     public void ejbRemove() throws RemoteException {

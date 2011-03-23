@@ -42,9 +42,9 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
 
     private String methodName;
 
-    private List<String> memberIds;
+    private final List<String> memberIds;
 
-    private List<String> memberIdsToRemove;
+    private final List<String> memberIdsToRemove;
 
     private final String parentId;
 
@@ -72,14 +72,14 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
                 if ("add".equals(this.methodName)) {
                 throw new InvalidContentException("Object with id " + objid
                     + " does not exist and can not be added to members of "
-                    + parentId + '.');
+                    + this.parentId + '.');
                 } else if ("remove".equals(this.methodName)) {
                     throw new InvalidContentException("Object with id " + objid
                         + " does not exist and can not be removed from members of "
-                        + parentId + '.');
+                        + this.parentId + '.');
                     }
             }
-            if (TripleStoreUtility.getInstance().isMemberOf(parentId, objid)) {
+            if (TripleStoreUtility.getInstance().isMemberOf(this.parentId, objid)) {
                 memberIdsToRemove.add(objid);
             } else {
                 memberIds.add(objid);
@@ -89,11 +89,11 @@ public class BuildRelsExtMemberEntriesFromTaskParamHandlerNew extends DefaultHan
     }
 
     public List<String> getMemberIds() {
-        return memberIds;
+        return this.memberIds;
     }
 
     public List<String> getMemberIdsToRemove() {
-        return memberIdsToRemove;
+        return this.memberIdsToRemove;
     }
 
 }

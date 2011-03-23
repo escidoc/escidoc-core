@@ -134,9 +134,9 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      */
     private long getESciDocUserHandleLifetime() throws WebserverSystemException {
 
-        if (eSciDocUserHandleLifetime == Long.MIN_VALUE) {
+        if (this.eSciDocUserHandleLifetime == Long.MIN_VALUE) {
             try {
-                eSciDocUserHandleLifetime =
+                this.eSciDocUserHandleLifetime =
                     Long.parseLong(EscidocConfiguration.getInstance().get(
                         EscidocConfiguration.ESCIDOC_CORE_USERHANDLE_LIFETIME));
             }

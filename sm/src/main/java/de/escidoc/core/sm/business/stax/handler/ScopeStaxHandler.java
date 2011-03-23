@@ -123,7 +123,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      * @return the scope
      */
     public Scope getScope() {
-        return scope;
+        return this.scope;
     }
 
     /**

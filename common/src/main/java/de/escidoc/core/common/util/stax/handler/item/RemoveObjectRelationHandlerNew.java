@@ -42,7 +42,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
     private List<String> objects;
 
-    private XMLStreamWriter writer;
+    private final XMLStreamWriter writer;
 
     private final OutputStream outputStream;
 
@@ -67,9 +67,9 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
         this.nsuris = new HashMap();
 
-        outputStream = new ByteArrayOutputStream();
+        this.outputStream = new ByteArrayOutputStream();
         try {
-            writer = XmlUtility.createXmlStreamWriter(outputStream);
+            this.writer = XmlUtility.createXmlStreamWriter(this.outputStream);
         }
         catch (final XMLStreamException e) {
             throw new WebserverSystemException(e);
@@ -87,12 +87,12 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
 
     @Override
     public EndElement endElement(final EndElement element) throws XMLStreamException {
-        if (justRemoved) {
-            justRemoved = false;
+        if (this.justRemoved) {
+            this.justRemoved = false;
             return element;
         }
         writer.writeEndElement();
-        deepLevel--;
+        this.deepLevel--;
         return element;
     }
 
@@ -135,7 +135,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
     public OutputStream getOutputStream() throws XMLStreamException {
         writer.flush();
         writer.close();
-        return outputStream;
+        return this.outputStream;
     }
 
     /**
@@ -168,7 +168,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
     }
 
     private void writeElement(final StartElement element) throws XMLStreamException {
-        deepLevel++;
+        this.deepLevel++;
         final String name = element.getLocalName();
         final String uri = element.getNamespace();
         String prefix = element.getPrefix();
@@ -180,7 +180,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 if (!prefixTrace.equals(prefix)) {
                     prefix = prefixTrace;
                 }
-                if (deepLevelInMAp >= deepLevel) {
+                if (deepLevelInMAp >= this.deepLevel) {
                     writer.writeStartElement(prefix, name, uri);
                     writer.writeNamespace(prefix, uri);
                 } else {
@@ -188,7 +188,7 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 }
             } else {
                 final List namespaceTrace = new ArrayList();
-                namespaceTrace.add(deepLevel);
+                namespaceTrace.add(this.deepLevel);
                 namespaceTrace.add(name);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);
@@ -211,14 +211,14 @@ public class RemoveObjectRelationHandlerNew extends DefaultHandler {
                 }
                 final Integer deepLevelInMAp = (Integer) namespaceTrace.get(0);
                 final String nameTrace = (String) namespaceTrace.get(1);
-                if (deepLevelInMAp == deepLevel && !elementName
+                if (deepLevelInMAp == this.deepLevel && !elementName
                         .equals(nameTrace)
-                        || deepLevelInMAp > deepLevel) {
+                        || deepLevelInMAp > this.deepLevel) {
                     writer.writeNamespace(prefix, uri);
                 }
             } else {
                 final List namespaceTrace = new ArrayList();
-                namespaceTrace.add(deepLevel);
+                namespaceTrace.add(this.deepLevel);
                 namespaceTrace.add(elementName);
                 namespaceTrace.add(prefix);
                 nsuris.put(uri, namespaceTrace);

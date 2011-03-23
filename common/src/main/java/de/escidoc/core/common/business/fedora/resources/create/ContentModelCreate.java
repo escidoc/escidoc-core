@@ -65,7 +65,7 @@ public class ContentModelCreate extends GenericResourceCreate {
     private Map<String, ResourceDefinitionCreate> resourceDefinitions;
 
     public Map<String, ResourceDefinitionCreate> getResourceDefinitions() {
-        return resourceDefinitions;
+        return this.resourceDefinitions;
     }
 
     /**
@@ -90,6 +90,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Set metadata record definitions.
+     * @param mdRecordDefinitions
      */
     public void setMdRecordDefinitions(
         final List<MdRecordDefinitionCreate> mdRecordDefinitions) {
@@ -99,6 +100,7 @@ public class ContentModelCreate extends GenericResourceCreate {
 
     /**
      * Set resource definitions.
+     * @param resourceDefinitions
      */
     public void setResourceDefinitions(
         final Map<String, ResourceDefinitionCreate> resourceDefinitions) {
@@ -177,7 +179,7 @@ public class ContentModelCreate extends GenericResourceCreate {
             }
 
             // create service definitions and deployments
-            if (resourceDefinitions != null) {
+            if (this.resourceDefinitions != null) {
                 for(final ResourceDefinitionCreate resourceDefinitionCreate : this.resourceDefinitions.values()) {
                     final ResourceDefinitionCreate rdc = resourceDefinitionCreate;
                     final String sdefFoxml = getSDefFoXML(rdc);
@@ -234,7 +236,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      * @return the contentStreams
      */
     public List<ContentStreamCreate> getContentStreams() {
-        return contentStreams;
+        return this.contentStreams;
     }
 
     /**

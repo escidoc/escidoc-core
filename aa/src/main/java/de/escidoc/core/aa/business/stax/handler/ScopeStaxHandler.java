@@ -147,7 +147,7 @@ public class ScopeStaxHandler extends DefaultHandler {
                     }
                     scopeDefAttributeObjectTypes.add(null);
                 }
-                unlimited = false;
+                this.unlimited = false;
             }
         }
 
@@ -190,7 +190,7 @@ public class ScopeStaxHandler extends DefaultHandler {
                         attributeObjectTypesIterator.next();
                     final ScopeDef scopeDef =
                         new ScopeDef(
-                            resourceType, attributeId, attributeObjectType, role);
+                            resourceType, attributeId, attributeObjectType, this.role);
                     scopeDefs.add(scopeDef);
                 }
 
@@ -211,7 +211,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      */
     public boolean isUnlimited() {
 
-        return unlimited;
+        return this.unlimited;
     }
 
     /**
@@ -223,7 +223,7 @@ public class ScopeStaxHandler extends DefaultHandler {
      *
      */
     public List<String> getScopeDefAttributeIds() {
-        return scopeDefAttributeIds;
+        return this.scopeDefAttributeIds;
     }
 
     /**
@@ -235,6 +235,6 @@ public class ScopeStaxHandler extends DefaultHandler {
      *
      */
     public List<String> getScopeDefResourceTypes() {
-        return scopeDefResourceTypes;
+        return this.scopeDefResourceTypes;
     }
 }

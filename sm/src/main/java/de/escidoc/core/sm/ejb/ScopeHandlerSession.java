@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for ScopeHandler.
  */
-public class ScopeHandlerSession extends ScopeHandlerBean implements SessionBean {
+public class ScopeHandlerSession extends ScopeHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

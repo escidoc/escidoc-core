@@ -112,7 +112,7 @@ public class IndexRequestImpl implements IndexRequest {
      */
     @Override
     public String getData() {
-        return data;
+        return this.data;
     }
 
     /**
@@ -129,7 +129,7 @@ public class IndexRequestImpl implements IndexRequest {
      */
     @Override
     public boolean getIsReindexerCaller() {
-        return isReindexerCaller;
+        return this.isReindexerCaller;
     }
 
     /**
@@ -148,14 +148,14 @@ public class IndexRequestImpl implements IndexRequest {
     @Override
     public String toString() {
         return "IndexRequestImpl{" +
-                "requestId='" + requestId + '\'' +
-                ", creationTimestamp=" + creationTimestamp +
-                ", action='" + action + '\'' +
-                ", indexName='" + indexName + '\'' +
-                ", resource='" + resource + '\'' +
-                ", objectType='" + objectType + '\'' +
-                ", data='" + data + '\'' +
-                ", isReindexerCaller='" + isReindexerCaller + '\'' +
+                "requestId='" + this.requestId + '\'' +
+                ", creationTimestamp=" + this.creationTimestamp +
+                ", action='" + this.action + '\'' +
+                ", indexName='" + this.indexName + '\'' +
+                ", resource='" + this.resource + '\'' +
+                ", objectType='" + this.objectType + '\'' +
+                ", data='" + this.data + '\'' +
+                ", isReindexerCaller='" + this.isReindexerCaller + '\'' +
                 '}';
     }
 }

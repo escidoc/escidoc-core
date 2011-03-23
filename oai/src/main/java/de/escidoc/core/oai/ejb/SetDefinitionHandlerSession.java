@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for SetDefinitionHandler.
  */
-public class SetDefinitionHandlerSession extends SetDefinitionHandlerBean
-        implements SessionBean {
+public class SetDefinitionHandlerSession extends SetDefinitionHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

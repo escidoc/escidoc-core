@@ -36,6 +36,8 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
+import java.lang.String;
+
 /**
  * Service layer implementation of a handler that manages eSciDoc actions.
  *
@@ -59,8 +61,8 @@ public class ActionHandler implements ActionHandlerInterface {
      * @throws AuthenticationException
      * @throws AuthorizationException
      * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.ActionHandlerInterface#createUnsecuredActions(java.lang.String,
-     *      java.lang.String)
+     * @see ActionHandlerInterface#createUnsecuredActions(String,
+     *      String)
      *
      */
     @Override
@@ -81,7 +83,7 @@ public class ActionHandler implements ActionHandlerInterface {
      * @throws AuthenticationException
      * @throws AuthorizationException
      * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.ActionHandlerInterface
+     * @see ActionHandlerInterface
      *      #deleteUnsecuredActions(java.lang.String)
      *
      */
@@ -102,7 +104,7 @@ public class ActionHandler implements ActionHandlerInterface {
      * @throws AuthenticationException
      * @throws AuthorizationException
      * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.ActionHandlerInterface
+     * @see ActionHandlerInterface
      *      #retrieveUnsecuredActions(java.lang.String)
      *
      */
@@ -123,7 +125,7 @@ public class ActionHandler implements ActionHandlerInterface {
      *            The business layer bean
      */
     public void setBusiness(
-        final de.escidoc.core.aa.service.interfaces.ActionHandlerInterface business) {
+        final ActionHandlerInterface business) {
 
         this.business = business;
     }

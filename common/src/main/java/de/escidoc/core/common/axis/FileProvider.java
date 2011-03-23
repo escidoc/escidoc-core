@@ -87,7 +87,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      *            name of the config-file
      */
     public FileProvider(final String filename) {
-        configFile = new File(filename);
+        this.configFile = new File(filename);
         if (defaultJNDIUrl == null) {
             try {
                 defaultJNDIUrl =
@@ -128,7 +128,7 @@ public class FileProvider implements WSDDEngineConfiguration {
                 "invalidConfigFilePath", basepath));
         }
 
-        configFile = new File(basepath, filename);
+        this.configFile = new File(basepath, filename);
         check();
     }
 
@@ -138,7 +138,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      */
     private void check() {
         try {
-            readOnly = !configFile.canWrite();
+            this.readOnly = !configFile.canWrite();
         }
         catch (final SecurityException se) {
             if(LOGGER.isWarnEnabled()) {
@@ -147,14 +147,14 @@ public class FileProvider implements WSDDEngineConfiguration {
             if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on checking the configuration file.", se);
             }
-            readOnly = true;
+            this.readOnly = true;
         }
 
         /*
          * If file is read-only, log informational message as configuration
          * changes will not persist.
          */
-        if (readOnly) {
+        if (this.readOnly) {
             LOGGER.info(Messages.getMessage("readOnlyConfigFile"));
         }
     }
@@ -178,9 +178,9 @@ public class FileProvider implements WSDDEngineConfiguration {
      */
     public final void setInputStream(final InputStream is) {
 
-        myInputStream = is;
+        this.myInputStream = is;
         if (is != null) {
-            myInputStream = replaceVariables(myInputStream);
+            this.myInputStream = replaceVariables(this.myInputStream);
         }
     }
 
@@ -190,7 +190,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @return InputStream input stream
      */
     private InputStream getInputStream() {
-        return myInputStream;
+        return this.myInputStream;
     }
 
     /**
@@ -200,7 +200,7 @@ public class FileProvider implements WSDDEngineConfiguration {
      */
     @Override
     public WSDDDeployment getDeployment() {
-        return deployment;
+        return this.deployment;
     }
 
     /**
@@ -318,7 +318,7 @@ public class FileProvider implements WSDDEngineConfiguration {
         try {
             if (getInputStream() == null) {
                 try {
-                    setInputStream(new FileInputStream(configFile));
+                    setInputStream(new FileInputStream(this.configFile));
                 } catch (final Exception e) {
                     if(LOGGER.isWarnEnabled()) {
                         LOGGER.warn("Error on creating input stream.");
@@ -326,7 +326,7 @@ public class FileProvider implements WSDDEngineConfiguration {
                     if(LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Error on creating input stream.", e);
                     }
-                    if (searchClasspath) {
+                    if (this.searchClasspath) {
                         setInputStream(ClassUtils.getResourceAsStream(engine
                             .getClass(), configFile.getName(), true));
                     }
@@ -340,7 +340,7 @@ public class FileProvider implements WSDDEngineConfiguration {
 
             final WSDDDocument doc =
                 new WSDDDocument(XMLUtils.newDocument(getInputStream()));
-            deployment = doc.getDeployment();
+            this.deployment = doc.getDeployment();
 
             deployment.configureEngine(engine);
             engine.refreshGlobalOptions();
@@ -365,12 +365,12 @@ public class FileProvider implements WSDDEngineConfiguration {
     @Override
     public void writeEngineConfig(final AxisEngine engine)
         throws ConfigurationException {
-        if (!readOnly) {
+        if (! this.readOnly) {
             PrintWriter writer = null;
             try {
                 final Document doc = Admin.listConfig(engine);
                 final Writer osWriter = new OutputStreamWriter(
-                        new FileOutputStream(configFile), XMLUtils.getEncoding());
+                        new FileOutputStream(this.configFile), XMLUtils.getEncoding());
                 writer = new PrintWriter(new BufferedWriter(osWriter));
                 XMLUtils.DocumentToWriter(doc, writer);
                 writer.println();

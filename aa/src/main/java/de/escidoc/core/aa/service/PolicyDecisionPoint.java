@@ -77,7 +77,7 @@ public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
      * @throws AuthenticationException
      * @throws AuthorizationException
      * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.PolicyDecisionPointInterface
+     * @see PolicyDecisionPointInterface
      *      #evaluate(java.lang.String)
      *
      */

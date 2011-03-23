@@ -190,7 +190,7 @@ public class RelationHandler2 extends DefaultHandler {
      * @return the relation
      */
     public RelationCreate getRelation() {
-        return relation;
+        return this.relation;
     }
 
 }

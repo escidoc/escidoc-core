@@ -110,14 +110,14 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
 
         if (id != null) {
             try {
-                organizationalUnit = new OrganizationalUnit(id);
+                this.organizationalUnit = new OrganizationalUnit(id);
             }
             catch (final ResourceNotFoundException e) {
                 throw new OrganizationalUnitNotFoundException(e);
             }
         }
         else {
-            organizationalUnit = null;
+            this.organizationalUnit = null;
         }
     }
 
@@ -126,7 +126,7 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      * @return Get the current organizational unit resource.
      */
     protected OrganizationalUnit getOrganizationalUnit() {
-        return organizationalUnit;
+        return this.organizationalUnit;
     }
 
     /**
@@ -134,10 +134,10 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      */
     @Override
     protected Utility getUtility() {
-        if (utility == null) {
-            utility = Utility.getInstance();
+        if (this.utility == null) {
+            this.utility = Utility.getInstance();
         }
-        return utility;
+        return this.utility;
     }
 
     /**
@@ -408,19 +408,19 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      */
     public OrganizationalUnitFoXmlRendererInterface getFoxmlRenderer() {
 
-        if (foxmlRenderer == null) {
-            foxmlRenderer = new VelocityXmlOrganizationalUnitFoXmlRenderer();
+        if (this.foxmlRenderer == null) {
+            this.foxmlRenderer = new VelocityXmlOrganizationalUnitFoXmlRenderer();
         }
-        return foxmlRenderer;
+        return this.foxmlRenderer;
     }
 
     /**
      * @return the renderer
      */
     public OrganizationalUnitRendererInterface getRenderer() {
-        if (renderer == null) {
-            renderer = new VelocityXmlOrganizationalUnitRenderer();
+        if (this.renderer == null) {
+            this.renderer = new VelocityXmlOrganizationalUnitRenderer();
         }
-        return renderer;
+        return this.renderer;
     }
 }

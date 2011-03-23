@@ -478,6 +478,7 @@ public final class PoliciesCache {
      *            <code>null</code>.
      * @returns roleIsGranted The {@link EvaluationResult} holding the result of
      *          the {@link XacmlFunctionRoleIsGranted} for the provided values.
+     * @return
      */
     public static EvaluationResult getRoleIsGrantedEvaluationResult(
         final String userOrGroupId, final String roleId, final String resourceId) {

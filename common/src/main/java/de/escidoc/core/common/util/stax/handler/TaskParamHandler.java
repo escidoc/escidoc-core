@@ -119,7 +119,7 @@ public class TaskParamHandler extends DefaultHandler {
         if (PARAM_PATH.equals(currentPath)) {
             try {
                 final Attribute date = element.getAttribute(null, LAST_MODIFICATION_DATE_ATT);
-                lastModificationDate = date.getValue();
+                this.lastModificationDate = date.getValue();
             } catch (final NoSuchAttributeException e1) {
                 if(LOGGER.isWarnEnabled()) {
                     LOGGER.warn("Error on parsing last modification attribute.");
@@ -132,17 +132,17 @@ public class TaskParamHandler extends DefaultHandler {
             // last-modifiaction-date timestamp already checked by schema
             // validation.
             try {
-                if (checkLastModificationDate) {
-                    if (lastModificationDate == null) {
+                if (this.checkLastModificationDate) {
+                    if (this.lastModificationDate == null) {
                         throw new XmlCorruptedException("");
                     }
-                    new DateTime(lastModificationDate);
+                    new DateTime(this.lastModificationDate);
                 }
             }
             catch (final Exception e) {
                 throw new XmlCorruptedException(
                     "Task param: last-modification-date '"
-                        + lastModificationDate + "' is no valid timestamp!", e);
+                        + this.lastModificationDate + "' is no valid timestamp!", e);
             }
         } else if (!currentPath.startsWith(PARAM_PATH)) {
             throw new XmlCorruptedException("Task param has wrong root element '"
@@ -221,7 +221,7 @@ public class TaskParamHandler extends DefaultHandler {
      * @return The keep in sync value used for AdminHandler.deleteObjects()
      */
     public boolean getKeepInSync() {
-        return keepInSync;
+        return this.keepInSync;
     }
 
     /**
@@ -229,7 +229,7 @@ public class TaskParamHandler extends DefaultHandler {
      * @return The latest modification date.
      */
     public String getLastModificationDate() {
-        return lastModificationDate;
+        return this.lastModificationDate;
     }
 
     /**
@@ -238,7 +238,7 @@ public class TaskParamHandler extends DefaultHandler {
      * @return withdraw comment
      */
     public String getWithdrawComment() {
-        return withdrawComment;
+        return this.withdrawComment;
     }
 
     /**
@@ -247,14 +247,14 @@ public class TaskParamHandler extends DefaultHandler {
      * @return comment.
      */
     public String getComment() {
-        return comment;
+        return this.comment;
     }
 
     /**
      * @return the format
      */
     public String getFormat() {
-        return format;
+        return this.format;
     }
 
     /**
@@ -262,7 +262,7 @@ public class TaskParamHandler extends DefaultHandler {
      * @return the id list
      */
     public Collection<String> getIds() {
-        return ids;
+        return this.ids;
     }
 
     /**
@@ -280,14 +280,14 @@ public class TaskParamHandler extends DefaultHandler {
      * @return the password
      */
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     /**
      * @return the objectType
      */
     public String getObjectType() {
-        return objectType;
+        return this.objectType;
     }
 
     /**
@@ -303,6 +303,6 @@ public class TaskParamHandler extends DefaultHandler {
      * @return the revokationRemark
      */
     public String getRevokationRemark() {
-        return revokationRemark;
+        return this.revokationRemark;
     }
 }

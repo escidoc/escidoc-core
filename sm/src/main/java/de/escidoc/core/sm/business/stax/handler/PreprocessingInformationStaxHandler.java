@@ -92,9 +92,9 @@ public class PreprocessingInformationStaxHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
 
         if (START_DATE_PATH.equals(currentPath)) {
-            startDate = DATE_FORMAT.parse(s);
+            this.startDate = DATE_FORMAT.parse(s);
         } else if (END_DATE_PATH.equals(currentPath)) {
-            endDate = DATE_FORMAT.parse(s);
+            this.endDate = DATE_FORMAT.parse(s);
         }
         return s;
     }
@@ -103,14 +103,14 @@ public class PreprocessingInformationStaxHandler extends DefaultHandler {
      * @return the startDate
      */
     public Date getStartDate() {
-        return startDate;
+        return this.startDate;
     }
 
     /**
      * @return the endDate
      */
     public Date getEndDate() {
-        return endDate;
+        return this.endDate;
     }
 
 }

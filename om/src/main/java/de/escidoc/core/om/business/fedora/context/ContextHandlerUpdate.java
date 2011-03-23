@@ -235,12 +235,12 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             final String oldModifiedBy =
                 getTripleStoreUtility().getProperty(getContext().getId(),
                     Constants.STRUCTURAL_RELATIONS_NS_URI + "modified-by");
-            final String[] currentUser = getUtility().getCurrentUser();
+            final String[] currentUser = Utility.getCurrentUser();
             if (!oldModifiedBy.equals(currentUser[0])) {
                 changedValues.put("modifiedBy", currentUser[0]);
                 changedValues.put("modifiedByTitle", currentUser[1]);
             }
-            final String buildNumber = Utility.getInstance().getBuildNumber();
+            final String buildNumber = Utility.getBuildNumber();
             changedValues.put("build", buildNumber);
             updateRelsExt(changedValues);
             getContext().persist();
@@ -315,7 +315,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX,
                 null, getUtility().getCurrentUserRealName(), null));
 
-        final String buildNumber = Utility.getInstance().getBuildNumber();
+        final String buildNumber = Utility.getBuildNumber();
         updateElementsRelsExt.put("build", new StartElementWithChildElements(
             "build", "http://escidoc.de/core/01/system/", "system", null,
             buildNumber, null));
@@ -427,7 +427,7 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
                 Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX,
                 null, getUtility().getCurrentUserRealName(), null));
 
-        final String buildNumber = Utility.getInstance().getBuildNumber();
+        final String buildNumber = Utility.getBuildNumber();
         updateElementsRelsExt.put("build", new StartElementWithChildElements(
             "build", "http://escidoc.de/core/01/system/", "system", null,
             buildNumber, null));

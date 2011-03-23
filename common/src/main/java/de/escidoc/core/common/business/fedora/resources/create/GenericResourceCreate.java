@@ -143,7 +143,7 @@ public abstract class GenericResourceCreate {
      * @return the objid
      */
     public String getObjid() {
-        return objid;
+        return this.objid;
     }
 
     /**
@@ -163,9 +163,9 @@ public abstract class GenericResourceCreate {
      */
     public String getBuildNumber() throws WebserverSystemException {
         if (this.buildNumber == null) {
-            this.buildNumber = Utility.getInstance().getBuildNumber();
+            this.buildNumber = Utility.getBuildNumber();
         }
-        return buildNumber;
+        return this.buildNumber;
     }
 
 }

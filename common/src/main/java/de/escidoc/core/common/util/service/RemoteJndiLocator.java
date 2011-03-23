@@ -78,7 +78,7 @@ public class RemoteJndiLocator extends JndiObjectFactoryBean {
      * @return String the package name
      */
     public String getPackageName() {
-        return packageName;
+        return this.packageName;
     }
 
     /**
@@ -102,8 +102,7 @@ public class RemoteJndiLocator extends JndiObjectFactoryBean {
         String providerUrl;
         try {
             providerUrl =
-                EscidocConfiguration.getInstance().get(
-                    packageName + CONFIG_PROVIDER_URL_NAME);
+                EscidocConfiguration.getInstance().get(this.packageName + CONFIG_PROVIDER_URL_NAME);
             if (providerUrl == null) {
                 providerUrl =
                     EscidocConfiguration.getInstance().get(

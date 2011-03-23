@@ -791,6 +791,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * <code>contentStreamMap</code> and calls Item.setContentStreams with a
      * HashMap which contains the metadata datastreams as Datastream objects.
      * 
+     * @param contentStreams
      * @throws WebserverSystemException
      * @throws IntegritySystemException
      * @throws FedoraSystemException
@@ -869,6 +870,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      *            The item which is to validate.
      * @throws InvalidStatusException
      *             Thrown if Item has invalid status.
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidContentException
      */
     private void validate(final ContentModelCreate item)
         throws InvalidContentException {
@@ -981,7 +983,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         WebserverSystemException {
         if (getContentModel().isLocked()
             && !getContentModel().getLockOwner().equals(
-                Utility.getInstance().getCurrentUser()[0])) {
+                Utility.getCurrentUser()[0])) {
             throw new LockingException("Content Model + "
                 + getContentModel().getId() + " is locked by "
                 + getContentModel().getLockOwner() + '.');
@@ -1075,7 +1077,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             restXml = getAlternateForm();
             soapXml = xmlData;
         }
-        for (final ResourceListener contentModelListener : contentModelListeners) {
+        for (final ResourceListener contentModelListener : this.contentModelListeners) {
             contentModelListener.resourceModified(id, restXml, soapXml);
         }
     }
@@ -1104,7 +1106,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             restXml = getAlternateForm();
             soapXml = xmlData;
         }
-        for (final ResourceListener contentModelListener : contentModelListeners) {
+        for (final ResourceListener contentModelListener : this.contentModelListeners) {
             contentModelListener.resourceCreated(id, restXml, soapXml);
         }
     }
@@ -1120,7 +1122,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      */
     private void fireContentModelDeleted(final String id)
         throws SystemException {
-        for (final ResourceListener contentModelListener : contentModelListeners) {
+        for (final ResourceListener contentModelListener : this.contentModelListeners) {
             contentModelListener.resourceDeleted(id);
         }
     }

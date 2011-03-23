@@ -126,6 +126,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
      * @return String date in database-specific format
      * 
      *
+     * @throws de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException
      */
     private static String convertDate(final String xmldate)
                     throws SqlDatabaseSystemException {
@@ -1158,6 +1159,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     /**
      * Wrapper of setDataSource to enable bean stuff generation for this
      * handler.
+     * @param myDataSource
      */
     public void setMyDataSource(final DataSource myDataSource) {
         setDataSource(myDataSource);

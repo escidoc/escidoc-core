@@ -94,6 +94,7 @@ public class XmlValidationInterceptor implements Ordered {
      * @param resolvingMethod
      *            The name of the resolving method used to identify the schema
      *            location.
+     * @param root
      * @throws InvalidXmlException
      *             Thrown in case of failed xml schema validation.
      * @throws WebserverSystemException
@@ -125,7 +126,7 @@ public class XmlValidationInterceptor implements Ordered {
         final Class[] paramTypes = {};
         try {
             final Method getSchemaLocationM = XmlUtility.class.getMethod(resolvingMethod, paramTypes);
-            return (String) getSchemaLocationM.invoke(null, new Object[0]);
+            return (String) getSchemaLocationM.invoke(null);
         } catch (final Exception e) {
             throw new WebserverSystemException("Could not find schema location for schema " + resolvingMethod + '!', e);
         }

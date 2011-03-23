@@ -46,7 +46,7 @@ public class EscidocServiceRedirect implements EscidocServiceRedirectInterface {
      */
     @Override
     public String getRedirectUrl() {
-        return redirectUrl;
+        return this.redirectUrl;
     }
 
     /* (non-Javadoc)
@@ -62,7 +62,7 @@ public class EscidocServiceRedirect implements EscidocServiceRedirectInterface {
      */
     @Override
     public String getContent() {
-        return content;
+        return this.content;
     }
 
     /* (non-Javadoc)

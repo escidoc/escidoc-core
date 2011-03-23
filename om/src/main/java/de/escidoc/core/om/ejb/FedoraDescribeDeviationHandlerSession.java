@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for FedoraDescribeDeviationHandler.
  */
-public class FedoraDescribeDeviationHandlerSession extends FedoraDescribeDeviationHandlerBean
-        implements SessionBean {
+public class FedoraDescribeDeviationHandlerSession extends FedoraDescribeDeviationHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

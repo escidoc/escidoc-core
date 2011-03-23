@@ -90,7 +90,7 @@ public class ContentRelationHandler extends DefaultHandler {
 
     private MetadataHandler2 metadataHandler;
 
-    private ContentRelationCreate contentRelation;
+    private final ContentRelationCreate contentRelation;
 
     // helper to collect a characters for type
     private String tmpType;
@@ -146,12 +146,12 @@ public class ContentRelationHandler extends DefaultHandler {
                 }
                 this.parsingProperties = true;
                 this.propertiesHandler =
-                    new ContentRelationPropertiesHandler(parser);
+                    new ContentRelationPropertiesHandler(this.parser);
                 this.propertiesHandler.startElement(element);
             } else if (XPATH_CONTENT_RELATION_METADATA.equals(currentPath)) {
                 this.parsingMetaData = true;
                 this.metadataHandler =
-                    new MetadataHandler2(parser,
+                    new MetadataHandler2(this.parser,
                         XPATH_CONTENT_RELATION_METADATA);
                 this.metadataHandler.startElement(element);
             }

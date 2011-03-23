@@ -43,7 +43,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  */
 public class AdminHandler implements AdminHandlerInterface {
 
-    private de.escidoc.core.adm.business.admin.AdminHandler business = null;
+    private de.escidoc.core.adm.business.admin.AdminHandler business;
 
     /**
      * Delete a list of objects given by their object id's from Fedora. In case

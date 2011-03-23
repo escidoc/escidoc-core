@@ -47,6 +47,7 @@ public interface SemanticStoreHandlerInterface {
      * Retrieves a result of provided triple store query in a provided output
      * format.
      * 
+     * @param taskParam
      * @return Returns XML representation of the query result.
      *
      * @throws InvalidTripleStoreQueryException
@@ -55,6 +56,8 @@ public interface SemanticStoreHandlerInterface {
      *             TODO
      * @throws InvalidTripleStoreOutputFormatException
      *             TODO
+     * @throws de.escidoc.core.common.exceptions.application.invalid.InvalidXmlException
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingElementValueException
      */
     String spo(final String taskParam) throws SystemException,
         InvalidTripleStoreQueryException,

@@ -172,6 +172,7 @@ public class SecurityInterceptor implements Ordered {
      * @throws Throwable
      *             Thrown in case of an error.
      *
+     * @return
      */
 //    @Around("call(public !static * de.escidoc.core.*.service.interfaces.*.*(..))"
 //        + " && within(de.escidoc.core.*.ejb.*Bean)")
@@ -550,7 +551,7 @@ public class SecurityInterceptor implements Ordered {
      */
     private InvocationParser getInvocationParser() {
 
-        return invocationParser;
+        return this.invocationParser;
     }
 
     /**
@@ -570,7 +571,7 @@ public class SecurityInterceptor implements Ordered {
      */
     private PolicyDecisionPointInterface getPdp() {
 
-        return pdp;
+        return this.pdp;
     }
 
     /**
@@ -601,7 +602,7 @@ public class SecurityInterceptor implements Ordered {
      *
      */
     private TripleStoreUtility getTsu() {
-        return tsu;
+        return this.tsu;
     }
 
     /**

@@ -118,7 +118,7 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
         final String theName = element.getLocalName();
 
         if (contentRelationPath.equals(currentPath)) {
-            inContentRelation = true;
+            this.inContentRelation = true;
             final int indexOfObjId = element.indexOfAttribute(null, "objid");
             final int indexOfHref =
                 element.indexOfAttribute(Constants.XLINK_URI, "href");
@@ -142,9 +142,9 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
             checkRefElement(objid, href);
             final int indexOfPredicate = element.indexOfAttribute(null, "predicate");
-            predicate = element.getAttribute(indexOfPredicate).getValue();
-            if (!ContentRelationsUtility.validPredicate(predicate)) {
-                throw new RelationPredicateNotFoundException("Predicate " + predicate + " is wrong.");
+            this.predicate = element.getAttribute(indexOfPredicate).getValue();
+            if (!ContentRelationsUtility.validPredicate(this.predicate)) {
+                throw new RelationPredicateNotFoundException("Predicate " + this.predicate + " is wrong.");
             }
         }
         return element;
@@ -160,9 +160,9 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
      */
     @Override
     public EndElement endElement(final EndElement element) {
-        if (inContentRelation) {
-            inContentRelation = false;
-            final String relationDataCheck = predicate + "###" + targetId;
+        if (this.inContentRelation) {
+            this.inContentRelation = false;
+            final String relationDataCheck = this.predicate + "###" + this.targetId;
             if (!relationsDataCheck.contains(relationDataCheck)) {
                 relationsDataCheck.add(relationDataCheck);
                 final Map<String, String> relationData =
@@ -173,11 +173,11 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
                 final String predicateValue = predicate.substring(index + 1);
                 relationData.put("predicateNs", predicateNs);
                 relationData.put("predicateValue", predicateValue);
-                relationData.put("target", targetId);
+                relationData.put("target", this.targetId);
             }
-            targetId = null;
+            this.targetId = null;
 
-            predicate = null;
+            this.predicate = null;
         }
         return element;
     }
@@ -186,16 +186,16 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
      * @return Returns the title.
      */
     public List<Map<String, String>> getContentRelationsData() {
-        return relationsData;
+        return this.relationsData;
     }
 
     private void checkRefElement(final String objectId, final String href)
         throws InvalidContentException, TripleStoreSystemException,
         ReferencedResourceNotFoundException, WebserverSystemException {
-        targetId = null;
-        targetId = href != null ? Utility.getId(href) : objectId;
+        this.targetId = null;
+        this.targetId = href != null ? Utility.getId(href) : objectId;
         final String targetIdWithoutVersion =
-            XmlUtility.getObjidWithoutVersion(targetId);
+            XmlUtility.getObjidWithoutVersion(this.targetId);
         String targetVersion =
             targetId.replaceFirst(targetIdWithoutVersion, "");
         if (targetVersion.length() > 0) {
@@ -206,32 +206,32 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
         }
 
         final String targetObjectType =
-            TripleStoreUtility.getInstance().getObjectType(targetId);
+            TripleStoreUtility.getInstance().getObjectType(this.targetId);
 
-        if (!TripleStoreUtility.getInstance().exists(targetId)) {
-            throw new ReferencedResourceNotFoundException("Related " + targetObjectType + " with id " + targetId
+        if (!TripleStoreUtility.getInstance().exists(this.targetId)) {
+            throw new ReferencedResourceNotFoundException("Related " + targetObjectType + " with id " + this.targetId
                     + " does not exist.");
         }
 
         if (!Constants.ITEM_OBJECT_TYPE.equals(targetObjectType)
             && !Constants.CONTAINER_OBJECT_TYPE.equals(targetObjectType)) {
             throw new InvalidContentException("A related resource has to be either 'item' or 'container'. "
-                    + "A object with id " + targetId
+                    + "A object with id " + this.targetId
                     + " is neither 'item' nor 'container' ");
         }
         if (href != null) {
             if (targetObjectType.equals(Constants.ITEM_OBJECT_TYPE)
-                && !href.equals("/ir/item/" + targetId)) {
+                && !href.equals("/ir/item/" + this.targetId)) {
                 throw new InvalidContentException("The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
-                        + "/ir/item/" + targetId);
+                        + "/ir/item/" + this.targetId);
 
             }
             else if (targetObjectType.equals(Constants.CONTAINER_OBJECT_TYPE)
-                && !href.equals("/ir/container/" + targetId)) {
+                && !href.equals("/ir/container/" + this.targetId)) {
                 throw new InvalidContentException("The 'href' attribute, which represents"
                         + " a target rest-url has a wrong syntax. The url has to look like: "
-                        + "/ir/container/" + targetId);
+                        + "/ir/container/" + this.targetId);
 
             }
         }

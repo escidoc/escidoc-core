@@ -76,7 +76,7 @@ public class ContentStreamCreate {
      * @return the name
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**
@@ -91,7 +91,7 @@ public class ContentStreamCreate {
      * @return the mimeType
      */
     public String getMimeType() {
-        return mimeType;
+        return this.mimeType;
     }
 
     /**
@@ -106,7 +106,7 @@ public class ContentStreamCreate {
      * @return the title
      */
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
 }

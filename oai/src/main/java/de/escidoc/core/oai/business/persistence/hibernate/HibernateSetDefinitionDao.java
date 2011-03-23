@@ -50,6 +50,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -73,7 +74,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
      */
     public HibernateSetDefinitionDao() {
         try {
-            setDefinitionFilter = new SetDefinitionFilter(null);
+            this.setDefinitionFilter = new SetDefinitionFilter(null);
         } catch (final InvalidSearchQueryException e) {
             // Dont do anything because null-query is given
             if(LOGGER.isWarnEnabled()) {
@@ -83,8 +84,8 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
                 LOGGER.debug("Expected exception for null-query", e);
             }
         }
-        criteriaMap = setDefinitionFilter.getCriteriaMap();
-        propertiesNamesMap = setDefinitionFilter.getPropertyMap();
+        this.criteriaMap = setDefinitionFilter.getCriteriaMap();
+        this.propertiesNamesMap = setDefinitionFilter.getPropertyMap();
     }
 
     /**
@@ -196,7 +197,7 @@ public class HibernateSetDefinitionDao extends AbstractHibernateDao
             detachedCriteria.add(Restrictions.in("id", setIds.toArray()));
         }
 
-        for (final Map.Entry<String, Object[]> stringEntry : criteriaMap.entrySet()) {
+        for (final Entry<String, Object[]> stringEntry : criteriaMap.entrySet()) {
             final Object criteriaValue = clonedCriterias.remove(stringEntry.getKey());
             if (criteriaValue != null) {
                 final Object[] parts = stringEntry.getValue();

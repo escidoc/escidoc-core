@@ -106,7 +106,7 @@ public class FedoraOrganizationalUnitHandler
     private final Collection<ResourceListener> ouListeners =
         new ArrayList<ResourceListener>();
 
-    private ContentRelationHandlerInterface contentRelationHandler;
+    private final ContentRelationHandlerInterface contentRelationHandler;
 
     /**
      * Construct a new FedoraOrganizationalUnitHandler. Get a reference to the
@@ -203,7 +203,7 @@ public class FedoraOrganizationalUnitHandler
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (final ResourceListener ouListener : ouListeners) {
+        for (final ResourceListener ouListener : this.ouListeners) {
             ouListener.resourceCreated(id, restXml, soapXml);
         }
     }
@@ -218,7 +218,7 @@ public class FedoraOrganizationalUnitHandler
      *             One of the listeners threw an exception.
      */
     private void fireOuDeleted(final String id) throws SystemException {
-        for (final ResourceListener ouListener : ouListeners) {
+        for (final ResourceListener ouListener : this.ouListeners) {
             ouListener.resourceDeleted(id);
         }
     }
@@ -247,7 +247,7 @@ public class FedoraOrganizationalUnitHandler
             restXml = getAlternateForm(id);
             soapXml = xmlData;
         }
-        for (final ResourceListener ouListener : ouListeners) {
+        for (final ResourceListener ouListener : this.ouListeners) {
             ouListener.resourceModified(id, restXml, soapXml);
         }
     }
@@ -369,7 +369,7 @@ public class FedoraOrganizationalUnitHandler
         final Map<String, Object> streams = me.getOutputStreams();
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
-        final String[] creator = getUtility().getCurrentUser();
+        final String[] creator = Utility.getCurrentUser();
         relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS,
             Constants.STATUS_OU_CREATED);
 
@@ -575,9 +575,8 @@ public class FedoraOrganizationalUnitHandler
         checkUpdateParentsConditions(parents);
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
-        final String[] creator = getUtility().getCurrentUser();
-        relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility
-            .getInstance().getBuildNumber());
+        final String[] creator = Utility.getCurrentUser();
+        relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
         relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS,
             getOrganizationalUnit().getPublicStatus());
         relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID,
@@ -737,9 +736,8 @@ public class FedoraOrganizationalUnitHandler
             .getParents());
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
-        final String[] creator = getUtility().getCurrentUser();
-        relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility
-            .getInstance().getBuildNumber());
+        final String[] creator = Utility.getCurrentUser();
+        relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER, Utility.getBuildNumber());
         relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS,
             getOrganizationalUnit().getPublicStatus());
         relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID,
@@ -841,12 +839,12 @@ public class FedoraOrganizationalUnitHandler
         checkName(id, getOrganizationalUnit().getName(), parents);
 
         final Map<String, Object> relsExtValues = new HashMap<String, Object>();
-        final String buildNumber = Utility.getInstance().getBuildNumber();
+        final String buildNumber = Utility.getBuildNumber();
         relsExtValues.put(XmlTemplateProvider.FRAMEWORK_BUILD_NUMBER,
             buildNumber);
         relsExtValues.put(TripleStoreUtility.PROP_NAME, getOrganizationalUnit()
             .getName());
-        final String[] creator = getUtility().getCurrentUser();
+        final String[] creator = Utility.getCurrentUser();
         relsExtValues.put(XmlTemplateProvider.PUBLIC_STATUS,
             getOrganizationalUnit().getPublicStatus());
         relsExtValues.put(XmlTemplateProvider.CREATED_BY_ID,

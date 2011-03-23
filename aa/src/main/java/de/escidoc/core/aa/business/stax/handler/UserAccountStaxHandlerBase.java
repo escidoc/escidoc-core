@@ -52,7 +52,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      * 
      *
      */
-    private boolean create;
+    private final boolean create;
 
     /**
      * The constructor.
@@ -95,7 +95,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      *
      */
     protected boolean isCreate() {
-        return create;
+        return this.create;
     }
 
     /**
@@ -106,7 +106,7 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      */
     protected UserAccount getUserAccount() {
 
-        return userAccount;
+        return this.userAccount;
     }
 
     /**
@@ -117,6 +117,6 @@ public abstract class UserAccountStaxHandlerBase extends DefaultHandler {
      */
     protected RoleGrant getGrant() {
 
-        return grant;
+        return this.grant;
     }
 }

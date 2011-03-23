@@ -3,28 +3,35 @@
  */
 package de.escidoc.core.aa.service;
 
+import de.escidoc.core.common.exceptions.application.security.AuthenticationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.springframework.security.context.SecurityContext;
+
+import java.lang.Boolean;
+import java.lang.String;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  * Service endpoint interface for UserManagementWrapper.
  */
-public interface UserManagementWrapperService extends java.rmi.Remote {
+public interface UserManagementWrapperService extends Remote {
 
-    void logout(org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            SystemException, java.rmi.RemoteException;
+    void logout(SecurityContext securityContext)
+            throws AuthenticationException,
+            SystemException, RemoteException;
 
-    void logout(java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            SystemException, java.rmi.RemoteException;
+    void logout(String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            SystemException, RemoteException;
 
-    void initHandleExpiryTimestamp(java.lang.String handle,
-                                   org.springframework.security.context.SecurityContext securityContext)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            SystemException, java.rmi.RemoteException;
+    void initHandleExpiryTimestamp(String handle,
+                                   SecurityContext securityContext)
+            throws AuthenticationException,
+            SystemException, RemoteException;
 
-    void initHandleExpiryTimestamp(java.lang.String handle, java.lang.String authHandle, java.lang.Boolean restAccess)
-            throws de.escidoc.core.common.exceptions.application.security.AuthenticationException,
-            SystemException, java.rmi.RemoteException;
+    void initHandleExpiryTimestamp(String handle, String authHandle, Boolean restAccess)
+            throws AuthenticationException,
+            SystemException, RemoteException;
 
 }

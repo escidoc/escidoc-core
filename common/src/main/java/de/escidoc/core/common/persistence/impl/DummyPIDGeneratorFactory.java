@@ -41,11 +41,11 @@ public class DummyPIDGeneratorFactory extends PIDSystemFactory {
     @Override
     public PIDSystem getPIDGenerator() throws PidSystemException,
         MissingMethodParameterException {
-        if (pidGenerator == null) {
+        if (this.pidGenerator == null) {
             getNewInstance();
         }
 
-        return pidGenerator;
+        return this.pidGenerator;
     }
 
     /**
@@ -94,7 +94,7 @@ public class DummyPIDGeneratorFactory extends PIDSystemFactory {
             throw new PidSystemException(
                 "Can not initialise PID System.", e);
         }
-        pidGenerator = dummyGenerator;
+        this.pidGenerator = dummyGenerator;
     }
 
 }

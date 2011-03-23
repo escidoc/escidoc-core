@@ -124,8 +124,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      */
     public HibernateUserAccountDao() {
         try {
-            userAccountFilter = new UserAccountFilter(null);
-            roleGrantFilter = new RoleGrantFilter(null);
+            this.userAccountFilter = new UserAccountFilter(null);
+            this.roleGrantFilter = new RoleGrantFilter(null);
         }
         catch (final InvalidSearchQueryException e) {
             // Dont do anything because null-query is given
@@ -136,9 +136,9 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
                 LOGGER.debug("Expected exception for null-query", e);
             }
         }
-        criteriaMap = userAccountFilter.getCriteriaMap();
-        propertiesNamesMap = userAccountFilter.getPropertyMap();
-        grantPropertiesNamesMap = roleGrantFilter.getPropertyMap();
+        this.criteriaMap = userAccountFilter.getCriteriaMap();
+        this.propertiesNamesMap = userAccountFilter.getPropertyMap();
+        this.grantPropertiesNamesMap = roleGrantFilter.getPropertyMap();
     }
 
     /**
@@ -1460,7 +1460,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
     private static boolean isExpired(final UserLoginData data) {
 
         boolean result = false;
-        if (data.getExpiryts() - System.currentTimeMillis() <= 0) {
+        if (data.getExpiryts() - System.currentTimeMillis() <= 0L) {
             result = true;
         }
         return result;

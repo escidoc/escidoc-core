@@ -758,7 +758,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     }
 
     /**
-     * 
+     *
+     * @param objectType
+     * @param filterMap
+     * @param whereClause
+     * @throws de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException
+     * @throws de.escidoc.core.common.exceptions.system.SystemException
+     * @return
      */
     public List<String> evaluate(
         final String objectType, final Map<String, Object> filterMap,
@@ -992,7 +998,9 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /**
      * 
      * @param filters
+     * @param begin
      * @return
+     * @throws de.escidoc.core.common.exceptions.system.TripleStoreSystemException
      */
     private String[] getJoinPartProperties(
         final Map<String, String> filters, final boolean begin)
@@ -1089,6 +1097,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     /**
      * 
      * @param columnName
+     * @param objects
      * @param idSet
      * @return
      */
@@ -1726,10 +1735,10 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      *             If access to the triple store fails.
      */
     public TableManager getTableManager() throws TripleStoreSystemException {
-        if (tableManager == null) {
+        if (this.tableManager == null) {
             setUpTableManager();
         }
-        return tableManager;
+        return this.tableManager;
     }
 
     /**

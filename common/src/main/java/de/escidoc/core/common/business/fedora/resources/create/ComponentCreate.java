@@ -167,7 +167,7 @@ public class ComponentCreate extends GenericResourceCreate
         valueMap.putAll(preparePropertiesValueMap());
         valueMap.putAll(getRelsExtNamespaceValues());
         valueMap.put(XmlTemplateProvider.MD_RECORDS,
-            getMetadataRecordsMap(mdRecords));
+            getMetadataRecordsMap(this.mdRecords));
 
         valueMap.putAll(getContentValues());
         // control template

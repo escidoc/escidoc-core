@@ -1,5 +1,7 @@
 package de.escidoc.core.index.internal;
 
+import de.escidoc.core.index.IndexRequest;
+
 import javax.xml.bind.annotation.XmlRegistry;
 
 /**
@@ -14,9 +16,9 @@ import javax.xml.bind.annotation.XmlRegistry;
 public class ObjectFactory  {
 
     /**
-     * Creates a new instance of {@link de.escidoc.core.index.IndexRequest}.
+     * Creates a new instance of {@link IndexRequest}.
      *
-     * @return a new instance of {@link de.escidoc.core.index.IndexRequest}
+     * @return a new instance of {@link IndexRequest}
      */
     public IndexRequestImpl createIndexRequest() {
         return new IndexRequestImpl();

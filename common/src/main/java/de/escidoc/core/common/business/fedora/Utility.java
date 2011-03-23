@@ -724,7 +724,7 @@ public class Utility {
                 Constants.PROPERTIES_NS_URI, Constants.PROPERTIES_NS_PREFIX,
                 null, getCurrentUserRealName(), null));
 
-        final String buildNumber = getInstance().getBuildNumber();
+        final String buildNumber = getBuildNumber();
         updateElementsRelsExt.put("build", new StartElementWithChildElements(
             "build", "http://escidoc.de/core/01/system/", "system", null,
             buildNumber, null));
@@ -1345,6 +1345,7 @@ public class Utility {
      *            to null), the method retrieves the RELS-EXT from Fedora
      * @param resource
      *            The resource which RELS-EXT is to alter.
+     * @param updateProperties
      * @return byte [] RELS-EXT datastream content
      * @throws IntegritySystemException
      *             If the integrity of the repository is violated.
@@ -1580,7 +1581,7 @@ public class Utility {
      */
     public StagingFileHandlerInterface getStagingFileHandler() {
 
-        return stagingFileHandler;
+        return this.stagingFileHandler;
     }
 
     /**
@@ -1685,7 +1686,7 @@ public class Utility {
             // given
             final URI local;
             final URI fq;
-            if (url.charAt(0) == '/') {
+            if ((int) url.charAt(0) == (int) '/') {
                 checkESciDocLocalURL(url);
                 local = new URI(url);
                 fq = new URI(escidocBaseUrl + url);

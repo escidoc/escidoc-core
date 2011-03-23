@@ -58,7 +58,7 @@ public class TmeRequestsStaxHandler extends DefaultHandler {
     private final Collection<String> files;
 
     public TmeRequestsStaxHandler() {
-        files = new ArrayList<String>();
+        this.files = new ArrayList<String>();
     }
 
     /**

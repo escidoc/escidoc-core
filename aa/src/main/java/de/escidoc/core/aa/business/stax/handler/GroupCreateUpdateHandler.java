@@ -68,7 +68,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
 
         
         if (PROPERTIES_PATH.equals(currenrPath)) {
-            inProperties = true;
+            this.inProperties = true;
 
         }
         
@@ -81,7 +81,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
 
         if (PROPERTIES_PATH.equals(currenrPath)) {
 
-            inProperties = false;
+            this.inProperties = false;
 
         }
         
@@ -93,7 +93,7 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
         throws XmlCorruptedException {
 
         final String theName = element.getLocalName();
-        if (inProperties) {
+        if (this.inProperties) {
             if (theName.equals(Elements.ELEMENT_NAME)) {
                 if (s != null && s.length() > 0) {
                     groupProperties.put(Elements.ELEMENT_NAME, s);

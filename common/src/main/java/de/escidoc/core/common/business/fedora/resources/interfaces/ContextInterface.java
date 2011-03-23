@@ -122,6 +122,7 @@ public interface ContextInterface extends FedoraResource {
      * @throws FedoraSystemException
      *             Thrown if AdminDescriptor not exist or could not retrieved
      *             from Fedora.
+     * @throws de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException
      */
     Datastream getAdminDescriptor(final String adminDescriptorName)
         throws FedoraSystemException, AdminDescriptorNotFoundException;

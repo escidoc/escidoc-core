@@ -1130,6 +1130,7 @@ public interface ItemHandlerInterface {
      *             Thrown in case of an invalid status.
      * 
      * @escidoc_core.visible false
+     * @throws de.escidoc.core.common.exceptions.application.notfound.XmlSchemaNotFoundException
      */
     @Deprecated
     @Validate(param = 1, resolver = "getItemSchemaLocation")

@@ -85,9 +85,9 @@ public class EscidocRole extends EscidocRoleBase {
      */
     public PolicySet getXacmlPolicySet() throws WebserverSystemException {
 
-        if (policySet == null) {
+        if (this.policySet == null) {
             try {
-                policySet = CustomPolicyBuilder.buildXacmlRolePolicySet(this);
+                this.policySet = CustomPolicyBuilder.buildXacmlRolePolicySet(this);
             }
             catch (final Exception e) {
                 throw new WebserverSystemException(StringUtility
@@ -97,7 +97,7 @@ public class EscidocRole extends EscidocRoleBase {
             }
         }
 
-        return policySet;
+        return this.policySet;
     }
 
     /**
@@ -120,19 +120,19 @@ public class EscidocRole extends EscidocRoleBase {
      *
      */
     public Collection<String> getObjectTypes() {
-        if (objectTypes == null) {
+        if (this.objectTypes == null) {
             if (isLimited()) {
                 final Collection<ScopeDef> scopeDefs = getScopeDefs();
-                objectTypes = new ArrayList<String>(scopeDefs.size());
+                this.objectTypes = new ArrayList<String>(scopeDefs.size());
                 for (final ScopeDef scopeDef : scopeDefs) {
                     objectTypes.add(scopeDef.getObjectType());
                 }
             } else {
-                objectTypes = new ArrayList<String>(0);
+                this.objectTypes = new ArrayList<String>(0);
             }
         }
 
-        return objectTypes;
+        return this.objectTypes;
     }
 
     /**

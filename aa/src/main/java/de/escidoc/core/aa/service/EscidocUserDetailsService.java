@@ -119,7 +119,7 @@ public class EscidocUserDetailsService
      */
     private UserAccountHandlerInterface getUserAccountHandler() {
 
-        return userAccountHandler;
+        return this.userAccountHandler;
     }
 
     /**

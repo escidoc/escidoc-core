@@ -47,6 +47,6 @@ public enum PredecessorForm {
      * @return object label
      */
     public String getLabel() {
-        return label;
+        return this.label;
     }
 }

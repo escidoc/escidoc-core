@@ -53,7 +53,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     private static final String XPATH_COMPONENT_PROPERTIES =
         "/item/components/component/properties";
 
-    private ComponentProperties properties;
+    private final ComponentProperties properties;
 
     private boolean inside;
 
@@ -88,10 +88,10 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     @Override
     public StartElement startElement(final StartElement element) {
 
-        if (!inside) {
+        if (! this.inside) {
             final String currentPath = parser.getCurPath();
             if (currentPath.startsWith(XPATH_COMPONENT_PROPERTIES)) {
-                inside = true;
+                this.inside = true;
             }
         }
         return element;
@@ -103,10 +103,10 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
     @Override
     public EndElement endElement(final EndElement element) {
 
-        if (inside) {
+        if (this.inside) {
             final String currentPath = parser.getCurPath();
             if (currentPath.startsWith(XPATH_COMPONENT_PROPERTIES)) {
-                inside = false;
+                this.inside = false;
             }
         }
         return element;
@@ -120,7 +120,7 @@ public class ComponentPropertiesHandler2 extends DefaultHandler {
         throws MissingElementValueException, InvalidContentException,
         WebserverSystemException {
 
-        if (inside) {
+        if (this.inside) {
             final String currentPath = element.getLocalName();
 
             if (currentPath.equals(Elements.ELEMENT_MIME_TYPE)) {

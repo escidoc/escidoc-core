@@ -51,6 +51,7 @@ public class UserFilter {
     /**
      * Get the list of the member (structural relation) of the Container.
      * 
+     * @param container
      * @return List of Container member (if <code>filter != null</code>
      *         filtered)
      * @throws SystemException

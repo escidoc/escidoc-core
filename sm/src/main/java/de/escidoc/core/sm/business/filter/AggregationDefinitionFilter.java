@@ -79,7 +79,7 @@ public class AggregationDefinitionFilter extends CqlFilter {
             try {
                 final CQLParser parser = new CQLParser();
 
-                detachedCriteria =
+                this.detachedCriteria =
                     DetachedCriteria.forClass(AggregationDefinition.class, "a");
 
                 final Criterion criterion = evaluate(parser.parse(query));

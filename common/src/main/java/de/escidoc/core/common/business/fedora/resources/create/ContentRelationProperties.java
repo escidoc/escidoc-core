@@ -105,7 +105,7 @@ public class ContentRelationProperties implements Serializable {
      * @return the status
      */
     public StatusType getStatus() {
-        return status;
+        return this.status;
     }
 
     /**
@@ -120,7 +120,7 @@ public class ContentRelationProperties implements Serializable {
      * @return the statusComment
      */
     public String getStatusComment() {
-        return statusComment;
+        return this.statusComment;
     }
 
     /**
@@ -135,7 +135,7 @@ public class ContentRelationProperties implements Serializable {
      * @return the pid
      */
     public String getPid() {
-        return pid;
+        return this.pid;
     }
 
     /**
@@ -169,7 +169,7 @@ public class ContentRelationProperties implements Serializable {
      * @return the creator id
      */
     public String getCreatedById() {
-        return createdById;
+        return this.createdById;
     }
 
     /**
@@ -188,7 +188,7 @@ public class ContentRelationProperties implements Serializable {
      * @return the modifiedById
      */
     public String getModifiedById() {
-        return modifiedById;
+        return this.modifiedById;
     }
 
     /**
@@ -203,7 +203,7 @@ public class ContentRelationProperties implements Serializable {
      * @return the createdByName
      */
     public String getCreatedByName() {
-        return createdByName;
+        return this.createdByName;
     }
 
     /**
@@ -218,7 +218,7 @@ public class ContentRelationProperties implements Serializable {
      * @return the modifiedByName
      */
     public String getModifiedByName() {
-        return modifiedByName;
+        return this.modifiedByName;
     }
 
     /**
@@ -244,7 +244,7 @@ public class ContentRelationProperties implements Serializable {
      * @return Last-modification-date of ContentRelation
      */
     public DateTime getLastModificationDate() {
-        return lastModificationDate;
+        return this.lastModificationDate;
     }
 
     /**
@@ -271,7 +271,7 @@ public class ContentRelationProperties implements Serializable {
      * @return timestamp of create
      */
     public DateTime getCreationDate() {
-        return creationDate;
+        return this.creationDate;
     }
 
     /**
@@ -307,7 +307,7 @@ public class ContentRelationProperties implements Serializable {
      * @return status of lock ([locked|unlocked]
      */
     public LockStatus getLockStatus() {
-        return lockStatus;
+        return this.lockStatus;
     }
 
     /**
@@ -336,7 +336,7 @@ public class ContentRelationProperties implements Serializable {
      * @return timestamp of lock.
      */
     public DateTime getLockDate() {
-        return lockDate;
+        return this.lockDate;
     }
 
     /**
@@ -355,7 +355,7 @@ public class ContentRelationProperties implements Serializable {
      * @return Owner of lock
      */
     public String getLockOwnerId() {
-        return lockOwnerId;
+        return this.lockOwnerId;
     }
 
     /**
@@ -374,7 +374,7 @@ public class ContentRelationProperties implements Serializable {
      * @return Name (title) of lock owner
      */
     public String getLockOwnerName() {
-        return lockOwnerName;
+        return this.lockOwnerName;
     }
 
     /**
@@ -416,7 +416,7 @@ public class ContentRelationProperties implements Serializable {
      * @return timestamp of resource
      */
     public DateTime getVersionDate() {
-        return versionDate;
+        return this.versionDate;
     }
 
     /**
@@ -453,7 +453,7 @@ public class ContentRelationProperties implements Serializable {
      * @return Description of ContentRelation
      */
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
 

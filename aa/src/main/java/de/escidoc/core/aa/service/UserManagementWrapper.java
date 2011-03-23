@@ -48,7 +48,7 @@ public class UserManagementWrapper implements UserManagementWrapperInterface {
      * 
      * @throws AuthenticationException
      * @throws SystemException
-     * @see de.escidoc.core.aa.service.interfaces.UserManagementWrapperInterface
+     * @see UserManagementWrapperInterface
      *      #logout()
      *
      */

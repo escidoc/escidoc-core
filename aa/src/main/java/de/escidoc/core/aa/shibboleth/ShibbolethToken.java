@@ -75,7 +75,7 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
     @Override
     public Object getPrincipal() {
 
-        return user;
+        return this.user;
     }
 
     /**

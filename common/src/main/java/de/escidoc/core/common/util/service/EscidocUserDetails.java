@@ -52,7 +52,7 @@ public class EscidocUserDetails implements UserDetails {
      */
     public String getId() {
 
-        return id;
+        return this.id;
     }
 
     /**
@@ -76,7 +76,7 @@ public class EscidocUserDetails implements UserDetails {
      */
     public String getRealName() {
 
-        return realName;
+        return this.realName;
     }
 
     /**

@@ -50,7 +50,7 @@ public class StatisticServiceImpl {
     @Override
     public String toString() {
         return "StatisticServiceImpl{" +
-                "statisticDataHandler=" + statisticDataHandler +
+                "statisticDataHandler=" + this.statisticDataHandler +
                 '}';
     }
 }

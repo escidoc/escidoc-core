@@ -128,7 +128,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
             values.put("propertiesVersion", propertiesVersion);
         }
         if (this.buildNumber == null) {
-            this.buildNumber = Utility.getInstance().getBuildNumber();
+            this.buildNumber = Utility.getBuildNumber();
         }
 
         values
@@ -267,7 +267,7 @@ public class VelocityXmlItemFoXmlRenderer implements ItemFoXmlRendererInterface 
         final Map<String, Object> values = new HashMap<String, Object>();
         addRelsExtNamespaceValues(values);
         if (this.buildNumber == null) {
-            this.buildNumber = Utility.getInstance().getBuildNumber();
+            this.buildNumber = Utility.getBuildNumber();
         }
         values.put(XmlTemplateProvider.OBJECT_PID,
             properties.get(TripleStoreUtility.PROP_OBJECT_PID));

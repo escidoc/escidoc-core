@@ -49,11 +49,11 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationsRemoveHandler2Edition.class);
 
-    private StaxParser parser;
+    private final StaxParser parser;
 
     private boolean inRelation;
 
-    private String sourceId;
+    private final String sourceId;
 
     private String targetId;
 
@@ -100,7 +100,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
         final String curPath = parser.getCurPath();
 
         if ("/param/relation".equals(curPath)) {
-            inRelation = true;
+            this.inRelation = true;
 
         }
 
@@ -111,19 +111,18 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
     public EndElement endElement(final EndElement element)
         throws ContentRelationNotFoundException, TripleStoreSystemException,
         WebserverSystemException {
-        if (inRelation
+        if (this.inRelation
             && "relation".equals(element.getLocalName())) {
-            final String[] splittedPredicate = splitPredicate(predicate);
+            final String[] splittedPredicate = splitPredicate(this.predicate);
             final String predicateNs = splittedPredicate[0];
             final String predicateValue = splittedPredicate[1];
             final String existRelationTarget =
-                TripleStoreUtility.getInstance().getRelation(sourceId,
-                    predicate);
+                TripleStoreUtility.getInstance().getRelation(this.sourceId, this.predicate);
 
             if (existRelationTarget == null) {
-                throw new ContentRelationNotFoundException("A relation with predicate " + predicate
-                        + " between resources with ids " + sourceId
-                        + " and " + targetId + " does not exist.");
+                throw new ContentRelationNotFoundException("A relation with predicate " + this.predicate
+                        + " between resources with ids " + this.sourceId
+                        + " and " + this.targetId + " does not exist.");
 
             }
 
@@ -132,10 +131,10 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
             relationsData.add(relationData);
             relationData.put("predicateNs", predicateNs);
             relationData.put("predicateValue", predicateValue);
-            relationData.put("target", targetId);
-            targetId = null;
-            predicate = null;
-            inRelation = false;
+            relationData.put("target", this.targetId);
+            this.targetId = null;
+            this.predicate = null;
+            this.inRelation = false;
         }
         return element;
     }
@@ -146,7 +145,7 @@ public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
      * @return Relations Map
      */
     public List<Map<String, String>> getRelations() {
-        return relationsData;
+        return this.relationsData;
     }
 
     private static String[] splitPredicate(final String predicate) {

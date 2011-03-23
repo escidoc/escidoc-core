@@ -105,49 +105,49 @@ public class MapResult {
      * @return Returns the contentTypePredicateId.
      */
     public String getContentTypePredicateId() {
-        return contentTypePredicateId;
+        return this.contentTypePredicateId;
     }
 
     /**
      * @return Returns the contentTypeTitle.
      */
     public String getContentTypeTitle() {
-        return contentTypeTitle;
+        return this.contentTypeTitle;
     }
 
     /**
      * @return Returns the longestMatch.
      */
     public String getCacheId() {
-        return cacheId;
+        return this.cacheId;
     }
 
     /**
      * @return Returns the tail.
      */
     public String getNextAttributeId() {
-        return nextAttributeId;
+        return this.nextAttributeId;
     }
 
     /**
      * @return Returns the inverse.
      */
     public boolean isInverse() {
-        return inverse;
+        return this.inverse;
     }
 
     /**
      * @return Returns the hierarchical.
      */
     public boolean isHierarchical() {
-        return hierarchical;
+        return this.hierarchical;
     }
 
     /**
      * @return Returns the includeHierarchyBase.
      */
     public boolean isIncludeHierarchyBase() {
-        return includeHierarchyBase;
+        return this.includeHierarchyBase;
     }
 
     /**
@@ -156,7 +156,7 @@ public class MapResult {
      */
     public boolean hasNext() {
 
-        return nextAttributeId != null;
+        return this.nextAttributeId != null;
     }
 
 
@@ -214,7 +214,7 @@ public class MapResult {
      *         {@link MapResult}.
      */
     public String getresolvableAttributeId() {
-        return resolvableAttributeId;
+        return this.resolvableAttributeId;
     }
 
     /**

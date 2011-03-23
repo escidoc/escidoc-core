@@ -283,7 +283,7 @@ public abstract class CqlFilter {
      * @return propertyNamesMap
      */
     public Map<String, String> getPropertyMap() {
-        return propertyNamesMap;
+        return this.propertyNamesMap;
     }
 
     /**
@@ -292,7 +292,7 @@ public abstract class CqlFilter {
      * @return criteriaMap
      */
     public Map<String, Object[]> getCriteriaMap() {
-        return criteriaMap;
+        return this.criteriaMap;
     }
 
     /**
@@ -301,7 +301,7 @@ public abstract class CqlFilter {
      * @return specialCriteriaNames
      */
     public Set<String> getSpecialCriteria() {
-        return specialCriteriaNames;
+        return this.specialCriteriaNames;
     }
 
     /**
@@ -349,6 +349,6 @@ public abstract class CqlFilter {
      *                                     not be translated into a SQL query
      */
     public DetachedCriteria toSql() throws InvalidSearchQueryException {
-        return detachedCriteria;
+        return this.detachedCriteria;
     }
 }

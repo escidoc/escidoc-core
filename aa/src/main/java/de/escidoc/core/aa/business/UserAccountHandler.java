@@ -179,7 +179,7 @@ public class UserAccountHandler
 
     private UserAccountDaoInterface dao;
 
-    private UserGroupDaoInterface userGroupDao = null;
+    private UserGroupDaoInterface userGroupDao;
 
     private ObjectAttributeResolver objectAttributeResolver;
 
@@ -275,7 +275,7 @@ public class UserAccountHandler
         final StaxParser sp = new StaxParser(XmlUtility.NAME_USER_ACCOUNT);
 
         final UserAccountPropertiesStaxHandler propertiesHandler =
-            new UserAccountPropertiesStaxHandler(userAccount, dao, true);
+            new UserAccountPropertiesStaxHandler(userAccount, this.dao, true);
         sp.addHandler(propertiesHandler);
 
         try {
@@ -384,7 +384,7 @@ public class UserAccountHandler
         sp.addHandler(optimisticLockingHandler);
 
         final UserAccountPropertiesStaxHandler propertiesHandler =
-            new UserAccountPropertiesStaxHandler(userAccount, dao, false);
+            new UserAccountPropertiesStaxHandler(userAccount, this.dao, false);
         sp.addHandler(propertiesHandler);
 
         try {
@@ -663,7 +663,7 @@ public class UserAccountHandler
                 new ArrayList<RoleGrant>();
 
             final List<RoleGrant> tmpRoleGrants =
-                dao.retrieveGrants(query, 0, 0, userGroupHandler);
+                dao.retrieveGrants(query, 0, 0, this.userGroupHandler);
             if (tmpRoleGrants != null && !tmpRoleGrants.isEmpty()) {
                 final List<String> userIds = new ArrayList<String>();
                 final List<String> groupIds = new ArrayList<String>();
@@ -977,7 +977,7 @@ public class UserAccountHandler
 
         final Date creationDate = new Date();
         grant.setCreationDate(creationDate);
-        grant.setUserAccountByCreatorId(getAuthenticatedUser(dao));
+        grant.setUserAccountByCreatorId(getAuthenticatedUser(this.dao));
 
         final String roleId = roleLinkHandler.getObjid();
         final EscidocRole role = roleDao.retrieveRole(roleId);
@@ -1120,7 +1120,7 @@ public class UserAccountHandler
         sp.addHandler(grantHandler);
 
         final RevokeStaxHandler revokeStaxHandler =
-            new RevokeStaxHandler(grant, dao);
+            new RevokeStaxHandler(grant, this.dao);
         sp.addHandler(revokeStaxHandler);
 
         try {
@@ -1266,7 +1266,7 @@ public class UserAccountHandler
         }
 
         final UserAccount authenticateUser =
-            getAuthenticatedUser(dao);
+            getAuthenticatedUser(this.dao);
         try {
             for (final String grantId : grantIds) {
                 // set revoke-date, -user and -remark
@@ -1547,7 +1547,7 @@ public class UserAccountHandler
                         // noinspection RedundantCast
                         for (int j = 0; j < ((Object[]) entry.getValue()).length; j++) {
                             filter1.get(entry.getKey())[j] =
-                                ((Object[]) entry.getValue())[j].toString();
+                                entry.getValue()[j].toString();
                         }
                     }
                     else {
@@ -2025,7 +2025,7 @@ public class UserAccountHandler
 
         userAccount
             .setLastModificationDate(new Date());
-        userAccount.setUserAccountByModifiedById(getAuthenticatedUser(dao));
+        userAccount.setUserAccountByModifiedById(getAuthenticatedUser(this.dao));
     }
 
     /**
@@ -2790,7 +2790,7 @@ public class UserAccountHandler
             }
         }
         // noinspection RedundantCast
-        return utility.prepareReturnXml(
+        return Utility.prepareReturnXml(
             null,
             "<filter>"
                 + permissionsQuery.getFilterQuery(resourceTypes,

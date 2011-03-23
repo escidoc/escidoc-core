@@ -119,11 +119,11 @@ public class ContextPropertiesHandler extends DefaultHandler {
         MissingElementValueException {
         final String curPath = parser.getCurPath();
 
-        if (curPath.startsWith(propertiesPath + '/')) {
+        if (curPath.startsWith(this.propertiesPath + '/')) {
             final String theName = element.getLocalName();
 
             // organizational-unit
-            if (curPath.equals(propertiesPath
+            if (curPath.equals(this.propertiesPath
                 + "/organizational-units/organizational-unit")) {
 
                 try {

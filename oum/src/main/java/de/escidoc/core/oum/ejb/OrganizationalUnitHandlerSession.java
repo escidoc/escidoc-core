@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for OrganizationalUnitHandler.
  */
-public class OrganizationalUnitHandlerSession extends OrganizationalUnitHandlerBean
-        implements SessionBean {
+public class OrganizationalUnitHandlerSession extends OrganizationalUnitHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

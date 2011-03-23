@@ -77,14 +77,14 @@ public class SpringStatisticPreprocessorService {
     public void execute() throws Exception {
         final long lastExecutionTime =
             StatisticPreprocessorServiceTimer.getInstance().getLastExecutionTime();
-        if (lastExecutionTime > 0 
-            && System.currentTimeMillis() - lastExecutionTime < 1000) {
+        if (lastExecutionTime > 0L
+            && System.currentTimeMillis() - lastExecutionTime < 1000L) {
             return;
         }
         try {
             LOGGER.info("preprocessing statistic-data");
             // call with date of yesterday
-            final long time = System.currentTimeMillis() - MILLISECONDS_PER_DAY;
+            final long time = System.currentTimeMillis() - (long) MILLISECONDS_PER_DAY;
             final Date date = new Date(time);
             preprocessor.execute(date);
         } catch (final Exception e) {

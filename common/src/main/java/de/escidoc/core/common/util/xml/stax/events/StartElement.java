@@ -111,7 +111,7 @@ public class StartElement extends AbstractElement {
     }
 
     public List<Attribute> getAttributes() {
-        return attributes;
+        return this.attributes;
     }
 
     public NamespaceContext getNamespaceContext() {
@@ -197,7 +197,7 @@ public class StartElement extends AbstractElement {
     }
 
     public String getLocalName() {
-        return localName;
+        return this.localName;
     }
 
     public void setLocalName(final String localName) {
@@ -205,7 +205,7 @@ public class StartElement extends AbstractElement {
     }
 
     public String getNamespace() {
-        return namespace;
+        return this.namespace;
     }
 
     public void setNamespace(final String namespace) {
@@ -213,7 +213,7 @@ public class StartElement extends AbstractElement {
     }
 
     public String getPrefix() {
-        return prefix;
+        return this.prefix;
     }
 
     public void setPrefix(final String prefix) {
@@ -221,11 +221,11 @@ public class StartElement extends AbstractElement {
     }
 
     public boolean isEmpty() {
-        return !(hasCharacters || hasChild);
+        return !(this.hasCharacters || this.hasChild);
     }
 
     public boolean hasCharacters() {
-        return hasCharacters;
+        return this.hasCharacters;
     }
 
     public void setHasCharacters(final boolean hasCharacters) {
@@ -233,7 +233,7 @@ public class StartElement extends AbstractElement {
     }
 
     public boolean hasChild() {
-        return hasChild;
+        return this.hasChild;
     }
 
     public void setHasChild(final boolean hasChild) {

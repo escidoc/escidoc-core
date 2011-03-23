@@ -104,7 +104,7 @@ public class EscidocIdProvider {
      */
     private void fetchIds(final int numberNeededIds) throws SystemException {
 
-        final int number = Math.max(numberNeededIds, numberPrefetchedIds);
+        final int number = Math.max(numberNeededIds, this.numberPrefetchedIds);
         final List<String> idArryList =
             Arrays.asList(resourceIdentifierDao.getNextPids(number));
 

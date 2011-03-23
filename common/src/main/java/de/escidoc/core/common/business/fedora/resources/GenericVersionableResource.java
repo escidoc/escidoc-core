@@ -54,6 +54,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 /**
@@ -199,7 +200,7 @@ public class GenericVersionableResource extends GenericResourcePid {
             if (latestVersionNumber == null
                 || Integer.valueOf(this.versionId) > Integer
                     .valueOf(latestVersionNumber)) {
-                throw new ResourceNotFoundException("The version " + versionNumber
+                throw new ResourceNotFoundException("The version " + this.versionNumber
                         + " of the requested resource " + "does not exist.");
             }
             if (this.versionNumber.equals(latestVersionNumber)) {
@@ -242,10 +243,10 @@ public class GenericVersionableResource extends GenericResourcePid {
      * @return number of version
      */
     public String getVersionNumber() {
-        if (versionNumber == null || versionNumber.length() <= 0) {
+        if (this.versionNumber == null || versionNumber.length() <= 0) {
             return null;
         }
-        return versionNumber;
+        return this.versionNumber;
     }
 
     /**
@@ -941,8 +942,8 @@ public class GenericVersionableResource extends GenericResourcePid {
         catch (final Exception e) {
             throw new XmlParserSystemException("Unexpected exception.", e);
         }
-        currentVersionData = wrh.getVersionData();
-        if (currentVersionData == null || currentVersionData.size() <= 1) {
+        this.currentVersionData = wrh.getVersionData();
+        if (this.currentVersionData == null || currentVersionData.size() <= 1) {
             throw new ResourceNotFoundException("Can not retrieve version '"
                 + this.versionNumber + "' for Resource '" + getId() + "'.");
         }
@@ -1321,7 +1322,7 @@ public class GenericVersionableResource extends GenericResourcePid {
 
         final Map<String, String> properties = new HashMap<String, String>();
 
-        for (final Map.Entry<String, String> stringStringEntry : tripleStoreMap.entrySet()) {
+        for (final Entry<String, String> stringStringEntry : tripleStoreMap.entrySet()) {
             final String value = stringStringEntry.getValue();
 
             if (value != null) {

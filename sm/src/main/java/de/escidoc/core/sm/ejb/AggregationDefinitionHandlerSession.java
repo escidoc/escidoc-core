@@ -10,8 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Session layer for AggregationDefinitionHandler.
  */
-public class AggregationDefinitionHandlerSession extends AggregationDefinitionHandlerBean
-        implements SessionBean {
+public class AggregationDefinitionHandlerSession extends AggregationDefinitionHandlerBean {
 
     public void ejbActivate() throws RemoteException {
 

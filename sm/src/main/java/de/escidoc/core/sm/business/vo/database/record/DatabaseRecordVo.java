@@ -47,7 +47,7 @@ public class DatabaseRecordVo {
      * @return the databaseRecordFieldVos
      */
     public Collection<DatabaseRecordFieldVo> getDatabaseRecordFieldVos() {
-        return databaseRecordFieldVos;
+        return this.databaseRecordFieldVos;
     }
 
     /**
@@ -63,7 +63,7 @@ public class DatabaseRecordVo {
      * @return the tableName
      */
     public String getTableName() {
-        return tableName;
+        return this.tableName;
     }
 
     /**

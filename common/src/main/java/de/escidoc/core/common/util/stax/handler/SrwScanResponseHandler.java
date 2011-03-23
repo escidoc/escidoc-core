@@ -48,6 +48,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
     
     /**
      * Constructor
+     * @param parser
      */
     public SrwScanResponseHandler(final StaxParser parser) {
         this.parser = parser;
@@ -76,8 +77,8 @@ public class SrwScanResponseHandler extends DefaultHandler {
         final String currentPath = parser.getCurPath();
         if (TERM_VALUE_PATH.equals(parser.getCurPath())) {
             terms.add(s.replaceAll("(.*?:.*?):.*", "$1"));
-            noOfDocumentTerms++;
-            lastTerm = s;
+            this.noOfDocumentTerms++;
+            this.lastTerm = s;
         } 
         return s;
     }
@@ -88,7 +89,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
      * @return terms set.
      */
     public Set<String> getTerms() {
-        return terms;
+        return this.terms;
     }
 
     /**
@@ -96,7 +97,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
      * 
      */
     public void resetNoOfDocumentTerms() {
-        noOfDocumentTerms = 0;
+        this.noOfDocumentTerms = 0;
     }
 
     /**
@@ -105,7 +106,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
      * @return number of Terms in last document.
      */
     public int getNoOfDocumentTerms() {
-        return noOfDocumentTerms;
+        return this.noOfDocumentTerms;
     }
 
     /**
@@ -114,7 +115,7 @@ public class SrwScanResponseHandler extends DefaultHandler {
      * @return last term parsed.
      */
     public String getLastTerm() {
-        return lastTerm;
+        return this.lastTerm;
     }
 
 }

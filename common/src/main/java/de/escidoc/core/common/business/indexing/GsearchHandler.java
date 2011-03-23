@@ -76,6 +76,7 @@ public class GsearchHandler {
      * @param pidSuffix
      *            PidSuffix for latestVersion, latestRelease
      *            if both is in index.
+     * @param indexFulltextVisibilities
      * @return String response
      * 
      * @throws ApplicationServerSystemException
@@ -415,10 +416,10 @@ public class GsearchHandler {
      */
     public Map<String, Map<String, String>> getIndexConfigurations() 
                                     throws ApplicationServerSystemException {
-        if (indexConfigurations == null) {
-            indexConfigurations = requestIndexConfiguration();
+        if (this.indexConfigurations == null) {
+            this.indexConfigurations = requestIndexConfiguration();
         }
-        return indexConfigurations;
+        return this.indexConfigurations;
     }
 
     /**
@@ -427,10 +428,10 @@ public class GsearchHandler {
      */
     public Map<String, String> getRepositoryInfo() 
                                     throws ApplicationServerSystemException {
-        if (repositoryInfo == null) {
-            repositoryInfo = requestRepositoryInfo();
+        if (this.repositoryInfo == null) {
+            this.repositoryInfo = requestRepositoryInfo();
         }
-        return repositoryInfo;
+        return this.repositoryInfo;
     }
 
     /**
@@ -440,8 +441,8 @@ public class GsearchHandler {
      */
     public Set<String> getSupportedMimeTypes() 
                 throws ApplicationServerSystemException {
-        if (supportedMimeTypes == null) {
-            supportedMimeTypes = new HashSet<String>();
+        if (this.supportedMimeTypes == null) {
+            this.supportedMimeTypes = new HashSet<String>();
             getRepositoryInfo();
             if (repositoryInfo.get("SupportedMimeTypes") != null) {
                 final String[] supportedMimeTypesArr =
@@ -449,7 +450,7 @@ public class GsearchHandler {
                 supportedMimeTypes.addAll(Arrays.asList(supportedMimeTypesArr));
             }
         }
-        return supportedMimeTypes;
+        return this.supportedMimeTypes;
     }
     
     /**
@@ -468,6 +469,7 @@ public class GsearchHandler {
      * @throws Exception e
      * 
      * @sb
+     * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     private void handleGsearchException(
             final String index, 

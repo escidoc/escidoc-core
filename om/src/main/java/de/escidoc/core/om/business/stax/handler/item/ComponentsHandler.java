@@ -80,6 +80,7 @@ public class ComponentsHandler extends DefaultHandler {
      * 
      * @param parser
      *            StAX parser
+     * @param item
      */
     public ComponentsHandler(final StaxParser parser, final ItemCreate item) {
         this.parser = parser;
@@ -115,7 +116,7 @@ public class ComponentsHandler extends DefaultHandler {
                 // creating a new Component shows that the parser is within a
                 // component element.
                 this.parsingComponent = true;
-                this.componentHandler = new ComponentHandler(parser, this.item);
+                this.componentHandler = new ComponentHandler(this.parser, this.item);
                 this.componentHandler.startElement(element);
             }
         }
