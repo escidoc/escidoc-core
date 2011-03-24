@@ -34,7 +34,7 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
  * Singleton which contains all information about a running or finished
  * reindexing process.
  * 
- * @author mih
+ * @author Michael Hoppe
  */
 public final class ReindexStatus extends AdminMethodStatus {
 

@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 /**
  * Constants for Search and Browse.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public final class Constants {
 

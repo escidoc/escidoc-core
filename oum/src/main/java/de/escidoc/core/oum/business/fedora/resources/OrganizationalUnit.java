@@ -62,7 +62,7 @@ import java.util.Set;
 /**
  * Resource implementation of an organizational unit resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class OrganizationalUnit extends GenericResource

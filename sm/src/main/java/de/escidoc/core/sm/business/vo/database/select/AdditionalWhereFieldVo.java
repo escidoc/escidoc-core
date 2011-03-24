@@ -35,7 +35,7 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 /**
  * Holds all values needed to represent a field in an additional where-clause.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class AdditionalWhereFieldVo {

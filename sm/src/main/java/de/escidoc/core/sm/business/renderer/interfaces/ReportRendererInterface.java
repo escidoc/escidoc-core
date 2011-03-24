@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * Interface of an report renderer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public interface ReportRendererInterface {

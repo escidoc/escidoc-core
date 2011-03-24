@@ -49,7 +49,7 @@ import java.util.Map;
  * Attention! This is only a helper class for the transition to integrate this
  * functionality into the ContentModel class.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class ContentModelCreate extends GenericResourceCreate {

@@ -25,7 +25,7 @@ import java.io.Serializable;
 /**
  * Indicates the relation to the repository.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class RepositoryIndicator implements Serializable {

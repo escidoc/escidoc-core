@@ -29,7 +29,7 @@ import org.springframework.security.providers.AbstractAuthenticationToken;
  * identified by a wrapped {@link Authentication} shall be executed as the
  * internal user, that is not further authorized.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  * 
  */

@@ -35,7 +35,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 /**
  * Stax handler that manages the unsecured-action elements.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class UnsecuredActionStaxHandler extends DefaultHandler {

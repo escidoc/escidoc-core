@@ -54,7 +54,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * @author rof
+ * @author Rozita Friedman
  */
 public class HibernateSetDefinitionDao extends AbstractHibernateDao
     implements SetDefinitionDaoInterface {

@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Interface of an fedora deviation handler.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  *
  */

@@ -39,7 +39,7 @@ import java.net.URL;
 /**
  * Abstract base class for handlers.
  * 
- * @author tte
+ * @author Torsten Tetteroo
  *
  */
 public abstract class HandlerBase {

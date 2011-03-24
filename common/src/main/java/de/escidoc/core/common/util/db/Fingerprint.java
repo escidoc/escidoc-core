@@ -48,7 +48,7 @@ import de.escidoc.core.common.util.IOUtils;
  * It can be used to compare the current structure with a structure stored in a
  * file to see if the database is in the expected state.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public class Fingerprint implements Comparable<Object> {
     

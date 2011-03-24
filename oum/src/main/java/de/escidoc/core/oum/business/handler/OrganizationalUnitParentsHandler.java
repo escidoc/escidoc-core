@@ -48,7 +48,7 @@ import java.util.List;
  * have to be parsed and extracted during the creation of an organizational
  * unit.<br/>
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class OrganizationalUnitParentsHandler

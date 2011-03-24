@@ -64,7 +64,7 @@ import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
 /**
  * Class for direct JDBC Database access via Hibernate.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     implements DirectDatabaseAccessorInterface {

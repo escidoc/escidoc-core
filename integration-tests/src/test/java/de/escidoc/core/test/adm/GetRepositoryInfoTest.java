@@ -45,7 +45,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test suite for the GetRepositoryInfo method of the admin tool.
  * 
- * @author SCHE
+ * @author André Schenk
  * 
  */
 @RunWith(value = Parameterized.class)

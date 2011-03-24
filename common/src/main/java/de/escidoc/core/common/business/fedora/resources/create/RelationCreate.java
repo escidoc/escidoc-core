@@ -23,7 +23,7 @@ package de.escidoc.core.common.business.fedora.resources.create;
 /**
  * Relation.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class RelationCreate {

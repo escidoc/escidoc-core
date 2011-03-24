@@ -41,7 +41,7 @@ import java.util.List;
  * each consisting of an enum and its handler instance.
  *
  *
- * @author KST
+ * @author Kai Strnad
  *
  */
 public class ResourceMapperDao {

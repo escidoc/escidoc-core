@@ -12,7 +12,7 @@ import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
 /**
  * Implementation for the Jhove Service layer of the TME component.
  * 
- * @author MSC
+ * @author Michael Schwantner
  */
 public class JhoveHandler
     implements de.escidoc.core.tme.service.interfaces.JhoveHandlerInterface {

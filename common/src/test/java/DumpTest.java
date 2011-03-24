@@ -30,7 +30,7 @@ import static org.junit.Assert.assertEquals;
  * database is created, no JBoss is running! That's why integration tests are to
  * settle at escidoc.ear integrration tests!
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class DumpTest {

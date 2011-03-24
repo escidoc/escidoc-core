@@ -30,7 +30,7 @@ import org.apache.axis.deployment.wsdd.WSDDService;
  * This implementation extends org.apache.axis.deployment.wsdd.WSDDProvider. The
  * name of the provider is <code>EscidocEJB</code>
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class EscidocEJBWsddProvider extends WSDDProvider {

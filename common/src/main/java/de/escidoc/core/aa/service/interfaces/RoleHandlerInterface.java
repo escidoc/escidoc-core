@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * Interface of a handler managing eSciDoc roles.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public interface RoleHandlerInterface {
 

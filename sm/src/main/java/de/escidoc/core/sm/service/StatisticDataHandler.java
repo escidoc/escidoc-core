@@ -37,7 +37,7 @@ import de.escidoc.core.sm.service.interfaces.StatisticDataHandlerInterface;
 /**
  * A statistic data resource handler.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class StatisticDataHandler implements StatisticDataHandlerInterface {
 

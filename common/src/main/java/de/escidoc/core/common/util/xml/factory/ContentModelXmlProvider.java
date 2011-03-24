@@ -31,7 +31,7 @@ import java.util.Map;
  * 
  * @see InfrastructureXmlProvider
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  *
  */
 public class ContentModelXmlProvider extends InfrastructureXmlProvider {

@@ -48,7 +48,7 @@ import static junit.framework.Assert.fail;
 /**
  * Base class for testing the implementation of the StagingFile.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public abstract class StagingFileTestBase extends EscidocTestBase {

@@ -34,7 +34,7 @@ import java.util.Collection;
  * Holds all values needed to represent a group of root where-clauses (enclosed
  * by brackets in the resulting sql-statement).
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class RootWhereGroupVo {

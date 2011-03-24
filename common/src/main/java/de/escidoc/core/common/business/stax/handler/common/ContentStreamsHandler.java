@@ -44,7 +44,7 @@ import java.util.List;
  * This handler obtains all (required) values of each ContentStream of an Item
  * and handle is within ContentStream objects.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContentStreamsHandler extends DefaultHandler {

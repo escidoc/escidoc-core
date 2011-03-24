@@ -35,7 +35,7 @@ import java.util.Date;
 /**
  * Database-Backend Interface for the Statistic-Data database-table.
  * 
- * @author mih
+ * @author Michael Hoppe
  */
 public interface SmStatisticDataDaoInterface {
 

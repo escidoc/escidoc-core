@@ -11,7 +11,7 @@ import java.util.Iterator;
 /**
  * Cleans up the login data by removing expired eSciDoc user handles.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class UserHandleCleaner {

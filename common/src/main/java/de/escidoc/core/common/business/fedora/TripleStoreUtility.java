@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
  * The abstract TripleStoreUtility. <code>getInstance</code> returns a
  * implementation of the subclass registered as business.TripleStoreUtility.
  * 
- * @author ROF
+ * @author Rozita Friedman
  */
 public abstract class TripleStoreUtility extends JdbcDaoSupport
     implements TripleStoreFilterUtility {

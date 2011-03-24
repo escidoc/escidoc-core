@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * Interface for direct JDBC Database access.
  * 
- * @author mih
+ * @author Michael Hoppe
  */
 public interface DirectDatabaseAccessorInterface {
 

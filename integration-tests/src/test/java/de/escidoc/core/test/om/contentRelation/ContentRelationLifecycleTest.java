@@ -52,7 +52,7 @@ import static org.junit.Assert.fail;
 /**
  * Test lifecycle of Content Relation.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 @RunWith(value = Parameterized.class)

@@ -54,7 +54,7 @@ import de.escidoc.core.test.security.client.PWCallback;
 /**
  * Test the mock implementation of the item resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 @RunWith(value = Parameterized.class)

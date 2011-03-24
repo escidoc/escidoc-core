@@ -46,7 +46,7 @@ import java.util.StringTokenizer;
 /**
  * The resource class to map HTTP requests to a configured resource method.
  * 
- * @author MSC
+ * @author Michael Schwantner
  *
  */
 public class Resource extends XMLBase {

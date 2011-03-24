@@ -47,7 +47,7 @@ import static org.junit.Assert.fail;
 /**
  * Test the implementation of checksums in components.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 @RunWith(value = Parameterized.class)

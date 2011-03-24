@@ -81,7 +81,7 @@ import java.util.regex.Pattern;
  * element has no attributes/text, the business logic ignores attributes/text in
  * the matching element.
  * 
- * @author ROF, FRA
+ * @author Rozita Friedman, FRA
  * 
  */
 public class MultipleExtractor extends WriteHandler {

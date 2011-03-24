@@ -40,7 +40,7 @@ import java.util.List;
  * Stax handler implementation that extracts ouIds out of a ouList.
  * 
  *
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class OuListOuIdHandler extends DefaultHandler {

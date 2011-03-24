@@ -39,7 +39,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * Administration tool that rebuilds the search index, rebuilds the resource
  * cache and deletes objects physically from the repository.
  *
- * @author sche
+ * @author André Schenk
  */
 public class AdminHandler implements AdminHandlerInterface {
 

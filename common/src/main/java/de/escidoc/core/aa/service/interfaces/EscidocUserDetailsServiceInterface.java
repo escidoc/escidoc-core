@@ -26,7 +26,7 @@ import org.springframework.security.userdetails.UserDetailsService;
 /**
  * Interface to EscidocUserDetailsService.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public interface EscidocUserDetailsServiceInterface extends UserDetailsService {

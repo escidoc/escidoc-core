@@ -42,7 +42,7 @@ import javax.naming.directory.NoSuchAttributeException;
 /**
  * Stax handler implementation that handles the item update.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  */
 public class ItemUpdateHandler extends DefaultHandler {
 

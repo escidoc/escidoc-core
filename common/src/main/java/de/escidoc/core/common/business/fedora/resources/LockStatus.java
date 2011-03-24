@@ -25,7 +25,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusExcept
 /**
  * All status types of lock (resource lock).
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public enum LockStatus {

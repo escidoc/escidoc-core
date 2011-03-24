@@ -160,7 +160,7 @@ import de.escidoc.core.om.business.stax.handler.container.StructMapCreateHandler
  * MultipleExtractor} have to be the last Handler in the HandlerChain of a
  * StaxParser.
  * 
- * @author ROF
+ * @author Rozita Friedman
  */
 public class FedoraContainerHandler extends ContainerHandlerPid
     implements ContainerHandlerInterface {

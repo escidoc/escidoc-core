@@ -37,7 +37,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Interface of a semantic store handler of the business layer.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  *
  */

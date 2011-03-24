@@ -25,7 +25,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 /**
  * Constants.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public final class Constants {
 

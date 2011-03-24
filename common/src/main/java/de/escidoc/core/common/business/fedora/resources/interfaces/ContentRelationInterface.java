@@ -36,7 +36,7 @@ import java.util.Map;
  * Interface for Fedora Content Relation Object which consist of datastreams
  * managed in Fedora Digital Repository System.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public interface ContentRelationInterface extends FedoraResource {

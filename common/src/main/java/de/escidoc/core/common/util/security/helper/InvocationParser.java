@@ -95,7 +95,7 @@ public class InvocationParser {
      * documents. It uses a <code>LRUMap</code> that is synchronized (via
      * {@link Collections}.synchronizedMap({@link Map})).
      * 
-     * @author TTE
+     * @author Torsten Tetteroo
      */
     private static final class DocumentCache {
 

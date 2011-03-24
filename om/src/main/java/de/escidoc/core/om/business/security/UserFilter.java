@@ -44,7 +44,7 @@ import java.util.List;
  * Helper class to filter elements out where the user permissions are
  * restricted.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class UserFilter {

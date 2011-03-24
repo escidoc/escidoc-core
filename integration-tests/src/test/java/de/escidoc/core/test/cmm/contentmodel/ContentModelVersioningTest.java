@@ -41,7 +41,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test Content Model versioning behavior.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

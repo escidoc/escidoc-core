@@ -54,7 +54,7 @@ import java.util.List;
 /**
  * Extracts data for Aggregation Definition out of raw-statistic-data-table.
  *
- * @author MIH
+ * @author Michael Hoppe
  */
 public class AggregationDataSelector {
 

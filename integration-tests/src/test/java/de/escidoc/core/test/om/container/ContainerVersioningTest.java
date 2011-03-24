@@ -52,7 +52,7 @@ import static org.junit.Assert.fail;
 /**
  * Test the implementation of the container resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 @RunWith(value = Parameterized.class)

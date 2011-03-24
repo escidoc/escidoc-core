@@ -28,7 +28,7 @@ import de.escidoc.core.common.business.Constants;
 /**
  * This class is a value object for all parameters used in an SRU request.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public abstract class SRURequestParameters {
     private final String query;

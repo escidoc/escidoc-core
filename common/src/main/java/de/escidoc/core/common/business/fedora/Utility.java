@@ -102,7 +102,7 @@ import java.util.regex.Pattern;
 /**
  * Some utilities.
  * 
- * @author MSC
+ * @author Michael Schwantner
  */
 public class Utility {
 

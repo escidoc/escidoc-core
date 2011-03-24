@@ -36,7 +36,7 @@ import java.util.Map;
 /**
  * Interface of an FedoraRestDeviation handler of the business layer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public interface FedoraRestDeviationHandlerInterface {

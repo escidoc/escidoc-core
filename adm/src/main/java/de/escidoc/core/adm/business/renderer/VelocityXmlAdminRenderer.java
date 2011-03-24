@@ -46,7 +46,7 @@ import java.util.Set;
 /**
  * Admin renderer implementation using the velocity template engine.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class VelocityXmlAdminRenderer 
     implements AdminRendererInterface {

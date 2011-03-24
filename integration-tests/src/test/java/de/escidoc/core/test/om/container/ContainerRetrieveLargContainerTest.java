@@ -41,7 +41,7 @@ import org.w3c.dom.Node;
 /**
  * Test stability by increasing the number of versions of the Container resource.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 @RunWith(value = Parameterized.class)

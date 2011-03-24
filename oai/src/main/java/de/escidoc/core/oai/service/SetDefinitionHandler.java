@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * A set definition resource handler.
  * 
- * @author rof
+ * @author Rozita Friedman
  */
 public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
     /**

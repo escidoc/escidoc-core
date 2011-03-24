@@ -68,7 +68,7 @@ import java.io.ByteArrayInputStream;
  * Contains base functionality of FedoraContainerHandler. Is extended at least
  * by FedoraContainerHandler.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 public class ContainerHandlerBase extends HandlerBase {

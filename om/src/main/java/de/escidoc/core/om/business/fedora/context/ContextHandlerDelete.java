@@ -38,7 +38,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 
 /**
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContextHandlerDelete extends ContextHandlerCreate {

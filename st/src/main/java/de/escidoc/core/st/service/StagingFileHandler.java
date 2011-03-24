@@ -39,7 +39,7 @@ import de.escidoc.core.st.service.interfaces.StagingFileHandlerInterface;
 /**
  * A StagingFile handler.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class StagingFileHandler implements StagingFileHandlerInterface {
 

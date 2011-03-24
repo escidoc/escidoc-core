@@ -43,7 +43,7 @@ import java.util.Map;
 /**
  * An statistic Scope resource handler.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class ScopeHandler implements ScopeHandlerInterface {
 

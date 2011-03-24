@@ -50,7 +50,7 @@ import java.util.regex.Pattern;
  * The function returns true, if the value of the second parameter is found in
  * the value of the first parameter.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  * 
  */

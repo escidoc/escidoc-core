@@ -30,7 +30,7 @@ import java.util.Collection;
  * index on large column values so there has to be defined a maximum prefix length
  * for those indices.
  *
- * @author SCHE
+ * @author André Schenk
  */
 public class BasicDDLGenerator
     extends PostgresDDLGenerator {

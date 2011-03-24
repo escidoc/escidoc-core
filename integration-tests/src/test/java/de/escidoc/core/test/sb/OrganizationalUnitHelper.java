@@ -36,7 +36,7 @@ import org.w3c.dom.Node;
 /**
  * Call the OrganizationalUnit-Service.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class OrganizationalUnitHelper extends OrganizationalUnitTestBase {

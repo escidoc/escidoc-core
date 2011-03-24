@@ -39,7 +39,7 @@ import java.net.URI;
 /**
  * Class holding the data of a policy reference.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class XacmlPolicyReference extends PolicyReference {

@@ -36,7 +36,7 @@ import java.util.Collection;
 /**
  * An utility class for SM XML Handling.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class SmXmlUtility {
 

@@ -45,7 +45,7 @@ import org.aopalliance.intercept.MethodInvocation;
  * >
  * <priority value="TRACE"/>
  *</category>
- * @author KST
+ * @author Kai Strnad
  *
  */
 public class PerformanceStatisticsInterceptor implements MethodInterceptor {

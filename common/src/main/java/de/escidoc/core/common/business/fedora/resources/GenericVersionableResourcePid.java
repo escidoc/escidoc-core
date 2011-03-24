@@ -67,7 +67,7 @@ import java.util.regex.Pattern;
 /**
  * Version PID handling for Generic Versionable Resources.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class GenericVersionableResourcePid extends GenericVersionableResource {

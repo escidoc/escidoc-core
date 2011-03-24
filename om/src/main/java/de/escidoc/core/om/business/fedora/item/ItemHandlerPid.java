@@ -63,7 +63,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 /**
  * Persistent Identifier relevant methods for Item.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ItemHandlerPid extends ItemHandlerContent {

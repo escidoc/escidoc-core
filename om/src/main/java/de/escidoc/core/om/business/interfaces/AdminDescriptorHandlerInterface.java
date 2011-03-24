@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Interface of an Admin-Descrictor Handler of the business layer.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  *
  */

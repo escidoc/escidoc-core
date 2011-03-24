@@ -49,7 +49,7 @@ import java.util.regex.Pattern;
  * "de.escidoc.core.aa.service.interfaces.UserAccountHandlerInterface" ->
  * "de.escidoc.core.aa.ejb.interfaces.UserAccountHandlerRemote"
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class RemoteStatelessEjbProxyFactoryBean
     extends SimpleRemoteStatelessSessionProxyFactoryBean {

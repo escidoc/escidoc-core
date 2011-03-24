@@ -40,7 +40,7 @@ import org.w3c.dom.Document;
 /**
  * Test suite for the role Audience.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class AudienceAbstractTest extends GrantTestBase {

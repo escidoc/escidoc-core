@@ -42,7 +42,7 @@ import de.escidoc.core.common.business.fedora.resources.ResourceType;
  * Basic class for all singletons which contain all information about a running or
  * finished process.
  *
- * @author sche
+ * @author André Schenk
  */
 public abstract class AdminMethodStatus implements Map<ResourceType, Integer> {
 

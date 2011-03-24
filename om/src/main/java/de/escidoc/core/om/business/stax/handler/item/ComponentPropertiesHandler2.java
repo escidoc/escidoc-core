@@ -42,7 +42,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 /**
  * Handles the Properties of one single Component.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ComponentPropertiesHandler2 extends DefaultHandler {

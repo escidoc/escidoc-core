@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * Parses the GsearchIndexConfiguration-XML into a Hash-Structure.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class GsearchIndexConfigurationHandler extends DefaultHandler {

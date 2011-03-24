@@ -28,7 +28,7 @@ import de.escidoc.core.common.util.service.UserContext;
  * Version properties of versionable resource (Item/Container)(can represent
  * current and latest version).
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class VersionProperties {

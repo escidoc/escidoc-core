@@ -58,7 +58,7 @@ import java.util.Properties;
  * Administration tool that rebuilds the search index, rebuilds the resource
  * cache and deletes objects physically from the repository.
  *
- * @author sche
+ * @author André Schenk
  */
 public class AdminHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(

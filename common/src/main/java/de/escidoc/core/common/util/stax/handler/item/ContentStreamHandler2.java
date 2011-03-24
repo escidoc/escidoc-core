@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * Handle ContentStream XML to obtain all required ContentStream values.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContentStreamHandler2 extends DefaultHandler {

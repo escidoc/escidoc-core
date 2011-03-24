@@ -51,7 +51,7 @@ import java.util.Map;
 /**
  * Interface of a Context handler.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public interface ContextHandlerInterface {
     /**

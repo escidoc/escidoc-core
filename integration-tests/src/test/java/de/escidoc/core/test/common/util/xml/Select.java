@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  * of test environment starts than remove this methods from the
  * Escidoc[.*]TestBase classes to shrink them.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class Select {

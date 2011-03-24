@@ -40,7 +40,7 @@ import javax.naming.directory.NoSuchAttributeException;
  * during creation of the handler. If the values are not equal a
  * <code>LockingException</code> is thrown.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class OptimisticLockingHandler extends DefaultHandler {

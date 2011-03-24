@@ -41,7 +41,7 @@ import de.escidoc.core.sm.service.interfaces.ReportHandlerInterface;
 /**
  * An statistic Report resource handler.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class ReportHandler implements ReportHandlerInterface {
 

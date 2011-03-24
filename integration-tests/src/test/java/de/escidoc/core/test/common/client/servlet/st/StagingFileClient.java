@@ -37,7 +37,7 @@ import java.io.InputStream;
  * This client offers access methods to the escidoc REST interface of the
  * StagingFile resource.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class StagingFileClient extends ClientBase {

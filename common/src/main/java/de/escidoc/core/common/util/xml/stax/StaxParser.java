@@ -47,7 +47,7 @@ import java.util.Stack;
  * 
  * @see de.escidoc.core.common.util.xml.stax.handler
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class StaxParser implements DefaultHandlerStackInterface {

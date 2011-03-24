@@ -28,7 +28,7 @@ import java.util.Map;
  * Singleton which encapsulates method calls to render FOXML for the content
  * object.
  * 
- * @author sche
+ * @author André Schenk
  */
 public final class ContextFoXmlProvider extends InfrastructureFoXmlProvider {
 

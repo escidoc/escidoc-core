@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * Resolves objectType and objectTitle for given objectId.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class ObjectAttributeResolver {
 

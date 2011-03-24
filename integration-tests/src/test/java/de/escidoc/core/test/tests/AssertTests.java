@@ -40,7 +40,7 @@ import static org.junit.Assert.fail;
  * This tests test test methods. OK, it's clear that tests can't fully check
  * systems, but it seems reasonable to check some test methods.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

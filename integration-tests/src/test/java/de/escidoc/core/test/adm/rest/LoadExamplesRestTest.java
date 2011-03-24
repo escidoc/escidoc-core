@@ -35,7 +35,7 @@ import org.junit.Test;
 /**
  * Test for the Admin tool with REST transport.
  * 
- * @author SCHE
+ * @author André Schenk
  * 
  */
 public class LoadExamplesRestTest extends AdminToolTestBase {

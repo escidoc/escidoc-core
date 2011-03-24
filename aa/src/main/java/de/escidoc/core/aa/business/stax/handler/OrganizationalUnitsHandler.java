@@ -49,7 +49,7 @@ import de.escidoc.core.common.util.xml.stax.handler.LinkCollectionStaxHandler;
  * <li>the public-status of the organizational unit is &quot;opened&quot;
  * </ul>
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class OrganizationalUnitsHandler extends LinkCollectionStaxHandler {

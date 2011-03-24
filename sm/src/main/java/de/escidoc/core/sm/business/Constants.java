@@ -32,7 +32,7 @@ package de.escidoc.core.sm.business;
 /**
  * Constants.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public final class Constants {
     

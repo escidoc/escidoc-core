@@ -46,7 +46,7 @@ import java.util.Collection;
  * ...:item:version-status, and ...:item:version-status. The attributes found
  * are stored in the <code>RequestAttributesCache</code>.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class ItemStaxHandler extends AbstractResourceAttributeStaxHandler {

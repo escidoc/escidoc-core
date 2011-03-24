@@ -85,7 +85,7 @@ import java.util.regex.Pattern;
  * record. For information about how to access the thread local statistic data
  * record and adding information to it.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 @Aspect

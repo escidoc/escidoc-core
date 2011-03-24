@@ -40,7 +40,7 @@ import java.util.Map;
  * Interface of an Statistic Aggregation Definition Handler of the business
  * layer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public interface AggregationDefinitionHandlerInterface {

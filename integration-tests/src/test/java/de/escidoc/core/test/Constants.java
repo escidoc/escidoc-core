@@ -3,7 +3,7 @@ package de.escidoc.core.test;
 /**
  * eSciDoc test case constants.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class Constants {

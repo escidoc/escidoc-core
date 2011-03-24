@@ -45,7 +45,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test the implementation of the content relation resource.
  * 
- * @author sche
+ * @author André Schenk
  * 
  */
 @RunWith(value = Parameterized.class)

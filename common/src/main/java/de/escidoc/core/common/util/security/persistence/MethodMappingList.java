@@ -33,7 +33,7 @@ import java.util.List;
  * number of before- and after-mappings and elements of the before- and
  * after-appigs lists..
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class MethodMappingList {

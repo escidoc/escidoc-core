@@ -47,7 +47,7 @@ import java.util.Collection;
  * Abstract stax handler that handles the attributes that have to be fetched
  * from a resource Xml representation.<br>
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class AbstractResourceAttributeStaxHandler extends DefaultHandler {

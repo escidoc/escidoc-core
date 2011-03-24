@@ -43,7 +43,7 @@ import java.util.List;
 /**
  * A role in eSciDoc.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class EscidocRole extends EscidocRoleBase {

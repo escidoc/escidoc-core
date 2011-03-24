@@ -45,7 +45,7 @@ import java.util.Collection;
 /**
  * Database-Backend for the Report-Definitions database-table.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class SmReportDefinitionsHibernateDao
     extends AbstractHibernateDao

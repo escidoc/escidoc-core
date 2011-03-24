@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 /**
  * Interface of a data access object used to access {@link Action} objects.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public interface ActionDaoInterface {

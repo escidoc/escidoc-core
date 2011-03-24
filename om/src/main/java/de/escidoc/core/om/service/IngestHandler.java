@@ -34,7 +34,7 @@ import de.escidoc.core.om.service.interfaces.IngestHandlerInterface;
 /**
  * The resource ingest handler.
  * 
- * @author SWA
+ * @author Steffen Wagner
  */
 public class IngestHandler implements IngestHandlerInterface {
 

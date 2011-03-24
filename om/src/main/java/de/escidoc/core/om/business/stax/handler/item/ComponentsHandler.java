@@ -52,7 +52,7 @@ import java.util.List;
  * This handler obtains all (required) values of each Component of an Item and
  * handle is within Component objects.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ComponentsHandler extends DefaultHandler {

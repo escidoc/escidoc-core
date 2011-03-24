@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Interface of an fedora deviation handler via rest.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public interface FedoraRestDeviationHandlerInterface {

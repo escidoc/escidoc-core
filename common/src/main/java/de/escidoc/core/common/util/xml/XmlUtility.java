@@ -91,7 +91,7 @@ import java.util.regex.Pattern;
  * <code>Schema</code> objects are created. These <code>Schema</code> objects
  * are thread-safe and are cached to prevent unnecessary recreation.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public final class XmlUtility {
 

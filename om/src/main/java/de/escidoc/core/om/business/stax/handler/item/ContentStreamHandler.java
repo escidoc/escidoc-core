@@ -50,7 +50,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class ContentStreamHandler extends WriteHandler {

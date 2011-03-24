@@ -43,7 +43,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 /**
  * Stax handler that manages the properties section of a role.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class RolePropertiesStaxHandler extends DefaultHandler {

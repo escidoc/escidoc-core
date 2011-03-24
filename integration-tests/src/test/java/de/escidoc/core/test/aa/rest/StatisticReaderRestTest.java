@@ -42,7 +42,7 @@ import java.util.Collection;
  * Test suite for testing access-rights 
  * to statistic-reports using the REST interface.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(Parameterized.class)

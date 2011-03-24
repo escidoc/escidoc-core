@@ -57,7 +57,7 @@ import java.util.regex.Pattern;
  * the parents of the new organizational-unit (hierarchical), multi value
  * attribute
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class NewOuParentsAttributeFinderModule
     extends AbstractAttributeFinderModule {

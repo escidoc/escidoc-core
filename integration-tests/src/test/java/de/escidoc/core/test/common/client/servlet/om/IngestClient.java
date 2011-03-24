@@ -39,7 +39,7 @@ import javax.xml.rpc.ServiceException;
 /**
  * Offers access methods to the escidoc interfaces of the item resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class IngestClient extends ClientBase

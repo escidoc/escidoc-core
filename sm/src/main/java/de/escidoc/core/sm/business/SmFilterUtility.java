@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * An utility class for filtering objectids by AA-Component.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class SmFilterUtility {

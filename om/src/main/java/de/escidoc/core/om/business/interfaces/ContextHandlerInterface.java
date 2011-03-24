@@ -55,7 +55,7 @@ import java.util.Map;
 /**
  * Interface of a context handler of the business layer.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public interface ContextHandlerInterface extends IngestableResource {
 

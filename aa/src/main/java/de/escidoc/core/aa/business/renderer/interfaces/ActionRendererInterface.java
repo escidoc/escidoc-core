@@ -34,7 +34,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 /**
  * Interface of an action renderer.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public interface ActionRendererInterface {

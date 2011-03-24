@@ -36,7 +36,7 @@ import de.escidoc.core.test.security.client.PWCallback;
 /**
  * Test suite for the DeleteObjects method of the admin tool.
  * 
- * @author SCHE
+ * @author André Schenk
  * 
  */
 public class AdminToolTestBase extends EscidocRestSoapTestBase {

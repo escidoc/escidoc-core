@@ -42,7 +42,7 @@ import java.util.Collection;
 /**
  * Test suite for the role Depositor using the SOAP interface.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(Parameterized.class)

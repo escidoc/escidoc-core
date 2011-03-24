@@ -26,7 +26,7 @@ package de.escidoc.core.common.exceptions.application.notfound;
 import de.escidoc.core.common.exceptions.EscidocException;
 
 /**
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class StreamNotFoundException extends EscidocException {

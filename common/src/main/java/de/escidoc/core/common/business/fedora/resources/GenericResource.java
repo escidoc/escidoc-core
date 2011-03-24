@@ -61,7 +61,7 @@ import java.util.Map.Entry;
  * Generic Resource supports object id, title, last modified, datastream,
  * locking and sync mechanisms.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class GenericResource implements FedoraResource {

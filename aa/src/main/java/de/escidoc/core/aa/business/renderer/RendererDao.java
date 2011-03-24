@@ -36,7 +36,7 @@ import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 /**
  * DAO implementation used by the renderer to get needed data.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class RendererDao {

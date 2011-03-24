@@ -54,7 +54,7 @@ import de.escidoc.core.test.security.client.PWCallback;
 /**
  * Test the Persistent Identifier implementation of the item content.
  * 
- * @author sche
+ * @author André Schenk
  * 
  */
 @RunWith(value = Parameterized.class)

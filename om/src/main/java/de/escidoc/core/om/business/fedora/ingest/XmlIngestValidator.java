@@ -40,7 +40,7 @@ import de.escidoc.core.om.business.interfaces.IngestValidator;
  * Implementation of IngestValidator. This class knows how to validate a given
  * resource agains XML Schemas.
  * 
- * @author KST
+ * @author Kai Strnad
  */
 public class XmlIngestValidator implements IngestValidator {
 

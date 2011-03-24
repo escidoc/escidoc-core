@@ -31,7 +31,7 @@ package de.escidoc.core.aa.business.persistence;
 /**
  * A user property.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  *
  *
  */

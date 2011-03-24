@@ -65,7 +65,7 @@ import java.util.Map;
  * This is a helper class to convert an XACML document into an SQL / Lucene
  * fragment.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public class XacmlParser {
     /**

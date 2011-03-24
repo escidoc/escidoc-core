@@ -35,7 +35,7 @@ import org.apache.http.util.EntityUtils;
 /**
  * Base class for Preprocessing tests.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class PreprocessingTestBase extends SmTestBase {

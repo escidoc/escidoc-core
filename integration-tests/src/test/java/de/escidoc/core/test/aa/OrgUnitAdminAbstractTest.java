@@ -48,7 +48,7 @@ import org.junit.Test;
  * This role is restricted to an organizational-unit 
  * and implicitly to all its children.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class OrgUnitAdminAbstractTest extends GrantTestBase {

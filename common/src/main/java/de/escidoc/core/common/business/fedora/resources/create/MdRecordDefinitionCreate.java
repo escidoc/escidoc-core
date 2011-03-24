@@ -42,7 +42,7 @@ import java.util.Map;
  * 
  * This class represent a metadata record.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class MdRecordDefinitionCreate {

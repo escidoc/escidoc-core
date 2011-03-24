@@ -43,7 +43,7 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
 /**
  * Implementation of an Acegi UserDetailsService.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * @see UserDetailsService
  */
 public class EscidocUserDetailsService

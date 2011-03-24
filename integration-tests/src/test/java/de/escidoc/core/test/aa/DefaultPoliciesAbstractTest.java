@@ -56,7 +56,7 @@ import java.util.ArrayList;
  * both users have no grants assigned
  * 
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class DefaultPoliciesAbstractTest extends GrantTestBase {

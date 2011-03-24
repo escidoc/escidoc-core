@@ -43,7 +43,7 @@ import java.net.URL;
 /**
  * Offers access methods to the escidoc interfaces.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class DeviationClient extends ClientBase {

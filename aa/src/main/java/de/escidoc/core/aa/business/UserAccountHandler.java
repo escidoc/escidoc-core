@@ -125,7 +125,7 @@ import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler
 /**
  * Implementation for the account handle.
  *
- * @author MSC
+ * @author Michael Schwantner
  */
 public class UserAccountHandler
     implements UserAccountHandlerInterface {

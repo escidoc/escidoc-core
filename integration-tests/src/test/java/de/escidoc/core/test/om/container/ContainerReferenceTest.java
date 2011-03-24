@@ -56,7 +56,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Test all references of a Container.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

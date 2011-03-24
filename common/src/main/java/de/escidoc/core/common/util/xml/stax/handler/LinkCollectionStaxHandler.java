@@ -32,7 +32,7 @@ import java.util.List;
  * This handler specializes {@link LinkStaxHandler}.
  * 
  * @see LinkStaxHandler
- * @author TTE
+ * @author Torsten Tetteroo
  *
  * 
  */

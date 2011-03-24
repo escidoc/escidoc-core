@@ -31,7 +31,7 @@ package de.escidoc.core.adm.business;
 /**
  * Provides constants used in the AdminHandler.
  *
- * @author sche
+ * @author André Schenk
  */
 public final class Constants {
     /**

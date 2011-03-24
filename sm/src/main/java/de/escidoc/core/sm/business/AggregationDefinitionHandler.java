@@ -73,7 +73,7 @@ import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
 /**
  * A statistic AggregationDefinition resource handler.
  *
- * @author MIH
+ * @author Michael Hoppe
  */
 public class AggregationDefinitionHandler
     implements AggregationDefinitionHandlerInterface {

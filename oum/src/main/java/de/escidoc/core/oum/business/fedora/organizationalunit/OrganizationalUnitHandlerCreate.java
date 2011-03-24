@@ -48,7 +48,7 @@ import java.util.Map.Entry;
  * The methods of the class deals with datastreams for fedora objects, which
  * will represent the OrganizationalUnitCreator.
  * 
- * @author MSc
+ * @author Michael Schwantner
  * @oum
  */
 public class OrganizationalUnitHandlerCreate

@@ -30,7 +30,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Interface of a handler managing eSciDoc actions.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public interface ActionHandlerInterface {
 

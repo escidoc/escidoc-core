@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Interface of a data access object for request mappings.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public interface RequestMappingDaoInterface {

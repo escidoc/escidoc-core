@@ -122,7 +122,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 
 /**
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public interface SoapExceptionGenerationInterface {

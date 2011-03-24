@@ -50,7 +50,7 @@ import java.util.HashSet;
  * Customized Springsecurity-ContextMapper.
  * Writes all attributes from LDAP into EscidocLdapUserDetails-Object.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class EscidocLdapContextMapper implements UserDetailsContextMapper {

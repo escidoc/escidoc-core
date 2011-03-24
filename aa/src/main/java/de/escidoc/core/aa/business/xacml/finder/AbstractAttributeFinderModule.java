@@ -64,7 +64,7 @@ import java.util.regex.Pattern;
  * <code>getCacheKey</code>, and <code>getSupportedDesignatorTypes</code> if the
  * default implementations do not fit their requirements.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  *
  */

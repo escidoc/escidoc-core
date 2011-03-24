@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 /**
  * Some constants used in the AA component.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  *
  */

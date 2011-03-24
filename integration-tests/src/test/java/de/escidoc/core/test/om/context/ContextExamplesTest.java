@@ -41,7 +41,7 @@ import java.util.Map;
 /**
  * Test creating the example Context objects.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

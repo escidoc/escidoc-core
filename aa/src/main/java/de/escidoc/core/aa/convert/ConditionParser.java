@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * This is a helper class to convert a XACML condition into an SQL fragment.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public class ConditionParser {
 

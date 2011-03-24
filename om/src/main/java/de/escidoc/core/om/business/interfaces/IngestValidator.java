@@ -37,7 +37,7 @@ import de.escidoc.core.common.exceptions.EscidocException;
  * may very well be subject to change as eSciDoc evolves, so the 
  * validation should be flexible enough.
  * 
- * @author KST
+ * @author Kai Strnad
  * 
  */
 public interface IngestValidator {

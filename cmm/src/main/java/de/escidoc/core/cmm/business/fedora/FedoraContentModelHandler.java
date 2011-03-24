@@ -103,7 +103,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
 import de.escidoc.core.common.util.xml.stax.events.StartElementWithText;
 
 /**
- * @author FRS
+ * @author Frank Schwichtenberg
  */
 public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
     implements ContentModelHandlerInterface {

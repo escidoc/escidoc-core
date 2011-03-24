@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import java.util.Map;
 
 /**
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public interface ComponentInterface extends FedoraResource {

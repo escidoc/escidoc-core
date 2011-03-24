@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * Interface of an item foxml renderer.
  * 
- * @author ROF
+ * @author Rozita Friedman
  *
  */
 public interface ItemFoXmlRendererInterface {

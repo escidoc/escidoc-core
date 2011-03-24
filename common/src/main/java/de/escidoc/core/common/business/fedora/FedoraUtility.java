@@ -90,7 +90,7 @@ import java.util.regex.Pattern;
  * An utility class for Fedora requests.<br />
  * This class uses pools for the fedora interfaces.
  *
- * @author ROF
+ * @author Rozita Friedman
  */
 @ManagedResource(objectName = "eSciDocCore:name=FedoraUtility", description = "The utility class to access the fedora repository.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class FedoraUtility implements InitializingBean {

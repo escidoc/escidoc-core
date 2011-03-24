@@ -41,7 +41,7 @@ import java.util.Collection;
 /**
  * Test suite for the role ou-administrator using the SOAP interface.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(Parameterized.class)

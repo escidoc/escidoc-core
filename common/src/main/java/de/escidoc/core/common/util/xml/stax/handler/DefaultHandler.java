@@ -32,7 +32,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
  * 
  *
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public abstract class DefaultHandler {

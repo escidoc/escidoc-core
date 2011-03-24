@@ -37,7 +37,7 @@ import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
 /**
  * Interface of an report definition renderer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public interface ReportDefinitionRendererInterface {

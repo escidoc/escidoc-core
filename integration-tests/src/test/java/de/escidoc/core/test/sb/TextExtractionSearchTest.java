@@ -47,7 +47,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test the implementation of the search resource.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @Ignore("Test the implementation of the search resource")

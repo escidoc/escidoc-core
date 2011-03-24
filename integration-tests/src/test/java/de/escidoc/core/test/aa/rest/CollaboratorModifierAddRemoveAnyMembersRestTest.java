@@ -44,7 +44,7 @@ import java.util.Collection;
 /**
  * Test suite for the role CollaboratorModifierAddRemoveAnyMembers a using the REST interface.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(Parameterized.class)

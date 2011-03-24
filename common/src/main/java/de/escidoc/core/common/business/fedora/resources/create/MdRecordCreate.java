@@ -43,7 +43,7 @@ import java.util.Map;
  * 
  * This class represent a metadata record.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class MdRecordCreate implements Serializable {

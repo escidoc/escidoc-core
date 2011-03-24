@@ -40,7 +40,7 @@ import java.util.Map;
  * Offers access methods to the escidoc REST and SOAP interface of the Statistic
  * Scope resource.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ScopeClient extends ClientBase {

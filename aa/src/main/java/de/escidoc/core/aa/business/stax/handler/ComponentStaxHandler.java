@@ -43,7 +43,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
  * ...:item:component:created-by. The attributes found are stored in the
  * <code>RequestAttributesCache</code>.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class ComponentStaxHandler extends DefaultHandler {

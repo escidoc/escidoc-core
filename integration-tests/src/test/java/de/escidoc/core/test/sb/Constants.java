@@ -34,7 +34,7 @@ import java.util.HashMap;
 /**
  * Constants for Search-Tests.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public final class Constants {
     public static final int NUM_ITEMS = 10;

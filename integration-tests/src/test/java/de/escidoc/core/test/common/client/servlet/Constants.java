@@ -31,7 +31,7 @@ package de.escidoc.core.test.common.client.servlet;
 /**
  * Some constants.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class Constants {

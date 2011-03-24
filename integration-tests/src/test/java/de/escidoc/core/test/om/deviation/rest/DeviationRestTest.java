@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class DeviationRestTest extends DeviationTestBase {

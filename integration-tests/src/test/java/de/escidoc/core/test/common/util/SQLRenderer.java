@@ -42,7 +42,7 @@ import java.util.TreeMap;
 /**
  * Render for SQL databases.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class SQLRenderer implements MeasurementRenderer {

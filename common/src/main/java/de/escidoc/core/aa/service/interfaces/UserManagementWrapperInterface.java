@@ -26,7 +26,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Interface of the wrapper of the external user management.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public interface UserManagementWrapperInterface {

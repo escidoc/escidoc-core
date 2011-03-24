@@ -45,7 +45,7 @@ import java.util.Map;
  * 
  * Implementation for the service layer for Aa component.
  *
- * @author ROF
+ * @author Rozita Friedman
  */
 public class PolicyDecisionPoint implements PolicyDecisionPointInterface {
 

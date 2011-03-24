@@ -48,7 +48,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Testsuite for the UserAccount with REST transport.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(JUnit4.class)

@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class DcReadHandler extends DefaultHandler {

@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
 /**
  * An utility class for Kowary request.
  *
- * @author ROF
+ * @author Rozita Friedman
  * 
  *         TODO move to TriplestoreUtility implementation
  */

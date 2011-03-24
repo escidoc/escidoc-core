@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
 /**
  * Test suite for testing access-rights to statistic-reports.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class StatisticReaderAbstractTest extends GrantTestBase {

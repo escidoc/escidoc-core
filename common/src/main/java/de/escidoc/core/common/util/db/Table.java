@@ -26,7 +26,7 @@ import java.util.TreeSet;
  * This class represents a database table containing a list of all its column
  * names and indexes.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public class Table implements Comparable<Object> {
     private String name;

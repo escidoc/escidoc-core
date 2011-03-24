@@ -33,7 +33,7 @@ import de.escidoc.core.test.cmm.contentmodel.ContentModelTestBase;
 /**
  * Call the Content-Model-Service.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ContentModelHelper extends ContentModelTestBase {

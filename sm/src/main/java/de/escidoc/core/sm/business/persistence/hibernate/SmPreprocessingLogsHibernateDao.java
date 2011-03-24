@@ -39,7 +39,7 @@ import java.util.Date;
 /**
  * Database-Backend for the PreprocessingLogs database-table.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class SmPreprocessingLogsHibernateDao 
     extends AbstractHibernateDao

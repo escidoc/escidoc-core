@@ -103,7 +103,7 @@ import java.util.regex.Pattern;
 /**
  * Implementation for the AA Component.
  *
- * @author TTE, ROW
+ * @author Torsten Tetteroo, Roland Werner
  */
 
 public class PolicyDecisionPoint implements PolicyDecisionPointInterface {

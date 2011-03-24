@@ -34,7 +34,7 @@ import java.util.List;
  * Data access object to retrieve xacml policies from an underlying persistent
  * layer.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public interface XacmlPolicyDao {

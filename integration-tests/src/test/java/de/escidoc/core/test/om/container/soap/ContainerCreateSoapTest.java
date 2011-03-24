@@ -57,7 +57,7 @@ import static org.junit.Assert.fail;
 /**
  * Item tests with SOAP transport.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class ContainerCreateSoapTest extends ContainerTestBase {

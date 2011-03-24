@@ -38,7 +38,7 @@ import java.util.Collection;
 /**
  * Database-Backend Interface for the Scopes database-table.
  * 
- * @author mih
+ * @author Michael Hoppe
  */
 public interface SmScopesDaoInterface {
 

@@ -34,7 +34,7 @@ import java.util.Map;
  * 
  * @see http://colab.mpdl.mpg.de/mediawiki/ESciDoc_Content_Relations_Concept
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public final class ContentRelationFoXmlProvider

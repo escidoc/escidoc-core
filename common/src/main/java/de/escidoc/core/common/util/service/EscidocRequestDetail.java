@@ -25,7 +25,7 @@ import java.io.Serializable;
 /**
  * Class encapsulating the details of an eSciDoc request.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  * 
  */

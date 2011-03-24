@@ -65,7 +65,7 @@ import java.util.regex.Pattern;
  * 
  * spring.bean id="business.TripleStoreUtility"
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  *
  * 

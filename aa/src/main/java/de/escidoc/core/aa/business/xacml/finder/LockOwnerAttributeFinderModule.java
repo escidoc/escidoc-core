@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
  * -info:escidoc/names:aa:1.0:resource:item:lock-owner<br>
  * the id of the user who locked the item, single value attribute
  *
- * @author MIH
+ * @author Michael Hoppe
  */
 public class LockOwnerAttributeFinderModule
     extends AbstractAttributeFinderModule {

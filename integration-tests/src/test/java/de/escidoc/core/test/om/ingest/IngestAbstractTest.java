@@ -46,7 +46,7 @@ import static org.junit.Assert.fail;
  * Test ingesting resource via ingest interface.<br>
  * By default, the tests are executed using a depositor user.
  * 
- * @author SWA, KST
+ * @author Steffen Wagner, KST
  * 
  */
 public class IngestAbstractTest extends IngestTestBase {

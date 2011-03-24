@@ -36,7 +36,7 @@ import org.junit.runners.JUnit4;
 /**
  * Testsuite for the UserManagementWrapper with SOAP transport.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(JUnit4.class)

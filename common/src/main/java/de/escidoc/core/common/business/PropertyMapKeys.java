@@ -32,7 +32,7 @@ package de.escidoc.core.common.business;
  * FIXME I started a central mapping instance. Please check if some keys are
  * useless or have ambiguouse names
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public final class PropertyMapKeys {

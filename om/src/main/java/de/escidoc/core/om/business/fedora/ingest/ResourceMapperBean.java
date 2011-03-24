@@ -37,7 +37,7 @@ import de.escidoc.core.om.business.interfaces.IngestValidator;
  * This bean encapsulates resources necessary for the mapping of Resource Types,
  * their respective handlers and validators.
  * 
- * @author KST
+ * @author Kai Strnad
  * 
  */
 public class ResourceMapperBean {

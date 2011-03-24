@@ -31,7 +31,7 @@ package de.escidoc.core.aa.shibboleth;
 /**
  * Class encapsulating the details of a shibboleth session.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  * 
  */

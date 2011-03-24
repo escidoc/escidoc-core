@@ -33,7 +33,7 @@ import de.escidoc.core.test.om.semanticstore.SemanticStoreTestBase;
 /**
  * Base class for tests of the mock implementation of the OM resources.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class SpoTestBase extends SemanticStoreTestBase {

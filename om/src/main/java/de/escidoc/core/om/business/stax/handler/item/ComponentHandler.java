@@ -49,7 +49,7 @@ import java.io.IOException;
 /**
  * Handle Component XML to obtain all required Component values.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ComponentHandler extends DefaultHandler {

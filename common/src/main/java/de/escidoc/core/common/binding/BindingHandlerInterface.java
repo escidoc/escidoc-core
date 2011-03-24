@@ -25,7 +25,7 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 /**
  * Interface of an Binding Handler of the business layer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  *
  */

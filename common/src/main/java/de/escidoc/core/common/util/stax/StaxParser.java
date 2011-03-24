@@ -77,7 +77,7 @@ import java.util.Stack;
  * 
  * @see DefaultHandler
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class StaxParser implements DefaultHandlerStackInterface {

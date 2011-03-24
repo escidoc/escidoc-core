@@ -95,7 +95,7 @@ import de.escidoc.core.test.sm.SmTestBase;
 /**
  * Base class for AA tests.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class AaTestBase extends EscidocRestSoapTestBase {

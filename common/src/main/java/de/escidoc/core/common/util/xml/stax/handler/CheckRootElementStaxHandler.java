@@ -29,7 +29,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 /**
  * Stax handler that asserts the name of the root element.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class CheckRootElementStaxHandler extends DefaultHandler {

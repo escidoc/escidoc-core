@@ -37,7 +37,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Interface of an StatisticData handler of the business layer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public interface StatisticDataHandlerInterface {

@@ -36,7 +36,7 @@ import java.util.Map;
  * to a common structure and remove the formatting code to an external
  * collaborator.
  *
- * @author KST
+ * @author Kai Strnad
  *
  */
 public interface ValueFormatter {

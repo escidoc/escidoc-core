@@ -27,7 +27,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 /**
  * Interface of a PIDGenerator obtained from PIDGeneratorFactory.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public interface PIDSystem {

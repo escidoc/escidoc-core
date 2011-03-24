@@ -54,7 +54,7 @@ import java.util.Map;
 /**
  * 
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 public class ContentRelationsCreateHandler extends DefaultHandler {

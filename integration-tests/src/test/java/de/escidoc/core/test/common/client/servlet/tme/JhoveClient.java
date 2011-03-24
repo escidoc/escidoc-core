@@ -39,7 +39,7 @@ import javax.xml.rpc.ServiceException;
  * Offers access methods to the escidoc REST interface of the container
  * resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class JhoveClient extends ClientBase {

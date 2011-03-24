@@ -46,7 +46,7 @@ import java.io.UnsupportedEncodingException;
  * its subresources and lists and methods which retrieve constituent parts to
  * render from.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 public class ContainerHandlerRetrieve extends ContainerHandlerBase {

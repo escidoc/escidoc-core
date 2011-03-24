@@ -26,7 +26,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 /**
  * Properties of the object.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ObjectProperties {

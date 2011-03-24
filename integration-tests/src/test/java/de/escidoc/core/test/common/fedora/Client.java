@@ -50,7 +50,7 @@ import java.util.HashMap;
 /**
  * An utility class for Fedora requests.
  *
- * @author ROF
+ * @author Rozita Friedman
  */
 public class Client {
 

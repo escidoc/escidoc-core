@@ -44,7 +44,7 @@ import org.w3c.dom.Document;
  * -create user-account
  * -retrieve, update, activate, deactivate user accounts (s)he created 
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class UserAccountAdminAbstractTest extends GrantTestBase {

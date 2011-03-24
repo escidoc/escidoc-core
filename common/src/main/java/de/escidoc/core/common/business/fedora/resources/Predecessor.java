@@ -26,7 +26,7 @@ package de.escidoc.core.common.business.fedora.resources;
  * The development of an OU could be reflected within the predecessor relation.
  * An OU links to it predecessors.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class Predecessor {

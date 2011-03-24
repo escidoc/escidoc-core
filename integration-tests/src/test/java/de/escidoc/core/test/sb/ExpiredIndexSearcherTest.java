@@ -45,7 +45,7 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
  * Test if IndexSearcher gets reloaded when 
  * an object is added or deleted in the index.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(value = Parameterized.class)

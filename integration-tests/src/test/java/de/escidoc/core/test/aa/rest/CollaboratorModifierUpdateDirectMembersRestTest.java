@@ -45,7 +45,7 @@ import java.util.Collection;
 /**
  * Test suite for the role CollaboratorModifierUpdateDirectMembers a using the REST interface.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(Parameterized.class)

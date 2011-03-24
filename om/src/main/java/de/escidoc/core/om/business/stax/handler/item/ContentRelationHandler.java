@@ -53,7 +53,7 @@ import java.net.URISyntaxException;
  * Handle ContentRelation XML to obtain all required values (Properties,
  * Metadata, .. ).
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContentRelationHandler extends DefaultHandler {

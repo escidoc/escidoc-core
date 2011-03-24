@@ -54,7 +54,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 /**
  * Role renderer implementation using the velocity template engine.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class VelocityXmlRoleRenderer extends AbstractRenderer
     implements RoleRendererInterface {

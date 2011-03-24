@@ -68,7 +68,7 @@ import java.util.regex.Pattern;
  * identified by the resource-id of the context to the current user (subject).</li>
  * </ul>
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class XacmlFunctionRoleIsGranted extends FunctionBase {
 

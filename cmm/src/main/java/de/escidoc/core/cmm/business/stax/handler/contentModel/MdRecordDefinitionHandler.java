@@ -49,7 +49,7 @@ import java.util.List;
  * Handler to extract md-record definitions from content-model xml by
  * StaxParser.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  *
  */

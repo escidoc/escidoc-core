@@ -42,7 +42,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * PDP test suite.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class PdpAbstractTest extends AaTestBase {

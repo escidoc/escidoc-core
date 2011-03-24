@@ -45,7 +45,7 @@ import java.security.cert.X509Certificate;
  */
 
 /**
- * @author mih
+ * @author Michael Hoppe
  * 
  *         Class for requesting http-requests.
  * 
@@ -354,7 +354,7 @@ public class HttpRequester {
     }
 
     /**
-     * @author mih
+     * @author Michael Hoppe
      * 
      *         Overwrite X509TrustManager.
      * 

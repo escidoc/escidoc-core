@@ -5,7 +5,7 @@ import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 /**
  * Checks for database conventions (like tablename, fieldname etc).
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public final class DatabaseConventionChecker {
     

@@ -38,7 +38,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * used in the triple store.
  * 
  *
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class MapResult {

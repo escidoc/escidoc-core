@@ -26,7 +26,7 @@ import de.escidoc.core.common.exceptions.application.ApplicationException;
  * Exception to indicate that a resource some operation should be done on is
  * referenced by another resource and the operation is not allowed.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  *
  */
 public class ResourceInUseException extends ApplicationException {

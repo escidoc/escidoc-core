@@ -30,7 +30,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 /**
  * Parses a SRW Scan Response and extracts all Terms.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class SrwScanResponseHandler extends DefaultHandler {

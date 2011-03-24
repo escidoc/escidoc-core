@@ -33,7 +33,7 @@ import org.joda.time.DateTime;
 /**
  * Test environment description.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class Environment {

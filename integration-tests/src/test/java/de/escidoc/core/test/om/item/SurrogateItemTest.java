@@ -49,7 +49,7 @@ import static org.junit.Assert.fail;
 /**
  * Test of a surrogate item resource.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 @RunWith(value = Parameterized.class)

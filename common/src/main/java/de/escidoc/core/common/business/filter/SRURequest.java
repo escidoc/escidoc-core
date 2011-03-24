@@ -56,7 +56,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 /**
  * Abstract super class for all types of SRU requests.
  * 
- * @author sche
+ * @author André Schenk
  * 
  * @spring.bean id="de.escidoc.core.common.business.filter.SRURequest"
  */

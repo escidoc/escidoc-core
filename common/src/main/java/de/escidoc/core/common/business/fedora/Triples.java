@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Simple data structure to handle Triples.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class Triples {

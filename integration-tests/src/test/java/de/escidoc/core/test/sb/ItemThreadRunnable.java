@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
  */
 
 /**
- * @author mih
+ * @author Michael Hoppe
  * 
  */
 public class ItemThreadRunnable implements Runnable {

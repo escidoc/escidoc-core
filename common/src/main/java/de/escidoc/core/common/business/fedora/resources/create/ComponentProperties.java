@@ -26,7 +26,7 @@ import de.escidoc.core.common.util.service.UserContext;
 /**
  * Properties for Component.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ComponentProperties {

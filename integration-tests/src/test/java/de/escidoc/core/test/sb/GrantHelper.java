@@ -33,7 +33,7 @@ import de.escidoc.core.test.aa.GrantTestBase;
 /**
  * Call the Grant-Service.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class GrantHelper extends GrantTestBase {

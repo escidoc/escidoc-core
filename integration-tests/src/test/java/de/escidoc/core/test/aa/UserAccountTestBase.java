@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * Base class for testing the AA UserAccountHandler component.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class UserAccountTestBase extends AaTestBase {

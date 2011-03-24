@@ -35,7 +35,7 @@ import org.joda.time.ReadableDateTime;
 /**
  * Holds parameter data.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class ParameterVo {

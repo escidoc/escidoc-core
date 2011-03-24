@@ -36,7 +36,7 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
  * Value Object that holds Information about one database-field when creating a
  * database-table.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class DatabaseTableFieldVo {

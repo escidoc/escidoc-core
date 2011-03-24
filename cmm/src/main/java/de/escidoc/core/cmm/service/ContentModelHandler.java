@@ -58,7 +58,7 @@ import java.util.Map;
 /**
  * Implementation for the Service layer of the ctm component.
  *
- * @author MSC
+ * @author Michael Schwantner
  */
 
 public class ContentModelHandler

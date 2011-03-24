@@ -37,7 +37,7 @@ import java.util.Map;
  * or preventing access to functionality as well as data provided by the
  * framework.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 public interface PolicyDecisionPointInterface {

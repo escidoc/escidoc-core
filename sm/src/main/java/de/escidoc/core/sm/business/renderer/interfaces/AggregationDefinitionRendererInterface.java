@@ -37,7 +37,7 @@ import de.escidoc.core.sm.business.persistence.hibernate.AggregationDefinition;
 /**
  * Interface of an aggregation definition renderer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public interface AggregationDefinitionRendererInterface {

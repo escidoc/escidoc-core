@@ -9,7 +9,7 @@ import static junit.framework.Assert.assertNotNull;
 /**
  * Assert eSciDoc XML representation.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class Assert {

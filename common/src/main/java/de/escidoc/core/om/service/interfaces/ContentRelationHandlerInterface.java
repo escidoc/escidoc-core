@@ -44,7 +44,7 @@ import java.util.Map;
 /**
  * Interface for content relation handler.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  *
  */

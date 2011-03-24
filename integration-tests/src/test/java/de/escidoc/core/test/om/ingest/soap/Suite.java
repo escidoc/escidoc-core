@@ -35,7 +35,7 @@ import junit.framework.TestSuite;
 /**
  * The ingest test suite (SOAP).
  * 
- * @author KST
+ * @author Kai Strnad
  * 
  */
 public class Suite {

@@ -35,7 +35,7 @@ import java.util.Collection;
 /**
  * Holds report-parameters data.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class ReportParametersVo {

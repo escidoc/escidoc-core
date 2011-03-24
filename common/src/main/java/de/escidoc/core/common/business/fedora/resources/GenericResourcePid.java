@@ -50,7 +50,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElementWithChildElements
  * Extends the Generic Resource with Object PID features. Object PIDs are stored
  * with RELS-EXT. The timestamp is not influenced by assignment methods.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class GenericResourcePid extends GenericResource {

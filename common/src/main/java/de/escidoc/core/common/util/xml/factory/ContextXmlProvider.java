@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * XML Provider of Context.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public final class ContextXmlProvider extends InfrastructureXmlProvider {

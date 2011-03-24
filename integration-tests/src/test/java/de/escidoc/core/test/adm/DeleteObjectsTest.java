@@ -39,7 +39,7 @@ import static org.junit.Assert.fail;
 /**
  * Test suite for the DeleteObjects method of the admin tool.
  * 
- * @author SCHE
+ * @author André Schenk
  * 
  */
 @RunWith(value = Parameterized.class)

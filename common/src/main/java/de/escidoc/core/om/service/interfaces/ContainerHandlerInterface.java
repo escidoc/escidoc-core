@@ -63,7 +63,7 @@ import java.util.Map;
 /**
  * Interface of a container handler.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  *
  */

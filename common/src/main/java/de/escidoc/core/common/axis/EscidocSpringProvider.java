@@ -50,7 +50,7 @@ import java.util.List;
  * initialize the spring-security (acegisecurity) security context for the
  * service call.<br>
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class EscidocSpringProvider extends RPCProvider {

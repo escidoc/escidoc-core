@@ -39,7 +39,7 @@ import static org.junit.Assert.fail;
 /**
  * Test content relation delete implementation.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

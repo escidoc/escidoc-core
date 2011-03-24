@@ -34,7 +34,7 @@ import de.escidoc.core.test.om.container.ContainerTestBase;
 /**
  * Call the Container-Service.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ContainerHelper extends ContainerTestBase {

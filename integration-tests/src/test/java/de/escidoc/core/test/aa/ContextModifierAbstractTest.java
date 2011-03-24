@@ -47,7 +47,7 @@ import org.junit.Test;
  * This role is a limited role. 
         It is restricted to a context.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ContextModifierAbstractTest extends GrantTestBase {

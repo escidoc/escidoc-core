@@ -48,7 +48,7 @@ import java.util.Vector;
 /**
  * Base class for testing the AA.UserGroup component.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class UserGroupTestBase extends AaTestBase {

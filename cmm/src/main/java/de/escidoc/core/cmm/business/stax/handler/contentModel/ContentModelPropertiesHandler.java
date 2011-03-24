@@ -44,7 +44,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Handler to extract property values from content model properties.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class ContentModelPropertiesHandler extends DefaultHandler {

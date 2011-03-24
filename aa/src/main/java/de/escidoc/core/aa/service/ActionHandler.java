@@ -41,7 +41,7 @@ import java.lang.String;
 /**
  * Service layer implementation of a handler that manages eSciDoc actions.
  *
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class ActionHandler implements ActionHandlerInterface {
 

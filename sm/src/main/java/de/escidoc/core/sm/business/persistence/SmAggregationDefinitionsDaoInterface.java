@@ -40,7 +40,7 @@ import java.util.Collection;
 /**
  * Database-Backend Interface for the Aggregation-Definitions database-table.
  * 
- * @author mih
+ * @author Michael Hoppe
  */
 public interface SmAggregationDefinitionsDaoInterface {
 

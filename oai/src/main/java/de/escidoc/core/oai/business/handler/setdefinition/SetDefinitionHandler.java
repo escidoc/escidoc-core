@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author rof
+ * @author Rozita Friedman
  */
 public class SetDefinitionHandler implements SetDefinitionHandlerInterface {
 

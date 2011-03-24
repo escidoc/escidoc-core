@@ -41,7 +41,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 /**
- * @author FRS
+ * @author Frank Schwichtenberg
  */
 public class LockHandler extends JdbcDaoSupport {
 

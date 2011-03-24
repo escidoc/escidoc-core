@@ -39,7 +39,7 @@ import javax.xml.rpc.ServiceException;
 /**
  * Offers access to the AdminHandler.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class AdminClient extends ClientBase implements AdminClientInterface {

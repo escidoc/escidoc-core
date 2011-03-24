@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 /**
  * Extracts filter-criteria out of filter-xml.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class ExtendedFilterHandler extends DefaultHandler {

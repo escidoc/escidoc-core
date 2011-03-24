@@ -28,7 +28,7 @@ import java.util.HashMap;
 /**
  * Handler for handling cache for indexing.
  *
- * @author MIH
+ * @author Michael Hoppe
  */
 public class IndexingCacheHandler {
 

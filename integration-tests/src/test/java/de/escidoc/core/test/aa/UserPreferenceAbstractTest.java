@@ -54,7 +54,7 @@ import static org.junit.Assert.fail;
 /**
  * Test suite for the Preferences of an UserAccount.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase {

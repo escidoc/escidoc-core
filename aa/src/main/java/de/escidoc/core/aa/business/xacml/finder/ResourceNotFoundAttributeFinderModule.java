@@ -50,7 +50,7 @@ import java.util.regex.Pattern;
  * eSciDoc specific finder module in the chain, but must be placed after the
  * 'standard' finder modules.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class ResourceNotFoundAttributeFinderModule
     extends AbstractAttributeFinderModule {

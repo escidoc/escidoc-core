@@ -62,7 +62,7 @@ import java.util.Map;
 /**
  * A context resource handler.
  *
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class ContextHandler implements ContextHandlerInterface {
 

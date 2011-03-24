@@ -41,7 +41,7 @@ import java.util.Map;
 /**
  * Interface of a Context renderer.
  * 
- * @author SWA
+ * @author Steffen Wagner
  *
  */
 public interface ContextRendererInterface {

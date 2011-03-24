@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * Parses the GsearchRepositoryInfo-XML into a Hash-Structure.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class GsearchRepositoryInfoHandler extends DefaultHandler {

@@ -53,7 +53,7 @@ import java.util.List;
  * Contains methods pertaining deletion of an item. Is extended at least by
  * FedoraItemHandler.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class ItemHandlerDelete extends ItemHandlerCreate {

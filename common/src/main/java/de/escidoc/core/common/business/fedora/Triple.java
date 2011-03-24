@@ -24,7 +24,7 @@ package de.escidoc.core.common.business.fedora;
  * Simple data structure for a Triple. Subject, Predicate and Object are simply
  * handles as Strings.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class Triple {

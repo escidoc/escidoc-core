@@ -42,7 +42,7 @@ import static org.junit.Assert.fail;
 /**
  * Item tests with REST transport.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class ItemComponentExternalContentRestTest extends ItemTestBase

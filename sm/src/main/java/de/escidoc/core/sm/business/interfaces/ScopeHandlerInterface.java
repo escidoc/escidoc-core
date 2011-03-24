@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Interface of an Statistic Scope Handler of the business layer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public interface ScopeHandlerInterface {

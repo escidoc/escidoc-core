@@ -54,7 +54,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 /**
  * User group renderer implementation using the velocity template engine.
  * 
- * @author sche
+ * @author André Schenk
  */
 public final class VelocityXmlUserGroupRenderer extends AbstractRenderer
     implements UserGroupRendererInterface {

@@ -54,7 +54,7 @@ import de.escidoc.core.index.IndexService;
 /**
  * Provides Methods used for Re-indexing.
  * 
- * @author sche
+ * @author André Schenk
  */
 public class Reindexer {
     /**

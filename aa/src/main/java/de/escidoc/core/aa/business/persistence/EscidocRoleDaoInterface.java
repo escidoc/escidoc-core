@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Interface of a data access object used to access {@link EscidocRole} objects.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public interface EscidocRoleDaoInterface {

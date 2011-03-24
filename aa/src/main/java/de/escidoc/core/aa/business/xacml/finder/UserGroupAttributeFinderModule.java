@@ -63,7 +63,7 @@ import java.util.regex.Pattern;
  * -info:escidoc/names:aa:1.0:resource:user-group:name<br>
  * the name of the user-group, single value attribute
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class UserGroupAttributeFinderModule
     extends AbstractAttributeFinderModule {

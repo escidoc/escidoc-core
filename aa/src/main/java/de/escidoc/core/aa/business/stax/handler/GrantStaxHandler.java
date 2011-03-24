@@ -35,7 +35,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 /**
  * Stax handler for grants.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class GrantStaxHandler extends DefaultHandler {

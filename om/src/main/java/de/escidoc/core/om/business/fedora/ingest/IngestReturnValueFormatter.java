@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Provide a formatter for the return value of the ingest.
  *
- * @author KST
+ * @author Kai Strnad
  */
 public class IngestReturnValueFormatter implements ValueFormatter {
 

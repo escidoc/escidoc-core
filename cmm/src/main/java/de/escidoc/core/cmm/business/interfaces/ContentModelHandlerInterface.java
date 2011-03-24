@@ -51,7 +51,7 @@ import java.net.MalformedURLException;
 /**
  * Interface of a business handler of the content type resource.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public interface ContentModelHandlerInterface extends IngestableResource {

@@ -76,7 +76,7 @@ import java.util.Map.Entry;
  * Contains methods pertaining update of an item. Is extended at least by
  * FedoraItemHandler.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class ItemHandlerUpdate extends ItemHandlerDelete {

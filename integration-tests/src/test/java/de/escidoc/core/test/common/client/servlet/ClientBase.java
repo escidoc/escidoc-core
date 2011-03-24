@@ -98,7 +98,7 @@ import static junit.framework.Assert.assertTrue;
 /**
  * Base class for access to the escidoc REST interface.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public abstract class ClientBase {

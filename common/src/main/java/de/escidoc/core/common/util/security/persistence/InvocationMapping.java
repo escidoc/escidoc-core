@@ -23,7 +23,7 @@ package de.escidoc.core.common.util.security.persistence;
 /**
  * Class holding information of an invocation mapping.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class InvocationMapping extends InvocationMappingBase {

@@ -38,7 +38,7 @@ import java.util.Date;
 /**
  * Extracts dates out of processing-information.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class PreprocessingInformationStaxHandler extends DefaultHandler {

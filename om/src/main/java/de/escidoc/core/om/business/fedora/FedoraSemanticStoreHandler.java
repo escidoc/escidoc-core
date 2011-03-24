@@ -51,7 +51,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 /**
- * @author ROF
+ * @author Rozita Friedman
  */
 
 public class FedoraSemanticStoreHandler

@@ -25,7 +25,7 @@ import de.escidoc.core.common.exceptions.application.invalid.InvalidStatusExcept
 /**
  * All types of public-status, version status.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public enum StatusType {

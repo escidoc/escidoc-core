@@ -51,7 +51,7 @@ import java.util.Map;
 /**
  * Test suite for the GrantFilter .
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class GrantFilterAbstractTest extends GrantTestBase {

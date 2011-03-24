@@ -85,7 +85,7 @@ import java.util.regex.Pattern;
  * assigned-on:context only resolves if grant is assigned to a component,
  * container or item.
  *
- * @author MIH
+ * @author Michael Hoppe
  */
 public class GrantAttributeFinderModule extends AbstractAttributeFinderModule {
 

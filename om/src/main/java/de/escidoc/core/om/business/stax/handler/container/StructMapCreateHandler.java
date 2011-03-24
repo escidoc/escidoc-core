@@ -47,7 +47,7 @@ import java.util.List;
 /**
  * Creating Struct Maps.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  *
  */

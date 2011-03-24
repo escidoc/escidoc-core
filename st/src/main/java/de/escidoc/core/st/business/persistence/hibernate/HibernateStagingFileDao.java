@@ -46,7 +46,7 @@ import java.util.List;
 /**
  * Implementation of a staging file data access object (DAO).
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class HibernateStagingFileDao extends HibernateDaoSupport
     implements StagingFileDao {

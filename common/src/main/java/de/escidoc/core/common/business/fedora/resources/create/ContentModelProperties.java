@@ -28,7 +28,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
  * the version which is currently retrieved and NOT the newest existing version
  * of the resource.)
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class ContentModelProperties {

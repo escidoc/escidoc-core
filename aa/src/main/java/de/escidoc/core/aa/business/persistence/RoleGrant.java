@@ -36,7 +36,7 @@ import java.util.Date;
 /**
  * A grant.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  *
  */

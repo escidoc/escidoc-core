@@ -27,7 +27,7 @@ import de.escidoc.core.common.persistence.PIDSystemFactory;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
 
 /**
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class DummyPIDGeneratorFactory extends PIDSystemFactory {

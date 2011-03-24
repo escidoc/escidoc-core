@@ -42,7 +42,7 @@ import java.util.Collection;
  * Test suite for testing access-rights 
  * to statistic-reports using the SOAP interface.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(Parameterized.class)

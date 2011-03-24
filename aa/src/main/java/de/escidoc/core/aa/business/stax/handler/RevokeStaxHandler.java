@@ -45,7 +45,7 @@ import java.util.Date;
  * and sets it in the grant.
  * 
  *
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class RevokeStaxHandler extends UserAccountStaxHandlerBase {

@@ -42,7 +42,7 @@ import java.util.Map;
  * it delegates to secured resource handlers with providing the original user
  * information.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class FedoraRestDeviationHandler
     implements FedoraRestDeviationHandlerInterface {

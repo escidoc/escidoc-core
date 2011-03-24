@@ -54,7 +54,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test the implementation of the admin search for contexts.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(value = Parameterized.class)

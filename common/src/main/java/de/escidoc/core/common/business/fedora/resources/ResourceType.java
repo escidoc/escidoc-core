@@ -25,7 +25,7 @@ import de.escidoc.core.common.business.Constants;
 /**
  * Enumeration to describe all types of resources.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public enum ResourceType {
     CONTAINER        ("container",           Constants.CONTAINER_OBJECT_TYPE),

@@ -49,7 +49,7 @@ import java.util.concurrent.Callable;
  * functionality into the Component class.
  * 
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ComponentCreate extends GenericResourceCreate

@@ -41,7 +41,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Interface of an user account renderer.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public interface UserAccountRendererInterface {

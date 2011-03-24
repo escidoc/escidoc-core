@@ -25,7 +25,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Data access object to fetch resource ids from a storage back end.
  * 
- * @author tte
+ * @author Torsten Tetteroo
  */
 public interface ResourceIdentifierDao {
 

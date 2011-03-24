@@ -31,7 +31,7 @@ package de.escidoc.sb.gsearch;
 /**
  * Constants.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class Constants {
 

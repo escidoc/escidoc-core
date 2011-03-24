@@ -24,7 +24,7 @@ package de.escidoc.core.common.exceptions.application.violated;
  * Exception to indicate that a role that shall be deleted is referenced by a
  * role grant.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class RoleInUseViolationException extends RuleViolationException {

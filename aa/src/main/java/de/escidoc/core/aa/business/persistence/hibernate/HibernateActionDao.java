@@ -41,7 +41,7 @@ import java.util.List;
 /**
  * Escidoc action data access object using hibernate.
  *
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class HibernateActionDao extends AbstractHibernateDao

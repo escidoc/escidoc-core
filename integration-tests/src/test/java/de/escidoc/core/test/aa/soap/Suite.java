@@ -33,7 +33,7 @@ import org.junit.runner.RunWith;
 /**
  * The AA test suite (SOAP).
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(org.junit.runners.Suite.class)

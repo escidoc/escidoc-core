@@ -58,7 +58,7 @@ import java.util.regex.Pattern;
  * This class provides some methods used in all finder modules of the AA
  * component.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  *
  */

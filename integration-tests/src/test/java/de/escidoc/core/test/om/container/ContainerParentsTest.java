@@ -42,7 +42,7 @@ import org.w3c.dom.Document;
 /**
  * Test retrieving parents of the Container resource.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(value = Parameterized.class)

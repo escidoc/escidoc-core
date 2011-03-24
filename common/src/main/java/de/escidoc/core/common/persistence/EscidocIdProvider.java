@@ -36,7 +36,7 @@ import java.util.List;
  * Currently, {@link FedoraResourceIdentifierDao} is used to fetch the ids from
  * a fedora repository.
  *
- * @author tte
+ * @author Torsten Tetteroo
  */
 public class EscidocIdProvider {
 

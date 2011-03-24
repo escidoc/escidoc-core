@@ -26,7 +26,7 @@ package de.escidoc.core.common.exceptions.application.invalid;
  * not a valid resource. Due to the similarity to the
  * XmlSchemaValidationException the same httpStatusCode(412) is returned.
  * 
- * @author KST
+ * @author Kai Strnad
  *
  */
 public class InvalidResourceException extends ValidationException {

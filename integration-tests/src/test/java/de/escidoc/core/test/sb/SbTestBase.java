@@ -45,7 +45,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Base class for tests of the mock implementation of the SB resources.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class SbTestBase extends EscidocRestSoapTestBase {

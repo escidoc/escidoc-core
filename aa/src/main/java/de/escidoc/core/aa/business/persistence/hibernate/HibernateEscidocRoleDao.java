@@ -58,7 +58,7 @@ import java.util.Set;
 /**
  * Escidoc role data access object using hibernate.
  *
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class HibernateEscidocRoleDao extends AbstractHibernateDao

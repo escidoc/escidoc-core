@@ -32,7 +32,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Utility-Class that creates the escidocCookie containing the userHandle.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public final class UserHandleCookieUtil {

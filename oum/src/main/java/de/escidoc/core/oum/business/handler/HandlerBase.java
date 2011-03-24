@@ -37,7 +37,7 @@ import de.escidoc.core.common.util.xml.stax.interfaces.DefaultHandlerStackInterf
 /**
  * Base class for stax handlers.
  * 
- * @author msc
+ * @author Michael Schwantner
  * 
  */
 public class HandlerBase extends DefaultHandler {

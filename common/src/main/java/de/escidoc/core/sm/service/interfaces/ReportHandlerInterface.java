@@ -33,7 +33,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Interface of an Statistic Report Handler.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public interface ReportHandlerInterface {

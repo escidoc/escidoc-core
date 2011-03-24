@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author MIH
+ * @author Michael Hoppe
  */
 public class JaxbBindingHandler implements BindingHandlerInterface {
 

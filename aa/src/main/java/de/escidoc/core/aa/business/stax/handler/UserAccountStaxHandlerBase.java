@@ -35,7 +35,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 /**
  * Base class of stax handlers that work with user accounts or grants.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public abstract class UserAccountStaxHandlerBase extends DefaultHandler {

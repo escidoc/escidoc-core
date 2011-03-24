@@ -37,7 +37,7 @@ import javax.naming.directory.NoSuchAttributeException;
 /**
  * Read RelsExt and stores predicate and values within a Map.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class RelsExtReadHandler extends DefaultHandler {

@@ -30,7 +30,7 @@ import java.lang.Throwable;
  * should be used in the REST interface. returned httpStatusCode is 500
  * (Internal Server Error)
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class EscidocException extends Exception {

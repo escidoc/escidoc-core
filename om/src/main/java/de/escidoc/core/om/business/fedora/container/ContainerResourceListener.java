@@ -40,7 +40,7 @@ import java.util.Collection;
 /**
  * Container cache handler.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContainerResourceListener extends ContainerHandlerRetrieve {

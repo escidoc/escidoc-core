@@ -91,7 +91,7 @@ import de.escidoc.core.oum.business.interfaces.OrganizationalUnitHandlerInterfac
 import de.escidoc.core.oum.business.utility.OumUtility;
 
 /**
- * @author FRS
+ * @author Frank Schwichtenberg
  */
 public class FedoraOrganizationalUnitHandler
     extends OrganizationalUnitHandlerUpdate

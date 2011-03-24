@@ -61,7 +61,7 @@ import static org.junit.Assert.fail;
 /**
  * Test suite for the userGroup resource.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public abstract class UserGroupTest extends UserGroupTestBase {

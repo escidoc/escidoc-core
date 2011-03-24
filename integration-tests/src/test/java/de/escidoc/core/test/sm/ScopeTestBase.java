@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Base class for Scope tests.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ScopeTestBase extends SmTestBase {

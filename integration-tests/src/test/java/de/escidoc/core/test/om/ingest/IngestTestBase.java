@@ -34,7 +34,7 @@ import de.escidoc.core.test.om.OmTestBase;
 /**
  * Test the implementation of the ingest interface.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class IngestTestBase extends OmTestBase {

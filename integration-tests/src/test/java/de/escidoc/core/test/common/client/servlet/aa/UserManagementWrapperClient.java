@@ -40,7 +40,7 @@ import javax.xml.rpc.ServiceException;
  * Offers access methods to the escidoc REST and soap interface of the user
  * management wrapper.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class UserManagementWrapperClient extends ClientBase {

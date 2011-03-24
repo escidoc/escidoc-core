@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
 /**
  * Base class for tests of the mock implementation of the SB resources.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class SmTestBase extends EscidocRestSoapTestBase {

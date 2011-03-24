@@ -27,7 +27,7 @@ import org.apache.velocity.runtime.log.LogChute;
 /**
  * Velocity Logger with no output.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class VelocityOutputLogger implements LogChute {

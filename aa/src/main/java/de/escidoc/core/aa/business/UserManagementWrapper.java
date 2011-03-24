@@ -42,7 +42,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 /**
  * Implementation of a wrapper of an external user management.
  *
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class UserManagementWrapper implements UserManagementWrapperInterface {

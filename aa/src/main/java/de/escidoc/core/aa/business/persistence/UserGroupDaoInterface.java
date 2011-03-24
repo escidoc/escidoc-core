@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Interface of an data access object to access user group data.
  * 
- * @author sche
+ * @author André Schenk
  *
  */
 public interface UserGroupDaoInterface {

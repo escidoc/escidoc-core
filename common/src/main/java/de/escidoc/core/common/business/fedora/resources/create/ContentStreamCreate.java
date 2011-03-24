@@ -27,7 +27,7 @@ package de.escidoc.core.common.business.fedora.resources.create;
  * functionality into the ContentStream class.
  * 
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContentStreamCreate {

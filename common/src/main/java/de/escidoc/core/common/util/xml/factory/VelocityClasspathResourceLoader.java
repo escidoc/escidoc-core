@@ -33,7 +33,7 @@ import java.io.InputStream;
  * <code>ClasspathResourceLoader</code> and changes the resource string by
  * adding <code>TEMPLATES_BASE</code> as prefix.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class VelocityClasspathResourceLoader extends ResourceLoader {

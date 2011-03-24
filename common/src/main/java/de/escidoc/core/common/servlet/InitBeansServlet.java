@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
 /**
  * Servlet that initializes the AA beans during startup.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class InitBeansServlet extends HttpServlet {

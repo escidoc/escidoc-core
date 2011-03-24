@@ -40,7 +40,7 @@ import org.w3c.dom.Document;
 /**
  * Test the mock implementation of the item resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 @RunWith(value = Parameterized.class)

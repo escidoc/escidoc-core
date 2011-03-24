@@ -32,7 +32,7 @@ package de.escidoc.core.adm.business.admin;
  * Singleton which contains all information about a running or finished purging
  * process.
  * 
- * @author sche
+ * @author André Schenk
  */
 public final class PurgeStatus extends AdminMethodStatus {
 

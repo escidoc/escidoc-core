@@ -41,7 +41,7 @@ import java.util.Collection;
 /**
  * Test suite for the role user-group-administrator using the REST interface.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(Parameterized.class)

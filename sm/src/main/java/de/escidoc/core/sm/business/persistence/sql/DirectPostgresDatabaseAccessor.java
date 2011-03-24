@@ -57,7 +57,7 @@ import java.util.regex.Pattern;
 /**
  * Class for direct JDBC Database access via Hibernate.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport

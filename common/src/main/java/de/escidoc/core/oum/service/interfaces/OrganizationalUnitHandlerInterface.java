@@ -47,7 +47,7 @@ import java.util.Map;
 /**
  * The interface for access to an OrganizationalUnitHandler Service.
  * 
- * @author MSC
+ * @author Michael Schwantner
  */
 public interface OrganizationalUnitHandlerInterface extends IngestableResource {
 

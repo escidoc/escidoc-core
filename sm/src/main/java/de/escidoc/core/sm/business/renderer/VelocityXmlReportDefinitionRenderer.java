@@ -53,7 +53,7 @@ import de.escidoc.core.sm.business.util.comparator.ReportDefinitionRoleComparato
 /**
  * ReportDefinition renderer implementation using the velocity template engine.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public final class VelocityXmlReportDefinitionRenderer
     implements ReportDefinitionRendererInterface {

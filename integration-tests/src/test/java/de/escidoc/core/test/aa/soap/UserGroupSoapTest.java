@@ -38,7 +38,7 @@ import org.junit.runners.JUnit4;
 /**
  * Testsuite for the UserGroup's Grants with SOAP transport.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(JUnit4.class)

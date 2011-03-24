@@ -36,7 +36,7 @@ import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
  * Interface for Fedora Object which consist of datastreams managed in Fedora
  * Digital Repository System.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public interface FedoraResource {

@@ -54,7 +54,7 @@ import static org.junit.Assert.fail;
 /**
  * Test the implementation of the Report resource.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(value = Parameterized.class)

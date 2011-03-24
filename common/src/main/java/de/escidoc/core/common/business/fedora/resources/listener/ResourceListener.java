@@ -26,7 +26,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
  * This interface allows you to get informed if a resource was created, modified
  * or deleted.
  * 
- * @author SCHE
+ * @author André Schenk
  *
  */
 public interface ResourceListener {

@@ -31,7 +31,7 @@ package de.escidoc.core.aa.business.persistence;
 /**
  * A user attribute.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  *
  */

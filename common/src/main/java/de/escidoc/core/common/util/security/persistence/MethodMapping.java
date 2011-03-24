@@ -23,7 +23,7 @@ package de.escidoc.core.common.util.security.persistence;
 /**
  * Class holding information of a method mapping.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class MethodMapping extends MethodMappingBase {

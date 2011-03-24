@@ -57,7 +57,7 @@ import static org.junit.Assert.fail;
 /**
  * Container tests with REST transport.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class ContainerCreateRestTest extends ContainerTestBase {

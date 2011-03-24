@@ -41,7 +41,7 @@ import java.util.List;
 /**
  * Utility class to create XACML evaluation results.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public final class CustomEvaluationResultBuilder {

@@ -65,7 +65,7 @@ import java.util.Set;
 /**
  * Component resource of eSciDoc.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class Component extends GenericResourcePid implements ComponentInterface {

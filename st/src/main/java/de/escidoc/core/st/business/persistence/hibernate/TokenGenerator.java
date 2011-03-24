@@ -40,7 +40,7 @@ import java.io.Serializable;
  * Generator for unique tokens.<br>
  * This is an implementation of a hibernate id generator.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class TokenGenerator implements IdentifierGenerator {

@@ -34,7 +34,7 @@ import java.io.Serializable;
 /**
  * Properties for Content Relation.<br/>
  *
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContentRelationProperties implements Serializable {

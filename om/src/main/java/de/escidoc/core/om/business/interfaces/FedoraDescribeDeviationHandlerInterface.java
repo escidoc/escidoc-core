@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * Interface of an FedoraDescribeDeviation handler of the business layer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  *
  */

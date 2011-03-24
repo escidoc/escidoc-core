@@ -46,7 +46,7 @@ import de.escidoc.core.test.common.util.xml.Select;
 /**
  * Methods to compare values with TripleStore values.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class TripleStoreValue {

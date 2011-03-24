@@ -26,7 +26,7 @@ package de.escidoc.core.common.exceptions.application.notfound;
  * system. Returned HTTP status code is 404. Status code (404) indicating that the
  * requested resource is not available.
  * 
- * @author sche
+ * @author André Schenk
  *
  */
 public class UserGroupNotFoundException extends ResourceNotFoundException {

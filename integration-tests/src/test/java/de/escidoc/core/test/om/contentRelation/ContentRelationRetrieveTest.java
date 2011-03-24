@@ -44,7 +44,7 @@ import static org.junit.Assert.assertNull;
 /**
  * Test content relation retrieve implementation.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

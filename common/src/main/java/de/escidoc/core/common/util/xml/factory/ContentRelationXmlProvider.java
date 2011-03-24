@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * XML Provider of ContentRelation.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public final class ContentRelationXmlProvider extends InfrastructureXmlProvider {

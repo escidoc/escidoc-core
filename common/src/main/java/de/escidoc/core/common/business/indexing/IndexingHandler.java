@@ -75,7 +75,7 @@ import de.escidoc.core.index.IndexService;
 /**
  * Handler for synchronous indexing via gsearch.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class IndexingHandler implements ResourceListener {
 

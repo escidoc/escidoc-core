@@ -40,7 +40,7 @@ import javax.servlet.http.HttpServletResponse;
  * Overwrites AuthenticationProcessingFilterEntryPoint
  * to enable to use absolute urls for the login-form.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class EscidocAuthenticationProcessingFilterEntryPoint extends

@@ -41,7 +41,7 @@ import org.junit.runners.Parameterized;
  * Test creates and releases items in order to fill a Escidoc repository and 
  * to test a Escidoc OAI-Provider.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 @RunWith(value = Parameterized.class)

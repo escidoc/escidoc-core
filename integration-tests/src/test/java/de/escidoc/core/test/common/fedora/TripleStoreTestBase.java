@@ -54,7 +54,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author SWA
+ * @author Steffen Wagner
  */
 public class TripleStoreTestBase {
 

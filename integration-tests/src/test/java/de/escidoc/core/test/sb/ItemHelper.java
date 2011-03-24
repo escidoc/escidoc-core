@@ -34,7 +34,7 @@ import de.escidoc.core.test.om.item.ItemTestBase;
 /**
  * Call the Item-Service.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ItemHelper extends ItemTestBase {

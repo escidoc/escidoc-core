@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * Interface of the data access layer.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public interface StagingFileDao {

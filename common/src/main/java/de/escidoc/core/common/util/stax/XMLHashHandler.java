@@ -37,7 +37,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class XMLHashHandler extends DefaultHandler {

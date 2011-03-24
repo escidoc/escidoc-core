@@ -57,7 +57,7 @@ import java.util.regex.Pattern;
 /**
  * Measure performance of Item create.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

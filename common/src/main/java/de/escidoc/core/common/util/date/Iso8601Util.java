@@ -33,7 +33,7 @@ import java.util.TimeZone;
 /**
  * Utility class to support date and time conversion to ISO86001 format.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 @Deprecated

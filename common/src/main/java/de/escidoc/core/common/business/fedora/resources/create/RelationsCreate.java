@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Relations.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class RelationsCreate {

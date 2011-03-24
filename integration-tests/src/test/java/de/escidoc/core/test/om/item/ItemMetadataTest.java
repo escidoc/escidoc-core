@@ -41,7 +41,7 @@ import static org.junit.Assert.assertNotSame;
 /**
  * Test handling of meta data within Item/Components.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

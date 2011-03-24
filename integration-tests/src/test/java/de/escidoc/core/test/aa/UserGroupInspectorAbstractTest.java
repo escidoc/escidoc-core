@@ -42,7 +42,7 @@ import java.util.ArrayList;
 /**
  * Test suite for the role user-group-inspector.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class UserGroupInspectorAbstractTest extends GrantTestBase {

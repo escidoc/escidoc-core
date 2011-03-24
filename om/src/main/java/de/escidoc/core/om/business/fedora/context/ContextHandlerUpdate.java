@@ -91,7 +91,7 @@ import java.util.TreeMap;
 
 /**
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContextHandlerUpdate extends ContextHandlerDelete {

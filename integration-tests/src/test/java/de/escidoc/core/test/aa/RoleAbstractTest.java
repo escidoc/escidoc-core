@@ -57,7 +57,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Test suite for the resource role.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  *         changes for schema version 0.3:
  *         <ul>

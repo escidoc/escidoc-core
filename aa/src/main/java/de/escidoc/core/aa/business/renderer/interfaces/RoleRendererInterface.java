@@ -37,7 +37,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 /**
  * Interface of a role renderer.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public interface RoleRendererInterface {

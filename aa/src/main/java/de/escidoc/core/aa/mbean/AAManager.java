@@ -41,7 +41,7 @@ import java.io.IOException;
  * Managed bean to access values and operations of the authentication and
  * authorization component.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 @ManagedResource(objectName = "eSciDocCore:name=AAManager", description = "Manager of the authentication and authorization component.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class AAManager {

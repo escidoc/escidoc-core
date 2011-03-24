@@ -36,7 +36,7 @@ import java.util.Map;
  * Offers access methods to the escidoc REST and soap interface of the grant
  * resource.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class GrantClient extends ClientBase {

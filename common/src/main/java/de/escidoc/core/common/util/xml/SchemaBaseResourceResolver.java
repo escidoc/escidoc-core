@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 /**
  * Helper class to change the base-url of imported schemas.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class SchemaBaseResourceResolver implements LSResourceResolver {

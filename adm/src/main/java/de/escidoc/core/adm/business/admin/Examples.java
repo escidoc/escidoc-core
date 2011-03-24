@@ -54,7 +54,7 @@ import java.util.Date;
 /**
  * Load some example objects as resource XMLs into the eSciDoc repository.
  * 
- * @author sche
+ * @author André Schenk
  */
 public class Examples {
     private static final String EXAMPLE_CONTAINER = "container.xml";

@@ -40,7 +40,7 @@ import java.rmi.Remote;
  * Offers access methods to the escidoc REST and SOAP interface of the Statistic
  * Data resource.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class StatisticDataClient extends ClientBase {

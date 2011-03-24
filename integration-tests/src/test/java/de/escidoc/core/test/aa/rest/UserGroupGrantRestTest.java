@@ -35,7 +35,7 @@ import org.junit.runners.JUnit4;
 /**
  * Testsuite for the UserGroup's Grants with REST transport.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(JUnit4.class)

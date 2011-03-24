@@ -55,7 +55,7 @@ import static org.junit.Assert.assertNull;
 /**
  * Base Class for GrantTests (userGrants and groupGrants).
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class GrantTestBase extends UserAccountTestBase {

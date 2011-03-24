@@ -47,7 +47,7 @@ import java.util.List;
 /**
  * Stax handler that manages the scope definition of a role.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class ScopeStaxHandler extends DefaultHandler {

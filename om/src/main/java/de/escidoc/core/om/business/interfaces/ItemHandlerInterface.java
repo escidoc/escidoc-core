@@ -77,7 +77,7 @@ import java.util.Map;
 /**
  * Interface of an item handler of the business layer.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public interface ItemHandlerInterface extends IngestableResource {
 

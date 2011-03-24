@@ -35,7 +35,7 @@ import junit.framework.TestSuite;
 /**
  * The ingest test suite (REST).
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class Suite {

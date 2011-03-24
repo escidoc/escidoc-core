@@ -44,7 +44,7 @@ import java.net.URISyntaxException;
  * Helper class to support target creation.
  * 
  * @author Roland Werner (Accenture)
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public final class CustomTargetBuilder {

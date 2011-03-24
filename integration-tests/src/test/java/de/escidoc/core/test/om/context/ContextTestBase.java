@@ -43,7 +43,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test the mock implementation of the context resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class ContextTestBase extends OmTestBase {

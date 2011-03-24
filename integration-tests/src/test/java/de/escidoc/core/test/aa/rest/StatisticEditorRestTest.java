@@ -41,7 +41,7 @@ import java.util.Collection;
 /**
  * Test suite for the role StatisticEditor using the REST interface.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(Parameterized.class)

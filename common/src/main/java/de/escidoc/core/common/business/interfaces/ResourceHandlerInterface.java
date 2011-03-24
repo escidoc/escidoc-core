@@ -30,7 +30,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Common interface implemented by all resource handlers.
  * 
- * @author sche
+ * @author André Schenk
  *
  */
 public interface ResourceHandlerInterface {

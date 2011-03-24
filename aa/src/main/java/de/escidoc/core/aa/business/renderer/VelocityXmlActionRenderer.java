@@ -44,7 +44,7 @@ import java.util.regex.Pattern;
 /**
  * Action renderer implementation using the velocity template engine.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class VelocityXmlActionRenderer extends AbstractRenderer
     implements ActionRendererInterface {

@@ -48,7 +48,7 @@ import static org.junit.Assert.fail;
 /**
  * Test the handler of the container resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 //@RunWith(value = Parameterized.class)

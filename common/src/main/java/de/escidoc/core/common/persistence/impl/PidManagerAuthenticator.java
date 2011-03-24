@@ -24,7 +24,7 @@ import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 
 /**
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class PidManagerAuthenticator extends Authenticator {

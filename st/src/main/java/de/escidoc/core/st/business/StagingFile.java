@@ -41,7 +41,7 @@ import java.io.OutputStream;
 /**
  * This class represents a file in the staging area.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class StagingFile

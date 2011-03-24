@@ -41,7 +41,7 @@ import javax.naming.directory.NoSuchAttributeException;
 
 /**
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class OrganizationalUnitHandlerBase extends HandlerBase {

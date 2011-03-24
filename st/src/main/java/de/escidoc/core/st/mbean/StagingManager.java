@@ -40,7 +40,7 @@ import java.io.IOException;
  * Managed bean for the staging file area. This should be exposed (as a mbean)
  * to a JMX server.
  *
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @ManagedResource(objectName = "eSciDocCore:name=StagingManager", description = "Manager of the staging file area.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)

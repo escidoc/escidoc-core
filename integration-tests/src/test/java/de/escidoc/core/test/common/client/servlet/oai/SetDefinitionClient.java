@@ -41,7 +41,7 @@ import java.util.Map;
  * Offers access methods to the escidoc REST interface of the setDefintion
  * resource.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 public class SetDefinitionClient extends ClientBase

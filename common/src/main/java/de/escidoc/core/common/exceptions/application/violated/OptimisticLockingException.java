@@ -30,7 +30,7 @@ package de.escidoc.core.common.exceptions.application.violated;
  * could not be completed due to a conflict with the current state of the
  * resource.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class OptimisticLockingException extends RuleViolationException {

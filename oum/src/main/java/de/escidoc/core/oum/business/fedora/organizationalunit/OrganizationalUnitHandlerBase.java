@@ -75,7 +75,7 @@ import java.util.Stack;
  * This class contains common methods for all handler classes of an
  * organizational unit.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class OrganizationalUnitHandlerBase extends HandlerBase {

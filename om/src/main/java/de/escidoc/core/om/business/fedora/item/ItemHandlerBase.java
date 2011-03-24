@@ -71,7 +71,7 @@ import java.util.regex.Pattern;
  * Contains base functionality of FedoraItemHandler. Is extended at least by
  * FedoraItemHandler.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class ItemHandlerBase extends HandlerBase {

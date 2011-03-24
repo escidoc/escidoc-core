@@ -78,7 +78,7 @@ import java.util.regex.Pattern;
  * An utility class for HTTP requests.<br />
  * This class uses pooled HTTP connections.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  * @spring.bean id="escidoc.core.common.util.service.ConnectionUtility"
  *              scope="singleton"

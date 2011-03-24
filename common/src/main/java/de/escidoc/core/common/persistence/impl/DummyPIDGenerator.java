@@ -29,7 +29,7 @@ import de.escidoc.core.common.persistence.PIDSystem;
  * Delivering of fake identifier of a PID System to check implementation without
  * creating real Persistent Identifier.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class DummyPIDGenerator implements PIDSystem {

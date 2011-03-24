@@ -36,7 +36,7 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 /**
  * Holds all values needed to represent one database-record.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class DatabaseRecordVo {
     private String tableName;

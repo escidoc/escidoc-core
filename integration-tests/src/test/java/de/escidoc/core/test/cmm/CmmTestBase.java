@@ -34,7 +34,7 @@ import de.escidoc.core.test.common.client.servlet.cmm.ContentModelClient;
 /**
  * Base class for tests of the mock implementation of the Content Model resources.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class CmmTestBase extends EscidocRestSoapTestBase {

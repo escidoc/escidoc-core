@@ -61,7 +61,7 @@ import java.util.Set;
  * To use is as implementation of the abstract class TripleStoreUtility register
  * this as spring.bean id="business.TripleStoreUtility".
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  */
 public class MPTTripleStoreUtility extends TripleStoreUtility {
 

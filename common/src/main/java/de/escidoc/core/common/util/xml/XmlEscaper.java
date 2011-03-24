@@ -24,7 +24,7 @@ package de.escidoc.core.common.util.xml;
  * This class provides escaping of special XML characters in text content and
  * attributes.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public final class XmlEscaper {

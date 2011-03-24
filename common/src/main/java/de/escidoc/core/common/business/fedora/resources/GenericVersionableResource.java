@@ -60,7 +60,7 @@ import java.util.TreeMap;
 /**
  * Generic Versionable Resource.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class GenericVersionableResource extends GenericResourcePid {

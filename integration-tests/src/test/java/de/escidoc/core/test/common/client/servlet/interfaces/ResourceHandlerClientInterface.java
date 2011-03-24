@@ -32,7 +32,7 @@ package de.escidoc.core.test.common.client.servlet.interfaces;
  * Interface of a resource handler.<br />
  * This interface defines methods common to all resource handlers, e.g. create.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public interface ResourceHandlerClientInterface {

@@ -37,7 +37,7 @@ import java.util.Date;
 /**
  * Database-Backend Interface for the PreprocessingLogs database-table.
  * 
- * @author mih
+ * @author Michael Hoppe
  */
 public interface SmPreprocessingLogsDaoInterface {
 

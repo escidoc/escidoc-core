@@ -59,7 +59,7 @@ import static org.junit.Assert.fail;
 /**
  * Test the Persistent Identifier implementation of the item resource.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

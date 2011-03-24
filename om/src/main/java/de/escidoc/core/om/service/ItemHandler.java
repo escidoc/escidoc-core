@@ -78,7 +78,7 @@ import java.util.Map;
 /**
  * An item resource handler.
  *
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class ItemHandler implements ItemHandlerInterface {
 

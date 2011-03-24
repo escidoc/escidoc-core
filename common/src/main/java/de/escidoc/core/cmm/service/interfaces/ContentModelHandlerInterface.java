@@ -46,7 +46,7 @@ import java.util.Map;
 /**
  * Interface of a business layer content type handler.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public interface ContentModelHandlerInterface {

@@ -48,7 +48,7 @@ import java.util.List;
 /**
  * Class holding the data of an XACML Policy Set.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  *
  */

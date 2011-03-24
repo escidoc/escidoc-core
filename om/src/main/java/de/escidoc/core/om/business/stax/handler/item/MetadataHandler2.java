@@ -47,7 +47,7 @@ import java.util.Map;
 /**
  * The MetadataHandler. The parser handles only one Metadata Record!
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  *
  */

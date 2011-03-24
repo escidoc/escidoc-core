@@ -49,7 +49,7 @@ import java.util.Map;
 /**
  * The interface for access to a User Group resource.
  * 
- * @author sche
+ * @author André Schenk
  * 
  */
 public interface UserGroupHandlerInterface {

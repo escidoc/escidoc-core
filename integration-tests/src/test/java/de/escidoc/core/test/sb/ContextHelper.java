@@ -33,7 +33,7 @@ import de.escidoc.core.test.om.context.ContextTestBase;
 /**
  * Call the Context-Service.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ContextHelper extends ContextTestBase {

@@ -39,7 +39,7 @@ import org.junit.runners.Parameterized;
 /**
  * Test the implementation of the item resource threaded.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(value = Parameterized.class)

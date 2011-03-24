@@ -36,7 +36,7 @@ import org.apache.http.util.EntityUtils;
 /**
  * Base class for statistic data tests.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class StatisticDataTestBase extends SmTestBase {

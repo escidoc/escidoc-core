@@ -52,7 +52,7 @@ import java.util.List;
  * 
  * @see http://colab.mpdl.mpg.de/mediawiki/ESciDoc_Content_Relations_Concept.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContentRelationCreate extends GenericResourceCreate

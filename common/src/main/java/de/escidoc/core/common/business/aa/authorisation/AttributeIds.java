@@ -25,7 +25,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 /**
  * Helper class providing attribute id URNs.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public final class AttributeIds {

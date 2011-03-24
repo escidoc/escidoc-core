@@ -46,7 +46,7 @@ import java.util.Vector;
  * running TripleStore where Fedora has written the Triples and, of course, a
  * running Fedora.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class PurgeRepository {

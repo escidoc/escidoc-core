@@ -51,7 +51,7 @@ import static junit.framework.Assert.assertTrue;
  * Offers access methods to the escidoc REST and soap interface of the user
  * resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class UserAccountClient extends GrantClient

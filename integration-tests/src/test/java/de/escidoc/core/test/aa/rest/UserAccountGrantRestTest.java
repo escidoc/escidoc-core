@@ -33,7 +33,7 @@ package de.escidoc.core.test.aa.rest;
 /**
  * Testsuite for the UserAccount's Grants with REST transport.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class UserAccountGrantRestTest extends GrantRestAbstractTest {

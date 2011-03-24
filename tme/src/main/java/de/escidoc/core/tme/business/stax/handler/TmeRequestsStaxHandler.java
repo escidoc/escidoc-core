@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * Stax handler that handles the last modification attribute and checks the
  * optimistic locking criteria.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class TmeRequestsStaxHandler extends DefaultHandler {

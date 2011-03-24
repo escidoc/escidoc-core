@@ -61,7 +61,7 @@ import java.io.ByteArrayInputStream;
 /**
  * Persistent Identifier relevant methods for Container.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContainerHandlerPid extends ContainerHandlerCreate {

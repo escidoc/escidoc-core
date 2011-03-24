@@ -75,7 +75,7 @@ import de.escidoc.core.om.business.fedora.contentRelation.FedoraContentRelationH
 import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
 
 /**
- * @author FRS
+ * @author Frank Schwichtenberg
  */
 public class FedoraContextHandler extends ContextHandlerUpdate
     implements ContextHandlerInterface {

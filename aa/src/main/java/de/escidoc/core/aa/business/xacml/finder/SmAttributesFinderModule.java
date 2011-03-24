@@ -72,7 +72,7 @@ import java.util.regex.Pattern;
  * -info:escidoc/names:aa:1.0:resource:scope-id<br>
  * the id of the scope, single value attribute
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
 

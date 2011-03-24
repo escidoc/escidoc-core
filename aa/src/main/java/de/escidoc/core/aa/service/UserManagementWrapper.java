@@ -35,7 +35,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * The User management wrapper in service layer.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class UserManagementWrapper implements UserManagementWrapperInterface {
 

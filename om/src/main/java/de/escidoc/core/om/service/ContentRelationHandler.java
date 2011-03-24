@@ -53,7 +53,7 @@ import java.util.Map;
 /**
  * A content relation resource handler.
  * 
- * @author SWA
+ * @author Steffen Wagner
  */
 public class ContentRelationHandler implements ContentRelationHandlerInterface {
 

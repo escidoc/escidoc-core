@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Admin Xml Provider.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class AdminXmlProvider extends InfrastructureXmlProvider {
 

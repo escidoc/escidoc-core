@@ -39,7 +39,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 /**
  * Interface of an container renderer.
  * 
- * @author ROF
+ * @author Rozita Friedman
  *
  */
 public interface ContainerRendererInterface {

@@ -42,7 +42,7 @@ import java.util.Set;
  * This class encapsulates access to the policies cache and ensures that the
  * cache is filled when reading from it.
  *
- * @author SCHE
+ * @author André Schenk
  */
 public class PoliciesCacheProxy {
 

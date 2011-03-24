@@ -47,7 +47,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test the task oriented method retrieveContexts.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 @RunWith(value = Parameterized.class)

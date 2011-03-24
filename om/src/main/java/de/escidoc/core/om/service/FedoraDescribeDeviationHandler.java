@@ -39,7 +39,7 @@ import java.util.Map;
  * it does not provide security relevant information and can be public
  * accessible.
  *
- * @author MIH
+ * @author Michael Hoppe
  */
 public class FedoraDescribeDeviationHandler
     implements FedoraDescribeDeviationHandlerInterface {

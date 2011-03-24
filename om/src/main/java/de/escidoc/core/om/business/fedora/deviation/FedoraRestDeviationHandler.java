@@ -40,7 +40,7 @@ import java.util.Map;
 
 
 /**
- * @author MIH
+ * @author Michael Hoppe
  */
 public class FedoraRestDeviationHandler
     implements FedoraRestDeviationHandlerInterface {

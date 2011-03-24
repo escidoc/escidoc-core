@@ -44,7 +44,7 @@ import java.util.Set;
 /**
  * Interface of an data access object to access user account data.
  * 
- * @author tte
+ * @author Torsten Tetteroo
  */
 public interface UserAccountDaoInterface {
 

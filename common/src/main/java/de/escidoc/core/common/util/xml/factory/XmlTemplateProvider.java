@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 /**
  * Handles XML Template mapping.
  * 
- * @author ?, SWA
+ * @author Steffen Wagner
  * 
  */
 public abstract class XmlTemplateProvider {

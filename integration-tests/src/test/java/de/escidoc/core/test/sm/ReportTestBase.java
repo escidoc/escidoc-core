@@ -36,7 +36,7 @@ import org.apache.http.util.EntityUtils;
 /**
  * Base class for report tests.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ReportTestBase extends SmTestBase {

@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * Base class for reportDefinition tests.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ReportDefinitionTestBase extends SmTestBase {

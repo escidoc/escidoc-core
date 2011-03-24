@@ -32,7 +32,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 /**
  * Versionable Resource Interface.
  * 
- * @author SWA
+ * @author Steffen Wagner
  */
 public interface VersionableResource extends Resource {
 

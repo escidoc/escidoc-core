@@ -51,7 +51,7 @@ import de.escidoc.core.oai.business.renderer.interfaces.SetDefinitionRendererInt
 /**
  * Set definition renderer implementation using the velocity template engine.
  * 
- * @author rof
+ * @author Rozita Friedman
  */
 public final class VelocityXmlSetDefinitionRenderer extends AbstractRenderer
     implements SetDefinitionRendererInterface {

@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * @deprecated Item renderer interface is implemented by item retrieve handler.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 @Deprecated

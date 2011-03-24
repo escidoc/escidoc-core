@@ -42,7 +42,7 @@ import java.util.Vector;
 /**
  * Tool to count resource in Fedora Repository.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class CountRepository {

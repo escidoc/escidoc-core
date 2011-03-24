@@ -43,7 +43,7 @@ import org.w3c.dom.Document;
 /**
  * Test suite for ContainerHandler.revise service.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(value = Parameterized.class)

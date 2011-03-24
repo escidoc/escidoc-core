@@ -60,7 +60,7 @@ import java.net.URL;
  * 
  * @see PIDManager Web Service
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class PIDManagerRESTService implements PIDSystem {

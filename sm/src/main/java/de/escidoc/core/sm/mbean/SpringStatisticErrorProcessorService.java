@@ -37,7 +37,7 @@ import org.springframework.jmx.export.annotation.ManagedResource;
  * StatisticErrorProcessor. Reads the messages that were written into the
  * StatisticError Logfile and sends them via email to the sm.administrator.email
  * 
- * @author MIH, TTE
+ * @author Michael Hoppe, Torsten Tetteroo
  */
 @ManagedResource(objectName = "eSciDocCore:name=StatisticErrorProcessorService", description = "Reads the messages that were written into the StatisticError Logfile and sends them via email to the sm.administrator.email.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class SpringStatisticErrorProcessorService {

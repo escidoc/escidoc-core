@@ -39,7 +39,7 @@ import de.escidoc.core.sm.service.interfaces.PreprocessingHandlerInterface;
 /**
  * A statistic data resource handler.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class PreprocessingHandler implements PreprocessingHandlerInterface {
 

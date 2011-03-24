@@ -46,7 +46,7 @@ import java.util.Map;
 /**
  * A statistic ReportDefinition resource handler.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class ReportDefinitionHandler
     implements ReportDefinitionHandlerInterface {

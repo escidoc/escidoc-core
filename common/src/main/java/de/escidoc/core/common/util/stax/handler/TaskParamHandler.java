@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * Handle the parameters for a task oriented method.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class TaskParamHandler extends DefaultHandler {

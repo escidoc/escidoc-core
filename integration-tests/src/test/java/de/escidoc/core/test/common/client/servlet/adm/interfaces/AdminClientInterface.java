@@ -3,7 +3,7 @@ package de.escidoc.core.test.common.client.servlet.adm.interfaces;
 /**
  * Interface for the Admin Handler Client.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public interface AdminClientInterface {

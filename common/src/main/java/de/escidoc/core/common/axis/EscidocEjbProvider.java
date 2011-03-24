@@ -35,7 +35,7 @@ import org.apache.axis.providers.java.JavaProvider;
  * from the SOAP data to the EJB.<br>
  * This implementation overrides the makeNewServiceObject method.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class EscidocEjbProvider extends EscidocSpringProvider {

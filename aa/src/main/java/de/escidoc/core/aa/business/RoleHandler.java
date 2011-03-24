@@ -80,7 +80,7 @@ import java.util.Map;
 /**
  * Business layer implementation of a handler that manages eSciDoc roles.
  *
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class RoleHandler implements RoleHandlerInterface {

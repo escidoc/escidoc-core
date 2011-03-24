@@ -66,7 +66,7 @@ import java.util.Set;
 
 /**
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class VelocityXmlContextRenderer implements ContextRendererInterface {

@@ -44,7 +44,7 @@ import java.util.Map;
 /**
  * Fills xml-data into hibernate object.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class ReportDefinitionStaxHandler extends DefaultHandler {

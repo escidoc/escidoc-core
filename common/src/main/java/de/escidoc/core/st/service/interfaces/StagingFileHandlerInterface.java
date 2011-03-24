@@ -30,7 +30,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Service interface of an StagingFile handler.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  * 
  */

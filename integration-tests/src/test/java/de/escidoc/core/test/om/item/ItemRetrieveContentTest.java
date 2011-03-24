@@ -62,7 +62,7 @@ import static org.junit.Assert.assertEquals;
  * Test the retrieve of binary content. These class tests especially the
  * transformation of images with digilib.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

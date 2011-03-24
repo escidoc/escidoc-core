@@ -46,7 +46,7 @@ import de.escidoc.core.common.exceptions.remote.application.violated.Organizatio
 /**
  * Test delete method of OrganizationalUnitHandler.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 @RunWith(value = Parameterized.class)

@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * Class holding data of an XACML policy.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  *
  */

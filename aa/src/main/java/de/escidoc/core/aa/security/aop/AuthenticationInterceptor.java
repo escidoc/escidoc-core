@@ -53,7 +53,7 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
  * It must be the first Interceptor after the StatisticInterceptor, i.e. it has
  * to be the second interceptor in the chain.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 @Aspect
 public class AuthenticationInterceptor implements Ordered {

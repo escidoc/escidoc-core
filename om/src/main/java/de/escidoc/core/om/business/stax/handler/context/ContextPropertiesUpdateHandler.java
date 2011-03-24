@@ -54,7 +54,7 @@ import java.util.Map;
 
 /**
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContextPropertiesUpdateHandler extends DefaultHandler {

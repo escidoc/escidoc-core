@@ -51,7 +51,7 @@ import java.io.IOException;
 /**
  * Staging File Handler implementation.
  *
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class StagingFileHandler implements StagingFileHandlerInterface {

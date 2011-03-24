@@ -45,7 +45,7 @@ import java.util.TreeSet;
 /**
  * This class parses a CQL filter and translates it into a Hibernate query.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public abstract class CqlFilter {
 

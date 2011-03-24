@@ -43,7 +43,7 @@ import java.lang.reflect.Constructor;
  * In case of a SOAP access, a link consists of the objid referencing the
  * resource object.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class LinkStaxHandler extends DefaultHandler {

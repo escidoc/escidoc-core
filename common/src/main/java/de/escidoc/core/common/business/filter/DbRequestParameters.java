@@ -29,7 +29,7 @@ import org.slf4j.Logger; import org.slf4j.LoggerFactory;
  * This class is a value object for all parameters used in an SRU request with a
  * relational database as back end.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public class DbRequestParameters extends SRURequestParameters {
     public static final int DEFAULT_MAXIMUM_RECORDS = 20;

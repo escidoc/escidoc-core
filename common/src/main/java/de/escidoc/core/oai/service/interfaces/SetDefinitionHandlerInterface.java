@@ -36,7 +36,7 @@ import java.util.Map;
 /**
  * Interface of an set definition handler.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  * @oai
  */

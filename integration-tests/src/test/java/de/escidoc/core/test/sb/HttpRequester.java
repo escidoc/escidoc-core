@@ -54,7 +54,7 @@ import java.net.URL;
  */
 
 /**
- * @author mih
+ * @author Michael Hoppe
  * 
  *         Class for requesting http-requests.
  * 
@@ -319,7 +319,7 @@ public class HttpRequester {
     }
 
     /**
-     * @author mih
+     * @author Michael Hoppe
      * 
      *         Overwrite X509TrustManager.
      * 

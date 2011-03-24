@@ -36,7 +36,7 @@ import java.util.Map;
 /**
  * Interface of an Statistic AggregationDefinition Handler.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public interface AggregationDefinitionHandlerInterface {

@@ -159,7 +159,7 @@ import de.escidoc.core.om.business.stax.handler.item.ItemUpdateHandler;
  * MultipleExtractor} have to be the last Handler in the HandlerChain of a
  * StaxParser.
  *
- * @author FRS
+ * @author Frank Schwichtenberg
  */
 public class FedoraItemHandler extends ItemHandlerPid
     implements ItemHandlerInterface {

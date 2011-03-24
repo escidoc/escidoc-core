@@ -26,7 +26,7 @@ import java.util.Map;
  * This class is a value object for all parameters used in an SRU request with
  * Lucene as back end.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public class LuceneRequestParameters extends SRURequestParameters {
     // Do not set a default value for maximum records on client side.

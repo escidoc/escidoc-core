@@ -30,7 +30,7 @@ import java.util.Properties;
 /**
  * Utility class to support ejb factory beans.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public final class EjbFactoryBeanHelper {

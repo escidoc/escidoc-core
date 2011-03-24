@@ -74,7 +74,7 @@ import static junit.framework.Assert.assertTrue;
 /**
  * Helper class providing executing of http requests.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public final class HttpHelper {

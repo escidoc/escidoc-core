@@ -47,7 +47,7 @@ import java.util.Set;
 /**
  * The interface for access to a user group resource.
  * 
- * @author sche
+ * @author André Schenk
  */
 public interface UserGroupHandlerInterface extends PermissionHandlerInterface {
     String MSG_GROUP_INVALID_SELECTOR_NAME =

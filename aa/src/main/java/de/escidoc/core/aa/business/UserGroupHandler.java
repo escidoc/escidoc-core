@@ -107,7 +107,7 @@ import de.escidoc.core.common.util.xml.stax.handler.OptimisticLockingStaxHandler
 /**
  * Implementation for the user group handler.
  *
- * @author sche
+ * @author André Schenk
  */
 public class UserGroupHandler implements UserGroupHandlerInterface {
     /**

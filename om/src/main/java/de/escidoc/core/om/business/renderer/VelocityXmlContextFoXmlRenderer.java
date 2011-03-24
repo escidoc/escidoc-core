@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Renderer that uses Velocity to create a context foxml.
  * 
- * @author sche
+ * @author André Schenk
  */
 public class VelocityXmlContextFoXmlRenderer
     implements ContextFoXmlRendererInterface {

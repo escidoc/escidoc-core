@@ -41,7 +41,7 @@ import java.util.List;
 /**
  * Test suite for the role Statistics_editor.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class StatisticEditorAbstractTest extends GrantTestBase {

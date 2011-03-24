@@ -36,7 +36,7 @@ import org.junit.runners.Parameterized;
 /**
  * Test suite for the reindex method of the admin tool.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(value = Parameterized.class)

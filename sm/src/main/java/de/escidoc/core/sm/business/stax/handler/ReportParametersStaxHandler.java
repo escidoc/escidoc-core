@@ -39,7 +39,7 @@ import org.joda.time.DateTime;
 /**
  * Fills xml-data into VO.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class ReportParametersStaxHandler extends DefaultHandler {

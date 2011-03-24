@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * @author MIH
+ * @author Michael Hoppe
  */
 public class ErrorMessageHandler {
 

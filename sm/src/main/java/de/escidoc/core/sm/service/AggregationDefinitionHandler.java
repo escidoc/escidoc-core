@@ -44,7 +44,7 @@ import java.util.Map;
 /**
  * An statistic aggregationDefinition resource handler.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class AggregationDefinitionHandler
     implements AggregationDefinitionHandlerInterface {

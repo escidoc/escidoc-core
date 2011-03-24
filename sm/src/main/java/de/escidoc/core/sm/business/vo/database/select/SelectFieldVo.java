@@ -37,7 +37,7 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
  * selectType is 'update' or 'delete' it holds the information which records to
  * update/delete.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class SelectFieldVo {

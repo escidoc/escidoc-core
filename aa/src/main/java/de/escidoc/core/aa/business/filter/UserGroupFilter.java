@@ -49,7 +49,7 @@ import java.util.TreeSet;
  * This class parses a CQL filter to filter for eSciDoc user groups and
  * translates it into a Hibernate query.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public class UserGroupFilter extends CqlFilter {
     /**

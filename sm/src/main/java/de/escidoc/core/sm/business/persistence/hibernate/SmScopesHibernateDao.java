@@ -46,7 +46,7 @@ import java.util.Collection;
 /**
  * Database-Backend for the Scopes database-table.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class SmScopesHibernateDao     
     extends AbstractHibernateDao

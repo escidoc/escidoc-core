@@ -48,7 +48,7 @@ import static org.junit.Assert.fail;
 /**
  * Test suite for the Attributes of an UserAccount.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class UserAttributeAbstractTest extends UserAttributeTestBase {

@@ -36,7 +36,7 @@ import java.util.Set;
 /**
  * Abstract (base) class for data access objects using hibernate.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public abstract class AbstractHibernateDao extends HibernateDaoSupport {

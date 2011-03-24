@@ -39,7 +39,7 @@ import javax.xml.rpc.ServiceException;
  * Offers access methods to the escidoc REST and soap interface of the policy
  * decision point.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class PolicyDecisionPointClient extends ClientBase {

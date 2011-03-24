@@ -59,7 +59,7 @@ import static org.junit.Assert.assertNull;
 /**
  * Test suite for the Grants of an UserAccount or UserGroup.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  * changes for schema version 0.3:
  * <ul>

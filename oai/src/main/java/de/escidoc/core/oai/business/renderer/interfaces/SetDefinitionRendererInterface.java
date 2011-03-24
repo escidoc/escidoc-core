@@ -37,7 +37,7 @@ import de.escidoc.core.oai.business.persistence.SetDefinition;
 /**
  * Interface of an user group renderer.
  * 
- * @author rof
+ * @author Rozita Friedman
  *
  */
 public interface SetDefinitionRendererInterface {

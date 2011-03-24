@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * Database-Backend for the Statistic-Data database-table.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class SmStatisticDataHibernateDao extends AbstractHibernateDao
     implements SmStatisticDataDaoInterface {

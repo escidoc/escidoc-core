@@ -63,7 +63,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Base class for search tests.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class SearchTestBase extends SbTestBase {

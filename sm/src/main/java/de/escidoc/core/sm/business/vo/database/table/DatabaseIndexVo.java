@@ -36,7 +36,7 @@ import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
 /**
  * Holds information about an index in the database.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class DatabaseIndexVo {

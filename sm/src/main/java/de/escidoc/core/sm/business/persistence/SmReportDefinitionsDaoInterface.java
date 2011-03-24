@@ -38,7 +38,7 @@ import java.util.Collection;
 /**
  * Database-Backend Interface for the Report-Definitions database-table.
  * 
- * @author mih
+ * @author Michael Hoppe
  */
 public interface SmReportDefinitionsDaoInterface {
 

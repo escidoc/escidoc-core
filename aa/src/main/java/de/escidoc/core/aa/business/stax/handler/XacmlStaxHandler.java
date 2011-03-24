@@ -51,7 +51,7 @@ import java.util.Collection;
  * <code>EscidocPolicy</code> object from this data and sets it in the
  * <code>EscidocRole</code>object.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class XacmlStaxHandler extends DefaultHandler {
 

@@ -40,7 +40,7 @@ import java.util.Map;
  * Offers access methods to the escidoc REST and interface of the organizational
  * unit resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class OrganizationalUnitClient extends ClientBase {

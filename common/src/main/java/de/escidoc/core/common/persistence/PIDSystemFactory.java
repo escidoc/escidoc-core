@@ -31,7 +31,7 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * Factory for PID Generator and Management Systems.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public abstract class PIDSystemFactory {

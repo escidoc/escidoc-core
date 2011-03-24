@@ -61,7 +61,7 @@ import java.util.Map;
 /**
  * User group handler implementation for the service layer of the AA component.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class UserGroupHandler implements UserGroupHandlerInterface {
     private de.escidoc.core.aa.business.interfaces.UserGroupHandlerInterface business;

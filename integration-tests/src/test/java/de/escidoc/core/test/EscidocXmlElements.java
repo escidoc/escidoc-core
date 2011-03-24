@@ -3,7 +3,7 @@ package de.escidoc.core.test;
 /**
  * Class contains all XML elements and attribute definition (as Constants).
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public final class EscidocXmlElements {

@@ -74,7 +74,7 @@ import java.util.Map.Entry;
 /**
  * Handler to create Context objects.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContextHandlerCreate extends ContextHandlerRetrieve {

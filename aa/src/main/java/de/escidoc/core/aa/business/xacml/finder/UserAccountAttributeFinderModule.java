@@ -119,7 +119,7 @@ import java.util.regex.Pattern;
  * the id of the object the grant is assigned on (scope of the grant), multi
  * value attribute
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class UserAccountAttributeFinderModule
     extends AbstractAttributeFinderModule {

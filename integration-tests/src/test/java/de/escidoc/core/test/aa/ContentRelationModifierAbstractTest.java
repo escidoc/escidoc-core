@@ -38,7 +38,7 @@ import org.junit.Test;
 /**
  * Test suite for the role ContentRelationManager.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ContentRelationModifierAbstractTest extends GrantTestBase {

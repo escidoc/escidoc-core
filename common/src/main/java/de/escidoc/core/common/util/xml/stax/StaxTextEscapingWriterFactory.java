@@ -30,7 +30,7 @@ import java.io.Writer;
  * <code>EscapingWriterFactory</code> implementation that returns escaping
  * writers used for escaping text content.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class StaxTextEscapingWriterFactory implements EscapingWriterFactory {

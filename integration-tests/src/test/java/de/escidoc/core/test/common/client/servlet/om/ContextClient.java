@@ -40,7 +40,7 @@ import java.util.Map;
 /**
  * Offers access methods to the escidoc interfaces of the context resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class ContextClient extends ClientBase

@@ -71,7 +71,7 @@ import java.util.Map;
 /**
  * Interface of a container handler of the business layer.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public interface ContainerHandlerInterface extends IngestableResource {
 

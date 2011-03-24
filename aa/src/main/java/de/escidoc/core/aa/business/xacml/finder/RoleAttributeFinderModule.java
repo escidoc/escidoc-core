@@ -65,7 +65,7 @@ import java.util.regex.Pattern;
  * 
  * created-by and modified-by can have tailing string with user-account-attributes.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class RoleAttributeFinderModule extends AbstractAttributeFinderModule {
 

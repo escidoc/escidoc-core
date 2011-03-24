@@ -92,7 +92,7 @@ import de.escidoc.core.om.business.stax.handler.item.ContentRelationHandler;
 /**
  * ContentRelation handler.
  * 
- * @author SWA
+ * @author Steffen Wagner
  */
 public class FedoraContentRelationHandler extends HandlerBase
     implements ContentRelationHandlerInterface {

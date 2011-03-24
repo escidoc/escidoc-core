@@ -41,7 +41,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Testsuite for the UserAccount with SOAP transport.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(JUnit4.class)

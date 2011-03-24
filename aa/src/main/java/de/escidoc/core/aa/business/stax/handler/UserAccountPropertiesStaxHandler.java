@@ -40,7 +40,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 /**
  * Stax Handler managing the properties of an UserAccount.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class UserAccountPropertiesStaxHandler

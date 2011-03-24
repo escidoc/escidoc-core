@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Report renderer implementation using the velocity template engine.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public final class ReportXmlProvider 

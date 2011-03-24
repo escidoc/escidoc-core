@@ -66,7 +66,7 @@ import java.util.Map;
  *          stringvalue
  *          datevalue
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public final class VelocityXmlReportRenderer
     implements ReportRendererInterface {

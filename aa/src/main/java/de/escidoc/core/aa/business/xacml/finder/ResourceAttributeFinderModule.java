@@ -96,7 +96,7 @@ import java.util.regex.Pattern;
  * -info:escidoc/names:aa:1.0:resource:container:version-status<br>
  *  the version-status of the container, single value attribute
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class ResourceAttributeFinderModule
     extends AbstractAttributeFinderModule {

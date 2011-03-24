@@ -38,7 +38,7 @@ import java.util.Collection;
  * Holds all values needed to execute an sql-statement or to delete/update
  * records in a database-table.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class DatabaseSelectVo {

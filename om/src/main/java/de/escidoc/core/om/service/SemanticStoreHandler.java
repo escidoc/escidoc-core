@@ -40,7 +40,7 @@ import de.escidoc.core.om.service.interfaces.SemanticStoreHandlerInterface;
 /**
  * A semantic store handler.
  * 
- * @author ROF
+ * @author Rozita Friedman
  */
 public class SemanticStoreHandler implements SemanticStoreHandlerInterface {
 

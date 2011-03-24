@@ -33,7 +33,7 @@ package de.escidoc.core.aa.business.persistence;
  * {@link EscidocRole}.
  * 
  *
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {

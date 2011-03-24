@@ -38,7 +38,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Interface of an user group renderer.
  * 
- * @author sche
+ * @author André Schenk
  *
  */
 public interface UserGroupRendererInterface {

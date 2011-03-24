@@ -45,7 +45,7 @@ import javax.xml.transform.TransformerException;
 /**
  * Base class for tests of the mock implementation of the OM resources.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class OmTestBase extends EscidocRestSoapTestBase {

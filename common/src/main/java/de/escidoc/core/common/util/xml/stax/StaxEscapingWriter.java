@@ -30,7 +30,7 @@ import java.io.Writer;
  * characters.<br/> For escaping, the method escapeForbiddenXmlCharacters of
  * {@link XmlUtility} is used.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class StaxEscapingWriter extends Writer {

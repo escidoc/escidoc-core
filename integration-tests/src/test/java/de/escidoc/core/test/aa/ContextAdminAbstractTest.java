@@ -45,7 +45,7 @@ import org.junit.Test;
  * 
  * This role is a unlimited role. (Has no scope-definitions).
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ContextAdminAbstractTest extends GrantTestBase {

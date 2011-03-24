@@ -36,7 +36,7 @@ import org.junit.runners.JUnit4;
 /**
  * Test suite for the policy decision point using the SOAP interface.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(JUnit4.class)

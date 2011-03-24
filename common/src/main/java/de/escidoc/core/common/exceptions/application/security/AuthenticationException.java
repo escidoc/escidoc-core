@@ -28,7 +28,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
  * eSciDocUserHandle. Status code (302) indicating that a redirect to eSciDoc
  * login could be needed.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class AuthenticationException extends SecurityException {

@@ -36,7 +36,7 @@ import org.apache.http.util.EntityUtils;
 /**
  * Base Class for GrantTests (userGrants and groupGrants).
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class UserPreferenceTestBase extends UserAccountTestBase {

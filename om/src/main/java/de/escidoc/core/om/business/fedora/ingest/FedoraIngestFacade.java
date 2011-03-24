@@ -42,7 +42,7 @@ import java.util.Map;
  * Handler from the individual classes used for the ingest and the determination
  * process of the resource type.
  *
- * @author KST
+ * @author Kai Strnad
  *
  */
 public class FedoraIngestFacade implements IngestFacade {

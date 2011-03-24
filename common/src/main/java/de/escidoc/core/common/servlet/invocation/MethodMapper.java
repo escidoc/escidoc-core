@@ -53,7 +53,7 @@ import java.util.Map.Entry;
  * and &lt;repositoryname&gt; and &lt;resourcename&gt; are simple names, not
  * paths.
  * 
- * @author MSC
+ * @author Michael Schwantner
  *
  */
 public class MethodMapper extends XMLBase implements MapperInterface {

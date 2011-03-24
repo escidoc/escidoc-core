@@ -2,7 +2,7 @@ package de.escidoc.sb.gsearch.mbean;
 
 
 /**
- * @author mih
+ * @author Michael Hoppe
  * 
  *         Singleton for timing Scheduled Job.
  *         We need this because Spring Scheduler has Bug and 

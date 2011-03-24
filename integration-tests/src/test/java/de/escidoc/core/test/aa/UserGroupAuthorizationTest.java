@@ -44,7 +44,7 @@ import java.util.ArrayList;
 /**
  * Test suite for UserGroupAuthorizationTest.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(value = Parameterized.class)

@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * Interface for the AaComponent to encapsulate the logic.
  * 
- * @author ROF, ROW
+ * @author Rozita Friedman, Roland Werner
  * 
  */
 public interface PolicyDecisionPointInterface

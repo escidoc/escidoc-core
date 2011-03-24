@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * Context Retrieve Handler.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContextHandlerRetrieve extends ContextHandlerBase {

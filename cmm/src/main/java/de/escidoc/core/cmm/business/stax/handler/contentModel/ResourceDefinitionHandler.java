@@ -48,7 +48,7 @@ import java.util.Map;
 /**
  * Handler to extract resource definitions from content model xml by StaxParser.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  *
  */

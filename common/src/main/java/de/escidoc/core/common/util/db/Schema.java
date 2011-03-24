@@ -28,7 +28,7 @@ import java.util.TreeSet;
  * This class represents a database schema containing a list of all its table
  * names.
  *
- * @author SCHE
+ * @author André Schenk
  */
 public class Schema {
     private String name;

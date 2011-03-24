@@ -62,7 +62,7 @@ import de.escidoc.core.sm.business.util.comparator.AggregationTableIndexFieldCom
  * AggregationDefinition renderer implementation using the velocity template
  * engine.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public final class VelocityXmlAggregationDefinitionRenderer
     implements AggregationDefinitionRendererInterface {

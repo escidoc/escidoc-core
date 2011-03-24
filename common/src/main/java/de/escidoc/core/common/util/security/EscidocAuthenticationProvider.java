@@ -32,7 +32,7 @@ import org.springframework.security.providers.anonymous.AnonymousAuthenticationT
 import org.springframework.security.userdetails.UserDetails;
 
 /**
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class EscidocAuthenticationProvider implements AuthenticationProvider {
 

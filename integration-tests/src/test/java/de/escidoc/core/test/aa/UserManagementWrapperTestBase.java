@@ -31,7 +31,7 @@ package de.escidoc.core.test.aa;
 /**
  * Base class for testing the implementation of the UserAccount resource.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public abstract class UserManagementWrapperTestBase extends UserAccountTestBase {

@@ -39,7 +39,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Test processing Container examples from lecture tree.
  * 
- * @author SWA
+ * @author Steffen Wagner
  */
 @RunWith(value = Parameterized.class)
 public class ContainerExamplesTest extends ContainerTestBase {

@@ -40,7 +40,7 @@ import java.util.Map;
 /**
  * Testing retrieveParents.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(value = Parameterized.class)

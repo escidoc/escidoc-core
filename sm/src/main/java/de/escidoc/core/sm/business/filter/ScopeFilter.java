@@ -41,7 +41,7 @@ import org.z3950.zing.cql.CQLTermNode;
  * This class parses a CQL filter to filter for scopes and translates
  * it into a Hibernate query.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public class ScopeFilter extends CqlFilter {
 

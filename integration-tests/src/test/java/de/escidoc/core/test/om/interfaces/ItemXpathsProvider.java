@@ -33,7 +33,7 @@ import de.escidoc.core.test.om.OmTestBase;
 /**
  * Xpath constants related to the item resource.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public interface ItemXpathsProvider {

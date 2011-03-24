@@ -58,7 +58,7 @@ import java.util.regex.Pattern;
  * This finder module should be the one of the first eSciDoc specific finder
  * module in the chain, but must be placed after the 'standard' finder modules.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class PartlyResolveableAttributeFinderModule
     extends AbstractAttributeFinderModule {

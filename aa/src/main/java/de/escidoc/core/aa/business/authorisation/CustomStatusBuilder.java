@@ -46,7 +46,7 @@ import java.util.regex.Pattern;
  * Utility class to create XACML statuses used in policy results or evaluation
  * results.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public final class CustomStatusBuilder {

@@ -50,7 +50,7 @@ import java.util.List;
 /**
  * StAX handler for predecessor relation of Organizational Unit.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class OrganizationalUnitPredecessorsHandler extends HandlerBase {

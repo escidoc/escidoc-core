@@ -56,7 +56,7 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 /**
  * User account renderer implementation using the velocity template engine.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
     implements UserAccountRendererInterface {

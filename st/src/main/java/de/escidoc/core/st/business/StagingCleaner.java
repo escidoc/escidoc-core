@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * Implementation of staging area clean up.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class StagingCleaner {
 

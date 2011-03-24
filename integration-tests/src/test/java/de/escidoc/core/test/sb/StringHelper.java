@@ -38,7 +38,7 @@ package de.escidoc.core.test.sb;
  * extension-element-prefixes="component-accessor string-helper" use:
  * <xsl:value-of select="string-helper:getSubstringAfterLast($PID,'/')"/>
  * 
- * @author MIH
+ * @author Michael Hoppe
  * @sb
  */
 public class StringHelper {

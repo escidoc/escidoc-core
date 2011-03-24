@@ -33,7 +33,7 @@ package de.escidoc.core.test.aa.soap;
 /**
  * Testsuite for the UserAccount's Grants with SOAP transport.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class UserAccountGrantSoapTest extends GrantSoapAbstractTest {

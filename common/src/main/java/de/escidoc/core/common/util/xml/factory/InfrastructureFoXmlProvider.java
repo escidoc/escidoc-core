@@ -32,7 +32,7 @@ import java.util.Map;
  * XmlTemplateProvider implementation using the velocity template engine.<br>
  * This implementation uses the velocity singleton pattern.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public abstract class InfrastructureFoXmlProvider extends VelocityXmlProvider {

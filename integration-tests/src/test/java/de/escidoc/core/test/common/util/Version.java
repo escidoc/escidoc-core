@@ -7,7 +7,7 @@ import org.w3c.dom.Node;
 
 /**
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class Version {

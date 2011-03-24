@@ -37,7 +37,7 @@ import de.escidoc.core.sm.business.persistence.hibernate.Scope;
 /**
  * Interface of an scope renderer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public interface ScopeRendererInterface {

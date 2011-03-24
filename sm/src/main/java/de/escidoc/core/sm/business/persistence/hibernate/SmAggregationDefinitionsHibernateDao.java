@@ -48,7 +48,7 @@ import java.util.Collection;
 /**
  * Hibernate Database-Backend for the Aggregation-Definitions database-table.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class SmAggregationDefinitionsHibernateDao
     extends AbstractHibernateDao

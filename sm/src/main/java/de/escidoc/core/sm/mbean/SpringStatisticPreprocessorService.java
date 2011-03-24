@@ -43,8 +43,8 @@ import java.util.Map;
 /**
  * StatisticPreprocessor. Preprocesses the raw statistic data into
  * aggregation-tables. Gets externally triggered, e.g. by a quartz job.
- * 
- * @author MIH, TTE
+ *
+ * @author Michael Hoppe, Torsten Tetteroo
  * 
  */
 @ManagedResource(objectName = "eSciDocCore:name=StatisticPreprocessorService", description = "Preprocesses the raw statistic data into aggregation-tables.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)

@@ -40,7 +40,7 @@ import java.util.HashMap;
 /**
  * Test suite for the role PrivilegedViewer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class PrivilegedViewerAbstractTest extends GrantTestBase {

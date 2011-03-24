@@ -28,7 +28,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Interface of an Statistic Data Handler.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public interface StatisticDataHandlerInterface {

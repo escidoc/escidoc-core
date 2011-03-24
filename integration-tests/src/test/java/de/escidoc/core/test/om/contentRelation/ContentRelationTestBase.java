@@ -49,7 +49,7 @@ import static org.junit.Assert.fail;
 /**
  * Test the handler of the content relation resource.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContentRelationTestBase extends OmTestBase {

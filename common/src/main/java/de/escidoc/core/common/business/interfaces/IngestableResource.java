@@ -27,7 +27,7 @@ import de.escidoc.core.common.exceptions.EscidocException;
  * This interface marks all extending interfaces as "ingestable", this is a
  * means of integrating all handlers so that they all comply to this contract.
  * 
- * @author KST
+ * @author Kai Strnad
  * 
  */
 public interface IngestableResource {

@@ -186,7 +186,7 @@ import java.util.regex.Pattern;
  * -info:escidoc/names:aa:1.0:resource:organizational-unit:hierarchical-parents<br>
  * the ids of the parents of the organizational-unit (hierarchical), multi value attribute
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class TripleStoreAttributeFinderModule
     extends AbstractAttributeFinderModule {

@@ -84,7 +84,7 @@ import static org.junit.Assert.fail;
  * Base class for tests that are used to test the REST and SOAP interfaces of
  * the eSciDoc core services.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class EscidocRestSoapTestBase extends EscidocTestBase {

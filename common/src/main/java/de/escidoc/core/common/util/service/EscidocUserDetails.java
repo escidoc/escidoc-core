@@ -28,7 +28,7 @@ import org.springframework.security.userdetails.UserDetails;
  * context.<br>
  * This class implements <code>UserDetails</code> and is serializable.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public class EscidocUserDetails implements UserDetails {

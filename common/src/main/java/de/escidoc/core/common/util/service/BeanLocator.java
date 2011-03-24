@@ -43,7 +43,7 @@ import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;
 /**
  * Class supporting locating of spring beans and the resource handler's EJBs.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public final class BeanLocator {

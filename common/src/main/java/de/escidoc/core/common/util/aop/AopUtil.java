@@ -26,7 +26,7 @@ package de.escidoc.core.common.util.aop;
  * Besides providing utility methods, the order of the interceptors (advises) is
  * defined here.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 public final class AopUtil {

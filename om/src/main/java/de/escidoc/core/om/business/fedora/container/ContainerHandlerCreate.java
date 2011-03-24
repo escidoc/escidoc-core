@@ -50,7 +50,7 @@ import java.util.Set;
  * The methods of the class deals with datastreams for fedora objects, which
  * will represent the Container Resource.
  * 
- * @author ROF
+ * @author Rozita Friedman
  *
  */
 public class ContainerHandlerCreate extends ContainerResourceListener {

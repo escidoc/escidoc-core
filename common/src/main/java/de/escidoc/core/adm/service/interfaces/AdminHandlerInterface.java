@@ -29,7 +29,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * The interface for access to the administration tool.
  * 
- * @author sche
+ * @author André Schenk
  */
 public interface AdminHandlerInterface {
 

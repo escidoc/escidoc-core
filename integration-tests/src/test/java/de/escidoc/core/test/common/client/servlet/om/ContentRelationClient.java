@@ -41,7 +41,7 @@ import java.util.Map;
  * Offers access methods to the escidoc interfaces of the content relation
  * resource.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContentRelationClient extends ClientBase

@@ -62,7 +62,7 @@ import java.util.List;
  * identified by the resource-id of the context to the current user (subject).</li>
  * </ul>
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class XacmlFunctionRoleInList extends FunctionBase {
 

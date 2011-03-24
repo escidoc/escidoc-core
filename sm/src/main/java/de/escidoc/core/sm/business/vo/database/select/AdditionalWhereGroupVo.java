@@ -37,7 +37,7 @@ import java.util.Collection;
  * Holds all values needed to represent a group of additional where-clauses
  * (enclosed by brackets in the resulting sql-statement).
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class AdditionalWhereGroupVo {

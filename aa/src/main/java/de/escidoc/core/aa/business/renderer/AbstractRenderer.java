@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Abstract renderer class.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class AbstractRenderer {

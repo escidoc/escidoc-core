@@ -67,7 +67,7 @@ import java.util.Map;
 /**
  * Interface of an Item handler.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public interface ItemHandlerInterface {
 

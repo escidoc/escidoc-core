@@ -30,7 +30,7 @@ import org.apache.axis.transport.http.AxisServlet;
 import javax.servlet.http.HttpServlet;
 
 /**
- * @author MIH
+ * @author Michael Hoppe
  * 
  * Overwrites default Axis Class because this class can extract placeholders out
  * of the server-config.wsdd and replace them with values specified in the

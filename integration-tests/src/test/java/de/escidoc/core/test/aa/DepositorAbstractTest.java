@@ -51,7 +51,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Test suite for the role depositor.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  * revoked testAaDep1f as a depositor is not allowed to retrieve a role.
  */

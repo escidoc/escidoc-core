@@ -56,7 +56,7 @@ import java.io.UnsupportedEncodingException;
  * Handle Item XML to obtain all required values (Properties, Metadata,
  * Components, Content-Model-Specific, .. ).
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ItemHandler extends DefaultHandler {

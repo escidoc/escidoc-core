@@ -52,7 +52,7 @@ import java.util.Vector;
  * -revoke grants from groups (s)he created
  * -retrieve grants for groups (s)he created
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class UserGroupAdminAbstractTest extends GrantTestBase {

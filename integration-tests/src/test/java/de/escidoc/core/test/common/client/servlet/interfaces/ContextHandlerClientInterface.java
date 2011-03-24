@@ -29,7 +29,7 @@
 package de.escidoc.core.test.common.client.servlet.interfaces;
 
 /**
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public interface ContextHandlerClientInterface

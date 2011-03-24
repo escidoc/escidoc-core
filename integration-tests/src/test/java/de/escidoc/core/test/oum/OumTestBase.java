@@ -41,7 +41,7 @@ import java.util.Arrays;
 /**
  * Base class for tests of the mock implementation of the OM resources.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class OumTestBase extends EscidocRestSoapTestBase {

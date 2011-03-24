@@ -33,7 +33,7 @@ import de.escidoc.core.test.om.contentRelation.ContentRelationTestBase;
 /**
  * Call the Content-Relation-Service.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class ContentRelationHelper extends ContentRelationTestBase {

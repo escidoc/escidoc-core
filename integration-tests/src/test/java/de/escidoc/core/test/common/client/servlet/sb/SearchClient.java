@@ -61,7 +61,7 @@ import de.escidoc.core.test.common.client.servlet.HttpHelper;
  * Offers access methods to the escidoc REST and SOAP interface of the Search
  * resource. (SRW-Server)
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class SearchClient extends ClientBase {

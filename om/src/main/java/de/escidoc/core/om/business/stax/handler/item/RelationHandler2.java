@@ -47,7 +47,7 @@ import javax.naming.directory.NoSuchAttributeException;
 /**
  * Obtains Content Relations values from XML.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class RelationHandler2 extends DefaultHandler {

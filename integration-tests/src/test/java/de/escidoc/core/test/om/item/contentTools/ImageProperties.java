@@ -6,7 +6,7 @@ import java.io.File;
 /**
  * Reading and determinig properties from Image file.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ImageProperties extends Canvas {

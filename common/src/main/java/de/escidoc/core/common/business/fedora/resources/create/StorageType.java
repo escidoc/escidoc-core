@@ -25,7 +25,7 @@ import de.escidoc.core.common.business.fedora.Constants;
 /**
  * Enumeration to describe all types of storage.
  * 
- * @author SWA
+ * @author Steffen Wagner
  */
 public enum StorageType {
 

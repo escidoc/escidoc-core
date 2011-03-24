@@ -26,7 +26,7 @@ import de.escidoc.core.common.persistence.interfaces.ResourceIdentifierDao;
 /**
  * {@link ResourceIdentifierDao} implementation using the Fedora repository.
  *
- * @author tte
+ * @author Torsten Tetteroo
  */
 public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
 

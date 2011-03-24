@@ -40,7 +40,7 @@ import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 /**
  * Fills all elements + attributes and values in list.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class AllStaxHandler extends DefaultHandler {
 

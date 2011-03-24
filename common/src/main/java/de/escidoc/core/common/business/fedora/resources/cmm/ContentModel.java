@@ -61,7 +61,7 @@ import java.util.Set;
  * Implementation of an eSciDoc Content Model Object which consist of
  * datastreams managed in Fedora Digital Repository System.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class ContentModel extends GenericVersionableResourcePid

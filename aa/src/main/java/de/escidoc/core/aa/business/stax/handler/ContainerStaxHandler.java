@@ -47,7 +47,7 @@ import java.util.Collection;
  * ...:container:current-version-status. The attributes found are stored in the
  * <code>RequestAttributesCache</code>.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  *
  */
 

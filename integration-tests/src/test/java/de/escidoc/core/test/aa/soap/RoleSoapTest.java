@@ -44,7 +44,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test suite for the resource role using the SOAP interface.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(JUnit4.class)

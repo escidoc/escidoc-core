@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * Generic Resource for Create.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public abstract class GenericResourceCreate {

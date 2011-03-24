@@ -73,7 +73,7 @@ import java.util.Set;
  * Implementation of a Fedora Item Object which consist of datastreams managed
  * in Fedora Digital Repository System.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class Item extends GenericVersionableResourcePid

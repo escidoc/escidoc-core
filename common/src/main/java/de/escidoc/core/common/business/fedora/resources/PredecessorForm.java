@@ -23,7 +23,7 @@ package de.escidoc.core.common.business.fedora.resources;
 /**
  * Enumeration to describe all forms of predecessors.
  * 
- * @author SWA
+ * @author Steffen Wagner
  */
 public enum PredecessorForm {
     SPLITTING("splitting"), FUSION("fusion"), SPIN_OFF("spin-off"), AFFILIATION(

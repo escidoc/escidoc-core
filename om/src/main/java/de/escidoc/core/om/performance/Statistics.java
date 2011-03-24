@@ -44,7 +44,7 @@ import java.util.Map;
  * reinitialized.
  * 
  * 
- * @author KST
+ * @author Kai Strnad
  *
  */
 // CHECKSTYLE:OFF

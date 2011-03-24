@@ -27,7 +27,7 @@ import java.util.List;
  * This is the Postgres implementation of the DDL generator for the MPTStore which
  * sets a maximum prefix length for indices.
  *
- * @author SCHE
+ * @author André Schenk
  */
 public class PostgresDDLGenerator extends BasicDDLGenerator {
     /*

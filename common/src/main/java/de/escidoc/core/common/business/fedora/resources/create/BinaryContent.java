@@ -33,7 +33,7 @@ import java.net.URL;
 /**
  * BinaryContent of Component, Content Stream.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class BinaryContent {

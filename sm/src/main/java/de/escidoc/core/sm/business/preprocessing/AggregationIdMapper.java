@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author mih
+ * @author Michael Hoppe
  * 
  * Singleton for caching aggregationDefinitionIds.
  * used to write aggregation-tables synchronized.

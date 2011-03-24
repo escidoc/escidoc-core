@@ -42,7 +42,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Test suite for the user management wrapper.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class UserManagementWrapperAbstractTest extends UserManagementWrapperTestBase {

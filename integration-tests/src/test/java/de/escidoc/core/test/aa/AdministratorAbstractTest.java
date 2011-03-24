@@ -39,7 +39,7 @@ import org.w3c.dom.Document;
 /**
  * Test suite for the role Administrator.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class AdministratorAbstractTest extends GrantTestBase {

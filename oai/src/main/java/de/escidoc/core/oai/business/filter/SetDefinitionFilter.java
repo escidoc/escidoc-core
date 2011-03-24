@@ -46,7 +46,7 @@ import java.util.TreeSet;
  * This class parses a CQL filter to filter for OAI set definitions and
  * translates it into a Hibernate query.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public class SetDefinitionFilter extends CqlFilter {
     /**

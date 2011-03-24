@@ -39,7 +39,7 @@ import de.escidoc.core.sm.business.stax.handler.PreprocessingInformationStaxHand
 /**
  * An Preprocessing resource handler.
  *
- * @author MIH
+ * @author Michael Hoppe
  */
 public class PreprocessingHandler implements PreprocessingHandlerInterface {
 

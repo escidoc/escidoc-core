@@ -36,7 +36,7 @@ import de.escidoc.core.om.business.interfaces.IngestHandlerInterface;
  * Fedora Ingest Handler. Takes any resource, automatically determines its type
  * and tries to ingest.
  * 
- * @author SWA,KST
+ * @author Steffen Wagner,KST
  */
 
 public class FedoraIngestHandler implements IngestHandlerInterface {

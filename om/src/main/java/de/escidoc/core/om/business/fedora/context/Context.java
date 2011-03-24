@@ -62,7 +62,7 @@ import java.util.TreeMap;
 /**
  * Context.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class Context extends GenericResource implements ContextInterface {

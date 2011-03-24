@@ -44,7 +44,7 @@ import java.util.TreeMap;
  * Cache used in the {@link SecurityInterceptor} to avoid accesses to the
  * database.<br>
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class SecurityInterceptorCache {
 

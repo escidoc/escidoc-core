@@ -24,7 +24,7 @@ package de.escidoc.core.common.business.filter;
  * This is an enumeration for the different values of record packing in an SRU
  * request.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public enum RecordPacking {
     STRING("string"), XML("xml");

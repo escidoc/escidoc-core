@@ -35,7 +35,7 @@ import org.junit.runners.Parameterized;
 /**
  * Test creating the example OrganizationalUnit objects.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

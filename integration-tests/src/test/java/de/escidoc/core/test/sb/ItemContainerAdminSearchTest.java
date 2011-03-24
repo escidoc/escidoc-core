@@ -60,7 +60,7 @@ import de.escidoc.core.test.security.client.PWCallback;
 /**
  * Test the implementation of the admin search for items and containers.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(value = Parameterized.class)

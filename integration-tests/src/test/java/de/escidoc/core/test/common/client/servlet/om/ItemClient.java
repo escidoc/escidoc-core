@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * Offers access methods to the escidoc interfaces of the item resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class ItemClient extends ClientBase

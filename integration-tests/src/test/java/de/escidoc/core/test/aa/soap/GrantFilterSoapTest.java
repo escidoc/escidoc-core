@@ -36,7 +36,7 @@ import org.junit.runners.JUnit4;
 /**
  * Testsuite for GrantFilter with SOAP transport.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(JUnit4.class)

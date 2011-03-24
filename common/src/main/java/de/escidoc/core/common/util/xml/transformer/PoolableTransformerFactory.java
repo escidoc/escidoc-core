@@ -43,7 +43,7 @@ import java.net.URL;
  * It should be a namespaceUri that can be mapped to a style sheet. If this
  * mapping fails, the specified default style sheet is used.
  * 
- * @author tte
+ * @author Torsten Tetteroo
  *
  */
 public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {

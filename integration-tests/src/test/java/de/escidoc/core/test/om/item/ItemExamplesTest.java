@@ -46,7 +46,7 @@ import static org.junit.Assert.assertFalse;
 /**
  * Test creating the example Item objects.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

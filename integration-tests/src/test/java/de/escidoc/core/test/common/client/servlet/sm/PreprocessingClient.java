@@ -39,7 +39,7 @@ import javax.xml.rpc.ServiceException;
  * Offers access methods to the escidoc REST and SOAP interface of the Statistic
  * Preprocessing resource.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class PreprocessingClient extends ClientBase {

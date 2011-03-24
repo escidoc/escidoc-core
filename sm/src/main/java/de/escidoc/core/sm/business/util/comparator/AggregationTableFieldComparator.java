@@ -37,7 +37,7 @@ import java.util.Comparator;
 /**
  * Sorts AggregationTableField-Objects according to their listIndex.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class AggregationTableFieldComparator 

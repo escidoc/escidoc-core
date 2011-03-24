@@ -36,7 +36,7 @@ import de.escidoc.core.common.exceptions.EscidocException;
  * part of this ingest has to implement this interface via an extension of its
  * implemented interface.
  * 
- * @author KST
+ * @author Kai Strnad
  * 
  */
 public interface IngestFacade {

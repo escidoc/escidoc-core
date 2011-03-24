@@ -36,7 +36,7 @@ import org.junit.runners.JUnit4;
 /**
  * Testsuite for the UserAccount's Attributes with SOAP transport.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(JUnit4.class)

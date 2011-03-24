@@ -44,7 +44,7 @@ import java.util.HashMap;
 /**
  * Test suite for the role PrivilegedViewer using the REST interface.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(Parameterized.class)

@@ -42,7 +42,7 @@ import static org.junit.Assert.fail;
 /**
  * Test creating Item objects.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

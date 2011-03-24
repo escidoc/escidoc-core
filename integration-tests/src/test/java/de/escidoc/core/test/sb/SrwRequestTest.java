@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 import java.net.URL;
 
 /**
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 public class SrwRequestTest {

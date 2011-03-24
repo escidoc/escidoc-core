@@ -28,7 +28,7 @@ import java.util.Map;
  * XmlTemplateProvider implementation using the Velocity template engine.<br/>
  * This implementation uses the velocity singleton pattern.
  * 
- * @author sche
+ * @author André Schenk
  *
  */
 public final class UserGroupXmlProvider extends InfrastructureXmlProvider {

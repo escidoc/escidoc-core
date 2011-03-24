@@ -70,7 +70,7 @@ import java.util.Set;
  * Preprocesses Raw Statistic Data according one Aggregation-Definition and
  * writes it into the aggregation-tables defined in the aggregation-definition.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class AggregationPreprocessor {
 

@@ -25,8 +25,8 @@ import de.escidoc.core.common.exceptions.EscidocException;
 /**
  * Interface of an resource ingest handler.
  * 
- * @author SWA
- * @author KST
+ * @author Steffen Wagner
+ * @author Kai Strnad
  * 
  *
  */

@@ -33,7 +33,7 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 /**
  * Class holding the user group data.
  * 
- * @author sche
+ * @author André Schenk
  *
  * 
  */

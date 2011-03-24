@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * Implementation of a request mapping data access objects using hibernate.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class HibernateRequestMappingDao extends HibernateDaoSupport
     implements RequestMappingDaoInterface {

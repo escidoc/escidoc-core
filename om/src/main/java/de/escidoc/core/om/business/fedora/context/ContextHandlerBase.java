@@ -40,7 +40,7 @@ import de.escidoc.core.om.business.renderer.interfaces.ContextRendererInterface;
 /**
  * Contains base functionality to handle Fedora Context.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ContextHandlerBase extends HandlerBase {

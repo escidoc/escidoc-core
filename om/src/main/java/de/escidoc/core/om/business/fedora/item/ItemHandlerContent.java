@@ -68,7 +68,7 @@ import java.util.regex.Pattern;
 /**
  * Content relevant methods for Item.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ItemHandlerContent extends ItemHandlerUpdate {

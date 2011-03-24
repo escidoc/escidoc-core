@@ -34,7 +34,7 @@ import de.escidoc.core.test.om.OmTestBase;
 /**
  * Test the implementation of the deviation interface.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class DeviationTestBase extends OmTestBase {

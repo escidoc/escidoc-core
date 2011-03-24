@@ -71,7 +71,7 @@ import java.util.List;
  *  do rollback of data-insertion for this aggregation-definition
  *  and process next aggregation-definition.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class StatisticPreprocessor {
 

@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
  * Interceptor to insert the xml header and an optional (in case access via
  * REST) a style sheet definition into an XML document.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 @Aspect
 public class XmlHeaderInterceptor implements Ordered {

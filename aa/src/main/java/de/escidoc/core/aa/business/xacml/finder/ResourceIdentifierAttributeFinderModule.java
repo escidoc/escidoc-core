@@ -66,7 +66,7 @@ import java.util.regex.Pattern;
  * -info:escidoc/names:aa:1.0:resource:user-group-id<br>
  *  the id of the user-group, single value attribute
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class ResourceIdentifierAttributeFinderModule
     extends AbstractAttributeFinderModule {

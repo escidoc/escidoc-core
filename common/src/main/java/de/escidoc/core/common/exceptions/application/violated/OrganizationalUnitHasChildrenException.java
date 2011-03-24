@@ -27,7 +27,7 @@ package de.escidoc.core.common.exceptions.application.violated;
  * Status code (409) indicating that the request could not be completed due to a
  * conflict with the current state of the resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  *
  */
 public class OrganizationalUnitHasChildrenException

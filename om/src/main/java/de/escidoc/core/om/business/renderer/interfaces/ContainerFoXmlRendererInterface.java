@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Interface of an container foxml renderer.
  * 
- * @author ROF
+ * @author Rozita Friedman
  *
  */
 public interface ContainerFoXmlRendererInterface {

@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * Offers access to the content type handler methods.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class ContentModelClient extends ClientBase {

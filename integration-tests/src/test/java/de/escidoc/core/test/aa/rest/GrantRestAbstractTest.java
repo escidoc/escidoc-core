@@ -42,7 +42,7 @@ import org.w3c.dom.Document;
 /**
  * Testsuite for the UserAccount's or UserGroups Grants with REST transport.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 @RunWith(JUnit4.class)

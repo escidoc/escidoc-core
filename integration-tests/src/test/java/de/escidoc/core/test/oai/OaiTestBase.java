@@ -34,7 +34,7 @@ import de.escidoc.core.test.common.client.servlet.oai.SetDefinitionClient;
 /**
  * Base class for tests of the mock implementation of the OM resources.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 public class OaiTestBase extends EscidocRestSoapTestBase {

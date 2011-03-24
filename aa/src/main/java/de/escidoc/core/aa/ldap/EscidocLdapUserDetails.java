@@ -40,7 +40,7 @@ import java.util.Map;
 /**
  * Object that holds LDAP-Userdata and all attributes from LDAP.
  * 
- * @author MIH
+ * @author Michael Hoppe
  *
  */
 public class EscidocLdapUserDetails extends LdapUserDetailsImpl {

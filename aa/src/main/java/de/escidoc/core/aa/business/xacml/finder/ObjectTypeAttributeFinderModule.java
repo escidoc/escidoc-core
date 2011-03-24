@@ -55,7 +55,7 @@ import de.escidoc.core.common.util.string.StringUtility;
  * -info:escidoc/names:aa:1.0:resource:object-type<br>
  *  the object-type of the resource, single value attribute
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class ObjectTypeAttributeFinderModule
     extends AbstractAttributeFinderModule {

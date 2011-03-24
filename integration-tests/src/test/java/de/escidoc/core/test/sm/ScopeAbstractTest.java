@@ -48,7 +48,7 @@ import static org.junit.Assert.fail;
 /**
  * Test the implementation of the Scope resource.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 @RunWith(value = Parameterized.class)

@@ -58,7 +58,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * @author sche
+ * @author André Schenk
  */
 public class HibernateUserGroupDao extends AbstractHibernateDao
     implements UserGroupDaoInterface {

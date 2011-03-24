@@ -48,7 +48,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Interface of a content relation handler of the business layer.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public interface ContentRelationHandlerInterface extends IngestableResource {

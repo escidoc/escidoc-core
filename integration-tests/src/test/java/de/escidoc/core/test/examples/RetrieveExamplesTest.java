@@ -42,7 +42,7 @@ import org.junit.runners.Parameterized;
 
 /**
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 @RunWith(value = Parameterized.class)

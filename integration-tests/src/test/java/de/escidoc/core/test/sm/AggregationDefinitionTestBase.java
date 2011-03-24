@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Base class for aggregationDefinition tests.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class AggregationDefinitionTestBase extends SmTestBase {

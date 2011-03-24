@@ -47,7 +47,7 @@ import de.escidoc.core.common.business.fedora.resources.Values;
  * access rights are SQL WHERE clauses which represent the read policies for a
  * specific user role.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public class AccessRights {
     /**

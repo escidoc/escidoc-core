@@ -42,7 +42,7 @@ import java.util.Map;
  * IndexOptimizerService. sends index.optimize-message to gsearch.
  * gsearch then optimizes all lucene-indexes
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 @ManagedResource(objectName = "eSciDocCore:name=IndexOptimizerService", description = "sends index-optimize request to gsearch", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class IndexOptimizerService {

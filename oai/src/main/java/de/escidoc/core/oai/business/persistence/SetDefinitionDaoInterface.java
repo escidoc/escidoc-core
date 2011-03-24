@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * Interface of an data access object to access set definition data.
  * 
- * @author sche
+ * @author André Schenk
  */
 public interface SetDefinitionDaoInterface {
 

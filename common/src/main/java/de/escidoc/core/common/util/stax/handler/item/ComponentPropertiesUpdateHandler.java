@@ -43,7 +43,7 @@ import java.util.Map;
  * ComponentPropertiesUpdateHandler handles XML with properties section for
  * eSciDoc Component.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class ComponentPropertiesUpdateHandler extends DefaultHandler {

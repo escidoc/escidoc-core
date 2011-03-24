@@ -51,7 +51,7 @@ import java.util.List;
 /**
  * Handle content relations for framework.
  * 
- * @author ROF, SWA
+ * @author Rozita Friedman, Steffen Wagner
  * 
  */
 public final class ContentRelationsUtility {

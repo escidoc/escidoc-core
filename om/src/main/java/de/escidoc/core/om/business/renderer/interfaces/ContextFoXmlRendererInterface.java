@@ -36,7 +36,7 @@ import java.util.Map;
 /**
  * Interface of a context foxml renderer.
  * 
- * @author sche
+ * @author André Schenk
  */
 public interface ContextFoXmlRendererInterface {
 

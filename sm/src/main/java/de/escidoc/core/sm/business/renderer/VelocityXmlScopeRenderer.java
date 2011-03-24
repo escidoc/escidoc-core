@@ -50,7 +50,7 @@ import de.escidoc.core.sm.business.renderer.interfaces.ScopeRendererInterface;
 /**
  * Scope renderer implementation using the velocity template engine.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public final class VelocityXmlScopeRenderer implements ScopeRendererInterface {
 

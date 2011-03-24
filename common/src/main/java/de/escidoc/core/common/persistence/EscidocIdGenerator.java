@@ -32,7 +32,7 @@ import java.io.Serializable;
  * Implementation of a hibernate id generator.<br>
  * This implementation fetches the ids from the {@link EscidocIdProvider}.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class EscidocIdGenerator implements IdentifierGenerator {

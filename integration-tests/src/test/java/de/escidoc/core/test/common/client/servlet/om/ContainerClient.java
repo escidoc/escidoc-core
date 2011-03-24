@@ -45,7 +45,7 @@ import java.util.Map;
 /**
  * Offers access methods to the escidoc interfaces of the container resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public class ContainerClient extends ClientBase

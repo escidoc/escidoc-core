@@ -34,7 +34,7 @@ import de.escidoc.core.st.business.persistence.StagingFileDao;
 /**
  * Implementation of some staging util.
  * 
- * @author MSC
+ * @author Michael Schwantner
  *
  */
 public final class StagingUtil {

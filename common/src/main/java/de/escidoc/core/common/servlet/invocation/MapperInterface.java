@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * Interface for mapping a http request to a resource method.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public interface MapperInterface {

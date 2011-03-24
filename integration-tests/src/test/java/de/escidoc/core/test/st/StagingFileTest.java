@@ -49,7 +49,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Test suite for the StagingFile.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public abstract class StagingFileTest extends StagingFileTestBase {

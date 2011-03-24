@@ -59,7 +59,7 @@ import java.util.regex.Pattern;
  * This is a helper class to convert an XACML policy into an SQL / Lucene
  * fragment.
  * 
- * @author SCHE
+ * @author André Schenk
  */
 public class PolicyParser {
     private static final String ACTION_ID =

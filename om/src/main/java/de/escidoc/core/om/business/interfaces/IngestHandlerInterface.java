@@ -34,7 +34,7 @@ import de.escidoc.core.common.exceptions.EscidocException;
 /**
  * Interface of an resource ingest handler of the business layer.
  * 
- * @author SWA,KST
+ * @author Steffen Wagner,KST
  * 
  *
  */

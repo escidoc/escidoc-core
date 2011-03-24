@@ -47,7 +47,7 @@ import java.net.URLConnection;
 
 /**
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 public final class OntologyUtility {

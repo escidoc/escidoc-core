@@ -62,7 +62,7 @@ import static org.junit.Assert.fail;
 /**
  * Test suite for the userAccount resource.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  *         changed for schema version 0.5:
  *         <ul>

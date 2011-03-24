@@ -35,7 +35,7 @@ import java.util.Map;
 /**
  * Interface of a admin renderer.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public interface AdminRendererInterface {
 

@@ -51,7 +51,7 @@ import java.util.Map;
 /**
  * Common interface for all handlers dealing with permissions.
  * 
- * @author sche
+ * @author André Schenk
  */
 public interface PermissionHandlerInterface extends ResourceHandlerInterface {
 

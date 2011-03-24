@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * Resource Interface.
  * 
- * @author SWA
+ * @author Steffen Wagner
  */
 public interface Resource extends FedoraResource {
 

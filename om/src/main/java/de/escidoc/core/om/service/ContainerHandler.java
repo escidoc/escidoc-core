@@ -74,7 +74,7 @@ import java.util.Map;
 /**
  * A container resource handler.
  *
- * @author TTE
+ * @author Torsten Tetteroo
  */
 public class ContainerHandler implements ContainerHandlerInterface {
 

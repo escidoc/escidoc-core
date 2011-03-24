@@ -39,7 +39,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Test the mock implementation of the item resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 @RunWith(value = Parameterized.class)

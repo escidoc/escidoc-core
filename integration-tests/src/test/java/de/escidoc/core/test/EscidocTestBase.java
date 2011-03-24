@@ -111,7 +111,7 @@ import etm.core.monitor.EtmPoint;
 /**
  * Base class for Escidoc tests.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  */
 public abstract class EscidocTestBase {

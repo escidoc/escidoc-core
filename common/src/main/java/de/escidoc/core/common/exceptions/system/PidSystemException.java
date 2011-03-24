@@ -26,7 +26,7 @@ package de.escidoc.core.common.exceptions.system;
  * Returned httpStatusCode is 500. Status code (500) indicating an error inside
  * the HTTP server which prevented it from fulfilling the request.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  *
  */
 public class PidSystemException extends SystemException {

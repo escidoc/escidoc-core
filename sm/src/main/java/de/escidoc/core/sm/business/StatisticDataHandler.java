@@ -44,7 +44,7 @@ import org.apache.camel.ProducerTemplate;
 /**
  * An statistic data resource handler.
  *
- * @author MIH
+ * @author Michael Hoppe
  */
 public class StatisticDataHandler implements StatisticDataHandlerInterface {
 

@@ -44,7 +44,7 @@ import org.w3c.dom.Node;
 /**
  * Test the implementation of the organizational-unit resource.
  * 
- * @author MSC
+ * @author Michael Schwantner
  * 
  * 
  */

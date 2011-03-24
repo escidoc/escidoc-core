@@ -59,7 +59,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author mih
+ * @author Michael Hoppe
  * 
  *         Singleton for caching Resources (items, container, fulltexts) For
  *         indexing by fedoragsearch

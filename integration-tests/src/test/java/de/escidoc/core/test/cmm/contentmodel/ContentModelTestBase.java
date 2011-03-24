@@ -51,7 +51,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Test the implementation of the Content Model.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class ContentModelTestBase extends CmmTestBase {

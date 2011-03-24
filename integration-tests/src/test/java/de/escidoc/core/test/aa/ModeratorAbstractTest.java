@@ -44,7 +44,7 @@ import static org.junit.Assert.fail;
 /**
  * Test suite for the role Moderator.
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  */
 public class ModeratorAbstractTest extends GrantTestBase {

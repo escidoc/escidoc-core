@@ -31,7 +31,7 @@ package de.escidoc.core.om.business.fedora.deviation;
 /**
  * Constants.
  * 
- * @author MIH
+ * @author Michael Hoppe
  */
 public class Constants {
 

@@ -43,7 +43,7 @@ import static org.junit.Assert.fail;
 /**
  * Testing predecessor/successor relation of OU.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

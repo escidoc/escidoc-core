@@ -40,7 +40,7 @@ import java.util.Map;
 /**
  * Base class for tests of the mock implementation of the OM resources.
  * 
- * @author ROF
+ * @author Rozita Friedman
  * 
  */
 public class SetDefinitionTestBase extends OaiTestBase {

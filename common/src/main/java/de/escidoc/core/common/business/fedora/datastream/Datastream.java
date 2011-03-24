@@ -57,7 +57,7 @@ import java.util.Vector;
  * Note: The Set <code>alternateIDs</code> is a not synchronized
  * {@link HashSet HashSet}.
  * 
- * @author FRS
+ * @author Frank Schwichtenberg
  * 
  */
 public class Datastream {

@@ -42,7 +42,7 @@ import org.w3c.dom.Document;
  * user-account-inspector may
  * -retrieve user-account (s)he has scope on
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public class UserAccountInspectorAbstractTest extends GrantTestBase {

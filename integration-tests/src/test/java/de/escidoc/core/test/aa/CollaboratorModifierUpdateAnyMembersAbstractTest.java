@@ -41,7 +41,7 @@ import org.w3c.dom.Document;
 /**
  * Test suite for the role CollaboratorModifierUpdateAnyMembers.
  * 
- * @author MIH
+ * @author Michael Hoppe
  * 
  */
 public abstract class CollaboratorModifierUpdateAnyMembersAbstractTest extends GrantTestBase {

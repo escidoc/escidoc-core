@@ -35,7 +35,7 @@ import java.io.Serializable;
 /**
  * Class holding the set definition data.
  * 
- * @author rof
+ * @author Rozita Friedman
  */
 public class SetDefinition extends SetDefinitionBase {
 

@@ -67,7 +67,7 @@ import java.util.regex.Pattern;
  * Attention! This is only a helper class for the transition to integrate this
  * functionality into the Item class.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 public class ItemCreate extends GenericResourceCreate {

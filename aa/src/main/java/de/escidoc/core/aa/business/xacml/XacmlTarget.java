@@ -60,7 +60,7 @@ import java.util.List;
  * urn:oasis:names:tc:xacml:1.0:action:action-id</li>
  * </ul>
  * 
- * @author TTE
+ * @author Torsten Tetteroo
  * 
  *
  */

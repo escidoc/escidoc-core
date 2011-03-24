@@ -50,7 +50,7 @@ import static org.junit.Assert.fail;
 /**
  * Test content relation create implementation.
  * 
- * @author SWA
+ * @author Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)
