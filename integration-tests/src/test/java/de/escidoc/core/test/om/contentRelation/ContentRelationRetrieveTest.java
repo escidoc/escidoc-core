@@ -105,7 +105,7 @@ public class ContentRelationRetrieveTest extends ContentRelationTestBase {
             String relationId = getObjidValue(xml);
 
             String resourcesXML = retrieveResources(relationId);
-            assertNotNull(resourcesXML);
+            assertXmlValidContentRelation(resourcesXML);
         }
     }
 
