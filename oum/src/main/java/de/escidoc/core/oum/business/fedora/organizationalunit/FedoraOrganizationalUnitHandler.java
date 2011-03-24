@@ -1111,6 +1111,10 @@ public class FedoraOrganizationalUnitHandler
             }
             filter.append("\"/id\"=").append(parent);
         }
+        if (filter.length() == 0) {
+            //restrict so 0 ous will be found
+            filter.append("nonexistingField=nonexistingValue");
+        }
         sruRequest.searchRetrieve(result,
             new ResourceType[] { ResourceType.OU }, filter.toString(),
             LuceneRequestParameters.DEFAULT_MAXIMUM_RECORDS,
