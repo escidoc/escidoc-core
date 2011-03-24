@@ -42,7 +42,8 @@ import javax.naming.directory.NoSuchAttributeException;
  */
 public class RelsExtReadHandler extends DefaultHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RelsExtReadHandler.class);
+    private static final Logger LOGGER = LoggerFactory
+        .getLogger(RelsExtReadHandler.class);
 
     private final StaxParser parser;
 
@@ -100,7 +101,7 @@ public class RelsExtReadHandler extends DefaultHandler {
                     // select subject
                     this.subject =
                         element.getAttributeValue(Constants.RDF_NAMESPACE_URI,
-                                RDF_ABOUT);
+                            RDF_ABOUT);
                     if (this.cleanIdentifier) {
                         this.subject = cleanIdentifier(this.subject);
                     }
@@ -190,25 +191,27 @@ public class RelsExtReadHandler extends DefaultHandler {
      */
     private void getObjectValue(final StartElement element) {
 
-        try {
-            this.object =
-                element.getAttributeValue(Constants.RDF_NAMESPACE_URI,
+        if (element.hasAttribute(Constants.RDF_NAMESPACE_URI, RDF_RESOURCE)) {
+            try {
+                this.object =
+                    element.getAttributeValue(Constants.RDF_NAMESPACE_URI,
                         RDF_RESOURCE);
-            if (this.cleanIdentifier) {
-                this.object = cleanIdentifier(this.object);
-            }
+                if (this.cleanIdentifier) {
+                    this.object = cleanIdentifier(this.object);
+                }
 
-        } catch (final NoSuchAttributeException e) {
-            if(LOGGER.isWarnEnabled()) {
-                LOGGER.warn("Error on getting attribute.");
             }
-            if(LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on getting attribute.", e);
+            catch (final NoSuchAttributeException e) {
+                if (LOGGER.isWarnEnabled()) {
+                    LOGGER.warn("Error on getting attribute.");
+                }
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Error on getting attribute.", e);
+                }
+                this.readCharacter = true;
+                this.object = "";
             }
-            this.readCharacter = true;
-            this.object = "";
         }
-
     }
 
     /**
