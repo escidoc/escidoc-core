@@ -32,6 +32,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -159,8 +160,8 @@ public class AccessRights {
     }
 
     /**
-     * Array containing all mappings between role id and SQL WHERE clause. The
-     * array index corresponds to the resource type.
+     * Array containing all mappings between role id and the generated queries.
+     * The array index corresponds to the resource type.
      */
     private final RightsMap[] rightsMap =
         new RightsMap[ResourceType.values().length];
@@ -210,9 +211,7 @@ public class AccessRights {
     }
 
     /**
-     * Get the SQL WHERE clause which matches the given role id. The SQL string
-     * is already filled with the given user id if there is a place holder
-     * inside the SQL string.
+     * Get the sub query which matches the given role id.
      * 
      * @param type
      *            resource type
@@ -232,8 +231,8 @@ public class AccessRights {
      * @param hierarchicalOUs
      *            list of all child OUs for all OUs the user is granted to
      * 
-     * @return SQL WHERE clause that represents the read policies for the given
-     *         user role and user.
+     * @return sub query that represents the read policies for the given user
+     *         role and user.
      */
     public String getAccessRights(
         final ResourceType type, final String roleId, final String userId,
@@ -242,141 +241,77 @@ public class AccessRights {
         final Map<String, Map<String, List<RoleGrant>>> userGroupGrants,
         final Set<String> hierarchicalContainers,
         final Set<String> hierarchicalOUs) {
-        final StringBuilder accessRights = new StringBuilder();
         final String containerGrants =
             ensureNotEmpty(getSetAsString(hierarchicalContainers));
         final String ouGrants = ensureNotEmpty(getSetAsString(hierarchicalOUs));
+        final List<String> accessRights = new LinkedList<String>();
 
         synchronized (this.rightsMap) {
             if ((roleId != null) && (roleId.length() > 0)) {
+                // add rules for the given role
                 if ((!groupIds.isEmpty() && (userGroupGrants != null) && userGroupGrants
                     .containsKey(roleId)) || userGrants.containsKey(roleId)) {
-                    final Rules rights = this.rightsMap[type.ordinal()].get(roleId);
+                    final String roleQuery =
+                        getRoleQuery(type, roleId, userId, groupIds,
+                            userGrants, userGroupGrants, containerGrants,
+                            ouGrants);
 
-                    if (rights != null) {
-                        final String groupSQL = getGroupSql(groupIds);
-                        final String quotedGroupSQL =
-                            groupSQL.replace("'", "''");
-                        final String scopeSql =
-                            MessageFormat.format(
-                                rights.scopeRules.replace("'", "''"),
-                                values.escape(userId),
-                                values.escape(roleId),
-                                groupSQL,
-                                quotedGroupSQL,
-                                ensureNotEmpty(getGrantsAsString(getScopeIds(
-                                    userGrants, userGroupGrants, roleId))),
-                                containerGrants, ouGrants);
-                        final String policySql =
-                            MessageFormat
-                                .format(
-                                    rights.policyRules.replace("'", "''"),
-                                    values.escape(userId),
-                                    values.escape(roleId),
-                                    groupSQL,
-                                    quotedGroupSQL,
-                                    ensureNotEmpty(getGrantsAsString(getOptimizedScopeIds(
-                                        type, userGrants, userGroupGrants,
-                                        roleId))), containerGrants, ouGrants);
-
-                        if (scopeSql.length() > 0) {
-                            accessRights.append(values.getAndCondition(
-                                scopeSql, policySql));
-                        }
-                        else if (policySql.length() > 0) {
-                            accessRights.append(policySql);
-                        }
+                    if (roleQuery != null) {
+                        accessRights.add(roleQuery);
                     }
+                }
+
+                // add rules for default role
+                final String roleQuery =
+                    getRoleQuery(type, DEFAULT_ROLE, userId, groupIds,
+                        userGrants, userGroupGrants, containerGrants, ouGrants);
+
+                if (roleQuery != null) {
+                    accessRights.add(roleQuery);
                 }
             }
             else {
-                // concatenate all rules with "OR"
-                for (final Entry<String, Rules> role : this.rightsMap[type.ordinal()]
-                    .entrySet()) {
+                // add rules for all roles
+                for (final Entry<String, Rules> role : this.rightsMap[type
+                    .ordinal()].entrySet()) {
                     if (!groupIds.isEmpty()
                         && userGroupGrants.containsKey(role.getKey())
                         || userGrants.containsKey(role.getKey())) {
-                        final String groupSQL = getGroupSql(groupIds);
-                        final String quotedGroupSQL =
-                            groupSQL.replace("'", "''");
+                        final String roleQuery =
+                            getRoleQuery(type, roleId, userId, groupIds,
+                                userGrants, userGroupGrants, containerGrants,
+                                ouGrants);
 
-                        if (accessRights.length() > 0) {
-                            accessRights.append(" OR ");
+                        if (roleQuery != null) {
+                            accessRights.add(roleQuery);
                         }
-                        accessRights.append('(');
-
-                        final String scopeSql =
-                            MessageFormat.format(
-                                role.getValue().scopeRules.replace("'", "''"),
-                                values.escape(userId),
-                                values.escape(role.getKey()),
-                                groupSQL,
-                                quotedGroupSQL,
-                                getGrantsAsString(getScopeIds(userGrants,
-                                    userGroupGrants, role.getKey())),
-                                containerGrants, ouGrants);
-                        final String policySql =
-                            MessageFormat
-                                .format(
-                                    role.getValue().policyRules.replace("'",
-                                        "''"),
-                                    values.escape(userId),
-                                    values.escape(role.getKey()),
-                                    groupSQL,
-                                    quotedGroupSQL,
-                                    getGrantsAsString(getOptimizedScopeIds(
-                                        type, userGrants, userGroupGrants,
-                                        role.getKey())), containerGrants,
-                                    ouGrants);
-
-                        if (scopeSql.length() > 0) {
-                            accessRights.append(values.getAndCondition(
-                                scopeSql, policySql));
-                        }
-                        else if (policySql.length() > 0) {
-                            accessRights.append(policySql);
-                        }
-                        accessRights.append(')');
                     }
                 }
             }
         }
-        String result = null;
-        if (accessRights.length() > 0) {
-            result = accessRights.toString();
-        }
-        return result;
+        return appendAccessRights(accessRights);
     }
 
     /**
-     * Get the SQL snippet which lists all group ids a user is member of.
+     * Append all given access rights with "OR".
      * 
-     * @param groupIds
-     *            list of all user groups the user belongs to
+     * @param accessRights
+     *            list of access rights to be appended
      * 
-     * @return SQL snippet with all group ids
+     * @return sub query which contains all given access rights concatenated
+     *         with "OR"
      */
-    private static String getGroupSql(final Collection<String> groupIds) {
+    public String appendAccessRights(final List<String> accessRights) {
         final StringBuilder result = new StringBuilder();
 
         result.append('(');
-        if (groupIds != null && !groupIds.isEmpty()) {
-            try {
-                for (final String groupId : groupIds) {
-                    if (result.length() > 1) {
-                        result.append(" OR ");
-                    }
-                    result.append("group_id='");
-                    result.append(groupId);
-                    result.append('\'');
-                }
+        for (int index = 0; index < accessRights.size(); index++) {
+            if (index > 0) {
+                result.append(" OR ");
             }
-            catch (final Exception ignored) {
-                result.append("FALSE");
-            }
-        }
-        else {
-            result.append("FALSE");
+            result.append('(');
+            result.append(accessRights.get(index));
+            result.append(')');
         }
         result.append(')');
         return result.toString();
@@ -392,6 +327,68 @@ public class AccessRights {
      */
     public Iterable<String> getRoleIds(final ResourceType type) {
         return this.rightsMap[type.ordinal()].keySet();
+    }
+
+    /**
+     * Get the sub query for the given user/role combination.
+     * 
+     * @param type
+     *            resource type
+     * @param roleId
+     *            role id
+     * @param userId
+     *            user id
+     * @param groupIds
+     *            list of all user groups the user belongs to
+     * @param userGrants
+     *            grants directly assigned to a user
+     * @param userGroupGrants
+     *            group grants assigned to a user
+     * @param containerGrants
+     *            container grants assigned to a user
+     * @param ouGrants
+     *            OU grants assigned to a user
+     * 
+     * @return sub query for the given user/role combination
+     */
+    private String getRoleQuery(
+        final ResourceType type, final String roleId, final String userId,
+        final Set<String> groupIds,
+        final Map<String, Map<String, List<RoleGrant>>> userGrants,
+        final Map<String, Map<String, List<RoleGrant>>> userGroupGrants,
+        final String containerGrants, final String ouGrants) {
+        String result = null;
+        final Rules rights = this.rightsMap[type.ordinal()].get(roleId);
+
+        if (rights != null) {
+            final String scopeSql =
+                MessageFormat.format(
+                    rights.scopeRules.replace("'", "''"),
+                    values.escape(userId),
+                    values.escape(roleId),
+                    null,
+                    null,
+                    ensureNotEmpty(getGrantsAsString(getScopeIds(userGrants,
+                        userGroupGrants, roleId))), containerGrants, ouGrants);
+            final String policySql =
+                MessageFormat.format(
+                    rights.policyRules.replace("'", "''"),
+                    values.escape(userId),
+                    values.escape(roleId),
+                    null,
+                    null,
+                    ensureNotEmpty(getGrantsAsString(getOptimizedScopeIds(type,
+                        userGrants, userGroupGrants, roleId))),
+                    containerGrants, ouGrants);
+
+            if (scopeSql.length() > 0) {
+                result = values.getAndCondition(scopeSql, policySql);
+            }
+            else if (policySql.length() > 0) {
+                result = policySql;
+            }
+        }
+        return result;
     }
 
     /**
@@ -662,8 +659,8 @@ public class AccessRights {
             for (final ResourceType type : ResourceType.values()) {
                 result.append(type);
                 result.append(":\n");
-                for (final Entry<String, Rules> role : this.rightsMap[type.ordinal()]
-                    .entrySet()) {
+                for (final Entry<String, Rules> role : this.rightsMap[type
+                    .ordinal()].entrySet()) {
                     result.append("  ");
                     result.append(role.getKey());
                     result.append('=');

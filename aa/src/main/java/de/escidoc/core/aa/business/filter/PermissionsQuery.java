@@ -138,18 +138,7 @@ public class PermissionsQuery {
                 }
             }
         }
-
-        // all matching access rights for the login user are ORed
-        statement.append('(');
-        for (int index = 0; index < statements.size(); index++) {
-            if (index > 0) {
-                statement.append(" OR ");
-            }
-            statement.append('(');
-            statement.append(statements.get(index));
-            statement.append(')');
-        }
-        statement.append(')');
+        statement.append(accessRights.appendAccessRights(statements));
     }
 
     /**
