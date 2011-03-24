@@ -32,8 +32,8 @@ public final class LuceneValues extends Values {
     // The following place holders may be used:
     // {0} : userId
     // {1} : roleId
-    // {2} : groupSQL
-    // {3} : quotedGroupSQL (used in stored procedures)
+    // {2} : unused
+    // {3} : unused
     // {4} : list of user grants and user group grants
     // {5} : list of hierarchical containers
     // {6} : list of hierarchical OUs
