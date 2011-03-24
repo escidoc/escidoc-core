@@ -660,7 +660,7 @@ public class ContentModelCreate extends GenericResourceCreate {
      */
     private String getHrefWithVersionSuffix() {
 
-        return Constants.ITEM_URL_BASE + getObjid() + ':'
+        return Constants.CONTENT_MODEL_URL_BASE + getObjid() + ':'
             + this.properties.getCurrentVersion().getNumber();
     }
 

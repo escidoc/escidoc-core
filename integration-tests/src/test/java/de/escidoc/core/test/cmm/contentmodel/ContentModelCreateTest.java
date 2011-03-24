@@ -28,18 +28,19 @@
  */
 package de.escidoc.core.test.cmm.contentmodel;
 
-import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
-import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
-import de.escidoc.core.test.EscidocRestSoapTestBase;
+import static org.junit.Assert.assertFalse;
+
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.w3c.dom.Document;
 
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.Assert.fail;
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
+import de.escidoc.core.common.exceptions.remote.application.missing.MissingMethodParameterException;
+import de.escidoc.core.test.EscidocRestSoapTestBase;
 
 /**
  * Test the mock implementation of the item resource.
@@ -212,20 +213,36 @@ public class ContentModelCreateTest extends ContentModelTestBase {
      * @throws Exception
      *             Thrown if behavior is not as expected.
      */
-    @Test
+    @Test(expected=InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
 
         /*
          * The infrastructure has thrown an unexpected parser exception during
-         * creation if a non XML datastructur is send (e.g. String).
+         * creation if a non XML data structure is send (e.g. String).
          */
-        try {
-            create("laber-rababer");
-            fail("Missing Invalid XML exception");
-        }
-        catch (final InvalidXmlException e) {
-            // that's ok
-        }
+         create("laber-rababer");
+    }
+
+    /**
+     * Test links in Version History.
+     * 
+     * See Issue INFR-942.
+     * 
+     * @throws Exception
+     *             If anything fails.
+     */
+    public void contentModelVersionHistory() throws Exception {
+        Document contentModel =
+            EscidocRestSoapTestBase.getTemplateAsDocument(
+                TEMPLATE_CONTENT_MODEL_PATH + "/" + getTransport(false),
+                "content-model-minimal-for-create.xml");
+
+        String cmXml = toString(contentModel, false);
+        String createdXML = create(cmXml);
+        String cmId = getObjidValue(createdXML);
+
+        String versionHistory = retrieveVersionHistory(cmId);
+        assertFalse("Wrong references", versionHistory.contains("item"));
     }
 
 }
