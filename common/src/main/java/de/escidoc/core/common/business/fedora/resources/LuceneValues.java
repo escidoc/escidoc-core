@@ -230,7 +230,7 @@ public final class LuceneValues extends Values {
      */
     @Override
     public String getNeutralOrElement(final ResourceType resourceType) {
-        return "NOT permissions-filter.objecttype:" + resourceType.getLabel();
+        return "permissions-filter.PID:\\-1";
     }
 
     /**

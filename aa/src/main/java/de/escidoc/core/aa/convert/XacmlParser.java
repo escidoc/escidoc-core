@@ -150,7 +150,7 @@ public class XacmlParser {
             }
         }
         if (result.length() == 0) {
-            result = "FALSE";
+            result = values.getNeutralOrElement(resourceType);
         }
         return result;
     }
