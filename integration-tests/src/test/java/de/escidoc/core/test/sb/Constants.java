@@ -145,7 +145,7 @@ public final class Constants {
                 private static final long serialVersionUID = 1L;
                 {
                     put("searchString", 
-                            "escidoc.most-recent-date=\"1980-01-27*\"");
+                            "escidoc.most-recent-date=1980-01-27*");
                     put("expectedHits", "3");
                 }
             });
@@ -239,7 +239,7 @@ public final class Constants {
             put("last-modification-date", new HashMap<String, String>() {
                 private static final long serialVersionUID = 1L;
                 {
-                    put("searchString", "escidoc.last-modification-date=\"20*\"");
+                    put("searchString", "escidoc.last-modification-date=20*");
                     put("expectedHits", "10");
                 }
             });
@@ -471,7 +471,7 @@ public final class Constants {
                 private static final long serialVersionUID = 1L;
                 {
                     put("searchString", 
-                            "escidoc.most-recent-date=\"1980-01-27*\"");
+                            "escidoc.most-recent-date=1980-01-27*");
                     put("expectedHits", "1");
                 }
             });
@@ -550,7 +550,7 @@ public final class Constants {
             put("last-modification-date", new HashMap<String, String>() {
                 private static final long serialVersionUID = 1L;
                 {
-                    put("searchString", "escidoc.last-modification-date=\"20*\"");
+                    put("searchString", "escidoc.last-modification-date=20*");
                     put("expectedHits", "1");
                 }
             });
@@ -719,7 +719,7 @@ public final class Constants {
             put("any-identifier", new HashMap<String, String>() {
                 private static final long serialVersionUID = 1L;
                 {
-                    put("searchString", "escidoc.any-identifier=\"1-01-01\"");
+                    put("searchString", "escidoc.any-identifier=1-01-01");
                     put("expectedHits", "1");
                 }
             });
@@ -734,7 +734,7 @@ public final class Constants {
             put("last-modification-date", new HashMap<String, String>() {
                 private static final long serialVersionUID = 1L;
                 {
-                    put("searchString", "escidoc.last-modification-date=\"20*\"");
+                    put("searchString", "escidoc.last-modification-date=20*");
                     put("expectedHits", "7");
                 }
             });
@@ -855,7 +855,7 @@ public final class Constants {
             put("creation-date", new HashMap<String, String>() {
                 private static final long serialVersionUID = 1L;
                 {
-                    put("searchString", "escidoc.creation-date=\"20*\"");
+                    put("searchString", "escidoc.creation-date=20*");
                     put("expectedHits", "10");
                 }
             });
@@ -895,7 +895,7 @@ public final class Constants {
             put("creation-date", new HashMap<String, String>() {
                 private static final long serialVersionUID = 1L;
                 {
-                    put("searchString", "escidoc.creation-date=\"20*\"");
+                    put("searchString", "escidoc.creation-date=20*");
                     put("expectedHits", "1");
                 }
             });
@@ -935,7 +935,7 @@ public final class Constants {
             put("creation-date", new HashMap<String, String>() {
                 private static final long serialVersionUID = 1L;
                 {
-                    put("searchString", "escidoc.creation-date=\"20*\"");
+                    put("searchString", "escidoc.creation-date=20*");
                     put("expectedHits", "7");
                 }
             });
@@ -993,7 +993,7 @@ public final class Constants {
             put("latest-release-date", new HashMap<String, String>() {
                 private static final long serialVersionUID = 1L;
                 {
-                    put("searchString", "escidoc.latest-release.date=\"20*\"");
+                    put("searchString", "escidoc.latest-release.date=20*");
                     put("expectedHits", "2");
                 }
             });
@@ -1008,7 +1008,7 @@ public final class Constants {
             put("latest-release-date", new HashMap<String, String>() {
                 private static final long serialVersionUID = 1L;
                 {
-                    put("searchString", "escidoc.latest-release.date=\"20*\"");
+                    put("searchString", "escidoc.latest-release.date=20*");
                     put("expectedHits", "1");
                 }
             });
