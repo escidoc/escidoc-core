@@ -634,7 +634,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.z3950.zing</groupId>
-			<artifactId>cql</artifactId>
+			<artifactId>cql-java</artifactId>
+			<version>1.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.netbeans</groupId>

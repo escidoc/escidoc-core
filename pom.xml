@@ -1476,8 +1476,8 @@
 
       <dependency>
         <groupId>org.z3950.zing</groupId>
-        <artifactId>cql</artifactId>
-        <version>1.0</version>
+        <artifactId>cql-java</artifactId>
+        <version>1.7</version>
       </dependency>
       <dependency>
         <groupId>org.apache.ant</groupId>
