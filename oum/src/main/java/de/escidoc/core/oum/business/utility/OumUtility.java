@@ -40,7 +40,7 @@ import java.util.Stack;
 /**
  * Methods to check if there are cycles in an ous parent list..
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class OumUtility {

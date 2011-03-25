@@ -39,7 +39,7 @@ import javax.xml.rpc.ServiceException;
  * Offers access methods to the escidoc REST interface of the container
  * resource.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class SemanticStoreClient extends ClientBase {

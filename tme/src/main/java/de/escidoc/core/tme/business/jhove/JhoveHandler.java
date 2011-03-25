@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * @author Michael Schwantner
+ * @author Michael Schneider
  */
 public class JhoveHandler extends TmeHandlerBase
     implements JhoveHandlerInterface {

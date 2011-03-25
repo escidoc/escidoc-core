@@ -77,7 +77,7 @@ import de.escidoc.core.common.util.string.StringUtility;
 /**
  * Login servlet for eSciDoc.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  */
 public class Login extends HttpServlet {
 

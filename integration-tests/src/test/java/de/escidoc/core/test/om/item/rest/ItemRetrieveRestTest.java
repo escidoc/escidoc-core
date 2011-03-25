@@ -36,7 +36,7 @@ import org.junit.Test;
 /**
  * Item tests with REST transport.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class ItemRetrieveRestTest extends ItemTestBase {

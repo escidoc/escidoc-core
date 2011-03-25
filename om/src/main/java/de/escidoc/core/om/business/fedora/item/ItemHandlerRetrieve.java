@@ -75,7 +75,7 @@ import java.util.Set;
 /**
  * This is a class, indeed.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class ItemHandlerRetrieve extends ItemHandlerBase

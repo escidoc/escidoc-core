@@ -56,7 +56,7 @@ import static org.junit.Assert.fail;
 /**
  * Test the implementation of containers PID assignment methods.
  * 
- * @author Michael Schwantner, Steffen Wagner
+ * @author Michael Schneider, Steffen Wagner
  * 
  */
 @RunWith(value = Parameterized.class)

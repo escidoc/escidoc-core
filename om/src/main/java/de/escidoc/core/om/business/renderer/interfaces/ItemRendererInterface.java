@@ -43,7 +43,7 @@ import java.util.List;
 /**
  * Interface of an item renderer.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  *
  */
 public interface ItemRendererInterface {

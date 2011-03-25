@@ -69,7 +69,7 @@ import java.util.regex.Pattern;
  * response is properly initialized by calling the one of the
  * <code>initHttpResponse</code> methods.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  *
  */
 public class EscidocServlet extends HttpServlet {

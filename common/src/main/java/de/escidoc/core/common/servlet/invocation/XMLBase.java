@@ -45,7 +45,7 @@ import java.io.StringWriter;
 /**
  * Base methods for XML handling.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  *
  */
 public class XMLBase {

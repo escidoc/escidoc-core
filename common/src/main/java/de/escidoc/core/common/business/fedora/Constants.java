@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 /**
  * Constants.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  */
 public class Constants {
 

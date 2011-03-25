@@ -38,7 +38,7 @@ import java.lang.reflect.Method;
  * Interceptor to validate incoming XML documents. The validation takes only
  * place if the called method is annotated accordingly.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  */
 @Aspect
 public class XmlValidationInterceptor implements Ordered {

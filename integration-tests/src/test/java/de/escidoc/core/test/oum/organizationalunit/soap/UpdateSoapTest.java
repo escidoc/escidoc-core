@@ -37,7 +37,7 @@ import org.w3c.dom.Document;
 /**
  * Organizational Unit tests with Soap transport.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class UpdateSoapTest extends OrganizationalUnitTestBase {

@@ -51,7 +51,7 @@ import static org.junit.Assert.fail;
  * Test locking and unlocking an item resource.<br>
  * By default, the tests are executed using a depositor user.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 @RunWith(value = Parameterized.class)

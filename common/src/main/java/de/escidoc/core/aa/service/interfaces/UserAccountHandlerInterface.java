@@ -51,7 +51,7 @@ import java.util.Map;
 /**
  * The interface for access to a user resource.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public interface UserAccountHandlerInterface {

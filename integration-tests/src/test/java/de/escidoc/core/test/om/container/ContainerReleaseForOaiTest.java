@@ -43,7 +43,7 @@ import java.net.URL;
 /**
  * Test the mock implementation of the Container resource.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 @RunWith(value = Parameterized.class)

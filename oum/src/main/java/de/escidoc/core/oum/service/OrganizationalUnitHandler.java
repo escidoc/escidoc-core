@@ -56,7 +56,7 @@ import java.util.Map;
 /**
  * Implementation for the Service layer of the OUM component.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  */
 public class OrganizationalUnitHandler
     implements

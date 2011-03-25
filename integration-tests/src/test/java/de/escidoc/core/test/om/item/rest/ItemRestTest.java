@@ -40,7 +40,7 @@ import org.w3c.dom.Document;
 /**
  * Item tests with REST transport.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class ItemRestTest extends ItemTestBase implements ItemXpathsProvider {

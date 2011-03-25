@@ -58,7 +58,7 @@ import java.util.Map;
  * Organizational unit renderer implementation using the velocity template
  * engine.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class VelocityXmlOrganizationalUnitRenderer

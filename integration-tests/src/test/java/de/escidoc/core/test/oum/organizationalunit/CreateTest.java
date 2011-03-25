@@ -46,7 +46,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test the create method of the organizational unit handler.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 @RunWith(value = Parameterized.class)

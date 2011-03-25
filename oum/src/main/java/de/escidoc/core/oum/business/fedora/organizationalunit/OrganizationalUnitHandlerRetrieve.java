@@ -40,7 +40,7 @@ import java.util.List;
  * This class contains methods for rendering the xml representations of
  * organizational units, it's sub resources, and lists.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class OrganizationalUnitHandlerRetrieve

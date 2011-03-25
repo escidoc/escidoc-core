@@ -40,7 +40,7 @@ import java.util.Map;
 /**
  * Interface of an organizational unit fedora resource.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public interface OrganizationalUnitInterface extends FedoraResource {

@@ -43,7 +43,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
 
 /**
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class PropertiesProvider {

@@ -41,7 +41,7 @@ import java.util.Map;
 /**
  * Organizational Unit tests with Soap transport.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class CreateSoapTest extends OrganizationalUnitTestBase {

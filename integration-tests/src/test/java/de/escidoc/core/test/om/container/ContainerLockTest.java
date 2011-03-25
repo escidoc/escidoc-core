@@ -49,7 +49,7 @@ import static org.junit.Assert.fail;
 /**
  * Test locking and unlocking a container resource.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 @RunWith(value = Parameterized.class)

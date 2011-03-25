@@ -41,7 +41,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 @RunWith(value = Parameterized.class)

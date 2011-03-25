@@ -51,7 +51,7 @@ import static org.junit.Assert.fail;
  * Tests the Semantic Store.<br>
  * The tests are executed by the depositor.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 @RunWith(value = Parameterized.class)

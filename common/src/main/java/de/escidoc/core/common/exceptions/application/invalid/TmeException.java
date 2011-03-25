@@ -27,7 +27,7 @@ import de.escidoc.core.common.exceptions.application.ApplicationException;
  * in the service-call is not empty and therefore can't be deleted or closed.
  * returned httpStatusCode is 450.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  *
  */
 public class TmeException extends ApplicationException {

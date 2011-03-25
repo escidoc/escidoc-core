@@ -41,7 +41,7 @@ import java.util.Map;
  * Organizational unit foxml renderer implementation using the velocity template
  * engine.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class VelocityXmlOrganizationalUnitFoXmlRenderer

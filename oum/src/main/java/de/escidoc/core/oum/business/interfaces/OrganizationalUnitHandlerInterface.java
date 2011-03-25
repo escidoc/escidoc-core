@@ -49,7 +49,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * The interface for access to the business OrganizationalUnitHandler.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  */
 public interface OrganizationalUnitHandlerInterface extends IngestableResource {
 

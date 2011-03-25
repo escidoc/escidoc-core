@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 /**
  * Item tests with SOAP transport.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class ItemSoapTest extends ItemTestBase {

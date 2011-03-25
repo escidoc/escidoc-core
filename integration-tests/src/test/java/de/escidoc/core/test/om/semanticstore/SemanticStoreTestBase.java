@@ -34,7 +34,7 @@ import de.escidoc.core.test.om.OmTestBase;
 /**
  * Base class for tests of the mock implementation of the OM resources.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class SemanticStoreTestBase extends OmTestBase {

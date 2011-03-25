@@ -37,7 +37,7 @@ import java.util.List;
 /**
  * Interface of an organizational unit renderer.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * @oum
  */
 public interface OrganizationalUnitRendererInterface {

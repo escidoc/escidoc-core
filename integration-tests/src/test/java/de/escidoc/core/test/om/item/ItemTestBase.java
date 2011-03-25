@@ -52,7 +52,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Test the mock implementation of the item resource.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class ItemTestBase extends OmTestBase {

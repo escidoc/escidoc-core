@@ -87,7 +87,7 @@ import java.util.regex.Pattern;
  * Contains methods pertaining creation of an item. Is extended at least by
  * FedoraItemHandler.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class ItemHandlerCreate extends ItemResourceListener {

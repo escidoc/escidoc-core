@@ -34,7 +34,7 @@ import junit.framework.TestSuite;
 /**
  * The semanticstore test suite (REST).
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class Suite {

@@ -25,7 +25,7 @@ package de.escidoc.core.common.exceptions.application.invalid;
  * in the service-call is not empty and therefore can't be deleted or closed.
  * returned httpStatusCode is 450.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  *
  */
 public class ContextNotEmptyException extends ValidationException {

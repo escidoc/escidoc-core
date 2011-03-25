@@ -52,7 +52,7 @@ import java.util.Vector;
 
 /**
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class MigrationTestBase extends EscidocRestSoapTestBase {

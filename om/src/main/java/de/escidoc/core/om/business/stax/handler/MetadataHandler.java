@@ -43,7 +43,7 @@ import java.util.Map;
 /**
  * The MetadataHandler.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  *
  */

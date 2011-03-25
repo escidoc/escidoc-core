@@ -39,7 +39,7 @@ import static org.junit.Assert.fail;
 /**
  * Item tests with SOAP transport.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class ItemUpdateSoapTest extends ItemTestBase {

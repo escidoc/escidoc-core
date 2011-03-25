@@ -72,7 +72,7 @@ import de.escidoc.core.common.util.list.ListSorting;
 import de.escidoc.core.common.util.service.EscidocUserDetails;
 
 /**
- * @author Michael Schwantner
+ * @author Michael Schneider
  */
 public class HibernateUserAccountDao extends AbstractHibernateDao
     implements UserAccountDaoInterface {

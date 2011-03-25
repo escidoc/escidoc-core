@@ -66,7 +66,7 @@ import static org.junit.Assert.fail;
 /**
  * Test the mock implementation of the item resource.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 @RunWith(value = Parameterized.class)

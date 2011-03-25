@@ -55,7 +55,7 @@ import java.util.Map.Entry;
 /**
  * This class contains common methods for all handler methods.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class OrganizationalUnitHandlerUpdate

@@ -32,7 +32,7 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 /**
  * Service interface of an Technical metadata extraction handler.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  */
 public interface JhoveHandlerInterface {
     /**

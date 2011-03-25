@@ -36,7 +36,7 @@ import org.w3c.dom.Document;
 /**
  * Organizational Unit tests with REST transport.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class UpdateMdRecordsRestTest extends OrganizationalUnitTestBase {

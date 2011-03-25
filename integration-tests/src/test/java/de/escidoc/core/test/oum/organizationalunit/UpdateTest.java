@@ -47,7 +47,7 @@ import static org.junit.Assert.assertNull;
 /**
  * Test the mock implementation of the item resource.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  * Changes:
  * <ul>

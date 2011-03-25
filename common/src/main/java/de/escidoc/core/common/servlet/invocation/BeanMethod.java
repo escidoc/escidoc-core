@@ -39,7 +39,7 @@ import java.util.Map;
 /**
  * A bean method.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  *
  */
 public class BeanMethod {

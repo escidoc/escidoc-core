@@ -40,7 +40,7 @@ import org.w3c.dom.Document;
 /**
  * Test close method of OrganizationalUnitHandler.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 @RunWith(value = Parameterized.class)

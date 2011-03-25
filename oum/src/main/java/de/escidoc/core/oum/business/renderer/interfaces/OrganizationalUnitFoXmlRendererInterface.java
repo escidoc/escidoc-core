@@ -36,7 +36,7 @@ import java.util.Map;
 /**
  * Interface of an organizational unit foxml renderer.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * @oum
  */
 public interface OrganizationalUnitFoXmlRendererInterface {

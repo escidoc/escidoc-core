@@ -46,7 +46,7 @@ import static org.junit.Assert.assertNull;
 /**
  * Test the implementation of the organizational unit resource.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class OrganizationalUnitTestBase extends OumTestBase {

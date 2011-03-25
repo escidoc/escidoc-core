@@ -46,7 +46,7 @@ import static org.junit.Assert.fail;
 
 /**
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 @RunWith(value = Parameterized.class)

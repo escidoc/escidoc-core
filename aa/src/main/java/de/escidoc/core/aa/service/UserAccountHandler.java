@@ -63,7 +63,7 @@ import java.util.Map;
  * User account handler implementation for the service layer of the AA
  * component.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  */
 public class UserAccountHandler
     implements UserAccountHandlerInterface {

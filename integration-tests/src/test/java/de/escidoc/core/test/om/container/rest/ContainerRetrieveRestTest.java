@@ -36,7 +36,7 @@ import org.junit.Test;
 /**
  * Container tests with REST transport.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class ContainerRetrieveRestTest extends ContainerTestBase {

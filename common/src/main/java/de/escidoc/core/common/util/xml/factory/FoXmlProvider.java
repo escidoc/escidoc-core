@@ -25,7 +25,7 @@ import de.escidoc.core.common.util.xml.Elements;
 /**
  * A factory to create Foxml documents.
  * 
- * @author Michael Schwantner
+ * @author Michael Schneider
  * 
  */
 public class FoXmlProvider extends XmlTemplateProvider {
