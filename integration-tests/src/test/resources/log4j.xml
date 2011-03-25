@@ -8,7 +8,7 @@
 	<appender name="CONSOLE"
 		class="org.apache.log4j.ConsoleAppender">
 		<param name="Target" value="System.out" />
-		<param name="Threshold" value="INFO" />
+		<param name="Threshold" value="WARN" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern"
 				value="%-5p [%c{1}] %m%n" />
@@ -26,7 +26,7 @@
 	</category>
 	
 	<root>
-        <priority value="INFO" />
+        <priority value="WARN" />
 		<appender-ref ref="CONSOLE" />
 		<!-- appender-ref ref="FILEOUT" / -->
 	</root>

@@ -1698,7 +1698,7 @@
               <showDeprecation>true</showDeprecation>
               <showWarnings>true</showWarnings>
               <verbose>true</verbose>
-              <fork>true</fork>
+              <fork>false</fork>
               <meminitial>128m</meminitial>
               <maxmem>512m</maxmem>
               <debug>false</debug>
@@ -1730,7 +1730,7 @@
               <showDeprecation>true</showDeprecation>
               <showWarnings>true</showWarnings>
               <verbose>true</verbose>
-              <fork>true</fork>
+              <fork>false</fork>
               <meminitial>128m</meminitial>
               <maxmem>512m</maxmem>
               <debug>true</debug>
@@ -1762,7 +1762,7 @@
               <showDeprecation>true</showDeprecation>
               <showWarnings>true</showWarnings>
               <verbose>true</verbose>
-              <fork>true</fork>
+              <fork>false</fork>
               <meminitial>128m</meminitial>
               <maxmem>512m</maxmem>
               <debug>true</debug>

@@ -44,7 +44,7 @@
    <appender name="FILE" class="org.jboss.logging.appender.DailyRollingFileAppender">
       <errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
       <param name="File" value="${jboss.server.log.dir}/server.log"/>
-      <param name="Threshold" value="INFO"/>
+      <param name="Threshold" value="WARN"/>
       <param name="Append" value="false"/>
 
       <!-- Rollover at midnight each day -->
@@ -71,7 +71,7 @@
    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
       <errorHandler class="org.jboss.logging.util.OnlyOnceErrorHandler"/>
       <param name="Target" value="System.out"/>
-      <param name="Threshold" value="INFO"/>
+      <param name="Threshold" value="WARN"/>
 
       <layout class="org.apache.log4j.PatternLayout">
          <!-- The default pattern: Date Priority [Category] Message\n -->
@@ -86,7 +86,7 @@
         <param name="Append" value="true"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
         <param name="File" value="${jboss.server.log.dir}/escidoc-core.log"/>
-        <param name="Threshold" value="INFO" />
+        <param name="Threshold" value="WARN" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%p %d (%c{1}) %m%n"/>
         </layout>
@@ -137,7 +137,7 @@
 	</category>
     
     <category name="org.apache.axis">
-		<priority value="INFO" />
+		<priority value="'WARN" />
 	</category>
     
     <category name="org.hibernate">
@@ -169,21 +169,21 @@
    </category>
 
    <category name="javax.enterprise.resource.webcontainer.jsf">
-      <priority value="DEBUG" />
+      <priority value="WARN" />
    </category>
 
    <!-- Limit JBoss categories
    <category name="org.jboss">
-      <priority value="INFO"/>
+      <priority value="WARN"/>
    </category>
    -->
 
    <category name="org.jboss.management">
-      <priority value="INFO"/>
+      <priority value="WARN"/>
    </category>
 
    <category name="org.jboss.serial">
-      <priority value="INFO"/>
+      <priority value="WARN"/>
    </category>
 
     <logger name="de.escidoc" additivity="false">
