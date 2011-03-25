@@ -650,7 +650,6 @@
 		<dependency>
 			<groupId>org.z3950.zing</groupId>
 			<artifactId>cql-java</artifactId>
-			<version>1.7</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
