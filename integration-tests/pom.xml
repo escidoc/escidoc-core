@@ -20,7 +20,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<escidoc.url>http://localhost:8080</escidoc.url>
-		<fedora.home>${project.build.directory}/fedora</fedora.home>
 		<fedora.database>fedora3</fedora.database>
 		<fedora.database.user>fedoraAdmin</fedora.database.user>
 		<fedora.database.password>fedoraAdmin</fedora.database.password>
@@ -1446,7 +1445,7 @@
 						<version>1.2</version>
 						<executions>
 							<execution>
-								<id>ingest-fedora-resources</id>
+								<id>ingest-fedora-resources-unix</id>
 								<phase>pre-integration-test</phase>
 								<goals>
 									<goal>exec</goal>
@@ -1455,19 +1454,19 @@
 									<skip>${skipITs}</skip>
 									<executable>java</executable>
 									<mainClass>org.fcrepo.client.utility.ingest.Ingest</mainClass>
-									<workingDirectory>${basedir}/target</workingDirectory>
+									<workingDirectory>${basedir}${file.separator}target</workingDirectory>
 									<arguments>
 										<argument>-Xms64m</argument>
 										<argument>-Xmx96m</argument>
 
 										<argument>-classpath</argument>
-										<argument>${fedora.home}/client/bin:${fedora.home}/client/fcrepo-client-admin-${fcrepo.version}.jar</argument>
-										<argument>-Djava.endorsed.dirs=${fedora.home}/client/lib</argument>
-										<argument>-Djavax.net.ssl.trustStore=${fedora.home}/client/truststore</argument>
+										<argument>${project.build.directory}${file.separator}fedora${file.separator}client${file.separator}bin${path.separator}${project.build.directory}${file.separator}fedora${file.separator}client${file.separator}fcrepo-client-admin-${fcrepo.version}.jar</argument>
+										<argument>-Djava.endorsed.dirs=${project.build.directory}${file.separator}fedora${file.separator}client${file.separator}lib</argument>
+										<argument>-Djavax.net.ssl.trustStore=${project.build.directory}${file.separator}fedora${file.separator}client${file.separator}truststore</argument>
 										<argument>-Djavax.net.ssl.trustStorePassword=tomcat</argument>
 										<argument>-Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl</argument>
 										<argument>-Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl</argument>
-										<argument>-Dfedora.home=${fedora.home}</argument>
+										<argument>-Dfedora.home=${project.build.directory}${file.separator}fedora</argument>
 
 										<argument>org.fcrepo.client.utility.ingest.Ingest</argument>
 										<argument>d</argument>
@@ -1479,7 +1478,7 @@
 										<argument>http</argument>
 
 									</arguments>
-									<outputFile>${project.build.directory}/fcrepo-ingest.log</outputFile>
+									<outputFile>${project.build.directory}${file.separator}fcrepo-ingest.log</outputFile>
 								</configuration>
 							</execution>
 						</executions>
@@ -1487,6 +1486,5 @@
 				</plugins>
 			</build>
 		</profile>
-
 	</profiles>
 </project>
