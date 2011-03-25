@@ -208,9 +208,11 @@ public class RelsExtReadHandler extends DefaultHandler {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Error on getting attribute.", e);
                 }
-                this.readCharacter = true;
-                this.object = "";
             }
+        } 
+        else {
+            this.readCharacter = true;
+            this.object = "";
         }
     }
 
