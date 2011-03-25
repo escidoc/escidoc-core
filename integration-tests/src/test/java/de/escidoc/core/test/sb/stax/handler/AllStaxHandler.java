@@ -36,6 +36,7 @@ import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.Attribute;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+import de.escidoc.core.test.EscidocTestBase;
 
 /**
  * Fills all elements + attributes and values in list.
@@ -102,7 +103,7 @@ public class AllStaxHandler extends DefaultHandler {
                 String namespace = attribute.getNamespace();
                 String localName = attribute.getLocalName();
                 if (namespace != null 
-                    && "http://www.w3.org/1999/xlink".equals(namespace)) {
+                    && EscidocTestBase.XLINK_NS_URI.equals(namespace)) {
                     if (attribute.getLocalName().equals("href")) {
                         localName = "id";
                         value = value.replaceFirst(".*/", "");
