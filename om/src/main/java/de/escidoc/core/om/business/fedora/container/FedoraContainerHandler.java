@@ -2585,7 +2585,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
         catch (final Exception e) {
             throw new SystemException(
-                "Shoud not occure in FedoraContainerHandler.addMember.", e);
+                "Should not occur in FedoraContainerHandler.addMember.", e);
         }
         return getUtility().prepareReturnXmlFromLastModificationDate(
             getContainer().getLastModificationDate());
@@ -2809,7 +2809,7 @@ public class FedoraContainerHandler extends ContainerHandlerPid
         }
         catch (final Exception e) {
             throw new SystemException(
-                "Shoud not occure in FedoraContainerHandler.removeMember.", e);
+                "Should not occur in FedoraContainerHandler.removeMember.", e);
         }
 
     }
