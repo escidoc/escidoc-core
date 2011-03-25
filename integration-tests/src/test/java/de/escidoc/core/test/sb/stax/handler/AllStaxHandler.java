@@ -69,6 +69,12 @@ public class AllStaxHandler extends DefaultHandler {
 
     /**
      * Parser hits an XML character element.
+     * Write all elements and all attributes 
+     * with path to element and value
+     * (eg /properties/version/status=released)
+     * in a list.
+     * If attribute is xlink:href, extract objectId out of href
+     * and replace attribute-name in path with /id.
      * 
      * @param s
      *            XML character element.
