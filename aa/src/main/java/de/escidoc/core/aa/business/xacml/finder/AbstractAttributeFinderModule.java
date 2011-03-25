@@ -864,6 +864,11 @@ public abstract class AbstractAttributeFinderModule
             final String objectType = matcher.group(2);
             exceptionName.append(StringUtility
                 .convertToUpperCaseLetterFormat(objectType));
+            if (objectType == null || objectType.equals("")) {
+                System.out.println(
+                    "MIH: objectType is empty, attributeValue was " 
+                    + attributeIdValue);
+            }
         }
         else {
             exceptionName.append("Resource");
