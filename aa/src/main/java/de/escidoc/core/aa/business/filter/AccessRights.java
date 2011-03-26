@@ -304,16 +304,18 @@ public class AccessRights {
     public String appendAccessRights(final List<String> accessRights) {
         final StringBuilder result = new StringBuilder();
 
-        result.append('(');
-        for (int index = 0; index < accessRights.size(); index++) {
-            if (index > 0) {
-                result.append(" OR ");
-            }
+        if ((accessRights != null) && (accessRights.size() > 0)) {
             result.append('(');
-            result.append(accessRights.get(index));
+            for (int index = 0; index < accessRights.size(); index++) {
+                if (index > 0) {
+                    result.append(" OR ");
+                }
+                result.append('(');
+                result.append(accessRights.get(index));
+                result.append(')');
+            }
             result.append(')');
         }
-        result.append(')');
         return result.toString();
     }
 
