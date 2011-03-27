@@ -175,6 +175,7 @@ public class PermissionsQuery {
 
             // all restricting access rights from another user are ANDed
             if (filter.getUserId() != null) {
+                final List<String> foreignUserRights = new LinkedList<String>();
                 final Map<String, Map<String, List<RoleGrant>>> userGrants =
                     getUserGrants(filter.getUserId());
                 final Map<String, Map<String, List<RoleGrant>>> userGroupGrants =
@@ -188,7 +189,9 @@ public class PermissionsQuery {
                             .getOptimizedScopeIds(ResourceType.CONTAINER,
                                 userGrants, userGroupGrants, filter.getRoleId()));
                 }
+
                 Set<String> hierarchicalOUs = null;
+
                 if (accessRights.needsHierarchicalPermissions(resourceType,
                     filter.getRoleId(), HIERARCHICAL_OUS_PLACEHOLDER)) {
                     hierarchicalOUs =
@@ -197,14 +200,39 @@ public class PermissionsQuery {
                             filter.getRoleId()));
                 }
 
-                final String rights =
+                final Set<String> groupIds =
+                    retrieveGroupsForUser(filter.getUserId());
+                String rights =
                     accessRights.getAccessRights(resourceType,
-                        filter.getRoleId(), filter.getUserId(),
-                        retrieveGroupsForUser(filter.getUserId()), userGrants,
-                        userGroupGrants, hierarchicalContainers,
+                        filter.getRoleId(), filter.getUserId(), groupIds,
+                        userGrants, userGroupGrants, hierarchicalContainers,
                         hierarchicalOUs);
 
                 if (rights != null && rights.length() > 0) {
+                    foreignUserRights.add(rights);
+                }
+
+                if (filter.getRoleId() != null) {
+                    // add rules for default role
+                    final String containerGrants =
+                        accessRights.ensureNotEmpty(accessRights
+                            .getSetAsString(hierarchicalContainers));
+                    final String ouGrants =
+                        accessRights.ensureNotEmpty(accessRights
+                            .getSetAsString(hierarchicalOUs));
+
+                    rights =
+                        accessRights.getRoleQuery(resourceType,
+                            AccessRights.DEFAULT_ROLE, filter.getUserId(),
+                            groupIds, userGrants, userGroupGrants,
+                            containerGrants, ouGrants);
+                    if (rights != null && rights.length() > 0) {
+                        foreignUserRights.add(rights);
+                    }
+                }
+
+                if (foreignUserRights.size() > 0) {
+                    rights = accessRights.appendAccessRights(foreignUserRights);
                     LOGGER.info("AND restricting access rights from "
                         + "another user (1): " + rights);
                     result.append(" AND (");

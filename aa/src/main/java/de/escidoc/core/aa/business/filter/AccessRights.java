@@ -54,12 +54,7 @@ public class AccessRights {
     /**
      * The id of the default role for anonymous access.
      */
-    private static final String DEFAULT_ROLE = "escidoc:role-default-user";
-
-    /**
-     * Resource id which will never exist in the repository.
-     */
-    private static final String INVALID_ID = "escidoc:-1";
+    public static final String DEFAULT_ROLE = "escidoc:role-default-user";
 
     /**
      * Container for the scope rules and the policy rules of a role.
@@ -201,11 +196,11 @@ public class AccessRights {
      * 
      * @return non empty string
      */
-    private String ensureNotEmpty(final String s) {
+    public String ensureNotEmpty(final String s) {
         String result = s;
 
         if (result == null || result.length() == 0) {
-            result = values.escape(INVALID_ID);
+            result = values.getNeutralOrElement(null);
         }
         return result;
     }
@@ -260,25 +255,15 @@ public class AccessRights {
                         accessRights.add(roleQuery);
                     }
                 }
-
-                // add rules for default role
-                final String roleQuery =
-                    getRoleQuery(type, DEFAULT_ROLE, userId, groupIds,
-                        userGrants, userGroupGrants, containerGrants, ouGrants);
-
-                if (roleQuery != null) {
-                    accessRights.add(roleQuery);
-                }
             }
             else {
                 // add rules for all roles
                 for (final Entry<String, Rules> role : this.rightsMap[type
                     .ordinal()].entrySet()) {
-                    if (!groupIds.isEmpty()
-                        && userGroupGrants.containsKey(role.getKey())
-                        || userGrants.containsKey(role.getKey())) {
+                    if ((!groupIds.isEmpty() && (userGroupGrants != null) && userGroupGrants
+                        .containsKey(role.getKey())) || userGrants.containsKey(role.getKey())) {
                         final String roleQuery =
-                            getRoleQuery(type, roleId, userId, groupIds,
+                            getRoleQuery(type, role.getKey(), userId, groupIds,
                                 userGrants, userGroupGrants, containerGrants,
                                 ouGrants);
 
@@ -307,11 +292,16 @@ public class AccessRights {
         if ((accessRights != null) && (accessRights.size() > 0)) {
             result.append('(');
             for (int index = 0; index < accessRights.size(); index++) {
+                String accessRight = accessRights.get(index);
+
+                if ((accessRight == null) || (accessRight.length() == 0)) {
+                    accessRight = values.getNeutralOrElement(null);
+                }
                 if (index > 0) {
                     result.append(" OR ");
                 }
                 result.append('(');
-                result.append(accessRights.get(index));
+                result.append(accessRight);
                 result.append(')');
             }
             result.append(')');
@@ -353,7 +343,7 @@ public class AccessRights {
      * 
      * @return sub query for the given user/role combination
      */
-    private String getRoleQuery(
+    public String getRoleQuery(
         final ResourceType type, final String roleId, final String userId,
         final Set<String> groupIds,
         final Map<String, Map<String, List<RoleGrant>>> userGrants,
@@ -413,7 +403,7 @@ public class AccessRights {
      * 
      * @return string containing all given strings separated with space
      */
-    private String getSetAsString(final Iterable<String> set) {
+    public String getSetAsString(final Iterable<String> set) {
         final StringBuilder result = new StringBuilder();
 
         if (set != null) {
