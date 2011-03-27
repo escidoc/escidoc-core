@@ -42,6 +42,8 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.fedora.resources.ResourceType;
@@ -61,6 +63,12 @@ import de.escidoc.core.common.util.xml.XmlUtility;
  * @spring.bean id="de.escidoc.core.common.business.filter.SRURequest"
  */
 public class SRURequest {
+    /**
+     * Logging goes there.
+     */
+    private static final Logger LOGGER = LoggerFactory
+        .getLogger(SRURequest.class);
+
     // map from resource type to the corresponding admin index
     private static final Map<ResourceType, String> ADMIN_INDEXES =
         new EnumMap<ResourceType, String>(ResourceType.class);
@@ -174,8 +182,7 @@ public class SRURequest {
         final SRURequestParameters parameters) throws WebserverSystemException {
         searchRetrieve(output, resourceTypes, parameters.getQuery(),
             parameters.getMaximumRecords(), parameters.getStartRecord(),
-            parameters.getExtraData(),
-            parameters.getRecordPacking());
+            parameters.getExtraData(), parameters.getRecordPacking());
     }
 
     /**
@@ -279,6 +286,7 @@ public class SRURequest {
                     '&' + Constants.SRU_PARAMETER_RECORD_SCHEMA
                         + "=eSciDocSoap";
             }
+            LOGGER.info("SRW URL: " + url);
 
             final Cookie cookie =
                 new BasicClientCookie(EscidocServlet.COOKIE_LOGIN,
