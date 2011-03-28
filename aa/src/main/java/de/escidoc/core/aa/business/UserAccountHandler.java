@@ -1548,8 +1548,7 @@ public class UserAccountHandler
                             new String[((Object[]) entry.getValue()).length]);
                         // noinspection RedundantCast
                         for (int j = 0; j < ((Object[]) entry.getValue()).length; j++) {
-                            filter1.get(entry.getKey())[j] =
-                                entry.getValue()[j].toString();
+                            filter1.get(entry.getKey())[j] = entry.getValue()[j];
                         }
                     }
                     else {
