@@ -1717,18 +1717,16 @@ public class FedoraUtility implements InitializingBean {
      */
     private void preventWrongLogging(final Exception e, final byte[] datastream) {
 
-        final Pattern PATTERN_ERROR_GETTING =
-            Pattern.compile(
-                "fedora.server.errors.GeneralException: Error getting",
+        final Pattern patternErrorGetting = Pattern.compile("fedora.server.errors.GeneralException: Error getting",
                 Pattern.CASE_INSENSITIVE);
-        final Pattern PATTERN_MALFORMED_URL =
+        final Pattern patternMalformedUrl =
             Pattern.compile("fedora.server.errors.ObjectIntegrityException: "
                 + "FOXML IO stream was bad : Malformed URL");
 
         final Matcher matcherErrorGetting =
-            PATTERN_ERROR_GETTING.matcher(e.getMessage());
+            patternErrorGetting.matcher(e.getMessage());
         final Matcher matcherMalformedUrl =
-            PATTERN_MALFORMED_URL.matcher(e.getMessage());
+            patternMalformedUrl.matcher(e.getMessage());
 
         if (matcherErrorGetting.find() || matcherMalformedUrl.find()) {
             if(LOGGER.isWarnEnabled()) {
