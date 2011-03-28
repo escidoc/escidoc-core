@@ -39,7 +39,7 @@ public abstract class SRURequestParameters {
 
     private final boolean explain;
 
-    private HashMap<String, String> extraData;
+    private Map<String, String> extraData;
 
     private RecordPacking recordPacking;
 
@@ -102,7 +102,7 @@ public abstract class SRURequestParameters {
         return this.recordPacking;
     }
 
-    public HashMap<String, String> getExtraData() {
+    public Map<String, String> getExtraData() {
         return this.extraData;
     }
 

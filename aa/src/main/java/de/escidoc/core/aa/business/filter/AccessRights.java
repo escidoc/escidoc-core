@@ -82,8 +82,8 @@ public class AccessRights {
      * Mapping from role id to SQL statements.
      */
     public static class RightsMap implements Map<String, Rules> {
-        private final HashMap<String, Rules> hashMap =
-            new HashMap<String, Rules>();
+
+        private final Map<String, Rules> hashMap = new HashMap<String, Rules>();
 
         public boolean equals(final Object o) {
             return hashMap.equals(o);
