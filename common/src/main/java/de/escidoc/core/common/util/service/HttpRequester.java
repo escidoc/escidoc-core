@@ -209,6 +209,8 @@ public class HttpRequester {
      *             e
      * 
      */
+    // False positive: Private method is never called
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings
     private String requestSsl( // Ignore FindBugs
         final String resource, final String method, final String body)
         throws Exception {

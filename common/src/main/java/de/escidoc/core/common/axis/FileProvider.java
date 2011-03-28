@@ -232,17 +232,18 @@ public class FileProvider implements WSDDEngineConfiguration {
      * @return InputStream replaced InputStream
      */
     private InputStream replaceVariables(final InputStream in) {
-        String xmlString = null;
+        InputStream returnValue = null;
         try {
-            xmlString = IOUtils.readStringFromStream(in);
+            String xmlString = IOUtils.readStringFromStream(in);
             xmlString = insertSystemProperties(xmlString);
+            returnValue = new ByteArrayInputStream(xmlString.getBytes(Charset.forName(XmlUtility.CHARACTER_ENCODING)));
         } catch (final IOException e) {
             LOGGER.error("Error on inserting system properties.", e);
         }
         finally {
             IOUtils.closeStream(in);
         }
-        return new ByteArrayInputStream(xmlString.getBytes(Charset.forName(XmlUtility.CHARACTER_ENCODING)));
+        return returnValue;
     }
 
     /**

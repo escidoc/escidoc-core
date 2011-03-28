@@ -272,9 +272,14 @@ public class SRURequest {
                     '&' + Constants.SRU_PARAMETER_START_RECORD + '=' + offset;
             }
             if (extraData != null) {
+                StringBuffer urlBuffer = new StringBuffer(url);
                 for (final Entry<String, String> entry : extraData.entrySet()) {
-                    url += '&' + entry.getKey() + '=' + entry.getValue();
+                    urlBuffer.append('&');
+                    urlBuffer.append(entry.getKey());
+                    urlBuffer.append('=');
+                    urlBuffer.append(entry.getValue());
                 }
+                url = urlBuffer.toString();
             }
             if (recordPacking != null) {
                 url +=
