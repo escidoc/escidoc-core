@@ -8,7 +8,7 @@
 --	(id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
 --	 VALUES
 --	('${escidoc.creator.user}',
---	true,
+--	1,
 --    'System Administrator User',
 --    'sysadmin',
 --    'eSciDoc',
@@ -22,7 +22,7 @@ INSERT INTO aa.user_account
 	(id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
 	 VALUES
 	('${escidoc.creator.user}',
-	true,
+	1,
     'System Administrator User',
     'sysadmin',
     'eSciDoc',
@@ -35,12 +35,12 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('${escidoc.creator.user}ouattribute', '${escidoc.creator.user}','o', 'escidoc:ex3', 'TRUE');
+    ('${escidoc.creator.user}ouattribute', '${escidoc.creator.user}','o', 'escidoc:ex3', '1');
 
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('${escidoc.creator.user}emailattribute', '${escidoc.creator.user}','email', 'system.administrator@superuser', 'TRUE');
+    ('${escidoc.creator.user}emailattribute', '${escidoc.creator.user}','email', 'system.administrator@superuser', '1');
 
     /*
      * System Inspector user (Read only super user).
@@ -49,7 +49,7 @@ INSERT INTO aa.user_account
 	(id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
 	 VALUES
 	('escidoc:exuser2',
-	true,
+	1,
     'System Inspector User (Read Only Super User)',
     'sysinspector',
     'eSciDoc',
@@ -61,12 +61,12 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:exuser2ouattribute', 'escidoc:exuser2','o', 'escidoc:ex3', 'TRUE');
+    ('escidoc:exuser2ouattribute', 'escidoc:exuser2','o', 'escidoc:ex3', '1');
 
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:exuser2emailattribute', 'escidoc:exuser2','email', 'system.inspector@superuser', 'TRUE');
+    ('escidoc:exuser2emailattribute', 'escidoc:exuser2','email', 'system.inspector@superuser', '1');
     
     /**
      * Depositor user.
@@ -75,7 +75,7 @@ INSERT INTO aa.user_account
 	(id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
 	 VALUES
 	('escidoc:exuser4',
-	true,
+	1,
     'Depositor User',
     'depositor',
     'eSciDoc',
@@ -87,7 +87,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:exuser4ouattribute', 'escidoc:exuser4','o', 'escidoc:ex3', 'TRUE');
+    ('escidoc:exuser4ouattribute', 'escidoc:exuser4','o', 'escidoc:ex3', '1');
 
     /**
      * Ingestor user.
@@ -96,7 +96,7 @@ INSERT INTO aa.user_account
 	(id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
 	 VALUES
 	('escidoc:exuser5',
-	true,
+	1,
     'Ingestor User',
     'ingester',
     'eSciDoc',
@@ -108,7 +108,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:exuser5ouattribute', 'escidoc:exuser5','o', 'escidoc:ex3', 'TRUE');
+    ('escidoc:exuser5ouattribute', 'escidoc:exuser5','o', 'escidoc:ex3', '1');
 
     /**
      * Collaborator user.
@@ -117,7 +117,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:exuser6',
-    true,
+    1,
     'Collaborator User',
     'collaborator',
     'eSciDoc',

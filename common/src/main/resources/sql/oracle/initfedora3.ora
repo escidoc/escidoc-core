@@ -1,0 +1,147 @@
+# 
+# $Header: init.ora 06-aug-98.10:24:40 atsukerm Exp $ 
+# 
+# Copyright (c) 1991, 1997, 1998 by Oracle Corporation
+# NAME
+#   initfedora3.ora
+# FUNCTION
+# NOTES
+# MODIFIED
+#
+##############################################################################
+# Example INIT.ORA file
+#
+# This file is provided by Oracle Corporation to help you customize
+# your RDBMS installation for your site.  Important system parameters
+# are discussed, and example settings given.
+#
+# Some parameter settings are generic to any size installation.
+# For parameters that require different values in different size
+# installations, three scenarios have been provided: SMALL, MEDIUM
+# and LARGE.  Any parameter that needs to be tuned according to 
+# installation size will have three settings, each one commented
+# according to installation size.
+#
+# Use the following table to approximate the SGA size needed for the 
+# three scenarious provided in this file:
+#
+#                     -------Installation/Database Size------
+#                      SMALL           MEDIUM           LARGE
+#  Block         2K    4500K            6800K           17000K
+#  Size          4K    5500K            8800K           21000K
+#
+# To set up a database that multiple instances will be using, place
+# all instance-specific parameters in one file, and then have all
+# of these files point to a master file using the IFILE command.
+# This way, when you change a public
+# parameter, it will automatically change on all instances.  This is 
+# necessary, since all instances must run with the same value for many
+# parameters. For example, if you choose to use private rollback segments, 
+# these must be specified in different files, but since all gc_* 
+# parameters must be the same on all instances, they should be in one file.
+#
+# INSTRUCTIONS: Edit this file and the other INIT files it calls for
+# your site, either by using the values provided here or by providing
+# your own.  Then place an IFILE= line into each instance-specific
+# INIT file that points at this file.
+#
+# NOTE: Parameter values suggested in this file are based on conservative
+# estimates for computer memory availability. You should adjust values upward
+# for modern machines.
+#
+# You may also consider using Database Configuration Assistant tool (DBCA)
+# to create INIT file and to size your initial set of tablespaces based
+# on the user input.
+###############################################################################
+
+db_name=fedora3
+
+# db_files = 80                                                         # SMALL  
+db_files = 400                                                      # MEDIUM 
+# db_files = 1500                                                     # LARGE  
+
+# db_file_multiblock_read_count = 8                                     # SMALL  
+db_file_multiblock_read_count = 16                                  # MEDIUM 
+# db_file_multiblock_read_count = 32                                  # LARGE  
+
+# db_block_buffers = 100                                                 # SMALL  
+db_block_buffers = 550                                              # MEDIUM 
+# db_block_buffers = 3200                                             # LARGE  
+
+# shared_pool_size = 3500000                                            # SMALL
+shared_pool_size = 65000000                                          # MEDIUM
+# shared_pool_size = 9000000                                          # LARGE
+
+log_checkpoint_interval = 10000
+
+processes = 50                                                        # SMALL  
+# processes = 100                                                     # MEDIUM 
+# processes = 200                                                     # LARGE  
+
+parallel_max_servers = 5                                              # SMALL
+# parallel_max_servers = 4 x (number of CPUs)                         # MEDIUM
+# parallel_max_servers = 4 x (number of CPUs)                         # LARGE
+
+# log_buffer = 32768                                                    # SMALL
+log_buffer = 32768                                                  # MEDIUM
+# log_buffer = 163840                                                 # LARGE
+
+# audit_trail = true            # if you want auditing
+# timed_statistics = true       # if you want timed statistics
+max_dump_file_size = 10240      # limit trace file size to 5 Meg each
+
+# Uncommenting the line below will cause automatic archiving if archiving has
+# been enabled using ALTER DATABASE ARCHIVELOG.
+# log_archive_start = true      
+# log_archive_dest = disk$rdbms:[oracle.archive]
+# log_archive_format = "T%TS%S.ARC"
+
+# If using private rollback segments, place lines of the following
+# form in each of your instance-specific init.ora files:
+# rollback_segments = (name1, name2)   
+
+# If using public rollback segments, define how many
+# rollback segments each instance will pick up, using the formula
+#   # of rollback segments = transactions / transactions_per_rollback_segment
+# In this example each instance will grab 40/5 = 8:
+# transactions = 40 
+# transactions_per_rollback_segment = 5 
+
+# Global Naming -- enforce that a dblink has same name as the db it connects to
+global_names = TRUE
+
+# Edit and uncomment the following line to provide the suffix that will be
+# appended to the db_name parameter (separated with a dot) and stored as the
+# global database name when a database is created.  If your site uses 
+# Internet Domain names for e-mail, then the part of your e-mail address after
+# the '@' is a good candidate for this parameter value.
+
+# db_domain = us.acme.com 	# global database name is db_name.db_domain
+
+# FOR DEVELOPMENT ONLY, ALWAYS TRY TO USE SYSTEM BACKING STORE
+# vms_sga_use_gblpagfil = TRUE
+
+# FOR BETA RELEASE ONLY.  Enable debugging modes.  Note that these can 
+# adversely affect performance.  On some non-VMS ports the db_block_cache_* 
+# debugging modes have a severe effect on performance. 
+
+#_db_block_cache_protect = true                       # memory protect buffers
+#event = "10210 trace name context forever, level 2" # data block checking
+#event = "10211 trace name context forever, level 2" # index block checking
+#event = "10235 trace name context forever, level 1" # memory heap checking
+#event = "10049 trace name context forever, level 2" # memory protect cursors
+
+# define parallel server (multi-instance) parameters
+#ifile = ora_system:initps.ora
+
+# define two control files by default
+control_files = (ora_control1, ora_control2)
+
+# Uncomment the following line if you wish to enable the Oracle Trace product
+# to trace server activity.  This enables scheduling of server collections
+# from the Oracle Enterprise Manager Console.  
+# Also, if the oracle_trace_collection_name parameter is non-null, 
+# every session will write to the named collection, as well as enabling you 
+# to schedule future collections from the console.
+
+# oracle_trace_enable = TRUE

@@ -3,36 +3,19 @@
  */
 
 /**
- * delete eSciDoc core database
+ * delete eSciDoc core users
  */   
-DROP DATABASE IF EXISTS "${escidoc.database.name}";
-
-/**
- * delete Fedora database
- */   
-DROP DATABASE IF EXISTS "${fedora.database.name}";
-
-/**
- * delete triple-store database
- */   
-DROP DATABASE IF EXISTS "riTriples";
-
-/**
- * delete eSciDoc DB user role
- */  
-DROP ROLE IF EXISTS "${escidoc.database.user}";
-
-/**
- * delete Fedora DB user role
- */  
-DROP ROLE IF EXISTS "${fedora.database.user}";
-
-/**
- * delete database scripting language
- */
-/* The following command is actually wrong, as it deletes the PLPGSQL language 
-   in the wrong database. Instead of the root database, it should be deleted in
-   the ${escidoc.database.name} database.
-   The installer takes care of this issue by directly executing the necessary
-   commands in database-init.xml */
-DROP LANGUAGE IF EXISTS plpgsql;
+begin execute immediate 'DROP USER ${escidoc.database.user} CASCADE'; exception when others then null; end;
+/
+begin execute immediate 'DROP USER aa CASCADE'; exception when others then null; end;
+/
+begin execute immediate 'DROP USER adm CASCADE'; exception when others then null; end;
+/
+begin execute immediate 'DROP USER oai CASCADE'; exception when others then null; end;
+/
+begin execute immediate 'DROP USER om CASCADE'; exception when others then null; end;
+/
+begin execute immediate 'DROP USER sm CASCADE'; exception when others then null; end;
+/
+begin execute immediate 'DROP USER st CASCADE'; exception when others then null; end;
+/

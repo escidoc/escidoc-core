@@ -28,46 +28,4 @@ INSERT INTO aa.scope_def
      'info:escidoc/names:aa:1.0:resource:content-relation-id',
      'content-relation');
         
-INSERT INTO aa.escidoc_policies (id, role_id, xml) VALUES ('escidoc:content-relation-modifier-policy-1', 'escidoc:role-content-relation-modifier', '
-<Policy PolicyId="ContentRelationModifier-policy" RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:ordered-permit-overrides">
-        <Target>
-            <Subjects>
-                <AnySubject/>
-            </Subjects>
-            <Resources>
-                <AnyResource/>
-            </Resources>
-            <Actions>
-                <Action>
-                    <ActionMatch MatchId="info:escidoc/names:aa:1.0:function:string-contains">
-                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
-                        info:escidoc/names:aa:1.0:action:delete-content-relation 
-                        info:escidoc/names:aa:1.0:action:retrieve-content-relation 
-                        info:escidoc/names:aa:1.0:action:update-content-relation 
-                        info:escidoc/names:aa:1.0:action:submit-content-relation 
-                        info:escidoc/names:aa:1.0:action:release-content-relation 
-                        info:escidoc/names:aa:1.0:action:revise-content-relation 
-                        info:escidoc/names:aa:1.0:action:withdraw-content-relation 
-                        info:escidoc/names:aa:1.0:action:lock-content-relation 
-                        info:escidoc/names:aa:1.0:action:unlock-content-relation 
-                        </AttributeValue>
-                        <ActionAttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
-                    </ActionMatch>
-                </Action>
-            </Actions>
-        </Target>
-        <Rule RuleId="ContentRelationModifier-policy-rule-1" Effect="Permit">
-            <Target>
-                <Subjects>
-                    <AnySubject/>
-                </Subjects>
-                <Resources>
-                    <AnyResource/>
-                </Resources>
-                <Actions>
-                    <AnyAction/>
-                </Actions>
-            </Target>
-        </Rule>
-    </Policy>');
   

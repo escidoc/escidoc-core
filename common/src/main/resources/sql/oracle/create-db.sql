@@ -1,66 +1,36 @@
 /**
  * Database initialization
- * RECHECK THIS AS riTriples NEEDS OTHER CHARACTER SET
+ * Prerequisite: Created Oracle Database with Characterset UTF8
  */
-ALTER DATABASE ${escidoc.database.name} CHARACTER SET UTF8;
 /**
- * create eSciDoc DB user and schemas
+ * create eSciDoc DB users and schemas
  */  
-CREATE USER "${escidoc.database.userid}" 
-IDENTIFIED BY '${escidoc.database.password}' 
-DEFAULT TABLESPACE USERS
-TEMPORARY TABLESPACE TEMP
-QUOTA UNLIMITED ON USERS; 
+CREATE USER ${escidoc.database.user} IDENTIFIED BY ${escidoc.database.password}; 
 
-GRANT CONNECT,RESOURCE, create any table TO "${escidoc.database.userid}";
+GRANT CONNECT, create any table, create any index, select any table, insert any table, create any procedure, UNLIMITED TABLESPACE TO ${escidoc.database.user};
 
-CREATE USER aa IDENTIFIED BY aa 
-DEFAULT TABLESPACE USERS 
-TEMPORARY TABLESPACE TEMP 
-QUOTA UNLIMITED ON USERS; 
+CREATE USER aa IDENTIFIED BY aa;
 
-CREATE USER adm IDENTIFIED BY adm 
-DEFAULT TABLESPACE USERS 
-TEMPORARY TABLESPACE TEMP 
-QUOTA UNLIMITED ON USERS; 
+GRANT UNLIMITED TABLESPACE TO aa;
 
-CREATE USER oai IDENTIFIED BY oai 
-DEFAULT TABLESPACE USERS 
-TEMPORARY TABLESPACE TEMP 
-QUOTA UNLIMITED ON USERS; 
+CREATE USER adm IDENTIFIED BY adm; 
 
-CREATE USER om IDENTIFIED BY om 
-DEFAULT TABLESPACE USERS 
-TEMPORARY TABLESPACE TEMP 
-QUOTA UNLIMITED ON USERS; 
+GRANT UNLIMITED TABLESPACE TO adm;
 
-CREATE USER sm IDENTIFIED BY sm 
-DEFAULT TABLESPACE USERS 
-TEMPORARY TABLESPACE TEMP 
-QUOTA UNLIMITED ON USERS; 
+CREATE USER oai IDENTIFIED BY oai; 
 
-CREATE USER st IDENTIFIED BY st 
-DEFAULT TABLESPACE USERS 
-TEMPORARY TABLESPACE TEMP 
-QUOTA UNLIMITED ON USERS; 
+GRANT UNLIMITED TABLESPACE TO oai;
 
+CREATE USER om IDENTIFIED BY om; 
 
-/**
- * create Fedora DB user role
- */  
-CREATE ROLE "${fedora.database.userid}" LOGIN 
-	PASSWORD '${fedora.database.password}' 
-	NOINHERIT CREATEDB VALID UNTIL 'infinity';    
+GRANT UNLIMITED TABLESPACE TO om;
 
-/**
- * create Fedora database
- */
-CREATE DATABASE "${fedora.database.name}" WITH ENCODING='UTF8' 
-	OWNER="${fedora.database.userid}";   
+CREATE USER sm IDENTIFIED BY sm; 
 
-/**
- * create triple-store database
- */ 
-CREATE DATABASE "riTriples" WITH ENCODING='SQL_ASCII' 
-	OWNER="${fedora.database.userid}" TEMPLATE=template0;
+GRANT UNLIMITED TABLESPACE TO sm;
+
+CREATE USER st IDENTIFIED BY st;
+
+GRANT UNLIMITED TABLESPACE TO st;
+
     

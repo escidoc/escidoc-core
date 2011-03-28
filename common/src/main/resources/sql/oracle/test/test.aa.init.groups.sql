@@ -18,7 +18,7 @@ INSERT INTO aa.user_group
 	 VALUES
 	('escidoc:testgroupwithuser',
 	'escidoc:testgroupwithuser',
-	true,
+	1,
     'Test Group with User',
     'Test Group that contains a user as member',
     'USER',
@@ -42,7 +42,7 @@ INSERT INTO aa.user_group
      VALUES
     ('escidoc:testgroupwithorgunit',
     'escidoc:testgroupwithorgunit',
-    true,
+    1,
     'Test Group with OrgUnit',
     'Test Group that contains an org unit as member',
     'OU',
@@ -66,7 +66,7 @@ INSERT INTO aa.user_group
      VALUES
     ('escidoc:testgroupwithgroup',
     'escidoc:testgroupwithgroup',
-    true,
+    1,
     'Test Group with Group',
     'Test Group that contains a Group as member',
     'GROUP',
@@ -90,7 +90,7 @@ INSERT INTO aa.user_group
      VALUES
     ('escidoc:testgroupwithuser1',
     'escidoc:testgroupwithuser1',
-    false,
+    0,
     'Test Group1 with User',
     'Test Group1 that contains a user as member',
     'USER',
@@ -123,7 +123,7 @@ INSERT INTO aa.user_group
      VALUES
     ('escidoc:testgroupwithorgunit1',
     'escidoc:testgroupwithorgunit1',
-    false,
+    0,
     'Test Group1 with OrgUnit',
     'Test Group1 that contains an org unit as member',
     'OU',
@@ -155,7 +155,7 @@ INSERT INTO aa.user_group
      VALUES
     ('escidoc:testgroupwithgroup1',
     'escidoc:testgroupwithgroup1',
-    false,
+    0,
     'Test Group1 with Group',
     'Test Group1 that contains a Group as member',
     'GROUP',
@@ -185,7 +185,7 @@ INSERT INTO aa.user_group
      VALUES
     ('escidoc:testgroupwithexternalselector1',
     'escidoc:testgroupwithexternalselector1',
-    false,
+    0,
     'Test Group1 with external selector',
     'Test Group1 that contains an external selector',
     'SHIB',
@@ -218,7 +218,7 @@ INSERT INTO aa.user_group
      VALUES
     ('escidoc:testgroup',
     'escidoc:testgroup',
-    true,
+    1,
     'Test Group',
     'Test Group with no members',
     'GROUP',
@@ -234,7 +234,7 @@ INSERT INTO aa.user_group
      VALUES
     ('escidoc:testgroupwithexternalselector',
     'escidoc:testgroupwithexternalselector',
-    true,
+    1,
     'Test Group with external selector',
     'Test Group that contains an external selector',
     'SHIB',
@@ -256,4 +256,4 @@ INSERT INTO aa.user_attribute
     'escidoc:test', 
     'testattribute', 
     'testvalue', 
-    true);
+    1);

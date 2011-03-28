@@ -74,7 +74,7 @@ INSERT INTO aa.user_account
 	(id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
 	 VALUES
 	('escidoc:testsystemadministrator',
-	true,
+	1,
     'Test System Administrator User',
     'testsystemadministrator',
     'escidoc',
@@ -86,7 +86,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testsystemadministratoremailattribute', 'escidoc:testsystemadministrator','email', 'test.systemadministrator@user', 'TRUE');
+    ('escidoc:testsystemadministratoremailattribute', 'escidoc:testsystemadministrator','email', 'test.systemadministrator@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -107,7 +107,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testsystemadministrator1',
-    true,
+    1,
     'Test System Administrator User1',
     'testsystemadministrator1',
     'escidoc',
@@ -119,7 +119,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testsystemadministratoremailattribute1', 'escidoc:testsystemadministrator1','email', 'test.systemadministrator@user', 'TRUE');
+    ('escidoc:testsystemadministratoremailattribute1', 'escidoc:testsystemadministrator1','email', 'test.systemadministrator@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -140,7 +140,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testadministrator',
-    true,
+    1,
     'Test Administrator User',
     'testadministrator',
     'escidoc',
@@ -152,7 +152,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testadministratoremailattribute', 'escidoc:testadministrator','email', 'test.administrator@user', 'TRUE');
+    ('escidoc:testadministratoremailattribute', 'escidoc:testadministrator','email', 'test.administrator@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -180,7 +180,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testouadministrator',
-    true,
+    1,
     'Test OU-Administrator User',
     'testouadministrator',
     'escidoc',
@@ -192,7 +192,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testouadministratoremailattribute', 'escidoc:testouadministrator','email', 'test.ouadministrator@user', 'TRUE');
+    ('escidoc:testouadministratoremailattribute', 'escidoc:testouadministrator','email', 'test.ouadministrator@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -220,7 +220,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testaudience',
-    true,
+    1,
     'Test Audience User',
     'testaudience',
     'escidoc',
@@ -232,7 +232,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testaudienceemailattribute', 'escidoc:testaudience','email', 'test.audience@user', 'TRUE');
+    ('escidoc:testaudienceemailattribute', 'escidoc:testaudience','email', 'test.audience@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -248,7 +248,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testauthor',
-    true,
+    1,
     'Test Author User',
     'testauthor',
     'escidoc',
@@ -260,7 +260,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testauthoremailattribute', 'escidoc:testauthor','email', 'test.author@user', 'TRUE');
+    ('escidoc:testauthoremailattribute', 'escidoc:testauthor','email', 'test.author@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -276,7 +276,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testcollaborator',
-    true,
+    1,
     'Test Collaborator User',
     'testcollaborator',
     'escidoc',
@@ -288,7 +288,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testcollaboratoremailattribute', 'escidoc:testcollaborator','email', 'test.collaborator@user', 'TRUE');
+    ('escidoc:testcollaboratoremailattribute', 'escidoc:testcollaborator','email', 'test.collaborator@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -304,7 +304,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testdepositor',
-    true,
+    1,
     'Test Depositor User',
     'testdepositor',
     'escidoc',
@@ -316,7 +316,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testdepositoremailattribute', 'escidoc:testdepositor','email', 'test.depositor@user', 'TRUE');
+    ('escidoc:testdepositoremailattribute', 'escidoc:testdepositor','email', 'test.depositor@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -344,7 +344,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testdepositor2',
-    true,
+    1,
     'Test Depositor User2',
     'testdepositor2',
     'escidoc',
@@ -356,7 +356,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testdepositor2emailattribute', 'escidoc:testdepositor2','email', 'test.depositor2@user', 'TRUE');
+    ('escidoc:testdepositor2emailattribute', 'escidoc:testdepositor2','email', 'test.depositor2@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -383,7 +383,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testdepositor3',
-    true,
+    1,
     'Test Depositor User3',
     'testdepositor3',
     'escidoc',
@@ -395,7 +395,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testdepositor3emailattribute', 'escidoc:testdepositor3','email', 'test.depositor3@user', 'TRUE');
+    ('escidoc:testdepositor3emailattribute', 'escidoc:testdepositor3','email', 'test.depositor3@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -422,7 +422,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testingester',
-    true,
+    1,
     'Test Ingester User',
     'testingester',
     'escidoc',
@@ -434,7 +434,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testingesteremailattribute', 'escidoc:testingester','email', 'test.ingester@user', 'TRUE');
+    ('escidoc:testingesteremailattribute', 'escidoc:testingester','email', 'test.ingester@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -450,7 +450,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testmdeditor',
-    true,
+    1,
     'Test Md-Editor User',
     'testmdeditor',
     'escidoc',
@@ -462,7 +462,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testsymdeditoremailattribute', 'escidoc:testmdeditor','email', 'test.mdeditor@user', 'TRUE');
+    ('escidoc:testsymdeditoremailattribute', 'escidoc:testmdeditor','email', 'test.mdeditor@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -490,7 +490,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testmoderator',
-    true,
+    1,
     'Test Moderator User',
     'testmoderator',
     'escidoc',
@@ -502,7 +502,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testmoderatoremailattribute', 'escidoc:testmoderator','email', 'test.moderator@user', 'TRUE');
+    ('escidoc:testmoderatoremailattribute', 'escidoc:testmoderator','email', 'test.moderator@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -530,7 +530,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testcontextadministrator',
-    true,
+    1,
     'Test Context-Administrator User',
     'testcontextadministrator',
     'escidoc',
@@ -542,7 +542,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testcontextadministratoremailattribute', 'escidoc:testcontextadministrator','email', 'test.contextadministrator@user', 'TRUE');
+    ('escidoc:testcontextadministratoremailattribute', 'escidoc:testcontextadministrator','email', 'test.contextadministrator@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -567,7 +567,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testcontentrelationmanager',
-    true,
+    1,
     'Test Content-Relation-Manager User',
     'testcontentrelationmanager',
     'escidoc',
@@ -579,7 +579,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testcontentrelationmanageremailattribute', 'escidoc:testcontentrelationmanager','email', 'test.contentrelationmanager@user', 'TRUE');
+    ('escidoc:testcontentrelationmanageremailattribute', 'escidoc:testcontentrelationmanager','email', 'test.contentrelationmanager@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -604,7 +604,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testprivilegedviewer',
-    true,
+    1,
     'Test Privileged-Viewer User',
     'testprivilegedviewer',
     'escidoc',
@@ -616,7 +616,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testprivilegedvieweremailattribute', 'escidoc:testprivilegedviewer','email', 'test.privilegedviewer@user', 'TRUE');
+    ('escidoc:testprivilegedvieweremailattribute', 'escidoc:testprivilegedviewer','email', 'test.privilegedviewer@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -644,7 +644,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:teststatisticseditor',
-    true,
+    1,
     'Test Statistics-Editor User',
     'teststatisticseditor',
     'escidoc',
@@ -656,7 +656,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:teststatisticseditoremailattribute', 'escidoc:teststatisticseditor','email', 'test.statisticseditor@user', 'TRUE');
+    ('escidoc:teststatisticseditoremailattribute', 'escidoc:teststatisticseditor','email', 'test.statisticseditor@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -684,7 +684,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:teststatisticsreader',
-    true,
+    1,
     'Test Statistics-Reader User',
     'teststatisticsreader',
     'escidoc',
@@ -696,7 +696,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:teststatisticsreaderemailattribute', 'escidoc:teststatisticsreader','email', 'test.statisticsreader@user', 'TRUE');
+    ('escidoc:teststatisticsreaderemailattribute', 'escidoc:teststatisticsreader','email', 'test.statisticsreader@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -724,7 +724,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:testsysteminspector',
-    true,
+    1,
     'Test System-Inspector User',
     'testsysteminspector',
     'escidoc',
@@ -736,7 +736,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testsysteminspectoremailattribute', 'escidoc:testsysteminspector','email', 'test.systeminspector@user', 'TRUE');
+    ('escidoc:testsysteminspectoremailattribute', 'escidoc:testsysteminspector','email', 'test.systeminspector@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -750,7 +750,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:test',
-    true,
+    1,
     'Test User',
     'test',
     'escidoc',
@@ -762,7 +762,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testemailattribute', 'escidoc:test','email', 'test.test@user', 'TRUE');
+    ('escidoc:testemailattribute', 'escidoc:test','email', 'test.test@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)
@@ -772,7 +772,7 @@ INSERT INTO aa.user_login_data
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:testouattribute', 'escidoc:test','o', 'escidoc:persistent31', 'TRUE');
+    ('escidoc:testouattribute', 'escidoc:test','o', 'escidoc:persistent31', '1');
 
 
 
@@ -783,7 +783,7 @@ INSERT INTO aa.user_account
     (id, active, name, loginName, password, creator_id, creation_date, modified_by_id, last_modification_date)
      VALUES
     ('escidoc:test1',
-    true,
+    1,
     'Test User1',
     'test1',
     'escidoc',
@@ -795,7 +795,7 @@ INSERT INTO aa.user_account
 INSERT INTO aa.user_attribute
     (id, user_id, name, value, internal)
      VALUES
-    ('escidoc:test1emailattribute', 'escidoc:test1','email', 'test.test1@user', 'TRUE');
+    ('escidoc:test1emailattribute', 'escidoc:test1','email', 'test.test1@user', '1');
 
 INSERT INTO aa.user_login_data
     (id, user_id, handle, expiryts)

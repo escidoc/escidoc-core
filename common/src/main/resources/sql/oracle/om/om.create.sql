@@ -1,11 +1,9 @@
-CREATE SCHEMA om;
-
 CREATE TABLE om.lockstatus
 (
-  objid VARCHAR(255) NOT NULL,
-  owner VARCHAR(255) NULL,
-  ownertitle VARCHAR(255) NOT NULL,
-  locked BOOLEAN NOT NULL,
-  lock_timestamp TIMESTAMP NOT NULL DEFAULT now(),
+  objid VARCHAR2(255) NOT NULL,
+  owner VARCHAR2(255),
+  ownertitle VARCHAR2(255) NOT NULL,
+  locked NUMBER(1,0) NOT NULL,
+  lock_timestamp TIMESTAMP DEFAULT SYSDATE NOT NULL,
   CONSTRAINT lockstatus_pkey PRIMARY KEY (objid)
 );
