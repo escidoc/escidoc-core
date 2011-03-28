@@ -32,7 +32,7 @@ VALUES
         Session1
         </stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -54,7 +54,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session1</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -76,7 +76,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session2</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -98,7 +98,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session2</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -120,7 +120,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session2</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -142,7 +142,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session1</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -170,7 +170,7 @@ VALUES
         Session1
         </stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-02 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-02 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -192,7 +192,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session1</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-02 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-02 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -214,7 +214,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session2</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-02 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-02 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -236,7 +236,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session2</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-02 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-02 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -258,7 +258,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session2</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-02 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-02 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -280,7 +280,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session1</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2000-01-02 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2000-01-02 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -308,7 +308,7 @@ VALUES
         Session1
         </stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2009-02-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2009-02-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -330,7 +330,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session1</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2009-02-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2009-02-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -352,7 +352,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session2</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2009-02-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2009-02-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -374,7 +374,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session2</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2009-02-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2009-02-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -396,7 +396,7 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session2</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2009-02-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2009-02-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
 INSERT INTO sm.statistic_data (id, xml_data, scope_id, timemarker) 
 VALUES
@@ -418,5 +418,5 @@ VALUES
     <parameter name="session_id">
         <stringvalue>Session1</stringvalue>
     </parameter>
-</statistic-record>', 'escidoc:scope4', '2009-02-01 08:00:00');
+</statistic-record>', 'escidoc:scope4', TO_DATE('2009-02-01 08:00:00','YYYY-MM-DD HH24:MI:SS'));
 
