@@ -88,9 +88,6 @@ public class ItemHandlerBase extends HandlerBase {
         .compile("fedora.server.errors.ObjectIntegrityException: "
             + "FOXML IO stream was bad : Malformed URL");
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        ItemHandlerBase.class);
-
     private Item item;
 
     private Item originItem;

@@ -59,12 +59,6 @@ import de.escidoc.core.common.util.xml.factory.XmlTemplateProvider;
 public class VelocityXmlRoleRenderer extends AbstractRenderer
     implements RoleRendererInterface {
 
-    /** The logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        VelocityXmlRoleRenderer.class);
-
-
-
     /**
      * See Interface for functional description.
      * 

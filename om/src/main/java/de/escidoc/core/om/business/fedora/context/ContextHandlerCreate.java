@@ -79,9 +79,6 @@ import java.util.Map.Entry;
  */
 public class ContextHandlerCreate extends ContextHandlerRetrieve {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        ContextHandlerCreate.class);
-
     private static final String XPATH_PROPERTIES = "/context/properties";
 
     private static final String XPATH_RESOURCES = "/context/resources";

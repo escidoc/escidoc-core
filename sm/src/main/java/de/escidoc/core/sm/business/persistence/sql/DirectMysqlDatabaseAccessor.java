@@ -73,9 +73,6 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     
     //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumeric)
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(DirectMysqlDatabaseAccessor.class);
-
     private static final String TIMESTAMP_FIELD_TYPE = "DATETIME";
 
     private static final String TEXT_FIELD_TYPE = "TEXT";

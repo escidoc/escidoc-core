@@ -80,11 +80,7 @@ import de.escidoc.core.om.business.interfaces.ContextHandlerInterface;
 public class FedoraContextHandler extends ContextHandlerUpdate
     implements ContextHandlerInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        FedoraContextHandler.class);
-
-    private final Collection<ResourceListener> contextListeners =
-        new ArrayList<ResourceListener>();
+    private final Collection<ResourceListener> contextListeners = new ArrayList<ResourceListener>();
 
     private FedoraContentRelationHandler contentRelationHandler;
 

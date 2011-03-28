@@ -69,9 +69,6 @@ import java.util.Map;
 public class ReportDefinitionHandler
     implements ReportDefinitionHandlerInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        ReportDefinitionHandler.class);
-
     private SmReportDefinitionsDaoInterface dao;
 
     private SmScopesDaoInterface scopesDao;

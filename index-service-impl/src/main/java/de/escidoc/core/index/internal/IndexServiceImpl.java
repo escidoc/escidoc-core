@@ -11,8 +11,6 @@ import org.apache.commons.logging.LogFactory;
 
 public class IndexServiceImpl {
 
-    private static final Log LOG = LogFactory.getLog(IndexServiceImpl.class);
-
     private IndexingHandler indexingHandler;
     private AdminHandlerInterface adminHandler;
 

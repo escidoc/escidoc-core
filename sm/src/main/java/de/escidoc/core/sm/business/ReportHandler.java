@@ -55,8 +55,6 @@ import java.util.regex.Matcher;
  */
 public class ReportHandler implements ReportHandlerInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReportHandler.class);
-
     private SmReportDefinitionsDaoInterface dao;
 
     private DirectDatabaseAccessorInterface dbAccessor;

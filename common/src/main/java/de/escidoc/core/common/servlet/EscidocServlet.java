@@ -111,11 +111,6 @@ public class EscidocServlet extends HttpServlet {
     private static final String HTML_RESPONSE_CONTENT_TYPE =
         "text/html; charset=" + XmlUtility.CHARACTER_ENCODING;
 
-    /**
-     * Buffer size for copying binary content into output stream.
-     */
-    private static final int BUFFER_SIZE = 0xFFFF;
-
     /** The LOGGER. */
     private static final Logger LOGGER = LoggerFactory.getLogger(
         EscidocServlet.class);

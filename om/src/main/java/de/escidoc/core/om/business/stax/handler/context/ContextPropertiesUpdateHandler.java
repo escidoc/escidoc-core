@@ -59,9 +59,6 @@ import java.util.Map;
  */
 public class ContextPropertiesUpdateHandler extends DefaultHandler {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ContextPropertiesUpdateHandler.class);
-
     private final StaxParser parser;
 
     private String propertiesPath = "/context/properties";

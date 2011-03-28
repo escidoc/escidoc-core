@@ -53,12 +53,6 @@ import java.util.regex.Pattern;
 public class LockOwnerAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        LockOwnerAttributeFinderModule.class);
-
     private static final Pattern PATTERN_VALID_ATTRIBUTE_ID = Pattern
         .compile(AttributeIds.CONTAINER_ATTR_PREFIX + "lock-owner|"
             + AttributeIds.ITEM_ATTR_PREFIX + "lock-owner");

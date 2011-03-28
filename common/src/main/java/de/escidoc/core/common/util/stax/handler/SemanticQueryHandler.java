@@ -38,8 +38,6 @@ public class SemanticQueryHandler extends DefaultHandler {
 
     private String format;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SemanticQueryHandler.class);
-
     @Override
     public String characters(final String data, final StartElement element)
         throws MissingElementValueException {

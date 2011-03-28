@@ -43,9 +43,6 @@ import de.escidoc.core.common.util.string.StringUtility;
  */
 public class ContextHandlerDelete extends ContextHandlerCreate {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        ContextHandlerDelete.class);
-
     /**
      * Removes an context from repository.
      * 

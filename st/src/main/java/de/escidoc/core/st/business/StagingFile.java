@@ -44,9 +44,7 @@ import java.io.OutputStream;
  * @author Torsten Tetteroo
  *
  */
-public class StagingFile
-    extends de.escidoc.core.st.business.persistence.StagingFile {
-    private static final int BUFFER_SIZE = 0xFFFF;
+public class StagingFile extends de.escidoc.core.st.business.persistence.StagingFile {
 
     /**
      * Checks if this staging file has an associated file in the file system.

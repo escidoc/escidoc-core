@@ -55,9 +55,6 @@ import java.util.regex.Pattern;
 public class ResourceNotFoundAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ResourceNotFoundAttributeFinderModule.class);
-
     /**
      * Pattern matching object-type attribute ids or resource identifiers
      * (...-id) attribute ids.

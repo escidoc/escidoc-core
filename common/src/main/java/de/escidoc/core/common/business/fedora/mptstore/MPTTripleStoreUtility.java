@@ -65,9 +65,6 @@ import java.util.Set;
  */
 public class MPTTripleStoreUtility extends TripleStoreUtility {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        MPTTripleStoreUtility.class);
-
     private TableManager tableManager;
 
     /**

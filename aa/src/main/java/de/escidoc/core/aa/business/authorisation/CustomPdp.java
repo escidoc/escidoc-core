@@ -83,11 +83,6 @@ import java.util.Set;
  */
 public class CustomPdp {
 
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomPdp.class);
-
     // this is the actual PDP object we'll use for evaluation
     private PDP pdp;
 

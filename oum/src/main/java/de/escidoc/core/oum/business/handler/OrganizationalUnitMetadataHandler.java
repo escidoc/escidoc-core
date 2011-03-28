@@ -74,9 +74,6 @@ public class OrganizationalUnitMetadataHandler
 
     private String escidocMetadataRecordNameSpace;
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(OrganizationalUnitMetadataHandler.class);
-
     private final Map<String, Map<String, String>> metadataAttributes =
         new HashMap<String, Map<String, String>>();
 

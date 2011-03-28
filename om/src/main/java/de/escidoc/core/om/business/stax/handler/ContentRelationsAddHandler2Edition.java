@@ -66,13 +66,9 @@ public class ContentRelationsAddHandler2Edition extends DefaultHandler {
 
     private String predicate;
 
-    private final List<Map<String, String>> relationsData =
-        new ArrayList<Map<String, String>>();
+    private final List<Map<String, String>> relationsData = new ArrayList<Map<String, String>>();
 
     private final Collection<String> relationsDataCheck = new ArrayList<String>();
-
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ContentRelationsAddHandler2Edition.class);
 
     public ContentRelationsAddHandler2Edition(final StaxParser parser, final String id) {
         this.parser = parser;

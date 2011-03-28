@@ -54,8 +54,6 @@ import java.util.List;
  */
 public class XacmlPolicySet extends PolicySet implements Serializable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(XacmlPolicySet.class);
-
     private static final CombiningAlgFactory factory = CombiningAlgFactory
         .getInstance();
 

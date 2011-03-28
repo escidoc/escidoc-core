@@ -105,9 +105,6 @@ public class Reindexer {
             + "www.w3.org/1999/02/22-rdf-syntax-ns%23type%3e%20%3c"
             + ResourceType.OU.getUri() + "%3e";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        Reindexer.class);
-
     private FedoraUtility fedoraUtility;
 
     private IndexService indexService;

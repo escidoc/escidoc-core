@@ -66,9 +66,6 @@ import java.io.ByteArrayInputStream;
  */
 public class ContainerHandlerPid extends ContainerHandlerCreate {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        ContainerHandlerPid.class);
-
     private PIDSystemFactory pidGenFactory;
 
     private PIDSystem pidGen;

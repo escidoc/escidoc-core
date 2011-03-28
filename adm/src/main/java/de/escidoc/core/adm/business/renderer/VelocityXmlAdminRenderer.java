@@ -48,14 +48,7 @@ import java.util.Set;
  * 
  * @author Michael Hoppe
  */
-public class VelocityXmlAdminRenderer 
-    implements AdminRendererInterface {
-
-    /** The logger. */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(VelocityXmlAdminRenderer.class);
-
-
+public class VelocityXmlAdminRenderer implements AdminRendererInterface {
 
     /**
      * See Interface for functional description.

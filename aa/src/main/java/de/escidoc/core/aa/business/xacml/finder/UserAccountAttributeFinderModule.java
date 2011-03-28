@@ -154,10 +154,6 @@ public class UserAccountAttributeFinderModule
     private static final Pattern PATTERN_IS_SUBJECT_ATTRIBUTE_ID = Pattern
         .compile(AttributeIds.SUBJECT_ATTR_PREFIX + ".*");
 
-    /** The logger. */
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        UserAccountAttributeFinderModule.class);
-
     /**
      * Attributes can have USER_ACCOUNT_ATTR_PREFIX
      * (info:escidoc/names:aa:1.0:resources:user-account:) or

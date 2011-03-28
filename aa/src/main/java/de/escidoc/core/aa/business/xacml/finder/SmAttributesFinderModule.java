@@ -76,12 +76,6 @@ import java.util.regex.Pattern;
  */
 public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
 
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(SmAttributesFinderModule.class);
-
     private static final String ATTR_SCOPE = "scope";
 
     // private static final String ATTR_CREATED_BY = "created-by";

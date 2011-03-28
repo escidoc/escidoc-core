@@ -38,8 +38,6 @@ import java.net.URL;
  */
 public class BinaryContent {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BinaryContent.class);
-
     /**
      * External Storage URL or External Storage Managed.
      */

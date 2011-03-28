@@ -61,8 +61,6 @@ import java.util.Properties;
  * @author André Schenk
  */
 public class AdminHandler {
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        AdminHandler.class);
 
     private Examples examples;
 

@@ -43,9 +43,6 @@ import java.util.Map;
  */
 public class ResourceDefinitionCreate {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        ResourceDefinitionCreate.class);
-
     private String name;
 
     private String xsltHref;

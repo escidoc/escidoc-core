@@ -124,8 +124,6 @@ public class MultipleExtractor extends WriteHandler {
 
     private StartElementWithChildElements elementToDelete;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MultipleExtractor.class);
-
     /**
      * Creates a instance of MultipleExtractor.
      * 

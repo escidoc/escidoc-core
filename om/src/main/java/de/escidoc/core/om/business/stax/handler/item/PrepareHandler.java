@@ -61,9 +61,6 @@ public class PrepareHandler extends DefaultHandler {
 
     private int componentNumber;
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(PrepareHandler.class);
-
     public PrepareHandler(final StaxParser parser) {
         this.parser = parser;
     }

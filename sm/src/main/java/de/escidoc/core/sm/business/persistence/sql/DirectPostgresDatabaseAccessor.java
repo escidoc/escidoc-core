@@ -75,8 +75,6 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     
     //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumeric)
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DirectPostgresDatabaseAccessor.class);
-
     private static final String TIMESTAMP_FIELD_TYPE = "timestamp";
 
     private static final String TEXT_FIELD_TYPE = "text";

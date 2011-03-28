@@ -66,17 +66,13 @@ import java.util.Map;
  */
 public class ContextPropertiesHandler extends DefaultHandler {
 
-    private final Map<String, Object> propertiesMap =
-        new HashMap<String, Object>();
+    private final Map<String, Object> propertiesMap = new HashMap<String, Object>();
 
     private final StaxParser parser;
 
     private String propertiesPath = "/context/properties";
 
     private final List<String> orgunits = new ArrayList<String>();
-
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ContextPropertiesHandler.class);
 
     /**
      * 

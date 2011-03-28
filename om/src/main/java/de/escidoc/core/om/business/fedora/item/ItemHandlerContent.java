@@ -73,9 +73,6 @@ import java.util.regex.Pattern;
  */
 public class ItemHandlerContent extends ItemHandlerUpdate {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ItemHandlerContent.class);
-
     private static final String TRANSFORM_SERVICE_DIGILIB = "digilib";
 
     private static final String TRANSFORM_DIGILIB_CLIENT = "digimage";

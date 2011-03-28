@@ -59,9 +59,6 @@ public class StructMapCreateHandler extends DefaultHandler {
 
     private final List<String> entries = new ArrayList<String>();
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(StructMapCreateHandler.class);
-
     /**
      * Struct Map Handler.
      * 

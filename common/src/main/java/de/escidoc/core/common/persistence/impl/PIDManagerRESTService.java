@@ -65,9 +65,6 @@ import java.net.URL;
  */
 public class PIDManagerRESTService implements PIDSystem {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(PIDManagerRESTService.class);
-
     private String pidGeneratorServer;
 
     private String separator = "/";

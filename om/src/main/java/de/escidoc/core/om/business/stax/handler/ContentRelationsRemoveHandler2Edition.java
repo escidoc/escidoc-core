@@ -47,8 +47,6 @@ import java.util.Map;
 
 public class ContentRelationsRemoveHandler2Edition extends DefaultHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationsRemoveHandler2Edition.class);
-
     private final StaxParser parser;
 
     private boolean inRelation;

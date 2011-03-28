@@ -50,8 +50,6 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
     private String predicate;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MultipleExtractor.class);
-
     public RelsExtContentRelationsReadHandler(final StaxParser parser) {
         this.parser = parser;
     }

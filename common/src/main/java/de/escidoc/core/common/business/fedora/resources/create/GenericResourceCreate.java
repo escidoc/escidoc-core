@@ -42,8 +42,6 @@ import java.util.Map;
  */
 public abstract class GenericResourceCreate {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenericResourceCreate.class);
-
     private String objid;
 
     private String buildNumber;

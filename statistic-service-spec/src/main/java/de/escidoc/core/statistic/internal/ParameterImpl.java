@@ -27,8 +27,6 @@ import java.util.GregorianCalendar;
 })
 public class ParameterImpl implements Parameter {
 
-    private static final Log LOG = LogFactory.getLog(ParameterImpl.class);
-
     private static final String VALUE_FALSE = "0"; // NON-NLS
     private static final String VALUE_TRUE = "1"; // NON-NLS
 

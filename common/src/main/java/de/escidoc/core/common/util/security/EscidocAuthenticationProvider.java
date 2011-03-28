@@ -36,12 +36,6 @@ import org.springframework.security.userdetails.UserDetails;
  */
 public class EscidocAuthenticationProvider implements AuthenticationProvider {
 
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(EscidocAuthenticationProvider.class);
-
     private EscidocUserDetailsServiceInterface escidocUserDetailsService;
 
 

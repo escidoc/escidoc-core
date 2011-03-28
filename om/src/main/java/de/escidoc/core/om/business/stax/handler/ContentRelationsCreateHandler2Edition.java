@@ -59,8 +59,6 @@ public class ContentRelationsCreateHandler2Edition extends DefaultHandler {
 
     public static final String CONTAINER = "/container";
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContentRelationsCreateHandler2Edition.class);
-
     private final StaxParser parser;
 
     private boolean inContentRelation;

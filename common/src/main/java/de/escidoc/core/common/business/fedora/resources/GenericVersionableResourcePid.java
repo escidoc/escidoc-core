@@ -72,8 +72,6 @@ import java.util.regex.Pattern;
  */
 public class GenericVersionableResourcePid extends GenericVersionableResource {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenericVersionableResourcePid.class);
-
     private static final Pattern LATEST_RELEASE_PID_ENTRY =
         Pattern.compile("<[^:]+:" + TripleStoreUtility.PROP_LATEST_RELEASE_PID
             + "[^>]>[^<]</[^:]+:" + TripleStoreUtility.PROP_LATEST_RELEASE_PID

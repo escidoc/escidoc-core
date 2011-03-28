@@ -67,9 +67,6 @@ public class MetadataHandler extends DefaultHandler {
 
     private String mdRecordsPath;
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(MetadataHandler.class);
-
     private final Map<String, Map<String, String>> metadataAttributes =
         new HashMap<String, Map<String, String>>();
 

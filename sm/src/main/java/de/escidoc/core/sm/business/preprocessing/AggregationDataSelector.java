@@ -57,9 +57,6 @@ import java.util.List;
  * @author Michael Hoppe
  */
 public class AggregationDataSelector {
-
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(AggregationDataSelector.class);
     
     private DirectDatabaseAccessorInterface dbAccessor;
 

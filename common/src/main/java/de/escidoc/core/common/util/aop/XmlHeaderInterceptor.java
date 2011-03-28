@@ -40,12 +40,6 @@ import java.util.regex.Pattern;
 @Aspect
 public class XmlHeaderInterceptor implements Ordered {
 
-    /**
-     * The logger.
-     */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(XmlHeaderInterceptor.class);
-
     private static final Pattern PATTERN_XML_HEADER =
         Pattern.compile("<\\?xml version=[^>]+\\?>");
 

@@ -50,8 +50,6 @@ public class MdRecordCreate implements Serializable {
 
     private static final long serialVersionUID = 1123744337465781247L;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MdRecordCreate.class);
-
     private final RepositoryIndicator ri = new RepositoryIndicator();
 
     private String content;

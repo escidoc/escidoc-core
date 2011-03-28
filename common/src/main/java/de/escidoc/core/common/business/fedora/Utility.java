@@ -106,8 +106,6 @@ import java.util.regex.Pattern;
  */
 public class Utility {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Utility.class);
-
     private StagingFileHandlerInterface stagingFileHandler;
 
     private TripleStoreUtility tripleStoreUtility;

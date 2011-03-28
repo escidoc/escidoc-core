@@ -43,14 +43,6 @@ import java.lang.reflect.Method;
 public class ParameterCheckInterceptor implements Ordered {
 
     /**
-     * The logger.
-     */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ParameterCheckInterceptor.class);
-
-
-
-    /**
      * See Interface for functional description.
      * 
      * @return

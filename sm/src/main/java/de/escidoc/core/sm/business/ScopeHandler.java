@@ -58,9 +58,6 @@ import java.util.Map;
  */
 public class ScopeHandler implements ScopeHandlerInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        ScopeHandler.class);
-
     private SmScopesDaoInterface dao;
 
     private SmFilterUtility filterUtility;

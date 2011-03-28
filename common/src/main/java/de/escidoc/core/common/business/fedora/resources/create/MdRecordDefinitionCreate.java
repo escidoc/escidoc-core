@@ -47,8 +47,6 @@ import java.util.Map;
  */
 public class MdRecordDefinitionCreate {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MdRecordDefinitionCreate.class);
-
     private ByteArrayOutputStream mdRecordDefinition;
 
     private String mdRecordDefinitionName;

@@ -45,20 +45,12 @@ public class GroupCreateUpdateHandler extends DefaultHandler {
 
     private boolean inProperties;
 
-  
     private final StaxParser parser;
 
-    private final Map<String, String> groupProperties =
-        new HashMap<String, String>();
+    private final Map<String, String> groupProperties = new HashMap<String, String>();
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(GroupCreateUpdateHandler.class);
-
-    /*
-     * 
-     */public GroupCreateUpdateHandler(final StaxParser parser) {
+    public GroupCreateUpdateHandler(final StaxParser parser) {
         this.parser = parser;
-
     }
 
     @Override

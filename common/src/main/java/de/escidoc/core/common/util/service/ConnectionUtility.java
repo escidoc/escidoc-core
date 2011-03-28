@@ -85,9 +85,6 @@ import java.util.regex.Pattern;
  */
 public class ConnectionUtility {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        ConnectionUtility.class);
-
     private static final int HTTP_MAX_CONNECTIONS_PER_HOST = 30;
 
     private static final int HTTP_MAX_TOTAL_CONNECTIONS_FACTOR = 3;

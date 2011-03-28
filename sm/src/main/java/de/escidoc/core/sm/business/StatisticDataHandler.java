@@ -48,9 +48,6 @@ import org.apache.camel.ProducerTemplate;
  */
 public class StatisticDataHandler implements StatisticDataHandlerInterface {
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(StatisticDataHandler.class);
-
     private SmStatisticDataDaoInterface dao;
 
     private SmXmlUtility xmlUtility;

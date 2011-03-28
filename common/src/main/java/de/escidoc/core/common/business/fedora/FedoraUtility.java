@@ -95,16 +95,6 @@ import java.util.regex.Pattern;
 @ManagedResource(objectName = "eSciDocCore:name=FedoraUtility", description = "The utility class to access the fedora repository.", log = true, logFile = "jmx.log", currencyTimeLimit = 15)
 public class FedoraUtility implements InitializingBean {
 
-    // taken from method preventWrongLogging to make them static final
-    private static final Pattern PATTERN_ERROR_GETTING =
-        Pattern.compile(
-            "fedora.server.errors.GeneralException: Error getting",
-            Pattern.CASE_INSENSITIVE);
-    private static final Pattern PATTERN_MALFORMED_URL =
-        Pattern.compile("fedora.server.errors.ObjectIntegrityException: "
-            + "FOXML IO stream was bad : Malformed URL");
-
-    
     public static final String DATASTREAM_STATUS_DELETED = "D";
 
     public static final int SYNC_RETRIES = 10;

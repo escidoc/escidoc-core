@@ -52,15 +52,9 @@ public class SetDefinitionCreateHandler extends DefaultHandler {
   
     private final StaxParser parser;
 
-    private final Map<String, String> setDefinitionProperties =
-        new HashMap<String, String>();
+    private final Map<String, String> setDefinitionProperties = new HashMap<String, String>();
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(SetDefinitionCreateHandler.class);
-
-    /*
-     * 
-     */public SetDefinitionCreateHandler(final StaxParser parser) {
+    public SetDefinitionCreateHandler(final StaxParser parser) {
         this.parser = parser;
 
     }

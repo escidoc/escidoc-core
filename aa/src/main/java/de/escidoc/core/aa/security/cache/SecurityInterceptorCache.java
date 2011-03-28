@@ -49,12 +49,6 @@ import java.util.TreeMap;
 public class SecurityInterceptorCache {
 
     /**
-     * The logger.
-     */
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(SecurityInterceptorCache.class);
-
-    /**
      * Cache for method mappings.
      * 
      *

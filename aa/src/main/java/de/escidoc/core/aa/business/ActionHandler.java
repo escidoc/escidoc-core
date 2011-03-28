@@ -57,11 +57,6 @@ import java.io.ByteArrayInputStream;
 public class ActionHandler implements ActionHandlerInterface {
 
     /**
-     * The logger.
-     */
-    private static final Logger LOGGER = LoggerFactory.getLogger(ActionHandler.class);
-
-    /**
      * The data access object to access action data.
      */
     private ActionDaoInterface actionDao;

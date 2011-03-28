@@ -71,9 +71,6 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
 
     private final List<String> relationsData = new ArrayList<String>();
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(ContentRelationsUpdateHandler2Edition.class);
-
     /**
      * Instantiate a ContentRelationsCreateHandler.
      * 

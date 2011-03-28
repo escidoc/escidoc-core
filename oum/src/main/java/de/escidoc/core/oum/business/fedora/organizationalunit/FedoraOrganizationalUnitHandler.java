@@ -97,9 +97,6 @@ public class FedoraOrganizationalUnitHandler
     extends OrganizationalUnitHandlerUpdate
     implements OrganizationalUnitHandlerInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        FedoraOrganizationalUnitHandler.class);
-
     /** SRU request. */
     private SRURequest sruRequest;
 

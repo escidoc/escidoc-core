@@ -62,9 +62,6 @@ public class OneComponentContentHandler extends DefaultHandler {
 
     private boolean inContent;
 
-    private static final Logger LOGGER =
-        LoggerFactory.getLogger(OneComponentContentHandler.class);
-
     /**
      * OneComponentContentHandler.
      * 

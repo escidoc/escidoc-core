@@ -12,8 +12,6 @@ import de.escidoc.core.statistic.StatisticServiceException;
  */
 public class StatisticServiceImpl {
 
-    private static final Log LOG = LogFactory.getLog(StatisticServiceImpl.class);
-
     private StatisticDataHandlerInterface statisticDataHandler;
 
     /**

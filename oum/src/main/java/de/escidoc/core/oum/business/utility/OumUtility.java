@@ -49,8 +49,6 @@ public class OumUtility {
 
     private final Collection<String> closed;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OumUtility.class);
-
     /**
      * 
      * Constructor.

@@ -53,8 +53,7 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
 
     private static final String DATA_PATH = CONTENT_RELATION_PATH;
 
-    private static final String CONTENT_RELATION_RESOURCE_NAME =
-        "content-relation";
+    private static final String CONTENT_RELATION_RESOURCE_NAME = "content-relation";
 
     private static final String RESOURCE_WITHDRAWN_NAME = "withdrawn";
 
@@ -71,9 +70,6 @@ public final class ContentRelationXmlProvider extends InfrastructureXmlProvider 
     public static final String MD_RECORD_PATH = COMMON_PATH;
 
     private static final ContentRelationXmlProvider PROVIDER = new ContentRelationXmlProvider();
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(
-        ContentRelationXmlProvider.class);
 
     /**
      * Private constructor to prevent initialization.
