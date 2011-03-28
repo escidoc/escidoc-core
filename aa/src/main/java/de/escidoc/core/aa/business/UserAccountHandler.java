@@ -2813,7 +2813,7 @@ public class UserAccountHandler
                         
                         @Override
                         public String toString() {
-                            return "[userId=" + getUserId() + ",roleId=" + getRoleId() + "]";
+                            return "[userId=" + getUserId() + ",roleId=" + getRoleId() + ']';
                         }
                     }) + "</filter>");
     }
