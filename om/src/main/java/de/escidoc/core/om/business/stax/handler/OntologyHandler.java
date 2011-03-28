@@ -34,8 +34,11 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.xml.XMLConstants;
+import java.util.regex.Pattern;
 
 public class OntologyHandler extends DefaultHandler {
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile("#");
 
     private final StaxParser parser;
 
@@ -62,7 +65,7 @@ public class OntologyHandler extends DefaultHandler {
         
         //TODO: If a predicate contains character #, this character wil be 
         //thrown away
-        final String[] predicateArray = p.split("#");
+        final String[] predicateArray = SPLIT_PATTERN.split(p);
         if (predicateArray.length != 2) {
             this.exist = false;
             return;

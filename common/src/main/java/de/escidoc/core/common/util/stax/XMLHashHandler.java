@@ -35,6 +35,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.regex.Pattern;
 
 /**
  * @author Frank Schwichtenberg
@@ -45,6 +46,8 @@ public class XMLHashHandler extends DefaultHandler {
     private StringBuffer string;
 
     private String hash;
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile(":");
 
     @Override
     public void characters(final char[] ch, final int start, final int length)
@@ -140,7 +143,7 @@ public class XMLHashHandler extends DefaultHandler {
     private static String createFqName(final String uri, final String localName, final String qName) {
 
         String fqName = '{' + uri + '}';
-        fqName += localName != null && localName.length() > 0 ? localName : qName.split(":")[1];
+        fqName += localName != null && localName.length() > 0 ? localName : SPLIT_PATTERN.split(qName)[1];
 
         return fqName;
     }

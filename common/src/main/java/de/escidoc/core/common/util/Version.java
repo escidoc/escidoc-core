@@ -21,6 +21,7 @@
 package de.escidoc.core.common.util;
 
 import java.util.Hashtable;
+import java.util.regex.Pattern;
 
 /**
  * Container object for version information.
@@ -28,6 +29,8 @@ import java.util.Hashtable;
  * @author Andr&eacute; Schenk
  */
 public class Version implements Comparable<Version> {
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile("\\.");
 
     private final int majorNumber;
 
@@ -59,7 +62,7 @@ public class Version implements Comparable<Version> {
      *            version number as string of the form "major.minor.revision"
      */
     public Version(final String version) {
-        final String[] parts = version.split("\\.");
+        final String[] parts = SPLIT_PATTERN.split(version);
 
         this.majorNumber = Integer.parseInt(parts[0]);
         this.minorNumber = Integer.parseInt(parts[1]);

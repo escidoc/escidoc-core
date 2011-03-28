@@ -34,6 +34,7 @@ import com.sun.xacml.cond.Apply;
 import de.escidoc.core.common.business.fedora.resources.Values;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * This is a helper class to convert a XACML condition into an SQL fragment.
@@ -41,6 +42,8 @@ import java.util.List;
  * @author André Schenk
  */
 public class ConditionParser {
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile(": ");
 
     private Values values;
 
@@ -309,7 +312,7 @@ public class ConditionParser {
      */
     private String parseContains(final String list, final String value) {
         String result = "";
-        final String[] listValues = list.split(" ");
+        final String[] listValues = SPLIT_PATTERN.split(list);
 
         for (final String listvalue : listValues) {
             result = result.length() > 0 ? values.getOrCondition(result,

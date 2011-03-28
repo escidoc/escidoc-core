@@ -191,6 +191,8 @@ import java.util.regex.Pattern;
 public class TripleStoreAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
+    private final static Pattern SPLIT_PATTERN = Pattern.compile(":");
+
     /**
      * Pattern to detect item attributes that are version dependent: component,
      * modified-by, and version-status.
@@ -764,9 +766,8 @@ public class TripleStoreAttributeFinderModule
             return null;
         }
 
-        final String[] elements =
-            attributeIdValue
-                .substring(AttributeIds.RESOURCE_ATTR_PREFIX_LENGTH).split(":");
+        final String[] elements = SPLIT_PATTERN.split(attributeIdValue
+                .substring(AttributeIds.RESOURCE_ATTR_PREFIX_LENGTH));
 
         String currentPath = "";
         String longestPath = null;

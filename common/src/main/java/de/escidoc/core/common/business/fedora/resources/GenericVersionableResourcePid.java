@@ -72,6 +72,10 @@ import java.util.regex.Pattern;
  */
 public class GenericVersionableResourcePid extends GenericVersionableResource {
 
+    private final static Pattern SPLIT_PATTERN_PREDICATE = Pattern.compile("#");
+
+    private final static Pattern SPLIT_PATTERN_PREDICATE_AND_TARGET = Pattern.compile("###");
+
     private static final Pattern LATEST_RELEASE_PID_ENTRY =
         Pattern.compile("<[^:]+:" + TripleStoreUtility.PROP_LATEST_RELEASE_PID
             + "[^>]>[^<]</[^:]+:" + TripleStoreUtility.PROP_LATEST_RELEASE_PID
@@ -896,8 +900,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
         if (!relationsToUpdate.isEmpty()) {
             elementsToAdd = new ArrayList<StartElementWithChildElements>();
             for (final String relation : relationsToUpdate) {
-                final String[] predicateAndTarget = relation.split("###");
-                final String[] predicate = predicateAndTarget[0].split("#");
+                final String[] predicateAndTarget = SPLIT_PATTERN_PREDICATE_AND_TARGET.split(relation);
+                final String[] predicate = SPLIT_PATTERN_PREDICATE.split(predicateAndTarget[0]);
                 final StartElementWithChildElements newContentRelationElement =
                         new StartElementWithChildElements();
                 newContentRelationElement.setLocalName(predicate[1]);
@@ -923,8 +927,8 @@ public class GenericVersionableResourcePid extends GenericVersionableResource {
 
             while (iterator.hasNext()) {
                 final String relation = iterator.next();
-                final String[] predicateAndTarget = relation.split("###");
-                final String[] predicate = predicateAndTarget[0].split("#");
+                final String[] predicateAndTarget = SPLIT_PATTERN_PREDICATE_AND_TARGET.split(relation);
+                final String[] predicate = SPLIT_PATTERN_PREDICATE.split(predicateAndTarget[0]);
 
                 final StartElementWithChildElements newContentRelationElement =
                     new StartElementWithChildElements();

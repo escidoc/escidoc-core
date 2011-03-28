@@ -35,6 +35,7 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.regex.Pattern;
 
 /**
  * {@link BaseKeyedPoolableObjectFactory} implementation creating
@@ -47,6 +48,8 @@ import java.net.URL;
  *
  */
 public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile(";");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(
         PoolableTransformerFactory.class);
@@ -156,7 +159,7 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
     private InputStream mapKeyToXslt(final String key)
         throws WebserverSystemException, FedoraSystemException, IOException {
 
-        final String[] keyParts = key.split(";");
+        final String[] keyParts = SPLIT_PATTERN.split(key);
         final String nsUri = keyParts[0];
         final String contentModelId = keyParts[1];
 

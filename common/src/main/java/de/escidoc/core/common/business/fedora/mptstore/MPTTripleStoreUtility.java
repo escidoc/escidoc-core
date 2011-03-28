@@ -56,6 +56,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * To use is as implementation of the abstract class TripleStoreUtility register
@@ -64,6 +65,8 @@ import java.util.Set;
  * @author Frank Schwichtenberg
  */
 public class MPTTripleStoreUtility extends TripleStoreUtility {
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile("\\s");
 
     private TableManager tableManager;
 
@@ -839,7 +842,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         boolean first = true;
         if (additionalConditionTriple != null) {
             first = false;
-            final String[] tripleParts = additionalConditionTriple.split("\\s");
+            final String[] tripleParts = SPLIT_PATTERN.split(additionalConditionTriple);
             if (tripleParts.length != 3) {
                 throw new IntegritySystemException("Wrong triple");
             }

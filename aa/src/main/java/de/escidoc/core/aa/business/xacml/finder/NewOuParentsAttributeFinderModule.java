@@ -62,6 +62,8 @@ import java.util.regex.Pattern;
 public class NewOuParentsAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
+    private final static Pattern SPLIT_PATTERN = Pattern.compile("\\s+");
+
     private static final String ATTR_HIERARCHICAL_PARENTS_NEW =
         AttributeIds.ORGANIZATIONAL_UNIT_ATTR_PREFIX
             + "hierarchical-parents-new";
@@ -152,7 +154,7 @@ public class NewOuParentsAttributeFinderModule
                             new URI(ATTR_PARENT_NEW), false));
                 final List<String> expandedParentIds = new ArrayList<String>();
                 for (final String parentId : parentIds) {
-                    final String[] expandedParentArr = parentId.split("\\s+");
+                    final String[] expandedParentArr = SPLIT_PATTERN.split(parentId);
                     if (expandedParentArr != null) {
                         expandedParentIds.addAll(Arrays.asList(expandedParentArr));
                     }

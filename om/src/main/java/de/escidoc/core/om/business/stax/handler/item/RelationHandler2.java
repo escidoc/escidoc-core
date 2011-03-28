@@ -43,6 +43,7 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.naming.directory.NoSuchAttributeException;
+import java.util.regex.Pattern;
 
 /**
  * Obtains Content Relations values from XML.
@@ -51,6 +52,8 @@ import javax.naming.directory.NoSuchAttributeException;
  * 
  */
 public class RelationHandler2 extends DefaultHandler {
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile("#");
 
     private final StaxParser parser;
 
@@ -111,7 +114,7 @@ public class RelationHandler2 extends DefaultHandler {
                         Elements.ATTRIBUTE_PREDICATE);
 
                 if (predicateUri != null) {
-                    final String[] predicateAndTarget = predicateUri.split("#");
+                    final String[] predicateAndTarget = SPLIT_PATTERN.split(predicateUri);
                     if (predicateAndTarget.length != 2) {
                         throw new InvalidContentException("Attribute has invalid predicate.");
                     }

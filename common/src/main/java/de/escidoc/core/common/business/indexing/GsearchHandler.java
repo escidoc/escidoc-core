@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -50,12 +51,13 @@ public class GsearchHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GsearchHandler.class);
 
-    private Map<String, Map<String, String>> 
-                                indexConfigurations;
+    private final static Pattern SPLIT_PATTERN = Pattern.compile("\\s");
 
-    private Map<String, String>    repositoryInfo;
+    private Map<String, Map<String, String>> indexConfigurations;
 
-    private Set<String>    supportedMimeTypes;
+    private Map<String, String> repositoryInfo;
+
+    private Set<String> supportedMimeTypes;
     
     private static final int MAX_ERROR_RETRIES = 15;
 
@@ -445,8 +447,7 @@ public class GsearchHandler {
             this.supportedMimeTypes = new HashSet<String>();
             getRepositoryInfo();
             if (repositoryInfo.get("SupportedMimeTypes") != null) {
-                final String[] supportedMimeTypesArr =
-                    repositoryInfo.get("SupportedMimeTypes").split("\\s");
+                final String[] supportedMimeTypesArr = SPLIT_PATTERN.split(repositoryInfo.get("SupportedMimeTypes"));
                 supportedMimeTypes.addAll(Arrays.asList(supportedMimeTypesArr));
             }
         }

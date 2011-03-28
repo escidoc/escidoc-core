@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.Resource;
@@ -40,6 +41,8 @@ import org.slf4j.Logger; import org.slf4j.LoggerFactory;
  * 
  */
 public final class EscidocConfiguration {
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile("\\}.*?\\$\\{");
 
     public static final String SEARCH_PROPERTIES_DIRECTORY =
         "search.properties.directory";
@@ -465,7 +468,7 @@ public final class EscidocConfiguration {
     private static String replaceEnvVariables(final String property) {
         String replacedProperty = property;
         if (property.contains("${")) {
-            final String[] envVariables = property.split("\\}.*?\\$\\{");
+            final String[] envVariables = SPLIT_PATTERN.split(property);
             if (envVariables != null) {
                 for (int i = 0; i < envVariables.length; i++) {
                     envVariables[i] =

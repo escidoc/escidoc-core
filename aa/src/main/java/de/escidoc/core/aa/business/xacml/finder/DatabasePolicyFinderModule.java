@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import com.sun.xacml.AbstractPolicy;
 import com.sun.xacml.EvaluationCtx;
@@ -77,6 +78,8 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     /** The logger. */
     private static final Logger LOGGER = LoggerFactory.getLogger(
         DatabasePolicyFinderModule.class);
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile("/");
 
     /**
      * The property which is used to specify the schema file to validate against
@@ -186,7 +189,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
         // The policyId is concatenated String
         // containing <roleName>/<user or group>/<userOrGroupId>
-        final String[] parts = idReference.toString().split("/");
+        final String[] parts = SPLIT_PATTERN.split(idReference.toString());
         final StringBuilder roleIdentifier = new StringBuilder("");
         if (parts.length > 2) {
             for (int i = 0; i < parts.length - 2; i++) {

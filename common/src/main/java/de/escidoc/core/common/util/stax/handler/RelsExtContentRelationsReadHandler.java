@@ -32,8 +32,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class RelsExtContentRelationsReadHandler extends DefaultHandler {
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile("/");
 
     private final StaxParser parser;
 
@@ -104,7 +107,7 @@ public class RelsExtContentRelationsReadHandler extends DefaultHandler {
             }
             final String resourceValue =
                     element.getAttribute(indexOfResource).getValue();
-            final String[] target = resourceValue.split("/");
+            final String[] target = SPLIT_PATTERN.split(resourceValue);
             this.targetId = target[1];
             String predicateNs = element.getNamespace();
             predicateNs =

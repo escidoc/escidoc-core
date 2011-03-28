@@ -32,6 +32,7 @@ import javax.xml.stream.XMLStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * 
@@ -39,6 +40,8 @@ import java.util.Map;
  * 
  */
 public abstract class WriteHandler extends DefaultHandler {
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile(":");
 
     private XMLStreamWriter writer;
 
@@ -143,7 +146,7 @@ public abstract class WriteHandler extends DefaultHandler {
             if (nameUri != null
                 && nameUri.equals(XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI)) {
 
-                final String[] attributeValueArray = attributeValue.split(":");
+                final String[] attributeValueArray = SPLIT_PATTERN.split(attributeValue);
                 if (attributeValueArray.length == 2) {
                     final int index = attributeValueArray[1].indexOf('/');
                     if (index == -1) {

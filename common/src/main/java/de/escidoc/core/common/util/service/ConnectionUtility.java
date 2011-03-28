@@ -85,6 +85,8 @@ import java.util.regex.Pattern;
  */
 public class ConnectionUtility {
 
+    private final static Pattern SPLIT_PATTERN = Pattern.compile(":");
+
     private static final int HTTP_MAX_CONNECTIONS_PER_HOST = 30;
 
     private static final int HTTP_MAX_TOTAL_CONNECTIONS_FACTOR = 3;
@@ -183,7 +185,7 @@ public class ConnectionUtility {
 
         final String userinfo = url.getUserInfo();
         if (userinfo != null) {
-            final String[] loginValues = userinfo.split(":");
+            final String[] loginValues = SPLIT_PATTERN.split(":");
             username = loginValues[0];
             password = loginValues[1];
         }

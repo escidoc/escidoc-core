@@ -73,6 +73,8 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     
     //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumeric)
 
+    private final static Pattern SPLIT_PATTERN = Pattern.compile(",");
+
     private static final String TIMESTAMP_FIELD_TYPE = "DATETIME";
 
     private static final String TEXT_FIELD_TYPE = "TEXT";
@@ -434,7 +436,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
         final String fromClause;
         fromClause = condition ? executionSql.replaceFirst(
                 "(?i).*?from(.*?)(where|order by|group by).*", "$1") : executionSql.replaceFirst("(?i).*?from(.*)", "$1");
-        final String[] tables = fromClause.split(",");
+        final String[] tables = SPLIT_PATTERN.split(fromClause);
         final StringBuilder replacedFromClause = new StringBuilder(" ");
         for (int i = 0; i < tables.length; i++) {
             if (i > 0) {

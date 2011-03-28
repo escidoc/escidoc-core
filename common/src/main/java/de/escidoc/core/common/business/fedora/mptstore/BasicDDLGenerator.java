@@ -23,6 +23,7 @@ package de.escidoc.core.common.business.fedora.mptstore;
 import org.nsdl.mptstore.impl.postgres.PostgresDDLGenerator;
 
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 /**
  * This class is the super class for the Postgres and MySQL implementations of the
@@ -34,6 +35,9 @@ import java.util.Collection;
  */
 public class BasicDDLGenerator
     extends PostgresDDLGenerator {
+
+    private final static Pattern SPLIT_PATTERN = Pattern.compile(" +");
+
     /**
      * Maximum prefix length when creating a database index.
      */
@@ -72,6 +76,6 @@ public class BasicDDLGenerator
      */
     protected static String[] splitProperty(final String name) {
         final String val = System.getProperty(name);
-        return val == null || val.trim().length() == 0 ? new String[0] : val.trim().split(" +");
+        return val == null || val.trim().length() == 0 ? new String[0] : SPLIT_PATTERN.split(val.trim());
     }
 }

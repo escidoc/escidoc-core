@@ -72,6 +72,8 @@ import java.util.regex.Pattern;
  */
 public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
+    private final static Pattern SPLIT_PATTERN = Pattern.compile("/");
+
     /**
      * The pattern to find the position to insert the "-new" marker in attribute
      * ids for new resources.
@@ -141,7 +143,7 @@ public class XacmlFunctionRoleIsGranted extends FunctionBase {
             // The policyId is concatenated String
             // containing <roleName>/<user or group>/<userorGroupId>
             final String policyId = ((StringAttribute) argValues[0]).getValue();
-            final String[] parts = policyId.split("/");
+            final String[] parts = SPLIT_PATTERN.split(policyId);
             final StringBuilder roleIdentifier = new StringBuilder("");
             if (parts.length > 2) {
                 for (int i = 0; i < parts.length - 2; i++) {

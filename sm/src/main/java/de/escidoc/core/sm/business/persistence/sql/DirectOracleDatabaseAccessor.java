@@ -69,6 +69,8 @@ import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
 public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
     implements DirectDatabaseAccessorInterface {
 
+    private final static Pattern SPLIT_PATTERN = Pattern.compile(",");
+
     private static final Logger LOGGER = LoggerFactory.getLogger(DirectOracleDatabaseAccessor.class);
 
     private static final String TIMESTAMP_FIELD_TYPE = "DATE";
@@ -427,7 +429,7 @@ public class DirectOracleDatabaseAccessor extends JdbcDaoSupport
         fromClause = condition ? executionSql.replaceFirst(
                 "(?i).*?from(.*?)(where|order by|group by).*", "$1") 
                     : executionSql.replaceFirst("(?i).*?from(.*)", "$1");
-        final String[] tables = fromClause.split(",");
+        final String[] tables = SPLIT_PATTERN.split(fromClause);
         final StringBuilder replacedFromClause = new StringBuilder(" ");
         for (int i = 0; i < tables.length; i++) {
             if (i > 0) {
