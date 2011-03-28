@@ -710,7 +710,6 @@ public class ContextHandlerUpdate extends ContextHandlerDelete {
             final AddNewSubTreesToDatastream addNewEntriesHandler =
                 new AddNewSubTreesToDatastream("/dc", sp);
             final List<StartElementWithChildElements> elementsToAdd = new ArrayList<StartElementWithChildElements>();
-            final Set<String> keysToAdd = propertiesToAdd.keySet();
             for (final Entry<String, String> stringStringEntry : propertiesToAdd.entrySet()) {
                 final StartElementWithChildElements newPropertyElement =
                         new StartElementWithChildElements();

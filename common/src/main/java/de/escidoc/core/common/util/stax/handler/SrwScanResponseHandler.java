@@ -74,7 +74,6 @@ public class SrwScanResponseHandler extends DefaultHandler {
             final String s,
             final StartElement element)
             throws Exception {
-        final String currentPath = parser.getCurPath();
         if (TERM_VALUE_PATH.equals(parser.getCurPath())) {
             terms.add(s.replaceAll("(.*?:.*?):.*", "$1"));
             this.noOfDocumentTerms++;

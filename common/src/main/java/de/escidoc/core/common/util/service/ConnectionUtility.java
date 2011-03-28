@@ -763,7 +763,6 @@ public class ConnectionUtility {
         try {
             final HttpDelete delete = new HttpDelete(new URI(url));
             final HttpResponse httpResponse = getHttpClient(url).execute(delete);
-            final int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (httpResponse.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
                 final String errorPage = readResponse(httpResponse);
                 throw new WebserverSystemException("HTTP connection to \""

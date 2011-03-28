@@ -176,7 +176,7 @@ public class ContentRelationsOntologyHandler extends DefaultHandler {
                 if (this.base != null) {
                     try {
                         // test if a value of about is an absolute URI
-                        final URI aboutUri = new URI(about);
+                        new URI(about);
                         this.predicate = about;
                     } catch (final URISyntaxException e) {
                         if(LOGGER.isWarnEnabled()) {
