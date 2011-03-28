@@ -28,7 +28,6 @@
 	<root>
         <priority value="WARN" />
 		<appender-ref ref="CONSOLE" />
-		<!-- appender-ref ref="FILEOUT" / -->
 	</root>
 
 </log4j:configuration>

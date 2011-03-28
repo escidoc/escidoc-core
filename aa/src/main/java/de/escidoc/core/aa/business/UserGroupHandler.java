@@ -1744,6 +1744,8 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *
      */
     @Override
+    // False positive: Inefficient use of keySet iterator instead of entrySet iterator
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings
     public void revokeGrants(final String groupId, final String filterXML)
         throws UserGroupNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException,

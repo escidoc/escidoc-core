@@ -258,11 +258,10 @@ public class HttpRequester {
         setCookie(con.getHeaderField("Set-cookie"));
 
         // Read response
-        final BufferedReader br = null;
         try {
             response = IOUtils.readStringFromStream(is);
         } finally {
-            IOUtils.closeStream(br);
+            IOUtils.closeStream(is);
         }
         return response;
     }

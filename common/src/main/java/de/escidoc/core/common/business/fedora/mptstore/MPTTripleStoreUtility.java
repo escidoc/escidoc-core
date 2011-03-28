@@ -532,8 +532,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
     @Override
     protected String executeQueryEarliestCreationDate()
         throws TripleStoreSystemException {
-
-        List<String> results = new ArrayList<String>();
         String result = null;
         final String tableName = getTableName(PROP_CREATION_DATE);
         if (tableName != null) {
@@ -542,7 +540,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Executing sql query '" + select + "'.");
             }
-            results = executeSqlQuery(select);
+            List<String> results = executeSqlQuery(select);
 
             if (getLogger().isDebugEnabled()) {
                 if (results.isEmpty()) {
@@ -716,6 +714,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * (java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
+    // False positive: Method may fail to close database resource
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings
     public String getRelation(
         final String pid, final String fullQualifiedPropertyName)
         throws TripleStoreSystemException {
@@ -1702,6 +1702,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
+    // False positive: Method may fail to close database resource
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings
     public List<String> executeSqlQuery(final String query)
         throws TripleStoreSystemException {
 
@@ -1805,6 +1807,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      *             If access to the triple store fails.
      */
     @Override
+    // False positive: Method may fail to close database resource
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings
     public boolean exists(final String pid) throws TripleStoreSystemException {
         Connection connection = null;
         ResultSet resultSet = null;

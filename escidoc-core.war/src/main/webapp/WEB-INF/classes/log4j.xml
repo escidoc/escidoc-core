@@ -63,7 +63,7 @@
     </appender>
 
     <category name="org.jboss">
-		<priority value="WARN" />
+		<priority value="INFO" />
 	</category>
     
     <category name="org.apache">
@@ -120,7 +120,6 @@
         <priority value="WARN" />
 		<appender-ref ref="ESCIDOCCONSOLE" />
 		<appender-ref ref="FILEOUT" />
-        <!-- appender-ref ref="SEARCHFILEOUT" / -->
 	</root>
 
 </log4j:configuration>

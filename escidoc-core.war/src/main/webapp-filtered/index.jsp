@@ -56,46 +56,82 @@
 <body bgcolor="#FFFFFF">
 
   <table align="center" border="0">
-    <tr> 
-      <td height="80" width="34%" >
-        <div align="right"><img src="/images/escidoc-logo.jpg" width="153" height="58"></div>
-      </td>
-      <td width="66%" ><b><font size="+3" face="Arial, Helvetica, sans-serif">Welcome 
-        to eSciDoc</font></b></td>
-    </tr>
-    <tr> 
-      <td></td>
-      <td><div align="left"><font size="+1">Version Information</font></div></td>
-    </tr>
-     <tr> 
-      <td> 
-        <div align="right">VERSION</div>
-      </td>
-      <td> 
-        <div align="left">${project.version}</div>
-      </td>
-    </tr>
-    <tr> 
-      <td> 
-        <div align="right">DATE</div>
-      </td>
-      <td> 
-        <div align="left">${buildtimestamp}</div>
-      </td>
-    </tr>
     <tr>
-      <td colspan="2">
-   <% 
+        <td>
+            <a href="https://www.escidoc.org/">
+                <div align="center">
+                    <img src="/images/escidoc-logo.jpg" width="153" height="58">
+                </div>
+            </a>
+        </td>
+	</tr>
+	<tr>
+        <td>
+            <div align="center">
+                <b><font size="+3" face="Arial, Helvetica, sans-serif">Welcome to eSciDoc</font></b>
+            </div>
+        </td>
+	</tr>
+	<tr>
+        <td>
+            <div align="center"><b>Version Information</b></div>
+        </td>
+	</tr>
+	<tr>
+        <td>
+            <div align="center">${project.version}</div>
+        </td>
+	</tr>
+	<tr>
+        <td>
+            <div align="center">${buildtimestamp}</div>
+        </td>
+	</tr>
+	<tr>
+        <td>
+   <%
     	String adminToolUrl = EscidocConfiguration.getInstance().get(EscidocConfiguration.ADMIN_TOOL_URL);
     	if(adminToolUrl != null) {
     		out.println("<a href=\"" + adminToolUrl + "\">Admin Tool</a>");
-    	} 
+    	}
    %>
 		</td>
-    </tr>
-    <tr>
-      <td colspan="2"><hr></td>
-    </tr>
+	</tr>
+	<tr>
+	    <td>
+	        <div align="center">
+	            <p><b>Mailinglists</b></p>
+                <p><a href="https://www.escidoc.org/mailman/listinfo/infrastructure-user">infrastructure-user</a></p>
+                <p><a href="https://listserv.gwdg.de/mailman/listinfo/escidoc-dev">escidoc-dev</a></p>
+            </div>
+	    </td>
+	</tr>
+	<tr>
+	    <td>
+	        <div align="center">
+	            <p><b>Webseite</b></p>
+                <p><a href="http://www.escidoc.org/">http://www.escidoc.org/</a></p>
+            </div>
+	    </td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<div align="center">
+		<p>eSciDoc is free open source software.</p>
+		<p>The software is distributed under the
+		<a href="http://www.opensource.org/licenses/cddl1.txt">Common Development and Distribution License (CDDL)</a>
+		in version 1.0.</p>
+		<p>This license is OSI-certified - find it on
+		<a href="http://www.opensource.org/licenses/cddl1.txt">OpenSource.org</a>!</p>
+		<p>CDDL has been created by Sun Microsystems and is based on the Mozilla 1.1 license, but addresses several
+        legal issues for non-US projects like eSciDoc.</p>
+        <p>You will find more background information on the CDDL, a
+        critizism of the Mozilla 1.1 license, and a description of the modifications at
+        <a href="http://www.sun.com/cddl/">Sun Microsystems CDDL website</a>.
+		</div>
+        </p>
+         </td>
+	</tr>
   </table>
 
 </body>

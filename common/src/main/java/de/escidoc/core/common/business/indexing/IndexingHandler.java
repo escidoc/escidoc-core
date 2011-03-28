@@ -810,8 +810,6 @@ public class IndexingHandler implements ResourceListener {
      */
     private static Set<String> getPids(final String indexName)
         throws SystemException {
-        Set<String> result = new HashSet<String>();
-
         try {
 
             final HttpParams params = new BasicHttpParams();
@@ -863,7 +861,7 @@ public class IndexingHandler implements ResourceListener {
                     throw new SystemException("duplicate PID in Scan Operation");
                 }
             }
-            result = handler.getTerms();
+            return handler.getTerms();
         }
         catch (final IOException e) {
             throw new SystemException(e.getMessage(), e);
@@ -871,7 +869,6 @@ public class IndexingHandler implements ResourceListener {
         catch (final Exception e) {
             throw new SystemException(e.getMessage(), e);
         }
-        return result;
     }
 
     /**

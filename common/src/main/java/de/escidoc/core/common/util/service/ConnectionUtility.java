@@ -763,11 +763,8 @@ public class ConnectionUtility {
      */
     private HttpDelete delete(final String url, final Cookie cookie)
         throws WebserverSystemException {
-        HttpDelete delete;
         try {
-            delete = new HttpDelete(url);
-            // delete = new HttpDelete(new URI(url, false).getEscapedURI());
-            delete = new HttpDelete(new URI(url));
+            final HttpDelete delete = new HttpDelete(new URI(url));
             final HttpResponse httpResponse = getHttpClient(url).execute(delete);
             final int responseCode = httpResponse.getStatusLine().getStatusCode();
             if (httpResponse.getStatusLine().getStatusCode() != HttpServletResponse.SC_OK) {
@@ -775,6 +772,7 @@ public class ConnectionUtility {
                 throw new WebserverSystemException("HTTP connection to \""
                     + url + "\" failed: " + errorPage);
             }
+            return delete;
         } catch (final IOException e) {
             throw new WebserverSystemException(e);
         } catch (final URISyntaxException e) {
@@ -782,7 +780,6 @@ public class ConnectionUtility {
         } catch (final IllegalArgumentException e) {
             throw new WebserverSystemException(e);
         }
-        return delete;
     }
 
     /**

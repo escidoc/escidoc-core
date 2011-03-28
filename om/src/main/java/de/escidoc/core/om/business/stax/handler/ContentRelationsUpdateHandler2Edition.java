@@ -180,7 +180,6 @@ public class ContentRelationsUpdateHandler2Edition extends DefaultHandler {
         String targetVersion =
             targetId.replaceFirst(targetIdWithoutVersion, "");
         if (targetVersion.length() > 0) {
-            targetVersion = targetVersion.substring(1);
             throw new InvalidContentException("A relation target may not be referenced by an "
                     + " identifier containing a version number. Use a floating "
                     + "identifier like 'escidoc:123' to reference a target");

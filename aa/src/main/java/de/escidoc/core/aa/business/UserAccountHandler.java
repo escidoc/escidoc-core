@@ -1176,6 +1176,8 @@ public class UserAccountHandler
      *      #revokeGrants(java.lang.String, java.lang.String)
      */
     @Override
+    // False positive: Inefficient use of keySet iterator instead of entrySet iterator
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings
     public void revokeGrants(final String userId, final String taskParam)
         throws UserAccountNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException,

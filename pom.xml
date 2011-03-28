@@ -865,6 +865,10 @@
       <groupId>jboss</groupId>
       <artifactId>jbosssx</artifactId>
     </dependency>
+      <dependency>
+          <groupId>net.sourceforge.findbugs</groupId>
+          <artifactId>annotations</artifactId>
+      </dependency>
   </dependencies>
 
   <dependencyManagement>
@@ -1671,6 +1675,11 @@
         <groupId>eSciDocCore</groupId>
         <artifactId>purge-service-impl</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>net.sourceforge.findbugs</groupId>
+          <artifactId>annotations</artifactId>
+          <version>1.3.2</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

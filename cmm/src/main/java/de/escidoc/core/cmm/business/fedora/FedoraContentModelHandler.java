@@ -564,8 +564,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
                 + '-';
         final String sdefIdPrefix = "sdef:" + sdexIdMidfix;
         // String sdepIdPrefix = "sdep:" + sdexIdMidfix;
-        final Map<String, ResourceDefinitionCreate> resourceDefinitions =
-            rdh.getResourceDefinitions();
+        final Map<String, ResourceDefinitionCreate> resourceDefinitions = rdh.getResourceDefinitions();
 
         // update RELS-EXT
         // FIXME store operation names in ContentModel and remove and add
@@ -590,9 +589,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
             }
         }
         deleteFromRelsExt.put("/RDF/Description/hasService", deleteElementList);
-        // getContentModel().setRelsExt(
-        // Utility.updateRelsExt(null, deleteFromRelsExt, null,
-        // getContentModel(), null));
         final byte[] tmpRelsExt =
             Utility.updateRelsExt(null, deleteFromRelsExt, null,
                 getContentModel(), null);
@@ -600,8 +596,7 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         // add services to RELS-EXT
         final List<StartElementWithChildElements> addToRelsExt =
             new ArrayList<StartElementWithChildElements>();
-        for (final ResourceDefinitionCreate resourceDefinition : resourceDefinitions
-            .values()) {
+        for (final ResourceDefinitionCreate resourceDefinition : resourceDefinitions.values()) {
             // FIXME do update existing resource definitions
             if (!getContentModel().getResourceDefinitions().containsKey(
                 resourceDefinition.getName())) {
@@ -658,42 +653,33 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
         // create service definitions and deployments or update xslt
         final FedoraUtility fu = FedoraUtility.getInstance();
 
-        if (resourceDefinitions != null) {
-            for (final ResourceDefinitionCreate resourceDefinition : resourceDefinitions
-                .values()) {
-                final String sdefId = sdefIdPrefix + resourceDefinition.getName();
-                // String sdepId = sdepIdPrefix + resourceDefinition.getName();
-
-                if (getTripleStoreUtility().exists(sdefId)) {
-                    // check if href for xslt is changed
-                    // /cmm/content-model/escidoc:40013/resource-\
-                    // definitions/resource-definition/trans/xslt
-                    if (resourceDefinition.getXsltHref()
-                            .equalsIgnoreCase("/cmm/content-model/"
-                                    + getContentModel().getId()
-                                    + "/resource-definitions/resource-definition/"
-                                    + resourceDefinition.getName() + "/xslt/content")) {
-                        if(LOGGER.isDebugEnabled()) {
-                            LOGGER.debug("Do not update xslt.");
-                        }
-                    } else {
-                        // update xslt
-                        fu.modifyDatastream(sdefId, "xslt",
-                                "Transformation instructions for operation '"
-                                        + resourceDefinition.getName() + "'.",
-                                "text/xml", new String[0],
-                                resourceDefinition.getXsltHref(), false);
+        for(final ResourceDefinitionCreate resourceDefinition : resourceDefinitions.values()) {
+            final String sdefId = sdefIdPrefix + resourceDefinition.getName();
+            if(getTripleStoreUtility().exists(sdefId)) {
+                // check if href for xslt is changed
+                // /cmm/content-model/escidoc:40013/resource-\
+                // definitions/resource-definition/trans/xslt
+                if(resourceDefinition.getXsltHref().equalsIgnoreCase("/cmm/content-model/" + getContentModel().getId() +
+                        "/resource-definitions/resource-definition/" + resourceDefinition.getName() +
+                        "/xslt/content")) {
+                    if(LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Do not update xslt.");
                     }
+                } else {
+                    // update xslt
+                    fu.modifyDatastream(sdefId, "xslt",
+                            "Transformation instructions for operation '" + resourceDefinition.getName() + "'.",
+                            "text/xml", new String[0], resourceDefinition.getXsltHref(), false);
                 }
-                else {
-                    // create
-                    final String sdefFoxml = getSDefFoXML(resourceDefinition);
-                    fu.storeObjectInFedora(sdefFoxml, false);
-                    final String sdepFoxml = getSDepFoXML(resourceDefinition);
-                    fu.storeObjectInFedora(sdepFoxml, false);
-                }
+            } else {
+                // create
+                final String sdefFoxml = getSDefFoXML(resourceDefinition);
+                fu.storeObjectInFedora(sdefFoxml, false);
+                final String sdepFoxml = getSDepFoXML(resourceDefinition);
+                fu.storeObjectInFedora(sdepFoxml, false);
             }
         }
+
 
         // Content Streams
         final List<ContentStreamCreate> contentStreams = csh.getContentStreams();

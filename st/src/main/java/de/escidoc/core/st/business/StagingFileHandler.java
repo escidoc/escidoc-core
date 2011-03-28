@@ -78,23 +78,20 @@ public class StagingFileHandler implements StagingFileHandlerInterface {
         throws MissingMethodParameterException, AuthenticationException,
         AuthorizationException, SystemException {
 
-        StagingFile stagingFile = null;
+        StagingFile stagingFile = StagingUtil.generateStagingFile(true, this.dao);
+        if (stagingFile == null) {
+            throw new MissingMethodParameterException("Missing staging file.");
+        }
         String token = null;
         try {
             if (binaryContent == null || binaryContent.getContent() == null) {
-                throw new MissingMethodParameterException(
-                    "Binary content must be provided.");
+                throw new MissingMethodParameterException("Binary content must be provided.");
             }
-            stagingFile = StagingUtil.generateStagingFile(true, this.dao);
             token = stagingFile.getToken();
-            stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil
-                .getUploadStagingArea(), token));
+            stagingFile.setReference(StagingUtil.concatenatePath(StagingUtil.getUploadStagingArea(), token));
             stagingFile.read(binaryContent.getContent());
         } catch (final IOException e) {
             throw new MissingMethodParameterException("Binary content must be provided.", e);
-        }
-        if (stagingFile == null) {
-            throw new MissingMethodParameterException("Missing staging file.");
         }
         stagingFile.setMimeType(binaryContent.getMimeType());
         dao.update(stagingFile);

@@ -172,18 +172,16 @@
       <priority value="WARN" />
    </category>
 
-   <!-- Limit JBoss categories
    <category name="org.jboss">
-      <priority value="WARN"/>
+      <priority value="INFO"/>
    </category>
-   -->
 
    <category name="org.jboss.management">
-      <priority value="WARN"/>
+      <priority value="INFO"/>
    </category>
 
    <category name="org.jboss.serial">
-      <priority value="WARN"/>
+      <priority value="INFO"/>
    </category>
 
     <logger name="de.escidoc" additivity="false">
