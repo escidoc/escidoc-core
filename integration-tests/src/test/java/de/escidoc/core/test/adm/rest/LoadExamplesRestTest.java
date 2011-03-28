@@ -56,7 +56,7 @@ public class LoadExamplesRestTest extends AdminToolTestBase {
      * @throws Exception
      *             If anything fails.
      */
-    @Test(timeout = 30000)
+    @Test(timeout = 90000)
     public void testLoadExamples() throws Exception {
         loadExamples("common");
     }
