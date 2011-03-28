@@ -231,7 +231,7 @@ public class PermissionsQuery {
                     }
                 }
 
-                if (foreignUserRights.size() > 0) {
+                if (! foreignUserRights.isEmpty()) {
                     rights = accessRights.appendAccessRights(foreignUserRights);
                     LOGGER.info("AND restricting access rights from "
                         + "another user (1): " + rights);

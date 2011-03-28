@@ -289,7 +289,7 @@ public class AccessRights {
     public String appendAccessRights(final List<String> accessRights) {
         final StringBuilder result = new StringBuilder();
 
-        if ((accessRights != null) && (accessRights.size() > 0)) {
+        if ((accessRights != null) && (! accessRights.isEmpty())) {
             result.append('(');
             for (int index = 0; index < accessRights.size(); index++) {
                 String accessRight = accessRights.get(index);
