@@ -61,7 +61,7 @@ import java.util.regex.Pattern;
  * 
  * @author André Schenk
  */
-public class PolicyParser {
+public class    PolicyParser {
     private static final String ACTION_ID =
         "urn:oasis:names:tc:xacml:1.0:action:action-id";
 
@@ -129,8 +129,7 @@ public class PolicyParser {
      * @return true if the given expression is an action id
      */
     private static boolean isActionId(final Evaluatable evaluatable) {
-        return evaluatable != null
-            && evaluatable instanceof AttributeDesignator
+        return evaluatable instanceof AttributeDesignator
             && ((AttributeDesignator) evaluatable)
             .getId().toString().equals(ACTION_ID);
     }
