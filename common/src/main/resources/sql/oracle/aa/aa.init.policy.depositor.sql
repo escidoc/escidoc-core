@@ -408,8 +408,11 @@ BEGIN
                     <SubjectAttributeDesignator SubjectCategory="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string"/>
                 </Apply>
             </Condition>
-        </Rule>
-            <Rule RuleId="Depositor-policy-rule-5" Effect="Permit">
+        </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="Depositor-policy-rule-5" Effect="Permit">
             <Target>
                 <Subjects>
                     <AnySubject/>

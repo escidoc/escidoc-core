@@ -90,8 +90,11 @@ BEGIN
             <ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:user-group:created-by" DataType="http://www.w3.org/2001/XMLSchema#string"/>
         </Apply>
     </Condition>
-  </Rule>
-  <Rule RuleId="User-Group-Administrator-policy-rule-3" Effect="Permit">
+  </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="User-Group-Administrator-policy-rule-3" Effect="Permit">
     <Target>
       <Subjects>
         <AnySubject/>

@@ -111,8 +111,11 @@ BEGIN
                 <ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:container:version-status" DataType="http://www.w3.org/2001/XMLSchema#string"/>
             </Apply>
         </Condition>
-    </Rule>
-    <Rule RuleId="Default-User-policy-rule-2" Effect="Permit">
+    </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="Default-User-policy-rule-2" Effect="Permit">
         <Target>
             <Subjects>
                 <AnySubject/>
@@ -205,8 +208,11 @@ BEGIN
                 <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">released</AttributeValue>
             </Apply>
         </Condition>
-    </Rule>
-    <Rule RuleId="Default-User-policy-rule-5" Effect="Permit">
+    </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="Default-User-policy-rule-5" Effect="Permit">
         <Target>
             <Subjects>
                 <AnySubject/>
@@ -311,8 +317,11 @@ BEGIN
             </Apply>
             <ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:item:lock-owner" DataType="http://www.w3.org/2001/XMLSchema#string"/>
         </Condition>
-    </Rule>
-    <Rule RuleId="Default-User-policy-rule-8" Effect="Permit">
+    </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="Default-User-policy-rule-8" Effect="Permit">
         <Target>
         <Subjects>
                 <AnySubject/>
@@ -429,8 +438,11 @@ BEGIN
                 </Apply>
             </Apply>
         </Condition>
-    </Rule>
-    <Rule RuleId="Default-User-policy-rule-8-2" Effect="Permit">
+    </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="Default-User-policy-rule-8-2" Effect="Permit">
         <Target>
         <Subjects>
                 <AnySubject/>
@@ -531,8 +543,11 @@ BEGIN
                 </Apply>
             </Apply>
         </Condition>
-    </Rule>
-    <Rule RuleId="Default-User-policy-rule-11" Effect="Permit">
+    </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="Default-User-policy-rule-11" Effect="Permit">
         <Target>
             <Subjects>
                 <AnySubject/>
@@ -633,8 +648,11 @@ BEGIN
                 <ResourceAttributeDesignator AttributeId="info:escidoc/names:aa:1.0:resource:user-group:grant:created-by" DataType="http://www.w3.org/2001/XMLSchema#string"/>
             </Apply>
         </Condition>
-    </Rule>
-    <Rule RuleId="Default-User-policy-rule-14" Effect="Permit">
+    </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="Default-User-policy-rule-14" Effect="Permit">
         <Target>
             <Subjects>
                 <AnySubject/>

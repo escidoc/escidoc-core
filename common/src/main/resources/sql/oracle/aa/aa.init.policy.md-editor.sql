@@ -77,8 +77,11 @@ BEGIN
                 <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">pending</AttributeValue>
             </Apply>
         </Condition>
-    </Rule>
-    <Rule RuleId="MD-Editor-policy-rule-retrievei" Effect="Permit">
+    </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="MD-Editor-policy-rule-retrievei" Effect="Permit">
         <Target>
             <Subjects>
                 <AnySubject/>
@@ -146,8 +149,11 @@ BEGIN
                 </Apply>
             </Apply>
         </Condition>
-    </Rule>
-    <Rule RuleId="Moderator-policy-rule-revisei" Effect="Permit">
+    </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="Moderator-policy-rule-revisei" Effect="Permit">
         <Target>
             <Subjects>
                 <AnySubject/>
@@ -250,8 +256,11 @@ BEGIN
                 <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">pending</AttributeValue>
             </Apply>
         </Condition>
-    </Rule>
-    <Rule RuleId="MD-Editor-policy-rule-retrievec" Effect="Permit">
+    </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="MD-Editor-policy-rule-retrievec" Effect="Permit">
         <Target>
             <Subjects>
                 <AnySubject/>
@@ -321,8 +330,11 @@ BEGIN
                 </Apply>
             </Apply>
         </Condition>
-    </Rule>
-    <Rule RuleId="Moderator-policy-rule-revisec" Effect="Permit">
+    </Rule>';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '<Rule RuleId="Moderator-policy-rule-revisec" Effect="Permit">
         <Target>
             <Subjects>
                 <AnySubject/>

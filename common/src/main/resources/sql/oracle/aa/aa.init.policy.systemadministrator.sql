@@ -74,8 +74,11 @@ BEGIN
               info:escidoc/names:aa:1.0:action:retrieve-content-model 
               info:escidoc/names:aa:1.0:action:update-content-model 
               info:escidoc/names:aa:1.0:action:create-context 
-              info:escidoc/names:aa:1.0:action:delete-context 
-              info:escidoc/names:aa:1.0:action:retrieve-context 
+              info:escidoc/names:aa:1.0:action:delete-context ';
+                        
+
+        DBMS_LOB.WRITEAPPEND(TMP_CLOB, LENGTH(SRC_CHUNK), SRC_CHUNK);
+        SRC_CHUNK := '              info:escidoc/names:aa:1.0:action:retrieve-context 
               info:escidoc/names:aa:1.0:action:update-context 
               info:escidoc/names:aa:1.0:action:close-context 
               info:escidoc/names:aa:1.0:action:open-context 
