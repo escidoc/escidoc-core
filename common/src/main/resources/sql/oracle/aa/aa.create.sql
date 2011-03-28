@@ -97,7 +97,7 @@ CREATE TABLE aa.method_mappings (
 CREATE TABLE aa.invocation_mappings (
   id VARCHAR2(255) NOT NULL,
   attribute_id CLOB NOT NULL, 
-  path VARCHAR2(255) NOT NULL,
+  path VARCHAR2(255),
   position NUMERIC(2,0) NOT NULL,
   attribute_type VARCHAR2(255) NOT NULL,
   mapping_type NUMERIC(2,0) NOT NULL,
