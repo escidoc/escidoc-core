@@ -29,7 +29,7 @@ import java.util.Map;
  * 
  * 
  */
-public class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
+public final class ContainerFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String CONTAINER_PATH = "/container";
 

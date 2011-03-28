@@ -24,7 +24,8 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.Map;
 
-public class ActionXmlProvider extends InfrastructureXmlProvider {
+public final
+class ActionXmlProvider extends InfrastructureXmlProvider {
 
     private static final String UNSECURED_ACTIONS_RESOURCE_NAME =
         "unsecured-actions";

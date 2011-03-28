@@ -68,7 +68,7 @@ public class ConditionParser {
     /**
      * Inner class that stores a tuple of the form (function, operand1, operand2).
      */
-    private static class Function {
+    private static final class Function {
         private final String operation;
 
         private final String operand1;

@@ -24,7 +24,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.Map;
 
-public class ContainerXmlProvider extends InfrastructureXmlProvider {
+public final class ContainerXmlProvider extends InfrastructureXmlProvider {
 
     private static final String COMMON_PATH = "/common";
 

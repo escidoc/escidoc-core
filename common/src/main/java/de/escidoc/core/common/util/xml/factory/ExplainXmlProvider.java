@@ -32,7 +32,7 @@ import java.util.Map;
  * 
  * @author Andr&eacute; Schenk
  */
-public class ExplainXmlProvider extends InfrastructureXmlProvider {
+public final class ExplainXmlProvider extends InfrastructureXmlProvider {
 
     private static final String RESOURCE_NAME = "explain";
 

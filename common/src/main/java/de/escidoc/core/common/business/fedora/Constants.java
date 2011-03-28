@@ -27,15 +27,13 @@ import java.util.regex.Pattern;
  * 
  * @author Michael Schneider
  */
-public class Constants {
+public final class Constants {
 
     public static final String CONTENT_STREAMS_URL_PART = "/content-streams";
 
-    public static final String CONTENT_STREAM_URL_PART =
-        CONTENT_STREAMS_URL_PART + "/content-stream";
+    public static final String CONTENT_STREAM_URL_PART = CONTENT_STREAMS_URL_PART + "/content-stream";
 
-    public static final String CONTENT_STREAM_CONTENT_URL_EXTENSION =
-        "/content";
+    public static final String CONTENT_STREAM_CONTENT_URL_EXTENSION = "/content";
 
     public static final String RELATIONS_URL_PART = "/relations";
 

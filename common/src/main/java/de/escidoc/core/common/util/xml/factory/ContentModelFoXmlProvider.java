@@ -24,7 +24,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.Map;
 
-public class ContentModelFoXmlProvider extends InfrastructureFoXmlProvider {
+public final class ContentModelFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String CONTENT_MODEL_PATH = "/content-model";
 

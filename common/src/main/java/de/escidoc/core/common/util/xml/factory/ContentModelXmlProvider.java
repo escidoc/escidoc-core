@@ -34,7 +34,7 @@ import java.util.Map;
  * @author Frank Schwichtenberg
  *
  */
-public class ContentModelXmlProvider extends InfrastructureXmlProvider {
+public final class ContentModelXmlProvider extends InfrastructureXmlProvider {
 
     public static final String RESOURCE_NAME = "content-model";
 

@@ -24,7 +24,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.Map;
 
-public class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
+public final class ItemFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String ITEM_PATH = "/item";
 

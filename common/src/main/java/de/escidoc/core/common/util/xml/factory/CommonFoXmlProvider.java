@@ -24,7 +24,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.Map;
 
-public class CommonFoXmlProvider extends InfrastructureFoXmlProvider {
+public final class CommonFoXmlProvider extends InfrastructureFoXmlProvider {
 
     private static final String COMMON_PATH = "/common";
 

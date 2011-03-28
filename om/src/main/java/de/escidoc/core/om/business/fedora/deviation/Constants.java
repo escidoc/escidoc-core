@@ -33,7 +33,7 @@ package de.escidoc.core.om.business.fedora.deviation;
  * 
  * @author Michael Hoppe
  */
-public class Constants {
+public final class Constants {
 
     /**
      * Private constructor to avoid instantiation.

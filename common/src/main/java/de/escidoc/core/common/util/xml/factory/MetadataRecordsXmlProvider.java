@@ -24,7 +24,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.Map;
 
-public class MetadataRecordsXmlProvider extends InfrastructureXmlProvider {
+public final class MetadataRecordsXmlProvider extends InfrastructureXmlProvider {
 
     public static final String MD_RECORDS_RESOURCE_NAME = "md-records";
 

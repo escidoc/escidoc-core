@@ -25,11 +25,9 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import java.util.Map;
 
 /**
- * Relations XML PROVIDER.
- * 
- * 
+ * Relations XML Provider.
  */
-public class RelationsXmlProvider extends InfrastructureXmlProvider {
+public final class RelationsXmlProvider extends InfrastructureXmlProvider {
 
     public static final String RELATIONS_RESOURCE_NAME = "relations";
 

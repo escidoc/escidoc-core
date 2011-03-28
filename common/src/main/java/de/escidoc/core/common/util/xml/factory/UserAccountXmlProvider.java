@@ -24,12 +24,11 @@ import java.util.Map;
 
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
-public class UserAccountXmlProvider extends InfrastructureXmlProvider {
+public final class UserAccountXmlProvider extends InfrastructureXmlProvider {
 
     private static final String USER_ACCOUNT_RESOURCE_NAME = "user-account";
 
-    private static final String USER_ACCOUNTS_SRW_RESOURCE_NAME =
-        "user-account-srw-list";
+    private static final String USER_ACCOUNTS_SRW_RESOURCE_NAME = "user-account-srw-list";
 
     private static final String USER_ACCOUNT_PATH = "/user-account";
 

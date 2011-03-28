@@ -20,7 +20,7 @@
 
 package de.escidoc.core.common.util.aop;
 
-public class TraceDepthThreadLocal {
+public final class TraceDepthThreadLocal {
 
     private static final Integer ZERO = 0;
 

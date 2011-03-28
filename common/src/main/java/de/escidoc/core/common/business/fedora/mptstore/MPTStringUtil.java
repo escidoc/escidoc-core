@@ -26,7 +26,7 @@ package de.escidoc.core.common.business.fedora.mptstore;
  * 
  * @author cwilper@cs.cornell.edu
  */
-public class MPTStringUtil {
+public final class MPTStringUtil {
 
     private static final int SHORT_ESCAPE_LENGTH = 5;
 

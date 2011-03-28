@@ -24,7 +24,7 @@ import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 
 import java.util.Map;
 
-public class OrganizationalUnitFoXmlProvider
+public final class OrganizationalUnitFoXmlProvider
     extends InfrastructureFoXmlProvider {
 
     private static final String ORGANIZATIONAL_UNIT_PATH =
