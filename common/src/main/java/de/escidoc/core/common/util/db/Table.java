@@ -95,7 +95,7 @@ public class Table implements Comparable<Object> {
      *         otherwise.
      */
     public boolean equals(final Object obj) {
-        return name.equals(((Table) obj).getName());
+        return (obj != null) && name.equals(((Table) obj).getName());
     }
 
     /**
@@ -162,7 +162,7 @@ public class Table implements Comparable<Object> {
     public void setColumns(final String[] columns) {
         this.columns = new TreeSet<String>();
         for (final String column : columns) {
-            this.columns.add(column);
+            this.columns.add(new String(column));
         }
     }
 
@@ -185,7 +185,7 @@ public class Table implements Comparable<Object> {
     public void setForeignKeys(final String[] foreignKeys) {
         this.foreignKeys = new TreeSet<String>();
         for (final String foreignKey : foreignKeys) {
-            this.foreignKeys.add(foreignKey);
+            this.foreignKeys.add(new String(foreignKey));
         }
     }
 
@@ -210,7 +210,7 @@ public class Table implements Comparable<Object> {
         // this.indexes = new TreeSet<String>();
         // if (indexes != null) {
         // for (String index : indexes) {
-        // this.indexes.add(index);
+        // this.indexes.add(new String(index));
         // }
         // }
     }
@@ -245,7 +245,7 @@ public class Table implements Comparable<Object> {
     public void setPrimaryKeys(final String[] primaryKeys) {
         this.primaryKeys = new TreeSet<String>();
         for (final String primaryKey : primaryKeys) {
-            this.primaryKeys.add(primaryKey);
+            this.primaryKeys.add(new String(primaryKey));
         }
     }
 
