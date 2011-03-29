@@ -1744,8 +1744,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *
      */
     @Override
-    // False positive: Inefficient use of keySet iterator instead of entrySet iterator
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings
     public void revokeGrants(final String groupId, final String filterXML)
         throws UserGroupNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException,
@@ -1845,8 +1843,10 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
                 UserAccountHandler.getAuthenticatedUser(this.userAccountDao);
 
         for (final String grantId : grantIds) {
-            // set revoke-date, -user and -remark
+            // False positive: Inefficient use of keySet iterator instead of entrySet iterator
+            @edu.umd.cs.findbugs.annotations.SuppressWarnings
             final RoleGrant roleGrant = grantsHash.get(grantId);
+            // set revoke-date, -user and -remark
             roleGrant.setUserAccountByRevokerId(authenticateUser);
             roleGrant.setRevocationDate(new Date());
             roleGrant.setRevocationRemark(tph.getRevokationRemark());

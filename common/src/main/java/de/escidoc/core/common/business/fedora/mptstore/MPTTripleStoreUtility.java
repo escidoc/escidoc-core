@@ -714,8 +714,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * (java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
-    // False positive: Method may fail to close database resource
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings
     public String getRelation(
         final String pid, final String fullQualifiedPropertyName)
         throws TripleStoreSystemException {
@@ -736,6 +734,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
             query = querySelect + queryFrom + queryWhere;
             connection = getConnection();
+            // False positive: Method may fail to close database resource
+            @edu.umd.cs.findbugs.annotations.SuppressWarnings
             resultSet = connection.prepareStatement(query).executeQuery();
             if (resultSet.next()) {
                 result = getValue(resultSet.getString(1));
@@ -1082,7 +1082,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
                 object = "\'<info:fedora/" + id + ">\'";
             }
             else {
-                object = MPTStringUtil.escapeLiteralValueForSql(val);
                 object = "\'\"" + val + "\"\'";
             }
             queryPart.append(" AND ");
@@ -1702,8 +1701,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
-    // False positive: Method may fail to close database resource
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings
     public List<String> executeSqlQuery(final String query)
         throws TripleStoreSystemException {
 
@@ -1712,6 +1709,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         ResultSet rs = null;
         try {
             con = getConnection();
+            // False positive: Method may fail to close database resource
+            @edu.umd.cs.findbugs.annotations.SuppressWarnings
             rs = con.prepareStatement(query).executeQuery();
             while (rs.next()) {
                 final String entry = getValue(rs.getString(1));
@@ -1807,8 +1806,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      *             If access to the triple store fails.
      */
     @Override
-    // False positive: Method may fail to close database resource
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings
     public boolean exists(final String pid) throws TripleStoreSystemException {
         Connection connection = null;
         ResultSet resultSet = null;
@@ -1830,6 +1827,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             queryBuffer.append("')");
             query = queryBuffer.toString();
             connection = getConnection();
+            // False positive: Method may fail to close database resource
+            @edu.umd.cs.findbugs.annotations.SuppressWarnings
             resultSet = connection.prepareStatement(query).executeQuery();
             return resultSet.next();
         } catch (final URISyntaxException e) {
