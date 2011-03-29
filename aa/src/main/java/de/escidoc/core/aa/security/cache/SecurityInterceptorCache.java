@@ -32,7 +32,6 @@ import de.escidoc.core.aa.security.aop.SecurityInterceptor;
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.security.persistence.MethodMappingList;
 import de.escidoc.core.common.util.security.persistence.RequestMappingDaoInterface;
 import de.escidoc.core.common.util.string.StringUtility;

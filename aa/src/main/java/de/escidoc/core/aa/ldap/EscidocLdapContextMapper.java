@@ -30,7 +30,8 @@
 package de.escidoc.core.aa.ldap;
 
 import de.escidoc.core.aa.business.authorisation.Constants;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DirContextOperations;
 import org.springframework.security.AuthenticationCredentialsNotFoundException;

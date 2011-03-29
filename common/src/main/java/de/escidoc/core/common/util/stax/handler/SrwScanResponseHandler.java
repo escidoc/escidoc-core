@@ -20,12 +20,12 @@
 
 package de.escidoc.core.common.util.stax.handler;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Parses a SRW Scan Response and extracts all Terms.

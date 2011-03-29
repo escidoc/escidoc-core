@@ -1,8 +1,5 @@
 package de.escidoc.core.statistic.internal;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import de.escidoc.core.sm.business.interfaces.StatisticDataHandlerInterface;
 import de.escidoc.core.statistic.StatisticService;
 import de.escidoc.core.statistic.StatisticServiceException;

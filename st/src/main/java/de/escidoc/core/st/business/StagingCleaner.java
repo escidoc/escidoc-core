@@ -29,9 +29,10 @@
 package de.escidoc.core.st.business;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import de.escidoc.core.st.business.persistence.StagingFileDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;

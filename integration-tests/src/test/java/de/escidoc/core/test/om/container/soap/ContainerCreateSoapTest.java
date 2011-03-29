@@ -62,7 +62,7 @@ import static org.junit.Assert.fail;
  */
 public class ContainerCreateSoapTest extends ContainerTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ContainerCreateSoapTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContainerCreateSoapTest.class);
 
     /**
      * Constructor.

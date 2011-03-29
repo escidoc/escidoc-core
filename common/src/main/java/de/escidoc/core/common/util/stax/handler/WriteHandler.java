@@ -28,7 +28,6 @@ import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ import java.util.regex.Pattern;
  */
 public abstract class WriteHandler extends DefaultHandler {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile(":");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile(":");
 
     private XMLStreamWriter writer;
 

@@ -23,7 +23,6 @@ package de.escidoc.core.common.util.service;
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
@@ -85,7 +84,7 @@ import java.util.regex.Pattern;
  */
 public class ConnectionUtility {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile(":");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile(":");
 
     private static final int HTTP_MAX_CONNECTIONS_PER_HOST = 30;
 

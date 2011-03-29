@@ -51,7 +51,6 @@ import de.escidoc.core.common.exceptions.application.violated.ResourceInUseExcep
 import de.escidoc.core.common.exceptions.system.SystemException;
 
 import javax.xml.stream.XMLStreamException;
-import java.lang.String;
 import java.net.MalformedURLException;
 import java.util.Map;
 

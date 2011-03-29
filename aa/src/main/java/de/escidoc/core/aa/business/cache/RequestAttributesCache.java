@@ -30,9 +30,10 @@ package de.escidoc.core.aa.business.cache;
 
 import com.sun.xacml.EvaluationCtx;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.apache.commons.collections.map.LRUMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.Map;

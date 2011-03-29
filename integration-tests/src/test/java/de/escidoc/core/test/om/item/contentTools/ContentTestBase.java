@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ContentTestBase extends ItemTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ContentTestBase.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentTestBase.class);
 
     private static final int BUFFER_SIZE = 0x4FFF;
 

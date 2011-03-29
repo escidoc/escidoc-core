@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 public class BasicDDLGenerator
     extends PostgresDDLGenerator {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile(" +");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile(" +");
 
     /**
      * Maximum prefix length when creating a database index.

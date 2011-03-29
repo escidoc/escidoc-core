@@ -20,24 +20,7 @@
 
 package de.escidoc.core.sm.business.persistence.sql;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.sql.DataSource;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.springframework.jdbc.core.support.JdbcDaoSupport;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
 import de.escidoc.core.sm.business.vo.database.record.DatabaseRecordFieldVo;
@@ -51,6 +34,20 @@ import de.escidoc.core.sm.business.vo.database.select.SelectFieldVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseIndexVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableFieldVo;
 import de.escidoc.core.sm.business.vo.database.table.DatabaseTableVo;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
+
+import javax.sql.DataSource;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class for direct JDBC Database access via Hibernate.
@@ -73,7 +70,7 @@ public class DirectMysqlDatabaseAccessor extends JdbcDaoSupport
     
     //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumeric)
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile(",");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile(",");
 
     private static final String TIMESTAMP_FIELD_TYPE = "DATETIME";
 

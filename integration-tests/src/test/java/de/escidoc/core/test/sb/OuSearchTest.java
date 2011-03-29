@@ -59,7 +59,7 @@ import static org.junit.Assert.fail;
 @RunWith(value = Parameterized.class)
 public class OuSearchTest extends SearchTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(OuSearchTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OuSearchTest.class);
 
     private static String[] orgUnitIds = null;
 

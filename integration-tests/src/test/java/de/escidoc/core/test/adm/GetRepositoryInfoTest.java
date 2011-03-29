@@ -28,11 +28,10 @@
  */
 package de.escidoc.core.test.adm;
 
+import de.escidoc.core.test.common.resources.PropertiesProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import de.escidoc.core.test.common.resources.PropertiesProvider;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

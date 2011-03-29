@@ -30,8 +30,6 @@ package de.escidoc.core.oai.business.persistence;
 
 import de.escidoc.core.common.util.xml.XmlUtility;
 
-import java.io.Serializable;
-
 /**
  * Class holding the set definition data.
  * 

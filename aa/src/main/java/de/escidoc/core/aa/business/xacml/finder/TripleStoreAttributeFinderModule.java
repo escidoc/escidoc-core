@@ -191,7 +191,7 @@ import java.util.regex.Pattern;
 public class TripleStoreAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile(":");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile(":");
 
     /**
      * Pattern to detect item attributes that are version dependent: component,

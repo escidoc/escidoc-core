@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
  */
 public class Version implements Comparable<Version> {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile("\\.");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("\\.");
 
     private final int majorNumber;
 

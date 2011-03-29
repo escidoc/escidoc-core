@@ -21,10 +21,11 @@
 package de.escidoc.core.common.servlet.invocation;
 
 import de.escidoc.core.common.util.IOUtils;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.apache.xpath.XPathAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;

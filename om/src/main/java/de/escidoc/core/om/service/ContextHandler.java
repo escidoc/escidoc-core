@@ -56,7 +56,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyElementVio
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContextHandlerInterface;
 
-import java.lang.String;
 import java.util.Map;
 
 /**

@@ -20,19 +20,19 @@
 
 package de.escidoc.core.common.util.configuration;
 
+import de.escidoc.core.common.exceptions.EscidocException;
+import de.escidoc.core.common.exceptions.system.SystemException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.ResourcePatternResolver;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 import java.util.regex.Pattern;
-
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.ResourcePatternResolver;
-
-import de.escidoc.core.common.exceptions.EscidocException;
-import de.escidoc.core.common.exceptions.system.SystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 /**
  * Handles properties.
@@ -42,7 +42,7 @@ import org.slf4j.Logger; import org.slf4j.LoggerFactory;
  */
 public final class EscidocConfiguration {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile("\\}.*?\\$\\{");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("\\}.*?\\$\\{");
 
     public static final String SEARCH_PROPERTIES_DIRECTORY =
         "search.properties.directory";

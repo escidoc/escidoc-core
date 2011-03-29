@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.sm.business.vo.database.table;
 
-import java.util.Collection;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
+
+import java.util.Collection;
 
 /**
  * Value Object that holds Information about a database-table when creating a

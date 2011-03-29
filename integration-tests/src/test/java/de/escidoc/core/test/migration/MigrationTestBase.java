@@ -57,11 +57,11 @@ import java.util.Vector;
  */
 public class MigrationTestBase extends EscidocRestSoapTestBase {
 
-    private final static String OBJECT_ID_PATH = "build/migration";
+    private static final String OBJECT_ID_PATH = "build/migration";
 
-    private final static String OBJECT_ID_FILENAME = "object-ids.properties";
+    private static final String OBJECT_ID_FILENAME = "object-ids.properties";
 
-    private final static String CHECK_RESULT_PATH = "build/migration/check";
+    private static final String CHECK_RESULT_PATH = "build/migration/check";
 
     private final ContainerClient containerClient =
         new ContainerClient(getTransport());

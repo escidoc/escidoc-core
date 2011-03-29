@@ -17,7 +17,7 @@ import java.util.Vector;
 
 public class DbAccess {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(DbAccess.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DbAccess.class);
 
     public static final String ESCIDOC_DATABASE_URL = "escidoc.database.url";
 

@@ -26,7 +26,6 @@ import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 
 import javax.naming.directory.NoSuchAttributeException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

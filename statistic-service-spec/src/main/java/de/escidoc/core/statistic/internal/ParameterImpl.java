@@ -1,8 +1,6 @@
 package de.escidoc.core.statistic.internal;
 
 import de.escidoc.core.statistic.Parameter;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.joda.time.ReadableInstant;
 
 import javax.xml.bind.annotation.XmlAccessType;

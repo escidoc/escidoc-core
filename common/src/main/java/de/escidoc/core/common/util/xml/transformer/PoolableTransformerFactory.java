@@ -25,8 +25,9 @@ import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.apache.commons.pool.BaseKeyedPoolableObjectFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -49,7 +50,7 @@ import java.util.regex.Pattern;
  */
 public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile(";");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile(";");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(
         PoolableTransformerFactory.class);

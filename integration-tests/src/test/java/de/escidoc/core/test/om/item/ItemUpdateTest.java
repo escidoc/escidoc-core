@@ -75,7 +75,7 @@ import static org.junit.Assert.fail;
 @RunWith(value = Parameterized.class)
 public class ItemUpdateTest extends ItemTestBase implements ItemXpathsProvider {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ItemUpdateTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemUpdateTest.class);
 
     private String theItemId;
 

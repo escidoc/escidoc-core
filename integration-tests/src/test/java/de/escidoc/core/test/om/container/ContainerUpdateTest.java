@@ -74,7 +74,7 @@ import static org.junit.Assert.fail;
 @RunWith(value = Parameterized.class)
 public class ContainerUpdateTest extends ContainerTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ContainerUpdateTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContainerUpdateTest.class);
 
     private String theContainerXml;
 

@@ -62,7 +62,7 @@ import static org.junit.Assert.fail;
 @RunWith(value = Parameterized.class)
 public class SearchTest extends SearchTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(SearchTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SearchTest.class);
 
     private static final String INDEX_NAME = "escidoc_all";
 

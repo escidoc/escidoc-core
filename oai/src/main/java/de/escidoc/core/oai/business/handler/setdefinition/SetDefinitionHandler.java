@@ -14,7 +14,6 @@ import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintVi
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.BeanLocator;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
@@ -31,6 +30,8 @@ import de.escidoc.core.oai.business.renderer.VelocityXmlSetDefinitionRenderer;
 import de.escidoc.core.oai.business.renderer.interfaces.SetDefinitionRendererInterface;
 import de.escidoc.core.oai.business.stax.handler.set_definition.SetDefinitionCreateHandler;
 import de.escidoc.core.oai.business.stax.handler.set_definition.SetDefinitionUpdateHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.sql.Timestamp;

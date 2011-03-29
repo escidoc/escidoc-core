@@ -30,7 +30,6 @@ package de.escidoc.core.sm.business;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.sm.business.interfaces.PreprocessingHandlerInterface;
 import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;

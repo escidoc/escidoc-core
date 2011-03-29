@@ -60,7 +60,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(value = Parameterized.class)
 public class ContentModelAdminSearchTest extends SearchTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ContentModelAdminSearchTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentModelAdminSearchTest.class);
 
     private static final String INDEX_NAME = "content_model_admin";
 

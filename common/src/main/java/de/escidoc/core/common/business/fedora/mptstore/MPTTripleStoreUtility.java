@@ -29,7 +29,6 @@ import de.escidoc.core.common.exceptions.system.IntegritySystemException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.util.IOUtils;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.xml.Elements;
 import de.escidoc.core.common.util.xml.XmlUtility;
@@ -66,7 +65,7 @@ import java.util.regex.Pattern;
  */
 public class MPTTripleStoreUtility extends TripleStoreUtility {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile("\\s");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("\\s");
 
     private TableManager tableManager;
 

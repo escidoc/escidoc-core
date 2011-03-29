@@ -21,7 +21,6 @@
 package de.escidoc.core.common.util.aop;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingMethodParameterException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

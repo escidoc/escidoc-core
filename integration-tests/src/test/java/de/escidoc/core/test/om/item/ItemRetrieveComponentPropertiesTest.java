@@ -54,7 +54,7 @@ import static org.junit.Assert.fail;
 @RunWith(value = Parameterized.class)
 public class ItemRetrieveComponentPropertiesTest extends ItemTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ItemRetrieveComponentPropertiesTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemRetrieveComponentPropertiesTest.class);
 
     private static String itemId = null;
 

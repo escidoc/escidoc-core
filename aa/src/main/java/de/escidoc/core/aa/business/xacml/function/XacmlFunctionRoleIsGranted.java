@@ -72,7 +72,7 @@ import java.util.regex.Pattern;
  */
 public class XacmlFunctionRoleIsGranted extends FunctionBase {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile("/");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("/");
 
     /**
      * The pattern to find the position to insert the "-new" marker in attribute

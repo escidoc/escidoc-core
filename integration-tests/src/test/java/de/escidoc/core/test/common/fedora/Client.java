@@ -54,7 +54,7 @@ import java.util.HashMap;
  */
 public class Client {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(Client.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Client.class);
 
     private FedoraAPIM apim;
 

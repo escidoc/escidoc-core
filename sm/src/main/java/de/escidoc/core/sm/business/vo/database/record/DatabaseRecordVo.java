@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.sm.business.vo.database.record;
 
-import java.util.Collection;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
+
+import java.util.Collection;
 
 /**
  * Holds all values needed to represent one database-record.

@@ -30,8 +30,6 @@ package de.escidoc.core.test.om.item;
 
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.common.CountRepository;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.adm.AdminClient;
 import de.escidoc.core.test.common.resources.PropertiesProvider;
 import de.escidoc.core.test.common.util.Environment;
 import de.escidoc.core.test.common.util.SQLRenderer;
@@ -51,8 +49,6 @@ import org.w3c.dom.Node;
 
 import java.util.Random;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Measure performance of Item create.
@@ -63,7 +59,7 @@ import java.util.regex.Pattern;
 @RunWith(value = Parameterized.class)
 public class ItemPerformanceTest extends ItemTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ItemPerformanceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemPerformanceTest.class);
 
     private static EtmMonitor monitor;
 

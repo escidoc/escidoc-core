@@ -69,7 +69,7 @@ import static org.junit.Assert.assertEquals;
 @Ignore // DigiLib Tests sollen laut Matthias bis auf weiteres deaktiviert werden.
 public class ItemRetrieveContentTest extends ContentTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ItemRetrieveContentTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemRetrieveContentTest.class);
 
     private static final int MAX_RETRIEVES = 30;
 

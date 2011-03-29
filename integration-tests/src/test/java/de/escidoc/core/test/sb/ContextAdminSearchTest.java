@@ -60,7 +60,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(value = Parameterized.class)
 public class ContextAdminSearchTest extends SearchTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ContextAdminSearchTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContextAdminSearchTest.class);
 
     private static final String INDEX_NAME = "context_admin";
 

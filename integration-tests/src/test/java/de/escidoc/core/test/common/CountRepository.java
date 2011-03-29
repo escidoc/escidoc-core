@@ -47,7 +47,7 @@ import java.util.Vector;
  */
 public class CountRepository {
 
-    private final static Logger LOGGER =
+    private static final Logger LOGGER =
         LoggerFactory.getLogger(CountRepository.class);
 
     private static final String RDF_TYPE =

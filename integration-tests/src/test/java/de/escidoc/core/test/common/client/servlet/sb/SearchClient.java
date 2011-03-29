@@ -28,6 +28,9 @@
  */
 package de.escidoc.core.test.common.client.servlet.sb;
 
+import de.escidoc.core.test.common.client.servlet.ClientBase;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.common.client.servlet.HttpHelper;
 import gov.loc.www.zing.srw.ExplainRequestType;
 import gov.loc.www.zing.srw.ExplainResponseType;
 import gov.loc.www.zing.srw.ExtraRequestData;
@@ -37,7 +40,11 @@ import gov.loc.www.zing.srw.SearchRetrieveResponseType;
 import gov.loc.www.zing.srw.service.ExplainPort;
 import gov.loc.www.zing.srw.service.SRWPort;
 import gov.loc.www.zing.srw.service.SRWSampleServiceLocator;
+import org.apache.axis.message.MessageElement;
+import org.apache.axis.types.PositiveInteger;
+import org.apache.axis.types.URI;
 
+import javax.xml.rpc.ServiceException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -46,16 +53,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
-import javax.xml.rpc.ServiceException;
-
-import org.apache.axis.message.MessageElement;
-import org.apache.axis.types.PositiveInteger;
-import org.apache.axis.types.URI;
-
-import de.escidoc.core.test.common.client.servlet.ClientBase;
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.common.client.servlet.HttpHelper;
 
 /**
  * Offers access methods to the escidoc REST and SOAP interface of the Search

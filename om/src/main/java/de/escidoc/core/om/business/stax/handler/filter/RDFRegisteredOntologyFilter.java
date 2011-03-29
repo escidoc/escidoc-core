@@ -30,8 +30,9 @@ package de.escidoc.core.om.business.stax.handler.filter;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.SystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.om.business.fedora.OntologyUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.EventFilter;

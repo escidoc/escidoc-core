@@ -6,8 +6,6 @@ import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.index.IndexRequest;
 import de.escidoc.core.index.IndexServiceException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 public class IndexServiceImpl {
 

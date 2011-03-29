@@ -21,8 +21,8 @@
 package de.escidoc.core.common.business.fedora.resources.interfaces;
 
 import de.escidoc.core.common.business.fedora.datastream.Datastream;
-import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.notfound.AdminDescriptorNotFoundException;
+import de.escidoc.core.common.exceptions.application.notfound.StreamNotFoundException;
 import de.escidoc.core.common.exceptions.application.violated.LockingException;
 import de.escidoc.core.common.exceptions.system.FedoraSystemException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;

@@ -43,7 +43,6 @@ import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 
 import javax.naming.directory.NoSuchAttributeException;
-
 import java.util.ArrayList;
 import java.util.List;
 

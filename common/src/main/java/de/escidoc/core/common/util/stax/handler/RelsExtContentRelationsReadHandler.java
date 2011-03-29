@@ -22,7 +22,6 @@ package de.escidoc.core.common.util.stax.handler;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.xml.stax.events.EndElement;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
@@ -36,7 +35,7 @@ import java.util.regex.Pattern;
 
 public class RelsExtContentRelationsReadHandler extends DefaultHandler {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile("/");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("/");
 
     private final StaxParser parser;
 

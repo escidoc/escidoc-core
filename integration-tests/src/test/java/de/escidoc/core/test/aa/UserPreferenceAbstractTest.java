@@ -59,7 +59,7 @@ import static org.junit.Assert.fail;
  */
 public abstract class UserPreferenceAbstractTest extends UserPreferenceTestBase {
 
-    private final static String PREEXISTING_USER = "escidoc:user42";
+    private static final String PREEXISTING_USER = "escidoc:user42";
 
     /**
      * The constructor.

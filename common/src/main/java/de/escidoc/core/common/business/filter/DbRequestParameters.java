@@ -20,10 +20,11 @@
 
 package de.escidoc.core.common.business.filter;
 
-import java.util.Map;
-
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
 
 /**
  * This class is a value object for all parameters used in an SRU request with a

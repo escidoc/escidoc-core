@@ -64,7 +64,6 @@ import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitFoXmlR
 import de.escidoc.core.oum.business.renderer.interfaces.OrganizationalUnitRendererInterface;
 
 import javax.xml.stream.XMLStreamException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

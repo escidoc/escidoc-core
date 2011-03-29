@@ -28,9 +28,10 @@ package de.escidoc.core.om.performance;
  * All rights reserved.  Use is subject to license terms.
  */
 
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class is the interceptor being used for collecting runtime performance

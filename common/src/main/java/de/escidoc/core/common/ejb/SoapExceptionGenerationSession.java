@@ -19,10 +19,6 @@
  */
 package de.escidoc.core.common.ejb;
 
-import javax.ejb.SessionBean;
-import javax.ejb.SessionContext;
-import java.rmi.RemoteException;
-
 /**
  * Session layer for SoapExceptionGeneration.
  */

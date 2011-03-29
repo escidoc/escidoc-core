@@ -55,7 +55,6 @@ import de.escidoc.core.common.exceptions.application.violated.UniqueConstraintVi
 import de.escidoc.core.common.exceptions.application.violated.UserGroupHierarchyViolationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
-import java.lang.String;
 import java.util.Map;
 
 /**

@@ -20,6 +20,18 @@
 
 package de.escidoc.core.common.business.indexing;
 
+import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
+import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+import de.escidoc.core.common.util.configuration.EscidocConfiguration;
+import de.escidoc.core.common.util.service.ConnectionUtility;
+import de.escidoc.core.common.util.stax.StaxParser;
+import de.escidoc.core.common.util.stax.handler.GsearchIndexConfigurationHandler;
+import de.escidoc.core.common.util.stax.handler.GsearchRepositoryInfoHandler;
+import de.escidoc.core.common.util.xml.XmlUtility;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -31,18 +43,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
-
-import de.escidoc.core.common.exceptions.system.ApplicationServerSystemException;
-import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
-import de.escidoc.core.common.util.service.ConnectionUtility;
-import de.escidoc.core.common.util.stax.StaxParser;
-import de.escidoc.core.common.util.stax.handler.GsearchIndexConfigurationHandler;
-import de.escidoc.core.common.util.stax.handler.GsearchRepositoryInfoHandler;
-import de.escidoc.core.common.util.xml.XmlUtility;
-
 /**
  * Execute http-request to fedoragsearch. Update with requestIndexing, delete
  * with requestDeletion.
@@ -51,7 +51,7 @@ public class GsearchHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GsearchHandler.class);
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile("\\s");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("\\s");
 
     private Map<String, Map<String, String>> indexConfigurations;
 

@@ -28,7 +28,6 @@
  */
 package de.escidoc.core.test.aa;
 
-import static org.junit.Assert.assertEquals;
 import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidSearchQueryException;
 import de.escidoc.core.test.EscidocRestSoapTestBase;
 import de.escidoc.core.test.EscidocTestBase;
@@ -47,6 +46,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test suite for the GrantFilter .

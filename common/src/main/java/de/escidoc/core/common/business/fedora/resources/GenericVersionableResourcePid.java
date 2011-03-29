@@ -34,7 +34,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
@@ -72,9 +71,9 @@ import java.util.regex.Pattern;
  */
 public class GenericVersionableResourcePid extends GenericVersionableResource {
 
-    private final static Pattern SPLIT_PATTERN_PREDICATE = Pattern.compile("#");
+    private static final Pattern SPLIT_PATTERN_PREDICATE = Pattern.compile("#");
 
-    private final static Pattern SPLIT_PATTERN_PREDICATE_AND_TARGET = Pattern.compile("###");
+    private static final Pattern SPLIT_PATTERN_PREDICATE_AND_TARGET = Pattern.compile("###");
 
     private static final Pattern LATEST_RELEASE_PID_ENTRY =
         Pattern.compile("<[^:]+:" + TripleStoreUtility.PROP_LATEST_RELEASE_PID

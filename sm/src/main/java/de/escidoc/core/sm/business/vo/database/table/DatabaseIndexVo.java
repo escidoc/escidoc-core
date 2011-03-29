@@ -28,10 +28,10 @@
  */
 package de.escidoc.core.sm.business.vo.database.table;
 
-import java.util.Collection;
-
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.sm.business.vo.database.DatabaseConventionChecker;
+
+import java.util.Collection;
 
 /**
  * Holds information about an index in the database.

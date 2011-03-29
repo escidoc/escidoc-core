@@ -3,8 +3,6 @@ package de.escidoc.core.om.service;
 import de.escidoc.core.common.exceptions.EscidocException;
 import org.springframework.security.context.SecurityContext;
 
-import java.lang.Boolean;
-import java.lang.String;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

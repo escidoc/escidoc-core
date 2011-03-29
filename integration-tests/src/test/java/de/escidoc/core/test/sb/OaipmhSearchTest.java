@@ -57,7 +57,7 @@ import static org.junit.Assert.fail;
 @RunWith(value = Parameterized.class)
 public class OaipmhSearchTest extends SearchTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(OaipmhSearchTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OaipmhSearchTest.class);
 
     private static String[] itemIds = null;
 

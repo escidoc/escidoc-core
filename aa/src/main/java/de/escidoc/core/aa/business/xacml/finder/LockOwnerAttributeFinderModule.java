@@ -34,7 +34,6 @@ import de.escidoc.core.aa.business.authorisation.CustomEvaluationResultBuilder;
 import de.escidoc.core.common.business.LockHandler;
 import de.escidoc.core.common.business.aa.authorisation.AttributeIds;
 import de.escidoc.core.common.exceptions.EscidocException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 import java.util.regex.Pattern;
 

@@ -21,7 +21,6 @@
 package de.escidoc.core.common.util.security;
 
 import de.escidoc.core.aa.service.interfaces.EscidocUserDetailsServiceInterface;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.springframework.security.Authentication;
 import org.springframework.security.AuthenticationException;
 import org.springframework.security.GrantedAuthority;

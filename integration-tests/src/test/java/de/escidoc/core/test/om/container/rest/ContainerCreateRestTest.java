@@ -62,7 +62,7 @@ import static org.junit.Assert.fail;
  */
 public class ContainerCreateRestTest extends ContainerTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ContainerCreateRestTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContainerCreateRestTest.class);
 
     /**
      * Constructor.

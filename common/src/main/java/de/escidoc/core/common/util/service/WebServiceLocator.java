@@ -20,7 +20,6 @@
 
 package de.escidoc.core.common.util.service;
 
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.apache.axis.ConfigurationException;
 import org.apache.axis.EngineConfiguration;
 import org.apache.axis.client.Call;
@@ -29,6 +28,8 @@ import org.apache.axis.encoding.ser.BeanDeserializerFactory;
 import org.apache.axis.encoding.ser.BeanSerializerFactory;
 import org.apache.ws.security.WSConstants;
 import org.apache.ws.security.handler.WSHandlerConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.namespace.QName;
 import javax.xml.rpc.ServiceException;

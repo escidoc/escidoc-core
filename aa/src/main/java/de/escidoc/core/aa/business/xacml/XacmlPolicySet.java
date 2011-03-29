@@ -36,8 +36,6 @@ import com.sun.xacml.combine.PolicyCombiningAlgorithm;
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.net.URI;

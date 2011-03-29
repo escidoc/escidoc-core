@@ -20,10 +20,10 @@
 
 package de.escidoc.core.common.business.filter;
 
+import de.escidoc.core.common.business.Constants;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import de.escidoc.core.common.business.Constants;
 
 /**
  * This class is a value object for all parameters used in an SRU request.

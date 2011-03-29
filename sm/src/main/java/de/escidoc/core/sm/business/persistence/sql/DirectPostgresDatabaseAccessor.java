@@ -29,7 +29,6 @@
 package de.escidoc.core.sm.business.persistence.sql;
 
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.sm.business.Constants;
 import de.escidoc.core.sm.business.persistence.DirectDatabaseAccessorInterface;
 import de.escidoc.core.sm.business.vo.database.record.DatabaseRecordFieldVo;
@@ -75,7 +74,7 @@ public class DirectPostgresDatabaseAccessor extends JdbcDaoSupport
     
     //Check xPath-Methods(getXpathBoolean, getXpathString, getXpathNumeric)
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile(",");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile(",");
 
     private static final String TIMESTAMP_FIELD_TYPE = "timestamp";
 

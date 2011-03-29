@@ -30,13 +30,14 @@ package de.escidoc.core.sm.business.stax.handler;
 
 import de.escidoc.core.common.exceptions.application.missing.MissingAttributeValueException;
 import de.escidoc.core.common.exceptions.system.IntegritySystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import de.escidoc.core.common.util.xml.stax.events.StartElement;
 import de.escidoc.core.common.util.xml.stax.handler.DefaultHandler;
 import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinition;
 import de.escidoc.core.sm.business.persistence.hibernate.ReportDefinitionRole;
 import de.escidoc.core.sm.business.persistence.hibernate.Scope;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;

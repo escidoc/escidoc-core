@@ -3,13 +3,14 @@ package de.escidoc.core.tme.business.jhove;
 import de.escidoc.core.common.exceptions.application.invalid.TmeException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.IOUtils;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.tme.business.TmeHandlerBase;
 import de.escidoc.core.tme.business.interfaces.JhoveHandlerInterface;
 import edu.harvard.hul.ois.jhove.App;
 import edu.harvard.hul.ois.jhove.JhoveBase;
 import edu.harvard.hul.ois.jhove.JhoveException;
 import edu.harvard.hul.ois.jhove.OutputHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

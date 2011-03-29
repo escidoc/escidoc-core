@@ -38,7 +38,8 @@ import com.sun.xacml.cond.FunctionFactory;
 import de.escidoc.core.aa.business.persistence.Action;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionContains;
 import de.escidoc.core.common.util.IOUtils;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URI;

@@ -68,7 +68,6 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyVersionExc
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.ContainerHandlerInterface;
 
-import java.lang.String;
 import java.util.Map;
 
 /**

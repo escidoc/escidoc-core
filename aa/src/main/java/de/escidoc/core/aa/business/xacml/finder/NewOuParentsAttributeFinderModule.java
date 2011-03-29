@@ -62,7 +62,7 @@ import java.util.regex.Pattern;
 public class NewOuParentsAttributeFinderModule
     extends AbstractAttributeFinderModule {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile("\\s+");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("\\s+");
 
     private static final String ATTR_HIERARCHICAL_PARENTS_NEW =
         AttributeIds.ORGANIZATIONAL_UNIT_ATTR_PREFIX

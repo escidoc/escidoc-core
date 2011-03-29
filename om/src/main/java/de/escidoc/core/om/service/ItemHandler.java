@@ -72,7 +72,6 @@ import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
 
-import java.lang.String;
 import java.util.Map;
 
 /**

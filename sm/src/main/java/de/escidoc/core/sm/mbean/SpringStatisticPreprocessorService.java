@@ -30,8 +30,9 @@ package de.escidoc.core.sm.mbean;
 
 import de.escidoc.core.common.business.Constants;
 import de.escidoc.core.common.business.queue.errorprocessing.ErrorMessageHandler;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.sm.business.preprocessing.StatisticPreprocessor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedOperationParameter;
 import org.springframework.jmx.export.annotation.ManagedResource;

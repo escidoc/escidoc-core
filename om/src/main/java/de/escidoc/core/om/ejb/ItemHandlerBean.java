@@ -47,8 +47,9 @@ import de.escidoc.core.common.exceptions.application.violated.ReadonlyViolationE
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.om.service.interfaces.EscidocServiceRedirectInterface;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.om.service.interfaces.ItemHandlerInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.access.BeanFactoryLocator;
 import org.springframework.beans.factory.access.SingletonBeanFactoryLocator;

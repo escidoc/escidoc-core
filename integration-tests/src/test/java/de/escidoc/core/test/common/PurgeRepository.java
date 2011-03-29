@@ -51,7 +51,7 @@ import java.util.Vector;
  */
 public class PurgeRepository {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(PurgeRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PurgeRepository.class);
 
     /**
      * @param args

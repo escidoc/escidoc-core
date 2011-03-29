@@ -20,6 +20,8 @@
 
 package de.escidoc.core.common.util.db;
 
+import de.escidoc.core.common.util.IOUtils;
+
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
@@ -40,8 +42,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import de.escidoc.core.common.util.IOUtils;
 
 /**
  * This class represents the table structure and the index list of a database.

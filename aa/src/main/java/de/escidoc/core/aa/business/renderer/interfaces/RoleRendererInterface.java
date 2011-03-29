@@ -28,11 +28,11 @@
  */
 package de.escidoc.core.aa.business.renderer.interfaces;
 
-import java.util.List;
-
 import de.escidoc.core.aa.business.persistence.EscidocRole;
 import de.escidoc.core.common.business.filter.RecordPacking;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
+
+import java.util.List;
 
 /**
  * Interface of a role renderer.

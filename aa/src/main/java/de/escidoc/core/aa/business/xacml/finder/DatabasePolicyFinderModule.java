@@ -28,16 +28,6 @@
  */
 package de.escidoc.core.aa.business.xacml.finder;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.regex.Pattern;
-
 import com.sun.xacml.AbstractPolicy;
 import com.sun.xacml.EvaluationCtx;
 import com.sun.xacml.PolicyReference;
@@ -46,7 +36,6 @@ import com.sun.xacml.ctx.Status;
 import com.sun.xacml.finder.PolicyFinder;
 import com.sun.xacml.finder.PolicyFinderModule;
 import com.sun.xacml.finder.PolicyFinderResult;
-
 import de.escidoc.core.aa.business.authorisation.Constants;
 import de.escidoc.core.aa.business.authorisation.CustomPolicyBuilder;
 import de.escidoc.core.aa.business.authorisation.CustomStatusBuilder;
@@ -63,9 +52,20 @@ import de.escidoc.core.aa.business.xacml.XacmlPolicySet;
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SqlDatabaseSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.UserContext;
 import de.escidoc.core.common.util.string.StringUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Custom implementation of a PolicyFinderModule.
@@ -79,7 +79,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
     private static final Logger LOGGER = LoggerFactory.getLogger(
         DatabasePolicyFinderModule.class);
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile("/");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("/");
 
     /**
      * The property which is used to specify the schema file to validate against

@@ -54,7 +54,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(value = Parameterized.class)
 public class TextExtractionSearchTest extends SearchTestBase {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(TextExtractionSearchTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TextExtractionSearchTest.class);
 
     private static String itemId = null;
 

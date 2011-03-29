@@ -23,7 +23,6 @@ package de.escidoc.core.common.exceptions;
 import de.escidoc.core.common.util.xml.XmlEscaper;
 
 import javax.servlet.http.HttpServletResponse;
-import java.lang.Throwable;
 
 /**
  * EscidocExeption contains a HttpStatusCode and a HttpStatusMessage which

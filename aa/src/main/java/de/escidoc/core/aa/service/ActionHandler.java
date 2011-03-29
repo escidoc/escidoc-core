@@ -36,8 +36,6 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.application.security.AuthorizationException;
 import de.escidoc.core.common.exceptions.system.SystemException;
 
-import java.lang.String;
-
 /**
  * Service layer implementation of a handler that manages eSciDoc actions.
  *

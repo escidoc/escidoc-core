@@ -29,9 +29,10 @@
 package de.escidoc.core.om.business.fedora.deviation;
 
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.service.ConnectionUtility;
 import de.escidoc.core.om.business.interfaces.FedoraDescribeDeviationHandlerInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.Map;

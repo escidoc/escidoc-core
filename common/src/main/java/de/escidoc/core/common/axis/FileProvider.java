@@ -22,7 +22,6 @@ package de.escidoc.core.common.axis;
 
 import de.escidoc.core.common.util.IOUtils;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.xml.XmlUtility;
 import org.apache.axis.AxisEngine;
 import org.apache.axis.ConfigurationException;
@@ -37,6 +36,8 @@ import org.apache.axis.utils.Admin;
 import org.apache.axis.utils.ClassUtils;
 import org.apache.axis.utils.Messages;
 import org.apache.axis.utils.XMLUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 import javax.xml.namespace.QName;

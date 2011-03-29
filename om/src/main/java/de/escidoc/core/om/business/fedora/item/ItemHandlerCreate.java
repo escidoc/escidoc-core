@@ -53,7 +53,6 @@ import de.escidoc.core.common.exceptions.system.TripleStoreSystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
 import de.escidoc.core.common.exceptions.system.XmlParserSystemException;
 import de.escidoc.core.common.util.configuration.EscidocConfiguration;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.stax.StaxParser;
 import de.escidoc.core.common.util.stax.handler.AddNewSubTreesToDatastream;
 import de.escidoc.core.common.util.stax.handler.MultipleExtractor;
@@ -69,6 +68,8 @@ import de.escidoc.core.om.business.stax.handler.item.ComponentMetadataHandler;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentContentHandler;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentPropertiesHandler;
 import de.escidoc.core.om.business.stax.handler.item.OneComponentTitleHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.ByteArrayOutputStream;

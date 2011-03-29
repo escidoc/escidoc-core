@@ -22,11 +22,12 @@ package de.escidoc.core.common.util.service;
 
 import de.escidoc.core.common.exceptions.system.SystemException;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import org.jboss.security.SecurityAssociation;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import de.escidoc.core.common.util.string.StringUtility;
 import org.aopalliance.intercept.MethodInvocation;
 import org.jboss.security.RunAsIdentity;
+import org.jboss.security.SecurityAssociation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ejb.access.AbstractRemoteSlsbInvokerInterceptor;
 import org.springframework.ejb.access.SimpleRemoteStatelessSessionProxyFactoryBean;
 import org.springframework.security.Authentication;

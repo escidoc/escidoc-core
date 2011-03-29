@@ -4,8 +4,6 @@ import de.escidoc.core.common.exceptions.application.security.AuthenticationExce
 import de.escidoc.core.common.exceptions.system.SystemException;
 import org.springframework.security.context.SecurityContext;
 
-import java.lang.Boolean;
-import java.lang.String;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

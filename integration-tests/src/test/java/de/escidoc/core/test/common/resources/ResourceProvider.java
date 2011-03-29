@@ -49,7 +49,7 @@ import java.io.InputStream;
  */
 public class ResourceProvider {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ResourceProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceProvider.class);
 
     private static final String DEFAULT_PACKAGE =
         "/data/";

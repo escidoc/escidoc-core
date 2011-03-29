@@ -20,9 +20,10 @@
 
 package de.escidoc.core.common.util.xml.factory;
 
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.log.LogChute;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Velocity Logger with no output.

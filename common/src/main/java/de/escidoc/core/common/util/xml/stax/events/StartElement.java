@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import javax.naming.directory.NoSuchAttributeException;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.stream.XMLStreamReader;
-
 import java.util.ArrayList;
 import java.util.List;
 

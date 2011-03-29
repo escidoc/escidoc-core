@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 
 public class OntologyHandler extends DefaultHandler {
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile("#");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("#");
 
     private final StaxParser parser;
 

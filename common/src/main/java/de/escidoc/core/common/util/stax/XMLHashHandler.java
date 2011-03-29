@@ -30,7 +30,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
@@ -47,7 +46,7 @@ public class XMLHashHandler extends DefaultHandler {
 
     private String hash;
 
-    private final static Pattern SPLIT_PATTERN = Pattern.compile(":");
+    private static final Pattern SPLIT_PATTERN = Pattern.compile(":");
 
     @Override
     public void characters(final char[] ch, final int start, final int length)

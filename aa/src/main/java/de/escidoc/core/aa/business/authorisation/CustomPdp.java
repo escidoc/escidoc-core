@@ -63,7 +63,6 @@ import de.escidoc.core.aa.business.xacml.function.XacmlFunctionOneAttributeInBot
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleInList;
 import de.escidoc.core.aa.business.xacml.function.XacmlFunctionRoleIsGranted;
 import de.escidoc.core.common.exceptions.system.WebserverSystemException;
-import org.slf4j.Logger; import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.IOException;
