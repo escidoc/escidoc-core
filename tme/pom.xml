@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>trunk-SNAPSHOT</version>
+		<version>${escidoc-core.version}</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
 	<artifactId>tme</artifactId>
     <packaging>ejb</packaging>
 	<name>eSciDoc Core - Technical Metadata Extraction Service</name>
-	<version>trunk-SNAPSHOT</version>
+	<version>${escidoc-core.version}</version>
 
 	<description>Technical Metadata Extraction Service package of eSciDoc Core</description>
 	<build>

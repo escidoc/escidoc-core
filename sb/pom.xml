@@ -7,12 +7,12 @@
 	<artifactId>sb</artifactId>
 	<packaging>ejb</packaging>
 	<name>eSciDoc Core - Search and Browse Unit Service</name>
-	<version>trunk-SNAPSHOT</version>
+	<version>${escidoc-core.version}</version>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>trunk-SNAPSHOT</version>
+		<version>${escidoc-core.version}</version>
 	</parent>
 
 	<description>Search &amp; Browse Service package of eSciDoc Core</description>

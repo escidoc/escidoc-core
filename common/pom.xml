@@ -28,13 +28,13 @@
 	<artifactId>common</artifactId>
 	<packaging>ejb</packaging>
 	<name>eSciDoc Core - Common</name>
-	<version>trunk-SNAPSHOT</version>
+	<version>${escidoc-core.version}</version>
 	<description>Common package of eSciDoc Core</description>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>trunk-SNAPSHOT</version>
+		<version>${escidoc-core.version}</version>
 	</parent>
 
 	<build>

@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>trunk-SNAPSHOT</version>
+		<version>${escidoc-core.version}</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
 	<artifactId>axis</artifactId>
 	<packaging>war</packaging>
 	<name>eSciDoc Core - Axis Service</name>
-	<version>trunk-SNAPSHOT</version>
+	<version>${escidoc-core.version}</version>
 	<description>Axis Web Archive package</description>
 
 	<dependencies>
@@ -553,7 +553,7 @@
 						<transformationSet>
 							<dir>${project.build.directory}/generated-sources/axistools/admin</dir>
 							<stylesheet>src/main/stylesheet.xsl</stylesheet>
-							<outputDir>${project.build.directory}/axis-trunk-SNAPSHOT/WEB-INF</outputDir>
+							<outputDir>${project.build.directory}/axis-${escidoc-core.version}/WEB-INF</outputDir>
 						</transformationSet>
 					</transformationSets>
 				</configuration>

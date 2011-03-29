@@ -27,7 +27,7 @@
 	<artifactId>eSciDocCore</artifactId>
 	<packaging>pom</packaging>
 	<name>eSciDoc Core</name>
-	<version>trunk-SNAPSHOT</version>
+	<version>${escidoc-core.version}</version>
 
 	<url>https://www.escidoc.org</url>
 	<issueManagement>
@@ -770,6 +770,7 @@
       <jaxb.temporary.folder>target/generated-sources/resources/jaxb</jaxb.temporary.folder> -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <escidoc-core.version>trunk-SNAPSHOT</escidoc-core.version>
   </properties>
 
   <dependencies>

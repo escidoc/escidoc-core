@@ -8,13 +8,13 @@
 	<artifactId>integration-tests</artifactId>
 	<packaging>jar</packaging>
 	<name>eSciDoc Core - Integration Tests</name>
-	<version>trunk-SNAPSHOT</version>
+	<version>${escidoc-core.version}</version>
 	<description>Integration Tests of eSciDoc Core</description>
 
 	<parent>
 		<artifactId>eSciDocCore</artifactId>
 		<groupId>eSciDocCore</groupId>
-		<version>trunk-SNAPSHOT</version>
+		<version>${escidoc-core.version}</version>
 	</parent>
 
 	<properties>
@@ -468,7 +468,7 @@
 		<dependency>
 			<groupId>org.escidoc</groupId>
 			<artifactId>escidoc-core</artifactId>
-			<version>trunk-SNAPSHOT</version>
+			<version>${escidoc-core.version}</version>
 			<type>ear</type>
 		</dependency>
 		<dependency>
