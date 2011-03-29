@@ -75,7 +75,7 @@ http://www.springframework.org/schema/security http://www.springframework.org/sc
         <security:jdbc-user-service
             id="jdbcUserService"
             data-source-ref="escidoc-core.DataSource"
-            users-by-username-query="select loginname, password, 'true' as active from aa.user_account where loginname = ?"
+            users-by-username-query="select loginname, password, 1 as active from aa.user_account where loginname = ?"
             authorities-by-username-query="select loginname, 'ROLE_ESCIDOC_USER' from aa.user_account where loginname = ?" />
     </security:authentication-provider>
     
