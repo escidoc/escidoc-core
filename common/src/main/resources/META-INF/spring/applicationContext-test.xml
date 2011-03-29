@@ -36,7 +36,7 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
        default-autowire="no" default-lazy-init="true">
-    <bean id="jamonPerformanceMonitorInterceptor"
+    <!--bean id="jamonPerformanceMonitorInterceptor"
           class="org.springframework.aop.interceptor.JamonPerformanceMonitorInterceptor">
         <property name="trackAllInvocations" value="true"></property>
     </bean>
@@ -44,5 +44,5 @@
         <aop:pointcut id="jamonMonitoringPointcut"
                       expression="execution(* de.escidoc.core..service.interfaces.*.*(..))"/>
         <aop:advisor pointcut-ref="jamonMonitoringPointcut" advice-ref="jamonPerformanceMonitorInterceptor"/>
-    </aop:config>
+    </aop:config-->
 </beans>
