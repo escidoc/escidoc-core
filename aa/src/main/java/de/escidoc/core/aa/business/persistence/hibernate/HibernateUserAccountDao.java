@@ -542,10 +542,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.UserAccount)
      *
      */
-    @Override
     public void save(final UserAccount userAccount)
         throws SqlDatabaseSystemException {
-
         super.save(userAccount);
     }
 
@@ -964,11 +962,8 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * @throws SqlDatabaseSystemException
      * @see UserAccountDaoInterface
      *      #save(de.escidoc.core.aa.business.persistence.RoleGrant)
-     *
      */
-    @Override
     public void save(final RoleGrant grant) throws SqlDatabaseSystemException {
-
         super.save(grant);
     }
 
@@ -981,9 +976,7 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #update(de.escidoc.core.aa.business.persistence.RoleGrant)
      *
      */
-    @Override
     public void update(final RoleGrant grant) throws SqlDatabaseSystemException {
-
         super.update(grant);
     }
 
@@ -1149,7 +1142,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.UserAttribute)
      *
      */
-    @Override
     public void save(final UserAttribute attribute)
         throws SqlDatabaseSystemException {
 
@@ -1165,7 +1157,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #update(de.escidoc.core.aa.business.persistence.UserAttribute)
      *
      */
-    @Override
     public void update(final UserAttribute attribute)
         throws SqlDatabaseSystemException {
 
@@ -1181,7 +1172,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserAttribute)
      *
      */
-    @Override
     public void delete(final UserAttribute attribute)
         throws SqlDatabaseSystemException {
 
@@ -1520,7 +1510,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      *
      */
-    @Override
     public void save(final UserPreference preference)
         throws SqlDatabaseSystemException {
         super.save(preference);
@@ -1537,7 +1526,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserPreference)
      *
      */
-    @Override
     public void delete(final UserPreference data)
         throws SqlDatabaseSystemException {
         super.delete(data);

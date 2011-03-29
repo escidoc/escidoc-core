@@ -110,7 +110,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserGroup)
      *
      */
-    @Override
     public void delete(final UserGroup userGroup)
         throws SqlDatabaseSystemException {
         super.delete(userGroup);
@@ -150,7 +149,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #delete(de.escidoc.core.aa.business.persistence.UserGroupMember)
      *
      */
-    @Override
     public void delete(final UserGroupMember userGroupMember)
         throws SqlDatabaseSystemException {
         super.delete(userGroupMember);
@@ -579,7 +577,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.RoleGrant)
      *
      */
-    @Override
     public void save(final RoleGrant grant) throws SqlDatabaseSystemException {
         super.save(grant);
     }
@@ -593,7 +590,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.UserGroup)
      *
      */
-    @Override
     public void save(final UserGroup userGroup)
         throws SqlDatabaseSystemException {
         super.save(userGroup);
@@ -608,7 +604,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #save(de.escidoc.core.aa.business.persistence.UserGroupMember)
      *
      */
-    @Override
     public void save(final UserGroupMember userGroupMember)
         throws SqlDatabaseSystemException {
         super.save(userGroupMember);
@@ -623,7 +618,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #update(de.escidoc.core.aa.business.persistence.RoleGrant)
      *
      */
-    @Override
     public void update(final RoleGrant grant) throws SqlDatabaseSystemException {
         super.update(grant);
     }
@@ -637,7 +631,6 @@ public class HibernateUserGroupDao extends AbstractHibernateDao
      *      #update(de.escidoc.core.aa.business.persistence.UserGroup)
      *
      */
-    @Override
     public void update(final UserGroup userGroup)
         throws SqlDatabaseSystemException {
         super.update(userGroup);

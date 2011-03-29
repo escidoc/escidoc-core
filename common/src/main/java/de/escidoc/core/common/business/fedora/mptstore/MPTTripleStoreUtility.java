@@ -719,6 +719,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
         throws TripleStoreSystemException {
         String result = null;
         Connection connection = null;
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings
         ResultSet resultSet = null;
         String query = null;
         try {
@@ -735,7 +736,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             query = querySelect + queryFrom + queryWhere;
             connection = getConnection();
             // False positive: Method may fail to close database resource
-            @edu.umd.cs.findbugs.annotations.SuppressWarnings
             resultSet = connection.prepareStatement(query).executeQuery();
             if (resultSet.next()) {
                 result = getValue(resultSet.getString(1));
@@ -1706,11 +1706,11 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
         final List<String> result = new LinkedList<String>();
         Connection con = null;
+        // False positive: Method may fail to close database resource
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings
         ResultSet rs = null;
         try {
             con = getConnection();
-            // False positive: Method may fail to close database resource
-            @edu.umd.cs.findbugs.annotations.SuppressWarnings
             rs = con.prepareStatement(query).executeQuery();
             while (rs.next()) {
                 final String entry = getValue(rs.getString(1));
@@ -1827,8 +1827,7 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
             queryBuffer.append("')");
             query = queryBuffer.toString();
             connection = getConnection();
-            // False positive: Method may fail to close database resource
-            @edu.umd.cs.findbugs.annotations.SuppressWarnings
+
             resultSet = connection.prepareStatement(query).executeQuery();
             return resultSet.next();
         } catch (final URISyntaxException e) {
