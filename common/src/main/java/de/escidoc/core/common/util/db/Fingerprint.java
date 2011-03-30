@@ -366,6 +366,17 @@ public class Fingerprint implements Comparable<Object> {
     }
 
     /**
+     * This class will never be inserted into a HashMap/HashTable.
+     * 
+     * @return a hash code value for this object.
+     */
+    @Override
+    public int hashCode() {
+        assert false : "hashCode not designed";
+        return 1;
+    }
+
+    /**
      * Get a list of all tables for the given schema.
      * 
      * @param conn
