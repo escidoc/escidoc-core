@@ -18,25 +18,16 @@ public class PurgeRequestImpl implements PurgeRequest {
     private final Date creationTimestamp = new Date();
     private String resourceId;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getRequestId() {
         return this.requestId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Date getCreationTimestamp() {
         return new Date(this.creationTimestamp.getTime());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getResourceId() {
         return this.resourceId;
@@ -51,9 +42,6 @@ public class PurgeRequestImpl implements PurgeRequest {
         this.resourceId = resourceId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return "PurgeRequestImpl{" +

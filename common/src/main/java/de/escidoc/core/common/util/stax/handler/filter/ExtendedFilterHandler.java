@@ -131,8 +131,6 @@ public class ExtendedFilterHandler extends DefaultHandler {
      * @param element
      * @return
      * @throws InvalidContentException
-     * @see DefaultHandler#characters(String,
-     *      StartElement)
      */
     @Override
     public String characters(final String data, final StartElement element)
@@ -194,7 +192,6 @@ public class ExtendedFilterHandler extends DefaultHandler {
      * 
      * @param element
      * @return
-     * @see DefaultHandler#startElement(StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element) {
@@ -228,7 +225,6 @@ public class ExtendedFilterHandler extends DefaultHandler {
      * 
      * @param element
      * @return
-     * @see DefaultHandler#endElement(EndElement)
      */
     @Override
     public EndElement endElement(final EndElement element) {

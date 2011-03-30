@@ -60,7 +60,6 @@ public interface ItemRendererInterface {
      *             Thrown in case of an internal error.
      * @throws ComponentNotFoundException
      *             Thrown if a Component of the Item could not be found.
-     * @oum
      */
     String render() throws SystemException, ItemNotFoundException,
         ComponentNotFoundException;
@@ -77,7 +76,6 @@ public interface ItemRendererInterface {
      *             Thrown in case of an internal error.
      * @throws SystemException
      * @throws TripleStoreSystemException
-     * @oum
      */
     String renderProperties() throws ItemNotFoundException,
         WebserverSystemException, TripleStoreSystemException, SystemException;
@@ -132,7 +130,6 @@ public interface ItemRendererInterface {
      *         <code>resources</code> of an item.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderResources() throws WebserverSystemException;
 
@@ -147,22 +144,8 @@ public interface ItemRendererInterface {
      *             Thrown in case of an internal error.
      * @throws ComponentNotFoundException
      *             Thrown if Component of Item could not be found.
-     * @oum
      */
     String renderItems(final List<String> items) throws SystemException,
         ComponentNotFoundException;
 
-    // /**
-    // * Gets the representation of the virtual resource <code>items<code>.
-    // *
-    // * @param items
-    // * The list of items.
-    // * @return Returns the XML representation of the virtual sub resource
-    // * <code>items<code> of an item.
-    // * @throws SystemException
-    // * Thrown in case of an internal error.
-    // * @oum
-    // */
-    // String renderItemRefs(final List<String> itemRefs) throws
-    // SystemException;
 }

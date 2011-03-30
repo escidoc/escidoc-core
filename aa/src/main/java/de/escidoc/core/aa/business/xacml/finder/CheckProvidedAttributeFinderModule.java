@@ -109,9 +109,6 @@ public class CheckProvidedAttributeFinderModule
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see AbstractAttributeFinderModule#assertAttribute(String,
-     *      EvaluationCtx, String, String,
-     *      String, int)
      *
      */
     @Override
@@ -144,9 +141,6 @@ public class CheckProvidedAttributeFinderModule
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
-     *      EvaluationCtx, String, String,
-     *      String)
      *
      */
     @Override

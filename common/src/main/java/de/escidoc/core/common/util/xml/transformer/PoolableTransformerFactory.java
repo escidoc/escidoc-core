@@ -117,7 +117,6 @@ public class PoolableTransformerFactory extends BaseKeyedPoolableObjectFactory {
      * @throws WebserverSystemException
      * @throws FedoraSystemException
      * @throws Exception
-     * @see BaseKeyedPoolableObjectFactory#makeObject(Object)
      */
     @Override
     public Object makeObject(final Object key)

@@ -195,8 +195,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @param id
      * @param filter
      * @return
-     * @see ContainerHandlerInterface#retrieveMembers(String,
-     *      Map)
      */
     @Override
     public String retrieveMembers(
@@ -213,9 +211,7 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @param id
      * @param filter
      * @return List of Tocs
-     * 
-     * @see ContainerHandlerInterface#retrieveTocs(String,
-     *      Map)
+     *
      */
     @Override
     public String retrieveTocs(
@@ -600,8 +596,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws LockingException
      * @throws ReadonlyVersionException
      *             cf. Interface
-     * @see ContainerHandlerInterface#addContentRelations(String,
-     *      String)
      * 
      *
      */
@@ -636,8 +630,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws LockingException
      * @throws ReadonlyVersionException
      *             cf. Interface
-     * @see ContainerHandlerInterface#removeContentRelations(String,
-     *      String)
      * 
      *
      */
@@ -665,8 +657,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws MissingMethodParameterException
      * @throws OptimisticLockingException
      * @throws SystemException
-     * @see ContainerHandlerInterface#assignObjectPid(String,
-     *      String)
      */
     @Override
     public String assignObjectPid(final String id, final String param)
@@ -693,8 +683,6 @@ public class ContainerHandler implements ContainerHandlerInterface {
      * @throws ReadonlyVersionException
      *             Thrown if a provided container version id is not a latest
      *             version.
-     * @see ContainerHandlerInterface#assignVersionPid(String,
-     *      String)
      */
     @Override
     public String assignVersionPid(final String id, final String param)

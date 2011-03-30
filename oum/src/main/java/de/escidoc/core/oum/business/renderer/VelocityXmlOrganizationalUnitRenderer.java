@@ -150,7 +150,6 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @param organizationalUnit
      * @return
      * @throws WebserverSystemException
-     * @see OrganizationalUnitRendererInterface#renderMdRecords(OrganizationalUnit)
      */
     @Override
     public String renderMdRecords(final OrganizationalUnit organizationalUnit)
@@ -345,7 +344,6 @@ public class VelocityXmlOrganizationalUnitRenderer
      * @return The expected <code>List</code> of <code>Maps</code>.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private static List<Map<String, String>> retrieveRefValues(final Collection<String> ids)
         throws SystemException {
@@ -370,7 +368,6 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private void addCommonValues(
         final OrganizationalUnit organizationalUnit,
@@ -400,7 +397,6 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private static void addXlinkValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -420,7 +416,6 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private static void addNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -446,7 +441,6 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private static void addListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -464,7 +458,6 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private static void addPathListNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -488,7 +481,6 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private static void addSuccessorsNamespaceValues(final Map<String, Object> values)
         throws WebserverSystemException {
@@ -511,7 +503,6 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The organizational unit for that data shall be created.
      * @param values
      *            The map to add values to.
-     * @oum
      */
     private static void addPropertiesValues(final OrganizationalUnit organizationalUnit,
                                             final Map<String, Object> values) {
@@ -698,7 +689,6 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The organizational unit for that data shall be created.
      * @param values
      *            The map to add values to.
-     * @oum
      */
     private static void addResourcesValues(final FedoraResource organizationalUnit, final Map<String, Object> values) {
         values.put(XmlTemplateProvider.RESOURCES_TITLE, "Resources");
@@ -728,7 +718,6 @@ public class VelocityXmlOrganizationalUnitRenderer
      *            The map to add values to.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private static void addParentsValues(final OrganizationalUnit organizationalUnit, final Map<String, Object> values)
             throws SystemException {

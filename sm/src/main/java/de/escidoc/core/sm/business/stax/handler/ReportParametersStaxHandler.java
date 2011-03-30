@@ -107,9 +107,6 @@ public class ReportParametersStaxHandler extends DefaultHandler {
      *            The element.
      * @return The character section.
      * @throws Exception e
-     * @see DefaultHandler#characters
-     *      (java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
      */
     @Override

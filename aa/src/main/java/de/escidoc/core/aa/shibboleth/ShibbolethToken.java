@@ -82,7 +82,6 @@ public class ShibbolethToken extends AbstractAuthenticationToken {
      * See Interface for functional description.
      * 
      * @return
-     * @see AbstractAuthenticationToken#getName()
      *
      */
     @Override

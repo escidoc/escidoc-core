@@ -386,9 +386,6 @@ public abstract class AbstractAttributeFinderModule
      *            The designatorType. Has to be RESOURCE_TARGET in this case.
      * @return EvaluationResult An EvaluationResult containing the requested
      *         attribute.
-     * @see AttributeFinderModule#findAttribute(URI,
-     *      URI, URI, URI,
-     *      EvaluationCtx, int)
      *
      */
     @Override

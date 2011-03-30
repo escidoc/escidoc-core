@@ -56,7 +56,7 @@ public class LinkCollectionStaxHandler extends LinkStaxHandler {
     }
     
     /**
-     * Constructs a {@link LinkCollectionStaxHandler} that checks the base uri
+     * Constructs a LinkCollectionStaxHandler that checks the base uri
      * of the link.
      * 
      * @param elementPath

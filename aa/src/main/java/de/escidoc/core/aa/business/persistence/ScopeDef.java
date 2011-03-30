@@ -77,7 +77,6 @@ public class ScopeDef extends ScopeDefBase implements Comparable<ScopeDef> {
      * 
      * @param o
      * @return
-     * @see Comparable#compareTo(Object)
      *
      */
     @Override

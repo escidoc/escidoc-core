@@ -54,7 +54,6 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
      * @param datastreams
      * @return
      * @throws SystemException
-     * @see OrganizationalUnitFoXmlRendererInterface#render(Map)
      */
     @Override
     public String render(final Map<String, Object> values)
@@ -80,7 +79,6 @@ public class VelocityXmlOrganizationalUnitFoXmlRenderer
      * @param values
      * @return
      * @throws WebserverSystemException
-     * @see OrganizationalUnitFoXmlRendererInterface#renderRelsExt(Map)
      */
     @Override
     public String renderRelsExt(final Map<String, Object> values)

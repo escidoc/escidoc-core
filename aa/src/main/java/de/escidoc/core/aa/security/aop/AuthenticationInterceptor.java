@@ -89,7 +89,6 @@ public class AuthenticationInterceptor implements Ordered {
      * See Interface for functional description.
      * 
      * @return
-     * @see Ordered#getOrder()
      *
      */
     @Override

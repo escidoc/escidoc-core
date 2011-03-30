@@ -98,41 +98,26 @@ public class ParameterImpl implements Parameter {
         this.stringvalue = value ? VALUE_TRUE : VALUE_FALSE;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getName() {
         return this.name;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public XMLGregorianCalendar getDateValue() {
         return this.datevalue;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getStringValue() {
         return this.stringvalue;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public BigDecimal getDecimalValue() {
         return this.decimalvalue;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return "ParameterImpl{" +

@@ -78,9 +78,6 @@ public class ResourceNotFoundAttributeFinderModule
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see AbstractAttributeFinderModule#assertAttribute(String,
-     *      EvaluationCtx, String, String,
-     *      String, int)
      *
      */
     @Override
@@ -111,9 +108,6 @@ public class ResourceNotFoundAttributeFinderModule
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
-     *      EvaluationCtx, String, String,
-     *      String)
      *
      */
     @Override

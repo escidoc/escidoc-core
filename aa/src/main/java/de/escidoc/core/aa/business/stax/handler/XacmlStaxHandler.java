@@ -143,8 +143,6 @@ public class XacmlStaxHandler extends DefaultHandler {
      * @param element
      * @return
      * @throws Exception
-     * @see DefaultHandler#characters(String,
-     *      StartElement)
      */
     @Override
     public String characters(final String data, final StartElement element)

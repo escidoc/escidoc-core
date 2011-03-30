@@ -197,16 +197,6 @@ public class FedoraItemHandler extends ItemHandlerPid
     }
 
 
-    /**
-     * @param id
-     * @return
-     * @throws ItemNotFoundException
-     * @throws ComponentNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws ComponentNotFoundException
-     * @see ItemHandlerInterface#retrieve(String)
-     */
     @Override
     public String retrieve(final String id) throws ItemNotFoundException,
         MissingMethodParameterException, SystemException,
@@ -484,7 +474,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws InvalidContentException
      * @throws RelationPredicateNotFoundException
      * @throws InvalidStatusException
-     * @see ItemHandlerInterface#create(String)
      */
     @Override
     public String create(final String xml) throws MissingContentException,
@@ -1267,14 +1256,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         return content;
     }
 
-    /**
-     * @param id
-     * @return
-     * @throws ItemNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @see ItemHandlerInterface#retrieveRelations(String)
-     */
     @Override
     public String retrieveRelations(final String id)
         throws ItemNotFoundException, MissingMethodParameterException,
@@ -1283,16 +1264,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         return renderRelations();
     }
 
-    /**
-     * @param id
-     * @param componentId
-     * @return
-     * @throws ItemNotFoundException
-     * @throws ComponentNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @see ItemHandlerInterface#retrieveComponent(String,String)
-     */
     @Override
     public String retrieveComponent(final String id, final String componentId)
         throws ItemNotFoundException, ComponentNotFoundException,
@@ -1350,18 +1321,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         return renderComponentMdRecords(componentId, true);
     }
 
-    /**
-     * 
-     * @param id
-     * @param componentId
-     * @param mdRecordId
-     * @return
-     * @throws ItemNotFoundException
-     * @throws ComponentNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @see ItemHandlerInterface#retrieveComponentMdRecord(String,String,String)
-     */
     @Override
     public String retrieveComponentMdRecord(
         final String id, final String componentId, final String mdRecordId)
@@ -1385,19 +1344,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         return renderComponentMdRecord(componentId, mdRecordId, true);
     }
 
-    /**
-     * @param itemId
-     * @param componentId
-     * @return
-     * @throws LockingException
-     * @throws AlreadyPublishedException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws InvalidStatusException
-     * @throws ItemNotFoundException
-     * @throws ResourceNotFoundException
-     * @see ItemHandlerInterface#deleteComponent(String,String)
-     */
     @Override
     public void deleteComponent(final String itemId, final String componentId)
         throws LockingException, MissingMethodParameterException,
@@ -1442,8 +1388,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws MissingAttributeValueException
      *             cf. Interface
      * @throws ComponentNotFoundException
-     * @see ItemHandlerInterface#createComponent(String,
-     *      String)
      */
     @Override
     public String createComponent(final String id, final String xmlData)
@@ -1588,21 +1532,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         return updatedXmlData;
     }
 
-    /**
-     * @param id
-     * @param param
-     * @return
-     * @throws ItemNotFoundException
-     * @throws LockingException
-     * @throws InvalidStatusException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws ReadonlyViolationException
-     * @throws ReadonlyVersionException
-     * @throws ComponentNotFoundException
-     * @see ItemHandlerInterface#release(String,String)
-     */
     @Override
     public String release(final String id, final String param)
         throws ItemNotFoundException, LockingException, InvalidStatusException,
@@ -1667,21 +1596,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getLastModificationDate());
     }
 
-    /**
-     * @param id
-     * @param param
-     * @return
-     * @throws ItemNotFoundException
-     * @throws LockingException
-     * @throws InvalidStatusException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws ReadonlyViolationException
-     * @throws ReadonlyVersionException
-     * @throws ComponentNotFoundException
-     * @see ItemHandlerInterface#submit(String,String)
-     */
     @Override
     public String submit(final String id, final String param)
         throws ItemNotFoundException, LockingException, InvalidStatusException,
@@ -1725,22 +1639,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getLastModificationDate());
     }
 
-    /**
-     * @param id
-     * @param param
-     * @return
-     * @throws ItemNotFoundException
-     * @throws LockingException
-     * @throws InvalidStatusException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws ReadonlyViolationException
-     * @throws ReadonlyVersionException
-     * @throws ComponentNotFoundException
-     * @throws XmlCorruptedException
-     * @see ItemHandlerInterface#revise(String,String)
-     */
     @Override
     public String revise(final String id, final String param)
         throws ItemNotFoundException, LockingException, InvalidStatusException,
@@ -1775,23 +1673,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getLastModificationDate());
     }
 
-    /**
-     * @param id
-     * @param param
-     * @return
-     * @throws ItemNotFoundException
-     * @throws NotPublishedException
-     * @throws LockingException
-     * @throws AlreadyWithdrawnException
-     * @throws InvalidStatusException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws ReadonlyViolationException
-     * @throws ReadonlyVersionException
-     * @throws ComponentNotFoundException
-     * @see ItemHandlerInterface#withdraw(String,String)
-     */
     @Override
     public String withdraw(final String id, final String param)
         throws ItemNotFoundException, NotPublishedException, LockingException,
@@ -1851,28 +1732,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getLastModificationDate());
     }
 
-    /**
-     * @param id
-     * @param param
-     * @return
-     * @throws SystemException
-     * @throws ItemNotFoundException
-     * @throws OptimisticLockingException
-     * @throws ReferencedResourceNotFoundException
-     * @throws RelationPredicateNotFoundException
-     * @throws AlreadyExistsException
-     * @throws InvalidStatusException
-     * @throws XmlCorruptedException
-     * @throws InvalidContentException
-     * @throws ReadonlyAttributeViolationException
-     * @throws MissingElementValueException
-     * @throws LockingException
-     * @throws ReadonlyElementViolationException
-     * @throws XmlSchemaValidationException
-     * @throws ReadonlyVersionException
-     * @throws ComponentNotFoundException
-     * @see ItemHandlerInterface#addContentRelations(String,String)
-     */
     @Override
     public String addContentRelations(final String id, final String param)
         throws SystemException, ItemNotFoundException,
@@ -1963,23 +1822,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getLastModificationDate());
     }
 
-    /**
-     * @param id
-     * @param param
-     * @return
-     * @throws SystemException
-     * @throws ItemNotFoundException
-     * @throws OptimisticLockingException
-     * @throws InvalidStatusException
-     * @throws MissingElementValueException
-     * @throws InvalidXmlException
-     * @throws ContentRelationNotFoundException
-     * @throws LockingException
-     * @throws ReadonlyViolationException
-     * @throws ReadonlyVersionException
-     * @throws ComponentNotFoundException
-     * @see ItemHandlerInterface#removeContentRelations(String,String)
-     */
     @Override
     public String removeContentRelations(final String id, final String param)
         throws SystemException, ItemNotFoundException,
@@ -2107,7 +1949,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      * @throws OptimisticLockingException
      * @throws ComponentNotFoundException
      * @throws InvalidStatusException
-     * @see ItemHandlerInterface#lock(String,String)
      */
     @Override
     public String lock(final String id, final String param)
@@ -2137,17 +1978,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getLastModificationDate());
     }
 
-    /**
-     * @param id
-     * @param param
-     * @throws ItemNotFoundException
-     * @throws LockingException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @throws OptimisticLockingException
-     * @throws ComponentNotFoundException
-     * @see ItemHandlerInterface#unlock(String,String)
-     */
     @Override
     public String unlock(final String id, final String param)
         throws ItemNotFoundException, LockingException,
@@ -2176,13 +2006,6 @@ public class FedoraItemHandler extends ItemHandlerPid
             getItem().getLastModificationDate());
     }
 
-    /**
-     * @param id
-     * @return
-     * @throws ItemNotFoundException
-     * @throws SystemException
-     * @see ItemHandlerInterface#retrieveVersionHistory(String)
-     */
     @Override
     public String retrieveVersionHistory(final String id)
         throws ItemNotFoundException, SystemException {
@@ -2224,7 +2047,6 @@ public class FedoraItemHandler extends ItemHandlerPid
      *             e
      * @throws SystemException
      *             cf. Interface
-     * @see ItemHandlerInterface#retrieveParents(String)
      */
     @Override
     public String retrieveParents(final String id)
@@ -2253,16 +2075,6 @@ public class FedoraItemHandler extends ItemHandlerPid
         return result.toString();
     }
 
-    /**
-     * @param id
-     * @param componentId
-     * @return
-     * @throws ItemNotFoundException
-     * @throws ComponentNotFoundException
-     * @throws MissingMethodParameterException
-     * @throws SystemException
-     * @see ItemHandlerInterface#retrieveComponentProperties(String,String)
-     */
     @Override
     public String retrieveComponentProperties(
         final String id, final String componentId)

@@ -13,7 +13,7 @@ public abstract class StatisticRecordBuilder {
     /**
      * Create a new {@link StatisticRecord}.
      *
-     * @return a new {@link StatisticRecordBuilder} instance.
+     * @return a new StatisticRecordBuilder instance.
      */
     public static StatisticRecordBuilder createStatisticRecord() {
         return new StatisticRecordBuilderImpl();
@@ -24,7 +24,7 @@ public abstract class StatisticRecordBuilder {
      *
      * @param name the name of the parameter
      * @param value the {@link String} value of the parameter
-     * @return a the current {@link StatisticRecordBuilder} instance.
+     * @return a the current StatisticRecordBuilder instance.
      */
     public abstract StatisticRecordBuilder withParameter(String name, String value);
 
@@ -33,7 +33,7 @@ public abstract class StatisticRecordBuilder {
      *
      * @param name the name of the parameter
      * @param value the {@link BigDecimal} value of the parameter
-     * @return a the current {@link StatisticRecordBuilder} instance.
+     * @return a the current StatisticRecordBuilder instance.
      */
     public abstract StatisticRecordBuilder withParameter(String name, BigDecimal value);
 
@@ -42,7 +42,7 @@ public abstract class StatisticRecordBuilder {
      *
      * @param name the name of the parameter
      * @param value the {@link DateTime} value of the parameter
-     * @return a the current {@link StatisticRecordBuilder} instance.
+     * @return a the current StatisticRecordBuilder} instance.
      */
     public abstract StatisticRecordBuilder withParameter(String name, DateTime value);
 
@@ -51,7 +51,7 @@ public abstract class StatisticRecordBuilder {
      *
      * @param name the name of the parameter
      * @param value the boolean value of the parameter
-     * @return a the current {@link StatisticRecordBuilder} instance.
+     * @return a the current StatisticRecordBuilder instance.
      */
     public abstract StatisticRecordBuilder withParameter(String name, boolean value);
 

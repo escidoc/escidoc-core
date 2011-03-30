@@ -259,7 +259,6 @@ public class Container extends GenericVersionableResourcePid
      * 
      * @throws IntegritySystemException
      * @throws FedoraSystemException
-     * @see ContainerInterface#getMdRecords()
      */
     @Override
     public Map<String, Datastream> getMdRecords()

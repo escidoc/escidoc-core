@@ -86,7 +86,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see UserGroupHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData)
@@ -117,7 +116,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see UserGroupHandlerInterface#delete(String)
      */
     @Override
     public void delete(final String groupId) throws UserGroupNotFoundException,
@@ -148,7 +146,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see UserGroupHandlerInterface#retrieve(String)
      */
     @Override
     public String retrieve(final String groupId)
@@ -191,8 +188,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see UserGroupHandlerInterface#update(String,
-     *      String)
      */
     @Override
     public String update(final String groupId, final String xmlData)
@@ -238,8 +233,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see UserGroupHandlerInterface#activate(String,
-     *      String)
      */
     @Override
     public void activate(final String groupId, final String taskParam)
@@ -281,8 +274,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see UserGroupHandlerInterface#deactivate(String,
-     *      String)
      */
     @Override
     public void deactivate(final String groupId, final String taskParam)
@@ -361,8 +352,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see UserGroupHandlerInterface#createGrant(String,
-     *      String)
      */
     @Override
     public String createGrant(final String groupId, final String grantXML)
@@ -502,8 +491,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see UserGroupHandlerInterface#revokeGrants(String,
-     *      String)
      */
     @Override
     public void revokeGrants(final String groupId, final String taskParam)
@@ -562,7 +549,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws SystemException
      *             e
-     * @see UserGroupHandlerInterface#retrieveUserGroups(Map)
      */
     @Override
     public String retrieveUserGroups(final Map<String, String[]> filter)
@@ -604,8 +590,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws UserGroupHierarchyViolationException
      *             e
-     * @see UserGroupHandlerInterface#addSelectors(String,
-     *      String)
      */
     @Override
     public String addSelectors(final String groupId, final String taskParam)
@@ -647,8 +631,6 @@ public class UserGroupHandler implements UserGroupHandlerInterface {
      *             e
      * @throws OrganizationalUnitNotFoundException
      *             e
-     * @see UserGroupHandlerInterface#removeSelectors(String,
-     *      String)
      */
     @Override
     public String removeSelectors(final String groupId, final String taskParam)

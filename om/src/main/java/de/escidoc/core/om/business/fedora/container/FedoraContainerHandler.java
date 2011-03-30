@@ -734,8 +734,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws MissingMdRecordException
      *             e
-     * @see ContainerHandlerInterface#update(String,
-     *      String)
      */
     @Override
     public String update(final String id, final String xmlData)
@@ -932,8 +930,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             Thrown if the given container was not found.
      * @throws SystemException
      *             cf. Interface
-     * @see ContainerHandlerInterface#retrieveMembers(String,
-     *      SRURequestParameters)
      */
     @Override
     public String retrieveMembers(
@@ -974,8 +970,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             Thrown if the given container was not found.
      * @throws SystemException
      *             cf. Interface
-     * @see ContainerHandlerInterface#retrieveTocs(String,
-     *      SRURequestParameters)
      */
     @Override
     public String retrieveTocs(
@@ -1030,8 +1024,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws MissingMethodParameterException
      *             cf. Interface
-     * @see ContainerHandlerInterface#moveToContext(String,
-     *      String)
      */
     @Override
     public String moveToContext(final String containerId, final String taskParam)
@@ -1053,7 +1045,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      * @return The list of Containers matching filter parameter.
      * @throws SystemException
      *             cf. Interface
-     * @see ContainerHandlerInterface#retrieveContainers(SRURequestParameters)
      */
     @Override
     public String retrieveContainers(final SRURequestParameters parameters)
@@ -1105,8 +1096,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws InvalidXmlException
      *             cf. Interface
-     * @see ContainerHandlerInterface#createMetadataRecord(String,
-     *      String)
      */
     @Override
     @Deprecated
@@ -1135,8 +1124,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws InvalidXmlException
      *             cf. Interface
-     * @see ContainerHandlerInterface#createMdRecord(String,
-     *      String)
      */
     @Override
     public String createMdRecord(final String id, final String xmlData)
@@ -1185,8 +1172,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws MdRecordNotFoundException
      *             cf. Interface
-     * @see ContainerHandlerInterface#retrieveMdRecord(String,
-     *      String)
      */
     @Override
     public String retrieveMdRecord(final String id, final String mdRecordId)
@@ -1253,7 +1238,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws SystemException
      *             cf. Interface
-     * @see ContainerHandlerInterface#retrieveMdRecords(String)
      */
     @Override
     public String retrieveMdRecords(final String containerId)
@@ -1287,8 +1271,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws ReadonlyVersionException
      *             cf. Interface
-     * @see ContainerHandlerInterface#updateMetadataRecord(String,
-     *      String, String)
      */
     @Override
     public String updateMetadataRecord(
@@ -1374,7 +1356,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws SystemException
      *             cf. Interface
-     * @see ContainerHandlerInterface#retrieveRelations(String)
      */
     @Override
     public String retrieveRelations(final String id)
@@ -1397,7 +1378,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws SystemException
      *             cf. Interface
-     * @see ContainerHandlerInterface#retrieveResources(String)
      */
     @Override
     public String retrieveResources(final String id)
@@ -1496,7 +1476,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws SystemException
      *             cf. Interface
-     * @see ContainerHandlerInterface#retrieveProperties(String)
      */
     @Override
     public String retrieveProperties(final String id)
@@ -1554,8 +1533,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @throws InvalidXmlException
      *             e
-     * @see ContainerHandlerInterface#release(String,
-     *      String)
      */
     @Override
     public String release(final String id, final String param)
@@ -1746,8 +1723,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @throws InvalidXmlException
      *             e
-     * @see ContainerHandlerInterface#submit(String,
-     *      String)
      */
     @Override
     public String submit(final String id, final String param)
@@ -1819,8 +1794,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @throws XmlCorruptedException
      *             e
-     * @see ContainerHandlerInterface#revise(String,
-     *      String)
      */
     @Override
     public String revise(final String id, final String param)
@@ -1892,8 +1865,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             cf. Interface
      * @throws InvalidXmlException
      *             e
-     * @see ContainerHandlerInterface#withdraw(String,
-     *      String)
      */
     @Override
     public String withdraw(final String id, final String param)
@@ -2182,7 +2153,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws SystemException
      *             cf. Interface
-     * @see ContainerHandlerInterface#retrieveVersionHistory(String)
      */
     @Override
     public String retrieveVersionHistory(final String id)
@@ -2225,7 +2195,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws SystemException
      *             cf. Interface
-     * @see ContainerHandlerInterface#retrieveParents(String)
      */
     @Override
     public String retrieveParents(final String id)
@@ -2282,8 +2251,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws AuthorizationException
      *             e
-     * @see ContainerHandlerInterface#createItem(String,
-     *      String)
      */
     @Override
     public String createItem(final String containerId, final String xmlData)
@@ -2379,8 +2346,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             Thrown if an organizational unit is in an invalid status.
      * @throws MissingMdRecordException
      *             e
-     * @see ContainerHandlerInterface#createContainer(String,
-     *      String)
      */
     @Override
     public String createContainer(final String containerId, final String xmlData)
@@ -2466,8 +2431,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws MissingAttributeValueException
      *             cf. Interface
-     * @see ContainerHandlerInterface#addMembers(String,
-     *      String)
      */
     @Override
     public String addMembers(final String id, final String taskParam)
@@ -2703,8 +2666,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws InvalidContentException
      *             cf. Interface
-     * @see ContainerHandlerInterface#removeMembers(String,
-     *      String)
      */
     @Override
     public String removeMembers(final String id, final String taskParam)
@@ -2872,8 +2833,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws InvalidContentException
      *             cf. Interface
-     * @see ContainerHandlerInterface#addContentRelations(String,
-     *      String)
      */
     @Override
     public String addContentRelations(final String id, final String taskParam)
@@ -3025,8 +2984,6 @@ public class FedoraContainerHandler extends ContainerHandlerPid
      *             e
      * @throws ContainerNotFoundException
      *             e
-     * @see ContainerHandlerInterface#removeContentRelations(String,
-     *      String)
      */
     @Override
     public String removeContentRelations(final String id, final String param)

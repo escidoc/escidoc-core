@@ -289,8 +289,6 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *             Thrown if internal error occurs.
      * @throws AuthorizationException
      *             Thrown if access to origin Item is restricted.
-     * @see ContextRendererInterface#renderMemberRefList(FedoraContextHandler,
-     *      List)
      */
     @Override
     public String renderMemberRefList(
@@ -314,7 +312,6 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *            The map to add values to.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private void addCommonValues(
         final Context context, final Map<String, Object> values)
@@ -409,7 +406,6 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      *            Map with property values. New values are added to this Map.
      * @throws SystemException
      *             If anything fails.
-     * @oum
      */
     private void addPropertiesValues(
         final Context context, final Map<String, Object> values)
@@ -643,7 +639,6 @@ public class VelocityXmlContextRenderer implements ContextRendererInterface {
      * @return Returns the name of a context.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     public String getName(final String id) throws SystemException {
         return getProperty(id, TripleStoreUtility.PROP_NAME);

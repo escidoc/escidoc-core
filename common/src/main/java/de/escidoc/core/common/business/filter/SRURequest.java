@@ -58,8 +58,6 @@ import java.util.Map.Entry;
  * Abstract super class for all types of SRU requests.
  * 
  * @author André Schenk
- * 
- * @spring.bean id="de.escidoc.core.common.business.filter.SRURequest"
  */
 public class SRURequest {
     /**
@@ -327,8 +325,6 @@ public class SRURequest {
      * 
      * @param connectionUtility
      *            ConnectionUtility.
-     * 
-     * @spring.property ref="escidoc.core.common.util.service.ConnectionUtility"
      */
     public void setConnectionUtility(final ConnectionUtility connectionUtility) {
         this.connectionUtility = connectionUtility;

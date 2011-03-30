@@ -42,7 +42,6 @@ public final class OrganizationalUnitFoXmlProvider
      * 
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private OrganizationalUnitFoXmlProvider() {
     }
@@ -55,7 +54,6 @@ public final class OrganizationalUnitFoXmlProvider
      * @throws WebserverSystemException
      *             Thrown if the instance cannot be created due to an internal
      *             error.
-     * @oum
      */
     public static OrganizationalUnitFoXmlProvider getInstance() {
         return PROVIDER;

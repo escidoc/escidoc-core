@@ -152,8 +152,7 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
 
     /**
      * See Interface for functional description.
-     * 
-     * @see PolicyFinderModule#invalidateCache()
+     *
      * 
      *
      */
@@ -172,8 +171,6 @@ public class DatabasePolicyFinderModule extends PolicyFinderModule {
      * @param type
      * @return
      * @throws IllegalArgumentException
-     * @see PolicyFinderModule#findPolicy(URI,
-     *      int)
      */
     @Override
     public PolicyFinderResult findPolicy(final URI idReference, final int type) {

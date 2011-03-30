@@ -481,8 +481,6 @@ public class OrganizationalUnit extends GenericResource
      * @param name
      * @param ds
      * @throws SystemException
-     * @see OrganizationalUnitInterface#setMdRecord(String,
-     *      Datastream)
      */
     @Override
     public void setMdRecord(final String name, final Datastream ds)

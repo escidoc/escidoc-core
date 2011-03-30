@@ -278,7 +278,6 @@ public class SecurityInterceptor implements Ordered {
      * See Interface for functional description.
      * 
      * @return
-     * @see Ordered#getOrder()
      *
      */
     @Override

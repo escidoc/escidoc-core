@@ -43,7 +43,6 @@ public class EscidocEJBWsddProvider extends WSDDProvider {
      * See Interface for functional description.
      * 
      * @return
-     * @see WSDDProvider#getName()
      */
     @Override
     public String getName() {
@@ -58,9 +57,6 @@ public class EscidocEJBWsddProvider extends WSDDProvider {
      * @param engineconfiguration
      * @return
      * @throws Exception
-     * @see WSDDProvider#newProviderInstance(
-     *      WSDDService,
-     *      EngineConfiguration)
      */
     @Override
     public Handler newProviderInstance(

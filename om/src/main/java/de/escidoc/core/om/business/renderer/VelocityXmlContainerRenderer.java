@@ -537,7 +537,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *            The map to add values to.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private void addStructMapValus(
         final Container container, final Map<String, Object> values)
@@ -623,7 +622,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *            The map to add values to.
      * @throws WebserverSystemException
      *             If an error occurs.
-     * @oum
      */
     private static void addResourcesValues(final FedoraResource container, final Map<String, Object> values)
         throws WebserverSystemException {
@@ -785,7 +783,6 @@ public class VelocityXmlContainerRenderer implements ContainerRendererInterface 
      *         <code>children</code> of an organizational unit.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     @Override
     public String renderStructMap(final Container container)

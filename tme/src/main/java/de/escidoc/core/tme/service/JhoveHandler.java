@@ -39,7 +39,6 @@ public class JhoveHandler
      *             e
      * @throws TmeException
      *             e
-     * @see de.escidoc.core.tme.service.interfaces.JhoveHandlerInterface#extract(String)
      */
     @Override
     public String extract(final String requests)

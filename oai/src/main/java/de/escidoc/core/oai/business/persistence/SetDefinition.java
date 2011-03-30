@@ -43,9 +43,7 @@ public class SetDefinition extends SetDefinitionBase {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @return Returns the href to this
-     *         {@link SetDefinition}
-     *         object.
+     * @return Returns the href to this SetDefinition object.
      */
     public String getHref() {
 

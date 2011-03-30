@@ -229,8 +229,6 @@ public class Login extends HttpServlet {
      *             e.
      * @throws IOException
      *             e.
-     * @see HttpServlet#doGet(HttpServletRequest,
-     *      HttpServletResponse)
      *
      */
     @Override
@@ -253,8 +251,6 @@ public class Login extends HttpServlet {
      * @param response
      * @throws ServletException
      * @throws IOException
-     * @see HttpServlet#doPost(HttpServletRequest,
-     *      HttpServletResponse)
      *
      */
     @Override

@@ -49,7 +49,6 @@ import java.util.Map.Entry;
  * will represent the OrganizationalUnitCreator.
  * 
  * @author Michael Schneider
- * @oum
  */
 public class OrganizationalUnitHandlerCreate
     extends OrganizationalUnitHandlerRetrieve {

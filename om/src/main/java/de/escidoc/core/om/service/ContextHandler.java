@@ -125,7 +125,6 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see ContextHandlerInterface#retrieveProperties(String)
      */
     @Override
     public String retrieveProperties(final String id) throws ContextNotFoundException, SystemException {
@@ -168,7 +167,6 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see ContextHandlerInterface#open(String, String)
      */
     @Override
     public String open(final String id, final String taskParam)
@@ -182,7 +180,6 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see ContextHandlerInterface#close(String, String)
      */
     @Override
     public String close(final String id, final String taskParam)
@@ -207,8 +204,6 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see ContextHandlerInterface#retrieveMembers(String,
-     *      Map)
      */
     @Override
     public String retrieveMembers(final String id, final Map<String, String[]> filter)
@@ -247,8 +242,6 @@ public class ContextHandler implements ContextHandlerInterface {
     /**
      * See Interface for functional description.
      *
-     * @see ContextHandlerInterface#updateAdminDescriptor(String,
-     *      String)
      */
     @Override
     public String updateAdminDescriptor(final String id, final String xmlData)

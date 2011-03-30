@@ -53,7 +53,6 @@ public class OrganizationalUnitHandlerBase extends HandlerBase {
      *            The id of the organizational unit.
      * @param parser
      *            The stax parser.
-     * @oum
      */
     public OrganizationalUnitHandlerBase(final String id,
         final StaxParser parser) {

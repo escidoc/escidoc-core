@@ -357,7 +357,6 @@ public class FedoraContentModelHandler extends ContentModelHandlerRetrieve
      * @throws InvalidXmlException
      * @throws SystemException
      * @throws SystemException
-     * @see ContentModelHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData) throws InvalidContentException,

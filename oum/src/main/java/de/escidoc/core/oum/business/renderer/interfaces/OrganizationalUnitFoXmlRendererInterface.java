@@ -37,7 +37,6 @@ import java.util.Map;
  * Interface of an organizational unit foxml renderer.
  * 
  * @author Michael Schneider
- * @oum
  */
 public interface OrganizationalUnitFoXmlRendererInterface {
 
@@ -49,7 +48,6 @@ public interface OrganizationalUnitFoXmlRendererInterface {
      * @return Returns the foxml representation of the organizational unit.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String render(final Map<String, Object> values) throws SystemException;
 
@@ -63,7 +61,6 @@ public interface OrganizationalUnitFoXmlRendererInterface {
      *         datastream of an organizational unit.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderRelsExt(final Map<String, Object> values)
         throws WebserverSystemException;

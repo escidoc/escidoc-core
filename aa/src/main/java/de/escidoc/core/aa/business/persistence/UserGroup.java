@@ -45,9 +45,7 @@ public class UserGroup extends UserGroupBase {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @return Returns the href to this
-     *         {@link UserGroup}
-     *         object.
+     * @return Returns the href to this UserGroup object.
      */
     public String getHref() {
 

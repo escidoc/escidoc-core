@@ -85,7 +85,7 @@ public class LinkStaxHandler extends DefaultHandler {
     }
 
     /**
-     * Constructs a {@link LinkStaxHandler} that checks the base uri of the
+     * Constructs a LinkStaxHandler that checks the base uri of the
      * link.
      * 
      * @param elementPath

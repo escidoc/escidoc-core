@@ -53,8 +53,6 @@ public class ShibbolethAuthenticationFilter extends SpringSecurityFilter {
      * @param filterChain
      * @throws IOException
      * @throws ServletException
-     * @see SpringSecurityFilter#doFilterHttp(HttpServletRequest,
-     *      HttpServletResponse, FilterChain)
      *
      */
     @Override

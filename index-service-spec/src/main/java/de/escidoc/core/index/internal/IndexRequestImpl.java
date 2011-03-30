@@ -23,25 +23,16 @@ public class IndexRequestImpl implements IndexRequest {
     private String data;
     private boolean isReindexerCaller;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getRequestId() {
         return this.requestId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Date getCreationTimestamp() {
         return new Date(this.creationTimestamp.getTime());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getAction() {
         return this.action;
@@ -56,9 +47,6 @@ public class IndexRequestImpl implements IndexRequest {
         this.action = action;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getIndexName() {
         return this.indexName;
@@ -73,9 +61,6 @@ public class IndexRequestImpl implements IndexRequest {
         this.indexName = indexName;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getResource() {
         return this.resource;
@@ -90,9 +75,6 @@ public class IndexRequestImpl implements IndexRequest {
         this.resource = resource;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getObjectType() {
         return this.objectType;
@@ -107,9 +89,6 @@ public class IndexRequestImpl implements IndexRequest {
         this.objectType = objectType;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getData() {
         return this.data;
@@ -124,9 +103,6 @@ public class IndexRequestImpl implements IndexRequest {
         this.data = data;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean getIsReindexerCaller() {
         return this.isReindexerCaller;
@@ -142,9 +118,6 @@ public class IndexRequestImpl implements IndexRequest {
         this.isReindexerCaller = isReindexerCaller;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return "IndexRequestImpl{" +

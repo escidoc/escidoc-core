@@ -298,7 +298,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws MissingMdRecordException
      *             If the required md-record is missing
-     * @see OrganizationalUnitHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData) throws InvalidStatusException,
@@ -456,7 +455,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#delete(java.lang.String)
-     * @oum
      */
     @Override
     public void delete(final String id)
@@ -491,7 +489,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieve(java.lang.String)
-     * @oum
      */
     @Override
     public String retrieve(final String id)
@@ -524,7 +521,6 @@ public class FedoraOrganizationalUnitHandler
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#update(java.lang.String,
      *      java.lang.String)
-     * @oum
      */
     @Override
     public String update(final String id, final String xml)
@@ -702,8 +698,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws InvalidStatusException
      *             e
-     * @see OrganizationalUnitHandlerInterface#updateMdRecords(String,
-     *      String)
      */
     @Override
     public String updateMdRecords(final String id, final String xml)
@@ -801,8 +795,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws SystemException
      *             e
-     * @see OrganizationalUnitHandlerInterface#updateParents(String,
-     *      String)
      */
     @Override
     public String updateParents(final String id, final String xml)
@@ -889,7 +881,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveProperties(java.lang.String)
-     * @oum
      */
     @Override
     public String retrieveProperties(final String id)
@@ -974,7 +965,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveResources(java.lang.String)
-     * @oum
      */
     @Override
     public String retrieveResources(final String id)
@@ -995,7 +985,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveMdRecords(java.lang.String)
-     * @oum
      */
     @Override
     public String retrieveMdRecords(final String id)
@@ -1017,8 +1006,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws SystemException
      *             e
-     * @see OrganizationalUnitHandlerInterface#retrieveMdRecord(String,
-     *      String)
      */
     @Override
     public String retrieveMdRecord(final String id, final String name)
@@ -1044,7 +1031,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @see de.escidoc.core.oum.business.interfaces.
      *      OrganizationalUnitHandlerInterface#retrieveParents(java.lang.String)
-     * @oum
      */
     @Override
     public String retrieveParents(final String id)
@@ -1179,11 +1165,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws OrganizationalUnitNotFoundException
      *             e
-     * @throws SystemException
-     *             e
-     * @see OrganizationalUnitHandlerInterface#close(String,
-     *      String)
-     * @oum
      */
     @Override
     public String close(final String id, final String taskParam)
@@ -1219,11 +1200,6 @@ public class FedoraOrganizationalUnitHandler
      *             e
      * @throws OrganizationalUnitNotFoundException
      *             e
-     * @throws SystemException
-     *             e
-     * @see OrganizationalUnitHandlerInterface#open(String,
-     *      String)
-     * @oum
      */
     @Override
     public String open(final String id, final String taskParam)

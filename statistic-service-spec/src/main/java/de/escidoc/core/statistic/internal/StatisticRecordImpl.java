@@ -28,9 +28,6 @@ public class StatisticRecordImpl implements StatisticRecord {
     private LinkRequiredImpl scope;
     private final List<ParameterImpl> parameter = new ArrayList<ParameterImpl>();
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public LinkRequired getScope() {
         return this.scope;
@@ -45,9 +42,6 @@ public class StatisticRecordImpl implements StatisticRecord {
         this.scope = value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<Parameter> getParameter() {
         return new ArrayList<Parameter>(this.parameter);
@@ -62,9 +56,6 @@ public class StatisticRecordImpl implements StatisticRecord {
         this.parameter.add(parameter);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return "StatisticRecordImpl{" +

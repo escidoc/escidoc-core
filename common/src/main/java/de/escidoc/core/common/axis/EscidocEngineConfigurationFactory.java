@@ -65,7 +65,7 @@ public class EscidocEngineConfigurationFactory
      *            The parameter of the engine configuration factory. This
      *            Factory needs an instance of {@link AdminServlet} or
      *            {@link AxisServlet}.
-     * @return Returns the {@link EscidocEngineConfigurationFactory} or
+     * @return Returns the EscidocEngineConfigurationFactory or
      *         <code>null</code> if the factory cannot be created.
      * @see EngineConfigurationFactoryFinder
      */

@@ -157,8 +157,6 @@ public class TaskParamHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see DefaultHandler#endElement
-     *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      *
      */
     @Override
@@ -175,8 +173,6 @@ public class TaskParamHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The character set of the element.
-     * @see DefaultHandler#characters(String,
-     *      StartElement)
      */
     @Override
     public String characters(final String data, final StartElement element) {

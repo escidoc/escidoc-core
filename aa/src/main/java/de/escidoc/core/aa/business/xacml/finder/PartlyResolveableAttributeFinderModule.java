@@ -88,9 +88,6 @@ public class PartlyResolveableAttributeFinderModule
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see AbstractAttributeFinderModule#assertAttribute(String,
-     *      EvaluationCtx, String, String,
-     *      String, int)
      *
      */
     @Override
@@ -126,9 +123,6 @@ public class PartlyResolveableAttributeFinderModule
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
-     *      EvaluationCtx, String, String,
-     *      String)
      *
      */
     @Override

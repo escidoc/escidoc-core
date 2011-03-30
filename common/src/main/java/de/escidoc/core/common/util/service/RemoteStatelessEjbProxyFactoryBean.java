@@ -84,7 +84,6 @@ public class RemoteStatelessEjbProxyFactoryBean
      * See Interface for functional description.
      * 
      * @throws NamingException
-     * @see SimpleRemoteStatelessSessionProxyFactoryBean#afterPropertiesSet()
      *
      */
     @Override

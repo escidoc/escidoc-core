@@ -10,7 +10,7 @@ public abstract class PurgeRequestBuilder {
     /**
      * Create a new {@link PurgeRequest}.
      *
-     * @return a new {@link PurgeRequestBuilder} instance.
+     * @return a new PurgeRequestBuilder} instance.
      */
     public static PurgeRequestBuilder createPurgeRequest() {
         return new PurgeRequestBuilderImpl();
@@ -20,7 +20,7 @@ public abstract class PurgeRequestBuilder {
      * Create a new {@link PurgeRequest} with the resource identifier.
      *
      * @param resourceId the resource identifier
-     * @return a the current {@link PurgeRequestBuilder} instance.
+     * @return a the current PurgeRequestBuilder instance.
      */
     public abstract PurgeRequestBuilder withResourceId(final String resourceId);
 

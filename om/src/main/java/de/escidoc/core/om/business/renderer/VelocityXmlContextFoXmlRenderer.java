@@ -50,7 +50,6 @@ public class VelocityXmlContextFoXmlRenderer
      * @param datastreams
      * @return
      * @throws SystemException
-     * @see ContextFoXmlRendererInterface#render(Map)
      */
     @Override
     public String render(final Map<String, Object> values) throws SystemException {

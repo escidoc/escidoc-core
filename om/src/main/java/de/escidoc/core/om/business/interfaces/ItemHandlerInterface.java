@@ -147,7 +147,6 @@ public interface ItemHandlerInterface extends IngestableResource {
      * @throws ReferencedResourceNotFoundException
      * @throws RelationPredicateNotFoundException
      *             cf. Interface
-     * @see ItemHandlerInterface#create(String)
      * @throws de.escidoc.core.common.exceptions.application.missing.MissingMdRecordException
      * @throws de.escidoc.core.common.exceptions.application.notfound.ContentModelNotFoundException
      */

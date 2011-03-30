@@ -217,8 +217,6 @@ public class ComponentMdRecordsUpdateHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see DefaultHandler#endElement
-     *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
     public EndElement endElement(final EndElement element) {

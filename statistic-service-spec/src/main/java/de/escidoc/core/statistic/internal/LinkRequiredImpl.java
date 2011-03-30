@@ -35,17 +35,11 @@ public class LinkRequiredImpl implements LinkRequired {
         this.objid = objid;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getObjid() {
         return this.objid;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return "LinkRequiredImpl{" + // NON-NLS

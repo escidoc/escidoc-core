@@ -102,8 +102,6 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @return The element.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @see DefaultHandler#startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -212,8 +210,6 @@ public class ContentRelationsCreateHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see DefaultHandler#endElement
-     *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
     public EndElement endElement(final EndElement element) {

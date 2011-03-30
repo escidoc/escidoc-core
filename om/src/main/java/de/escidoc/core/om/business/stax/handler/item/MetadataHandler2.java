@@ -106,8 +106,6 @@ public class MetadataHandler2 extends DefaultHandler {
      *             Thrown if md-record name is invalid (not unique)
      *@throws WebserverSystemException
      *             Thrown by MultipleExtractor
-     * @see DefaultHandler#startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element)
@@ -160,8 +158,6 @@ public class MetadataHandler2 extends DefaultHandler {
      * @param element
      *            The element.
      * @return The element.
-     * @see DefaultHandler#endElement
-     *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      *
      */
     @Override
@@ -201,9 +197,6 @@ public class MetadataHandler2 extends DefaultHandler {
      * @param element
      *            The element.
      * @return The character section.
-     * @see DefaultHandler#characters
-     *      (java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
      */
     @Override

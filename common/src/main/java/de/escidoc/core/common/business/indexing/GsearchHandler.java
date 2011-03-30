@@ -468,8 +468,6 @@ public class GsearchHandler {
      * @param retries numer of retries already executed
      * 
      * @throws Exception e
-     * 
-     * @sb
      * @throws de.escidoc.core.common.exceptions.system.ApplicationServerSystemException
      */
     private void handleGsearchException(
@@ -542,8 +540,6 @@ public class GsearchHandler {
      * 
      * @param response Errormessage that 
      * contains the path to the lockfile
-     * 
-     * @sb
      */
     private static void deleteLock(final String response) {
         try {
@@ -564,8 +560,6 @@ public class GsearchHandler {
     
     /**
      * Delete Directories with Indexes.
-     * 
-     * @sb
      */
     private void deleteIndexDirs() {
         try {
@@ -593,8 +587,6 @@ public class GsearchHandler {
      * 
      * @param path path to Directory
      * @return boolean if delete was successful
-     * 
-     * @sb
      */
     public boolean deleteDir(final File path) {
         if (path.exists()) {

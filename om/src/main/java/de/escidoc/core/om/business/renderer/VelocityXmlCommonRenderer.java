@@ -64,7 +64,6 @@ public class VelocityXmlCommonRenderer {
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
      * @throws TripleStoreSystemException
-     * @oum
      */
     public void addRelationsValues(
         final List<Map<String, String>> relations, final String href,

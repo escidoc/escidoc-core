@@ -47,9 +47,6 @@ public class GsearchRepositoryInfoHandler extends DefaultHandler {
      * @return The character section.
      * @throws Exception
      *             e
-     * @see DefaultHandler#characters
-     *      (java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public String characters(

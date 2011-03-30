@@ -111,7 +111,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws InvalidContentException
      * @throws InvalidStatusException
      * @throws ComponentNotFoundException
-     * @see ItemHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData) throws MissingContentException,
@@ -219,8 +218,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws OptimisticLockingException
      * @throws MissingAttributeValueException
      *             cf. Interface
-     * @see ItemHandlerInterface#createComponent(String,
-     *      String)
      * 
      * 
      */
@@ -708,8 +705,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws ReadonlyViolationException
      * @throws ReadonlyVersionException
      * @throws InvalidXmlException
-     * @see ItemHandlerInterface#withdraw(String,
-     *      String)
      */
     @Override
     public String withdraw(final String id, final String lastModified)
@@ -740,8 +735,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws OptimisticLockingException
      * @throws InvalidXmlException
      * @throws InvalidStatusException
-     * @see ItemHandlerInterface#lock(String,
-     *      String)
      */
     @Override
     public String lock(final String id, final String lastModified)
@@ -768,8 +761,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws SystemException
      * @throws OptimisticLockingException
      * @throws InvalidXmlException
-     * @see ItemHandlerInterface#unlock(String,
-     *      String)
      */
     @Override
     public String unlock(final String id, final String lastModified)
@@ -794,8 +785,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws MissingMethodParameterException
      * @throws SystemException
      * @throws InvalidStatusException
-     * @see ItemHandlerInterface#deleteComponent(String,
-     *      String)
      * 
      * 
      */
@@ -824,8 +813,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws AuthenticationException
      * @throws AuthorizationException
      * @throws SystemException
-     * @see ItemHandlerInterface#moveToContext(String,
-     *      String)
      * 
      * 
      */
@@ -949,8 +936,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws LockingException
      * @throws ReadonlyViolationException
      *             cf. Interface
-     * @see ItemHandlerInterface#addContentRelations(String,
-     *      String)
      */
     @Override
     public String addContentRelations(final String id, final String param)
@@ -984,8 +969,6 @@ public class ItemHandler implements ItemHandlerInterface {
      * @throws LockingException
      * @throws ReadonlyViolationException
      *             cf. Interface
-     * @see ItemHandlerInterface#removeContentRelations(String,
-     *      String)
      */
     @Override
     public String removeContentRelations(final String id, final String param)

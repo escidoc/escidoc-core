@@ -75,7 +75,7 @@ public class ShibbolethDetails {
     private final String shibSessionId;
 
     /**
-     * Constructs a {@link ShibbolethDetails} object.
+     * Constructs a ShibbolethDetails object.
      * 
      * @param shibApplicationId
      *            TODO

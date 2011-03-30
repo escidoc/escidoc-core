@@ -39,9 +39,6 @@ public class StatisticServiceImpl {
         this.statisticDataHandler = statisticDataHandler;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return "StatisticServiceImpl{" +

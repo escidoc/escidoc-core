@@ -267,8 +267,6 @@ public class FedoraContextHandler extends ContextHandlerUpdate
      * (non-Javadoc)
      * 
      * @see ContextHandlerInterface#retrieveProperties(java.lang.String)
-     * 
-     * @oum
      */
     @Override
     public String retrieveProperties(final String id)

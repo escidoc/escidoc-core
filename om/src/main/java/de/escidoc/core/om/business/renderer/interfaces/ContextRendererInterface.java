@@ -54,7 +54,6 @@ public interface ContextRendererInterface {
      * @return Returns the XML representation of the Context.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String render(final FedoraContextHandler contextHandler)
         throws SystemException;
@@ -69,7 +68,6 @@ public interface ContextRendererInterface {
      *         <code>properties</code> of a context.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderProperties(final FedoraContextHandler contextHandler)
         throws WebserverSystemException;
@@ -84,7 +82,6 @@ public interface ContextRendererInterface {
      *         <code>resources</code> a Context.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderResources(final FedoraContextHandler contextHandler)
         throws WebserverSystemException;
@@ -99,7 +96,6 @@ public interface ContextRendererInterface {
      * @return The XML representation of all admin-descriptors of the Context.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderAdminDescriptors(
         final FedoraContextHandler contextHandler, Map<String, Object> values)
@@ -123,7 +119,6 @@ public interface ContextRendererInterface {
      *             fails.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderAdminDescriptor(
         final FedoraContextHandler contextHandler, final String name,
@@ -142,7 +137,6 @@ public interface ContextRendererInterface {
      *             Thrown if access to origin Item is restricted.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderMemberList(
         final FedoraContextHandler contextHandler, final List<String> memberList)
@@ -160,7 +154,6 @@ public interface ContextRendererInterface {
      *             Thrown if access to origin Item is restricted.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderMemberRefList(
         final FedoraContextHandler contextHandler, final List<String> memberList)

@@ -83,7 +83,6 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * @param role
      * @return
      * @throws WebserverSystemException
-     * @see RoleRendererInterface#renderResources(EscidocRole)
      *
      */
     @Override
@@ -114,7 +113,6 @@ public class VelocityXmlRoleRenderer extends AbstractRenderer
      * 
      * @return
      * @throws WebserverSystemException
-     * @see RoleRendererInterface#renderRoles(List)
      */
     @Override
     public String renderRoles(

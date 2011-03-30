@@ -270,7 +270,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param id
      * @return
-     * @see UserAccountDaoInterface#retrieveUserAccountById(String)
      *
      */
     @Override
@@ -304,7 +303,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param loginName
      * @return
-     * @see UserAccountDaoInterface#retrieveUserAccountByLoginName(String)
      *
      */
     @Override
@@ -333,7 +331,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param handle
      * @return
-     * @see UserAccountDaoInterface#retrieveUserAccountByHandle(String)
      *
      */
     @Override
@@ -1315,7 +1312,6 @@ public class HibernateUserAccountDao extends AbstractHibernateDao
      * 
      * @param handle
      * @throws SqlDatabaseSystemException
-     * @see UserAccountDaoInterface#deleteUserLoginData(String)
      */
     @Override
     public void deleteUserLoginData(final String handle)

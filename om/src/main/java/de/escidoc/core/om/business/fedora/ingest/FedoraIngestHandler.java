@@ -71,7 +71,6 @@ public class FedoraIngestHandler implements IngestHandlerInterface {
      * @throws EscidocException
      *             Thrown if XML representation fulfills not all requirements or
      *             internal errors occur.
-     * @see IngestHandlerInterface#ingest(String)
      */
     @Override
     public String ingest(final String xmlData) throws EscidocException {

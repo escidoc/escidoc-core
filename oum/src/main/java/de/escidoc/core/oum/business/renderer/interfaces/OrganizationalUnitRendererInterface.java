@@ -38,7 +38,6 @@ import java.util.List;
  * Interface of an organizational unit renderer.
  * 
  * @author Michael Schneider
- * @oum
  */
 public interface OrganizationalUnitRendererInterface {
 
@@ -50,7 +49,6 @@ public interface OrganizationalUnitRendererInterface {
      * @return Returns the XML representation of the organizational unit.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String render(final OrganizationalUnit organizationalUnit)
         throws SystemException;
@@ -65,7 +63,6 @@ public interface OrganizationalUnitRendererInterface {
      *         <code>properties</code> of an organizational unit.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderProperties(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException;
@@ -80,7 +77,6 @@ public interface OrganizationalUnitRendererInterface {
      *         <code>resources</code> of an organizational unit.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderResources(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException;
@@ -95,7 +91,6 @@ public interface OrganizationalUnitRendererInterface {
      *         <code>md-records</code> of an organizational unit.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderMdRecords(final OrganizationalUnit organizationalUnit)
         throws WebserverSystemException;
@@ -112,7 +107,6 @@ public interface OrganizationalUnitRendererInterface {
      *         <code>md-records</code> of an organizational unit.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderMdRecord(
         final OrganizationalUnit organizationalUnit, final String name)
@@ -128,7 +122,6 @@ public interface OrganizationalUnitRendererInterface {
      *         <code>parents</code> of an organizational unit.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderParents(final OrganizationalUnit organizationalUnit)
         throws SystemException;
@@ -145,7 +138,6 @@ public interface OrganizationalUnitRendererInterface {
      *         <code>children</code> of the organizational unit.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderChildObjects(
         final OrganizationalUnit organizationalUnit, final List<String> children)
@@ -163,7 +155,6 @@ public interface OrganizationalUnitRendererInterface {
      *         <code>parents</code> of an organizational unit.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderParentObjects(
         final OrganizationalUnit organizationalUnit, final List<String> parents)
@@ -181,7 +172,6 @@ public interface OrganizationalUnitRendererInterface {
      *         <code>path-list</code> of an organizational unit.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderPathList(
         final OrganizationalUnit organizationalUnit,
@@ -197,7 +187,6 @@ public interface OrganizationalUnitRendererInterface {
      *         <code>successors</code> of an organizational unit.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderSuccessors(final OrganizationalUnit organizationalUnit)
         throws SystemException;

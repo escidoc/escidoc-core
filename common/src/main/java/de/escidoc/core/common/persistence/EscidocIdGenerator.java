@@ -50,8 +50,6 @@ public class EscidocIdGenerator implements IdentifierGenerator {
      * @param arg1
      * @return
      * @throws HibernateException
-     * @see IdentifierGenerator#generate(
-     *      SessionImplementor, Object)
      *
      */
     @Override
@@ -72,7 +70,7 @@ public class EscidocIdGenerator implements IdentifierGenerator {
     /**
      * Gets (an initializes if needed) the {@link EscidocIdProvider}.
      * 
-     * @return Returns the {@link EscidocIdGenerator} object.
+     * @return Returns the  object.
      * @throws SystemException
      *             Thrown in case of an internal system error.
      *

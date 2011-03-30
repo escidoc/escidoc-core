@@ -14,9 +14,6 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
     private StatisticRecordImpl statisticRecord = new StatisticRecordImpl();
     private String scopeId = "escidoc:scope1"; // NON-NLS
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public StatisticRecordBuilder withParameter(final String name, final String value) {
         if(value != null) {
@@ -26,9 +23,6 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public StatisticRecordBuilder withParameter(final String name, final BigDecimal value) {
         if(value != null) {
@@ -38,9 +32,6 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public StatisticRecordBuilder withParameter(final String name, final DateTime value) {
         if(value != null) {
@@ -50,9 +41,6 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public StatisticRecordBuilder withParameter(final String name, final boolean value) {
         final ParameterImpl parameter = new ParameterImpl(name, value);
@@ -60,9 +48,6 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public StatisticRecord build() {
         final StatisticRecordImpl returnValue = this.statisticRecord;
@@ -82,9 +67,6 @@ public class StatisticRecordBuilderImpl extends StatisticRecordBuilder {
         this.scopeId = scopeId;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return "StatisticRecordBuilderImpl{" +

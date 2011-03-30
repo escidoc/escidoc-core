@@ -59,8 +59,6 @@ public class ActionHandler implements ActionHandlerInterface {
      * @throws AuthenticationException
      * @throws AuthorizationException
      * @throws SystemException
-     * @see ActionHandlerInterface#createUnsecuredActions(String,
-     *      String)
      *
      */
     @Override

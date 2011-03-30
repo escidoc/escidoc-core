@@ -71,7 +71,6 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * 
      * @param token
      * @return
-     * @see StagingFileDao#findStagingFile(String)
      */
     @Override
     public StagingFile findStagingFile(final String token)
@@ -101,7 +100,6 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * See Interface for functional description.
      * 
      * @return
-     * @see StagingFileDao#findExpiredStagingFiles()
      */
     @Override
     public List<StagingFile> findExpiredStagingFiles()
@@ -123,7 +121,6 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * See Interface for functional description.
      * 
      * @param stagingFile
-     * @see StagingFileDao#save(StagingFile)
      */
     @Override
     public void save(final StagingFile stagingFile)
@@ -143,7 +140,6 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * See Interface for functional description.
      * 
      * @param stagingFile
-     * @see StagingFileDao#update(StagingFile)
      */
     @Override
     public void update(final StagingFile stagingFile)
@@ -164,7 +160,6 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * See Interface for functional description.
      * 
      * @param stagingFile
-     * @see StagingFileDao#saveOrUpdate(StagingFile)
      */
     @Override
     public void saveOrUpdate(final StagingFile stagingFile)
@@ -184,7 +179,6 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * See Interface for functional description.
      * 
      * @param stagingFile
-     * @see StagingFileDao#delete(StagingFile)
      */
     @Override
     public void delete(final StagingFile stagingFile)
@@ -204,7 +198,6 @@ public class HibernateStagingFileDao extends HibernateDaoSupport
      * See Interface for functional description.
      * 
      * @param stagingFiles
-     * @see StagingFileDao#delete(StagingFile[])
      */
     @Override
     public void delete(final StagingFile[] stagingFiles)

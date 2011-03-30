@@ -472,7 +472,6 @@ public class GenericResource implements FedoraResource {
      *             Thrown if Fedora request failed.
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
-     * @see FedoraResource#setRelsExt(Datastream)
      */
     @Override
     public void setRelsExt(final Datastream ds) throws FedoraSystemException,
@@ -497,7 +496,6 @@ public class GenericResource implements FedoraResource {
      *             Thrown if Fedora request failed.
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
-     * @see FedoraResource#setRelsExt(byte[])
      */
     @Override
     public void setRelsExt(final byte[] relsExt) throws FedoraSystemException,
@@ -550,7 +548,6 @@ public class GenericResource implements FedoraResource {
      *             Thrown if Fedora request failed.
      * @throws WebserverSystemException
      *             Thrown in case of internal failure.
-     * @see FedoraResource#setRelsExt(String)
      */
     @Override
     public void setRelsExt(final String relsExt)
@@ -1074,7 +1071,6 @@ public class GenericResource implements FedoraResource {
      * @return Array with information for all data streams.
      * 
      * @throws FedoraSystemException
-     * @see FedoraResource#getDatastreamsInformation()
      */
     @Override
     public org.fcrepo.server.types.gen.Datastream[] getDatastreamsInformation()

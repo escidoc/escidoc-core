@@ -323,6 +323,7 @@ public class StaxParser implements DefaultHandlerStackInterface {
      * chain. Shifts the element currently at that position (if any) and any
      * subsequent elements to the right (adds one to their indices).
      * @param index
+     * @param dh
      */
     public void addHandler(final int index, final DefaultHandler dh) {
         handlerChain.add(index, dh);

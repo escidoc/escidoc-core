@@ -1617,6 +1617,7 @@ public interface ItemHandlerInterface {
      * @param resourceName
      *            The name of the resource.
      * 
+     * @param parameters
      * @return The content of the resource.
      * 
      * @throws ItemNotFoundException

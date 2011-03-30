@@ -194,8 +194,6 @@ public class OrganizationalUnitHandler
      * @throws OrganizationalUnitNotFoundException
      * @throws MissingElementValueException
      * @throws SystemException
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#updateMdRecords(String,
-     *      String)
      */
     @Override
     public String updateMdRecords(final String id, final String xml)
@@ -223,8 +221,6 @@ public class OrganizationalUnitHandler
      * @throws OrganizationalUnitNotFoundException
      * @throws MissingElementValueException
      * @throws SystemException
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#updateParents(String,
-     *      String)
      */
     @Override
     public String updateParents(final String id, final String xml)
@@ -333,8 +329,6 @@ public class OrganizationalUnitHandler
      * @throws MissingMethodParameterException
      * @throws OrganizationalUnitNotFoundException
      * @throws SystemException
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#retrieveMdRecord(String,
-     *      String)
      */
     @Override
     public String retrieveMdRecord(final String id, final String name)
@@ -476,8 +470,6 @@ public class OrganizationalUnitHandler
      * @throws MissingMethodParameterException
      * @throws OrganizationalUnitNotFoundException
      * @throws SystemException
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#close(String,
-     *      String)
      */
     @Override
     public String close(final String id, final String taskParam)
@@ -499,8 +491,6 @@ public class OrganizationalUnitHandler
      * @throws MissingMethodParameterException
      * @throws OrganizationalUnitNotFoundException
      * @throws SystemException
-     * @see de.escidoc.core.oum.service.interfaces.OrganizationalUnitHandlerInterface#open(String,
-     *      String)
      */
     @Override
     public String open(final String id, final String taskParam)

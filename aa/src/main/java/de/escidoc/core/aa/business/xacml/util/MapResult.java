@@ -165,7 +165,6 @@ public class MapResult {
      * See Interface for functional description.
      * 
      * @return
-     * @see Object#toString()
      */
     @Override
     public String toString() {
@@ -210,15 +209,14 @@ public class MapResult {
     }
 
     /**
-     * @return Returns the attribute id that is resolvable by this
-     *         {@link MapResult}.
+     * @return Returns the attribute id that is resolvable by this MapResult.
      */
     public String getresolvableAttributeId() {
         return this.resolvableAttributeId;
     }
 
     /**
-     * Sets the attribute id that is resolvable by this {@link MapResult}.
+     * Sets the attribute id that is resolvable by this MapResult.
      * 
      * @param resolvableAttributeId
      *            The resolvable attribute id.

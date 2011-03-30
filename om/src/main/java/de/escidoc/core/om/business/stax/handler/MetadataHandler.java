@@ -95,8 +95,6 @@ public class MetadataHandler extends DefaultHandler {
      * @throws MissingAttributeValueException
      * @throws MissingAttributeValueException
      *             If a required attribute is missing.
-     * @see DefaultHandler#startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
      */
     @Override
@@ -175,8 +173,6 @@ public class MetadataHandler extends DefaultHandler {
      *             Thrown if a mentatory meta data datastream is missing
      *             (refernced by name).
      * @return The element.
-     * @see DefaultHandler#endElement
-     *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      *
      */
     @Override
@@ -204,9 +200,6 @@ public class MetadataHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The character section.
-     * @see DefaultHandler#characters
-     *      (java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
      */
     @Override

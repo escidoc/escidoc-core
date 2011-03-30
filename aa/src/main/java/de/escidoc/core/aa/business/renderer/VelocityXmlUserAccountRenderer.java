@@ -138,8 +138,6 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param currentGrants
      * @return
      * @throws WebserverSystemException
-     * @see UserAccountRendererInterface#renderCurrentGrants
-     *      (de.escidoc.core.aa.business.UserAccount, java.util.List)
      *
      */
     @Override
@@ -229,8 +227,6 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @param grant
      * @return
      * @throws WebserverSystemException
-     * @see UserAccountRendererInterface#renderGrant
-     *      (de.escidoc.core.aa.business.persistence.RoleGrant)
      *
      */
     @Override
@@ -564,8 +560,6 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @return String rendered attribute
      * @throws SystemException
      *             e
-     * @see UserAccountRendererInterface#renderAttribute
-     *      (de.escidoc.core.aa.business.persistence.UserAttribute)
      *
      */
     @Override
@@ -621,8 +615,6 @@ public final class VelocityXmlUserAccountRenderer extends AbstractRenderer
      * @return String rendered attributes
      * @throws SystemException
      *             e
-     * @see UserAccountRendererInterface#renderAttributes
-     *      (de.escidoc.core.aa.business.persistence.UserAccount, Set)
      *
      */
     @Override

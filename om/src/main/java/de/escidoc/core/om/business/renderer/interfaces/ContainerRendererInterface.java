@@ -52,7 +52,6 @@ public interface ContainerRendererInterface {
      * @return Returns the XML representation of the organizational unit.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String render(final Container container) throws SystemException;
 
@@ -66,7 +65,6 @@ public interface ContainerRendererInterface {
      *         <code>properties</code> of an organizational unit.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderProperties(final Container container) throws SystemException;
 
@@ -80,7 +78,6 @@ public interface ContainerRendererInterface {
      *         <code>resources</code> of an organizational unit.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderResources(final Container container)
         throws WebserverSystemException;
@@ -95,7 +92,6 @@ public interface ContainerRendererInterface {
      *         <code>data</code> of an organizational unit.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.IntegritySystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
@@ -116,7 +112,6 @@ public interface ContainerRendererInterface {
      *         <code>data</code> of an organizational unit.
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      * @throws de.escidoc.core.common.exceptions.system.FedoraSystemException
      * @throws de.escidoc.core.common.exceptions.system.EncodingSystemException
      */
@@ -135,7 +130,6 @@ public interface ContainerRendererInterface {
      *         <code>ou-parents</code> of an organizational unit.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderRelations(final Container container) throws SystemException;
 
@@ -162,7 +156,6 @@ public interface ContainerRendererInterface {
      *         <code>struct-map</code> of an Container.
      * @throws SystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     String renderStructMap(final Container container) throws SystemException;
 }

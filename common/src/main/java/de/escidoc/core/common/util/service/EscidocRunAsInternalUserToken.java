@@ -42,7 +42,7 @@ public class EscidocRunAsInternalUserToken extends AbstractAuthenticationToken {
     private final Authentication orginalAuthentication;
 
     /**
-     * Constructs an {@link EscidocRunAsInternalUserToken}.
+     * Constructs an EscidocRunAsInternalUserToken.
      * 
      * @param orginalAuthentication
      *            The original {@link Authentication} whose access shall be

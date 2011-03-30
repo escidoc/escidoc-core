@@ -55,7 +55,6 @@ public class HibernateActionDao extends AbstractHibernateDao
      * @param contextId
      * @return
      * @throws SqlDatabaseSystemException
-     * @see ActionDaoInterface#retrieveUnsecuredActionList(String)
      */
     @Override
     public UnsecuredActionList retrieveUnsecuredActionList(
@@ -79,7 +78,6 @@ public class HibernateActionDao extends AbstractHibernateDao
      * 
      * @param unsecuredActionList
      * @throws SqlDatabaseSystemException
-     * @see ActionDaoInterface#saveOrUpdate(UnsecuredActionList)
      */
     @Override
     public void saveOrUpdate(final UnsecuredActionList unsecuredActionList)

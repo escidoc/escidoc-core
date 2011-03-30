@@ -103,9 +103,7 @@ public class MdRecordDefinitionHandler extends DefaultHandler {
      * @throws MissingAttributeValueException
      * @throws InvalidContentException
      * @throws WebserverSystemException
-     * 
-     * @see DefaultHandler#startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
+     *
      * 
      * 
      */

@@ -52,9 +52,7 @@ public class UserGroupMember extends UserGroupMemberBase {
     }
 
     /**
-     * @return Returns the href to this
-     *         {@link UserGroupMember}
-     *         object.
+     * @return Returns the href to this UserGroupMember object.
      */
     public String getHref() {
  

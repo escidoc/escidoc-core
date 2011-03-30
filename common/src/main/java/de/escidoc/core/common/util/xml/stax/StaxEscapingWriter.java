@@ -58,7 +58,6 @@ public class StaxEscapingWriter extends Writer {
      * See Interface for functional description.
      * 
      * @throws IOException
-     * @see Writer#close()
      */
     @Override
     public void close() throws IOException {
@@ -70,7 +69,6 @@ public class StaxEscapingWriter extends Writer {
      * See Interface for functional description.
      * 
      * @throws IOException
-     * @see Writer#flush()
      */
     @Override
     public void flush() throws IOException {
@@ -85,7 +83,6 @@ public class StaxEscapingWriter extends Writer {
      * @param off
      * @param len
      * @throws IOException
-     * @see Writer#write(char[], int, int)
      */
     @Override
     public void write(final char[] cbuf, final int off, final int len) throws IOException {

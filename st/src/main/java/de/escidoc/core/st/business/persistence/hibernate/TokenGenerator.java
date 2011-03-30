@@ -57,8 +57,6 @@ public class TokenGenerator implements IdentifierGenerator {
      * @param arg0
      * @param arg1
      * @return
-     * @see IdentifierGenerator#generate(
-     *      SessionImplementor, Object)
      */
     @Override
     public Serializable generate(final SessionImplementor sessionImplementor,

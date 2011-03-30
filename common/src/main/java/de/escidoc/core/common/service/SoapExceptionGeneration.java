@@ -229,7 +229,6 @@ public class SoapExceptionGeneration
      * @throws WebserverSystemException
      * @throws XmlParserSystemException
      * @throws UserGroupHierarchyViolationException
-     * @see SoapExceptionGenerationInterface#generateExceptions()
      */
     @Override
     public void generateExceptions() throws EscidocException,

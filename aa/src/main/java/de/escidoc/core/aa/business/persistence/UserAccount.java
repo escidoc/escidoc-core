@@ -46,9 +46,7 @@ public class UserAccount extends UserAccountBase {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @return Returns the href to this
-     *         {@link UserAccount}
-     *         object.
+     * @return Returns the href to this UserAccount object.
      */
     public String getHref() {
 

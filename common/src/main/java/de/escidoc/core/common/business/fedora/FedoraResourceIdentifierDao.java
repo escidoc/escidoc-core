@@ -38,7 +38,6 @@ public class FedoraResourceIdentifierDao implements ResourceIdentifierDao {
      * @param noOfPids
      * @return
      * @throws SystemException
-     * @see ResourceIdentifierDao#getNextPids(int)
      */
     @Override
     public String[] getNextPids(final int noOfPids) throws SystemException {

@@ -304,10 +304,10 @@ public class EscidocException extends Exception {
     }
 
     /**
-     * Checks if the provided {@link EscidocException} holds an http error code.
+     * Checks if the provided EscidocException holds an http error code.
      * 
      * @param e
-     *            The {@link EscidocException} to check.
+     *            The EscidocException to check.
      * @return Returns <code>true</code> if the http status code of the
      *         exception equals or is larger than 400 (Bad Request).
      */

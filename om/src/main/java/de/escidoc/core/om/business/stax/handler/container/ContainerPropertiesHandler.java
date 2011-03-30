@@ -266,8 +266,6 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      *             Thrown if referenced Context does not exist
      * @throws SystemException
      *             Thrown if internal failure occur
-     * @see DefaultHandler#endElement
-     *      (de.escidoc.core.common.util.xml.stax.events.EndElement)
      */
     @Override
     public EndElement endElement(final EndElement element)
@@ -318,9 +316,6 @@ public class ContainerPropertiesHandler extends DefaultHandler {
      * @param element
      *            The element.
      * @return The character section.
-     * @see DefaultHandler#characters
-     *      (java.lang.String,
-     *      de.escidoc.core.common.util.xml.stax.events.StartElement)
      *
      */
     @Override

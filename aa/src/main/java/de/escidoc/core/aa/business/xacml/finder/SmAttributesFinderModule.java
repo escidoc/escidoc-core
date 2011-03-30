@@ -143,9 +143,6 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * @param designatorType
      * @return
      * @throws EscidocException
-     * @see AbstractAttributeFinderModule#assertAttribute(String,
-     *      EvaluationCtx, String, String,
-     *      String, int)
      *
      */
     @Override
@@ -177,9 +174,6 @@ public class SmAttributesFinderModule extends AbstractAttributeFinderModule {
      * @param resourceVersionNumber
      * @return
      * @throws EscidocException
-     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
-     *      EvaluationCtx, String, String,
-     *      String)
      *
      */
     @Override

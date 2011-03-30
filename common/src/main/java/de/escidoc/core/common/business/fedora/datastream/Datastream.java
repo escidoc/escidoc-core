@@ -775,7 +775,6 @@ public class Datastream {
      * 
      * @return The String representation of the Datastream.
      * @throws StreamNotFoundException
-     * @see Object#toString()
      */
     @Override
     public String toString() {
@@ -860,8 +859,7 @@ public class Datastream {
      *            The Datastream object which is to compare.
      * @return true if the datastreams are equal.
      * @throws StreamNotFoundException
-     * 
-     * @see Object#equals(Object)
+     *
      */
     @Override
     public boolean equals(final Object obj) {

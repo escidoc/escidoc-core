@@ -77,7 +77,6 @@ public final class OrganizationalUnitXmlProvider
      * 
      * @throws WebserverSystemException
      *             Thrown in case of an internal error.
-     * @oum
      */
     private OrganizationalUnitXmlProvider() {
     }

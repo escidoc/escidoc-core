@@ -97,9 +97,6 @@ public class NewOuParentsAttributeFinderModule
      * @return boolean
      * @throws EscidocException
      *             e
-     * @see AbstractAttributeFinderModule#assertAttribute(String,
-     *      EvaluationCtx, String, String,
-     *      String, int)
      *
      */
     @Override
@@ -135,9 +132,6 @@ public class NewOuParentsAttributeFinderModule
      * @return Object[]
      * @throws EscidocException
      *             e
-     * @see AbstractAttributeFinderModule#resolveLocalPart(String,
-     *      EvaluationCtx, String, String,
-     *      String)
      *
      */
     @Override

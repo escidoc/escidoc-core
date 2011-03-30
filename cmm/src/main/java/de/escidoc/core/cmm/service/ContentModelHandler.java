@@ -94,7 +94,6 @@ public class ContentModelHandler
      * @throws MissingMethodParameterException
      * @throws XMLStreamException
      * @throws MalformedURLException
-     * @see de.escidoc.core.cmm.service.interfaces.ContentModelHandlerInterface#create(String)
      */
     @Override
     public String create(final String xmlData) throws InvalidContentException,

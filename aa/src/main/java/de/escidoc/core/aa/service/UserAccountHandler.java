@@ -211,8 +211,6 @@ public class UserAccountHandler
      *             e
      * @throws SystemException
      *             e
-     * @see UserAccountHandlerInterface#updatePassword(String,
-     *      String)
      *
      */
     @Override

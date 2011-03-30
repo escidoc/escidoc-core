@@ -515,7 +515,6 @@ public class Item extends GenericVersionableResourcePid
      * @return
      * @throws IntegritySystemException
      * @throws FedoraSystemException
-     * @see ItemInterface#getMdRecords()
      */
     @Override
     public Map<String, Datastream> getMdRecords() {

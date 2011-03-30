@@ -105,8 +105,6 @@ public class ResourceDefinitionHandler extends DefaultHandler {
      *             If invalid content is found.
      * @throws WebserverSystemException
      *             If an error occurs.
-     * @see DefaultHandler#startElement
-     *      (de.escidoc.core.common.util.xml.stax.events.StartElement)
      */
     @Override
     public StartElement startElement(final StartElement element)

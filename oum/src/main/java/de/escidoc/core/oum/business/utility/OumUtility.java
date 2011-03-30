@@ -48,12 +48,6 @@ public class OumUtility {
 
     private final Collection<String> closed;
 
-    /**
-     * 
-     * Constructor.
-     * 
-     * @oum
-     */
     public OumUtility() {
 
         this.open = new Stack<String>();
@@ -72,8 +66,6 @@ public class OumUtility {
      *             If there are cycles in the parent ou hierarchy.
      * @throws SystemException
      *             If triplestore query fails.
-     * 
-     * @oum
      */
     public void detectCycles(
         final String organizationalUnitId, final Collection<String> parentIds)
