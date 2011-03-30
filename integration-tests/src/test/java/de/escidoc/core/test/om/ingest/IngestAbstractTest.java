@@ -290,7 +290,7 @@ public class IngestAbstractTest extends IngestTestBase {
             return;
         }
         // No exception happened ? -> fail
-        failMissingException();
+        failMissingException(XmlSchemaValidationException.class);
 
     }
 

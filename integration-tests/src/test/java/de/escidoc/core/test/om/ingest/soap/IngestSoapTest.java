@@ -1,11 +1,10 @@
 package de.escidoc.core.test.om.ingest.soap;
 
-import de.escidoc.core.test.common.client.servlet.Constants;
-import de.escidoc.core.test.om.ingest.IngestAbstractTest;
-import org.apache.axis.AxisFault;
 import org.junit.Test;
 
-import static org.junit.Assert.fail;
+import de.escidoc.core.common.exceptions.remote.application.invalid.InvalidXmlException;
+import de.escidoc.core.test.common.client.servlet.Constants;
+import de.escidoc.core.test.om.ingest.IngestAbstractTest;
 
 public class IngestSoapTest extends IngestAbstractTest {
 
