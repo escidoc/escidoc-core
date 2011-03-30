@@ -67,6 +67,8 @@
 		<module>escidoc-core.war</module>
 		<module>common-remote</module>
 		<module>escidoc-core.ear</module>
+		<module>assembly</module>
+		<module>installer</module>
     	<module>integration-tests</module>
 		<module>jms-server</module>
 		<module>index-service-impl</module>
@@ -178,20 +180,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ejb-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/bin-descriptor.xml</descriptor>
-						<descriptor>src/main/assembly/src-descriptor.xml</descriptor>
-						<descriptor>src/main/assembly/doc-descriptor.xml</descriptor>
-                                                <descriptor>src/main/assembly/examples-descriptor.xml</descriptor>
-                                                <descriptor>src/main/assembly/jboss-patch-descriptor.xml</descriptor>
-					</descriptors>
-					<finalName>escidoc-core-${project.version}</finalName>
-				</configuration>
 			</plugin>
       <plugin>
         <!-- Note: This plugin can't be moved to the reporting section as long as
@@ -702,6 +690,17 @@
         <enabled>false</enabled>
       </snapshots>
     </repository>
+<!--    <repository>-->
+<!--      <id>wso2</id>-->
+<!--      <name>wso 2 Repository</name>-->
+<!--      <url>http://dist.wso2.org/maven2</url>-->
+<!--      <releases>-->
+<!--        <enabled>true</enabled>-->
+<!--      </releases>-->
+<!--      <snapshots>-->
+<!--        <enabled>false</enabled>-->
+<!--      </snapshots>-->
+<!--    </repository>-->
     <repository>
       <id>MVNSearch</id>
       <url>http://www.mvnsearch.org/maven2</url>
@@ -712,6 +711,7 @@
       <url>http://download.java.net/maven/2</url>
     </repository>
   </repositories>
+
   <pluginRepositories>
     <pluginRepository>
       <id>org.escidoc.core</id>

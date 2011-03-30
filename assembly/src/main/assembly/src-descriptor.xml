@@ -27,7 +27,7 @@
   </formats>
   <fileSets>
     <fileSet>
-      <directory>${project.basedir}</directory>
+      <directory>${project.basedir}/..</directory>
       <includes>
         <include>README*</include>
         <include>LICENSE*</include>
@@ -38,7 +38,7 @@
     </fileSet>
     <fileSet>
       <!-- TODO: use expresssions instead: ${project.build.sourceDirectory}, etc -->
-      <directory>${project.basedir}</directory>
+      <directory>${project.basedir}/..</directory>
       <includes>
         <include>*/src/**</include>
       </includes>

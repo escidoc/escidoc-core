@@ -27,7 +27,7 @@
   <fileSets>
     <!-- license -->
     <fileSet>
-      <directory>${project.basedir}</directory>
+      <directory>${project.basedir}/..</directory>
       <includes>
         <include>license/*</include>
       </includes>
@@ -35,7 +35,7 @@
 
     <!--  ear -->
     <fileSet>
-      <directory>${project.basedir}/escidoc-core.ear/target</directory>
+      <directory>${project.basedir}/../escidoc-core.ear/target</directory>
       <outputDirectory>/ear</outputDirectory>
       <includes>
         <include>*.ear</include>
@@ -44,14 +44,14 @@
 
     <!-- sql scripte -->
     <fileSet>
-      <directory>${project.basedir}/bin/data/release/bin</directory>
+      <directory>${project.basedir}/../bin/data/release/bin</directory>
       <outputDirectory>/bin</outputDirectory>
       <includes>
         <include>*</include>
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${project.basedir}/common/src/main/resources/sql/postgres</directory>
+      <directory>${project.basedir}/../common/src/main/resources/sql/postgres</directory>
       <outputDirectory>/sql</outputDirectory>
       <includes>
         <include>**/*</include>
@@ -60,7 +60,7 @@
 
     <!-- XSDs -->
     <fileSet>
-      <directory>${project.basedir}</directory>
+      <directory>${project.basedir}/..</directory>
       <outputDirectory>/xsd</outputDirectory>
       <includes>
         <include>*/src/main/xsd/**/*.xsd</include>
@@ -69,7 +69,7 @@
 
     <!-- wsdls -->
     <fileSet>
-      <directory>${project.basedir}/integration-tests/target</directory>
+      <directory>${project.basedir}/../integration-tests/target</directory>
       <outputDirectory>/wsdl</outputDirectory>
       <includes>
         <include>*.wsdl</include>
@@ -87,7 +87,7 @@
 
     <!-- ontologies -->
     <fileSet>
-      <directory>${project.basedir}/escidoc-core.war/src/main/webapp/ontologies</directory>
+      <directory>${project.basedir}/../escidoc-core.war/src/main/webapp/ontologies</directory>
       <outputDirectory>/ontologies</outputDirectory>
       <includes>
         <include>**/*</include>

@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<userInput>
+    <!-- install or upgrade eSciDoc -->
+    <panel order="0">
+      <createForPack name="eSciDoc" />
+      <field type="title" txt="Install / Upgrade" bold="true" size="1" />
+      <field type="divider" align="top" />
+      <field type="radio" variable="InstallationType">
+        <description align="left" txt="Would you like to install a new eSciDoc Infrastructure or rather upgrade an existing one?" />
+        <spec>
+          <choice txt="Install new eSciDoc infrastructure" value="install" set="true" />
+          <choice txt="Upgrade existing eSciDoc infrastructure" value="upgrade" />
+        </spec>
+      </field>
+      <field type="divider" align="bottom" />
+    </panel>
+
+    <!-- Install -->
+    <panel order="1">
+      <!-- Hostname -->
+        <createForPack name="eSciDoc" />
+        <field type="title" txt="Hostname" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <!-- Hostname of the system onto which eSciDoc will be installed -->
+        <field type="staticText" align="left" txt="The hostname of the server you are about to install the eSciDoc Infrastructure onto. You may optionally append the domain name. Please make sure not to append a port." />
+        <field type="staticText" align="left" txt="Alternativly, you may provide the IP address instead of hostname and domain name. Keeping the default value 'localhost' will prohibit access from remote hosts." />
+        <field type="text" align="left" variable="Hostname">
+          <spec txt="Hostname:" size="25" set="${Hostname}"/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Hostname must not be empty string."/>
+        </field>
+        <field type="divider" align="bottom"/>
+        <!-- Bind address of the system onto which eSciDoc will be installed -->
+        <!-- field type="staticText" align="left" txt="By default, the eSciDoc Infrastructure will only bind to the loopback interface, which circumvents access from remote machines." />
+        <field type="staticText" align="left" txt="If you want to access the eSciDoc Infrastructure from another machine, check this box. This is typically the case for a production environment. The eSciDoc Infrastructure will then bind to all existing network interfaces." />
+        <field type="check" variable="jboss.bind.address">
+          <spec txt="Bind to all network interfaces" true="0.0.0.0" false="localhost" set="true"/>
+        </field>
+        <field type="divider" align="bottom"/ -->
+    </panel>
+
+    <panel order="2">
+      <!-- Select RDBMS for eSciDoc and Fedora -->
+        <createForPack name="eSciDoc" />
+        <field type="title" txt="Select Relational Database Management System" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <!-- Underlying RDBMS -->
+        <field type="combo" variable="Database">
+          <description>eSciDoc requires a relational database system. Currently, only PostgreSQL and MySQL are supported. The database will only hold internal data (e.g. caches for faster response times), but not the actual content.</description>
+          <spec txt="Relational Database:" id="userdata.database">
+            <choice txt="PostgreSQL" value="PostgreSQL" set="true"/>
+            <choice txt="MySQL" value="MySQL"/>
+          </spec>
+        </field>
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="3">
+        <createForPack name="eSciDoc" />
+        <field type="title" txt="PostgreSQL Database Connection" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <field type="space"/>
+        <field type="text" align="left" variable="DatabaseHost">
+          <spec txt="JDBC Database Host:" size="25" set="${DatabaseHost}"/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database host must not be empty string."/>
+        </field>
+        <field type="text" align="left" variable="DatabasePortPostgres">
+          <spec txt="JDBC Database Port:" size="25" set="${DatabasePortPostgres}"/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database port must not be empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Database Driver Class -->
+        <field type="text" align="left" variable="DatabaseDriverClassPostgres">
+          <spec txt="JDBC Database Driver Class:" size="25" set="${DatabaseDriverClassPostgres}"/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database driver class must not be empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Default Database Name -->
+        <field type="text" align="left" variable="DefaultDatabaseName">
+          <description>During the installation of PostgreSQL, you have set a name for the root database. If you accepted the default value, you do not need to edit this field.</description>
+          <spec txt="Root Database Name:" size="25" set="${RootDatabaseName}"/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Default database name must not be empty string."/>
+        </field>
+        <field type="space"/>
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="4">
+        <createForPack name="eSciDoc" />
+        <field type="title" txt="MySQL Database Connection" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <field type="space"/>
+        <field type="text" align="left" variable="DatabaseHost">
+          <spec txt="JDBC Database Host:" size="25" set="${DatabaseHost}"/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database host must not be empty string."/>
+        </field>
+        <field type="text" align="left" variable="DatabasePortMySQL">
+          <spec txt="JDBC Database Port:" size="25" set="${DatabasePortMySQL}"/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database port must not be empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Database Driver Class -->
+        <field type="text" align="left" variable="DatabaseDriverClassMySQL">
+          <spec txt="JDBC Database Driver Class:" size="25" set="${DatabaseDriverClassMySQL}" />
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database driver class must not be empty string."/>
+        </field>
+        <field type="space"/>
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="5">
+        <createForPack name="eSciDoc" />
+        <field type="title" txt="eSciDoc Database User" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <field type="staticText" align="left" txt="The datebase user specified here will be created by the installer and will be used at runtime for eSciDoc. This user should not have administrative privileges. Please take care not to re-use an existing user, as the installer will drop pre-existing users with the same name!" />
+        <field type="space"/>
+        <!-- Username -->
+        <field type="text" align="left" variable="DatabaseUsername">
+          <spec txt="Database Username:" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database username must not be empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Password -->
+        <field type="password" align="left" variable="DatabasePassword">
+          <spec>
+            <pwd txt="Database Password:" size="25" set=""/>
+            <pwd txt="Retype Password:" size="25" set=""/>
+          </spec>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database password must not be empty string."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database passwords must match."/>
+        </field>
+        <!--field type="space"/>
+        <field type="staticText" align="left" txt="If the installer shall create the necessary databases for you, this user requires additional privileges (create and drop databases and roles). After a successful installation, you may revoke the additional privileges." /-->
+        <field type="space"/>
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="6">
+        <createForPack name="Database Creation" />
+        <field type="title" txt="User Credentials for Database and Role Creation" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <!-- Username -->
+        <field type="staticText" align="left" txt="The installer will create the necessary databases and roles for you. In common database setups, this requires a privileged user." />
+        <field type="space"/>
+        <field type="staticText" align="left" txt="Please provide the user creadentials of an appropriate database user with sufficient privileges. This user will not be stored in any configuration file and will not be used once the necessary databases and roles have been created." />
+        <field type="space"/>
+        <field type="text" align="left" variable="DatabaseAdminUsernamePostgres">
+          <spec txt="Database Admin Username:" size="25" set="${DatabaseAdminUsernamePostgres}" />
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin username must not be an empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Password -->
+        <field type="password" align="left" variable="DatabaseAdminPassword">
+          <spec>
+            <pwd txt="Database Admin Password:" size="25" set="${DatabaseAdminPassword}" />
+            <pwd txt="Retype Admin Password:" size="25" set="${DatabaseAdminPassword}" />
+          </spec>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin password must not be an empty string."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database admin passwords must match."/>
+        </field>
+        <field type="space"/>
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="7">
+        <createForPack name="Database Creation" />
+        <field type="title" txt="User Credentials for Database and Role Creation" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <!-- Username -->
+        <field type="staticText" align="left" txt="The installer will create the necessary databases and roles for you. In common database setups, this requires a privileged user." />
+        <field type="space"/>
+        <field type="staticText" align="left" txt="Please provide the user creadentials of an appropriate database user with sufficient privileges. This user will not be stored in any configuration file and will not be used once the necessary databases and roles have been created." />
+        <field type="space"/>
+        <field type="text" align="left" variable="DatabaseAdminUsernameMySQL">
+          <spec txt="Database Admin Username:" size="25" set="${DatabaseAdminUsernameMySQL}" />
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin username must not be an empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Password -->
+        <field type="password" align="left" variable="DatabaseAdminPassword">
+          <spec>
+            <pwd txt="Database Admin Password:" size="25" set="${DatabaseAdminPassword}" />
+            <pwd txt="Retype Admin Password:" size="25" set="${DatabaseAdminPassword}" />
+          </spec>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Database admin password must not be an empty string."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both database admin passwords must match."/>
+        </field>
+        <field type="space"/>
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="8">
+        <createForPack name="eSciDoc" />
+        <field type="title" txt="Fedora Adminstration User" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <field type="staticText" align="left" txt="The Fedora Administration User will be used to directly log on to Fedora and as an additional database user for Fedora-specific tables." />
+        <field type="space"/>
+        <field type="staticText" align="left" txt="Typically, you will never need this user. The Fedora Administration User is mainly used within the eSciDoc Infrastructure. The email address may be used by Fedora to send error messages. It is not required." />
+        <field type="space"/>
+        <!-- Username -->
+        <field type="text" align="left" variable="FedoraUsername">
+          <spec txt="Fedora Username:" size="25" set="FedoraUsername"/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Fedora username must not be an empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Password -->
+        <field type="password" align="left" variable="FedoraPassword">
+          <spec>
+            <pwd txt="Fedora Password:" size="25" set=""/>
+            <pwd txt="Retype Password:" size="25" set=""/>
+          </spec>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Fedora admin password must not be an empty string."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both Fedora passwords must match."/>
+        </field>
+        <field type="space"/>
+        <!-- eMail Address -->
+        <field type="text" align="left" variable="FedoraAdminMailAddress">
+          <spec txt="eMail Address:" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Fedora administrator email addess must not be an empty string."/>
+        </field>
+        <field type="space"/>
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="9">
+      <!-- Select authentication method -->
+        <createForPack name="eSciDoc" />
+        <field type="title" txt="Authentication Method" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <field type="staticText" align="left" txt="eSciDoc supports three different authentication frameworks. If you have doubts which method is the right one for you, chosse 'Form-based'. Please read the installation manual to learn more about the requirements for LDAP and Shibboleth. Both are not yet fully supported by the installer and require further manual configuration after the installer succeeds." />
+        <field type="space"/>
+        <!-- Authentication methods -->
+        <field type="combo" variable="AuthenticationMethod">
+          <spec txt="Authentication Method:" id="authentication">
+            <choice txt="Form-based" value="form-based" set="true"/>
+            <choice txt="LDAP" value="ldap" set="true"/>
+            <choice txt="Shibboleth" value="shibboleth" set="true"/>
+          </spec>
+        </field>
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="10">
+        <createForPack name="Roles and Users Creation" />
+        <field type="title" txt="User Credentials for System Administrator User" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <!-- Username -->
+        <field type="staticText" align="left" txt="The System Administrator user has access to all resources in the eSciDoc Infrastructure. He can create other users and grant roles and privileges to them." />
+        <field type="space"/>
+        <field type="text" align="left" variable="AdminUsername">
+          <spec txt="System Administrator Username:" size="25" set="AdminUsername" />
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="System administrator username must not be an empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Password -->
+        <field type="password" align="left" variable="AdminPassword">
+          <spec>
+            <pwd txt="System Administrator Password:" size="25" set="" />
+            <pwd txt="Retype Password:" size="25" set="" />
+          </spec>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="System administrator password must not be an empty string."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both system administrator passwords must match."/>
+        </field>
+        <field type="space"/>
+        <!-- eMail Address -->
+        <!-- field type="text" align="left" variable="AdminEmail">
+          <spec txt="eMail Address:" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="The eSciDoc Infrastructure System Administrator's email addess must not be an empty string."/>
+        </field>
+        <field type="space"/ -->
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="11">
+        <createForPack name="Roles and Users Creation" />
+        <field type="title" txt="User Credentials for System Inspector User" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <!-- Username -->
+        <field type="staticText" align="left" txt="The System Inspector user is a read-only user, who may access all resources in the system. The System Inspector user is needed for infrastructure-internal purposes like indexing." />
+        <field type="space"/>
+        <field type="text" align="left" variable="InspectorUsername">
+          <spec txt="System Inspector Username:" size="25" set="InspectorUsername" />
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="System Inspector username must not be an empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Password -->
+        <field type="password" align="left" variable="InspectorHandle">
+          <spec>
+            <pwd txt="System Inspector Password:" size="25" set="" />
+            <pwd txt="Retype Password:" size="25" set="" />
+          </spec>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="System Inspector password must not be an empty string."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both System Inspector passwords must match."/>
+        </field>
+        <field type="space"/>
+        <!-- eMail Address -->
+        <!-- field type="text" align="left" variable="InspectorEmail">
+          <spec txt="eMail Address:" size="25" set=""/>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="The eSciDoc Infrastructure System Inspector's email addess must not be an empty string."/>
+        </field>
+        <field type="space"/ -->
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="12">
+        <createForPack name="Roles and Users Creation" />
+        <field type="title" txt="User Credentials for Depositor User" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <!-- Username -->
+        <field type="staticText" align="left" txt="The Depositor user is entitles to create new resources within the eSciDoc Infrastructure. This is the user for most of the day-to-day work." />
+        <field type="space"/>
+        <field type="text" align="left" variable="DepositorUsername">
+          <spec txt="Depositor Username:" size="25" set="DepositorUsername" />
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Depositor username must not be an empty string."/>
+        </field>
+        <field type="space"/>
+        <!-- Password -->
+        <field type="password" align="left" variable="DepositorPassword">
+          <spec>
+            <pwd txt="Depositor Password:" size="25" set="" />
+            <pwd txt="Retype Password:" size="25" set="" />
+          </spec>
+          <validator class="com.izforge.izpack.util.NotEmptyValidator" txt="Depositor password must not be an empty string."/>
+          <validator class="com.izforge.izpack.util.PasswordEqualityValidator" txt="Both Depositor passwords must match."/>
+        </field>
+        <field type="space"/>
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="13">
+        <createForPack name="eSciDoc" />
+        <field type="title" txt="Database backup" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <field type="staticText" align="left" txt="If you don't have a recent backup of your database we strongly recommend to stop here and make a backup now. This ensures you will not loose data if the database migration fails." />
+        <field type="divider" align="bottom"/>
+    </panel>
+
+    <panel order="14">
+        <createForPack name="eSciDoc" />
+        <field type="title" txt="Database migration" bold="true" size="1" />
+        <field type="divider" align="top"/>
+        <field type="staticText" align="left" txt="Now you may run the database migration. Please keep an eye on the tool's output to see if the migration run successfully." />
+        <field type="space"/>
+        <field type="check" align="left" variable="RunDatabaseMigration">
+          <spec txt="Run the database migration." size="25" true="yes" false="no" set="no"/>
+        </field>
+        <field type="divider" align="bottom"/>
+    </panel>
+
+</userInput>
