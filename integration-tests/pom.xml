@@ -36,13 +36,17 @@
 		<escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user>
 		<escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password>
 		<escidoc.oracle.database.admin.user>oraesci_adm</escidoc.oracle.database.admin.user>
-		<escidoc.oracle.database.admin.password>oraesciadm</escidoc.oracle.database.admin.password -->
+		<escidoc.oracle.database.admin.password>oraesciadm</escidoc.oracle.database.admin.password>
+		<escidoc.oracle.default.tablespace>escidoc</escidoc.oracle.default.tablespace>
+		<escidoc.oracle.temp.tablespace>escidoc</escidoc.oracle.temp.tablespace -->
 		<escidoc.oracle.url>localhost:1521</escidoc.oracle.url>
 		<escidoc.oracle.database>XE</escidoc.oracle.database>
 		<escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user>
 		<escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password>
 		<escidoc.oracle.database.admin.user>HR</escidoc.oracle.database.admin.user>
 		<escidoc.oracle.database.admin.password>oracle</escidoc.oracle.database.admin.password>
+		<escidoc.oracle.default.tablespace>USERS</escidoc.oracle.default.tablespace>
+		<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace>
 	</properties>
 
 	<!-- Setting up the integration test infrastructure is a little bit complex 
