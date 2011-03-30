@@ -20,6 +20,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<escidoc.url>http://localhost:8080</escidoc.url>
+		<escidoc.jboss.zip.name>jboss-4.2.3.GA.escidoc-core-11.zip</escidoc.jboss.zip.name>
 		<fedora.database>fedora3</fedora.database>
 		<fedora.database.user>fedoraAdmin</fedora.database.user>
 		<fedora.database.password>fedoraAdmin</fedora.database.password>
@@ -31,22 +32,22 @@
 		<escidoc.database.user>escidoc</escidoc.database.user>
 		<escidoc.database.password>escidoc</escidoc.database.password>
 
-		<!-- escidoc.oracle.url>escidev5:1521</escidoc.oracle.url>
+		<escidoc.oracle.url>escidev5:1521</escidoc.oracle.url>
 		<escidoc.oracle.database>oraesci01</escidoc.oracle.database>
 		<escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user>
 		<escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password>
 		<escidoc.oracle.database.admin.user>oraesci_adm</escidoc.oracle.database.admin.user>
 		<escidoc.oracle.database.admin.password>oraesciadm</escidoc.oracle.database.admin.password>
 		<escidoc.oracle.default.tablespace>escidoc</escidoc.oracle.default.tablespace>
-		<escidoc.oracle.temp.tablespace>escidoc</escidoc.oracle.temp.tablespace -->
-		<escidoc.oracle.url>localhost:1521</escidoc.oracle.url>
+		<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace>
+		<!-- escidoc.oracle.url>localhost:1521</escidoc.oracle.url>
 		<escidoc.oracle.database>XE</escidoc.oracle.database>
 		<escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user>
 		<escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password>
 		<escidoc.oracle.database.admin.user>HR</escidoc.oracle.database.admin.user>
 		<escidoc.oracle.database.admin.password>oracle</escidoc.oracle.database.admin.password>
 		<escidoc.oracle.default.tablespace>USERS</escidoc.oracle.default.tablespace>
-		<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace>
+		<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace -->
 	</properties>
 
 	<!-- Setting up the integration test infrastructure is a little bit complex 
@@ -1619,7 +1620,7 @@
 								<zipUrlInstaller>
 									<!-- If you change the name of the JBoss package, change the install 
 										path too! -->
-									<url>http://escidev5.fiz-karlsruhe.de:8888/files/jboss-4.2.3.GA.escidoc-core-11.zip</url>
+									<url>http://escidev5.fiz-karlsruhe.de:8888/files/${escidoc.jboss.zip.name}</url>
 									<!-- url>http://escidev5:8888/files/jboss-4.2.3.GA-jdk6.zip</url -->
 									<installDir>${project.build.directory}/installs</installDir>
 								</zipUrlInstaller>
