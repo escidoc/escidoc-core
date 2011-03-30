@@ -1176,6 +1176,7 @@ public class UserAccountHandler
      *      #revokeGrants(java.lang.String, java.lang.String)
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR")
     public void revokeGrants(final String userId, final String taskParam)
         throws UserAccountNotFoundException, GrantNotFoundException,
         AlreadyRevokedException, XmlCorruptedException,
@@ -1269,8 +1270,6 @@ public class UserAccountHandler
             getAuthenticatedUser(this.dao);
         try {
             for (final String grantId : grantIds) {
-                // False positive: Inefficient use of keySet iterator instead of entrySet iterator
-                @edu.umd.cs.findbugs.annotations.SuppressWarnings
                 final RoleGrant roleGrant = grantsHash.get(grantId);
                 // set revoke-date, -user and -remark
                 roleGrant.setUserAccountByRevokerId(authenticateUser);

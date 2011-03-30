@@ -713,12 +713,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * (java.lang.String, java.lang.String, java.lang.String)
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings
+                (value="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING")
     public String getRelation(
         final String pid, final String fullQualifiedPropertyName)
         throws TripleStoreSystemException {
         String result = null;
         Connection connection = null;
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings
         ResultSet resultSet = null;
         String query = null;
         try {
@@ -734,7 +735,6 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
 
             query = querySelect + queryFrom + queryWhere;
             connection = getConnection();
-            // False positive: Method may fail to close database resource
             resultSet = connection.prepareStatement(query).executeQuery();
             if (resultSet.next()) {
                 result = getValue(resultSet.getString(1));
@@ -1700,13 +1700,13 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      * @throws TripleStoreSystemException
      *             If access to the triple store fails.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings
+                (value="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING")
     public List<String> executeSqlQuery(final String query)
         throws TripleStoreSystemException {
 
         final List<String> result = new LinkedList<String>();
         Connection con = null;
-        // False positive: Method may fail to close database resource
-        @edu.umd.cs.findbugs.annotations.SuppressWarnings
         ResultSet rs = null;
         try {
             con = getConnection();
@@ -1805,6 +1805,8 @@ public class MPTTripleStoreUtility extends TripleStoreUtility {
      *             If access to the triple store fails.
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings
+                (value="SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING")
     public boolean exists(final String pid) throws TripleStoreSystemException {
         Connection connection = null;
         ResultSet resultSet = null;
