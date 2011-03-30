@@ -369,9 +369,9 @@ public final class EscidocConfiguration {
         try {
             returnValue = Integer.parseInt(getProperty(name));
         } catch(NumberFormatException e) {
-            LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a interger!.");
+            LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a integer!.");
             if(LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a interger!", e);
+                LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a integer!", e);
             }
         }
         return returnValue;
