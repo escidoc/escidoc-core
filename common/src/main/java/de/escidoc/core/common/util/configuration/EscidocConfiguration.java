@@ -330,9 +330,12 @@ public final class EscidocConfiguration {
      */
     public boolean getAsBoolean(final String name) {
         Boolean result = false;
-        final String prop = (getProperty(name)).toLowerCase();
-        if (prop != null && (TRUE.equals(prop) || ONE.equals(prop))) {
-            result = true;
+        String prop = ((String) this.properties.get(name));
+        if(prop != null) {
+            prop = prop.toLowerCase();
+            if (prop != null && (TRUE.equals(prop) || ONE.equals(prop))) {
+                result = true;
+            }
         }
         return result;
     }
@@ -348,7 +351,7 @@ public final class EscidocConfiguration {
         Long returnValue = null;
         try {
             returnValue = Long.parseLong(getProperty(name));
-        } catch(NumberFormatException e) {
+        } catch(final NumberFormatException e) {
             LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a long!.");
             if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a long!", e);
@@ -368,7 +371,7 @@ public final class EscidocConfiguration {
         Integer returnValue = null;
         try {
             returnValue = Integer.parseInt(getProperty(name));
-        } catch(NumberFormatException e) {
+        } catch(final NumberFormatException e) {
             LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a integer!.");
             if(LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a integer!", e);
