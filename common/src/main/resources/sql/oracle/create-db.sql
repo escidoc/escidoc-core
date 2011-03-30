@@ -5,9 +5,9 @@
 /**
  * create eSciDoc DB users and schemas
  */  
-CREATE USER ${escidoc.database.user} IDENTIFIED BY ${escidoc.database.password}; 
+CREATE USER ${escidoc.oracle.database.user} IDENTIFIED BY ${escidoc.oracle.database.password}; 
 
-GRANT CONNECT, create any table, create any index, drop any table, drop any index, select any table, insert any table, update any table, delete any table, create any procedure, UNLIMITED TABLESPACE TO ${escidoc.database.user};
+GRANT CONNECT, create any table, create any index, drop any table, drop any index, select any table, insert any table, update any table, delete any table, create any procedure, UNLIMITED TABLESPACE TO ${escidoc.oracle.database.user};
 
 CREATE USER aa IDENTIFIED BY aa;
 
