@@ -1,4 +1,4 @@
 -create Oracle Database with character encoding UTF-8
+-create Tablespace for escidoc-tables
 -configure Database-Name and Superuser name + login
 
--adapt escidoc-login.xml: change users-by-username-query: 'true' to 1
