@@ -20,7 +20,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<escidoc.url>http://localhost:8080</escidoc.url>
-		<escidoc.jboss.zip.name>jboss-4.2.3.GA.escidoc-core-11.zip</escidoc.jboss.zip.name>
+		<escidoc.jboss.zip.name>jboss-4.2.3.GA.escidoc-core-11</escidoc.jboss.zip.name>
 		<fedora.database>fedora3</fedora.database>
 		<fedora.database.user>fedoraAdmin</fedora.database.user>
 		<fedora.database.password>fedoraAdmin</fedora.database.password>
@@ -40,14 +40,12 @@
 		<escidoc.oracle.database.admin.password>oraesciadm</escidoc.oracle.database.admin.password>
 		<escidoc.oracle.default.tablespace>escidoc</escidoc.oracle.default.tablespace>
 		<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace>
-		<!-- escidoc.oracle.url>localhost:1521</escidoc.oracle.url>
-		<escidoc.oracle.database>XE</escidoc.oracle.database>
-		<escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user>
-		<escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password>
-		<escidoc.oracle.database.admin.user>HR</escidoc.oracle.database.admin.user>
-		<escidoc.oracle.database.admin.password>oracle</escidoc.oracle.database.admin.password>
-		<escidoc.oracle.default.tablespace>USERS</escidoc.oracle.default.tablespace>
-		<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace -->
+		<!-- escidoc.oracle.url>localhost:1521</escidoc.oracle.url> <escidoc.oracle.database>XE</escidoc.oracle.database> 
+			<escidoc.oracle.database.user>escidoc</escidoc.oracle.database.user> <escidoc.oracle.database.password>escidoc</escidoc.oracle.database.password> 
+			<escidoc.oracle.database.admin.user>HR</escidoc.oracle.database.admin.user> 
+			<escidoc.oracle.database.admin.password>oracle</escidoc.oracle.database.admin.password> 
+			<escidoc.oracle.default.tablespace>USERS</escidoc.oracle.default.tablespace> 
+			<escidoc.oracle.temp.tablespace>TEMP</escidoc.oracle.temp.tablespace -->
 	</properties>
 
 	<!-- Setting up the integration test infrastructure is a little bit complex 
@@ -782,27 +780,6 @@
 									<onError>continue</onError>
 								</configuration>
 							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>sql-maven-plugin</artifactId>
-						<version>1.3</version>
-						<dependencies>
-							<!-- specify the dependent jdbc driver here -->
-							<dependency>
-								<groupId>postgresql</groupId>
-								<artifactId>postgresql</artifactId>
-								<version>${jdbc.postgresql.version}</version>
-							</dependency>
-						</dependencies>
-						<!-- common configuration shared by all executions -->
-						<configuration>
-							<driver>org.postgresql.Driver</driver>
-							<url>jdbc:postgresql://localhost:5432/postgres</url>
-							<settingsKey>escidoc-core-db-admin</settingsKey>
-						</configuration>
-						<executions>
 							<execution>
 								<id>create-escidoc-role</id>
 								<phase>process-resources</phase>
@@ -1101,9 +1078,9 @@
 							<url>jdbc:oracle:thin:@${escidoc.oracle.url}:${escidoc.oracle.database}</url>
 							<username>${escidoc.oracle.database.admin.user}</username>
 							<password>${escidoc.oracle.database.admin.password}</password>
-          					<delimiter>/</delimiter>
-          					<delimiterType>row</delimiterType>
-          					<keepFormat>true</keepFormat>
+							<delimiter>/</delimiter>
+							<delimiterType>row</delimiterType>
+							<keepFormat>true</keepFormat>
 						</configuration>
 						<executions>
 							<execution>
@@ -1118,9 +1095,9 @@
 									<username>${escidoc.oracle.database.admin.user}</username>
 									<password>${escidoc.oracle.database.admin.password}</password>
 									<autocommit>true</autocommit>
-          							<delimiter>/</delimiter>
-          							<delimiterType>row</delimiterType>
-          							<keepFormat>true</keepFormat>
+									<delimiter>/</delimiter>
+									<delimiterType>row</delimiterType>
+									<keepFormat>true</keepFormat>
 									<srcFiles>
 										<srcFile>${basedir}/target/sql-resources/oracle/drop-db.sql
 										</srcFile>
@@ -1161,9 +1138,9 @@
 									<username>${escidoc.oracle.database.admin.user}</username>
 									<password>${escidoc.oracle.database.admin.password}</password>
 									<autocommit>true</autocommit>
-          							<delimiter>;</delimiter>
-          							<delimiterType>normal</delimiterType>
-          							<keepFormat>false</keepFormat>
+									<delimiter>;</delimiter>
+									<delimiterType>normal</delimiterType>
+									<keepFormat>false</keepFormat>
 									<srcFiles>
 										<srcFile>${basedir}/target/sql-resources/oracle/create-db.sql
 										</srcFile>
@@ -1182,9 +1159,9 @@
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
-          							<delimiter>;</delimiter>
-          							<delimiterType>normal</delimiterType>
-          							<keepFormat>false</keepFormat>
+									<delimiter>;</delimiter>
+									<delimiterType>normal</delimiterType>
+									<keepFormat>false</keepFormat>
 									<srcFiles>
 										<!-- the initialize phase allows no filtering. Furthermore is creating 
 											database part of the test phase. That's why here should only be these tables 
@@ -1219,9 +1196,9 @@
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
-          							<delimiter>;</delimiter>
-          							<delimiterType>normal</delimiterType>
-          							<keepFormat>false</keepFormat>
+									<delimiter>;</delimiter>
+									<delimiterType>normal</delimiterType>
+									<keepFormat>false</keepFormat>
 									<srcFiles>
 										<srcFile>${basedir}/target/sql-resources/oracle/aa/aa.init.user-accounts.common.sql
 										</srcFile>
@@ -1245,9 +1222,9 @@
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
-          							<delimiter>;</delimiter>
-          							<delimiterType>normal</delimiterType>
-          							<keepFormat>false</keepFormat>
+									<delimiter>;</delimiter>
+									<delimiterType>normal</delimiterType>
+									<keepFormat>false</keepFormat>
 									<fileset>
 										<basedir>${basedir}/target/sql-resources/oracle</basedir>
 										<includes>
@@ -1272,9 +1249,9 @@
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
-          							<delimiter>;</delimiter>
-          							<delimiterType>normal</delimiterType>
-          							<keepFormat>false</keepFormat>
+									<delimiter>;</delimiter>
+									<delimiterType>normal</delimiterType>
+									<keepFormat>false</keepFormat>
 									<fileset>
 										<basedir>${basedir}/target/sql-resources/oracle/</basedir>
 										<includes>
@@ -1299,9 +1276,9 @@
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
-          							<delimiter>/</delimiter>
-          							<delimiterType>row</delimiterType>
-          							<keepFormat>true</keepFormat>
+									<delimiter>/</delimiter>
+									<delimiterType>row</delimiterType>
+									<keepFormat>true</keepFormat>
 									<fileset>
 										<basedir>${basedir}/target/sql-resources/oracle/</basedir>
 										<includes>
@@ -1326,9 +1303,9 @@
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
-          							<delimiter>;</delimiter>
-          							<delimiterType>normal</delimiterType>
-          							<keepFormat>false</keepFormat>
+									<delimiter>;</delimiter>
+									<delimiterType>normal</delimiterType>
+									<keepFormat>false</keepFormat>
 									<fileset>
 										<basedir>${basedir}/target/sql-resources/oracle/</basedir>
 										<includes>
@@ -1354,9 +1331,9 @@
 									<username>${escidoc.oracle.database.user}</username>
 									<password>${escidoc.oracle.database.password}</password>
 									<autocommit>true</autocommit>
-          							<delimiter>;</delimiter>
-          							<delimiterType>normal</delimiterType>
-          							<keepFormat>false</keepFormat>
+									<delimiter>;</delimiter>
+									<delimiterType>normal</delimiterType>
+									<keepFormat>false</keepFormat>
 									<srcFiles>
 										<!-- the initialize phase allows no filtering. Furthermore is creating 
 											database part of the test phase. That's why here should only be these tables 
@@ -1537,7 +1514,7 @@
 									<goal>copy-resources</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${project.build.directory}/installs/jboss-4.2.3.GA.escidoc-core-11/jboss-4.2.3.GA/server/default/deploy</outputDirectory>
+									<outputDirectory>${project.build.directory}/installs/${escidoc.jboss.zip.name}/jboss-4.2.3.GA/server/default/deploy</outputDirectory>
 									<resources>
 										<resource>
 											<directory>${project.build.directory}/fedora/install</directory>
@@ -1620,7 +1597,7 @@
 								<zipUrlInstaller>
 									<!-- If you change the name of the JBoss package, change the install 
 										path too! -->
-									<url>http://escidev5.fiz-karlsruhe.de:8888/files/${escidoc.jboss.zip.name}</url>
+									<url>http://escidev5.fiz-karlsruhe.de:8888/files/${escidoc.jboss.zip.name}.zip</url>
 									<!-- url>http://escidev5:8888/files/jboss-4.2.3.GA-jdk6.zip</url -->
 									<installDir>${project.build.directory}/installs</installDir>
 								</zipUrlInstaller>
