@@ -10,30 +10,20 @@ import static org.junit.Assert.fail;
 public class IngestSoapTest extends IngestAbstractTest {
 
     public IngestSoapTest() {
-	super(Constants.TRANSPORT_SOAP);
+        super(Constants.TRANSPORT_SOAP);
     }
 
     /**
      * Test unexpected parser exception instead of InvalidXmlException during
      * create (see issue INFR-911).
-     *
+     * 
      * @throws Exception
      *             Thrown if behavior is not as expected.
      */
-    @Test
+    @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
 
-        /*
-         * The infrastructure has thrown an unexpected parser exception during
-         * creation if a non XML datastructur is send (e.g. String).
-         */
-        try {
-            ingest("laber-rababer");
-            fail("Missing Invalid XML exception");
-        }
-        catch (final AxisFault e) {
-            // that's ok
-        }
+        ingest("laber-rababer");
     }
 
 }

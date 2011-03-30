@@ -290,7 +290,7 @@ public class IngestAbstractTest extends IngestTestBase {
             return;
         }
         // No exception happened ? -> fail
-        failMissingException(XmlSchemaValidationException.class);
+        failMissingException();
 
     }
 
@@ -560,6 +560,43 @@ public class IngestAbstractTest extends IngestTestBase {
         }
         else {
             fail("no match for organizational unit found, return value "
+                + "of ingest could not be matched successfully.");
+        }
+    }
+
+    /**
+     * Test if a valid Content Model gets ingested. The return value must be a XML fragment
+     * containing the object id and conforming the the result.xsd schema.
+     * 
+     * @throws Exception
+     *             Throws Exception if test fail.
+     */
+    @Test
+    public void ingestContentModel() throws Exception {
+        String cmmTempl =
+            getTemplateAsString(TEMPLATE_CONTENT_MODEL_PATH,
+                "content-model-minimal-for-create.xml");
+
+        String createdXml = ingest(cmmTempl);
+
+        // assert document is well formed and valid
+        assertXmlValidResult(createdXml);
+
+        Matcher matcher = OBJECT_PATTERN.matcher(createdXml);
+
+        if (matcher.find()) {
+            String resourceType = matcher.group(1);
+            String objectId = matcher.group(2);
+
+            // Have we just ingested a content model ?
+            assert (resourceType.equals("CMM"));
+
+            // We can't assume anything about the object's id except not being
+            // null, can we ?
+            assert (objectId != null);
+        }
+        else {
+            fail("no match for content model found, return value "
                 + "of ingest could not be matched successfully.");
         }
     }

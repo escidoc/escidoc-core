@@ -54,24 +54,14 @@ public class IngestRestTest extends IngestAbstractTest {
     /**
      * Test unexpected parser exception instead of InvalidXmlException during
      * create (see issue INFR-911).
-     *
+     * 
      * @throws Exception
      *             Thrown if behavior is not as expected.
      */
-    @Test
+    @Test(expected = InvalidXmlException.class)
     public void testInvalidXml() throws Exception {
 
-        /*
-         * The infrastructure has thrown an unexpected parser exception during
-         * creation if a non XML datastructur is send (e.g. String).
-         */
-        try {
-            ingest("laber-rababer");
-            fail("Missing Invalid XML exception");
-        }
-        catch (final InvalidXmlException e) {
-            // that's ok
-        }
+        ingest("laber-rababer");
     }
 
 }
