@@ -762,6 +762,7 @@
     <xdoclet.version>1.2.3</xdoclet.version>
     <xjavadoc.version>1.5-050611</xjavadoc.version>
     <jdbc.postgresql.version>9.0-801.jdbc4</jdbc.postgresql.version>
+    <jdbc.oracle.version>14</jdbc.oracle.version>
     <fcrepo.version>3.4.2</fcrepo.version>
     <lucene.version>3.0.2</lucene.version>
 	<java.source.version>1.6</java.source.version>
@@ -1514,6 +1515,11 @@
         <artifactId>postgresql</artifactId>
         <version>${jdbc.postgresql.version}</version>
       </dependency>
+	  <dependency>
+		<groupId>ojdbc</groupId>
+		<artifactId>ojdbc</artifactId>
+		<version>${jdbc.oracle.version}</version>
+	  </dependency>
       <dependency>
         <groupId>org</groupId>
         <artifactId>trippi</artifactId>
