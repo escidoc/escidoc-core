@@ -22,6 +22,7 @@ package de.escidoc.core.common.util.configuration;
 
 import de.escidoc.core.common.exceptions.EscidocException;
 import de.escidoc.core.common.exceptions.system.SystemException;
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -328,9 +329,8 @@ public final class EscidocConfiguration {
      * @return Value of the given Property as boolean.
      */
     public boolean getAsBoolean(final String name) {
-        boolean result = false;
-        final String prop = ((String) properties.get(name)).toLowerCase();
-
+        Boolean result = false;
+        final String prop = (getProperty(name)).toLowerCase();
         if (prop != null && (TRUE.equals(prop) || ONE.equals(prop))) {
             result = true;
         }
@@ -344,9 +344,45 @@ public final class EscidocConfiguration {
      *            The name of the Property.
      * @return Value of the given Property as long value.
      */
-    public long getAsLong(final String name) {
+    public Long getAsLong(final String name) {
+        Long returnValue = null;
+        try {
+            returnValue = Long.parseLong(getProperty(name));
+        } catch(NumberFormatException e) {
+            LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a long!.");
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a long!", e);
+            }
+        }
+        return returnValue;
+    }
 
-        return Long.parseLong(properties.getProperty(name));
+    /**
+     * Returns the property with the given name as a long value.
+     *
+     * @param name
+     *            The name of the Property.
+     * @return Value of the given Property as long value.
+     */
+    public Integer getAsInt(final String name) {
+        Integer returnValue = null;
+        try {
+            returnValue = Integer.parseInt(getProperty(name));
+        } catch(NumberFormatException e) {
+            LOGGER.error("Error on parsing configuration property '" + name + "'. Property must be a interger!.");
+            if(LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Error on parsing configuration property '" + name + "'. Property must be a interger!", e);
+            }
+        }
+        return returnValue;
+    }
+
+    private String getProperty(final String name) {
+        final String property = properties.getProperty(name);
+        if(property == null) {
+            LOGGER.error("Missing property '" + name + "'!");
+        }
+        throw new IllegalStateException("Missing property '" + name + "'!");
     }
 
     /**

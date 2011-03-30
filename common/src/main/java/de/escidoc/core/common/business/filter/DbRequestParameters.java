@@ -49,9 +49,9 @@ public class DbRequestParameters extends SRURequestParameters {
     static {
         try {
             defaultMaximumRecords =
-                (int) EscidocConfiguration
+                 EscidocConfiguration
                     .getInstance()
-                    .getAsLong(
+                    .getAsInt(
                         EscidocConfiguration.ESCIDOC_CORE_FILTER_DEFAULT_MAXIMUM_RECORDS);
         }
         catch (final Exception e) {
