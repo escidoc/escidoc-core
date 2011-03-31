@@ -20,6 +20,7 @@
 
 package de.escidoc.core.common.util.db;
 
+import java.util.Arrays;
 import java.util.TreeSet;
 
 /**
@@ -160,9 +161,12 @@ public class Table implements Comparable<Object> {
      *            column names
      */
     public void setColumns(final String[] columns) {
-        this.columns = new TreeSet<String>();
-        for (final String column : columns) {
-            this.columns.add(new String(column));
+        if (columns != null) {
+            this.columns = new TreeSet<String>();
+            final String[] internalArray = new String[columns.length];
+            System
+                .arraycopy(columns, 0, internalArray, 0, internalArray.length);
+            this.columns.addAll(Arrays.asList(internalArray));
         }
     }
 
@@ -183,9 +187,12 @@ public class Table implements Comparable<Object> {
      *            foreign keys
      */
     public void setForeignKeys(final String[] foreignKeys) {
-        this.foreignKeys = new TreeSet<String>();
-        for (final String foreignKey : foreignKeys) {
-            this.foreignKeys.add(new String(foreignKey));
+        if (foreignKeys != null) {
+            this.foreignKeys = new TreeSet<String>();
+            final String[] internalArray = new String[foreignKeys.length];
+            System.arraycopy(foreignKeys, 0, internalArray, 0,
+                internalArray.length);
+            this.foreignKeys.addAll(Arrays.asList(internalArray));
         }
     }
 
@@ -210,7 +217,7 @@ public class Table implements Comparable<Object> {
         // this.indexes = new TreeSet<String>();
         // if (indexes != null) {
         // for (String index : indexes) {
-        // this.indexes.add(new String(index));
+        // this.indexes.add(index);
         // }
         // }
     }
@@ -243,9 +250,12 @@ public class Table implements Comparable<Object> {
      *            primary keys
      */
     public void setPrimaryKeys(final String[] primaryKeys) {
-        this.primaryKeys = new TreeSet<String>();
-        for (final String primaryKey : primaryKeys) {
-            this.primaryKeys.add(new String(primaryKey));
+        if (primaryKeys != null) {
+            this.primaryKeys = new TreeSet<String>();
+            final String[] internalArray = new String[primaryKeys.length];
+            System.arraycopy(primaryKeys, 0, internalArray, 0,
+                internalArray.length);
+            this.primaryKeys.addAll(Arrays.asList(internalArray));
         }
     }
 
